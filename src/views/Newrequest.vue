@@ -203,7 +203,7 @@
                             <div class="flex items-center gap-x-2">
                               
                               <div>
-                                <h2 class="font-medium text-gray-800 dark:text-white ">Arthur Melo</h2>
+                                <h2 class="font-medium text-gray-800 dark:text-white "></h2>
                                 <p class="text-sm font-normal text-gray-600 dark:text-gray-400">@authurmelo</p>
                               </div>
                             </div>
