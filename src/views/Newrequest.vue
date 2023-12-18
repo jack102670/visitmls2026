@@ -28,22 +28,7 @@
               </a>
             </div>
 
-            <div class="p-6 space-y-3  h-20 border-4 bg-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-xl relative">
-
-
-              <h1 class="text-xl font-semibold text-gray-700 capitalize ddark:text-slate-300"></h1>
-
-
-
-              <a href="#"
-                class="inline-flex p-6 absolute -top-3 -right-6 text-blue-500 capitalize transition-colors duration-300 transform bg-blue-100 rounded-full rtl:-scale-x-100 dark:bg-blue-500 dark:text-white hover:underline hover:text-blue-600 dark:hover:text-blue-500">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </a>
-            </div>
+          
 
             <div class="p-6 space-y-3  h-20 border-4 bg-tranparent dark:border-gray-700 dark:bg-gray-900 rounded-xl relative">
 

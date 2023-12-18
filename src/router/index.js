@@ -9,6 +9,8 @@ import Todo from '../views/Todo.vue'
 import Newsidebar from '../components/Newsidebar.vue'
 import Managerequest from '../views/Managerequest.vue'
 import people from '../views/people.vue'
+import Loginstaff from '../views/Loginstaff.vue'
+import Vendorsignup from '../views/Vendorsignup.vue'
 const routes = [
     {
         path: '/Home',
@@ -63,9 +65,19 @@ const routes = [
         }
     },
     {
-        path: '/',
+        path: '/Vendorlogin',
         name: 'Login',
         component: Login,
+    },
+    {
+        path: '/',
+        name: 'Loginstaff',
+        component: Loginstaff,
+    },
+    {
+        path: '/Registervendor',
+        name: 'Vendorsingup',
+        component: Vendorsignup,
     },
     {
         path: '/Todo',
