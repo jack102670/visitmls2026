@@ -1,6 +1,6 @@
 <template>
   <div>
-    <main class="flex-1 overflow-x-hidden text overflow-y-auto bg-[#F8F9FA] dark:bg-[#141517] p-10 sm:ml-64  h-screen">
+    <main class="flex-1 overflow-x-hidden text overflow-y-auto bg-[#F8F9FA] dark:bg-[#141517] p-10 sm:ml-64  ">
       <!-- Your page content goes here -->
       <div class="container mx-auto  ">
 

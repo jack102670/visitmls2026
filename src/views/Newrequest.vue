@@ -191,6 +191,10 @@ export default {
           // Redirect to the 'movie' child route
           this.$router.push({ name: 'movie' });
           break;
+          case '3':
+          // Redirect to the 'movie' child route
+          this.$router.push({ name: 'cctvform' });
+          break;
         // Add more cases for additional types of requests
 
         default:

@@ -13,6 +13,7 @@ import Loginstaff from '../views/Loginstaff.vue'
 import Vendorsignup from '../views/Vendorsignup.vue'
 import Myrequest2 from '../views/Myrequest2.vue'
 import movie from '../views/movie.vue'
+import cctvform from '../views/cctvform.vue'
 const routes = [
     {
         path: '/Home',
@@ -47,6 +48,11 @@ const routes = [
                 path: '2',
                 name: 'movie',
                 component: movie,
+            },
+            {
+                path: 'cctvform',
+                name: 'cctvform',
+                component: cctvform,
             },
         ],
     },
