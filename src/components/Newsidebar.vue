@@ -5,21 +5,34 @@
         <a href="/" class="mx-auto">
             <img class=" rounded w-auto h-19 sm:h-20" src="@/assets/images/pkt-logo-white.jpg" alt="">
         </a>
+        <div class=" absolute top-0 right-0">
+                    <button id="theme-toggle" type="button"
+                        class="text-white dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"
+                        @click="toggleTheme">
+                        <svg id="theme-toggle-dark-icon" class="w-5 h-5" :class="{ hidden: isLightTheme }"
+                            fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                        <svg id="theme-toggle-light-icon" class="w-5 h-5" :class="{ hidden: !isLightTheme }"
+                            fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                                fill-rule="evenodd" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
 
 
 
-        <div class="flex flex-col items-center mt-6 -mx-2">
-            <img class="object-cover w-24 h-24 mx-2 rounded-full"
-                src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
-                alt="avatar">
-            <h4 class="mx-2 mt-2 font-medium text-slate-200 dark:text-gray-200">John Doe</h4>
+        <div class="flex flex-col items-center mt-1 -mx-2">
+                    <h4 class="mx-2 mt-2 font-medium text-slate-200 dark:text-gray-200">John Doe</h4>
             <p class="mx-2 mt-1 text-sm font-medium text-slate-400 dark:text-gray-400">john@example.com</p>
         </div>
 
         <div class="flex flex-col justify-between flex-1 mt-6">
             <nav>
-                <router-link :to="{ name: 'Newrequest' }" class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
-                    >
+                <router-link :to="{ name: 'Newrequest' }"
+                    class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M19 11H5M19 11C20.1046 11 21 11.8954 21 13V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V13C3 11.8954 3.89543 11 5 11M19 11V9C19 7.89543 18.1046 7 17 7M5 11V9C5 7.89543 5.89543 7 7 7M7 7V5C7 3.89543 7.89543 3 9 3H15C16.1046 3 17 3.89543 17 5V7M7 7H17"
@@ -42,15 +55,16 @@
                     <span class="mx-4 font-medium">Accounts</span>
                 </a>
 
-                <router-link class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
-                :to="{ name: 'Managerequest' }">
+                <router-link
+                    class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
+                    :to="{ name: 'Managerequest' }">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M15 5V7M15 11V13M15 17V19M5 5C3.89543 5 3 5.89543 3 7V10C4.10457 10 5 10.8954 5 12C5 13.1046 4.10457 14 3 14V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V14C19.8954 14 19 13.1046 19 12C19 10.8954 19.8954 10 21 10V7C21 5.89543 20.1046 5 19 5H5Z"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
 
-                    <span class="mx-4 font-medium">Tickets</span>   
+                    <span class="mx-4 font-medium">Tickets</span>
                 </router-link>
 
                 <a class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
@@ -66,40 +80,11 @@
 
                     <span class="mx-4 font-medium">Log Out</span>
                 </a>
+
+             
             </nav>
         </div>
     </aside>
-    <nav
-        class="flex overflow-x-hidden text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 p-4 pt-3 sm:ml-64 ">
-        <div class="container mx-auto">
-            <div class="bg-[#1B1464] dark:bg-gray-800 rounded-lg px-3 py-2 ring-1 ring-slate-900/5 ">
-                <div class="flex items-center  w-full">
-                    <!-- Notification Dropdown -->
-
-
-                    <!-- Theme Toggle Button -->
-                    <div class="ml-auto">
-                        <button id="theme-toggle" type="button"
-                            class="text-white dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"
-                            @click="toggleTheme">
-                            <svg id="theme-toggle-dark-icon" class="w-5 h-5" :class="{ hidden: isLightTheme }"
-                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-                            </svg>
-                            <svg id="theme-toggle-light-icon" class="w-5 h-5" :class="{ hidden: !isLightTheme }"
-                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                                    fill-rule="evenodd" clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-
-    </nav>
 </template>
 
 <script>

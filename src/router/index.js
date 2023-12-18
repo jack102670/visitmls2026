@@ -8,6 +8,7 @@ import Incidentreport from '../views/Incidentreport.vue'
 import Todo from '../views/Todo.vue'
 import Newsidebar from '../components/Newsidebar.vue'
 import Managerequest from '../views/Managerequest.vue'
+import people from '../views/people.vue'
 const routes = [
     {
         path: '/Home',
@@ -30,6 +31,15 @@ const routes = [
         name: 'Newrequest',
         components: {
             default: Newrequest,
+            Sidebar: Newsidebar,
+
+        }
+    },
+    {
+        path: '/people',
+        name: 'people',
+        components: {
+            default: people,
             Sidebar: Newsidebar,
 
         }
