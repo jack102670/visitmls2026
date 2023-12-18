@@ -72,8 +72,5 @@ export default {
     z-index: -1;
 }
 
-/* Additional styling or overrides for content if needed */
-.h-max {
-    /* Add your styles for the content container */
-}
+
 </style>

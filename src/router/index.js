@@ -11,6 +11,8 @@ import Managerequest from '../views/Managerequest.vue'
 import people from '../views/people.vue'
 import Loginstaff from '../views/Loginstaff.vue'
 import Vendorsignup from '../views/Vendorsignup.vue'
+import Myrequest2 from '../views/Myrequest2.vue'
+import movie from '../views/movie.vue'
 const routes = [
     {
         path: '/Home',
@@ -29,10 +31,35 @@ const routes = [
         }
     },
     {
-        path: '/Newrequest',
+        path: '/Newrequest/',
         name: 'Newrequest',
         components: {
             default: Newrequest,
+            Sidebar: Newsidebar,
+        },
+        children: [
+            {
+                path: '',
+                name: 'NewrequestDefault',
+                component: Myrequest2,
+            },
+            {
+                path: '2',
+                name: 'movie',
+                component: movie,
+            },
+        ],
+    },
+    
+    
+    
+    
+    
+    {
+        path: '/Myrequest2',
+        name: 'Myrequest2',
+        components: {
+            default: Myrequest2,
             Sidebar: Newsidebar,
 
         }
