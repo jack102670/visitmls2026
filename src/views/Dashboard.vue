@@ -25,10 +25,13 @@
           </div>
           
         </div> -->
-        <div class="flex justify-start  flex-col ml-5">
-          <h2 class="text-3xl font-bold text-blue-900 dark:text-white">Service Portal</h2>
-          <h3 class="text-xl font-bold text-blue-800 dark:text-white">Security Safety Maintenance</h3>
-
+        <div class="flex justify-start flex-col ml-5">
+          <h2 class="text-3xl font-bold text-blue-900 dark:text-white">
+            Service Portal
+          </h2>
+          <h3 class="text-xl font-bold text-blue-800 dark:text-white">
+            Security Safety Maintenance
+          </h3>
         </div>
         <hr class="h- mx-auto bg-gray-100 border-0 rounded dark:bg-gray-700" />
         <div class="pt-0 container px-6 py-1 mx-auto">
@@ -69,7 +72,7 @@
               </a>
             </div>
 
-            <buttom
+            <!-- <buttom
               @click="showContent"
               class="p-6 space-y-3 h-20 border-4 bg-white dark:border-gray-700 dark:bg-gray-900 rounded-xl relative"
             >
@@ -98,7 +101,33 @@
                   />
                 </svg>
               </a>
-            </buttom>
+            </buttom> -->
+            <BaseButton
+              @click="showContent"
+              class="relative max-w-full rounded"
+            >
+              <div
+                class="flex items-center justify-center p-6 space-y-3 h-20 border-4 text-xl dark:border-gray-700 dark:bg-gray-900 rounded-xl px-8 py-4 bg-gradient-to-r from-blue-700 to-indigo-800 border text-white"
+              >
+                <span class="mr-2 text-slate-100 hover:text-blue-200 ">New Request</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  data-slot="icon"
+                  class="w-8 h-8 hover:text-blue-200"
+               
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59"
+                  />
+                </svg>
+              </div>
+            </BaseButton>
           </div>
         </div>
         <div class="container mx-auto">
