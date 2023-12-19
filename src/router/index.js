@@ -1,19 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Myrequest from '../views/Myrequest.vue'
-import Newrequest from '../views/Newrequest.vue'
+import Dashboard from '../views/Dashboard.vue'
 import Sidebar from '../components/Sidebar.vue'
 import Login from '../views/Login.vue'
 import Incidentreport from '../views/Incidentreport.vue'
 import Todo from '../views/Todo.vue'
 import Newsidebar from '../components/Newsidebar.vue'
 import Managerequest from '../views/Managerequest.vue'
-import people from '../views/people.vue'
+import PTW from '../views/PTW.vue'
 import Loginstaff from '../views/Loginstaff.vue'
 import Vendorsignup from '../views/Vendorsignup.vue'
 import Myrequest2 from '../views/Myrequest2.vue'
-import movie from '../views/movie.vue'
+
 import cctvform from '../views/cctvform.vue'
+import badgeform from '../views/badgeform.vue'
+import Maskform from '../views/Maskform.vue'
+import Teskitform from '../views/Teskitform.vue'
+import visitorescorttour from '../views/visitor-escort-tour.vue'
+import Incidentreportform from '../views/Incidentreportform.vue'
+import PTWpage1 from '../views/PTWpage1.vue';
 const routes = [
     {
         path: '/Home',
@@ -32,10 +38,10 @@ const routes = [
         }
     },
     {
-        path: '/Newrequest/',
-        name: 'Newrequest',
+        path: '/Dashboard/',
+        name: 'Dashboard',
         components: {
-            default: Newrequest,
+            default: Dashboard,
             Sidebar: Newsidebar,
         },
         children: [
@@ -44,15 +50,36 @@ const routes = [
                 name: 'NewrequestDefault',
                 component: Myrequest2,
             },
-            {
-                path: '2',
-                name: 'movie',
-                component: movie,
-            },
+          
             {
                 path: 'cctvform',
                 name: 'cctvform',
                 component: cctvform,
+            },
+            {
+                path: 'mask',
+                name: 'Maskform',
+                component: Maskform,
+            },
+            {
+                path: 'badge',
+                name: 'badgeform',
+                component: badgeform,
+            },
+            {
+                path: 'Teskit',
+                name: 'Teskitform',
+                component: Teskitform,
+            },
+            {
+                path: 'visitorescorttour',
+                name: 'visitorescorttour',
+                component: visitorescorttour,
+            },
+            {
+                path: 'Incidentreport',
+                name: 'Incidentreportform',
+                component: Incidentreportform,
             },
         ],
     },
@@ -71,10 +98,19 @@ const routes = [
         }
     },
     {
-        path: '/people',
-        name: 'people',
+        path: '/PTW',
+        name: 'PTW',
         components: {
-            default: people,
+            default: PTW,
+            Sidebar: Newsidebar,
+
+        }
+    },
+    {
+        path: '/PTWpage1',
+        name: 'PTWpage1',
+        components: {
+            default: PTWpage1,
             Sidebar: Newsidebar,
 
         }

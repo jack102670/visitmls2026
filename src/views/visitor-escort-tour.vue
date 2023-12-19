@@ -12,7 +12,7 @@
           <h2
             class="text-lg font-semibold text-gray-700 capitalize dark:text-white"
           >
-            CCTV Form
+            Visitor/Escort/Tour
           </h2>
 
           <form>
