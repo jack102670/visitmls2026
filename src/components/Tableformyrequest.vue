@@ -4,7 +4,7 @@
       <div class="inline-flex items-center gap-x-3">
         <div class="flex items-center gap-x-2">
           <div>
-            <h2 class="font-medium text-gray-500 dark:text-white">
+            <h2 class="font-medium text-gray-500 dark:text-gray-300 ">
               {{ requester.typeofrequest }}
             </h2>
           </div>
