@@ -136,7 +136,7 @@ export default {
     },
     viewRequestDetails() {
       // You can implement the logic to show the details view here
-      console.log("View button clicked for request:", this.requester);
+      console.log("see", this.requester);
     },
   },
 };

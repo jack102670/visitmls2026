@@ -506,6 +506,7 @@ export default {
     },
     methods: {
         openModal() {
+            console.log("see", this.requester);
             this.modalOpen = true;
         },
         closeModal() {
