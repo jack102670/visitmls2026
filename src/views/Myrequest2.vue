@@ -18,7 +18,7 @@
 
             <span
               class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400"
-              >34
+              >{{ requesters.length }}
             </span>
           </div>
 
@@ -335,7 +335,7 @@ export default {
         status: "asc",
       },
       sortBy: "typeofrequest",
-      itemsPerPage: 5,
+      itemsPerPage: 4,
       currentPage: 1,
     };
   },
