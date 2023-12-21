@@ -1,10 +1,7 @@
 <template>
   <!-- component -->
-  <button @click="toggleSidebar" class="fixed ml-64 rounded-full  bg-white ">test
-    
-    <!-- Your existing theme toggle button -->
-  </button>
-  <aside :class="{ 'hidden': !open, 'lg:block': open }"
+
+  <aside 
     class="fixed top-0 left-0 z-40 w-64 h-screen flex flex-col px-4 py-8 overflow-y-auto bg-[#160959] border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700"
   >
     <a href="/" class="mx-auto">
@@ -151,9 +148,7 @@ export default {
   },
 
   methods: {
-    toggleSidebar() {
-      this.open = !this.open;
-    },
+   
 
     toggleTheme() {
       const root = document.documentElement;
