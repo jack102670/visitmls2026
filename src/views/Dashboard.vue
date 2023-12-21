@@ -258,7 +258,8 @@ export default {
             { id: "2", name: "Incident Report" },
             { id: "3", name: "CCTV Footage View" },
             { id: "4", name: "Visitor/Escort" },
-            { id: "5", name: "Mask/Testkids" },
+            { id: "5", name: "Testkids" },
+            { id: "6", name: "Mask" },
             // Add more states as needed
           ];
           break;
@@ -279,6 +280,7 @@ export default {
             { id: "3", name: "CCTV Footage View" },
             { id: "4", name: "Visitor/Escort" },
             { id: "5", name: "Mask/Testkids" },
+            { id: "6", name: "Mask" },
             // Add more states as needed
           ];
           break;
@@ -312,6 +314,10 @@ export default {
         case "4":
           // Redirect to the 'movie' child route
           this.$router.push({ name: "visitorescorttour" });
+          break;
+          case "6":
+          // Redirect to the 'movie' child route
+          this.$router.push({ name: "Maskform" });
           break;
         // Add more cases for additional types of requests
 

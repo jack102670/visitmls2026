@@ -100,7 +100,7 @@
 
 <script>
 export default {
-  name: 'LoginViews',
+  name: 'savedComponent',
   
 }
 </script>

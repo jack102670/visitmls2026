@@ -228,23 +228,23 @@
           class="w-full mt-4 bg-white border border-gray-300 divide-y divide-gray-300"
         >
           <tr>
-            <td class="py-2 px-4 font-medium">Requester Name:</td>
+            <td class="py-2 px-4 font-medium">Date of incident:</td>
             <td class="py-2 px-4">{{ formData.Dateofincident }}</td>
           </tr>
           <tr>
-            <td class="py-2 px-4 font-medium">Department:</td>
+            <td class="py-2 px-4 font-medium">Time of incident:</td>
             <td class="py-2 px-4">{{ formData.Timeofincident }}</td>
           </tr>
           <tr>
-            <td class="py-2 px-4 font-medium">Phone Number:</td>
+            <td class="py-2 px-4 font-medium">Location of incident:</td>
             <td class="py-2 px-4">{{ formData.Locationofincident }}</td>
           </tr>
           <tr>
-            <td class="py-2 px-4 font-medium">Date Requested:</td>
+            <td class="py-2 px-4 font-medium">Name of parties involved:</td>
             <td class="py-2 px-4">{{ formData.PartiesInvolved }}</td>
           </tr>
           <tr>
-            <td class="py-2 px-4 font-medium">People/For:</td>
+            <td class="py-2 px-4 font-medium">Witness/victim/suspect:</td>
             <td class="py-2 px-4">{{ formData.Typeofincident }}</td>
           </tr>
           <tr>

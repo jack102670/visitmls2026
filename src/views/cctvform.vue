@@ -7,7 +7,7 @@
         class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
         <section
-          class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800"
+          class="max-w-4xl p-6 mx-auto bg-[#f7fbff] rounded-md dark:bg-gray-800"
         >
           <h2
             class="text-lg font-semibold text-gray-700 capitalize dark:text-white"
@@ -15,131 +15,309 @@
             CCTV Form
           </h2>
 
-          <form>
-            <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-              <div>
-                <label class="text-gray-700 dark:text-gray-200" for="username"
-                  >Requester Name</label
-                >
-                <input
-                  id="username"
-                  type="text"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
-              </div>
-
+          <form @submit.prevent="openPreviewModal">
+            <div
+              class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3"
+            >
               <div>
                 <label
                   class="text-gray-700 dark:text-gray-200"
-                  for="emailAddress"
-                  >Department</label
+                  for="Requestername"
+                  >Requester Name</label
                 >
                 <input
-                  id="emailAddress"
-                  type="email"
+                  v-model="formData.Requestername"
+                  id="Requestername"
+                  type="text"
+                  required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
 
               <div>
-                <label class="text-gray-700 dark:text-gray-200" for="password"
-                  >Incident Date</label
+                <label class="text-gray-700 dark:text-gray-200" for="Department"
+                  >Department</label
                 >
                 <input
-                  id="incidentdate"
+                  v-model="formData.Department"
+                  id="Department"
+                  type="text"
+                  required
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                />
+              </div>
+              <div>
+                <label
+                  class="text-gray-700 dark:text-gray-200"
+                  for="Locationofincident"
+                  >Phone number</label
+                >
+                <input
+                  v-model="formData.Phonenumber"
+                  id="Phonenumber"
+                  type="number"
+                  required
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                />
+              </div>
+
+              <!-- Add v-model to other inputs as needed -->
+            </div>
+
+            <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
+              <div>
+                <label
+                  class="text-gray-700 dark:text-gray-200"
+                  for="Daterequested"
+                  >Date requested</label
+                >
+                <input
+                  v-model="formData.Daterequested"
+                  id="Daterequested"
                   type="date"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
+
               <div>
-                <label class="text-gray-700 dark:text-gray-200" for="password"
-                  >Incident time</label
+                <label class="text-gray-700 dark:text-gray-200" for="Witness"
+                  >Incident location</label
                 >
                 <input
-                  id="incidenttime"
+                  v-model="formData.Incidentlocation"
+                  id="Incidentlocation"
+                  type="text"
+                  required
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                />
+              </div>
+              <div>
+                <label
+                  class="text-gray-700 dark:text-gray-200"
+                  for="Appointmenttime"
+                  >Appointment time</label
+                >
+                <input
+                  v-model="formData.Appointmenttime"
+                  id="Appointmenttime"
                   type="time"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
 
+              <!-- Add v-model to other inputs as needed -->
+            </div>
+            <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
                 <label
                   class="text-gray-700 dark:text-gray-200"
-                  for="passwordConfirmation"
-                  >Incident Location</label
+                  for="Incidentdate"
+                  >Incident date</label
                 >
                 <input
-                  id="passwordConfirmation"
-                  type="text"
+                  v-model="formData.Incidentdate"
+                  id="Incidentdate"
+                  type="date"
+                  required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
+
               <div>
                 <label
                   class="text-gray-700 dark:text-gray-200"
-                  for="passwordConfirmation"
-                  >Incident Location</label
+                  for="Incidenttime"
+                  >Incident ltime</label
                 >
                 <input
-                  id="passwordConfirmation"
-                  type="text"
+                  v-model="formData.Incidenttime"
+                  id="Incidenttime"
+                  type="time"
+                  required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
-              <div>
+            </div>
+            <div
+              class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
+            >
+              <div class="w-full">
                 <label
+                  for="Detailsincident"
                   class="text-gray-700 dark:text-gray-200"
-                  for="passwordConfirmation"
-                  >Witness</label
+                  >Description of incident</label
                 >
-                <input
-                  id="passwordConfirmation"
-                  type="text"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
-              </div>
-              <div>
-                <label
-                  class="text-gray-700 dark:text-gray-200"
-                  for="passwordConfirmation"
-                  >Details</label
-                >
-                <input
-                  id="passwordConfirmation"
-                  type="text"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
-              </div>
-              <div>
-                <label
-                  class="text-gray-700 dark:text-gray-200"
-                  for="passwordConfirmation"
-                  >appointment time</label
-                >
-                <input
-                  id="passwordConfirmation"
-                  type="text"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                <textarea
+                  v-model="formData.Detailsincident"
+                  id="Detailsincident"
+                  class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                  rows="5"
+                  required
+                ></textarea>
               </div>
             </div>
 
             <div class="flex justify-end mt-6">
               <button
+                type="submit"
+                required
                 class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
               >
-                submit
+                Submit
               </button>
             </div>
           </form>
         </section>
       </div>
     </div>
+
+    <Modal :modalOpen="isPreviewModalOpen" :closeModal="closePreviewModal">
+      <!-- Content for your custom modal -->
+      <div class="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-lg">
+        <h3 class="text-2xl font-bold text-gray-700 dark:text-white mb-4">
+          Preview
+        </h3>
+
+        <table
+          class="w-full mt-4 bg-white border border-gray-300 divide-y divide-gray-300"
+        >
+          <tr>
+            <td class="py-2 px-4 font-medium">Requester Name:</td>
+            <td class="py-2 px-4">{{ formData.Requestername }}</td>
+          </tr>
+          <tr>
+            <td class="py-2 px-4 font-medium">Department:</td>
+            <td class="py-2 px-4">{{ formData.Department }}</td>
+          </tr>
+          <tr>
+            <td class="py-2 px-4 font-medium">Phone number:</td>
+            <td class="py-2 px-4">{{ formData.Phonenumber }}</td>
+          </tr>
+          <tr>
+            <td class="py-2 px-4 font-medium">Date requested:</td>
+            <td class="py-2 px-4">{{ formData.Daterequested }}</td>
+          </tr>
+          <tr>
+            <td class="py-2 px-4 font-medium">Incident location:</td>
+            <td class="py-2 px-4">{{ formData.Incidentlocation }}</td>
+          </tr>
+          <tr>
+            <td class="py-2 px-4 font-medium">Indident time:</td>
+            <td class="py-2 px-4">{{ formData.Incidenttime }}</td>
+          </tr>
+          <tr>
+            <td class="py-2 px-4 font-medium">Incident date:</td>
+            <td class="py-2 px-4">{{ formData.Incidentdate }}</td>
+          </tr>
+          <tr>
+            <td class="py-2 px-4 font-medium">Details:</td>
+            <td class="py-2 px-4">
+              <div class="text-sm max-h-32 overflow-auto">
+                {{ formData.Detailsincident }}
+              </div>
+            </td>
+          </tr>
+
+          <!-- ... (Other modal content) ... -->
+
+          <!-- ... (Other modal content) ... -->
+        </table>
+
+        <!-- <div class="flex justify-end mt-6">
+                                                      <button
+                                                        type="submit"
+                                                        class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+                                                      >
+                                                        Submit
+                                                      </button>
+                                                    </div> -->
+      </div>
+    </Modal>
+
+    <!-- <div class="flex justify-end mt-6">
+                                                      <button
+                                                        type="submit"
+                                                        class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
+                                                      >
+                                                        Submit
+                                                      </button>
+                                                    </div> -->
   </main>
 </template>
 
 <script>
+import Modal from "@/components/Modal.vue";
+
 export default {
-  name: "cctvfromViews",
+  name: "cctvformViews",
+  components: {
+    Modal,
+  },
+  data() {
+    return {
+      uploadedFiles: [],
+      isDragging: false,
+      formData: {
+        requesterName: "",
+        department: "",
+        phonenumber: "",
+        daterequest: "",
+        location: "",
+        stockinbox: "",
+        stockinkit: "",
+        kitout: "",
+        balancekit: "",
+        // Add more form fields here
+      },
+      isPreviewModalOpen: false,
+    };
+  },
+  computed: {
+    labelClasses() {
+      return {
+        "border-blue-400": !this.isDragging,
+        "border-blue-700": this.isDragging,
+        "bg-white": !this.isDragging,
+        "bg-blue-100": this.isDragging,
+      };
+    },
+  },
+  methods: {
+    openPreviewModal() {
+      this.isPreviewModalOpen = true;
+    },
+    closePreviewModal() {
+      this.isPreviewModalOpen = false;
+    },
+    handleDragOver() {
+      this.isDragging = true;
+    },
+    handleDragEnter() {
+      this.isDragging = true;
+    },
+    handleDragLeave() {
+      this.isDragging = false;
+    },
+    handleDrop(event) {
+      this.isDragging = false;
+      // Handle the dropped files
+      const files = event.dataTransfer.files;
+      this.handleFiles(files);
+    },
+    handleFileChange(event) {
+      // Handle the selected files
+      const files = event.target.files;
+      this.handleFiles(files);
+    },
+    handleFiles(files) {
+      // Process and store the files
+      for (const file of files) {
+        this.uploadedFiles.push(file);
+      }
+    },
+    removeFile(index) {
+      this.uploadedFiles.splice(index, 1);
+    },
+  },
 };
 </script>
