@@ -102,7 +102,7 @@
                 </svg>
               </a>
             </buttom> -->
-            <BaseButton
+            <Button
               @click="showContent"
               class="relative max-w-full rounded"
             >
@@ -126,7 +126,7 @@
                   />
                 </svg>
               </div>
-            </BaseButton>
+            </Button>
           </div>
         </div>
         <div class="container mx-auto">
