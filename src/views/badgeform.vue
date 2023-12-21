@@ -254,7 +254,7 @@
 import Modal from "@/components/Modal.vue";
 
 export default {
-  name: "cctvfromViews",
+  name: "badgeformViews",
   components: {
     Modal,
   },
