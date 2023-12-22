@@ -267,11 +267,8 @@ export default {
         department: "",
         phonenumber: "",
         daterequest: "",
-        location: "",
-        stockinbox: "",
-        stockinkit: "",
-        kitout: "",
-        balancekit: "",
+        People: "",
+   
         // Add more form fields here
       },
       isPreviewModalOpen: false,
