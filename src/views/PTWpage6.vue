@@ -1,17 +1,19 @@
 <!-- FormPage1.vue -->
 <template>
-  <div class="container pt-4 mx-auto">
+  <div class="container mx-auto">
     <div
       class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
     >
       <section
         class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800"
       >
-        <h2
-          class="text-lg font-semibold text-gray-700 capitalize dark:text-white"
-        >
-          Determined Control
-        </h2>
+        <div class=" ">
+          <h2
+            class="text-lg font-semibold text-gray-700 capitalize bg-blue-400 dark:text-white"
+          >
+            Works Information
+          </h2>
+        </div>
 
         <form>
           <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
@@ -119,51 +121,39 @@
               />
             </div>
           </div>
-
-         
         </form>
-        <!-- <div class="flex justify-between mt-6">
-            <button
-              @click="goBack"
-              class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
-            >
-              back
-            </button>
-            <button
-              @click="nextPage"
-              class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
-            >
-              Next
-            </button>
-          </div> -->
+        <!-- <div class="flex justify-end mt-6">
+          <button
+            @click="nextPage"
+            class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+          >
+            Next
+          </button>
+        </div> -->
       </section>
     </div>
 
-   
     <!-- add more fields as needed -->
-
   </div>
 </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        formData: {
-          field1: '',
-          // add more fields as needed
-        },
-      };
-    },
-    methods: {
 
+<script>
+export default {
+  data() {
+    return {
+      formData: {
+        field1: "",
+        // add more fields as needed
+      },
+    };
+  },
+  methods: {
     nextPage() {
       this.$emit("next-page"); // Pass formData when emitting "Next" event
     },
     goBack() {
-      this.$emit('go-back'); // Emit an event when the "Next" button is clicked
+      this.$emit("go-back"); // Emit an event when the "Next" button is clicked
     },
-    },
-  };
-  </script>
-  
+  },
+};
+</script>

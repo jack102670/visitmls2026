@@ -36,8 +36,7 @@
                 <input type="file" class="hidden" />
               </label>
             </div>
-          
-          
+
             <div>
               <label class="text-gray-700 dark:text-gray-200" for="username"
                 >Please upload list of foreign workers</label
@@ -60,22 +59,22 @@
               </label>
             </div>
           </div>
-
-          <div class="flex justify-between mt-6">
-            <button
-              @click="goBack"
-              class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
-            >
-              back
-            </button>
-            <button
-              @click="nextPage"
-              class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
-            >
-              Next
-            </button>
-          </div>
         </form>
+        <!-- <div class="flex justify-between mt-6">
+          <button
+            @click="goBack"
+            class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+          >
+            back
+          </button>
+          <button
+            v-if="addExtraPage"
+            @click="nextPage"
+            class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+          >
+            Next
+          </button>
+        </div> -->
       </section>
     </div>
 
@@ -89,17 +88,22 @@ export default {
     return {
       formData: {
         field1: "",
+
         // add more fields as needed
       },
+      addExtraPage: false,
     };
   },
   methods: {
+    updateAddExtraPage(value) {
+      this.addExtraPage = value;
+    },
+
     nextPage() {
-      this.$emit("updateFormData", this.formData);
-      this.$emit("nextPage", "/PTWpage1"); // emit an event to navigate to the next page
+      this.$emit("next-page"); // Pass formData when emitting "Next" event
     },
     goBack() {
-      this.$emit("nextPage", "/PTWpage3");
+      this.$emit("go-back"); // Emit an event when the "Next" button is clicked
     },
   },
 };
