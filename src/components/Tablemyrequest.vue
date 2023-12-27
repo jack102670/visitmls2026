@@ -1,4 +1,3 @@
-<!-- TableTemp.vue -->
 <template>
     <tr>
       <td class="p-2 whitespace-nowrap">
@@ -29,4 +28,3 @@
     },
   };
   </script>
-  

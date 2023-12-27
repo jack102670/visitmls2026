@@ -1,530 +1,443 @@
 <template>
-    <main class="flex-1 overflow-x-hidden text bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64 h-auto">
-
-
-
-        <div class="container pt-6 mx-auto">
-            <div
-                class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
-                <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-xl font-bold text-slate-900 dark:text-white"></h2>
-
-                </div>
-
-                <section class="container px-4 mx-auto">
-                    <div class="flex items-center gap-x-3">
-                        <h2 class="text-lg font-medium text-gray-800 dark:text-white">Manage Request</h2>
-
-                        <span
-                            class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">34
-                        </span>
-                    </div>
-
-                    <div class="flex flex-col mt-6">
-                        <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                            <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                                <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                        <thead class="bg-gray-50 dark:bg-gray-800">
-                                            <tr>
-                                                <th scope="col"
-                                                    class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                    <div class="flex items-center gap-x-3">
-                                                        <span>Name</span>
-                                                    </div>
-                                                </th>
-
-                                                <th scope="col"
-                                                    class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                    <button class="flex items-center gap-x-2">
-                                                        <span>Status</span>
-
-                                                        <svg class="h-3" viewBox="0 0 10 11" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M2.13347 0.0999756H2.98516L5.01902 4.79058H3.86226L3.45549 3.79907H1.63772L1.24366 4.79058H0.0996094L2.13347 0.0999756ZM2.54025 1.46012L1.96822 2.92196H3.11227L2.54025 1.46012Z"
-                                                                fill="currentColor" stroke="currentColor"
-                                                                stroke-width="0.1" />
-                                                            <path
-                                                                d="M0.722656 9.60832L3.09974 6.78633H0.811638V5.87109H4.35819V6.78633L2.01925 9.60832H4.43446V10.5617H0.722656V9.60832Z"
-                                                                fill="currentColor" stroke="currentColor"
-                                                                stroke-width="0.1" />
-                                                            <path
-                                                                d="M8.45558 7.25664V7.40664H8.60558H9.66065C9.72481 7.40664 9.74667 7.42274 9.75141 7.42691C9.75148 7.42808 9.75146 7.42993 9.75116 7.43262C9.75001 7.44265 9.74458 7.46304 9.72525 7.49314C9.72522 7.4932 9.72518 7.49326 9.72514 7.49332L7.86959 10.3529L7.86924 10.3534C7.83227 10.4109 7.79863 10.418 7.78568 10.418C7.77272 10.418 7.73908 10.4109 7.70211 10.3534L7.70177 10.3529L5.84621 7.49332C5.84617 7.49325 5.84612 7.49318 5.84608 7.49311C5.82677 7.46302 5.82135 7.44264 5.8202 7.43262C5.81989 7.42993 5.81987 7.42808 5.81994 7.42691C5.82469 7.42274 5.84655 7.40664 5.91071 7.40664H6.96578H7.11578V7.25664V0.633865C7.11578 0.42434 7.29014 0.249976 7.49967 0.249976H8.07169C8.28121 0.249976 8.45558 0.42434 8.45558 0.633865V7.25664Z"
-                                                                fill="currentColor" stroke="currentColor"
-                                                                stroke-width="0.3" />
-                                                        </svg>
-                                                    </button>
-                                                </th>
-
-                                                <th scope="col"
-                                                    class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                    <button class="flex items-center gap-x-2">
-                                                        <span>Role</span>
-
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                                            class="w-4 h-4">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
-                                                        </svg>
-                                                    </button>
-                                                </th>
-
-                                                <th scope="col"
-                                                    class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                    Email address</th>
-
-
-
-                                                <th scope="col" class="relative py-3.5 px-4">
-                                                    <span class="sr-only">Edit</span>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody
-                                            class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                            <tr>
-                                                <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                    <div class="inline-flex items-center gap-x-3">
-
-                                                        <div class="flex items-center gap-x-2">
-                                                            <img class="object-cover w-10 h-10 rounded-full"
-                                                                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                                                                alt="">
-                                                            <div>
-                                                                <h2 class="font-medium text-gray-800 dark:text-white ">
-                                                                    Arthur Melo</h2>
-                                                                <p
-                                                                    class="text-sm font-normal text-gray-600 dark:text-gray-400">
-                                                                    @authurmelo</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                    <div
-                                                        class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-yellow-100/60 dark:bg-gray-800">
-                                                        <span class="h-1.5 w-1.5 rounded-full bg-yellow-500"></span>
-
-                                                        <h2 class="text-sm font-normal text-yellow-500">Pending</h2>
-                                                    </div>
-                                                </td>
-                                                <td
-                                                    class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                    Design Director
-                                                </td>
-                                                <td
-                                                    class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                    authurmelo@example.com</td>
-
-                                                <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div class="flex items-center gap-x-6">
-                                                        <button
-                                                            class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                                class="w-5 h-5">
-                                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-
-
-                                                            </svg>
-
-
-                                                        </button>
-
-
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                    <div class="inline-flex items-center gap-x-3">
-
-                                                        <div class="flex items-center gap-x-2">
-                                                            <img class="object-cover w-10 h-10 rounded-full"
-                                                                src="https://images.unsplash.com/photo-1531590878845-12627191e687?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"
-                                                                alt="">
-                                                            <div>
-                                                                <h2 class="font-medium text-gray-800 dark:text-white ">
-                                                                    Amelia. Anderson</h2>
-                                                                <p
-                                                                    class="text-sm font-normal text-gray-600 dark:text-gray-400">
-                                                                    @ameliaanderson</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                    <div
-                                                        class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-
-                                                        <h2 class="text-sm font-normal text-emerald-500">Aprroved</h2>
-                                                    </div>
-                                                </td>
-                                                <td
-                                                    class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                    Lead Developer
-                                                </td>
-                                                <td
-                                                    class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                    ameliaanderson@example.com</td>
-
-                                                <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div class="flex items-center gap-x-6"><button
-                                                            class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                                class="w-5 h-5">
-                                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-
-
-                                                            </svg>
-
-
-                                                        </button>
-
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                    <div class="inline-flex items-center gap-x-3">
-
-                                                        <div class="flex items-center gap-x-2">
-                                                            <img class="object-cover w-10 h-10 rounded-full"
-                                                                src="https://images.unsplash.com/photo-1531590878845-12627191e687?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"
-                                                                alt="">
-                                                            <div>
-                                                                <h2 class="font-medium text-gray-800 dark:text-white ">
-                                                                    Amelia. Anderson</h2>
-                                                                <p
-                                                                    class="text-sm font-normal text-gray-600 dark:text-gray-400">
-                                                                    @ameliaanderson</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                    <div
-                                                        class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-
-                                                        <h2 class="text-sm font-normal text-emerald-500">Aprroved</h2>
-                                                    </div>
-                                                </td>
-                                                <td
-                                                    class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                    Lead Developer
-                                                </td>
-                                                <td
-                                                    class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                    ameliaanderson@example.com</td>
-
-                                                <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div class="flex items-center gap-x-6"><button
-                                                            class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                                class="w-5 h-5">
-                                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-
-
-                                                            </svg>
-
-
-                                                        </button>
-
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                    <div class="inline-flex items-center gap-x-3">
-
-                                                        <div class="flex items-center gap-x-2">
-                                                            <img class="object-cover w-10 h-10 rounded-full"
-                                                                src="https://images.unsplash.com/photo-1608174386344-80898cec6beb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-                                                                alt="">
-                                                            <div>
-                                                                <h2 class="font-medium text-gray-800 dark:text-white ">
-                                                                    junior REIS</h2>
-                                                                <p
-                                                                    class="text-sm font-normal text-gray-600 dark:text-gray-400">
-                                                                    @junior</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                    <div
-                                                        class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800">
-                                                        <span class="h-1.5 w-1.5 rounded-full bg-red-500"></span>
-
-                                                        <h2 class="text-sm font-normal text-red-500">Rejected</h2>
-                                                    </div>
-                                                </td>
-                                                <td
-                                                    class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                    Products Managers
-                                                </td>
-                                                <td
-                                                    class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                    junior@example.com</td>
-
-                                                <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div class="flex items-center gap-x-6">
-                                                        <button @click="openModal"
-                                                            class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                                class="w-5 h-5">
-                                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-
-
-                                                            </svg>
-
-
-                                                        </button>
-
-
-
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-
-                                        </tbody>
-                                    </table>
-                                    <modal :modalOpen="modalOpen" :closeModal="closeModal">
-                                        <div
-                                            class="bg-[#f7fbff] dark:bg-[#25262b] rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
-                                            <div class="flex items-center justify-center h-full">
-                                                
-                                            </div>
-                                            <!-- <h3 class="text-slate-900 dark:text-white mt-5 text-base font-medium tracking-tight">Writes Upside-Down</h3>
-          <p class="text-slate-500 dark:text-slate-300 mt-2 text-sm">
-            The Zero Gravity Pen can be used to write in any orientation, including upside-down. It even works in outer
-            space.
-          </p> -->
-                                            <!-- component -->
-
-                                            <div class="-mx-3 flex flex-wrap pt-4">
-                                                <div class="w-full px-3 sm:w-1/2">
-                                                    <div class="mb-5">
-                                                        <label for="fName"
-                                                            class="mb-3 block text-base font-medium text-[#07074D]">
-                                                            Requester Name
-                                                        </label>
-                                                        <input type="text" name="fName" id="fName" placeholder="First Name"
-                                                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                                    </div>
-                                                </div>
-                                                <div class="w-full px-3 sm:w-1/2">
-                                                    <div class="mb-5">
-                                                        <label for="lName"
-                                                            class="mb-3 block text-base font-medium text-[#07074D]">
-                                                            IC Number
-                                                        </label>
-                                                        <input type="text" name="lName" id="lName" placeholder="Last Name"
-                                                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-
-                                            <div class="-mx-3 flex flex-wrap">
-                                                <div class="w-full px-3 sm:w-1/2">
-                                                    <div class="mb-5">
-                                                        <label for="date"
-                                                            class="mb-3 block text-base font-medium text-[#07074D]">
-                                                            Date
-                                                        </label>
-                                                        <input type="date" name="date" id="date"
-                                                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                                    </div>
-                                                </div>
-                                                <div class="w-full px-3 sm:w-1/2">
-                                                    <div class="mb-5">
-                                                        <label for="time"
-                                                            class="mb-3 block text-base font-medium text-[#07074D]">
-                                                            Phone Number
-                                                        </label>
-                                                        <input type="text" name="time" id="time"
-                                                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="mb-5">
-                                                <label class="mb-3 block text-base font-medium text-[#07074D]">
-                                                    Position
-                                                </label>
-                                                <div class="flex items-center space-x-6">
-                                                    <div class="flex items-center">
-                                                        <input type="radio" name="radio1" id="radioButton1"
-                                                            class="h-5 w-5" />
-                                                        <label for="radioButton1"
-                                                            class="pl-3 text-base font-medium text-[#07074D]">
-                                                            Staff
-                                                        </label>
-                                                    </div>
-                                                    <div class="flex items-center">
-                                                        <input type="radio" name="radio1" id="radioButton2"
-                                                            class="h-5 w-5" />
-                                                        <label for="radioButton2"
-                                                            class="pl-3 text-base font-medium text-[#07074D]">
-                                                            Contractor
-                                                        </label>
-                                                    </div>
-                                                    <div class="flex items-center">
-                                                        <input type="radio" name="radio1" id="radioButton2"
-                                                            class="h-5 w-5" />
-                                                        <label for="radioButton2"
-                                                            class="pl-3 text-base font-medium text-[#07074D]">
-                                                            Customer
-                                                        </label>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <div class="mb-5">
-                                                <label for="guest" class="mb-3 block text-base font-medium text-[#07074D]">
-                                                    Company Name <span class="text-xs"> (for Company & Customer)</span>
-                                                </label>
-                                                <input type="text" name="guest" id="guest" placeholder="5" min="0"
-                                                    class="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                            </div>
-                                            <div class="mb-5">
-                                                <label for="department"
-                                                    class="mb-3 block text-base font-medium text-[#07074D]">
-                                                    Department <span class="text-xs"> (for Staff)</span>
-                                                </label>
-                                                <select name="department" id="department"
-                                                    class="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
-                                                    <option value="security">Security</option>
-                                                    <option value="safety">Safety</option>
-                                                    <option value="maintenance">Maintenance</option>
-                                                    <!-- Add more options as needed -->
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <p class="text-lg">Do you want to approve this?</p>
-                                            </div>
-                                            </div>
-                                    </modal>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-between mt-6">
-                        <a href="#"
-                            class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
-                            </svg>
-
-                            <span>
-                                previous
-                            </span>
-                        </a>
-
-                        <div class="items-center hidden lg:flex gap-x-3">
-                            <a href="#"
-                                class="px-2 py-1 text-sm text-blue-500 rounded-md dark:bg-gray-800 bg-blue-100/60">1</a>
-                            <a href="#"
-                                class="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">2</a>
-                            <a href="#"
-                                class="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">3</a>
-                            <a href="#"
-                                class="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">...</a>
-                            <a href="#"
-                                class="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">12</a>
-                            <a href="#"
-                                class="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">13</a>
-                            <a href="#"
-                                class="px-2 py-1 text-sm text-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">14</a>
-                        </div>
-
-                        <a href="#"
-                            class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
-                            <span>
-                                Next
-                            </span>
-
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-                            </svg>
-                        </a>
-                    </div>
-                </section>
-
-
-
-                <!-- Display a list of movies from the TMDb API -->
-
-            </div>
-
-        </div>
-
-    </main>
-</template>
+    <main
+      class="flex-1 overflow-x-hidden text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64 h-auto"
+    >
+      <div class="container mx-auto">
+        <div
+          class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
+        >
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white"></h2>
+          </div>
   
-<script>
-import Modal from '../components/Modal.vue'
-
-export default {
-    name: 'ManagerequestViews',
+          <section class="container px-4 mx-auto">
+            <div class="flex items-center gap-x-3">
+              <h2 class="text-lg font-medium text-gray-800 dark:text-white">
+                My Request
+              </h2>
+  
+              <span
+                class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400"
+                >{{ requesters.length }}
+              </span>
+            </div>
+  
+            <div class="flex flex-col mt-6">
+              <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div
+                  class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
+                >
+                  <div
+                    class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg"
+                  >
+                    <table
+                      class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                    >
+                      <thead class="bg-gray-50 dark:bg-gray-800">
+                        <tr>
+                            <th
+                            scope="col"
+                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            @click="handleSortClick('name')"
+                          >
+                            <div class="flex items-center gap-x-3">
+                              <span>Name</span>
+                              <svg
+                                v-if="sortBy === 'name'"
+                                :class="{
+                                  'transform rotate-180': sortOrder === 'desc',
+                                }"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-5 h-5"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M3 4.5h14.25M3 9h9.75M3 13.5h5.25m5.25-.75L17.25 9m0 0L21 12.75M17.25 9v12"
+                                />
+                              </svg>
+                            </div>
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            @click="handleSortClick('typeofrequest')"
+                          >
+                            <div class="flex items-center gap-x-3">
+                              <span>Type Of Request</span>
+                              <svg
+                                v-if="sortBy === 'typeofrequest'"
+                                :class="{
+                                  'transform rotate-180': sortOrder === 'desc',
+                                }"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-5 h-5"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M3 4.5h14.25M3 9h9.75M3 13.5h5.25m5.25-.75L17.25 9m0 0L21 12.75M17.25 9v12"
+                                />
+                              </svg>
+                            </div>
+                          </th>
+  
+                          <th
+                            scope="col"
+                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            @click="handleSortClick('date')"
+                          >
+                            <div class="flex items-center gap-x-3">
+                              <span>Date</span>
+                              <svg
+                                v-if="sortBy === 'date'"
+                                :class="{
+                                  'transform rotate-180': sortOrder === 'desc',
+                                }"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="2"
+                                stroke="currentColor"
+                                class="w-5 h-5"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M3 4.5h14.25M3 9h9.75M3 13.5h5.25m5.25-.75L17.25 9m0 0L21 12.75M17.25 9v12"
+                                />
+                              </svg>
+                            </div>
+                          </th>
+  
+                          <th
+                            scope="col"
+                            class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            @click="handleSortClick('status')"
+                          >
+                            <div class="flex items-center gap-x-3">
+                              <span>Status</span>
+                              <svg
+                                v-if="sortBy === 'status'"
+                                :class="{
+                                  'transform rotate-180': sortOrder === 'desc',
+                                }"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="2"
+                                stroke="currentColor"
+                                class="w-5 h-5"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M3 4.5h14.25M3 9h9.75M3 13.5h5.25m5.25-.75L17.25 9m0 0L21 12.75M17.25 9v12"
+                                />
+                              </svg>
+                            </div>
+                          </th>
+  
+                          <th scope="col" class="relative py-3.5 px-4">
+                            <span class="sr-only">Edit</span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody
+                        class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
+                      >
+                        <Tablemanagerequest
+                          v-for="requester in sortedAndPaginatedRequesters"
+                          :key="requester.id"
+                          :requester="requester"
+                        />
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="flex items-center justify-between mt-6">
+              <a
+                href="#"
+                @click.prevent="previousPage"
+                class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 rtl:-scale-x-100"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+                  />
+                </svg>
+                <span> previous </span>
+              </a>
+  
+              <div class="flex items-center gap-x-3">
+                <!-- Display page links based on the total number of pages -->
+                <template v-for="page in totalPages" :key="page">
+                  <a
+                    href="#"
+                    @click.prevent="changePage(page)"
+                    class="px-2 py-1 text-sm"
+                    :class="{
+                      'text-blue-500': page === currentPage,
+                      'text-gray-500': page !== currentPage,
+                      'dark:bg-gray-800 bg-blue-100/60': page === currentPage,
+                    }"
+                  >
+                    {{ page }}
+                  </a>
+                </template>
+              </div>
+  
+              <a
+                href="#"
+                @click.prevent="nextPage"
+                class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
+              >
+                <span> Next </span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 rtl:-scale-x-100"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                  />
+                </svg>
+              </a>
+            </div>
+          </section>
+  
+          <!-- Display a list of movies from the TMDb API -->
+        </div>
+      </div>
+    </main>
+  </template>
+  
+  <script>
+  import Tablemanagerequest from "../components/Tablemanagerequest.vue";
+  export default {
+    name: "Myrequest2Views",
     components: {
-        Modal,
+      Tablemanagerequest,
     },
     data() {
-        return {
-            modalOpen: false,
-        };
+      return {
+        // Sample data structure for requesters
+        requesters: [
+          {
+            id: 1,
+            name: "bohn Doe",
+            typeofrequest: "CCTV footage",
+            date: "2023-01-01",
+            status: "Pending",
+          },
+          {
+            id: 2,
+            name: "aane Doe",
+            typeofrequest: "Badge request",
+            date: "2023-01-02",
+            status: "Approved",
+          },
+          {
+            id: 3,
+            name: "Jan Man",
+            typeofrequest: "Badge request",
+            date: "2023-01-02",
+            status: "Rejected",
+          },
+          // ... (Add more entries as needed)
+          {
+            id: 4,
+            name: "Jim Smith",
+            typeofrequest: "Access card request",
+            date: "2023-01-03",
+            status: "Pending",
+          },
+          {
+            id: 5,
+            name: "Jack Brown",
+            typeofrequest: "CCTV footage",
+            date: "2023-01-04",
+            status: "Approved",
+          },
+          {
+            id: 6,
+            name: "Jill White",
+            typeofrequest: "Badge request",
+            date: "2023-01-05",
+            status: "Rejected",
+          },
+          {
+            id: 7,
+            name: "James Black",
+            typeofrequest: "Access card request",
+            date: "2023-01-06",
+            status: "Pending",
+          },
+          {
+            id: 8,
+            name: "Jessica Green",
+            typeofrequest: "CCTV footage",
+            date: "2023-01-07",
+            status: "Approved",
+          },
+          {
+            id: 9,
+            name: "Jordan Gray",
+            typeofrequest: "Badge request",
+            date: "2023-01-08",
+            status: "Rejected",
+          },
+          {
+            id: 10,
+            name: "Justin Blue",
+            typeofrequest: "Access card request",
+            date: "2023-01-09",
+            status: "Pending",
+          },
+          {
+            id: 11,
+            name: "Jennifer Red",
+            typeofrequest: "CCTV footage",
+            date: "2023-01-10",
+            status: "Approved",
+          },
+          {
+            id: 12,
+            name: "Jeffrey Orange",
+            typeofrequest: "Badge request",
+            date: "2023-01-11",
+            status: "Rejected",
+          },
+          {
+            id: 13,
+            name: "Jasmine Yellow",
+            typeofrequest: "Access card request",
+            date: "2023-01-12",
+            status: "Pending",
+          },
+          {
+            id: 14,
+            name: "Jason Pink",
+            typeofrequest: "CCTV footage",
+            date: "2023-01-13",
+            status: "Approved",
+          },
+          {
+            id: 15,
+            name: "Jocelyn Purple",
+            typeofrequest: "Badge request",
+            date: "2023-01-14",
+            status: "Rejected",
+          },
+        ],
+        sortOrder: {
+          typeofrequest: "asc",
+          date: "asc",
+          status: "asc",
+          name:"asc"
+        },
+        sortBy: "typeofrequest",
+        itemsPerPage: 4,
+        currentPage: 1,
+      };
+    },
+    computed: {
+      // Computed property to get the sorted and paginated requesters
+      sortedAndPaginatedRequesters() {
+        const sortedRequesters = this.sortRequesters(this.requesters);
+        return this.paginate(sortedRequesters);
+      },
+      totalPages() {
+        return Math.ceil(this.requesters.length / this.itemsPerPage);
+      },
+  
+      // Calculate the index of the first item on the current page
+      startIndex() {
+        return (this.currentPage - 1) * this.itemsPerPage;
+      },
+  
+      // Calculate the index of the last item on the current page
+      endIndex() {
+        return this.startIndex + this.itemsPerPage - 1;
+      },
+  
+      // Get the subset of items to display on the current page
+      paginatedRequesters() {
+        return this.requesters.slice(this.startIndex, this.endIndex + 1);
+      },
     },
     methods: {
-        openModal() {
-            console.log("see", this.requester);
-            this.modalOpen = true;
-        },
-        closeModal() {
-            this.modalOpen = false;
-        },
-    },
-};
-</script>
+      // Method to sort the requesters based on current sort column and order
+      sortRequesters(requesters) {
+        const orderMultiplier = this.sortOrder === "asc" ? 1 : -1;
+        return requesters.slice().sort((a, b) => {
+          const valueA = a[this.sortBy];
+          const valueB = b[this.sortBy];
+          return orderMultiplier * valueA.localeCompare(valueB);
+        });
+      },
+      // Method to paginate the requesters based on current page and itemsPerPage
+      paginate(requesters) {
+        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+        const endIndex = startIndex + this.itemsPerPage;
+        return requesters.slice(startIndex, endIndex);
+      },
+      // Method to handle sorting when a table header is clicked
+      handleSortClick(column) {
+        if (this.sortBy === column) {
+          // If clicking on the same column, reverse the sort order
+          this.sortOrder = this.sortOrder === "asc" ? "desc" : "asc";
+        } else {
+          // If clicking on a different column, set the new column and reset sort order
+          this.sortBy = column;
+          this.sortOrder = "asc";
+        }
+      },
   
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.5s;
-}
-
-.fade-enter,
-.fade-leave-to {
-    opacity: 0;
-}
-</style>
+      // Methods to handle pagination
+      previousPage() {
+        if (this.currentPage > 1) {
+          this.currentPage--;
+        }
+      },
+  
+      // Change to the next page
+      nextPage() {
+        if (this.currentPage < this.totalPages) {
+          this.currentPage++;
+        }
+      },
+  
+      // Change to a specific page
+      changePage(page) {
+        this.currentPage = page;
+      },
+    },
+  };
+  </script>
   
