@@ -337,6 +337,7 @@ export default {
         case "1":
           // Redirect to the default child route
           this.$router.push({ name: "badgeform" });
+          
           break;
         case "5":
           // Redirect to the 'movie' child route
