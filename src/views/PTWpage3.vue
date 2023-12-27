@@ -153,7 +153,7 @@
         >
           C[4] Plant Support
         </h2>
-        <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-3">
+        <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
             
             <div>
               <label class="text-gray-700 dark:text-gray-200">

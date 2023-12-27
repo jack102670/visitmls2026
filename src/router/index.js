@@ -103,9 +103,9 @@ const routes = [
         component: PTW,
       },
       {
-        path: "Incidentreport",
-        name: "Incidentreportform",
-        component: Incidentreportform,
+        path: "",
+        name: "NewrequestDefault2",
+        component: Myrequest2,
       },
     ],
   },

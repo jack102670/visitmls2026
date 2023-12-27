@@ -71,16 +71,47 @@
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
-              <div>
-                <label class="text-gray-700 dark:text-gray-200" for="People"
+              <div class="mt-4">
+                <label
+                  class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
+                  for="people"
                   >People/For</label
                 >
-                <input
-                  v-model="formData.People"
-                  id="People"
-                  type="text"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+
+                <div class="flex items-center space-x-4">
+                  <!-- Radio button for Staff -->
+                  <label class="inline-flex items-center">
+                    <input
+                      type="radio"
+                      v-model="radio"
+                      value="staff"
+                      class="text-blue-500 form-radio focus:ring-blue-400 dark:text-blue-300 dark:focus:ring-blue-300"
+                    />
+                    <span class="ml-2">Staff</span>
+                  </label>
+
+                  <!-- Radio button for Vendor -->
+                  <label class="inline-flex items-center">
+                    <input
+                      type="radio"
+                      v-model="radio"
+                      value="vendor"
+                      class="text-blue-500 form-radio focus:ring-blue-400 dark:text-blue-300 dark:focus:ring-blue-300"
+                    />
+                    <span class="ml-2">Vendor</span>
+                  </label>
+
+                  <!-- Radio button for Contract -->
+                  <label class="inline-flex items-center">
+                    <input
+                      type="radio"
+                      v-model="radio"
+                      value="contract"
+                      class="text-blue-500 form-radio focus:ring-blue-400 dark:text-blue-300 dark:focus:ring-blue-300"
+                    />
+                    <span class="ml-2">Contract</span>
+                  </label>
+                </div>
               </div>
 
               <!-- Add v-model to other inputs as needed -->
@@ -260,6 +291,7 @@ export default {
   },
   data() {
     return {
+      radio: null,
       uploadedFiles: [],
       isDragging: false,
       formData: {
@@ -268,7 +300,7 @@ export default {
         phonenumber: "",
         daterequest: "",
         People: "",
-   
+
         // Add more form fields here
       },
       isPreviewModalOpen: false,

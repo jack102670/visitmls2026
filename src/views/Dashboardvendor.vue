@@ -102,13 +102,13 @@
                 </svg>
               </a>
             </buttom> -->
-            <Button
-              @click="showContent"
-              class="relative max-w-full rounded"
-            >
+            <Button @click="showContent" class="relative max-w-full rounded">
               <div
-              class="flex items-center justify-center p-6 space-y-3 h-20 border-4 text-xl dark:bg-gray-900 dark:border-gray-700 rounded-full px-8 py-4 bg-[#210e81] border text-white"   >
-                <span class="mr-2 text-slate-100 hover:text-blue-200 ">New Request</span>
+                class="flex items-center justify-center p-6 space-y-3 h-20 border-4 text-xl dark:bg-gray-900 dark:border-gray-700 rounded-full px-8 py-4 bg-[#210e81] border text-white"
+              >
+                <span class="mr-2 text-slate-100 hover:text-blue-200"
+                  >New Request</span
+                >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -117,12 +117,11 @@
                   stroke="currentColor"
                   data-slot="icon"
                   class="w-8 h-8 hover:text-blue-200"
-               
                 >
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59"
+                    d="M12 4.5v15m7.5-7.5h-15"
                   />
                 </svg>
               </div>
@@ -161,25 +160,26 @@
 
             <!-- Dropdown Form -->
             <div
+              
               class="flex justify-center p-3 text-6xl dark:bg-gray-700 bg-gray-100 border-2 border-gray-200 rounded-xl"
             >
               <label
-                for="Department"
+                for="department"
                 class="block text-sm font-medium text-gray-700 my-auto dark:text-gray-300"
                 >Department:</label
               >
               <select
                 v-model="selectedDepartment"
                 @change="onDepartmentChange"
-                id="Department"
+                id="department"
                 class="mt-1 block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               >
                 <option
-                  v-for="Department in Departments"
-                  :key="Department.id"
-                  :value="Department.id"
+                  v-for="department in departments"
+                  :key="department.id"
+                  :value="department.id"
                 >
-                  {{ Department.name }}
+                  {{ department.name }}
                 </option>
               </select>
             </div>
@@ -218,12 +218,13 @@
 </template>
 
 <script>
+// NewrequestViews.js
+// NewrequestViews.js
 export default {
-  name: "DashbaordvendorViews",
+  name: "NewrequestvendorViews",
   data() {
     return {
       showAdditionalContent: false,
-
       selectedLocation: null,
       locations: [
         { id: "1", name: "HQ" },
@@ -231,26 +232,68 @@ export default {
         { id: "3", name: "KULIM HUB" },
         // Add more locations as needed
       ],
-      Departments: [
-        { id: "Security", name: "Security" },
-        { id: "Safety", name: "Safety" },
-        { id: "Maintenance", name: "Maintenance" },
-        // Add more countries as needed
-      ],
+      departments: [], // Initialize as empty, it will be populated based on the selected location
       selectedDepartment: null,
       selectedTypeOfRequest: null,
       TypeOfRequests: [],
     };
-    // Your other data properties
   },
   methods: {
     showContent() {
       this.showAdditionalContent = !this.showAdditionalContent;
     },
-    onDepartmentChange() {
-      this.TypeOfRequests = []; // Reset stateCities when the country changes
+    onLocationChange() {
+      // Reset selected department and departments when location changes
+      this.selectedDepartment = null;
+      this.departments = [];
 
-      // Hard-coded data for states/cities based on the selected country
+      // Log to console to check if the method is being called
+      console.log("Location changed. Updating departments.");
+
+      // Your logic to update departments based on the selected location
+      this.updateDepartments();
+    },
+
+    updateDepartments() {
+      // Example: Populate departments based on the selected location
+      switch (this.selectedLocation) {
+        case "1": // HQ
+          this.departments = [
+         
+            { id: "Safety", name: "Safety" },
+  
+            // Add more departments as needed
+          ];
+          break;
+        case "2": // OAH
+          this.departments = [
+            // Define departments for OAH
+          ];
+          break;
+        case "3": // KULIM HUB
+          this.departments = [
+            // Define departments for KULIM HUB
+          ];
+          break;
+        // Add more cases for additional locations
+
+        default:
+          break;
+      }
+
+      // Log to console to check if departments are being updated
+      console.log("Departments updated:", this.departments);
+    },
+
+    onDepartmentChange() {
+      this.TypeOfRequests = []; // Reset TypeOfRequests when the department changes
+
+      // Your logic to update TypeOfRequests based on the selected department
+      this.updateTypeOfRequests();
+    },
+
+    updateTypeOfRequests() {
+      // Example: Populate TypeOfRequests based on the selected department
       switch (this.selectedDepartment) {
         case "Security":
           this.TypeOfRequests = [
@@ -260,19 +303,16 @@ export default {
             { id: "4", name: "Visitor/Escort" },
             { id: "5", name: "Testkids" },
             { id: "6", name: "Mask" },
-            // Add more states as needed
+            // Add more TypeOfRequests as needed
           ];
           break;
-
         case "Safety":
           this.TypeOfRequests = [
-            { id: "1", name: "Badge Request" },
-            { id: "2", name: "Incident Report" },
-
-            // Add more states as needed
+            { id: "1", name: "PTW" },
+       
+            // Add more TypeOfRequests as needed
           ];
           break;
-
         case "Maintenance":
           this.TypeOfRequests = [
             { id: "1", name: "Badge Request" },
@@ -281,11 +321,10 @@ export default {
             { id: "4", name: "Visitor/Escort" },
             { id: "5", name: "Mask/Testkids" },
             { id: "6", name: "Mask" },
-            // Add more states as needed
+            // Add more TypeOfRequests as needed
           ];
           break;
-
-        // Add more cases for additional countries
+        // Add more cases for additional departments
 
         default:
           break;
@@ -297,7 +336,7 @@ export default {
       switch (this.selectedTypeOfRequest) {
         case "1":
           // Redirect to the default child route
-          this.$router.push({ name: "badgeform" });
+          this.$router.push({ name: "DashboardvendorPTW" });
           break;
         case "5":
           // Redirect to the 'movie' child route
@@ -315,7 +354,7 @@ export default {
           // Redirect to the 'movie' child route
           this.$router.push({ name: "visitorescorttour" });
           break;
-          case "6":
+        case "6":
           // Redirect to the 'movie' child route
           this.$router.push({ name: "Maskform" });
           break;

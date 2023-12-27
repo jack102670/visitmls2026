@@ -2,7 +2,7 @@
 <template>
   <div class="container mx-auto">
     <div
-      class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
+      class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 "
     >
       <section
         class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800"

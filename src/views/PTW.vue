@@ -18,19 +18,7 @@
     @next-page="scrollToPage3"
     @go-back="scrollToPage1"
   ></PTWpage2>
-  <PTWpage5
-    v-if="addExtraPage"
-    ref="page5"
-    @updateFormData="updateFormData"
-    @next-page="scrollToPage6"
-    @go-back="scrollToPage4"
-  ></PTWpage5>
-  <PTWpage6
-    v-if="addExtraPage2"
-    ref="page6"
-    @updateFormData="updateFormData"
-    @go-back="scrollToPage5"
-  ></PTWpage6>
+ 
   <PTWpage3
     ref="page3"
     @updateFormData="updateFormData"
@@ -43,6 +31,19 @@
     @next-page="scrollToPage5"
     @go-back="scrollToPage3"
   ></PTWpage4>
+  <PTWpage5
+  v-if="addExtraPage"
+    ref="page5"
+    @updateFormData="updateFormData"
+    @next-page="scrollToPage6"
+    @go-back="scrollToPage4"
+  ></PTWpage5>
+  <PTWpage6
+    v-if="addExtraPage2"
+    ref="page6"
+    @updateFormData="updateFormData"
+    @go-back="scrollToPage5"
+  ></PTWpage6>
 
   <!-- Checkbox for adding extra form pages -->
 
@@ -77,8 +78,8 @@ export default {
     PTWpage2,
     PTWpage3,
     PTWpage4,
-    PTWpage5, // Register additional form components
-    PTWpage6, // Register additional form components
+    PTWpage5, 
+    PTWpage6, 
   },
   data() {
     return {
