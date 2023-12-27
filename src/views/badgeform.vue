@@ -96,7 +96,7 @@
                 <div>
                   <label
                     for="dropzone-file"
-                    class="p-10 flex mx-auto cursor-pointer flex w-full max-w-lg flex-col items-center rounded-xl border-2 border-dashed"
+                    class="p-4 flex ml-0 cursor-pointer flex w-full max-w-xs flex-col items-center rounded-xl border-2 border-dashed"
                     :class="{
                       'border-blue-400': !isDragging,
                       'border-blue-700': isDragging,
@@ -124,7 +124,7 @@
                     </svg>
 
                     <h2
-                      class="mt-4 text-xl font-medium text-gray-700 tracking-wide"
+                      class="mt-2 text-xl font-medium text-gray-700 tracking-wide"
                     >
                       Click Here
                     </h2>

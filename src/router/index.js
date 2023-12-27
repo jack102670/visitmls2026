@@ -84,7 +84,7 @@ const routes = [
       },
       {
         path: "PTW",
-        name: "PTW",
+        name: "PTWdjasdh",
         component: PTW,
       },
     ],

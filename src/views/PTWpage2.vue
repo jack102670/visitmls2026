@@ -23,7 +23,7 @@
               <label class="text-gray-700 dark:text-gray-200">
                 <input
                   type="checkbox"
-                  :checked="addExtraPage"
+                  :checked="addExtraPage1"
                   @change="handleCheckboxChange"
                 />
                 Hot Works (i.e Welding & Flame Cutting)
@@ -105,7 +105,7 @@
 export default {
   name: "PTWpage2Views",
   props: {
-    addExtraPage: Boolean,
+    addExtraPage1: Boolean,
   },
   data() {
     return {
