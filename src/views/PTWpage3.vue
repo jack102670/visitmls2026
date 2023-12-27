@@ -149,7 +149,7 @@
           
           </div>
           <h2
-          class="text-lg font-semibold text-gray-700 pt-4 capitalize dark:text-white"
+          class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white"
         >
           C[4] Plant Support
         </h2>

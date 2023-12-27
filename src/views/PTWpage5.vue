@@ -11,7 +11,7 @@
       <div class=" "><h2
           class="text-lg font-semibold text-gray-700 capitalize bg-blue-400  dark:text-white"
         >
-          Works Information
+          Works Information page 5
         </h2></div>
 
         <form>

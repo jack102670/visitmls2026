@@ -2,7 +2,7 @@
 <template>
   <div class="container mx-auto">
     <div
-      class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8  shadow-xl"
+      class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 shadow-xl"
     >
       <section
         class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800"
@@ -23,7 +23,7 @@
               <label class="text-gray-700 dark:text-gray-200">
                 <input
                   type="checkbox"
-                  :checked="addExtraPage1"
+                  :checked="addExtraPage"
                   @change="handleCheckboxChange"
                 />
                 Hot Works (i.e Welding & Flame Cutting)
@@ -31,7 +31,11 @@
             </div>
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  :checked="addExtraPage2"
+                  @change="handleCheckboxChange2"
+                />
                 Working at Height (falling height > 1.8m)
               </label>
             </div>
@@ -77,7 +81,6 @@
                 Inadequate Illumination
               </label>
             </div>
-          
           </div>
         </form>
         <!-- <div class="flex justify-between mt-6">
@@ -118,6 +121,9 @@ export default {
   methods: {
     handleCheckboxChange(event) {
       this.$emit("update:addExtraPage", event.target.checked);
+    },
+    handleCheckboxChange2(event) {
+      this.$emit("update:addExtraPage2", event.target.checked);
     },
     nextPage() {
       this.$emit("next-page"); // Pass formData when emitting "Next" event

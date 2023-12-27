@@ -12,7 +12,9 @@
     ref="page2"
     @updateFormData="updateFormData"
     :addExtraPage="addExtraPage"
+    :addExtraPage2="addExtraPage2"
     @update:addExtraPage="updateAddExtraPage"
+    @update:addExtraPage2="updateAddExtraPage2"
     @next-page="scrollToPage3"
     @go-back="scrollToPage1"
   ></PTWpage2>
@@ -24,7 +26,7 @@
     @go-back="scrollToPage4"
   ></PTWpage5>
   <PTWpage6
-    v-if="addExtraPage"
+    v-if="addExtraPage2"
     ref="page6"
     @updateFormData="updateFormData"
     @go-back="scrollToPage5"
@@ -82,6 +84,7 @@ export default {
     return {
       formData: {},
       addExtraPage: false, // State to track whether to add extra form pages
+      addExtraPage2: false,
     };
   },
   methods: {
@@ -90,6 +93,9 @@ export default {
     },
     updateAddExtraPage(value) {
       this.addExtraPage = value;
+    },
+    updateAddExtraPage2(value) {
+      this.addExtraPage2 = value;
     },
     submitForm() {
       // Handle form submission logic here
