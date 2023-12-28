@@ -228,14 +228,15 @@
           <!-- ... (Other modal content) ... -->
         </table>
 
-        <!-- <div class="flex justify-end mt-6">
+        <div class="flex justify-end mt-6">
           <button
+            @click="confirmFormSubmission"
             type="submit"
             class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
           >
             Submit
           </button>
-        </div> -->
+        </div>
       </div>
     </Modal>
 
@@ -269,11 +270,11 @@ export default {
         phonenumber: "",
         daterequest: "",
         People: "",
-   
+
         // Add more form fields here
       },
       isPreviewModalOpen: false,
-      modalContent: '',
+      modalContent: "",
     };
   },
   computed: {
@@ -289,16 +290,32 @@ export default {
   methods: {
     openPreviewModal() {
       this.isPreviewModalOpen = true;
-      axios.get('https://api.kanye.rest/')
-        .then(response => {
-          // Handle the API response and show the modal with Kanye West's quote
-          this.modalContent = response.data.quote;
-          this.isModalVisible = true;
+    },
+    confirmFormSubmission() {
+      // Handle the confirmation logic here
+      console.log("Confirmed!");
+      axios
+        .post("http://localhost:3000/badgeRequests", this.formData)
+        .then((response) => {
+          // Handle the response
+          console.log("Server response:", response.data);
+          this.formData = {
+            requesterName: "",
+            department: "",
+            phonenumber: "",
+            daterequest: "",
+            People: "",
+            // Add more form fields here
+          };
+          // Optionally, you can show a success message or navigate to another page
         })
-        .catch(error => {
-          console.error('Error fetching Kanye West quote:', error);
-          // You can handle errors and show a different modal or message if needed
+        .catch((error) => {
+          // Handle errors
+          console.error("Error submitting form:", error);
+          // You can show an error message to the user if needed
         });
+      // Optionally, you can perform additional actions or close the modal
+      this.closePreviewModal();
     },
     closePreviewModal() {
       this.isPreviewModalOpen = false;
