@@ -8,6 +8,7 @@
         class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800"
       >
         <div class=" ">
+          <h1 class="font-semibold text-3xl p-3 text-gray-700">PERMIT TO WORK </h1>
           <h2
             class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
           >

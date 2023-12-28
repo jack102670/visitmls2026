@@ -252,6 +252,7 @@
 
 <script>
 import Modal from "@/components/Modal.vue";
+import axios from "axios";
 
 export default {
   name: "badgeformViews",
@@ -272,6 +273,7 @@ export default {
         // Add more form fields here
       },
       isPreviewModalOpen: false,
+      modalContent: '',
     };
   },
   computed: {
@@ -287,6 +289,16 @@ export default {
   methods: {
     openPreviewModal() {
       this.isPreviewModalOpen = true;
+      axios.get('https://api.kanye.rest/')
+        .then(response => {
+          // Handle the API response and show the modal with Kanye West's quote
+          this.modalContent = response.data.quote;
+          this.isModalVisible = true;
+        })
+        .catch(error => {
+          console.error('Error fetching Kanye West quote:', error);
+          // You can handle errors and show a different modal or message if needed
+        });
     },
     closePreviewModal() {
       this.isPreviewModalOpen = false;
