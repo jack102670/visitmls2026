@@ -28,7 +28,8 @@
     </td>
     <td class="px-4 py-4 ml text-sm whitespace-nowrap">
       <div class="flex items-center gap-x-6">
-        <button   v-if="requester.typeofrequest === 'Badge request'"
+        <button
+          v-if="requester.typeofrequest === 'Badge request'"
           @click="showModal"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
@@ -51,7 +52,9 @@
               d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
             />
           </svg>
-        </button> <button   v-if="requester.typeofrequest === 'Incident Report'"
+        </button>
+        <button
+          v-if="requester.typeofrequest === 'Incident Report'"
           @click="showModal2"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
@@ -74,7 +77,9 @@
               d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
             />
           </svg>
-        </button> <button   v-if="requester.typeofrequest === 'Visitor/Escort'"
+        </button>
+        <button
+          v-if="requester.typeofrequest === 'Visitor/Escort'"
           @click="showModal4"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
@@ -97,7 +102,9 @@
               d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
             />
           </svg>
-        </button> <button   v-if="requester.typeofrequest === 'Testkits'"
+        </button>
+        <button
+          v-if="requester.typeofrequest === 'Testkits'"
           @click="showModal5"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
@@ -120,7 +127,9 @@
               d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
             />
           </svg>
-        </button> <button   v-if="requester.typeofrequest === 'Mask'"
+        </button>
+        <button
+          v-if="requester.typeofrequest === 'Mask'"
           @click="showModal6"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
@@ -144,7 +153,8 @@
             />
           </svg>
         </button>
-        <button   v-if="requester.typeofrequest === 'CCTV'"
+        <button
+          v-if="requester.typeofrequest === 'CCTV'"
           @click="showModal2"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
@@ -310,7 +320,7 @@
   <Modalvisitorescordt v-show="isModalVisible4" @close="closeModal">
     <!-- header -->
     <template v-slot:header>
-      <h1 class="font-bold text-xl">Confirmation</h1>
+      <h1 class="font-bold text-xl">Visitor/Escort</h1>
     </template>
 
     <!-- body -->
@@ -318,7 +328,89 @@
       <!-- <p class="py-3 text-xs font-bold text-purple-900">
         Forgot your password?
       </p> -->
-      <p class="text-lg">modal 4</p>
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="requesterName"
+            >Requester Name</label
+          >
+          <label
+       
+            id="requesterName"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          >{{ requester.name }}</label>
+        </div>
+
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="department"
+            >Department</label
+          >
+          <input
+            
+            id="department"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <!-- Add v-model to other inputs as needed -->
+      </div>
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="username"
+            >Phone number</label
+          >
+          <input
+         
+            id="number"
+            type="number"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="emailAddress"
+            >Date Requested</label
+          >
+          <input
+         
+            id="daterequest"
+            type="date"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="Noofpieces"
+            >No of pieces</label
+          >
+          <input
+            
+            id="Noofpieces"
+            type="number"
+            required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <!-- Add v-model to other inputs as needed -->
+      </div>
+      <div
+        class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
+      >
+        <div class="w-full">
+          <label for="Description" class="text-gray-700 dark:text-gray-200"
+            >Description</label
+          >
+          <textarea
+        
+            id="Description"
+            class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            rows="2"
+          
+
+          > </textarea>
+        </div>
+      </div>
     </template>
 
     <!-- footer -->
@@ -422,7 +514,6 @@ export default {
     Modalvisitorescordt,
     Modaltestkits,
     Modalmask,
-    
   },
   props: {
     requester: {
