@@ -72,15 +72,33 @@
                 />
               </div>
               <div>
-                <label class="text-gray-700 dark:text-gray-200" for="People"
-                  >People/For</label
+                <label
+                  class="text-gray-700 dark:text-gray-200"
+                  for="formData.people"
+                  >For: {{ formData.people }}</label
                 >
-                <input
-                  v-model="formData.People"
-                  id="People"
-                  type="text"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                <div
+                  class="block flex justify-between w-full px-4 py-2 mt-2 text-gray-700  dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                >
+                  <div>
+                    <input
+                      type="radio"
+                      id="staff"
+                      value="Staff"
+                      v-model="formData.people"
+                    />
+                    <label for="staff">Staff</label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      id="contract"
+                      value="Contract"
+                      v-model="formData.people"
+                    />
+                    <label for="contract">Contract</label>
+                  </div>
+                </div>
               </div>
 
               <!-- Add v-model to other inputs as needed -->
