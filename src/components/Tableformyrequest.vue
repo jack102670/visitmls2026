@@ -4,7 +4,7 @@
       <div class="inline-flex items-center gap-x-3">
         <div class="flex items-center gap-x-2">
           <div>
-            <h2 class="font-medium text-gray-500 dark:text-gray-300 ">
+            <h2 class="font-medium text-gray-500 dark:text-gray-300">
               {{ requester.typeofrequest }}
             </h2>
           </div>
@@ -28,8 +28,8 @@
     </td>
     <td class="px-4 py-4 ml text-sm whitespace-nowrap">
       <div class="flex items-center gap-x-6">
-        <button
-          @click="viewRequestDetails"
+        <button   v-if="requester.typeofrequest === 'Badge request'"
+          @click="showModal"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
           <svg
@@ -51,9 +51,126 @@
               d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
             />
           </svg>
-        </button> 
+        </button> <button   v-if="requester.typeofrequest === 'Incident Report'"
+          @click="showModal2"
+          class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+            />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+          </svg>
+        </button> <button   v-if="requester.typeofrequest === 'Visitor/Escort'"
+          @click="showModal4"
+          class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+            />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+          </svg>
+        </button> <button   v-if="requester.typeofrequest === 'Testkits'"
+          @click="showModal5"
+          class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+            />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+          </svg>
+        </button> <button   v-if="requester.typeofrequest === 'Mask'"
+          @click="showModal6"
+          class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+            />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+          </svg>
+        </button>
+        <button   v-if="requester.typeofrequest === 'CCTV'"
+          @click="showModal2"
+          class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+            />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+          </svg>
+        </button>
 
-        <button v-if="requester.status === 'Pending'"
+        <button
+          v-if="requester.status === 'Pending'"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
         >
           <svg
@@ -71,8 +188,9 @@
             />
           </svg>
         </button>
-        
-        <button v-if="requester.status === 'Pending'"
+
+        <button
+          v-if="requester.status === 'Pending'"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
           <svg
@@ -92,21 +210,263 @@
         </button>
       </div>
     </td>
-
-   
   </tr>
+  <Modalbadgerequest v-show="isModalVisible" @close="closeModal">
+    <!-- header -->
+    <template v-slot:header>
+      <h1 class="font-bold text-xl">Confirmation</h1>
+    </template>
+
+    <!-- body -->
+    <template v-slot:body>
+      <!-- <p class="py-3 text-xs font-bold text-purple-900">
+        Forgot your password?
+      </p> -->
+      <p class="text-lg">Do you want to approve this?</p>
+    </template>
+
+    <!-- footer -->
+    <template v-slot:footer>
+      <div class="grid grid-cols-2 gap-3">
+        <button
+          type="button"
+          class="rounded-2xl bg-gray-600 shadow-md p-3 my-1 w-full text-white"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="rounded-2xl bg-cyan-800 shadow-md p-3 my-1 w-full text-white"
+        >
+          Confirm
+        </button>
+      </div>
+    </template>
+  </Modalbadgerequest>
+  <Modalincidentreport v-show="isModalVisible2" @close="closeModal">
+    <!-- header -->
+    <template v-slot:header>
+      <h1 class="font-bold text-xl">Confirmation</h1>
+    </template>
+
+    <!-- body -->
+    <template v-slot:body>
+      <!-- <p class="py-3 text-xs font-bold text-purple-900">
+        Forgot your password?
+      </p> -->
+      <p class="text-lg">modal 2</p>
+    </template>
+
+    <!-- footer -->
+    <template v-slot:footer>
+      <div class="grid grid-cols-2 gap-3">
+        <button
+          type="button"
+          class="rounded-2xl bg-gray-600 shadow-md p-3 my-1 w-full text-white"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="rounded-2xl bg-cyan-800 shadow-md p-3 my-1 w-full text-white"
+        >
+          Confirm
+        </button>
+      </div>
+    </template>
+  </Modalincidentreport>
+  <Modalcctv v-show="isModalVisible3" @close="closeModal">
+    <!-- header -->
+    <template v-slot:header>
+      <h1 class="font-bold text-xl">Confirmation</h1>
+    </template>
+
+    <!-- body -->
+    <template v-slot:body>
+      <!-- <p class="py-3 text-xs font-bold text-purple-900">
+        Forgot your password?
+      </p> -->
+      <p class="text-lg">modal 3</p>
+    </template>
+
+    <!-- footer -->
+    <template v-slot:footer>
+      <div class="grid grid-cols-2 gap-3">
+        <button
+          type="button"
+          class="rounded-2xl bg-gray-600 shadow-md p-3 my-1 w-full text-white"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="rounded-2xl bg-cyan-800 shadow-md p-3 my-1 w-full text-white"
+        >
+          Confirm
+        </button>
+      </div>
+    </template>
+  </Modalcctv>
+  <Modalvisitorescordt v-show="isModalVisible4" @close="closeModal">
+    <!-- header -->
+    <template v-slot:header>
+      <h1 class="font-bold text-xl">Confirmation</h1>
+    </template>
+
+    <!-- body -->
+    <template v-slot:body>
+      <!-- <p class="py-3 text-xs font-bold text-purple-900">
+        Forgot your password?
+      </p> -->
+      <p class="text-lg">modal 4</p>
+    </template>
+
+    <!-- footer -->
+    <template v-slot:footer>
+      <div class="grid grid-cols-2 gap-3">
+        <button
+          type="button"
+          class="rounded-2xl bg-gray-600 shadow-md p-3 my-1 w-full text-white"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="rounded-2xl bg-cyan-800 shadow-md p-3 my-1 w-full text-white"
+        >
+          Confirm
+        </button>
+      </div>
+    </template>
+  </Modalvisitorescordt>
+  <Modaltestkits v-show="isModalVisible5" @close="closeModal">
+    <!-- header -->
+    <template v-slot:header>
+      <h1 class="font-bold text-xl">Confirmation</h1>
+    </template>
+
+    <!-- body -->
+    <template v-slot:body>
+      <!-- <p class="py-3 text-xs font-bold text-purple-900">
+        Forgot your password?
+      </p> -->
+      <p class="text-lg">modal 5</p>
+    </template>
+
+    <!-- footer -->
+    <template v-slot:footer>
+      <div class="grid grid-cols-2 gap-3">
+        <button
+          type="button"
+          class="rounded-2xl bg-gray-600 shadow-md p-3 my-1 w-full text-white"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="rounded-2xl bg-cyan-800 shadow-md p-3 my-1 w-full text-white"
+        >
+          Confirm
+        </button>
+      </div>
+    </template>
+  </Modaltestkits>
+  <Modalmask v-show="isModalVisible6" @close="closeModal">
+    <!-- header -->
+    <template v-slot:header>
+      <h1 class="font-bold text-xl">Confirmation</h1>
+    </template>
+
+    <!-- body -->
+    <template v-slot:body>
+      <!-- <p class="py-3 text-xs font-bold text-purple-900">
+        Forgot your password?
+      </p> -->
+      <p class="text-lg">modal 6</p>
+    </template>
+
+    <!-- footer -->
+    <template v-slot:footer>
+      <div class="grid grid-cols-2 gap-3">
+        <button
+          type="button"
+          class="rounded-2xl bg-gray-600 shadow-md p-3 my-1 w-full text-white"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="rounded-2xl bg-cyan-800 shadow-md p-3 my-1 w-full text-white"
+        >
+          Confirm
+        </button>
+      </div>
+    </template>
+  </Modalmask>
 </template>
 
 <script>
+import Modalbadgerequest from "../components/vmodal.vue";
+import Modalincidentreport from "../components/vmodal.vue";
+import Modalcctv from "../components/vmodal.vue";
+import Modalvisitorescordt from "../components/vmodal.vue";
+import Modaltestkits from "../components/vmodal.vue";
+import Modalmask from "../components/vmodal.vue";
+
 export default {
   name: "TableformyrequestView",
+  components: {
+    Modalbadgerequest,
+    Modalincidentreport,
+    Modalcctv,
+    Modalvisitorescordt,
+    Modaltestkits,
+    Modalmask,
+    
+  },
   props: {
     requester: {
       type: Object,
       required: true,
     },
   },
+  data() {
+    return {
+      isModalVisible: false,
+      isModalVisible2: false,
+      isModalVisible3: false,
+      isModalVisible4: false,
+      isModalVisible5: false,
+      isModalVisible6: false,
+    };
+  },
   methods: {
+    showModal() {
+      this.isModalVisible = true;
+    },
+    showModal2() {
+      this.isModalVisible2 = true;
+    },
+    showModal3() {
+      this.isModalVisible3 = true;
+    },
+    showModal4() {
+      this.isModalVisible4 = true;
+    },
+    showModal5() {
+      this.isModalVisible5 = true;
+    },
+    showModal6() {
+      this.isModalVisible6 = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+      this.isModalVisible2 = false;
+      this.isModalVisible3 = false;
+      this.isModalVisible4 = false;
+      this.isModalVisible5 = false;
+      this.isModalVisible6 = false;
+    },
     getStatusContainerClass(status) {
       const colorMap = {
         Approved:

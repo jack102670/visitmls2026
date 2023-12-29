@@ -212,6 +212,7 @@
 
 <script>
 import Tableformyrequest from "../components/Tableformyrequest.vue";
+import axios from "axios";
 export default {
   name: "Myrequest2Views",
   components: {
@@ -220,114 +221,7 @@ export default {
   data() {
     return {
       // Sample data structure for requesters
-      requesters: [
-        {
-          id: 1,
-          name: "John Doe",
-          typeofrequest: "CCTV footage",
-          date: "2023-01-01",
-          status: "Pending",
-        },
-        {
-          id: 2,
-          name: "Jane Doe",
-          typeofrequest: "Badge request",
-          date: "2023-01-02",
-          status: "Approved",
-        },
-        {
-          id: 3,
-          name: "Jan Man",
-          typeofrequest: "Badge request",
-          date: "2023-01-02",
-          status: "Rejected",
-        },
-        // ... (Add more entries as needed)
-        {
-          id: 4,
-          name: "Jim Smith",
-          typeofrequest: "Access card request",
-          date: "2023-01-03",
-          status: "Pending",
-        },
-        {
-          id: 5,
-          name: "Jack Brown",
-          typeofrequest: "CCTV footage",
-          date: "2023-01-04",
-          status: "Approved",
-        },
-        {
-          id: 6,
-          name: "Jill White",
-          typeofrequest: "Badge request",
-          date: "2023-01-05",
-          status: "Rejected",
-        },
-        {
-          id: 7,
-          name: "James Black",
-          typeofrequest: "Access card request",
-          date: "2023-01-06",
-          status: "Pending",
-        },
-        {
-          id: 8,
-          name: "Jessica Green",
-          typeofrequest: "CCTV footage",
-          date: "2023-01-07",
-          status: "Approved",
-        },
-        {
-          id: 9,
-          name: "Jordan Gray",
-          typeofrequest: "Badge request",
-          date: "2023-01-08",
-          status: "Rejected",
-        },
-        {
-          id: 10,
-          name: "Justin Blue",
-          typeofrequest: "Access card request",
-          date: "2023-01-09",
-          status: "Pending",
-        },
-        {
-          id: 11,
-          name: "Jennifer Red",
-          typeofrequest: "CCTV footage",
-          date: "2023-01-10",
-          status: "Approved",
-        },
-        {
-          id: 12,
-          name: "Jeffrey Orange",
-          typeofrequest: "Badge request",
-          date: "2023-01-11",
-          status: "Rejected",
-        },
-        {
-          id: 13,
-          name: "Jasmine Yellow",
-          typeofrequest: "Access card request",
-          date: "2023-01-12",
-          status: "Pending",
-        },
-        {
-          id: 14,
-          name: "Jason Pink",
-          typeofrequest: "CCTV footage",
-          date: "2023-01-13",
-          status: "Approved",
-        },
-        {
-          id: 15,
-          name: "Jocelyn Purple",
-          typeofrequest: "Badge request",
-          date: "2023-01-14",
-          status: "Rejected",
-        },
-      ],
+      requesters: [],
       sortOrder: {
         typeofrequest: "asc",
         date: "asc",
@@ -363,7 +257,24 @@ export default {
       return this.requesters.slice(this.startIndex, this.endIndex + 1);
     },
   },
+  mounted() {
+    // Fetch data when the component is mounted
+    this.fetchRequesters();
+  },
   methods: {
+    fetchRequesters() {
+      console.log("Fetching requesters...");
+      axios
+        .get("http://localhost:3000/api/requesters")
+        .then((response) => {
+          this.requesters = response.data;
+          console.log("Requesters data:", this.requesters);
+        })
+        .catch((error) => {
+          console.error("Error fetching requesters:", error);
+        });
+    },
+
     // Method to sort the requesters based on current sort column and order
     sortRequesters(requesters) {
       const orderMultiplier = this.sortOrder === "asc" ? 1 : -1;

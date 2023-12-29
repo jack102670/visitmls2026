@@ -90,7 +90,9 @@
               class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
             >
               <div class="w-full">
-                <label for="Description" class="text-gray-700 dark:text-gray-200"
+                <label
+                  for="Description"
+                  class="text-gray-700 dark:text-gray-200"
                   >Description</label
                 >
                 <textarea
@@ -152,19 +154,17 @@
           </tr>
           <!-- ... (Other modal content) ... -->
 
-          
-
           <!-- ... (Other modal content) ... -->
         </table>
 
-        <!-- <div class="flex justify-end mt-6">
-          <button
-            type="submit"
+        <div class="flex justify-end mt-6">
+          <button @click="submitForm"
+            type="submit" 
             class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
           >
             Submit
           </button>
-        </div> -->
+        </div>
       </div>
     </Modal>
 
@@ -181,6 +181,7 @@
 
 <script>
 import Modal from "@/components/Modal.vue";
+import axios from "axios";
 
 export default {
   name: "badgeformViews",
@@ -199,6 +200,10 @@ export default {
         stockinkit: "",
         kitout: "",
         balancekit: "",
+        name: "man",
+            typeofrequest: "CCTV",
+            date: "2023-01-01",
+            status: "Pending",
         // Add more form fields here
       },
       isPreviewModalOpen: false,
@@ -212,6 +217,31 @@ export default {
     closePreviewModal() {
       this.isPreviewModalOpen = false;
     },
+    submitForm() {
+      axios.post("http://localhost:3000/api/requesters", this. formData)
+        .then(response => {
+          // Assuming the server responds with the newly created requester
+          const  formData = response.data;
+          this.requesters.push( formData);
+          this. formData = {
+         
+             requesterName: "",
+          department: "",
+        phonenumber: "",
+         daterequest: "",
+        location: "",
+        stockinbox: "",
+        stockinkit: "",
+        kitout: "",
+        balancekit: ""
+
+          };
+        })
+        .catch(error => {
+          console.error("Error adding new requester:", error);
+        });
+    },
   },
+  
 };
 </script>
