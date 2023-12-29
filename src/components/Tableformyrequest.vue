@@ -155,7 +155,7 @@
         </button>
         <button
           v-if="requester.typeofrequest === 'CCTV'"
-          @click="showModal2"
+          @click="showModal3"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
           <svg
@@ -224,7 +224,7 @@
   <Modalbadgerequest v-show="isModalVisible" @close="closeModal">
     <!-- header -->
     <template v-slot:header>
-      <h1 class="font-bold text-xl">Confirmation</h1>
+      <h1 class="font-bold text-xl">Badge</h1>
     </template>
 
     <!-- body -->
@@ -232,31 +232,143 @@
       <!-- <p class="py-3 text-xs font-bold text-purple-900">
         Forgot your password?
       </p> -->
-      <p class="text-lg">Do you want to approve this?</p>
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="requesterName"
+            >Requester Name</label
+          >
+          <input
+            id="requesterName"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="department"
+            >Department</label
+          >
+          <input
+            id="department"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <!-- Add v-model to other inputs as needed -->
+      </div>
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="username"
+            >Phone number</label
+          >
+          <input
+            id="number"
+            type="number"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="emailAddress"
+            >Date Requested</label
+          >
+          <input
+            id="daterequest"
+            type="date"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="People"
+            >People/For</label
+          >
+          <input
+            id="People"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
+        <label class="text-gray-700 dark:text-gray-200" for="People"
+          >Uploaded Files:</label
+        >
+        <label class="py-2 px-4">
+          <ul>
+            <li
+              v-for="(file, index) in uploadedFiles"
+              :key="index"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            >
+              <span class="text-blue-700">{{ file.name }}</span>
+            </li>
+          </ul>
+        </label>
+      </div>
     </template>
 
     <!-- footer -->
     <template v-slot:footer>
-      <div class="grid grid-cols-2 gap-3">
-        <button
-          type="button"
-          class="rounded-2xl bg-gray-600 shadow-md p-3 my-1 w-full text-white"
-        >
-          Cancel
-        </button>
-        <button
-          type="button"
-          class="rounded-2xl bg-cyan-800 shadow-md p-3 my-1 w-full text-white"
-        >
-          Confirm
-        </button>
+      <div class="-mx-3 flex flex-wrap">
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4">
+            <label
+              for="preparedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Prepared By
+            </label>
+            <input
+              type="text"
+              name="preparedBy"
+              id="preparedBy"
+              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+            />
+          </div>
+        </div>
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4">
+            <label
+              for="verifiedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Verified By
+            </label>
+            <input
+              type="text"
+              name="verifiedBy"
+              id="verifiedBy"
+              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+            />
+          </div>
+        </div>
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4 relative">
+            <label
+              for="approvedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Approved By
+            </label>
+            <div class="relative flex items-stretch">
+              <input
+                type="text"
+                name="approvedBy"
+                id="approvedBy"
+                class="w-full pl-12 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </template>
   </Modalbadgerequest>
   <Modalincidentreport v-show="isModalVisible2" @close="closeModal">
     <!-- header -->
     <template v-slot:header>
-      <h1 class="font-bold text-xl">Confirmation</h1>
+      <h1 class="font-bold text-xl">Incident Report</h1>
     </template>
 
     <!-- body -->
@@ -264,24 +376,165 @@
       <!-- <p class="py-3 text-xs font-bold text-purple-900">
         Forgot your password?
       </p> -->
-      <p class="text-lg">modal 2</p>
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3">
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="Dateofincident"
+            >Date of incident</label
+          >
+          <input
+            id="Dateofincident"
+            type="Date"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="Timeofincident"
+            >Time of incident</label
+          >
+          <input
+            id="Timeofincident"
+            type="time"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+        <div>
+          <label
+            class="text-gray-700 dark:text-gray-200"
+            for="Locationofincident"
+            >Location of incident</label
+          >
+          <input
+            id="Locationofincident"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <!-- Add v-model to other inputs as needed -->
+      </div>
+
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="PartiesInvolved"
+            >Name of parties involved</label
+          >
+          <input
+            id="PartiesInvolved"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="Witness"
+            >Witness/victim/suspect</label
+          >
+          <input
+            id="Witness"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="Typeofincident"
+            >Type of incident</label
+          >
+          <input
+            id="Typeofincident"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <!-- Add v-model to other inputs as needed -->
+      </div>
+      <div
+        class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
+      >
+        <div class="w-full">
+          <label for="Detailsincident" class="text-gray-700 dark:text-gray-200"
+            >Details Incident</label
+          >
+          <textarea
+            id="Detailsincident"
+            class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            rows="5"
+            required
+          ></textarea>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
+        <label class="text-gray-700 dark:text-gray-200" for="People"
+          >Uploaded Files:</label
+        >
+        <label class="py-2 px-4">
+          <ul>
+            <li
+              v-for="(file, index) in uploadedFiles"
+              :key="index"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            >
+              <span class="text-blue-700">{{ file.name }}</span>
+            </li>
+          </ul>
+        </label>
+      </div>
     </template>
 
     <!-- footer -->
     <template v-slot:footer>
-      <div class="grid grid-cols-2 gap-3">
-        <button
-          type="button"
-          class="rounded-2xl bg-gray-600 shadow-md p-3 my-1 w-full text-white"
-        >
-          Cancel
-        </button>
-        <button
-          type="button"
-          class="rounded-2xl bg-cyan-800 shadow-md p-3 my-1 w-full text-white"
-        >
-          Confirm
-        </button>
+      <div class="-mx-3 flex flex-wrap">
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4">
+            <label
+              for="preparedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Prepared By
+            </label>
+            <input
+              type="text"
+              name="preparedBy"
+              id="preparedBy"
+              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+            />
+          </div>
+        </div>
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4">
+            <label
+              for="verifiedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Verified By
+            </label>
+            <input
+              type="text"
+              name="verifiedBy"
+              id="verifiedBy"
+              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+            />
+          </div>
+        </div>
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4 relative">
+            <label
+              for="approvedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Approved By
+            </label>
+            <div class="relative flex items-stretch">
+              <input
+                type="text"
+                name="approvedBy"
+                id="approvedBy"
+                class="w-full pl-12 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </template>
   </Modalincidentreport>
@@ -296,24 +549,187 @@
       <!-- <p class="py-3 text-xs font-bold text-purple-900">
         Forgot your password?
       </p> -->
-      <p class="text-lg">modal 3</p>
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3">
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="Requestername"
+            >Requester Name</label
+          >
+          <input
+           
+            id="Requestername"
+            type="text"
+            required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="Department"
+            >Department</label
+          >
+          <input
+          
+            id="Department"
+            type="text"
+            required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+        <div>
+          <label
+            class="text-gray-700 dark:text-gray-200"
+            for="Locationofincident"
+            >Phone number</label
+          >
+          <input
+            
+            id="Phonenumber"
+            type="number"
+            required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <!-- Add v-model to other inputs as needed -->
+      </div>
+
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="Daterequested"
+            >Date requested</label
+          >
+          <input
+        
+            id="Daterequested"
+            type="date"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="Witness"
+            >Incident location</label
+          >
+          <input
+        
+            id="Incidentlocation"
+            type="text"
+            required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="Appointmenttime"
+            >Appointment time</label
+          >
+          <input
+          
+            id="Appointmenttime"
+            type="time"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <!-- Add v-model to other inputs as needed -->
+      </div>
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="Incidentdate"
+            >Incident date</label
+          >
+          <input
+           
+            id="Incidentdate"
+            type="date"
+            required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="Incidenttime"
+            >Incident ltime</label
+          >
+          <input
+          
+            id="Incidenttime"
+            type="time"
+            required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+      </div>
+      <div
+        class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
+      >
+        <div class="w-full">
+          <label for="Detailsincident" class="text-gray-700 dark:text-gray-200"
+            >Description of incident</label
+          >
+          <textarea
+      
+            id="Detailsincident"
+            class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            rows="5"
+            required
+          ></textarea>
+        </div>
+      </div>
     </template>
 
     <!-- footer -->
     <template v-slot:footer>
-      <div class="grid grid-cols-2 gap-3">
-        <button
-          type="button"
-          class="rounded-2xl bg-gray-600 shadow-md p-3 my-1 w-full text-white"
-        >
-          Cancel
-        </button>
-        <button
-          type="button"
-          class="rounded-2xl bg-cyan-800 shadow-md p-3 my-1 w-full text-white"
-        >
-          Confirm
-        </button>
+      <div class="-mx-3 flex flex-wrap">
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4">
+            <label
+              for="preparedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Prepared By
+            </label>
+            <input
+              type="text"
+              name="preparedBy"
+              id="preparedBy"
+              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+            />
+          </div>
+        </div>
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4">
+            <label
+              for="verifiedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Verified By
+            </label>
+            <input
+              type="text"
+              name="verifiedBy"
+              id="verifiedBy"
+              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+            />
+          </div>
+        </div>
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4 relative">
+            <label
+              for="approvedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Approved By
+            </label>
+            <div class="relative flex items-stretch">
+              <input
+                type="text"
+                name="approvedBy"
+                id="approvedBy"
+                class="w-full pl-12 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </template>
   </Modalcctv>
@@ -334,11 +750,11 @@
             >Requester Name</label
           >
           <label
-       
             id="requesterName"
             type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          >{{ requester.name }}</label>
+            >{{ requester.name }}</label
+          >
         </div>
 
         <div>
@@ -346,7 +762,6 @@
             >Department</label
           >
           <input
-            
             id="department"
             type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -361,7 +776,6 @@
             >Phone number</label
           >
           <input
-         
             id="number"
             type="number"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -373,7 +787,6 @@
             >Date Requested</label
           >
           <input
-         
             id="daterequest"
             type="date"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -384,7 +797,6 @@
             >No of pieces</label
           >
           <input
-            
             id="Noofpieces"
             type="number"
             required
@@ -402,39 +814,76 @@
             >Description</label
           >
           <textarea
-        
             id="Description"
             class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             rows="2"
-          
-
-          > </textarea>
+            v-show="requester.name"
+          >
+          </textarea>
         </div>
       </div>
     </template>
 
     <!-- footer -->
     <template v-slot:footer>
-      <div class="grid grid-cols-2 gap-3">
-        <button
-          type="button"
-          class="rounded-2xl bg-gray-600 shadow-md p-3 my-1 w-full text-white"
-        >
-          Cancel
-        </button>
-        <button
-          type="button"
-          class="rounded-2xl bg-cyan-800 shadow-md p-3 my-1 w-full text-white"
-        >
-          Confirm
-        </button>
+      <div class="-mx-3 flex flex-wrap">
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4">
+            <label
+              for="preparedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Prepared By
+            </label>
+            <input
+              type="text"
+              name="preparedBy"
+              id="preparedBy"
+              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+            />
+          </div>
+        </div>
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4">
+            <label
+              for="verifiedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Verified By
+            </label>
+            <input
+              type="text"
+              name="verifiedBy"
+              id="verifiedBy"
+              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+            />
+          </div>
+        </div>
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4 relative">
+            <label
+              for="approvedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Approved By
+            </label>
+            <div class="relative flex items-stretch">
+              <input
+                type="text"
+                name="approvedBy"
+                id="approvedBy"
+                class="w-full pl-12 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </template>
   </Modalvisitorescordt>
   <Modaltestkits v-show="isModalVisible5" @close="closeModal">
     <!-- header -->
     <template v-slot:header>
-      <h1 class="font-bold text-xl">Confirmation</h1>
+      <h1 class="font-bold text-xl">Teskitform</h1>
     </template>
 
     <!-- body -->
@@ -442,31 +891,176 @@
       <!-- <p class="py-3 text-xs font-bold text-purple-900">
         Forgot your password?
       </p> -->
-      <p class="text-lg">modal 5</p>
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="requesterName"
+            >Requester Name</label
+          >
+          <input
+            id="requesterName"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="department"
+            >Department</label
+          >
+          <input
+            id="department"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <!-- Add v-model to other inputs as needed -->
+      </div>
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="username"
+            >Phone number</label
+          >
+          <input
+            id="number"
+            type="number"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="emailAddress"
+            >Date Requested</label
+          >
+          <input
+            id="daterequest"
+            type="date"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="emailAddress"
+            >Location</label
+          >
+          <select
+            id="locatioan"
+            type="email"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          >
+            <option value="hq">a</option>
+            <option value="hq">b</option>
+          </select>
+        </div>
+
+        <!-- Add v-model to other inputs as needed -->
+      </div>
+      <div class="grid grid-cols-2 gap-6 mt-4 sm:grid-cols-2">
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="username"
+            >NO. stock in box</label
+          >
+          <input
+            id="stockinbox"
+            type="number"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="emailAddress"
+            >No. stock in (kit)</label
+          >
+          <input
+            id="stockinkit"
+            type="number"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="emailAddress"
+            >No. of kit out</label
+          >
+          <input
+            id="kitout"
+            type="number"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="emailAddress"
+            >No. of balance kit</label
+          >
+          <input
+            id="balacekit"
+            type="number"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <!-- Add v-model to other inputs as needed -->
+      </div>
     </template>
 
     <!-- footer -->
     <template v-slot:footer>
-      <div class="grid grid-cols-2 gap-3">
-        <button
-          type="button"
-          class="rounded-2xl bg-gray-600 shadow-md p-3 my-1 w-full text-white"
-        >
-          Cancel
-        </button>
-        <button
-          type="button"
-          class="rounded-2xl bg-cyan-800 shadow-md p-3 my-1 w-full text-white"
-        >
-          Confirm
-        </button>
+      <div class="-mx-3 flex flex-wrap">
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4">
+            <label
+              for="preparedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Prepared By
+            </label>
+            <input
+              type="text"
+              name="preparedBy"
+              id="preparedBy"
+              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+            />
+          </div>
+        </div>
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4">
+            <label
+              for="verifiedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Verified By
+            </label>
+            <input
+              type="text"
+              name="verifiedBy"
+              id="verifiedBy"
+              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+            />
+          </div>
+        </div>
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4 relative">
+            <label
+              for="approvedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Approved By
+            </label>
+            <div class="relative flex items-stretch">
+              <input
+                type="text"
+                name="approvedBy"
+                id="approvedBy"
+                class="w-full pl-12 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </template>
   </Modaltestkits>
   <Modalmask v-show="isModalVisible6" @close="closeModal">
     <!-- header -->
     <template v-slot:header>
-      <h1 class="font-bold text-xl">Confirmation</h1>
+      <h1 class="font-bold text-xl">Mask</h1>
     </template>
 
     <!-- body -->
@@ -474,24 +1068,137 @@
       <!-- <p class="py-3 text-xs font-bold text-purple-900">
         Forgot your password?
       </p> -->
-      <p class="text-lg">modal 6</p>
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="requesterName"
+            >Requester Name</label
+          >
+          <input
+            id="requesterName"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="department"
+            >Department</label
+          >
+          <input
+            id="department"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <!-- Add v-model to other inputs as needed -->
+      </div>
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="username"
+            >Phone number</label
+          >
+          <input
+            id="number"
+            type="number"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="emailAddress"
+            >Date Requested</label
+          >
+          <input
+            id="daterequest"
+            type="date"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="Noofpieces"
+            >No of pieces</label
+          >
+          <input
+            id="Noofpieces"
+            type="number"
+            required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <!-- Add v-model to other inputs as needed -->
+      </div>
+      <div
+        class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
+      >
+        <div class="w-full">
+          <label for="Description" class="text-gray-700 dark:text-gray-200"
+            >Description</label
+          >
+          <textarea
+            id="Description"
+            class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            rows="2"
+            required
+          ></textarea>
+        </div>
+      </div>
     </template>
 
     <!-- footer -->
     <template v-slot:footer>
-      <div class="grid grid-cols-2 gap-3">
-        <button
-          type="button"
-          class="rounded-2xl bg-gray-600 shadow-md p-3 my-1 w-full text-white"
-        >
-          Cancel
-        </button>
-        <button
-          type="button"
-          class="rounded-2xl bg-cyan-800 shadow-md p-3 my-1 w-full text-white"
-        >
-          Confirm
-        </button>
+      <div class="-mx-3 flex flex-wrap">
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4">
+            <label
+              for="preparedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Prepared By
+            </label>
+            <input
+              type="text"
+              name="preparedBy"
+              id="preparedBy"
+              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+            />
+          </div>
+        </div>
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4">
+            <label
+              for="verifiedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Verified By
+            </label>
+            <input
+              type="text"
+              name="verifiedBy"
+              id="verifiedBy"
+              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+            />
+          </div>
+        </div>
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4 relative">
+            <label
+              for="approvedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Approved By
+            </label>
+            <div class="relative flex items-stretch">
+              <input
+                type="text"
+                name="approvedBy"
+                id="approvedBy"
+                class="w-full pl-12 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </template>
   </Modalmask>
