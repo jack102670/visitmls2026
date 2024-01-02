@@ -24,7 +24,7 @@
                 >Description</label
               >
               <textarea
-                v-model="formData.Description"
+                v-model="Description"
                 id="Description"
                 class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 rows="2"
@@ -32,31 +32,27 @@
               ></textarea>
             </div>
             <div>
-                <label
-                  class="text-gray-700 dark:text-gray-200"
-                  for="emailAddress"
-                  >Location</label
-                >
-                <select
-                  v-model="formData.location"
-                  id="locatioan"
-                  type="text"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                >
-                  <option value="hq">a</option>
-                  <option value="hq">b</option>
-                </select>
-              </div>
+              <label class="text-gray-700 dark:text-gray-200" for="location"
+                >Location</label
+              >
+              <select
+                v-model="location"
+                id="location"
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              >
+                <option value="a">a</option>
+                <option value="b">b</option>
+              </select>
+            </div>
           </div>
           <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <div>
-              <label
-                class="text-gray-700 dark:text-gray-200"
-                for="passwordConfirmation"
+              <label class="text-gray-700 dark:text-gray-200" for="Fromdate"
                 >From</label
               >
               <input
-                id="Fromdate"
+                id="fromdate"
+                v-model="fromDate"
                 type="date"
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
@@ -67,6 +63,7 @@
               >
               <input
                 id="todate"
+                v-model="toDate"
                 type="date"
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
@@ -77,49 +74,51 @@
               >
               <input
                 id="username"
+                v-model="requesterName"
                 type="text"
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
             </div>
-
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="emailAddress"
+              <label class="text-gray-700 dark:text-gray-200" for="Department"
                 >Department</label
               >
               <input
                 id="Department"
+                v-model="department"
                 type="text"
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
             </div>
-
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="password"
+              <label class="text-gray-700 dark:text-gray-200" for="Phonenumber"
                 >Phone</label
               >
               <input
                 id="Phonenumber"
+                v-model="phone"
                 type="number"
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
             </div>
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="password"
+              <label class="text-gray-700 dark:text-gray-200" for="Contracktor"
                 >Contractor/Vendor</label
               >
               <input
                 id="Contracktor"
+                v-model="contractorVendor"
                 type="text"
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
             </div>
-
             <div>
               <label class="text-gray-700 dark:text-gray-200" for="Company"
                 >Company</label
               >
               <input
                 id="Company"
+                v-model="company"
                 type="text"
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
@@ -130,7 +129,8 @@
               >
               <input
                 id="PhoneC"
-                type="Number"
+                v-model="phoneC"
+                type="number"
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
             </div>
@@ -154,10 +154,16 @@
 export default {
   data() {
     return {
-      formData: {
-        field1: "",
-        // add more fields as needed
-      },
+      Description: "",
+      location: "",
+      fromDate: "",
+      toDate: "",
+      requesterName: "",
+      department: "",
+      phone: "",
+      contractorVendor: "",
+      company: "",
+      phoneC: "",
     };
   },
   methods: {
@@ -166,6 +172,32 @@ export default {
     },
     goBack() {
       this.$emit("go-back"); // Emit an event when the "Next" button is clicked
+    },
+  },
+
+  computed: {
+    formData() {
+      return {
+        Description: this.Description,
+        location: this.location,
+        fromDate: this.fromDate,
+        toDate: this.toDate,
+        requesterName: this.requesterName,
+        department: this.department,
+        phone: this.phone,
+        contractorVendor: this.contractorVendor,
+        company: this.company,
+        phoneC: this.phoneC,
+      };
+    },
+  },
+  watch: {
+    formData: {
+      handler(newFormData) {
+        // Emit an event to the parent with the updated form data
+        this.$emit("submit-form", newFormData);
+      },
+      deep: true,
     },
   },
 };

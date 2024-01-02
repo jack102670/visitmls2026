@@ -14,9 +14,9 @@
         </h2>
 
         <form>
-          <div class="flex flex-1 justify-between gap-6 mt-4 ">
-           <PTWuploadlocal/>
-           <PTWuploadforeign/>
+          <div class="flex flex-1 justify-between gap-6 mt-4">
+            <PTWuploadlocal />
+            <PTWuploadforeign />
           </div>
         </form>
         <!-- <div class="flex justify-between mt-6">
@@ -42,24 +42,55 @@
 </template>
 
 <script>
-import PTWuploadlocal from '../views/PTWuploadlocal.vue';
-import PTWuploadforeign from '../views/PTWuploadforeign.vue';
-
-
+import PTWuploadlocal from "../views/PTWuploadlocal.vue";
+import PTWuploadforeign from "../views/PTWuploadforeign.vue";
 
 export default {
-
   components: {
     PTWuploadlocal,
     PTWuploadforeign,
-},
+  },
   data() {
     return {
-      
-      
+      localFile: null,
+      foreignFile: null,
       isPreviewModalOpen: false,
     };
   },
-  
+  computed: {
+    formData() {
+      return {
+        localFile: this.localFile,
+        foreignFile: this.foreignFile,
+        // Add other properties as needed
+      };
+    },
+  },
+  watch: {
+    formData: {
+      handler(newFormData) {
+        // Emit an event to the parent with the updated form data
+        this.$emit("submit-form", newFormData);
+      },
+      deep: true,
+    },
+  },
+  methods: {
+    uploadFiles() {
+      // Use FormData to handle file uploads
+      const formData = new FormData();
+      formData.append("localFile", this.localFile);
+      formData.append("foreignFile", this.foreignFile);
+
+      // You can now send formData to your server using AJAX or any other method
+      // Example using Axios:
+      // axios.post('/upload-endpoint', formData).then(response => {
+      //   // Handle response
+      // });
+
+      // For now, let's just log the formData for demonstration purposes
+      console.log(formData);
+    },
+  },
 };
 </script>

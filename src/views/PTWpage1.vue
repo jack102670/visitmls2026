@@ -8,7 +8,9 @@
         class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800"
       >
         <div class=" ">
-          <h1 class="font-semibold text-3xl p-3 text-gray-700">PERMIT TO WORK </h1>
+          <h1 class="font-semibold text-3xl p-3 text-gray-700">
+            PERMIT TO WORK
+          </h1>
           <h2
             class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
           >
@@ -16,7 +18,7 @@
           </h2>
         </div>
 
-        <form>
+        <form @submit.prevent="submitForm">
           <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <div>
               <label class="text-gray-700 dark:text-gray-200" for="username"
@@ -140,7 +142,7 @@
           </div>
 
           <!-- <div class="flex justify-end mt-6">
-              <button @click="nextPage"
+              <button @click=" submitForm"
                 class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
               >
                 Next
@@ -156,6 +158,15 @@
 
 <script>
 export default {
+  watch: {
+    formData: {
+      handler(newFormData) {
+        // Emit an event to the parent with the updated form data
+        this.$emit("submit-form", newFormData);
+      },
+      deep: true,
+    },
+  },
   data() {
     return {
       // Common form fields
@@ -186,10 +197,9 @@ export default {
       };
     },
   },
+  
   methods: {
-    nextPage() {
-      this.$emit("next-page", this.formData);
-    },
+  
   },
 };
 </script>

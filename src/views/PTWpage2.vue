@@ -20,9 +20,11 @@
         <form>
           <div class="grid grid-cols-1 pt-6 gap-6 mt-4 sm:grid-cols-3">
             <div>
-              <label class="text-gray-700 dark:text-gray-200">
+              <label for="hotWorks" class="text-gray-700 dark:text-gray-200">
                 <input
+                  id="hotWorks"
                   type="checkbox"
+                  v-model="formData.hotWorks"
                   :checked="addExtraPage"
                   @change="handleCheckboxChange"
                 />
@@ -30,9 +32,14 @@
               </label>
             </div>
             <div>
-              <label class="text-gray-700 dark:text-gray-200">
+              <label
+                for="workingAtHeight"
+                class="text-gray-700 dark:text-gray-200"
+              >
                 <input
+                  id="workingAtHeight"
                   type="checkbox"
+                  v-model="formData.workingAtHeight"
                   :checked="addExtraPage2"
                   @change="handleCheckboxChange2"
                 />
@@ -40,44 +47,93 @@
               </label>
             </div>
             <div>
-              <label class="text-gray-700 dark:text-gray-200">
-                <input type="checkbox" />
+              <label
+                for="electricalHighTension"
+                class="text-gray-700 dark:text-gray-200"
+              >
+                <input
+                  id="electricalHighTension"
+                  type="checkbox"
+                  v-model="electricalHighTension"
+                />
                 Electrical High Tension
               </label>
             </div>
             <div>
-              <label class="text-gray-700 dark:text-gray-200">
-                <input type="checkbox" />
+              <label
+                for="fireProtectionSystemImpairment"
+                class="text-gray-700 dark:text-gray-200"
+              >
+                <input
+                  id="fireProtectionSystemImpairment"
+                  type="checkbox"
+                  v-model="fireProtectionSystemImpairment"
+                />
                 Fire Protection System Impairment
               </label>
             </div>
             <div>
-              <label class="text-gray-700 dark:text-gray-200">
-                <input type="checkbox" />
+              <label
+                for="hazardousSubstances"
+                class="text-gray-700 dark:text-gray-200"
+              >
+                <input
+                  id="hazardousSubstances"
+                  type="checkbox"
+                  v-model="hazardousSubstances"
+                />
                 Hazardous Substances
               </label>
             </div>
             <div>
-              <label class="text-gray-700 dark:text-gray-200">
-                <input type="checkbox" />
+              <label
+                for="dustPollutantsExposure"
+                class="text-gray-700 dark:text-gray-200"
+              >
+                <input
+                  id="dustPollutantsExposure"
+                  type="checkbox"
+                  v-model="dustPollutantsExposure"
+                />
                 Dust/Pollutants exposure
               </label>
             </div>
             <div>
-              <label class="text-gray-700 dark:text-gray-200">
-                <input type="checkbox" />
+              <label
+                for="hydraulicSpillPneumaticJet"
+                class="text-gray-700 dark:text-gray-200"
+              >
+                <input
+                  id="hydraulicSpillPneumaticJet"
+                  type="checkbox"
+                  v-model="hydraulicSpillPneumaticJet"
+                />
                 Hydraulic Spill/Pneumatic Jet
               </label>
             </div>
             <div>
-              <label class="text-gray-700 dark:text-gray-200">
-                <input type="checkbox" />
+              <label
+                for="trappingPointsNipPoints"
+                class="text-gray-700 dark:text-gray-200"
+              >
+                <input
+                  id="trappingPointsNipPoints"
+                  type="checkbox"
+                  v-model="trappingPointsNipPoints"
+                />
                 Trapping Points/Nip Points
               </label>
             </div>
             <div>
-              <label class="text-gray-700 dark:text-gray-200">
-                <input type="checkbox" />
+              <label
+                for="inadequateIllumination"
+                class="text-gray-700 dark:text-gray-200"
+              >
+                <input
+                  id="inadequateIllumination"
+                  type="checkbox"
+                  v-model="inadequateIllumination"
+                />
                 Inadequate Illumination
               </label>
             </div>
@@ -110,13 +166,32 @@ export default {
   props: {
     addExtraPage1: Boolean,
   },
+  
   data() {
     return {
-      formData: {
-        field1: "",
+      
+        hotWorks: false,
+        workingAtHeight: false,
+        electricalHighTension: false,
+        fireProtectionSystemImpairment: false,
+        hazardousSubstances: false,
+        dustPollutantsExposure: false,
+        hydraulicSpillPneumaticJet: false,
+        trappingPointsNipPoints: false,
+        inadequateIllumination: false,
         // add more fields as needed
-      },
+      
     };
+  },
+  
+  watch: {
+    formData: {
+      handler(newFormData) {
+        // Emit an event to the parent with the updated form data
+        this.$emit("submit-form", newFormData);
+      },
+      deep: true,
+    },
   },
   methods: {
     handleCheckboxChange(event) {
@@ -132,5 +207,23 @@ export default {
       this.$emit("go-back"); // Emit an event when the "Next" button is clicked
     },
   },
+  computed: {
+    formData() {
+      // Map all form fields for PTWpage2
+      return {
+        hotWorks: this.hotWorks,
+        workingAtHeight: this.workingAtHeight,
+        electricalHighTension: this.electricalHighTension,
+        fireProtectionSystemImpairment: this.fireProtectionSystemImpairment,
+        hazardousSubstances: this.hazardousSubstances,
+        dustPollutantsExposure: this.dustPollutantsExposure,
+        hydraulicSpillPneumaticJet: this.hydraulicSpillPneumaticJet,
+        trappingPointsNipPoints: this.trappingPointsNipPoints,
+        inadequateIllumination: this.inadequateIllumination,
+        // add more fields as needed
+      };
+    },
+  },
 };
+
 </script>
