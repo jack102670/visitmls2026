@@ -14,7 +14,7 @@
           <div class="flex justify-between items-center">
             <div>
               <h2 class="text-lg font-medium text-gray-800 dark:text-white">
-                My Request <span
+                Pending Request <span
                 class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400"
                 >{{ requesters.length }}
               </span>
@@ -373,13 +373,14 @@ export default {
         status: "asc",
         name: "asc",
       },
-      sortBy: "typeofrequest",
+      sortBy: "status",
       itemsPerPage: 4,
       currentPage: 1,
     };
   },
   computed: {
     sortedAndPaginatedRequesters() {
+      
       const sortedRequesters = this.sortRequesters(this.requesters);
       const filteredRequesters = this.filterRequesters(
         sortedRequesters,
@@ -431,6 +432,7 @@ export default {
 
     // Method to sort the requesters based on current sort column and order
     sortRequesters(requesters) {
+      
       const orderMultiplier = this.sortOrder === "asc" ? 1 : -1;
       return requesters.slice().sort((a, b) => {
         const valueA = a[this.sortBy];

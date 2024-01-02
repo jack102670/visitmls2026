@@ -11,15 +11,25 @@
         </div>
 
         <section class="container px-4 mx-auto">
-          <div class="flex items-center gap-x-3">
+          <div class="flex items-center justify-between gap-x-3">
+            <div>
             <h2 class="text-lg font-medium text-gray-800 dark:text-white">
-              My Request
-            </h2>
-
-            <span
-              class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400"
+              My Request<span
+              class="ml-1 px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400"
               >{{ requesters.length }}
             </span>
+            </h2>
+
+            
+          </div>
+          <div>
+              <input
+                type="text"
+                v-model="searchQuery"
+                placeholder="Search..."
+                class="px-2 py-1 border rounded"
+              />
+            </div>
           </div>
 
           <div class="flex flex-col mt-6">
@@ -221,6 +231,7 @@ export default {
   data() {
     return {
       // Sample data structure for requesters
+      searchQuery: "",
       requesters: [],
       sortOrder: {
         typeofrequest: "asc",
@@ -236,7 +247,11 @@ export default {
     // Computed property to get the sorted and paginated requesters
     sortedAndPaginatedRequesters() {
       const sortedRequesters = this.sortRequesters(this.requesters);
-      return this.paginate(sortedRequesters);
+      const filteredRequesters = this.filterRequesters(
+        sortedRequesters,
+        this.searchQuery
+      );
+      return this.paginate(filteredRequesters);
     },
     totalPages() {
       return Math.ceil(this.requesters.length / this.itemsPerPage);
@@ -261,7 +276,30 @@ export default {
     // Fetch data when the component is mounted
     this.fetchRequesters();
   },
+
   methods: {
+    
+    filterRequesters(requesters, searchQuery) {
+      console.log("Search Query:", searchQuery);
+      if (!searchQuery) {
+        return requesters;
+      }
+
+      const normalizedSearchQuery = searchQuery.toLowerCase();
+      return requesters.filter((requester) => {
+        const fullName = requester.name.toLowerCase(); // Assuming name is a string
+        const isFullNameMatch = fullName.includes(normalizedSearchQuery);
+
+        // Customize this logic based on your data structure
+        return (
+          isFullNameMatch ||
+          requester.typeofrequest
+            .toLowerCase()
+            .includes(normalizedSearchQuery) ||
+          requester.status.toLowerCase().includes(normalizedSearchQuery)
+        );
+      });
+    },
     fetchRequesters() {
       console.log("Fetching requesters...");
       axios

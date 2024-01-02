@@ -87,7 +87,7 @@
                       value="Staff"
                       v-model="formData.people"
                     />
-                    <label for="staff">Staff</label>
+                    <label class="ml-1" for="staff">Staff</label>
                   </div>
                   <div>
                     <input
@@ -96,7 +96,7 @@
                       value="Contract"
                       v-model="formData.people"
                     />
-                    <label for="contract">Contract</label>
+                    <label class="ml-1" for="contract">Contract</label>
                   </div>
                 </div>
               </div>
