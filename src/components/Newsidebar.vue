@@ -1,8 +1,49 @@
 <template>
   <!-- component -->
-
-  <aside 
-    class="fixed top-0 left-0 z-40 w-64 h-screen flex flex-col px-4 py-8 overflow-y-auto bg-[#160959] border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700"
+  <button
+  :style="sidebarPosition"
+    class="toggle-btn sm:block md:hidden fixed z-50 p-2 bg-gray-800 text-white rounded-full"
+    @click.stop="toggleSidebar"
+  >
+    <svg
+      :style="{ transform: 'rotate(' + arrowRotation + 'deg)' }"
+      class="w-6 h-6"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M19 12H5M12 19l-7-7 7-7"
+      ></path>
+    </svg>
+  </button>
+  <aside
+    :class="{
+      hidden: !open,
+      'sm:hidden': !open,
+      fixed: open,
+      'top-0': open,
+      'left-0': open,
+      'z-40': open,
+      'w-64': open,
+      'h-screen': open,
+      flex: open,
+      'flex-col': open,
+      'px-4': open,
+      'py-8': open,
+      'overflow-y-auto': open,
+      'bg-[#160959]': open,
+      'border-r': open,
+      'rtl:border-r-0': open,
+      'rtl:border-l': open,
+      'dark:bg-gray-900': open,
+      'dark:border-gray-700': open,
+    }"
+    class="sm:hidden md:block fixed top-0 left-0 z-40 w-64 h-screen flex flex-col px-4 py-8 overflow-y-auto bg-[#160959] border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700"
   >
     <a href="/" class="mx-auto">
       <img
@@ -146,10 +187,18 @@ export default {
       isLightTheme: true,
     };
   },
-
+  computed: {
+    sidebarPosition() {
+      return {
+        left: this.open ? "250px" : "4px",
+        top: this.open ? "4px" : "4px", // Add your top position style here
+      };
+    },
+    arrowRotation() {
+      return this.open ? "360" : "180";
+    },
+  }, 
   methods: {
-   
-
     toggleTheme() {
       const root = document.documentElement;
       const isDarkMode = root.classList.contains("dark");
@@ -172,6 +221,9 @@ export default {
     },
     closeDropdown() {
       this.dropdownOpen = false;
+    },
+    toggleSidebar() {
+      this.open = !this.open;
     },
   },
   created() {
