@@ -26,6 +26,7 @@
                   type="checkbox"
                   v-model="formData.hotWorks"
                   :checked="addExtraPage"
+                  ref="checkbox1" 
                   @change="handleCheckboxChange"
                 />
                 Hot Works (i.e Welding & Flame Cutting)
@@ -41,6 +42,7 @@
                   type="checkbox"
                   v-model="formData.workingAtHeight"
                   :checked="addExtraPage2"
+                  ref="checkbox2"
                   @change="handleCheckboxChange2"
                 />
                 Working at Height (falling height > 1.8m)

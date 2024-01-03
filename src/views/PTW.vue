@@ -104,6 +104,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import PTWpage1 from "../views/PTWpage1.vue";
 import PTWpage2 from "../views/PTWpage2.vue";
 import PTWpage3 from "../views/PTWpage3.vue";
@@ -137,37 +138,86 @@ export default {
       this.formData = formData;
     },
 
-    submitForm() {
+    async submitForm() {
+      // Check if PTWpage2 reference is defined
+      if (!this.$refs.page2) {
+        console.error("PTWpage2 reference is undefined.");
+        return;
+      }
 
-      const page1Data = this.$refs.page1.formData;
-      const page2Data = this.$refs.page2.formData;
-      const page3Data = this.$refs.page3.formData;
-      const page4Data = this.$refs.page4.formData;
-      const page5Data = this.$refs.page5.formData;
-      const page6Data = this.$refs.page6.formData;
+      // Access the checkboxes in PTWpage2
+      const checkbox1Ref = this.$refs.page2.$refs.checkbox1;
+      const checkbox2Ref = this.$refs.page2.$refs.checkbox2;
 
+      // Check if the checkboxes in PTWpage2 are defined
+      if (!checkbox1Ref || !checkbox2Ref) {
+        console.error("Checkbox references in PTWpage2 are undefined.");
+        return;
+      }
 
+      // Check if the checkboxes are checked
+      const isCheckbox1Checked = checkbox1Ref.checked;
+      const isCheckbox2Checked = checkbox2Ref.checked;
+
+      // Check for undefined references or formData for pages 1 to 6 conditionally
+      for (let i = 1; i <= 6; i++) {
+        // Check if the current iteration is for page 5 or 6 and if the checkboxes are not checked
+        if (
+          (i === 5 || i === 6) &&
+          !isCheckbox1Checked &&
+          !isCheckbox2Checked
+        ) {
+          continue; // Skip this iteration if page 5 or 6 is optional and checkboxes are not checked
+        }
+
+        const pageRef = this.$refs["page" + i];
+
+        if (!pageRef) {
+          console.error(`page${i} reference is undefined.`);
+          return; // Stop execution if a reference is undefined
+        } else if (!pageRef.formData) {
+          console.error(`page${i}.formData is undefined.`);
+          return; // Stop execution if formData is undefined
+        }
+      }
+
+      // If all references and formData are defined, proceed with the Axios request
       const formData = {
-        page1: page1Data,
-        page2: page2Data,
-        page3: page3Data,
-        page4: page4Data,
-        page5: page5Data,
-        page6: page6Data,
+        page1: this.$refs.page1.formData,
+        page2: this.$refs.page2.formData,
+        page3: this.$refs.page3.formData,
+        page4: this.$refs.page4.formData,
+        // Only include page 5 and 6 if the checkboxes are checked
+        ...(isCheckbox1Checked || isCheckbox2Checked
+          ? {
+              page5: this.$refs.page5.formData,
+              page6: this.$refs.page6.formData,
+            }
+          : {}),
         // Add more pages as needed
       };
 
-      // Convert the form data object to a JSON string
-      const formDataString = JSON.stringify(formData, null, 2);
+      // ... (previous code)
 
-      // Alert the JSON string
-      alert(formDataString);
+      try {
+        // Send a POST request to your server using Axios
+        const response = await axios.post(
+          "http://localhost:3000/ptw",
+          formData
+        );
 
-      // You can also log it to the console for debugging
-      console.log("Form Data Submitted:", formData);
+        // Handle the response as needed
+        console.log("Server response:", response.data);
 
-      // Additional logic for submitting the form
+        // Additional logic for submitting the form
+      } catch (error) {
+        console.error("Error submitting form:", error);
+        // Handle the error as needed
+      }
     },
+    // ... Other methods ...
+
+    // ... Other methods ...
 
     updateAddExtraPage(value) {
       this.addExtraPage = value;
