@@ -316,7 +316,7 @@ export default {
         .post("http://localhost:3000/badgeRequests", this.formData)
         .then((response) => {
           // Handle the response
-          console.log("Server response:", response.data);
+          ("Server response:", response.data);
           this.formData = {
             requesterName: "",
             department: "",

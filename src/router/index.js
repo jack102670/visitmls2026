@@ -21,6 +21,7 @@ import visitorescorttour from "../views/visitor-escort-tour.vue";
 import Incidentreportform from "../views/Incidentreportform.vue";
 import PTWpage1 from "../views/PTWpage1.vue";
 import Dashboardvendor from "../views/Dashboardvendor.vue";
+import Incidentreportsafety from "../views/Incidentreportsafety.vue";
 const routes = [
   {
     path: "/Home",
@@ -81,6 +82,11 @@ const routes = [
         path: "Incidentreport",
         name: "Incidentreportform",
         component: Incidentreportform,
+      },
+      {
+        path: "Incidentreportsafety",
+        name: "Incidentreportsafety",
+        component: Incidentreportsafety,
       },
       {
         path: "PTW",

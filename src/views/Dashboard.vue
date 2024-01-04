@@ -309,7 +309,7 @@ export default {
         case "Safety":
           this.TypeOfRequests = [
             { id: "1", name: "Badge Request" },
-            { id: "2", name: "Incident Report" },
+            { id: "7", name: "Incident Report" },
             // Add more TypeOfRequests as needed
           ];
           break;
@@ -358,6 +358,10 @@ export default {
         case "6":
           // Redirect to the 'movie' child route
           this.$router.push({ name: "Maskform" });
+          break;
+          case "7":
+          // Redirect to the 'movie' child route
+          this.$router.push({ name: "Incidentreportsafety" });
           break;
         // Add more cases for additional types of requests
 
