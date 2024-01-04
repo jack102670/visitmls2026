@@ -2,7 +2,7 @@
   <!-- component -->
   <button
   :style="sidebarPosition"
-    class="toggle-btn sm:block md:hidden fixed z-50 p-2 bg-gray-800 text-white rounded-full"
+    class="toggle-btn sm:block md:hidden fixed z-50 p-2 bg-slate-200 text-blue-900 rounded-full"
     @click.stop="toggleSidebar"
   >
     <svg
@@ -45,7 +45,7 @@
     }"
     class="sm:hidden md:block fixed top-0 left-0 z-40 w-64 h-screen flex flex-col px-4 py-8 overflow-y-auto bg-[#160959] border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700"
   >
-    <a href="/" class="mx-auto">
+    <a href="/" class="flex justify-center items-center">
       <img
         class="rounded w-auto h-19 sm:h-20"
         src="@/assets/images/pkt-logo-white.jpg"
@@ -190,8 +190,8 @@ export default {
   computed: {
     sidebarPosition() {
       return {
-        left: this.open ? "250px" : "4px",
-        top: this.open ? "4px" : "4px", // Add your top position style here
+        left: this.open ? "240px" : "4px",
+        top: this.open ? "9px" : "9px", // Add your top position style here
       };
     },
     arrowRotation() {
