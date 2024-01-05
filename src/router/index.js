@@ -5,14 +5,14 @@ import Dashboard from "../views/Dashboard.vue";
 import Sidebar from "../components/Sidebar.vue";
 import Login from "../views/Login.vue";
 import Incidentreport from "../views/Incidentreport.vue";
-import Todo from "../views/Todo.vue";
+
 import Newsidebar from "../components/Newsidebar.vue";
 import Managerequest from "../views/Managerequest.vue";
 import PTW from "../views/PTW.vue";
 import Loginstaff from "../views/Loginstaff.vue";
 import Vendorsignup from "../views/Vendorsignup.vue";
 import Myrequest2 from "../views/Myrequest2.vue";
-
+import temp from "../views/temp.vue";
 import cctvform from "../views/cctvform.vue";
 import badgeform from "../views/badgeform.vue";
 import Maskform from "../views/Maskform.vue";
@@ -93,6 +93,11 @@ const routes = [
         name: "PTWdjasdh",
         component: PTW,
       },
+      {
+        path: "temp",
+        name: "PTWtemp",
+        component: temp,
+      },
     ],
   },
   {
@@ -171,14 +176,7 @@ const routes = [
     name: "Vendorsingup",
     component: Vendorsignup,
   },
-  {
-    path: "/Todo",
-    name: "Todo",
-    components: {
-      default: Todo,
-      Sidebar: Sidebar,
-    },
-  },
+
 ];
 
 const router = createRouter({

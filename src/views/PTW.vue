@@ -35,6 +35,13 @@
       @next-page="scrollToPage5"
       @go-back="scrollToPage3"
     ></PTWpage4>
+    <PTWpage7
+ 
+      ref="page7"
+      @updateFormData="updateFormData"
+      @submit-form="updateFormData"
+      @go-back="scrollToPage5"
+    ></PTWpage7>
     <PTWpage5
       v-if="addExtraPage"
       ref="page5"
@@ -111,6 +118,7 @@ import PTWpage3 from "../views/PTWpage3.vue";
 import PTWpage4 from "../views/PTWpage4.vue";
 import PTWpage5 from "../views/PTWpage5.vue"; // Import additional form pages
 import PTWpage6 from "../views/PTWpage6.vue"; // Import additional form pages
+import PTWpage7 from "../views/PTWpage7.vue";
 
 import Modal from "../components/vmodal.vue";
 
@@ -123,6 +131,7 @@ export default {
     PTWpage4,
     PTWpage5,
     PTWpage6,
+    PTWpage7,
     Modal,
   },
   data() {
@@ -187,6 +196,7 @@ export default {
         page2: this.$refs.page2.formData,
         page3: this.$refs.page3.formData,
         page4: this.$refs.page4.formData,
+        page7: this.$refs.page7.formData,
         // Only include page 5 and 6 if the checkboxes are checked
         ...(isCheckbox1Checked || isCheckbox2Checked
           ? {
@@ -208,6 +218,7 @@ export default {
 
         // Handle the response as needed
         console.log("Server response:", response.data);
+        // location.reload();
 
         // Additional logic for submitting the form
       } catch (error) {
