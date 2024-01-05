@@ -1037,15 +1037,19 @@
               </div>
             </div>
 
-            <div class="pt-4">
-            <input
-              id="file_upload"
-              type="file"
-              class=""
-              multiple
-              ref="file_upload"
-              v-on:change="storeFiles()"
-            /></div>
+            <div>
+                <label class="text-gray-700 dark:text-gray-200" for="Correctiveby"
+                  >Accident Details Attachment</label
+                >
+                <file-pond
+          name="test1"
+          ref="pond1"
+          label-idle="Drop files here or <span class='filepond--label-action'>Browse</span>"
+          allow-multiple="true"
+          accepted-file-types="image/jpeg, image/png"
+          v-bind:files="myFiles1"
+        />
+              </div>
 
             <div class="pt-4">
               <h2
@@ -1144,7 +1148,9 @@
 
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
-                <label class="text-gray-700 dark:text-gray-200" for="Correctiveby"
+                <label
+                  class="text-gray-700 dark:text-gray-200"
+                  for="Correctiveby"
                   >Corrective By</label
                 >
                 <input
@@ -1168,16 +1174,24 @@
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
-              <div class="pt-4">
-            <input
-              id="file_upload"
-              type="file"
-              class=""
-              multiple
-              ref="file_upload"
-              v-on:change="storeFiles()"
-            /></div>
-
+              </div>
+              <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
+              <div>
+                <label
+                  class="text-gray-700 dark:text-gray-200"
+                  for="Correctiveby"
+                  >Corrective Attachment</label
+                >
+                <file-pond
+                  name="test2"
+                  ref="pond2"
+                  label-idle="Drop files here or <span class='filepond--label-action'>Browse</span>"
+                  allow-multiple="true"
+                  accepted-file-types="image/jpeg, image/png"
+                  v-bind:files="myFiles2"
+                  
+                />
+              </div>
             </div>
 
             <div class="flex justify-end mt-6">
@@ -1205,12 +1219,24 @@
 </template>
 
 <script>
+import vueFilePond from "vue-filepond";
+import "filepond/dist/filepond.min.css";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+
+const FilePond = vueFilePond(
+  FilePondPluginFileValidateType,
+  FilePondPluginImagePreview
+);
 export default {
   name: "cctvfromViews",
-  components: {},
+  components: { FilePond,},
   data() {
     return {
       uploadedFiles: [],
+      myFiles: [],
+      myFiles2: [],
       isDragging: false,
       formData: {
         requesterName: "",
@@ -1251,6 +1277,15 @@ export default {
     },
   },
   methods: {
+    handleFilePondInit() {
+      console.log('FilePond has initialized');
+
+      // Example of instance method call on pond reference for the first component
+      this.$refs.pond1.getFiles();
+
+      // Example of instance method call on pond reference for the second component
+      this.$refs.pond2.getFiles();
+    },
     openPreviewModal() {
       this.isPreviewModalOpen = true;
     },

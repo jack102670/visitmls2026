@@ -14,7 +14,7 @@
         </h2>
 
         <form>
-          <div class="flex flex-1 justify-between gap-6 mt-4">
+          <div class="grid grid-cols-2 gap-6 pt-5">
             <PTWuploadlocal />
             <PTWuploadforeign />
           </div>

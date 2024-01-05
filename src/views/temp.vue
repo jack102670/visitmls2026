@@ -14,38 +14,14 @@
           </h2>
         </div>
 
-        <form>
-          <div
-            class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 mx-auto cursor-pointer flex w-full"
-          >
-            <!-- ... (existing form fields) ... -->
-
-            <!-- File Upload Section -->
-            <div class="mt-4">
-              <label class="text-gray-700 dark:text-gray-200" for="fileUpload">
-                Upload File
-              </label>
-              <input
-                type="file"
-                id="fileUpload"
-                @change="handleFileUpload"
-                class="mt-2"
-              />
-            </div>
-
-            <!-- ... (existing code for tasks) ... -->
-
-          </div>
-
-
-          <!-- File Upload Button -->
-          <div class="mt-4">
-            <button @click.prevent="uploadFile" class="bg-green-500 text-white px-4 py-2 rounded">
-              Upload File
-            </button>
-          </div>
-        </form>
-
+        <file-pond
+            name="test"
+            ref="pond"
+            label-idle="Drop files here or <span class='filepond--label-action'>Browse</span>"
+            allow-multiple="true"
+            accepted-file-types="image/jpeg, image/png"
+            v-bind:files="myFiles"
+    />
         <div class="flex justify-end mt-6">
           <!-- ... (existing code) ... -->
         </div>
@@ -54,72 +30,42 @@
   </div>
 </template>
 
-  
-  <script>
-  import axios from 'axios';
-  
-  export default {
-    name: "tempView",
-    data() {
-      return {
-        // ... (existing data properties)
-        selectedFile: null,
-        fileUploadProgress: 0,
-      };
-    },
-    computed: {
-      formData() {
-        return {
-          // ... (existing form data properties)
-          selectedFile: this.selectedFile,
-        };
-      },
-    },
-    watch: {
-      formData: {
-        handler(newFormData) {
-          // Emit an event to the parent with the updated form data
-          this.$emit("form-updated", newFormData);
+<script>
+ import vueFilePond from 'vue-filepond'
+
+// Import FilePond styles
+import 'filepond/dist/filepond.min.css'
+
+// Import FilePond plugins
+// Please note that you need to install these plugins separately
+
+// Import image preview plugin styles
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
+
+// Import image preview and file type validation plugins
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
+
+// Create component
+const FilePond = vueFilePond(
+        FilePondPluginFileValidateType,
+        FilePondPluginImagePreview
+)
+export default {
+  name: "tempView",
+  data: function () {
+            return { myFiles: [] };
         },
-        deep: true,
-      },
-    },
-    methods: {
-      // ... (existing methods)
-  
-      handleFileUpload(event) {
-        const file = event.target.files[0];
-        this.selectedFile = file;
-        console.log("Selected File:", this.selectedFile);
-      },
-  
-      async uploadFile() {
-        try {
-          const formData = new FormData();
-          formData.append('file', this.selectedFile);
-  
-          const response = await axios.post(
-            'http://localhost:3000/ptw',
-            formData,
-            {
-              onUploadProgress: (progressEvent) => {
-                this.fileUploadProgress = Math.round(
-                  (progressEvent.loaded / progressEvent.total) * 100
-                );
-              },
-            }
-          );
-  
-          console.log('File Upload Response:', response.data);
-        } catch (error) {
-          console.error('Error uploading file:', error);
-        } finally {
-          // Clear selected file after upload
-          this.selectedFile = null;
-          this.fileUploadProgress = 0;
-        }
-      },
-    },
-  };
-  </script>
-  
+        methods: {
+            handleFilePondInit: function () {
+                console.log('FilePond has initialized');
+
+                // example of instance method call on pond reference
+                this.$refs.pond.getFiles();
+            },
+        },
+        components: {
+            FilePond,
+        },
+    };
+</script>
