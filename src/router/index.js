@@ -12,7 +12,7 @@ import PTW from "../views/PTW.vue";
 import Loginstaff from "../views/Loginstaff.vue";
 import Vendorsignup from "../views/Vendorsignup.vue";
 import Myrequest2 from "../views/Myrequest2.vue";
-import temp from "../views/temp.vue";
+import Temp from "../views/temp.vue";
 import cctvform from "../views/cctvform.vue";
 import badgeform from "../views/badgeform.vue";
 import Maskform from "../views/Maskform.vue";
@@ -93,11 +93,7 @@ const routes = [
         name: "PTWdjasdh",
         component: PTW,
       },
-      {
-        path: "temp",
-        name: "PTWtemp",
-        component: temp,
-      },
+   
     ],
   },
   {
@@ -175,6 +171,11 @@ const routes = [
     path: "/Registervendor",
     name: "Vendorsingup",
     component: Vendorsignup,
+  },
+  {
+    path: "/Temp",
+    name: "tempViews",
+    component: Temp,
   },
 
 ];
