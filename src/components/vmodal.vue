@@ -5,7 +5,7 @@
   >
     <div
       id="modal"
-      class="bg-blue-50 rounded-3xl overflow-x-auto flex flex-col justify-between [calculateModalSize()]"
+      class="bg-blue-50 rounded-3xl overflow-x-auto flex flex-col w-6/12 justify-between [calculateModalSize()]"
     >
       <!-- Modal Header -->
       <header

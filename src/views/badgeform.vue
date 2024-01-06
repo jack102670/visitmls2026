@@ -1,101 +1,59 @@
 <template>
-  <main
-    class="flex-1 overflow-x-hidden text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64 h-auto"
-  >
+  <main class="flex-1 overflow-x-hidden text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64 h-auto">
     <div class="container mx-auto">
       <div
-        class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
-      >
-        <section
-          class="max-w-4xl p-6 mx-auto bg-[#f7fbff] rounded-md dark:bg-gray-800"
-        >
-          <h2
-            class="text-lg font-semibold text-gray-700 capitalize dark:text-white"
-          >
+        class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
+        <section class="max-w-4xl p-6 mx-auto bg-gray-100 border rounded-md dark:bg-gray-800">
+          <h2 class="text-2xl font-bold text-gray-700 capitalize dark:text-white">
             Badge Request Form
           </h2>
+          <div class="pt-2">
+            <hr class="">
+          </div>
 
-          <form @submit.prevent="openPreviewModal">
+
+          <form @submit.prevent="showModal">
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
-                <label
-                  class="text-gray-700 dark:text-gray-200"
-                  for="requesterName"
-                  >Requester Name</label
-                >
-                <input
-                  v-model="formData.requesterName"
-                  id="requesterName"
-                  type="text"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                <label class=" font-semibold text-gray-700 dark:text-gray-200" for="requesterName">Requester Name</label>
+                <input v-model="formData.requesterName" id="requesterName" type="text" required
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
               </div>
 
               <div>
-                <label class="text-gray-700 dark:text-gray-200" for="department"
-                  >Department</label
-                >
-                <input
-                  v-model="formData.department"
-                  id="department"
-                  type="text"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                <label class=" font-semibold text-gray-700 dark:text-gray-200" for="emailAddress">Department</label>
+                <select id="Department" required v-model="formData.department"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                  <option value="Security">Security</option>
+                  <option value="Safety">Safety</option>
+                  <option value="Safety">Maintenance</option>
+                </select>
               </div>
 
-              <!-- Add v-model to other inputs as needed -->
+
             </div>
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
               <div>
-                <label class="text-gray-700 dark:text-gray-200" for="username"
-                  >Phone number</label
-                >
-                <input
-                  v-model="formData.phonenumber"
-                  id="number"
-                  type="number"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                <label class="text-gray-700 dark:text-gray-200" for="username">Phone number</label>
+                <input v-model="formData.phonenumber" id="number" type="number" required
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
               </div>
 
               <div>
-                <label
-                  class="text-gray-700 dark:text-gray-200"
-                  for="emailAddress"
-                  >Date Requested</label
-                >
-                <input
-                  v-model="formData.daterequest"
-                  id="daterequest"
-                  type="date"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                <label class="text-gray-700 dark:text-gray-200" for="emailAddress">Date Requested</label>
+                <input v-model="formData.daterequest" id="daterequest" type="date"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
               </div>
               <div>
-                <label
-                  class="text-gray-700 dark:text-gray-200"
-                  for="formData.people"
-                  >For: {{ formData.people }}</label
-                >
+                <label class="text-gray-700 dark:text-gray-200" for="formData.people">For: {{ formData.people }}</label>
                 <div
-                  class="block flex justify-between w-full px-4 py-2 mt-2 text-gray-700  dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                >
+                  class="block flex justify-between w-full px-4 py-2 mt-2 text-gray-700  dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
                   <div>
-                    <input
-                      type="radio"
-                      id="staff"
-                      value="Staff"
-                      v-model="formData.people"
-                    />
+                    <input type="radio" id="staff" value="Staff" v-model="formData.people" />
                     <label class="ml-1" for="staff">Staff</label>
                   </div>
                   <div>
-                    <input
-                      type="radio"
-                      id="contract"
-                      value="Contract"
-                      v-model="formData.people"
-                    />
+                    <input type="radio" id="contract" value="Contract" v-model="formData.people" />
                     <label class="ml-1" for="contract">Contract</label>
                   </div>
                 </div>
@@ -105,78 +63,20 @@
             </div>
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
               <div>
-                <label class="text-gray-700 dark:text-gray-200" for="username"
-                  >Upload file list of worker</label
-                >
+                <label class="text-gray-700 dark:text-gray-200" for="username">Upload file list of worker</label>
 
                 <!-- component -->
 
                 <div>
-                  <label
-                    for="dropzone-file"
-                    class="p-4 flex ml-0 cursor-pointer flex w-full max-w-xs flex-col items-center rounded-xl border-2 border-dashed"
-                    :class="{
-                      'border-blue-400': !isDragging,
-                      'border-blue-700': isDragging,
-                      'bg-white': !isDragging,
-                      'bg-blue-100': isDragging,
-                    }"
-                    @dragover.prevent="handleDragOver"
-                    @dragenter.prevent="handleDragEnter"
-                    @dragleave.prevent="handleDragLeave"
-                    @drop.prevent="handleDrop"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-10 w-10 text-blue-500"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                      />
-                    </svg>
 
-                    <h2
-                      class="mt-2 text-xl font-medium text-gray-700 tracking-wide"
-                    >
-                      Click Here
-                    </h2>
+                  <Div class="pt-3">
+                    <file-pond class="" name="test" ref="pond1"
+                      label-idle="Drop files here or <span class='filepond--label-action'>Browse</span>"
+                      allow-multiple="true" accepted-file-types="image/jpeg, image/png" v-bind:files="myFiles" />
+                  </Div>
+                  <!-- component -->
 
-                    <p class="mt-2 text-gray-500 tracking-wide">
-                      Upload or drag & drop your file SVG, PNG, JPG, or GIF.
-                    </p>
 
-                    <input
-                      id="dropzone-file"
-                      type="file"
-                      class="hidden"
-                      @change="handleFileChange"
-                    />
-                  </label>
-
-                  <!-- Display uploaded files -->
-                  <ul class="mt-4">
-                    <li
-                      v-for="(file, index) in uploadedFiles"
-                      :key="index"
-                      class="flex items-center justify-between bg-blue-100 p-4 mb-2 rounded-md"
-                    >
-                      <span class="text-blue-700">{{ file.name }}</span>
-                      <button
-                        class="bg-blue-900 text-white px-4 py-2 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-                        @click="removeFile(index)"
-                      >
-                        Remove
-                      </button>
-                    </li>
-                  </ul>
-
-                  <!-- Display uploaded files -->
                 </div>
               </div>
 
@@ -184,10 +84,8 @@
             </div>
 
             <div class="flex justify-end mt-6">
-              <button
-                type="submit"
-                class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
-              >
+              <button type="submit"
+                class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
                 Submit
               </button>
             </div>
@@ -195,17 +93,19 @@
         </section>
       </div>
     </div>
+    <Modal v-show="isModalVisible" @close="closeModal">
+      <!-- header -->
+      <template v-slot:header>
+        <h1 class="font-bold text-xl">Confirmation</h1>
+      </template>
 
-    <Modal :modalOpen="isPreviewModalOpen" :closeModal="closePreviewModal">
-      <!-- Content for your custom modal -->
-      <div class="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-lg">
-        <h3 class="text-2xl font-bold text-gray-700 dark:text-white mb-4">
-          Preview
-        </h3>
+      <!-- body -->
+      <template v-slot:body>
 
-        <table
-          class="w-full mt-4 bg-white border border-gray-300 divide-y divide-gray-300"
-        >
+        <!-- <p class="py-3 text-xs font-bold text-purple-900">
+        Forgot your password?
+      </p> -->
+        <table class="w-full mt-4 bg-white border border-gray-300 divide-y divide-gray-300">
           <tr>
             <td class="py-2 px-4 font-medium">Requester Name:</td>
             <td class="py-2 px-4">{{ formData.requesterName }}</td>
@@ -223,40 +123,34 @@
             <td class="py-2 px-4">{{ formData.daterequest }}</td>
           </tr>
           <tr>
-            <td class="py-2 px-4 font-medium">People/For:</td>
-            <td class="py-2 px-4">{{ formData.People }}</td>
+            <td class="py-2 px-4 font-medium">For:</td>
+            <td class="py-2 px-4">{{ formData.people }}</td>
           </tr>
+
           <!-- ... (Other modal content) ... -->
 
-          <tr>
-            <td class="py-2 px-4 font-medium">Uploaded Files:</td>
-            <td class="py-2 px-4">
-              <ul>
-                <li
-                  v-for="(file, index) in uploadedFiles"
-                  :key="index"
-                  class="flex items-center bg-blue-100 p-4 mb-2 rounded-md"
-                >
-                  <span class="text-blue-700">{{ file.name }}</span>
-                </li>
-              </ul>
-            </td>
-          </tr>
+
 
           <!-- ... (Other modal content) ... -->
         </table>
+      </template>
 
-        <div class="flex justify-end mt-6">
-          <button
-            @click="confirmFormSubmission"
-            type="submit"
-            class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
-          >
-            Submit
+      <!-- footer -->
+      <template v-slot:footer>
+        <div class="grid grid-cols-2 gap-3">
+          <button type="button" class="rounded-2xl bg-gray-600 shadow-md p-3 my-1 w-full text-white">
+            Cancel
+          </button>
+          <button type="button" class="rounded-2xl bg-cyan-800 shadow-md p-3 my-1 w-full text-white">
+            Confirm
           </button>
         </div>
-      </div>
+        <div class="flex justify-end mt-6">
+
+        </div>
+      </template>
     </Modal>
+
 
     <!-- <div class="flex justify-end mt-6">
           <button
@@ -270,18 +164,30 @@
 </template>
 
 <script>
-import Modal from "@/components/Modal.vue";
+import vueFilePond from 'vue-filepond';
+import 'filepond/dist/filepond.min.css';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import Modal from "../components/vmodal.vue";
+
 import axios from "axios";
 
+const FilePond = vueFilePond(
+  FilePondPluginFileValidateType,
+  FilePondPluginImagePreview
+);
 export default {
   name: "badgeformViews",
   components: {
+    FilePond,
     Modal,
   },
   data() {
     return {
-      uploadedFiles: [],
-      isDragging: false,
+
+      myFiles: [],
+
       formData: {
         requesterName: "",
         department: "",
@@ -291,24 +197,30 @@ export default {
 
         // Add more form fields here
       },
-      isPreviewModalOpen: false,
+
       modalContent: "",
+      isModalVisible: false,
     };
   },
-  computed: {
-    labelClasses() {
-      return {
-        "border-blue-400": !this.isDragging,
-        "border-blue-700": this.isDragging,
-        "bg-white": !this.isDragging,
-        "bg-blue-100": this.isDragging,
-      };
-    },
-  },
+
   methods: {
-    openPreviewModal() {
-      this.isPreviewModalOpen = true;
+    showModal() {
+      this.isModalVisible = true;
     },
+    closeModal() {
+      this.isModalVisible = false;
+    },
+
+    handleFilePondInit() {
+      console.log('FilePond has initialized');
+
+      // Example of instance method call on pond reference for the first component
+      this.$refs.pond1.getFiles();
+
+      // Example of instance method call on pond reference for the second component
+
+    },
+
     confirmFormSubmission() {
       // Handle the confirmation logic here
       console.log("Confirmed!");
@@ -335,38 +247,7 @@ export default {
       // Optionally, you can perform additional actions or close the modal
       this.closePreviewModal();
     },
-    closePreviewModal() {
-      this.isPreviewModalOpen = false;
-    },
-    handleDragOver() {
-      this.isDragging = true;
-    },
-    handleDragEnter() {
-      this.isDragging = true;
-    },
-    handleDragLeave() {
-      this.isDragging = false;
-    },
-    handleDrop(event) {
-      this.isDragging = false;
-      // Handle the dropped files
-      const files = event.dataTransfer.files;
-      this.handleFiles(files);
-    },
-    handleFileChange(event) {
-      // Handle the selected files
-      const files = event.target.files;
-      this.handleFiles(files);
-    },
-    handleFiles(files) {
-      // Process and store the files
-      for (const file of files) {
-        this.uploadedFiles.push(file);
-      }
-    },
-    removeFile(index) {
-      this.uploadedFiles.splice(index, 1);
-    },
+
   },
 };
 </script>

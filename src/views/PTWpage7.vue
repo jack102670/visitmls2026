@@ -44,7 +44,7 @@
                 <label
                   class="text-gray-700 dark:text-gray-200"
                   :for="'task-' + index"
-                  >Sequence of Tasks</label
+                  >Sequence of Tasks {{ index+1 }}</label
                 >
                 <input
                   v-model="task.sequence"
