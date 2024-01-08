@@ -11,11 +11,11 @@
           class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
         >
           Hazard Identification
-          <span class="text-sm">
-            (Item with '<span class="text-red-900">*</span>' needs a special
+         
+        </h2> <span class="text-sm">
+            (Item with '<span class="text-red-500">*</span>' needs a special
             work permit, mark '☑️' if applicable)
           </span>
-        </h2>
 
         <form>
           <div class="grid grid-cols-1 pt-6 gap-6 mt-4 sm:grid-cols-3">
@@ -29,7 +29,7 @@
                   ref="checkbox1" 
                   @change="handleCheckboxChange"
                 />
-                Hot Works (i.e Welding & Flame Cutting)
+                Hot Works<span class="text-red-500">*</span> (i.e Welding & Flame Cutting)
               </label>
             </div>
             <div>
@@ -45,7 +45,7 @@
                   ref="checkbox2"
                   @change="handleCheckboxChange2"
                 />
-                Working at Height (falling height > 1.8m)
+                Working at Height<span class="text-red-500">*</span> (falling height > 1.8m)
               </label>
             </div>
             <div>

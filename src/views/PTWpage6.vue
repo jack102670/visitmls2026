@@ -20,7 +20,9 @@
             class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 mx-auto cursor-pointer flex w-full"
           >
             <div class="w-full">
-              <label for="Description" class="text-gray-700 dark:text-gray-200"
+              <label
+                for="Description"
+                class="font-semibold text-gray-700 dark:text-gray-200"
                 >Description</label
               >
               <textarea
@@ -32,7 +34,9 @@
               ></textarea>
             </div>
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="location"
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="location"
                 >Location</label
               >
               <select
@@ -48,7 +52,9 @@
           </div>
           <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="Fromdate"
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="Fromdate"
                 >From</label
               >
               <input
@@ -59,8 +65,10 @@
               />
             </div>
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="todate"
-                >to</label
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="todate"
+                >To</label
               >
               <input
                 v-model="toDate"
@@ -71,75 +79,241 @@
             </div>
 
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="username"
-                >Requester Name</label
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="Contractorname"
+                >Contractor Name<span class="text-red-500">*</span></label
               >
               <input
-                v-model="requesterName"
-                id="username"
+                v-model="Contractorname"
+                id="Contractorname"
+                type="text"
+                required
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              />
+            </div>
+
+            <div>
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="Contractorcompany"
+                >Contractor Company<span class="text-red-500">*</span></label
+              >
+              <input
+                v-model="Contractorcompany"
+                id="Contractorcompany"
                 type="text"
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
             </div>
 
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="emailAddress"
-                >Department</label
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="Startdate"
+                >Start Date<span class="text-red-500">*</span></label
               >
               <input
-                v-model="department"
-                id="Department"
+                v-model="Startdate"
+                id="Startdate"
+                type="date"
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              />
+            </div>
+
+            <div>
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="Completedate"
+                >Complete Date</label
+              >
+              <input
+                v-model="Completedate"
+                id="Completedate"
+                type="date"
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              />
+            </div>
+
+            <div>
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="Starttime"
+                >Start Time</label
+              >
+              <input
+                v-model="Starttime"
+                id="Starttime"
+                type="time"
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              />
+            </div>
+
+            <div>
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="Completetime"
+                >Complete Time</label
+              >
+              <input
+                v-model="Completetime"
+                id="Completetime"
+                type="time"
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              />
+            </div>
+            <div>
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="Location"
+                >Location<span class="text-red-500">*</span></label
+              >
+              <select
+                v-model="Location"
+                id="Location"
                 type="text"
+                required
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
+              >
+                <option value="Security">Security</option>
+                <option value="Safety">Safety</option>
+                <option value="Maintenance">Maintenance</option>
+                <option value="ICT">ICT</option>
+              </select>
+            </div>
+            <div
+              class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
+            >
+              <div class="w-full">
+                <label
+                  for="Descofwork"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  >Description Of Work<span class="text-red-500">*</span></label
+                >
+                <textarea
+                  v-model="Descofwork"
+                  id="Descofwork"
+                  class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                  rows="3"
+                  required
+                ></textarea>
+              </div>
+            </div>
+            <div>
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="Authority"
+                >Hazard Identification
+              </label>
+              <div class="grid grid-cols-2">
+                <div>
+                  <label for="A" class="text-gray-700 dark:text-gray-200">
+                    <input
+                      type="checkbox"
+                      value="A"
+                      v-model="selectedAuthorities"
+                    />
+                    A
+                  </label>
+                </div>
+
+                <div>
+                  <label for="jack" class="text-gray-700 dark:text-gray-200">
+                    <input
+                      id="jack"
+                      type="checkbox"
+                      value="B"
+                      v-model="selectedAuthorities"
+                    />
+                    B
+                  </label>
+                </div>
+
+                <div>
+                  <label for="john" class="text-gray-700 dark:text-gray-200">
+                    <input
+                      id="john"
+                      type="checkbox"
+                      value="C"
+                      v-model="selectedAuthorities"
+                    />
+                    C
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
+              <div>
+                <label
+                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  for="username"
+                  >Upload Files (Person Involved)</label
+                >
+
+                <!-- component -->
+
+                <div>
+                  <Div class="pt-3">
+                    <file-pond
+                      class=""
+                      name="test"
+                      ref="pond1"
+                      label-idle="Drop files here or <span class='filepond--label-action'>Browse</span>"
+                      allow-multiple="true"
+                      accepted-file-types="image/jpeg, image/png"
+                      v-bind:files="myFiles"
+                      @input="updateFiles"
+                    />
+                  </Div>
+                  <!-- component -->
+                </div>
+              </div>
+
+              <!-- Add v-model to other inputs as needed -->
             </div>
 
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="password"
-                >Phone</label
-              >
-              <input
-                v-model="phone"
-                id="Phonenumber"
-                type="number"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
-            </div>
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="Authority"
+                >Authority Check
+              </label>
+              <div class="grid grid-cols-2">
+                <div>
+                  <label for="A" class="text-gray-700 dark:text-gray-200">
+                    <input
+                      type="checkbox"
+                      value="A"
+                      v-model="selectedAuthorities"
+                    />
+                    A
+                  </label>
+                </div>
 
-            <div>
-              <label class="text-gray-700 dark:text-gray-200" for="password"
-                >Contractor/Vendor</label
-              >
-              <input
-                v-model="contractorVendor"
-                id="Contracktor"
-                type="text"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
-            </div>
+                <div>
+                  <label for="jack" class="text-gray-700 dark:text-gray-200">
+                    <input
+                      id="jack"
+                      type="checkbox"
+                      value="B"
+                      v-model="selectedAuthorities"
+                    />
+                    B
+                  </label>
+                </div>
 
-            <div>
-              <label class="text-gray-700 dark:text-gray-200" for="Company"
-                >Company</label
-              >
-              <input
-                v-model="company"
-                id="Company"
-                type="text"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
-            </div>
-
-            <div>
-              <label class="text-gray-700 dark:text-gray-200" for="PhoneC"
-                >Phone</label
-              >
-              <input
-                v-model="phoneC"
-                id="PhoneC"
-                type="number"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
+                <div>
+                  <label for="john" class="text-gray-700 dark:text-gray-200">
+                    <input
+                      id="john"
+                      type="checkbox"
+                      value="C"
+                      v-model="selectedAuthorities"
+                    />
+                    C
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
         </form>
@@ -158,7 +332,18 @@
 </template>
 
 <script>
+import vueFilePond from "vue-filepond";
+import "filepond/dist/filepond.min.css";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+
+const FilePond = vueFilePond(
+  FilePondPluginFileValidateType,
+  FilePondPluginImagePreview
+);
 export default {
+  components: { FilePond, },
   data() {
     return {
       Description: "",

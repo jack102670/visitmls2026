@@ -21,8 +21,8 @@
         <form @submit.prevent="submitForm">
           <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="username"
-                >Requester Name</label
+              <label class="font-semibold text-gray-700 dark:text-gray-200" for="username"
+                >Requester Name<span class="text-red-500">*</span></label
               >
               <input
                 id="requestername"
@@ -34,8 +34,8 @@
             </div>
 
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="emailAddress"
-                >Department</label
+              <label class="font-semibold text-gray-700 dark:text-gray-200" for="emailAddress"
+                >Department<span class="text-red-500">*</span></label
               >
               <select
                 id="Department"
@@ -43,13 +43,13 @@
                 v-model="department"
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               >
-                <option value="Security">security</option>
-                <option value="Safety">safety</option>
+                <option value="Security">Security</option>
+                <option value="Safety">Safety</option>
               </select>
             </div>
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="password"
-                >Phone number</label
+              <label class="font-semibold text-gray-700 dark:text-gray-200" for="password"
+                >Phone Number<span class="text-red-500">*</span></label
               >
               <input
                 id="Phonenumber"
@@ -61,8 +61,8 @@
             </div>
 
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="password"
-                >Contractor / vendor name</label
+              <label class="font-semibold text-gray-700 dark:text-gray-200" for="password"
+                >Contractor / Vendor Name<span class="text-red-500">*</span></label
               >
               <input
                 id="Contractorvendorname"
@@ -73,8 +73,8 @@
               />
             </div>
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="password"
-                >Company name</label
+              <label class="font-semibold text-gray-700 dark:text-gray-200" for="password"
+                >Company Name<span class="text-red-500">*</span></label
               >
               <input
                 id="Companyname"
@@ -86,8 +86,8 @@
             </div>
 
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="Location"
-                >Location</label
+              <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+                >Location<span class="text-red-500">*</span></label
               >
               <input
                 id="Location"
@@ -99,8 +99,8 @@
             </div>
 
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="datefrom"
-                >Date From</label
+              <label class="font-semibold text-gray-700 dark:text-gray-200" for="datefrom"
+                >Date From<span class="text-red-500">*</span></label
               >
               <input
                 id="datefrom"
@@ -111,8 +111,8 @@
               />
             </div>
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="dateto"
-                >date to</label
+              <label class="font-semibold text-gray-700 dark:text-gray-200" for="dateto"
+                >Date To<span class="text-red-500">*</span></label
               >
               <input
                 id="dateto"
@@ -129,7 +129,7 @@
             <div class="w-full">
               <label
                 for="Detailsincident"
-                class="text-gray-700 dark:text-gray-200"
+                class="text-gray-700 font-semibold dark:text-gray-200"
                 >Description</label
               >
               <textarea

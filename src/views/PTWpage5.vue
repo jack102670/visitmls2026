@@ -20,19 +20,35 @@
             class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 mx-auto cursor-pointer flex w-full"
           >
             <div class="w-full">
-              <label for="Description" class="text-gray-700 dark:text-gray-200"
-                >Description</label
+              <label
+                for="Location"
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                >Location</label
               >
-              <textarea
-                v-model="Description"
-                id="Description"
+              <input
+                v-model="Location"
+                id="Location"
                 class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 rows="2"
                 required
-              ></textarea>
+              >
             </div>
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="location"
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="Worksdescription"
+                >Works Description</label
+              >
+              <textarea
+                id="Worksdescription"
+                v-model="Worksdescription"
+                type="text"
+                rows="1"
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              ></textarea>
+            </div>
+            <!-- <div>
+              <label class="font-semibold text-gray-700 dark:text-gray-200" for="location"
                 >Location</label
               >
               <select
@@ -43,96 +59,122 @@
                 <option value="a">a</option>
                 <option value="b">b</option>
               </select>
-            </div>
+            </div> -->
           </div>
           <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+            
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="Fromdate"
-                >From</label
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="todate"
+                >Datetime Start</label
               >
               <input
-                id="fromdate"
-                v-model="fromDate"
-                type="date"
+                id="datetimestart"
+                v-model="datetimestart"
+                type="datetime-local"
+                class="font-semibold block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              />
+            </div>
+            <div>
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="Datetimecomplete"
+                >Datetime Complete</label
+              >
+              <input
+                id="Datetimecomplete"
+                v-model="Datetimecomplete"
+                type="datetime-local"
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
             </div>
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="todate"
-                >to</label
-              >
-              <input
-                id="todate"
-                v-model="toDate"
-                type="date"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="Authority"
+                >Authority
+              </label>
+              <div class="grid grid-cols-2">
+                <div>
+                  <label for="A" class="text-gray-700 dark:text-gray-200">
+                    <input
+                      type="checkbox"
+                      value="A"
+                      v-model="selectedAuthorities"
+                    />
+                    A
+                  </label>
+                </div>
+
+                <div>
+                  <label for="jack" class="text-gray-700 dark:text-gray-200">
+                    <input
+                      id="jack"
+                      type="checkbox"
+                      value="B"
+                      v-model="selectedAuthorities"
+                    />
+                    B
+                  </label>
+                </div>
+
+                <div>
+                  <label for="john" class="text-gray-700 dark:text-gray-200">
+                    <input
+                      id="john"
+                      type="checkbox"
+                      value="C"
+                      v-model="selectedAuthorities"
+                    />
+                    C
+                  </label>
+                </div>
+              </div>
             </div>
+
             <div>
-              <label class="text-gray-700 dark:text-gray-200" for="username"
-                >Requester Name</label
-              >
-              <input
-                id="username"
-                v-model="requesterName"
-                type="text"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
-            </div>
-            <div>
-              <label class="text-gray-700 dark:text-gray-200" for="Department"
-                >Department</label
-              >
-              <input
-                id="Department"
-                v-model="department"
-                type="text"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
-            </div>
-            <div>
-              <label class="text-gray-700 dark:text-gray-200" for="Phonenumber"
-                >Phone</label
-              >
-              <input
-                id="Phonenumber"
-                v-model="phone"
-                type="number"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
-            </div>
-            <div>
-              <label class="text-gray-700 dark:text-gray-200" for="Contracktor"
-                >Contractor/Vendor</label
-              >
-              <input
-                id="Contracktor"
-                v-model="contractorVendor"
-                type="text"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
-            </div>
-            <div>
-              <label class="text-gray-700 dark:text-gray-200" for="Company"
-                >Company</label
-              >
-              <input
-                id="Company"
-                v-model="company"
-                type="text"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
-            </div>
-            <div>
-              <label class="text-gray-700 dark:text-gray-200" for="PhoneC"
-                >Phone</label
-              >
-              <input
-                id="PhoneC"
-                v-model="phoneC"
-                type="number"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="radiohotworkby"
+                >Hotwork By 
+              </label>
+              <div class="grid grid-cols-3">
+                <div>
+                  <label for="A" class="text-gray-700 dark:text-gray-200">
+                    <input
+                      type="radio"
+                      value="A"
+                      v-model="radiohotworkby"
+                    />
+                    A
+                  </label>
+                </div>
+
+                <div>
+                  <label for="b" class="text-gray-700 dark:text-gray-200">
+                    <input
+                      id="b"
+                      type="radio"
+                      value="B"
+                      v-model="radiohotworkby"
+                    />
+                    B
+                  </label>
+                </div>
+
+                <div>
+                  <label for="c" class="text-gray-700 dark:text-gray-200">
+                    <input
+                      id="c"
+                      type="radio"
+                      value="C"
+                      v-model="radiohotworkby"
+                    />
+                    C
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
         </form>
@@ -164,6 +206,8 @@ export default {
       contractorVendor: "",
       company: "",
       phoneC: "",
+      selectedAuthorities: [],
+      radiohotworkby: [],
     };
   },
   methods: {
