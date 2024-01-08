@@ -7,54 +7,62 @@
         class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
         <section
-          class="max-w-4xl p-6 mx-auto bg-[#f7fbff] rounded-md dark:bg-gray-800"
+          class="max-w-4xl p-6 mx-auto bg-white border-2 border-gray-200 rounded-md dark:bg-gray-800"
         >
           <h2
-            class="text-lg font-semibold text-gray-700 capitalize dark:text-white"
+            class="text-2xl font-bold text-gray-700 capitalize dark:text-white"
           >
-            Incident Report Form
+            INCIDENT REPORT FORM
           </h2>
+          <div class="pt-2">
+            <hr class="" />
+          </div>
 
-          <form @submit.prevent="openPreviewModal">
+          <form @submit.prevent="showModal">
             <div
               class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3"
             >
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Dateofincident"
-                  >Date of incident</label
+                  >Date Of Incident<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="formData.Dateofincident"
                   id="Dateofincident"
                   type="Date"
+                  required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
 
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Timeofincident"
-                  >Time of incident</label
+                  >Time Of Incident<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="formData.Timeofincident"
                   id="Timeofincident"
                   type="time"
+                  required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Locationofincident"
-                  >Location of incident</label
+                  >Location Of Incident<span class="text-red-500"
+                    >*</span
+                  ></label
                 >
                 <input
                   v-model="formData.Locationofincident"
                   id="Locationofincident"
+                  required
                   type="text"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
@@ -66,44 +74,84 @@
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="PartiesInvolved"
-                  >Name of parties involved</label
+                  >Name Of Parties Involved<span class="text-red-500"
+                    >*</span
+                  ></label
                 >
                 <input
                   v-model="formData.PartiesInvolved"
                   id="PartiesInvolved"
                   type="text"
+                  required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
 
               <div>
-                <label class="text-gray-700 dark:text-gray-200" for="Witness"
-                  >Witness/victim/suspect</label
+                <label
+                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  for="Witness"
+                  >Witness/Victim/Suspect<span class="text-red-500"
+                    >*</span
+                  ></label
                 >
                 <input
                   v-model="formData.Witness"
                   id="Witness"
                   type="text"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
-              </div>
-              <div>
-                <label
-                  class="text-gray-700 dark:text-gray-200"
-                  for="Typeofincident"
-                  >Type of incident</label
-                >
-                <input
-                  v-model="formData.Typeofincident"
-                  id="Typeofincident"
-                  type="text"
+                  required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
 
               <!-- Add v-model to other inputs as needed -->
+            </div>
+            <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
+              <div>
+                <label
+                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  for="Typeofincident"
+                  >Type Of Incident<span class="text-red-500">*</span></label
+                >
+                <select
+                  :id="dynamicId"
+                  required
+                  v-model="formData.Typeofincident"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                >
+                  <option value="Fatality">Fatality</option>
+                  <option value="Near Miss">Near Miss</option>
+                  <option value="No Injury">No Injury</option>
+                  <option value="Lost Time Injury">Lost Time Injury</option>
+                  <option value="Medical Treatment">Medical Treatment</option>
+                  <option value="Property Damage">Property Damage</option>
+                  <option value="Serious Bodily Injury">
+                    Serious Bodily Injury
+                  </option>
+                  <option value="First Aid">First Aid</option>
+                  <option value="Dangerous Occurance">
+                    Dangerous Occurance
+                  </option>
+                  <option value="Others">Others</option>
+                </select>
+              </div>
+              <div v-if="formData.Typeofincident === 'Others'">
+                <label
+                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  :for="dynamicCustomId"
+                  >Specify<span class="text-red-500">*</span>
+                </label>
+                <input
+                  placeholder="Specify category"
+                  :id="dynamicCustomId"
+                  type="text"
+                  required
+                  v-model="formData.customIncidentType"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                />
+              </div>
             </div>
             <div
               class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
@@ -111,8 +159,8 @@
               <div class="w-full">
                 <label
                   for="Detailsincident"
-                  class="text-gray-700 dark:text-gray-200"
-                  >Details Incident</label
+                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  >Details Incident<span class="text-red-500">*</span></label
                 >
                 <textarea
                   v-model="formData.Detailsincident"
@@ -126,83 +174,35 @@
 
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
               <div>
-                <label class="text-gray-700 dark:text-gray-200" for="username"
-                  >Attach file (if necessary)
-                </label>
+                <label
+                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  for="username"
+                  >Upload file list of worker</label
+                >
 
                 <!-- component -->
 
                 <div>
-                  <label
-                    for="dropzone-file"
-                    class="p-10 flex mx-auto cursor-pointer flex w-full max-w-lg flex-col items-center rounded-xl border-2 border-dashed"
-                    :class="{
-                      'border-blue-400': !isDragging,
-                      'border-blue-700': isDragging,
-                      'bg-white': !isDragging,
-                      'bg-blue-100': isDragging,
-                    }"
-                    @dragover.prevent="handleDragOver"
-                    @dragenter.prevent="handleDragEnter"
-                    @dragleave.prevent="handleDragLeave"
-                    @drop.prevent="handleDrop"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-10 w-10 text-blue-500"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                      />
-                    </svg>
-
-                    <h2
-                      class="mt-4 text-xl font-medium text-gray-700 tracking-wide"
-                    >
-                      Click Here
-                    </h2>
-
-                    <p class="mt-2 text-gray-500 tracking-wide">
-                      Upload or drag & drop your file SVG, PNG, JPG, or GIF.
-                    </p>
-
-                    <input
-                      id="dropzone-file"
-                      type="file"
-                      class="hidden"
-                      @change="handleFileChange"
+                  <Div class="pt-3">
+                    <file-pond
+                      class=""
+                      name="test"
+                      ref="pond1"
+                      label-idle="Drop files here or <span class='filepond--label-action'>Browse</span>"
+                      allow-multiple="true"
+                      accepted-file-types="image/jpeg, image/png"
+                      v-bind:files="myFiles"
+                      @input="updateFiles"
                     />
-                  </label>
-
-                  <!-- Display uploaded files -->
-                  <ul class="mt-4">
-                    <li
-                      v-for="(file, index) in uploadedFiles"
-                      :key="index"
-                      class="flex items-center justify-between bg-blue-100 p-4 mb-2 rounded-md"
-                    >
-                      <span class="text-blue-700">{{ file.name }}</span>
-                      <button
-                        class="bg-blue-900 text-white px-4 py-2 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-                        @click="removeFile(index)"
-                      >
-                        Remove
-                      </button>
-                    </li>
-                  </ul>
-
-                  <!-- Display uploaded files -->
+                  </Div>
+                  <!-- component -->
                 </div>
               </div>
 
               <!-- Add v-model to other inputs as needed -->
             </div>
+
+            <!-- Add v-model to other inputs as needed -->
 
             <div class="flex justify-end mt-6">
               <button
@@ -216,75 +216,95 @@
         </section>
       </div>
     </div>
+    <Modal v-show="isModalVisible" @close="closeModal">
+      <!-- header -->
+      <template v-slot:header>
+        <h1 class="font-bold text-xl">Confirmation</h1>
+      </template>
 
-    <Modal :modalOpen="isPreviewModalOpen" :closeModal="closePreviewModal">
-      <!-- Content for your custom modal -->
-      <div class="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-lg">
-        <h3 class="text-2xl font-bold text-gray-700 dark:text-white mb-4">
-          Preview
-        </h3>
-
+      <!-- body -->
+      <template v-slot:body>
+        <!-- <p class="py-3 text-xs font-bold text-purple-900">
+        Forgot your password?
+      </p> -->
         <table
           class="w-full mt-4 bg-white border border-gray-300 divide-y divide-gray-300"
         >
           <tr>
-            <td class="py-2 px-4 font-medium">Date of incident:</td>
+            <td class="py-2 px-4 font-medium">Date Of Incident:</td>
             <td class="py-2 px-4">{{ formData.Dateofincident }}</td>
           </tr>
           <tr>
-            <td class="py-2 px-4 font-medium">Time of incident:</td>
+            <td class="py-2 px-4 font-medium">Time Of Incident:</td>
             <td class="py-2 px-4">{{ formData.Timeofincident }}</td>
           </tr>
           <tr>
-            <td class="py-2 px-4 font-medium">Location of incident:</td>
+            <td class="py-2 px-4 font-medium">Location Of Incident:</td>
             <td class="py-2 px-4">{{ formData.Locationofincident }}</td>
           </tr>
           <tr>
-            <td class="py-2 px-4 font-medium">Name of parties involved:</td>
+            <td class="py-2 px-4 font-medium">Name Of Parties Involved:</td>
             <td class="py-2 px-4">{{ formData.PartiesInvolved }}</td>
           </tr>
           <tr>
-            <td class="py-2 px-4 font-medium">Witness/victim/suspect:</td>
-            <td class="py-2 px-4">{{ formData.Typeofincident }}</td>
+            <td class="py-2 px-4 font-medium">Witness/Victim/Suspect:</td>
+            <td class="py-2 px-4">{{ formData.Witness }}</td>
           </tr>
           <tr>
-            <td class="py-2 px-4 font-medium">Details:</td>
-            <td class="py-2 px-4">
-              <div class="text-sm max-h-32 overflow-auto">
-                {{ formData.Detailsincident }}
-              </div>
+            <td class="py-2 px-4 font-medium">Type Of Incident:</td>
+
+            <td class="py-2 px-4" v-if="formData.Typeofincident === 'Others'">
+              {{ formData.customIncidentType }}
             </td>
+            <td class="py-2 px-4" v-else>{{ formData.Typeofincident }}</td>
           </tr>
-
-          <!-- ... (Other modal content) ... -->
-
           <tr>
-            <td class="py-2 px-4 font-medium">Uploaded Files:</td>
+            <td class="py-2 px-4 font-medium">Details Incident:</td>
+
+            <textarea
+              v-model="formData.Detailsincident"
+              name="Detailsincident"
+              id="Detailsincident"
+              cols="40"
+              rows="4"
+              style="overflow-y: auto"
+            ></textarea>
+          </tr>
+          <tr>
+            <td class="py-2 px-4 font-medium">Files Upload:</td>
             <td class="py-2 px-4">
               <ul>
-                <li
-                  v-for="(file, index) in uploadedFiles"
-                  :key="index"
-                  class="flex items-center bg-blue-100 p-4 mb-2 rounded-md"
-                >
-                  <span class="text-blue-700">{{ file.name }}</span>
+                <li v-for="fileName in uploadedFileNames" :key="fileName">
+                  {{ fileName }}
                 </li>
               </ul>
             </td>
           </tr>
 
           <!-- ... (Other modal content) ... -->
-        </table>
 
-        <!-- <div class="flex justify-end mt-6">
+          <!-- ... (Other modal content) ... -->
+        </table>
+      </template>
+
+      <!-- footer -->
+      <template v-slot:footer>
+        <div class="grid grid-cols-2 gap-3">
           <button
-            type="submit"
-            class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+            type="button"
+            class="rounded-2xl bg-gray-600 shadow-md p-3 my-1 w-full text-white"
           >
-            Submit
+            Cancel
           </button>
-        </div> -->
-      </div>
+          <button
+            type="button"
+            class="rounded-2xl bg-cyan-800 shadow-md p-3 my-1 w-full text-white"
+          >
+            Confirm
+          </button>
+        </div>
+        <div class="flex justify-end mt-6"></div>
+      </template>
     </Modal>
 
     <!-- <div class="flex justify-end mt-6">
@@ -299,77 +319,83 @@
 </template>
 
 <script>
-import Modal from "@/components/Modal.vue";
+import vueFilePond from "vue-filepond";
+import "filepond/dist/filepond.min.css";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import Modal from "../components/vmodal.vue";
+import axios from "axios";
+
+const FilePond = vueFilePond(
+  FilePondPluginFileValidateType,
+  FilePondPluginImagePreview
+);
 
 export default {
   name: "cctvfromViews",
   components: {
     Modal,
+    FilePond,
   },
   data() {
     return {
-      uploadedFiles: [],
+      myFiles: [],
+      modalContent: "",
+      isModalVisible: false,
+
       isDragging: false,
       formData: {
-        requesterName: "",
-        department: "",
-        phonenumber: "",
-        daterequest: "",
-        location: "",
-        stockinbox: "",
-        stockinkit: "",
-        kitout: "",
-        balancekit: "",
         // Add more form fields here
       },
-      isPreviewModalOpen: false,
     };
   },
   computed: {
-    labelClasses() {
-      return {
-        "border-blue-400": !this.isDragging,
-        "border-blue-700": this.isDragging,
-        "bg-white": !this.isDragging,
-        "bg-blue-100": this.isDragging,
-      };
+    dynamicId() {
+      return `Typeofincident-${this.formData.Typeofincident}`;
+    },
+    dynamicCustomId() {
+      return `customIncidentType-${this.formData.Typeofincident}`;
     },
   },
   methods: {
-    openPreviewModal() {
-      this.isPreviewModalOpen = true;
+    showModal() {
+      this.isModalVisible = true;
     },
-    closePreviewModal() {
-      this.isPreviewModalOpen = false;
+    closeModal() {
+      this.isModalVisible = false;
     },
-    handleDragOver() {
-      this.isDragging = true;
+    handleFilePondInit() {
+      console.log("FilePond has initialized");
+
+      // Example of instance method call on pond reference for the first component
+      this.$refs.pond1.getFiles();
+
+      // Example of instance method call on pond reference for the second component
     },
-    handleDragEnter() {
-      this.isDragging = true;
-    },
-    handleDragLeave() {
-      this.isDragging = false;
-    },
-    handleDrop(event) {
-      this.isDragging = false;
-      // Handle the dropped files
-      const files = event.dataTransfer.files;
-      this.handleFiles(files);
-    },
-    handleFileChange(event) {
-      // Handle the selected files
-      const files = event.target.files;
-      this.handleFiles(files);
-    },
-    handleFiles(files) {
-      // Process and store the files
-      for (const file of files) {
-        this.uploadedFiles.push(file);
-      }
-    },
-    removeFile(index) {
-      this.uploadedFiles.splice(index, 1);
+
+    confirmFormSubmission() {
+      // Handle the confirmation logic here
+      console.log("Confirmed!");
+      console.log("Form Data:", this.formData);
+      axios
+        .post("http://localhost:3000/badgeRequests", this.formData)
+        .then((response) => {
+          // Handle the response
+          console.log("Server response:", response.data);
+
+          this.formData = {
+            // Add more form fields here
+          };
+          // Optionally, you can show a success message or navigate to another page
+        })
+        .catch((error) => {
+          // Handle errors
+          console.error("Error submitting form:", error);
+          // You can show an error message to the user if needed
+        });
+      // Optionally, you can perform additional actions or close the modal
+      this.closePreviewModal();
     },
   },
 };

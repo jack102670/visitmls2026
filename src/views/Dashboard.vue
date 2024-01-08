@@ -140,13 +140,13 @@
               <label
                 for="location"
                 class="block text-sm font-medium my-auto text-gray-700 dark:text-gray-300"
-                >Location:</label
+                >LOCATION:</label
               >
               <select
                 v-model="selectedLocation"
                 @change="onLocationChange"
                 id="location"
-                class="mt-1 block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                class="mt-1 block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-sm"
               >
                 <option
                   v-for="location in locations"
@@ -166,13 +166,13 @@
               <label
                 for="department"
                 class="block text-sm font-medium text-gray-700 my-auto dark:text-gray-300"
-                >Department:</label
+                >DEPARTMENT:</label
               >
               <select
                 v-model="selectedDepartment"
                 @change="onDepartmentChange"
                 id="department"
-                class="mt-1 block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                class="mt-1 text-sm block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               >
                 <option
                   v-for="department in departments"
@@ -190,13 +190,13 @@
               <label
                 for="TypeOfRequest"
                 class="block text-sm font-medium text-gray-700 my-auto dark:text-gray-300"
-                >Type Of Request:</label
+                >TYPE OF REQUEST:</label
               >
               <select
                 v-model="selectedTypeOfRequest"
                 @change="onTypeOfRequestChange"
                 id="TypeOfRequest"
-                class="mt-1 block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                class="mt-1 block text-sm w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               >
                 <option
                   v-for="TypeOfRequest in TypeOfRequests"
@@ -230,6 +230,14 @@ export default {
         { id: "1", name: "HQ" },
         { id: "2", name: "OAH" },
         { id: "3", name: "KULIM HUB" },
+        { id: "4", name: "12 WAVES" },
+        { id: "5", name: "THE SHIP CAMPUS" },
+        { id: "6", name: "BKH" },
+        { id: "7", name: "JOHOR OPS" },
+        { id: "8", name: "LOT 9" },
+        { id: "9", name: "KUANTAN OPS" },
+        { id: "10", name: "DAISO OPS" },
+        { id: "11", name: "8 WAVES" },
         // Add more locations as needed
       ],
       departments: [], // Initialize as empty, it will be populated based on the selected location
@@ -259,9 +267,9 @@ export default {
       switch (this.selectedLocation) {
         case "1": // HQ
           this.departments = [
-            { id: "Security", name: "Security" },
-            { id: "Safety", name: "Safety" },
-            { id: "Maintenance", name: "Maintenance" },
+            { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            { id: "MAINTENANCE", name: "MAINTENANCE" },
             // Add more departments as needed
           ];
           break;
@@ -295,32 +303,28 @@ export default {
     updateTypeOfRequests() {
       // Example: Populate TypeOfRequests based on the selected department
       switch (this.selectedDepartment) {
-        case "Security":
+        case "SECURITY":
           this.TypeOfRequests = [
-            { id: "1", name: "Badge Request" },
-            { id: "2", name: "Incident Report" },
-            { id: "3", name: "CCTV Footage View" },
-            { id: "4", name: "Visitor/Escort" },
-            { id: "5", name: "Testkids" },
-            { id: "6", name: "Mask" },
+            { id: "1", name: "BADGE REQUEST" },
+            { id: "2", name: "INCIDENT REPORT" },
+            { id: "3", name: "CCTV FOOTAGE VIEW" },
+            { id: "4", name: "VISITOR / ESCORT" },
+            { id: "5", name: "TESTKITS" },
+            { id: "6", name: "MASK" },
             // Add more TypeOfRequests as needed
           ];
           break;
-        case "Safety":
+        case "SAFETY":
           this.TypeOfRequests = [
-            { id: "1", name: "Badge Request" },
-            { id: "7", name: "Incident Report" },
+       
+            { id: "7", name: "INCIDENT REPORT" },
             // Add more TypeOfRequests as needed
           ];
           break;
-        case "Maintenance":
+        case "MAINTENANCE":
           this.TypeOfRequests = [
-            { id: "1", name: "Badge Request" },
-            { id: "2", name: "Incident Report" },
-            { id: "3", name: "CCTV Footage View" },
-            { id: "4", name: "Visitor/Escort" },
-            { id: "5", name: "Mask/Testkids" },
-            { id: "6", name: "Mask" },
+            { id: "1", name: "BADGE REQUEST" },
+          
             // Add more TypeOfRequests as needed
           ];
           break;

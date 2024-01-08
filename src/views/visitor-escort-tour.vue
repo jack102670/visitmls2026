@@ -7,21 +7,25 @@
         class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
         <section
-          class="max-w-4xl p-6 mx-auto bg-[#f7fbff] rounded-md dark:bg-gray-800"
+          class="max-w-4xl p-6 mx-auto bg-white border-2 border-gray-200 rounded-md dark:bg-gray-800"
         >
           <h2
-            class="text-lg font-semibold text-gray-700 capitalize dark:text-white"
+            class="text-2xl font-bold text-gray-700 capitalize dark:text-white"
           >
-          Visitor/Escort/Tour
+          VISITOR / ESCORT / TOUR
           </h2>
+          <div class="pt-2"> 
+            <hr>
 
-          <form @submit.prevent="openPreviewModal">
+          </div>
+
+          <form @submit.prevent="showModal">
             <div
               class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3"
             >
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class=" font-semibold text-gray-700 dark:text-gray-200"
                   for="Requestername"
                   >Requester Name</label
                 >
@@ -35,7 +39,7 @@
               </div>
 
               <div>
-                <label class="text-gray-700 dark:text-gray-200" for="Department"
+                <label class="font-semibold text-gray-700 dark:text-gray-200" for="Department"
                   >Department</label
                 >
                 <input
@@ -48,7 +52,7 @@
               </div>
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Locationofincident"
                   >Phone number</label
                 >
@@ -67,7 +71,7 @@
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Date"
                   >Date</label
                 >
@@ -80,7 +84,7 @@
               </div>
 
               <div>
-                <label class="text-gray-700 dark:text-gray-200" for="Witness"
+                <label class="font-semibold text-gray-700 dark:text-gray-200" for="Witness"
                   >location</label
                 >
                 <input
@@ -93,7 +97,7 @@
               </div>
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="time"
                   >time</label
                 >
@@ -110,7 +114,7 @@
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Customername"
                   >Customer name</label
                 >
@@ -125,7 +129,7 @@
 
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Noofpax"
                   >No of pax</label
                 >
@@ -144,7 +148,7 @@
               <div class="w-full">
                 <label
                   for="Purpose"
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   >Purpose</label
                 >
                 <textarea
@@ -159,7 +163,7 @@
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Noofparkingspace"
                   >No of parking space</label
                 >
@@ -174,7 +178,7 @@
 
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Transport"
                   >Transport</label
                 >
