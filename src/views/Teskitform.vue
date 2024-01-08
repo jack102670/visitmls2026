@@ -7,38 +7,43 @@
         class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
         <section
-          class="max-w-4xl p-6 mx-auto bg-[#f7fbff] rounded-md  dark:bg-gray-800"
+          class="max-w-4xl p-6 mx-auto bg-white border-2 border-gray-200 rounded-md dark:bg-gray-800"
         >
           <h2
-            class="text-lg font-semibold text-gray-700 capitalize dark:text-white"
+            class="text-2xl font-bold text-gray-700 capitalize dark:text-white"
           >
             Teskit Form
           </h2>
+          <div class="pt-2">
+            <hr />
+          </div>
 
-          <form @submit.prevent="openPreviewModal">
+          <form @submit.prevent="showModal">
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="requesterName"
-                  >Requester Name</label
+                  >Requester Name<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="formData.requesterName"
                   id="requesterName"
                   type="text"
+                  required1
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
 
               <div>
                 <label class="text-gray-700 dark:text-gray-200" for="department"
-                  >Department</label
+                  >Department<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="formData.department"
                   id="department"
                   type="text"
+                  required1
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
@@ -48,12 +53,13 @@
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
               <div>
                 <label class="text-gray-700 dark:text-gray-200" for="username"
-                  >Phone number</label
+                  >Phone Number<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="formData.phonenumber"
                   id="number"
                   type="number"
+                  required1
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
@@ -72,15 +78,14 @@
                 />
               </div>
               <div>
-                <label
-                  class="text-gray-700 dark:text-gray-200"
-                  for="emailAddress"
-                  >Location</label
+                <label class="text-gray-700 dark:text-gray-200" for=""
+                  >Location<span class="text-red-500">*</span></label
                 >
                 <select
                   v-model="formData.location"
-                  id="locatioan"
+                  id="location"
                   type="email"
+                  required1
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 >
                   <option value="hq">a</option>
@@ -93,12 +98,13 @@
             <div class="grid grid-cols-2 gap-6 mt-4 sm:grid-cols-4">
               <div>
                 <label class="text-gray-700 dark:text-gray-200" for="username"
-                  >NO. stock in box</label
+                  >No. Stock In Box <span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="formData.stockinbox"
                   id="stockinbox"
                   type="number"
+                  required1
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
@@ -107,12 +113,13 @@
                 <label
                   class="text-gray-700 dark:text-gray-200"
                   for="emailAddress"
-                  >No. stock in (kit)</label
+                  >No. Stock In (kit)<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="formData.stockinkit"
                   id="stockinkit"
                   type="number"
+                  required1
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
@@ -120,12 +127,13 @@
                 <label
                   class="text-gray-700 dark:text-gray-200"
                   for="emailAddress"
-                  >No. of kit out</label
+                  >No. Of Kit Out<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="formData.kitout"
                   id="kitout"
                   type="number"
+                  required1
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
@@ -133,12 +141,13 @@
                 <label
                   class="text-gray-700 dark:text-gray-200"
                   for="emailAddress"
-                  >No. of balance kit</label
+                  >No. Of Balance Kit<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="formData.balancekit"
                   id="balacekit"
                   type="number"
+                  required1
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
@@ -158,14 +167,17 @@
         </section>
       </div>
     </div>
+    <Modal v-show="isModalVisible" @close="closeModal">
+      <!-- header -->
+      <template v-slot:header>
+        <h1 class="font-bold text-xl">Confirmation</h1>
+      </template>
 
-    <Modal :modalOpen="isPreviewModalOpen" :closeModal="closePreviewModal">
-      <!-- Content for your custom modal -->
-      <div class="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-lg">
-        <h3 class="text-2xl font-bold text-gray-700 dark:text-white mb-4">
-          Preview
-        </h3>
-
+      <!-- body -->
+      <template v-slot:body>
+        <!-- <p class="py-3 text-xs font-bold text-purple-900">
+        Forgot your password?
+      </p> -->
         <table
           class="w-full mt-4 bg-white border border-gray-300 divide-y divide-gray-300"
         >
@@ -192,39 +204,49 @@
           </tr>
           <!-- Add more rows as needed -->
           <tr>
-            <td class="py-2 px-4 font-medium">NO. Stock in Box:</td>
+            <td class="py-2 px-4 font-medium">No. Stock In Box:</td>
             <td class="py-2 px-4">{{ formData.stockinbox }}</td>
           </tr>
           <tr>
-            <td class="py-2 px-4 font-medium">No. Stock in (Kit):</td>
+            <td class="py-2 px-4 font-medium">No. Stock In (Kit):</td>
             <td class="py-2 px-4">{{ formData.stockinkit }}</td>
           </tr>
           <tr>
-            <td class="py-2 px-4 font-medium">No. of Kit Out:</td>
+            <td class="py-2 px-4 font-medium">No. Of Kit Out:</td>
             <td class="py-2 px-4">{{ formData.kitout }}</td>
           </tr>
           <tr>
-            <td class="py-2 px-4 font-medium">No. of Balance Kit:</td>
+            <td class="py-2 px-4 font-medium">No. Of Balance Kit:</td>
             <td class="py-2 px-4">{{ formData.balancekit }}</td>
           </tr>
           <!-- Add more rows as needed -->
         </table>
+      </template>
 
-        <!-- <div class="flex justify-end mt-6">
+      <!-- footer -->
+      <template v-slot:footer>
+        <div class="grid grid-cols-2 gap-3">
           <button
-            type="submit"
-            class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
+            type="button"
+            class="rounded-2xl bg-gray-600 shadow-md p-3 my-1 w-full text-white"
           >
-            Submit
+            Cancel
           </button>
-        </div> -->
-      </div>
+          <button
+            type="button"
+            class="rounded-2xl bg-cyan-800 shadow-md p-3 my-1 w-full text-white"
+          >
+            Confirm
+          </button>
+        </div>
+        <div class="flex justify-end mt-6"></div>
+      </template>
     </Modal>
   </main>
 </template>
 
 <script>
-import Modal from "@/components/Modal.vue";
+import Modal from "@/components/vmodal.vue";
 
 export default {
   name: "cctvfromViews",
@@ -245,20 +267,15 @@ export default {
         balancekit: "",
         // Add more form fields here
       },
-      isPreviewModalOpen: false,
+      isModalVisible: false,
     };
   },
   methods: {
-    openPreviewModal() {
-      this.isPreviewModalOpen = true;
+    showModal() {
+      this.isModalVisible = true;
     },
-    closePreviewModal() {
-      this.isPreviewModalOpen = false;
-    },
-    submitForm() {
-      // Handle form submission logic here
-      this.isPreviewModalOpen = false;
-      // You may want to make an API call or perform other actions
+    closeModal() {
+      this.isModalVisible = false;
     },
   },
 };

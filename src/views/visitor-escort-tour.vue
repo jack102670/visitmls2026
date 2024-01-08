@@ -12,11 +12,10 @@
           <h2
             class="text-2xl font-bold text-gray-700 capitalize dark:text-white"
           >
-          VISITOR / ESCORT / TOUR
+            VISITOR / ESCORT / TOUR
           </h2>
-          <div class="pt-2"> 
-            <hr>
-
+          <div class="pt-2">
+            <hr />
           </div>
 
           <form @submit.prevent="showModal">
@@ -25,9 +24,9 @@
             >
               <div>
                 <label
-                  class=" font-semibold text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Requestername"
-                  >Requester Name</label
+                  >Requester Name<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="formData.Requestername"
@@ -39,8 +38,10 @@
               </div>
 
               <div>
-                <label class="font-semibold text-gray-700 dark:text-gray-200" for="Department"
-                  >Department</label
+                <label
+                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  for="Department"
+                  >Department<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="formData.Department"
@@ -53,8 +54,8 @@
               <div>
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
-                  for="Locationofincident"
-                  >Phone number</label
+                  for=""
+                  >Phone Number<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="formData.Phonenumber"
@@ -73,19 +74,22 @@
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Date"
-                  >Date</label
+                  >Date<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="formData.Date"
                   id="Date"
                   type="date"
+                  required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
 
               <div>
-                <label class="font-semibold text-gray-700 dark:text-gray-200" for="Witness"
-                  >location</label
+                <label
+                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  for="Witness"
+                  >Location<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="formData.location"
@@ -99,12 +103,13 @@
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="time"
-                  >time</label
+                  >Time<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="formData.time"
                   id="time"
                   type="time"
+                  required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
@@ -116,7 +121,7 @@
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Customername"
-                  >Customer name</label
+                  >Customer Name</label
                 >
                 <input
                   v-model="formData.Customername"
@@ -131,7 +136,7 @@
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Noofpax"
-                  >No of pax</label
+                  >No Of Pax<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="formData.Noofpax"
@@ -149,7 +154,7 @@
                 <label
                   for="Purpose"
                   class="font-semibold text-gray-700 dark:text-gray-200"
-                  >Purpose</label
+                  >Purpose<span class="text-red-500">*</span></label
                 >
                 <textarea
                   v-model="formData.Purpose"
@@ -165,7 +170,7 @@
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Noofparkingspace"
-                  >No of parking space</label
+                  >No Of Parking Space<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="formData.Noofparkingspace"
@@ -180,7 +185,7 @@
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Transport"
-                  >Transport</label
+                  >Transport<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="formData.Transport"
@@ -202,80 +207,93 @@
               </button>
             </div>
           </form>
+          <Modal v-show="isModalVisible" @close="closeModal">
+            <!-- header -->
+            <template v-slot:header>
+              <h1 class="font-bold text-xl">Confirmation</h1>
+            </template>
+
+            <!-- body -->
+            <template v-slot:body>
+              <!-- <p class="py-3 text-xs font-bold text-purple-900">
+        Forgot your password?
+      </p> -->
+              <table
+                class="w-full mt-4 bg-white border border-gray-300 divide-y divide-gray-300"
+              >
+                <tr>
+                  <td class="py-2 px-4 font-medium">Requester Name:</td>
+                  <td class="py-2 px-4">{{ formData.Requestername }}</td>
+                </tr>
+                <tr>
+                  <td class="py-2 px-4 font-medium">Department:</td>
+                  <td class="py-2 px-4">{{ formData.Department }}</td>
+                </tr>
+                <tr>
+                  <td class="py-2 px-4 font-medium">Phone number:</td>
+                  <td class="py-2 px-4">{{ formData.Phonenumber }}</td>
+                </tr>
+                <tr>
+                  <td class="py-2 px-4 font-medium">Date:</td>
+                  <td class="py-2 px-4">{{ formData.Date }}</td>
+                </tr>
+                <tr>
+                  <td class="py-2 px-4 font-medium">location:</td>
+                  <td class="py-2 px-4">{{ formData.location }}</td>
+                </tr>
+                <tr>
+                  <td class="py-2 px-4 font-medium">time:</td>
+                  <td class="py-2 px-4">{{ formData.time }}</td>
+                </tr>
+                <tr>
+                  <td class="py-2 px-4 font-medium">Customer name:</td>
+                  <td class="py-2 px-4">{{ formData.Customername }}</td>
+                </tr>
+                <tr>
+                  <td class="py-2 px-4 font-medium">Perpose:</td>
+                  <td class="py-2 px-4">
+                    <div class="text-sm max-h-32 overflow-auto">
+                      {{ formData.Purpose }}
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="py-2 px-4 font-medium">No of parking space:</td>
+                  <td class="py-2 px-4">{{ formData.Noofparkingspace }}</td>
+                </tr>
+                <tr>
+                  <td class="py-2 px-4 font-medium">Transport:</td>
+                  <td class="py-2 px-4">{{ formData.Transport }}</td>
+                </tr>
+
+                <!-- ... (Other modal content) ... -->
+
+                <!-- ... (Other modal content) ... -->
+              </table>
+            </template>
+
+            <!-- footer -->
+            <template v-slot:footer>
+              <div class="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  class="rounded-2xl bg-gray-600 shadow-md p-3 my-1 w-full text-white"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  class="rounded-2xl bg-cyan-800 shadow-md p-3 my-1 w-full text-white"
+                >
+                  Confirm
+                </button>
+              </div>
+              <div class="flex justify-end mt-6"></div>
+            </template>
+          </Modal>
         </section>
       </div>
     </div>
-
-    <Modal :modalOpen="isPreviewModalOpen" :closeModal="closePreviewModal">
-      <!-- Content for your custom modal -->
-      <div class="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-lg">
-        <h3 class="text-2xl font-bold text-gray-700 dark:text-white mb-4">
-          Preview
-        </h3>
-
-        <table
-          class="w-full mt-4 bg-white border border-gray-300 divide-y divide-gray-300"
-        >
-          <tr>
-            <td class="py-2 px-4 font-medium">Requester Name:</td>
-            <td class="py-2 px-4">{{ formData.Requestername }}</td>
-          </tr>
-          <tr>
-            <td class="py-2 px-4 font-medium">Department:</td>
-            <td class="py-2 px-4">{{ formData.Department }}</td>
-          </tr>
-          <tr>
-            <td class="py-2 px-4 font-medium">Phone number:</td>
-            <td class="py-2 px-4">{{ formData.Phonenumber }}</td>
-          </tr>
-          <tr>
-            <td class="py-2 px-4 font-medium">Date:</td>
-            <td class="py-2 px-4">{{ formData.Date }}</td>
-          </tr>
-          <tr>
-            <td class="py-2 px-4 font-medium">location:</td>
-            <td class="py-2 px-4">{{ formData.location }}</td>
-          </tr>
-          <tr>
-            <td class="py-2 px-4 font-medium">time:</td>
-            <td class="py-2 px-4">{{ formData.time }}</td>
-          </tr>
-          <tr>
-            <td class="py-2 px-4 font-medium">Customer name:</td>
-            <td class="py-2 px-4">{{ formData.Customername }}</td>
-          </tr>
-          <tr>
-            <td class="py-2 px-4 font-medium">Perpose:</td>
-            <td class="py-2 px-4">
-              <div class="text-sm max-h-32 overflow-auto">
-                {{ formData.Purpose }}
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td class="py-2 px-4 font-medium">No of parking space:</td>
-            <td class="py-2 px-4">{{ formData.Noofparkingspace }}</td>
-          </tr>
-          <tr>
-            <td class="py-2 px-4 font-medium">Transport:</td>
-            <td class="py-2 px-4">{{ formData.Transport }}</td>
-          </tr>
-
-          <!-- ... (Other modal content) ... -->
-
-          <!-- ... (Other modal content) ... -->
-        </table>
-
-        <!-- <div class="flex justify-end mt-6">
-          <button
-            type="submit"
-            class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
-          >
-            Submit
-          </button>
-        </div> -->
-      </div>
-    </Modal>
 
     <!-- <div class="flex justify-end mt-6">
       <button
@@ -289,7 +307,7 @@
 </template>
 
 <script>
-import Modal from "@/components/Modal.vue";
+import Modal from "@/components/vmodal.vue";
 
 export default {
   name: "cctvformViews",
@@ -301,65 +319,28 @@ export default {
       uploadedFiles: [],
       isDragging: false,
       formData: {
-        requesterName: "",
-        department: "",
-        phonenumber: "",
-        daterequest: "",
-        location: "",
-        stockinbox: "",
-        stockinkit: "",
-        kitout: "",
-        balancekit: "",
-        // Add more form fields here
+        Requestername: '', // Add default value if needed
+        Department: '', // Add default value if needed
+        Phonenumber: '', // Add default value if needed
+        Date: '', // Add default value if needed
+        location: '', // Add default value if needed
+        time: '', // Add default value if needed
+        Customername: '', // Add default value if needed
+        Purpose: '', // Add default value if needed
+        Noofparkingspace: '', // Add default value if needed
+        Transport: '', // Add default value if needed
+        // Add more form fields here as needed
       },
-      isPreviewModalOpen: false,
+      isModalVisible: false,
     };
   },
-  computed: {
-    labelClasses() {
-      return {
-        "border-blue-400": !this.isDragging,
-        "border-blue-700": this.isDragging,
-        "bg-white": !this.isDragging,
-        "bg-blue-100": this.isDragging,
-      };
-    },
-  },
+
   methods: {
-    openPreviewModal() {
-      this.isPreviewModalOpen = true;
+    showModal() {
+      this.isModalVisible = true;
     },
-    closePreviewModal() {
-      this.isPreviewModalOpen = false;
-    },
-    handleDragOver() {
-      this.isDragging = true;
-    },
-    handleDragEnter() {
-      this.isDragging = true;
-    },
-    handleDragLeave() {
-      this.isDragging = false;
-    },
-    handleDrop(event) {
-      this.isDragging = false;
-      // Handle the dropped files
-      const files = event.dataTransfer.files;
-      this.handleFiles(files);
-    },
-    handleFileChange(event) {
-      // Handle the selected files
-      const files = event.target.files;
-      this.handleFiles(files);
-    },
-    handleFiles(files) {
-      // Process and store the files
-      for (const file of files) {
-        this.uploadedFiles.push(file);
-      }
-    },
-    removeFile(index) {
-      this.uploadedFiles.splice(index, 1);
+    closeModal() {
+      this.isModalVisible = false;
     },
   },
 };
