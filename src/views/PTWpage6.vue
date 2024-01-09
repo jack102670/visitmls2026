@@ -19,64 +19,7 @@
           <div
             class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 mx-auto cursor-pointer flex w-full"
           >
-            <div class="w-full">
-              <label
-                for="Description"
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                >Description</label
-              >
-              <textarea
-                v-model="Description"
-                id="Description"
-                class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                rows="2"
-                required
-              ></textarea>
-            </div>
-            <div>
-              <label
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                for="location"
-                >Location</label
-              >
-              <select
-                v-model="location"
-                id="location"
-                type="text"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              >
-                <option value="hq">a</option>
-                <option value="hq">b</option>
-              </select>
-            </div>
-          </div>
-          <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-            <div>
-              <label
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                for="Fromdate"
-                >From</label
-              >
-              <input
-                v-model="formData.fromDate"
-                id="Fromdate"
-                type="date"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
-            </div>
-            <div>
-              <label
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                for="todate"
-                >To</label
-              >
-              <input
-                v-model="toDate"
-                id="todate"
-                type="date"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
-            </div>
+            
 
             <div>
               <label
@@ -125,7 +68,7 @@
               <label
                 class="font-semibold text-gray-700 dark:text-gray-200"
                 for="Completedate"
-                >Complete Date</label
+                >Complete Date<span class="text-red-500">*</span></label
               >
               <input
                 v-model="Completedate"
@@ -139,7 +82,7 @@
               <label
                 class="font-semibold text-gray-700 dark:text-gray-200"
                 for="Starttime"
-                >Start Time</label
+                >Start Time<span class="text-red-500">*</span></label
               >
               <input
                 v-model="Starttime"
@@ -153,7 +96,7 @@
               <label
                 class="font-semibold text-gray-700 dark:text-gray-200"
                 for="Completetime"
-                >Complete Time</label
+                >Complete Time<span class="text-red-500">*</span></label
               >
               <input
                 v-model="Completetime"
@@ -188,14 +131,14 @@
                 <label
                   for="Descofwork"
                   class="font-semibold text-gray-700 dark:text-gray-200"
-                  >Description Of Work<span class="text-red-500">*</span></label
+                  >Description Of Work</label
                 >
                 <textarea
                   v-model="Descofwork"
                   id="Descofwork"
                   class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                   rows="3"
-                  required
+                  
                 ></textarea>
               </div>
             </div>
@@ -207,8 +150,9 @@
               </label>
               <div class="grid grid-cols-2">
                 <div>
-                  <label for="A" class="text-gray-700 dark:text-gray-200">
+                  <label for="a2" class="text-gray-700 dark:text-gray-200">
                     <input
+                    id="a2"
                       type="checkbox"
                       value="A"
                       v-model="selectedAuthorities"
@@ -218,9 +162,9 @@
                 </div>
 
                 <div>
-                  <label for="jack" class="text-gray-700 dark:text-gray-200">
+                  <label for="b2" class="text-gray-700 dark:text-gray-200">
                     <input
-                      id="jack"
+                      id="b2"
                       type="checkbox"
                       value="B"
                       v-model="selectedAuthorities"
@@ -230,9 +174,9 @@
                 </div>
 
                 <div>
-                  <label for="john" class="text-gray-700 dark:text-gray-200">
+                  <label for="c2" class="text-gray-700 dark:text-gray-200">
                     <input
-                      id="john"
+                      id="c2"
                       type="checkbox"
                       value="C"
                       v-model="selectedAuthorities"
@@ -280,8 +224,9 @@
               </label>
               <div class="grid grid-cols-2">
                 <div>
-                  <label for="A" class="text-gray-700 dark:text-gray-200">
+                  <label for="a1" class="text-gray-700 dark:text-gray-200">
                     <input
+                    id="a1"
                       type="checkbox"
                       value="A"
                       v-model="selectedAuthorities"
@@ -291,9 +236,9 @@
                 </div>
 
                 <div>
-                  <label for="jack" class="text-gray-700 dark:text-gray-200">
+                  <label for="b1" class="text-gray-700 dark:text-gray-200">
                     <input
-                      id="jack"
+                      id="b1"
                       type="checkbox"
                       value="B"
                       v-model="selectedAuthorities"
@@ -303,9 +248,9 @@
                 </div>
 
                 <div>
-                  <label for="john" class="text-gray-700 dark:text-gray-200">
+                  <label for="c1" class="text-gray-700 dark:text-gray-200">
                     <input
-                      id="john"
+                      id="c1"
                       type="checkbox"
                       value="C"
                       v-model="selectedAuthorities"

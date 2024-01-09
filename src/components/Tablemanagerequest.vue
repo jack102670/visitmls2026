@@ -4,7 +4,7 @@
       <div class="inline-flex items-center gap-x-3">
         <div class="flex items-center gap-x-2">
           <div>
-            <h2 class="font-medium text-gray-500 dark:text-gray-300 ">
+            <h2 class="font-medium text-gray-500 dark:text-gray-300">
               {{ requester.name }}
             </h2>
           </div>
@@ -15,7 +15,7 @@
       <div class="inline-flex items-center gap-x-3">
         <div class="flex items-center gap-x-2">
           <div>
-            <h2 class="font-medium text-gray-500 dark:text-gray-300 ">
+            <h2 class="font-medium text-gray-500 dark:text-gray-300">
               {{ requester.typeofrequest }}
             </h2>
           </div>
@@ -40,7 +40,7 @@
     <td class="px-4 py-4 ml text-sm whitespace-nowrap">
       <div class="flex items-center gap-x-6">
         <button
-          @click="viewRequestDetails"
+          @click="showModal"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
           <svg
@@ -62,9 +62,10 @@
               d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
             />
           </svg>
-        </button> 
+        </button>
 
-        <button v-if="requester.status === 'Pending'"
+        <button
+          v-if="requester.status === 'Pending'"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
         >
           <svg
@@ -82,8 +83,9 @@
             />
           </svg>
         </button>
-        
-        <button v-if="requester.status === 'Pending'"
+
+        <button
+          v-if="requester.status === 'Pending'"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
           <svg
@@ -103,14 +105,132 @@
         </button>
       </div>
     </td>
-
-   
   </tr>
+  <Modal v-show="isModalVisible" @close="closeModal">
+    <!-- header -->
+    <template v-slot:header>
+      <h1 v-if="requester.typeofrequest==='Access card request'" class="font-bold text-xl">Access card request</h1><h1 v-if="requester.typeofrequest==='Badge request'" class="font-bold text-xl">Badge Request</h1><h1   v-if="requester.typeofrequest=== 'PTW'" class="font-bold text-xl">Permit To Work</h1>
+    </template>
+
+    <!-- body -->
+    <template v-slot:body>
+      <!-- <p class="py-3 text-xs font-bold text-purple-900">
+        Forgot your password?
+      </p> -->
+      <div v-if="requester.typeofrequest=== 'PTW'" class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="requesterName"
+            >Requester Name</label
+          >
+          <input
+            id="requesterName"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="department"
+            >Department</label
+          >
+          <input
+            id="department"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <!-- Add v-model to other inputs as needed -->
+      </div>
+      
+      <div
+        class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
+      >
+        <div class="w-full">
+          <label for="Description" class="text-gray-700 dark:text-gray-200"
+            >Description</label
+          >
+          <textarea
+            id="Description"
+            class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            rows="2"
+            required
+          ></textarea>
+        </div>
+      </div>
+    </template>
+
+    <!-- footer -->
+    <template v-slot:footer>
+      <h1  class="font-bold text-xl">ADMIN</h1>
+      <div class="-mx-3 flex flex-wrap">
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4">
+            <label
+              for="preparedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Prepared By
+            </label>
+            <input
+              type="text"
+              name="preparedBy"
+              id="preparedBy"
+              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+            />
+          </div>
+        </div>
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4">
+            <label
+              for="verifiedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Verified By
+            </label>
+            <input
+              type="text"
+              name="verifiedBy"
+              id="verifiedBy"
+              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+            />
+          </div>
+        </div>
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4 relative">
+            <label
+              for="approvedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Approved By
+            </label>
+            <div class="relative flex items-stretch">
+              <input
+                type="text"
+                name="approvedBy"
+                id="approvedBy"
+                class="w-full pl-12 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+  </Modal>
 </template>
 
 <script>
+import Modal from "../components/vmodal.vue";
 export default {
   name: "TableformanagerequestView",
+  components: {
+    Modal,
+  },
+  data() {
+    return {
+      isModalVisible: false,
+    };
+  },
   props: {
     requester: {
       type: Object,
@@ -118,6 +238,12 @@ export default {
     },
   },
   methods: {
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
     getStatusContainerClass(status) {
       const colorMap = {
         Approved:

@@ -259,13 +259,15 @@ export default {
     return {
       searchQuery: "",
       // Sample data structure for requesters
+      role:"security",
       requesters: [
         {
           id: 1,
           name: "bohn Doe",
-          typeofrequest: "CCTV footage",
+          typeofrequest: "PTW",
           date: "2023-01-01",
           status: "Pending",
+          
         },
         {
           id: 2,
@@ -374,7 +376,7 @@ export default {
         name: "asc",
       },
       sortBy: "status",
-      itemsPerPage: 4,
+      itemsPerPage: 8,
       currentPage: 1,
     };
   },

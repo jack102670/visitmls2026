@@ -303,7 +303,7 @@ export default {
     fetchRequesters() {
       console.log("Fetching requesters...");
       axios
-        .get("http://localhost:3000/api/requesters")
+        .get("http://localhost:3000/requesters")
         .then((response) => {
           this.requesters = response.data;
           console.log("Requesters data:", this.requesters);

@@ -9,10 +9,13 @@
         <section
           class="max-w-4xl p-6 mx-auto bg-[#f7fbff] rounded-md dark:bg-gray-800"
         >
+          <p class="font-semibold text-3xl p-3 text-gray-700">
+            SAFETY INCIDENT REPORT
+          </p>
           <h2
             class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
           >
-            Part 1 Incident / Accident Info
+            Part 1 Incident / Accident Info<span class="text-red-500">*</span>
           </h2>
 
           <form @submit.prevent="openPreviewModal">
@@ -20,7 +23,9 @@
               class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2"
             >
               <div>
-                <label class="text-gray-700 dark:text-gray-200" for="location"
+                <label
+                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  for="location"
                   >Incident Location</label
                 >
                 <input
@@ -32,7 +37,7 @@
               </div>
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Dateofincident"
                   >Date of incident</label
                 >
@@ -55,7 +60,7 @@
               <!-- Add v-model to other inputs as needed -->
             </div>
             <div class="flex flex-col sm:flex-row gap-4 mt-4">
-              <label class="text-gray-700 dark:text-gray-200"
+              <label class="font-semibold text-gray-700 dark:text-gray-200"
                 >Incident Accident Category:</label
               >
               <div class="mt-2 flex flex-wrap">
@@ -105,14 +110,14 @@
               <h2
                 class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
               >
-                Part 2 Personal Data - Victim 1
+                Part 2 Personal Data - Victim 1 <span class="text-red-500">*</span>
               </h2>
             </div>
 
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Namevictim1"
                   >Name</label
                 >
@@ -126,7 +131,7 @@
 
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="NRICpassportvictim1"
                   >NRIC / Passport</label
                 >
@@ -139,7 +144,7 @@
               </div>
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Nationalityvictim1"
                   >Nationality: {{ Nationalityvictim1 }}</label
                 >
@@ -149,27 +154,29 @@
                   <div>
                     <input
                       type="radio"
-                      id="Local"
-                      value="Local"
+                      id="Malaysian"
+                      value="Malaysian"
                       v-model="Nationalityvictim1"
                     />
-                    <label class="ml-1" for="Local">Local</label>
+                    <label class="ml-1" for="Malaysian">Malaysian</label>
                   </div>
                   <div>
                     <input
                       type="radio"
-                      id="Foreign"
-                      value="Foreign"
+                      id="Non Malaysian"
+                      value="Non Malaysian"
                       v-model="Nationalityvictim1"
                     />
-                    <label class="ml-1" for="Foreign">Foreign</label>
+                    <label class="ml-1" for="Non Malaysian"
+                      >Non Malaysian</label
+                    >
                   </div>
                   <Div></Div>
                 </div>
               </div>
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Addressvictim1"
                   >Address</label
                 >
@@ -190,7 +197,7 @@
               <div class="w-full">
                 <label
                   for="Companynamevictim1"
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   >Company Name</label
                 >
                 <input
@@ -203,7 +210,7 @@
               <div class="w-full">
                 <label
                   for="Companyaddressvictim1"
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   >Company Address</label
                 >
                 <textarea
@@ -220,7 +227,7 @@
             >
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Departmentvictim1"
                   >Department</label
                 >
@@ -233,9 +240,9 @@
               </div>
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Datejoinedvictim1"
-                  >Date joined</label
+                  >Date Joined</label
                 >
                 <input
                   v-model="Datejoinedvictim1"
@@ -247,7 +254,7 @@
 
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="categoryvictim1"
                   >Category</label
                 >
@@ -256,19 +263,22 @@
                   id="categoryvictim1"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 >
-                  <option value="hq">a</option>
-                  <option value="hq">b</option>
+                  <option value="Employee">Employee</option>
+                  <option value="Foreign Worker">Foreign Worker</option>
+                  <option value="Contractor">Contractor</option>
+                  <option value="Customer">Customer</option>
+                  <option value="Visitor and Public">Visitor and Public</option>
                 </select>
               </div>
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
-                  for="Designnationvictim1"
-                  >Designnation
+                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  for="Designationvictim1"
+                  >Designation
                 </label>
                 <input
                   v-model="Designnationvictim1"
-                  id="Designnationvictim1"
+                  id="Designationvictim1"
                   type="text"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
@@ -279,7 +289,7 @@
             >
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Gendervictim1"
                   >Gender</label
                 >
@@ -294,7 +304,9 @@
                 </select>
               </div>
               <div>
-                <label class="text-gray-700 dark:text-gray-200" for="Agevictim1"
+                <label
+                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  for="Agevictim1"
                   >Age</label
                 >
                 <input
@@ -305,7 +317,9 @@
                 />
               </div>
               <div>
-                <label class="text-gray-700 dark:text-gray-200" for="DOBvictim1"
+                <label
+                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  for="DOBvictim1"
                   >Date of Birth</label
                 >
                 <input
@@ -327,7 +341,7 @@
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Namevictim2"
                   >Name</label
                 >
@@ -341,7 +355,7 @@
 
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="NRICpassportvictim2"
                   >NRIC / Passport</label
                 >
@@ -355,7 +369,7 @@
 
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Nationalityvictim2"
                   >Nationality: {{ Nationalityvictim2 }}</label
                 >
@@ -365,27 +379,29 @@
                   <div>
                     <input
                       type="radio"
-                      id="Local"
-                      value="Local"
+                      id="Malaysian2"
+                      value="Malaysian"
                       v-model="Nationalityvictim2"
                     />
-                    <label class="ml-1" for="Local">Local</label>
+                    <label class="ml-1" for="Malaysian2">Malaysian</label>
                   </div>
                   <div>
                     <input
                       type="radio"
-                      id="Foreign"
-                      value="Foreign"
+                      id="Non Malaysian2"
+                      value="Non Malaysian"
                       v-model="Nationalityvictim2"
                     />
-                    <label class="ml-1" for="Foreign">Foreign</label>
+                    <label class="ml-1" for="Non Malaysian2"
+                      >Non Malaysian</label
+                    >
                   </div>
                   <Div></Div>
                 </div>
               </div>
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Addressvictim2"
                   >Address</label
                 >
@@ -406,7 +422,7 @@
               <div class="w-full">
                 <label
                   for="Companynamevictim2"
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   >Company Name</label
                 >
                 <input
@@ -419,7 +435,7 @@
               <div class="w-full">
                 <label
                   for="Companyaddressvictim2"
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   >Company Address</label
                 >
                 <textarea
@@ -436,7 +452,7 @@
             >
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Departmentvictim2"
                   >Department</label
                 >
@@ -449,9 +465,9 @@
               </div>
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Datejoinedvictim2"
-                  >Date joined</label
+                  >Date Joined</label
                 >
                 <input
                   v-model="Datejoinedvictim2"
@@ -463,7 +479,7 @@
 
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="categoryvictim2"
                   >Category</label
                 >
@@ -472,13 +488,16 @@
                   id="categoryvictim2"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 >
-                  <option value="hq">a</option>
-                  <option value="hq">b</option>
+                  <option value="Employee">Employee</option>
+                  <option value="Foreign Worker">Foreign Worker</option>
+                  <option value="Contractor">Contractor</option>
+                  <option value="Customer">Customer</option>
+                  <option value="Visitor and Public">Visitor and Public</option>
                 </select>
               </div>
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Designnationvictim2"
                   >Designnation
                 </label>
@@ -495,7 +514,7 @@
             >
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Gendervictim2"
                   >Gender</label
                 >
@@ -510,7 +529,7 @@
                 </select>
               </div>
               <div>
-                <label class="text-gray-700 dark:text-gray-200" for="Agevictim2"
+                <label class="font-semibold text-gray-700 dark:text-gray-200" for="Agevictim2"
                   >Age</label
                 >
                 <input
@@ -521,7 +540,7 @@
                 />
               </div>
               <div>
-                <label class="text-gray-700 dark:text-gray-200" for="DOBvictim2"
+                <label class="font-semibold text-gray-700 dark:text-gray-200" for="DOBvictim2"
                   >Date of Birth</label
                 >
                 <input
@@ -543,7 +562,7 @@
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Namewitness1"
                   >Name</label
                 >
@@ -557,7 +576,7 @@
 
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="NRICpassportwitness1"
                   >NRIC / Passport</label
                 >
@@ -571,37 +590,39 @@
 
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Nationalitywitness1"
                   >Nationality: {{ Nationalitywitness1 }}</label
                 >
                 <div
                   class="block flex justify-between w-full px-4 py-2 mt-2 text-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 >
-                  <div>
+                <div>
                     <input
                       type="radio"
-                      id="Local"
-                      value="Local"
+                      id="Malaysianwitness1"
+                      value="Malaysian"
                       v-model="Nationalitywitness1"
                     />
-                    <label class="ml-1" for="Local">Local</label>
+                    <label class="ml-1" for="Malaysianwitness1">Malaysian</label>
                   </div>
                   <div>
                     <input
                       type="radio"
-                      id="Foreign"
-                      value="Foreign"
+                      id="Non Malaysianwitness1"
+                      value="Non Malaysian"
                       v-model="Nationalitywitness1"
                     />
-                    <label class="ml-1" for="Foreign">Foreign</label>
+                    <label class="ml-1" for="Non Malaysianwitness1"
+                      >Non Malaysian</label
+                    >
                   </div>
                   <Div></Div>
                 </div>
               </div>
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Addresswitness1"
                   >Address</label
                 >
@@ -620,7 +641,7 @@
               class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 mx-auto cursor-pointer flex w-full"
             >
               <div class="w-full">
-                <label for="" class="text-gray-700 dark:text-gray-200"
+                <label for="" class="font-semibold text-gray-700 dark:text-gray-200"
                   >Company Name</label
                 >
                 <input
@@ -633,7 +654,7 @@
               <div class="w-full">
                 <label
                   for="Companyaddresswitness1"
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   >Company Address</label
                 >
                 <textarea
@@ -650,7 +671,7 @@
             >
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Departmentwitness1"
                   >Department</label
                 >
@@ -664,9 +685,9 @@
 
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Designnationwitness1"
-                  >Designnation
+                  >Designation
                 </label>
                 <input
                   v-model="Designnationwitness1"
@@ -690,7 +711,7 @@
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Namewitness2"
                   >Name</label
                 >
@@ -704,7 +725,7 @@
 
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="NRICpassportwitness2"
                   >NRIC / Passport</label
                 >
@@ -718,37 +739,39 @@
 
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Nationalitywitness2"
                   >Nationality: {{ Nationalitywitness2 }}</label
                 >
                 <div
                   class="block flex justify-between w-full px-4 py-2 mt-2 text-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 >
-                  <div>
+                <div>
                     <input
                       type="radio"
-                      id="Local"
-                      value="Local"
+                      id="Malaysianwitness2"
+                      value="Malaysian"
                       v-model="Nationalitywitness2"
                     />
-                    <label class="ml-1" for="Local">Local</label>
+                    <label class="ml-1" for="Malaysianwitness2">Malaysian</label>
                   </div>
                   <div>
                     <input
                       type="radio"
-                      id="Foreign"
-                      value="Foreign"
+                      id="Non Malaysianwitness2"
+                      value="Non Malaysian"
                       v-model="Nationalitywitness2"
                     />
-                    <label class="ml-1" for="Foreign">Foreign</label>
+                    <label class="ml-1" for="Non Malaysianwitness2"
+                      >Non Malaysian</label
+                    >
                   </div>
                   <Div></Div>
                 </div>
               </div>
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Addresswitness2"
                   >Address</label
                 >
@@ -769,7 +792,7 @@
               <div class="w-full">
                 <label
                   for="Companynamewitness2"
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   >Company Name</label
                 >
                 <input
@@ -782,7 +805,7 @@
               <div class="w-full">
                 <label
                   for="Companyaddresswitness2"
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   >Company Address</label
                 >
                 <textarea
@@ -799,7 +822,7 @@
             >
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Departmentwitness2"
                   >Department</label
                 >
@@ -813,9 +836,9 @@
 
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Designnationwitness2"
-                  >Designnation
+                  >Designation
                 </label>
                 <input
                   v-model="Designnationwitness2"
@@ -836,7 +859,7 @@
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Operatorname"
                   >Operator Name</label
                 >
@@ -850,7 +873,7 @@
 
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="NRICpassportad"
                   >NRIC / Passport</label
                 >
@@ -864,7 +887,7 @@
               <div class="w-full">
                 <label
                   for="Companynamead"
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   >Company Name</label
                 >
                 <input
@@ -883,7 +906,7 @@
               <div class="w-full">
                 <label
                   for="Firstaidtreatment"
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   >First Aid Treatment</label
                 >
                 <textarea
@@ -897,7 +920,7 @@
               <div class="w-full">
                 <label
                   for="Machineryinvolved"
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   >Machinery Involved</label
                 >
                 <textarea
@@ -911,7 +934,7 @@
               <div class="w-full">
                 <label
                   for="Description"
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   >Description</label
                 >
                 <textarea
@@ -925,7 +948,7 @@
               <div class="w-full">
                 <label
                   for="typeofpropertydamage"
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   >Type of Property Damage</label
                 >
                 <textarea
@@ -939,7 +962,7 @@
               <div class="w-full">
                 <label
                   for="machineryfitnesscertificate"
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   >Machinery Fitness Certificate</label
                 >
                 <textarea
@@ -953,7 +976,7 @@
               <div class="w-full">
                 <label
                   for="operatorcompetencycertificate"
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   >Operator Competency Certificate</label
                 >
                 <textarea
@@ -967,8 +990,8 @@
               <div class="w-full">
                 <label
                   for="Partofinjuredbody"
-                  class="text-gray-700 dark:text-gray-200"
-                  >Part Of Injured Body</label
+                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  >Part of Injured Body</label
                 >
                 <textarea
                   v-model="Partofinjuredbody"
@@ -984,7 +1007,7 @@
             >
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Costofdamages"
                   >Cost of Damages</label
                 >
@@ -997,7 +1020,7 @@
               </div>
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Hospitalization"
                   >Hospitalication (Day)</label
                 >
@@ -1011,7 +1034,7 @@
 
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Medicalleave"
                   >Medical Leave (Day)
                 </label>
@@ -1024,7 +1047,7 @@
               </div>
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Medicationfees"
                   >Medication Fees
                 </label>
@@ -1038,22 +1061,22 @@
             </div>
 
             <div>
-                <label class="text-gray-700 dark:text-gray-200" for="Correctiveby"
-                  >Accident Details Attachment</label
-                >
-                <file-pond
-          name="test1"
-          ref="pond1"
-          label-idle="Drop files here or <span class='filepond--label-action'>Browse</span>"
-          allow-multiple="true"
-          accepted-file-types="image/jpeg, image/png"
-          v-bind:files="myFiles1"
-        />
-              </div>
+              <label class="font-semibold text-gray-700 dark:text-gray-200" for="Correctiveby"
+                >Accident Details Attachment</label
+              >
+              <file-pond
+                name="test1"
+                ref="pond1"
+                label-idle="Drop files here or <span class='filepond--label-action'>Browse</span>"
+                allow-multiple="true"
+                accepted-file-types="image/jpeg, image/png"
+                v-bind:files="myFiles1"
+              />
+            </div>
 
             <div class="pt-4">
               <h2
-                class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
+                class="font-semibold text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
               >
                 Immediate Action Taken (optional)
               </h2>
@@ -1061,7 +1084,7 @@
             <div class="pt-4 w-full">
               <label
                 for="Actiontakendescription"
-                class="text-gray-700 dark:text-gray-200"
+                class="font-semibold text-gray-700 dark:text-gray-200"
                 >Action Taken Description</label
               >
               <textarea
@@ -1075,7 +1098,7 @@
 
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
-                <label class="text-gray-700 dark:text-gray-200" for="Actionby"
+                <label class="font-semibold text-gray-700 dark:text-gray-200" for="Actionby"
                   >Action By</label
                 >
                 <input
@@ -1088,7 +1111,7 @@
 
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Completiondate"
                   >Completion Date</label
                 >
@@ -1102,7 +1125,7 @@
             </div>
             <div class="pt-4">
               <h2
-                class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
+                class="font-semibold text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
               >
                 Rootcause Of Incident (optional)
               </h2>
@@ -1113,7 +1136,7 @@
                 <label
                   for="Causeofincident"
                   class="text-gray-700 dark:text-gray-200"
-                  >Cause Of Incident</label
+                  >Cause of Incident</label
                 >
                 <textarea
                   v-model="Causeofincident"
@@ -1126,7 +1149,7 @@
             </div>
             <div class="pt-4">
               <h2
-                class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
+                class="font-semibold text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
               >
                 Corrective Action
               </h2>
@@ -1134,7 +1157,7 @@
             <div class="pt-4 w-full">
               <label
                 for="Correctiveactiondescription"
-                class="text-gray-700 dark:text-gray-200"
+                class="font-semibold text-gray-700 dark:text-gray-200"
                 >Corrective Action Description</label
               >
               <textarea
@@ -1149,7 +1172,7 @@
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Correctiveby"
                   >Corrective By</label
                 >
@@ -1163,7 +1186,7 @@
 
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Correctivedate"
                   >Completion Date</label
                 >
@@ -1174,11 +1197,11 @@
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
-              </div>
-              <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
+            </div>
+            <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Correctiveby"
                   >Corrective Attachment</label
                 >
@@ -1189,7 +1212,6 @@
                   allow-multiple="true"
                   accepted-file-types="image/jpeg, image/png"
                   v-bind:files="myFiles2"
-                  
                 />
               </div>
             </div>
@@ -1231,7 +1253,7 @@ const FilePond = vueFilePond(
 );
 export default {
   name: "cctvfromViews",
-  components: { FilePond,},
+  components: { FilePond },
   data() {
     return {
       uploadedFiles: [],
@@ -1253,7 +1275,7 @@ export default {
       categories: [
         { id: "categoryA", value: "a", label: "Category A" },
         { id: "categoryB", value: "b", label: "Category B" },
-        { id: "categoryC", value: "c", label: "Category C" },
+
         // Add more categories as needed
       ],
       selectedCategories: [],
@@ -1278,7 +1300,7 @@ export default {
   },
   methods: {
     handleFilePondInit() {
-      console.log('FilePond has initialized');
+      console.log("FilePond has initialized");
 
       // Example of instance method call on pond reference for the first component
       this.$refs.pond1.getFiles();
@@ -1325,52 +1347,54 @@ export default {
 };
 </script>
 <style>
-
-
 /* Default light theme styles */
 .filepond--panel-root {
-    background-color: #eef8fd;
-    /* ... other styles ... */
+  background-color: #eef8fd;
+  /* ... other styles ... */
 }
 
 /* ... other default light theme styles ... */
 
 /* Dark theme styles */
 .dark .filepond--panel-root {
-    background-color: #333; /* Dark background for the panel */
-    /* ... other dark styles ... */
+  background-color: #333; /* Dark background for the panel */
+  /* ... other dark styles ... */
 }
 
 .dark .filepond--drop-label {
-    color: #ddd; /* Lighter text color for dark mode */
+  color: #ddd; /* Lighter text color for dark mode */
 }
 
 .dark .filepond--label-action {
-    text-decoration-color: #ccc; /* Lighter underline color for "Browse" button */
+  text-decoration-color: #ccc; /* Lighter underline color for "Browse" button */
 }
 
 .dark .filepond--item-panel {
-    background-color: #444; /* Dark background for file items */
+  background-color: #444; /* Dark background for file items */
 }
 
 .dark .filepond--drip-blob {
-    background-color: #555; /* Dark background for the drop circle */
+  background-color: #555; /* Dark background for the drop circle */
 }
 
 .dark .filepond--file-action-button {
-    background-color: rgba(255, 255, 255, 0.5); /* Lighter background for action buttons */
-    color: black; /* Dark text/icon color for action buttons */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.5
+  ); /* Lighter background for action buttons */
+  color: black; /* Dark text/icon color for action buttons */
 }
 
 /* ... other dark theme styles ... */
 
 /* You can also customize the colors for error and success states in dark mode */
-.dark [data-filepond-item-state*='error'] .filepond--item-panel {
-    background-color: #ff5555; /* Darker red for errors */
+.dark [data-filepond-item-state*="error"] .filepond--item-panel {
+  background-color: #ff5555; /* Darker red for errors */
 }
 
-.dark [data-filepond-item-state='processing-complete'] .filepond--item-panel {
-    background-color: #55ff55; /* Darker green for success */
+.dark [data-filepond-item-state="processing-complete"] .filepond--item-panel {
+  background-color: #55ff55; /* Darker green for success */
 }
-
 </style>
