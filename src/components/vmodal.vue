@@ -23,7 +23,7 @@
       </header>
 
       <!-- Modal Body -->
-      <section id="modal-body" class="px-4 py-6">
+      <section id="modal-body" class="px-4 py-6 ">
         <slot name="body"></slot>
       </section>
 
@@ -62,4 +62,3 @@ export default {
 };
 </script>
 
-<style></style>

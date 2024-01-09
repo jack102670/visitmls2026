@@ -109,7 +109,21 @@
   <Modal v-show="isModalVisible" @close="closeModal">
     <!-- header -->
     <template v-slot:header>
-      <h1 v-if="requester.typeofrequest==='Access card request'" class="font-bold text-xl">Access card request</h1><h1 v-if="requester.typeofrequest==='Badge request'" class="font-bold text-xl">Badge Request</h1><h1   v-if="requester.typeofrequest=== 'PTW'" class="font-bold text-xl">Permit To Work</h1>
+      <h1
+        v-if="requester.typeofrequest === 'Access card request'"
+        class="font-bold text-xl"
+      >
+        Access card request
+      </h1>
+      <h1
+        v-if="requester.typeofrequest === 'Badge request'"
+        class="font-bold text-xl"
+      >
+        Badge Request
+      </h1>
+      <h1 v-if="requester.typeofrequest === 'PTW'" class="font-bold text-xl">
+        Permit To Work
+      </h1>
     </template>
 
     <!-- body -->
@@ -117,24 +131,100 @@
       <!-- <p class="py-3 text-xs font-bold text-purple-900">
         Forgot your password?
       </p> -->
-      <div v-if="requester.typeofrequest=== 'PTW'" class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+      <div
+        v-if="requester.typeofrequest === 'PTW'"
+        class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-4"
+      >
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="requesterName"
-            >Requester Name</label
+          <label class="text-gray-700 dark:text-gray-200" for="Description"
+            >Description</label
           >
           <input
-            id="requesterName"
+            id="Description"
             type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
           />
         </div>
 
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="department"
+          <label class="text-gray-700 dark:text-gray-200" for="Location"
+            >Location</label
+          >
+          <input
+            id="Location"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="Description"
+            >Requester</label
+          >
+          <input
+            id="Description"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="Location"
             >Department</label
           >
           <input
-            id="department"
+            id="Location"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="Description"
+            >Phone</label
+          >
+          <input
+            id="Description"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="Location"
+            >Contractor / Vendor</label
+          >
+          <input
+            id="Location"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="Location"
+            >Department</label
+          >
+          <input
+            id="Location"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="Description"
+            >Phone</label
+          >
+          <input
+            id="Description"
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          />
+        </div>
+
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" for="Location"
+            >Contractor / Vendor</label
+          >
+          <input
+            id="Location"
             type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
           />
@@ -142,13 +232,93 @@
 
         <!-- Add v-model to other inputs as needed -->
       </div>
-      
-      <div
-        class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
-      >
+    </template>
+
+    <!-- footer -->
+    <template v-slot:footer>
+      <h1 class="font-bold text-xl">ADMIN</h1>
+      <div class="-mx-3 flex flex-1">
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4">
+            <label
+              for="preparedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Ticket Status
+            </label>
+            <input
+              disabled
+              type="text"
+              name="preparedBy"
+              id="preparedBy"
+              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+            />
+          </div>
+        </div>
+
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4">
+            <label
+              for="preparedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Last edited
+            </label>
+            <input
+              disabled
+              type="text"
+              name="preparedBy"
+              id="preparedBy"
+              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+            />
+          </div>
+        </div>
+        <!-- Your existing structure -->
+        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+          <div class="mb-4">
+            <label class="mb-2 block text-sm font-semibold text-gray-700">
+              Admin Status
+            </label>
+            <div class="grid grid-cols-2 gap-4 items-center">
+              <div class="radio">
+                <input
+                  type="radio"
+                  name="adminStatus"
+                  id="resubmission1"
+                  value="Resubmission"
+                  class="peer hidden"
+                />
+                <label
+                  for="resubmission1"
+                  class="block cursor-pointer select-none rounded-lg p-2 text-center peer-checked:bg-blue-500 peer-checked:font-bold peer-checked:text-white"
+                >
+                  Resubmission
+                </label>
+              </div>
+              <div class="radio">
+                <input
+                  type="radio"
+                  name="adminStatus"
+                  id="accepted1"
+                  value="Accepted"
+                  class="peer hidden"
+                />
+                <label
+                  for="accepted1"
+                  class="block cursor-pointer select-none rounded-lg p-2 text-center peer-checked:bg-blue-500 peer-checked:font-bold peer-checked:text-white"
+                >
+                  Accepted
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
         <div class="w-full">
           <label for="Description" class="text-gray-700 dark:text-gray-200"
-            >Description</label
+            >Comments</label
           >
           <textarea
             id="Description"
@@ -158,62 +328,14 @@
           ></textarea>
         </div>
       </div>
-    </template>
 
-    <!-- footer -->
-    <template v-slot:footer>
-      <h1  class="font-bold text-xl">ADMIN</h1>
-      <div class="-mx-3 flex flex-wrap">
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4">
-            <label
-              for="preparedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Prepared By
-            </label>
-            <input
-              type="text"
-              name="preparedBy"
-              id="preparedBy"
-              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-            />
-          </div>
-        </div>
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4">
-            <label
-              for="verifiedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Verified By
-            </label>
-            <input
-              type="text"
-              name="verifiedBy"
-              id="verifiedBy"
-              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-            />
-          </div>
-        </div>
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4 relative">
-            <label
-              for="approvedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Approved By
-            </label>
-            <div class="relative flex items-stretch">
-              <input
-                type="text"
-                name="approvedBy"
-                id="approvedBy"
-                class="w-full pl-12 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-              />
-            </div>
-          </div>
-        </div>
+      <div class="flex justify-end mt-6">
+        <button
+          type="button"
+          class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-sky-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+        >
+          Update
+        </button>
       </div>
     </template>
   </Modal>
