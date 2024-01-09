@@ -109,6 +109,7 @@
   <Modal v-show="isModalVisible" @close="closeModal">
     <!-- header -->
     <template v-slot:header>
+
       <h1
         v-if="requester.typeofrequest === 'Access card request'"
         class="font-bold text-xl"
@@ -121,9 +122,12 @@
       >
         Badge Request
       </h1>
-      <h1 v-if="requester.typeofrequest === 'PTW'" class="font-bold text-xl">
-        Permit To Work
-      </h1>
+     
+      <h2 v-if="requester.typeofrequest === 'PTW'"
+            class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
+          >
+            PERMIT TOO WORK
+          </h2>
     </template>
 
     <!-- body -->
@@ -236,80 +240,53 @@
 
     <!-- footer -->
     <template v-slot:footer>
-      <h1 class="font-bold text-xl">ADMIN</h1>
-      <div class="-mx-3 flex flex-1">
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4">
-            <label
-              for="preparedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Ticket Status
-            </label>
-            <input
-              disabled
-              type="text"
-              name="preparedBy"
-              id="preparedBy"
-              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-            />
-          </div>
+      <h2
+            class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
+          >
+           ADMIN
+          </h2>
+      <div class="-mx-3 flex flex-1"></div>
+      <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+        <div class="mb-4">
+          <label
+            for="preparedBy"
+            class="mb-2 block text-sm font-semibold text-gray-700"
+          >
+            Ticket Status
+          </label>
+          
         </div>
+      </div>
 
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4">
-            <label
-              for="preparedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Last edited
-            </label>
-            <input
-              disabled
-              type="text"
-              name="preparedBy"
-              id="preparedBy"
-              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-            />
-          </div>
-        </div>
-        <!-- Your existing structure -->
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4">
-            <label class="mb-2 block text-sm font-semibold text-gray-700">
-              Admin Status
-            </label>
-            <div class="grid grid-cols-2 gap-4 items-center">
-              <div class="radio">
-                <input
-                  type="radio"
-                  name="adminStatus"
-                  id="resubmission1"
-                  value="Resubmission"
-                  class="peer hidden"
-                />
-                <label
-                  for="resubmission1"
-                  class="block cursor-pointer select-none rounded-lg p-2 text-center peer-checked:bg-blue-500 peer-checked:font-bold peer-checked:text-white"
-                >
-                  Resubmission
-                </label>
-              </div>
-              <div class="radio">
-                <input
-                  type="radio"
-                  name="adminStatus"
-                  id="accepted1"
-                  value="Accepted"
-                  class="peer hidden"
-                />
-                <label
-                  for="accepted1"
-                  class="block cursor-pointer select-none rounded-lg p-2 text-center peer-checked:bg-blue-500 peer-checked:font-bold peer-checked:text-white"
-                >
-                  Accepted
-                </label>
-              </div>
+      <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+        <div class="mb-4">
+          <label class="mb-2 block text-sm font-semibold text-gray-700">
+            Admin Status
+          </label>
+          <div class="grid grid-cols-2 gap-4 items-center">
+            <div>
+              <input
+                type="radio"
+                name="adminStatus"
+                id="resubmission"
+                value="Resubmission"
+                class="mr-2"
+              />
+              <label for="resubmission" class="text-sm text-gray-700">
+                Resubmission
+              </label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="adminStatus"
+                id="accepted"
+                value="Accepted"
+                class="mr-2"
+              />
+              <label for="accepted" class="text-sm text-gray-700">
+                Accepted
+              </label>
             </div>
           </div>
         </div>
@@ -326,6 +303,23 @@
             rows="2"
             required
           ></textarea>
+        </div>
+      </div>
+      <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
+        <div class="mb-4">
+          <label
+            for="preparedBy"
+            class="mb-2 block text-sm font-semibold text-gray-700"
+          >
+            Last edited
+          </label>
+          <input
+            
+            type="text"
+            name="preparedBy"
+            id="preparedBy"
+            class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+          />
         </div>
       </div>
 
@@ -400,3 +394,13 @@ export default {
   },
 };
 </script>
+<style>
+.radio input[type="radio"] ~ label {
+  background-color: rgb(233, 225, 225);
+  color: rgb(158, 146, 146);
+}
+.radio input[type="radio"]:checked ~ label {
+  background-color: rgb(70, 230, 22);
+  color: white;
+}
+</style>

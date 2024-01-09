@@ -35,17 +35,24 @@
                 />
               </div>
 
-              <div>
-                <label class="text-gray-700 dark:text-gray-200" for="department"
+                <div>
+                <label class="text-gray-700 dark:text-gray-200" for="de"
                   >Department<span class="text-red-500">*</span></label
                 >
-                <input
+                <select
                   v-model="formData.department"
                   id="department"
-                  type="text"
-                  required1
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                >
+                  <option value=""></option>
+                  <option
+                    v-for="department in departments"
+                    :key="department.id"
+                    :value="department.name"
+                  >
+                    {{ department.name }}
+                  </option>
+                </select>
               </div>
 
               <!-- Add v-model to other inputs as needed -->
@@ -78,18 +85,22 @@
                 />
               </div>
               <div>
-                <label class="text-gray-700 dark:text-gray-200" for=""
+                <label class="text-gray-700 dark:text-gray-200" for="location"
                   >Location<span class="text-red-500">*</span></label
                 >
                 <select
                   v-model="formData.location"
                   id="location"
-                  type="email"
-                  required1
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 >
-                  <option value="hq">a</option>
-                  <option value="hq">b</option>
+                  <option value=""></option>
+                  <option
+                    v-for="location in locations"
+                    :key="location.id"
+                    :value="location.name"
+                  >
+                    {{ location.name }}
+                  </option>
                 </select>
               </div>
 
@@ -247,6 +258,7 @@
 
 <script>
 import Modal from "@/components/vmodal.vue";
+import * as departments from "../javascript/department.js";
 
 export default {
   name: "cctvfromViews",
@@ -260,15 +272,21 @@ export default {
         department: "",
         phonenumber: "",
         daterequest: "",
-        location: "",
+       
         stockinbox: "",
         stockinkit: "",
         kitout: "",
         balancekit: "",
+        location: "",
+
         // Add more form fields here
       },
       isModalVisible: false,
+    locations:departments.locations,
+      departments:departments.departments,
+      
     };
+
   },
   methods: {
     showModal() {

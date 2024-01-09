@@ -23,7 +23,7 @@
       </header>
 
       <!-- Modal Body -->
-      <section id="modal-body" class="px-4 py-6 ">
+      <section id="modal-body" class="px-4 py-6 max-h-80 overflow-y-auto ">
         <slot name="body"></slot>
       </section>
 
