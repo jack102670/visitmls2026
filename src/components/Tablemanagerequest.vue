@@ -109,7 +109,6 @@
   <Modal v-show="isModalVisible" @close="closeModal">
     <!-- header -->
     <template v-slot:header>
-
       <h1
         v-if="requester.typeofrequest === 'Access card request'"
         class="font-bold text-xl"
@@ -122,12 +121,13 @@
       >
         Badge Request
       </h1>
-     
-      <h2 v-if="requester.typeofrequest === 'PTW'"
-            class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
-          >
-            PERMIT TOO WORK
-          </h2>
+
+      <h2
+        v-if="requester.typeofrequest === 'PTW'"
+        class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
+      >
+        PERMIT TOO WORK
+      </h2>
     </template>
 
     <!-- body -->
@@ -240,89 +240,92 @@
 
     <!-- footer -->
     <template v-slot:footer>
-      <h2
-            class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
-          >
-           ADMIN
-          </h2>
-      <div class="-mx-3 flex flex-1"></div>
-      <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-        <div class="mb-4">
-          <label
-            for="preparedBy"
-            class="mb-2 block text-sm font-semibold text-gray-700"
-          >
-            Ticket Status
-          </label>
-          
-        </div>
+      <div class="p-1 bg-[#160959e2] rounded-lg">
+        <h2 class="text-lg font-semibold text-white capitalize">ADMIN</h2>
       </div>
+      <!-- Centralized Container -->
+      <div class="flex justify-between gap-4 mt-4">
+        <!-- Ticket Status Section -->
+        <div class="w-full md:w-1/3">
+          <div class="mb-4">
+            <label class="mb-2 block text-sm font-semibold text-gray-700">
+              Ticket Status
+            </label>
+            <div :class="getStatusContainerClass(requester.status)">
+              <span :class="getStatusDotClass(requester.status)"></span>
+              <h2 :class="getStatusTextClass(requester.status)">
+                {{ requester.status }}
+              </h2>
+            </div>
+          </div>
+        </div>
 
-      <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-        <div class="mb-4">
-          <label class="mb-2 block text-sm font-semibold text-gray-700">
-            Admin Status
-          </label>
-          <div class="grid grid-cols-2 gap-4 items-center">
-            <div>
-              <input
-                type="radio"
-                name="adminStatus"
-                id="resubmission"
-                value="Resubmission"
-                class="mr-2"
-              />
-              <label for="resubmission" class="text-sm text-gray-700">
+        <!-- Admin Status Section -->
+        <div class="w-full md:w-1/3">
+          <div class="mb-4">
+            <label class="mb-2 block text-sm font-semibold text-gray-700">
+              Admin Status
+            </label>
+            <div class="grid grid-cols-1 gap-4 items-center">
+              <label class="flex items-center text-sm text-gray-700">
+                <input
+                  type="radio"
+                  name="adminStatus"
+                  id="resubmission"
+                  value="Resubmission"
+                  class="mr-2"
+                />
                 Resubmission
               </label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                name="adminStatus"
-                id="accepted"
-                value="Accepted"
-                class="mr-2"
-              />
-              <label for="accepted" class="text-sm text-gray-700">
+              <label class="flex items-center text-sm text-gray-700">
+                <input
+                  type="radio"
+                  name="adminStatus"
+                  id="accepted"
+                  value="Accepted"
+                  class="mr-2"
+                />
                 Accepted
               </label>
             </div>
           </div>
         </div>
-      </div>
-
-      <div>
-        <div class="w-full">
-          <label for="Description" class="text-gray-700 dark:text-gray-200"
-            >Comments</label
-          >
-          <textarea
-            id="Description"
-            class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            rows="2"
-            required
-          ></textarea>
+        <div class="w-full md:w-1/3">
+          <div class="mb-4">
+            <label
+              for="preparedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              Last edited
+            </label>
+            <input
+              type="text"
+              name="preparedBy"
+              id="preparedBy"
+              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+            />
+          </div>
         </div>
       </div>
-      <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-        <div class="mb-4">
-          <label
-            for="preparedBy"
-            class="mb-2 block text-sm font-semibold text-gray-700"
-          >
-            Last edited
-          </label>
-          <input
-            
-            type="text"
-            name="preparedBy"
-            id="preparedBy"
-            class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-          />
-        </div>
+      <!-- Comments Section -->
+      <div class="w-full">
+        <label
+          for="Description"
+          class="mb-2 block text-sm font-semibold text-gray-700"
+        >
+          Comments
+        </label>
+        <textarea
+          id="Description"
+          class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+          rows="2"
+          required
+        ></textarea>
       </div>
 
+      <!-- Last Edited Section -->
+
+      <!-- Update Button -->
       <div class="flex justify-end mt-6">
         <button
           type="button"
