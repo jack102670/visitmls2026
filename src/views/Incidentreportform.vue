@@ -26,14 +26,14 @@
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Dateofincident"
-                  >Date Of Incident<span class="text-red-500">*</span></label
+                  >Date And Time Of Incident<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="formData.Dateofincident"
                   id="Dateofincident"
                   type="Datetime-local"
                   :min="minDateTime"
-                  required1
+                  required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
@@ -49,7 +49,7 @@
                 <input
                   v-model="formData.Locationofincident"
                   id="Locationofincident"
-                  required1
+                  required
                   type="text"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
@@ -71,7 +71,7 @@
                   v-model="formData.PartiesInvolved"
                   id="PartiesInvolved"
                   type="text"
-                  required1
+                  required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
@@ -88,7 +88,7 @@
                   v-model="formData.Witness"
                   id="Witness"
                   type="text"
-                  required1
+                  required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
@@ -104,7 +104,7 @@
                 >
                 <select
                   :id="dynamicId"
-                  required1
+                  required
                   v-model="formData.Typeofincident"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 >
@@ -134,7 +134,7 @@
                   placeholder="Specify category"
                   :id="dynamicCustomId"
                   type="text"
-                  required1
+                  required
                   v-model="formData.customIncidentType"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
@@ -154,7 +154,7 @@
                   id="Detailsincident"
                   class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                   rows="5"
-                  required1
+                  required
                 ></textarea>
               </div>
             </div>

@@ -29,7 +29,7 @@
                   >Requester Name<span class="text-red-500">*</span></label
                 >
                 <input
-                  v-model="formData.Requestername"
+                  v-model="capitalizedRequesterName"
                   id="Requestername"
                   type="text"
                   required
@@ -40,16 +40,24 @@
               <div>
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
-                  for="Department"
+                  for="de"
                   >Department<span class="text-red-500">*</span></label
                 >
-                <input
-                  v-model="formData.Department"
-                  id="Department"
-                  type="text"
+                <select
+                  v-model="formData.department"
+                  id="department"
                   required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                >
+                  <option value=""></option>
+                  <option
+                    v-for="department in departments"
+                    :key="department.id"
+                    :value="department.name"
+                  >
+                    {{ department.name }}
+                  </option>
+                </select>
               </div>
               <div>
                 <label
@@ -79,7 +87,8 @@
                 <input
                   v-model="formData.Date"
                   id="Date"
-                  type="date"
+                  type="datetime-local"
+                  :min="minDateTime"
                   required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
@@ -99,20 +108,6 @@
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
-              <div>
-                <label
-                  class="font-semibold text-gray-700 dark:text-gray-200"
-                  for="time"
-                  >Time<span class="text-red-500">*</span></label
-                >
-                <input
-                  v-model="formData.time"
-                  id="time"
-                  type="time"
-                  required
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
-              </div>
 
               <!-- Add v-model to other inputs as needed -->
             </div>
@@ -121,7 +116,7 @@
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Customername"
-                  >Customer Name</label
+                  >Customer Name<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="formData.Customername"
@@ -223,34 +218,31 @@
               >
                 <tr>
                   <td class="py-2 px-4 font-medium">Requester Name:</td>
-                  <td class="py-2 px-4">{{ formData.Requestername }}</td>
+                  <td class="py-2 px-4">{{ formData.requesterName }}</td>
                 </tr>
                 <tr>
                   <td class="py-2 px-4 font-medium">Department:</td>
-                  <td class="py-2 px-4">{{ formData.Department }}</td>
+                  <td class="py-2 px-4">{{ formData.department }}</td>
                 </tr>
                 <tr>
-                  <td class="py-2 px-4 font-medium">Phone number:</td>
+                  <td class="py-2 px-4 font-medium">Phone Number:</td>
                   <td class="py-2 px-4">{{ formData.Phonenumber }}</td>
                 </tr>
                 <tr>
-                  <td class="py-2 px-4 font-medium">Date:</td>
+                  <td class="py-2 px-4 font-medium">Date And Time:</td>
                   <td class="py-2 px-4">{{ formData.Date }}</td>
                 </tr>
                 <tr>
                   <td class="py-2 px-4 font-medium">location:</td>
                   <td class="py-2 px-4">{{ formData.location }}</td>
                 </tr>
+
                 <tr>
-                  <td class="py-2 px-4 font-medium">time:</td>
-                  <td class="py-2 px-4">{{ formData.time }}</td>
-                </tr>
-                <tr>
-                  <td class="py-2 px-4 font-medium">Customer name:</td>
+                  <td class="py-2 px-4 font-medium">Customer Name:</td>
                   <td class="py-2 px-4">{{ formData.Customername }}</td>
                 </tr>
                 <tr>
-                  <td class="py-2 px-4 font-medium">Perpose:</td>
+                  <td class="py-2 px-4 font-medium">Purpose:</td>
                   <td class="py-2 px-4">
                     <div class="text-sm max-h-32 overflow-auto">
                       {{ formData.Purpose }}
@@ -258,7 +250,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <td class="py-2 px-4 font-medium">No of parking space:</td>
+                  <td class="py-2 px-4 font-medium">No Of Parking Space:</td>
                   <td class="py-2 px-4">{{ formData.Noofparkingspace }}</td>
                 </tr>
                 <tr>
@@ -308,6 +300,7 @@
 
 <script>
 import Modal from "@/components/vmodal.vue";
+import * as template from "../javascript/department.js";
 
 export default {
   name: "cctvformViews",
@@ -318,24 +311,44 @@ export default {
     return {
       uploadedFiles: [],
       isDragging: false,
+      minDateTime: this.formatDateTime(new Date()),
       formData: {
-        Requestername: '', // Add default value if needed
-        Department: '', // Add default value if needed
-        Phonenumber: '', // Add default value if needed
-        Date: '', // Add default value if needed
-        location: '', // Add default value if needed
-        time: '', // Add default value if needed
-        Customername: '', // Add default value if needed
-        Purpose: '', // Add default value if needed
-        Noofparkingspace: '', // Add default value if needed
-        Transport: '', // Add default value if needed
+        requesterName: "", // Add default value if needed
+        Department: "", // Add default value if needed
+        Phonenumber: "", // Add default value if needed
+        Date: "", // Add default value if needed
+        location: "", // Add default value if needed
+        time: "", // Add default value if needed
+        Customername: "", // Add default value if needed
+        Purpose: "", // Add default value if needed
+        Noofparkingspace: "", // Add default value if needed
+        Transport: "", // Add default value if needed
         // Add more form fields here as needed
       },
       isModalVisible: false,
+      departments: template.departments,
     };
   },
-
+  computed: {
+    capitalizedRequesterName: {
+      get() {
+        return this.formData.requesterName;
+      },
+      set(value) {
+        this.formData.requesterName =
+          value.charAt(0).toUpperCase() + value.slice(1);
+      },
+    },
+  },
   methods: {
+    formatDateTime(date) {
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
+      const day = date.getDate().toString().padStart(2, "0");
+      const hours = date.getHours().toString().padStart(2, "0");
+      const minutes = date.getMinutes().toString().padStart(2, "0");
+      return `${year}-${month}-${day}T${hours}:${minutes}`;
+    },
     showModal() {
       this.isModalVisible = true;
     },

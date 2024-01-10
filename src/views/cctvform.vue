@@ -4,7 +4,7 @@
   >
     <div class="container mx-auto">
       <div
-        class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900  dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
+        class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
         <section
           class="max-w-4xl p-6 mx-auto bg-white border-2 border-gray-200 rounded-md dark:bg-gray-800"
@@ -29,7 +29,7 @@
                   >Requester Name<span class="text-red-500">*</span></label
                 >
                 <input
-                  v-model="formData.Requestername"
+                  v-model="capitalizedRequesterName"
                   id="Requestername"
                   type="text"
                   required
@@ -40,20 +40,22 @@
               <div>
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
-                  for="Department"
+                  for="de"
                   >Department<span class="text-red-500">*</span></label
                 >
                 <select
-                  v-model="formData.Department"
-                  id="Department"
-                  type="text"
-                  required
+                  v-model="formData.department"
+                  id="department"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 >
-                  <option value="Security">Security</option>
-                  <option value="Safety">Safety</option>
-                  <option value="Maintenance">Maintenance</option>
-                  <option value="ICT">ICT</option>
+                  <option value=""></option>
+                  <option
+                    v-for="department in departments"
+                    :key="department.id"
+                    :value="department.name"
+                  >
+                    {{ department.name }}
+                  </option>
                 </select>
               </div>
               <div>
@@ -75,8 +77,6 @@
             </div>
 
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
-          
-
               <div>
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
@@ -100,7 +100,8 @@
                 <input
                   v-model="formData.Appointmenttime"
                   id="Appointmenttime"
-                  type="date"
+                  :min="minDateTime"
+                  type="datetime-local"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
@@ -108,6 +109,25 @@
               <!-- Add v-model to other inputs as needed -->
             </div>
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+              <div>
+                <label
+                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  for="Incidentdate"
+                  >Incident Date And Time<span class="text-red-500"
+                    >*</span
+                  ></label
+                >
+                <input
+                  v-model="formData.Incidentdate"
+                  id="Incidentdate"
+                  type="datetime-local"
+                  :max="maxDateTime"
+                  required
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                />
+              </div>
+            </div>
+            <!-- <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
@@ -137,7 +157,7 @@
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
-            </div>
+            </div> -->
             <div
               class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
             >
@@ -181,30 +201,30 @@
         <!-- <p class="py-3 text-xs font-bold text-purple-900">
         Forgot your password?
       </p> -->
-      <table
+        <table
           class="w-full mt-4 bg-white border border-gray-300 divide-y divide-gray-300"
         >
           <tr>
             <td class="py-2 px-4 font-medium">Requester Name:</td>
-            <td class="py-2 px-4">{{ formData.Requestername }}</td>
+            <td class="py-2 px-4">{{ formData.requesterName }}</td>
           </tr>
           <tr>
             <td class="py-2 px-4 font-medium">Department:</td>
-            <td class="py-2 px-4">{{ formData.Department }}</td>
+            <td class="py-2 px-4">{{ formData.department }}</td>
           </tr>
           <tr>
             <td class="py-2 px-4 font-medium">Phone Number:</td>
             <td class="py-2 px-4">{{ formData.Phonenumber }}</td>
           </tr>
-     
+          <tr>
+            <td class="py-2 px-4 font-medium">Appointment Date:</td>
+            <td class="py-2 px-4">{{ formData.Appointmenttime }}</td>
+          </tr>
           <tr>
             <td class="py-2 px-4 font-medium">Incident Location:</td>
             <td class="py-2 px-4">{{ formData.Incidentlocation }}</td>
           </tr>
-          <tr>
-            <td class="py-2 px-4 font-medium">Incident Time:</td>
-            <td class="py-2 px-4">{{ formData.Incidenttime }}</td>
-          </tr>
+
           <tr>
             <td class="py-2 px-4 font-medium">Incident Date:</td>
             <td class="py-2 px-4">{{ formData.Incidentdate }}</td>
@@ -257,6 +277,7 @@
 
 <script>
 import Modal from "@/components/vmodal.vue";
+import * as template from "../javascript/department.js";
 
 export default {
   name: "cctvformViews",
@@ -267,6 +288,31 @@ export default {
     return {
       isModalVisible: false,
       modalContent: "",
+      departments: template.departments,
+      uploadedFileNames: [],
+      filePondOptions: {
+        // Configure FilePond options here
+        allowFileRename: true,
+        fileRenameFunction: (file) => {
+          const fileExtension = file.name.split(".").pop();
+          const timestamp = Date.now();
+          let newName;
+
+          if (file.type === "application/pdf") {
+            newName = `PDF-${timestamp}.${fileExtension}`;
+          } else if (
+            file.type.includes("excel") ||
+            file.type.includes("spreadsheet")
+          ) {
+            newName = `Excel-${timestamp}.${fileExtension}`;
+          } else {
+            newName = `${timestamp}-${file.name}`;
+          }
+
+          console.log(`Renaming: Original - ${file.name}, New - ${newName}`);
+          return newName;
+        },
+      },
       formData: {
         requesterName: "",
         department: "",
@@ -276,19 +322,49 @@ export default {
 
         // Add more form fields here
       },
+      minDateTime: this.formatDateTime(new Date()),
+      maxDateTime: this.formatDateTime(new Date()),
     };
-    
+  },
+  computed: {
+    capitalizedRequesterName: {
+      get() {
+        return this.formData.requesterName;
+      },
+      set(value) {
+        this.formData.requesterName =
+          value.charAt(0).toUpperCase() + value.slice(1);
+      },
+    },
   },
 
   methods: {
-   
+    formatDateTime(date) {
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
+      const day = date.getDate().toString().padStart(2, "0");
+      const hours = date.getHours().toString().padStart(2, "0");
+      const minutes = date.getMinutes().toString().padStart(2, "0");
+      return `${year}-${month}-${day}T${hours}:${minutes}`;
+    },
+
+    updateFiles(newFiles) {
+      if (Array.isArray(newFiles)) {
+        this.myFiles = newFiles;
+        this.uploadedFileNames = newFiles.map((fileItem) => {
+          console.log(`File in pond: ${fileItem.file.name}`);
+          return fileItem.file.name;
+        });
+      } else {
+        console.error("Expected newFiles to be an array, received:", newFiles);
+      }
+    },
     showModal() {
       this.isModalVisible = true;
     },
     closeModal() {
       this.isModalVisible = false;
     },
-
   },
 };
 </script>
