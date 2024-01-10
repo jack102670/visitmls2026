@@ -7,10 +7,10 @@
         class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
         <section
-          class="max-w-4xl p-6 mx-auto bg-[#f7fbff] rounded-md dark:bg-gray-800"
+          class="max-w-4xl p-6 mx-auto bg-white border-2 border-gray-200 rounded-md dark:bg-gray-800"
         >
           <h2
-            class="text-2XL font-bold text-gray-700 capitalize dark:text-white"
+            class="text-2xl font-bold text-gray-700 capitalize dark:text-white"
           >
             Mask request form
           </h2>
@@ -27,10 +27,10 @@
                   >Requester Name<span class="text-red-500">*</span></label
                 >
                 <input
-                  v-model="formData.requesterName"
+                  v-model="capitalizedRequesterName"
                   id="requesterName"
                   type="text"
-                  required
+                  required1
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
@@ -38,23 +38,24 @@
               <div>
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
-                  for="Department"
+                  for="de"
                   >Department<span class="text-red-500">*</span></label
                 >
                 <select
-                  v-model="formData.Department"
-                  id="Department"
-                  type="text"
-                  required
+                  v-model="formData.department"
+                  id="department"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 >
-                  <option value="Security">Security</option>
-                  <option value="Safety">Safety</option>
-                  <option value="Maintenance">Maintenance</option>
-                  <option value="ICT">ICT</option>
+                  <option value=""></option>
+                  <option
+                    v-for="department in departments"
+                    :key="department.id"
+                    :value="department.name"
+                  >
+                    {{ department.name }}
+                  </option>
                 </select>
               </div>
-
               <!-- Add v-model to other inputs as needed -->
             </div>
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
@@ -68,24 +69,11 @@
                   v-model="formData.phonenumber"
                   id="number"
                   type="number"
-                  required
+                  required1
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
 
-              <div>
-                <label
-                  class="text-gray-700 font-semibold dark:text-gray-200"
-                  for="emailAddress"
-                  >Date Requested</label
-                >
-                <input
-                  v-model="formData.daterequest"
-                  id="daterequest"
-                  type="date"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
-              </div>
               <div>
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
@@ -96,7 +84,7 @@
                   v-model="formData.Noofpieces"
                   id="Noofpieces"
                   type="number"
-                  required
+                  required1
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
@@ -149,28 +137,32 @@
           class="w-full mt-4 bg-white border border-gray-300 divide-y divide-gray-300"
         >
           <tr>
-            <td class="py-2 px-4 font-medium">Requester Name:</td>
-            <td class="py-2 px-4">{{ formData.requesterName }}</td>
+            <td class="py-2 px-4 font-medium left-column">Requester Name:</td>
+            <td class="py-2 px-4 right-column">{{ formData.requesterName }}</td>
           </tr>
           <tr>
             <td class="py-2 px-4 font-medium">Department:</td>
-            <td class="py-2 px-4">{{ formData.Department }}</td>
+            <td class="py-2 px-4">{{ formData.department }}</td>
           </tr>
           <tr>
             <td class="py-2 px-4 font-medium">Phone Number:</td>
             <td class="py-2 px-4">{{ formData.phonenumber }}</td>
           </tr>
-          <tr>
-            <td class="py-2 px-4 font-medium">Date Requested:</td>
-            <td class="py-2 px-4">{{ formData.daterequest }}</td>
-          </tr>
+         
           <tr>
             <td class="py-2 px-4 font-medium">No Of Pieces:</td>
             <td class="py-2 px-4">{{ formData.Noofpieces }}</td>
           </tr>
           <tr>
             <td class="py-2 px-4 font-medium">Description:</td>
-            <td class="py-2 px-4">{{ formData.Description }}</td>
+
+            <textarea
+              v-model=" formData.Description"
+              name=" formData.Description"
+              id=" formData.Description"
+              rows="4"
+              style="overflow-y: auto; width: 100%"
+            ></textarea>
           </tr>
           <!-- ... (Other modal content) ... -->
 
@@ -213,6 +205,7 @@
 
 <script>
 import Modal from "@/components/vmodal.vue";
+import * as template from "../javascript/department.js";
 import axios from "axios";
 
 export default {
@@ -224,15 +217,28 @@ export default {
     return {
       formData: {
         requesterName: "", // Corresponds to "Requester Name"
-        Department: "", // Corresponds to "Department"
+
         phonenumber: "", // Corresponds to "Phone Number"
         daterequest: "", // Corresponds to "Date Requested"
         Noofpieces: "", // Corresponds to "No Of Pieces"
         Description: "", // Corresponds to "Description"
+
         // Add more form fields here if needed
       },
+      departments: template.departments,
       isModalVisible: false,
     };
+  },
+  computed: {
+    capitalizedRequesterName: {
+      get() {
+        return this.formData.requesterName;
+      },
+      set(value) {
+        this.formData.requesterName =
+          value.charAt(0).toUpperCase() + value.slice(1);
+      },
+    },
   },
 
   methods: {
