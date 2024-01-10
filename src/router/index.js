@@ -4,7 +4,7 @@ import Myrequest from "../views/Myrequest.vue";
 import Dashboard from "../views/Dashboard.vue";
 import Sidebar from "../components/Sidebar.vue";
 import Login from "../views/Login.vue";
-import Incidentreport from "../views/Incidentreport.vue";
+
 
 import Newsidebar from "../components/Newsidebar.vue";
 import Managerequest from "../views/Managerequest.vue";
@@ -149,14 +149,7 @@ const routes = [
       Sidebar: Newsidebar,
     },
   },
-  {
-    path: "/Incidentreport",
-    name: "Incidentreport",
-    components: {
-      default: Incidentreport,
-      Sidebar: Sidebar,
-    },
-  },
+ 
   {
     path: "/Vendorlogin",
     name: "Login",

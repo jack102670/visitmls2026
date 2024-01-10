@@ -36,7 +36,7 @@
               </div>
 
                 <div>
-                <label class="text-gray-700 dark:text-gray-200" for="de"
+                <label class="font-semibold text-gray-700 dark:text-gray-200" for="de"
                   >Department<span class="text-red-500">*</span></label
                 >
                 <select
@@ -59,7 +59,7 @@
             </div>
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
               <div>
-                <label class="text-gray-700 dark:text-gray-200" for="username"
+                <label class="font-semibold text-gray-700 dark:text-gray-200" for="username"
                   >Phone Number<span class="text-red-500">*</span></label
                 >
                 <input
@@ -73,7 +73,7 @@
 
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="emailAddress"
                   >Date Requested</label
                 >
@@ -84,31 +84,13 @@
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
-              <div>
-                <label class="text-gray-700 dark:text-gray-200" for="location"
-                  >Location<span class="text-red-500">*</span></label
-                >
-                <select
-                  v-model="formData.location"
-                  id="location"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                >
-                  <option value=""></option>
-                  <option
-                    v-for="location in locations"
-                    :key="location.id"
-                    :value="location.name"
-                  >
-                    {{ location.name }}
-                  </option>
-                </select>
-              </div>
+            
 
               <!-- Add v-model to other inputs as needed -->
             </div>
             <div class="grid grid-cols-2 gap-6 mt-4 sm:grid-cols-4">
               <div>
-                <label class="text-gray-700 dark:text-gray-200" for="username"
+                <label class="font-semibold text-gray-700 dark:text-gray-200" for="username"
                   >No. Stock In Box <span class="text-red-500">*</span></label
                 >
                 <input
@@ -122,7 +104,7 @@
 
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="emailAddress"
                   >No. Stock In (kit)<span class="text-red-500">*</span></label
                 >
@@ -136,7 +118,7 @@
               </div>
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="emailAddress"
                   >No. Of Kit Out<span class="text-red-500">*</span></label
                 >
@@ -150,7 +132,7 @@
               </div>
               <div>
                 <label
-                  class="text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200"
                   for="emailAddress"
                   >No. Of Balance Kit<span class="text-red-500">*</span></label
                 >
@@ -209,10 +191,7 @@
             <td class="py-2 px-4 font-medium">Date Requested:</td>
             <td class="py-2 px-4">{{ formData.daterequest }}</td>
           </tr>
-          <tr>
-            <td class="py-2 px-4 font-medium">Location:</td>
-            <td class="py-2 px-4">{{ formData.location }}</td>
-          </tr>
+      
           <!-- Add more rows as needed -->
           <tr>
             <td class="py-2 px-4 font-medium">No. Stock In Box:</td>
@@ -277,12 +256,12 @@ export default {
         stockinkit: "",
         kitout: "",
         balancekit: "",
-        location: "",
+    
 
         // Add more form fields here
       },
       isModalVisible: false,
-    locations:departments.locations,
+
       departments:departments.departments,
       
     };

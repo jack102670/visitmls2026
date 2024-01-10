@@ -336,7 +336,7 @@
 </template>
 
 <script>
-import Modal from "../components/vmodal.vue";
+import Modal from "../components/vmodaladmin.vue";
 export default {
   name: "TableformanagerequestView",
   components: {

@@ -27,7 +27,7 @@
                   >Requester Name<span class="text-red-500">*</span></label
                 >
                 <input
-                  v-model="formData.requesterName"
+                  v-model="capitalizedRequesterName"
                   id="requesterName"
                   type="text"
                   required
@@ -36,7 +36,9 @@
               </div>
 
               <div>
-                <label class="text-gray-700 dark:text-gray-200" for="de"
+                <label
+                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  for="de"
                   >Department<span class="text-red-500">*</span></label
                 >
                 <select
@@ -75,7 +77,8 @@
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="formData.people"
-                  >For<span class="text-red-500">*</span>: {{ formData.people }}</label
+                  >For<span class="text-red-500">*</span>:
+                  {{ formData.people }}</label
                 >
                 <div
                   class="block flex justify-between w-full px-4 py-2 mt-2 text-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -108,7 +111,9 @@
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="username"
-                  >Upload file list of worker<span class="text-red-500">*</span></label
+                  >Upload file list of worker<span class="text-red-500"
+                    >*</span
+                  ></label
                 >
 
                 <!-- component -->
@@ -121,9 +126,10 @@
                       ref="pond1"
                       label-idle="Drop files here or <span class='filepond--label-action'>Browse</span>"
                       allow-multiple="true"
-                      accepted-file-types="image/jpeg, image/png"
+                      accepted-file-types="image/jpeg, image/png, application/pdf, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                       v-bind:files="myFiles"
                       @input="updateFiles"
+                      :options="filePondOptions"
                     />
                   </Div>
                   <!-- component -->
@@ -171,10 +177,7 @@
             <td class="py-2 px-4 font-medium">Phone Number:</td>
             <td class="py-2 px-4">{{ formData.phonenumber }}</td>
           </tr>
-          <tr>
-            <td class="py-2 px-4 font-medium">Date Requested:</td>
-            <td class="py-2 px-4">{{ formData.daterequest }}</td>
-          </tr>
+
           <tr>
             <td class="py-2 px-4 font-medium">For:</td>
             <td class="py-2 px-4">{{ formData.people }}</td>
@@ -207,6 +210,7 @@
           </button>
           <button
             type="button"
+            @click="confirmFormSubmission"
             class="rounded-2xl bg-cyan-800 shadow-md p-3 my-1 w-full text-white"
           >
             Confirm
@@ -228,19 +232,21 @@
 </template>
 
 <script>
-import * as template from '../javascript/department.js'
+import * as template from "../javascript/department.js";
 import vueFilePond from "vue-filepond";
 import "filepond/dist/filepond.min.css";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import Modal from "../components/vmodal.vue";
+import FilePondPluginFileRename from "filepond-plugin-file-rename";
 
 import axios from "axios";
 
 const FilePond = vueFilePond(
   FilePondPluginFileValidateType,
-  FilePondPluginImagePreview
+  FilePondPluginImagePreview,
+  FilePondPluginFileRename
 );
 export default {
   name: "badgeformViews",
@@ -251,24 +257,67 @@ export default {
   data() {
     return {
       myFiles: [],
+      uploadedFileNames: [],
+      filePondOptions: {
+        // Configure FilePond options here
+        allowFileRename: true,
+        fileRenameFunction: (file) => {
+          const fileExtension = file.name.split(".").pop();
+          const timestamp = Date.now();
+          let newName;
 
+          if (file.type === "application/pdf") {
+            newName = `PDF-${timestamp}.${fileExtension}`;
+          } else if (
+            file.type.includes("excel") ||
+            file.type.includes("spreadsheet")
+          ) {
+            newName = `Excel-${timestamp}.${fileExtension}`;
+          } else {
+            newName = `${timestamp}-${file.name}`;
+          }
+
+          console.log(`Renaming: Original - ${file.name}, New - ${newName}`);
+          return newName;
+        },
+      },
       formData: {
         requesterName: "",
         department: "",
         phonenumber: "",
-        daterequest: "",
+
         People: "",
 
         // Add more form fields here
       },
 
-      modalContent: "",
       isModalVisible: false,
-      departments:template.departments,
+      departments: template.departments,
     };
   },
-
+  computed: {
+    capitalizedRequesterName: {
+      get() {
+        return this.formData.requesterName;
+      },
+      set(value) {
+        this.formData.requesterName =
+          value.charAt(0).toUpperCase() + value.slice(1);
+      },
+    },
+  },
   methods: {
+    updateFiles(newFiles) {
+      if (Array.isArray(newFiles)) {
+        this.myFiles = newFiles;
+        this.uploadedFileNames = newFiles.map((fileItem) => {
+          console.log(`File in pond: ${fileItem.file.name}`);
+          return fileItem.file.name;
+        });
+      } else {
+        console.error("Expected newFiles to be an array, received:", newFiles);
+      }
+    },
     showModal() {
       this.isModalVisible = true;
     },
@@ -285,31 +334,53 @@ export default {
       // Example of instance method call on pond reference for the second component
     },
 
-    confirmFormSubmission() {
-      // Handle the confirmation logic here
-      console.log("Confirmed!");
-      axios
-        .post("http://localhost:3000/badgeRequests", this.formData)
-        .then((response) => {
-          // Handle the response
-          "Server response:", response.data;
-          this.formData = {
-            requesterName: "",
-            department: "",
-            phonenumber: "",
-            daterequest: "",
-            People: "",
-            // Add more form fields here
-          };
-          // Optionally, you can show a success message or navigate to another page
-        })
-        .catch((error) => {
-          // Handle errors
-          console.error("Error submitting form:", error);
-          // You can show an error message to the user if needed
-        });
-      // Optionally, you can perform additional actions or close the modal
-      this.closePreviewModal();
+   confirmFormSubmission() {
+  // Prepare the form data to be sent
+  let formDataToSend = new FormData();
+  formDataToSend.append("requesterName", this.formData.requesterName);
+  formDataToSend.append("department", this.formData.department);
+  formDataToSend.append("phonenumber", this.formData.phonenumber);
+
+  formDataToSend.append("people", this.formData.people);
+
+  // Log the form data for debugging
+  console.log('Form Data to send:', Array.from(formDataToSend.entries()));
+
+  // Log the names of files being sent
+  console.log("Logging file names before sending:");
+  this.myFiles.forEach((fileItem) => {
+    console.log("File name:", fileItem.file.name); // This logs the name of each file
+    formDataToSend.append("files", fileItem.file);
+  });
+
+  // Send the POST request
+  axios
+    .post("http://localhost:3000/badgeRequests", formDataToSend)
+    .then((response) => {
+    ("Server response:", response.data);
+      // Handle the response, such as showing a success message or resetting the form
+      this.resetForm();
+      this.closeModal();
+    })
+    .catch((error) => {
+      console.error("Error submitting form:", error);
+      // Handle errors, such as showing an error message
+    });
+},
+
+
+    resetForm() {
+      // Reset form data after submission
+      this.formData = {
+        requesterName: "",
+        department: "",
+        phonenumber: "",
+        daterequest: "",
+        people: "",
+      };
+      this.myFiles = [];
+      this.uploadedFileNames = [];
+
     },
   },
 };

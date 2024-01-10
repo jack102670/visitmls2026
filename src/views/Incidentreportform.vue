@@ -31,26 +31,13 @@
                 <input
                   v-model="formData.Dateofincident"
                   id="Dateofincident"
-                  type="Date"
-                  required
+                  type="Datetime-local"
+                  :min="minDateTime"
+                  required1
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
 
-              <div>
-                <label
-                  class="font-semibold text-gray-700 dark:text-gray-200"
-                  for="Timeofincident"
-                  >Time Of Incident<span class="text-red-500">*</span></label
-                >
-                <input
-                  v-model="formData.Timeofincident"
-                  id="Timeofincident"
-                  type="time"
-                  required
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
-              </div>
               <div>
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
@@ -62,7 +49,7 @@
                 <input
                   v-model="formData.Locationofincident"
                   id="Locationofincident"
-                  required
+                  required1
                   type="text"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
@@ -72,7 +59,7 @@
             </div>
 
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
-              <div>
+              <div class="col-span-2">
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="PartiesInvolved"
@@ -84,7 +71,7 @@
                   v-model="formData.PartiesInvolved"
                   id="PartiesInvolved"
                   type="text"
-                  required
+                  required1
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
@@ -101,7 +88,7 @@
                   v-model="formData.Witness"
                   id="Witness"
                   type="text"
-                  required
+                  required1
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
@@ -117,7 +104,7 @@
                 >
                 <select
                   :id="dynamicId"
-                  required
+                  required1
                   v-model="formData.Typeofincident"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 >
@@ -147,7 +134,7 @@
                   placeholder="Specify category"
                   :id="dynamicCustomId"
                   type="text"
-                  required
+                  required1
                   v-model="formData.customIncidentType"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
@@ -167,7 +154,7 @@
                   id="Detailsincident"
                   class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                   rows="5"
-                  required
+                  required1
                 ></textarea>
               </div>
             </div>
@@ -190,7 +177,7 @@
                       ref="pond1"
                       label-idle="Drop files here or <span class='filepond--label-action'>Browse</span>"
                       allow-multiple="true"
-                      accepted-file-types="image/jpeg, image/png"
+                      accepted-file-types="image/jpeg, image/png, application/pdf, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                       v-bind:files="myFiles"
                       @input="updateFiles"
                     />
@@ -231,13 +218,14 @@
           class="w-full mt-4 bg-white border border-gray-300 divide-y divide-gray-300"
         >
           <tr>
-            <td class="py-2 px-4 font-medium">Date Of Incident:</td>
-            <td class="py-2 px-4">{{ formData.Dateofincident }}</td>
+            <td class="py-2 px-4 font-medium left-column">
+              Date And Time 0f Incident:
+            </td>
+            <td class="py-2 px-4 right-column">
+              {{ formData.Dateofincident }}
+            </td>
           </tr>
-          <tr>
-            <td class="py-2 px-4 font-medium">Time Of Incident:</td>
-            <td class="py-2 px-4">{{ formData.Timeofincident }}</td>
-          </tr>
+
           <tr>
             <td class="py-2 px-4 font-medium">Location Of Incident:</td>
             <td class="py-2 px-4">{{ formData.Locationofincident }}</td>
@@ -265,9 +253,8 @@
               v-model="formData.Detailsincident"
               name="Detailsincident"
               id="Detailsincident"
-              cols="40"
               rows="4"
-              style="overflow-y: auto"
+              style="overflow-y: auto; width: 100%"
             ></textarea>
           </tr>
           <tr>
@@ -343,6 +330,8 @@ export default {
       myFiles: [],
       modalContent: "",
       isModalVisible: false,
+      uploadedFileNames: [],
+      minDateTime: this.formatDateTime(new Date()),
 
       isDragging: false,
       formData: {
@@ -359,6 +348,26 @@ export default {
     },
   },
   methods: {
+    formatDateTime(date) {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  },
+
+    updateFiles(newFiles) {
+      if (Array.isArray(newFiles)) {
+        this.myFiles = newFiles;
+        this.uploadedFileNames = newFiles.map((fileItem) => {
+          console.log(`File in pond: ${fileItem.file.name}`);
+          return fileItem.file.name;
+        });
+      } else {
+        console.error("Expected newFiles to be an array, received:", newFiles);
+      }
+    },
     showModal() {
       this.isModalVisible = true;
     },
@@ -400,3 +409,11 @@ export default {
   },
 };
 </script>
+<style>
+.left-column {
+  width: 30%; /* Adjust this value as needed */
+}
+.right-column {
+  width: 70%; /* Adjust this value as needed */
+}
+</style>

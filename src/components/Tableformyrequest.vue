@@ -311,58 +311,7 @@
 
     <!-- footer -->
     <template v-slot:footer>
-      <div class="-mx-3 flex flex-wrap">
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4">
-            <label
-              for="preparedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Prepared By
-            </label>
-            <input
-              type="text"
-              name="preparedBy"
-              id="preparedBy"
-              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-            />
-          </div>
-        </div>
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4">
-            <label
-              for="verifiedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Verified By
-            </label>
-            <input
-              type="text"
-              name="verifiedBy"
-              id="verifiedBy"
-              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-            />
-          </div>
-        </div>
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4 relative">
-            <label
-              for="approvedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Approved By
-            </label>
-            <div class="relative flex items-stretch">
-              <input
-                type="text"
-                name="approvedBy"
-                id="approvedBy"
-                class="w-full pl-12 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+     
     </template>
   </Modalbadgerequest>
   <Modalincidentreport v-show="isModalVisible2" @close="closeModal">
@@ -484,58 +433,7 @@
 
     <!-- footer -->
     <template v-slot:footer>
-      <div class="-mx-3 flex flex-wrap">
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4">
-            <label
-              for="preparedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Prepared By
-            </label>
-            <input
-              type="text"
-              name="preparedBy"
-              id="preparedBy"
-              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-            />
-          </div>
-        </div>
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4">
-            <label
-              for="verifiedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Verified By
-            </label>
-            <input
-              type="text"
-              name="verifiedBy"
-              id="verifiedBy"
-              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-            />
-          </div>
-        </div>
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4 relative">
-            <label
-              for="approvedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Approved By
-            </label>
-            <div class="relative flex items-stretch">
-              <input
-                type="text"
-                name="approvedBy"
-                id="approvedBy"
-                class="w-full pl-12 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+     
     </template>
   </Modalincidentreport>
   <Modalcctv v-show="isModalVisible3" @close="closeModal">
@@ -679,58 +577,7 @@
 
     <!-- footer -->
     <template v-slot:footer>
-      <div class="-mx-3 flex flex-wrap">
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4">
-            <label
-              for="preparedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Prepared By
-            </label>
-            <input
-              type="text"
-              name="preparedBy"
-              id="preparedBy"
-              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-            />
-          </div>
-        </div>
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4">
-            <label
-              for="verifiedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Verified By
-            </label>
-            <input
-              type="text"
-              name="verifiedBy"
-              id="verifiedBy"
-              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-            />
-          </div>
-        </div>
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4 relative">
-            <label
-              for="approvedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Approved By
-            </label>
-            <div class="relative flex items-stretch">
-              <input
-                type="text"
-                name="approvedBy"
-                id="approvedBy"
-                class="w-full pl-12 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+      
     </template>
   </Modalcctv>
   <Modalvisitorescordt v-show="isModalVisible4" @close="closeModal">
@@ -826,58 +673,7 @@
 
     <!-- footer -->
     <template v-slot:footer>
-      <div class="-mx-3 flex flex-wrap">
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4">
-            <label
-              for="preparedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Prepared By
-            </label>
-            <input
-              type="text"
-              name="preparedBy"
-              id="preparedBy"
-              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-            />
-          </div>
-        </div>
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4">
-            <label
-              for="verifiedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Verified By
-            </label>
-            <input
-              type="text"
-              name="verifiedBy"
-              id="verifiedBy"
-              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-            />
-          </div>
-        </div>
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4 relative">
-            <label
-              for="approvedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Approved By
-            </label>
-            <div class="relative flex items-stretch">
-              <input
-                type="text"
-                name="approvedBy"
-                id="approvedBy"
-                class="w-full pl-12 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+      
     </template>
   </Modalvisitorescordt>
   <Modaltestkits v-show="isModalVisible5" @close="closeModal">
@@ -1003,58 +799,7 @@
 
     <!-- footer -->
     <template v-slot:footer>
-      <div class="-mx-3 flex flex-wrap">
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4">
-            <label
-              for="preparedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Prepared By
-            </label>
-            <input
-              type="text"
-              name="preparedBy"
-              id="preparedBy"
-              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-            />
-          </div>
-        </div>
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4">
-            <label
-              for="verifiedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Verified By
-            </label>
-            <input
-              type="text"
-              name="verifiedBy"
-              id="verifiedBy"
-              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-            />
-          </div>
-        </div>
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4 relative">
-            <label
-              for="approvedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Approved By
-            </label>
-            <div class="relative flex items-stretch">
-              <input
-                type="text"
-                name="approvedBy"
-                id="approvedBy"
-                class="w-full pl-12 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+     
     </template>
   </Modaltestkits>
   <Modalmask v-show="isModalVisible6" @close="closeModal">
@@ -1148,58 +893,7 @@
 
     <!-- footer -->
     <template v-slot:footer>
-      <div class="-mx-3 flex flex-wrap">
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4">
-            <label
-              for="preparedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Prepared By
-            </label>
-            <input
-              type="text"
-              name="preparedBy"
-              id="preparedBy"
-              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-            />
-          </div>
-        </div>
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4">
-            <label
-              for="verifiedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Verified By
-            </label>
-            <input
-              type="text"
-              name="verifiedBy"
-              id="verifiedBy"
-              class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-            />
-          </div>
-        </div>
-        <div class="w-full px-3 sm:w-full md:w-1/3 lg:w-1/3 xl:w-1/3">
-          <div class="mb-4 relative">
-            <label
-              for="approvedBy"
-              class="mb-2 block text-sm font-semibold text-gray-700"
-            >
-              Approved By
-            </label>
-            <div class="relative flex items-stretch">
-              <input
-                type="text"
-                name="approvedBy"
-                id="approvedBy"
-                class="w-full pl-12 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+   
     </template>
   </Modalmask>
 </template>
