@@ -14,13 +14,12 @@
           <div class="flex justify-between items-center">
             <div>
               <h2 class="text-lg font-medium text-gray-800 dark:text-white">
-                Pending Request <span
-                class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400"
-                >{{ requesters.length }}
-              </span>
+                Pending Request
+                <span
+                  class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400"
+                  >{{ requesters.length }}
+                </span>
               </h2>
-
-             
             </div>
 
             <div>
@@ -259,7 +258,7 @@ export default {
     return {
       searchQuery: "",
       // Sample data structure for requesters
-      role:"security",
+      role: "security",
       requesters: [
         {
           id: 1,
@@ -267,7 +266,6 @@ export default {
           typeofrequest: "PTW",
           date: "2023-01-01",
           status: "Pending",
-          
         },
         {
           id: 2,
@@ -322,17 +320,11 @@ export default {
         {
           id: 9,
           name: "Jordan Gray",
-          typeofrequest: "Badge request",
+          typeofrequest: "BR1000",
           date: "2023-01-08",
           status: "Rejected",
         },
-        {
-          id: 10,
-          name: "Justin Blue",
-          typeofrequest: "Access card request",
-          date: "2023-01-09",
-          status: "Pending",
-        },
+
         {
           id: 11,
           name: "Jennifer Red",
@@ -346,6 +338,13 @@ export default {
           typeofrequest: "Badge request",
           date: "2023-01-11",
           status: "Rejected",
+        },
+        {
+          id: 10,
+          name: "Justin Blue",
+          typeofrequest: "acr1000",
+          date: "2023-01-09",
+          status: "Pending",
         },
         {
           id: 13,
@@ -382,7 +381,6 @@ export default {
   },
   computed: {
     sortedAndPaginatedRequesters() {
-      
       const sortedRequesters = this.sortRequesters(this.requesters);
       const filteredRequesters = this.filterRequesters(
         sortedRequesters,
@@ -434,7 +432,6 @@ export default {
 
     // Method to sort the requesters based on current sort column and order
     sortRequesters(requesters) {
-      
       const orderMultiplier = this.sortOrder === "asc" ? 1 : -1;
       return requesters.slice().sort((a, b) => {
         const valueA = a[this.sortBy];

@@ -288,35 +288,34 @@ const FilePond = vueFilePond(
   FilePondPluginImagePreview
 );
 export default {
-  components: { FilePond, },
+  components: { FilePond },
   data() {
     return {
-      Description: "",
-      location: "",
-      fromDate: null,
-      toDate: null,
-      requesterName: "",
-      department: "",
-      phone: null,
-      contractorVendor: "",
-      company: "",
-      phoneC: null,
+      Contractorname: "",
+      Contractorcompany: "",
+      Startdate: "",
+      Completedate: "",
+      Starttime: "",
+      Completetime: "",
+      Location: "",
+      Descofwork: "",
+      selectedAuthorities: [],
+      myFiles: [], // Assuming this for filepond
     };
   },
-
   computed: {
     formData() {
       return {
-        Description: this.Description,
-        location: this.location,
-        fromDate: this.fromDate,
-        toDate: this.toDate,
-        requesterName: this.requesterName,
-        department: this.department,
-        phone: this.phone,
-        contractorVendor: this.contractorVendor,
-        company: this.company,
-        phoneC: this.phoneC,
+        Contractorname: this.Contractorname,
+        Contractorcompany: this.Contractorcompany,
+        Startdate: this.Startdate,
+        Completedate: this.Completedate,
+        Starttime: this.Starttime,
+        Completetime: this.Completetime,
+        Location: this.Location,
+        Descofwork: this.Descofwork,
+        selectedAuthorities: this.selectedAuthorities,
+        Files: this.myFiles, // Assuming filepond data
       };
     },
   },

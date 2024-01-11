@@ -16,7 +16,24 @@
         <div class="flex items-center gap-x-2">
           <div>
             <h2 class="font-medium text-gray-500 dark:text-gray-300">
-              {{ requester.typeofrequest }}
+              <!-- Conditionally display 'Badge Request' if typeofrequest includes 'br' -->
+              {{
+                requester.typeofrequest.includes("BR")
+                  ? "Badge Request"
+                  : requester.typeofrequest.includes("IR")
+                    ? "Access Card Request"
+                    : requester.typeofrequest.includes("CCTV")
+                      ? "CCTV Footage"
+                      : requester.typeofrequest.includes("PTW")
+                        ? "Permission To Work"
+                        : requester.typeofrequest.includes("VET")
+                          ? "Vehicle Request"
+                          : requester.typeofrequest.includes("TK")
+                            ? "Vehicle Request"
+                            : requester.typeofrequest.includes("MK")
+                            ? "Vehicle Request"
+                            : requester.typeofrequest
+              }}
             </h2>
           </div>
         </div>
@@ -124,7 +141,7 @@
 
       <h2
         v-if="requester.typeofrequest === 'PTW'"
-        class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
+        class="text-lg font-semibold rounded-lg text-slate-200 p-1 rounded w-full capitalize bg-[#160959e2] dark:text-white"
       >
         PERMIT TOO WORK
       </h2>
@@ -135,8 +152,10 @@
       <!-- <p class="py-3 text-xs font-bold text-purple-900">
         Forgot your password?
       </p> -->
+
+      <!-- Permit to works -->
       <div
-        v-if="requester.typeofrequest === 'PTW'"
+        v-if="requester.typeofrequest.includes('PTW')"
         class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-4"
       >
         <div>

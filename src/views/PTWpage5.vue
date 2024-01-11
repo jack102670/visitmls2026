@@ -196,42 +196,33 @@
 export default {
   data() {
     return {
-      Description: "",
-      location: "",
-      fromDate: "",
-      toDate: "",
-      requesterName: "",
-      department: "",
-      phone: "",
-      contractorVendor: "",
-      company: "",
-      phoneC: "",
+      // Data properties for each form input
+      Location: "",
+      Worksdescription: "",
+      datetimestart: "",
+      Datetimecomplete: "",
       selectedAuthorities: [],
-      radiohotworkby: [],
+      radiohotworkby: null,
     };
   },
   methods: {
     nextPage() {
-      this.$emit("next-page"); // Pass formData when emitting "Next" event
+      this.$emit("next-page", this.formData); // Pass formData when emitting "Next" event
     },
     goBack() {
-      this.$emit("go-back"); // Emit an event when the "Next" button is clicked
+      this.$emit("go-back"); // Emit an event when the "Back" button is clicked
     },
   },
-
   computed: {
     formData() {
+      // Combines all form data into a single object
       return {
-        Description: this.Description,
-        location: this.location,
-        fromDate: this.fromDate,
-        toDate: this.toDate,
-        requesterName: this.requesterName,
-        department: this.department,
-        phone: this.phone,
-        contractorVendor: this.contractorVendor,
-        company: this.company,
-        phoneC: this.phoneC,
+        Location: this.Location,
+        Worksdescription: this.Worksdescription,
+        Datetimestart: this.datetimestart,
+        Datetimecomplete: this.Datetimecomplete,
+        SelectedAuthorities: this.selectedAuthorities,
+        RadioHotworkBy: this.radiohotworkby,
       };
     },
   },

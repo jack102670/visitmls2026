@@ -36,7 +36,6 @@
       @go-back="scrollToPage3"
     ></PTWpage4>
     <PTWpage7
- 
       ref="page7"
       @updateFormData="updateFormData"
       @submit-form="updateFormData"
@@ -116,8 +115,8 @@ import PTWpage1 from "../views/PTWpage1.vue";
 import PTWpage2 from "../views/PTWpage2.vue";
 import PTWpage3 from "../views/PTWpage3.vue";
 import PTWpage4 from "../views/PTWpage4.vue";
-import PTWpage5 from "../views/PTWpage5.vue"; // Import additional form pages
-import PTWpage6 from "../views/PTWpage6.vue"; // Import additional form pages
+import PTWpage5 from "../views/PTWpage5.vue";
+import PTWpage6 from "../views/PTWpage6.vue";
 import PTWpage7 from "../views/PTWpage7.vue";
 
 import Modal from "../components/vmodal.vue";
@@ -146,7 +145,6 @@ export default {
     updateFormData(formData) {
       this.formData = formData;
     },
-
     async submitForm() {
       // Check if PTWpage2 reference is defined
       if (!this.$refs.page2) {
@@ -165,20 +163,11 @@ export default {
       }
 
       // Check if the checkboxes are checked
-      const isCheckbox1Checked = checkbox1Ref.checked;
-      const isCheckbox2Checked = checkbox2Ref.checked;
+      this.isCheckbox1Checked = checkbox1Ref.checked;
+      this.isCheckbox2Checked = checkbox2Ref.checked;
 
       // Check for undefined references or formData for pages 1 to 6 conditionally
       for (let i = 1; i <= 6; i++) {
-        // Check if the current iteration is for page 5 or 6 and if the checkboxes are not checked
-        if (
-          (i === 5 || i === 6) &&
-          !isCheckbox1Checked &&
-          !isCheckbox2Checked
-        ) {
-          continue; // Skip this iteration if page 5 or 6 is optional and checkboxes are not checked
-        }
-
         const pageRef = this.$refs["page" + i];
 
         if (!pageRef) {
@@ -188,22 +177,41 @@ export default {
           console.error(`page${i}.formData is undefined.`);
           return; // Stop execution if formData is undefined
         }
+
+        // Check if the current iteration is for page 5 or 6
+        if (i === 5 || i === 6) {
+          // Check if page 5 or 6 is optional and checkboxes are not checked
+          if (
+            (i === 5 && !this.isCheckbox1Checked) ||
+            (i === 6 && !this.isCheckbox2Checked)
+          ) {
+            continue; // Skip this iteration if page 5 or 6 is optional and checkboxes are not checked
+          }
+        }
       }
 
-      // If all references and formData are defined, proceed with the Axios request
+      // Define an empty object to store the formData for optional pages
+      const optionalPagesData = {};
+
+      // Check if checkbox1 for page5 is checked and page5 reference is defined
+      if (this.isCheckbox1Checked && this.$refs.page5) {
+        optionalPagesData.page5 = this.$refs.page5.formData;
+      }
+
+      // Check if checkbox2 for page6 is checked and page6 reference is defined
+      if (this.isCheckbox2Checked && this.$refs.page6) {
+        optionalPagesData.page6 = this.$refs.page6.formData;
+      }
+
+      // Combine the formData for all pages
       const formData = {
         page1: this.$refs.page1.formData,
         page2: this.$refs.page2.formData,
         page3: this.$refs.page3.formData,
         page4: this.$refs.page4.formData,
         page7: this.$refs.page7.formData,
-        // Only include page 5 and 6 if the checkboxes are checked
-        ...(isCheckbox1Checked || isCheckbox2Checked
-          ? {
-              page5: this.$refs.page5.formData,
-              page6: this.$refs.page6.formData,
-            }
-          : {}),
+        // Merge the formData for optional pages
+        ...optionalPagesData,
         // Add more pages as needed
       };
 
@@ -241,22 +249,6 @@ export default {
     },
     closeModal() {
       this.isModalVisible = false;
-    },
-
-    scrollToPage1() {
-      this.$refs.page1.$el.scrollIntoView({ behavior: "smooth" });
-    },
-    scrollToPage2() {
-      this.$refs.page2.$el.scrollIntoView({ behavior: "smooth" });
-    },
-    scrollToPage3() {
-      this.$refs.page3.$el.scrollIntoView({ behavior: "smooth" });
-    },
-    scrollToPage4() {
-      this.$refs.page4.$el.scrollIntoView({ behavior: "smooth" });
-    },
-    scrollToPage5() {
-      this.$refs.page5.$el.scrollIntoView({ behavior: "smooth" });
     },
   },
 };
