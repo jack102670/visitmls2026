@@ -22,7 +22,8 @@
       <div :class="getStatusContainerClass(requester.status)">
         <span :class="getStatusDotClass(requester.status)"></span>
         <h2 :class="getStatusTextClass(requester.status)">
-          {{ requester.status }}
+          {{ requester.status === '' ? 'open' : requester.status }}
+
         </h2>
       </div>
     </td>
@@ -961,7 +962,7 @@ export default {
     },
     getStatusContainerClass(status) {
       const colorMap = {
-        Approved:
+        '':
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800",
         Pending:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-yellow-100/60 dark:bg-gray-800",
@@ -972,7 +973,7 @@ export default {
     },
     getStatusDotClass(status) {
       const colorMap = {
-        Approved: "h-1.5 w-1.5 rounded-full bg-emerald-500",
+        '': "h-1.5 w-1.5 rounded-full bg-emerald-500",
         Pending: "h-1.5 w-1.5 rounded-full bg-yellow-500",
         Rejected: "h-1.5 w-1.5 rounded-full bg-red-500",
       };
@@ -980,7 +981,7 @@ export default {
     },
     getStatusTextClass(status) {
       const colorMap = {
-        Approved: "text-sm font-normal text-emerald-500",
+        '': "text-sm font-normal text-emerald-500",
         Pending: "text-sm font-normal text-yellow-500",
         Rejected: "text-sm font-normal text-red-500",
       };

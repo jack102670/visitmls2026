@@ -255,6 +255,7 @@
 
         <!-- Add v-model to other inputs as needed -->
       </div>
+      
     </template>
 
     <!-- footer -->

@@ -328,7 +328,7 @@ export default {
         {
           id: 11,
           name: "Jennifer Red",
-          typeofrequest: "CCTV footage",
+          typeofrequest: "CCfootageaaaa",
           date: "2023-01-10",
           status: "Approved",
         },

@@ -47,12 +47,11 @@
                   required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 >
-                  <option value=""  disabled selected></option>
+                  <option value="" disabled selected></option>
                   <option
                     v-for="department in departments"
                     :key="department.id"
                     :value="department.name"
-                    
                   >
                     {{ department.name }}
                   </option>
@@ -83,7 +82,7 @@
                   {{ formData.people }}</label
                 >
                 <div
-                  class=" flex justify-between w-full px-4 py-2 mt-2 text-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                  class="flex justify-between w-full px-4 py-2 mt-2 text-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 >
                   <div>
                     <input
@@ -287,9 +286,9 @@ export default {
         requesterName: "",
         department: "",
         phonenumber: "",
-
+        branch: null,
         People: "",
-
+        userid: null,
         // Add more form fields here
       },
 
@@ -336,40 +335,41 @@ export default {
       // Example of instance method call on pond reference for the second component
     },
 
-   confirmFormSubmission() {
-  // Prepare the form data to be sent
-  let formDataToSend = new FormData();
-  formDataToSend.append("requesterName", this.formData.requesterName);
-  formDataToSend.append("department", this.formData.department);
-  formDataToSend.append("phonenumber", this.formData.phonenumber);
+    confirmFormSubmission() {
+      // Prepare the form data to be sent
+      let formDataToSend = new FormData();
+      formDataToSend.append("requesterName", this.formData.requesterName);
+      formDataToSend.append("department", this.formData.department);
+      formDataToSend.append("phonenumber", this.formData.phonenumber);
+      formDataToSend.append("branch");
+      formDataToSend.append("userid");
 
-  formDataToSend.append("people", this.formData.people);
+      formDataToSend.append("people", this.formData.people);
 
-  // Log the form data for debugging
-  console.log('Form Data to send:', Array.from(formDataToSend.entries()));
+      // Log the form data for debugging
+      console.log("Form Data to send:", Array.from(formDataToSend.entries()));
 
-  // Log the names of files being sent
-  console.log("Logging file names before sending:");
-  this.myFiles.forEach((fileItem) => {
-    console.log("File name:", fileItem.file.name); // This logs the name of each file
-    formDataToSend.append("files", fileItem.file);
-  });
+      // Log the names of files being sent
+      console.log("Logging file names before sending:");
+      this.myFiles.forEach((fileItem) => {
+        console.log("File name:", fileItem.file.name); // This logs the name of each file
+        formDataToSend.append("files", fileItem.file);
+      });
 
-  // Send the POST request
-  axios
-    .post("http://localhost:3000/badgeRequests", formDataToSend)
-    .then((response) => {
-    ("Server response:", response.data);
-      // Handle the response, such as showing a success message or resetting the form
-      this.resetForm();
-      this.closeModal();
-    })
-    .catch((error) => {
-      console.error("Error submitting form:", error);
-      // Handle errors, such as showing an error message
-    });
-},
-
+      // Send the POST request
+      axios
+        .post("http://localhost:3000/badgeRequests", formDataToSend)
+        .then((response) => {
+          "Server response:", response.data;
+          // Handle the response, such as showing a success message or resetting the form
+          this.resetForm();
+          this.closeModal();
+        })
+        .catch((error) => {
+          console.error("Error submitting form:", error);
+          // Handle errors, such as showing an error message
+        });
+    },
 
     resetForm() {
       // Reset form data after submission
@@ -382,7 +382,6 @@ export default {
       };
       this.myFiles = [];
       this.uploadedFileNames = [];
-
     },
   },
 };
