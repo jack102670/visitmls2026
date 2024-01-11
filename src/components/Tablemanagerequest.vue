@@ -21,17 +21,17 @@
                 requester.typeofrequest.includes("BR")
                   ? "Badge Request"
                   : requester.typeofrequest.includes("IR")
-                    ? "Access Card Request"
+                    ? "Incident Report"
                     : requester.typeofrequest.includes("CCTV")
                       ? "CCTV Footage"
                       : requester.typeofrequest.includes("PTW")
                         ? "Permission To Work"
                         : requester.typeofrequest.includes("VET")
-                          ? "Vehicle Request"
+                          ? "Visitor Escort Tour"
                           : requester.typeofrequest.includes("TK")
-                            ? "Vehicle Request"
+                            ? "Teskit"
                             : requester.typeofrequest.includes("MK")
-                            ? "Vehicle Request"
+                            ? "Mask"
                             : requester.typeofrequest
               }}
             </h2>
