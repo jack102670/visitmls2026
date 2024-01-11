@@ -17,7 +17,7 @@
 
         <form>
           <div
-            class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 mx-auto cursor-pointer flex w-full"
+            class="grid-cols-1 gap-6 mt-4 sm:grid-cols-2 mx-auto cursor-pointer flex w-full"
           >
             
 
@@ -125,7 +125,7 @@
               </select>
             </div>
             <div
-              class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
+              class=" grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
             >
               <div class="w-full">
                 <label
@@ -323,7 +323,7 @@ export default {
     formData: {
       handler(newFormData) {
         // Emit an event to the parent with the updated form data
-        this.$emit("form-updated", newFormData);
+        this.$emit("submit-form", newFormData);
       },
       deep: true,
     },

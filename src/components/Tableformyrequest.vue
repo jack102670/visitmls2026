@@ -399,7 +399,7 @@
         <!-- Add v-model to other inputs as needed -->
       </div>
       <div
-        class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
+        class=" grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
       >
         <div class="w-full">
           <label for="Detailsincident" class="text-gray-700 dark:text-gray-200"
@@ -558,7 +558,7 @@
         </div>
       </div>
       <div
-        class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
+        class=" grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
       >
         <div class="w-full">
           <label for="Detailsincident" class="text-gray-700 dark:text-gray-200"
@@ -654,7 +654,7 @@
         <!-- Add v-model to other inputs as needed -->
       </div>
       <div
-        class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
+        class=" grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
       >
         <div class="w-full">
           <label for="Description" class="text-gray-700 dark:text-gray-200"
@@ -875,7 +875,7 @@
         <!-- Add v-model to other inputs as needed -->
       </div>
       <div
-        class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
+        class=" grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
       >
         <div class="w-full">
           <label for="Description" class="text-gray-700 dark:text-gray-200"

@@ -28,6 +28,7 @@
       </section>
     </div>
   </div>
+  <ptw6/>
 </template>
 
 <script>
@@ -45,6 +46,7 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css
 // Import image preview and file type validation plugins
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
+import ptw6 from "../views/PTWpage6.vue"
 
 // Create component
 const FilePond = vueFilePond(
@@ -66,6 +68,7 @@ export default {
         },
         components: {
             FilePond,
+            ptw6,
         },
     };
 </script>

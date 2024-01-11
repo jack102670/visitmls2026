@@ -141,7 +141,7 @@
 
       <h2
         v-if="requester.typeofrequest === 'PTW'"
-        class="text-lg font-semibold rounded-lg text-slate-200 p-1 rounded w-full capitalize bg-[#160959e2] dark:text-white"
+        class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize bg-[#160959e2] dark:text-white"
       >
         PERMIT TOO WORK
       </h2>

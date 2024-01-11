@@ -17,7 +17,7 @@
 
         <form>
           <div
-            class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 mx-auto cursor-pointer flex w-full"
+            class=" grid-cols-1 gap-6 mt-4 sm:grid-cols-2 mx-auto cursor-pointer flex w-full"
           >
             <div class="w-full">
               <label
