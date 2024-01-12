@@ -22,8 +22,7 @@
       <div :class="getStatusContainerClass(requester.status)">
         <span :class="getStatusDotClass(requester.status)"></span>
         <h2 :class="getStatusTextClass(requester.status)">
-          {{ requester.status === '' ? 'open' : requester.status }}
-
+          {{ requester.status === "" ? "open" : requester.status }}
         </h2>
       </div>
     </td>
@@ -179,8 +178,8 @@
             />
           </svg>
         </button>
-
-        <button
+        <!-- this button for edit and deleted  -->
+        <!-- <button
           v-if="requester.status === 'Pending'"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
         >
@@ -218,7 +217,7 @@
               d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
             />
           </svg>
-        </button>
+        </button> -->
       </div>
     </td>
   </tr>
@@ -311,9 +310,7 @@
     </template>
 
     <!-- footer -->
-    <template v-slot:footer>
-     
-    </template>
+    <template v-slot:footer> </template>
   </Modalbadgerequest>
   <Modalincidentreport v-show="isModalVisible2" @close="closeModal">
     <!-- header -->
@@ -400,7 +397,7 @@
         <!-- Add v-model to other inputs as needed -->
       </div>
       <div
-        class=" grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
+        class="grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
       >
         <div class="w-full">
           <label for="Detailsincident" class="text-gray-700 dark:text-gray-200"
@@ -433,9 +430,7 @@
     </template>
 
     <!-- footer -->
-    <template v-slot:footer>
-     
-    </template>
+    <template v-slot:footer> </template>
   </Modalincidentreport>
   <Modalcctv v-show="isModalVisible3" @close="closeModal">
     <!-- header -->
@@ -454,7 +449,6 @@
             >Requester Name</label
           >
           <input
-           
             id="Requestername"
             type="text"
             required
@@ -467,7 +461,6 @@
             >Department</label
           >
           <input
-          
             id="Department"
             type="text"
             required
@@ -481,7 +474,6 @@
             >Phone number</label
           >
           <input
-            
             id="Phonenumber"
             type="number"
             required
@@ -498,7 +490,6 @@
             >Date requested</label
           >
           <input
-        
             id="Daterequested"
             type="date"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -510,7 +501,6 @@
             >Incident location</label
           >
           <input
-        
             id="Incidentlocation"
             type="text"
             required
@@ -522,7 +512,6 @@
             >Appointment time</label
           >
           <input
-          
             id="Appointmenttime"
             type="time"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -537,7 +526,6 @@
             >Incident date</label
           >
           <input
-           
             id="Incidentdate"
             type="date"
             required
@@ -550,7 +538,6 @@
             >Incident ltime</label
           >
           <input
-          
             id="Incidenttime"
             type="time"
             required
@@ -559,14 +546,13 @@
         </div>
       </div>
       <div
-        class=" grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
+        class="grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
       >
         <div class="w-full">
           <label for="Detailsincident" class="text-gray-700 dark:text-gray-200"
             >Description of incident</label
           >
           <textarea
-      
             id="Detailsincident"
             class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             rows="5"
@@ -577,9 +563,7 @@
     </template>
 
     <!-- footer -->
-    <template v-slot:footer>
-      
-    </template>
+    <template v-slot:footer> </template>
   </Modalcctv>
   <Modalvisitorescordt v-show="isModalVisible4" @close="closeModal">
     <!-- header -->
@@ -655,7 +639,7 @@
         <!-- Add v-model to other inputs as needed -->
       </div>
       <div
-        class=" grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
+        class="grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
       >
         <div class="w-full">
           <label for="Description" class="text-gray-700 dark:text-gray-200"
@@ -673,9 +657,7 @@
     </template>
 
     <!-- footer -->
-    <template v-slot:footer>
-      
-    </template>
+    <template v-slot:footer> </template>
   </Modalvisitorescordt>
   <Modaltestkits v-show="isModalVisible5" @close="closeModal">
     <!-- header -->
@@ -799,9 +781,7 @@
     </template>
 
     <!-- footer -->
-    <template v-slot:footer>
-     
-    </template>
+    <template v-slot:footer> </template>
   </Modaltestkits>
   <Modalmask v-show="isModalVisible6" @close="closeModal">
     <!-- header -->
@@ -876,7 +856,7 @@
         <!-- Add v-model to other inputs as needed -->
       </div>
       <div
-        class=" grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
+        class="grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
       >
         <div class="w-full">
           <label for="Description" class="text-gray-700 dark:text-gray-200"
@@ -893,9 +873,7 @@
     </template>
 
     <!-- footer -->
-    <template v-slot:footer>
-   
-    </template>
+    <template v-slot:footer> </template>
   </Modalmask>
 </template>
 
@@ -962,7 +940,8 @@ export default {
     },
     getStatusContainerClass(status) {
       const colorMap = {
-        '':
+        "": "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800",
+        Approved:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800",
         Pending:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-yellow-100/60 dark:bg-gray-800",
@@ -973,7 +952,8 @@ export default {
     },
     getStatusDotClass(status) {
       const colorMap = {
-        '': "h-1.5 w-1.5 rounded-full bg-emerald-500",
+        "": "h-1.5 w-1.5 rounded-full bg-emerald-500",
+        Approved: "h-1.5 w-1.5 rounded-full bg-emerald-500",
         Pending: "h-1.5 w-1.5 rounded-full bg-yellow-500",
         Rejected: "h-1.5 w-1.5 rounded-full bg-red-500",
       };
@@ -981,7 +961,8 @@ export default {
     },
     getStatusTextClass(status) {
       const colorMap = {
-        '': "text-sm font-normal text-emerald-500",
+        "": "text-sm font-normal text-emerald-500",
+        Approved: "text-sm font-normal text-emerald-500",
         Pending: "text-sm font-normal text-yellow-500",
         Rejected: "text-sm font-normal text-red-500",
       };

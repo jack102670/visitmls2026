@@ -337,28 +337,16 @@ export default {
 
     confirmFormSubmission() {
       // Prepare the form data to be sent
-      let formDataToSend = new FormData();
-      formDataToSend.append("requesterName", this.formData.requesterName);
-      formDataToSend.append("department", this.formData.department);
-      formDataToSend.append("phonenumber", this.formData.phonenumber);
-      formDataToSend.append("branch");
-      formDataToSend.append("userid");
-
-      formDataToSend.append("people", this.formData.people);
-
-      // Log the form data for debugging
-      console.log("Form Data to send:", Array.from(formDataToSend.entries()));
-
-      // Log the names of files being sent
-      console.log("Logging file names before sending:");
-      this.myFiles.forEach((fileItem) => {
-        console.log("File name:", fileItem.file.name); // This logs the name of each file
-        formDataToSend.append("files", fileItem.file);
-      });
 
       // Send the POST request
       axios
-        .post("http://localhost:3000/badgeRequests", formDataToSend)
+        .post("http://localhost:3000/badgeRequests", {
+          requesterName: this.formData.requesterName,
+          departmentName: this.formData.department,
+          designationPeople: this.formData.People,
+          phoneNumber: this.formData.phonenumber,
+          branch:null,
+        })
         .then((response) => {
           "Server response:", response.data;
           // Handle the response, such as showing a success message or resetting the form

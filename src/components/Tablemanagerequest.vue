@@ -34,7 +34,6 @@
                               ? "Mask"
                               : null
               }}
-         
             </h2>
           </div>
         </div>
@@ -58,7 +57,7 @@
     <td class="px-4 py-4 ml text-sm whitespace-nowrap">
       <div class="flex items-center gap-x-6">
         <button
-        @click="showModal(requester.refNumber)"
+          @click="showModal(requester.refNumber)"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
           <svg
@@ -81,8 +80,8 @@
             />
           </svg>
         </button>
-
-        <button
+        <!-- this button for edit and deleted  -->
+        <!-- <button
           v-if="requester.status === 'Pending'"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
         >
@@ -120,7 +119,7 @@
               d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
             />
           </svg>
-        </button>
+        </button> -->
       </div>
     </td>
   </tr>
@@ -462,13 +461,14 @@
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Description"
-              >Requester </label
-            >
+              >Requester
+            </label>
             <label
               id="Description"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            >{{ getRequest.name }}</label>
+              >{{ getRequest.name }}</label
+            >
           </div>
 
           <div>
@@ -479,7 +479,8 @@
               id="Description"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            >{{ getRequest.Department }}</label>
+              >{{ getRequest.Department }}</label
+            >
           </div>
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
@@ -491,7 +492,8 @@
               id="Description"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            >{{ getRequest.PhoneNumber}}</label>
+              >{{ getRequest.PhoneNumber }}</label
+            >
           </div>
 
           <div>
@@ -502,7 +504,8 @@
               id="Location"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            >{{ getRequest.For }}</Label>
+              >{{ getRequest.For }}</Label
+            >
           </div>
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-1">
@@ -600,7 +603,7 @@
         </div>
       </div>
       <!--Visitor Escort Transport-->
-      <div v-show="showVETForm">  
+      <div v-show="showVETForm">
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Description"
@@ -856,7 +859,7 @@ export default {
   },
   data() {
     return {
-      getRequest:[],
+      getRequest: [],
       isModalVisible: false,
       showBadgeRequest: false,
       showMaskRequest: false,
@@ -865,7 +868,6 @@ export default {
       showPTWForm: false,
       showCCTVForm: false,
       showVETForm: false,
-    
     };
   },
   props: {
@@ -878,12 +880,10 @@ export default {
     showModal(refNumber) {
       if (refNumber.includes("BR")) {
         axios
-          .get(
-            `http://localhost:3000/badgeRequests/10`
-          )
+          .get(`http://localhost:3000/badgeRequests/10`)
           .then((response) => {
             this.getRequest = response.data;
-            console.log("this is get request"+this.getRequest);
+            console.log("this is get request" + this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -894,9 +894,7 @@ export default {
       }
       if (refNumber.includes("VET")) {
         axios
-          .get(
-            `http://localhost:3000/badgeRequests`
-          )
+          .get(`http://localhost:3000/badgeRequests`)
           .then((response) => {
             this.getRequest = response.data;
             console.log(this.getRequest);
