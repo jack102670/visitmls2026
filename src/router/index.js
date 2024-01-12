@@ -1,8 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
-import Myrequest from "../views/Myrequest.vue";
+
 import Dashboard from "../views/Dashboard.vue";
-import Sidebar from "../components/Sidebar.vue";
+
 import Login from "../views/Login.vue";
 
 
@@ -12,33 +11,19 @@ import PTW from "../views/PTW.vue";
 import Loginstaff from "../views/Loginstaff.vue";
 import Vendorsignup from "../views/Vendorsignup.vue";
 import Myrequest2 from "../views/Myrequest2.vue";
-import Temp from "../views/temp.vue";
+
 import cctvform from "../views/cctvform.vue";
 import badgeform from "../views/badgeform.vue";
 import Maskform from "../views/Maskform.vue";
 import Teskitform from "../views/Teskitform.vue";
 import visitorescorttour from "../views/visitor-escort-tour.vue";
 import Incidentreportform from "../views/Incidentreportform.vue";
-import PTWpage1 from "../views/PTWpage1.vue";
+
 import Dashboardvendor from "../views/Dashboardvendor.vue";
 import Incidentreportsafety from "../views/Incidentreportsafety.vue";
 const routes = [
-  {
-    path: "/Home",
-    name: "Home",
-    components: {
-      default: Home,
-      Sidebar: Sidebar,
-    },
-  },
-  {
-    path: "/Myrequest",
-    name: "Myrequest",
-    components: {
-      default: Myrequest,
-      Sidebar: Sidebar,
-    },
-  },
+
+
   {
     path: "/Dashboard/",
     name: "Dashboard",
@@ -133,14 +118,7 @@ const routes = [
       Sidebar: Newsidebar,
     },
   },
-  {
-    path: "/PTWpage1",
-    name: "PTWpage1",
-    components: {
-      default: PTWpage1,
-      Sidebar: Newsidebar,
-    },
-  },
+
   {
     path: "/Managerequest",
     name: "Managerequest",
@@ -165,11 +143,7 @@ const routes = [
     name: "Vendorsingup",
     component: Vendorsignup,
   },
-  {
-    path: "/Temp",
-    name: "tempViews",
-    component: Temp,
-  },
+
 
 ];
 
