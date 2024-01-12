@@ -17,7 +17,7 @@
           <div>
             <h2 class="font-medium text-gray-500 dark:text-gray-300">
               <!-- Conditionally display 'Badge Request' if typeofrequest includes 'br' -->
-              <!-- {{
+              {{
                 requester.refNumber.includes("BR")
                   ? "Badge Request"
                   : requester.refNumber.includes("IR")
@@ -33,7 +33,8 @@
                             : requester.refNumber.includes("MK")
                               ? "Mask"
                               : null
-              }} -->
+              }}
+         
             </h2>
           </div>
         </div>
@@ -55,7 +56,7 @@
       </div>
     </td>
     <td class="px-4 py-4 ml text-sm whitespace-nowrap">
-      <div class="flex items-center gap-x-6">{{ requester.refNumber }}
+      <div class="flex items-center gap-x-6">
         <button
         @click="showModal(requester.refNumber)"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
@@ -126,49 +127,49 @@
   <Modal v-show="isModalVisible" @close="closeModal">
     <!-- header -->
     <template v-slot:header>
-      <!-- <h1
-        v-if="requester.typeofrequest.includes('CCTV')"
+      <h1
+        v-if="requester.refNumber.includes('CCTV')"
         class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
       >
         CCTV FOOTAGE
       </h1>
       <h1
-        v-if="requester.typeofrequest.includes('BR')"
+        v-if="requester.refNumber.includes('BR')"
         class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
       >
         BADGE REQUEST
       </h1>
 
       <h2
-        v-if="requester.typeofrequest.includes('PTW')"
+        v-if="requester.refNumber.includes('PTW')"
         class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
       >
         PERMIT TOO WORK
       </h2>
       <h2
-        v-if="requester.typeofrequest.includes('IR')"
+        v-if="requester.refNumber.includes('IR')"
         class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
       >
         INCIDENT REPORT
       </h2>
       <h2
-        v-if="requester.typeofrequest.includes('TK')"
+        v-if="requester.refNumber.includes('TK')"
         class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
       >
         TESTKIT
       </h2>
       <h2
-        v-if="requester.typeofrequest.includes('VET')"
+        v-if="requester.refNumber.includes('VET')"
         class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
       >
         VISITOR ESCORT TOUR
       </h2>
       <h2
-        v-if="requester.typeofrequest.includes('MK')"
+        v-if="requester.refNumber.includes('MK')"
         class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
       >
         MASK
-      </h2> -->
+      </h2>
     </template>
 
     <!-- body -->
@@ -377,7 +378,7 @@
         </div>
       </div>
       <!-- teskit -->
-      <div v-show="showTestkit">
+      <div v-show="showTeskit">
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Description"
@@ -461,7 +462,7 @@
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Description"
-              >Requester :{{ getRequest.name }}</label
+              >Requester </label
             >
             <label
               id="Description"
@@ -478,7 +479,7 @@
               id="Description"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            >{{ getRequest.status }}</label>
+            >{{ getRequest.Department }}</label>
           </div>
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
@@ -486,22 +487,22 @@
             <label class="text-gray-700 dark:text-gray-200" for="Description"
               >Phone Number</label
             >
-            <input
+            <label
               id="Description"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+            >{{ getRequest.PhoneNumber}}</label>
           </div>
 
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Location"
               >For</label
             >
-            <input
+            <Label
               id="Location"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+            >{{ getRequest.For }}</Label>
           </div>
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-1">
@@ -599,11 +600,11 @@
         </div>
       </div>
       <!--Visitor Escort Transport-->
-      <div v-show="showVETForm">
+      <div v-show="showVETForm">  
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Description"
-              >Requester Name</label
+              >Requester Name:</label
             >
             <input
               id="Description"
@@ -878,7 +879,7 @@ export default {
       if (refNumber.includes("BR")) {
         axios
           .get(
-            `http://localhost:3000/badgeRequests`
+            `http://localhost:3000/badgeRequests/10`
           )
           .then((response) => {
             this.getRequest = response.data;
@@ -894,7 +895,7 @@ export default {
       if (refNumber.includes("VET")) {
         axios
           .get(
-            `https://localhost:61659/api/Main/GetBadgeRequestByUser/${refNumber}`
+            `http://localhost:3000/badgeRequests`
           )
           .then((response) => {
             this.getRequest = response.data;
@@ -987,7 +988,7 @@ export default {
         this.isModalVisible = true;
         this.showMaskRequest = true;
       }
-      this.isModalVisible = true;
+      // this.isModalVisible = true;
     },
 
     closeModal() {

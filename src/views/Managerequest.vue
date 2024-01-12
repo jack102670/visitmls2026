@@ -249,6 +249,7 @@
 
 <script>
 import Tablemanagerequest from "../components/Tablemanagerequest.vue";
+import axios from "axios";
 export default {
   name: "Myrequest2Views",
   components: {
@@ -259,100 +260,7 @@ export default {
       searchQuery: "",
       // Sample data structure for requesters
       role: "security",
-      requesters: [
-        {
-          id: 1,
-          name: "bohn Doe",
-          typeofrequest: "PTW",
-          date: "2023-01-01",
-          status: "Pending",
-          refNumber: "PTW111"
-        },
-        {
-          id: 2,
-          name: "aane Doe",
-          typeofrequest: "",
-          date: "2023-01-02",
-          status: "Approved",
-          refNumber: "BR111"
-        },
-        {
-          id: 3,
-          name: "Jan Man",
-          typeofrequest: "BR333",
-          date: "2023-01-02",
-          status: "Rejected",
-          refNumber: "BR111"
-        },
-        // ... (Add more entries as needed)
-        {
-          id: 4,
-          name: "Jim Smith",
-          typeofrequest: "IR300",
-          date: "2023-01-03",
-          status: "Pending",
-        },
-        {
-          id: 5,
-          name: "Jack Brown",
-          typeofrequest: "CCTV409",
-          date: "2023-01-04",
-          status: "Approved",
-        },
-        {
-          id: 6,
-          name: "Jill White",
-          typeofrequest: "VET200",
-          date: "2023-01-05",
-          status: "Rejected",
-        },
-        {
-          id: 7,
-          name: "James Black",
-          typeofrequest: "TK300",
-          date: "2023-01-06",
-          status: "Pending",
-        },
-        {
-          id: 8,
-          name: "Jessica Green",
-          typeofrequest: "MK1003",
-          date: "2023-01-07",
-          status: "Approved",
-        },
-        {
-          id: 9,
-          name: "Jordan Gray",
-          typeofrequest: "BR1000",
-          date: "2023-01-08",
-          status: "Rejected",
-        },
-
-        {
-          id: 11,
-          name: "Jennifer Red",
-          typeofrequest: "CCfootageaaaa",
-          date: "2023-01-10",
-          status: "Approved",
-        },
-    
-        {
-          id: 10,
-          name: "Justin Blue",
-          typeofrequest: "TK4842",
-          date: "2023-01-09",
-          status: "Pending",
-        },
-       
-        {
-          id: 14,
-          name: "hazman",
-          typeofrequest: "CCTV footage",
-          date: "2023-01-13",
-          status: "Approved",
-        },
-    
-      ],
+      requesters: [],
       sortOrder: {
         typeofrequest: "asc",
         date: "asc",
@@ -393,7 +301,23 @@ export default {
       return this.requesters.slice(this.startIndex, this.endIndex + 1);
     },
   },
+  mounted() {
+    // Fetch data when the component is mounted
+    this.fetchRequesters();
+  },
   methods: {
+    fetchRequesters() {
+      console.log("Fetching requesters...");
+      axios
+        .get("http://localhost:3000/badgeRequests")
+        .then((response) => {
+          this.requesters = response.data;
+          console.log("Requesters data:", this.requesters);
+        })
+        .catch((error) => {
+          console.error("Error fetching requesters:", error);
+        });
+    },
     filterRequesters(requesters, searchQuery) {
       if (!searchQuery) {
         return requesters;
@@ -407,10 +331,12 @@ export default {
         // Customize this logic based on your data structure
         return (
           isFullNameMatch ||
-          requester.typeofrequest
+          requester.name
             .toLowerCase()
             .includes(normalizedSearchQuery) ||
           requester.status.toLowerCase().includes(normalizedSearchQuery)
+          ||
+          requester.date.toLowerCase().includes(normalizedSearchQuery)
         );
       });
     },
