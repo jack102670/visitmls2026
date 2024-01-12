@@ -112,7 +112,7 @@
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="username"
-                  >Upload file list of worker<span class="text-red-500"
+                  >Upload File List Of Name<span class="text-red-500"
                     >*</span
                   ></label
                 >

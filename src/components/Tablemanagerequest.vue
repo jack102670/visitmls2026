@@ -17,23 +17,23 @@
           <div>
             <h2 class="font-medium text-gray-500 dark:text-gray-300">
               <!-- Conditionally display 'Badge Request' if typeofrequest includes 'br' -->
-              {{
-                requester.typeofrequest.includes("BR")
+              <!-- {{
+                requester.refNumber.includes("BR")
                   ? "Badge Request"
-                  : requester.typeofrequest.includes("IR")
+                  : requester.refNumber.includes("IR")
                     ? "Incident Report"
-                    : requester.typeofrequest.includes("CCTV")
+                    : requester.refNumber.includes("CCTV")
                       ? "CCTV Footage"
-                      : requester.typeofrequest.includes("PTW")
+                      : requester.refNumber.includes("PTW")
                         ? "Permission To Work"
-                        : requester.typeofrequest.includes("VET")
+                        : requester.refNumber.includes("VET")
                           ? "Visitor Escort Tour"
-                          : requester.typeofrequest.includes("TK")
+                          : requester.refNumber.includes("TK")
                             ? "Teskit"
-                            : requester.typeofrequest.includes("MK")
-                            ? "Mask"
-                            : requester.typeofrequest
-              }}
+                            : requester.refNumber.includes("MK")
+                              ? "Mask"
+                              : null
+              }} -->
             </h2>
           </div>
         </div>
@@ -55,9 +55,9 @@
       </div>
     </td>
     <td class="px-4 py-4 ml text-sm whitespace-nowrap">
-      <div class="flex items-center gap-x-6">
+      <div class="flex items-center gap-x-6">{{ requester.refNumber }}
         <button
-          @click="showModal"
+        @click="showModal(requester.refNumber)"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
           <svg
@@ -126,25 +126,49 @@
   <Modal v-show="isModalVisible" @close="closeModal">
     <!-- header -->
     <template v-slot:header>
-      <h1
-        v-if="requester.typeofrequest === 'Access card request'"
-        class="font-bold text-xl"
+      <!-- <h1
+        v-if="requester.typeofrequest.includes('CCTV')"
+        class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
       >
-        Access card request
+        CCTV FOOTAGE
       </h1>
       <h1
-        v-if="requester.typeofrequest === 'Badge request'"
-        class="font-bold text-xl"
+        v-if="requester.typeofrequest.includes('BR')"
+        class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
       >
-        Badge Request
+        BADGE REQUEST
       </h1>
 
       <h2
-        v-if="requester.typeofrequest === 'PTW'"
-        class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize bg-[#160959e2] dark:text-white"
+        v-if="requester.typeofrequest.includes('PTW')"
+        class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
       >
         PERMIT TOO WORK
       </h2>
+      <h2
+        v-if="requester.typeofrequest.includes('IR')"
+        class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
+      >
+        INCIDENT REPORT
+      </h2>
+      <h2
+        v-if="requester.typeofrequest.includes('TK')"
+        class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
+      >
+        TESTKIT
+      </h2>
+      <h2
+        v-if="requester.typeofrequest.includes('VET')"
+        class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
+      >
+        VISITOR ESCORT TOUR
+      </h2>
+      <h2
+        v-if="requester.typeofrequest.includes('MK')"
+        class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
+      >
+        MASK
+      </h2> -->
     </template>
 
     <!-- body -->
@@ -154,14 +178,98 @@
       </p> -->
 
       <!-- Permit to works -->
-      <div
-        v-if="requester.typeofrequest.includes('PTW')"
-        class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-4"
-      >
+      <div v-show="showPTWForm">
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Description</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Location"
+              >Location</label
+            >
+            <input
+              id="Location"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+        </div>
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-3">
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Requester</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Location"
+              >Department</label
+            >
+            <input
+              id="Location"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Phone</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Location"
+              >Contractor / Vendor</label
+            >
+            <input
+              id="Location"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Location"
+              >Company
+            </label>
+            <input
+              id="Location"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Phone
+            </label>
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+        </div>
         <div>
           <label class="text-gray-700 dark:text-gray-200" for="Description"
-            >Description</label
-          >
+            >Hazard Identidication
+          </label>
           <input
             id="Description"
             type="text"
@@ -171,49 +279,7 @@
 
         <div>
           <label class="text-gray-700 dark:text-gray-200" for="Location"
-            >Location</label
-          >
-          <input
-            id="Location"
-            type="text"
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
-        </div>
-        <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Description"
-            >Requester</label
-          >
-          <input
-            id="Description"
-            type="text"
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
-        </div>
-
-        <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Location"
-            >Department</label
-          >
-          <input
-            id="Location"
-            type="text"
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
-        </div>
-        <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Description"
-            >Phone</label
-          >
-          <input
-            id="Description"
-            type="text"
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
-        </div>
-
-        <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Location"
-            >Contractor / Vendor</label
+            >Determined Control</label
           >
           <input
             id="Location"
@@ -223,7 +289,7 @@
         </div>
         <div>
           <label class="text-gray-700 dark:text-gray-200" for="Location"
-            >Department</label
+            >Attachment</label
           >
           <input
             id="Location"
@@ -231,38 +297,459 @@
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
           />
         </div>
-        <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Description"
-            >Phone</label
-          >
-          <input
-            id="Description"
-            type="text"
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
-        </div>
-
-        <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Location"
-            >Contractor / Vendor</label
-          >
-          <input
-            id="Location"
-            type="text"
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
-        </div>
-
-        <!-- Add v-model to other inputs as needed -->
       </div>
-      
-    </template>
+      <!-- Permit to works for security -->
+      <!-- <div
+        v-show="requester.PTWSecurity"
+      >
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >DateTime Of Incident</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+        </div>
+      </div> -->
+      <!-- Incident Report -->
+      <div v-show="showIncidentReport">
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >DateTime Of Incident</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
 
-    <!-- footer -->
-    <template v-slot:footer>
-      <div class="p-1 bg-[#160959e2] rounded-lg">
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Location"
+              >Location</label
+            >
+            <input
+              id="Location"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+        </div>
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Name Of Parties Involved</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Location"
+              >Witness / Victim / Suspect</label
+            >
+            <input
+              id="Location"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+        </div>
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-1">
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Attachment</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+        </div>
+      </div>
+      <!-- teskit -->
+      <div v-show="showTestkit">
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Requester Name</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Location"
+              >Department</label
+            >
+            <input
+              id="Location"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Phone Number</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+        </div>
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Location"
+              >No Stock In Box</label
+            >
+            <input
+              id="Location"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Location"
+              >No Stock In (kit)</label
+            >
+            <input
+              id="Location"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Location"
+              >No Of Kit Out</label
+            >
+            <input
+              id="Location"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Location"
+              >No Of Balance Kit</label
+            >
+            <input
+              id="Location"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Badge Request -->
+      <div v-show="showBadgeRequest">
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Requester :{{ getRequest.name }}</label
+            >
+            <label
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            >{{ getRequest.name }}</label>
+          </div>
+
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Location"
+              >Department</label
+            >
+            <label
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            >{{ getRequest.status }}</label>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Phone Number</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Location"
+              >For</label
+            >
+            <input
+              id="Location"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+        </div>
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-1">
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Upload File List Of Name</label
+            >
+            <input
+              id="Location"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+        </div>
+      </div>
+      <!-- CCTV Footages-->
+      <div v-show="showCCTVForm">
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Requester Name</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Location"
+              >Department</label
+            >
+            <input
+              id="Location"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+        </div>
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Phone Number</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Location"
+              >Incident Location</label
+            >
+            <input
+              id="Location"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Appointment Date</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Incident DateTime</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+        </div>
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-1">
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Description Of Incident</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+        </div>
+      </div>
+      <!--Visitor Escort Transport-->
+      <div v-show="showVETForm">
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Requester Name</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Location"
+              >Department</label
+            >
+            <input
+              id="Location"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+        </div>
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Phone Number</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Location"
+              >Incident Location</label
+            >
+            <input
+              id="Location"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Appointment Date</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Incident DateTime</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+        </div>
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-1">
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Description Of Incident</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+        </div>
+      </div>
+      <!-- mask-->
+      <div v-show="showMaskRequest">
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="requester.name"
+              >Requester Name</label
+            >
+            <label
+              id="requester.name"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              >{{ requester.name }}</label
+            >
+          </div>
+
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Location"
+              >Department</label
+            >
+            <input
+              id="Location"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+        </div>
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Phone Number</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Location"
+              >No Of Pieces</label
+            >
+            <input
+              id="Location"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+        </div>
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Description</label
+            >
+            <input
+              id="Description"
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Add v-model to other inputs as needed -->
+    </template>
+    <template v-slot:header2>
+      <div class="p-1 rounded-lg">
         <h2 class="text-lg font-semibold text-white capitalize">ADMIN</h2>
       </div>
+    </template>
+    <!-- footer -->
+    <template v-slot:footer>
       <!-- Centralized Container -->
       <div class="flex justify-between gap-4 mt-4">
         <!-- Ticket Status Section -->
@@ -360,6 +847,7 @@
 
 <script>
 import Modal from "../components/vmodaladmin.vue";
+import axios from "axios";
 export default {
   name: "TableformanagerequestView",
   components: {
@@ -367,7 +855,16 @@ export default {
   },
   data() {
     return {
+      getRequest:[],
       isModalVisible: false,
+      showBadgeRequest: false,
+      showMaskRequest: false,
+      showTeskit: false,
+      showIncidentReport: false,
+      showPTWForm: false,
+      showCCTVForm: false,
+      showVETForm: false,
+    
     };
   },
   props: {
@@ -377,9 +874,122 @@ export default {
     },
   },
   methods: {
-    showModal() {
+    showModal(refNumber) {
+      if (refNumber.includes("BR")) {
+        axios
+          .get(
+            `http://localhost:3000/badgeRequests`
+          )
+          .then((response) => {
+            this.getRequest = response.data;
+            console.log("this is get request"+this.getRequest);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+        this.isModalVisible = true;
+        this.showBadgeRequest = true;
+      }
+      if (refNumber.includes("VET")) {
+        axios
+          .get(
+            `https://localhost:61659/api/Main/GetBadgeRequestByUser/${refNumber}`
+          )
+          .then((response) => {
+            this.getRequest = response.data;
+            console.log(this.getRequest);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+        this.isModalVisible = true;
+        this.showVETForm = true;
+      }
+      if (refNumber.includes("CCTV")) {
+        axios
+          .get(
+            `https://localhost:61659/api/Main/GetBadgeRequestByUser/${refNumber}`
+          )
+          .then((response) => {
+            this.getRequest = response.data;
+            console.log(this.getRequest);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+        this.isModalVisible = true;
+        this.showCCTVForm = true;
+      }
+      if (refNumber.includes("PTW")) {
+        axios
+          .get(
+            `https://localhost:61659/api/Main/GetBadgeRequestByUser/${refNumber}`
+          )
+          .then((response) => {
+            this.getRequest = response.data;
+            console.log(this.getRequest);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+        this.isModalVisible = true;
+        this.showPTWForm = true;
+      }
+      if (refNumber.includes("IR")) {
+        axios
+          .get(
+            `https://localhost:61659/api/Main/GetBadgeRequestByUser/${refNumber}`
+          )
+          .then((response) => {
+            this.getRequest = response.data;
+            console.log(this.getRequest);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+        this.isModalVisible = true;
+        this.showIncidentReport = true;
+      }
+      if (refNumber.includes("TK")) {
+        axios
+          .get(
+            `https://localhost:61659/api/Main/GetBadgeRequestByUser/${refNumber}`
+          )
+          .then((response) => {
+            this.getRequest = response.data;
+            console.log(this.getRequest);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+        this.isModalVisible = true;
+        this.showTeskit = true;
+      }
+      if (refNumber.includes("MK")) {
+        axios
+          .get(
+            `https://localhost:61659/api/Main/GetBadgeRequestByUser/${refNumber}`
+          )
+          .then((response) => {
+            this.getRequest = response.data;
+            console.log(this.getRequest);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+        this.isModalVisible = true;
+        this.showMaskRequest = true;
+      }
       this.isModalVisible = true;
     },
+
     closeModal() {
       this.isModalVisible = false;
     },

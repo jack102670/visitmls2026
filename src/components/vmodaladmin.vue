@@ -10,7 +10,7 @@
       <!-- Modal Header -->
       <header
         id="modal-header"
-        class="px-4 py-6 flex justify-between items-center border-b-2 border-white"
+        class="px-2 py-3 flex justify-between bg-[#160959e2] items-center border-b-2 border-white"
       >
         <slot name="header">Dummy header</slot>
         <button
@@ -28,6 +28,15 @@
       </section>
 
       <!-- Modal Footer -->
+      <header2
+        id="modal-header2"
+        class="px-2 py-3 flex justify-between bg-[#160959e2] items-center"
+      >
+        <slot name="header2">Dummy header</slot>
+     
+      
+     
+      </header2>
       <footer id="modal-footer" class="px-4 py-6 border-t-2 border-white">
         <slot name="footer"></slot>
       </footer>

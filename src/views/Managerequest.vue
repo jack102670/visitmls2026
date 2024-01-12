@@ -266,13 +266,15 @@ export default {
           typeofrequest: "PTW",
           date: "2023-01-01",
           status: "Pending",
+          refNumber: "PTW111"
         },
         {
           id: 2,
           name: "aane Doe",
-          typeofrequest: "BR1003",
+          typeofrequest: "",
           date: "2023-01-02",
           status: "Approved",
+          refNumber: "BR111"
         },
         {
           id: 3,
@@ -280,6 +282,7 @@ export default {
           typeofrequest: "BR333",
           date: "2023-01-02",
           status: "Rejected",
+          refNumber: "BR111"
         },
         // ... (Add more entries as needed)
         {
@@ -332,13 +335,7 @@ export default {
           date: "2023-01-10",
           status: "Approved",
         },
-        {
-          id: 12,
-          name: "Jeffrey Orange",
-          typeofrequest: "Badge request",
-          date: "2023-01-11",
-          status: "Rejected",
-        },
+    
         {
           id: 10,
           name: "Justin Blue",
@@ -346,13 +343,7 @@ export default {
           date: "2023-01-09",
           status: "Pending",
         },
-        {
-          id: 13,
-          name: "Jasmine Yellow",
-          typeofrequest: "Access card request",
-          date: "2023-01-12",
-          status: "Pending",
-        },
+       
         {
           id: 14,
           name: "hazman",
@@ -360,13 +351,7 @@ export default {
           date: "2023-01-13",
           status: "Approved",
         },
-        {
-          id: 15,
-          name: "Jocelyn Purple",
-          typeofrequest: "Badge request",
-          date: "2023-01-14",
-          status: "Rejected",
-        },
+    
       ],
       sortOrder: {
         typeofrequest: "asc",
