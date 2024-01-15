@@ -24,12 +24,20 @@
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="requesterName"
-                  >Requester Name<span class="text-red-500">*</span></label
+                  >Requester Name {{ formData.requesterName }}<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="capitalizedRequesterName"
                   id="requesterName"
                   type="text"
+                  value=
+                  required
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                />
+                <input
+                  v-model="branch"
+                  id="requesterName"
+                  type="hidden"
                   required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
@@ -149,9 +157,24 @@
               </button>
             </div>
           </form>
+
+          <!-- Conditional rendering of the loading indicator -->
+
+          <div
+            v-if="isLoading"
+            class="loading-indicator flex items-center justify-center min-h-screen"
+            style="z-index: 9999"
+          >
+            <div
+              style="border-top-color: transparent"
+              class="w-8 h-8 border-4 border-blue-200 rounded-full animate-spin"
+            ></div>
+            <p class="ml-2">Loading...</p>
+          </div>
         </section>
       </div>
     </div>
+
     <Modal v-show="isModalVisible" @close="closeModal">
       <!-- header -->
       <template v-slot:header>
@@ -241,6 +264,7 @@ import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import Modal from "../components/vmodal.vue";
 import FilePondPluginFileRename from "filepond-plugin-file-rename";
+//import * as myrequest from "../views/Myrequest2.vue";
 
 import axios from "axios";
 
@@ -257,6 +281,8 @@ export default {
   },
   data() {
     return {
+      selectedLocation: formData.branch,
+      isLoading: false,
       myFiles: [],
       uploadedFileNames: [],
       filePondOptions: {
@@ -287,7 +313,7 @@ export default {
         department: "",
         phonenumber: "",
         branch: null,
-        People: "",
+        people: "",
         userid: null,
         // Add more form fields here
       },
@@ -337,26 +363,46 @@ export default {
 
     confirmFormSubmission() {
       // Prepare the form data to be sent
+      (this.isLoading = true),
+        // Send the POST request
+        axios
+          .post("http://172.28.28.91:8085/api/Main/InsertBadgeRequest", {
+            requesterName: this.formData.requesterName,
+            departmentName: this.formData.department,
+            designationPeople: this.formData.people,
+            phoneNumber: this.formData.phonenumber,
+            uniqueCode: "BR0383",
+            userId: "7a7641d6-dede-4803-8b7b-93063de2f077",
+            branch: "HQ",
+          })
+          .then((response) => {
+            "Server response:", response.data;
+            // Handle the response, such as showing a success message or resetting the form
+            //myrequest.fetchRequesters();
 
-      // Send the POST request
-      axios
-        .post("http://localhost:3000/badgeRequests", {
-          requesterName: this.formData.requesterName,
-          departmentName: this.formData.department,
-          designationPeople: this.formData.People,
-          phoneNumber: this.formData.phonenumber,
-          branch:null,
-        })
-        .then((response) => {
-          "Server response:", response.data;
-          // Handle the response, such as showing a success message or resetting the form
-          this.resetForm();
-          this.closeModal();
-        })
-        .catch((error) => {
-          console.error("Error submitting form:", error);
-          // Handle errors, such as showing an error message
-        });
+            this.resetForm();
+            this.closeModal();
+          })
+          .catch((error) => {
+            if (error.response) {
+              console.log(
+                "Server responded with status code:",
+                error.response.status
+              );
+              console.log("Response data:", error.response.data);
+            } else if (error.request) {
+              console.log("No response received:", error.request);
+            } else {
+              console.log("Error creating request:", error.message);
+            }
+
+            console.error("Error submitting form:", error);
+            // Handle errors, such as showing an error message
+          })
+          .finally(() => {
+            // Set isLoading back to false when the submission is complete
+            this.isLoading = false;
+          });
     },
 
     resetForm() {

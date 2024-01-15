@@ -272,6 +272,7 @@ export default {
       currentPage: 1,
     };
   },
+
   computed: {
     sortedAndPaginatedRequesters() {
       const sortedRequesters = this.sortRequesters(this.requesters);
@@ -301,6 +302,7 @@ export default {
       return this.requesters.slice(this.startIndex, this.endIndex + 1);
     },
   },
+  
   mounted() {
     // Fetch data when the component is mounted
     this.fetchRequesters();
@@ -313,6 +315,7 @@ export default {
         .then((response) => {
           this.requesters = response.data;
           console.log("Requesters data:", this.requesters);
+    
         })
         .catch((error) => {
           console.error("Error fetching requesters:", error);

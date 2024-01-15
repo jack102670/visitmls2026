@@ -904,7 +904,10 @@ export default {
       }
       if (refNumber.includes("VET")) {
         axios
-          .get(`http://localhost:3000/badgeRequests`)
+        .get(
+            "http://172.28.28.91:8085/api/Main/GetVisitorByUser/" +
+              refNumber
+          )
           .then((response) => {
             this.getRequest = response.data;
             console.log(this.getRequest);
@@ -935,8 +938,9 @@ export default {
       }
       if (refNumber.includes("PTW")) {
         axios
-          .get(
-            `https://localhost:61659/api/Main/GetBadgeRequestByUser/${refNumber}`
+        .get(
+            "http://172.28.28.91:8085/api/Main/GetPTWbyUser/" +
+              refNumber
           )
           .then((response) => {
             this.getRequest = response.data;
@@ -951,8 +955,9 @@ export default {
       }
       if (refNumber.includes("IR")) {
         axios
-          .get(
-            `https://localhost:61659/api/Main/GetBadgeRequestByUser/${refNumber}`
+        .get(
+            "http://172.28.28.91:8085/api/Main/GetIncidentReportByUser/" +
+              refNumber
           )
           .then((response) => {
             this.getRequest = response.data;
@@ -967,8 +972,9 @@ export default {
       }
       if (refNumber.includes("TK")) {
         axios
-          .get(
-            `https://localhost:61659/api/Main/GetBadgeRequestByUser/${refNumber}`
+        .get(
+            "http://172.28.28.91:8085/api/Main/GetTestKitsByUser/" +
+              refNumber
           )
           .then((response) => {
             this.getRequest = response.data;
@@ -983,8 +989,9 @@ export default {
       }
       if (refNumber.includes("MK")) {
         axios
-          .get(
-            `https://localhost:61659/api/Main/GetBadgeRequestByUser/${refNumber}`
+        .get(
+            "http://172.28.28.91:8085/api/Main/GetMaskByUser/" +
+              refNumber
           )
           .then((response) => {
             this.getRequest = response.data;
