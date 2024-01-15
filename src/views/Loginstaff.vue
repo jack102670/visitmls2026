@@ -17,13 +17,14 @@
       <div class="p-10 flex flex-col gap-4 text-sm">
         <div>
           <label class="text-slate-300 font-bold inline-block pb-2" for="email"
-            >Email</label
+            >Username</label
           >
           <input
             class="border border-gray-400 focus:outline-slate-400 rounded-md w-full shadow-sm px-5 py-2"
             type="email"
             name="email"
             placeholder="user@pktgroup.com"
+            v-model = "userName"
           />
         </div>
         <div>
@@ -37,12 +38,13 @@
             type="password"
             name="password"
             placeholder="******"
+            v-model = "password"
           />
         </div>
         <div class="flex">
           <div class="w-1/2">
             <input type="checkbox" name="remeberMe" />
-            <label class="text-slate-200" for="remeberMe">Remeber me</label>
+            <label class="text-slate-200" for="remeberMe">Remember me</label>
           </div>
           <!-- <div class="w-1/2">
             <a class="font-bold text-sky-300" href="">Forgot password ?</a>
@@ -78,8 +80,27 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: "LoginstaffView",
+
+  data(){
+    return{
+    userName:"",
+    password:"",
+    }
+
+  },
+  methods:{
+
+    login(){
+      axios.post("http://172.28.28.91:8085/api/Security/login",{
+        userName: this.userName,
+        password: this.password
+      })
+    }
+
+  }
 };
 </script>
 <style scoped>

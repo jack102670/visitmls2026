@@ -5,7 +5,23 @@
         <div class="flex items-center gap-x-2">
           <div>
             <h2 class="font-medium text-gray-500 dark:text-gray-300">
-              {{ requester.typeofrequest }}
+              {{
+                requester.refNumber.includes("BR")
+                  ? "Badge Request"
+                  : requester.refNumber.includes("IR")
+                    ? "Incident Report"
+                    : requester.refNumber.includes("CCTV")
+                      ? "CCTV Footage"
+                      : requester.refNumber.includes("PTW")
+                        ? "Permission To Work"
+                        : requester.refNumber.includes("VET")
+                          ? "Visitor Escort Tour"
+                          : requester.refNumber.includes("TK")
+                            ? "Teskit"
+                            : requester.refNumber.includes("MK")
+                              ? "Mask"
+                              : null
+              }}
             </h2>
           </div>
         </div>
@@ -15,21 +31,21 @@
     <td
       class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
     >
-      {{ requester.date }}
+      {{ requester.dateRequested }}
     </td>
 
     <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-      <div :class="getStatusContainerClass(requester.status)">
-        <span :class="getStatusDotClass(requester.status)"></span>
-        <h2 :class="getStatusTextClass(requester.status)">
-          {{ requester.status === "" ? "open" : requester.status }}
+      <div :class="getStatusContainerClass(requester.adminStatus)">
+        <span :class="getStatusDotClass(requester.adminStatus)"></span>
+        <h2 :class="getStatusTextClass(requester.adminStatus)">
+          {{ requester.adminStatus === "" ? "OPEN" : requester.adminStatus }}
         </h2>
       </div>
     </td>
     <td class="px-4 py-4 ml text-sm whitespace-nowrap">
       <div class="flex items-center gap-x-6">
         <button
-          v-if="requester.typeofrequest === 'Badge request'"
+
           @click="showModal"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
@@ -940,7 +956,7 @@ export default {
     },
     getStatusContainerClass(status) {
       const colorMap = {
-        "": "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800",
+        "": "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800",
         Approved:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800",
         Pending:
@@ -952,7 +968,7 @@ export default {
     },
     getStatusDotClass(status) {
       const colorMap = {
-        "": "h-1.5 w-1.5 rounded-full bg-emerald-500",
+        "": "h-1.5 w-1.5 rounded-full bg-blue-500",
         Approved: "h-1.5 w-1.5 rounded-full bg-emerald-500",
         Pending: "h-1.5 w-1.5 rounded-full bg-yellow-500",
         Rejected: "h-1.5 w-1.5 rounded-full bg-red-500",
@@ -961,7 +977,7 @@ export default {
     },
     getStatusTextClass(status) {
       const colorMap = {
-        "": "text-sm font-normal text-emerald-500",
+        "": "text-sm font-normal text-blue-500",
         Approved: "text-sm font-normal text-emerald-500",
         Pending: "text-sm font-normal text-yellow-500",
         Rejected: "text-sm font-normal text-red-500",

@@ -28,7 +28,7 @@
               </div>
               
               <div class="relative">
-                <button class="bg-blue-500 text-white rounded-md px-2 py-1">Submit</button>
+                <button @click= "login()" class="bg-blue-500 text-white rounded-md px-2 py-1">Submit</button>
               </div>
               <p class="text-sm text-gray-500 mt-10">Dont have an account? <router-link :to="{name:'Vendorsingup'}" class="text-[#4F46E5] font-bold">Sign Up</router-link></p>
       
@@ -41,8 +41,23 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'LoginViews',
+
+  data(){
+
+  },
+  methods:{
+
+    login(){
+      axios.post("http://172.28.28.91:8085/api/Security/login",{
+      })
+    }
+
+  }
+
+  
 
 }
 </script>

@@ -5,7 +5,7 @@
         <div class="flex items-center gap-x-2">
           <div>
             <h2 class="font-medium text-gray-500 dark:text-gray-300">
-              {{ requester.name }}
+              {{ requester.branch }}
             </h2>
           </div>
         </div>
@@ -43,14 +43,14 @@
     <td
       class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
     >
-      {{ requester.date }}
+      {{ requester.dateRequested }}
     </td>
 
     <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-      <div :class="getStatusContainerClass(requester.status)">
-        <span :class="getStatusDotClass(requester.status)"></span>
-        <h2 :class="getStatusTextClass(requester.status)">
-          {{ requester.status }}
+      <div :class="getStatusContainerClass(requester.adminStatus)">
+        <span :class="getStatusDotClass(requester.adminStatus)"></span>
+        <h2 :class="getStatusTextClass(requester.adminStatus)">
+          {{ requester.adminStatus === "" ? "OPEN" : requester.adminStatus }}
         </h2>
       </div>
     </td>
@@ -467,7 +467,7 @@
               id="Description"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              >{{ getRequest.name }}</label
+              >{{ getRequest.requesterName }}</label
             >
           </div>
 
@@ -479,7 +479,7 @@
               id="Description"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              >{{ getRequest.Department }}</label
+              >{{ getRequest.departmentName }}</label
             >
           </div>
         </div>
@@ -492,7 +492,7 @@
               id="Description"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              >{{ getRequest.PhoneNumber }}</label
+              >{{ getRequest.phoneNumber }}</label
             >
           </div>
 
@@ -504,7 +504,7 @@
               id="Location"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              >{{ getRequest.For }}</Label
+              >{{ getRequest.designationPeople }}</Label
             >
           </div>
         </div>
@@ -525,25 +525,27 @@
       <div v-show="showCCTVForm">
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="text-gray-700 dark:text-gray-200" for="requestername"
               >Requester Name</label
             >
-            <input
-              id="Description"
+            <label
+              id="requestername"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.requesterName }}</label
+            >
           </div>
 
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Location"
               >Department</label
             >
-            <input
+            <label
               id="Location"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.departmentName }}</label
+            >
           </div>
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
@@ -551,42 +553,46 @@
             <label class="text-gray-700 dark:text-gray-200" for="Description"
               >Phone Number</label
             >
-            <input
+            <label
               id="Description"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.PhoneNumber }}</label
+            >
           </div>
 
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Location"
               >Incident Location</label
             >
-            <input
+            <label
               id="Location"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.incidentLocation }}</label
+            >
           </div>
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Description"
               >Appointment Date</label
             >
-            <input
+            <label
               id="Description"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.apptDateTime }}</label
+            >
           </div>
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Description"
               >Incident DateTime</label
             >
-            <input
+            <label
               id="Description"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.incidentDateTime }}</label
+            >
           </div>
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-1">
@@ -594,11 +600,12 @@
             <label class="text-gray-700 dark:text-gray-200" for="Description"
               >Description Of Incident</label
             >
-            <input
+            <label
               id="Description"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.description }}</label
+            >
           </div>
         </div>
       </div>
@@ -762,10 +769,10 @@
             <label class="mb-2 block text-sm font-semibold text-gray-700">
               Ticket Status
             </label>
-            <div :class="getStatusContainerClass(requester.status)">
-              <span :class="getStatusDotClass(requester.status)"></span>
-              <h2 :class="getStatusTextClass(requester.status)">
-                {{ requester.status }}
+            <div :class="getStatusContainerClass(getRequest.ticketStatus)">
+              <span :class="getStatusDotClass(getRequest.ticketStatus)"></span>
+              <h2 :class="getStatusTextClass(getRequest.ticketStatus)">
+                {{ getRequest.ticketStatus }}
               </h2>
             </div>
           </div>
@@ -880,7 +887,10 @@ export default {
     showModal(refNumber) {
       if (refNumber.includes("BR")) {
         axios
-          .get(`http://localhost:3000/badgeRequests/10`)
+          .get(
+            "http://172.28.28.91:8085/api/Main/GetBadgeRequestByUser/" +
+              refNumber
+          )
           .then((response) => {
             this.getRequest = response.data;
             console.log("this is get request" + this.getRequest);
@@ -909,7 +919,8 @@ export default {
       if (refNumber.includes("CCTV")) {
         axios
           .get(
-            `https://localhost:61659/api/Main/GetBadgeRequestByUser/${refNumber}`
+            "http://172.28.28.91:8085/api/Main/GetCCTVRequestByUser/" +
+              refNumber
           )
           .then((response) => {
             this.getRequest = response.data;
@@ -992,8 +1003,11 @@ export default {
     closeModal() {
       this.isModalVisible = false;
     },
-    getStatusContainerClass(status) {
+
+    getStatusContainerClass(Status) {
       const colorMap = {
+        "": "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800",
+        OPEN: "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800",
         Approved:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800",
         Pending:
@@ -1001,23 +1015,29 @@ export default {
         Rejected:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800",
       };
-      return colorMap[status] || "bg-gray-800"; // Default to a dark color if the status is not recognized
+       // Get the class for the combination of ticketStatus and adminStatus
+       // You can adjust this format based on your needs
+      return colorMap[Status] || "bg-gray-800"; // Default to a dark color if the combination is not recognized
     },
-    getStatusDotClass(status) {
+    getStatusDotClass(Status) {
       const colorMap = {
+        "": "h-1.5 w-1.5 rounded-full bg-blue-500",
+        OPEN: "h-1.5 w-1.5 rounded-full bg-blue-500",
         Approved: "h-1.5 w-1.5 rounded-full bg-emerald-500",
         Pending: "h-1.5 w-1.5 rounded-full bg-yellow-500",
         Rejected: "h-1.5 w-1.5 rounded-full bg-red-500",
       };
-      return colorMap[status] || "h-1.5 w-1.5 rounded-full bg-gray-700"; // Default to a dark color if the status is not recognized
+      return colorMap[Status] || "h-1.5 w-1.5 rounded-full bg-gray-700"; // Default to a dark color if the status is not recognized
     },
-    getStatusTextClass(status) {
+    getStatusTextClass(Status) {
       const colorMap = {
+        "": "text-sm font-normal text-blue-500",
+        OPEN: "text-sm font-normal text-blue-500",
         Approved: "text-sm font-normal text-emerald-500",
         Pending: "text-sm font-normal text-yellow-500",
         Rejected: "text-sm font-normal text-red-500",
       };
-      return colorMap[status] || "text-gray-500"; // Default to a dark color if the status is not recognized
+      return colorMap[Status] || "text-gray-500"; // Default to a dark color if the status is not recognized
     },
     viewRequestDetails() {
       // You can implement the logic to show the details view here

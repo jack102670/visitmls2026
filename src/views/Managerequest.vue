@@ -48,12 +48,12 @@
                         <th
                           scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                          @click="handleSortClick('name')"
+                          @click="handleSortClick('branch')"
                         >
                           <div class="flex items-center gap-x-3">
-                            <span>Name</span>
+                            <span>Branch</span>
                             <svg
-                              v-if="sortBy === 'name'"
+                              v-if="sortBy === 'branch'"
                               :class="{
                                 'transform rotate-180': sortOrder === 'desc',
                               }"
@@ -75,12 +75,12 @@
                         <th
                           scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                          @click="handleSortClick('typeofrequest')"
+                          @click="handleSortClick('refNumber')"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>Type Of Request</span>
                             <svg
-                              v-if="sortBy === 'typeofrequest'"
+                              v-if="sortBy === 'refNumber'"
                               :class="{
                                 'transform rotate-180': sortOrder === 'desc',
                               }"
@@ -131,12 +131,12 @@
                         <th
                           scope="col"
                           class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                          @click="handleSortClick('status')"
+                          @click="handleSortClick('adminStatus')"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>Status</span>
                             <svg
-                              v-if="sortBy === 'status'"
+                              v-if="sortBy === 'adminStatus'"
                               :class="{
                                 'transform rotate-180': sortOrder === 'desc',
                               }"
@@ -166,7 +166,7 @@
                     >
                       <Tablemanagerequest
                         v-for="requester in sortedAndPaginatedRequesters"
-                        :key="requester.id"
+                        :key="requester.refNumber"
                         :requester="requester"
                       />
                     </tbody>
@@ -262,12 +262,12 @@ export default {
       role: "security",
       requesters: [],
       sortOrder: {
-        typeofrequest: "asc",
-        date: "asc",
-        status: "asc",
-        name: "asc",
+        branch: "asc",
+        requesterName: "asc",
+        refNumber: "asc",
+        adminStatus: "asc",
       },
-      sortBy: "status",
+      sortBy: "branch",
       itemsPerPage: 8,
       currentPage: 1,
     };
@@ -309,7 +309,7 @@ export default {
     fetchRequesters() {
       console.log("Fetching requesters...");
       axios
-        .get("http://localhost:3000/badgeRequests")
+        .get("http://172.28.28.91:8085/api/Admin/GetAllRequestsAdminSecurity")
         .then((response) => {
           this.requesters = response.data;
           console.log("Requesters data:", this.requesters);
@@ -325,18 +325,16 @@ export default {
 
       const normalizedSearchQuery = searchQuery.toLowerCase();
       return requesters.filter((requester) => {
-        const fullName = requester.name.toLowerCase(); // Assuming name is a string
+        const fullName = requester.refNumber.toLowerCase(); // Assuming name is a string
         const isFullNameMatch = fullName.includes(normalizedSearchQuery);
 
         // Customize this logic based on your data structure
         return (
           isFullNameMatch ||
-          requester.name
-            .toLowerCase()
-            .includes(normalizedSearchQuery) ||
-          requester.status.toLowerCase().includes(normalizedSearchQuery)
-          ||
-          requester.date.toLowerCase().includes(normalizedSearchQuery)
+          requester.refNumber.toLowerCase().includes(normalizedSearchQuery) ||
+          requester.branch.toLowerCase().includes(normalizedSearchQuery) ||
+          requester.dateRequested.toLowerCase().includes(normalizedSearchQuery) ||
+          requester.adminStatus.toLowerCase().includes(normalizedSearchQuery)
         );
       });
     },

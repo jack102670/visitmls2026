@@ -48,12 +48,12 @@
                         <th
                           scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                          @click="handleSortClick('typeofrequest')"
+                          @click="handleSortClick('refNumber')"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>Type Of Request</span>
                             <svg
-                              v-if="sortBy === 'typeofrequest'"
+                              v-if="sortBy === 'refNumber'"
                               :class="{
                                 'transform rotate-180': sortOrder === 'desc',
                               }"
@@ -76,12 +76,12 @@
                         <th
                           scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                          @click="handleSortClick('date')"
+                          @click="handleSortClick('dateRequested')"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>Date</span>
                             <svg
-                              v-if="sortBy === 'date'"
+                              v-if="sortBy === 'dateRequested'"
                               :class="{
                                 'transform rotate-180': sortOrder === 'desc',
                               }"
@@ -104,12 +104,12 @@
                         <th
                           scope="col"
                           class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                          @click="handleSortClick('status')"
+                          @click="handleSortClick('adminStatus')"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>Status</span>
                             <svg
-                              v-if="sortBy === 'status'"
+                              v-if="sortBy === 'adminStatus'"
                               :class="{
                                 'transform rotate-180': sortOrder === 'desc',
                               }"
@@ -139,7 +139,7 @@
                     >
                       <Tableformyrequest
                         v-for="requester in sortedAndPaginatedRequesters"
-                        :key="requester.id"
+                        :key="requester.refNumber"
                         :requester="requester"
                       />
                     </tbody>
@@ -234,11 +234,12 @@ export default {
       searchQuery: "",
       requesters: [],
       sortOrder: {
-        typeofrequest: "asc",
-        date: "asc",
-        status: "asc",
+        refNumber: "asc",
+        dateRequested: "asc",
+        adminStatus: "asc",
+        branch:"asc"
       },
-      sortBy: "typeofrequest",
+      sortBy: "branch",
       itemsPerPage: 4,
       currentPage: 1,
     };
@@ -287,23 +288,23 @@ export default {
 
       const normalizedSearchQuery = searchQuery.toLowerCase();
       return requesters.filter((requester) => {
-        const fullName = requester.name.toLowerCase(); // Assuming name is a string
+        const fullName = requester.refNumber.toLowerCase(); // Assuming name is a string
         const isFullNameMatch = fullName.includes(normalizedSearchQuery);
 
         // Customize this logic based on your data structure
         return (
           isFullNameMatch ||
-          requester.typeofrequest
-            .toLowerCase()
-            .includes(normalizedSearchQuery) ||
-          requester.status.toLowerCase().includes(normalizedSearchQuery)
+          requester.refNumber.toLowerCase().includes(normalizedSearchQuery) ||
+          requester.branch.toLowerCase().includes(normalizedSearchQuery) ||
+          requester.dateRequested.toLowerCase().includes(normalizedSearchQuery) ||
+          requester.adminStatus.toLowerCase().includes(normalizedSearchQuery)
         );
       });
     },
     fetchRequesters() {
       console.log("Fetching requesters...");
       axios
-        .get("http://localhost:3000/requesters")
+        .get("http://172.28.28.91:8085/api/Main/GetAllRequests/"+ "7a7641d6-dede-4803-8b7b-93063de2f077")
         .then((response) => {
           this.requesters = response.data;
           console.log("Requesters data:", this.requesters);

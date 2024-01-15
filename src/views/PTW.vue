@@ -169,7 +169,15 @@ export default {
       // Check for undefined references or formData for pages 1 to 6 conditionally
       for (let i = 1; i <= 6; i++) {
         const pageRef = this.$refs["page" + i];
-
+        if (i === 5 || i === 6) {
+          // Check if page 5 or 6 is optional and checkboxes are not checked
+          if (i === 5 && !this.isCheckbox1Checked) {
+            continue; // Skip this iteration if page 5 or 6 is optional and checkboxes are not checked
+          }
+          if (i === 6 && !this.isCheckbox2Checked) {
+            continue; // Skip this iteration if page 5 or 6 is optional and checkboxes are not checked
+          }
+        }
         if (!pageRef) {
           console.error(`page${i} reference is undefined.`);
           return; // Stop execution if a reference is undefined
@@ -179,15 +187,6 @@ export default {
         }
 
         // Check if the current iteration is for page 5 or 6
-        if (i === 5 || i === 6) {
-          // Check if page 5 or 6 is optional and checkboxes are not checked
-          if (
-            (i === 5 && !this.isCheckbox1Checked) ||
-            (i === 6 && !this.isCheckbox2Checked)
-          ) {
-            continue; // Skip this iteration if page 5 or 6 is optional and checkboxes are not checked
-          }
-        }
       }
 
       // Define an empty object to store the formData for optional pages
