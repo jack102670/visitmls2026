@@ -46,7 +46,8 @@
       <div class="flex items-center gap-x-6">
         <button
 
-          @click="showModal"
+        v-if="requester.refNumber.includes('BR')"
+        @click="showModal"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
           <svg
@@ -170,7 +171,8 @@
           </svg>
         </button>
         <button
-          v-if="requester.typeofrequest === 'CCTV'"
+         v-if="requester.refNumber.includes('CCTV')"
+
           @click="showModal3"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
@@ -930,6 +932,7 @@ export default {
   methods: {
     showModal() {
       this.isModalVisible = true;
+
     },
     showModal2() {
       this.isModalVisible2 = true;
