@@ -218,6 +218,7 @@
 </template>
 
 <script>
+import {store} from "../views/store.js"
 // NewrequestViews.js
 // NewrequestViews.js
 export default {
@@ -260,6 +261,7 @@ export default {
 
       // Your logic to update departments based on the selected location
       this.updateDepartments();
+      store.setSelectedLocation(this.selectedLocation, this.locations);
     },
 
     updateDepartments() {

@@ -30,7 +30,7 @@
                           ? "Visitor Escort Tour"
                           : requester.refNumber.includes("TK")
                             ? "Teskit"
-                            : requester.refNumber.includes("MK")
+                            : requester.refNumber.includes("Mask")
                               ? "Mask"
                               : null
               }}
@@ -322,45 +322,56 @@
             <label class="text-gray-700 dark:text-gray-200" for="Description"
               >DateTime Of Incident</label
             >
-            <input
-              id="Description"
+            <label
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
-          </div>
-
-          <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Location"
-              >Location</label
+              >{{ getRequest.dateIncident }}</label
             >
-            <input
-              id="Location"
+          </div>
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Type Of Incident</label
+            >
+            <label
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.incidentType }}</label
+            >
           </div>
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
           <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Location"
+              >Location</label
+            >
+            <label
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              >{{ getRequest.incidentLocation }}</label
+            >
+          </div>
+          <div>
             <label class="text-gray-700 dark:text-gray-200" for="Description"
               >Name Of Parties Involved</label
             >
-            <input
-              id="Description"
+            <label
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.partiesInvolved }}</label
+            >
           </div>
 
-          <div>
+          <div class="col-span-2">
             <label class="text-gray-700 dark:text-gray-200" for="Location"
-              >Witness / Victim / Suspect</label
+              >Incident Details</label
             >
-            <input
-              id="Location"
-              type="text"
+            <textarea
+              v-model="getRequest.incidentDetails"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              rows="2"
+            ></textarea>
+
+            
           </div>
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-1">
@@ -368,11 +379,11 @@
             <label class="text-gray-700 dark:text-gray-200" for="Description"
               >Attachment</label
             >
-            <input
-              id="Description"
+            <label
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.requesterName }}</label
+            >
           </div>
         </div>
       </div>
@@ -383,75 +394,85 @@
             <label class="text-gray-700 dark:text-gray-200" for="Description"
               >Requester Name</label
             >
-            <input
-              id="Description"
+            <label
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.requesterName }}</label
+            >
           </div>
 
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Location"
               >Department</label
             >
-            <input
-              id="Location"
+            <label
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.departmentName }}</label
+            >
           </div>
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Description"
               >Phone Number</label
             >
-            <input
-              id="Description"
+            <label
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.phoneNumber }}</label
+            >
           </div>
         </div>
-        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3">
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Location"
               >No Stock In Box</label
             >
-            <input
-              id="Location"
+            <label
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.boxStock }}</label
+            >
           </div>
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Location"
               >No Stock In (kit)</label
             >
-            <input
-              id="Location"
+            <label
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.kitStock }}</label
+            >
           </div>
 
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Location"
               >No Of Kit Out</label
             >
-            <input
-              id="Location"
+            <label
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.kitOut }}</label
+            >
           </div>
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Location"
               >No Of Balance Kit</label
             >
-            <input
-              id="Location"
+            <label
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.balanceKit }}</label
+            >
+          </div>
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Location"
+              >Remark</label
+            >
+            <label
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              >{{ getRequest.remark }}</label
+            >
           </div>
         </div>
       </div>
@@ -557,7 +578,7 @@
               id="Description"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              >{{ getRequest.PhoneNumber }}</label
+              >{{ getRequest.phoneNumber }}</label
             >
           </div>
 
@@ -616,22 +637,24 @@
             <label class="text-gray-700 dark:text-gray-200" for="Description"
               >Requester Name:</label
             >
-            <input
-              id="Description"
+            <label
+              id="requesterName"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.requesterName }}</label
+            >
           </div>
 
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Location"
               >Department</label
             >
-            <input
-              id="Location"
+            <label
+              id="departmentName"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.departmentName }}</label
+            >
           </div>
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
@@ -639,54 +662,77 @@
             <label class="text-gray-700 dark:text-gray-200" for="Description"
               >Phone Number</label
             >
-            <input
-              id="Description"
+            <label
+              id="phoneNumber"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.phoneNumber }}</label
+            >
           </div>
 
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Location"
-              >Incident Location</label
+              >Meeting Location</label
             >
-            <input
-              id="Location"
+            <label
+              id="meetingLocation"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.meetingLocation }}</label
+            >
           </div>
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Description"
-              >Appointment Date</label
+              >Visitor Date</label
             >
-            <input
-              id="Description"
+            <label
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.visitDateTime }}</label
+            >
           </div>
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Description"
-              >Incident DateTime</label
+              >Customer Name</label
             >
-            <input
-              id="Description"
+            <label
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.customerName }}</label
+            >
           </div>
         </div>
-        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-1">
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-2">
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Description"
-              >Description Of Incident</label
+              >No Of Pax</label
             >
-            <input
-              id="Description"
+            <label
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.paxAmount }}</label
+            >
+          </div>
+
+          <div>
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >No Of Parking Space</label
+            >
+            <label
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              >{{ getRequest.parkSpaceAmount }}</label
+            >
+          </div>
+          <div class="col-span-2">
+            <label class="text-gray-700 dark:text-gray-200" for="Description"
+              >Purpose</label
+            >
+            <label
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              >{{ getRequest.visitPurpose }}</label
+            >
           </div>
         </div>
       </div>
@@ -700,7 +746,7 @@
             <label
               id="requester.name"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              >{{ requester.name }}</label
+              >{{ getRequest.requesterName }}</label
             >
           </div>
 
@@ -708,11 +754,12 @@
             <label class="text-gray-700 dark:text-gray-200" for="Location"
               >Department</label
             >
-            <input
+            <label
               id="Location"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.departmentName }}</label
+            >
           </div>
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
@@ -720,22 +767,24 @@
             <label class="text-gray-700 dark:text-gray-200" for="Description"
               >Phone Number</label
             >
-            <input
+            <label
               id="Description"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.phoneNumber }}</label
+            >
           </div>
 
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Location"
               >No Of Pieces</label
             >
-            <input
+            <label
               id="Location"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.piecesAmount }}</label
+            >
           </div>
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
@@ -743,11 +792,12 @@
             <label class="text-gray-700 dark:text-gray-200" for="Description"
               >Description</label
             >
-            <input
+            <label
               id="Description"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+              >{{ getRequest.description }}</label
+            >
           </div>
         </div>
       </div>
@@ -887,10 +937,7 @@ export default {
     showModal(refNumber) {
       if (refNumber.includes("BR")) {
         axios
-          .get(
-            "http://172.28.28.91:8085/api/Main/GetBadgeRequestByUser/" +
-              refNumber
-          )
+          .get("http://172.28.28.91:8085/api/Main/GetBadgeRequest/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
             console.log("this is get request" + this.getRequest);
@@ -904,10 +951,7 @@ export default {
       }
       if (refNumber.includes("VET")) {
         axios
-        .get(
-            "http://172.28.28.91:8085/api/Main/GetVisitorByUser/" +
-              refNumber
-          )
+          .get("http://172.28.28.91:8085/api/Main/GetVisitor/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
             console.log(this.getRequest);
@@ -921,10 +965,7 @@ export default {
       }
       if (refNumber.includes("CCTV")) {
         axios
-          .get(
-            "http://172.28.28.91:8085/api/Main/GetCCTVRequestByUser/" +
-              refNumber
-          )
+          .get("http://172.28.28.91:8085/api/Main/GetCCTVRequest/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
             console.log(this.getRequest);
@@ -938,10 +979,7 @@ export default {
       }
       if (refNumber.includes("PTW")) {
         axios
-        .get(
-            "http://172.28.28.91:8085/api/Main/GetPTWbyUser/" +
-              refNumber
-          )
+          .get("http://172.28.28.91:8085/api/Main/GetPTW/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
             console.log(this.getRequest);
@@ -955,9 +993,8 @@ export default {
       }
       if (refNumber.includes("IR")) {
         axios
-        .get(
-            "http://172.28.28.91:8085/api/Main/GetIncidentReportByUser/" +
-              refNumber
+          .get(
+            "http://172.28.28.91:8085/api/Main/GetIncidentReport/" + refNumber
           )
           .then((response) => {
             this.getRequest = response.data;
@@ -972,10 +1009,7 @@ export default {
       }
       if (refNumber.includes("TK")) {
         axios
-        .get(
-            "http://172.28.28.91:8085/api/Main/GetTestKitsByUser/" +
-              refNumber
-          )
+          .get("http://172.28.28.91:8085/api/Main/GetTestKits/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
             console.log(this.getRequest);
@@ -987,12 +1021,9 @@ export default {
         this.isModalVisible = true;
         this.showTeskit = true;
       }
-      if (refNumber.includes("MK")) {
+      if (refNumber.includes("Mask")) {
         axios
-        .get(
-            "http://172.28.28.91:8085/api/Main/GetMaskByUser/" +
-              refNumber
-          )
+          .get("http://172.28.28.91:8085/api/Main/GetMask/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
             console.log(this.getRequest);
@@ -1022,8 +1053,8 @@ export default {
         Rejected:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800",
       };
-       // Get the class for the combination of ticketStatus and adminStatus
-       // You can adjust this format based on your needs
+      // Get the class for the combination of ticketStatus and adminStatus
+      // You can adjust this format based on your needs
       return colorMap[Status] || "bg-gray-800"; // Default to a dark color if the combination is not recognized
     },
     getStatusDotClass(Status) {

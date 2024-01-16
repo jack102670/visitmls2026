@@ -103,12 +103,12 @@
                         <th
                           scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                          @click="handleSortClick('date')"
+                          @click="handleSortClick('dateRequested')"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>Date</span>
                             <svg
-                              v-if="sortBy === 'date'"
+                              v-if="sortBy === 'dateRequested'"
                               :class="{
                                 'transform rotate-180': sortOrder === 'desc',
                               }"
@@ -266,8 +266,9 @@ export default {
         requesterName: "asc",
         refNumber: "asc",
         adminStatus: "asc",
+        dateRequested:"asc",
       },
-      sortBy: "branch",
+      sortBy: "dateRequested",
       itemsPerPage: 8,
       currentPage: 1,
     };

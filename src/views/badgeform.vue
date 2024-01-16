@@ -35,7 +35,7 @@
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
                 <input
-                  v-model="FormData.branch"
+                  v-model="branch"
                   id="requesterName"
                   type="hidden"
                   
@@ -256,6 +256,7 @@
 </template>
 
 <script>
+import {store} from "../views/store.js"
 import * as template from "../javascript/department.js";
 import vueFilePond from "vue-filepond";
 import "filepond/dist/filepond.min.css";
@@ -312,7 +313,7 @@ export default {
         requesterName: "",
         department: "",
         phonenumber: "",
-        branch: null,
+      
         people: "",
         userid: null,
         // Add more form fields here
@@ -371,9 +372,9 @@ export default {
             departmentName: this.formData.department,
             designationPeople: this.formData.people,
             phoneNumber: this.formData.phonenumber,
-            uniqueCode: "BR0383",
+            uniqueCode: "BR01383",
             userId: "7a7641d6-dede-4803-8b7b-93063de2f077",
-            branch: "HQ",
+            branch: this.branch,
           })
           .then((response) => {
             "Server response:", response.data;
@@ -414,9 +415,14 @@ export default {
         daterequest: "",
         people: "",
       };
+   
       this.myFiles = [];
       this.uploadedFileNames = [];
     },
   },
+  created() {
+  this.branch = store.getSelectedLocation();
+},
+
 };
 </script>
