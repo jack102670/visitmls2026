@@ -370,8 +370,6 @@
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               rows="2"
             ></textarea>
-
-            
           </div>
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-1">
@@ -832,16 +830,16 @@
         <div class="w-full md:w-1/3">
           <div class="mb-4">
             <label class="mb-2 block text-sm font-semibold text-gray-700">
-              Admin Status
+              Admin Status 
             </label>
             <div class="grid grid-cols-1 gap-4 items-center">
               <label class="flex items-center text-sm text-gray-700">
                 <input
                   type="radio"
                   name="adminStatus"
-                  id="resubmission"
                   value="Resubmission"
-                  class="mr-2"
+                  v-model="adminStatus"
+                  :checked="getRequest.adminStatus === 'Resubmission'"
                 />
                 Resubmission
               </label>
@@ -849,11 +847,11 @@
                 <input
                   type="radio"
                   name="adminStatus"
-                  id="accepted"
-                  value="Accepted"
-                  class="mr-2"
+                  value="Approved"
+                  v-model="adminStatus"
+                  :checked="getRequest.adminStatus === 'Aprroved'"
                 />
-                Accepted
+                Approved
               </label>
             </div>
           </div>
@@ -867,11 +865,13 @@
               Last edited
             </label>
             <input
+            v-model="modifiedBy"
               type="text"
               name="preparedBy"
               id="preparedBy"
               class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-            />
+              >
+            
           </div>
         </div>
       </div>
@@ -884,6 +884,7 @@
           Comments
         </label>
         <textarea
+          v-model="adminComment"
           id="Description"
           class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
           rows="2"
@@ -896,6 +897,7 @@
       <!-- Update Button -->
       <div class="flex justify-end mt-6">
         <button
+        @click="adminUpdate()"
           type="button"
           class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-sky-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
         >
@@ -925,6 +927,10 @@ export default {
       showPTWForm: false,
       showCCTVForm: false,
       showVETForm: false,
+      adminComment:"",
+      modifiedBy:"",
+      adminStatus:"",
+
     };
   },
   props: {
@@ -934,6 +940,28 @@ export default {
     },
   },
   methods: {
+    // adminUpdate(){
+    //   if (this.getRequest.referenceNumber.includes("BR")) {
+    //     axios
+    //       .get("http://172.28.28.91:8085/api/Admin/AdminUpdateBadgeRequest", {
+
+    //         refNumber: this.getRequest.referenceNumber,
+    //         ticketStatus: "open",
+    //         adminStatus: this.getRequest.adminStatus,
+    //         adminComment: this.getRequest.adminComment,
+    //         modifiedBy: this.getRequest.modifiedBy,
+    //         userEmail: "hazman5001@gmail.com"
+
+    //       })
+    //       .catch((error) => {
+    //         console.error("Error:", error);
+    //       });
+
+    //     this.isModalVisible = false;
+    //     //this.showBadgeRequest = true;
+    //   }
+    //   },
+    
     showModal(refNumber) {
       if (refNumber.includes("BR")) {
         axios
