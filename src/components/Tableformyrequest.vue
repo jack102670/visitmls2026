@@ -18,7 +18,7 @@
                           ? "Visitor Escort Tour"
                           : requester.refNumber.includes("TK")
                             ? "Teskit"
-                            : requester.refNumber.includes("MK")
+                            : requester.refNumber.includes("Mask")
                               ? "Mask"
                               : null
               }}
@@ -44,10 +44,10 @@
     </td>
     <td class="px-4 py-4 ml text-sm whitespace-nowrap">
       <div class="flex items-center gap-x-6">
+        {{ requester.refNumber }}
         <button
-
-        v-if="requester.refNumber.includes('BR')"
-        @click="showModal"
+          v-if="requester.refNumber.includes('BR')"
+          @click="showModal(requester.refNumber)"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
           <svg
@@ -71,8 +71,8 @@
           </svg>
         </button>
         <button
-          v-if="requester.typeofrequest === 'Incident Report'"
-          @click="showModal2"
+          v-if="requester.refNumber.includes('IR')"
+          @click="showModal2(requester.refNumber)"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
           <svg
@@ -96,8 +96,8 @@
           </svg>
         </button>
         <button
-          v-if="requester.typeofrequest === 'Visitor/Escort'"
-          @click="showModal4"
+          v-if="requester.refNumber.includes('VET')"
+          @click="showModal4(requester.refNumber)"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
           <svg
@@ -121,8 +121,8 @@
           </svg>
         </button>
         <button
-          v-if="requester.typeofrequest === 'Testkits'"
-          @click="showModal5"
+          v-if="requester.refNumber.includes('TK')"
+          @click="showModal5(requester.refNumber)"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
           <svg
@@ -146,8 +146,8 @@
           </svg>
         </button>
         <button
-          v-if="requester.typeofrequest === 'Mask'"
-          @click="showModal6"
+          v-if="requester.refNumber.includes('Mask')"
+          @click="showModal6(requester.refNumber)"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
           <svg
@@ -171,9 +171,8 @@
           </svg>
         </button>
         <button
-         v-if="requester.refNumber.includes('CCTV')"
-
-          @click="showModal3"
+          v-if="requester.refNumber.includes('CCTV')"
+          @click="showModal3(requester.refNumber)"
           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
         >
           <svg
@@ -242,7 +241,7 @@
   <Modalbadgerequest v-show="isModalVisible" @close="closeModal">
     <!-- header -->
     <template v-slot:header>
-      <h1 class="font-bold text-xl">Badge</h1>
+      <h1 class="font-bold text-xl">BADGE</h1>
     </template>
 
     <!-- body -->
@@ -252,25 +251,25 @@
       </p> -->
       <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="requesterName"
+          <label class="text-gray-700 dark:text-gray-200" for=""
             >Requester Name</label
           >
-          <input
-            id="requesterName"
+          <label
             type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+            >{{ getRequest.requesterName }}</label
+          >
         </div>
 
         <div>
           <label class="text-gray-700 dark:text-gray-200" for="department"
             >Department</label
           >
-          <input
-            id="department"
+          <label
             type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+            >{{ getRequest.departmentName }}</label
+          >
         </div>
 
         <!-- Add v-model to other inputs as needed -->
@@ -280,32 +279,33 @@
           <label class="text-gray-700 dark:text-gray-200" for="username"
             >Phone number</label
           >
-          <input
-            id="number"
-            type="number"
+          <label
+            type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+            >{{ getRequest.phoneNumber }}</label
+          >
         </div>
 
         <div>
           <label class="text-gray-700 dark:text-gray-200" for="emailAddress"
             >Date Requested</label
           >
-          <input
-            id="daterequest"
-            type="date"
+          <label
+            type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+            >{{ getRequest.dateRequested }}</label
+          >
         </div>
+
         <div>
           <label class="text-gray-700 dark:text-gray-200" for="People"
             >People/For</label
           >
-          <input
-            id="People"
+          <label
             type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+            >{{ getRequest.designationPeople }}</label
+          >
         </div>
       </div>
 
@@ -333,7 +333,7 @@
   <Modalincidentreport v-show="isModalVisible2" @close="closeModal">
     <!-- header -->
     <template v-slot:header>
-      <h1 class="font-bold text-xl">Incident Report</h1>
+      <h1 class="font-bold text-xl">INCIDENT REPORT</h1>
     </template>
 
     <!-- body -->
@@ -341,87 +341,75 @@
       <!-- <p class="py-3 text-xs font-bold text-purple-900">
         Forgot your password?
       </p> -->
-      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3">
-        <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Dateofincident"
-            >Date of incident</label
-          >
-          <input
-            id="Dateofincident"
-            type="Date"
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
-        </div>
-
-        <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Timeofincident"
-            >Time of incident</label
-          >
-          <input
-            id="Timeofincident"
-            type="time"
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
-        </div>
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
         <div>
           <label
-            class="text-gray-700 dark:text-gray-200"
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="Dateofincident"
+            >Date Of Incident</label
+          >
+          <label
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            >{{ getRequest.dateIncident }}</label
+          >
+        </div>
+
+        <div>
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
             for="Locationofincident"
-            >Location of incident</label
+            >Location Of Incident</label
           >
-          <input
-            id="Locationofincident"
+          <label
             type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+            >{{ getRequest.incidentLocation }}</label
+          >
         </div>
 
         <!-- Add v-model to other inputs as needed -->
+
+        <!-- <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3"> -->
+        <div>
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="PartiesInvolved"
+            >Parties Involved</label
+          >
+          <label
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            >{{ getRequest.partiesInvolved }}</label
+          >
+        </div>
+
+        <div>
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="Typeofincident"
+            >Type Of Incident</label
+          >
+          <label
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            >{{ getRequest.incidentType }}</label
+          >
+        </div>
       </div>
-
-      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
-        <div>
-          <label class="text-gray-700 dark:text-gray-200" for="PartiesInvolved"
-            >Name of parties involved</label
-          >
-          <input
-            id="PartiesInvolved"
-            type="text"
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
-        </div>
-
-        <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Witness"
-            >Witness/victim/suspect</label
-          >
-          <input
-            id="Witness"
-            type="text"
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
-        </div>
-        <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Typeofincident"
-            >Type of incident</label
-          >
-          <input
-            id="Typeofincident"
-            type="text"
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
-        </div>
-
-        <!-- Add v-model to other inputs as needed -->
-      </div>
+      <!-- Add v-model to other inputs as needed -->
+      <!-- </div> -->
       <div
         class="grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
       >
         <div class="w-full">
-          <label for="Detailsincident" class="text-gray-700 dark:text-gray-200"
+          <label
+            for="Detailsincident"
+            class="font-semibold text-gray-700 dark:text-gray-200"
             >Details Incident</label
           >
           <textarea
+            v-model="getRequest.incidentDetails"
             id="Detailsincident"
             class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             rows="5"
@@ -430,7 +418,9 @@
         </div>
       </div>
       <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
-        <label class="text-gray-700 dark:text-gray-200" for="People"
+        <label
+          class="font-semibold text-gray-700 dark:text-gray-200"
+          for="People"
           >Uploaded Files:</label
         >
         <label class="py-2 px-4">
@@ -453,7 +443,7 @@
   <Modalcctv v-show="isModalVisible3" @close="closeModal">
     <!-- header -->
     <template v-slot:header>
-      <h1 class="font-bold text-xl">Confirmation</h1>
+      <h1 class="font-bold text-xl">CCTV</h1>
     </template>
 
     <!-- body -->
@@ -463,114 +453,111 @@
       </p> -->
       <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3">
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Requestername"
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="Requestername"
             >Requester Name</label
           >
-          <input
-            id="Requestername"
+          <label
             type="text"
-            required
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+            >{{ getRequest.requesterName }}</label
+          >
         </div>
 
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Department"
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="Department"
             >Department</label
           >
-          <input
-            id="Department"
+          <label
             type="text"
-            required
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+            >{{ getRequest.departmentName }}</label
+          >
         </div>
         <div>
           <label
-            class="text-gray-700 dark:text-gray-200"
+            class="font-semibold text-gray-700 dark:text-gray-200"
             for="Locationofincident"
-            >Phone number</label
+            >Phone Number</label
           >
-          <input
-            id="Phonenumber"
-            type="number"
-            required
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
-        </div>
-
-        <!-- Add v-model to other inputs as needed -->
-      </div>
-
-      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
-        <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Daterequested"
-            >Date requested</label
-          >
-          <input
-            id="Daterequested"
-            type="date"
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
-        </div>
-
-        <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Witness"
-            >Incident location</label
-          >
-          <input
-            id="Incidentlocation"
+          <label
             type="text"
-            required
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
-        </div>
-        <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Appointmenttime"
-            >Appointment time</label
+            >{{ getRequest.phoneNumber }}</label
           >
-          <input
-            id="Appointmenttime"
-            type="time"
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
         </div>
 
         <!-- Add v-model to other inputs as needed -->
       </div>
+
       <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Incidentdate"
-            >Incident date</label
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="Daterequested"
+            >Date Requested</label
           >
-          <input
-            id="Incidentdate"
-            type="date"
-            required
+          <label
+            type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+            >{{ getRequest.dateRequested }}</label
+          >
         </div>
 
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Incidenttime"
-            >Incident ltime</label
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="Witness"
+            >Incident location</label
           >
-          <input
-            id="Incidenttime"
-            type="time"
-            required
+          <label
+            type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+            >{{ getRequest.incidentLocation }}</label
+          >
         </div>
+        <div>
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="Appointmenttime"
+            >Appointment Time</label
+          >
+          <label
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            >{{ getRequest.apptDateTime }}</label
+          >
+        </div>
+        <div>
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="Incidentdate"
+            >Incident Date Time</label
+          >
+          <label
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            >{{ getRequest.incidentDateTime }}</label
+          >
+        </div>
+
+        <!-- Add v-model to other inputs as needed -->
       </div>
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2"></div>
       <div
         class="grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
       >
         <div class="w-full">
-          <label for="Detailsincident" class="text-gray-700 dark:text-gray-200"
-            >Description of incident</label
+          <label
+            for="Detailsincident"
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            >Description Of Incident</label
           >
           <textarea
+            v-model="getRequest.description"
             id="Detailsincident"
             class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             rows="5"
@@ -596,62 +583,118 @@
       </p> -->
       <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="requesterName"
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="requesterName"
             >Requester Name</label
           >
           <label
             id="requesterName"
             type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            >{{ requester.name }}</label
+            >{{ getRequest.requesterName }}</label
           >
         </div>
-
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="department"
-            >Department</label
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="emailAddress"
+            >Date Requested</label
           >
-          <input
-            id="department"
+          <label
             type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+            >{{ getRequest.dateRequested }}</label
+          >
         </div>
 
         <!-- Add v-model to other inputs as needed -->
       </div>
       <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="username"
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="department"
+            >Department</label
+          >
+          <label
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            >{{ getRequest.departmentName }}</label
+          >
+        </div>
+        <div>
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="username"
             >Phone number</label
           >
-          <input
-            id="number"
-            type="number"
+          <label
+            type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+            >{{ getRequest.phoneNumber }}</label
+          >
         </div>
 
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="emailAddress"
-            >Date Requested</label
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="Noofpieces"
+            >Customer Name</label
           >
-          <input
-            id="daterequest"
-            type="date"
+          <label
+            type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+            >{{ getRequest.customerName }}</label
+          >
         </div>
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Noofpieces"
-            >No of pieces</label
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="Noofpieces"
+            >No Of Pax</label
           >
-          <input
-            id="Noofpieces"
-            type="number"
-            required
+          <label
+            type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+            >{{ getRequest.paxAmount }}</label
+          >
+        </div>
+        <div>
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="Noofpieces"
+            >No Of Parking Space</label
+          >
+          <label
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            >{{ getRequest.parkSpaceAmount }}</label
+          >
+        </div>
+        <div>
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="Noofpieces"
+            >Transport</label
+          >
+          <label
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            >{{ getRequest.customerTransport }}</label
+          >
+        </div>
+        <div>
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="Noofpieces"
+            >Location</label
+          >
+          <label
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            >{{ getRequest.meetingLocation }}</label
+          >
         </div>
 
         <!-- Add v-model to other inputs as needed -->
@@ -660,14 +703,16 @@
         class="grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
       >
         <div class="w-full">
-          <label for="Description" class="text-gray-700 dark:text-gray-200"
+          <label
+            for="Description"
+            class="font-semibold text-gray-700 dark:text-gray-200"
             >Description</label
           >
           <textarea
+            v-model="getRequest.visitPurpose"
             id="Description"
             class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             rows="2"
-            v-show="requester.name"
           >
           </textarea>
         </div>
@@ -680,7 +725,7 @@
   <Modaltestkits v-show="isModalVisible5" @close="closeModal">
     <!-- header -->
     <template v-slot:header>
-      <h1 class="font-bold text-xl">Teskitform</h1>
+      <h1 class="font-bold text-xl">TESKITFORM</h1>
     </template>
 
     <!-- body -->
@@ -690,108 +735,106 @@
       </p> -->
       <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="requesterName"
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="requesterName"
             >Requester Name</label
           >
-          <input
-            id="requesterName"
+          <label
+            
             type="text"
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+            class="block w-full px-4 py-2 mt-2 font-semibold text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          >{{ getRequest.requesterName }}</label>
         </div>
 
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="department"
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="department"
             >Department</label
           >
-          <input
-            id="department"
+          <label
+            
             type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+          >{{ getRequest.departmentName }}</label>
         </div>
 
         <!-- Add v-model to other inputs as needed -->
       </div>
       <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="username"
-            >Phone number</label
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="username"
+            >Phone Number</label
           >
-          <input
-            id="number"
-            type="number"
+          <label
+            
+            type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+          >{{ getRequest.phoneNumber }}</label>
         </div>
 
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="emailAddress"
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="emailAddress"
             >Date Requested</label
           >
-          <input
-            id="daterequest"
-            type="date"
+          <label
+            
+            type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+          >{{ getRequest.dateRequested }}</label>
         </div>
-        <div>
-          <label class="text-gray-700 dark:text-gray-200" for="emailAddress"
-            >Location</label
-          >
-          <select
-            id="locatioan"
-            type="email"
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          >
-            <option value="hq">a</option>
-            <option value="hq">b</option>
-          </select>
-        </div>
+      
 
         <!-- Add v-model to other inputs as needed -->
       </div>
       <div class="grid grid-cols-2 gap-6 mt-4 sm:grid-cols-2">
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="username"
-            >NO. stock in box</label
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="username"
+            >NO. Stock In Box</label
           >
-          <input
-            id="stockinbox"
-            type="number"
+          <label
+            
+            type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+          >{{ getRequest.boxStock }}</label>
         </div>
 
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="emailAddress"
-            >No. stock in (kit)</label
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="emailAddress"
+            >No. Stock In (kit)</label
           >
-          <input
-            id="stockinkit"
-            type="number"
+          <label
+            
+            type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+          >{{ getRequest.kitStock }}</label>
         </div>
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="emailAddress"
-            >No. of kit out</label
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="emailAddress"
+            >No. Of Kit Out</label
           >
-          <input
-            id="kitout"
-            type="number"
+          <label
+            
+            type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+          >{{ getRequest.kitOut }}</label>
         </div>
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="emailAddress"
-            >No. of balance kit</label
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="emailAddress"
+            >No. Of Balance Kit</label
           >
-          <input
-            id="balacekit"
-            type="number"
+          <label
+            
+            type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+          >{{ getRequest.balanceKit }}</label>
+        </div>
+        <div>
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="emailAddress"
+            >Remark</label
+          >
+          <label
+            
+            type="text"
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+          >{{ getRequest.remark }}</label>
         </div>
 
         <!-- Add v-model to other inputs as needed -->
@@ -902,6 +945,7 @@ import Modalcctv from "../components/vmodal.vue";
 import Modalvisitorescordt from "../components/vmodal.vue";
 import Modaltestkits from "../components/vmodal.vue";
 import Modalmask from "../components/vmodal.vue";
+import axios from "axios";
 
 export default {
   name: "TableformyrequestView",
@@ -921,6 +965,7 @@ export default {
   },
   data() {
     return {
+      getRequest: [],
       isModalVisible: false,
       isModalVisible2: false,
       isModalVisible3: false,
@@ -930,23 +975,84 @@ export default {
     };
   },
   methods: {
-    showModal() {
-      this.isModalVisible = true;
+    showModal(refNumber) {
+      //badge Request
+      axios
+        .get("http://172.28.28.91:8085/api/Main/GetBadgeRequest/" + refNumber)
+        .then((response) => {
+          this.getRequest = response.data;
+          console.log("this is get request" + this.getRequest);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
 
+      this.isModalVisible = true;
     },
-    showModal2() {
+    showModal2(refNumber) {
+      //IR
+      axios
+        .get("http://172.28.28.91:8085/api/Main/GetIncidentReport/" + refNumber)
+        .then((response) => {
+          this.getRequest = response.data;
+          console.log("this is get request" + this.getRequest);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+
       this.isModalVisible2 = true;
     },
-    showModal3() {
+    showModal3(refNumber) {
+      //cctv
+      axios
+        .get("http://172.28.28.91:8085/api/Main/GetCCTVRequest/" + refNumber)
+        .then((response) => {
+          this.getRequest = response.data;
+          console.log("this is get request" + this.getRequest);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
       this.isModalVisible3 = true;
     },
-    showModal4() {
+    showModal4(refNumber) {
+      //vet
+      axios
+        .get("http://172.28.28.91:8085/api/Main/GetVisitor/" + refNumber)
+        .then((response) => {
+          this.getRequest = response.data;
+          console.log("this is get request" + this.getRequest);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
       this.isModalVisible4 = true;
     },
-    showModal5() {
+    showModal5(refNumber) {
+      //tk
+      axios
+        .get("http://172.28.28.91:8085/api/Main/GetTestKits/" + refNumber)
+        .then((response) => {
+          this.getRequest = response.data;
+          console.log("this is get request" + this.getRequest);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
       this.isModalVisible5 = true;
     },
-    showModal6() {
+    showModal6(refNumber) {
+      //mask
+      axios
+        .get("http://172.28.28.91:8085/api/Main/GetMaskByUser/" + refNumber)
+        .then((response) => {
+          this.getRequest = response.data;
+          console.log("this is get request" + this.getRequest);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
       this.isModalVisible6 = true;
     },
     closeModal() {

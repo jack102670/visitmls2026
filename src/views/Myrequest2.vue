@@ -239,7 +239,7 @@ export default {
         adminStatus: "asc",
         branch:"asc"
       },
-      sortBy: "branch",
+      sortBy: "dateRequested",
       itemsPerPage: 4,
       currentPage: 1,
     };
