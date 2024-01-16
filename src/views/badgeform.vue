@@ -381,6 +381,7 @@ export default {
             // Handle the response, such as showing a success message or resetting the form
             //myrequest.fetchRequesters();
 
+            this.uploadMultiImage(this.userId, this.uniqueCode);
             this.resetForm();
             this.closeModal();
           })
@@ -404,7 +405,41 @@ export default {
             // Set isLoading back to false when the submission is complete
             this.isLoading = false;
           });
+
+
     },
+
+    // uploadMultiImage(userId,uniqueCode){
+    //   const fileUpload = new FormData();
+    //   this.myFiles.forEach((file) => {
+    //     fileUpload.append('file', file[0]);
+    //   });
+    //   axios
+    //       .post("http://172.28.28.91:8085/api/Files/MultiUploadImage/"+ userId + uniqueCode, 
+    //   fileUpload)
+    //       .then((response) => {
+    //         "Server response:", response.data;
+    //         // Handle the response, such as showing a success message or resetting the form
+    //         //myrequest.fetchRequesters();
+
+    //       })
+    //       .catch((error) => {
+    //         if (error.response) {
+    //           console.log(
+    //             "Server responded with status code:",
+    //             error.response.status
+    //           );
+    //           console.log("Response data:", error.response.data);
+    //         } else if (error.request) {
+    //           console.log("No response received:", error.request);
+    //         } else {
+    //           console.log("Error creating request:", error.message);
+    //         }
+
+    //         console.error("Error submitting form:", error);
+    //         // Handle errors, such as showing an error message
+    //       })
+    // },
 
     resetForm() {
       // Reset form data after submission

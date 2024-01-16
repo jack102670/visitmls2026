@@ -309,18 +309,18 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
         <label class="text-gray-700 dark:text-gray-200" for="People"
           >Uploaded Files:</label
         >
         <label class="py-2 px-4">
           <ul>
             <li
-              v-for="(file, index) in uploadedFiles"
-              :key="index"
+              v-for=" file in getRequest.files"
+              :key="file"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             >
-              <span class="text-blue-700">{{ file.name }}</span>
+            <a class= "text-blue-500" target="_blank" v-bind:href="file">try</a>
             </li>
           </ul>
         </label>
@@ -860,22 +860,22 @@
           <label class="text-gray-700 dark:text-gray-200" for="requesterName"
             >Requester Name</label
           >
-          <input
-            id="requesterName"
+          <label
+            
             type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+          >{{ getRequest.requesterName }}</label>
         </div>
 
         <div>
           <label class="text-gray-700 dark:text-gray-200" for="department"
             >Department</label
           >
-          <input
-            id="department"
+          <label
+            
             type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+          >{{ getRequest.departmentName }}</label>
         </div>
 
         <!-- Add v-model to other inputs as needed -->
@@ -885,33 +885,32 @@
           <label class="text-gray-700 dark:text-gray-200" for="username"
             >Phone number</label
           >
-          <input
-            id="number"
-            type="number"
+          <label
+            
+            type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+          >{{ getRequest.phoneNumber }}</label>
         </div>
 
         <div>
           <label class="text-gray-700 dark:text-gray-200" for="emailAddress"
             >Date Requested</label
           >
-          <input
-            id="daterequest"
-            type="date"
+          <label
+            
+            type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+          >{{ getRequest.dateRequested }}</label>
         </div>
         <div>
           <label class="text-gray-700 dark:text-gray-200" for="Noofpieces"
             >No of pieces</label
           >
-          <input
-            id="Noofpieces"
-            type="number"
-            required
+          <label
+            
+            type="text"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+          >{{ getRequest.piecesAmount }}</label>
         </div>
 
         <!-- Add v-model to other inputs as needed -->
@@ -924,6 +923,7 @@
             >Description</label
           >
           <textarea
+          v-model="getRequest.description"
             id="Description"
             class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             rows="2"
@@ -1045,7 +1045,7 @@ export default {
     showModal6(refNumber) {
       //mask
       axios
-        .get("http://172.28.28.91:8085/api/Main/GetMaskByUser/" + refNumber)
+        .get("http://172.28.28.91:8085/api/Main/GetMask/" + refNumber)
         .then((response) => {
           this.getRequest = response.data;
           console.log("this is get request" + this.getRequest);
