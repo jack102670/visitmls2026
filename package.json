@@ -13,6 +13,7 @@
     "core-js": "^3.8.3",
     "filepond": "^4.30.6",
     "filepond-plugin-file-rename": "^1.1.8",
+    "filepond-plugin-file-validate-size": "^2.2.8",
     "filepond-plugin-file-validate-type": "^1.2.8",
     "filepond-plugin-image-preview": "^4.6.12",
     "prettier": "^3.1.0",

@@ -4,7 +4,6 @@ import Dashboard from "../views/Dashboard.vue";
 
 import Login from "../views/Login.vue";
 
-
 import Newsidebar from "../components/Newsidebar.vue";
 import Managerequest from "../views/Managerequest.vue";
 import PTW from "../views/PTW.vue";
@@ -19,11 +18,17 @@ import Teskitform from "../views/Teskitform.vue";
 import visitorescorttour from "../views/visitor-escort-tour.vue";
 import Incidentreportform from "../views/Incidentreportform.vue";
 
+import testing from "../views/Testing.vue";
 import Dashboardvendor from "../views/Dashboardvendor.vue";
 import Incidentreportsafety from "../views/Incidentreportsafety.vue";
 const routes = [
-
-
+  {
+    path: "/test",
+    name: "testing",
+    components: {
+      default: testing,
+    },
+  },
   {
     path: "/Dashboard/",
     name: "Dashboard",
@@ -78,7 +83,6 @@ const routes = [
         name: "PTWdjasdh",
         component: PTW,
       },
-   
     ],
   },
   {
@@ -127,7 +131,7 @@ const routes = [
       Sidebar: Newsidebar,
     },
   },
- 
+
   {
     path: "/Vendorlogin",
     name: "Login",
@@ -143,8 +147,6 @@ const routes = [
     name: "Vendorsingup",
     component: Vendorsignup,
   },
-
-
 ];
 
 const router = createRouter({
