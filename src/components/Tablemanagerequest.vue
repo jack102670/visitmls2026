@@ -838,7 +838,7 @@
                   type="radio"
                   name="adminStatus"
                   value="Resubmission"
-                  v-model="adminStatus"
+                  v-model="getRequest.adminStatus"
                   :checked="getRequest.adminStatus === 'Resubmission'"
                 />
                 Resubmission
@@ -848,7 +848,7 @@
                   type="radio"
                   name="adminStatus"
                   value="Approved"
-                  v-model="adminStatus"
+                  v-model="getRequest.adminStatus"
                   :checked="getRequest.adminStatus === 'Aprroved'"
                 />
                 Approved
@@ -865,7 +865,7 @@
               Last edited
             </label>
             <input
-            v-model="modifiedBy"
+            v-model="getRequest.modifiedBy"
               type="text"
               name="preparedBy"
               id="preparedBy"
@@ -884,7 +884,7 @@
           Comments
         </label>
         <textarea
-          v-model="adminComment"
+          v-model="getRequest.adminComment"
           id="Description"
           class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
           rows="2"
@@ -897,7 +897,7 @@
       <!-- Update Button -->
       <div class="flex justify-end mt-6">
         <button
-        @click="adminUpdate()"
+        @click="adminUpdate(getRequest.referenceNumber)"
           type="button"
           class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-sky-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
         >
@@ -930,7 +930,9 @@ export default {
       adminComment:"",
       modifiedBy:"",
       adminStatus:"",
-
+      refNumber:"",
+      ticketStatus:"",
+      userEmail:"",
     };
   },
   props: {
@@ -940,27 +942,168 @@ export default {
     },
   },
   methods: {
-    // adminUpdate(){
-    //   if (this.getRequest.referenceNumber.includes("BR")) {
-    //     axios
-    //       .get("http://172.28.28.91:8085/api/Admin/AdminUpdateBadgeRequest", {
+    adminUpdate(){
+      if (this.getRequest.referenceNumber.includes("BR")) {
+        axios
+          .put("http://172.28.28.91:8085/api/Admin/AdminUpdateBadgeRequest", {
 
-    //         refNumber: this.getRequest.referenceNumber,
-    //         ticketStatus: "open",
-    //         adminStatus: this.getRequest.adminStatus,
-    //         adminComment: this.getRequest.adminComment,
-    //         modifiedBy: this.getRequest.modifiedBy,
-    //         userEmail: "hazman5001@gmail.com"
+            refNumber: this.getRequest.referenceNumber,
+            ticketStatus: "open",
+            adminStatus: this.getRequest.adminStatus,
+            adminComment: this.getRequest.adminComment,
+            modifiedBy: this.getRequest.modifiedBy,
+            userEmail: "hazman5001@gmail.com"
 
-    //       })
-    //       .catch((error) => {
-    //         console.error("Error:", error);
-    //       });
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
 
-    //     this.isModalVisible = false;
-    //     //this.showBadgeRequest = true;
-    //   }
-    //   },
+        this.isModalVisible = false;
+        window.location.reload();
+        //this.showBadgeRequest = true;
+      }
+      if (this.getRequest.referenceNumber.includes("IR")) {
+        axios
+          .put("http://172.28.28.91:8085/api/Admin/AdminUpdateIncidentReport", {
+
+            refNumber: this.getRequest.referenceNumber,
+            ticketStatus: "open",
+            adminStatus: this.getRequest.adminStatus,
+            adminComment: this.getRequest.adminComment,
+            modifiedBy: this.getRequest.modifiedBy,
+            userEmail: "hazman5001@gmail.com"
+
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+        this.isModalVisible = false;
+        window.location.reload();
+        //this.showBadgeRequest = true;
+      }
+      if (this.getRequest.referenceNumber.includes("CCTV")) {
+        axios
+          .put("http://172.28.28.91:8085/api/Admin/AdminUpdateCCTV", {
+
+            refNumber: this.getRequest.referenceNumber,
+            ticketStatus: "open",
+            adminStatus: this.getRequest.adminStatus,
+            adminComment: this.getRequest.adminComment,
+            modifiedBy: this.getRequest.modifiedBy,
+            userEmail: "hazman5001@gmail.com"
+
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+        this.isModalVisible = false;
+        window.location.reload();
+        //this.showBadgeRequest = true;
+      }
+      if (this.getRequest.referenceNumber.includes("Mask")) {
+        axios
+          .put("http://172.28.28.91:8085/api/Admin/AdminUpdateMask", {
+
+            refNumber: this.getRequest.referenceNumber,
+            ticketStatus: "open",
+            adminStatus: this.getRequest.adminStatus,
+            adminComment: this.getRequest.adminComment,
+            modifiedBy: this.getRequest.modifiedBy,
+            userEmail: "hazman5001@gmail.com"
+
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+        this.isModalVisible = false;
+        window.location.reload();
+        //this.showBadgeRequest = true;
+      }
+      if (this.getRequest.referenceNumber.includes("TK")) {
+        axios
+          .put("http://172.28.28.91:8085/api/Admin/AdminUpdateTestkit", {
+
+            refNumber: this.getRequest.referenceNumber,
+            ticketStatus: "open",
+            adminStatus: this.getRequest.adminStatus,
+            adminComment: this.getRequest.adminComment,
+            modifiedBy: this.getRequest.modifiedBy,
+            userEmail: "hazman5001@gmail.com"
+
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+        this.isModalVisible = false;
+        window.location.reload();
+        //this.showBadgeRequest = true;
+      }
+      if (this.getRequest.referenceNumber.includes("VET")) {
+        axios
+          .put("http://172.28.28.91:8085/api/Admin/AdminUpdateTestkit", {
+
+            refNumber: this.getRequest.referenceNumber,
+            ticketStatus: "open",
+            adminStatus: this.getRequest.adminStatus,
+            adminComment: this.getRequest.adminComment,
+            modifiedBy: this.getRequest.modifiedBy,
+            userEmail: "hazman5001@gmail.com"
+
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+        this.isModalVisible = false;
+        window.location.reload();
+        //this.showBadgeRequest = true;
+      }
+      if (this.getRequest.referenceNumber.includes("PTW")) {
+        axios
+          .put("http://172.28.28.91:8085/api/Admin/AdminSecUpdatePTW", {
+
+            refNumber: this.getRequest.referenceNumber,
+            ticketStatus: "open",
+            adminStatus: this.getRequest.adminStatus,
+            adminComment: this.getRequest.adminComment,
+            modifiedBy: this.getRequest.modifiedBy,
+            userEmail: "hazman5001@gmail.com"
+
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+        this.isModalVisible = false;
+        window.location.reload();
+        //this.showBadgeRequest = true;
+      }
+      // if (this.getRequest.referenceNumber.includes("PTW")) {
+      //   axios
+      //     .put("http://172.28.28.91:8085/api/Admin/AdminSafetyUpdatePTW", {
+
+      //       refNumber: this.getRequest.referenceNumber,
+      //       ticketStatus: "open",
+      //       adminStatus: this.getRequest.adminStatus,
+      //       adminComment: this.getRequest.adminComment,
+      //       modifiedBy: this.getRequest.modifiedBy,
+      //       userEmail: "hazman5001@gmail.com"
+
+      //     })
+      //     .catch((error) => {
+      //       console.error("Error:", error);
+      //     });
+
+      //   this.isModalVisible = false;
+      //   window.location.reload();
+      //   //this.showBadgeRequest = true;
+      // }
+      },
     
     showModal(refNumber) {
       if (refNumber.includes("BR")) {
@@ -1072,6 +1215,7 @@ export default {
 
     getStatusContainerClass(Status) {
       const colorMap = {
+        Resubmission: "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800",
         "": "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800",
         OPEN: "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800",
         Approved:
@@ -1087,6 +1231,7 @@ export default {
     },
     getStatusDotClass(Status) {
       const colorMap = {
+        Resubmission: "h-1.5 w-1.5 rounded-full bg-orange-500",
         "": "h-1.5 w-1.5 rounded-full bg-blue-500",
         OPEN: "h-1.5 w-1.5 rounded-full bg-blue-500",
         Approved: "h-1.5 w-1.5 rounded-full bg-emerald-500",
@@ -1097,6 +1242,7 @@ export default {
     },
     getStatusTextClass(Status) {
       const colorMap = {
+        Resubmission: "text-sm font-normal text-orange-500",
         "": "text-sm font-normal text-blue-500",
         OPEN: "text-sm font-normal text-blue-500",
         Approved: "text-sm font-normal text-emerald-500",

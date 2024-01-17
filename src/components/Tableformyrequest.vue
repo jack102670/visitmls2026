@@ -1065,6 +1065,7 @@ export default {
     },
     getStatusContainerClass(status) {
       const colorMap = {
+        Resubmission: "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800",
         "": "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800",
         Approved:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800",
@@ -1077,6 +1078,7 @@ export default {
     },
     getStatusDotClass(status) {
       const colorMap = {
+        Resubmission: "h-1.5 w-1.5 rounded-full bg-orange-500",
         "": "h-1.5 w-1.5 rounded-full bg-blue-500",
         Approved: "h-1.5 w-1.5 rounded-full bg-emerald-500",
         Pending: "h-1.5 w-1.5 rounded-full bg-yellow-500",
@@ -1086,6 +1088,7 @@ export default {
     },
     getStatusTextClass(status) {
       const colorMap = {
+        Resubmission: "text-sm font-normal text-orange-500",
         "": "text-sm font-normal text-blue-500",
         Approved: "text-sm font-normal text-emerald-500",
         Pending: "text-sm font-normal text-yellow-500",
