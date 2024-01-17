@@ -1,7 +1,7 @@
 <template>
   <!-- component -->
   <button
-  :style="sidebarPosition"
+    :style="sidebarPosition"
     class="toggle-btn sm:block md:hidden fixed z-50 p-2 bg-slate-200 text-blue-900 rounded-full"
     @click.stop="toggleSidebar"
   >
@@ -88,13 +88,11 @@
       </button>
     </div>
 
-    <div class="flex flex-col items-center mt-1 -mx-2">
-      <h4 class="mx-2 mt-2 font-medium text-slate-200 dark:text-gray-200">
-        John Doe
+    <div class="flex flex-col items-center justify-center mt-1">
+      <h4 class="text-slate-200 dark:text-gray-200 font-medium text-center">
+        Welcome, {{ userDetails.userName }}
       </h4>
-      <p
-        class="mx-2 mt-1 text-sm font-medium text-slate-400 dark:text-gray-400"
-      >
+      <p class="text-sm font-medium text-slate-400 dark:text-gray-400 mt-1">
         john@example.com
       </p>
     </div>
@@ -171,7 +169,7 @@
             />
           </svg>
 
-          <span class="mx-4 font-medium">Log Out</span>
+          <span @click="logout" class="mx-4 font-medium">Log Out</span>
         </a>
       </nav>
     </div>
@@ -179,12 +177,15 @@
 </template>
 
 <script>
+import { store } from "../views/store.js";
+
 export default {
   name: "NewsidebarComponent",
   data() {
     return {
       open: false,
       isLightTheme: true,
+      userDetails: [],
     };
   },
   computed: {
@@ -197,8 +198,19 @@ export default {
     arrowRotation() {
       return this.open ? "360" : "180";
     },
-  }, 
+  },
+  mounted() {
+    this.userDetails = store.getSession().userDetails;
+    this.token = store.data.token;
+    // Fetch data when the component is mounted
+
+    //this.currentUser();
+  },
   methods: {
+    logout() {
+      store.clearSession();
+      this.$router.push("/"); // Redirect to login
+    },
     toggleTheme() {
       const root = document.documentElement;
       const isDarkMode = root.classList.contains("dark");

@@ -12,7 +12,7 @@
           <h2
             class="text-2xl font-bold text-gray-700 capitalize dark:text-white"
           >
-            BADGE REQUEST FORM
+            BADGE REQUEST FORM {{ branch }}
           </h2>
           <div class="pt-2">
             <hr class="" />
@@ -318,6 +318,7 @@ export default {
         userid: null,
         // Add more form fields here
       },
+      userDetails:[],
 
       isModalVisible: false,
       departments: template.departments,
@@ -373,7 +374,7 @@ export default {
             designationPeople: this.formData.people,
             phoneNumber: this.formData.phonenumber,
             uniqueCode: "BR01383",
-            userId: "7a7641d6-dede-4803-8b7b-93063de2f077",
+            userId:  this.userDetails.userId ,
             branch: this.branch,
           })
           .then((response) => {
@@ -381,7 +382,7 @@ export default {
             // Handle the response, such as showing a success message or resetting the form
             //myrequest.fetchRequesters();
 
-            this.uploadMultiImage(this.userId, this.uniqueCode);
+            // this.uploadMultiImage(this.userId, this.uniqueCode);
             this.resetForm();
             this.closeModal();
           })
@@ -456,7 +457,12 @@ export default {
     },
   },
   created() {
-  this.branch = store.getSelectedLocation();
+ 
+    this.token =store.data.token
+},
+mounted() {
+   this.branch = store.getSelectedLocation();
+  this.userDetails = store.getSession().userDetails;
 },
 
 };

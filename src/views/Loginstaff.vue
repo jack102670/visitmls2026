@@ -24,7 +24,7 @@
             type="email"
             name="email"
             placeholder="user@pktgroup.com"
-            v-model = "userName"
+            v-model="userName"
           />
         </div>
         <div>
@@ -38,7 +38,7 @@
             type="password"
             name="password"
             placeholder="******"
-            v-model = "password"
+            v-model="password"
           />
         </div>
         <div class="flex">
@@ -54,7 +54,7 @@
           <input
             class="bg-blue-900 w-full py-2 rounded-md text-white font-bold cursor-pointer hover:bg-blue-700"
             type="submit"
-            value="Login"
+            @click.prevent="login"
           />
         </div>
         <!-- <div>
@@ -80,29 +80,57 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
+import { store } from "../views/store.js"; // Update this path to the actual location of your store
+
 export default {
   name: "LoginstaffView",
 
-  data(){
-    return{
-    userName:"",
-    password:"",
-    }
-
+  data() {
+    return {
+      userDetails:[],
+      
+      userName: "",
+      password: "",
+    };
   },
-  methods:{
+  methods: {
+    login() {
+      axios
+        .post("http://172.28.28.91:8085/api/Security/login", {
+          userName: this.userName,
+          password: this.password,
+        })
+        .then((response) => {
+          // Check if the login is successful based on the response message
+          if (response.data && response.data.message === "Login Success!") {
+            // Set the session in the store
+            this.userDetails = response.data.result.userdetails;
+            store.setSession(
+              this.userDetails,
+              response.data.result.token
+            );
 
-    login(){
-      axios.post("http://172.28.28.91:8085/api/Security/login",{
-        userName: this.userName,
-        password: this.password
-      })
-    }
+            console.log(response.data.result.userdetails);
 
-  }
+            // Redirect to dashboard
+            this.$router.push("/dashboard"); // Update with your dashboard route
+          } else {
+            // Handle login failure
+            alert(
+              "Login failed: " +
+                (response.data.message + ". Invalid credentials")
+            );
+          }
+        })
+        .catch((error) => {
+          console.error("Login error:", error);
+        });
+    },
+  },
 };
 </script>
+
 <style scoped>
 .background-image {
   position: relative;

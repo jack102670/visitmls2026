@@ -476,7 +476,8 @@
       </div>
 
       <!-- Badge Request -->
-      <div v-show="showBadgeRequest">
+      <div v-show="showBadgeRequest" class="relative">
+        <span class="absolute -top-10 -right-1  text-slate-500 text-sm">REFNUMBER: {{  getRequest.referenceNumber }}</span>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Description"
@@ -874,7 +875,7 @@
               for="preparedBy"
               class="mb-2 block text-sm font-semibold text-gray-700"
             >
-              Last edited
+              Last edited: {{ getRequest.modifiedDate }}
             </label>
             <input
             v-model="getRequest.modifiedBy"
@@ -1123,7 +1124,7 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetBadgeRequest/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
-            console.log("this is get request" + this.getRequest);
+            console.log("this is get request" + response.data);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1137,7 +1138,7 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetVisitor/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
-            console.log(this.getRequest);
+            console.log("try"+this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);

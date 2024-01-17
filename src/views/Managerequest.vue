@@ -14,7 +14,7 @@
           <div class="flex justify-between items-center">
             <div>
               <h2 class="text-lg font-medium text-gray-800 dark:text-white">
-                Pending Request
+                Pending Request {{ userDetails.userName}}
                 <span
                   class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400"
                   >{{ requesters.length }}
@@ -248,6 +248,7 @@
 </template>
 
 <script>
+import {store} from "../views/store.js"
 import Tablemanagerequest from "../components/Tablemanagerequest.vue";
 import axios from "axios";
 export default {
@@ -257,6 +258,8 @@ export default {
   },
   data() {
     return {
+      userDetails:[],
+      token:"",
       searchQuery: "",
       // Sample data structure for requesters
       role: "security",
@@ -302,20 +305,27 @@ export default {
     paginatedRequesters() {
       return this.requesters.slice(this.startIndex, this.endIndex + 1);
     },
+
   },
   
   mounted() {
+    this.userDetails = store.getSession().userDetails;
+    this.token =store.data.token
     // Fetch data when the component is mounted
     this.fetchRequesters();
+    //this.currentUser();
   },
+ 
   methods: {
+    
     fetchRequesters() {
       console.log("Fetching requesters...");
       axios
         .get("http://172.28.28.91:8085/api/Admin/GetAllRequestsAdminSecurity")
         .then((response) => {
           this.requesters = response.data;
-          console.log("Requesters data:", this.requesters);
+          console.log("Requesters data:"+ this.requesters);
+          console.log("TRY TENGOK USER DETAILS"+this.userDetails.userName);
     
         })
         .catch((error) => {

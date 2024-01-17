@@ -160,7 +160,6 @@
 
             <!-- Dropdown Form -->
             <div
-              
               class="flex justify-center p-3 text-6xl dark:bg-gray-700 bg-gray-100 border-2 border-gray-200 rounded-xl"
             >
               <label
@@ -218,7 +217,7 @@
 </template>
 
 <script>
-import {store} from "../views/store.js"
+import { store } from "../views/store.js";
 // NewrequestViews.js
 // NewrequestViews.js
 export default {
@@ -246,6 +245,10 @@ export default {
       selectedTypeOfRequest: null,
       TypeOfRequests: [],
     };
+  },
+  mounted() {
+    this.userDetails = store.getSession().userDetails;
+    this.token = store.data.token;
   },
   methods: {
     showContent() {
@@ -318,7 +321,6 @@ export default {
           break;
         case "SAFETY":
           this.TypeOfRequests = [
-       
             { id: "7", name: "INCIDENT REPORT" },
             // Add more TypeOfRequests as needed
           ];
@@ -326,7 +328,7 @@ export default {
         case "MAINTENANCE":
           this.TypeOfRequests = [
             { id: "1", name: "BADGE REQUEST" },
-          
+
             // Add more TypeOfRequests as needed
           ];
           break;
@@ -343,7 +345,7 @@ export default {
         case "1":
           // Redirect to the default child route
           this.$router.push({ name: "badgeform" });
-          
+
           break;
         case "5":
           // Redirect to the 'movie' child route
@@ -365,7 +367,7 @@ export default {
           // Redirect to the 'movie' child route
           this.$router.push({ name: "Maskform" });
           break;
-          case "7":
+        case "7":
           // Redirect to the 'movie' child route
           this.$router.push({ name: "Incidentreportsafety" });
           break;
