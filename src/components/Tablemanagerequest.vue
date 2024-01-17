@@ -834,24 +834,36 @@
             </label>
             <div class="grid grid-cols-1 gap-4 items-center">
               <label class="flex items-center text-sm text-gray-700">
+                <div></div>
+             
                 <input
                   type="radio"
                   name="adminStatus"
-                  value="Resubmission"
+                  value="RESUBMISSION"
                   v-model="getRequest.adminStatus"
-                  :checked="getRequest.adminStatus === 'Resubmission'"
+                  :checked="getRequest.adminStatus === 'RESUBMISSION'"
                 />
-                Resubmission
+                RESUBMISSION
               </label>
               <label class="flex items-center text-sm text-gray-700">
                 <input
                   type="radio"
                   name="adminStatus"
-                  value="Approved"
+                  value="APPROVED"
                   v-model="getRequest.adminStatus"
-                  :checked="getRequest.adminStatus === 'Aprroved'"
+                  :checked="getRequest.adminStatus === 'APRROVED'"
                 />
-                Approved
+                APPROVED
+              </label>
+              <label class="flex items-center text-sm text-gray-700">
+                <input
+                  type="radio"
+                  name="adminStatus"
+                  value="COMPLETED"
+                  v-model="getRequest.adminStatus"
+                  :checked="getRequest.adminStatus === 'COMPLETED'"
+                />
+                COMPLETED
               </label>
             </div>
           </div>
@@ -1045,7 +1057,7 @@ export default {
       }
       if (this.getRequest.referenceNumber.includes("VET")) {
         axios
-          .put("http://172.28.28.91:8085/api/Admin/AdminUpdateTestkit", {
+          .put("http://172.28.28.91:8085/api/Admin/AdminUpdateVisitor", {
 
             refNumber: this.getRequest.referenceNumber,
             ticketStatus: "open",
@@ -1215,14 +1227,14 @@ export default {
 
     getStatusContainerClass(Status) {
       const colorMap = {
-        Resubmission: "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800",
+        RESUBMISSION: "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800",
         "": "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800",
         OPEN: "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800",
-        Approved:
+        APPROVED:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800",
-        Pending:
-          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-yellow-100/60 dark:bg-gray-800",
-        Rejected:
+        COMPLETED:
+          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-neutral-200/60 dark:bg-gray-800",
+        REJECTED:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800",
       };
       // Get the class for the combination of ticketStatus and adminStatus
@@ -1231,23 +1243,23 @@ export default {
     },
     getStatusDotClass(Status) {
       const colorMap = {
-        Resubmission: "h-1.5 w-1.5 rounded-full bg-orange-500",
+        RESUBMISSION: "h-1.5 w-1.5 rounded-full bg-orange-500",
         "": "h-1.5 w-1.5 rounded-full bg-blue-500",
         OPEN: "h-1.5 w-1.5 rounded-full bg-blue-500",
-        Approved: "h-1.5 w-1.5 rounded-full bg-emerald-500",
-        Pending: "h-1.5 w-1.5 rounded-full bg-yellow-500",
-        Rejected: "h-1.5 w-1.5 rounded-full bg-red-500",
+        APPROVED: "h-1.5 w-1.5 rounded-full bg-emerald-500",
+        COMPLETED: "h-1.5 w-1.5 rounded-full bg-neutral-500",
+        REJECTED: "h-1.5 w-1.5 rounded-full bg-red-500",
       };
       return colorMap[Status] || "h-1.5 w-1.5 rounded-full bg-gray-700"; // Default to a dark color if the status is not recognized
     },
     getStatusTextClass(Status) {
       const colorMap = {
-        Resubmission: "text-sm font-normal text-orange-500",
+        RESUBMISSION: "text-sm font-normal text-orange-500",
         "": "text-sm font-normal text-blue-500",
         OPEN: "text-sm font-normal text-blue-500",
-        Approved: "text-sm font-normal text-emerald-500",
-        Pending: "text-sm font-normal text-yellow-500",
-        Rejected: "text-sm font-normal text-red-500",
+        APPROVED: "text-sm font-normal text-emerald-500",
+        COMPLETED: "text-sm font-normal text-neutral-500",
+        REJECTED: "text-sm font-normal text-red-500",
       };
       return colorMap[Status] || "text-gray-500"; // Default to a dark color if the status is not recognized
     },
