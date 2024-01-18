@@ -1347,12 +1347,12 @@ export default {
       const colorMap = {
         RESUBMISSION:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800",
-        "": "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800",
-        OPEN: "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800",
+        "": "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800",
+        OPEN: "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800",
         APPROVED:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800",
         COMPLETED:
-          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-neutral-200/60 dark:bg-gray-800",
+          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-200/60 dark:bg-gray-800",
         REJECTED:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800",
       };
@@ -1363,10 +1363,10 @@ export default {
     getStatusDotClass(Status) {
       const colorMap = {
         RESUBMISSION: "h-1.5 w-1.5 rounded-full bg-orange-500",
-        "": "h-1.5 w-1.5 rounded-full bg-blue-500",
-        OPEN: "h-1.5 w-1.5 rounded-full bg-blue-500",
+        "": "h-1.5 w-1.5 rounded-full bg-red-500",
+        OPEN: "h-1.5 w-1.5 rounded-full bg-red-500",
         APPROVED: "h-1.5 w-1.5 rounded-full bg-emerald-500",
-        COMPLETED: "h-1.5 w-1.5 rounded-full bg-neutral-500",
+        COMPLETED: "h-1.5 w-1.5 rounded-full bg-blue-500",
         REJECTED: "h-1.5 w-1.5 rounded-full bg-red-500",
       };
       return colorMap[Status] || "h-1.5 w-1.5 rounded-full bg-gray-700"; // Default to a dark color if the status is not recognized
@@ -1374,10 +1374,10 @@ export default {
     getStatusTextClass(Status) {
       const colorMap = {
         RESUBMISSION: "text-sm font-normal text-orange-500",
-        "": "text-sm font-normal text-blue-500",
-        OPEN: "text-sm font-normal text-blue-500",
+        "": "text-sm font-normal text-red-500",
+        OPEN: "text-sm font-normal text-red-500",
         APPROVED: "text-sm font-normal text-emerald-500",
-        COMPLETED: "text-sm font-normal text-neutral-500",
+        COMPLETED: "text-sm font-normal text-blue-500",
         REJECTED: "text-sm font-normal text-red-500",
       };
       return colorMap[Status] || "text-gray-500"; // Default to a dark color if the status is not recognized
