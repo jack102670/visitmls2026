@@ -1347,6 +1347,8 @@ export default {
       const colorMap = {
         RESUBMISSION:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800",
+        CLOSE:
+          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-neutral-300/60 dark:bg-gray-800",
         "": "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800",
         OPEN: "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800",
         APPROVED:
@@ -1363,6 +1365,7 @@ export default {
     getStatusDotClass(Status) {
       const colorMap = {
         RESUBMISSION: "h-1.5 w-1.5 rounded-full bg-orange-500",
+        CLOSE: "h-1.5 w-1.5 rounded-full bg-neutral-500",
         "": "h-1.5 w-1.5 rounded-full bg-red-500",
         OPEN: "h-1.5 w-1.5 rounded-full bg-red-500",
         APPROVED: "h-1.5 w-1.5 rounded-full bg-emerald-500",
@@ -1374,6 +1377,7 @@ export default {
     getStatusTextClass(Status) {
       const colorMap = {
         RESUBMISSION: "text-sm font-normal text-orange-500",
+        CLOSE: "text-sm font-normal text-neutral-500",
         "": "text-sm font-normal text-red-500",
         OPEN: "text-sm font-normal text-red-500",
         APPROVED: "text-sm font-normal text-emerald-500",
