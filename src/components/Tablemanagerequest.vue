@@ -178,7 +178,10 @@
       </p> -->
 
       <!-- Permit to works -->
-      <div v-show="showPTWForm">
+      <div class="relative" v-show="showPTWForm">
+        <span class="absolute -top-10 -right-1 text-slate-500 text-sm"
+          >REFNUMBER: {{ getRequest.referenceNumber }}</span
+        >
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Description"
@@ -316,7 +319,10 @@
         </div>
       </div> -->
       <!-- Incident Report -->
-      <div v-show="showIncidentReport">
+      <div class="relative" v-show="showIncidentReport">
+        <span class="absolute -top-10 -right-1 text-slate-500 text-sm"
+          >REFNUMBER: {{ getRequest.referenceNumber }}</span
+        >
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Description"
@@ -386,7 +392,10 @@
         </div>
       </div>
       <!-- teskit -->
-      <div v-show="showTeskit">
+      <div class="relative" v-show="showTeskit">
+        <span class="absolute -top-10 -right-1 text-slate-500 text-sm"
+          >REFNUMBER: {{ getRequest.referenceNumber }}</span
+        >
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Description"
@@ -477,7 +486,9 @@
 
       <!-- Badge Request -->
       <div v-show="showBadgeRequest" class="relative">
-        <span class="absolute -top-10 -right-1  text-slate-500 text-sm">REFNUMBER: {{  getRequest.referenceNumber }}</span>
+        <span class="absolute -top-10 -right-1 text-slate-500 text-sm"
+          >REFNUMBER: {{ getRequest.referenceNumber }}</span
+        >
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Description"
@@ -542,7 +553,10 @@
         </div>
       </div>
       <!-- CCTV Footages-->
-      <div v-show="showCCTVForm">
+      <div class="relativeF" v-show="showCCTVForm">
+        <span class="absolute -top-10 -right-1 text-slate-500 text-sm"
+          >REFNUMBER: {{ getRequest.referenceNumber }}</span
+        >
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="requestername"
@@ -630,7 +644,8 @@
         </div>
       </div>
       <!--Visitor Escort Transport-->
-      <div v-show="showVETForm">
+      <div class="relative" v-show="showVETForm">
+        <span class="absolute -top-10 -right-1  text-slate-500 text-sm">REFNUMBER: {{  getRequest.referenceNumber }}</span>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="Description"
@@ -736,7 +751,8 @@
         </div>
       </div>
       <!-- mask-->
-      <div v-show="showMaskRequest">
+      <div class="relative" v-show="showMaskRequest">
+        <span class="absolute -top-10 -right-1  text-slate-500 text-sm">REFNUMBER: {{  getRequest.referenceNumber }}</span>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
             <label class="text-gray-700 dark:text-gray-200" for="requester.name"
@@ -831,12 +847,12 @@
         <div class="w-full md:w-1/3">
           <div class="mb-4">
             <label class="mb-2 block text-sm font-semibold text-gray-700">
-              Admin Status 
+              Admin Status
             </label>
             <div class="grid grid-cols-1 gap-4 items-center">
               <label class="flex items-center text-sm text-gray-700">
                 <div></div>
-             
+
                 <input
                   type="radio"
                   name="adminStatus"
@@ -878,13 +894,12 @@
               Last edited: {{ getRequest.modifiedDate }}
             </label>
             <input
-            v-model="getRequest.modifiedBy"
+              v-model="getRequest.modifiedBy"
               type="text"
               name="preparedBy"
               id="preparedBy"
               class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
-              >
-            
+            />
           </div>
         </div>
       </div>
@@ -910,7 +925,7 @@
       <!-- Update Button -->
       <div class="flex justify-end mt-6">
         <button
-        @click="adminUpdate(getRequest.referenceNumber)"
+          @click="adminUpdate(getRequest.referenceNumber)"
           type="button"
           class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-sky-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
         >
@@ -940,12 +955,12 @@ export default {
       showPTWForm: false,
       showCCTVForm: false,
       showVETForm: false,
-      adminComment:"",
-      modifiedBy:"",
-      adminStatus:"",
-      refNumber:"",
-      ticketStatus:"",
-      userEmail:"",
+      adminComment: "",
+      modifiedBy: "",
+      adminStatus: "",
+      refNumber: "",
+      ticketStatus: "",
+      userEmail: "",
     };
   },
   props: {
@@ -955,18 +970,16 @@ export default {
     },
   },
   methods: {
-    adminUpdate(){
+    adminUpdate() {
       if (this.getRequest.referenceNumber.includes("BR")) {
         axios
           .put("http://172.28.28.91:8085/api/Admin/AdminUpdateBadgeRequest", {
-
             refNumber: this.getRequest.referenceNumber,
             ticketStatus: "open",
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
-            userEmail: "hazman5001@gmail.com"
-
+            userEmail: "hazman5001@gmail.com",
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -979,14 +992,12 @@ export default {
       if (this.getRequest.referenceNumber.includes("IR")) {
         axios
           .put("http://172.28.28.91:8085/api/Admin/AdminUpdateIncidentReport", {
-
             refNumber: this.getRequest.referenceNumber,
             ticketStatus: "open",
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
-            userEmail: "hazman5001@gmail.com"
-
+            userEmail: "hazman5001@gmail.com",
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -999,14 +1010,12 @@ export default {
       if (this.getRequest.referenceNumber.includes("CCTV")) {
         axios
           .put("http://172.28.28.91:8085/api/Admin/AdminUpdateCCTV", {
-
             refNumber: this.getRequest.referenceNumber,
             ticketStatus: "open",
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
-            userEmail: "hazman5001@gmail.com"
-
+            userEmail: "hazman5001@gmail.com",
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1019,14 +1028,12 @@ export default {
       if (this.getRequest.referenceNumber.includes("Mask")) {
         axios
           .put("http://172.28.28.91:8085/api/Admin/AdminUpdateMask", {
-
             refNumber: this.getRequest.referenceNumber,
             ticketStatus: "open",
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
-            userEmail: "hazman5001@gmail.com"
-
+            userEmail: "hazman5001@gmail.com",
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1039,14 +1046,12 @@ export default {
       if (this.getRequest.referenceNumber.includes("TK")) {
         axios
           .put("http://172.28.28.91:8085/api/Admin/AdminUpdateTestkit", {
-
             refNumber: this.getRequest.referenceNumber,
             ticketStatus: "open",
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
-            userEmail: "hazman5001@gmail.com"
-
+            userEmail: "hazman5001@gmail.com",
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1059,14 +1064,12 @@ export default {
       if (this.getRequest.referenceNumber.includes("VET")) {
         axios
           .put("http://172.28.28.91:8085/api/Admin/AdminUpdateVisitor", {
-
             refNumber: this.getRequest.referenceNumber,
             ticketStatus: "open",
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
-            userEmail: "hazman5001@gmail.com"
-
+            userEmail: "hazman5001@gmail.com",
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1079,14 +1082,12 @@ export default {
       if (this.getRequest.referenceNumber.includes("PTW")) {
         axios
           .put("http://172.28.28.91:8085/api/Admin/AdminSecUpdatePTW", {
-
             refNumber: this.getRequest.referenceNumber,
             ticketStatus: "open",
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
-            userEmail: "hazman5001@gmail.com"
-
+            userEmail: "hazman5001@gmail.com",
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1116,8 +1117,8 @@ export default {
       //   window.location.reload();
       //   //this.showBadgeRequest = true;
       // }
-      },
-    
+    },
+
     showModal(refNumber) {
       if (refNumber.includes("BR")) {
         axios
@@ -1138,7 +1139,7 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetVisitor/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
-            console.log("try"+this.getRequest);
+            console.log("try" + this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1228,7 +1229,8 @@ export default {
 
     getStatusContainerClass(Status) {
       const colorMap = {
-        RESUBMISSION: "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800",
+        RESUBMISSION:
+          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800",
         "": "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800",
         OPEN: "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800",
         APPROVED:
