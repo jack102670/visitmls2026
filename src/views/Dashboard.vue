@@ -285,6 +285,9 @@ export default {
           break;
         case "3": // KULIM HUB
           this.departments = [
+            { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            { id: "MAINTENANCE", name: "MAINTENANCE" },
             // Define departments for KULIM HUB
           ];
           break;

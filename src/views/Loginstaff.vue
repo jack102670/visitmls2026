@@ -105,6 +105,10 @@ export default {
   if (this.rememberMe) {
     this.userName = localStorage.getItem('rememberedUserName');
   }
+  const session = store.getSession();
+  if (session){
+    this.$router.push("/dashboard");
+  }
 },
 
   methods: {
@@ -123,16 +127,16 @@ export default {
 
             console.log(response.data.result.userdetails);
 
-            // Redirect to dashboard
+          
             localStorage.setItem("rememberMe", this.rememberMe);
             if (this.rememberMe) {
               localStorage.setItem("rememberedUserName", this.userName);
             } else {
               localStorage.removeItem("rememberedUserName");
             }
-            this.$router.push("/dashboard"); // Update with your dashboard route
+            this.$router.push("/dashboard"); 
           } else {
-            // Handle login failure
+    
             alert(
               "Login failed: " +
                 (response.data.message + ". Invalid credentials")

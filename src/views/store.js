@@ -5,14 +5,23 @@ export const store = {
     token: null
   },
 
-  setSelectedLocation(locationId, locations) {
-    const location = locations.find(loc => loc.id === locationId);
-    this.data.selectedLocation = location ? location.name : null;
-  },
+setSelectedLocation(locationId, locations) {
+  const location = locations.find(loc => loc.id === locationId);
+  this.data.selectedLocation = location ? location.name : null;
 
-  getSelectedLocation() {
-    return this.data.selectedLocation;
-  },
+  // Save to local storage
+  localStorage.setItem('selectedLocation', this.data.selectedLocation);
+},
+
+
+getSelectedLocation() {
+ 
+  if (!this.data.selectedLocation) {
+    this.data.selectedLocation = localStorage.getItem('selectedLocation');
+  }
+  return this.data.selectedLocation;
+},
+
 
   // Session handling methods
   setSession(userdetails, token) {
@@ -34,9 +43,6 @@ export const store = {
   },
 
   getSession() {
-    // Check if session data exists in the store's data
-  
-        //token: this.data.token
 
         const userDetails = JSON.parse(localStorage.getItem('userdetails'));
         const token = localStorage.getItem('token');
