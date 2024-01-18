@@ -21,6 +21,7 @@ import Incidentreportform from "../views/Incidentreportform.vue";
 import testing from "../views/Testing.vue";
 import Dashboardvendor from "../views/Dashboardvendor.vue";
 import Incidentreportsafety from "../views/Incidentreportsafety.vue";
+import { store } from "../views/store.js";
 const routes = [
   {
     path: "/test",
@@ -152,6 +153,25 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+ 
+  const publicPages = ["Login", "Loginstaff", "Vendorsingup", "testing"]; // Add other public route names as necessary
+
+  // Check if the current route requires authentication
+  const authRequired = !publicPages.includes(to.name);
+
+  // Check if the session exists
+  const session = store.getSession();
+
+  if (authRequired && !session) {
+    // Redirect to login page if no session and the route requires auth
+    next({ name: "Loginstaff" });
+  } else {
+    // Otherwise, proceed as normal
+    next();
+  }
 });
 
 export default router;

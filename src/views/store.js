@@ -43,17 +43,14 @@ getSelectedLocation() {
   },
 
   getSession() {
-
-        const userDetails = JSON.parse(localStorage.getItem('userdetails'));
-        const token = localStorage.getItem('token');
-        if (userDetails && token) {
-          this.setSession(userDetails, token); // Update store's data
-          return { 
-            userDetails, 
-            token };
-        }
-    
-        return null;
+    const userDetails = JSON.parse(localStorage.getItem('userdetails'));
+    const token = localStorage.getItem('token');
   
+    if (userDetails && token) {
+      return { userDetails, token };
+    }
+  
+    return null;
   }
+  
 };

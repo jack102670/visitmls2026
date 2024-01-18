@@ -221,6 +221,7 @@
 </template>
 
 <script>
+import { store } from "../views/store.js";
 import Tableformyrequest from "../components/Tableformyrequest.vue";
 import axios from "axios";
 export default {
@@ -304,7 +305,7 @@ export default {
     fetchRequesters() {
       console.log("Fetching requesters...");
       axios
-        .get("http://172.28.28.91:8085/api/Main/GetAllRequests/"+ "7a7641d6-dede-4803-8b7b-93063de2f077")
+        .get("http://172.28.28.91:8085/api/Main/GetAllRequests/"+ store.getSession().userDetails.userId)
         .then((response) => {
           this.requesters = response.data;
           console.log("Requesters data:", this.requesters);

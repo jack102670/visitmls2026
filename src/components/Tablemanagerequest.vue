@@ -184,7 +184,9 @@
         >
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >Description</label
             >
             <input
@@ -195,7 +197,9 @@
           </div>
 
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Location"
               >Location</label
             >
             <input
@@ -207,7 +211,9 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-3">
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >Requester</label
             >
             <input
@@ -218,7 +224,9 @@
           </div>
 
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Location"
               >Department</label
             >
             <input
@@ -228,7 +236,9 @@
             />
           </div>
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >Phone</label
             >
             <input
@@ -239,7 +249,9 @@
           </div>
 
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Location"
               >Contractor / Vendor</label
             >
             <input
@@ -249,7 +261,9 @@
             />
           </div>
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Location"
               >Company
             </label>
             <input
@@ -259,7 +273,9 @@
             />
           </div>
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >Phone
             </label>
             <input
@@ -270,7 +286,9 @@
           </div>
         </div>
         <div>
-          <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="Description"
             >Hazard Identidication
           </label>
           <input
@@ -281,7 +299,9 @@
         </div>
 
         <div>
-          <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="Location"
             >Determined Control</label
           >
           <input
@@ -291,7 +311,9 @@
           />
         </div>
         <div>
-          <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="Location"
             >Attachment</label
           >
           <input
@@ -325,7 +347,9 @@
         >
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >DateTime Of Incident</label
             >
             <label
@@ -335,7 +359,9 @@
             >
           </div>
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >Type Of Incident</label
             >
             <label
@@ -347,7 +373,9 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Location"
               >Location</label
             >
             <label
@@ -357,7 +385,9 @@
             >
           </div>
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >Name Of Parties Involved</label
             >
             <label
@@ -368,7 +398,9 @@
           </div>
 
           <div class="col-span-2">
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Location"
               >Incident Details</label
             >
             <textarea
@@ -378,18 +410,24 @@
             ></textarea>
           </div>
         </div>
-        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-1">
-          <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
-              >Attachment</label
-            >
-            <label
-              type="text"
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
+        <label class="font-semibold text-gray-700 dark:text-gray-200" for="People"
+          >Attachment</label
+        >
+        <label class="py-2 px-4">
+          <ul>
+            <li
+              v-for="file in getRequest.files"
+              :key="file"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              >{{ getRequest.requesterName }}</label
             >
-          </div>
-        </div>
+              <a class="text-blue-500" target="_blank" :href="file">{{
+                getFileName(file)
+              }}</a>
+            </li>
+          </ul>
+        </label>
+      </div>
       </div>
       <!-- teskit -->
       <div class="relative" v-show="showTeskit">
@@ -398,7 +436,9 @@
         >
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >Requester Name</label
             >
             <label
@@ -409,7 +449,9 @@
           </div>
 
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Location"
               >Department</label
             >
             <label
@@ -419,7 +461,9 @@
             >
           </div>
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >Phone Number</label
             >
             <label
@@ -431,7 +475,9 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3">
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Location"
               >No Stock In Box</label
             >
             <label
@@ -441,7 +487,9 @@
             >
           </div>
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Location"
               >No Stock In (kit)</label
             >
             <label
@@ -452,7 +500,9 @@
           </div>
 
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Location"
               >No Of Kit Out</label
             >
             <label
@@ -462,7 +512,9 @@
             >
           </div>
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Location"
               >No Of Balance Kit</label
             >
             <label
@@ -472,7 +524,9 @@
             >
           </div>
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Location"
               >Remark</label
             >
             <label
@@ -491,7 +545,9 @@
         >
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >Requester
             </label>
             <label
@@ -503,7 +559,9 @@
           </div>
 
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Location"
               >Department</label
             >
             <label
@@ -516,7 +574,9 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >Phone Number</label
             >
             <label
@@ -528,7 +588,9 @@
           </div>
 
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Location"
               >For</label
             >
             <Label
@@ -539,27 +601,37 @@
             >
           </div>
         </div>
-        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-1">
-          <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
-              >Upload File List Of Name</label
-            >
-            <input
-              id="Location"
-              type="text"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
-          </div>
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="People"
+            >Uploaded Files:</label
+          >
+          <label class="py-2 px-4">
+            <ul>
+              <li
+                v-for="file in getRequest.files"
+                :key="file"
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              >
+                <a class="text-blue-500" target="_blank" :href="file">{{
+                  getFileName(file)
+                }}</a>
+              </li>
+            </ul>
+          </label>
         </div>
       </div>
       <!-- CCTV Footages-->
-      <div class="relativeF" v-show="showCCTVForm">
+      <div class="relative" v-show="showCCTVForm">
         <span class="absolute -top-10 -right-1 text-slate-500 text-sm"
           >REFNUMBER: {{ getRequest.referenceNumber }}</span
         >
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="requestername"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="requestername"
               >Requester Name</label
             >
             <label
@@ -571,7 +643,9 @@
           </div>
 
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Location"
               >Department</label
             >
             <label
@@ -584,7 +658,9 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >Phone Number</label
             >
             <label
@@ -596,7 +672,9 @@
           </div>
 
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Location"
               >Incident Location</label
             >
             <label
@@ -607,7 +685,9 @@
             >
           </div>
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >Appointment Date</label
             >
             <label
@@ -618,7 +698,9 @@
             >
           </div>
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >Incident DateTime</label
             >
             <label
@@ -631,7 +713,9 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-1">
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >Description Of Incident</label
             >
             <label
@@ -645,10 +729,14 @@
       </div>
       <!--Visitor Escort Transport-->
       <div class="relative" v-show="showVETForm">
-        <span class="absolute -top-10 -right-1  text-slate-500 text-sm">REFNUMBER: {{  getRequest.referenceNumber }}</span>
+        <span class="absolute -top-10 -right-1 text-slate-500 text-sm"
+          >REFNUMBER: {{ getRequest.referenceNumber }}</span
+        >
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >Requester Name:</label
             >
             <label
@@ -660,7 +748,9 @@
           </div>
 
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Location"
               >Department</label
             >
             <label
@@ -673,7 +763,9 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >Phone Number</label
             >
             <label
@@ -685,7 +777,9 @@
           </div>
 
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Location"
               >Meeting Location</label
             >
             <label
@@ -696,7 +790,9 @@
             >
           </div>
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >Visitor Date</label
             >
             <label
@@ -706,7 +802,9 @@
             >
           </div>
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >Customer Name</label
             >
             <label
@@ -718,7 +816,9 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-2">
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >No Of Pax</label
             >
             <label
@@ -729,7 +829,9 @@
           </div>
 
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >No Of Parking Space</label
             >
             <label
@@ -739,7 +841,9 @@
             >
           </div>
           <div class="col-span-2">
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >Purpose</label
             >
             <label
@@ -752,10 +856,14 @@
       </div>
       <!-- mask-->
       <div class="relative" v-show="showMaskRequest">
-        <span class="absolute -top-10 -right-1  text-slate-500 text-sm">REFNUMBER: {{  getRequest.referenceNumber }}</span>
+        <span class="absolute -top-10 -right-1 text-slate-500 text-sm"
+          >REFNUMBER: {{ getRequest.referenceNumber }}</span
+        >
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="requester.name"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="requester.name"
               >Requester Name</label
             >
             <label
@@ -766,7 +874,9 @@
           </div>
 
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Location"
               >Department</label
             >
             <label
@@ -779,7 +889,9 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >Phone Number</label
             >
             <label
@@ -791,7 +903,9 @@
           </div>
 
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Location"
               >No Of Pieces</label
             >
             <label
@@ -804,7 +918,9 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
               >Description</label
             >
             <label

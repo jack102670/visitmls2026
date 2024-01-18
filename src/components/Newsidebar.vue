@@ -90,10 +90,10 @@
 
     <div class="flex flex-col items-center justify-center mt-1">
       <h4 class="text-slate-200 dark:text-gray-200 font-medium text-center">
-        Welcome, {{ userDetails.userName }}
+        Welcome, 
       </h4>
-      <p class="text-sm font-medium text-slate-400 dark:text-gray-400 mt-1">
-        john@example.com
+      <p class="text-sm font-medium text-slate-200 dark:text-gray-400 mt-1">
+        {{ userDetails.userName }}
       </p>
     </div>
 
@@ -211,6 +211,9 @@ export default {
       store.clearSession();
       this.$router.push("/"); // Redirect to login
     },
+    // logoutAPI(){
+    //   axios.post("http://172.28.28.91:8085api/Security/logout")
+    // },
     toggleTheme() {
       const root = document.documentElement;
       const isDarkMode = root.classList.contains("dark");

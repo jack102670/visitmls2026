@@ -49,7 +49,7 @@
               name="rememberMe"
               v-model="rememberMe"
             />
-            <label class="text-slate-200" for="rememberMe">Remember me</label>
+            <label class="text-slate-200" for="rememberMe"> Remember me</label>
           </div>
           <!-- <div class="w-1/2">
             <a class="font-bold text-sky-300" href="">Forgot password ?</a>
@@ -134,7 +134,7 @@ export default {
             } else {
               localStorage.removeItem("rememberedUserName");
             }
-            this.$router.push("/dashboard"); 
+            this.$router.push("/Dashboard"); 
           } else {
     
             alert(
