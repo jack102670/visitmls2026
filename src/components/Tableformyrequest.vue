@@ -251,7 +251,7 @@
       </p> -->
       <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for=""
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for=""
             >Requester Name</label
           >
           <label
@@ -262,7 +262,7 @@
         </div>
 
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="department"
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="department"
             >Department</label
           >
           <label
@@ -276,7 +276,7 @@
       </div>
       <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="username"
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="username"
             >Phone number</label
           >
           <label
@@ -287,7 +287,7 @@
         </div>
 
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="emailAddress"
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="emailAddress"
             >Date Requested</label
           >
           <label
@@ -298,7 +298,7 @@
         </div>
 
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="People"
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="People"
             >People/For</label
           >
           <label
@@ -310,7 +310,7 @@
       </div>
 
       <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
-        <label class="text-gray-700 dark:text-gray-200" for="People"
+        <label class="font-semibold text-gray-700 dark:text-gray-200" for="People"
           >Uploaded Files:</label
         >
         <label class="py-2 px-4">
@@ -876,7 +876,7 @@
       </p> -->
       <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="requesterName"
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="requesterName"
             >Requester Name</label
           >
           <label
@@ -887,7 +887,7 @@
         </div>
 
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="department"
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="department"
             >Department</label
           >
           <label
@@ -901,7 +901,7 @@
       </div>
       <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="username"
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="username"
             >Phone number</label
           >
           <label
@@ -912,7 +912,7 @@
         </div>
 
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="emailAddress"
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="emailAddress"
             >Date Requested</label
           >
           <label
@@ -922,7 +922,7 @@
           >
         </div>
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Noofpieces"
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="Noofpieces"
             >No of pieces</label
           >
           <label
@@ -938,7 +938,7 @@
         class="grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
       >
         <div class="w-full">
-          <label for="Description" class="text-gray-700 dark:text-gray-200"
+          <label for="Description" class="font-semibold text-gray-700 dark:text-gray-200"
             >Description</label
           >
           <textarea

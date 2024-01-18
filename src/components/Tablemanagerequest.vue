@@ -184,7 +184,7 @@
         >
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Description</label
             >
             <input
@@ -195,7 +195,7 @@
           </div>
 
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Location"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
               >Location</label
             >
             <input
@@ -207,7 +207,7 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-3">
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Requester</label
             >
             <input
@@ -218,7 +218,7 @@
           </div>
 
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Location"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
               >Department</label
             >
             <input
@@ -228,7 +228,7 @@
             />
           </div>
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Phone</label
             >
             <input
@@ -239,7 +239,7 @@
           </div>
 
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Location"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
               >Contractor / Vendor</label
             >
             <input
@@ -249,7 +249,7 @@
             />
           </div>
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Location"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
               >Company
             </label>
             <input
@@ -259,7 +259,7 @@
             />
           </div>
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Phone
             </label>
             <input
@@ -270,7 +270,7 @@
           </div>
         </div>
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Description"
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
             >Hazard Identidication
           </label>
           <input
@@ -281,7 +281,7 @@
         </div>
 
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Location"
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
             >Determined Control</label
           >
           <input
@@ -291,7 +291,7 @@
           />
         </div>
         <div>
-          <label class="text-gray-700 dark:text-gray-200" for="Location"
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
             >Attachment</label
           >
           <input
@@ -325,7 +325,7 @@
         >
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >DateTime Of Incident</label
             >
             <label
@@ -335,7 +335,7 @@
             >
           </div>
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Type Of Incident</label
             >
             <label
@@ -347,7 +347,7 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Location"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
               >Location</label
             >
             <label
@@ -357,7 +357,7 @@
             >
           </div>
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Name Of Parties Involved</label
             >
             <label
@@ -368,7 +368,7 @@
           </div>
 
           <div class="col-span-2">
-            <label class="text-gray-700 dark:text-gray-200" for="Location"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
               >Incident Details</label
             >
             <textarea
@@ -380,7 +380,7 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-1">
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Attachment</label
             >
             <label
@@ -398,7 +398,7 @@
         >
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Requester Name</label
             >
             <label
@@ -409,7 +409,7 @@
           </div>
 
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Location"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
               >Department</label
             >
             <label
@@ -419,7 +419,7 @@
             >
           </div>
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Phone Number</label
             >
             <label
@@ -431,7 +431,7 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-3">
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Location"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
               >No Stock In Box</label
             >
             <label
@@ -441,7 +441,7 @@
             >
           </div>
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Location"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
               >No Stock In (kit)</label
             >
             <label
@@ -452,7 +452,7 @@
           </div>
 
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Location"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
               >No Of Kit Out</label
             >
             <label
@@ -462,7 +462,7 @@
             >
           </div>
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Location"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
               >No Of Balance Kit</label
             >
             <label
@@ -472,7 +472,7 @@
             >
           </div>
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Location"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
               >Remark</label
             >
             <label
@@ -491,7 +491,7 @@
         >
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Requester
             </label>
             <label
@@ -503,7 +503,7 @@
           </div>
 
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Location"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
               >Department</label
             >
             <label
@@ -516,7 +516,7 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Phone Number</label
             >
             <label
@@ -528,7 +528,7 @@
           </div>
 
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Location"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
               >For</label
             >
             <Label
@@ -541,7 +541,7 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-1">
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Upload File List Of Name</label
             >
             <input
@@ -559,7 +559,7 @@
         >
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="requestername"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="requestername"
               >Requester Name</label
             >
             <label
@@ -571,7 +571,7 @@
           </div>
 
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Location"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
               >Department</label
             >
             <label
@@ -584,7 +584,7 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Phone Number</label
             >
             <label
@@ -596,7 +596,7 @@
           </div>
 
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Location"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
               >Incident Location</label
             >
             <label
@@ -607,7 +607,7 @@
             >
           </div>
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Appointment Date</label
             >
             <label
@@ -618,7 +618,7 @@
             >
           </div>
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Incident DateTime</label
             >
             <label
@@ -631,7 +631,7 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-1">
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Description Of Incident</label
             >
             <label
@@ -648,7 +648,7 @@
         <span class="absolute -top-10 -right-1  text-slate-500 text-sm">REFNUMBER: {{  getRequest.referenceNumber }}</span>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Requester Name:</label
             >
             <label
@@ -660,7 +660,7 @@
           </div>
 
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Location"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
               >Department</label
             >
             <label
@@ -673,7 +673,7 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Phone Number</label
             >
             <label
@@ -685,7 +685,7 @@
           </div>
 
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Location"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
               >Meeting Location</label
             >
             <label
@@ -696,7 +696,7 @@
             >
           </div>
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Visitor Date</label
             >
             <label
@@ -706,7 +706,7 @@
             >
           </div>
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Customer Name</label
             >
             <label
@@ -718,7 +718,7 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-2">
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >No Of Pax</label
             >
             <label
@@ -729,7 +729,7 @@
           </div>
 
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >No Of Parking Space</label
             >
             <label
@@ -739,7 +739,7 @@
             >
           </div>
           <div class="col-span-2">
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Purpose</label
             >
             <label
@@ -755,7 +755,7 @@
         <span class="absolute -top-10 -right-1  text-slate-500 text-sm">REFNUMBER: {{  getRequest.referenceNumber }}</span>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="requester.name"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="requester.name"
               >Requester Name</label
             >
             <label
@@ -766,7 +766,7 @@
           </div>
 
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Location"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
               >Department</label
             >
             <label
@@ -779,7 +779,7 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 md:grid-cols-2">
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Phone Number</label
             >
             <label
@@ -791,7 +791,7 @@
           </div>
 
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Location"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location"
               >No Of Pieces</label
             >
             <label
@@ -804,7 +804,7 @@
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="Description"
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description"
               >Description</label
             >
             <label
