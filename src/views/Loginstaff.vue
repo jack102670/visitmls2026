@@ -43,8 +43,13 @@
         </div>
         <div class="flex">
           <div class="w-1/2">
-            <input type="checkbox" name="remeberMe" />
-            <label class="text-slate-200" for="remeberMe">Remember me</label>
+            <input
+              type="checkbox"
+              id="rememberMe"
+              name="rememberMe"
+              v-model="rememberMe"
+            />
+            <label class="text-slate-200" for="rememberMe">Remember me</label>
           </div>
           <!-- <div class="w-1/2">
             <a class="font-bold text-sky-300" href="">Forgot password ?</a>
@@ -88,12 +93,20 @@ export default {
 
   data() {
     return {
-      userDetails:[],
-      
+      userDetails: [],
+
       userName: "",
       password: "",
     };
   },
+  mounted() {
+  this.rememberMe = localStorage.getItem('rememberMe') === 'true';
+
+  if (this.rememberMe) {
+    this.userName = localStorage.getItem('rememberedUserName');
+  }
+},
+
   methods: {
     login() {
       axios
@@ -106,14 +119,17 @@ export default {
           if (response.data && response.data.message === "Login Success!") {
             // Set the session in the store
             this.userDetails = response.data.result.userdetails;
-            store.setSession(
-              this.userDetails,
-              response.data.result.token
-            );
+            store.setSession(this.userDetails, response.data.result.token);
 
             console.log(response.data.result.userdetails);
 
             // Redirect to dashboard
+            localStorage.setItem("rememberMe", this.rememberMe);
+            if (this.rememberMe) {
+              localStorage.setItem("rememberedUserName", this.userName);
+            } else {
+              localStorage.removeItem("rememberedUserName");
+            }
             this.$router.push("/dashboard"); // Update with your dashboard route
           } else {
             // Handle login failure
