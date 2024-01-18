@@ -32,26 +32,26 @@
                 required
               ></textarea>
             </div>
-            
           </div>
           <div>
             <div
               v-for="(task, index) in tasks"
               :key="index"
-              class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3"
+              class="relative grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3"
             >
               <div>
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   :for="'task-' + index"
-                  >Sequence of Tasks {{ index+1 }}</label
+                  >Sequence of Tasks {{ index + 1 }}</label
                 >
-                <input
+                <textarea
                   v-model="task.sequence"
                   :id="'task-' + index"
                   type="text"
+                  rows="5"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                ></textarea>
               </div>
               <div>
                 <label
@@ -59,12 +59,13 @@
                   :for="'hazard-' + index"
                   >Potential Hazards</label
                 >
-                <input
+                <textarea
                   v-model="task.hazard"
                   :id="'hazard-' + index"
                   type="text"
+                  rows="5"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                ></textarea>
               </div>
               <div>
                 <label
@@ -72,29 +73,30 @@
                   :for="'measure-' + index"
                   >Preventive Measures</label
                 >
-                <input
-                  v-model="task.measure"
-                  :id="'measure-' + index"
-                  type="text"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                <div class="flex">
+                  <textarea
+                    v-model="task.measure"
+                    :id="'measure-' + index"
+                    type="text"
+                    rows="5"
+                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                  ></textarea>
+                  <button
+                    @click.prevent="removeTask(index)"
+                    v-if="tasks.length > 1"
+                    class="bg-red-500 text-white font-bold text-3xl w-8 h-8 my-auto rounded justify-end ml-0"
+                  >
+                    -
+                  </button>
+                </div>
               </div>
             </div>
-
-            <div class="flex justify-between mt-4">
-              <button
-                @click.prevent="addTask"
-                class="bg-blue-500 text-white px-4 py-2 rounded"
-              >
-                Add</button
-              ><button
-                @click.prevent="removeTask(index)"
-                v-if="tasks.length > 1"
-                class="bg-red-500 text-white px-4 py-2 rounded justify-end ml-0"
-              >
-                Remove
-              </button>
-            </div>
+            <button
+              @click.prevent="addTask"
+              class="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              Add
+            </button>
           </div>
         </form>
         <div class="flex justify-end mt-6">
@@ -117,14 +119,13 @@ export default {
     return {
       tasks: [{ sequence: "", hazard: "", measure: "" }],
       Jobdescription: "",
-    
     };
   },
   computed: {
     formData() {
       return {
         Jobdescription: this.Jobdescription,
-        
+
         tasks: this.tasks,
       };
     },
