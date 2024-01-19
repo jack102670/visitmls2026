@@ -373,6 +373,7 @@ export default {
             uniqueCode: this.generateUniqueCode(),
             userId: this.userDetails.userId,
             branch: this.branch,
+            userEmail: this.userDetails.email,
           })
 
           .then((response) => {

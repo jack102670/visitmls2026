@@ -471,11 +471,13 @@
         <label class="py-2 px-4">
           <ul>
             <li
-              v-for="(file, index) in uploadedFiles"
-              :key="index"
+              v-for="file in getRequest.files"
+              :key="file"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             >
-              <span class="text-blue-700">{{ file.name }}</span>
+              <a class="text-blue-500" target="_blank" :href="file">{{
+                getFileName(file)
+              }}</a>
             </li>
           </ul>
         </label>
