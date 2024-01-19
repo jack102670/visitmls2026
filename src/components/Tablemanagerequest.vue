@@ -11,33 +11,38 @@
         </div>
       </div>
     </td>
-    <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+    <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
       <div class="inline-flex items-center gap-x-3">
         <div class="flex items-center gap-x-2">
           <div>
-            <h2 class="font-medium text-gray-500 dark:text-gray-300">
+            
               <!-- Conditionally display 'Badge Request' if typeofrequest includes 'br' -->
               {{
                 requester.refNumber.includes("BR")
-                  ? "Badge Request"
+                  ? "BADGE REQUEST"
                   : requester.refNumber.includes("IR")
-                    ? "Incident Report"
+                    ? "INCIDENT REPORT"
                     : requester.refNumber.includes("CCTV")
-                      ? "CCTV Footage"
+                      ? "CCTV FOOTAGE VIEW"
                       : requester.refNumber.includes("PTW")
-                        ? "Permission To Work"
+                        ? "PTW"
                         : requester.refNumber.includes("VET")
-                          ? "Visitor Escort Tour"
+                          ? "VISITOR/ESCORT/TOUR"
                           : requester.refNumber.includes("TK")
-                            ? "Teskit"
+                            ? "TESTKITS"
                             : requester.refNumber.includes("Mask")
-                              ? "Mask"
+                              ? "MASK"
                               : null
               }}
-            </h2>
+          
           </div>
         </div>
       </div>
+    </td>
+    <td
+      class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+    >
+      {{ requester.refNumber }}
     </td>
 
     <td
@@ -130,7 +135,7 @@
         v-if="requester.refNumber.includes('CCTV')"
         class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
       >
-        CCTV FOOTAGE
+        CCTV FOOTAGE VIEWING REQUEST
       </h1>
       <h1
         v-if="requester.refNumber.includes('BR')"
@@ -143,7 +148,7 @@
         v-if="requester.refNumber.includes('PTW')"
         class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
       >
-        PERMIT TOO WORK
+        PTW
       </h2>
       <h2
         v-if="requester.refNumber.includes('IR')"
@@ -155,19 +160,19 @@
         v-if="requester.refNumber.includes('TK')"
         class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
       >
-        TESTKIT
+        TESTKITS REQUEST
       </h2>
       <h2
         v-if="requester.refNumber.includes('VET')"
         class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
       >
-        VISITOR ESCORT TOUR
+        VISITOR/ESCORT/TOUR REQUEST 
       </h2>
       <h2
-        v-if="requester.refNumber.includes('MK')"
+        v-if="requester.refNumber.includes('Mask')"
         class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
       >
-        MASK
+        MASK REQUEST
       </h2>
     </template>
 
@@ -314,13 +319,17 @@
           <label
             class="font-semibold text-gray-700 dark:text-gray-200"
             for="Location"
-            >Attachment</label
+            >Attachment(s): </label
           >
-          <input
-            id="Location"
-            type="text"
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
+          <li
+                v-for="file in getRequest.files"
+                :key="file"
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              >
+                <a class="text-blue-500" target="_blank" :href="file">{{
+                  getFileName(file)
+                }}</a>
+              </li>
         </div>
       </div>
       <!-- Permit to works for security -->
@@ -397,13 +406,26 @@
             >
           </div>
 
+          <div>
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="Description"
+              >Witness</label
+            >
+            <label
+              type="text"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              >{{ getRequest.Witness }}</label
+            >
+          </div>
+
           <div class="col-span-2">
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="Location"
               >Incident Details</label
             >
-            <textarea
+            <textarea disabled
               v-model="getRequest.incidentDetails"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               rows="2"
@@ -411,8 +433,9 @@
           </div>
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
+
         <label class="font-semibold text-gray-700 dark:text-gray-200" for="People"
-          >Attachment</label
+          >Attachment(s): </label
         >
         <label class="py-2 px-4">
           <ul>
@@ -428,6 +451,7 @@
           </ul>
         </label>
       </div>
+
       </div>
       <!-- teskit -->
       <div class="relative" v-show="showTeskit">
@@ -548,7 +572,7 @@
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="Description"
-              >Requester
+              >Requester Name
             </label>
             <label
               id="Description"
@@ -605,7 +629,7 @@
           <label
             class="font-semibold text-gray-700 dark:text-gray-200"
             for="People"
-            >Uploaded Files:</label
+            >Attachment(s):</label
           >
           <label class="py-2 px-4">
             <ul>
@@ -1086,6 +1110,10 @@ export default {
     },
   },
   methods: {
+    getFileName(file) {
+      const parts = file.split("/");
+      return parts[parts.length - 1];
+    },
     adminUpdate() {
       if (this.getRequest.referenceNumber.includes("BR")) {
         axios
@@ -1347,6 +1375,8 @@ export default {
       const colorMap = {
         RESUBMISSION:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800",
+        CLOSE:
+          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-neutral-300/60 dark:bg-gray-800",
         "": "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800",
         OPEN: "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800",
         APPROVED:
@@ -1363,6 +1393,7 @@ export default {
     getStatusDotClass(Status) {
       const colorMap = {
         RESUBMISSION: "h-1.5 w-1.5 rounded-full bg-orange-500",
+        CLOSE: "h-1.5 w-1.5 rounded-full bg-neutral-500",
         "": "h-1.5 w-1.5 rounded-full bg-red-500",
         OPEN: "h-1.5 w-1.5 rounded-full bg-red-500",
         APPROVED: "h-1.5 w-1.5 rounded-full bg-emerald-500",
@@ -1374,6 +1405,7 @@ export default {
     getStatusTextClass(Status) {
       const colorMap = {
         RESUBMISSION: "text-sm font-normal text-orange-500",
+        CLOSE: "text-sm font-normal text-neutral-500",
         "": "text-sm font-normal text-red-500",
         OPEN: "text-sm font-normal text-red-500",
         APPROVED: "text-sm font-normal text-emerald-500",

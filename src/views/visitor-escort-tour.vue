@@ -12,7 +12,7 @@
           <h2
             class="text-2xl font-bold text-gray-700 capitalize dark:text-white"
           >
-            VISITOR / ESCORT / TOUR
+            VISITOR / ESCORT / TOUR REQUEST FORM
           </h2>
           <div class="pt-2">
             <hr />

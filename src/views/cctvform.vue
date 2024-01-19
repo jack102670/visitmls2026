@@ -12,7 +12,7 @@
           <h2
             class="text-2xl font-bold text-gray-700 capitalize dark:text-white"
           >
-            CCTV FORM
+            CCTV FOOTAGE VIEWING FORM
           </h2>
           <div class="pt-2">
             <hr />
@@ -166,13 +166,14 @@
                 <label
                   for="Detailsincident"
                   class="font-semibold text-gray-700 dark:text-gray-200"
-                  >Description Of Incident</label
+                  >Description Of Incident <span class="text-red-500">*</span></label
                 >
                 <textarea
                   v-model="formData.Detailsincident"
                   id="Detailsincident"
                   class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                   rows="5"
+                  required
                 ></textarea>
               </div>
             </div>

@@ -7,9 +7,7 @@
       @removefile="handleRemoveFile" />
 
     <!-- Button to trigger file submission -->
-    <button @click="submitFiles" :disabled="loading">Submit</button>
-    <div v-if="isLoading" class="full-screen-loader">
-      <div class="spinner"></div></div>
+    <button @click="submitFiles">Submit</button>
   </div>
 </template>
 
@@ -38,7 +36,7 @@ export default {
     return {
       files: [], // Store file data here
       userId: '7a7641d6-dede-4803-8b7b-93063de2f077', // Replace with the actual user ID
-      loading: false,
+
     };
   },
   methods: {
@@ -71,54 +69,34 @@ export default {
       this.files = this.files.filter(file => file !== fileItem.file);
     },
     submitFiles() {
-  this.loading = true; // Start loading
+      const uniqueCode = this.generateUniqueCode();
+      let formData = new FormData();
+      this.files.forEach(file => {
+        formData.append('filecollection', file);
+      });
+      // Construct the URL with userId and uniqueCode
+      const url = `http://172.28.28.91:8085/api/Files/MultiUploadImage/${this.userId}/${uniqueCode}`;
+      axios.post(url, formData)
+        .then(response => {
+          console.log('Upload successful:', response.data);
+        })
+        .catch(error => {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.error('Error data:', error.response.data);
+            console.error('Error status:', error.response.status);
+          } else if (error.request) {
+            // The request was made but no response was received
+            console.error('Error request:', error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.error('Error message:', error.message);
+          }
+        });
 
-  const uniqueCode = this.generateUniqueCode();
-  let formData = new FormData();
-  this.files.forEach(file => {
-    formData.append('filecollection', file);
-  });
 
-  const url = `http://172.28.28.91:8085/api/Files/MultiUploadImage/${this.userId}/${uniqueCode}`;
-  axios.post(url, formData)
-    .then(response => {
-      console.log('Upload successful:', response.data);
-      this.loading = false; // Stop loading on success
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      this.loading = false; // Stop loading on error
-    });
-}
+    }
   }
 };
 </script>
-
-<style>
-.full-screen-loader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.spinner {
-  border: 5px solid #f3f3f3;
-  border-top: 5px solid #3498db;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 2s linear infinite;
-}
-</style>
