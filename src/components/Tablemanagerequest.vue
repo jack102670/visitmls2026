@@ -433,27 +433,7 @@
           </div>
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
-<<<<<<< Updated upstream
-          <label
-            class="font-semibold text-gray-700 dark:text-gray-200"
-            for="People"
-            >Attachment</label
-          >
-          <label class="py-2 px-4">
-            <ul>
-              <li
-                v-for="file in getRequest.files"
-                :key="file"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              >
-                <a class="text-blue-500" target="_blank" :href="file">{{
-                  getFileName(file)
-                }}</a>
-              </li>
-            </ul>
-          </label>
-        </div>
-=======
+
         <label class="font-semibold text-gray-700 dark:text-gray-200" for="People"
           >Attachment(s): </label
         >
@@ -471,7 +451,7 @@
           </ul>
         </label>
       </div>
->>>>>>> Stashed changes
+
       </div>
       <!-- teskit -->
       <div class="relative" v-show="showTeskit">

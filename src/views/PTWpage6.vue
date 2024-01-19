@@ -661,49 +661,49 @@
           </div>
 
           <div v-if="mancage">
-          <div class="pt-6">
-            <hr />
-            <div class="pt-2"></div>
-            <label
-              class="font-bold text-gray-700 dark:text-gray-200"
-              for="workInvolvement"
-            >
-              Man cage
-            </label>
-          </div>
-          <div class="pt-2"><hr /></div>
-          <div class="grid grid-cols-1 pt-2 gap-6 mt-4 sm:grid-cols-2">
-            <!-- Securing chain and shackle available? -->
-            <div>
+            <div class="pt-6">
+              <hr />
+              <div class="pt-2"></div>
               <label
-                for="securingChain"
-                class="text-gray-700 dark:text-gray-200"
+                class="font-bold text-gray-700 dark:text-gray-200"
+                for="workInvolvement"
               >
-                <input id="securingChain" type="checkbox" />
-                Securing chain and shackle available?
+                Man cage
               </label>
             </div>
+            <div class="pt-2"><hr /></div>
+            <div class="grid grid-cols-1 pt-2 gap-6 mt-4 sm:grid-cols-2">
+              <!-- Securing chain and shackle available? -->
+              <div>
+                <label
+                  for="securingChain"
+                  class="text-gray-700 dark:text-gray-200"
+                >
+                  <input id="securingChain" type="checkbox" />
+                  Securing chain and shackle available?
+                </label>
+              </div>
 
-            <!-- Free of physical damage? -->
-            <div>
-              <label
-                for="freeOfDamage"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input id="freeOfDamage" type="checkbox" />
-                Free of physical damage?
-              </label>
-            </div>
+              <!-- Free of physical damage? -->
+              <div>
+                <label
+                  for="freeOfDamage"
+                  class="text-gray-700 dark:text-gray-200"
+                >
+                  <input id="freeOfDamage" type="checkbox" />
+                  Free of physical damage?
+                </label>
+              </div>
 
-            <!-- Appropriate slot size for forks available? -->
-            <div>
-              <label for="slotSize" class="text-gray-700 dark:text-gray-200">
-                <input id="slotSize" type="checkbox" />
-                Appropriate slot size for forks available?
-              </label>
+              <!-- Appropriate slot size for forks available? -->
+              <div>
+                <label for="slotSize" class="text-gray-700 dark:text-gray-200">
+                  <input id="slotSize" type="checkbox" />
+                  Appropriate slot size for forks available?
+                </label>
+              </div>
             </div>
           </div>
-        </div>
 
           <div class="pt-6">
             <hr />
@@ -929,6 +929,58 @@ export default {
       Completetime: "",
       Location: "",
       Descofwork: "",
+      fallingObjects: false,
+      unguardedEdges: false,
+      highWindsWeather: false,
+      slopeOfSurface: false,
+      overheadElectricalCables: false,
+      otherHazards: false,
+      limitedRoofWeight: false,
+      unsecuredLadders: false,
+      unevenFloorSurfaces: false,
+      fragileRoofs: false,
+      slipperySurface: false,
+      additionalOther: false,
+      ladders: false,
+      scaffolding: false,
+      liftTruck: false,
+      workingAlone: false,
+      travelRestraint: false,
+      ewp: false,
+      climbingTechnique: false,
+      otherEquipment: false,
+      ladderCondition: false,
+      ladderHeight: false,
+      ladderLevel: false,
+      areaBarricaded: false,
+      ladderSecured: false,
+      ladderExtended: false,
+      ladderRatio: false,
+      kickBoards: false,
+      handRails: false,
+      midRails: false,
+      internalLadder: false,
+      solidFooting: false,
+      wheelsLocked: false,
+      areaBarricadedScaffold: false,
+      safeWorkingLimits: false,
+      freeFromObstructions: false,
+      competentPerson: false,
+      permissionToUse: false,
+      equipmentGoodOrder: false,
+      batteryCharged: false,
+      equipmentChecked: false,
+      securingChain: false,
+      freeOfDamage: false,
+      slotSize: false,
+      emergencyProcedures: false,
+      communicationArrangements: false,
+      specificJHA: false,
+      jhaReviewed: false,
+      competentTraining: false,
+      contractorSignature: "",
+      contractorDate: "",
+      contractorTime: "",
       selectedAuthorities: [],
       myFiles: [], // Assuming this for filepond
     };
