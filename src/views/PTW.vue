@@ -40,17 +40,17 @@
       @updateFormData="updateFormData"
       @submit-form="updateFormData"
       @go-back="scrollToPage5"
-    ></PTWpage7>
+    ></PTWpage7>    v-if="addExtraPage"
     <PTWpage5
-      v-if="addExtraPage"
+  
       ref="page5"
       @updateFormData="updateFormData"
       @submit-form="updateFormData"
       @next-page="scrollToPage6"
       @go-back="scrollToPage4"
-    ></PTWpage5>
+    ></PTWpage5> v-if="addExtraPage2"
     <PTWpage6
-      v-if="addExtraPage2"
+      
       ref="page6"
       @updateFormData="updateFormData"
       @submit-form="updateFormData"
