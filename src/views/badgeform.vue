@@ -71,7 +71,7 @@
                 <div>
                   <Div class="pt-3">
                     <FilePond ref="pond" name="file" :server="null" :allowMultiple="true" :maxFileSize="'5MB'"
-                      :acceptedFileTypes="['image/png', 'image/jpeg', 'application/pdf']" @addfile="handleAddFile"
+                      :acceptedFileTypes="['image/png', 'image/jpeg', 'application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']" @addfile="handleAddFile"
                       @removefile="handleRemoveFile" />
                   </Div>
                   <!-- component -->
@@ -202,7 +202,8 @@ export default {
   },
   data() {
     return {
-
+    //uniqueCode:[],
+      uniqueCode:"",
       isLoading: false,
       files: [],
      
@@ -265,9 +266,9 @@ export default {
         const timestamp = Date.now().toString().slice(-2);
 
         // Construct the uniqueCode
-        const uniqueCode = `BR${userIdFragment}${randomNumber}${timestamp}`;
-        console.log('Unique Code:', uniqueCode);
-        return uniqueCode;
+        this.uniqueCode = `BR${userIdFragment}${randomNumber}${timestamp}`;
+        console.log('Unique Code:', this.uniqueCode);
+        return this.uniqueCode;
       } else {
         console.error('User ID is undefined.');
         // You may want to handle this case differently based on your application logic.
@@ -277,19 +278,21 @@ export default {
 
     confirmFormSubmission() {
       // Prepare the form data to be sent
-      this.generateUniqueCode();
-      (this.isLoading = true),
+      
+      (this.isLoading = true);
         // Send the POST request
+        try {
         axios
           .post("http://172.28.28.91:8085/api/Main/InsertBadgeRequest", {
             requesterName: this.formData.requesterName,
             departmentName: this.formData.department,
             designationPeople: this.formData.people,
             phoneNumber: this.formData.phonenumber,
-            uniqueCode: this.uniqueCode,
+            uniqueCode: this.generateUniqueCode(),
             userId: this.userDetails.userId,
             branch: this.branch,
           })
+          
           .then((response) => {
             "Server response:", response.data;
             // Handle the response, such as showing a success message or resetting the form
@@ -298,6 +301,7 @@ export default {
             this.uploadMultiImage();
             this.resetForm();
             this.closeModal();
+            this.$router.push("/Dashboard"); 
           })
           .catch((error) => {
             if (error.response) {
@@ -319,6 +323,24 @@ export default {
             // Set isLoading back to false when the submission is complete
             this.isLoading = false;
           });
+        }
+        catch(error) {
+            if (error.response) {
+              console.log(
+                "Server responded with status code:",
+                error.response.status
+              );
+              console.log("Response data:", error.response.data);
+            } else if (error.request) {
+              console.log("No response received:", error.request);
+            } else {
+              console.log("Error creating request:", error.message);
+            }
+
+            console.error("Error submitting form:", error);
+            // Handle errors, such as showing an error message
+          }
+        
 
 
     },
@@ -329,23 +351,24 @@ export default {
       this.files.forEach(file => {
         formData.append('filecollection', file);
       });
-      // Construct the URL with userId and uniqueCode
+     console.log('userid uniqcode:', this.userDetails.userId,this.uniqueCode);
       const url = `http://172.28.28.91:8085/api/Files/MultiUploadImage/${this.userDetails.userId}/${this.uniqueCode}`;
+   
       axios.post(url, formData)
         .then(response => {
           console.log('Upload successful:', response.data);
+
         })
         .catch(error => {
           if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
+
             console.error('Error data:', error.response.data);
             console.error('Error status:', error.response.status);
           } else if (error.request) {
-            // The request was made but no response was received
+ 
             console.error('Error request:', error.request);
           } else {
-            // Something happened in setting up the request that triggered an Error
+
             console.error('Error message:', error.message);
           }
         });
@@ -362,7 +385,7 @@ export default {
         people: "",
       };
 
-      this.myFiles = [];
+      this.Files = [];
       this.uploadedFileNames = [];
     },
   },
