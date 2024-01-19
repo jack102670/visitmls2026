@@ -109,17 +109,10 @@
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 >
                   <option value="Fatality">Fatality</option>
-                  <option value="Near Miss">Near Miss</option>
-                  <option value="No Injury">No Injury</option>
-                  <option value="Lost Time Injury">Lost Time Injury</option>
-                  <option value="Medical Treatment">Medical Treatment</option>
                   <option value="Property Damage">Property Damage</option>
-                  <option value="Serious Bodily Injury">
-                    Serious Bodily Injury
-                  </option>
                   <option value="First Aid">First Aid</option>
-                  <option value="Dangerous Occurance">
-                    Dangerous Occurance
+                  <option value="Theft">
+                    Theft
                   </option>
                   <option value="Others">Others</option>
                 </select>
@@ -130,14 +123,14 @@
                   :for="dynamicCustomId"
                   >Specify<span class="text-red-500">*</span>
                 </label>
-                <input
+                <textarea
                   placeholder="Specify category"
                   :id="dynamicCustomId"
                   type="text"
                   required
                   v-model="formData.customIncidentType"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                ></textarea>
               </div>
             </div>
             <div

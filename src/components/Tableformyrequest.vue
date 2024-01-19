@@ -7,19 +7,19 @@
             <h2 class="font-medium text-gray-500 dark:text-gray-300">
               {{
                 requester.refNumber.includes("BR")
-                  ? "Badge Request"
+                  ? "BADGE REQUEST"
                   : requester.refNumber.includes("IR")
-                    ? "Incident Report"
+                    ? "INCIDENT REPORT"
                     : requester.refNumber.includes("CCTV")
-                      ? "CCTV Footage"
+                      ? "CCTV FOOTAGE VIEW "
                       : requester.refNumber.includes("PTW")
-                        ? "Permission To Work"
+                        ? "PTW"
                         : requester.refNumber.includes("VET")
-                          ? "Visitor Escort Tour"
+                          ? "VISITOR/ESCORT/TOUR"
                           : requester.refNumber.includes("TK")
-                            ? "Teskit"
+                            ? "TESTKITS"
                             : requester.refNumber.includes("Mask")
-                              ? "Mask"
+                              ? "MASK"
                               : null
               }}
             </h2>
@@ -31,8 +31,16 @@
     <td
       class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
     >
+      {{ requester.refNumber }}
+    </td>
+    <td
+      class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+    >
       {{ requester.dateRequested }}
     </td>
+  
+
+   
 
     <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
       <div :class="getStatusContainerClass(requester.adminStatus)">
@@ -44,7 +52,7 @@
     </td>
     <td class="px-4 py-4 ml text-sm whitespace-nowrap">
       <div class="flex items-center gap-x-6">
-        {{ requester.refNumber }}
+       
         <button
           v-if="requester.refNumber.includes('BR')"
           @click="showModal(requester.refNumber)"
@@ -241,7 +249,7 @@
   <Modalbadgerequest v-show="isModalVisible" @close="closeModal">
     <!-- header -->
     <template v-slot:header>
-      <h1 class="font-bold text-xl">BADGE</h1>
+      <h1 class="font-bold text-xl">BADGE REQUEST</h1>
     </template>
 
     <!-- body -->
@@ -311,7 +319,7 @@
 
       <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
         <label class="font-semibold text-gray-700 dark:text-gray-200" for="People"
-          >Uploaded Files:</label
+          >Attachment(s)</label
         >
         <label class="py-2 px-4">
           <ul>
@@ -330,7 +338,42 @@
     </template>
 
     <!-- footer -->
-    <template v-slot:footer> </template>
+    <template v-slot:header2>
+      <div class="p-1 rounded-lg">
+        <h2 class="text-lg font-semibold text-white capitalize">ADMIN</h2>
+      </div>
+    </template>
+    <template v-slot:footer> <div class="flex ">
+        <!-- Ticket Status Section -->
+        <label
+              for="preparedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              LAST EDITED: {{ getRequest.modifiedDate }} BY ADMIN {{ getRequest.modifiedBy }}
+            </label>
+        <!-- Admin Status Section -->
+        
+        <div class="w-md:w-1/3">
+          <div class="flex mb-4">
+          
+          </div>
+        </div>
+      </div>
+      <div class="w-sm">
+        <label
+          for="Description"
+          class="mb-2 block text-sm font-semibold text-gray-700"
+        >
+          ADMIN COMMENTS
+        </label>
+        <label
+              id="Location"
+          
+              class="block w-sm px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              >{{ getRequest.adminComment }}</label
+              >
+      
+      </div></template>
   </Modalbadgerequest>
   <Modalincidentreport v-show="isModalVisible2" @close="closeModal">
     <!-- header -->
@@ -410,12 +453,12 @@
             class="font-semibold text-gray-700 dark:text-gray-200"
             >Details Incident</label
           >
-          <textarea
-            v-model="getRequest.incidentDetails"
+          <textarea disabled
             id="Detailsincident"
             class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             rows="5"
             required
+            v-model="getRequest.incidentDetails"
           ></textarea>
         </div>
       </div>
@@ -423,7 +466,7 @@
         <label
           class="font-semibold text-gray-700 dark:text-gray-200"
           for="People"
-          >Uploaded Files:</label
+          >Attachment(s)</label
         >
         <label class="py-2 px-4">
           <ul>
@@ -440,12 +483,44 @@
     </template>
 
     <!-- footer -->
-    <template v-slot:footer> </template>
+    <template v-slot:footer>
+      
+      <div class="flex justify-between gap-4 mt-4">
+        <!-- Ticket Status Section -->
+        <label
+              for="preparedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              LAST EDITED: {{ getRequest.modifiedDate }} BY ADMIN {{ getRequest.modifiedBy }}
+            </label>
+        <!-- Admin Status Section -->
+        
+        <div class="w-full md:w-1/3">
+          <div class="mb-4">
+            
+          </div>
+        </div>
+      </div>
+      <div class="w-full">
+        <label
+          for="Description"
+          class="mb-2 block text-sm font-semibold text-gray-700"
+        >
+          ADMIN COMMENTS
+        </label>
+        <label
+              id="Location"
+          
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              >{{ getRequest.adminComment }}</label
+              >
+      
+      </div></template>
   </Modalincidentreport>
   <Modalcctv v-show="isModalVisible3" @close="closeModal">
     <!-- header -->
     <template v-slot:header>
-      <h1 class="font-bold text-xl">CCTV</h1>
+      <h1 class="font-bold text-xl">CCTV FOOTAGE VIEW REQUEST </h1>
     </template>
 
     <!-- body -->
@@ -558,7 +633,7 @@
             class="font-semibold text-gray-700 dark:text-gray-200"
             >Description Of Incident</label
           >
-          <textarea
+          <textarea disabled
             v-model="getRequest.description"
             id="Detailsincident"
             class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -570,12 +645,43 @@
     </template>
 
     <!-- footer -->
-    <template v-slot:footer> </template>
+    <template v-slot:footer>
+      <div class="flex justify-between gap-4 mt-4">
+        <!-- Ticket Status Section -->
+        <label
+              for="preparedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              LAST EDITED: {{ getRequest.modifiedDate }} BY ADMIN {{ getRequest.modifiedBy }}
+            </label>
+          </div>
+        <!-- Admin Status Section -->
+        
+        <div class="w-full md:w-1/3">
+          <div class="mb-4">
+            
+        </div>
+      </div>
+      <div class="w-full">
+        <label
+          for="Description"
+          class="mb-2 block text-sm font-semibold text-gray-700"
+        >
+          ADMIN COMMENTS
+        </label>
+        <label
+              id="Location"
+          
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              >{{ getRequest.adminComment }}</label
+              >
+      
+      </div> </template>
   </Modalcctv>
   <Modalvisitorescordt v-show="isModalVisible4" @close="closeModal">
     <!-- header -->
     <template v-slot:header>
-      <h1 class="font-bold text-xl">Visitor/Escort</h1>
+      <h1 class="font-bold text-xl">VISITOR/ESCORT/TOUR</h1>
     </template>
 
     <!-- body -->
@@ -710,7 +816,7 @@
             class="font-semibold text-gray-700 dark:text-gray-200"
             >Description</label
           >
-          <textarea
+          <textarea disabled
             v-model="getRequest.visitPurpose"
             id="Description"
             class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -722,12 +828,42 @@
     </template>
 
     <!-- footer -->
-    <template v-slot:footer> </template>
+    <template v-slot:footer> <div class="flex justify-between gap-4 mt-4">
+        <!-- Ticket Status Section -->
+        <label
+              for="preparedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              LAST EDITED: {{ getRequest.modifiedDate }} BY ADMIN {{ getRequest.modifiedBy }}
+            </label>
+        <!-- Admin Status Section -->
+        
+        <div class="w-full md:w-1/3">
+          <div class="mb-4">
+            
+          </div>
+        </div>
+      </div>
+      <div class="w-full">
+        <label
+          for="Description"
+          class="mb-2 block text-sm font-semibold text-gray-700"
+        >
+          ADMIN COMMENTS
+        </label>
+        <label
+              id="Location"
+          
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              >{{ getRequest.adminComment }}</label
+              >
+      
+      </div></template>
   </Modalvisitorescordt>
   <Modaltestkits v-show="isModalVisible5" @close="closeModal">
     <!-- header -->
     <template v-slot:header>
-      <h1 class="font-bold text-xl">TESKITFORM</h1>
+      <h1 class="font-bold text-xl">TESTKITS REQUEST</h1>
     </template>
 
     <!-- body -->
@@ -861,12 +997,42 @@
     </template>
 
     <!-- footer -->
-    <template v-slot:footer> </template>
+    <template v-slot:footer> <div class="flex justify-between gap-4 mt-4">
+        <!-- Ticket Status Section -->
+        <label
+              for="preparedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              LAST EDITED: {{ getRequest.modifiedDate }} BY ADMIN {{ getRequest.modifiedBy }}
+            </label>
+        <!-- Admin Status Section -->
+        
+        <div class="w-full md:w-1/3">
+          <div class="mb-4">
+           
+          </div>
+        </div>
+      </div>
+      <div class="w-full">
+        <label
+          for="Description"
+          class="mb-2 block text-sm font-semibold text-gray-700"
+        >
+          ADMIN COMMENTS
+        </label>
+        <label
+              id="Location"
+          
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              >{{ getRequest.adminComment }}</label
+              >
+      
+      </div></template>
   </Modaltestkits>
   <Modalmask v-show="isModalVisible6" @close="closeModal">
     <!-- header -->
     <template v-slot:header>
-      <h1 class="font-bold text-xl">Mask</h1>
+      <h1 class="font-bold text-xl">MASK REQUEST</h1>
     </template>
 
     <!-- body -->
@@ -941,7 +1107,7 @@
           <label for="Description" class="font-semibold text-gray-700 dark:text-gray-200"
             >Description</label
           >
-          <textarea
+          <textarea disabled
             v-model="getRequest.description"
             id="Description"
             class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -953,7 +1119,39 @@
     </template>
 
     <!-- footer -->
-    <template v-slot:footer> </template>
+    <template v-slot:footer> 
+      
+      <div class="flex justify-between gap-4 mt-4">
+        <!-- Ticket Status Section -->
+        <label
+              for="preparedBy"
+              class="mb-2 block text-sm font-semibold text-gray-700"
+            >
+              LAST EDITED: {{ getRequest.modifiedDate }} BY ADMIN {{ getRequest.modifiedBy }}
+            </label>
+        <!-- Admin Status Section -->
+        
+        <div class="flex w-full md:w-1/3">
+          <div class="mb-4">
+            
+          </div>
+        </div>
+      </div>
+      <div class="w-full">
+        <label
+          for="Description"
+          class="mb-2 block text-sm font-semibold text-gray-700"
+        >
+          ADMIN COMMENTS
+        </label>
+        <label
+              id="Location"
+          
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              >{{ getRequest.adminComment }}</label
+              >
+      
+      </div></template>
   </Modalmask>
 </template>
 

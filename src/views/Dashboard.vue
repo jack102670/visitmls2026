@@ -313,12 +313,12 @@ export default {
       switch (this.selectedDepartment) {
         case "SECURITY":
           this.TypeOfRequests = [
-            { id: "1", name: "BADGE REQUEST" },
-            { id: "2", name: "INCIDENT REPORT" },
-            { id: "3", name: "CCTV FOOTAGE VIEW" },
-            { id: "4", name: "VISITOR / ESCORT" },
-            { id: "5", name: "TESTKITS" },
-            { id: "6", name: "MASK" },
+            { id: "1", name: "BADGE REQUEST FORM" },
+            { id: "2", name: "INCIDENT REPORT FORM" },
+            { id: "3", name: "CCTV FOOTAGE VIEWING FORM" },
+            { id: "4", name: "VISITOR / ESCORT / TOUR FORM" },
+            { id: "5", name: "TESTKITS REQUEST FORM" },
+            { id: "6", name: "MASK REQUEST FORM" },
             // Add more TypeOfRequests as needed
           ];
           break;
@@ -330,7 +330,7 @@ export default {
           break;
         case "MAINTENANCE":
           this.TypeOfRequests = [
-            { id: "1", name: "BADGE REQUEST" },
+            {  },
 
             // Add more TypeOfRequests as needed
           ];
