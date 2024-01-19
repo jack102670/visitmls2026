@@ -12,7 +12,7 @@
           <h2
             class="text-2xl font-bold text-gray-700 capitalize dark:text-white"
           >
-            MASK REQUEST FORM
+            MASK REQUEST FORM {{ userDetails.email }}
           </h2>
           <div class="pt-2">
             <hr />
@@ -30,7 +30,7 @@
                   v-model="capitalizedRequesterName"
                   id="requesterName"
                   type="text"
-                  required1
+                  required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
@@ -69,7 +69,7 @@
                   v-model="phonenumber"
                   id="number"
                   type="number"
-                  required1
+                  required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
@@ -84,7 +84,7 @@
                   v-model="Noofpieces"
                   id="Noofpieces"
                   type="number"
-                  required1
+                  required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
@@ -157,7 +157,7 @@
             <td class="py-2 px-4 font-medium">Description:</td>
 
             <textarea
-              v-model="formData.Description"
+              v-model="Description"
               name=" formData.Description"
               id=" formData.Description"
               rows="4"
@@ -235,10 +235,10 @@ export default {
   computed: {
     capitalizedRequesterName: {
       get() {
-        return this.formData.requesterName;
+        return this.requesterName;
       },
       set(value) {
-        this.formData.requesterName =
+        this.requesterName =
           value.charAt(0).toUpperCase() + value.slice(1);
       },
     },
@@ -276,7 +276,7 @@ export default {
       this.isModalVisible = false;
     },
     submitForm() {
-      console.log("Submitting form data:", this.branch); // Log formData to console for debugging
+      console.log("Submitting form data:", ); // Log formData to console for debugging
       axios
         .post("http://172.28.28.91:8085/api/Main/InsertMaskRequest", {
           requesterName: this.requesterName,
@@ -287,6 +287,7 @@ export default {
           uniqueCode: this.generateUniqueCode(),
           userId: this.userDetails.userId,
           branch: this.branch, // Ensure this is defined and has a valid value
+          userEmail: this.userDetails.email,
         })
         
 
