@@ -99,10 +99,10 @@
 
     <div class="flex flex-col justify-between flex-1 mt-6">
       <nav>
-        <router-link
-          to="/Dashboard"
+        <router-link  
+          to="/Dashboard" v-if="role === 'admin' || role === 'user'"
           class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
-        >
+         >
           <svg
             class="w-5 h-5"
             viewBox="0 0 24 24"
@@ -121,7 +121,7 @@
           <span class="mx-4 font-medium">Dashboard</span>
         </router-link>
 
-        <router-link
+        <router-link v-if="role === 'admin'" 
           class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
           :to="{ name: 'Managerequest' }"
         >
@@ -186,6 +186,7 @@ export default {
       open: false,
       isLightTheme: true,
       userDetails: [],
+      role: "",
     };
   },
   computed: {
@@ -202,6 +203,7 @@ export default {
   mounted() {
     this.userDetails = store.getSession().userDetails;
     this.token = store.data.token;
+    this.role = store.getRole();
     // Fetch data when the component is mounted
 
     //this.currentUser();
