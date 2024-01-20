@@ -6,7 +6,7 @@
       :acceptedFileTypes="['image/png', 'image/jpeg', 'application/pdf']" @addfile="handleAddFile"
       @removefile="handleRemoveFile" />
 
-    <!-- Button to trigger file submission -->
+    <!-- button to trigger file submission -->
     <button @click="submitFiles">Submit</button>
   </div>
 </template>

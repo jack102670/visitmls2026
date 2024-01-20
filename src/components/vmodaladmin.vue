@@ -28,15 +28,15 @@
       </section>
 
       <!-- Modal Footer -->
-      <header2
-        id="modal-header2"
+      <header
+        id="modal-header"
         class="px-2 py-3 flex justify-between bg-[#160959e2] items-center"
       >
-        <slot name="header2">Dummy header</slot>
+        <slot name="header">Dummy header</slot>
      
       
      
-      </header2>
+      </header>
       <footer id="modal-footer" class="px-4 py-6 border-t-2 border-white">
         <slot name="footer"></slot>
       </footer>

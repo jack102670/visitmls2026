@@ -6,7 +6,7 @@
       :acceptedFileTypes="['image/png', 'image/jpeg', 'application/pdf']" @addfile="handleAddFile"
       @removefile="handleRemoveFile" />
 
-    <!-- Button to trigger file submission -->
+    <!-- button to trigger file submission -->
     <button @click="submitFiles" :disabled="loading">Submit</button>
     <div v-if="isLoading" class="full-screen-loader">
       <div class="spinner"></div></div>

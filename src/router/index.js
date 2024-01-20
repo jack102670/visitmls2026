@@ -99,11 +99,7 @@ const routes = [
         name: "DashboardvendorPTW",
         component: PTW,
       },
-      {
-        path: "",
-        name: "NewrequestDefault2",
-        component: Myrequest2,
-      },
+
     ],
   },
 
