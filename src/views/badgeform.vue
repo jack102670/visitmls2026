@@ -8,7 +8,7 @@
         class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
         <section class="max-w-4xl p-6 mx-auto bg-white border-2 border-e-gray-200 rounded-md dark:bg-gray-800">
           <h2 class="text-2xl font-bold text-gray-700 capitalize dark:text-white">
-            BADGE REQUEST FORM {{ branch }}
+            BADGE REQUEST FORM 
 
           </h2>
           <div class="pt-2">
@@ -285,6 +285,7 @@ export default {
   data() {
     return {
       //uniqueCode:[],
+      role:"",
       uniqueCode: "",
       isLoading: false,
       files: [],
@@ -469,6 +470,7 @@ export default {
   mounted() {
     this.branch = store.getSelectedLocation();
     this.userDetails = store.getSession().userDetails;
+
   },
 };
 </script>

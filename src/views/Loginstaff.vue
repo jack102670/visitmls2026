@@ -1,54 +1,25 @@
 <template>
   <!-- component -->
   <div class="background-image h-screen w-screen flex items-center">
-    <div
-      class="h-max mx-auto flex flex-col items-center bg-[#18273F] shadow-lg bg-opacity-90 rounded-xl p-5"
-    >
-      <img
-        class="h-[60px] w-[70px] mb-5"
-        src="@/assets/images/pkt-blue-logo.jpg"
-        alt=""
-      />
-      <h1
-        class="text-slate-200 shadow-text-2xl text-xl font-bold text-center pb-10"
-      >
+    <div class="h-max mx-auto flex flex-col items-center bg-[#18273F] shadow-lg bg-opacity-90 rounded-xl p-5">
+      <img class="h-[60px] w-[70px] mb-5" src="@/assets/images/pkt-blue-logo.jpg" alt="" />
+      <h1 class="text-slate-200 shadow-text-2xl text-xl font-bold text-center pb-10">
         Sign in to your account
       </h1>
       <div class="p-10 flex flex-col gap-4 text-sm">
         <div>
-          <label class="text-slate-300 font-bold inline-block pb-2" for="email"
-            >Username</label
-          >
-          <input
-            class="border border-gray-400 focus:outline-slate-400 rounded-md w-full shadow-sm px-5 py-2"
-            type="email"
-            name="email"
-            placeholder="user@pktgroup.com"
-            v-model="userName"
-          />
+          <label class="text-slate-300 font-bold inline-block pb-2" for="email">Username</label>
+          <input class="border border-gray-400 focus:outline-slate-400 rounded-md w-full shadow-sm px-5 py-2" type="email"
+            name="email" placeholder="user@pktgroup.com" v-model="userName" />
         </div>
         <div>
-          <label
-            class="text-slate-300 font-bold inline-block pb-2"
-            for="password"
-            >Password</label
-          >
-          <input
-            class="border border-gray-400 focus:outline-slate-400 rounded-md w-full shadow-sm px-5 py-2"
-            type="password"
-            name="password"
-            placeholder="******"
-            v-model="password"
-          />
+          <label class="text-slate-300 font-bold inline-block pb-2" for="password">Password</label>
+          <input class="border border-gray-400 focus:outline-slate-400 rounded-md w-full shadow-sm px-5 py-2"
+            type="password" name="password" placeholder="******" v-model="password" />
         </div>
         <div class="flex">
           <div class="w-1/2">
-            <input
-              type="checkbox"
-              id="rememberMe"
-              name="rememberMe"
-              v-model="rememberMe"
-            />
+            <input type="checkbox" id="rememberMe" name="rememberMe" v-model="rememberMe" />
             <label class="text-slate-200" for="rememberMe"> Remember me</label>
           </div>
           <!-- <div class="w-1/2">
@@ -56,11 +27,8 @@
           </div> -->
         </div>
         <div>
-          <input
-            class="bg-blue-900 w-full py-2 rounded-md text-white font-bold cursor-pointer hover:bg-blue-700"
-            type="submit"
-            @click.prevent="login"
-          />
+          <input class="bg-blue-900 w-full py-2 rounded-md text-white font-bold cursor-pointer hover:bg-blue-700"
+            type="submit" @click.prevent="login" />
         </div>
         <!-- <div>
                     <p class="text-slate-200 text-center">Or continue with</p>
@@ -76,8 +44,7 @@
       </div>
       <p class="text-sm text-slate-200 mt-10">
         Are you a vendor?
-        <router-link to="/Vendorlogin" class="text-sky-400 font-bold"
-          >Login Here
+        <router-link to="/Vendorlogin" class="text-sky-400 font-bold">Login Here
         </router-link>
       </p>
     </div>
@@ -94,59 +61,65 @@ export default {
   data() {
     return {
       userDetails: [],
-
+      rememberMe: false,
       userName: "",
       password: "",
     };
   },
   mounted() {
-  this.rememberMe = localStorage.getItem('rememberMe') === 'true';
+    this.rememberMe = localStorage.getItem('rememberMe') === 'true';
 
-  if (this.rememberMe) {
-    this.userName = localStorage.getItem('rememberedUserName');
-  }
-  const session = store.getSession();
-  if (session){
-    this.$router.push("/dashboard");
-  }
-},
+    if (this.rememberMe) {
+      this.userName = localStorage.getItem('rememberedUserName');
+    }
+    const session = store.getSession();
+    if (session) {
+      this.$router.push("/dashboard");
+    }
+  },
 
   methods: {
     login() {
-      axios
-        .post("http://172.28.28.91:8085/api/Security/login", {
-          userName: this.userName,
-          password: this.password,
-        })
-        .then((response) => {
-          // Check if the login is successful based on the response message
+      axios.post("http://172.28.28.91:8085/api/Security/login", {
+        userName: this.userName,
+        password: this.password,
+      })
+        .then(response => {
           if (response.data && response.data.message === "Login Success!") {
-            // Set the session in the store
-            this.userDetails = response.data.result.userdetails;
-            store.setSession(this.userDetails, response.data.result.token);
+            // Extract user details and token
+            const userDetails = response.data.result.userdetails;
+            const token = response.data.result.token;
 
-            console.log(response.data.result.userdetails);
-
-          
-            localStorage.setItem("rememberMe", this.rememberMe);
-            if (this.rememberMe) {
-              localStorage.setItem("rememberedUserName", this.userName);
+            // Determine role based on the email
+            let role;
+            if (response.data.result.userdetails.email === "ict.intern@pktgroup.com" ) {
+              role = "admin";
+            } else if (response.data.result.userdetails.email === "thisistesting@pktgroup.com") {
+              role = "user";
             } else {
-              localStorage.removeItem("rememberedUserName");
+              role = "guest"; // default role
             }
-            this.$router.push("/Dashboard"); 
+
+            // Set the session with role
+            store.setSession(userDetails, token, role);
+
+            // Redirect based on the role
+            if (role === "admin") {
+              this.$router.push("/dashboard");
+            } else if (role === "user") {
+              this.$router.push("/UserDashboard");
+            } else {
+              this.$router.push("/GuestDashboard");
+            }
           } else {
-    
-            alert(
-              "Login failed: " +
-                (response.data.message + ". Invalid credentials")
-            );
+            alert("Login failed: " + response.data.message);
           }
         })
-        .catch((error) => {
+        .catch(error => {
           console.error("Login error:", error);
         });
     },
+
   },
 };
 </script>
