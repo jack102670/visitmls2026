@@ -2,21 +2,40 @@
 <template>
   <div class="container mx-auto">
     <div
-      class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8"
-    >
-      <section
-        class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800"
-      >
-        <h2
-          class="text-lg font-semibold text-gray-700 capitalize dark:text-white"
-        >
+      class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8">
+      <section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
+        <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">
           Upload Files
         </h2>
 
         <form>
           <div class="grid grid-cols-2 gap-6 pt-5">
-            <PTWuploadlocal />
-            <PTWuploadforeign />
+            <div>
+              <Div class="pt-3">
+                <FilePond ref="pond" name="file" :server="null" :allowMultiple="true" :maxFileSize="'5MB'"
+                  :acceptedFileTypes="[
+                    'image/png',
+                    'image/jpeg',
+                    'application/pdf',
+                    'application/vnd.ms-excel',
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                  ]" @addfile="handleAddFile" @removefile="handleRemoveFile" />
+              </Div>
+              <!-- component -->
+            </div>
+            <div>
+              <Div class="pt-3">
+                <FilePond ref="pond" name="file" :server="null" :allowMultiple="true" :maxFileSize="'5MB'"
+                  :acceptedFileTypes="[
+                    'image/png',
+                    'image/jpeg',
+                    'application/pdf',
+                    'application/vnd.ms-excel',
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                  ]" @addfile="handleAddFile" @removefile="handleRemoveFile" />
+              </Div>
+              <!-- component -->
+            </div>
           </div>
         </form>
         <!-- <div class="flex justify-between mt-6">
@@ -42,19 +61,31 @@
 </template>
 
 <script>
-import PTWuploadlocal from "../views/PTWuploadlocal.vue";
-import PTWuploadforeign from "../views/PTWuploadforeign.vue";
+import { store } from "../views/store.js";
+
+import vueFilePond from "vue-filepond";
+import "filepond/dist/filepond.min.css";
+
+import FilePondPluginFilePoster from "filepond-plugin-file-poster";
+import FilePondPluginFileRename from "filepond-plugin-file-rename";
+import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
+
+const FilePond = vueFilePond(
+  FilePondPluginFilePoster,
+  FilePondPluginFileRename,
+  FilePondPluginFileValidateSize,
+  FilePondPluginFileValidateType
+);
 
 export default {
   components: {
-    PTWuploadlocal,
-    PTWuploadforeign,
+    FilePond,
   },
   data() {
     return {
-      localFile: null,
-      foreignFile: null,
-      isPreviewModalOpen: false,
+      files: [],
+
     };
   },
   computed: {
@@ -76,21 +107,29 @@ export default {
     },
   },
   methods: {
-    uploadFiles() {
-      // Use FormData to handle file uploads
-      const formData = new FormData();
-      formData.append("localFile", this.localFile);
-      formData.append("foreignFile", this.foreignFile);
-
-      // You can now send formData to your server using AJAX or any other method
-      // Example using Axios:
-      // axios.post('/upload-endpoint', formData).then(response => {
-      //   // Handle response
-      // });
-
-      // For now, let's just log the formData for demonstration purposes
-      console.log(formData);
+    handleAddFile(error, fileItem) {
+      if (!error) {
+        this.files.push(fileItem.file);
+        this.$emit('update-files', this.files); // Emitting the updated files array
+      }
     },
+
+    
+
+
+    handleRemoveFile(error, fileItem) {
+      this.files = this.files.filter((file) => file !== fileItem.file);
+    },
+    submitForm() {
+      // Emit an event with the uploaded files to the parent component
+      this.$emit("submit-form", this.files);
+    },
+
+  },
+  mounted() {
+    this.branch = store.getSelectedLocation();
+    this.userDetails = store.getSession().userDetails;
+
   },
 };
 </script>
