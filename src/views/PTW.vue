@@ -181,7 +181,7 @@ export default {
       try {
         // Send a POST request to your server using Axios
         const response = await axios.post(
-          "http://localhost:3000/d",
+          "http://localhost:3000/ptw",
           formData
         );
 
