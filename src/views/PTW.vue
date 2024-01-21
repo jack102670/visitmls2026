@@ -129,72 +129,33 @@ export default {
       this.isCheckbox2Checked = checkbox2Ref.checked;
 
       // Check for undefined references or formData for pages 1 to 6 conditionally
-      for (let i = 1; i <= 6; i++) {
-        const pageRef = this.$refs["page" + i];
-        if (i === 5 || i === 6) {
-          // Check if page 5 or 6 is optional and checkboxes are not checked
-          if (i === 5 && !this.isCheckbox1Checked) {
-            continue; // Skip this iteration if page 5 or 6 is optional and checkboxes are not checked
-          }
-          if (i === 6 && !this.isCheckbox2Checked) {
-            continue; // Skip this iteration if page 5 or 6 is optional and checkboxes are not checked
-          }
-        }
-        if (!pageRef) {
-          console.error(`page${i} reference is undefined.`);
-          return; // Stop execution if a reference is undefined
-        } else if (!pageRef.formData) {
-          console.error(`page${i}.formData is undefined.`);
-          return; // Stop execution if formData is undefined
-        }
+      let combinedFormData = {};
 
-        // Check if the current iteration is for page 5 or 6
+  // Loop through each page and merge its formData into combinedFormData
+  for (let i = 1; i <= 7; i++) {
+    // For optional pages, check if they are required and if the reference exists
+    if ((i === 5 && this.isCheckbox1Checked) || (i === 6 && this.isCheckbox2Checked) || (i !== 5 && i !== 6)) {
+      if (this.$refs["page" + i]) {
+        combinedFormData = { ...combinedFormData, ...this.$refs["page" + i].formData };
+      } else {
+        console.error(`page${i} reference is undefined.`);
+        return; // Stop execution if a reference is undefined
       }
+    }
+  }
 
-      // Define an empty object to store the formData for optional pages
-      const optionalPagesData = {};
+  // No need to separately handle optional pages as they are already included in the loop
 
-      // Check if checkbox1 for page5 is checked and page5 reference is defined
-      if (this.isCheckbox1Checked && this.$refs.page5) {
-        optionalPagesData.page5 = this.$refs.page5.formData;
-      }
-
-      // Check if checkbox2 for page6 is checked and page6 reference is defined
-      if (this.isCheckbox2Checked && this.$refs.page6) {
-        optionalPagesData.page6 = this.$refs.page6.formData;
-      }
-
-      // Combine the formData for all pages
-      const formData = {
-        page1: this.$refs.page1.formData,
-        page2: this.$refs.page2.formData,
-        page3: this.$refs.page3.formData,
-        page4: this.$refs.page4.formData,
-        page7: this.$refs.page7.formData,
-        // Merge the formData for optional pages
-        ...optionalPagesData,
-        // Add more pages as needed
-      };
-
-      // ... (previous code)
-
-      try {
-        // Send a POST request to your server using Axios
-        const response = await axios.post(
-          "http://localhost:3000/ptw",
-          formData
-        );
-
-        // Handle the response as needed
-        console.log("Server response:", response.data);
-        // location.reload();
-
-        // Additional logic for submitting the form
-      } catch (error) {
-        console.error("Error submitting form:", error);
-        // Handle the error as needed
-      }
-    },
+  try {
+    // Send a POST request to your server using Axios with the combined formData
+    const response = await axios.post("http://localhost:3000/ptw", combinedFormData);
+    console.log("Server response:", response.data);
+    // Handle post-submission logic here
+  } catch (error) {
+    console.error("Error submitting form:", error);
+    // Handle the error as needed
+  }
+},
     uploadMultiImage() {
       let formData = new FormData();
       this.files.forEach((file) => {
