@@ -11,132 +11,34 @@
           class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
         >
           Hazard Identification
-         
-        </h2> <span class="text-sm">
-            (Item with '<span class="text-red-500">*</span>' needs a special
-            work permit, mark '☑️' if applicable)
-          </span>
+        </h2>
+        <span class="text-sm">
+          (Item with '<span class="text-red-500">*</span>' needs a special work
+          permit, mark '☑️' if applicable)
+        </span>
 
         <form>
           <div class="grid grid-cols-1 pt-6 gap-6 mt-4 sm:grid-cols-3">
-            <div>
-              <label for="hotWorks" class="text-gray-700 dark:text-gray-200">
+            <div v-for="(hazard, index) in hazards" :key="index">
+              <label :for="hazard" class="text-gray-700 dark:text-gray-200">
                 <input
-                  id="hotWorks"
+                  :id="hazard"
                   type="checkbox"
-                  v-model="formData.hotWorks"
-                  :checked="addExtraPage"
-                  ref="checkbox1" 
-                  @change="handleCheckboxChange"
+                  v-model="formData[hazard]"
+                  @change="
+                    hazard === 'hotWorks'
+                      ? handleCheckboxChange('hotWorks')
+                      : hazard === 'workingAtHeight'
+                        ? handleCheckboxChange2('workingAtHeight')
+                        : handleGeneralCheckboxChange()
+                  "
                 />
-                Hot Works<span class="text-red-500">*</span> (i.e Welding & Flame Cutting)
-              </label>
-            </div>
-            <div>
-              <label
-                for="workingAtHeight"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="workingAtHeight"
-                  type="checkbox"
-                  v-model="formData.workingAtHeight"
-                  :checked="addExtraPage2"
-                  ref="checkbox2"
-                  @change="handleCheckboxChange2"
-                />
-                Working at Height<span class="text-red-500">*</span> (falling height > 1.8m)
-              </label>
-            </div>
-            <div>
-              <label
-                for="electricalHighTension"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="electricalHighTension"
-                  type="checkbox"
-                  v-model="electricalHighTension"
-                />
-                Electrical High Tension
-              </label>
-            </div>
-            <div>
-              <label
-                for="fireProtectionSystemImpairment"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="fireProtectionSystemImpairment"
-                  type="checkbox"
-                  v-model="fireProtectionSystemImpairment"
-                />
-                Fire Protection System Impairment
-              </label>
-            </div>
-            <div>
-              <label
-                for="hazardousSubstances"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="hazardousSubstances"
-                  type="checkbox"
-                  v-model="hazardousSubstances"
-                />
-                Hazardous Substances
-              </label>
-            </div>
-            <div>
-              <label
-                for="dustPollutantsExposure"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="dustPollutantsExposure"
-                  type="checkbox"
-                  v-model="dustPollutantsExposure"
-                />
-                Dust/Pollutants exposure
-              </label>
-            </div>
-            <div>
-              <label
-                for="hydraulicSpillPneumaticJet"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="hydraulicSpillPneumaticJet"
-                  type="checkbox"
-                  v-model="hydraulicSpillPneumaticJet"
-                />
-                Hydraulic Spill/Pneumatic Jet
-              </label>
-            </div>
-            <div>
-              <label
-                for="trappingPointsNipPoints"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="trappingPointsNipPoints"
-                  type="checkbox"
-                  v-model="trappingPointsNipPoints"
-                />
-                Trapping Points/Nip Points
-              </label>
-            </div>
-            <div>
-              <label
-                for="inadequateIllumination"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="inadequateIllumination"
-                  type="checkbox"
-                  v-model="inadequateIllumination"
-                />
-                Inadequate Illumination
+                {{ hazard
+                }}<span
+                  v-if="specialPermits.includes(hazard)"
+                  class="text-red-500"
+                  >*</span
+                >
               </label>
             </div>
           </div>
@@ -166,26 +68,28 @@
 export default {
   name: "PTWpage2Views",
   props: {
-    addExtraPage1: Boolean,
+    addExtraPage2: Boolean,
+
   },
-  
+
   data() {
     return {
-      
-        hotWorks: false,
-        workingAtHeight: false,
-        electricalHighTension: false,
-        fireProtectionSystemImpairment: false,
-        hazardousSubstances: false,
-        dustPollutantsExposure: false,
-        hydraulicSpillPneumaticJet: false,
-        trappingPointsNipPoints: false,
-        inadequateIllumination: false,
-        // add more fields as needed
-      
+      hazards: [
+        "hotWorks",
+        "workingAtHeight",
+        "electricalHighTension",
+        "fireProtectionSystemImpairment",
+        "hazardousSubstances",
+        "dustPollutantsExposure",
+        "hydraulicSpillPneumaticJet",
+        "trappingPointsNipPoints",
+        "inadequateIllumination",
+      ],
+
+      specialPermits: ["hotWorks", "workingAtHeight"],
     };
   },
-  
+
   watch: {
     formData: {
       handler(newFormData) {
@@ -195,13 +99,27 @@ export default {
       deep: true,
     },
   },
+  created() {
+    this.hazards.forEach((hazard) => {
+      this.formData[hazard] = false;
+    });
+  },
   methods: {
-    handleCheckboxChange(event) {
-      this.$emit("update:addExtraPage", event.target.checked);
+    handleGeneralCheckboxChange() {
+      // Add your logic here for general checkbox changes
+      // If no specific logic is needed, you can leave this method empty
     },
-    handleCheckboxChange2(event) {
-      this.$emit("update:addExtraPage2", event.target.checked);
+    handleCheckboxChange(hazard) {
+      if (hazard === "hotWorks") {
+        this.$emit("update:addExtraPage", this.formData.hotWorks);
+      }
     },
+    handleCheckboxChange2(hazard) {
+      if (hazard === "workingAtHeight") {
+        this.$emit("update:addExtraPage2", this.formData.workingAtHeight);
+      }
+    },
+    
     nextPage() {
       this.$emit("next-page"); // Pass formData when emitting "Next" event
     },
@@ -227,5 +145,4 @@ export default {
     },
   },
 };
-
 </script>
