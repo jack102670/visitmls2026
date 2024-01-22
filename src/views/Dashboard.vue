@@ -67,7 +67,7 @@
                 </svg>
                 <span
                   class="text-blue-700 dark:text-white mx-1 top-5 font-semibold text-2xl absolute"
-                  >3</span
+                  >{{ OGR }}</span
                 >
               </a>
             </div>
@@ -224,6 +224,8 @@ export default {
   name: "NewrequestViews",
   data() {
     return {
+      OGR:null,
+
       showAdditionalContent: false,
       selectedLocation: null,
       locations: [
@@ -249,6 +251,8 @@ export default {
   mounted() {
     this.userDetails = store.getSession().userDetails;
     this.token = store.data.token;
+    this.OGR = store.getOGR();
+    console.log('OGR from store:', store.getOGR());
   },
   methods: {
     showContent() {

@@ -13,16 +13,15 @@
         <section class="container px-4 mx-auto">
           <div class="flex items-center justify-between gap-x-3">
             <div>
-            <h2 class="text-lg font-medium text-gray-800 dark:text-white">
-              My Request<span
-              class="ml-1 px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400"
-              >{{ requesters.length }}
-            </span>
-            </h2>
-
-            
-          </div>
-          <div>
+              <h2 class="text-lg font-medium text-gray-800 dark:text-white">
+                My Request 
+                <!-- <span
+                  class="ml-1 px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400"
+                  >{{ requesters.length }}
+                </span> -->
+              </h2>
+            </div>
+            <div>
               <input
                 type="text"
                 v-model="searchQuery"
@@ -260,13 +259,14 @@ export default {
   data() {
     return {
       // Sample data structure for requesters
+      OGR: null,
       searchQuery: "",
       requesters: [],
       sortOrder: {
         refNumber: "asc",
         dateRequested: "asc",
         adminStatus: "asc",
-        branch:"asc"
+        branch: "asc",
       },
       sortBy: "dateRequested",
       itemsPerPage: 4,
@@ -308,7 +308,6 @@ export default {
   },
 
   methods: {
-    
     filterRequesters(requesters, searchQuery) {
       console.log("Search Query:", searchQuery);
       if (!searchQuery) {
@@ -325,7 +324,9 @@ export default {
           isFullNameMatch ||
           requester.refNumber.toLowerCase().includes(normalizedSearchQuery) ||
           requester.branch.toLowerCase().includes(normalizedSearchQuery) ||
-          requester.dateRequested.toLowerCase().includes(normalizedSearchQuery) ||
+          requester.dateRequested
+            .toLowerCase()
+            .includes(normalizedSearchQuery) ||
           requester.adminStatus.toLowerCase().includes(normalizedSearchQuery)
         );
       });
@@ -333,10 +334,16 @@ export default {
     fetchRequesters() {
       console.log("Fetching requesters...");
       axios
-        .get("http://172.28.28.91:8085/api/Main/GetAllRequests/"+ store.getSession().userDetails.userId)
+        .get(
+          "http://172.28.28.91:8085/api/Main/GetAllRequests/" +
+            store.getSession().userDetails.userId
+        )
         .then((response) => {
           this.requesters = response.data;
           console.log("Requesters data:", this.requesters);
+          this.OGR = this.requesters.length;
+          store.setOGR(this.OGR);
+          console.log("OGR set to:", this.OGR);
         })
         .catch((error) => {
           console.error("Error fetching requesters:", error);
