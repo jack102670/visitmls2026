@@ -125,11 +125,15 @@ export default {
               this.$router.push("/GuestDashboard");
             }
           } else {
-            alert("Login failed: " + response.data.message);
+            alert(response.data.message + ". Check your credentials!");
+            this.showLoginButton= true;
+            this.showLoadingButton= false;
           }
         })
         .catch(error => {
           console.error("Login error:", error);
+          this.showLoginButton= true;
+          this.showLoadingButton= false;
         });
     },
 

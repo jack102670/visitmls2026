@@ -10,28 +10,43 @@
             <div class="divide-y divide-gray-200">
               <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
                 <div class="relative">
-                  <input autocomplete="off" id="email" name="email" type="text" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-blue-600" placeholder="Email address" />
+                  <input required v-model = "userEmail" autocomplete="off" id="email" name="email" type="text" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-blue-600" placeholder="Email address" />
                   <label for="email" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Email Address</label>
                 </div>
                 <div class="relative">
-                  <input autocomplete="off" id="name" name="name" type="text" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-blue-600" placeholder="Name" />
-                  <label for="name" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Name</label>
+                  <input required v-model = "userName" autocomplete="off" id="name" name="name" type="text" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-blue-600" placeholder="Name" />
+                  <label for="name" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Username</label>
                 </div>
                 <div class="relative">
-                  <input autocomplete="off" id="Cname" name="Cname" type="Ctext" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-blue-600" placeholder="Company Name" />
+                  <input required v-model = "userCompany"  autocomplete="off" id="Cname" name="Cname" type="Ctext" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-blue-600" placeholder="Company Name" />
                   <label for="Cname" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Company Name</label>
                 </div>
                 <div class="relative">
-                  <input autocomplete="off" id="password" name="password" type="password" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-blue-600" placeholder="Password" />
+                  <input required v-model = "userPassword"  autocomplete="off" id="password" name="password" type="password" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-blue-600" placeholder="Password" />
                   <label for="password" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Password</label>
                 </div>
                 <div class="relative">
-                  <input autocomplete="off" id="confirmPassword" name="confirmPassword" type="password" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-blue-600" placeholder="Confirm Password" />
+                  <input required v-model = "userConfirmPassword" autocomplete="off" id="confirmPassword" name="confirmPassword" type="password" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-blue-600" placeholder="Confirm Password" />
                   <label for="confirmPassword" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Confirm Password</label>
                 </div>
                 
                 <div class="relative">
-                  <button class="bg-blue-500 text-white rounded-md px-2 py-1">Register</button>
+                  <div v-show= "showSignUpButton">
+          <button @click= signUp() type="button" class="bg-blue-500 text-white rounded-md px-2 py-1 items-center">
+   
+    Register
+</button>
+</div>
+<div v-show = "showLoadingButton">
+  <button disabled="" type="button" class="text-center rounded-2xl bg-cyan-800 shadow-md p-3 my-1 w-full text-white py-2.5 px-5 mr-2 text-sm font-medium text-gray-900 rounded border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700  items-center">
+    <svg aria-hidden="true" role="status" class="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"></path>
+    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"></path>
+    </svg>
+    Loading....
+</button>
+</div>
+ 
                 </div>
                 <p class="text-sm text-gray-500 mt-10">Already have an account? <router-link :to="{name:'Login'}" class="text-[#4F46E5] font-bold">Sign In</router-link></p>
               </div>
@@ -43,10 +58,69 @@
   </template>
   
   <script>
+  import axios from 'axios'
   export default {
     name: 'VendorRegister',
+  data(){
+    return{
+      showSignUpButton: true,
+      showLoadingButton: false,
+    userEmail: "",
+    userName: "",
+    userPassword: "",
+    userConfirmPassword: "",
+    userCompany: ""
+    }
+
+
+  },
+  methods:{
+
+    signUp(){
+      this.showSignUpButton = false;
+      this.showLoadingButton= true;
+      axios.post("http://172.28.28.91:8085/api/VendorCredentials/VENDOR SIGN UP", {
+      userEmail: this.userEmail,
+      userName: this.userName,
+      userPassword: this.userPassword,
+      userConfirmPassword: this.userConfirmPassword,
+      userCompany: this.userCompany
+      })
+      .then(response => {
+        alert(response.data.message);
+        this.$router.push("/Vendorlogin"); 
+          console.log("Server response:", response.data);
+        })
+        .catch(error => {
+          if (error.response) {
+            //alert(response.data.message);
+            this.showSignUpButton = true;
+            this.showLoadingButton= false;
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+          }
+        });
+    },
+    login(){
+      axios.post("http://172.28.28.91:8085/api/Security/login",{
+      })
+    }
+
   }
-  </script>
+
+  
+
+}
+    </script>
   
   <style>
   .register {
