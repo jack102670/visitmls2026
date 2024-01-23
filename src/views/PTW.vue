@@ -2493,7 +2493,7 @@ export default {
           waH_ControlMeasure:    this.waH_ControlMeasure 
         },
 
-        userId: "b88491d8-b840-426e-891f-826c0fddd672",
+        userId: this.userDetails.userId,
       };
 
       try {
