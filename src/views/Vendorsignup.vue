@@ -71,11 +71,9 @@
     userConfirmPassword: "",
     userCompany: ""
     }
-
-
   },
-  methods:{
 
+  methods:{
     signUp(){
       this.showSignUpButton = false;
       this.showLoadingButton= true;
@@ -110,14 +108,8 @@
           }
         });
     },
-    login(){
-      axios.post("http://172.28.28.91:8085/api/Security/login",{
-      })
-    }
 
   }
-
-  
 
 }
     </script>

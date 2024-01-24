@@ -76,8 +76,8 @@ export default {
   methods:{
 
     login() {
-      this.showLoginButton= false;
-      this.showLoadingButton= true;
+      this.showLoginButton = false;
+      this.showLoadingButton = true;
       axios.post("http://172.28.28.91:8085/api/VendorCredentials/VENDOR SIGN IN", {
         userEmail: this.userEmail,
         password: this.password,
@@ -88,6 +88,7 @@ export default {
             const userDetails = response.data;
             const token = response.data.token;
 
+            if(response.data.userId != null){
             // Determine role based on the email
             let role;
             if (response.data.userEmail === "ict.intern@pktgroup.com" ) {
@@ -97,10 +98,11 @@ export default {
             } else {
               role = "vendor"; // default role
             }
-
+            alert("SUCCESSFULLY LOGGED IN!");
             // Set the session with role
             store.setSession(userDetails, token, role);
 
+          
             // Redirect based on the role
             if (role === "admin") {
               this.$router.push("/dashboard");
@@ -109,9 +111,17 @@ export default {
             } else {
               this.$router.push("/Dashboardvendor/");
             }
+          }
+          else{
+          alert(response.data);
+          
+          this.showLoginButton= true;
+          this.showLoadingButton= false;
+          }
        
         })
         .catch(error => {
+          alert("SOMETHING IS WRONG! TRY AGAIN LATER. CHECK YOUR CREDENTIALS.");
           console.error("Login error:", error);
           this.showLoginButton= true;
           this.showLoadingButton= false;
