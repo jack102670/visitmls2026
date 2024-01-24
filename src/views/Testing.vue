@@ -4,6 +4,7 @@
     <!-- FilePond component for file upload -->
     <FilePond ref="pond" name="file" :server="null" :allowMultiple="true" :maxFileSize="'5MB'"
       :acceptedFileTypes="['image/png', 'image/jpeg', 'application/pdf']" @addfile="handleAddFile"
+      :fileRenameFunction="renameFile"
       @removefile="handleRemoveFile" />
 
     <!-- button to trigger file submission -->
@@ -42,6 +43,9 @@ export default {
     };
   },
   methods: {
+    renameFile(file) {
+    return `testing_${file.name}`;
+  },
     generateUniqueCode() {
       // Use part of the userId for uniqueness, e.g., 4 characters
       const userIdFragment = this.userId.substring(0, 4);
@@ -57,9 +61,7 @@ export default {
       console.log('Unique Code:', uniqueCode);
       return uniqueCode;
     },
-    renameFile(file) {
-      return `testing${file.name}`;
-    },
+
     handleAddFile(error, fileItem) {
       if (!error) {
         console.log('Added file name:', fileItem.file.name);
@@ -73,13 +75,13 @@ export default {
     submitFiles() {
   this.loading = true; // Start loading
 
-  const uniqueCode = this.generateUniqueCode();
+  // const uniqueCode = this.generateUniqueCode();
   let formData = new FormData();
   this.files.forEach(file => {
-    formData.append('filecollection', file);
+    formData.append('filecollection', file, file.name);
   });
 
-  const url = `http://172.28.28.91:8085/api/Files/MultiUploadImage/${this.userId}/${uniqueCode}`;
+  const url = `http://172.28.28.91:8085/api/Files/MultiUploadImage/7a7641d6-dede-4803-8b7b-93063de2f077/BR7a765869`;
   axios.post(url, formData)
     .then(response => {
       console.log('Upload successful:', response.data);

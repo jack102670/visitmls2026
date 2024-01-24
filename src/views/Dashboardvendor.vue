@@ -67,7 +67,7 @@
                 </svg>
                 <span
                   class="text-blue-700 dark:text-white mx-1 top-5 font-semibold text-2xl absolute"
-                  >3</span
+                  >{{ OGR }}</span
                 >
               </a>
             </div>
@@ -140,13 +140,13 @@
               <label
                 for="location"
                 class="block text-sm font-medium my-auto text-gray-700 dark:text-gray-300"
-                >Location:</label
+                >LOCATION:</label
               >
               <select
                 v-model="selectedLocation"
                 @change="onLocationChange"
                 id="location"
-                class="mt-1 block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                class="mt-1 block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-sm"
               >
                 <option
                   v-for="location in locations"
@@ -160,19 +160,18 @@
 
             <!-- Dropdown Form -->
             <div
-              
               class="flex justify-center p-3 text-6xl dark:bg-gray-700 bg-gray-100 border-2 border-gray-200 rounded-xl"
             >
               <label
                 for="department"
                 class="block text-sm font-medium text-gray-700 my-auto dark:text-gray-300"
-                >Department:</label
+                >DEPARTMENT:</label
               >
               <select
                 v-model="selectedDepartment"
                 @change="onDepartmentChange"
                 id="department"
-                class="mt-1 block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                class="mt-1 text-sm block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               >
                 <option
                   v-for="department in departments"
@@ -190,13 +189,13 @@
               <label
                 for="TypeOfRequest"
                 class="block text-sm font-medium text-gray-700 my-auto dark:text-gray-300"
-                >Type Of Request:</label
+                >TYPE OF REQUEST:</label
               >
               <select
                 v-model="selectedTypeOfRequest"
                 @change="onTypeOfRequestChange"
                 id="TypeOfRequest"
-                class="mt-1 block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                class="mt-1 block text-sm w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               >
                 <option
                   v-for="TypeOfRequest in TypeOfRequests"
@@ -218,18 +217,29 @@
 </template>
 
 <script>
+import { store } from "../views/store.js";
 // NewrequestViews.js
 // NewrequestViews.js
 export default {
-  name: "NewrequestvendorViews",
+  name: "NewrequestViews",
   data() {
     return {
+      OGR: null,
+
       showAdditionalContent: false,
       selectedLocation: null,
       locations: [
         { id: "1", name: "HQ" },
         { id: "2", name: "OAH" },
         { id: "3", name: "KULIM HUB" },
+        { id: "4", name: "12 WAVES" },
+        { id: "5", name: "THE SHIP CAMPUS" },
+        { id: "6", name: "BKH" },
+        { id: "7", name: "JOHOR OPS" },
+        { id: "8", name: "LOT 9" },
+        { id: "9", name: "KUANTAN OPS" },
+        { id: "10", name: "DAISO OPS" },
+        { id: "11", name: "8 WAVES" },
         // Add more locations as needed
       ],
       departments: [], // Initialize as empty, it will be populated based on the selected location
@@ -237,6 +247,12 @@ export default {
       selectedTypeOfRequest: null,
       TypeOfRequests: [],
     };
+  },
+  mounted() {
+    this.userDetails = store.getSession().userDetails;
+    this.token = store.data.token;
+    this.OGR = store.getOGR();
+    console.log("OGR from store:", store.getOGR());
   },
   methods: {
     showContent() {
@@ -252,6 +268,7 @@ export default {
 
       // Your logic to update departments based on the selected location
       this.updateDepartments();
+      store.setSelectedLocation(this.selectedLocation, this.locations);
     },
 
     updateDepartments() {
@@ -259,9 +276,9 @@ export default {
       switch (this.selectedLocation) {
         case "1": // HQ
           this.departments = [
-         
-            { id: "Safety", name: "Safety" },
-  
+            { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            { id: "MAINTENANCE", name: "MAINTENANCE" },
             // Add more departments as needed
           ];
           break;
@@ -272,6 +289,9 @@ export default {
           break;
         case "3": // KULIM HUB
           this.departments = [
+            { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            { id: "MAINTENANCE", name: "MAINTENANCE" },
             // Define departments for KULIM HUB
           ];
           break;
@@ -295,32 +315,27 @@ export default {
     updateTypeOfRequests() {
       // Example: Populate TypeOfRequests based on the selected department
       switch (this.selectedDepartment) {
-        case "Security":
+        case "SECURITY":
           this.TypeOfRequests = [
-            { id: "1", name: "Badge Request" },
-            { id: "2", name: "Incident Report" },
-            { id: "3", name: "CCTV Footage View" },
-            { id: "4", name: "Visitor/Escort" },
-            { id: "5", name: "Testkids" },
-            { id: "6", name: "Mask" },
+            { id: "1", name: "BADGE REQUEST FORM" },
+            { id: "2", name: "INCIDENT REPORT FORM" },
+            { id: "3", name: "CCTV FOOTAGE VIEWING FORM" },
+            { id: "4", name: "VISITOR / ESCORT / TOUR FORM" },
+            { id: "5", name: "TESTKITS REQUEST FORM" },
+            { id: "6", name: "MASK REQUEST FORM" },
             // Add more TypeOfRequests as needed
           ];
           break;
-        case "Safety":
+        case "SAFETY":
           this.TypeOfRequests = [
-            { id: "1", name: "PTW" },
-       
+            { id: "7", name: "INCIDENT REPORT" },
             // Add more TypeOfRequests as needed
           ];
           break;
-        case "Maintenance":
+        case "MAINTENANCE":
           this.TypeOfRequests = [
-            { id: "1", name: "Badge Request" },
-            { id: "2", name: "Incident Report" },
-            { id: "3", name: "CCTV Footage View" },
-            { id: "4", name: "Visitor/Escort" },
-            { id: "5", name: "Mask/Testkids" },
-            { id: "6", name: "Mask" },
+            {},
+
             // Add more TypeOfRequests as needed
           ];
           break;
@@ -337,6 +352,7 @@ export default {
         case "1":
           // Redirect to the default child route
           this.$router.push({ name: "DashboardvendorPTW" });
+
           break;
         case "5":
           // Redirect to the 'movie' child route
@@ -357,6 +373,10 @@ export default {
         case "6":
           // Redirect to the 'movie' child route
           this.$router.push({ name: "Maskform" });
+          break;
+        case "7":
+          // Redirect to the 'movie' child route
+          this.$router.push({ name: "Incidentreportsafety" });
           break;
         // Add more cases for additional types of requests
 
