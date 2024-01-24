@@ -107,11 +107,9 @@ export default {
             let role;
             if (response.data.result.userdetails.email === "ict.intern@pktgroup.com" ) {
               role = "admin";
-            } else if (response.data.result.userdetails.email === "thisistesting@pktgroup.com") {
-              role = "user";
             } else {
-              role = "guest"; // default role
-            }
+              role = "user";
+            } 
 
             // Set the session with role
             store.setSession(userDetails, token, role);
@@ -121,8 +119,6 @@ export default {
               this.$router.push("/dashboard");
             } else if (role === "user") {
               this.$router.push("/UserDashboard");
-            } else {
-              this.$router.push("/GuestDashboard");
             }
           } else {
             alert(response.data.message + ". Check your credentials!");
