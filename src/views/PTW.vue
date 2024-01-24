@@ -789,7 +789,7 @@
             <div>
               <Div class="pt-3">
                 <FilePond
-                  ref="pond"
+                  ref="pond1"
                   name="file"
                   :server="null"
                   :allowMultiple="true"
@@ -801,8 +801,8 @@
                     'application/vnd.ms-excel',
                     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                   ]"
-                  @addfile="handleAddFile"
-                  @removefile="handleRemoveFile"
+                  @addfile="handleAddFile1"
+                  @removefile="handleRemoveFile1"
                 />
               </Div>
               <!-- component -->
@@ -1351,7 +1351,6 @@
               />
             </div>
 
-       
             <div>
               <label
                 class="font-semibold text-gray-700 dark:text-gray-200"
@@ -1396,7 +1395,8 @@
             <label
               class="font-bold text-gray-700 dark:text-gray-200"
               for="authority"
-              >Which of the following hazards are associated with this work? {{ waH_Hazard }}
+              >Which of the following hazards are associated with this work?
+              {{ waH_Hazard }}
             </label>
             <div class="pt-2">
               <hr />
@@ -1411,7 +1411,12 @@
                 for="fallingObjects"
                 class="text-gray-700 dark:text-gray-200"
               >
-                <input id="fallingObjects" type="checkbox" v-model="waH_Hazard" value="Falling objects"/>
+                <input
+                  id="fallingObjects"
+                  type="checkbox"
+                  v-model="waH_Hazard"
+                  value="Falling objects"
+                />
                 Falling objects
               </label>
             </div>
@@ -1421,7 +1426,12 @@
                 for="unguardedEdges"
                 class="text-gray-700 dark:text-gray-200"
               >
-                <input id="unguardedEdges" type="checkbox" v-model="waH_Hazard" value="Unguarded edges"/>
+                <input
+                  id="unguardedEdges"
+                  type="checkbox"
+                  v-model="waH_Hazard"
+                  value="Unguarded edges"
+                />
                 Unguarded edges
               </label>
             </div>
@@ -1431,7 +1441,12 @@
                 for="highWindsWeather"
                 class="text-gray-700 dark:text-gray-200"
               >
-                <input id="highWindsWeather" type="checkbox" v-model="waH_Hazard" value="High winds/weather"/>
+                <input
+                  id="highWindsWeather"
+                  type="checkbox"
+                  v-model="waH_Hazard"
+                  value="High winds/weather"
+                />
                 High winds/weather
               </label>
             </div>
@@ -1441,7 +1456,12 @@
                 for="slopeOfSurface"
                 class="text-gray-700 dark:text-gray-200"
               >
-                <input id="slopeOfSurface" type="checkbox" v-model="waH_Hazard" value="Slope of surface"/>
+                <input
+                  id="slopeOfSurface"
+                  type="checkbox"
+                  v-model="waH_Hazard"
+                  value="Slope of surface"
+                />
                 Slope of surface
               </label>
             </div>
@@ -1451,7 +1471,12 @@
                 for="overheadElectricalCables"
                 class="text-gray-700 dark:text-gray-200"
               >
-                <input id="overheadElectricalCables" type="checkbox" v-model="waH_Hazard" value="Overhead electrical cables"/>
+                <input
+                  id="overheadElectricalCables"
+                  type="checkbox"
+                  v-model="waH_Hazard"
+                  value="Overhead electrical cables"
+                />
                 Overhead electrical cables
               </label>
             </div>
@@ -1461,7 +1486,12 @@
                 for="otherHazards"
                 class="text-gray-700 dark:text-gray-200"
               >
-                <input id="otherHazards" type="checkbox" v-model="waH_Hazard" value="Other (provide details):"/>
+                <input
+                  id="otherHazards"
+                  type="checkbox"
+                  v-model="waH_Hazard"
+                  value="Other (provide details):"
+                />
                 Other (provide details):
               </label>
             </div>
@@ -1474,7 +1504,12 @@
                 for="limitedRoofWeight"
                 class="text-gray-700 dark:text-gray-200"
               >
-                <input id="limitedRoofWeight" type="checkbox" v-model="waH_Hazard" value="Limited roof weight loading (placarded)"/>
+                <input
+                  id="limitedRoofWeight"
+                  type="checkbox"
+                  v-model="waH_Hazard"
+                  value="Limited roof weight loading (placarded)"
+                />
                 Limited roof weight loading (placarded)
               </label>
             </div>
@@ -1484,7 +1519,12 @@
                 for="unsecuredLadders"
                 class="text-gray-700 dark:text-gray-200"
               >
-                <input id="unsecuredLadders" type="checkbox" v-model="waH_Hazard" value="Unsecured ladders"/>
+                <input
+                  id="unsecuredLadders"
+                  type="checkbox"
+                  v-model="waH_Hazard"
+                  value="Unsecured ladders"
+                />
                 Unsecured ladders
               </label>
             </div>
@@ -1494,7 +1534,12 @@
                 for="unevenFloorSurfaces"
                 class="text-gray-700 dark:text-gray-200"
               >
-                <input id="unevenFloorSurfaces" type="checkbox" v-model="waH_Hazard" value="Uneven floor surfaces"/>
+                <input
+                  id="unevenFloorSurfaces"
+                  type="checkbox"
+                  v-model="waH_Hazard"
+                  value="Uneven floor surfaces"
+                />
                 Uneven floor surfaces
               </label>
             </div>
@@ -1504,7 +1549,12 @@
                 for="fragileRoofs"
                 class="text-gray-700 dark:text-gray-200"
               >
-                <input id="fragileRoofs" type="checkbox" v-model="waH_Hazard" value="Fragile roofs"/>
+                <input
+                  id="fragileRoofs"
+                  type="checkbox"
+                  v-model="waH_Hazard"
+                  value="Fragile roofs"
+                />
                 Fragile roofs
               </label>
             </div>
@@ -1514,7 +1564,12 @@
                 for="slipperySurface"
                 class="text-gray-700 dark:text-gray-200"
               >
-                <input id="slipperySurface" type="checkbox" v-model="waH_Hazard" value="Slippery surface"/>
+                <input
+                  id="slipperySurface"
+                  type="checkbox"
+                  v-model="waH_Hazard"
+                  value="Slippery surface"
+                />
                 Slippery surface
               </label>
             </div>
@@ -1524,7 +1579,12 @@
                 for="additionalOther"
                 class="text-gray-700 dark:text-gray-200"
               >
-                <input id="additionalOther" type="checkbox" v-model="waH_Hazard" value="Additional other (provide details)"/>
+                <input
+                  id="additionalOther"
+                  type="checkbox"
+                  v-model="waH_Hazard"
+                  value="Additional other (provide details)"
+                />
                 Additional other (provide details):
               </label>
             </div>
@@ -1656,7 +1716,12 @@
                   for="ladderCondition"
                   class="text-gray-700 dark:text-gray-200"
                 >
-                  <input id="ladderCondition" type="checkbox" v-model="waH_Ladders" value="Is the ladder in good condition and suitable for the task?"/>
+                  <input
+                    id="ladderCondition"
+                    type="checkbox"
+                    v-model="waH_Ladders"
+                    value="Is the ladder in good condition and suitable for the task?"
+                  />
                   Is the ladder in good condition and suitable for the task?
                 </label>
               </div>
@@ -1667,7 +1732,12 @@
                   for="ladderHeight"
                   class="text-gray-700 dark:text-gray-200"
                 >
-                  <input id="ladderHeight" type="checkbox" v-model="waH_Ladders" value="Is the ladder tall enough for the task?" />
+                  <input
+                    id="ladderHeight"
+                    type="checkbox"
+                    v-model="waH_Ladders"
+                    value="Is the ladder tall enough for the task?"
+                  />
                   Is the ladder tall enough for the task?
                 </label>
               </div>
@@ -1678,7 +1748,12 @@
                   for="ladderLevel"
                   class="text-gray-700 dark:text-gray-200"
                 >
-                  <input id="ladderLevel" type="checkbox" v-model="waH_Ladders" value="Is the ladder on a level footing?"/>
+                  <input
+                    id="ladderLevel"
+                    type="checkbox"
+                    v-model="waH_Ladders"
+                    value="Is the ladder on a level footing?"
+                  />
                   Is the ladder on a level footing?
                 </label>
               </div>
@@ -1689,7 +1764,12 @@
                   for="areaBarricaded"
                   class="text-gray-700 dark:text-gray-200"
                 >
-                  <input id="areaBarricaded" type="checkbox" v-model="waH_Ladders" value="Is the area below barricaded?"/>
+                  <input
+                    id="areaBarricaded"
+                    type="checkbox"
+                    v-model="waH_Ladders"
+                    value="Is the area below barricaded?"
+                  />
                   Is the area below barricaded?
                 </label>
               </div>
@@ -1700,8 +1780,13 @@
                   for="ladderSecured"
                   class="text-gray-700 dark:text-gray-200"
                 >
-                  <input id="ladderSecured" type="checkbox" v-model="waH_Ladders" value="Is the ladder secured top and bottom? (not applicable for step
-                  ladders)"/>
+                  <input
+                    id="ladderSecured"
+                    type="checkbox"
+                    v-model="waH_Ladders"
+                    value="Is the ladder secured top and bottom? (not applicable for step
+                  ladders)"
+                  />
                   Is the ladder secured top and bottom? (not applicable for step
                   ladders)
                 </label>
@@ -1713,8 +1798,13 @@
                   for="ladderExtended"
                   class="text-gray-700 dark:text-gray-200"
                 >
-                  <input id="ladderExtended" type="checkbox" v-model="waH_Ladders" value="Is the ladder extended with at least three (3) rungs or 900mm
-                  overlap?"/>
+                  <input
+                    id="ladderExtended"
+                    type="checkbox"
+                    v-model="waH_Ladders"
+                    value="Is the ladder extended with at least three (3) rungs or 900mm
+                  overlap?"
+                  />
                   Is the ladder extended with at least three (3) rungs or 900mm
                   overlap?
                 </label>
@@ -1726,7 +1816,12 @@
                   for="ladderRatio"
                   class="text-gray-700 dark:text-gray-200"
                 >
-                  <input id="ladderRatio" type="checkbox" v-model="waH_Ladders" value="Is the ladder position 1 in 4 ratio?"/>
+                  <input
+                    id="ladderRatio"
+                    type="checkbox"
+                    v-model="waH_Ladders"
+                    value="Is the ladder position 1 in 4 ratio?"
+                  />
                   Is the ladder position 1 in 4 ratio?
                 </label>
               </div>
@@ -1752,7 +1847,12 @@
                   for="kickBoards"
                   class="text-gray-700 dark:text-gray-200"
                 >
-                  <input id="kickBoards" type="checkbox" v-model="waH_Scaffolding" value=" Are kick boards in place?"/>
+                  <input
+                    id="kickBoards"
+                    type="checkbox"
+                    v-model="waH_Scaffolding"
+                    value=" Are kick boards in place?"
+                  />
                   Are kick boards in place?
                 </label>
               </div>
@@ -1760,7 +1860,12 @@
               <!-- Are hand rails in place? -->
               <div>
                 <label for="handRails" class="text-gray-700 dark:text-gray-200">
-                  <input id="handRails" type="checkbox" v-model="waH_Scaffolding" value="Are hand rails in place?"/>
+                  <input
+                    id="handRails"
+                    type="checkbox"
+                    v-model="waH_Scaffolding"
+                    value="Are hand rails in place?"
+                  />
                   Are hand rails in place?
                 </label>
               </div>
@@ -1768,7 +1873,12 @@
               <!-- Are mid rails in place? -->
               <div>
                 <label for="midRails" class="text-gray-700 dark:text-gray-200">
-                  <input id="midRails" type="checkbox" v-model="waH_Scaffolding" value="Are mid rails in place?"/>
+                  <input
+                    id="midRails"
+                    type="checkbox"
+                    v-model="waH_Scaffolding"
+                    value="Are mid rails in place?"
+                  />
                   Are mid rails in place?
                 </label>
               </div>
@@ -1779,7 +1889,12 @@
                   for="internalLadder"
                   class="text-gray-700 dark:text-gray-200"
                 >
-                  <input id="internalLadder" type="checkbox" v-model="waH_Scaffolding" value="Is the ladder installed internally (if applicable)?"/>
+                  <input
+                    id="internalLadder"
+                    type="checkbox"
+                    v-model="waH_Scaffolding"
+                    value="Is the ladder installed internally (if applicable)?"
+                  />
                   Is the ladder installed internally (if applicable)?
                 </label>
               </div>
@@ -1790,7 +1905,12 @@
                   for="solidFooting"
                   class="text-gray-700 dark:text-gray-200"
                 >
-                  <input id="solidFooting" type="checkbox" v-model="waH_Scaffolding" value="Is the scaffold on a solid footing?"/>
+                  <input
+                    id="solidFooting"
+                    type="checkbox"
+                    v-model="waH_Scaffolding"
+                    value="Is the scaffold on a solid footing?"
+                  />
                   Is the scaffold on a solid footing?
                 </label>
               </div>
@@ -1801,8 +1921,13 @@
                   for="wheelsLocked"
                   class="text-gray-700 dark:text-gray-200"
                 >
-                  <input id="wheelsLocked" type="checkbox" v-model="waH_Scaffolding" value="Are the wheels in locked position when in use? (e.g. mobile
-                  scaffold)"/>
+                  <input
+                    id="wheelsLocked"
+                    type="checkbox"
+                    v-model="waH_Scaffolding"
+                    value="Are the wheels in locked position when in use? (e.g. mobile
+                  scaffold)"
+                  />
                   Are the wheels in locked position when in use? (e.g. mobile
                   scaffold)
                 </label>
@@ -1814,7 +1939,12 @@
                   for="areaBarricadedScaffold"
                   class="text-gray-700 dark:text-gray-200"
                 >
-                  <input id="areaBarricadedScaffold" type="checkbox" v-model="waH_Scaffolding" value="Is the area below barricaded?"/>
+                  <input
+                    id="areaBarricadedScaffold"
+                    type="checkbox"
+                    v-model="waH_Scaffolding"
+                    value="Is the area below barricaded?"
+                  />
                   Is the area below barricaded?
                 </label>
               </div>
@@ -1825,7 +1955,12 @@
                   for="safeWorkingLimits"
                   class="text-gray-700 dark:text-gray-200"
                 >
-                  <input id="safeWorkingLimits" type="checkbox" v-model="waH_Scaffolding" value="Is the scaffold operating within safe working limits?"/>
+                  <input
+                    id="safeWorkingLimits"
+                    type="checkbox"
+                    v-model="waH_Scaffolding"
+                    value="Is the scaffold operating within safe working limits?"
+                  />
                   Is the scaffold operating within safe working limits?
                 </label>
               </div>
@@ -1836,7 +1971,12 @@
                   for="freeFromObstructions"
                   class="text-gray-700 dark:text-gray-200"
                 >
-                  <input id="freeFromObstructions" type="checkbox" v-model="waH_Scaffolding" value="Is the area free from overhead obstructions?"/>
+                  <input
+                    id="freeFromObstructions"
+                    type="checkbox"
+                    v-model="waH_Scaffolding"
+                    value="Is the area free from overhead obstructions?"
+                  />
                   Is the area free from overhead obstructions?
                 </label>
               </div>
@@ -1847,7 +1987,12 @@
                   for="competentPerson"
                   class="text-gray-700 dark:text-gray-200"
                 >
-                  <input id="competentPerson" type="checkbox" v-model="waH_Scaffolding" value="Is the scaffold erected by a competent person?"/>
+                  <input
+                    id="competentPerson"
+                    type="checkbox"
+                    v-model="waH_Scaffolding"
+                    value="Is the scaffold erected by a competent person?"
+                  />
                   Is the scaffold erected by a competent person?
                 </label>
               </div>
@@ -1872,7 +2017,12 @@
                   for="permissionToUse"
                   class="text-gray-700 dark:text-gray-200"
                 >
-                  <input id="permissionToUse" type="checkbox" v-model="waH_LiftTruck" value="Permission to use attained?"/>
+                  <input
+                    id="permissionToUse"
+                    type="checkbox"
+                    v-model="waH_LiftTruck"
+                    value="Permission to use attained?"
+                  />
                   Permission to use attained?
                 </label>
               </div>
@@ -1883,7 +2033,12 @@
                   for="equipmentGoodOrder"
                   class="text-gray-700 dark:text-gray-200"
                 >
-                  <input id="equipmentGoodOrder" type="checkbox" v-model="waH_LiftTruck" value="Equipment in good working order?"/>
+                  <input
+                    id="equipmentGoodOrder"
+                    type="checkbox"
+                    v-model="waH_LiftTruck"
+                    value="Equipment in good working order?"
+                  />
                   Equipment in good working order?
                 </label>
               </div>
@@ -1894,7 +2049,12 @@
                   for="batteryCharged"
                   class="text-gray-700 dark:text-gray-200"
                 >
-                  <input id="batteryCharged" type="checkbox" v-model="waH_LiftTruck" value="Battery fully charged?"/>
+                  <input
+                    id="batteryCharged"
+                    type="checkbox"
+                    v-model="waH_LiftTruck"
+                    value="Battery fully charged?"
+                  />
                   Battery fully charged?
                 </label>
               </div>
@@ -1905,7 +2065,12 @@
                   for="equipmentChecked"
                   class="text-gray-700 dark:text-gray-200"
                 >
-                  <input id="equipmentChecked" type="checkbox" v-model="waH_LiftTruck" value="Equipment physically checked?"/>
+                  <input
+                    id="equipmentChecked"
+                    type="checkbox"
+                    v-model="waH_LiftTruck"
+                    value="Equipment physically checked?"
+                  />
                   Equipment physically checked?
                 </label>
               </div>
@@ -1931,7 +2096,12 @@
                   for="securingChain"
                   class="text-gray-700 dark:text-gray-200"
                 >
-                  <input id="securingChain" type="checkbox" v-model="waH_ManCage" value="Securing chain and shackle available?"/>
+                  <input
+                    id="securingChain"
+                    type="checkbox"
+                    v-model="waH_ManCage"
+                    value="Securing chain and shackle available?"
+                  />
                   Securing chain and shackle available?
                 </label>
               </div>
@@ -1942,7 +2112,12 @@
                   for="freeOfDamage"
                   class="text-gray-700 dark:text-gray-200"
                 >
-                  <input id="freeOfDamage" type="checkbox" v-model="waH_ManCage" value="Free of physical damage?"/>
+                  <input
+                    id="freeOfDamage"
+                    type="checkbox"
+                    v-model="waH_ManCage"
+                    value="Free of physical damage?"
+                  />
                   Free of physical damage?
                 </label>
               </div>
@@ -1950,7 +2125,12 @@
               <!-- Appropriate slot size for forks available? -->
               <div>
                 <label for="slotSize" class="text-gray-700 dark:text-gray-200">
-                  <input id="slotSize" type="checkbox" v-model="waH_ManCage" value="Appropriate slot size for forks available?"/>
+                  <input
+                    id="slotSize"
+                    type="checkbox"
+                    v-model="waH_ManCage"
+                    value="Appropriate slot size for forks available?"
+                  />
                   Appropriate slot size for forks available?
                 </label>
               </div>
@@ -1966,7 +2146,8 @@
             for="workInvolvement"
           >
             Emergency Arrangements for use of Fall Arrest Equipment
-            <span class="text-sm">(not applicable for fall restraint)</span> {{ waH_Emergency }}
+            <span class="text-sm">(not applicable for fall restraint)</span>
+            {{ waH_Emergency }}
           </label>
           <div class="pt-2"><hr /></div>
 
@@ -1977,8 +2158,13 @@
                 for="emergencyProcedures"
                 class="text-gray-700 dark:text-gray-200"
               >
-                <input id="emergencyProcedures" type="checkbox" v-model="waH_Emergency" value="Have emergency and rescue procedures been established, tested
-                and recorded? (These items can be recorded in JHA)"/>
+                <input
+                  id="emergencyProcedures"
+                  type="checkbox"
+                  v-model="waH_Emergency"
+                  value="Have emergency and rescue procedures been established, tested
+                and recorded? (These items can be recorded in JHA)"
+                />
                 Have emergency and rescue procedures been established, tested
                 and recorded? (These items can be recorded in JHA)
               </label>
@@ -1990,8 +2176,13 @@
                 for="communicationArrangements"
                 class="text-gray-700 dark:text-gray-200"
               >
-                <input id="communicationArrangements" type="checkbox" v-model="waH_Emergency" value="Have appropriate communication arrangements been established for
-                potential emergencies?"/>
+                <input
+                  id="communicationArrangements"
+                  type="checkbox"
+                  v-model="waH_Emergency"
+                  value="Have appropriate communication arrangements been established for
+                potential emergencies?"
+                />
                 Have appropriate communication arrangements been established for
                 potential emergencies?
               </label>
@@ -2011,7 +2202,7 @@
               class="font-bold text-gray-700 dark:text-gray-200"
               for="workInvolvement"
             >
-              Mandatory Control Measures {{waH_ControlMeasure  }}
+              Mandatory Control Measures {{ waH_ControlMeasure }}
             </label>
           </div>
           <div class="pt-2"><hr /></div>
@@ -2020,8 +2211,13 @@
             <!-- A task/site specific JHA, or equivalent, has been developed and appropriately addresses identified work at height hazards? -->
             <div>
               <label for="specificJHA" class="text-gray-700 dark:text-gray-200">
-                <input id="specificJHA" type="checkbox" v-model="waH_ControlMeasure" value=" A task/site specific JHA, or equivalent, has been developed and
-                appropriately addresses identified work at height hazards?"/>
+                <input
+                  id="specificJHA"
+                  type="checkbox"
+                  v-model="waH_ControlMeasure"
+                  value=" A task/site specific JHA, or equivalent, has been developed and
+                appropriately addresses identified work at height hazards?"
+                />
                 A task/site specific JHA, or equivalent, has been developed and
                 appropriately addresses identified work at height hazards?
               </label>
@@ -2030,8 +2226,13 @@
             <!-- The JHA, or equivalent, has been reviewed and is understood by those involved in the task? -->
             <div>
               <label for="jhaReviewed" class="text-gray-700 dark:text-gray-200">
-                <input id="jhaReviewed" type="checkbox" v-model="waH_ControlMeasure" value="The JHA, or equivalent, has been reviewed and is understood by
-                those involved in the task?"/>
+                <input
+                  id="jhaReviewed"
+                  type="checkbox"
+                  v-model="waH_ControlMeasure"
+                  value="The JHA, or equivalent, has been reviewed and is understood by
+                those involved in the task?"
+                />
                 The JHA, or equivalent, has been reviewed and is understood by
                 those involved in the task?
               </label>
@@ -2043,9 +2244,14 @@
                 for="competentTraining"
                 class="text-gray-700 dark:text-gray-200"
               >
-                <input id="competentTraining" type="checkbox" v-model="waH_ControlMeasure" value="Those involved in the work at height activities are
+                <input
+                  id="competentTraining"
+                  type="checkbox"
+                  v-model="waH_ControlMeasure"
+                  value="Those involved in the work at height activities are
                 appropriately competent and can produce evidence of training
-                where requested?"/>
+                where requested?"
+                />
                 Those involved in the work at height activities are
                 appropriately competent and can produce evidence of training
                 where requested?
@@ -2065,15 +2271,19 @@
 
               <div>
                 <Div class="pt-3">
-                  <file-pond
-                    class=""
-                    name="test"
-                    ref="pond1"
-                    label-idle="Drop files here or <span class='filepond--label-action'>Browse</span>"
-                    allow-multiple="true"
-                    accepted-file-types="image/jpeg, image/png"
-                    v-bind:files="myFiles"
-                    @input="updateFiles"
+                  <FilePond
+                    ref="pond2"
+                    name="file"
+                    :server="null"
+                    :allowMultiple="true"
+                    :maxFileSize="'5MB'"
+                    :acceptedFileTypes="[
+                      'image/png',
+                      'image/jpeg',
+                      'application/pdf',
+                    ]"
+                    @addfile="handleAddFile2"
+                    @removefile="handleRemoveFile2"
                   />
                 </Div>
                 <!-- component -->
@@ -2368,7 +2578,8 @@ export default {
 
       hazards: [],
 
-      files: [],
+      files1: [],
+      files2: [],
       formData: {},
       isModalVisible: false,
       departments: template.departments,
@@ -2405,12 +2616,12 @@ export default {
       contractorAuthority: 0,
       filesName: "",
       waH_Hazard: [],
-          waH_Ladders: [],
-          waH_Scaffolding: [],
-          waH_LiftTruck: [],
-          waH_ManCage: [],
-          waH_Emergency: [],
-          waH_ControlMeasure: [],
+      waH_Ladders: [],
+      waH_Scaffolding: [],
+      waH_LiftTruck: [],
+      waH_ManCage: [],
+      waH_Emergency: [],
+      waH_ControlMeasure: [],
     };
   },
   mounted() {
@@ -2418,8 +2629,21 @@ export default {
     this.userDetails = store.getSession().userDetails;
   },
   methods: {
-    updateFiles(files) {
-      this.files = files;
+    handleAddFile1(error, fileItem) {
+      if (!error) {
+        this.files1.push(fileItem.file);
+      }
+    },
+    handleAddFile2(error, fileItem) {
+      if (!error) {
+        this.files2.push(fileItem.file);
+      }
+    },
+    handleRemoveFile1(error, fileItem) {
+      this.files1 = this.files1.filter((file) => file !== fileItem.file);
+    },
+    handleRemoveFile2(error, fileItem) {
+      this.files2 = this.files2.filter((file) => file !== fileItem.file);
     },
     updateFormData(formData) {
       this.formData = formData;
@@ -2481,28 +2705,31 @@ export default {
           workLocation: this.workLocation,
           workDescription: this.workDescription,
           startDateTime: this.startDateTime,
-          completeDateTime:    this.completeDateTime,
-          contractorAuthority:   this.contractorAuthority,
+          completeDateTime: this.completeDateTime,
+          contractorAuthority: this.contractorAuthority,
           filesName: this.filesName,
-          waH_Hazard:    this.waH_Hazard,
-          waH_Ladders:    this.waH_Ladders,
-          waH_Scaffolding:    this.waH_Scaffolding,
-          waH_LiftTruck:    this.waH_LiftTruck,
-          waH_ManCage:    this.waH_ManCage,
-          waH_Emergency:    this.waH_Emergency,
-          waH_ControlMeasure:    this.waH_ControlMeasure 
+          waH_Hazard: this.waH_Hazard,
+          waH_Ladders: this.waH_Ladders,
+          waH_Scaffolding: this.waH_Scaffolding,
+          waH_LiftTruck: this.waH_LiftTruck,
+          waH_ManCage: this.waH_ManCage,
+          waH_Emergency: this.waH_Emergency,
+          waH_ControlMeasure: this.waH_ControlMeasure,
         },
-
-        userId: this.userDetails.userId,
+        // this.userDetails.userId
+        userId: "b88491d8-b840-426e-891f-826c0fddd672",
       };
 
       try {
-        const response = await axios.post(
-          "http://172.28.28.91:8085/api/Main/InsertPTW",
-          combinedFormData
-        );
-        console.log("Server response:", response.data);
-        // Handle post-submission logic here
+        const response = await axios
+          .post("http://172.28.28.91:8085/api/Main/InsertPTW", combinedFormData)
+          .then((response) => {
+            console.log("respon server:", response.data);
+            this.uploadMultiImage();
+            this.closeModal();
+            this.$router.push("/dashboardvendor/ptw");
+          });
+        console.log("Server response 2:", response.data);
       } catch (error) {
         if (error.response) {
           console.log(
@@ -2532,11 +2759,14 @@ export default {
     },
     uploadMultiImage() {
       let formData = new FormData();
-      this.files.forEach((file) => {
+      this.files1.forEach((file) => {
+        formData.append("filecollection", file);
+      });
+      this.files2.forEach((file) => {
         formData.append("filecollection", file);
       });
 
-      const url = `http://localhost:3000/upload`;
+      const url = `http://172.28.28.91:8085/api/Files/MultiUploadImage/${this.userDetails.userId}/${this.uniqueCode}`;
 
       axios
         .post(url, formData)
@@ -2600,3 +2830,4 @@ export default {
   },
 };
 </script>
+f
