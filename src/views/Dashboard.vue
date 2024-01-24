@@ -44,7 +44,7 @@
               <h1
                 class="text-xl font-semibold text-gray-700 capitalize dark:text-slate-300"
               >
-                On-Going Request
+                On-Going Request 
               </h1>
 
               <a
@@ -224,7 +224,7 @@ export default {
   name: "NewrequestViews",
   data() {
     return {
-      OGR:null,
+      OGR: null,
 
       showAdditionalContent: false,
       selectedLocation: null,
@@ -249,10 +249,14 @@ export default {
     };
   },
   mounted() {
+    this.role = store.getRole();
     this.userDetails = store.getSession().userDetails;
     this.token = store.data.token;
     this.OGR = store.getOGR();
-    console.log('OGR from store:', store.getOGR());
+    console.log("OGR from store:", store.getOGR());
+    if (this.role === "vendor") {
+      this.$router.push("/Dashboardvendor");
+    }
   },
   methods: {
     showContent() {
@@ -334,7 +338,7 @@ export default {
           break;
         case "MAINTENANCE":
           this.TypeOfRequests = [
-            {  },
+            {},
 
             // Add more TypeOfRequests as needed
           ];

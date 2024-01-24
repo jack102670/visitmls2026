@@ -101,7 +101,7 @@
       <nav>
         <router-link
           to="/Dashboard"
-          v-if="role === 'admin' || role === 'user'"
+          v-if="role === 'vendor' || role === 'user'"
           class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
         >
           <svg
