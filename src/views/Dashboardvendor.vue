@@ -253,6 +253,13 @@ export default {
     this.token = store.data.token;
     this.OGR = store.getOGR();
     console.log("OGR from store:", store.getOGR());
+    // this.role = store.getRole();
+    // if (this.role === "vendor") {
+    //   this.$router.push("/Dashboardvendor");
+    // }
+    // else{
+    //   this.$router.push("/dashboard");
+    // }
   },
   methods: {
     showContent() {

@@ -305,6 +305,13 @@ export default {
   mounted() {
     // Fetch data when the component is mounted
     this.fetchRequesters();
+  
+    // if (this.role === "user") {
+    //   this.$router.push("/Dashboard");
+    // }
+    // else{
+    //   this.$router.push("/Managerequest");
+    // }
   },
 
   methods: {
@@ -332,12 +339,21 @@ export default {
       });
     },
     fetchRequesters() {
-      console.log("Fetching requesters...");
-      axios
-        .get(
-          "http://172.28.28.91:8085/api/Main/GetAllRequests/" +
-            store.getSession().userDetails.userId
-        )
+      const userDetails = store.getSession().userDetails;
+      const role = store.getRole();
+    let url = '';
+
+    if (role === 'user') {
+      url = `http://172.28.28.91:8085/api/Main/GetAllRequests/${userDetails.userId}`;
+    } else if (role === 'vendor') {
+      url = `http://172.28.28.91:8085/api/Main/GetAllRequestsVendor/${userDetails.userId}`;
+    } else {
+      console.log("Role not authorized or role-specific URL not set");
+      return;
+    }
+
+    console.log("Fetching requesters for role:", userDetails.role);
+    axios.get(url)
         .then((response) => {
           this.requesters = response.data;
           console.log("Requesters data:", this.requesters);

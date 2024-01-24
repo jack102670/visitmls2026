@@ -249,17 +249,17 @@ export default {
     };
   },
   mounted() {
-    this.role = store.getRole();
+    // this.role = store.getRole();
     this.userDetails = store.getSession().userDetails;
     this.token = store.data.token;
     this.OGR = store.getOGR();
     console.log("OGR from store:", store.getOGR());
-    if (this.role === "vendor") {
-      this.$router.push("/Dashboardvendor");
-    }
-    else{
-      this.$router.push("/dashboard");
-    }
+    // if (this.role === "user") {
+    //   this.$router.push("/Dashboard");
+    // }
+    // else{
+    //   this.$router.push("/Managerequest");
+    // }
     
   },
   methods: {

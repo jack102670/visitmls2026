@@ -94,11 +94,6 @@ const routes = [
       Sidebar: Newsidebar,
     },
     children: [
-      // {
-      //   path: "",
-      //   name: "NewrequestDefault",
-      //   component: Myrequest2,
-      // },
       {
         path: "ptw",
         name: "DashboardvendorPTW",
