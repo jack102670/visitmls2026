@@ -257,6 +257,10 @@ export default {
     if (this.role === "vendor") {
       this.$router.push("/Dashboardvendor");
     }
+    else{
+      this.$router.push("/dashboard");
+    }
+    
   },
   methods: {
     showContent() {

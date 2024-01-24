@@ -118,7 +118,7 @@ export default {
             if (role === "admin") {
               this.$router.push("/dashboard");
             } else if (role === "user") {
-              this.$router.push("/UserDashboard");
+              this.$router.push("/dashboard");
             }
           } else {
             alert(response.data.message + ". Check your credentials!");
