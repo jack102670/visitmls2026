@@ -92,7 +92,7 @@ export default {
             // Determine role based on the email
             let role;
 
-              role = "user";
+              role = "vendor";
              // default role
             
             alert("SUCCESSFULLY LOGGED IN!");
@@ -101,13 +101,9 @@ export default {
 
           
             // Redirect based on the role
-            if (role === "admin") {
-              this.$router.push("/dashboard");
-            } else if (role === "user") {
-              this.$router.push("/UserDashboard");
-            } else {
-              this.$router.push("/Dashboardvendor/");
-            }
+            if (role === "vendor") {
+              this.$router.push("/Dashboardvendor");
+            } 
           }
           else{
           alert(response.data);
