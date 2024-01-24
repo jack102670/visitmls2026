@@ -91,13 +91,10 @@ export default {
             if(response.data.userId != null){
             // Determine role based on the email
             let role;
-            if (response.data.userEmail === "ict.intern@pktgroup.com" ) {
-              role = "admin";
-            } else if (response.data.userEmail === "thisistesting@pktgroup.com") {
+
               role = "user";
-            } else {
-              role = "vendor"; // default role
-            }
+             // default role
+            
             alert("SUCCESSFULLY LOGGED IN!");
             // Set the session with role
             store.setSession(userDetails, token, role);
