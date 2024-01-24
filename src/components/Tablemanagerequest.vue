@@ -185,60 +185,60 @@
       <!-- Permit to works -->
       <div class="relative" v-show="showPTWForm">
         <span class="absolute -top-10 -right-1 text-slate-500 text-sm"
-          >REFNUMBER: {{ getRequest.referenceNumber }}</span
+          >REFNUMBER: {{ getRequest.refNumber }}</span
         >
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="Description"
-              >Description</label
+              >Vendor Name</label
             >
-            <input
-              id="Description"
+            <label
+              id="Location"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+            >{{  getRequest.vendorName }}</label>
           </div>
 
           <div>
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="Location"
-              >Location</label
+              >Company Name</label
             >
-            <input
+            <label
               id="Location"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+            >{{  getRequest.companyName }}</label>
           </div>
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3 md:grid-cols-3">
-          <div>
+          <!-- <div>
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="Description"
-              >Requester</label
+              >Work Description</label
             >
-            <input
-              id="Description"
+            <label
+              id="Location"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
-          </div>
+            >{{  getRequest.workDescription }}</label>
+          </div> -->
 
-          <div>
+          <!-- <div>
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="Location"
               >Department</label
             >
-            <input
+            <label
               id="Location"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+            >{{  getRequest. }}</label>
           </div>
           <div>
             <label
@@ -246,75 +246,51 @@
               for="Description"
               >Phone</label
             >
-            <input
-              id="Description"
+            <label
+              id="Location"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
-          </div>
+            >{{  getRequest. }}</label>
+          </div> -->
 
           <div>
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="Location"
-              >Contractor / Vendor</label
+              >Staff Name</label
             >
-            <input
+            <label
               id="Location"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+            >{{  getRequest.pktStaffName }}</label>
           </div>
           <div>
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="Location"
-              >Company
+              >Staff Email
             </label>
-            <input
+            <label
               id="Location"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+            >{{  getRequest.departmentName }}</label>
           </div>
           <div>
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="Description"
-              >Phone
+              >Department Staff
             </label>
-            <input
-              id="Description"
+            <label
+              id="Location"
               type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+            >{{  getRequest.departmentName }}</label>
           </div>
         </div>
-        <div>
-          <label
-            class="font-semibold text-gray-700 dark:text-gray-200"
-            for="Description"
-            >Hazard Identidication
-          </label>
-          <input
-            id="Description"
-            type="text"
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
-        </div>
-
-        <div>
-          <label
-            class="font-semibold text-gray-700 dark:text-gray-200"
-            for="Location"
-            >Determined Control</label
-          >
-          <input
-            id="Location"
-            type="text"
-            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-          />
-        </div>
+       
         <div>
           <label
             class="font-semibold text-gray-700 dark:text-gray-200"
@@ -1274,7 +1250,7 @@ export default {
 
         //this.showBadgeRequest = true;
       }
-      if (this.getRequest.referenceNumber.includes("PTW")) {
+      if (this.getRequest.refNumber.includes("PTW")) {
         axios
           .put("http://172.28.28.91:8085/api/Admin/AdminSecUpdatePTW", {
             refNumber: this.getRequest.referenceNumber,
