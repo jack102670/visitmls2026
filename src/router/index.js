@@ -6,6 +6,7 @@ import Login from "../views/Login.vue";
 
 import Newsidebar from "../components/Newsidebar.vue";
 import Managerequest from "../views/Managerequest.vue";
+import ManagerequestSafety from "../views/ManagerequestSafety.vue";
 import PTW from "../views/PTW.vue";
 import Loginstaff from "../views/Loginstaff.vue";
 import Vendorsignup from "../views/Vendorsignup.vue";
@@ -94,6 +95,11 @@ const routes = [
       Sidebar: Newsidebar,
     },
     children: [
+       {
+        path: "",
+        name: "NewrequestDefault2",
+        component: Myrequest2,
+      },
       {
         path: "ptw",
         name: "DashboardvendorPTW",
@@ -119,7 +125,14 @@ const routes = [
       Sidebar: Newsidebar,
     },
   },
-
+  {
+    path: "/ManagerequestSafety",
+    name: "ManagerequestSafety",
+    components: {
+      default: ManagerequestSafety,
+      Sidebar: Newsidebar,
+    },
+  },
   {
     path: "/Managerequest",
     name: "Managerequest",

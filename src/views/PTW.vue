@@ -1,23 +1,16 @@
 <template>
-  <div
-    class="flex-1 overflow-x-hidden text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64 h-auto"
-  >
+  <div class="flex-1 overflow-x-hidden text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64 h-auto">
     <!-- Existing form pages -->
     <div class="container mx-auto">
       <div
-        class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8"
-      >
-        <section
-          class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800"
-        >
+        class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8">
+        <section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
           <div class=" ">
-            {{branch }}
+            {{ branch }}
             <h1 class="font-semibold text-3xl p-3 text-gray-700">
               PERMIT TO WORK
             </h1>
-            <h2
-              class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
-            >
+            <h2 class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white">
               Works Information
             </h2>
           </div>
@@ -25,124 +18,57 @@
           <form>
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
-                <label
-                  class="font-semibold text-gray-700 dark:text-gray-200"
-                  for="password"
-                  >Contractor / Vendor Name<span class="text-red-500"
-                    >*</span
-                  ></label
-                >
-                <input
-                  id="Contractorvendorname"
-                  required1
-                  type="text"
-                  v-model="Contractorvendorname"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                <label class="font-semibold text-gray-700 dark:text-gray-200" for="password">Contractor / Vendor Name<span
+                    class="text-red-500">*</span></label>
+                <input id="Contractorvendorname" required1 type="text" v-model="Contractorvendorname"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
               </div>
               <div>
-                <label
-                  class="font-semibold text-gray-700 dark:text-gray-200"
-                  for="password"
-                  >Phone Number<span class="text-red-500">*</span></label
-                >
-                <input
-                  id="Phonenumber"
-                  required1
-                  v-model="Phonenumber"
-                  type="number"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                <label class="font-semibold text-gray-700 dark:text-gray-200" for="password">Phone Number<span
+                    class="text-red-500">*</span></label>
+                <input id="Phonenumber" required1 v-model="Phonenumber" type="number"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
               </div>
               <div>
-                <label
-                  class="font-semibold text-gray-700 dark:text-gray-200"
-                  for="password"
-                  >Email<span class="text-red-500">*</span></label
-                >
-                <input
-                  id="email"
-                  required1
-                  v-model="Vemail"
-                  type="email"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                <label class="font-semibold text-gray-700 dark:text-gray-200" for="password">Email<span
+                    class="text-red-500">*</span></label>
+                <input id="email" required1 v-model="Vemail" type="email"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
               </div>
 
               <div>
-                <label
-                  class="font-semibold text-gray-700 dark:text-gray-200"
-                  for="password"
-                  >Company Name<span class="text-red-500">*</span></label
-                >
-                <input
-                  id="Companyname"
-                  type="text"
-                  required1
-                  v-model="Companyname"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                <label class="font-semibold text-gray-700 dark:text-gray-200" for="password">Company Name<span
+                    class="text-red-500">*</span></label>
+                <input id="Companyname" type="text" required1 v-model="Companyname"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
               </div>
 
               <div>
-                <label
-                  class="font-semibold text-gray-700 dark:text-gray-200"
-                  for="Location"
-                  >Location<span class="text-red-500">*</span></label
-                >
-                <input
-                  id="Location"
-                  type="text"
-                  required1
-                  v-model="Location"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location">Location<span
+                    class="text-red-500">*</span></label>
+                <input id="Location" type="text" required1 v-model="Location"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
               </div>
 
               <div>
-                <label
-                  class="font-semibold text-gray-700 dark:text-gray-200"
-                  for="datefrom"
-                  >Date From<span class="text-red-500">*</span></label
-                >
-                <input
-                  id="datefrom"
-                  v-model="datefrom"
-                  required1
-                  type="date"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                <label class="font-semibold text-gray-700 dark:text-gray-200" for="datefrom">Date From<span
+                    class="text-red-500">*</span></label>
+                <input id="datefrom" v-model="datefrom" required1 type="date"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
               </div>
               <div>
-                <label
-                  class="font-semibold text-gray-700 dark:text-gray-200"
-                  for="dateto"
-                  >Date To<span class="text-red-500">*</span></label
-                >
-                <input
-                  id="dateto"
-                  type="date"
-                  v-model="dateto"
-                  required1
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                <label class="font-semibold text-gray-700 dark:text-gray-200" for="dateto">Date To<span
+                    class="text-red-500">*</span></label>
+                <input id="dateto" type="date" v-model="dateto" required1
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
               </div>
             </div>
-            <div
-              class="grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
-            >
+            <div class="grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full">
               <div class="w-full">
-                <label
-                  for="Detailsincident"
-                  class="text-gray-700 font-semibold dark:text-gray-200"
-                  >Description</label
-                >
-                <textarea
-                  v-model="Description"
-                  id="description"
+                <label for="Detailsincident" class="text-gray-700 font-semibold dark:text-gray-200">Description</label>
+                <textarea v-model="Description" id="description"
                   class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                  rows="5"
-                ></textarea>
+                  rows="5"></textarea>
               </div>
             </div>
             <div class="pt-4">
@@ -154,55 +80,28 @@
             </div>
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
               <div>
-                <label
-                  class="font-semibold text-gray-700 dark:text-gray-200"
-                  for="username"
-                  >Staff Name<span class="text-red-500">*</span></label
-                >
-                <input
-                  id="requestername"
-                  v-model="requestername"
-                  required1
-                  type="text"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                <label class="font-semibold text-gray-700 dark:text-gray-200" for="username">Staff Name<span
+                    class="text-red-500">*</span></label>
+                <input id="requestername" v-model="requestername" required1 type="text"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
               </div>
 
               <div>
-                <label
-                  class="font-semibold text-gray-700 dark:text-gray-200"
-                  for="department"
-                  >Department<span class="text-red-500">*</span></label
-                >
-                <select
-                  v-model="department"
-                  id="department"
-                  required1
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                >
+                <label class="font-semibold text-gray-700 dark:text-gray-200" for="department">Department<span
+                    class="text-red-500">*</span></label>
+                <select v-model="department" id="department" required1
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
                   <option value="" disabled selected></option>
-                  <option
-                    v-for="department in departments"
-                    :key="department.id"
-                    :value="department.name"
-                  >
+                  <option v-for="department in departments" :key="department.id" :value="department.name">
                     {{ department.name }}
                   </option>
                 </select>
               </div>
               <div>
-                <label
-                  class="font-semibold text-gray-700 dark:text-gray-200"
-                  for="username"
-                  >Staff Email<span class="text-red-500">*</span></label
-                >
-                <input
-                  id="Staffemail"
-                  v-model="Staffemail"
-                  required1
-                  type="text"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                <label class="font-semibold text-gray-700 dark:text-gray-200" for="username">Staff Email<span
+                    class="text-red-500">*</span></label>
+                <input id="Staffemail" v-model="Staffemail" required1 type="text"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
               </div>
             </div>
 
@@ -220,14 +119,9 @@
       <!-- add more fields as needed -->
     </div>
     <div
-      class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 shadow-xl"
-    >
-      <section
-        class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800"
-      >
-        <h2
-          class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
-        >
+      class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 shadow-xl">
+      <section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
+        <h2 class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white">
           Hazard Identification
         </h2>
         <span class="text-sm">
@@ -239,128 +133,62 @@
           <div class="grid grid-cols-1 pt-6 gap-6 mt-4 sm:grid-cols-3">
             <div>
               <label for="hotWorks" class="text-gray-700 dark:text-gray-200">
-                <input
-                  id="hotWorks"
-                  type="checkbox"
-                  value="hot Works"
-                  v-model="hazards"
-                  @change="handleCheckboxChange('hotWorks')"
-                />
+                <input id="hotWorks" type="checkbox" value="hot Works" v-model="hazards"
+                  @change="handleCheckboxChange('hotWorks')" />
                 Hot Works<span class="text-red-500">*</span> (i.e Welding &
                 Flame Cutting)
               </label>
             </div>
             <div>
-              <label
-                for="workingAtHeight"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="workingAtHeight"
-                  type="checkbox"
-                  value="working At Height"
-                  v-model="hazards"
-                  @change="handleCheckboxChange('workingAtHeight')"
-                />
+              <label for="workingAtHeight" class="text-gray-700 dark:text-gray-200">
+                <input id="workingAtHeight" type="checkbox" value="working At Height" v-model="hazards"
+                  @change="handleCheckboxChange('workingAtHeight')" />
                 Working at Height<span class="text-red-500">*</span> (falling
                 height > 1.8m)
               </label>
             </div>
             <div>
-              <label
-                for="electricalHighTension"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="electricalHighTension"
-                  type="checkbox"
-                  value="electrical High Tension"
-                  v-model="hazards"
-                />
+              <label for="electricalHighTension" class="text-gray-700 dark:text-gray-200">
+                <input id="electricalHighTension" type="checkbox" value="electrical High Tension" v-model="hazards" />
                 Electrical High Tension
               </label>
             </div>
             <div>
-              <label
-                for="fireProtectionSystemImpairment"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="fireProtectionSystemImpairment"
-                  type="checkbox"
-                  value="fire Protection System Impairment"
-                  v-model="hazards"
-                />
+              <label for="fireProtectionSystemImpairment" class="text-gray-700 dark:text-gray-200">
+                <input id="fireProtectionSystemImpairment" type="checkbox" value="fire Protection System Impairment"
+                  v-model="hazards" />
                 Fire Protection System Impairment
               </label>
             </div>
             <div>
-              <label
-                for="hazardousSubstances"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="hazardousSubstances"
-                  type="checkbox"
-                  value="hazardous Substances"
-                  v-model="hazards"
-                />
+              <label for="hazardousSubstances" class="text-gray-700 dark:text-gray-200">
+                <input id="hazardousSubstances" type="checkbox" value="hazardous Substances" v-model="hazards" />
                 Hazardous Substances
               </label>
             </div>
             <div>
-              <label
-                for="dustPollutantsExposure"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="dustPollutantsExposure"
-                  type="checkbox"
-                  value="dust Pollutants Exposure"
-                  v-model="hazards"
-                />
+              <label for="dustPollutantsExposure" class="text-gray-700 dark:text-gray-200">
+                <input id="dustPollutantsExposure" type="checkbox" value="dust Pollutants Exposure" v-model="hazards" />
                 Dust/Pollutants exposure
               </label>
             </div>
             <div>
-              <label
-                for="hydraulicSpillPneumaticJet"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="hydraulicSpillPneumaticJet"
-                  type="checkbox"
-                  value="hydraulic Spill Pneumatic Jet"
-                  v-model="hazards"
-                />
+              <label for="hydraulicSpillPneumaticJet" class="text-gray-700 dark:text-gray-200">
+                <input id="hydraulicSpillPneumaticJet" type="checkbox" value="hydraulic Spill Pneumatic Jet"
+                  v-model="hazards" />
                 Hydraulic Spill/Pneumatic Jet
               </label>
             </div>
             <div>
-              <label
-                for="trappingPointsNipPoints"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="trappingPointsNipPoints"
-                  type="checkbox"
-                  v-model="hazards"
-                  value="trapping Points Nip Points"
-                />
+              <label for="trappingPointsNipPoints" class="text-gray-700 dark:text-gray-200">
+                <input id="trappingPointsNipPoints" type="checkbox" v-model="hazards"
+                  value="trapping Points Nip Points" />
                 Trapping Points/Nip Points
               </label>
             </div>
             <div>
-              <label
-                for="inadequateIllumination"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="inadequateIllumination"
-                  type="checkbox"
-                  v-model="hazards"
-                  value="inadequate Illumination"
-                />
+              <label for="inadequateIllumination" class="text-gray-700 dark:text-gray-200">
+                <input id="inadequateIllumination" type="checkbox" v-model="hazards" value="inadequate Illumination" />
                 Inadequate Illumination
               </label>
             </div>
@@ -384,31 +212,20 @@
       </section>
     </div>
     <div
-      class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 shadow-xl"
-    >
-      <section
-        class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800"
-      >
-        <h2
-          class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
-        >
+      class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 shadow-xl">
+      <section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
+        <h2 class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white">
           Determined Control
         </h2>
 
         <form>
-          <h2
-            class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white"
-          >
+          <h2 class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white">
             C[1] Personal Protective Equipment {{ equipment }}
           </h2>
           <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Safety Helmet or Hard hats"
-                  v-model="equipment"
-                />
+                <input type="checkbox" value="Safety Helmet or Hard hats" v-model="equipment" />
                 Safety Helmet or Hard hats
               </label>
             </div>
@@ -416,11 +233,7 @@
             <!-- Breathing Apparatus -->
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Breathing Apparatus"
-                  v-model="equipment"
-                />
+                <input type="checkbox" value="Breathing Apparatus" v-model="equipment" />
                 Breathing Apparatus
               </label>
             </div>
@@ -428,11 +241,7 @@
             <!-- Safety Shoes -->
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Safety Shoes"
-                  v-model="equipment"
-                />
+                <input type="checkbox" value="Safety Shoes" v-model="equipment" />
                 Safety Shoes
               </label>
             </div>
@@ -440,11 +249,7 @@
             <!-- Safety Glasses/Goggles -->
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Safety Glasses/Goggles"
-                  v-model="equipment"
-                />
+                <input type="checkbox" value="Safety Glasses/Goggles" v-model="equipment" />
                 Safety Glasses/Goggles
               </label>
             </div>
@@ -452,11 +257,7 @@
             <!-- Respirator/Mask -->
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Respirator/Mask"
-                  v-model="equipment"
-                />
+                <input type="checkbox" value="Respirator/Mask" v-model="equipment" />
                 Respirator/Mask
               </label>
             </div>
@@ -464,11 +265,7 @@
             <!-- Safety Harness -->
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Safety Harness"
-                  v-model="equipment"
-                />
+                <input type="checkbox" value="Safety Harness" v-model="equipment" />
                 Safety Harness
               </label>
             </div>
@@ -476,11 +273,7 @@
             <!-- High-visibility Clothing or Vest -->
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="High-visibility Clothing or Vest"
-                  v-model="equipment"
-                />
+                <input type="checkbox" value="High-visibility Clothing or Vest" v-model="equipment" />
                 High-visibility Clothing or Vest
               </label>
             </div>
@@ -488,11 +281,7 @@
             <!-- Face Shield -->
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Face Shield"
-                  v-model="equipment"
-                />
+                <input type="checkbox" value="Face Shield" v-model="equipment" />
                 Face Shield
               </label>
             </div>
@@ -500,11 +289,7 @@
             <!-- Earplug or Ear Muff -->
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Earplug or Ear Muff"
-                  v-model="equipment"
-                />
+                <input type="checkbox" value="Earplug or Ear Muff" v-model="equipment" />
                 Earplug or Ear Muff
               </label>
             </div>
@@ -512,11 +297,7 @@
             <!-- Gloves (cotton/leather/rubber) -->
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Gloves (cotton/leather/rubber)"
-                  v-model="equipment"
-                />
+                <input type="checkbox" value="Gloves (cotton/leather/rubber)" v-model="equipment" />
                 Gloves (cotton/leather/rubber)
               </label>
             </div>
@@ -527,19 +308,13 @@
               </label>
             </div>
           </div>
-          <h2
-            class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white"
-          >
+          <h2 class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white">
             C[2] Safety Measure {{ safetyMeasure }}
           </h2>
           <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Risk Assessment"
-                  v-model="safetyMeasure"
-                />
+                <input type="checkbox" value="Risk Assessment" v-model="safetyMeasure" />
                 Risk Assessment
               </label>
             </div>
@@ -547,11 +322,7 @@
             <!-- Barricades -->
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Barricades"
-                  v-model="safetyMeasure"
-                />
+                <input type="checkbox" value="Barricades" v-model="safetyMeasure" />
                 Barricades
               </label>
             </div>
@@ -559,11 +330,7 @@
             <!-- First Aid Kit -->
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="First Aid Kit"
-                  v-model="safetyMeasure"
-                />
+                <input type="checkbox" value="First Aid Kit" v-model="safetyMeasure" />
                 First Aid Kit
               </label>
             </div>
@@ -571,11 +338,7 @@
             <!-- Fire Extinguisher -->
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Fire Extinguisher"
-                  v-model="safetyMeasure"
-                />
+                <input type="checkbox" value="Fire Extinguisher" v-model="safetyMeasure" />
                 Fire Extinguisher
               </label>
             </div>
@@ -583,11 +346,7 @@
             <!-- Continuous Supervision -->
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Continuous Supervision"
-                  v-model="safetyMeasure"
-                />
+                <input type="checkbox" value="Continuous Supervision" v-model="safetyMeasure" />
                 Continuous Supervision
               </label>
             </div>
@@ -595,11 +354,7 @@
             <!-- Warning Signs -->
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Warning Signs"
-                  v-model="safetyMeasure"
-                />
+                <input type="checkbox" value="Warning Signs" v-model="safetyMeasure" />
                 Warning Signs
               </label>
             </div>
@@ -607,11 +362,7 @@
             <!-- Noise Meter -->
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Noise Meter"
-                  v-model="safetyMeasure"
-                />
+                <input type="checkbox" value="Noise Meter" v-model="safetyMeasure" />
                 Noise Meter
               </label>
             </div>
@@ -619,11 +370,7 @@
             <!-- Air Ventilation/Exhaust -->
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Air Ventilation/Exhaust"
-                  v-model="safetyMeasure"
-                />
+                <input type="checkbox" value="Air Ventilation/Exhaust" v-model="safetyMeasure" />
                 Air Ventilation/Exhaust
               </label>
             </div>
@@ -631,11 +378,7 @@
             <!-- Communication -->
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Communication"
-                  v-model="safetyMeasure"
-                />
+                <input type="checkbox" value="Communication" v-model="safetyMeasure" />
                 Communication
               </label>
             </div>
@@ -643,30 +386,20 @@
             <!-- Other Safety Measure -->
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Other Safety Measure"
-                  v-model="safetyMeasure"
-                />
+                <input type="checkbox" value="Other Safety Measure" v-model="safetyMeasure" />
                 Other
               </label>
             </div>
 
             <!-- Electrical Isolation -->
           </div>
-          <h2
-            class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white"
-          >
+          <h2 class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white">
             C[3] Isolation {{ isolation }}
           </h2>
           <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="I-Electrical"
-                  v-model="isolation"
-                />
+                <input type="checkbox" value="I-Electrical" v-model="isolation" />
                 Electrical
               </label>
             </div>
@@ -690,11 +423,7 @@
             <!-- Chemical/Gas -->
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Chemical/Gas"
-                  v-model="isolation"
-                />
+                <input type="checkbox" value="Chemical/Gas" v-model="isolation" />
                 Chemical/Gas
               </label>
             </div>
@@ -702,18 +431,12 @@
             <!-- Other Isolation -->
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Other Isolation"
-                  v-model="isolation"
-                />
+                <input type="checkbox" value="Other Isolation" v-model="isolation" />
                 Others
               </label>
             </div>
           </div>
-          <h2
-            class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white"
-          >
+          <h2 class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white">
             C[4] Plant Support {{ plantSupport }}
           </h2>
           <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
@@ -725,32 +448,20 @@
             </div>
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="PS-Electrical"
-                  v-model="plantSupport"
-                />
+                <input type="checkbox" value="PS-Electrical" v-model="plantSupport" />
                 Electrical
               </label>
             </div>
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Compressed Air"
-                  v-model="plantSupport"
-                />
+                <input type="checkbox" value="Compressed Air" v-model="plantSupport" />
                 Compressed Air
               </label>
             </div>
 
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input
-                  type="checkbox"
-                  value="Illumination"
-                  v-model="plantSupport"
-                />
+                <input type="checkbox" value="Illumination" v-model="plantSupport" />
                 Illumination
               </label>
             </div>
@@ -773,14 +484,9 @@
       </section>
     </div>
     <div
-      class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8"
-    >
-      <section
-        class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800"
-      >
-        <h2
-          class="text-lg font-semibold text-gray-700 capitalize dark:text-white"
-        >
+      class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8">
+      <section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
+        <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">
           Upload Files (List of Local, Foreign and Consent Letter)
         </h2>
 
@@ -788,23 +494,14 @@
           <div class="grid grid-cols-2 gap-6 pt-5">
             <div>
               <Div class="pt-3">
-                <FilePond
-                  ref="pond1"
-                  name="file"
-                  :server="null"
-                  :allowMultiple="true"
-                  :maxFileSize="'5MB'"
+                <FilePond ref="pond1" name="file" :server="null" :allowMultiple="true" :maxFileSize="'5MB'"
                   :acceptedFileTypes="[
                     'image/png',
                     'image/jpeg',
                     'application/pdf',
                     'application/vnd.ms-excel',
                     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                  ]"
-                  :fileRenameFunction="renameFile"
-                  @addfile="handleAddFile1"
-                  @removefile="handleRemoveFile1"
-                />
+                  ]" :fileRenameFunction="renameFile" @addfile="handleAddFile1" @removefile="handleRemoveFile1" />
               </Div>
               <!-- component -->
             </div>
@@ -827,52 +524,28 @@
         </div> -->
       </section>
     </div>
-    <div
-      v-if="hotWorks"
-      class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8"
-    >
-      <section
-        class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800"
-      >
+    <div v-if="hotWorks"
+      class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8">
+      <section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
         <div class=" ">
-          <h2
-            class="text-lg font-bold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
-          >
+          <h2 class="text-lg font-bold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white">
             Hot Work Permit
           </h2>
         </div>
 
         <form>
-          <div
-            class="grid-cols-1 gap-6 mt-4 sm:grid-cols-2 mx-auto cursor-pointer flex w-full"
-          >
+          <div class="grid-cols-1 gap-6 mt-4 sm:grid-cols-2 mx-auto cursor-pointer flex w-full">
             <div class="w-full">
-              <label
-                for="Location"
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                >Location</label
-              >
-              <input
-                v-model="Location"
-                id="Location"
+              <label for="Location" class="font-semibold text-gray-700 dark:text-gray-200">Location</label>
+              <input v-model="Location" id="Location"
                 class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                rows="2"
-                required
-              />
+                rows="2" required />
             </div>
             <div>
-              <label
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                for="Worksdescription"
-                >Works Description</label
-              >
-              <textarea
-                id="Worksdescription"
-                v-model="Worksdescription"
-                type="text"
-                rows="1"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              ></textarea>
+              <label class="font-semibold text-gray-700 dark:text-gray-200" for="Worksdescription">Works
+                Description</label>
+              <textarea id="Worksdescription" v-model="Worksdescription" type="text" rows="1"
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"></textarea>
             </div>
             <!-- <div>
               <label class="font-bold text-gray-700 dark:text-gray-200" for="location"
@@ -890,89 +563,49 @@
           </div>
           <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <div>
-              <label
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                for="todate"
-                >Datetime Start</label
-              >
-              <input
-                id="datetimestart"
-                v-model="datetimestart"
-                type="datetime-local"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
+              <label class="font-semibold text-gray-700 dark:text-gray-200" for="todate">Datetime Start</label>
+              <input id="datetimestart" v-model="datetimestart" type="datetime-local"
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
             </div>
             <div>
-              <label
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                for="Datetimecomplete"
-                >Datetime Complete</label
-              >
-              <input
-                id="Datetimecomplete"
-                v-model="Datetimecomplete"
-                type="datetime-local"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
+              <label class="font-semibold text-gray-700 dark:text-gray-200" for="Datetimecomplete">Datetime
+                Complete</label>
+              <input id="Datetimecomplete" v-model="Datetimecomplete" type="datetime-local"
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
             </div>
           </div>
           <div class="pt-6">
             <hr />
             <div class="pt-2"></div>
-            <label
-              class="font-bold text-gray-700 dark:text-gray-200"
-              for="workInvolvement"
-            >
+            <label class="font-bold text-gray-700 dark:text-gray-200" for="workInvolvement">
               General Requirement {{ reqGeneral }}
             </label>
           </div>
 
-          <div class="pt-2"><hr /></div>
+          <div class="pt-2">
+            <hr />
+          </div>
           <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
             <div>
-              <label
-                for="sprinklersOperable"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="sprinklersOperable"
-                  type="checkbox"
-                  v-model="reqGeneral"
-                  value="Available sprinklers, hose streams and extinguishers are in
-                service and operable."
-                />
+              <label for="sprinklersOperable" class="text-gray-700 dark:text-gray-200">
+                <input id="sprinklersOperable" type="checkbox" v-model="reqGeneral" value="Available sprinklers, hose streams and extinguishers are in
+                service and operable." />
                 Available sprinklers, hose streams and extinguishers are in
                 service and operable.
               </label>
             </div>
             <div>
-              <label
-                for="hotWorkEquipment"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="hotWorkEquipment"
-                  type="checkbox"
-                  v-model="reqGeneral"
-                  value="Hot work equipment is in good working condition in accordance
-                with manufacturer’s specifications."
-                />
+              <label for="hotWorkEquipment" class="text-gray-700 dark:text-gray-200">
+                <input id="hotWorkEquipment" type="checkbox" v-model="reqGeneral" value="Hot work equipment is in good working condition in accordance
+                with manufacturer’s specifications." />
                 Hot work equipment is in good working condition in accordance
                 with manufacturer’s specifications.
               </label>
             </div>
             <div>
-              <label
-                for="specialPermission"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="specialPermission"
-                  type="checkbox"
-                  v-model="reqGeneral"
-                  value="Special permission obtained to conduct hot work on metal vessels
-                or piping lined with rubber or plastic."
-                />
+              <label for="specialPermission" class="text-gray-700 dark:text-gray-200">
+                <input id="specialPermission" type="checkbox" v-model="reqGeneral" value="Special permission obtained to conduct hot work on metal vessels
+                or piping lined with rubber or plastic." />
                 Special permission obtained to conduct hot work on metal vessels
                 or piping lined with rubber or plastic.
               </label>
@@ -982,104 +615,58 @@
           <div class="pt-6">
             <hr />
             <div class="pt-2"></div>
-            <label
-              class="font-bold text-gray-700 dark:text-gray-200"
-              for="workInvolvement"
-            >
+            <label class="font-bold text-gray-700 dark:text-gray-200" for="workInvolvement">
               Requirements within 35 ft. (11m) of hot work {{ requirement }}
             </label>
           </div>
-          <div class="pt-2"><hr /></div>
+          <div class="pt-2">
+            <hr />
+          </div>
           <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <!-- Checklist Section 2 -->
 
             <div>
-              <label
-                for="flammableRemoved"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="flammableRemoved"
-                  type="checkbox"
-                  v-model="requirement"
-                  value="Flammable liquid, dust, lint, and oily deposits removed and
-                floors swept clean."
-                />
+              <label for="flammableRemoved" class="text-gray-700 dark:text-gray-200">
+                <input id="flammableRemoved" type="checkbox" v-model="requirement" value="Flammable liquid, dust, lint, and oily deposits removed and
+                floors swept clean." />
                 Flammable liquid, dust, lint, and oily deposits removed and
                 floors swept clean.
               </label>
             </div>
             <div>
-              <label
-                for="explosiveAtmosphere"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="explosiveAtmosphere"
-                  type="checkbox"
-                  v-model="requirement"
-                  value="Explosive atmosphere in area eliminated."
-                />
+              <label for="explosiveAtmosphere" class="text-gray-700 dark:text-gray-200">
+                <input id="explosiveAtmosphere" type="checkbox" v-model="requirement"
+                  value="Explosive atmosphere in area eliminated." />
                 Explosive atmosphere in area eliminated.
               </label>
             </div>
             <div>
-              <label
-                for="combustibleFloors"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="combustibleFloors"
-                  type="checkbox"
-                  v-model="requirement"
-                  value="Combustible floors wet down or covered with damp sand or
-                fire-resistive/noncombustible materials or equivalent."
-                />
+              <label for="combustibleFloors" class="text-gray-700 dark:text-gray-200">
+                <input id="combustibleFloors" type="checkbox" v-model="requirement" value="Combustible floors wet down or covered with damp sand or
+                fire-resistive/noncombustible materials or equivalent." />
                 Combustible floors wet down or covered with damp sand or
                 fire-resistive/noncombustible materials or equivalent.
               </label>
             </div>
             <div>
-              <label
-                for="electricalShockProtection"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="electricalShockProtection"
-                  type="checkbox"
-                  v-model="requirement"
-                  value="Personnel protected from electrical shock when floors are wet."
-                />
+              <label for="electricalShockProtection" class="text-gray-700 dark:text-gray-200">
+                <input id="electricalShockProtection" type="checkbox" v-model="requirement"
+                  value="Personnel protected from electrical shock when floors are wet." />
                 Personnel protected from electrical shock when floors are wet.
               </label>
             </div>
             <div>
-              <label
-                for="removeMaterial"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="removeMaterial"
-                  type="checkbox"
-                  v-model="requirement"
-                  value=" Remove flammable and combustible material where possible.
-                Otherwise protect with fire blankets, guards or metal shields."
-                />
+              <label for="removeMaterial" class="text-gray-700 dark:text-gray-200">
+                <input id="removeMaterial" type="checkbox" v-model="requirement" value=" Remove flammable and combustible material where possible.
+                Otherwise protect with fire blankets, guards or metal shields." />
                 Remove flammable and combustible material where possible.
                 Otherwise protect with fire blankets, guards or metal shields.
               </label>
             </div>
             <div>
-              <label
-                for="openingsCovered"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="openingsCovered"
-                  type="checkbox"
-                  v-model="requirement"
-                  value="All wall and floor openings covered."
-                />
+              <label for="openingsCovered" class="text-gray-700 dark:text-gray-200">
+                <input id="openingsCovered" type="checkbox" v-model="requirement"
+                  value="All wall and floor openings covered." />
                 All wall and floor openings covered.
               </label>
             </div>
@@ -1088,46 +675,29 @@
           <div class="pt-6">
             <hr />
             <div class="pt-2"></div>
-            <label
-              class="font-bold text-gray-700 dark:text-gray-200"
-              for="workInvolvement"
-            >
+            <label class="font-bold text-gray-700 dark:text-gray-200" for="workInvolvement">
               Requirements for hot work on walls, ceilings or roofs.
               {{ req_Walls }}
             </label>
           </div>
-          <div class="pt-2"><hr /></div>
+          <div class="pt-2">
+            <hr />
+          </div>
           <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <!-- Checklist Section 3 -->
 
             <div>
-              <label
-                for="noncombustibleConstruction"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="noncombustibleConstruction"
-                  type="checkbox"
-                  v-model="req_Walls"
-                  value="Construction is noncombustible and without combustible coverings
-                or insulation."
-                />
+              <label for="noncombustibleConstruction" class="text-gray-700 dark:text-gray-200">
+                <input id="noncombustibleConstruction" type="checkbox" v-model="req_Walls" value="Construction is noncombustible and without combustible coverings
+                or insulation." />
                 Construction is noncombustible and without combustible coverings
                 or insulation.
               </label>
             </div>
             <div>
-              <label
-                for="combustibleMaterialMoved"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="combustibleMaterialMoved"
-                  type="checkbox"
-                  v-model="req_Walls"
-                  value="Combustible material on other side of walls, ceilings, or roofs
-                is moved away."
-                />
+              <label for="combustibleMaterialMoved" class="text-gray-700 dark:text-gray-200">
+                <input id="combustibleMaterialMoved" type="checkbox" v-model="req_Walls" value="Combustible material on other side of walls, ceilings, or roofs
+                is moved away." />
                 Combustible material on other side of walls, ceilings, or roofs
                 is moved away.
               </label>
@@ -1136,43 +706,28 @@
           <div class="pt-6">
             <hr />
             <div class="pt-2"></div>
-            <label
-              class="font-bold text-gray-700 dark:text-gray-200"
-              for="workInvolvement"
-            >
+            <label class="font-bold text-gray-700 dark:text-gray-200" for="workInvolvement">
               Requirements for hot work on enclosed equipment:
               {{ req_Enc_Equip }}
             </label>
           </div>
-          <div class="pt-2"><hr /></div>
+          <div class="pt-2">
+            <hr />
+          </div>
           <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <!-- Checklist Section 4 -->
 
             <div>
-              <label
-                for="enclosedEquipmentCleaned"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="enclosedEquipmentCleaned"
-                  type="checkbox"
-                  v-model="req_Enc_Equip"
-                  value="Enclosed equipment is cleaned of all combustibles."
-                />
+              <label for="enclosedEquipmentCleaned" class="text-gray-700 dark:text-gray-200">
+                <input id="enclosedEquipmentCleaned" type="checkbox" v-model="req_Enc_Equip"
+                  value="Enclosed equipment is cleaned of all combustibles." />
                 Enclosed equipment is cleaned of all combustibles.
               </label>
             </div>
             <div>
-              <label
-                for="containerarepurged"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="containerarepurged"
-                  type="checkbox"
-                  v-model="req_Enc_Equip"
-                  value="Container are purged of flammable liquid/vapor."
-                />
+              <label for="containerarepurged" class="text-gray-700 dark:text-gray-200">
+                <input id="containerarepurged" type="checkbox" v-model="req_Enc_Equip"
+                  value="Container are purged of flammable liquid/vapor." />
                 Container are purged of flammable liquid/vapor.
               </label>
             </div>
@@ -1181,87 +736,48 @@
           <div class="pt-6">
             <hr />
             <div class="pt-2"></div>
-            <label
-              class="font-bold text-gray-700 dark:text-gray-200"
-              for="workInvolvement"
-            >
+            <label class="font-bold text-gray-700 dark:text-gray-200" for="workInvolvement">
               Requirements for hot work fire watchman and fire monitoring:
               {{ reqDistance }}
             </label>
           </div>
-          <div class="pt-2"><hr /></div>
+          <div class="pt-2">
+            <hr />
+          </div>
           <div>
-            <label
-              for="fireWatchProvided"
-              class="text-gray-700 dark:text-gray-200"
-            >
-              <input
-                id="fireWatchProvided"
-                type="checkbox"
-                v-model="reqDistance"
-                value=" Fire watch is provided during and for a minimum of 30 min. after
-              hot work, including any break activity."
-              />
+            <label for="fireWatchProvided" class="text-gray-700 dark:text-gray-200">
+              <input id="fireWatchProvided" type="checkbox" v-model="reqDistance" value=" Fire watch is provided during and for a minimum of 30 min. after
+              hot work, including any break activity." />
               Fire watch is provided during and for a minimum of 30 min. after
               hot work, including any break activity.
             </label>
           </div>
           <div>
-            <label
-              for="fireWatchExtinguishers"
-              class="text-gray-700 dark:text-gray-200"
-            >
-              <input
-                id="fireWatchExtinguishers"
-                type="checkbox"
-                v-model="reqDistance"
-                value="Fire watch is provided with suitable extinguishers and, where
-              practical, a charged small hose."
-              />
+            <label for="fireWatchExtinguishers" class="text-gray-700 dark:text-gray-200">
+              <input id="fireWatchExtinguishers" type="checkbox" v-model="reqDistance" value="Fire watch is provided with suitable extinguishers and, where
+              practical, a charged small hose." />
               Fire watch is provided with suitable extinguishers and, where
               practical, a charged small hose.
             </label>
           </div>
           <div>
-            <label
-              for="fireWatchTrained"
-              class="text-gray-700 dark:text-gray-200"
-            >
-              <input
-                id="fireWatchTrained"
-                type="checkbox"
-                v-model="reqDistance"
-                value="Fire watch is trained in use of equipment and in sounding alarm."
-              />
+            <label for="fireWatchTrained" class="text-gray-700 dark:text-gray-200">
+              <input id="fireWatchTrained" type="checkbox" v-model="reqDistance"
+                value="Fire watch is trained in use of equipment and in sounding alarm." />
               Fire watch is trained in use of equipment and in sounding alarm.
             </label>
           </div>
           <div>
-            <label
-              for="fireWatchRequired"
-              class="text-gray-700 dark:text-gray-200"
-            >
-              <input
-                id="fireWatchRequired"
-                type="checkbox"
-                v-model="reqDistance"
-                value="Fire watch can be required in adjoining areas, above and below."
-              />
+            <label for="fireWatchRequired" class="text-gray-700 dark:text-gray-200">
+              <input id="fireWatchRequired" type="checkbox" v-model="reqDistance"
+                value="Fire watch can be required in adjoining areas, above and below." />
               Fire watch can be required in adjoining areas, above and below.
             </label>
           </div>
           <div class="">
-            <label
-              for="fireWatchMonitoringExtended"
-              class="text-gray-700 dark:text-gray-200"
-            >
-              <input
-                id="fireWatchMonitoringExtended"
-                type="checkbox"
-                v-model="reqDistance"
-                value="Per the PAI/fire watch, monitoring of hot work area has been
-              extended beyond the 30 min."
-              />
+            <label for="fireWatchMonitoringExtended" class="text-gray-700 dark:text-gray-200">
+              <input id="fireWatchMonitoringExtended" type="checkbox" v-model="reqDistance" value="Per the PAI/fire watch, monitoring of hot work area has been
+              extended beyond the 30 min." />
               Per the PAI/fire watch, monitoring of hot work area has been
               extended beyond the 30 min.
             </label>
@@ -1276,95 +792,50 @@
         </div>
       </section>
     </div>
-    <div
-      v-if="workingAtHeight"
-      class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8"
-    >
-      <section
-        class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800"
-      >
+    <div v-if="workingAtHeight"
+      class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8">
+      <section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
         <div class=" ">
-          <h2
-            class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
-          >
+          <h2 class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white">
             Work At Height Permit
           </h2>
         </div>
 
         <form>
-          <div
-            class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 mx-auto cursor-pointer w-full"
-          >
+          <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 mx-auto cursor-pointer w-full">
             <div>
-              <label
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                for="Contractorname"
-                >Contractor Name<span class="text-red-500">*</span></label
-              >
-              <input
-                v-model="companyName"
-                id="Contractorname"
-                type="text"
-                required
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
+              <label class="font-semibold text-gray-700 dark:text-gray-200" for="Contractorname">Contractor Name<span
+                  class="text-red-500">*</span></label>
+              <input v-model="companyName" id="Contractorname" type="text" required
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
             </div>
 
             <div>
-              <label
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                for="Contractorcompany"
-                >Contractor Company<span class="text-red-500">*</span></label
-              >
-              <input
-                v-model="contractorName"
-                id="Contractorcompany"
-                type="text"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
+              <label class="font-semibold text-gray-700 dark:text-gray-200" for="Contractorcompany">Contractor
+                Company<span class="text-red-500">*</span></label>
+              <input v-model="contractorName" id="Contractorcompany" type="text"
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
             </div>
 
             <div>
-              <label
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                for="Startdate"
-                >Start Date<span class="text-red-500">*</span></label
-              >
-              <input
-                v-model="startDateTime"
-                id="Startdate"
-                type="datetime-local"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
+              <label class="font-semibold text-gray-700 dark:text-gray-200" for="Startdate">Start Date<span
+                  class="text-red-500">*</span></label>
+              <input v-model="startDateTime" id="Startdate" type="datetime-local"
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
             </div>
 
             <div>
-              <label
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                for="Completedate"
-                >Complete Date<span class="text-red-500">*</span></label
-              >
-              <input
-                v-model="completeDateTime"
-                id="Completedate"
-                type="datetime-local"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
+              <label class="font-semibold text-gray-700 dark:text-gray-200" for="Completedate">Complete Date<span
+                  class="text-red-500">*</span></label>
+              <input v-model="completeDateTime" id="Completedate" type="datetime-local"
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
             </div>
 
             <div>
-              <label
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                for="Location"
-                >Location<span class="text-red-500">*</span></label
-              >
-              <select
-                v-model="workLocation"
-                id="Location"
-                type="text"
-                required
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              >
+              <label class="font-semibold text-gray-700 dark:text-gray-200" for="Location">Location<span
+                  class="text-red-500">*</span></label>
+              <select v-model="workLocation" id="Location" type="text" required
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
                 <option value="Security">Security</option>
                 <option value="Safety">Safety</option>
                 <option value="Maintenance">Maintenance</option>
@@ -1372,31 +843,20 @@
               </select>
             </div>
           </div>
-          <div
-            class="grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
-          >
+          <div class="grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full">
             <div class="w-full">
-              <label
-                for="Descofwork"
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                >Description Of Work</label
-              >
-              <textarea
-                v-model="workDescription"
-                id="Descofwork"
+              <label for="Descofwork" class="font-semibold text-gray-700 dark:text-gray-200">Description Of Work</label>
+              <textarea v-model="workDescription" id="Descofwork"
                 class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                rows="3"
-              ></textarea>
+                rows="3"></textarea>
             </div>
           </div>
 
           <div class="pt-4">
             <hr />
             <div class="pt-2"></div>
-            <label
-              class="font-bold text-gray-700 dark:text-gray-200"
-              for="authority"
-              >Which of the following hazards are associated with this work?
+            <label class="font-bold text-gray-700 dark:text-gray-200" for="authority">Which of the following hazards are
+              associated with this work?
               {{ waH_Hazard }}
             </label>
             <div class="pt-2">
@@ -1408,91 +868,44 @@
 
             <!-- Falling objects -->
             <div>
-              <label
-                for="fallingObjects"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="fallingObjects"
-                  type="checkbox"
-                  v-model="waH_Hazard"
-                  value="Falling objects"
-                />
+              <label for="fallingObjects" class="text-gray-700 dark:text-gray-200">
+                <input id="fallingObjects" type="checkbox" v-model="waH_Hazard" value="Falling objects" />
                 Falling objects
               </label>
             </div>
             <!-- Unguarded edges -->
             <div>
-              <label
-                for="unguardedEdges"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="unguardedEdges"
-                  type="checkbox"
-                  v-model="waH_Hazard"
-                  value="Unguarded edges"
-                />
+              <label for="unguardedEdges" class="text-gray-700 dark:text-gray-200">
+                <input id="unguardedEdges" type="checkbox" v-model="waH_Hazard" value="Unguarded edges" />
                 Unguarded edges
               </label>
             </div>
             <!-- High winds/weather -->
             <div>
-              <label
-                for="highWindsWeather"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="highWindsWeather"
-                  type="checkbox"
-                  v-model="waH_Hazard"
-                  value="High winds/weather"
-                />
+              <label for="highWindsWeather" class="text-gray-700 dark:text-gray-200">
+                <input id="highWindsWeather" type="checkbox" v-model="waH_Hazard" value="High winds/weather" />
                 High winds/weather
               </label>
             </div>
             <!-- Slope of surface -->
             <div>
-              <label
-                for="slopeOfSurface"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="slopeOfSurface"
-                  type="checkbox"
-                  v-model="waH_Hazard"
-                  value="Slope of surface"
-                />
+              <label for="slopeOfSurface" class="text-gray-700 dark:text-gray-200">
+                <input id="slopeOfSurface" type="checkbox" v-model="waH_Hazard" value="Slope of surface" />
                 Slope of surface
               </label>
             </div>
             <!-- Overhead electrical cables -->
             <div>
-              <label
-                for="overheadElectricalCables"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="overheadElectricalCables"
-                  type="checkbox"
-                  v-model="waH_Hazard"
-                  value="Overhead electrical cables"
-                />
+              <label for="overheadElectricalCables" class="text-gray-700 dark:text-gray-200">
+                <input id="overheadElectricalCables" type="checkbox" v-model="waH_Hazard"
+                  value="Overhead electrical cables" />
                 Overhead electrical cables
               </label>
             </div>
             <!-- Other (provide details) -->
             <div>
-              <label
-                for="otherHazards"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="otherHazards"
-                  type="checkbox"
-                  v-model="waH_Hazard"
-                  value="Other (provide details):"
-                />
+              <label for="otherHazards" class="text-gray-700 dark:text-gray-200">
+                <input id="otherHazards" type="checkbox" v-model="waH_Hazard" value="Other (provide details):" />
                 Other (provide details):
               </label>
             </div>
@@ -1501,91 +914,45 @@
 
             <!-- Limited roof weight loading (placarded) -->
             <div>
-              <label
-                for="limitedRoofWeight"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="limitedRoofWeight"
-                  type="checkbox"
-                  v-model="waH_Hazard"
-                  value="Limited roof weight loading (placarded)"
-                />
+              <label for="limitedRoofWeight" class="text-gray-700 dark:text-gray-200">
+                <input id="limitedRoofWeight" type="checkbox" v-model="waH_Hazard"
+                  value="Limited roof weight loading (placarded)" />
                 Limited roof weight loading (placarded)
               </label>
             </div>
             <!-- Unsecured ladders -->
             <div>
-              <label
-                for="unsecuredLadders"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="unsecuredLadders"
-                  type="checkbox"
-                  v-model="waH_Hazard"
-                  value="Unsecured ladders"
-                />
+              <label for="unsecuredLadders" class="text-gray-700 dark:text-gray-200">
+                <input id="unsecuredLadders" type="checkbox" v-model="waH_Hazard" value="Unsecured ladders" />
                 Unsecured ladders
               </label>
             </div>
             <!-- Uneven floor surfaces -->
             <div>
-              <label
-                for="unevenFloorSurfaces"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="unevenFloorSurfaces"
-                  type="checkbox"
-                  v-model="waH_Hazard"
-                  value="Uneven floor surfaces"
-                />
+              <label for="unevenFloorSurfaces" class="text-gray-700 dark:text-gray-200">
+                <input id="unevenFloorSurfaces" type="checkbox" v-model="waH_Hazard" value="Uneven floor surfaces" />
                 Uneven floor surfaces
               </label>
             </div>
             <!-- Fragile roofs -->
             <div>
-              <label
-                for="fragileRoofs"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="fragileRoofs"
-                  type="checkbox"
-                  v-model="waH_Hazard"
-                  value="Fragile roofs"
-                />
+              <label for="fragileRoofs" class="text-gray-700 dark:text-gray-200">
+                <input id="fragileRoofs" type="checkbox" v-model="waH_Hazard" value="Fragile roofs" />
                 Fragile roofs
               </label>
             </div>
             <!-- Slippery surface -->
             <div>
-              <label
-                for="slipperySurface"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="slipperySurface"
-                  type="checkbox"
-                  v-model="waH_Hazard"
-                  value="Slippery surface"
-                />
+              <label for="slipperySurface" class="text-gray-700 dark:text-gray-200">
+                <input id="slipperySurface" type="checkbox" v-model="waH_Hazard" value="Slippery surface" />
                 Slippery surface
               </label>
             </div>
             <!-- Additional other checkbox -->
             <div>
-              <label
-                for="additionalOther"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="additionalOther"
-                  type="checkbox"
-                  v-model="waH_Hazard"
-                  value="Additional other (provide details)"
-                />
+              <label for="additionalOther" class="text-gray-700 dark:text-gray-200">
+                <input id="additionalOther" type="checkbox" v-model="waH_Hazard"
+                  value="Additional other (provide details)" />
                 Additional other (provide details):
               </label>
             </div>
@@ -1593,15 +960,14 @@
           <div class="pt-6">
             <hr />
             <div class="pt-2"></div>
-            <label
-              class="font-bold text-gray-700 dark:text-gray-200"
-              for="workInvolvement"
-            >
+            <label class="font-bold text-gray-700 dark:text-gray-200" for="workInvolvement">
               Does the work involve use of any of the following? (Please
               indicate only where relevant)
             </label>
           </div>
-          <div class="pt-2"><hr /></div>
+          <div class="pt-2">
+            <hr />
+          </div>
           <div class="grid grid-cols-1 pt-2 gap-6 mt-4 sm:grid-cols-3">
             <!-- Ladders -->
             <div>
@@ -1613,22 +979,14 @@
 
             <div>
               <label for="scaffolding" class="text-gray-700 dark:text-gray-200">
-                <input
-                  id="scaffolding"
-                  type="checkbox"
-                  v-model="checkscaffolding"
-                />
+                <input id="scaffolding" type="checkbox" v-model="checkscaffolding" />
                 Scaffolding
               </label>
             </div>
             <!-- Lift Truck -->
             <div>
               <label for="liftTruck" class="text-gray-700 dark:text-gray-200">
-                <input
-                  id="liftTruck"
-                  type="checkbox"
-                  v-model="liftruckScissorlift"
-                />
+                <input id="liftTruck" type="checkbox" v-model="liftruckScissorlift" />
                 Lift truck / Scissor lift
               </label>
             </div>
@@ -1637,10 +995,7 @@
 
             <!-- Working Alone or in Isolation -->
             <div>
-              <label
-                for="workingAlone"
-                class="text-gray-700 dark:text-gray-200"
-              >
+              <label for="workingAlone" class="text-gray-700 dark:text-gray-200">
                 <input id="workingAlone" type="checkbox" />
                 Working alone or in isolation
               </label>
@@ -1648,10 +1003,7 @@
 
             <!-- Travel Restraint -->
             <div>
-              <label
-                for="travelRestraint"
-                class="text-gray-700 dark:text-gray-200"
-              >
+              <label for="travelRestraint" class="text-gray-700 dark:text-gray-200">
                 <input id="travelRestraint" type="checkbox" />
                 Travel restraint
               </label>
@@ -1677,10 +1029,7 @@
 
             <!-- Climbing Technique (using lanyard) -->
             <div>
-              <label
-                for="climbingTechnique"
-                class="text-gray-700 dark:text-gray-200"
-              >
+              <label for="climbingTechnique" class="text-gray-700 dark:text-gray-200">
                 <input id="climbingTechnique" type="checkbox" />
                 Climbing technique (using lanyard)
               </label>
@@ -1688,10 +1037,7 @@
 
             <!-- Other (provide details) -->
             <div>
-              <label
-                for="otherEquipment"
-                class="text-gray-700 dark:text-gray-200"
-              >
+              <label for="otherEquipment" class="text-gray-700 dark:text-gray-200">
                 <input id="otherEquipment" type="checkbox" />
                 Other (provide details):
               </label>
@@ -1701,93 +1047,56 @@
             <div class="pt-6">
               <hr />
               <div class="pt-2"></div>
-              <label
-                class="font-bold text-gray-700 dark:text-gray-200"
-                for="workInvolvement"
-              >
+              <label class="font-bold text-gray-700 dark:text-gray-200" for="workInvolvement">
                 Ladder {{ waH_Ladders }}
               </label>
             </div>
-            <div class="pt-2"><hr /></div>
+            <div class="pt-2">
+              <hr />
+            </div>
 
             <div class="grid grid-cols-1 pt-2 gap-6 mt-4 sm:grid-cols-2">
               <!-- Is the ladder in good condition and suitable for the task? -->
               <div>
-                <label
-                  for="ladderCondition"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="ladderCondition"
-                    type="checkbox"
-                    v-model="waH_Ladders"
-                    value="Is the ladder in good condition and suitable for the task?"
-                  />
+                <label for="ladderCondition" class="text-gray-700 dark:text-gray-200">
+                  <input id="ladderCondition" type="checkbox" v-model="waH_Ladders"
+                    value="Is the ladder in good condition and suitable for the task?" />
                   Is the ladder in good condition and suitable for the task?
                 </label>
               </div>
 
               <!-- Is the ladder tall enough for the task? -->
               <div>
-                <label
-                  for="ladderHeight"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="ladderHeight"
-                    type="checkbox"
-                    v-model="waH_Ladders"
-                    value="Is the ladder tall enough for the task?"
-                  />
+                <label for="ladderHeight" class="text-gray-700 dark:text-gray-200">
+                  <input id="ladderHeight" type="checkbox" v-model="waH_Ladders"
+                    value="Is the ladder tall enough for the task?" />
                   Is the ladder tall enough for the task?
                 </label>
               </div>
 
               <!-- Is the ladder on a level footing? -->
               <div>
-                <label
-                  for="ladderLevel"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="ladderLevel"
-                    type="checkbox"
-                    v-model="waH_Ladders"
-                    value="Is the ladder on a level footing?"
-                  />
+                <label for="ladderLevel" class="text-gray-700 dark:text-gray-200">
+                  <input id="ladderLevel" type="checkbox" v-model="waH_Ladders"
+                    value="Is the ladder on a level footing?" />
                   Is the ladder on a level footing?
                 </label>
               </div>
 
               <!-- Is the area below barricaded? -->
               <div>
-                <label
-                  for="areaBarricaded"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="areaBarricaded"
-                    type="checkbox"
-                    v-model="waH_Ladders"
-                    value="Is the area below barricaded?"
-                  />
+                <label for="areaBarricaded" class="text-gray-700 dark:text-gray-200">
+                  <input id="areaBarricaded" type="checkbox" v-model="waH_Ladders"
+                    value="Is the area below barricaded?" />
                   Is the area below barricaded?
                 </label>
               </div>
 
               <!-- Is the ladder secured top and bottom? -->
               <div>
-                <label
-                  for="ladderSecured"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="ladderSecured"
-                    type="checkbox"
-                    v-model="waH_Ladders"
-                    value="Is the ladder secured top and bottom? (not applicable for step
-                  ladders)"
-                  />
+                <label for="ladderSecured" class="text-gray-700 dark:text-gray-200">
+                  <input id="ladderSecured" type="checkbox" v-model="waH_Ladders" value="Is the ladder secured top and bottom? (not applicable for step
+                  ladders)" />
                   Is the ladder secured top and bottom? (not applicable for step
                   ladders)
                 </label>
@@ -1795,17 +1104,9 @@
 
               <!-- Is the ladder extended with at least three (3) rungs or 900mm overlap? -->
               <div>
-                <label
-                  for="ladderExtended"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="ladderExtended"
-                    type="checkbox"
-                    v-model="waH_Ladders"
-                    value="Is the ladder extended with at least three (3) rungs or 900mm
-                  overlap?"
-                  />
+                <label for="ladderExtended" class="text-gray-700 dark:text-gray-200">
+                  <input id="ladderExtended" type="checkbox" v-model="waH_Ladders" value="Is the ladder extended with at least three (3) rungs or 900mm
+                  overlap?" />
                   Is the ladder extended with at least three (3) rungs or 900mm
                   overlap?
                 </label>
@@ -1813,16 +1114,9 @@
 
               <!-- Is the ladder position 1 in 4 ratio? -->
               <div>
-                <label
-                  for="ladderRatio"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="ladderRatio"
-                    type="checkbox"
-                    v-model="waH_Ladders"
-                    value="Is the ladder position 1 in 4 ratio?"
-                  />
+                <label for="ladderRatio" class="text-gray-700 dark:text-gray-200">
+                  <input id="ladderRatio" type="checkbox" v-model="waH_Ladders"
+                    value="Is the ladder position 1 in 4 ratio?" />
                   Is the ladder position 1 in 4 ratio?
                 </label>
               </div>
@@ -1833,27 +1127,18 @@
             <div class="pt-6">
               <hr />
               <div class="pt-2"></div>
-              <label
-                class="font-bold text-gray-700 dark:text-gray-200"
-                for="workInvolvement"
-              >
+              <label class="font-bold text-gray-700 dark:text-gray-200" for="workInvolvement">
                 Scaffolding {{ waH_Scaffolding }}
               </label>
             </div>
-            <div class="pt-2"><hr /></div>
+            <div class="pt-2">
+              <hr />
+            </div>
             <div class="grid grid-cols-1 pt-2 gap-6 mt-4 sm:grid-cols-2">
               <!-- Are kick boards in place? -->
               <div>
-                <label
-                  for="kickBoards"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="kickBoards"
-                    type="checkbox"
-                    v-model="waH_Scaffolding"
-                    value=" Are kick boards in place?"
-                  />
+                <label for="kickBoards" class="text-gray-700 dark:text-gray-200">
+                  <input id="kickBoards" type="checkbox" v-model="waH_Scaffolding" value=" Are kick boards in place?" />
                   Are kick boards in place?
                 </label>
               </div>
@@ -1861,12 +1146,7 @@
               <!-- Are hand rails in place? -->
               <div>
                 <label for="handRails" class="text-gray-700 dark:text-gray-200">
-                  <input
-                    id="handRails"
-                    type="checkbox"
-                    v-model="waH_Scaffolding"
-                    value="Are hand rails in place?"
-                  />
+                  <input id="handRails" type="checkbox" v-model="waH_Scaffolding" value="Are hand rails in place?" />
                   Are hand rails in place?
                 </label>
               </div>
@@ -1874,61 +1154,34 @@
               <!-- Are mid rails in place? -->
               <div>
                 <label for="midRails" class="text-gray-700 dark:text-gray-200">
-                  <input
-                    id="midRails"
-                    type="checkbox"
-                    v-model="waH_Scaffolding"
-                    value="Are mid rails in place?"
-                  />
+                  <input id="midRails" type="checkbox" v-model="waH_Scaffolding" value="Are mid rails in place?" />
                   Are mid rails in place?
                 </label>
               </div>
 
               <!-- Is the ladder installed internally (if applicable)? -->
               <div>
-                <label
-                  for="internalLadder"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="internalLadder"
-                    type="checkbox"
-                    v-model="waH_Scaffolding"
-                    value="Is the ladder installed internally (if applicable)?"
-                  />
+                <label for="internalLadder" class="text-gray-700 dark:text-gray-200">
+                  <input id="internalLadder" type="checkbox" v-model="waH_Scaffolding"
+                    value="Is the ladder installed internally (if applicable)?" />
                   Is the ladder installed internally (if applicable)?
                 </label>
               </div>
 
               <!-- Is the scaffold on a solid footing? -->
               <div>
-                <label
-                  for="solidFooting"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="solidFooting"
-                    type="checkbox"
-                    v-model="waH_Scaffolding"
-                    value="Is the scaffold on a solid footing?"
-                  />
+                <label for="solidFooting" class="text-gray-700 dark:text-gray-200">
+                  <input id="solidFooting" type="checkbox" v-model="waH_Scaffolding"
+                    value="Is the scaffold on a solid footing?" />
                   Is the scaffold on a solid footing?
                 </label>
               </div>
 
               <!-- Are the wheels in locked position when in use? -->
               <div>
-                <label
-                  for="wheelsLocked"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="wheelsLocked"
-                    type="checkbox"
-                    v-model="waH_Scaffolding"
-                    value="Are the wheels in locked position when in use? (e.g. mobile
-                  scaffold)"
-                  />
+                <label for="wheelsLocked" class="text-gray-700 dark:text-gray-200">
+                  <input id="wheelsLocked" type="checkbox" v-model="waH_Scaffolding" value="Are the wheels in locked position when in use? (e.g. mobile
+                  scaffold)" />
                   Are the wheels in locked position when in use? (e.g. mobile
                   scaffold)
                 </label>
@@ -1936,64 +1189,36 @@
 
               <!-- Is the area below barricaded? -->
               <div>
-                <label
-                  for="areaBarricadedScaffold"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="areaBarricadedScaffold"
-                    type="checkbox"
-                    v-model="waH_Scaffolding"
-                    value="Is the area below barricaded?"
-                  />
+                <label for="areaBarricadedScaffold" class="text-gray-700 dark:text-gray-200">
+                  <input id="areaBarricadedScaffold" type="checkbox" v-model="waH_Scaffolding"
+                    value="Is the area below barricaded?" />
                   Is the area below barricaded?
                 </label>
               </div>
 
               <!-- Is the scaffold operating within safe working limits? -->
               <div>
-                <label
-                  for="safeWorkingLimits"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="safeWorkingLimits"
-                    type="checkbox"
-                    v-model="waH_Scaffolding"
-                    value="Is the scaffold operating within safe working limits?"
-                  />
+                <label for="safeWorkingLimits" class="text-gray-700 dark:text-gray-200">
+                  <input id="safeWorkingLimits" type="checkbox" v-model="waH_Scaffolding"
+                    value="Is the scaffold operating within safe working limits?" />
                   Is the scaffold operating within safe working limits?
                 </label>
               </div>
 
               <!-- Is the area free from overhead obstructions? -->
               <div>
-                <label
-                  for="freeFromObstructions"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="freeFromObstructions"
-                    type="checkbox"
-                    v-model="waH_Scaffolding"
-                    value="Is the area free from overhead obstructions?"
-                  />
+                <label for="freeFromObstructions" class="text-gray-700 dark:text-gray-200">
+                  <input id="freeFromObstructions" type="checkbox" v-model="waH_Scaffolding"
+                    value="Is the area free from overhead obstructions?" />
                   Is the area free from overhead obstructions?
                 </label>
               </div>
 
               <!-- Is the scaffold erected by a competent person? -->
               <div>
-                <label
-                  for="competentPerson"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="competentPerson"
-                    type="checkbox"
-                    v-model="waH_Scaffolding"
-                    value="Is the scaffold erected by a competent person?"
-                  />
+                <label for="competentPerson" class="text-gray-700 dark:text-gray-200">
+                  <input id="competentPerson" type="checkbox" v-model="waH_Scaffolding"
+                    value="Is the scaffold erected by a competent person?" />
                   Is the scaffold erected by a competent person?
                 </label>
               </div>
@@ -2003,75 +1228,45 @@
             <div class="pt-6">
               <hr />
               <div class="pt-2"></div>
-              <label
-                class="font-bold text-gray-700 dark:text-gray-200"
-                for="workInvolvement"
-              >
+              <label class="font-bold text-gray-700 dark:text-gray-200" for="workInvolvement">
                 Lift truck / Scissor lift {{ waH_LiftTruck }}
               </label>
             </div>
-            <div class="pt-2"><hr /></div>
+            <div class="pt-2">
+              <hr />
+            </div>
             <div class="grid grid-cols-1 pt-2 gap-6 mt-4 sm:grid-cols-2">
               <!-- Permission to use attained? -->
               <div>
-                <label
-                  for="permissionToUse"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="permissionToUse"
-                    type="checkbox"
-                    v-model="waH_LiftTruck"
-                    value="Permission to use attained?"
-                  />
+                <label for="permissionToUse" class="text-gray-700 dark:text-gray-200">
+                  <input id="permissionToUse" type="checkbox" v-model="waH_LiftTruck"
+                    value="Permission to use attained?" />
                   Permission to use attained?
                 </label>
               </div>
 
               <!-- Equipment in good working order? -->
               <div>
-                <label
-                  for="equipmentGoodOrder"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="equipmentGoodOrder"
-                    type="checkbox"
-                    v-model="waH_LiftTruck"
-                    value="Equipment in good working order?"
-                  />
+                <label for="equipmentGoodOrder" class="text-gray-700 dark:text-gray-200">
+                  <input id="equipmentGoodOrder" type="checkbox" v-model="waH_LiftTruck"
+                    value="Equipment in good working order?" />
                   Equipment in good working order?
                 </label>
               </div>
 
               <!-- Battery fully charged? -->
               <div>
-                <label
-                  for="batteryCharged"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="batteryCharged"
-                    type="checkbox"
-                    v-model="waH_LiftTruck"
-                    value="Battery fully charged?"
-                  />
+                <label for="batteryCharged" class="text-gray-700 dark:text-gray-200">
+                  <input id="batteryCharged" type="checkbox" v-model="waH_LiftTruck" value="Battery fully charged?" />
                   Battery fully charged?
                 </label>
               </div>
 
               <!-- Equipment physically checked? -->
               <div>
-                <label
-                  for="equipmentChecked"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="equipmentChecked"
-                    type="checkbox"
-                    v-model="waH_LiftTruck"
-                    value="Equipment physically checked?"
-                  />
+                <label for="equipmentChecked" class="text-gray-700 dark:text-gray-200">
+                  <input id="equipmentChecked" type="checkbox" v-model="waH_LiftTruck"
+                    value="Equipment physically checked?" />
                   Equipment physically checked?
                 </label>
               </div>
@@ -2082,43 +1277,27 @@
             <div class="pt-6">
               <hr />
               <div class="pt-2"></div>
-              <label
-                class="font-bold text-gray-700 dark:text-gray-200"
-                for="workInvolvement"
-              >
+              <label class="font-bold text-gray-700 dark:text-gray-200" for="workInvolvement">
                 Man cage {{ waH_ManCage }}
               </label>
             </div>
-            <div class="pt-2"><hr /></div>
+            <div class="pt-2">
+              <hr />
+            </div>
             <div class="grid grid-cols-1 pt-2 gap-6 mt-4 sm:grid-cols-2">
               <!-- Securing chain and shackle available? -->
               <div>
-                <label
-                  for="securingChain"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="securingChain"
-                    type="checkbox"
-                    v-model="waH_ManCage"
-                    value="Securing chain and shackle available?"
-                  />
+                <label for="securingChain" class="text-gray-700 dark:text-gray-200">
+                  <input id="securingChain" type="checkbox" v-model="waH_ManCage"
+                    value="Securing chain and shackle available?" />
                   Securing chain and shackle available?
                 </label>
               </div>
 
               <!-- Free of physical damage? -->
               <div>
-                <label
-                  for="freeOfDamage"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="freeOfDamage"
-                    type="checkbox"
-                    v-model="waH_ManCage"
-                    value="Free of physical damage?"
-                  />
+                <label for="freeOfDamage" class="text-gray-700 dark:text-gray-200">
+                  <input id="freeOfDamage" type="checkbox" v-model="waH_ManCage" value="Free of physical damage?" />
                   Free of physical damage?
                 </label>
               </div>
@@ -2126,12 +1305,8 @@
               <!-- Appropriate slot size for forks available? -->
               <div>
                 <label for="slotSize" class="text-gray-700 dark:text-gray-200">
-                  <input
-                    id="slotSize"
-                    type="checkbox"
-                    v-model="waH_ManCage"
-                    value="Appropriate slot size for forks available?"
-                  />
+                  <input id="slotSize" type="checkbox" v-model="waH_ManCage"
+                    value="Appropriate slot size for forks available?" />
                   Appropriate slot size for forks available?
                 </label>
               </div>
@@ -2142,30 +1317,21 @@
             <hr />
             <div class="pt-2"></div>
           </div>
-          <label
-            class="font-bold text-gray-700 dark:text-gray-200"
-            for="workInvolvement"
-          >
+          <label class="font-bold text-gray-700 dark:text-gray-200" for="workInvolvement">
             Emergency Arrangements for use of Fall Arrest Equipment
             <span class="text-sm">(not applicable for fall restraint)</span>
             {{ waH_Emergency }}
           </label>
-          <div class="pt-2"><hr /></div>
+          <div class="pt-2">
+            <hr />
+          </div>
 
           <div class="grid grid-cols-1 pt-2 gap-6 mt-4 sm:grid-cols-2">
             <!-- Have emergency and rescue procedures been established, tested and recorded? -->
             <div>
-              <label
-                for="emergencyProcedures"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="emergencyProcedures"
-                  type="checkbox"
-                  v-model="waH_Emergency"
-                  value="Have emergency and rescue procedures been established, tested
-                and recorded? (These items can be recorded in JHA)"
-                />
+              <label for="emergencyProcedures" class="text-gray-700 dark:text-gray-200">
+                <input id="emergencyProcedures" type="checkbox" v-model="waH_Emergency" value="Have emergency and rescue procedures been established, tested
+                and recorded? (These items can be recorded in JHA)" />
                 Have emergency and rescue procedures been established, tested
                 and recorded? (These items can be recorded in JHA)
               </label>
@@ -2173,17 +1339,9 @@
 
             <!-- Have appropriate communication arrangements been established for potential emergencies? -->
             <div>
-              <label
-                for="communicationArrangements"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="communicationArrangements"
-                  type="checkbox"
-                  v-model="waH_Emergency"
-                  value="Have appropriate communication arrangements been established for
-                potential emergencies?"
-                />
+              <label for="communicationArrangements" class="text-gray-700 dark:text-gray-200">
+                <input id="communicationArrangements" type="checkbox" v-model="waH_Emergency" value="Have appropriate communication arrangements been established for
+                potential emergencies?" />
                 Have appropriate communication arrangements been established for
                 potential emergencies?
               </label>
@@ -2199,26 +1357,20 @@
           <div class="pt-6">
             <hr />
             <div class="pt-2"></div>
-            <label
-              class="font-bold text-gray-700 dark:text-gray-200"
-              for="workInvolvement"
-            >
+            <label class="font-bold text-gray-700 dark:text-gray-200" for="workInvolvement">
               Mandatory Control Measures {{ waH_ControlMeasure }}
             </label>
           </div>
-          <div class="pt-2"><hr /></div>
+          <div class="pt-2">
+            <hr />
+          </div>
 
           <div class="grid grid-cols-1 pt-2 gap-6 mt-4 sm:grid-cols-2">
             <!-- A task/site specific JHA, or equivalent, has been developed and appropriately addresses identified work at height hazards? -->
             <div>
               <label for="specificJHA" class="text-gray-700 dark:text-gray-200">
-                <input
-                  id="specificJHA"
-                  type="checkbox"
-                  v-model="waH_ControlMeasure"
-                  value=" A task/site specific JHA, or equivalent, has been developed and
-                appropriately addresses identified work at height hazards?"
-                />
+                <input id="specificJHA" type="checkbox" v-model="waH_ControlMeasure" value=" A task/site specific JHA, or equivalent, has been developed and
+                appropriately addresses identified work at height hazards?" />
                 A task/site specific JHA, or equivalent, has been developed and
                 appropriately addresses identified work at height hazards?
               </label>
@@ -2227,13 +1379,8 @@
             <!-- The JHA, or equivalent, has been reviewed and is understood by those involved in the task? -->
             <div>
               <label for="jhaReviewed" class="text-gray-700 dark:text-gray-200">
-                <input
-                  id="jhaReviewed"
-                  type="checkbox"
-                  v-model="waH_ControlMeasure"
-                  value="The JHA, or equivalent, has been reviewed and is understood by
-                those involved in the task?"
-                />
+                <input id="jhaReviewed" type="checkbox" v-model="waH_ControlMeasure" value="The JHA, or equivalent, has been reviewed and is understood by
+                those involved in the task?" />
                 The JHA, or equivalent, has been reviewed and is understood by
                 those involved in the task?
               </label>
@@ -2241,18 +1388,10 @@
 
             <!-- Those involved in the work at height activities are appropriately competent and can produce evidence of training where requested? -->
             <div>
-              <label
-                for="competentTraining"
-                class="text-gray-700 dark:text-gray-200"
-              >
-                <input
-                  id="competentTraining"
-                  type="checkbox"
-                  v-model="waH_ControlMeasure"
-                  value="Those involved in the work at height activities are
+              <label for="competentTraining" class="text-gray-700 dark:text-gray-200">
+                <input id="competentTraining" type="checkbox" v-model="waH_ControlMeasure" value="Those involved in the work at height activities are
                 appropriately competent and can produce evidence of training
-                where requested?"
-                />
+                where requested?" />
                 Those involved in the work at height activities are
                 appropriately competent and can produce evidence of training
                 where requested?
@@ -2262,31 +1401,19 @@
 
           <div class="pt-4 grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
             <div>
-              <label
-                class="font-bold text-gray-700 dark:text-gray-200"
-                for="username"
-                >Upload Files (List of People Involved)</label
-              >
+              <label class="font-bold text-gray-700 dark:text-gray-200" for="username">Upload Files (List of People
+                Involved)</label>
 
               <!-- component -->
 
               <div>
                 <Div class="pt-3">
-                  <FilePond
-                    ref="pond2"
-                    name="file"
-                    :server="null"
-                    :allowMultiple="true"
-                    :maxFileSize="'5MB'"
+                  <FilePond ref="pond2" name="file" :server="null" :allowMultiple="true" :maxFileSize="'5MB'"
                     :acceptedFileTypes="[
                       'image/png',
                       'image/jpeg',
                       'application/pdf',
-                    ]"
-                    :fileRenameFunction = "renameFile2"
-                    @addfile="handleAddFile2"
-                    @removefile="handleRemoveFile2"
-                  />
+                    ]" :fileRenameFunction="renameFile2" @addfile="handleAddFile2" @removefile="handleRemoveFile2" />
                 </Div>
                 <!-- component -->
               </div>
@@ -2301,11 +1428,7 @@
 
             <!-- Authority Check section with digital form fields -->
             <div>
-              <label
-                class="font-bold text-gray-700 dark:text-gray-200"
-                for="authority"
-                >Authority</label
-              >
+              <label class="font-bold text-gray-700 dark:text-gray-200" for="authority">Authority</label>
               <!-- <label
                   id="authority"
                   class="form-textarea mt-1 block w-full"
@@ -2316,41 +1439,18 @@
 
             <div class="grid grid-cols-3 gap-4 pt-4">
               <div>
-                <label
-                  for="contractorSignature"
-                  class="font-bold text-gray-700 dark:text-gray-200"
-                  >Signed (Contractor Representative)</label
-                >
-                <input
-                  type="text"
-                  id="contractorSignature"
-                  class="form-input mt-1 block w-full"
-                  placeholder="Signature"
-                />
+                <label for="contractorSignature" class="font-bold text-gray-700 dark:text-gray-200">Signed (Contractor
+                  Representative)</label>
+                <input type="text" id="contractorSignature" class="form-input mt-1 block w-full"
+                  placeholder="Signature" />
               </div>
               <div>
-                <label
-                  for="contractorDate"
-                  class="font-bold text-gray-700 dark:text-gray-200"
-                  >Date</label
-                >
-                <input
-                  type="date"
-                  id="contractorDate"
-                  class="form-input mt-1 block w-full"
-                />
+                <label for="contractorDate" class="font-bold text-gray-700 dark:text-gray-200">Date</label>
+                <input type="date" id="contractorDate" class="form-input mt-1 block w-full" />
               </div>
               <div>
-                <label
-                  for="contractorTime"
-                  class="font-bold text-gray-700 dark:text-gray-200"
-                  >Time</label
-                >
-                <input
-                  type="time"
-                  id="contractorTime"
-                  class="form-input mt-1 block w-full"
-                />
+                <label for="contractorTime" class="font-bold text-gray-700 dark:text-gray-200">Time</label>
+                <input type="time" id="contractorTime" class="form-input mt-1 block w-full" />
               </div>
             </div>
 
@@ -2368,99 +1468,52 @@
       </section>
     </div>
     <div
-      class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8"
-    >
-      <section
-        class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800"
-      >
+      class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8">
+      <section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
         <div class=" ">
-          <h2
-            class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
-          >
+          <h2 class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white">
             Job Hazard Analysis
           </h2>
         </div>
 
         <form>
-          <div
-            class="grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
-          >
+          <div class="grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full">
             <div class="w-full">
-              <label
-                for="Jobdescription"
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                >Job Description<span class="text-red-500">*</span></label
-              >
-              <textarea
-                v-model="Jobdescription"
-                id="Jobdescription"
+              <label for="Jobdescription" class="font-semibold text-gray-700 dark:text-gray-200">Job Description<span
+                  class="text-red-500">*</span></label>
+              <textarea v-model="Jobdescription" id="Jobdescription"
                 class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                required
-              ></textarea>
+                required></textarea>
             </div>
           </div>
           <div>
-            <div
-              v-for="(task, index) in tasks"
-              :key="index"
-              class="relative grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3"
-            >
+            <div v-for="(task, index) in tasks" :key="index" class="relative grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
               <div>
-                <label
-                  class="font-semibold text-gray-700 dark:text-gray-200"
-                  :for="'task-' + index"
-                  >Sequence of Tasks {{ index + 1 }}</label
-                >
-                <textarea
-                  v-model="task.sequenceTask"
-                  :id="'task-' + index"
-                  type="text"
-                  rows="5"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                ></textarea>
+                <label class="font-semibold text-gray-700 dark:text-gray-200" :for="'task-' + index">Sequence of Tasks {{
+                  index + 1 }}</label>
+                <textarea v-model="task.sequenceTask" :id="'task-' + index" type="text" rows="5"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"></textarea>
               </div>
               <div>
-                <label
-                  class="font-semibold text-gray-700 dark:text-gray-200"
-                  :for="'hazard-' + index"
-                  >Potential Hazards {{ index + 1 }}</label
-                >
-                <textarea
-                  v-model="task.potentialHazard"
-                  :id="'hazard-' + index"
-                  type="text"
-                  rows="5"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                ></textarea>
+                <label class="font-semibold text-gray-700 dark:text-gray-200" :for="'hazard-' + index">Potential Hazards
+                  {{ index + 1 }}</label>
+                <textarea v-model="task.potentialHazard" :id="'hazard-' + index" type="text" rows="5"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"></textarea>
               </div>
               <div>
-                <label
-                  class="font-semibold text-gray-700 dark:text-gray-200"
-                  :for="'measure-' + index"
-                  >Preventive Measures {{ index + 1 }}</label
-                >
+                <label class="font-semibold text-gray-700 dark:text-gray-200" :for="'measure-' + index">Preventive
+                  Measures {{ index + 1 }}</label>
                 <div class="flex">
-                  <textarea
-                    v-model="task.preventiveMeasures"
-                    :id="'measure-' + index"
-                    type="text"
-                    rows="5"
-                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                  ></textarea>
-                  <button
-                    @click.prevent="removeTask(index)"
-                    v-if="tasks.length > 1"
-                    class="bg-red-500 text-white font-bold text-3xl w-8 h-8 my-auto rounded justify-end ml-0"
-                  >
+                  <textarea v-model="task.preventiveMeasures" :id="'measure-' + index" type="text" rows="5"
+                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"></textarea>
+                  <button @click.prevent="removeTask(index)" v-if="tasks.length > 1"
+                    class="bg-red-500 text-white font-bold text-3xl w-8 h-8 my-auto rounded justify-end ml-0">
                     -
                   </button>
                 </div>
               </div>
             </div>
-            <button
-              @click.prevent="addTask"
-              class="bg-blue-500 text-white px-4 py-2 rounded"
-            >
+            <button @click.prevent="addTask" class="bg-blue-500 text-white px-4 py-2 rounded">
               Add
             </button>
           </div>
@@ -2485,10 +1538,8 @@
 
     <!-- Submit button -->
     <div class="flex justify-end mt-6">
-      <button
-        @click="showModal"
-        class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-blue-900 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
-      >
+      <button @click="showModal"
+        class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-blue-900 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
         Submit
       </button>
     </div>
@@ -2510,29 +1561,33 @@
     <!-- footer -->
     <template v-slot:footer>
       <div class="grid grid-cols-2 gap-3">
-        <button
-          @click="closeModal"
-          type="button"
-          class="rounded-2xl bg-gray-600 shadow-md p-3 my-1 w-full text-white"
-        >
+        <button @click="closeModal" type="button" class="rounded-2xl bg-gray-600 shadow-md p-3 my-1 w-full text-white">
           Cancel
         </button>
-        <div v-show= "showConfirmButton">
-          <button @click="submitForm" type="button" class="rounded-2xl bg-blue-800 shadow-md p-3 my-1 w-full text-white  items-center">
-   
-    Confirm
-</button>
-</div>
-<div v-show = "showLoadingButton">
-  <button disabled="" type="button" class="rounded-2xl bg-blue-800 shadow-md p-3 my-1 w-full text-white  items-center">
-    <svg aria-hidden="true" role="status" class="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"></path>
-    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"></path>
-    </svg>
-    Loading....
-</button>
-      
-      </div>
+        <div v-show="showConfirmButton">
+          <button @click="submitForm" type="button"
+            class="rounded-2xl bg-blue-800 shadow-md p-3 my-1 w-full text-white  items-center">
+
+            Confirm
+          </button>
+        </div>
+        <div v-show="showLoadingButton">
+          <button disabled="" type="button"
+            class="rounded-2xl bg-blue-800 shadow-md p-3 my-1 w-full text-white  items-center">
+            <svg aria-hidden="true" role="status"
+              class="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                fill="currentColor"></path>
+              <path
+                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                fill="#1C64F2"></path>
+            </svg>
+            Loading....
+          </button>
+
+        </div>
       </div>
     </template>
   </Modal>
@@ -2644,13 +1699,13 @@ export default {
   },
   methods: {
     renameFile(file) {
-    // Example: Prepend 'uploaded_' to the original file name
-    return `SECURITY_${file.name}`;
-  },
-  renameFile2(file) {
-    // Example: Prepend 'uploaded_' to the original file name
-    return `WAH_${file.name}`;
-  },
+      // Example: Prepend 'uploaded_' to the original file name
+      return `SECURITY_${file.name}`;
+    },
+    renameFile2(file) {
+      // Example: Prepend 'uploaded_' to the original file name
+      return `WAH_${file.name}`;
+    },
     handleAddFile1(error, fileItem) {
       if (!error) {
         this.files1.push(fileItem.file);
@@ -2670,9 +1725,9 @@ export default {
     updateFormData(formData) {
       this.formData = formData;
     },
-    async submitForm() {
+    submitForm() {
       this.showConfirmButton = false;
-      this.showLoadingButton= true;
+      this.showLoadingButton = true;
       let combinedFormData = {
         branch: this.branch,
         vendorName: this.Contractorvendorname,
@@ -2744,30 +1799,31 @@ export default {
         userId: this.userDetails.userId,
       };
 
-      try {
-        axios
-          .post("http://172.28.28.91:8085/api/Main/InsertPTW", combinedFormData)
-          .then((response) => {
-            console.log("respon server:", response.data);
-            this.uploadMultiImage();
-          });
-       // console.log("Server response 2:", response.data);
-      } catch (error) {
-        if (error.response) {
-          console.log(
-            "Server responded with status code:",
-            error.response.status
-          );
-          console.log("Response data:", error.response.data);
-        } else if (error.request) {
-          console.log("No response received:", error.request);
-        } else {
-          console.log("Error creating request:", error.message);
-        }
 
-        console.error("Error submitting form:", error);
-        // Handle errors, such as showing an error message
-      }
+      axios
+        .post("http://172.28.28.91:8085/api/Main/InsertPTW", combinedFormData)
+        .then((response) => {
+          console.log("Server response:", response.data);
+          this.uploadMultiImage();
+          // Handle the response, such as showing a success message
+        })
+        .catch((error) => {
+          console.log("Error submitting form:", error);
+          // Handle errors, such as showing an error message
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log("Server responded with status code:", error.response.status);
+            console.log("Response data:", error.response.data);
+          } else if (error.request) {
+            // The request was made but no response was received
+            console.log("No response received:", error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error message:", error.message);
+          }
+        });
+
     },
     addTask() {
       this.tasks.push({
@@ -2782,10 +1838,10 @@ export default {
     uploadMultiImage() {
       let formData = new FormData();
       this.files1.forEach((file) => {
-        formData.append("filecollection", file,file.name);
+        formData.append("filecollection", file, file.name);
       });
       this.files2.forEach((file) => {
-        formData.append("filecollection", file,file.name);
+        formData.append("filecollection", file, file.name);
       });
 
       const url = `http://172.28.28.91:8085/api/Files/MultiUploadImage/${this.userDetails.userId}/${this.uniqueCode}`;
@@ -2855,4 +1911,4 @@ export default {
   },
 };
 </script>
-f
+
