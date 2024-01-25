@@ -260,7 +260,7 @@ export default {
     // else{
     //   this.$router.push("/Managerequest");
     // }
-    
+    store.setSelectedLocation(this.selectedLocation, this.locations);
   },
   methods: {
     showContent() {

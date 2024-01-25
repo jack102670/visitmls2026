@@ -731,9 +731,9 @@
           <div class="w-full md:w-1/3">
             <div class="mb-4">
               <label for="ptwPreparedBy" class="mb-2 block text-sm font-semibold text-gray-700">
-                Last edited: {{ getRequest.modifiedDate }}
+                Last edited: {{ getRequest.securityModifiedDate }}
               </label>
-              <input v-model="getRequest.securityModifiedDate" type="text" name="ptwPreparedBy" id="ptwPreparedBy"
+              <input v-model="getRequest.securityModifiedBy" type="text" name="ptwPreparedBy" id="ptwPreparedBy"
                 class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md" />
             </div>
           </div>
@@ -808,10 +808,7 @@ export default {
       ticketStatus: "",
       userEmail: "",
 
-      securityModifiedDate: "",
-      securityAdminStatus: "",
-      securityAdminComment: "",
-      securityModifiedBy: "",
+
     };
   },
   props: {
@@ -835,7 +832,7 @@ export default {
           adminStatus: this.getRequest.securityadminStatus,
           adminComment: this.getRequest.securityadminComment,
           modifiedBy: this.getRequest.securitymodifiedBy,
-          userEmail: this.getRequest.vendorEmail,
+          userEmail: "hazman5001@gmail.com",
         })
           .then(() => {
             // Handle success
@@ -955,7 +952,7 @@ export default {
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
-            userEmail: "hazman5001@gmail.com",
+            userEmail: this.getRequest.vendorEmail,
           })
           .then((response) => {
             "Server response:", response.data;
