@@ -11,7 +11,7 @@ import PTW from "../views/PTW.vue";
 import Loginstaff from "../views/Loginstaff.vue";
 import Vendorsignup from "../views/Vendorsignup.vue";
 import Myrequest2 from "../views/Myrequest2.vue";
-
+import PTWView from "../views/PTWview.vue"
 import cctvform from "../views/cctvform.vue";
 import badgeform from "../views/badgeform.vue";
 import Maskform from "../views/Maskform.vue";
@@ -31,6 +31,7 @@ const routes = [
       default: testing,
     },
   },
+
   {
     path: "/Dashboard/",
     name: "Dashboard",
@@ -100,15 +101,30 @@ const routes = [
         name: "NewrequestDefault2",
         component: Myrequest2,
       },
+
       {
         path: "ptw",
         name: "DashboardvendorPTW",
         component: PTW,
       },
+      {
+        path: "/PTWview2/:refNumber",
+        name: "PTWview2",
+        component: PTWView,
+        
+      },
 
     ],
   },
 
+  {
+    path: "/PTWView",
+    name: "PTWView",
+    components: {
+      default: PTWView,
+      Sidebar: Newsidebar,
+    },
+  },
   {
     path: "/Myrequest2",
     name: "Myrequest2",

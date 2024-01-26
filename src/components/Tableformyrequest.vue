@@ -1236,8 +1236,9 @@ export default {
 
   methods: {
     redirectToPTWView(refNumber) {
-    // Assuming you are using vue-router
-    this.$router.push({ name: 'PTWview', params: { refNumber: refNumber } });
+      console.log(refNumber)
+ 
+      this.$router.push({ path: `/PTWView2/${refNumber}` });
   },
     getFileName(file) {
       const parts = file.split("/");
