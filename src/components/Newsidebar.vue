@@ -236,8 +236,11 @@ export default {
     };
   },
   computed: {
+    
     sidebarPosition() {
+      
       return {
+        
         left: this.open ? "240px" : "4px",
         top: this.open ? "9px" : "9px", // Add your top position style here
       };
@@ -247,12 +250,26 @@ export default {
     },
   },
   mounted() {
+
     this.userDetails = store.getSession().userDetails;
     this.token = store.data.token;
     this.role = store.getRole();
+    
     // Fetch data when the component is mounted
 
     //this.currentUser();
+   
+  
+  },
+  beforeCreate(){
+    if (!localStorage.getItem('reloaded')) {
+      localStorage.setItem('reloaded', 'true');
+      window.location.reload();
+    } else {
+      localStorage.removeItem('reloaded');
+      // Additional code for your component
+    }
+
   },
   methods: {
     logout() {
@@ -265,6 +282,7 @@ export default {
     //   axios.post("http://172.28.28.91:8085api/Security/logout")
     // },
     toggleTheme() {
+
       const root = document.documentElement;
       const isDarkMode = root.classList.contains("dark");
 
@@ -288,10 +306,12 @@ export default {
       this.dropdownOpen = false;
     },
     toggleSidebar() {
+      
       this.open = !this.open;
     },
   },
   created() {
+   
     // Retrieve the theme from localStorage when the component is created
     const storedTheme = localStorage.getItem("theme");
 

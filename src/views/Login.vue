@@ -151,7 +151,7 @@ export default {
 
           // Set the session with user details, token, and role
           // Ensure store.setSession is an async function or returns a Promise
-          await store.setSession(userDetails, token, role);
+          store.setSession(userDetails, token, role);
 
           // Redirect to the Vendor Dashboard
           this.$router.push("/Dashboardvendor/");

@@ -33,12 +33,6 @@ export const store = {
     localStorage.setItem("token", token);
     localStorage.setItem("role", role);
   },
-
-  setRole(role) {
-    this.data.role = role;
-    // Optionally, store role in localStorage
-    localStorage.setItem("role", role);
-  },
   setOGR(OGR) {
     this.data.OGR = OGR;
     localStorage.setItem("OGR", OGR.toString()); // Assuming OGR is a number

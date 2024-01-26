@@ -172,7 +172,7 @@ export default {
 
           // Set the session with user details, token, and role
           // Make sure store.setSession is an async function or returns a Promise
-          await store.setSession(userDetails, token, role);
+           store.setSession(userDetails, token, role);
 
           // Redirect to a specific route based on the user's role
           if (role === "admin") {

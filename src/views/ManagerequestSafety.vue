@@ -345,7 +345,7 @@ export default {
     fetchRequesters() {
       console.log("Fetching requesters...");
       axios
-        .get("http://172.28.28.91:8085/api/Admin/GetAllRequestsAdminSecurity")
+        .get("http://172.28.28.91:8085/api/Admin/GetAllRequestsAdminSafety")
         .then((response) => {
           this.requesters = response.data;
           console.log("Requesters data:" + this.requesters);

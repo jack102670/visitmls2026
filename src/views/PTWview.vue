@@ -106,6 +106,7 @@
             </tr>
             <tr>
               <td class="py-2 px-4 font-medium">Jobs Hazard Analysis:</td>
+             
               <td class="py-2 px-4">
                 <div
                   v-for="detail in ptwData.jhaDetails"
@@ -343,11 +344,7 @@ created() {
 //     this.refNumber = this.$route.params.refNumber;
 //     this.fetchPTWData();
 //   },
-computed:{
-  //getRefNumber(){
-//return this.$route.params.refNumber
- // }
-},
+
 
   methods: {
     getFileName(file) {
