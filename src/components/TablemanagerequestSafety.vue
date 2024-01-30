@@ -5,7 +5,7 @@
         <div class="flex items-center gap-x-2">
           <div>
             <h2 class="font-medium text-gray-500 dark:text-gray-300">
-              {{ requester.branch }} this is for safety
+              {{ requester.branch }} 
             </h2>
           </div>
         </div>
@@ -687,11 +687,38 @@
       </div>
       </div>
       <div v-show="showPTWForm">
+        <table class="min-w-full table-auto border-collapse border border-gray-800">
+          <thead class="">
+            <tr>
+     
+         
+            </tr>
+        </thead>
+        <thead class="">
+            <tr>
+              <th class="border border-gray-600 px-4 py-2">Security Status</th>
+                <th class="border border-gray-600 px-4 py-2">Security Comments</th>
+                <th class="border border-gray-600 px-4 py-2">Last Edited</th>
+            </tr>
+        </thead>
+
+   
+        <tbody>
+           
+            <tr class="">
+                <td class="border border-gray-600 px-4 py-2">{{getRequest.securityAdminStatus}}</td>
+                <td class="border border-gray-600 px-4 py-2">{{getRequest.securityAdminComment}}</td>
+                <td class="border border-gray-600 px-4 py-2">{{getRequest.securityModifiedBy}}</td>
+            </tr>
+
+      
+        </tbody>
+    </table>
         <div class="flex justify-between gap-4 mt-4">
           <div class="w-full md:w-1/3">
       <div class="mb-4">
         <label class="mb-2 block text-sm font-semibold text-gray-700">
-          Ticket Status
+          Ticket Status 
         </label>
         <div :class="getStatusContainerClass(getRequest.ticketStatus)">
           <span :class="getStatusDotClass(getRequest.ticketStatus)"></span>
@@ -710,18 +737,18 @@
               <div class="grid grid-cols-1 gap-4 items-center">
                 <label class="flex items-center text-sm text-gray-700">
                   <div></div>
-                  <input type="radio" name="ptwAdminStatus" value="RESUBMISSION" v-model="getRequest.securityAdminStatus"
-                    :checked="getRequest.securityAdminStatus === 'RESUBMISSION'" />
+                  <input type="radio" name="ptwAdminStatus" value="RESUBMISSION" v-model="getRequest.safetyAdminStatus"
+                    :checked="getRequest.safetyAdminStatus === 'RESUBMISSION'" />
                   RESUBMISSION
                 </label>
                 <label class="flex items-center text-sm text-gray-700">
-                  <input type="radio" name="ptwAdminStatus" value="APPROVED" v-model="getRequest.securityAdminStatus"
-                    :checked="getRequest.securityAdminStatus === 'APPROVED'" />
+                  <input type="radio" name="ptwAdminStatus" value="APPROVED" v-model="getRequest.safetyAdminStatus"
+                    :checked="getRequest.safetyAdminStatus === 'APPROVED'" />
                   APPROVED
                 </label>
                 <label class="flex items-center text-sm text-gray-700">
-                  <input type="radio" name="ptwAdminStatus" value="COMPLETED" v-model="getRequest.securityAdminStatus"
-                    :checked="getRequest.securityAdminStatus === 'COMPLETED'" />
+                  <input type="radio" name="ptwAdminStatus" value="COMPLETED" v-model="getRequest.safetyAdminStatus"
+                    :checked="getRequest.safetyAdminStatus === 'COMPLETED'" />
                   COMPLETED
                 </label>
               </div>
@@ -731,9 +758,9 @@
           <div class="w-full md:w-1/3">
             <div class="mb-4">
               <label for="ptwPreparedBy" class="mb-2 block text-sm font-semibold text-gray-700">
-                Last edited: {{ getRequest.securityModifiedDate }}
+                Last edited: {{ getRequest.safetyModifiedDate }}
               </label>
-              <input v-model="getRequest.securityModifiedBy" type="text" name="ptwPreparedBy" id="ptwPreparedBy"
+              <input v-model="getRequest.safetyModifiedBy" type="text" name="ptwPreparedBy" id="ptwPreparedBy"
                 class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md" />
             </div>
           </div>
@@ -743,13 +770,13 @@
           <label for="ptwDescription" class="mb-2 block text-sm font-semibold text-gray-700">
             Comments
           </label>
-          <textarea v-model="getRequest.securityAdminComment" id="ptwDescription"
+          <textarea v-model="getRequest.safetyAdminComment" id="ptwDescription"
             class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
             rows="2" required></textarea>
         </div>
         <div class="flex justify-end mt-6">
         <div v-show="showConfirmButton">
-          <button @click="adminsecurityUpdate()" type="button"
+          <button @click="adminsafetyUpdate()" type="button"
             class="text-center rounded-2xl bg-sky-800 shadow-md p-3 my-1 w-full text-white py-2.5 px-5 mr-2 text-sm font-medium text-gray-900 rounded border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 items-center">
             Update
           </button>
@@ -822,17 +849,17 @@ export default {
       const parts = file.split("/");
       return parts[parts.length - 1];
     },
-    adminsecurityUpdate() {
+    adminsafetyUpdate() {
       this.showConfirmButton = false;
       this.showLoadingButton = true;
-      axios.put("http://172.28.28.91:8085/api/Admin/AdminSecUpdatePTW", {
+      axios.put("http://172.28.28.91:8085/api/Admin/AdminSafetyUpdatePTW", {
           // Use the correct property name
           refNumber: this.getRequest.refNumber,
           ticketStatus: "open",
-          adminStatus: this.getRequest.securityadminStatus,
-          adminComment: this.getRequest.securityadminComment,
-          modifiedBy: this.getRequest.securitymodifiedBy,
-          userEmail: "hazman5001@gmail.com",
+          adminStatus: this.getRequest.safetyAdminStatus,
+          adminComment: this.getRequest.safetyAdminComment,
+          modifiedBy: this.getRequest.safetyModifiedBy,
+          userEmail: this.getRequest.vendorEmail,
         })
           .then(() => {
             // Handle success
@@ -856,7 +883,7 @@ export default {
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
-            userEmail: "hazman5001@gmail.com",
+            userEmail: this.getRequest.userEmail,
           })
           .then((response) => {
             "Server response:", response.data;
@@ -880,7 +907,7 @@ export default {
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
-            userEmail: "hazman5001@gmail.com",
+            userEmail: this.getRequest.userEmail,
           })
           .then((response) => {
             "Server response:", response.data;
@@ -904,7 +931,7 @@ export default {
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
-            userEmail: "hazman5001@gmail.com",
+            userEmail: this.getRequest.userEmail,
           })
           .then((response) => {
             "Server response:", response.data;
@@ -928,7 +955,7 @@ export default {
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
-            userEmail: "hazman5001@gmail.com",
+            userEmail: this.getRequest.userEmail,
           })
           .then((response) => {
             "Server response:", response.data;
@@ -952,7 +979,7 @@ export default {
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
-            userEmail: this.getRequest.vendorEmail,
+            userEmail: this.getRequest.userEmail,
           })
           .then((response) => {
             "Server response:", response.data;

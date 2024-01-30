@@ -687,6 +687,7 @@
       </div>
       </div>
       <div v-show="showPTWForm">
+        
         <div class="flex justify-between gap-4 mt-4">
           <div class="w-full md:w-1/3">
       <div class="mb-4">
@@ -829,10 +830,10 @@ export default {
           // Use the correct property name
           refNumber: this.getRequest.refNumber,
           ticketStatus: "open",
-          adminStatus: this.getRequest.securityadminStatus,
-          adminComment: this.getRequest.securityadminComment,
-          modifiedBy: this.getRequest.securitymodifiedBy,
-          userEmail: "hazman5001@gmail.com",
+          adminStatus: this.getRequest.securityAdminStatus,
+          adminComment: this.getRequest.securityAdminComment,
+          modifiedBy: this.getRequest.securityModifiedBy,
+          userEmail: this.getRequest.vendorEmail,
         })
           .then(() => {
             // Handle success
@@ -856,7 +857,7 @@ export default {
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
-            userEmail: "hazman5001@gmail.com",
+            userEmail: this.getRequest.userEmail,
           })
           .then((response) => {
             "Server response:", response.data;
@@ -880,7 +881,7 @@ export default {
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
-            userEmail: "hazman5001@gmail.com",
+            userEmail: this.getRequest.userEmail,
           })
           .then((response) => {
             "Server response:", response.data;
@@ -904,7 +905,7 @@ export default {
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
-            userEmail: "hazman5001@gmail.com",
+            userEmail: this.getRequest.userEmail,
           })
           .then((response) => {
             "Server response:", response.data;
@@ -928,7 +929,7 @@ export default {
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
-            userEmail: "hazman5001@gmail.com",
+            userEmail: this.getRequest.userEmail,
           })
           .then((response) => {
             "Server response:", response.data;
@@ -952,7 +953,7 @@ export default {
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
-            userEmail: this.getRequest.vendorEmail,
+            userEmail: this.getRequest.userEmail,
           })
           .then((response) => {
             "Server response:", response.data;
