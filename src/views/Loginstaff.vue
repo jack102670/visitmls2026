@@ -168,7 +168,7 @@ export default {
           //   role = "admin";
           // } 
           if (
-            response.data.result.userdetails.email === ".com"
+            response.data.result.userdetails.email === "ict.intern@pktgroup.com"
           ) {
             role = "safety";
           }else {
