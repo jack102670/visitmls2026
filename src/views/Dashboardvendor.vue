@@ -282,7 +282,7 @@ export default {
       // Log to console to check if the method is being called
       console.log("Location changed. Updating departments.");
 
-      // Your logic to update departments based on the selected location
+
       this.updateDepartments();
       store.setSelectedLocation(this.selectedLocation, this.locations);
     },
