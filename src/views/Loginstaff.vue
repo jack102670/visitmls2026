@@ -162,15 +162,18 @@ export default {
 
           // Determine the user's role
           let role;
-          // if (
-          //   response.data.result.userdetails.email === "ict.intern@pktgroup.com"
-          // ) {
-          //   role = "admin";
-          // } 
           if (
-            response.data.result.userdetails.email === "ict.intern@pktgroup.com"
+            response.data.result.userdetails.email === "afifah.hasani@pktgroup.com"
           ) {
             role = "safety";
+          } 
+
+
+
+         else if (
+            response.data.result.userdetails.email === "ict.intern@pktgroup.com"
+          ) {
+            role = "admin";
           }else {
             role = "user";
           }

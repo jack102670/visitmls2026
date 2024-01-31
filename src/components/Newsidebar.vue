@@ -90,10 +90,11 @@
 
     <div class="flex flex-col items-center justify-center mt-1">
       <h4 class="text-slate-200 dark:text-gray-200 font-medium text-center">
-        Welcome, {{ role }}
+        Welcome, {{ role }} {{ userDetails.email }}
       </h4>
       <p class="text-sm font-medium text-slate-200 dark:text-gray-400 mt-1">
         {{ userDetails.userName }}
+       
       </p>
     </div>
 

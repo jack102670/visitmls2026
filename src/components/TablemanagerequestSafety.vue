@@ -1109,9 +1109,7 @@
         </div>
         <div class="bg-[#F9FAFB] rounded-md">
           <table class="min-w-full table-auto border-collapse border-gray-800">
-            <thead class="">
-              <tr></tr>
-            </thead>
+          
             <thead class="">
               <tr>
                 <th class="border-gray-600 px-4 py-2 text-sm font-semibold">

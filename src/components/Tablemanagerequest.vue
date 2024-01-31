@@ -697,7 +697,7 @@
         <div :class="getStatusContainerClass(getRequest.ticketStatus)">
           <span :class="getStatusDotClass(getRequest.ticketStatus)"></span>
           <h2 :class="getStatusTextClass(getRequest.ticketStatus)">
-            {{ getRequest.ticketStatus }}
+            {{ getRequest.AdminStatus }}
           </h2>
         </div>
       </div>
@@ -720,11 +720,11 @@
                     :checked="getRequest.securityAdminStatus === 'APPROVED'" />
                   APPROVED
                 </label>
-                <label class="flex items-center text-sm text-gray-700">
+                <!-- <label class="flex items-center text-sm text-gray-700">
                   <input type="radio" name="ptwAdminStatus" value="COMPLETED" v-model="getRequest.securityAdminStatus"
                     :checked="getRequest.securityAdminStatus === 'COMPLETED'" />
                   COMPLETED
-                </label>
+                </label> -->
               </div>
             </div>
           </div>
