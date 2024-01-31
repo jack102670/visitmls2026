@@ -28,11 +28,23 @@
       </section>
 
       <!-- Modal Footer -->
+      <!-- <header
+        id="modal-header" 
+        class="px-2 py-3 flex justify-between bg-[#160959e2] items-center"
+      >
+        <slot name="header3">Dummy header</slot>
+     
+      
+     
+      </header>
+      <section id="modal-body" class="px-4 py-6 max-h-80 overflow-y-auto " >
+        <slot name="body2"></slot>
+      </section> -->
       <header
         id="modal-header"
         class="px-2 py-3 flex justify-between bg-[#160959e2] items-center"
       >
-        <slot name="header">Dummy header</slot>
+        <slot name="header2">Dummy header</slot>
      
       
      

@@ -67,7 +67,7 @@
                 </svg>
                 <span
                   class="text-blue-700 dark:text-white mx-1 top-5 font-semibold text-2xl absolute"
-                  >{{ OGR }}</span
+                  >{{ requesters.length}}</span
                 >
               </a>
             </div>
@@ -217,13 +217,16 @@
 </template>
 
 <script>
+import axios from "axios";
 import { store } from "../views/store.js";
 // NewrequestViews.js
 // NewrequestViews.js
 export default {
   name: "NewrequestViews",
   data() {
-    return {
+
+    return {    
+      requesters:[],
       OGR: null,
 
       showAdditionalContent: false,
@@ -248,12 +251,15 @@ export default {
       TypeOfRequests: [],
     };
   },
+
+ 
   mounted() {
     // this.role = store.getRole();
-    this.userDetails = store.getSession().userDetails;
-    this.token = store.data.token;
-    this.OGR = store.getOGR();
-    console.log("OGR from store:", store.getOGR());
+    this.fetchRequesters();
+    // this.userDetails = store.getSession().userDetails;
+    // this.token = store.data.token;
+    // this.OGR = store.getOGR();
+    // console.log("OGR from store:", store.getOGR());
     // if (this.role === "user") {
     //   this.$router.push("/Dashboard");
     // }
@@ -262,7 +268,44 @@ export default {
     // }
     store.setSelectedLocation(this.selectedLocation, this.locations);
   },
+  // beforeCreate(){
+  //   if (!localStorage.getItem('reloaded2')) {
+  //     localStorage.setItem('reloaded2', 'true');
+  //     window.location.reload();
+  //   } else {
+  //     localStorage.removeItem('reloaded2');
+  //     // Additional code for your component
+  //   }
+  // },
   methods: {
+    fetchRequesters() {
+      const userDetails = store.getSession().userDetails;
+      const role = store.getRole();
+    let url = '';
+
+    if (role === 'user') {
+      url = `http://172.28.28.91:8085/api/Main/GetAllRequests/${userDetails.userId}`;
+    } else if (role === 'vendor') {
+      url = `http://172.28.28.91:8085/api/Main/GetAllRequestsVendor/${userDetails.userId}`;
+    } else {
+      console.log("Role not authorized or role-specific URL not set");
+      return;
+    }
+
+    console.log("Fetching requesters for role:", userDetails.role);
+    axios.get(url)
+        .then((response) => {
+          this.requesters = response.data;
+          console.log("Requesters on dashboard:", this.requesters);
+          console.log("all",this.requesters.length)
+          // this.OGR = this.requesters.length;
+          // store.setOGR(this.OGR);
+          // console.log("OGR set to:", this.OGR);
+        })
+        .catch((error) => {
+          console.error("Error fetching requesters:", error);
+        });
+    },
     showContent() {
       this.showAdditionalContent = !this.showAdditionalContent;
     },

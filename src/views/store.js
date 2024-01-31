@@ -57,11 +57,13 @@ export const store = {
     this.data.userdetails = null;
     this.data.token = null;
     this.data.role = null;
+    this.data.OGR = null;
 
     // Clear session from localStorage
     localStorage.removeItem("userdetails");
     localStorage.removeItem("token");
     localStorage.removeItem("role");
+    localStorage.removeItem("OGR");
   },
 
   getSession() {

@@ -162,11 +162,16 @@ export default {
 
           // Determine the user's role
           let role;
+          // if (
+          //   response.data.result.userdetails.email === "ict.intern@pktgroup.com"
+          // ) {
+          //   role = "admin";
+          // } 
           if (
-            response.data.result.userdetails.email === "ict.intern@pktgroup.com"
+            response.data.result.userdetails.email === ".com"
           ) {
-            role = "admin";
-          } else {
+            role = "safety";
+          }else {
             role = "user";
           }
 
@@ -179,6 +184,9 @@ export default {
             this.$router.push("/Managerequest");
           } else if (role === "user") {
             this.$router.push("/Dashboard");
+          }
+          else if (role === "safety") {
+            this.$router.push("/ManagerequestSafety");
           }
         } else {
           // Handle login failure

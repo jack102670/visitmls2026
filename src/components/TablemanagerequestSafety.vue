@@ -255,7 +255,7 @@
             >{{  getRequest. }}</label>
           </div> -->
 
-          <div>
+          <!-- <div>
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="Location"
@@ -293,16 +293,16 @@
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               >{{ getRequest.departmentName }}</label
             >
-          </div>
+          </div> -->
         </div>
 
         <div>
           <div class="flex justify-between">
-            <label
+            <!-- <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="Location"
-              >Attachment(s): </label
-            ><button
+              >Attachment(s): </label> -->
+            <button
               type="button"
               class="text-blue-500"
               @click="redirectToPTWView(requester.refNumber)"
@@ -310,7 +310,8 @@
               see more....
             </button>
           </div>
-          <li
+
+          <!-- <li
             v-for="file in getRequest.files"
             :key="file"
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -318,7 +319,7 @@
             <a class="text-blue-500" target="_blank" :href="file">{{
               getFileName(file)
             }}</a>
-          </li>
+          </li> -->
         </div>
       </div>
       <!-- Permit to works for security -->
@@ -951,7 +952,9 @@
     </template>
     <template v-slot:header2>
       <div class="p-1 rounded-lg">
-        <h2 class="text-lg font-semibold text-white capitalize">ADMIN</h2>
+        <h2 class="text-lg font-semibold text-white capitalize">
+          Admin Safety
+        </h2>
       </div>
     </template>
     <!-- footer -->
@@ -1097,36 +1100,63 @@
         </div>
       </div>
       <div v-show="showPTWForm">
-        <table
-          class="min-w-full table-auto border-collapse border border-gray-800"
-        >
-          <thead class="">
-            <tr></tr>
-          </thead>
-          <thead class="">
-            <tr>
-              <th class="border border-gray-600 px-4 py-2">Security Status</th>
-              <th class="border border-gray-600 px-4 py-2">
-                Security Comments
-              </th>
-              <th class="border border-gray-600 px-4 py-2">Last Edited</th>
-            </tr>
-          </thead>
+        <hr />
+        <div class="p-1 rounded-lg">
+          <h2 class="text-md font-semibold text-black capitalize">
+            Feedback From Security
+          </h2>
+          <hr />
+        </div>
+        <div class="bg-[#F9FAFB] rounded-md">
+          <table class="min-w-full table-auto border-collapse border-gray-800">
+            <thead class="">
+              <tr></tr>
+            </thead>
+            <thead class="">
+              <tr>
+                <th class="border-gray-600 px-4 py-2 text-sm font-semibold">
+                  Status
+                </th>
+                <th class="border-gray-600 px-4 py-2 text-sm font-semibold">
+                  Comments
+                </th>
+                <th class="border-gray-600 px-4 py-2 text-sm font-semibold">
+                  By
+                </th>
+              </tr>
+            </thead>
 
-          <tbody>
-            <tr class="">
-              <td class="border border-gray-600 px-4 py-2">
-                {{ getRequest.securityAdminStatus }}
-              </td>
-              <td class="border border-gray-600 px-4 py-2">
-                {{ getRequest.securityAdminComment }}
-              </td>
-              <td class="border border-gray-600 px-4 py-2">
-                {{ getRequest.securityModifiedBy }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+            <tbody>
+              <tr class="justify-centre text-center">
+                <td class="border-gray-600 px-4 py-2">
+                  <div
+                    :class="
+                      getStatusContainerClass(getRequest.securityAdminStatus)
+                    "
+                  >
+                    <span
+                      :class="getStatusDotClass(getRequest.securityAdminStatus)"
+                    ></span>
+                    <h2
+                      :class="
+                        getStatusTextClass(getRequest.securityAdminStatus)
+                      "
+                    >
+                      {{ getRequest.securityAdminStatus }}
+                    </h2>
+                  </div>
+                </td>
+                <td class="border-gray-600 px-4 py-2">
+                  {{ getRequest.securityAdminComment }}
+                </td>
+                <td class="border-gray-600 px-4 py-2">
+                  {{ getRequest.securityModifiedBy }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <hr />
+        </div>
         <div class="flex justify-between gap-4 mt-4">
           <div class="w-full md:w-1/3">
             <div class="mb-4">
@@ -1298,15 +1328,15 @@ export default {
     },
   },
   methods: {
-  redirectToPTWView(refNumber) {
-  console.log(refNumber);
+    redirectToPTWView(refNumber) {
+      console.log(refNumber);
 
-  // Construct the full URL you want to navigate to
-  const url = `${window.location.origin}/PTWView/${refNumber}`;
+      // Construct the full URL you want to navigate to
+      const url = `${window.location.origin}/PTWView/${refNumber}`;
 
-  // Open in a new tab
-  window.open(url, '_blank');
-},
+      // Open in a new tab
+      window.open(url, "_blank");
+    },
 
     getFileName(file) {
       const parts = file.split("/");

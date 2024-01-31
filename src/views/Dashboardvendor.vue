@@ -27,7 +27,7 @@
         </div> -->
         <div class="flex justify-start flex-col ml-5">
           <h2 class="text-3xl font-bold text-blue-900 dark:text-white">
-            Service Portal
+            Service Portal (VENDOR)
           </h2>
           <h3 class="text-xl font-bold text-blue-800 dark:text-white">
             Security Safety Maintenance
@@ -260,6 +260,15 @@ export default {
     // else{
     //   this.$router.push("/dashboard");
     // }
+  },
+  beforeCreate(){
+    if (!localStorage.getItem('reloaded2')) {
+      localStorage.setItem('reloaded2', 'true');
+      window.location.reload();
+    } else {
+      localStorage.removeItem('reloaded2');
+      // Additional code for your component
+    }
   },
   methods: {
     showContent() {
