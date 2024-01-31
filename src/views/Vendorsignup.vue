@@ -12,7 +12,7 @@
         <form @submit.prevent="signUp()">
           <div class="max-w-md mx-auto">
             <div>
-              <h1 class="text-2xl font-semibold">Vendor Registration Form</h1>
+              <h1 class="text-2xl font-semibold">Vendor Sign Up</h1>
             </div>
             <div class="divide-y divide-gray-200">
               <div
