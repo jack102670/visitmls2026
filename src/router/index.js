@@ -118,7 +118,7 @@ const routes = [
   },
 
   {
-    path: "/PTWView",
+    path: "/PTWView/:refNumber",
     name: "PTWView",
     components: {
       default: PTWView,
