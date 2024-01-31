@@ -1109,7 +1109,6 @@
         </div>
         <div class="bg-[#F9FAFB] rounded-md">
           <table class="min-w-full table-auto border-collapse border-gray-800">
-          
             <thead class="">
               <tr>
                 <th class="border-gray-600 px-4 py-2 text-sm font-semibold">
@@ -1126,23 +1125,20 @@
 
             <tbody>
               <tr class="justify-centre text-center">
-                <td class="border-gray-600 px-4 py-2">
-                  <div
-                    :class="
-                      getStatusContainerClass(getRequest.securityAdminStatus)
-                    "
+                <td
+                  class="border-gray-600 px-4 py-2"
+                  :class="
+                    getStatusContainerClass(getRequest.securityAdminStatus)
+                  "
+                >
+                  <span
+                    :class="getStatusDotClass(getRequest.securityAdminStatus)"
+                  ></span>
+                  <h2
+                    :class="getStatusTextClass(getRequest.securityAdminStatus)"
                   >
-                    <span
-                      :class="getStatusDotClass(getRequest.securityAdminStatus)"
-                    ></span>
-                    <h2
-                      :class="
-                        getStatusTextClass(getRequest.securityAdminStatus)
-                      "
-                    >
-                      {{ getRequest.securityAdminStatus }}
-                    </h2>
-                  </div>
+                    {{ getRequest.securityAdminStatus }}
+                  </h2>
                 </td>
                 <td class="border-gray-600 px-4 py-2">
                   {{ getRequest.securityAdminComment }}
