@@ -1528,15 +1528,7 @@
       </section>
     </div>
 
-    <!-- add more fields as needed -->
 
-    <!-- Checkbox for adding extra form pages -->
-
-    <!-- Additional form pages based on checkbox -->
-
-    <!-- Add more extra form pages as needed -->
-
-    <!-- Submit button -->
     <div class="flex justify-end mt-6">
       <button @click="showModal"
         class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-blue-900 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
@@ -1640,8 +1632,8 @@ export default {
       safetyMeasure: [],
       isolation: [],
       plantSupport: [],
-      hotWorks: true,
-      workingAtHeight: true,
+      hotWorks: false,
+      workingAtHeight: false,
       file: [],
 
       hazards: [],
