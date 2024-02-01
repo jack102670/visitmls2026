@@ -352,7 +352,7 @@
           for="People"
           >Attachment(s)</label
         >
-        <label class="py-2 px-4">
+        <label class="">
           <ul>
             <li
               v-for="file in getRequest.files"
@@ -497,13 +497,13 @@
           ></textarea>
         </div>
       </div>
-      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
         <label
           class="font-semibold text-gray-700 dark:text-gray-200"
           for="People"
           >Attachment(s)</label
         >
-        <label class="py-2 px-4">
+        <label class="">
           <ul>
             <li
               v-for="file in getRequest.files"

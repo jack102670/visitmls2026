@@ -1,13 +1,9 @@
 <template>
-    
-    <div v-if="isLoading">
-      Loading data, please wait...
-    </div>
-    <div v-else-if="error">
-      An error occurred: {{ error.message }}
-    </div>
+  <div v-if="isLoading">Loading data, please wait...</div>
+  <div v-else-if="error">An error occurred: {{ error.message }}</div>
 
-  <div  v-else
+  <div
+    v-else
     class="flex-1 overflow-x-hidden text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64 h-auto"
   >
     <div class="container mx-auto">
@@ -63,7 +59,7 @@
             <tr>
               <td class="py-2 px-4 font-medium">PKT Staff Email:</td>
               <td class="py-2 px-4">
-                {{ ptwData.staffDetails.pktStaffEmail}}
+                {{ ptwData.staffDetails.pktStaffEmail }}
               </td>
             </tr>
             <tr>
@@ -106,7 +102,7 @@
             </tr>
             <tr>
               <td class="py-2 px-4 font-medium">Jobs Hazard Analysis:</td>
-             
+
               <td class="py-2 px-4">
                 <div
                   v-for="detail in ptwData.jhaDetails"
@@ -199,21 +195,26 @@
               </td>
             </tr>
 
-            <tr >
+            <tr>
               <td class="py-2 px-4 font-medium">Work at Height:</td>
               <td class="py-2 px-4">
-                <div><strong>Company Name:</strong> {{ ptwData.wah.companyName }}</div>
                 <div>
-                  <strong>Contractor Name:</strong> {{ ptwData.wah.contractorName }}
+                  <strong>Company Name:</strong> {{ ptwData.wah.companyName }}
+                </div>
+                <div>
+                  <strong>Contractor Name:</strong>
+                  {{ ptwData.wah.contractorName }}
                 </div>
                 <div>
                   <strong>Work Location:</strong> {{ ptwData.wah.workLocation }}
                 </div>
                 <div>
-                  <strong>Work Description:</strong> {{ ptwData.wah.workDescription }}
+                  <strong>Work Description:</strong>
+                  {{ ptwData.wah.workDescription }}
                 </div>
                 <div>
-                  <strong>Start Date/Time:</strong> {{ ptwData.wah.startDateTime }}
+                  <strong>Start Date/Time:</strong>
+                  {{ ptwData.wah.startDateTime }}
                 </div>
                 <div>
                   <strong>Complete Date/Time:</strong>
@@ -278,7 +279,10 @@
                 <div>
                   <strong>Control Measures:</strong>
                   <ul>
-                    <li v-for="item in ptwData.wah.waH_ControlMeasure" :key="item">
+                    <li
+                      v-for="item in ptwData.wah.waH_ControlMeasure"
+                      :key="item"
+                    >
                       {{ item }}
                     </li>
                   </ul>
@@ -297,9 +301,9 @@
                     v-for="file in ptwData.files"
                     :key="file"
                   >
-                  <a class="text-blue-500" target="_blank" :href="file">{{
-                getFileName(file)
-              }}</a>
+                    <a class="text-blue-500" target="_blank" :href="file">{{
+                      getFileName(file)
+                    }}</a>
                   </li>
                 </ul>
               </td>
@@ -309,7 +313,7 @@
 
             <!-- ... (Other modal content) ... -->
           </table>
-          <!-- General Information Section -->
+          <button @click="exportFormToPDF">Export to PDF</button>
         </div>
 
         <!-- Display a list of movies from the TMDb API -->
@@ -319,34 +323,221 @@
 </template>
 
 <script>
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
 import axios from "axios";
 export default {
   data() {
     return {
       ptwData: [],
-      refNumber:"",
-      isLoading: true, 
+      refNumber: "",
+      isLoading: true,
     };
   },
- 
+
   mounted() {
     //this.refNumber = this.$route.params.refNumber;
-    console.log("this refNumber" +this.refNumber)
+    console.log("this refNumber" + this.refNumber);
     //this.fetchPTWData();
-    console.log("try"+ this.$route.params.refNumber);
-},
-created() {
-  this.refNumber = this.$route.params.refNumber;
-    this.fetchPTWData();
-    
+    console.log("try" + this.$route.params.refNumber);
   },
-// beforeMount() {
-//     this.refNumber = this.$route.params.refNumber;
-//     this.fetchPTWData();
-//   },
-
+  created() {
+    this.refNumber = this.$route.params.refNumber;
+    this.fetchPTWData();
+  },
+  // beforeMount() {
+  //     this.refNumber = this.$route.params.refNumber;
+  //     this.fetchPTWData();
+  //   },
 
   methods: {
+    exportFormToPDF() {
+      const doc = new jsPDF();
+      let yPos = 10;
+
+      // Heading Style
+      const addSectionHeading = (text) => {
+        doc.setFontSize(14);
+        doc.setFont(undefined, "bold");
+        doc.text(text, 14, yPos);
+        yPos += 7; // Space after heading
+        doc.setFontSize(10); // Reset font size for content
+        doc.setFont(undefined, "normal");
+      };
+
+      // Regular Text
+      const addText = (label, text) => {
+        doc.text(`${label}: ${text}`, 14, yPos);
+        yPos += 6; // Increment yPos for the next line
+      };
+
+      addSectionHeading("Permit To Work Details");
+
+      // Adding basic info
+      addText("Requester Name", this.ptwData.vendorName || "");
+      addText("Company", this.ptwData.companyName || "");
+      addText("Phone Number", this.ptwData.phoneNumber || "");
+      addText("Date From", this.ptwData.dateFrom || "");
+      addText("Date Until", this.ptwData.dateUntil || "");
+      addText("Work Location", this.ptwData.workLocation || "");
+      addText("Work Description", this.ptwData.workDescription || "");
+      addText("Date Requested", this.ptwData.dateRequested || "");
+      addText("PKT Staff Name", this.ptwData.staffDetails.pktStaffName || "");
+      addText("PKT Staff Email", this.ptwData.staffDetails.pktStaffEmail || "");
+      addText(
+        "PKT Staff Department",
+        this.ptwData.staffDetails.departmentName || ""
+      );
+
+      // Ensure not to overflow, add new page if needed
+      if (yPos > 280) {
+        doc.addPage();
+        yPos = 10;
+      }
+
+      // Adding tables for detailed sections like Equipment, Hazard, etc.
+      const addTableSection = (title, data) => {
+        if (yPos > 280) {
+          doc.addPage();
+          yPos = 10;
+        }
+        addSectionHeading(title);
+        doc.autoTable({
+          startY: yPos,
+          theme: "grid",
+          margin: { left: 14 },
+          headStyles: { fillColor: [22, 160, 133] }, // Customize head style
+          styles: {
+            cellPadding: { top: 2, right: 4, bottom: 2, left: 4 },
+            fontSize: 10,
+            overflow: "linebreak",
+          },
+          columnStyles: { 0: { cellWidth: "auto" } }, // Ensure the column automatically adjusts to content
+          head: [[title]],
+          body: data.map((item) => [item]),
+          willDrawCell: function (data) {
+            // Adjust the `minCellWidth` based on the content length if necessary
+            const textLength =
+              (doc.getStringUnitWidth(data.cell.raw) *
+                doc.internal.getFontSize()) /
+              doc.internal.scaleFactor;
+            if (textLength > data.cell.width) {
+              data.cell.styles.minCellWidth = textLength;
+            }
+          },
+          didDrawPage: function (data) {
+            yPos = data.cursor.y + 10; // Update Y position for next content
+          },
+        });
+      };
+
+      addTableSection("Equipment", this.ptwData.equipment);
+      addTableSection("Hazard", this.ptwData.hazard);
+      addTableSection("Isolation", this.ptwData.isolation);
+      addTableSection("Plant Support", this.ptwData.plantSupport);
+
+      if (yPos > 280) {
+        doc.addPage();
+        yPos = 10;
+      }
+
+  
+      addSectionHeading("Jobs Hazard Analysis");
+      doc.autoTable({
+        startY: yPos,
+        head: [["Sequence Task", "Potential Hazard", "Preventive Measures"]],
+        body: this.ptwData.jhaDetails.map((detail) => [
+          detail.sequenceTask,
+          detail.potentialHazard,
+          detail.preventiveMeasures,
+        ]),
+        theme: "grid",
+        margin: { left: 14 },
+        headStyles: { fillColor: [22, 160, 133] }, // Customize head style
+        didDrawPage: function (data) {
+          yPos = data.cursor.y + 10; // Update Y position for next content
+        },
+      });
+
+      addSectionHeading("Hot Work");
+      addText(
+        "Work Description",
+        this.ptwData.hotWork?.workDescription || "Not provided"
+      );
+      addText(
+        "Start Date/Time",
+        this.ptwData.hotWork?.dateTimeStart || "Not provided"
+      );
+      addText(
+        "Complete Date/Time",
+        this.ptwData.hotWork?.dateTimeComplete || "Not provided"
+      );
+      addText("Hot Work By", this.ptwData.hotWork?.hotWorkBy || "Not provided");
+
+      // For lists within the "Hot Work" section, use addListSection
+      addTableSection(
+        "General Requirements",
+        this.ptwData.hotWork?.reqGeneral || []
+      );
+      addTableSection(
+        "Distance Requirements",
+        this.ptwData.hotWork?.reqDistance || []
+      );
+      addTableSection(
+        "Enclosed Equipment Requirements",
+        this.ptwData.hotWork?.req_Enc_Equip || []
+      );
+      addTableSection(
+        "Fire Monitor Requirements",
+        this.ptwData.hotWork?.req_FireMon || []
+      );
+      addTableSection(
+        "Walls Requirements",
+        this.ptwData.hotWork?.req_Walls || []
+      );
+
+      addSectionHeading("Work at Height");
+      addText("Company Name", this.ptwData.wah?.companyName || "Not provided");
+      addText(
+        "Contractor Name",
+        this.ptwData.wah?.contractorName || "Not provided"
+      );
+      addText(
+        "Work Location",
+        this.ptwData.wah?.workLocation || "Not provided"
+      );
+      addText(
+        "Work Description",
+        this.ptwData.wah?.workDescription || "Not provided"
+      );
+      addText(
+        "Start Date/Time",
+        this.ptwData.wah?.startDateTime || "Not provided"
+      );
+      addText(
+        "Complete Date/Time",
+        this.ptwData.wah?.completeDateTime || "Not provided"
+      );
+
+      // Adding additional lists as tables for "Work at Height"
+      addTableSection("Hazards", this.ptwData.wah?.waH_Hazard || []);
+      addTableSection("Ladders", this.ptwData.wah?.waH_Ladders || []);
+      addTableSection("Scaffolding", this.ptwData.wah?.waH_Scaffolding || []);
+      addTableSection("Lift Trucks", this.ptwData.wah?.waH_LiftTruck || []);
+      addTableSection("Man Cages", this.ptwData.wah?.waH_ManCage || []);
+      addTableSection(
+        "Emergency Procedures",
+        this.ptwData.wah?.waH_Emergency || []
+      );
+      addTableSection(
+        "Control Measures",
+        this.ptwData.wah?.waH_ControlMeasure || []
+      );
+
+      // Finish up
+      doc.save("permit-to-work-details.pdf");
+    },
+
     getFileName(file) {
       const parts = file.split("/");
       return parts[parts.length - 1];
@@ -354,17 +545,16 @@ created() {
     fetchPTWData() {
       this.isLoading = true;
       this.error = null;
-      axios.get("http://172.28.28.91:8085/api/Main/GetPTW/" + this.refNumber)
-        .then(response => {
+      axios
+        .get("http://172.28.28.91:8085/api/Main/GetPTW/" + this.refNumber)
+        .then((response) => {
           this.ptwData = response.data;
           this.isLoading = false;
         })
-        .catch(error => {
+        .catch((error) => {
           this.error = error;
           this.isLoading = false;
         });
-
-      
     },
   },
 };
