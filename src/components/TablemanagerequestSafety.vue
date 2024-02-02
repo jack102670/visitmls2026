@@ -1654,7 +1654,7 @@ export default {
       };
       // Get the class for the combination of ticketStatus and adminStatus
       // You can adjust this format based on your needs
-      return colorMap[Status] || "bg-gray-800"; // Default to a dark color if the combination is not recognized
+      return colorMap[Status] || ""; // Default to a dark color if the combination is not recognized
     },
     getStatusDotClass(Status) {
       const colorMap = {

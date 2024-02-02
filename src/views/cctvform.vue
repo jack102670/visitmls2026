@@ -304,7 +304,7 @@ export default {
       const formData = {
         branch: this.branch,
         requesterName: this.requesterName,
-        departmentName: this.requesterName,
+        departmentName: this.department,
         phoneNumber: this.Phonenumber,
         description: this.Detailsincident,
         incidentDateTime: this.Incidentdate,

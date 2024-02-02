@@ -256,6 +256,10 @@
       </div> -->
       <!-- Incident Report -->
       <div class="relative" v-show="showIncidentReport">
+        <span class="absolute -top-10 right-40  text-[#160959] "><button  @click = exportFormToPDF()><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
+</svg>
+</button></span>
         <span class="absolute -top-10 -right-1 text-slate-500 text-sm">REFNUMBER: {{ getRequest.referenceNumber }}</span>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
@@ -290,7 +294,7 @@
             <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description">Witness</label>
             <label type="text"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">{{
-                getRequest.Witness }}</label>
+                getRequest.witness }}</label>
           </div>
 
           <div class="col-span-2">
@@ -317,6 +321,10 @@
       </div>
       <!-- teskit -->
       <div class="relative" v-show="showTeskit">
+        <span class="absolute -top-10 right-40  text-[#160959] "><button  @click = exportFormToPDF()><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
+</svg>
+</button></span>
         <span class="absolute -top-10 -right-1 text-slate-500 text-sm">REFNUMBER: {{ getRequest.referenceNumber }}</span>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
           <div>
@@ -374,9 +382,15 @@
         </div>
       </div>
 
+      
+
       <!-- Badge Request -->
       <div v-show="showBadgeRequest" class="relative">
-        <span class="absolute -top-10 -right-1 text-slate-500 text-sm">REFNUMBER: {{ getRequest.referenceNumber }}</span>
+        <span class="absolute -top-10 right-40  text-[#160959] "><button  @click = exportFormToPDF()><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
+</svg>
+</button></span>
+        <span class="absolute -top-10 -right-1 text-slate-500 text-sm">REFNUMBER: {{ getRequest.referenceNumber }}</span> 
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
             <label class="font-semibold text-gray-700 dark:text-gray-200" for="Description">Requester Name
@@ -421,9 +435,14 @@
             </ul>
           </label>
         </div>
+        
       </div>
       <!-- CCTV Footages-->
       <div class="relative" v-show="showCCTVForm">
+        <span class="absolute -top-10 right-50  text-[#160959] "><button  @click = exportFormToPDF()><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
+</svg>
+</button></span>
         <span class="absolute -top-10 -right-1 text-slate-500 text-sm">REFNUMBER: {{ getRequest.referenceNumber }}</span>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
@@ -479,6 +498,10 @@
       </div>
       <!--Visitor Escort Transport-->
       <div class="relative" v-show="showVETForm">
+        <span class="absolute -top-10 right-40  text-[#160959] "><button  @click = exportFormToPDF()><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
+</svg>
+</button></span>
         <span class="absolute -top-10 -right-1 text-slate-500 text-sm">REFNUMBER: {{ getRequest.referenceNumber }}</span>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
@@ -546,6 +569,10 @@
       </div>
       <!-- mask-->
       <div class="relative" v-show="showMaskRequest">
+        <span class="absolute -top-10 right-40  text-[#160959] "><button  @click = exportFormToPDF()><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
+</svg>
+</button></span>
         <span class="absolute -top-10 -right-1 text-slate-500 text-sm">REFNUMBER: {{ getRequest.referenceNumber }}</span>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
@@ -783,6 +810,9 @@
 <script>
 import Modal from "../components/vmodaladmin.vue";
 import axios from "axios";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
+
 export default {
   name: "TableformanagerequestView",
   components: {
@@ -808,6 +838,10 @@ export default {
       refNumber: "",
       ticketStatus: "",
       userEmail: "",
+      fileName:"",
+
+      keysToExclude: ["uniqueCode", "files", "userId", "id"],
+      name: ["Branch", "Department", "Phone Number"]
 
 
     };
@@ -1031,7 +1065,7 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetBadgeRequest/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
-            console.log("this is get request" + response.data);
+            console.log("this is get request" + this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1179,6 +1213,95 @@ export default {
     viewRequestDetails() {
       // You can implement the logic to show the details view here
       console.log("see", this.requester);
+    },
+    convertJsonToArray(json, keysToExclude) {
+      return Object.entries(json).reduce((tableData, [key, value]) => {
+      if (!keysToExclude.includes(key)) {
+        tableData.push([key, value]);
+      }
+      return tableData;
+    }, []);
+  },
+
+    exportFormToPDF() {
+      const doc = new jsPDF();
+      let yPos = 10;
+
+      // Heading Style
+      const addSectionHeading = (text) => {
+        doc.setFontSize(14);
+        doc.setFont(undefined, "bold");
+        doc.text(text, 14, yPos);
+        yPos += 7; // Space after heading
+        doc.setFontSize(10); // Reset font size for content
+        doc.setFont(undefined, "normal");
+      };
+
+      // Regular Text
+      // const addText = (label, text) => {
+      //   doc.text(`${label}: ${text}`, 14, yPos);
+      //   yPos += 6; // Increment yPos for the next line
+      // };
+       
+      if(this.getRequest.referenceNumber.includes("BR")){
+        addSectionHeading("BADGE REQUEST. (RefNo: " + this.getRequest.referenceNumber+")")
+        this.fileName= "BADGE REQUEST"
+      }
+      if(this.getRequest.referenceNumber.includes("IR")){
+        addSectionHeading("INCIDENT REPORT. (RefNo: " + this.getRequest.referenceNumber+")")
+        this.fileName= "INCIDENT REPORT"
+      }
+      if(this.getRequest.referenceNumber.includes("CCTV")){
+        addSectionHeading("CCTV FOOTAGE VIEW. (RefNo: " + this.getRequest.referenceNumber+")")
+        this.fileName= "CCTV"
+      }
+      if(this.getRequest.referenceNumber.includes("PTW")){
+        addSectionHeading("PTW. (RefNo: " + this.getRequest.referenceNumber+")")
+        this.fileName= "PTW"
+      }
+      if(this.getRequest.referenceNumber.includes("VET")){
+        addSectionHeading("VISITOR/ESCORT/TOUR. (RefNo: " + this.getRequest.referenceNumber+")")
+        this.fileName= "VET"
+      }
+      if(this.getRequest.referenceNumber.includes("TK")){
+        addSectionHeading("TESTKITS REQUEST. (RefNo: " + this.getRequest.referenceNumber+")")
+        this.fileName= "TESKITS"
+      }
+      if(this.getRequest.referenceNumber.includes("Mask")){
+        addSectionHeading("MASK REQUEST. (RefNo: " + this.getRequest.referenceNumber+")")
+        this.fileName= "MASK"
+      }
+
+            
+
+      
+      // Adding basic info
+
+      // Ensure not to overflow, add new page if needed
+
+      // Adding tables for detailed sections like Equipment, Hazard, etc.
+      
+      const tableRows = this.convertJsonToArray(this.getRequest, this.keysToExclude);
+
+      doc.autoTable({
+        startY: yPos,
+        head: [["", ""]],
+        body: tableRows,
+    
+        theme: "grid",
+        margin: { left: 14 },
+        headStyles: { fillColor: [22, 9, 89] }, // Customize head style
+        didDrawPage: function (data) {
+          yPos = data.cursor.y + 10; // Update Y position for next content
+        },
+      });
+
+      // Define the "Hot Work" information in a two-column format
+
+      // Check for a new page if needed
+
+      // Finish up
+      doc.save(this.getRequest.referenceNumber+"_"+this.fileName+".pdf");
     },
   },
 };

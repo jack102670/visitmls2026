@@ -15,7 +15,27 @@
         </div>
 
         <div class="ptw-container max-w-4xl mx-auto p-6">
-          <h2 class="text-2xl font-bold mb-4">Permit To Work Details</h2>
+          <div class="flex justify-between">
+            <h2 class="text-2xl font-bold mb-4">Permit To Work Details</h2>
+            <span class="text-[#160959]"
+              ><button @click="exportFormToPDF()">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z"
+                  />
+                </svg></button
+            ></span>
+          </div>
+
           <table
             class="w-full mt-4 bg-white border border-gray-300 divide-y divide-gray-300"
           >
@@ -313,7 +333,6 @@
 
             <!-- ... (Other modal content) ... -->
           </table>
-          <button @click="exportFormToPDF">Export to PDF</button>
         </div>
 
         <!-- Display a list of movies from the TMDb API -->
@@ -338,6 +357,7 @@ export default {
   mounted() {
     //this.refNumber = this.$route.params.refNumber;
     console.log("this refNumber" + this.refNumber);
+
     //this.fetchPTWData();
     console.log("try" + this.$route.params.refNumber);
   },
@@ -352,7 +372,9 @@ export default {
 
   methods: {
     exportFormToPDF() {
+      console.log("this is ptwdata" + this.ptwData.jhaDetails);
       const doc = new jsPDF();
+      const logo = '/assets/images/profile.png';
       let yPos = 10;
 
       // Heading Style
@@ -366,28 +388,63 @@ export default {
       };
 
       // Regular Text
-      const addText = (label, text) => {
-        doc.text(`${label}: ${text}`, 14, yPos);
-        yPos += 6; // Increment yPos for the next line
-      };
-
-      addSectionHeading("Permit To Work Details");
+      // const addText = (label, text) => {
+      //   doc.text(`${label}: ${text}`, 14, yPos);
+      //   yPos += 6; // Increment yPos for the next line
+      // };
+      doc.addImage(logo, 'png', 10, 10, 40, 40); 
+      addSectionHeading(
+        "Permit To Work Details. (RefNo: " + this.ptwData.refNumber + ")"
+      );
 
       // Adding basic info
-      addText("Requester Name", this.ptwData.vendorName || "");
-      addText("Company", this.ptwData.companyName || "");
-      addText("Phone Number", this.ptwData.phoneNumber || "");
-      addText("Date From", this.ptwData.dateFrom || "");
-      addText("Date Until", this.ptwData.dateUntil || "");
-      addText("Work Location", this.ptwData.workLocation || "");
-      addText("Work Description", this.ptwData.workDescription || "");
-      addText("Date Requested", this.ptwData.dateRequested || "");
-      addText("PKT Staff Name", this.ptwData.staffDetails.pktStaffName || "");
-      addText("PKT Staff Email", this.ptwData.staffDetails.pktStaffEmail || "");
-      addText(
-        "PKT Staff Department",
-        this.ptwData.staffDetails.departmentName || ""
-      );
+      const basicInfo = [
+        [
+          "Requester Name:",
+          this.ptwData.vendorName || "",
+          "PKT Staff Name:",
+          this.ptwData.staffDetails.pktStaffName || "",
+        ],
+        [
+          "Date Requested",
+          this.ptwData.dateRequested || "",
+          "PKT Staff Email:",
+          this.ptwData.staffDetails.pktStaffEmail || "",
+        ],
+
+        [
+          "Company:",
+          this.ptwData.companyName || "",
+          "PKT Staff Department:",
+          this.ptwData.staffDetails.departmentName || "",
+        ],
+        ["Phone Number:", this.ptwData.phoneNumber || ""],
+        ["Date From:", this.ptwData.dateFrom || ""],
+        ["Date Until:", this.ptwData.dateUntil || ""],
+        ["Work Location:", this.ptwData.workLocation || ""],
+
+        // Empty strings for padding if needed
+        ["Work Description:", this.ptwData.workDescription || ""],
+      ];
+
+      doc.autoTable({
+        startY: yPos,
+        theme: "plain",
+        styles: { fontSize: 10, cellPadding: 1, lineColor: [0, 0, 0] },
+        columnStyles: {
+          0: { fontStyle: "bold", cellWidth: 40 }, // Label columns
+          1: { cellWidth: 60 }, // Value columns
+          2: { fontStyle: "bold", cellWidth: 40 }, // Label columns
+          3: { cellWidth: 60 }, // Value columns
+        },
+        body: basicInfo,
+        showHead: "firstPage",
+        margin: { top: 10, right: 14, bottom: 10, left: 14 },
+
+        didDrawPage: function (data) {
+          yPos = data.cursor.y + 10; // Update Y position for next content
+        },
+      });
 
       // Ensure not to overflow, add new page if needed
       if (yPos > 280) {
@@ -406,11 +463,12 @@ export default {
           startY: yPos,
           theme: "grid",
           margin: { left: 14 },
-          headStyles: { fillColor: [22, 160, 133] }, // Customize head style
+          headStyles: { fillColor: [22, 9, 89] }, // Customize head style
           styles: {
             cellPadding: { top: 2, right: 4, bottom: 2, left: 4 },
             fontSize: 10,
-            overflow: "linebreak",
+            overflow: "linebreak", // Change this to 'visible' if you want to avoid any line breaks
+            cellWidth: "wrap", // Use 'wrap' to allow cells to expand based on content
           },
           columnStyles: { 0: { cellWidth: "auto" } }, // Ensure the column automatically adjusts to content
           head: [[title]],
@@ -441,7 +499,6 @@ export default {
         yPos = 10;
       }
 
-  
       addSectionHeading("Jobs Hazard Analysis");
       doc.autoTable({
         startY: yPos,
@@ -453,89 +510,153 @@ export default {
         ]),
         theme: "grid",
         margin: { left: 14 },
-        headStyles: { fillColor: [22, 160, 133] }, // Customize head style
+        headStyles: { fillColor: [22, 9, 89] }, // Customize head style
         didDrawPage: function (data) {
           yPos = data.cursor.y + 10; // Update Y position for next content
         },
       });
 
-      addSectionHeading("Hot Work");
-      addText(
-        "Work Description",
-        this.ptwData.hotWork?.workDescription || "Not provided"
-      );
-      addText(
-        "Start Date/Time",
-        this.ptwData.hotWork?.dateTimeStart || "Not provided"
-      );
-      addText(
-        "Complete Date/Time",
-        this.ptwData.hotWork?.dateTimeComplete || "Not provided"
-      );
-      addText("Hot Work By", this.ptwData.hotWork?.hotWorkBy || "Not provided");
+      // Define the "Hot Work" information in a two-column format
+      const hotWorkInfo = [
+        [
+          "Work Description:",
+          this.ptwData.hotWork?.workDescription || "Not provided",
+          "Start Date/Time:",
+          this.ptwData.hotWork?.dateTimeStart || "Not provided",
+        ],
+        [
+          "Complete Date/Time:",
+          this.ptwData.hotWork?.dateTimeComplete || "Not provided",
+          "Hot Work By:",
+          this.ptwData.hotWork?.hotWorkBy || "Not provided",
+        ],
+      ];
 
-      // For lists within the "Hot Work" section, use addListSection
-      addTableSection(
-        "General Requirements",
-        this.ptwData.hotWork?.reqGeneral || []
-      );
-      addTableSection(
-        "Distance Requirements",
-        this.ptwData.hotWork?.reqDistance || []
-      );
-      addTableSection(
-        "Enclosed Equipment Requirements",
-        this.ptwData.hotWork?.req_Enc_Equip || []
-      );
-      addTableSection(
-        "Fire Monitor Requirements",
-        this.ptwData.hotWork?.req_FireMon || []
-      );
-      addTableSection(
-        "Walls Requirements",
-        this.ptwData.hotWork?.req_Walls || []
-      );
+      // Check for a new page if needed
+      if (yPos > 280) {
+        doc.addPage();
+        yPos = 10;
+      }
+      if (this.ptwData.hotWork.workDescription != null) {
+        addSectionHeading("Hot Work");
 
-      addSectionHeading("Work at Height");
-      addText("Company Name", this.ptwData.wah?.companyName || "Not provided");
-      addText(
-        "Contractor Name",
-        this.ptwData.wah?.contractorName || "Not provided"
-      );
-      addText(
-        "Work Location",
-        this.ptwData.wah?.workLocation || "Not provided"
-      );
-      addText(
-        "Work Description",
-        this.ptwData.wah?.workDescription || "Not provided"
-      );
-      addText(
-        "Start Date/Time",
-        this.ptwData.wah?.startDateTime || "Not provided"
-      );
-      addText(
-        "Complete Date/Time",
-        this.ptwData.wah?.completeDateTime || "Not provided"
-      );
+        // Use autoTable to create the two-column layout for "Hot Work" section
+        doc.autoTable({
+          startY: yPos,
+          theme: "plain",
+          styles: { fontSize: 10, cellPadding: 1 },
+          columnStyles: {
+            0: { fontStyle: "bold", cellWidth: 40 }, // Label column
+            1: { cellWidth: 60 }, // Value column
+            2: { fontStyle: "bold", cellWidth: 40 }, // Second label column
+            3: { cellWidth: 60 }, // Second value column
+          },
+          body: hotWorkInfo,
+          willDrawCell: (data) => {
+            // Prevents lines from being drawn
+            if (data.section === "body") {
+              data.cell.styles.lineWidth = 0;
+            }
+          },
+          didDrawPage: (data) => {
+            yPos = data.cursor.y + 10; // Update yPos for the next section
+          },
+        });
 
-      // Adding additional lists as tables for "Work at Height"
-      addTableSection("Hazards", this.ptwData.wah?.waH_Hazard || []);
-      addTableSection("Ladders", this.ptwData.wah?.waH_Ladders || []);
-      addTableSection("Scaffolding", this.ptwData.wah?.waH_Scaffolding || []);
-      addTableSection("Lift Trucks", this.ptwData.wah?.waH_LiftTruck || []);
-      addTableSection("Man Cages", this.ptwData.wah?.waH_ManCage || []);
-      addTableSection(
-        "Emergency Procedures",
-        this.ptwData.wah?.waH_Emergency || []
-      );
-      addTableSection(
-        "Control Measures",
-        this.ptwData.wah?.waH_ControlMeasure || []
-      );
+        // For lists within the "Hot Work" section, use addListSection
+        addTableSection(
+          "General Requirements",
+          this.ptwData.hotWork?.reqGeneral 
+        );
+        addTableSection(
+          "Distance Requirements",
+          this.ptwData.hotWork?.reqDistance 
+        );
+        addTableSection(
+          "Enclosed Equipment Requirements",
+          this.ptwData.hotWork?.req_Enc_Equip 
+        );
+        addTableSection(
+          "Fire Monitor Requirements",
+          this.ptwData.hotWork?.req_FireMon 
+        );
+        addTableSection(
+          "Walls Requirements",
+          this.ptwData.hotWork?.req_Walls 
+        );
+      }
+      // Add a section heading for "Hot Work"
+
+      const workAtHeightInfo = [
+        [
+          "Company Name:",
+          this.ptwData.wah?.companyName || "Not provided",
+          "Contractor Name:",
+          this.ptwData.wah?.contractorName || "Not provided",
+        ],
+        [
+          "Work Location:",
+          this.ptwData.wah?.workLocation || "Not provided",
+          
+        ],
+        [
+          "Start Date/Time:",
+          this.ptwData.wah?.startDateTime || "Not provided",
+          "Complete Date/Time:",
+          this.ptwData.wah?.completeDateTime || "Not provided",
+        ],
+        ["Work Description:",
+          this.ptwData.wah?.workDescription || "Not provided",],
+      ];
+      if (yPos > 280) {
+        doc.addPage();
+        yPos = 10;
+      }
+
+      if (this.ptwData.wah.companyName != null) {
+        addSectionHeading("Work at Height");
+
+        // Use autoTable to create the two-column layout for "Work at Height" section
+        doc.autoTable({
+          startY: yPos,
+          theme: "plain",
+          styles: { fontSize: 10, cellPadding: 1 },
+          columnStyles: {
+            0: { fontStyle: "bold", cellWidth: 40 }, // Label column
+            1: { cellWidth: 60 }, // Value column
+            2: { fontStyle: "bold", cellWidth: 40 }, // Second label column
+            3: { cellWidth: 60 }, // Second value column
+          },
+          body: workAtHeightInfo,
+          willDrawCell: (data) => {
+            // Prevents lines from being drawn
+            if (data.section === "body") {
+              data.cell.styles.lineWidth = 0;
+            }
+          },
+          didDrawPage: (data) => {
+            yPos = data.cursor.y + 10; // Update yPos for the next section
+          },
+        });
+        // Adding additional lists as tables for "Work at Height"
+        addTableSection("Hazards", this.ptwData.wah?.waH_Hazard || []);
+        addTableSection("Ladders", this.ptwData.wah?.waH_Ladders || []);
+        addTableSection("Scaffolding", this.ptwData.wah?.waH_Scaffolding || []);
+        addTableSection("Lift Trucks", this.ptwData.wah?.waH_LiftTruck || []);
+        addTableSection("Man Cages", this.ptwData.wah?.waH_ManCage || []);
+        addTableSection(
+          "Emergency Procedures",
+          this.ptwData.wah?.waH_Emergency || []
+        );
+        addTableSection(
+          "Control Measures",
+          this.ptwData.wah?.waH_ControlMeasure || []
+        );
+      }
+      // Add a section heading for "Work at Height"
 
       // Finish up
-      doc.save("permit-to-work-details.pdf");
+      doc.save(this.ptwData.refNumber + ".pdf");
     },
 
     getFileName(file) {

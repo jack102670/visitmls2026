@@ -149,32 +149,32 @@
             </div>
             <div>
               <label for="electricalHighTension" class="text-gray-700 dark:text-gray-200">
-                <input id="electricalHighTension" type="checkbox" value="electrical High Tension" v-model="hazards" />
+                <input id="electricalHighTension" type="checkbox" value="Electrical High Tension" v-model="hazards" />
                 Electrical High Tension
               </label>
             </div>
             <div>
               <label for="fireProtectionSystemImpairment" class="text-gray-700 dark:text-gray-200">
-                <input id="fireProtectionSystemImpairment" type="checkbox" value="fire Protection System Impairment"
+                <input id="fireProtectionSystemImpairment" type="checkbox" value="Fire Protection System Impairment"
                   v-model="hazards" />
                 Fire Protection System Impairment
               </label>
             </div>
             <div>
               <label for="hazardousSubstances" class="text-gray-700 dark:text-gray-200">
-                <input id="hazardousSubstances" type="checkbox" value="hazardous Substances" v-model="hazards" />
+                <input id="hazardousSubstances" type="checkbox" value="Hazardous Substances" v-model="hazards" />
                 Hazardous Substances
               </label>
             </div>
             <div>
               <label for="dustPollutantsExposure" class="text-gray-700 dark:text-gray-200">
-                <input id="dustPollutantsExposure" type="checkbox" value="dust Pollutants Exposure" v-model="hazards" />
+                <input id="dustPollutantsExposure" type="checkbox" value="Dust Pollutants Exposure" v-model="hazards" />
                 Dust/Pollutants exposure
               </label>
             </div>
             <div>
               <label for="hydraulicSpillPneumaticJet" class="text-gray-700 dark:text-gray-200">
-                <input id="hydraulicSpillPneumaticJet" type="checkbox" value="hydraulic Spill Pneumatic Jet"
+                <input id="hydraulicSpillPneumaticJet" type="checkbox" value="Hydraulic Spill Pneumatic Jet"
                   v-model="hazards" />
                 Hydraulic Spill/Pneumatic Jet
               </label>
@@ -182,13 +182,13 @@
             <div>
               <label for="trappingPointsNipPoints" class="text-gray-700 dark:text-gray-200">
                 <input id="trappingPointsNipPoints" type="checkbox" v-model="hazards"
-                  value="trapping Points Nip Points" />
+                  value="Trapping Points Nip Points" />
                 Trapping Points/Nip Points
               </label>
             </div>
             <div>
               <label for="inadequateIllumination" class="text-gray-700 dark:text-gray-200">
-                <input id="inadequateIllumination" type="checkbox" v-model="hazards" value="inadequate Illumination" />
+                <input id="inadequateIllumination" type="checkbox" v-model="hazards" value="Inadequate Illumination" />
                 Inadequate Illumination
               </label>
             </div>
@@ -225,7 +225,7 @@
           <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
             <div>
               <label class="text-gray-700 dark:text-gray-200">
-                <input type="checkbox" value="Safety Helmet or Hard hats" v-model="equipment" />
+                <input type="checkbox" value="Safety Helmet or Hard Hats" v-model="equipment" />
                 Safety Helmet or Hard hats
               </label>
             </div>

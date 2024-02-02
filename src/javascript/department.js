@@ -25,4 +25,15 @@ export const locations = [
     // Add more locations as needed
   ];
 
+  
+  export const staffdepartments = [
+ 
+    { id: "SECURITY", name: "SECURITY" },
+    { id: "SAFETY", name: "SAFETY" },
+    { id: "MAINTENANCE", name: "MAINTENANCE" },
+    { id: "ICT", name: "ICT" },
+    { id: "BD", name: "BD" },
+// Add more locations as needed
+];
+
 

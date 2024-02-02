@@ -231,8 +231,8 @@ export default {
       const formData = {
         requesterName: this.requesterName,
         departmentName: this.department,
-        Description: this.Description,
-        Noofpieces: this.Noofpieces,
+        description: this.Description,
+        piecesAmount: this.Noofpieces,
         phoneNumber: this.phonenumber,
         uniqueCode: this.generateUniqueCode(),
         userId: this.userDetails.userId,
@@ -248,7 +248,8 @@ export default {
       axios.post("http://172.28.28.91:8085/api/Main/InsertMaskRequest", formData)
         .then(response => {
 
-          this.closeModal(); this.resetForm();
+          this.closeModal(); 
+          //this.resetForm();
           this.$router.push("/Dashboard");
 
           console.log("Server response:", response.data);
@@ -261,15 +262,14 @@ export default {
 
   },
   resetForm() {
+    this.requesterName ='';
+        this.department ='';
+        this.Description ='';
+        this.Noofpieces ='';
+         this.phonenumber ='';
     // Reset each property to its default value
     // this.branch = '';
-    this.requesterName = '';
-    this.departmentName = '';
-    this.phoneNumber = '';
-    this.description = '';
-    this.incidentDateTime = '';
-    this.incidentLocation = '';
-    this.apptDateTime = '';
+  
     // No need to reset uniqueCode or userId since they are generated and set elsewhere
     // this.uniqueCode = '';
     // this.userId = '';
