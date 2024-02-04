@@ -4,9 +4,13 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "build": "npm run build:tailwind && vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "build:tailwind": "npx tailwindcss -i ./src/input.css -o ./src/assets/css/output.css",
+
+    "dev": "npm run build:tailwind --watch & vue-cli-service serve"
   },
+  
   "dependencies": {
     "@vueuse/core": "^10.7.0",
     "axios": "^1.6.2",
