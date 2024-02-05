@@ -688,7 +688,7 @@
       <!-- CCTV Footages-->
       <div  class="relative" v-show="showCCTVForm">
        
-       <div class="absolute -top-10 -right-1 item-centre"><span  v-if = "getRequest.adminStatus==='COMPLETED'" class=" text-[#160959]"
+       <div class="absolute -top-10 -right-1 flex item-center"><span  v-if = "getRequest.adminStatus==='COMPLETED'" class=" text-[#160959]"
           ><button @click="exportFormToPDF()">
             <svg
               xmlns="http://www.w3.org/2000/svg"
