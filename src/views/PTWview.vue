@@ -374,7 +374,7 @@ export default {
     exportFormToPDF() {
       console.log("this is ptwdata" + this.ptwData.jhaDetails);
       const doc = new jsPDF();
-      const logo = '/assets/images/profile.png';
+
       let yPos = 10;
 
       // Heading Style
@@ -392,7 +392,7 @@ export default {
       //   doc.text(`${label}: ${text}`, 14, yPos);
       //   yPos += 6; // Increment yPos for the next line
       // };
-      doc.addImage(logo, 'png', 10, 10, 40, 40); 
+
       addSectionHeading(
         "Permit To Work Details. (RefNo: " + this.ptwData.refNumber + ")"
       );
@@ -401,30 +401,30 @@ export default {
       const basicInfo = [
         [
           "Requester Name:",
-          this.ptwData.vendorName || "",
+          this.ptwData.vendorName || "N/A",
           "PKT Staff Name:",
-          this.ptwData.staffDetails.pktStaffName || "",
+          this.ptwData.staffDetails.pktStaffName || "N/A",
         ],
         [
           "Date Requested",
-          this.ptwData.dateRequested || "",
+          this.ptwData.dateRequested || "N/A",
           "PKT Staff Email:",
-          this.ptwData.staffDetails.pktStaffEmail || "",
+          this.ptwData.staffDetails.pktStaffEmail || "N/A",
         ],
 
         [
           "Company:",
-          this.ptwData.companyName || "",
+          this.ptwData.companyName || "N/A",
           "PKT Staff Department:",
-          this.ptwData.staffDetails.departmentName || "",
+          this.ptwData.staffDetails.departmentName || "N/A",
         ],
-        ["Phone Number:", this.ptwData.phoneNumber || ""],
-        ["Date From:", this.ptwData.dateFrom || ""],
-        ["Date Until:", this.ptwData.dateUntil || ""],
-        ["Work Location:", this.ptwData.workLocation || ""],
+        ["Phone Number:", this.ptwData.phoneNumber || "N/A"],
+        ["Date From:", this.ptwData.dateFrom || "N/A"],
+        ["Date Until:", this.ptwData.dateUntil || "N/A"],
+        ["Work Location:", this.ptwData.workLocation || "N/A"],
 
         // Empty strings for padding if needed
-        ["Work Description:", this.ptwData.workDescription || ""],
+        ["Work Description:", this.ptwData.workDescription || "N/A"],
       ];
 
       doc.autoTable({
@@ -463,7 +463,7 @@ export default {
           startY: yPos,
           theme: "grid",
           margin: { left: 14 },
-          headStyles: { fillColor: [22, 9, 89] }, // Customize head style
+          headStyles: { fillColor: [22, 160, 133] }, // Customize head style
           styles: {
             cellPadding: { top: 2, right: 4, bottom: 2, left: 4 },
             fontSize: 10,
@@ -510,7 +510,7 @@ export default {
         ]),
         theme: "grid",
         margin: { left: 14 },
-        headStyles: { fillColor: [22, 9, 89] }, // Customize head style
+        headStyles: { fillColor: [22, 160, 133] }, // Customize head style
         didDrawPage: function (data) {
           yPos = data.cursor.y + 10; // Update Y position for next content
         },
@@ -520,15 +520,15 @@ export default {
       const hotWorkInfo = [
         [
           "Work Description:",
-          this.ptwData.hotWork?.workDescription || "Not provided",
+          this.ptwData.hotWork?.workDescription || "N/A",
           "Start Date/Time:",
-          this.ptwData.hotWork?.dateTimeStart || "Not provided",
+          this.ptwData.hotWork?.dateTimeStart || "N/A",
         ],
         [
           "Complete Date/Time:",
-          this.ptwData.hotWork?.dateTimeComplete || "Not provided",
+          this.ptwData.hotWork?.dateTimeComplete || "N/A",
           "Hot Work By:",
-          this.ptwData.hotWork?.hotWorkBy || "Not provided",
+          this.ptwData.hotWork?.hotWorkBy || "N/A",
         ],
       ];
 
@@ -590,23 +590,23 @@ export default {
       const workAtHeightInfo = [
         [
           "Company Name:",
-          this.ptwData.wah?.companyName || "Not provided",
+          this.ptwData.wah?.companyName || "N/A",
           "Contractor Name:",
-          this.ptwData.wah?.contractorName || "Not provided",
+          this.ptwData.wah?.contractorName || "N/A",
         ],
         [
           "Work Location:",
-          this.ptwData.wah?.workLocation || "Not provided",
+          this.ptwData.wah?.workLocation || "N/A",
           
         ],
         [
           "Start Date/Time:",
-          this.ptwData.wah?.startDateTime || "Not provided",
+          this.ptwData.wah?.startDateTime || "N/A",
           "Complete Date/Time:",
-          this.ptwData.wah?.completeDateTime || "Not provided",
+          this.ptwData.wah?.completeDateTime || "N/A",
         ],
         ["Work Description:",
-          this.ptwData.wah?.workDescription || "Not provided",],
+          this.ptwData.wah?.workDescription || "N/A",],
       ];
       if (yPos > 280) {
         doc.addPage();

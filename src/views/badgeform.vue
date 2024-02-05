@@ -64,6 +64,21 @@
                   </option>
                 </select>
               </div>
+              <div v-if="formData.department === 'Others'">
+                <label
+                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  :for="dynamicCustomId"
+                  >Specify<span class="text-red-500">*</span>
+                </label>
+                <input
+                  placeholder="Specify category"
+                  :id="dynamicCustomId"
+                  type="text"
+                  required
+                  v-model="capitalizedDepartment"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                />
+              </div>
             </div>
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
               <div>
@@ -199,7 +214,11 @@
           </tr>
           <tr>
             <td class="py-2 px-4 font-medium">Department:</td>
-            <td class="py-2 px-4">{{ formData.department }}</td>
+
+            <td class="py-2 px-4" v-if="formData.department === 'Others'">
+              {{ formData.customdepartment }}
+            </td>
+            <td class="py-2 px-4" v-else>{{ formData.department }}</td>
           </tr>
           <tr>
             <td class="py-2 px-4 font-medium">Phone Number:</td>
@@ -303,7 +322,7 @@ import FilePondPluginFileRename from "filepond-plugin-file-rename";
 import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 
-import { jsPDF } from "jspdf";
+//import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 
 const FilePond = vueFilePond(
@@ -355,302 +374,18 @@ export default {
           value.charAt(0).toUpperCase() + value.slice(1);
       },
     },
+    capitalizedDepartment: {
+      get() {
+        return this.formData.customdepartment;
+      },
+
+      set(value) {
+        this.formData.customdepartment = value.toUpperCase();
+      },
+    },
   },
   methods: {
-    exportFormToPDF() {
-      const doc = new jsPDF();
-      let yPos = 10;
-
-      // Heading Style
-      const addSectionHeading = (text) => {
-        doc.setFontSize(14);
-        doc.setFont(undefined, "bold");
-        doc.text(text, 14, yPos);
-        yPos += 7; // Space after heading
-        doc.setFontSize(10); // Reset font size for content
-        doc.setFont(undefined, "normal");
-      };
-
-      // Regular Text
-      // const addText = (label, text) => {
-      //   doc.text(`${label}: ${text}`, 14, yPos);
-      //   yPos += 6; // Increment yPos for the next line
-      // };
-
-      addSectionHeading("BADGE REQUEST. (RefNo: " + this.getRe.refNumber+")");
-
-      // Adding basic info
-      const basicInfo = [
-      [
-          "Requester Name:",
-          this.ptwData.vendorName || "",
-          "PKT Staff Name:",
-          this.ptwData.staffDetails.pktStaffName || "",
-         
-        ],
-      [
-          "Date Requested",
-          this.ptwData.dateRequested || "",
-          "PKT Staff Email:",
-          this.ptwData.staffDetails.pktStaffEmail || "",
-        ],
-       
-        [
-        "Company:",
-          this.ptwData.companyName || "",
-          "PKT Staff Department:",
-          this.ptwData.staffDetails.departmentName || "",
-         
-        ],
-        [
-        "Phone Number:",
-          this.ptwData.phoneNumber || "",
-         
-        ],
-        [
-           "Date From:",
-          this.ptwData.dateFrom || "",
-        ],
-        [
-          "Date Until:",
-          this.ptwData.dateUntil || "",
-        
-        ],
-        [  "Work Location:",
-          this.ptwData.workLocation || "",],
-        
-        // Empty strings for padding if needed
-        ["Work Description:",
-          this.ptwData.workDescription || "",],
-      ];
-
-      doc.autoTable({
-        startY: yPos,
-        theme: "plain",
-        styles: { fontSize: 10, cellPadding: 1, lineColor: [0, 0, 0] },
-        columnStyles: {
-          0: { fontStyle: "bold", cellWidth: 40 }, // Label columns
-          1: { cellWidth: 60 }, // Value columns
-          2: { fontStyle: "bold", cellWidth: 40 }, // Label columns
-          3: { cellWidth: 60 }, // Value columns
-        },
-        body: basicInfo,
-        showHead: "firstPage",
-        margin: { top: 10, right: 14, bottom: 10, left: 14 },
-
-        didDrawPage: function (data) {
-          yPos = data.cursor.y + 10; // Update Y position for next content
-        },
-      });
-
-      // Ensure not to overflow, add new page if needed
-      if (yPos > 280) {
-        doc.addPage();
-        yPos = 10;
-      }
-
-      // Adding tables for detailed sections like Equipment, Hazard, etc.
-      const addTableSection = (title, data) => {
-        if (yPos > 280) {
-          doc.addPage();
-          yPos = 10;
-        }
-        addSectionHeading(title);
-        doc.autoTable({
-          startY: yPos,
-          theme: "grid",
-          margin: { left: 14 },
-          headStyles: { fillColor: [22, 160, 133] }, // Customize head style
-          styles: {
-            cellPadding: { top: 2, right: 4, bottom: 2, left: 4 },
-            fontSize: 10,
-            overflow: "linebreak", // Change this to 'visible' if you want to avoid any line breaks
-            cellWidth: "wrap", // Use 'wrap' to allow cells to expand based on content
-          },
-          columnStyles: { 0: { cellWidth: "auto" } }, // Ensure the column automatically adjusts to content
-          head: [[title]],
-          body: data.map((item) => [item]),
-          willDrawCell: function (data) {
-            // Adjust the `minCellWidth` based on the content length if necessary
-            const textLength =
-              (doc.getStringUnitWidth(data.cell.raw) *
-                doc.internal.getFontSize()) /
-              doc.internal.scaleFactor;
-            if (textLength > data.cell.width) {
-              data.cell.styles.minCellWidth = textLength;
-            }
-          },
-          didDrawPage: function (data) {
-            yPos = data.cursor.y + 10; // Update Y position for next content
-          },
-        });
-      };
-
-      addTableSection("Equipment", this.ptwData.equipment);
-      addTableSection("Hazard", this.ptwData.hazard);
-      addTableSection("Isolation", this.ptwData.isolation);
-      addTableSection("Plant Support", this.ptwData.plantSupport);
-
-      if (yPos > 280) {
-        doc.addPage();
-        yPos = 10;
-      }
-
-      addSectionHeading("Jobs Hazard Analysis");
-      doc.autoTable({
-        startY: yPos,
-        head: [["Sequence Task", "Potential Hazard", "Preventive Measures"]],
-        body: this.ptwData.jhaDetails.map((detail) => [
-          detail.sequenceTask,
-          detail.potentialHazard,
-          detail.preventiveMeasures,
-        ]),
-        theme: "grid",
-        margin: { left: 14 },
-        headStyles: { fillColor: [22, 160, 133] }, // Customize head style
-        didDrawPage: function (data) {
-          yPos = data.cursor.y + 10; // Update Y position for next content
-        },
-      });
-
-      // Define the "Hot Work" information in a two-column format
-      const hotWorkInfo = [
-        [
-          "Work Description:",
-          this.ptwData.hotWork?.workDescription || "Not provided",
-          "Start Date/Time:",
-          this.ptwData.hotWork?.dateTimeStart || "Not provided",
-        ],
-        [
-          "Complete Date/Time:",
-          this.ptwData.hotWork?.dateTimeComplete || "Not provided",
-          "Hot Work By:",
-          this.ptwData.hotWork?.hotWorkBy || "Not provided",
-        ],
-      ];
-
-      // Check for a new page if needed
-      if (yPos > 280) {
-        doc.addPage();
-        yPos = 10;
-      }
-
-      // Add a section heading for "Hot Work"
-      addSectionHeading("Hot Work");
-
-      // Use autoTable to create the two-column layout for "Hot Work" section
-      doc.autoTable({
-        startY: yPos,
-        theme: "plain",
-        styles: { fontSize: 10, cellPadding: 1 },
-        columnStyles: {
-          0: { fontStyle: "bold", cellWidth: 40 }, // Label column
-          1: { cellWidth: 60 }, // Value column
-          2: { fontStyle: "bold", cellWidth: 40 }, // Second label column
-          3: { cellWidth: 60 }, // Second value column
-        },
-        body: hotWorkInfo,
-        willDrawCell: (data) => {
-          // Prevents lines from being drawn
-          if (data.section === "body") {
-            data.cell.styles.lineWidth = 0;
-          }
-        },
-        didDrawPage: (data) => {
-          yPos = data.cursor.y + 10; // Update yPos for the next section
-        },
-      });
-
-      // For lists within the "Hot Work" section, use addListSection
-      addTableSection(
-        "General Requirements",
-        this.ptwData.hotWork?.reqGeneral || []
-      );
-      addTableSection(
-        "Distance Requirements",
-        this.ptwData.hotWork?.reqDistance || []
-      );
-      addTableSection(
-        "Enclosed Equipment Requirements",
-        this.ptwData.hotWork?.req_Enc_Equip || []
-      );
-      addTableSection(
-        "Fire Monitor Requirements",
-        this.ptwData.hotWork?.req_FireMon || []
-      );
-      addTableSection(
-        "Walls Requirements",
-        this.ptwData.hotWork?.req_Walls || []
-      );
-
-      const workAtHeightInfo = [
-        [
-          "Company Name:",
-          this.ptwData.wah?.companyName || "Not provided",
-          "Contractor Name:",
-          this.ptwData.wah?.contractorName || "Not provided",
-        ],
-        [
-          "Work Location:",
-          this.ptwData.wah?.workLocation || "Not provided",
-          "Work Description:",
-          this.ptwData.wah?.workDescription || "Not provided",
-        ],
-        [
-          "Start Date/Time:",
-          this.ptwData.wah?.startDateTime || "Not provided",
-          "Complete Date/Time:",
-          this.ptwData.wah?.completeDateTime || "Not provided",
-        ],
-      ];
-      if (yPos > 280) {
-        doc.addPage();
-        yPos = 10;
-      }
-
-      // Add a section heading for "Work at Height"
-      addSectionHeading("Work at Height");
-
-      // Use autoTable to create the two-column layout for "Work at Height" section
-      doc.autoTable({
-        startY: yPos,
-        theme: "plain",
-        styles: { fontSize: 10, cellPadding: 1 },
-        columnStyles: {
-          0: { fontStyle: "bold", cellWidth: 40 }, // Label column
-          1: { cellWidth: 60 }, // Value column
-          2: { fontStyle: "bold", cellWidth: 40 }, // Second label column
-          3: { cellWidth: 60 }, // Second value column
-        },
-        body: workAtHeightInfo,
-        willDrawCell: (data) => {
-          // Prevents lines from being drawn
-          if (data.section === "body") {
-            data.cell.styles.lineWidth = 0;
-          }
-        },
-        didDrawPage: (data) => {
-          yPos = data.cursor.y + 10; // Update yPos for the next section
-        },
-      });
-      // Adding additional lists as tables for "Work at Height"
-      addTableSection("Hazards", this.ptwData.wah?.waH_Hazard || []);
-      addTableSection("Ladders", this.ptwData.wah?.waH_Ladders || []);
-      addTableSection("Scaffolding", this.ptwData.wah?.waH_Scaffolding || []);
-      addTableSection("Lift Trucks", this.ptwData.wah?.waH_LiftTruck || []);
-      addTableSection("Man Cages", this.ptwData.wah?.waH_ManCage || []);
-      addTableSection(
-        "Emergency Procedures",
-        this.ptwData.wah?.waH_Emergency || []
-      );
-      addTableSection(
-        "Control Measures",
-        this.ptwData.wah?.waH_ControlMeasure || []
-      );
-
-      // Finish up
-      doc.save("permit-to-work-details.pdf");
-    },
+    
     showModal() {
       this.isModalVisible = true;
     },
@@ -698,17 +433,22 @@ export default {
       this.showConfirmButton = false;
       this.showLoadingButton = true;
       this.isLoading = true;
+      if (this.formData.department === "Others") {
+        this.finalDepartment = this.formData.customdepartment;
+      } else {
+        this.finalDepartment = this.formData.department;
+      }
       // Send the POST request
       try {
         axios
           .post("http://172.28.28.91:8085/api/Main/InsertBadgeRequest", {
             requesterName: this.formData.requesterName,
-            departmentName: this.formData.department,
+            departmentName: this.finalDepartment,
             designationPeople: this.formData.people,
             phoneNumber: this.formData.phonenumber,
             uniqueCode: this.generateUniqueCode(),
             userId: this.userDetails.userId,
-            branch: this.branch,
+            branch: store.getSelectedLocation(),
             userEmail: this.userDetails.email,
           })
 
@@ -720,7 +460,7 @@ export default {
             this.uploadMultiImage();
             this.resetForm();
             this.closeModal();
-          
+
             this.$router.push("/Dashboard");
           })
           .catch((error) => {

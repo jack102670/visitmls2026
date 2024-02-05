@@ -63,11 +63,11 @@
                   >Specify<span class="text-red-500">*</span>
                 </label>
                 <input
-                  placeholder="Specify category"
+                  placeholder="Specify Department"
                   :id="dynamicCustomId"
                   type="text"
                   required
-                  v-model="formData.customdepartment"
+                  v-model="capitalizedDepartment"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
@@ -327,8 +327,17 @@ export default {
           value.charAt(0).toUpperCase() + value.slice(1);
       },
     },
-    dynamicId() { 
-      return `formData.department-${this.formData.department}`; 
+    capitalizedDepartment: {
+      get() {
+        return this.formData.customdepartment;
+      },
+
+      set(value) {
+        this.formData.customdepartment = value.toUpperCase();
+      },
+    },
+    dynamicId() {
+      return `formData.department-${this.formData.department}`;
     },
     dynamicCustomId() {
       return `formData.customdepartment-${this.formData.department}`;
@@ -373,10 +382,9 @@ export default {
     confirmFormSubmission() {
       this.showConfirmButton = false;
       this.showLoadingButton = true;
-      if(this.formData.department === "Others"){
+      if (this.formData.department === "Others") {
         this.finalDepartment = this.formData.customdepartment;
-      }
-      else{
+      } else {
         this.finalDepartment = this.formData.department;
       }
       const uploadForm = {

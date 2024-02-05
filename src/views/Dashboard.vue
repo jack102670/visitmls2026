@@ -144,7 +144,7 @@
               >
               <select
                 v-model="selectedLocation"
-                @change="onLocationChange"
+                @change="onLocationChange(); SetToStore()"
                 id="location"
                 class="mt-1 block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-sm"
               >
@@ -266,7 +266,8 @@ export default {
     // else{
     //   this.$router.push("/Managerequest");
     // }
-    store.setSelectedLocation(this.selectedLocation, this.locations);
+    
+    
   },
   // beforeCreate(){
   //   if (!localStorage.getItem('reloaded2')) {
@@ -278,6 +279,10 @@ export default {
   //   }
   // },
   methods: {
+    SetToStore(){
+      store.setSelectedLocation(this.selectedLocation, this.locations);
+  
+    },
     fetchRequesters() {
       const userDetails = store.getSession().userDetails;
       const role = store.getRole();

@@ -6,10 +6,11 @@
         class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8">
         <section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
           <div class=" ">
-            {{ branch }}
+           <div class="flex justify-between">
             <h1 class="font-semibold text-3xl p-3 text-gray-700">
               PERMIT TO WORK
-            </h1>
+            </h1><p class="text-slate-200"> Branch: {{ branch }}</p>
+          </div>
             <h2 class="text-lg font-semibold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white">
               Works Information
             </h2>
@@ -133,7 +134,7 @@
           <div class="grid grid-cols-1 pt-6 gap-6 mt-4 sm:grid-cols-3">
             <div>
               <label for="hotWorks" class="text-gray-700 dark:text-gray-200">
-                <input id="hotWorks" type="checkbox" value="hot Works" v-model="hazards"
+                <input id="hotWorks" type="checkbox" value="Hot Works" v-model="hazards"
                   @change="handleCheckboxChange('hotWorks')" />
                 Hot Works<span class="text-red-500">*</span> (i.e Welding &
                 Flame Cutting)
@@ -141,7 +142,7 @@
             </div>
             <div>
               <label for="workingAtHeight" class="text-gray-700 dark:text-gray-200">
-                <input id="workingAtHeight" type="checkbox" value="working At Height" v-model="hazards"
+                <input id="workingAtHeight" type="checkbox" value="Working At Height" v-model="hazards"
                   @change="handleCheckboxChange('workingAtHeight')" />
                 Working at Height<span class="text-red-500">*</span> (falling
                 height > 1.8m)
@@ -535,13 +536,13 @@
 
         <form>
           <div class="grid-cols-1 gap-6 mt-4 sm:grid-cols-2 mx-auto cursor-pointer flex w-full">
-            <div class="w-full">
+            <div >
               <label for="Location" class="font-semibold text-gray-700 dark:text-gray-200">Location</label>
               <input v-model="Location" id="Location"
                 class="w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 rows="2" required />
             </div>
-            <div>
+            <div class="w-full">
               <label class="font-semibold text-gray-700 dark:text-gray-200" for="Worksdescription">Works
                 Description</label>
               <textarea id="Worksdescription" v-model="Worksdescription" type="text" rows="1"
@@ -1615,6 +1616,7 @@ export default {
   },
   data() {
     return {
+      branch: "",
       showConfirmButton: true,
       showLoadingButton: false,
       mancage: false,
@@ -1684,6 +1686,7 @@ export default {
       waH_ControlMeasure: [],
     };
   },
+  
   mounted() {
 
     this.branch = store.getSelectedLocation();
@@ -1721,7 +1724,7 @@ export default {
       this.showConfirmButton = false;
       this.showLoadingButton = true;
       let combinedFormData = {
-        branch: this.branch,
+        branch: store.getSelectedLocation(),
         vendorName: this.Contractorvendorname,
         vendorEmail: this.Vemail,
         companyName: this.Companyname,
@@ -1844,7 +1847,7 @@ export default {
           console.log("Upload successful:", response.data);
 
           this.closeModal();
-          this.$router.push("/dashboardvendor/ptw");
+          this.$router.push("/dashboardvendor");
         })
         .catch((error) => {
           if (error.response) {
