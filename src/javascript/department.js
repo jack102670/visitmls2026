@@ -22,6 +22,7 @@ export const locations = [
         { id: "SECURITY", name: "SECURITY" },
         { id: "SAFETY", name: "SAFETY" },
         { id: "MAINTENANCE", name: "MAINTENANCE" },
+        {id:"Others", name:"Others"},
     // Add more locations as needed
   ];
 
@@ -33,6 +34,7 @@ export const locations = [
     { id: "MAINTENANCE", name: "MAINTENANCE" },
     { id: "ICT", name: "ICT" },
     { id: "BD", name: "BD" },
+      {id:"Others", name:"Others"},
 // Add more locations as needed
 ];
 

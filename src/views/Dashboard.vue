@@ -334,8 +334,11 @@ export default {
           ];
           break;
         case "2": // OAH
-          this.departments = [
-            // Define departments for OAH
+        this.departments = [
+            { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            { id: "MAINTENANCE", name: "MAINTENANCE" },
+            // Add more departments as needed
           ];
           break;
         case "3": // KULIM HUB
@@ -344,6 +347,64 @@ export default {
             { id: "SAFETY", name: "SAFETY" },
             { id: "MAINTENANCE", name: "MAINTENANCE" },
             // Define departments for KULIM HUB
+          ];
+          break;
+          case "4": // HQ
+          this.departments = [
+            { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            { id: "MAINTENANCE", name: "MAINTENANCE" },
+            // Add more departments as needed
+          ];
+          break;
+          case "5": // HQ
+          this.departments = [
+            { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            { id: "MAINTENANCE", name: "MAINTENANCE" },
+            // Add more departments as needed
+          ];
+          break;     case "6": // HQ
+          this.departments = [
+            { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            { id: "MAINTENANCE", name: "MAINTENANCE" },
+            // Add more departments as needed
+          ];
+          break;     case "7": // HQ
+          this.departments = [
+            { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            { id: "MAINTENANCE", name: "MAINTENANCE" },
+            // Add more departments as needed
+          ];
+          break;     case "8": // HQ
+          this.departments = [
+            { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            { id: "MAINTENANCE", name: "MAINTENANCE" },
+            // Add more departments as needed
+          ];
+          break;     case "9": // HQ
+          this.departments = [
+            { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            { id: "MAINTENANCE", name: "MAINTENANCE" },
+            // Add more departments as needed
+          ];
+          break;     case "10": // HQ
+          this.departments = [
+            { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            { id: "MAINTENANCE", name: "MAINTENANCE" },
+            // Add more departments as needed
+          ];
+          break;     case "11": // HQ
+          this.departments = [
+            { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            { id: "MAINTENANCE", name: "MAINTENANCE" },
+            // Add more departments as needed
           ];
           break;
         // Add more cases for additional locations

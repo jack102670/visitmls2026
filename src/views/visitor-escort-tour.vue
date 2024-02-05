@@ -23,13 +23,21 @@
               <div>
                 <label class="font-semibold text-gray-700 dark:text-gray-200" for="de">Department<span
                     class="text-red-500">*</span></label>
-                <select v-model="formData.department" id="department" required
+                <select :id="dynamicId" v-model="formData.department" required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
                   <option value=""></option>
                   <option v-for="department in departments" :key="department.id" :value="department.name">
                     {{ department.name }}
                   </option>
                 </select>
+              </div>
+              <div v-if="formData.department === 'Others'">
+                <label class="font-semibold text-gray-700 dark:text-gray-200" :for="dynamicCustomId">Specify<span
+                    class="text-red-500">*</span>
+                </label>
+                <input placeholder="Specify category" :id="dynamicCustomId" type="text" required
+                  v-model="formData.customdepartment"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
               </div>
               <div>
                 <label class="font-semibold text-gray-700 dark:text-gray-200" for="">Phone Number<span
@@ -122,9 +130,13 @@
                   <td class="py-2 px-4">{{ formData.requesterName }}</td>
                 </tr>
                 <tr>
-                  <td class="py-2 px-4 font-medium">Department:</td>
-                  <td class="py-2 px-4">{{ formData.department }}</td>
-                </tr>
+            <td class="py-2 px-4 font-medium">Department:</td>
+
+            <td class="py-2 px-4" v-if=" formData.department === 'Others'">
+              {{ formData.customdepartment }}
+            </td>
+            <td class="py-2 px-4" v-else>{{ formData.department }}</td>
+          </tr>
                 <tr>
                   <td class="py-2 px-4 font-medium">Phone Number:</td>
                   <td class="py-2 px-4">{{ formData.Phonenumber }}</td>
@@ -257,6 +269,12 @@ export default {
           value.charAt(0).toUpperCase() + value.slice(1);
       },
     },
+    dynamicId() { 
+      return `formData.department-${this.formData.department}`; 
+    },
+    dynamicCustomId() {
+      return `formData.customdepartment-${this.formData.department}`;
+    },
   },
   generateUniqueCode() {
     // Check if this.userId is defined
@@ -310,6 +328,12 @@ export default {
     confirmFormSubmission() {
       this.showConfirmButton = false;
       this.showLoadingButton= true;
+      if(this.formData.department === "Others"){
+        this.finalDepartment = this.formData.customdepartment;
+      }
+      else{
+        this.finalDepartment = this.formData.department;
+      }
       axios
         .post("http://172.28.28.91:8085/api/Main/InsertVisitorEscortRequest", {
 
@@ -317,7 +341,7 @@ export default {
 
 
           requesterName: this.formData.requesterName,
-          departmentName: this.formData.department,
+          departmentName: this.finalDepartment,
           meetingLocation: this.formData.location,
           phoneNumber: this.formData.Phonenumber,
           customerName: this.formData.Customername,

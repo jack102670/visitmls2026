@@ -23,13 +23,21 @@
               <div>
                 <label class="font-semibold text-gray-700 dark:text-gray-200" for="de">Department<span
                     class="text-red-500">*</span></label>
-                <select v-model="department" id="department" required
+                <select :id="dynamicId" v-model="department" required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
                   <option value="" disabled selected></option>
                   <option v-for="department in departments" :key="department.id" :value="department.name">
                     {{ department.name }}
                   </option>
                 </select>
+              </div>
+              <div v-if="department === 'Others'">
+                <label class="font-semibold text-gray-700 dark:text-gray-200" :for="dynamicCustomId">Specify<span
+                    class="text-red-500">*</span>
+                </label>
+                <input placeholder="Specify category" :id="dynamicCustomId" type="text" required
+                  v-model="customdepartment"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
               </div>
               <div>
                 <label class="font-semibold text-gray-700 dark:text-gray-200" for="Phonenumber">Phone Number<span
@@ -135,8 +143,13 @@
           </tr>
           <tr>
             <td class="py-2 px-4 font-medium">Department:</td>
-            <td class="py-2 px-4">{{ department }}</td>
+
+            <td class="py-2 px-4" v-if=" department === 'Others'">
+              {{ customdepartment }}
+            </td>
+            <td class="py-2 px-4" v-else>{{ department }}</td>
           </tr>
+       
           <tr>
             <td class="py-2 px-4 font-medium">Phone Number:</td>
             <td class="py-2 px-4">{{ Phonenumber }}</td>
@@ -224,7 +237,7 @@ export default {
       userDetails: [],
       isModalVisible: false,
       modalContent: "",
-      departments: template.departments,
+      departments: template.staffdepartments,
 
 
 
@@ -252,6 +265,12 @@ export default {
         this.requesterName =
           value.charAt(0).toUpperCase() + value.slice(1);
       },
+    },
+    dynamicId() { 
+      return `department-${this.department}`; 
+    },
+    dynamicCustomId() {
+      return `customdepartment-${this.department}`;
     },
   },
 
@@ -300,11 +319,18 @@ export default {
     confirmFormSubmission() {
       this.showConfirmButton = false;
       this.showLoadingButton= true;
+
+      if(this.department === "Others"){
+        this.finalDepartment = this.customdepartment;
+      }
+      else{
+        this.finalDepartment = this.department;
+      }
       
       const formData = {
         branch: this.branch,
         requesterName: this.requesterName,
-        departmentName: this.department,
+        departmentName: this.finalDepartment,
         phoneNumber: this.Phonenumber,
         description: this.Detailsincident,
         incidentDateTime: this.Incidentdate,
