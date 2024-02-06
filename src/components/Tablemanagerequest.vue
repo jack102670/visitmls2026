@@ -1742,6 +1742,11 @@ export default {
         return tableData;
       }, []);
     },
+   convertJsonToKeyValArray(jsonObject) {
+  return Object.keys(jsonObject).map(key => {
+    return { key: key, value: jsonObject[key] };
+  });
+},
 
     exportFormToPDF() {
       const doc = new jsPDF();
@@ -1814,15 +1819,36 @@ export default {
 
       // Adding tables for detailed sections like Equipment, Hazard, etc.
 
+      const test = this.convertJsonToKeyValArray(
+        this.getRequest
+      );
+
+      console.log(test)
+
       const tableRows = this.convertJsonToArray(
         this.getRequest,
         this.keysToExclude
       );
 
+      console.log(tableRows)
+
       doc.autoTable({
         startY: yPos,
         head: [["", ""]],
-        body: tableRows,
+        body: [[
+        "BRANCH",
+          tableRows[0][1]],
+          [
+          "REFERENCE NUMBER",
+          tableRows[1][1]
+        ],
+          [
+          "REQUESTER NAME",
+          tableRows[2][1]
+        ]
+      ],
+      
+
 
         theme: "grid",
         margin: { left: 14 },
