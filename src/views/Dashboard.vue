@@ -104,7 +104,7 @@
             </buttom> -->
             <button @click="showContent" class="relative max-w-full rounded">
               <div
-                class="flex items-center justify-center p-6 space-y-3 h-20 border-4 text-xl dark:bg-gray-900 dark:border-gray-700 rounded-full px-8 py-4 bg-[#210e81] border text-white"
+                class="flex items-center justify-center p-6  h-12 border-4 text-xl dark:bg-gray-900 dark:border-gray-700 rounded-full px-8 py-4 bg-[#210e81] border text-white"
               >
                 <span class="mr-2 text-slate-100 hover:text-blue-200"
                   >New Request</span
