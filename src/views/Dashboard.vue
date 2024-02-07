@@ -6,7 +6,8 @@
       <div
         class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
-        <!-- <div class="text-center space-y-12 ml-5 ">
+        <div class="flex justify-between">
+          <!-- <div class="text-center space-y-12 ml-5 ">
           <div class="flex text-3xl font-bold text-blue-900 ">
             Services Portal
             <div
@@ -25,54 +26,54 @@
           </div>
           
         </div> -->
-        <div class="flex justify-start flex-col ml-5">
-          <h2 class="text-3xl font-bold text-blue-900 dark:text-white">
-            Service Portal
-          </h2>
-          <h3 class="text-xl font-bold text-blue-800 dark:text-white">
-            Security Safety Maintenance
-          </h3>
-        </div>
-        <hr class="h- mx-auto bg-gray-100 border-0 rounded dark:bg-gray-700" />
-        <div class="pt-0 container px-6 py-1 mx-auto">
-          <div
-            class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 md:grid-cols-2 xl:grid-cols-3"
-          >
-            <div
-              class="p-6 space-y-3 h-20 border-4 bg-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-xl relative"
-            >
-              <h1
-                class="text-xl font-semibold text-gray-700 capitalize dark:text-slate-300"
+          <div class="flex justify-start flex-col ml-5">
+            <h2 class="text-3xl font-bold text-blue-900 dark:text-white">
+              Service Portal
+            </h2>
+            <h3 class="text-xl font-bold text-blue-800 dark:text-white">
+              Security, Safety, Maintenance.
+            </h3>
+          </div>
+          <hr
+            class="h- mx-auto bg-gray-100 border-0 rounded dark:bg-gray-700"
+          />
+          <div class="flex pt-0 container justify-end">
+            <div class="flex pt-5 gap-12">
+              <div
+                class="w-64 p-3 space-y-3 border-4 mr-6 bg-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-xl relative"
               >
-                On-Going Request 
-              </h1>
-
-              <a
-                href="#"
-                class="inline-flex p-6 absolute -top-3 -right-6 text-blue-100 capitalize transition-colors duration-300 transform bg-blue-100 rounded-full rtl:-scale-x-100 dark:bg-blue-500 dark:text-blue-500 hover:underline dark:hover:text-blue-500"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-6 h-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+                <h1
+                  class="text-xl font-semibold text-gray-700 capitalize dark:text-slate-300"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                <span
-                  class="text-blue-700 dark:text-white mx-1 top-5 font-semibold text-2xl absolute"
-                  >{{ requesters.length}}</span
-                >
-              </a>
-            </div>
+                  On-Going Request
+                </h1>
 
-            <!-- <buttom
+                <a
+                  href="#"
+                  class="inline-flex p-6 absolute -top-3 -right-6 text-blue-100 capitalize transition-colors duration-300 transform bg-blue-100 rounded-full rtl:-scale-x-100 dark:bg-blue-500 dark:text-blue-500 hover:underline dark:hover:text-blue-500"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-6 h-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <span
+                    class="text-blue-700 dark:text-white mx-1 top-5 font-semibold text-2xl absolute"
+                    >{{ requesters.length }}</span
+                  >
+                </a>
+              </div>
+
+              <!-- <buttom
               @click="showContent"
               class="p-6 space-y-3 h-20 border-4 bg-white dark:border-gray-700 dark:bg-gray-900 rounded-xl relative"
             >
@@ -102,36 +103,41 @@
                 </svg>
               </a>
             </buttom> -->
-            <button @click="showContent" class="relative max-w-full rounded">
-              <div
-                class="flex items-center justify-center p-6  h-12 border-4 text-xl dark:bg-gray-900 dark:border-gray-700 rounded-full px-8 py-4 bg-[#210e81] border text-white"
-              >
-                <span class="mr-2 text-slate-100 hover:text-blue-200"
-                  >New Request</span
+              <div class="flex-initial">
+                <button
+                  @click="showContent"
+                  class="w-64 p-3 rounded-2xl tems-center border-4 text-xl dark:bg-gray-900 dark:border-gray-700 bg-[#210e81] border text-white"
                 >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  data-slot="icon"
-                  class="w-8 h-8 hover:text-blue-200"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M12 4.5v15m7.5-7.5h-15"
-                  />
-                </svg>
+                  <div class="flex justify-center">
+                    <span class="mr-2 text-slate-100 hover:text-blue-200"
+                      >New Request</span
+                    >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      data-slot="icon"
+                      class="w-8 h-8 hover:text-blue-200"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 4.5v15m7.5-7.5h-15"
+                      />
+                    </svg>
+                  </div>
+                </button>
               </div>
-            </button>
+              <!-- <button class="bg-red-500 grid">test</button> -->
+            </div>
           </div>
         </div>
         <div class="container mx-auto">
           <div
             v-if="showAdditionalContent"
-            class="mt-1 p-6 dark:bg-gray-800 rounded-lg grid grid-cols-1 xl:mt-10 xl:gap-5 md:grid-cols-2 xl:grid-cols-3 gap-3"
+            class="mt-1 p-1 dark:bg-gray-800 rounded-lg grid grid-cols-1 xl:mt-10 xl:gap-5 md:grid-cols-2 xl:grid-cols-3 gap-3"
           >
             <!-- Dropdown Trigger -->
             <div
@@ -144,7 +150,10 @@
               >
               <select
                 v-model="selectedLocation"
-                @change="onLocationChange(); SetToStore()"
+                @change="
+                  onLocationChange();
+                  SetToStore();
+                "
                 id="location"
                 class="mt-1 block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-sm"
               >
@@ -224,9 +233,8 @@ import { store } from "../views/store.js";
 export default {
   name: "NewrequestViews",
   data() {
-
-    return {    
-      requesters:[],
+    return {
+      requesters: [],
       OGR: null,
 
       showAdditionalContent: false,
@@ -252,7 +260,6 @@ export default {
     };
   },
 
- 
   mounted() {
     // this.role = store.getRole();
     this.fetchRequesters();
@@ -266,8 +273,6 @@ export default {
     // else{
     //   this.$router.push("/Managerequest");
     // }
-    
-    
   },
   // beforeCreate(){
   //   if (!localStorage.getItem('reloaded2')) {
@@ -279,30 +284,30 @@ export default {
   //   }
   // },
   methods: {
-    SetToStore(){
+    SetToStore() {
       store.setSelectedLocation(this.selectedLocation, this.locations);
-  
     },
     fetchRequesters() {
       const userDetails = store.getSession().userDetails;
       const role = store.getRole();
-    let url = '';
+      let url = "";
 
-    if (role === 'user') {
-      url = `http://172.28.28.91:8085/api/Main/GetAllRequests/${userDetails.userId}`;
-    } else if (role === 'vendor') {
-      url = `http://172.28.28.91:8085/api/Main/GetAllRequestsVendor/${userDetails.userId}`;
-    } else {
-      console.log("Role not authorized or role-specific URL not set");
-      return;
-    }
+      if (role === "user") {
+        url = `http://172.28.28.91:8085/api/Main/GetAllRequests/${userDetails.userId}`;
+      } else if (role === "vendor") {
+        url = `http://172.28.28.91:8085/api/Main/GetAllRequestsVendor/${userDetails.userId}`;
+      } else {
+        console.log("Role not authorized or role-specific URL not set");
+        return;
+      }
 
-    console.log("Fetching requesters for role:", userDetails.role);
-    axios.get(url)
+      console.log("Fetching requesters for role:", userDetails.role);
+      axios
+        .get(url)
         .then((response) => {
           this.requesters = response.data;
           console.log("Requesters on dashboard:", this.requesters);
-          console.log("all",this.requesters.length)
+          console.log("all", this.requesters.length);
           // this.OGR = this.requesters.length;
           // store.setOGR(this.OGR);
           // console.log("OGR set to:", this.OGR);
@@ -339,7 +344,7 @@ export default {
           ];
           break;
         case "2": // OAH
-        this.departments = [
+          this.departments = [
             { id: "SECURITY", name: "SECURITY" },
             { id: "SAFETY", name: "SAFETY" },
             { id: "MAINTENANCE", name: "MAINTENANCE" },
@@ -354,7 +359,7 @@ export default {
             // Define departments for KULIM HUB
           ];
           break;
-          case "4": // HQ
+        case "4": // HQ
           this.departments = [
             { id: "SECURITY", name: "SECURITY" },
             { id: "SAFETY", name: "SAFETY" },
@@ -362,49 +367,55 @@ export default {
             // Add more departments as needed
           ];
           break;
-          case "5": // HQ
+        case "5": // HQ
           this.departments = [
             { id: "SECURITY", name: "SECURITY" },
             { id: "SAFETY", name: "SAFETY" },
             { id: "MAINTENANCE", name: "MAINTENANCE" },
             // Add more departments as needed
           ];
-          break;     case "6": // HQ
+          break;
+        case "6": // HQ
           this.departments = [
             { id: "SECURITY", name: "SECURITY" },
             { id: "SAFETY", name: "SAFETY" },
             { id: "MAINTENANCE", name: "MAINTENANCE" },
             // Add more departments as needed
           ];
-          break;     case "7": // HQ
+          break;
+        case "7": // HQ
           this.departments = [
             { id: "SECURITY", name: "SECURITY" },
             { id: "SAFETY", name: "SAFETY" },
             { id: "MAINTENANCE", name: "MAINTENANCE" },
             // Add more departments as needed
           ];
-          break;     case "8": // HQ
+          break;
+        case "8": // HQ
           this.departments = [
             { id: "SECURITY", name: "SECURITY" },
             { id: "SAFETY", name: "SAFETY" },
             { id: "MAINTENANCE", name: "MAINTENANCE" },
             // Add more departments as needed
           ];
-          break;     case "9": // HQ
+          break;
+        case "9": // HQ
           this.departments = [
             { id: "SECURITY", name: "SECURITY" },
             { id: "SAFETY", name: "SAFETY" },
             { id: "MAINTENANCE", name: "MAINTENANCE" },
             // Add more departments as needed
           ];
-          break;     case "10": // HQ
+          break;
+        case "10": // HQ
           this.departments = [
             { id: "SECURITY", name: "SECURITY" },
             { id: "SAFETY", name: "SAFETY" },
             { id: "MAINTENANCE", name: "MAINTENANCE" },
             // Add more departments as needed
           ];
-          break;     case "11": // HQ
+          break;
+        case "11": // HQ
           this.departments = [
             { id: "SECURITY", name: "SECURITY" },
             { id: "SAFETY", name: "SAFETY" },
