@@ -59,6 +59,8 @@
         </h2>
       </div>
     </td>
+
+
     <td class="px-4 py-4 ml text-sm whitespace-nowrap">
       <div class="flex items-center gap-x-6">
         <button
@@ -1621,13 +1623,15 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetBadgeRequest/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
-            console.log("this is get request" + this.getRequest);
+           
           })
           .catch((error) => {
             console.error("Error:", error);
           });
 
         this.isModalVisible = true;
+        console.log("this is get request masuk tak" + this.getRequest);
+        console.log(this.isModalVisible)
         this.showBadgeRequest = true;
       }
       if (refNumber.includes("VET")) {

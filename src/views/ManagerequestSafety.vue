@@ -194,8 +194,7 @@
                       <Tablemanagerequest
                         v-for="requester in sortedAndPaginatedRequesters"
                         :key="requester.refNumber"
-                        :requester="requester"
-                      />
+                        :requester="requester"/>
                     </tbody>
                   </table>
                 </div>
