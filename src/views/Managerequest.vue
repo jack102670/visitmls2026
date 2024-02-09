@@ -33,7 +33,7 @@
                 >
                   <table
                     ref="myTable"
-                    class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                    class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe"
                   >
                     <thead class="bg-gray-50 dark:bg-gray-800">
                       <tr>
@@ -2275,4 +2275,5 @@ export default {
   background-color: rgb(70, 230, 22);
   color: white;
 }
+
 </style>
