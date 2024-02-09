@@ -8,24 +8,15 @@
       >
         <div class="flex justify-between">
           <!-- <div class="text-center space-y-12 ml-5 ">
-          <div class="flex text-3xl font-bold text-blue-900 ">
-            Services Portal
-            <div
-              class="relative inline-grid grid-cols-1 grid-rows-1 gap-12 overflow-hidden"
-            >
-              <span class="animate-word col-span-full row-span-full text-blue-800"
-                >Security</span
-              >
-              <span class="animate-word-delay-1 col-span-full row-span-full text-blue-800"
-                >Safety</span
-              >
-              <span class="animate-word-delay-2 col-span-full row-span-full ml-4 text-blue-800"
-                >Maintenance</span
-              >
-            </div>
-          </div>
-          
-        </div> -->
+      <div class="flex text-3xl font-bold text-blue-900 ">
+        Services Portal
+        <div class="relative inline-grid grid-cols-1 grid-rows-1 gap-12 overflow-hidden">
+          <span class="animate-word col-span-full row-span-full text-blue-800">Security</span>
+          <span class="animate-word-delay-1 col-span-full row-span-full text-blue-800">Safety</span>
+          <span class="animate-word-delay-2 col-span-full row-span-full ml-4 text-blue-800">Maintenance</span>
+        </div>
+      </div>
+    </div> -->
           <div class="flex justify-start flex-col ml-5">
             <h2 class="text-3xl font-bold text-blue-900 dark:text-white">
               Service Portal
@@ -37,20 +28,14 @@
           <hr
             class="h- mx-auto bg-gray-100 border-0 rounded dark:bg-gray-700"
           />
-          <div class="flex pt-0 container justify-end">
+          <div class="flex pt-0 container justify-end flex-col ml-5">
             <div class="flex pt-5 gap-12">
               <div
-                class="w-64 p-3 space-y-3 border-4 mr-6 bg-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-xl relative"
+                class="w-64 p-3 space-y-3 h-20 border-4 bg-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-3xl relative"
               >
-                <h1
-                  class="text-xl font-semibold text-gray-700 capitalize dark:text-slate-300"
-                >
-                  On-Going Request
-                </h1>
-
                 <a
                   href="#"
-                  class="inline-flex p-6 absolute -top-3 -right-6 text-blue-100 capitalize transition-colors duration-300 transform bg-blue-100 rounded-full rtl:-scale-x-100 dark:bg-blue-500 dark:text-blue-500 hover:underline dark:hover:text-blue-500"
+                  class="p-6 absolute top-0 -right-1 text-blue-100 capitalize transition-colors duration-300 transform bg-blue-100 rounded-full rtl:-scale-x-100 dark:bg-blue-500 dark:text-blue-500 hover:underline dark:hover:text-blue-500"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -71,39 +56,14 @@
                     >{{ requesters.length }}</span
                   >
                 </a>
+                <h1
+                  class="text-xl font-semibold text-gray-700 capitalize dark:text-slate-300"
+                >
+                  On-Going Request
+                </h1>
               </div>
 
-              <!-- <buttom
-              @click="showContent"
-              class="p-6 space-y-3 h-20 border-4 bg-white dark:border-gray-700 dark:bg-gray-900 rounded-xl relative"
-            >
-              <h1
-                class="text-xl font-semibold text-gray-700 capitalize dark:text-slate-300"
-              >
-                New Request
-              </h1>
-
-              <a
-                href=""
-                class="inline-flex p-6 absolute -top-3 -right-6 text-blue-500 capitalize transition-colors duration-300 transform bg-blue-100 rounded-full rtl:-scale-x-100 dark:bg-blue-500 dark:text-white hover:underline hover:text-blue-600 dark:hover:text-blue-500"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-6 h-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </a>
-            </buttom> -->
-              <div class="flex-initial">
+              <div class="flex flex-col ml-5">
                 <button
                   @click="showContent"
                   class="w-64 p-3 rounded-2xl tems-center border-4 text-xl dark:bg-gray-900 dark:border-gray-700 bg-[#210e81] border text-white"
@@ -134,6 +94,7 @@
             </div>
           </div>
         </div>
+
         <div class="container mx-auto">
           <div
             v-if="showAdditionalContent"

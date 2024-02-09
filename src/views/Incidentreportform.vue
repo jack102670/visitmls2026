@@ -379,6 +379,7 @@ export default {
             uniqueCode: this.generateUniqueCode(),
             userId: this.userDetails.userId,
             branch: this.branch,
+            userName: this.userDetails.userName,
             userEmail: this.userDetails.email,
             witness: this.formData.Witness,
           })
@@ -390,8 +391,8 @@ export default {
 
             this.uploadMultiImage();
             this.resetForm();
-            this.closeModal();
-            this.$router.push("/Dashboard");
+            // this.closeModal();
+            // this.$router.push("/Dashboard");
           })
           .catch((error) => {
             if (error.response) {
