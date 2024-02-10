@@ -40,7 +40,7 @@
             class="w-full mt-4 bg-white border border-gray-300 divide-y divide-gray-300"
           >
             <tr>
-              <td class="py-2 px-4 font-medium">Requester Name:</td>
+              <td class="py-2 px-4 font-medium">Vendor Name:</td>
               <td class="py-2 px-4">{{ ptwData.vendorName }}</td>
             </tr>
             <tr>

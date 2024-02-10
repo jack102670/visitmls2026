@@ -13,7 +13,7 @@
     "@vueuse/core": "^10.7.0",
     "axios": "^1.6.2",
     "core-js": "^3.8.3",
-    "datatables.net-dt": "^1.13.8",
+    "datatables.net-dt": "^1.13.10",
     "filepond": "^4.30.6",
     "filepond-plugin-file-poster": "^2.5.1",
     "filepond-plugin-file-rename": "^1.1.8",

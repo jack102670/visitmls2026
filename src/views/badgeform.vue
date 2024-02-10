@@ -450,6 +450,7 @@ export default {
             userId: this.userDetails.userId,
             branch: store.getSelectedLocation(),
             userEmail: this.userDetails.email,
+            userName: this.userDetails.userName,
           })
 
           .then((response) => {

@@ -391,8 +391,8 @@ export default {
 
             this.uploadMultiImage();
             this.resetForm();
-            // this.closeModal();
-            // this.$router.push("/Dashboard");
+            this.closeModal();
+            this.$router.push("/Dashboard");
           })
           .catch((error) => {
             if (error.response) {

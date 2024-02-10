@@ -2732,6 +2732,7 @@ export default {
       this.showConfirmButton = false;
       this.showLoadingButton = true;
       let combinedFormData = {
+     
         branch: store.getSelectedLocation(),
         vendorName: this.Contractorvendorname,
         vendorEmail: this.Vemail,
