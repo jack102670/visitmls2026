@@ -2178,7 +2178,9 @@ export default {
         doc.setFontSize(11);
         // Adjust the starting Y position for "Supplier Company INC" section based on yPos
         doc.text(
-          "REQUESTER NAME         : " +
+          "BRANCH                            : " +
+            tableRows[0][1] +
+          "\n\nREQUESTER NAME         : " +
             tableRows[2][1] +
             "\n\nDEPARTMENT NAME      : " +
             tableRows[3][1] +
@@ -2220,7 +2222,9 @@ export default {
         doc.setFontSize(11);
         // Adjust the starting Y position for "Supplier Company INC" section based on yPos
         doc.text(
-          "REQUESTER NAME         : " +
+          "BRANCH                            : " +
+            tableRows[0][1] +
+          "\n\nREQUESTER NAME         : " +
             tableRows[2][1] +
             "\n\nDEPARTMENT NAME      : " +
            
@@ -2267,7 +2271,9 @@ export default {
         doc.setFontSize(11);
         // Adjust the starting Y position for "Supplier Company INC" section based on yPos
         doc.text(
-          "REQUESTER NAME         : " +
+          "BRANCH                            : " +
+            tableRows[0][1] +
+          "\n\nREQUESTER NAME         : " +
             tableRows[2][1] +
             "\n\nDEPARTMENT NAME      : " +
             tableRows[3][1] +
@@ -2311,7 +2317,9 @@ export default {
         doc.setFontSize(11);
         // Adjust the starting Y position for "Supplier Company INC" section based on yPos
         doc.text(
-          "REQUESTER NAME         : " +
+          "BRANCH                            : " +
+            tableRows[0][1] +
+          "\n\nREQUESTER NAME         : " +
             tableRows[2][1] +
             "\n\nDEPARTMENT NAME      : " +
             tableRows[3][1] +
