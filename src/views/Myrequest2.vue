@@ -18,9 +18,7 @@
                 </span> -->
               </h2>
             </div>
-            <div>
-              <input type="text" v-model="searchQuery" placeholder="Search..." class="px-2 py-1 border rounded" />
-            </div>
+           
           </div>
 
           <div class="flex flex-col mt-6">
@@ -884,38 +882,7 @@
             </div>
           </div>
 
-          <div class="flex items-center justify-between mt-6">
-            <a href="#" @click.prevent="previousPage"
-              class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
-              </svg>
-              <span> previous </span>
-            </a>
-
-            <div class="flex items-center gap-x-3">
-              <!-- Display page links based on the total number of pages -->
-              <template v-for="page in totalPages" :key="page">
-                <a href="#" @click.prevent="changePage(page)" class="px-2 py-1 text-sm" :class="{
-                  'text-blue-500': page === currentPage,
-                  'text-gray-500': page !== currentPage,
-                  'dark:bg-gray-800 bg-blue-100/60': page === currentPage,
-                }">
-                  {{ page }}
-                </a>
-              </template>
-            </div>
-
-            <a href="#" @click.prevent="nextPage"
-              class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
-              <span> Next </span>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-              </svg>
-            </a>
-          </div>
+          
         </section>
 
         <!-- Display a list of movies from the TMDb API -->
@@ -1136,35 +1103,52 @@ export default {
       // You can implement the logic to show the details view here
       console.log("see", this.requester);
     },
-    fetchRequesters() {
-      const userDetails = store.getSession().userDetails;
-      const role = store.getRole();
-      let url = '';
+    async fetchRequesters() {
+  const userDetails = store.getSession().userDetails;
+  const role = store.getRole();
+  let url = '';
 
-      if (role === 'user') {
-        url = `http://172.28.28.91:8085/api/Main/GetAllRequests/${userDetails.userId}`;
-      } else if (role === 'vendor') {
-        url = `http://172.28.28.91:8085/api/Main/GetAllRequestsVendor/${userDetails.userId}`;
-      } else {
-        console.log("Role not authorized or role-specific URL not set");
-        return;
-      }
+  if (role === 'user') {
+    url = `http://172.28.28.91:8085/api/Main/GetAllRequests/${userDetails.userId}`;
+  } else if (role === 'vendor') {
+    url = `http://172.28.28.91:8085/api/Main/GetAllRequestsVendor/${userDetails.userId}`;
+  } else {
+    console.log("Role not authorized or role-specific URL not set");
+    return;
+  }
 
-      console.log("Fetching requesters for role:", userDetails.role);
-      axios.get(url)
-        .then((response) => {
-          this.requesters = response.data;
-          console.log("Requesters data:", this.requesters);
-          this.OGR = this.requesters.length;
-          store.setOGR(this.OGR);
-          console.log("OGR set to:", this.OGR);
-        })
-        .catch((error) => {
-          console.error("Error fetching requesters:", error);
-        });
-    },
+  console.log("Fetching requesters for role:", userDetails.role);
+  
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+    this.requesters = data;
+    console.log("Requesters data:", this.requesters);
+    this.OGR = this.requesters.length;
+    store.setOGR(this.OGR);
+    console.log("OGR set to:", this.OGR);
+  } catch (error) {
+    console.error("Error fetching requesters:", error);
+  }
+}
+
 
     // Method to sort the requesters based on current sort column and orde
   },
 };
 </script>
+<style>
+.radio input[type="radio"] ~ label {
+  background-color: rgb(233, 225, 225);
+  color: rgb(158, 146, 146);
+}
+
+.radio input[type="radio"]:checked ~ label {
+  background-color: rgb(70, 230, 22);
+  color: white;
+}
+
+</style>
