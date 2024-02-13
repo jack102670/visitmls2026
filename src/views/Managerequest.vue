@@ -62,7 +62,6 @@
                           </div>
                         </th>
                         <th
-                        
                           scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
@@ -262,23 +261,21 @@
               </div>
             </div>
           </div>
-
-         
         </section>
 
         <!-- Display a list of movies from the TMDb API -->
       </div>
-      
-      <Modal v-show="isModalVisible" @close="closeModal" >
+
+      <Modal v-show="isModalVisible" @close="closeModal">
         <!-- header -->
-    
+
         <template v-slot:header>
- <h1
+          <h1
             v-if="requesterRefNumber.includes('CCTV')"
             class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
           >
             CCTV FOOTAGE VIEWING REQUEST
-          </h1>     
+          </h1>
           <h1
             v-if="requesterRefNumber.includes('BR')"
             class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
@@ -315,8 +312,7 @@
             class="text-lg font-semibold rounded-lg text-slate-200 p-1 w-full capitalize dark:text-white"
           >
             MASK REQUEST
-          </h2> 
-          
+          </h2>
         </template>
 
         <!-- body -->
@@ -441,43 +437,47 @@
               </div>
             </div>
 
-            <div>
+            <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
               <label
                 class="font-semibold text-gray-700 dark:text-gray-200"
-                for="Location"
-                >Attachment(s):
-              </label>
-              <li
-                v-for="file in getRequest.files"
-                :key="file"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                for="People"
+                >Attachment(s)</label
               >
-                <div class="flex">
-                  {{ getFileName(file) }}
+              <label class="">
+                <ul>
+                  <li
+                    v-for="file in securityFiles"
+                    :key="file"
+                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                  >
+                    <div class="flex justify-between">
+                      {{ getFileName(file) }}
 
-                  <a class="text-blue-500" target="_blank" :href="file">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="w-6 h-6"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
-                      />
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                      />
-                    </svg>
-                  </a>
-                </div>
-              </li>
+                      <a class="text-blue-500" target="_blank" :href="file">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="w-6 h-6"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+                          />
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                          />
+                        </svg>
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              </label>
             </div>
           </div>
           <!-- Permit to works for security -->
@@ -499,8 +499,10 @@
       </div> -->
           <!-- Incident Report -->
           <div class="relative" v-show="showIncidentReport">
-            <div class="absolute -top-10 -right-1 flex" >
-              <span v-if="getRequest.adminStatus === 'COMPLETED'" class="text-[#160959]"
+            <div class="absolute -top-10 -right-1 flex">
+              <span
+                v-if="getRequest.adminStatus === 'COMPLETED'"
+                class="text-[#160959]"
                 ><button @click="exportFormToPDF()">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -515,12 +517,12 @@
                       stroke-linejoin="round"
                       d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z"
                     />
-                  </svg></button
-              ></span><span class="text-slate-500 text-sm" 
-              >REFNUMBER: {{ getRequest.referenceNumber }}</span
-            >
+                  </svg></button></span
+              ><span class="text-slate-500 text-sm"
+                >REFNUMBER: {{ getRequest.referenceNumber }}</span
+              >
             </div>
-            
+
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
                 <label
@@ -608,14 +610,14 @@
                 for="People"
                 >Attachment(s):
               </label>
-              <label class="py-2 px-4">
+              <label class="">
                 <ul>
                   <li
                     v-for="file in getRequest.files"
                     :key="file"
                     class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                   >
-                    <div class="flex">
+                    <div class="flex justify-between">
                       {{ getFileName(file) }}
 
                       <a class="text-blue-500" target="_blank" :href="file">
@@ -648,28 +650,28 @@
           <!-- teskit -->
           <div class="relative" v-show="showTeskit">
             <div class="flex absolute -top-10 -right-1">
-            <div v-if="getRequest.adminStatus === 'COMPLETED'">
-              <span class=" text-[#160959]"
-                ><button @click="exportFormToPDF()">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-6 h-6"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z"
-                    />
-                  </svg></button
-              ></span>
-            </div>
-            <span class=" text-slate-500 text-sm"
-              >REFNUMBER: {{ getRequest.referenceNumber }}</span
-            >
+              <div v-if="getRequest.adminStatus === 'COMPLETED'">
+                <span class="text-[#160959]"
+                  ><button @click="exportFormToPDF()">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="w-6 h-6"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z"
+                      />
+                    </svg></button
+                ></span>
+              </div>
+              <span class="text-slate-500 text-sm"
+                >REFNUMBER: {{ getRequest.referenceNumber }}</span
+              >
             </div>
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
               <div>
@@ -780,28 +782,28 @@
           <!-- Badge Request -->
           <div v-show="showBadgeRequest" class="relative">
             <div class="flex absolute -top-10 -right-1">
-            <div v-if="getRequest.adminStatus === 'COMPLETED'">
-              <span class=" text-[#160959]"
-                ><button @click="exportFormToPDF()">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-6 h-6"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z"
-                    />
-                  </svg></button
-              ></span>
-            </div>
-            <span class=" text-slate-500 text-sm"
-              >REFNUMBER: {{ getRequest.referenceNumber }}</span
-            >
+              <div v-if="getRequest.ticketStatus === 'CLOSE'">
+                <span class="text-[#160959]"
+                  ><button @click="exportFormToPDF()">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="w-6 h-6"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z"
+                      />
+                    </svg></button
+                ></span>
+              </div>
+              <span class="text-slate-500 text-sm"
+                >REFNUMBER: {{ getRequest.referenceNumber }}</span
+              >
             </div>
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
@@ -867,16 +869,16 @@
               <label
                 class="font-semibold text-gray-700 dark:text-gray-200"
                 for="People"
-                >Attachment(s):</label
+                >Attachment(s)</label
               >
-              <label class="py-2 px-4">
+              <label class="">
                 <ul>
                   <li
                     v-for="file in getRequest.files"
                     :key="file"
                     class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                   >
-                    <div class="flex">
+                    <div class="flex justify-between">
                       {{ getFileName(file) }}
 
                       <a class="text-blue-500" target="_blank" :href="file">
@@ -1037,34 +1039,30 @@
             </div>
           </div>
           <!--Visitor Escort Transport-->
-          <div
-           
-            class="relative"
-            v-show="showVETForm"
-          >
-          <div class="flex absolute -top-10 -right-1">
-            <div v-if="getRequest.adminStatus === 'COMPLETED'">
-              <span class=" text-[#160959]"
-                ><button @click="exportFormToPDF()">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-6 h-6"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z"
-                    />
-                  </svg></button
-              ></span>
-            </div>
-            <span class=" text-slate-500 text-sm"
-              >REFNUMBER: {{ getRequest.referenceNumber }}</span
-            >
+          <div class="relative" v-show="showVETForm">
+            <div class="flex absolute -top-10 -right-1">
+              <div v-if="getRequest.adminStatus === 'COMPLETED'">
+                <span class="text-[#160959]"
+                  ><button @click="exportFormToPDF()">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="w-6 h-6"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z"
+                      />
+                    </svg></button
+                ></span>
+              </div>
+              <span class="text-slate-500 text-sm"
+                >REFNUMBER: {{ getRequest.referenceNumber }}</span
+              >
             </div>
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
@@ -1195,7 +1193,9 @@
           <!-- mask-->
           <div class="relative" v-show="showMaskRequest">
             <div class="absolute -top-10 -right-1 flex items-center">
-              <span class="text-[#160959] " v-if="getRequest.adminStatus === 'COMPLETED'"
+              <span
+                class="text-[#160959]"
+                v-if="getRequest.adminStatus === 'COMPLETED'"
                 ><button @click="exportFormToPDF()">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1595,8 +1595,10 @@ export default {
   data() {
     return {
       userDetails: [],
+      length: 0,
+      securityFiles: [],
       token: "",
-      requesterRefNumber:"",
+      requesterRefNumber: "",
       searchQuery: "",
       // Sample data structure for requesters
       role: "security",
@@ -1626,7 +1628,7 @@ export default {
       name: ["Branch", "Department", "Phone Number"],
     };
   },
-  
+
   computed: {},
 
   mounted() {
@@ -1635,13 +1637,11 @@ export default {
         this.initializeDataTable();
       });
     });
-    
   },
-  beforeUnmount() {
-  
-  },
+  beforeUnmount() {},
 
   methods: {
+    
     getFileName(file) {
       const parts = file.split("/");
       return parts[parts.length - 1];
@@ -1846,29 +1846,28 @@ export default {
     },
 
     showModal(refNumber) {
-      this.requesterRefNumber=refNumber
+      this.requesterRefNumber = refNumber;
       if (refNumber.includes("BR")) {
         axios
           .get("http://172.28.28.91:8085/api/Main/GetBadgeRequest/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
+            console.log("this is get request masuk tak" + this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
           });
 
-        
         this.isModalVisible = true;
-        
-        console.log("this is get request masuk tak" + this.getRequest);
+
         console.log(this.isModalVisible);
         this.showBadgeRequest = true;
-        this.showMaskRequest= false;
-        this.showTeskit= false;
-        this.showIncidentReport= false;
-        this.showPTWForm=false;
-        this.showCCTVForm= false;
-        this.showVETForm=false;
+        this.showMaskRequest = false;
+        this.showTeskit = false;
+        this.showIncidentReport = false;
+        this.showPTWForm = false;
+        this.showCCTVForm = false;
+        this.showVETForm = false;
       }
       if (refNumber.includes("VET")) {
         axios
@@ -1884,12 +1883,11 @@ export default {
         this.isModalVisible = true;
         this.showVETForm = true;
         this.showBadgeRequest = false;
-        this.showMaskRequest= false;
-        this.showTeskit= false;
-        this.showIncidentReport= false;
-        this.showPTWForm=false;
-        this.showCCTVForm= false;
-        
+        this.showMaskRequest = false;
+        this.showTeskit = false;
+        this.showIncidentReport = false;
+        this.showPTWForm = false;
+        this.showCCTVForm = false;
       }
       if (refNumber.includes("CCTV")) {
         axios
@@ -1901,15 +1899,15 @@ export default {
           .catch((error) => {
             console.error("Error:", error);
           });
-          
+
         this.isModalVisible = true;
         this.showCCTVForm = true;
         this.showVETForm = false;
         this.showBadgeRequest = false;
-        this.showMaskRequest= false;
-        this.showTeskit= false;
-        this.showIncidentReport= false;
-        this.showPTWForm=false;
+        this.showMaskRequest = false;
+        this.showTeskit = false;
+        this.showIncidentReport = false;
+        this.showPTWForm = false;
       }
       if (refNumber.includes("PTW")) {
         axios
@@ -1917,6 +1915,19 @@ export default {
           .then((response) => {
             this.getRequest = response.data;
             console.log(this.getRequest);
+            this.length = this.getRequest.files.length;
+            console.log(this.length);
+
+            //To append files name with SECURITY into new array
+            for (let i = 0; i < this.length; i++) {
+              const parts = this.getRequest.files[i].split("/");
+              const fileName = parts[parts.length - 1];
+              if (fileName.includes("SECURITY")) {
+                this.securityFiles.push(this.getRequest.files[i]);
+              }
+
+              console.log("this is new files with security" + this.files);
+            }
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1927,9 +1938,9 @@ export default {
         this.showCCTVForm = false;
         this.showVETForm = false;
         this.showBadgeRequest = false;
-        this.showMaskRequest= false;
-        this.showTeskit= false;
-        this.showIncidentReport= false;
+        this.showMaskRequest = false;
+        this.showTeskit = false;
+        this.showIncidentReport = false;
       }
       if (refNumber.includes("IR")) {
         axios
@@ -1950,9 +1961,8 @@ export default {
         this.showCCTVForm = false;
         this.showVETForm = false;
         this.showBadgeRequest = false;
-        this.showMaskRequest= false;
-        this.showTeskit= false;
-
+        this.showMaskRequest = false;
+        this.showTeskit = false;
       }
       if (refNumber.includes("TK")) {
         axios
@@ -1972,7 +1982,7 @@ export default {
         this.showCCTVForm = false;
         this.showVETForm = false;
         this.showBadgeRequest = false;
-        this.showMaskRequest= false;
+        this.showMaskRequest = false;
       }
       if (refNumber.includes("Mask")) {
         axios
@@ -1992,9 +2002,9 @@ export default {
         this.showCCTVForm = false;
         this.showVETForm = false;
         this.showBadgeRequest = false;
-        this.showTeskit= false;
+        this.showTeskit = false;
       }
-      
+
       // this.isModalVisible = true;
     },
 
@@ -2050,18 +2060,19 @@ export default {
       };
       return colorMap[Status] || "text-gray-500"; // Default to a dark color if the status is not recognized
     },
-     async fetchRequesters() {
+    async fetchRequesters() {
       try {
-        const response =  await axios.get(
+        const response = await axios.get(
           "http://172.28.28.91:8085/api/Admin/GetAllRequestsAdminSecurity"
         );
         this.requesters = response.data;
-        
+
         // Additional logging or processing
       } catch (error) {
         console.error("Error fetching requesters:", error);
       }
-    }, viewRequestDetails() {
+    },
+    viewRequestDetails() {
       // You can implement the logic to show the details view here
       console.log("see", this.requester);
     },
@@ -2180,7 +2191,7 @@ export default {
         doc.text(
           "BRANCH                            : " +
             tableRows[0][1] +
-          "\n\nREQUESTER NAME         : " +
+            "\n\nREQUESTER NAME         : " +
             tableRows[2][1] +
             "\n\nDEPARTMENT NAME      : " +
             tableRows[3][1] +
@@ -2224,10 +2235,9 @@ export default {
         doc.text(
           "BRANCH                            : " +
             tableRows[0][1] +
-          "\n\nREQUESTER NAME         : " +
+            "\n\nREQUESTER NAME         : " +
             tableRows[2][1] +
             "\n\nDEPARTMENT NAME      : " +
-           
             tableRows[6][1] +
             "\n\nPHONE NUMBER \t    : " +
             tableRows[4][1] +
@@ -2237,22 +2247,24 @@ export default {
             tableRows[3][1] +
             "\n\nINCIDENT LOCATION \t: " +
             tableRows[7][1] +
-            "\n\nINCIDENT DATETIME \t: " ,
-           
+            "\n\nINCIDENT DATETIME \t: ",
+
           15,
-          yPos 
+          yPos
         );
-        yPos += 70; 
-        const labelX = 15; 
-const descriptionX = 60; 
+        yPos += 70;
+        const labelX = 15;
+        const descriptionX = 60;
 
         doc.setFont(undefined, "bold");
-doc.text("DESCRIPTION", labelX, yPos);
-// doc.setFont(undefined,"normal"); 
+        doc.text("DESCRIPTION", labelX, yPos);
+        // doc.setFont(undefined,"normal");
 
-doc.text(": "+tableRows[5][1] || "N/A", descriptionX, yPos, { align: "left", maxWidth: 120 });
-yPos += 20; 
-
+        doc.text(": " + tableRows[5][1] || "N/A", descriptionX, yPos, {
+          align: "left",
+          maxWidth: 120,
+        });
+        yPos += 20;
 
         // Increment yPos for each block of text to ensure they do not overlap
         yPos += 10;
@@ -2282,7 +2294,7 @@ yPos += 20;
         doc.text(
           "BRANCH                            : " +
             tableRows[0][1] +
-          "\n\nREQUESTER NAME         : " +
+            "\n\nREQUESTER NAME         : " +
             tableRows[2][1] +
             "\n\nDEPARTMENT NAME      : " +
             tableRows[3][1] +
@@ -2292,7 +2304,6 @@ yPos += 20;
             tableRows[7][1] +
             "\n\nPIECES AMOUNT \t: " +
             tableRows[6][1] +
-        
             "\n\nDESCRIPTION \t: " +
             tableRows[5][1],
 
@@ -2300,7 +2311,6 @@ yPos += 20;
           yPos
         );
 
-   
         yPos += 90;
 
         doc.autoTable({
@@ -2328,7 +2338,7 @@ yPos += 20;
         doc.text(
           "BRANCH                            : " +
             tableRows[0][1] +
-          "\n\nREQUESTER NAME         : " +
+            "\n\nREQUESTER NAME         : " +
             tableRows[2][1] +
             "\n\nDEPARTMENT NAME      : " +
             tableRows[3][1] +
@@ -2344,7 +2354,6 @@ yPos += 20;
             tableRows[6][1] +
             "\n\nBALANCE KIT \t: " +
             tableRows[5][1] +
-        
             "\n\nREMARK \t: " +
             tableRows[9][1],
 
@@ -2352,7 +2361,6 @@ yPos += 20;
           yPos
         );
 
-   
         yPos += 90;
 
         doc.autoTable({
@@ -2390,7 +2398,6 @@ yPos += 20;
             tableRows[5][1] +
             "\n\nWITNESS \t: " +
             tableRows[6][1] +
-        
             "\n\nINCIDENT DETAILS \t: " +
             tableRows[7][1],
 
@@ -2398,7 +2405,6 @@ yPos += 20;
           yPos
         );
 
-   
         yPos += 90;
 
         doc.autoTable({
@@ -2442,7 +2448,6 @@ yPos += 20;
             tableRows[10][1] +
             "\n\nVISIT DATETIME \t: " +
             tableRows[11][1] +
-        
             "\n\nVISIT PURPOSE \t: " +
             tableRows[7][1],
 
@@ -2450,7 +2455,6 @@ yPos += 20;
           yPos
         );
 
-   
         yPos += 100;
 
         doc.autoTable({
@@ -2506,5 +2510,4 @@ yPos += 20;
   background-color: rgb(70, 230, 22);
   color: white;
 }
-
 </style>

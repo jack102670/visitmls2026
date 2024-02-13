@@ -44,12 +44,21 @@
                             <span>Branch</span>
                           </div>
                         </th>
+                        
                         <th
                           scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>Type Of Request</span>
+                          </div>
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        >
+                          <div class="flex items-center gap-x-3">
+                            <span>Requester</span>
                           </div>
                         </th>
                         <th
@@ -136,6 +145,11 @@
                               </div>
                             </div>
                           </div>
+                        </td>
+                        <td
+                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                        >
+                          {{ requester.userName }}
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
@@ -1466,7 +1480,7 @@ export default {
     async fetchRequesters() {
       try {
         const response =  await axios.get(
-          "http://172.28.28.91:8085/api/Admin/GetAllRequestsAdminSecurity"
+          "http://172.28.28.91:8085/api/Admin/GetAllRequestsAdminSafety"
         );
         this.requesters = response.data;
         

@@ -71,7 +71,7 @@
                   >Specify<span class="text-red-500">*</span>
                 </label>
                 <input
-                  placeholder="Specify category"
+                  placeholder="Specify Department"
                   :id="dynamicCustomId"
                   type="text"
                   required
