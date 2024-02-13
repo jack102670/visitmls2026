@@ -375,7 +375,7 @@ export default {
       console.log("this is ptwdata" + this.ptwData.jhaDetails);
       const doc = new jsPDF();
 
-      let yPos = 10;
+      let yPos = 15;
 
       // Heading Style
       const addSectionHeading = (text) => {
@@ -424,7 +424,7 @@ export default {
         ["Work Location:", this.ptwData.workLocation || "N/A"],
 
         // Empty strings for padding if needed
-        ["Work Description:", this.ptwData.workDescription || "N/A"],
+        // ["Work Description:", this.ptwData.workDescription || "N/A"],
       ];
 
       doc.autoTable({
@@ -442,15 +442,29 @@ export default {
         margin: { top: 10, right: 14, bottom: 10, left: 14 },
 
         didDrawPage: function (data) {
-          yPos = data.cursor.y + 10; // Update Y position for next content
+          yPos = data.cursor.y + 5; // Update Y position for next content
         },
       });
+
+      const labelX = 15; // X-coordinate for the label
+const descriptionX = 55; // X-coordinate for the description
+
+
+doc.setFont(undefined, "bold");
+doc.text("Work Description:", labelX, yPos);
+doc.setFont(undefined,"normal"); 
+
+doc.text(this.ptwData.workDescription || "N/A", descriptionX, yPos, { align: "left", maxWidth: 140 });
+yPos += 20; // Increment yPos for spacing
+
 
       // Ensure not to overflow, add new page if needed
       if (yPos > 280) {
         doc.addPage();
         yPos = 10;
       }
+
+
 
       // Adding tables for detailed sections like Equipment, Hazard, etc.
       const addTableSection = (title, data) => {

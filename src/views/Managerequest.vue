@@ -2237,16 +2237,25 @@ export default {
             tableRows[3][1] +
             "\n\nINCIDENT LOCATION \t: " +
             tableRows[7][1] +
-            "\n\nINCIDENT DATETIME \t: " +
-            tableRows[9][1] +
-          "\n\nDESCRIPTION \t: " + tableRows[5][1],
-
+            "\n\nINCIDENT DATETIME \t: " ,
+           
           15,
-          yPos
+          yPos 
         );
+        yPos += 70; 
+        const labelX = 15; 
+const descriptionX = 60; 
+
+        doc.setFont(undefined, "bold");
+doc.text("DESCRIPTION", labelX, yPos);
+// doc.setFont(undefined,"normal"); 
+
+doc.text(": "+tableRows[5][1] || "N/A", descriptionX, yPos, { align: "left", maxWidth: 120 });
+yPos += 20; 
+
 
         // Increment yPos for each block of text to ensure they do not overlap
-        yPos += 90;
+        yPos += 10;
 
         doc.autoTable({
           startY: yPos,
