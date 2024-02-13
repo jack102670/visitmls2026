@@ -28,7 +28,7 @@
           <hr
             class="h- mx-auto bg-gray-100 border-0 rounded dark:bg-gray-700"
           />
-          <div class="flex pt-0 container justify-end flex-col ml-5">
+          <div class="flex pt-0 container justify-end">
             <div class="flex pt-5 gap-12">
               <div
                 class="w-64 p-3 space-y-3 h-20 border-4 bg-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-3xl relative"

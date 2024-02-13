@@ -363,6 +363,7 @@ export default {
           branch: this.branch,
           userId: this.userDetails.userId,
           userEmail: this.userDetails.email,
+          userName: this.userDetails.userName,
 
         })
 

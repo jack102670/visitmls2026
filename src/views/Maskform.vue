@@ -266,6 +266,7 @@ export default {
         userId: this.userDetails.userId,
         branch: this.branch,
         userEmail: this.userDetails.email,
+        userName: this.userDetails.userName,
 
       };
 

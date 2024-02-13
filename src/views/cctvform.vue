@@ -342,6 +342,7 @@ export default {
         uniqueCode: this.generateUniqueCode(),
         userId: this.userDetails.userId,
         userEmail: this.userDetails.email,
+        userName: this.userDetails.userName,
       };
 
 

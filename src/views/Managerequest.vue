@@ -647,8 +647,9 @@
           </div>
           <!-- teskit -->
           <div class="relative" v-show="showTeskit">
+            <div class="flex absolute -top-10 -right-1">
             <div v-if="getRequest.adminStatus === 'COMPLETED'">
-              <span class="absolute -top-10 right-40 text-[#160959]"
+              <span class=" text-[#160959]"
                 ><button @click="exportFormToPDF()">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -666,9 +667,10 @@
                   </svg></button
               ></span>
             </div>
-            <span class="absolute -top-10 -right-1 text-slate-500 text-sm"
+            <span class=" text-slate-500 text-sm"
               >REFNUMBER: {{ getRequest.referenceNumber }}</span
             >
+            </div>
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
               <div>
                 <label
@@ -777,8 +779,9 @@
 
           <!-- Badge Request -->
           <div v-show="showBadgeRequest" class="relative">
+            <div class="flex absolute -top-10 -right-1">
             <div v-if="getRequest.adminStatus === 'COMPLETED'">
-              <span class="absolute -top-10 right-40 text-[#160959]"
+              <span class=" text-[#160959]"
                 ><button @click="exportFormToPDF()">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -796,9 +799,10 @@
                   </svg></button
               ></span>
             </div>
-            <span class="absolute -top-10 -right-1 text-slate-500 text-sm"
+            <span class=" text-slate-500 text-sm"
               >REFNUMBER: {{ getRequest.referenceNumber }}</span
             >
+            </div>
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
                 <label
@@ -1034,30 +1038,34 @@
           </div>
           <!--Visitor Escort Transport-->
           <div
-            v-if="getRequest.adminStatus === 'COMPLETED'"
+           
             class="relative"
             v-show="showVETForm"
           >
-            <span class="absolute -top-10 right-40 text-[#160959]"
-              ><button @click="exportFormToPDF()">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z"
-                  />
-                </svg></button
-            ></span>
-            <span class="absolute -top-10 -right-1 text-slate-500 text-sm"
+          <div class="flex absolute -top-10 -right-1">
+            <div v-if="getRequest.adminStatus === 'COMPLETED'">
+              <span class=" text-[#160959]"
+                ><button @click="exportFormToPDF()">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z"
+                    />
+                  </svg></button
+              ></span>
+            </div>
+            <span class=" text-slate-500 text-sm"
               >REFNUMBER: {{ getRequest.referenceNumber }}</span
             >
+            </div>
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
                 <label
@@ -1187,7 +1195,7 @@
           <!-- mask-->
           <div class="relative" v-show="showMaskRequest">
             <div class="absolute -top-10 -right-1 flex items-center">
-              <span class="text-[#160959]"
+              <span class="text-[#160959] " v-if="getRequest.adminStatus === 'COMPLETED'"
                 ><button @click="exportFormToPDF()">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -2245,6 +2253,100 @@ export default {
             ["STATUS", tableRows[10][1]],
             ["BY", tableRows[14][1]],
             ["LAST MODIFIED", tableRows[13][1]],
+          ],
+
+          theme: "grid",
+          margin: { left: 14 },
+          headStyles: { fillColor: [22, 9, 89] }, // Customize head style
+          didDrawPage: function (data) {
+            yPos = data.cursor.y + 10; // Update Y position for next content
+          },
+        });
+      }
+      if (this.getRequest.referenceNumber.includes("Mask")) {
+        doc.setFontSize(11);
+        // Adjust the starting Y position for "Supplier Company INC" section based on yPos
+        doc.text(
+          "REQUESTER NAME         : " +
+            tableRows[2][1] +
+            "\n\nDEPARTMENT NAME      : " +
+            tableRows[3][1] +
+            "\n\nPHONE NUMBER \t    : " +
+            tableRows[4][1] +
+            "\n\nDATE REQUESTED \t: " +
+            tableRows[7][1] +
+            "\n\nPIECES AMOUNT \t: " +
+            tableRows[6][1] +
+        
+            "\n\nDESCRIPTION \t: " +
+            tableRows[5][1],
+
+          15,
+          yPos
+        );
+
+   
+        yPos += 90;
+
+        doc.autoTable({
+          startY: yPos,
+          head: [["ADMIN FEEDBACK", ""]],
+          body: [
+            ["TICKETSTATUS", tableRows[10][1]],
+            ["COMMENT", tableRows[9][1]],
+            ["STATUS", tableRows[8][1]],
+            ["BY", tableRows[12][1]],
+            ["LAST MODIFIED", tableRows[11][1]],
+          ],
+
+          theme: "grid",
+          margin: { left: 14 },
+          headStyles: { fillColor: [22, 9, 89] }, // Customize head style
+          didDrawPage: function (data) {
+            yPos = data.cursor.y + 10; // Update Y position for next content
+          },
+        });
+      }
+      if (this.getRequest.referenceNumber.includes("TK")) {
+        doc.setFontSize(11);
+        // Adjust the starting Y position for "Supplier Company INC" section based on yPos
+        doc.text(
+          "REQUESTER NAME         : " +
+            tableRows[2][1] +
+            "\n\nDEPARTMENT NAME      : " +
+            tableRows[3][1] +
+            "\n\nPHONE NUMBER \t    : " +
+            tableRows[4][1] +
+            "\n\nDATE REQUESTED \t: " +
+            tableRows[10][1] +
+            "\n\nBOX STOCK \t: " +
+            tableRows[7][1] +
+            "\n\nKIT STOCK \t: " +
+            tableRows[8][1] +
+            "\n\nKIT OUT \t: " +
+            tableRows[6][1] +
+            "\n\nBALANCE KIT \t: " +
+            tableRows[5][1] +
+        
+            "\n\nREMARK \t: " +
+            tableRows[9][1],
+
+          15,
+          yPos
+        );
+
+   
+        yPos += 90;
+
+        doc.autoTable({
+          startY: yPos,
+          head: [["ADMIN FEEDBACK", ""]],
+          body: [
+            ["TICKETSTATUS", tableRows[10][1]],
+            ["COMMENT", tableRows[9][1]],
+            ["STATUS", tableRows[8][1]],
+            ["BY", tableRows[12][1]],
+            ["LAST MODIFIED", tableRows[11][1]],
           ],
 
           theme: "grid",

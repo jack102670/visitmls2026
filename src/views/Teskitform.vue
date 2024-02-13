@@ -400,6 +400,7 @@ export default {
         boxStock: this.formData.stockinbox,
         kitStock: this.formData.stockinkit,
         remark: this.formData.remark,
+        userName: this.userDetails.userName,
       };
 
       console.log("Submitting form data:", uploadForm);
