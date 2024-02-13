@@ -499,8 +499,8 @@
       </div> -->
           <!-- Incident Report -->
           <div class="relative" v-show="showIncidentReport">
-            <div v-if="getRequest.adminStatus === 'COMPLETED'">
-              <span class="absolute -top-10 right-40 text-[#160959]"
+            <div class="absolute -top-10 -right-1 flex" >
+              <span v-if="getRequest.adminStatus === 'COMPLETED'" class="text-[#160959]"
                 ><button @click="exportFormToPDF()">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -516,17 +516,17 @@
                       d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z"
                     />
                   </svg></button
-              ></span>
-            </div>
-            <span class="absolute -top-10 -right-1 text-slate-500 text-sm"
+              ></span><span class="text-slate-500 text-sm" 
               >REFNUMBER: {{ getRequest.referenceNumber }}</span
             >
+            </div>
+            
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Description"
-                  >DateTime Of Incident {{ getRequest.adminStatus }}</label
+                  >DateTime Of Incident</label
                 >
                 <label
                   type="text"
@@ -2342,11 +2342,109 @@ export default {
           startY: yPos,
           head: [["ADMIN FEEDBACK", ""]],
           body: [
-            ["TICKETSTATUS", tableRows[10][1]],
-            ["COMMENT", tableRows[9][1]],
-            ["STATUS", tableRows[8][1]],
-            ["BY", tableRows[12][1]],
-            ["LAST MODIFIED", tableRows[11][1]],
+            ["TICKETSTATUS", tableRows[13][1]],
+            ["COMMENT", tableRows[12][1]],
+            ["STATUS", tableRows[11][1]],
+            ["BY", tableRows[15][1]],
+            ["LAST MODIFIED", tableRows[14][1]],
+          ],
+
+          theme: "grid",
+          margin: { left: 14 },
+          headStyles: { fillColor: [22, 9, 89] }, // Customize head style
+          didDrawPage: function (data) {
+            yPos = data.cursor.y + 10; // Update Y position for next content
+          },
+        });
+      }
+      if (this.getRequest.referenceNumber.includes("IR")) {
+        doc.setFontSize(11);
+        // Adjust the starting Y position for "Supplier Company INC" section based on yPos
+        doc.text(
+          "DATE INCIDENT    : " +
+            tableRows[2][1] +
+            "\n\nINCIDENT TYPE    : " +
+            tableRows[3][1] +
+            "\n\nINCIDENT LOCATION \t    : " +
+            tableRows[4][1] +
+            "\n\nDATE REQUESTED \t: " +
+            tableRows[8][1] +
+            "\n\nPARTIES INVOLVED \t: " +
+            tableRows[5][1] +
+            "\n\nWITNESS \t: " +
+            tableRows[6][1] +
+        
+            "\n\nINCIDENT DETAILS \t: " +
+            tableRows[7][1],
+
+          15,
+          yPos
+        );
+
+   
+        yPos += 90;
+
+        doc.autoTable({
+          startY: yPos,
+          head: [["ADMIN FEEDBACK", ""]],
+          body: [
+            ["TICKETSTATUS", tableRows[11][1]],
+            ["COMMENT", tableRows[10][1]],
+            ["STATUS", tableRows[9][1]],
+            ["BY", tableRows[13][1]],
+            ["LAST MODIFIED", tableRows[12][1]],
+          ],
+
+          theme: "grid",
+          margin: { left: 14 },
+          headStyles: { fillColor: [22, 9, 89] }, // Customize head style
+          didDrawPage: function (data) {
+            yPos = data.cursor.y + 10; // Update Y position for next content
+          },
+        });
+      }
+      if (this.getRequest.referenceNumber.includes("VET")) {
+        doc.setFontSize(11);
+        // Adjust the starting Y position for "Supplier Company INC" section based on yPos
+        doc.text(
+          "REQUESTER NAME         : " +
+            tableRows[2][1] +
+            "\n\nDEPARTMENT NAME      : " +
+            tableRows[3][1] +
+            "\n\nPHONE NUMBER \t    : " +
+            tableRows[5][1] +
+            "\n\nDATE REQUESTED \t: " +
+            tableRows[12][1] +
+            "\n\nMEETING LOCATION \t: " +
+            tableRows[4][1] +
+            "\n\nNO OF PAX \t: " +
+            tableRows[8][1] +
+            "\n\nNO OF PARKING SPACE \t: " +
+            tableRows[9][1] +
+            "\n\nCUSTOMER TRANSPORT \t: " +
+            tableRows[10][1] +
+            "\n\nVISIT DATETIME \t: " +
+            tableRows[11][1] +
+        
+            "\n\nVISIT PURPOSE \t: " +
+            tableRows[7][1],
+
+          15,
+          yPos
+        );
+
+   
+        yPos += 100;
+
+        doc.autoTable({
+          startY: yPos,
+          head: [["ADMIN FEEDBACK", ""]],
+          body: [
+            ["TICKETSTATUS", tableRows[15][1]],
+            ["COMMENT", tableRows[14][1]],
+            ["STATUS", tableRows[13][1]],
+            ["BY", tableRows[17][1]],
+            ["LAST MODIFIED", tableRows[16][1]],
           ],
 
           theme: "grid",
