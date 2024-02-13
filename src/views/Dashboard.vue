@@ -31,22 +31,20 @@
           <div class="flex pt-0 justify-end">
             <div class="flex pt-5 gap-12">
               <div class="flex flex-col ml-5">
-                <button
-                  class="w-64 relative p-3 rounded-2xl border-4 text-xl relative bg-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-3xl border text-white"
-                ><div class="absolute flex bg-blue-100 p-20 w-10 h-10 right-0 rounded-full">
-                       <span class="mx-auto my-auto text-blue-600">{{ requesters.length }}</span>
-                    </div>
-                <span
-                      class=" flex justify-start text-gray-700 capitalize dark:text-slate-300"
-                      >On-Going Request</span
-                    >
-                    
-                
-                  <div class="flex  ">
-                    
-                  </div>
-                </button>
-              </div>
+  <button
+    class="w-64 relative p-3 rounded-2xl border-4 text-xl relative bg-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-3xl border text-white"
+  >
+   
+    <div class="absolute flex bg-blue-100 p-5 w-16 h-16 -right-1 -top-3 rounded-full">
+      <span class="mx-auto my-auto text-3xl text-blue-600">{{ requesters.length }}</span>
+    </div>
+    <span class="flex justify-start text-gray-700 capitalize dark:text-slate-300">On-Going Request</span>
+    <div class="flex">
+
+    </div>
+  </button>
+</div>
+
               <!-- <div
                 class="w-64 h-10 border-4 bg-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-3xl relative"
               >

@@ -1346,6 +1346,7 @@
                         value="RESUBMISSION"
                         v-model="getRequest.adminStatus"
                         :checked="getRequest.adminStatus === 'RESUBMISSION'"
+                        :disabled="getRequest.ticketStatus === 'CLOSE'"
                       />
                       RESUBMISSION
                     </label>
@@ -1356,6 +1357,7 @@
                         value="APPROVED"
                         v-model="getRequest.adminStatus"
                         :checked="getRequest.adminStatus === 'APRROVED'"
+                        :disabled="getRequest.ticketStatus === 'CLOSE'"
                       />
                       APPROVED
                     </label>
@@ -1366,6 +1368,7 @@
                         value="COMPLETED"
                         v-model="getRequest.adminStatus"
                         :checked="getRequest.adminStatus === 'COMPLETED'"
+                        :disabled="getRequest.ticketStatus === 'CLOSE'"
                       />
                       COMPLETED
                     </label>
@@ -1385,6 +1388,7 @@
                     type="text"
                     name="preparedBy"
                     id="preparedBy"
+                    :disabled="getRequest.ticketStatus === 'CLOSE'"
                     class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
                   />
                 </div>
@@ -1401,6 +1405,7 @@
               <textarea
                 v-model="getRequest.adminComment"
                 id="Description"
+                :disabled="getRequest.ticketStatus === 'CLOSE'"
                 class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
                 rows="2"
                 required
@@ -1410,6 +1415,7 @@
               <div v-show="showConfirmButton">
                 <button
                   @click="adminUpdate()"
+                  :disabled="getRequest.ticketStatus === 'CLOSE'"
                   type="button"
                   class="text-center rounded-2xl bg-sky-800 shadow-md p-3 my-1 w-full text-white py-2.5 px-5 mr-2 text-sm font-medium text-gray-900 rounded border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 items-center"
                 >
@@ -1480,6 +1486,7 @@
                         :checked="
                           getRequest.securityAdminStatus === 'RESUBMISSION'
                         "
+                         :disabled="getRequest.ticketStatus === 'CLOSE'"
                       />
                       RESUBMISSION
                     </label>
@@ -1490,6 +1497,7 @@
                         value="APPROVED"
                         v-model="getRequest.securityAdminStatus"
                         :checked="getRequest.securityAdminStatus === 'APPROVED'"
+                        :disabled="getRequest.ticketStatus === 'CLOSE'"
                       />
                       APPROVED
                     </label>
@@ -1512,6 +1520,7 @@
                   </label>
                   <input
                     v-model="getRequest.securityModifiedBy"
+                    :disabled="getRequest.ticketStatus === 'CLOSE'"
                     type="text"
                     name="ptwPreparedBy"
                     id="ptwPreparedBy"
@@ -1530,16 +1539,18 @@
               </label>
               <textarea
                 v-model="getRequest.securityAdminComment"
+                :disabled="getRequest.ticketStatus === 'CLOSE'"
                 id="ptwDescription"
                 class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
                 rows="2"
                 required
+            
               ></textarea>
             </div>
             <div class="flex justify-end mt-6">
               <div v-show="showConfirmButton">
                 <button
-                  @click="adminsecurityUpdate()"
+                  @click="adminsecurityUpdate()"    :disabled="getRequest.ticketStatus === 'CLOSE'"
                   type="button"
                   class="text-center rounded-2xl bg-sky-800 shadow-md p-3 my-1 w-full text-white py-2.5 px-5 mr-2 text-sm font-medium text-gray-900 rounded border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 items-center"
                 >
