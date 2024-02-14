@@ -6,126 +6,107 @@
       <div
         class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
-        <!-- <div class="text-center space-y-12 ml-5 ">
-          <div class="flex text-3xl font-bold text-blue-900 ">
-            Services Portal
-            <div
-              class="relative inline-grid grid-cols-1 grid-rows-1 gap-12 overflow-hidden"
-            >
-              <span class="animate-word col-span-full row-span-full text-blue-800"
-                >Security</span
-              >
-              <span class="animate-word-delay-1 col-span-full row-span-full text-blue-800"
-                >Safety</span
-              >
-              <span class="animate-word-delay-2 col-span-full row-span-full ml-4 text-blue-800"
-                >Maintenance</span
-              >
-            </div>
-          </div>
-          
-        </div> -->
-        <div class="flex justify-start flex-col ml-5">
-          <h2 class="text-3xl font-bold text-blue-900 dark:text-white">
-            Service Portal (VENDOR)
-          </h2>
-          <h3 class="text-xl font-bold text-blue-800 dark:text-white">
-            Security Safety Maintenance
-          </h3>
+        <div class="flex justify-between">
+          <!-- <div class="text-center space-y-12 ml-5 ">
+      <div class="flex text-3xl font-bold text-blue-900 ">
+        Services Portal
+        <div class="relative inline-grid grid-cols-1 grid-rows-1 gap-12 overflow-hidden">
+          <span class="animate-word col-span-full row-span-full text-blue-800">Security</span>
+          <span class="animate-word-delay-1 col-span-full row-span-full text-blue-800">Safety</span>
+          <span class="animate-word-delay-2 col-span-full row-span-full ml-4 text-blue-800">Maintenance</span>
         </div>
-        <hr class="h- mx-auto bg-gray-100 border-0 rounded dark:bg-gray-700" />
-        <div class="pt-0 container px-6 py-1 mx-auto">
-          <div
-            class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 md:grid-cols-2 xl:grid-cols-3"
-          >
-            <div
-              class="p-6 space-y-3 h-20 border-4 bg-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-xl relative"
-            >
-              <h1
-                class="text-xl font-semibold text-gray-700 capitalize dark:text-slate-300"
-              >
-                On-Going Request
-              </h1>
+      </div>
+    </div> -->
+          <div class="flex justify-start flex-col ml-5">
+            <h2 class="text-3xl font-bold text-blue-900 dark:text-white">
+              Service Portal
+            </h2>
+            <h3 class="text-xl font-bold text-blue-800 dark:text-white">
+              Security, Safety, Maintenance.
+            </h3>
+          </div>
+          <hr
+            class="h- mx-auto bg-gray-100 border-0 rounded dark:bg-gray-700"
+          />
+          <div class="flex pt-0 justify-end">
+            <div class="flex pt-5 gap-12">
+              <div class="flex flex-col ml-5">
+  <button
+    class="w-64 relative p-3 rounded-2xl border-4 text-xl relative bg-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-3xl border text-white"
+  >
+   
+    <div class="absolute flex bg-blue-100 p-5 w-16 h-16 -right-1 -top-3 rounded-full">
+      <span class="mx-auto my-auto text-3xl text-blue-600">{{ requesters.length }}</span>
+    </div>
+    <span class="flex justify-start text-gray-700 capitalize dark:text-slate-300">On-Going Request</span>
+    <div class="flex">
 
-              <a
-                href="#"
-                class="inline-flex p-6 absolute -top-3 -right-6 text-blue-100 capitalize transition-colors duration-300 transform bg-blue-100 rounded-full rtl:-scale-x-100 dark:bg-blue-500 dark:text-blue-500 hover:underline dark:hover:text-blue-500"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-6 h-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                <span
-                  class="text-blue-700 dark:text-white mx-1 top-5 font-semibold text-2xl absolute"
-                  >{{ requesters.length }}</span
-                >
-              </a>
-            </div>
+    </div>
+  </button>
+</div>
 
-            <!-- <buttom
-              @click="showContent"
-              class="p-6 space-y-3 h-20 border-4 bg-white dark:border-gray-700 dark:bg-gray-900 rounded-xl relative"
-            >
-              <h1
-                class="text-xl font-semibold text-gray-700 capitalize dark:text-slate-300"
+              <!-- <div
+                class="w-64 h-10 border-4 bg-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-3xl relative"
               >
-                New Request
-              </h1>
+                <a
+                  href="#"
+                  class="p-6 absolute top-0 -right-1 text-blue-100 capitalize transition-colors duration-300 transform bg-blue-100 rounded-full rtl:-scale-x-100 dark:bg-blue-500 dark:text-blue-500 hover:underline dark:hover:text-blue-500"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-6 h-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <span
+                    class="text-blue-700 dark:text-white mx-1 top-5 font-semibold text-2xl absolute"
+                    >{{ requesters.length }}</span
+                  >
+                </a>
+                <h1
+                  class="text-xl font-semibold text-gray-700 capitalize dark:text-slate-300"
+                >
+                  On-Going Request
+                </h1>
+              </div> -->
 
-              <a
-                href=""
-                class="inline-flex p-6 absolute -top-3 -right-6 text-blue-500 capitalize transition-colors duration-300 transform bg-blue-100 rounded-full rtl:-scale-x-100 dark:bg-blue-500 dark:text-white hover:underline hover:text-blue-600 dark:hover:text-blue-500"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-6 h-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+              <div class="flex flex-col ml-5">
+                <button
+                  @click="showContent"
+                  class="w-64 p-3 rounded-2xl tems-center border-4 text-xl dark:bg-gray-900 dark:border-gray-700 bg-[#210e81] border text-white"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </a>
-            </buttom> -->
-            <button @click="showContent" class="relative max-w-full rounded">
-              <div
-                class="flex items-center justify-center p-6 space-y-3 h-20 border-4 text-xl dark:bg-gray-900 dark:border-gray-700 rounded-full px-8 py-4 bg-[#210e81] border text-white"
-              >
-                <span class="mr-2 text-slate-100 hover:text-blue-200"
-                  >New Request</span
-                >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  data-slot="icon"
-                  class="w-8 h-8 hover:text-blue-200"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M12 4.5v15m7.5-7.5h-15"
-                  />
-                </svg>
+                  <div class="flex justify-center">
+                    <span class="mr-2 text-slate-100 hover:text-blue-200"
+                      >New Request</span
+                    >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      data-slot="icon"
+                      class="w-8 h-8 hover:text-blue-200"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 4.5v15m7.5-7.5h-15"
+                      />
+                    </svg>
+                  </div>
+                </button>
               </div>
-            </button>
+              <!-- <button class="bg-red-500 grid">test</button> -->
+            </div>
           </div>
         </div>
         <div class="container mx-auto">

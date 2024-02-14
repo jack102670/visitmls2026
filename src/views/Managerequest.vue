@@ -2408,15 +2408,28 @@ export default {
             "\n\nPARTIES INVOLVED \t: " +
             tableRows[5][1] +
             "\n\nWITNESS \t: " +
-            tableRows[6][1] +
-            "\n\nINCIDENT DETAILS \t: " +
-            tableRows[7][1],
+            tableRows[6][1] ,
+            // "\n\nINCIDENT DETAILS \t: " +
+            // tableRows[7][1],
 
           15,
           yPos
         );
+        yPos += 55;
+        const labelX = 15;
+        const descriptionX = 60;
 
-        yPos += 90;
+        doc.setFont(undefined, "bold");
+        doc.text("INCIDENT DETAILS", labelX, yPos);
+        // doc.setFont(undefined,"normal");
+
+        doc.text(": " + tableRows[7][1] || "N/A", descriptionX, yPos, {
+          align: "left",
+          maxWidth: 120,
+        });
+        yPos += 50;
+
+        // yPos += 90;
 
         doc.autoTable({
           startY: yPos,
