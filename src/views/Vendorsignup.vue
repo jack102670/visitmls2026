@@ -72,6 +72,23 @@
                 <div class="relative">
                   <input
                     required
+                    v-model="pktStaffName"
+                    autocomplete="off"
+                    id="pktStaffName"
+                    name="pktStaffName"
+                    type="text"
+                    class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-blue-600"
+                    placeholder=" PKT Staff Name"
+                  />
+                  <label
+                    for="Cname"
+                    class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
+                    > PKT Staff Name</label
+                  >
+                </div>
+                <div class="relative">
+                  <input
+                    required
                     v-model="userPassword"
                     autocomplete="off"
                     id="password"
@@ -170,6 +187,7 @@ export default {
       userPassword: "",
       userConfirmPassword: "",
       userCompany: "",
+      pktStaffName:"",
     };
   },
 
@@ -185,6 +203,7 @@ export default {
           userPassword: this.userPassword,
           userConfirmPassword: this.userConfirmPassword,
           userCompany: this.userCompany,
+          pktStaffName: this.pktStaffName,
         })
         .then((response) => {
           alert(response.data.message);

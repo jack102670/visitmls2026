@@ -234,7 +234,7 @@
         </h2>
         <span class="text-sm">
           (Item with '<span class="text-red-500">*</span>' needs a special work
-          permit, mark '☑️' if applicable) {{ hazards }}
+          permit, mark '☑️' if applicable) 
         </span>
 
         <form>
@@ -401,7 +401,7 @@
           <h2
             class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white"
           >
-            C[1] Personal Protective Equipment {{ equipment }}
+            C[1] Personal Protective Equipment 
           </h2>
           <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
             <div>
@@ -546,7 +546,7 @@
           <h2
             class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white"
           >
-            C[2] Safety Measure {{ safetyMeasure }}
+            C[2] Safety Measure 
           </h2>
           <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
             <div>
@@ -673,7 +673,7 @@
           <h2
             class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white"
           >
-            C[3] Isolation {{ isolation }}
+            C[3] Isolation 
           </h2>
           <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
             <div>
@@ -730,7 +730,7 @@
           <h2
             class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white"
           >
-            C[4] Plant Support {{ plantSupport }}
+            C[4] Plant Support 
           </h2>
           <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
             <div>
@@ -939,7 +939,7 @@
               class="font-bold text-gray-700 dark:text-gray-200"
               for="workInvolvement"
             >
-              General Requirement {{ reqGeneral }}
+              General Requirement 
             </label>
           </div>
 
@@ -1004,7 +1004,7 @@
               class="font-bold text-gray-700 dark:text-gray-200"
               for="workInvolvement"
             >
-              Requirements within 35 ft. (11m) of hot work {{ requirement }}
+              Requirements within 35 ft. (11m) of hot work 
             </label>
           </div>
           <div class="pt-2">
@@ -1113,7 +1113,7 @@
               for="workInvolvement"
             >
               Requirements for hot work on walls, ceilings or roofs.
-              {{ req_Walls }}
+          
             </label>
           </div>
           <div class="pt-2">
@@ -1163,7 +1163,7 @@
               for="workInvolvement"
             >
               Requirements for hot work on enclosed equipment:
-              {{ req_Enc_Equip }}
+              <!-- {{ req_Enc_Equip }} -->
             </label>
           </div>
           <div class="pt-2">
@@ -1210,7 +1210,7 @@
               for="workInvolvement"
             >
               Requirements for hot work fire watchman and fire monitoring:
-              {{ reqDistance }}
+              <!-- {{ reqDistance }} -->
             </label>
           </div>
           <div class="pt-2">
@@ -1423,7 +1423,7 @@
               class="font-bold text-gray-700 dark:text-gray-200"
               for="authority"
               >Which of the following hazards are associated with this work?
-              {{ waH_Hazard }}
+              <!-- {{ waH_Hazard }} -->
             </label>
             <div class="pt-2">
               <hr />
@@ -1730,7 +1730,8 @@
                 class="font-bold text-gray-700 dark:text-gray-200"
                 for="workInvolvement"
               >
-                Ladder {{ waH_Ladders }}
+                Ladder 
+                <!-- {{ waH_Ladders }} -->
               </label>
             </div>
             <div class="pt-2">
@@ -1864,7 +1865,7 @@
                 class="font-bold text-gray-700 dark:text-gray-200"
                 for="workInvolvement"
               >
-                Scaffolding {{ waH_Scaffolding }}
+                Scaffolding 
               </label>
             </div>
             <div class="pt-2">
@@ -2036,7 +2037,7 @@
                 class="font-bold text-gray-700 dark:text-gray-200"
                 for="workInvolvement"
               >
-                Lift truck / Scissor lift {{ waH_LiftTruck }}
+                Lift truck / Scissor lift 
               </label>
             </div>
             <div class="pt-2">
@@ -2117,7 +2118,7 @@
                 class="font-bold text-gray-700 dark:text-gray-200"
                 for="workInvolvement"
               >
-                Man cage {{ waH_ManCage }}
+                Man cage 
               </label>
             </div>
             <div class="pt-2">
@@ -2181,7 +2182,7 @@
           >
             Emergency Arrangements for use of Fall Arrest Equipment
             <span class="text-sm">(not applicable for fall restraint)</span>
-            {{ waH_Emergency }}
+          
           </label>
           <div class="pt-2">
             <hr />
@@ -2238,7 +2239,7 @@
               class="font-bold text-gray-700 dark:text-gray-200"
               for="workInvolvement"
             >
-              Mandatory Control Measures {{ waH_ControlMeasure }}
+              Mandatory Control Measures 
             </label>
           </div>
           <div class="pt-2">
