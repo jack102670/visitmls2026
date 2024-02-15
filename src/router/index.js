@@ -18,7 +18,7 @@ import Maskform from "../views/Maskform.vue";
 import Teskitform from "../views/Teskitform.vue";
 import visitorescorttour from "../views/visitor-escort-tour.vue";
 import Incidentreportform from "../views/Incidentreportform.vue";
-
+import manageVendor from "../views/AccApproval.vue";
 import testing from "../views/Testing.vue";
 import Dashboardvendor from "../views/Dashboardvendor.vue";
 import Incidentreportsafety from "../views/Incidentreportsafety.vue";
@@ -45,6 +45,7 @@ const routes = [
         name: "NewrequestDefault",
         component: Myrequest2,
       },
+  
 
       {
         path: "cctvform",
@@ -132,6 +133,15 @@ const routes = [
       default: Myrequest2,
       Sidebar: Newsidebar,
     },
+  },
+  {
+    path: "/manageVendor",
+    name: "manageVendor",
+    components:{
+        default: manageVendor,
+    Sidebar: Newsidebar,
+    }
+  
   },
   {
     path: "/PTW",

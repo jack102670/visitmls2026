@@ -1311,7 +1311,7 @@
               showMaskRequest ||
               showBadgeRequest
             "
-          >
+          > <form @submit.prevent="adminUpdate()">
             <div class="flex justify-between gap-4 mt-4">
               <div class="w-full md:w-1/3">
                 <div class="mb-4">
@@ -1384,6 +1384,7 @@
                     Last edited: {{ getRequest.modifiedDate }}
                   </label>
                   <input
+                  required
                     v-model="getRequest.modifiedBy"
                     type="text"
                     name="preparedBy"
@@ -1414,9 +1415,9 @@
             <div class="flex justify-end mt-6">
               <div v-show="showConfirmButton">
                 <button
-                  @click="adminUpdate()"
+                  
                   :disabled="getRequest.ticketStatus === 'CLOSE'"
-                  type="button"
+                  type="submit"
                   class="text-center rounded-2xl bg-sky-800 shadow-md p-3 my-1 w-full text-white py-2.5 px-5 mr-2 text-sm font-medium text-gray-900 rounded border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 items-center"
                 >
                   Update
@@ -1449,6 +1450,7 @@
                 </button>
               </div>
             </div>
+          </form>
           </div>
           <div v-show="showPTWForm">
             <div class="flex justify-between gap-4 mt-4">
@@ -1486,7 +1488,7 @@
                         :checked="
                           getRequest.securityAdminStatus === 'RESUBMISSION'
                         "
-                         :disabled="getRequest.ticketStatus === 'CLOSE'"
+                        :disabled="getRequest.ticketStatus === 'CLOSE'"
                       />
                       RESUBMISSION
                     </label>
@@ -1544,13 +1546,13 @@
                 class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
                 rows="2"
                 required
-            
               ></textarea>
             </div>
             <div class="flex justify-end mt-6">
               <div v-show="showConfirmButton">
                 <button
-                  @click="adminsecurityUpdate()"    :disabled="getRequest.ticketStatus === 'CLOSE'"
+                  @click="adminsecurityUpdate()"
+                  :disabled="getRequest.ticketStatus === 'CLOSE'"
                   type="button"
                   class="text-center rounded-2xl bg-sky-800 shadow-md p-3 my-1 w-full text-white py-2.5 px-5 mr-2 text-sm font-medium text-gray-900 rounded border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 items-center"
                 >
@@ -1618,7 +1620,6 @@ export default {
       showLoadingButton: false,
       showPrintBtn: false,
 
-      getRequest: [],
       isModalVisible: false,
       showBadgeRequest: false,
       showMaskRequest: false,
@@ -1634,6 +1635,8 @@ export default {
       ticketStatus: "",
       userEmail: "",
       fileName: "",
+      getRequest: [],
+
 
       keysToExclude: ["uniqueCode", "files", "userId", "id"],
       name: ["Branch", "Department", "Phone Number"],
@@ -1652,7 +1655,7 @@ export default {
   beforeUnmount() {},
 
   methods: {
-    
+
     getFileName(file) {
       const parts = file.split("/");
       return parts[parts.length - 1];
@@ -2244,21 +2247,22 @@ export default {
         doc.setFontSize(11);
         // Adjust the starting Y position for "Supplier Company INC" section based on yPos
         doc.text(
-          "BRANCH                            : " +
+          "BRANCH                             : " +
             tableRows[0][1] +
-            "\n\nREQUESTER NAME         : " +
+            "\n\nREQUESTER NAME           : " +
             tableRows[2][1] +
-            "\n\nDEPARTMENT NAME      : " +
+            "\n\nDEPARTMENT NAME        : " +
             tableRows[6][1] +
-            "\n\nPHONE NUMBER \t    : " +
+            "\n\nPHONE NUMBER \t      : " +
             tableRows[4][1] +
-            "\n\nDATE REQUESTED \t: " +
+            "\n\nDATE REQUESTED \t  : " +
             tableRows[3][1] +
-            "\n\nAPPOINTMENT DATE \t: " +
-            tableRows[3][1] +
-            "\n\nINCIDENT LOCATION \t: " +
+            "\n\nAPPOINTMENT DATE\t: " +
+            tableRows[8][1] +
+            "\n\nINCIDENT LOCATION\t: " +
             tableRows[7][1] +
-            "\n\nINCIDENT DATETIME \t: ",
+            "\n\nINCIDENT DATETIME\t: " +
+            tableRows[6][1] ,
 
           15,
           yPos
@@ -2271,7 +2275,7 @@ export default {
         doc.text("DESCRIPTION", labelX, yPos);
         // doc.setFont(undefined,"normal");
 
-        doc.text(": " + tableRows[5][1] || "N/A", descriptionX, yPos, {
+        doc.text("   : " + tableRows[5][1] || "N/A", descriptionX, yPos, {
           align: "left",
           maxWidth: 120,
         });
@@ -2313,16 +2317,29 @@ export default {
             tableRows[4][1] +
             "\n\nDATE REQUESTED \t: " +
             tableRows[7][1] +
-            "\n\nPIECES AMOUNT \t: " +
-            tableRows[6][1] +
-            "\n\nDESCRIPTION \t: " +
-            tableRows[5][1],
+            "\n\nPIECES AMOUNT \t   : " +
+            tableRows[6][1] ,
+            // "\n\nDESCRIPTION \t    : " +
+            // tableRows[5][1],
 
           15,
           yPos
-        );
+        ); yPos += 54;
+        const labelX = 15;
+        const descriptionX = 60;
 
-        yPos += 90;
+        doc.setFont(undefined, "bold");
+        doc.text("DESCRIPTION", labelX, yPos);
+        // doc.setFont(undefined,"normal");
+
+        doc.text(": " +  tableRows[5][1] || "N/A", descriptionX, yPos, {
+          align: "left",
+          maxWidth: 120,
+        });
+
+
+
+        yPos += 30;
 
         doc.autoTable({
           startY: yPos,
@@ -2357,15 +2374,15 @@ export default {
             tableRows[4][1] +
             "\n\nDATE REQUESTED \t: " +
             tableRows[10][1] +
-            "\n\nBOX STOCK \t: " +
+            "\n\nBOX STOCK \t            : " +
             tableRows[7][1] +
-            "\n\nKIT STOCK \t: " +
+            "\n\nKIT STOCK \t              : " +
             tableRows[8][1] +
-            "\n\nKIT OUT \t: " +
+            "\n\nKIT OUT \t                   : " +
             tableRows[6][1] +
-            "\n\nBALANCE KIT \t: " +
+            "\n\nBALANCE KIT \t         : " +
             tableRows[5][1] +
-            "\n\nREMARK \t: " +
+            "\n\nREMARK \t                  : " +
             tableRows[9][1],
 
           15,
@@ -2397,17 +2414,17 @@ export default {
         doc.setFontSize(11);
         // Adjust the starting Y position for "Supplier Company INC" section based on yPos
         doc.text(
-          "DATE INCIDENT    : " +
+          "DATE INCIDENT\t\t : " +
             tableRows[2][1] +
-            "\n\nINCIDENT TYPE    : " +
+            "\n\nINCIDENT TYPE \t\t: " +
             tableRows[3][1] +
-            "\n\nINCIDENT LOCATION \t    : " +
+            "\n\nINCIDENT LOCATION\t: " +
             tableRows[4][1] +
-            "\n\nDATE REQUESTED \t: " +
+            "\n\nDATE REQUESTED   \t: " +
             tableRows[8][1] +
-            "\n\nPARTIES INVOLVED \t: " +
+            "\n\nPARTIES INVOLVED\t : " +
             tableRows[5][1] +
-            "\n\nWITNESS \t: " +
+            "\n\nWITNESS \t\t\t   : " +
             tableRows[6][1] ,
             // "\n\nINCIDENT DETAILS \t: " +
             // tableRows[7][1],
@@ -2423,7 +2440,7 @@ export default {
         doc.text("INCIDENT DETAILS", labelX, yPos);
         // doc.setFont(undefined,"normal");
 
-        doc.text(": " + tableRows[7][1] || "N/A", descriptionX, yPos, {
+        doc.text("  : " + tableRows[7][1] || "N/A", descriptionX, yPos, {
           align: "left",
           maxWidth: 120,
         });
@@ -2454,25 +2471,25 @@ export default {
         doc.setFontSize(11);
         // Adjust the starting Y position for "Supplier Company INC" section based on yPos
         doc.text(
-          "REQUESTER NAME         : " +
+          "REQUESTER NAME          : " +
             tableRows[2][1] +
-            "\n\nDEPARTMENT NAME      : " +
+            "\n\nDEPARTMENT NAME       : " +
             tableRows[3][1] +
-            "\n\nPHONE NUMBER \t    : " +
+            "\n\nPHONE NUMBER              : " +
             tableRows[5][1] +
-            "\n\nDATE REQUESTED \t: " +
+            "\n\nDATE REQUESTED           : " +
             tableRows[12][1] +
-            "\n\nMEETING LOCATION \t: " +
+            "\n\nMEETING LOCATION\t: " +
             tableRows[4][1] +
-            "\n\nNO OF PAX \t: " +
+            "\n\nNO OF PAX \t               : " +
             tableRows[8][1] +
-            "\n\nNO OF PARKING SPACE \t: " +
+            "\n\nNO OF PARKING SPACE  : " +
             tableRows[9][1] +
-            "\n\nCUSTOMER TRANSPORT \t: " +
+            "\n\nCUSTOMER TRANSPORT: " +
             tableRows[10][1] +
-            "\n\nVISIT DATETIME \t: " +
+            "\n\nVISIT DATETIME \t       : " +
             tableRows[11][1] +
-            "\n\nVISIT PURPOSE \t: " +
+            "\n\nVISIT PURPOSE \t        : " +
             tableRows[7][1],
 
           15,

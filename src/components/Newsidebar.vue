@@ -90,11 +90,10 @@
 
     <div class="flex flex-col items-center justify-center mt-1">
       <h4 class="text-slate-200 dark:text-gray-200 font-medium text-center">
-        Welcome, 
+        Welcome,
       </h4>
       <p class="text-sm font-medium text-slate-200 dark:text-gray-400 mt-1">
         {{ userDetails.userName }}
-       
       </p>
     </div>
 
@@ -173,7 +172,7 @@
           :to="{ name: 'ManagerequestSafety' }"
         >
           <svg
-            class="w-5 h-5"
+            class="w-5 h-5 "
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -188,6 +187,29 @@
           </svg>
 
           <span class="mx-4 font-medium">Tickets</span>
+        </router-link>
+        <router-link
+          v-if="role === 'safety'"
+          class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
+          :to="{ name: 'manageVendor' }"
+        >
+          <svg
+            class="w-6 h-6 "
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="square"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M7 19H5a1 1 0 0 1-1-1v-1a3 3 0 0 1 3-3h1m4-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm7.4 1.6a2 2 0 0 1 0 2.7l-6 6-3.4.7.7-3.4 6-6a2 2 0 0 1 2.7 0Z"
+            />
+          </svg>
+
+          <span class="mx-4 font-medium">Manage Vendor</span>
         </router-link>
 
         <a
@@ -216,7 +238,12 @@
             />
           </svg>
 
-          <span @click="logout" v-show="showLogOutButton" class="mx-4 font-medium">Log Out</span>
+          <span
+            @click="logout"
+            v-show="showLogOutButton"
+            class="mx-4 font-medium"
+            >Log Out</span
+          >
           <span v-show="showLoadingButton" class="mx-4 font-medium">
             <svg
               aria-hidden="true"
@@ -259,11 +286,8 @@ export default {
     };
   },
   computed: {
-    
     sidebarPosition() {
-      
       return {
-        
         left: this.open ? "240px" : "4px",
         top: this.open ? "9px" : "9px", // Add your top position style here
       };
@@ -273,26 +297,22 @@ export default {
     },
   },
   mounted() {
-
     this.userDetails = store.getSession().userDetails;
     this.token = store.data.token;
     this.role = store.getRole();
-    console.log(this.userDetails,"user details");
+    console.log(this.userDetails, "user details");
     // Fetch data when the component is mounted
 
     //this.currentUser();
-   
-  
   },
-  beforeCreate(){
-    if (!localStorage.getItem('reloaded')) {
-      localStorage.setItem('reloaded', 'true');
+  beforeCreate() {
+    if (!localStorage.getItem("reloaded")) {
+      localStorage.setItem("reloaded", "true");
       window.location.reload();
     } else {
-      localStorage.removeItem('reloaded');
+      localStorage.removeItem("reloaded");
       // Additional code for your component
     }
-
   },
   methods: {
     logout() {
@@ -305,7 +325,6 @@ export default {
     //   axios.post("http://172.28.28.91:8085api/Security/logout")
     // },
     toggleTheme() {
-
       const root = document.documentElement;
       const isDarkMode = root.classList.contains("dark");
 
@@ -329,12 +348,10 @@ export default {
       this.dropdownOpen = false;
     },
     toggleSidebar() {
-      
       this.open = !this.open;
     },
   },
   created() {
-   
     // Retrieve the theme from localStorage when the component is created
     const storedTheme = localStorage.getItem("theme");
 
