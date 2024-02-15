@@ -18,6 +18,7 @@
                 <span
                   class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400"
                 >
+                  {{ requesters.length }}
                 </span>
               </h2>
             </div>
@@ -32,6 +33,7 @@
                   class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg"
                 >
                   <table
+                    v-if="requesters.length > 0"
                     ref="myTable"
                     class="hover stripe min-w-full divide-y divide-gray-200 dark:divide-gray-700"
                   >
@@ -144,16 +146,18 @@
                         <td class="px-3 py-2 ml text-sm whitespace-nowrap">
                           <div class="flex items-center gap-x-1">
                             <button
-                              v-show="showConfirmButton"
+                              v-show="!requester.loading"
                               @click="approveRequest(requester)"
                               class="bg-cyan-800 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded mr-4"
+                              style="width: 100px"
                             >
                               Approve
                             </button>
                             <button
-                              v-show="showLoadingButton(requester)"
+                              v-show="requester.loading"
                               class="bg-cyan-800 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded mr-4"
                               disabled
+                              style="width: 100px"
                             >
                               <svg
                                 aria-hidden="true"
@@ -172,17 +176,20 @@
                                   fill="#1C64F2"
                                 ></path>
                               </svg>
-                              Loading....
+                            
                             </button>
 
                             <button
-                              @click="rejectRequest"
+                              v-show="!requester.rejectLoading"
+                              @click="rejectRequest(requester)"
                               class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
+                              style="width: 100px"
                             >
                               Reject
                             </button>
                             <button
-                              v-show="showLoadingRejectButton"
+                              v-show="requester.rejectLoading"
+                              style="width: 100px"
                               class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
                             >
                               <svg
@@ -202,13 +209,19 @@
                                   fill="#1C64F2"
                                 ></path>
                               </svg>
-                              Loading....
+                         
                             </button>
                           </div>
                         </td>
                       </tr>
                     </tbody>
                   </table>
+                  <div
+                    v-else
+                    class="text-gray-500 dark:text-gray-400 text-center py-4"
+                  >
+                    No data available
+                  </div>
                 </div>
               </div>
             </div>
@@ -228,9 +241,6 @@ export default {
   name: "testingViews",
   data() {
     return {
-      showRejectButton: true,
-
-      showLoadingRejectButton: false,
       requesters: [],
     };
   },
@@ -238,12 +248,6 @@ export default {
     this.fetchRequesters();
   },
   methods: {
-    showConfirmButton() {
-        return false;
-    },
-    showLoadingButton() {
-        return true;
-    },
     async fetchRequesters() {
       try {
         const response = await axios.get(
@@ -254,44 +258,43 @@ export default {
         console.error("Error fetching requesters:", error);
       }
     },
-    approveRequest(requester) {
-      this.showConfirmButton(requester);
-      this.showLoadingButton(requester);
+    async approveRequest(requester) {
+      requester.loading = true;
+
       try {
-        axios
-          .put(`http://172.28.28.91:8085/api/Admin/AdminApproveVendor`, {
+        const response = await axios.put(
+          `http://172.28.28.91:8085/api/Admin/AdminApproveVendor`,
+          {
             approvalInt: 1,
             userId: requester.userId,
             userEmail: requester.userEmail,
-          })
-          .then((response) => {
-            "Server response:", response.data;
-            // Handle the response, such as showing a success message or resetting the form
-
-            this.fetchRequesters();
-          });
+          }
+        );
+        console.log("Server response:", response.data);
+        this.fetchRequesters();
       } catch (error) {
         console.error("Error approving request:", error);
+      } finally {
+        requester.loading = false;
       }
     },
-    rejectRequest(requester) {
-      this.showRejectButton = false;
-      this.showLoadingRejectButton = true;
+    async rejectRequest(requester) {
+      requester.rejectLoading = true;
       try {
-        axios
-          .put(`http://172.28.28.91:8085/api/Admin/AdminApproveVendor`, {
+        const response = await axios.put(
+          `http://172.28.28.91:8085/api/Admin/AdminApproveVendor`,
+          {
             approvalInt: 0,
             userId: requester.userId,
             userEmail: requester.userEmail,
-          })
-          .then((response) => {
-            "Server response:", response.data;
-            // Handle the response, such as showing a success message or resetting the form
-
-            this.fetchRequesters();
-          });
+          }
+        );
+        console.log("Server response:", response.data);
+        this.fetchRequesters();
       } catch (error) {
-        console.error("Error approving request:", error);
+        console.error("Error rejecting request:", error);
+      } finally {
+        requester.rejectLoading = false;
       }
     },
   },
