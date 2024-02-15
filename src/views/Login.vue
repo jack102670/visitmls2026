@@ -124,22 +124,23 @@ export default {
     //const session = store.getSession();
   },
   methods: {
-    async login() {
+     login() {
       this.showLoginButton = false;
       this.showLoadingButton = true;
 
-      try {
+   
         // Send login request for vendor
-        const response = await axios.post(
+        axios.post(
           "http://172.28.28.91:8085/api/VendorCredentials/VENDOR SIGN IN",
           {
             userEmail: this.userEmail,
             password: this.password,
           }
-        );
+        ).then((response) => {
+        
+          console.log("Server response:", response.data);
 
-        // Check if userId is present in response
-        if (response.data.userId != null) {
+          if (response.data.userId != null) {
           // Extract user details and token
           const userDetails = response.data;
           const token = response.data.token;
@@ -157,17 +158,15 @@ export default {
           this.$router.push("/Dashboardvendor/");
         } else {
           // Handle login failure
-          alert(response.data);
+          alert(response.data.message);
           this.showLoginButton = true;
           this.showLoadingButton = false;
         }
-      } catch (error) {
-        // Handle errors that occur during the login process
-        alert("SOMETHING IS WRONG! TRY AGAIN LATER. CHECK YOUR CREDENTIALS.");
-        console.error("Login error:", error);
-        this.showLoginButton = true;
-        this.showLoadingButton = false;
-      }
+        });
+
+        // Check if userId is present in response
+        
+      
     },
   },
 };

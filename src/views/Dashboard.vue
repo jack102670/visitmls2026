@@ -35,8 +35,8 @@
     class="w-64 relative p-3 rounded-2xl border-4 text-xl relative bg-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-3xl border text-white"
   >
    
-    <div class="absolute flex bg-blue-100 p-5 w-16 h-16 -right-1 -top-3 rounded-full">
-      <span class="mx-auto my-auto text-3xl text-blue-600">{{ requesters.length }}</span>
+    <div class="absolute flex bg-blue-100 p-5 w-20 h-20 -right-3 -top-3 rounded-full">
+      <span class="m-auto text-3xl text-blue-600">{{ requesters.length }}</span>
     </div>
     <span class="flex justify-start text-gray-700 capitalize dark:text-slate-300">On-Going Request</span>
     <div class="flex">
