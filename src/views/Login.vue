@@ -26,12 +26,12 @@
                   name="email"
                   type="text"
                   class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
-                  placeholder="Email address"
+                  placeholder="user@address.com"
                 />
                 <label
                   for="email"
                   class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
-                  >Email Address</label
+                  >Email</label
                 >
               </div>
               <div class="relative">
@@ -90,7 +90,7 @@
                 </div>
               </div>
               <p class="text-sm text-gray-500 mt-10">
-                Dont have an account?
+                Don't have an account?
                 <router-link
                   :to="{ name: 'Vendorsingup' }"
                   class="text-[#4F46E5] font-bold"

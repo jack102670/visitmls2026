@@ -1,19 +1,26 @@
 <template>
   <!-- component -->
   <div class="background-image h-screen w-screen flex items-center">
+    
     <div
       class="h-max mx-auto flex flex-col items-center bg-[#18273F] shadow-lg bg-opacity-90 rounded-xl p-5"
     >
+    <h1
+        class="text-slate-200 shadow-text-2xl text-2xl font-bold text-center pt-5 pb-10"
+      >
+        Services Portal System
+      </h1>
       <img
         class="h-[60px] w-[70px] mb-5"
         src="@/assets/images/pkt-blue-logo.jpg"
         alt=""
       />
-      <h1
-        class="text-slate-200 shadow-text-2xl text-xl font-bold text-center pb-10"
+      
+      <h5
+        class="text-slate-200 shadow-text-2xl text-xl font-bold text-center pb-5"
       >
         Sign in to your account
-      </h1>
+      </h5>
       <div class="p-10 flex flex-col gap-4 text-sm">
         <div>
           <label class="text-slate-300 font-bold inline-block pb-2" for="email"
@@ -23,7 +30,7 @@
             class="border border-gray-400 focus:outline-slate-400 rounded-md w-full shadow-sm px-5 py-2"
             type="email"
             name="email"
-            placeholder="user@pktgroup.com"
+            placeholder="user"
             v-model="userName"
           />
         </div>
@@ -56,11 +63,11 @@
           </div> -->
         </div>
         <div v-show="showLoginButton">
-          <input
+          <button
             class="bg-blue-900 w-full py-2 rounded-md text-white font-bold cursor-pointer hover:bg-blue-700"
             type="submit"
             @click.prevent="login"
-          />
+          >Login</button>
         </div>
         <div v-show="showLoadingButton">
           <button
