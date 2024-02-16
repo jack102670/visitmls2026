@@ -204,12 +204,12 @@
 <script>
 import axios from "axios";
 import { store } from "../views/store.js";
-// NewrequestViews.js
-// NewrequestViews.js
+
 export default {
-  name: "NewrequestViews",
+  name: "DashboardView",
   data() {
     return {
+      keyForRerender: 0,
       requesters: [],
       OGR: null,
 
@@ -235,7 +235,17 @@ export default {
       TypeOfRequests: [],
     };
   },
-
+  watch: {
+    $route() {
+      // Check if the route is the Dashboard route
+    
+        // Refresh component when navigating to Dashboard
+        this.refreshComponent();
+        // Force re-render by updating the key
+        this.keyForRerender++;
+      
+    }
+  },
   mounted() {
     // this.role = store.getRole();
     this.fetchRequesters();
@@ -260,6 +270,9 @@ export default {
   //   }
   // },
   methods: {
+    refreshComponent() {
+      // Implement the logic to refresh the component data here
+    },
     SetToStore() {
       store.setSelectedLocation(this.selectedLocation, this.locations);
     },

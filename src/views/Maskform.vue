@@ -279,7 +279,7 @@ export default {
 
           this.closeModal(); 
           //this.resetForm();
-          this.$router.push("/Dashboard");
+          this.$router.push("/");
 
           console.log("Server response:", response.data);
         })

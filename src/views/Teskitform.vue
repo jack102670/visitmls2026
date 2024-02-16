@@ -413,7 +413,7 @@ export default {
         .then((response) => {
           this.resetForm();
           this.closeModal();
-          this.$router.push("/Dashboard");
+          this.$router.push("/");
           console.log("Server response:", response.data);
         })
         .catch((error) => {

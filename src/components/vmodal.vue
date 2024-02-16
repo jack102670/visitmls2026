@@ -5,7 +5,7 @@
   >
     <div
       id="modal"
-      class="bg-blue-50 rounded-3xl overflow-x-auto flex flex-col w-6/12 justify-between [calculateModalSize()]"
+      class="bg-blue-50 rounded-3xl overflow-x-auto flex flex-col w-6/12 justify-between [calculateModalSize()] overflow-y-auto "
     >
       <!-- Modal Header -->
       <header
@@ -23,7 +23,7 @@
       </header>
 
       <!-- Modal Body -->
-      <section id="modal-body" class="px-4 py-6">
+      <section id="modal-body" class="px-4 py-6 max-h-[370px] overflow-y-auto" >
         <slot name="body"></slot>
       </section>
 

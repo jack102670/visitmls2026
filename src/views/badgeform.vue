@@ -364,8 +364,8 @@ export default {
     };
   },
   computed: {
-capitalizedRequesterName: {
-      get()     {
+    capitalizedRequesterName: {
+      get() {
         return this.formData.requesterName;
       },
       set(value) {
@@ -384,7 +384,6 @@ capitalizedRequesterName: {
     },
   },
   methods: {
-    
     showModal() {
       this.isModalVisible = true;
     },
@@ -460,8 +459,10 @@ capitalizedRequesterName: {
             this.uploadMultiImage();
             this.resetForm();
             this.closeModal();
-
-            this.$router.push("/Dashboard");
+            
+            this.$router.push("/")
+            //window.location.reload();
+             
           })
           .catch((error) => {
             if (error.response) {
