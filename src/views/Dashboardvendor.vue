@@ -31,19 +31,23 @@
           <div class="flex pt-0 justify-end">
             <div class="flex pt-5 gap-12">
               <div class="flex flex-col ml-5">
-  <button
-    class="w-64 relative p-3 rounded-2xl border-4 text-xl relative bg-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-3xl border text-white"
-  >
-   
-    <div class="absolute flex bg-blue-100 p-5 w-16 h-16 -right-1 -top-3 rounded-full">
-      <span class="mx-auto my-auto text-3xl text-blue-600">{{ requesters.length }}</span>
-    </div>
-    <span class="flex justify-start text-gray-700 capitalize dark:text-slate-300">On-Going Request</span>
-    <div class="flex">
-
-    </div>
-  </button>
-</div>
+                <button
+                  class="w-64 relative p-3 rounded-2xl border-4 text-xl relative bg-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-3xl border text-white"
+                >
+                  <div
+                    class="absolute flex bg-blue-100 p-5 w-20 h-20 -right-3 -top-3 rounded-full"
+                  >
+                    <span class="m-auto text-3xl text-blue-600">{{
+                      requesters.length
+                    }}</span>
+                  </div>
+                  <span
+                    class="flex justify-start text-gray-700 capitalize dark:text-slate-300"
+                    >On-Going Request</span
+                  >
+                  <div class="flex"></div>
+                </button>
+              </div>
 
               <!-- <div
                 class="w-64 h-10 border-4 bg-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-3xl relative"
@@ -125,8 +129,10 @@
               >
               <select
                 v-model="selectedLocation"
-                @change="onLocationChange(); SetToStore()"
-                
+                @change="
+                  onLocationChange();
+                  SetToStore();
+                "
                 id="location"
                 class="mt-1 block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-sm"
               >
@@ -207,7 +213,7 @@ export default {
   name: "NewrequestViews",
   data() {
     return {
-      requesters:[],
+      requesters: [],
       OGR: null,
 
       showAdditionalContent: false,
@@ -245,7 +251,6 @@ export default {
     // else{
     //   this.$router.push("/dashboard");
     // }
- 
   },
   // beforeCreate(){
   //   if (!localStorage.getItem('reloaded2')) {
@@ -257,31 +262,31 @@ export default {
   //   }
   // },
   methods: {
-    SetToStore(){
+    SetToStore() {
       store.setSelectedLocation(this.selectedLocation, this.locations);
-      console.log('check location',this.selectedLocation)
-  
+      console.log("check location", this.selectedLocation);
     },
     fetchRequesters() {
       const userDetails = store.getSession().userDetails;
       const role = store.getRole();
-    let url = '';
+      let url = "";
 
-    if (role === 'user') {
-      url = `http://172.28.28.91:8085/api/Main/GetAllRequests/${userDetails.userId}`;
-    } else if (role === 'vendor') {
-      url = `http://172.28.28.91:8085/api/Main/GetAllRequestsVendor/${userDetails.userId}`;
-    } else {
-      console.log("Role not authorized or role-specific URL not set");
-      return;
-    }
+      if (role === "user") {
+        url = `http://172.28.28.91:8085/api/Main/GetAllRequests/${userDetails.userId}`;
+      } else if (role === "vendor") {
+        url = `http://172.28.28.91:8085/api/Main/GetAllRequestsVendor/${userDetails.userId}`;
+      } else {
+        console.log("Role not authorized or role-specific URL not set");
+        return;
+      }
 
-    console.log("Fetching requesters for role:", userDetails.role);
-    axios.get(url)
+      console.log("Fetching requesters for role:", userDetails.role);
+      axios
+        .get(url)
         .then((response) => {
           this.requesters = response.data;
           console.log("Requesters on dashboard:", this.requesters);
-          console.log("all",this.requesters.length)
+          console.log("all", this.requesters.length);
           // this.OGR = this.requesters.length;
           // store.setOGR(this.OGR);
           // console.log("OGR set to:", this.OGR);
@@ -301,9 +306,7 @@ export default {
       // Log to console to check if the method is being called
       console.log("Location changed. Updating departments.");
 
-
       this.updateDepartments();
-      
     },
 
     updateDepartments() {
@@ -311,25 +314,92 @@ export default {
       switch (this.selectedLocation) {
         case "1": // HQ
           this.departments = [
-            { id: "SECURITY", name: "SECURITY" },
+            // { id: "SECURITY", name: "SECURITY" },
             { id: "SAFETY", name: "SAFETY" },
-            { id: "MAINTENANCE", name: "MAINTENANCE" },
+            // { id: "MAINTENANCE", name: "MAINTENANCE" },
             // Add more departments as needed
           ];
           break;
         case "2": // OAH
           this.departments = [
-            // Define departments for OAH
+            // { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            // { id: "MAINTENANCE", name: "MAINTENANCE" },
           ];
           break;
         case "3": // KULIM HUB
           this.departments = [
-            { id: "SECURITY", name: "SECURITY" },
+            // { id: "SECURITY", name: "SECURITY" },
             { id: "SAFETY", name: "SAFETY" },
-            { id: "MAINTENANCE", name: "MAINTENANCE" },
+            // { id: "MAINTENANCE", name: "MAINTENANCE" },
             // Define departments for KULIM HUB
           ];
           break;
+        case "4": // KULIM HUB
+          this.departments = [
+            // { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            // { id: "MAINTENANCE", name: "MAINTENANCE" },
+            // Define departments for KULIM HUB
+          ];
+          break;
+        case "5": // KULIM HUB
+          this.departments = [
+            // { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            // { id: "MAINTENANCE", name: "MAINTENANCE" },
+            // Define departments for KULIM HUB
+          ];
+          break;
+        case "6": // KULIM HUB
+          this.departments = [
+            // { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            // { id: "MAINTENANCE", name: "MAINTENANCE" },
+            // Define departments for KULIM HUB
+          ];
+          break;
+        case "7": // KULIM HUB
+          this.departments = [
+            // { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            // { id: "MAINTENANCE", name: "MAINTENANCE" },
+            // Define departments for KULIM HUB
+          ];
+          break;
+        case "8": // KULIM HUB
+          this.departments = [
+            // { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            // { id: "MAINTENANCE", name: "MAINTENANCE" },
+            // Define departments for KULIM HUB
+          ];
+          break;
+        case "9": // KULIM HUB
+          this.departments = [
+            // { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            // { id: "MAINTENANCE", name: "MAINTENANCE" },
+            // Define departments for KULIM HUB
+          ];
+          break;
+        case "10": // KULIM HUB
+          this.departments = [
+            // { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            // { id: "MAINTENANCE", name: "MAINTENANCE" },
+            // Define departments for KULIM HUB
+          ];
+          break;
+        case "11": // KULIM HUB
+          this.departments = [
+            // { id: "SECURITY", name: "SECURITY" },
+            { id: "SAFETY", name: "SAFETY" },
+            // { id: "MAINTENANCE", name: "MAINTENANCE" },
+            // Define departments for KULIM HUB
+          ];
+          break;
+
         // Add more cases for additional locations
 
         default:
@@ -352,7 +422,6 @@ export default {
       switch (this.selectedDepartment) {
         case "SECURITY":
           this.TypeOfRequests = [
-
             // Add more TypeOfRequests as needed
           ];
           break;

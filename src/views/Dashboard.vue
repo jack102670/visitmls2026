@@ -19,7 +19,7 @@
     </div> -->
           <div class="flex justify-start flex-col ml-5">
             <h2 class="text-3xl font-bold text-blue-900 dark:text-white">
-              Services Portal System 
+              Services Portal System
             </h2>
             <h3 class="text-xl font-bold text-blue-800 dark:text-white">
               Security, Safety, Maintenance.
@@ -31,19 +31,23 @@
           <div class="flex pt-0 justify-end">
             <div class="flex pt-5 gap-12">
               <div class="flex flex-col ml-5">
-  <button
-    class="w-64 relative p-3 rounded-2xl border-4 text-xl relative bg-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-3xl border text-white"
-  >
-   
-    <div class="absolute flex bg-blue-100 p-5 w-20 h-20 -right-3 -top-3 rounded-full">
-      <span class="m-auto text-3xl text-blue-600">{{ requesters.length }}</span>
-    </div>
-    <span class="flex justify-start text-gray-700 capitalize dark:text-slate-300">On-Going Request</span>
-    <div class="flex">
-
-    </div>
-  </button>
-</div>
+                <button
+                  class="w-64 relative p-3 rounded-2xl border-4 text-xl relative bg-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-3xl border text-white"
+                >
+                  <div
+                    class="absolute flex bg-blue-100 p-5 w-20 h-20 -right-3 -top-3 rounded-full"
+                  >
+                    <span class="m-auto text-3xl text-blue-600">{{
+                      requesters.length
+                    }}</span>
+                  </div>
+                  <span
+                    class="flex justify-start text-gray-700 capitalize dark:text-slate-300"
+                    >On-Going Request</span
+                  >
+                  <div class="flex"></div>
+                </button>
+              </div>
 
               <!-- <div
                 class="w-64 h-10 border-4 bg-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-3xl relative"
@@ -238,27 +242,25 @@ export default {
   watch: {
     $route() {
       // Check if the route is the Dashboard route
-    
-        // Refresh component when navigating to Dashboard
-        this.refreshComponent();
-        // Force re-render by updating the key
-        this.keyForRerender++;
-      
-    }
+
+      // Refresh component when navigating to Dashboard
+      this.refreshComponent();
+      // Force re-render by updating the key
+      this.keyForRerender++;
+    },
   },
   mounted() {
-    // this.role = store.getRole();
+    this.role = store.getRole();
     this.fetchRequesters();
     // this.userDetails = store.getSession().userDetails;
     // this.token = store.data.token;
     // this.OGR = store.getOGR();
     // console.log("OGR from store:", store.getOGR());
-    // if (this.role === "user") {
-    //   this.$router.push("/Dashboard");
-    // }
-    // else{
-    //   this.$router.push("/Managerequest");
-    // }
+    if (this.role === "user") {
+      this.$router.push("/Dashboard");
+    } else {
+      this.$router.push("/Managerequest");
+    }
   },
   // beforeCreate(){
   //   if (!localStorage.getItem('reloaded2')) {
