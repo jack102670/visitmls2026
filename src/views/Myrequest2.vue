@@ -101,8 +101,16 @@
                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           {{ requester.dateRequested }}
                         </td>
+                        <td v-if="role==='vendor'" class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                          <div :class="getStatusContainerClass(requester.safetyAdminStatus)">
+                            <span :class="getStatusDotClass(requester.safetyAdminStatus)"></span>
+                            <h2 :class="getStatusTextClass(requester.safetyAdminStatus)">
+                              {{ requester.safetyAdminStatus === "" ? "OPEN" : requester.safetyAdminStatus }}
+                            </h2>
+                          </div>
+                        </td>
 
-                        <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                        <td v-else class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                           <div :class="getStatusContainerClass(requester.adminStatus)">
                             <span :class="getStatusDotClass(requester.adminStatus)"></span>
                             <h2 :class="getStatusTextClass(requester.adminStatus)">

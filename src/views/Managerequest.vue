@@ -1595,7 +1595,7 @@
 </template>
 
 <script>
-import { store } from "../views/store.js";
+// import { store } from "../views/store.js";
 import Modal from "../components/vmodaladmin.vue";
 import $ from "jquery";
 import "datatables.net-dt";
@@ -1647,13 +1647,13 @@ export default {
   computed: {},
 
   mounted() {
-    this.role = store.getRole();
-    if (this.role === "admin") {
-      this.$router.push("/Managerequest");
-    }
-    else{
-      this.$router.push("/ManagerequestSafety");
-    }
+    // this.role = store.getRole();
+    // if (this.role !== "admin") {
+    //   this.$router.push("/Managerequest");
+    // }
+    // else{
+    //   this.$router.push("/ManagerequestSafety");
+    // }
     this.fetchRequesters().then(() => {
       this.$nextTick(() => {
         this.initializeDataTable();

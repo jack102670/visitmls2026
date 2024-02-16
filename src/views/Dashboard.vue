@@ -239,28 +239,19 @@ export default {
       TypeOfRequests: [],
     };
   },
-  watch: {
-    $route() {
-      // Check if the route is the Dashboard route
 
-      // Refresh component when navigating to Dashboard
-      this.refreshComponent();
-      // Force re-render by updating the key
-      this.keyForRerender++;
-    },
-  },
   mounted() {
-    this.role = store.getRole();
+    // this.role = store.getRole();
     this.fetchRequesters();
     // this.userDetails = store.getSession().userDetails;
     // this.token = store.data.token;
     // this.OGR = store.getOGR();
     // console.log("OGR from store:", store.getOGR());
-    if (this.role === "user") {
-      this.$router.push("/Dashboard");
-    } else {
-      this.$router.push("/Managerequest");
-    }
+    // if (this.role === "user") {
+    //   this.$router.push("/Dashboard");
+    // } else {
+    //   this.$router.push("/Managerequest");
+    // }
   },
   // beforeCreate(){
   //   if (!localStorage.getItem('reloaded2')) {
