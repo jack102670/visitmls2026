@@ -24,8 +24,7 @@
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="requesterName"
-                  >Requester Name {{ formData.requesterName
-                  }}<span class="text-red-500">*</span></label
+                  >Requester Name <span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="capitalizedRequesterName"
@@ -365,8 +364,8 @@ export default {
     };
   },
   computed: {
-    capitalizedRequesterName: {
-      get() {
+capitalizedRequesterName: {
+      get()     {
         return this.formData.requesterName;
       },
       set(value) {

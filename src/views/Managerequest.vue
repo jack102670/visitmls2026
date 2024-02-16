@@ -1485,6 +1485,7 @@
                         name="ptwAdminStatus"
                         value="RESUBMISSION"
                         v-model="getRequest.securityAdminStatus"
+                        
                         :checked="
                           getRequest.securityAdminStatus === 'RESUBMISSION'
                         "
@@ -2028,7 +2029,7 @@ export default {
 
     initializeDataTable() {
       $(this.$refs.myTable).DataTable({
-        // DataTables options here
+        
       });
     },
     getStatusContainerClass(Status) {
