@@ -958,6 +958,7 @@ export default {
   },
   mounted() {
     // Fetch data when the component is mounted
+    this.role = store.getRole();
     this.fetchRequesters();
     this.fetchRequesters().then(() => {
       this.$nextTick(() => {
