@@ -84,8 +84,7 @@
 
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
               <div>
-                <label class="font-semibold text-gray-700 dark:text-gray-200" for="username">Upload file list of
-                  worker</label>
+                <label class="font-semibold text-gray-700 dark:text-gray-200" for="username">Upload File(s). (png, jpeg, pdf or xlsx)</label>
 
                 <!-- component -->
 
