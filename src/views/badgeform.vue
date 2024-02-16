@@ -133,7 +133,7 @@
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="username"
-                  >Upload File List Of Name<span class="text-red-500"
+                  >Upload List of Workers. (png, jpeg, pdf or xlsx)<span class="text-red-500"
                     >*</span
                   ></label
                 >
@@ -143,6 +143,7 @@
                 <div>
                   <Div class="pt-3">
                     <FilePond
+                    required
                       ref="pond"
                       name="file"
                       :server="null"
