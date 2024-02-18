@@ -141,8 +141,14 @@ export default {
       this.userName = localStorage.getItem("rememberedUserName");
     }
     const session = store.getSession();
+
     if (session) {
+     if (store.getRole() ==='user'){
       this.$router.push("/dashboard");
+     } 
+     else if (store.getRole() ==='vendor'){
+      this.$router.push("/dashboardvendor");
+     } 
     }
   },
 

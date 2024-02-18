@@ -406,33 +406,33 @@
                   id="Location"
                   type="text"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                  >{{ getRequest.pktStaffName }}</label
+                  >{{ getRequest.staffDetails.pktStaffName }}</label
                 >
               </div>
               <div>
                 <label
-                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  class="font-semibold text-gray-700 dark:text-gray-200  "
                   for="Location"
                   >Staff Email
                 </label>
                 <label
                   id="Location"
                   type="text"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                  >{{ getRequest.departmentName }}</label
+                  class=" overflow-x-auto block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                  >{{ getRequest.staffDetails.pktStaffEmail }}</label
                 >
               </div>
               <div>
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Description"
-                  >Department Staff
+                  > Staff Department
                 </label>
                 <label
                   id="Location"
                   type="text"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                  >{{ getRequest.departmentName }}</label
+                  >{{ getRequest.staffDetails.departmentName }}</label
                 >
               </div>
             </div>
@@ -1636,7 +1636,9 @@ export default {
       ticketStatus: "",
       userEmail: "",
       fileName: "",
-      getRequest: [],
+      getRequest: {
+        staffDetails:[],
+      },
 
 
       keysToExclude: ["uniqueCode", "files", "userId", "id"],
@@ -1654,6 +1656,7 @@ export default {
     // else{
     //   this.$router.push("/ManagerequestSafety");
     // }
+
     this.fetchRequesters().then(() => {
       this.$nextTick(() => {
         this.initializeDataTable();
