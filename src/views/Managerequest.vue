@@ -324,7 +324,7 @@
           <!-- Permit to works -->
           <div class="relative" v-show="showPTWForm">
             <span class="absolute -top-10 -right-1 text-slate-500 text-sm"
-              >REFNUMBER: {{ getRequest.refNumber }}</span
+              >REFNUMBER: {{ getRequest2.refNumber }}</span
             >
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
@@ -337,7 +337,7 @@
                   id="Location"
                   type="text"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                  >{{ getRequest.vendorName }}</label
+                  >{{ getRequest2.vendorName }}</label
                 >
               </div>
 
@@ -351,7 +351,7 @@
                   id="Location"
                   type="text"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                  >{{ getRequest.companyName }}</label
+                  >{{ getRequest2.companyName }}</label
                 >
               </div>
             </div>
@@ -406,7 +406,7 @@
                   id="Location"
                   type="text"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                  >{{ getRequest.staffDetails.pktStaffName }}</label
+                  >{{ getRequest2.staffDetails.pktStaffName }}</label
                 >
               </div>
               <div>
@@ -419,7 +419,7 @@
                   id="Location"
                   type="text"
                   class=" overflow-x-auto block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                  >{{ getRequest.staffDetails.pktStaffEmail }}</label
+                  >{{ getRequest2.staffDetails.pktStaffEmail }}</label
                 >
               </div>
               <div>
@@ -432,7 +432,7 @@
                   id="Location"
                   type="text"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                  >{{ getRequest.staffDetails.departmentName }}</label
+                  >{{ getRequest2.staffDetails.departmentName }}</label
                 >
               </div>
             </div>
@@ -1460,13 +1460,13 @@
                     Ticket Status
                   </label>
                   <div
-                    :class="getStatusContainerClass(getRequest.ticketStatus)"
+                    :class="getStatusContainerClass(getRequest2.ticketStatus)"
                   >
                     <span
-                      :class="getStatusDotClass(getRequest.ticketStatus)"
+                      :class="getStatusDotClass(getRequest2.ticketStatus)"
                     ></span>
-                    <h2 :class="getStatusTextClass(getRequest.ticketStatus)">
-                      {{ getRequest.AdminStatus }}
+                    <h2 :class="getStatusTextClass(getRequest2.ticketStatus)">
+                      {{ getRequest2.AdminStatus }}
                     </h2>
                   </div>
                 </div>
@@ -1484,12 +1484,12 @@
                         type="radio"
                         name="ptwAdminStatus"
                         value="RESUBMISSION"
-                        v-model="getRequest.securityAdminStatus"
+                        v-model="getRequest2.securityAdminStatus"
                         
                         :checked="
-                          getRequest.securityAdminStatus === 'RESUBMISSION'
+                          getRequest2.securityAdminStatus === 'RESUBMISSION'
                         "
-                        :disabled="getRequest.ticketStatus === 'CLOSE'"
+                        :disabled="getRequest2.ticketStatus === 'CLOSE'"
                       />
                       RESUBMISSION
                     </label>
@@ -1498,9 +1498,9 @@
                         type="radio"
                         name="ptwAdminStatus"
                         value="APPROVED"
-                        v-model="getRequest.securityAdminStatus"
-                        :checked="getRequest.securityAdminStatus === 'APPROVED'"
-                        :disabled="getRequest.ticketStatus === 'CLOSE'"
+                        v-model="getRequest2.securityAdminStatus"
+                        :checked="getRequest2.securityAdminStatus === 'APPROVED'"
+                        :disabled="getRequest2.ticketStatus === 'CLOSE'"
                       />
                       APPROVED
                     </label>
@@ -1519,11 +1519,11 @@
                     for="ptwPreparedBy"
                     class="mb-2 block text-sm font-semibold text-gray-700"
                   >
-                    Last edited: {{ getRequest.securityModifiedDate }}
+                    Last edited: {{ getRequest2.securityModifiedDate }}
                   </label>
                   <input
-                    v-model="getRequest.securityModifiedBy"
-                    :disabled="getRequest.ticketStatus === 'CLOSE'"
+                    v-model="getRequest2.securityModifiedBy"
+                    :disabled="getRequest2.ticketStatus === 'CLOSE'"
                     type="text"
                     name="ptwPreparedBy"
                     id="ptwPreparedBy"
@@ -1541,8 +1541,8 @@
                 Comments
               </label>
               <textarea
-                v-model="getRequest.securityAdminComment"
-                :disabled="getRequest.ticketStatus === 'CLOSE'"
+                v-model="getRequest2.securityAdminComment"
+                :disabled="getRequest2.ticketStatus === 'CLOSE'"
                 id="ptwDescription"
                 class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
                 rows="2"
@@ -1553,7 +1553,7 @@
               <div v-show="showConfirmButton">
                 <button
                   @click="adminsecurityUpdate()"
-                  :disabled="getRequest.ticketStatus === 'CLOSE'"
+                  :disabled="getRequest2.ticketStatus === 'CLOSE'"
                   type="button"
                   class="text-center rounded-2xl bg-sky-800 shadow-md p-3 my-1 w-full text-white py-2.5 px-5 mr-2 text-sm font-medium text-gray-900 rounded border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 items-center"
                 >
@@ -1637,6 +1637,10 @@ export default {
       userEmail: "",
       fileName: "",
       getRequest: {
+        
+      },
+
+      getRequest2: {
         staffDetails:[],
       },
 
@@ -1938,17 +1942,17 @@ export default {
         axios
           .get("http://172.28.28.91:8085/api/Main/GetPTW/" + refNumber)
           .then((response) => {
-            this.getRequest = response.data;
-            console.log(this.getRequest);
-            this.length = this.getRequest.files.length;
+            this.getRequest2 = response.data;
+            console.log(this.getRequest2);
+            this.length = this.getRequest2.files.length;
             console.log(this.length);
 
             //To append files name with SECURITY into new array
             for (let i = 0; i < this.length; i++) {
-              const parts = this.getRequest.files[i].split("/");
+              const parts = this.getRequest2.files[i].split("/");
               const fileName = parts[parts.length - 1];
               if (fileName.includes("SECURITY")) {
-                this.securityFiles.push(this.getRequest.files[i]);
+                this.securityFiles.push(this.getRequest2.files[i]);
               }
 
               console.log("this is new files with security" + this.files);
