@@ -2,7 +2,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import axios from 'axios';  // Import Axios
 import './assets/css/output.css';
-import '../dist/output.css';
+// import '../dist/output.css';
 import router from './router';
 
 

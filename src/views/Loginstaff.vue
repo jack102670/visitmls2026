@@ -143,6 +143,9 @@ export default {
     const session = store.getSession();
 
     if (session) {
+      if (store.getRole() ==='admin'){
+      this.$router.push("/");
+     } 
      if (store.getRole() ==='user'){
       this.$router.push("/dashboard");
      } 
