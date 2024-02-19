@@ -192,6 +192,21 @@
                   </option>
                 </select>
               </div>
+              <div v-if="department === 'Others'">
+                <label
+                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  :for="dynamicCustomId"
+                  >Specify<span class="text-red-500">*</span>
+                </label>
+                <input
+                  placeholder="Specify Department"
+                  :id="dynamicCustomId"
+                  type="text"
+                  required
+                  v-model="capitalizedDepartment"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                />
+              </div>
               <div>
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
@@ -2358,21 +2373,21 @@
               <!-- ... -->
 
               <!-- Authority Check section with digital form fields -->
-              <div>
+              <!-- <div>
                 <label
                   class="font-bold text-gray-700 dark:text-gray-200"
                   for="authority"
                   >Authority</label
-                >
+                > -->
                 <!-- <label
                   id="authority"
                   class="form-textarea mt-1 block w-full"
                   rows="3"
                         >The risk control measures and precautions are appropriate for the safe execution of the tasks. The risk controls have been implemented.
           </label> -->
-              </div>
+              <!-- </div> -->
 
-              <div class="grid grid-cols-3 gap-4 pt-4">
+              <!-- <div class="grid grid-cols-3 gap-4 pt-4">
                 <div>
                   <label
                     for="contractorSignature"
@@ -2410,10 +2425,8 @@
                     class="form-input mt-1 block w-full"
                   />
                 </div>
-              </div>
+              </div> -->
 
-              <!-- Other form sections continue here... -->
-              <!-- ... -->
             </div>
           </form>
           <div class="flex justify-end mt-6">
@@ -2637,6 +2650,7 @@ export default {
   },
   data() {
     return {
+      department: "",
       hotWorkLocation: "",
       othersDetails: "",
       othersPPE: "",
@@ -2711,6 +2725,18 @@ export default {
       waH_ControlMeasure: [],
     };
   },
+  computed: {
+    
+    capitalizedDepartment: {
+      get() {
+        return this.customdepartment;
+      },
+
+      set(value) {
+        this.customdepartment = value.toUpperCase();
+      },
+    },
+  },
 
   mounted() {
     this.branch = store.getSelectedLocation();
@@ -2752,6 +2778,11 @@ export default {
     submitForm() {
       this.showConfirmButton = false;
       this.showLoadingButton = true;
+      if (this.department === "Others") {
+        this.finalDepartment = this.customdepartment;
+      } else {
+        this.finalDepartment = this.department;
+      }
       let combinedFormData = {
         branch: store.getSelectedLocation(),
         vendorName: this.Contractorvendorname,
@@ -2766,7 +2797,7 @@ export default {
         staffDetails: {
           pktStaffName: this.requestername,
           pktStaffEmail: this.Staffemail,
-          departmentName: this.department,
+          departmentName: this.finalDepartment,
         },
         equipment: this.equipment,
         hazard: this.hazards,
