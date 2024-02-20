@@ -1,11 +1,12 @@
 <template>
   <div
     id="modal-backdrop"
-    class="fixed inset-0 bg-opacity-60 bg-black flex justify-center items-center flex-1 overflow-x-hidden text overflow-y-auto p-4 sm:ml-64 h-auto "
+    class="fixed inset-0 bg-opacity-60 bg-black flex justify-center items-center flex-1 overflow-x-hidden  p-4 sm:ml-64 h-auto "
   >
     <div
       id="modal"
-      class="bg-blue-50 rounded-3xl overflow-x-auto flex flex-col w-6/12 justify-between [calculateModalSize()]"
+      :class="[modalWidthClass]"
+      class="bg-blue-50 rounded-3xl overflow-x-auto flex flex-col justify-between max-h-screen overflow-y-auto"
     >
       <!-- Modal Header -->
       <header
@@ -18,38 +19,17 @@
           class="w-7 p-2 bg-gray-300 rounded-full"
           @click="close"
         >
-        <img src="../assets/letter-x.svg" alt="close button" />
+          <img src="../assets/letter-x.svg" alt="close button" />
         </button>
       </header>
 
       <!-- Modal Body -->
-      <section id="modal-body" class="px-4 py-6 max-h-80 overflow-y-auto ">
+      <section id="modal-body" class="px-4 py-6 max-h-[300px] overflow-y-auto">
         <slot name="body"></slot>
       </section>
 
       <!-- Modal Footer -->
-      <!-- <header
-        id="modal-header" 
-        class="px-2 py-3 flex justify-between bg-[#160959e2] items-center"
-      >
-        <slot name="header3">Dummy header</slot>
-     
-      
-     
-      </header>
-      <section id="modal-body" class="px-4 py-6 max-h-80 overflow-y-auto " >
-        <slot name="body2"></slot>
-      </section> -->
-      <header
-        id="modal-header"
-        class="px-2 py-3 flex justify-between bg-[#160959e2] items-center"
-      >
-        <slot name="header2">Dummy header</slot>
-     
-      
-     
-      </header>
-      <footer id="modal-footer" class="px-4 py-6 border-t-2 border-white">
+      <footer id="modal-footer" class="px-4 py-6 border-t-2 border-white ">
         <slot name="footer"></slot>
       </footer>
     </div>
@@ -62,24 +42,46 @@ export default {
   methods: {
     close() {
       this.$emit("close");
-    },
-  
-    calculateModalSize() {
-      // Calculate your dynamic size based on content or other criteria
-      // For example, you can check if the content has a specific class
-      const contentElement = this.$el.querySelector('#modal-content');
-      const hasLargeContent = contentElement && contentElement.classList.contains('large-content');
-
-      // Set the dynamic size classes
-      return {
-        'rounded-3xl': true,
-        'w-2/6': !hasLargeContent,  // Set width based on content size
-        'w-4/6': hasLargeContent,
-        'h-4/6': true,  // You can adjust the height dynamically as well
-        // Add other classes as needed
-      };
-    },
+    }
   },
+  computed: {
+    modalWidthClass() {
+      // Determine the appropriate width class based on screen size
+      if (window.innerWidth <= 640) {
+        return "w-full";
+      } else if (window.innerWidth <= 768) {
+        return "w-4/5";
+      } else {
+        return "w-6/12";
+      }
+    }
+  },
+  beforeUnmount() {
+    // Clean up code here before the component is unmounted
+  }
 };
 </script>
 
+<style scoped>
+/* Additional styles for responsiveness */
+@media screen and (max-width: 640px) {
+  #modal-backdrop {
+    align-items: flex-start;
+  }
+  #modal {
+    max-width: 100%;
+  }
+}
+
+@media screen and (min-width: 641px) and (max-width: 768px) {
+  #modal {
+    max-width: 80%;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #modal {
+    max-width: 50%;
+  }
+}
+</style>

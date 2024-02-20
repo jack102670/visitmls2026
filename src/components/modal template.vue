@@ -1,71 +1,98 @@
 <template>
-    <div>
-      <main class="flex-1 overflow-x-hidden text overflow-y-auto bg-[#F8F9FA] dark:bg-[#141517] p-10 sm:ml-64  h-screen">
-        <!-- Your page content goes here -->
-        <div class="container mx-auto  ">
-  
-          <div class="bg-[#f7fbff] dark:bg-[#25262b] rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
-            <div class="flex items-center justify-center h-full">
-              <p class="text-2xl font-bold text-slate-900 dark:text-white">New Request vv</p>
-            </div>
-            <!-- <h3 class="text-slate-900 dark:text-white mt-5 text-base font-medium tracking-tight">Writes Upside-Down</h3>
-            <p class="text-slate-500 dark:text-slate-300 mt-2 text-sm">
-              The Zero Gravity Pen can be used to write in any orientation, including upside-down. It even works in outer
-              space.
-            </p> -->
-            <!-- component -->
-            <div>
-              <button @click="openModal" class="bg-blue-500 text-white p-2 rounded text-2xl font-bold">Open Modal</button>
-              <!-- Use ModalComponent -->
-              <modal :modalOpen="modalOpen" :closeModal="closeModal">  
-                <!-- Modal content goes here -->
-                <div>
-                    <p class="text-lg">Do you want to approve this?</p>
-                </div>
-              </modal>
-            </div>
-          </div>
-        </div>
-      </main>
+  <div
+    id="modal-backdrop"
+    class="fixed inset-0 bg-opacity-60 bg-black flex justify-center items-center flex-1 overflow-x-hidden text overflow-y-auto p-4 sm:ml-64 h-auto"
+  >
+    <div
+      id="modal"
+      :class="[modalWidthClass]"
+      class="bg-blue-50 rounded-3xl overflow-x-auto flex flex-col justify-between"
+    >
+      <!-- Modal Header -->
+      <header
+        id="modal-header"
+        class="px-2 py-3 flex justify-between bg-[#160959e2] items-center border-b-2 border-white"
+      >
+        <slot name="header">Dummy header</slot>
+        <button
+          type="button"
+          class="w-7 p-2 bg-gray-300 rounded-full"
+          @click="close"
+        >
+          <img src="../assets/letter-x.svg" alt="close button" />
+        </button>
+      </header>
+
+      <!-- Modal Body -->
+      <section id="modal-body" class="px-4 py-6 max-h-[300px] overflow-y-auto">
+        <slot name="body"></slot>
+      </section>
+
+      <!-- Modal Footer -->
+      <footer id="modal-footer" :class="footerClasses">
+        <slot name="footer"></slot>
+      </footer>
     </div>
-  
-  
-    3. Open
-  </template>
-  
-  
-  <script>
-  import Modal from '@/components/Modal';
-  
-  export default {
-    name: 'NewrequestViews',
-    components: {
-      Modal,
+  </div>
+</template>
+
+<script>
+export default {
+  name: "vmodalComponents",
+  methods: {
+    close() {
+      this.$emit("close");
+    }
+  },
+  computed: {
+    modalWidthClass() {
+      // Determine the appropriate width class based on screen size
+      if (window.innerWidth <= 640) {
+        return "w-full";
+      } else if (window.innerWidth <= 768) {
+        return "w-4/5";
+      } else {
+        return "w-6/12";
+      }
     },
-    data() {
-      return {
-        modalOpen: false,
-      };
-    },
-    methods: {
-      openModal() {
-        this.modalOpen = true;
-      },
-      closeModal() {
-        this.modalOpen = false;
-      },
-    },
-  };
-  </script>
-  
-  <style scoped>
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 0.5s;
+    footerClasses() {
+      const displayScale = window.devicePixelRatio;
+      let classes = ["px-4", "py-6", "border-t-2", "border-white"];
+
+      // Add classes based on display scale
+      if (displayScale === 1.2) {
+        classes.push("max-h-[300px]", "overflow-y-auto");
+      }
+
+      return classes.join(" ");
+    }
+  },
+  beforeUnmount() {
+    // Clean up code here before the component is unmounted
   }
-  
-  .fade-enter,
-  .fade-leave-to {
-    opacity: 0;
+};
+</script>
+
+<style scoped>
+/* Additional styles for responsiveness */
+@media screen and (max-width: 640px) {
+  #modal-backdrop {
+    align-items: flex-start;
   }
-  </style>
+  #modal {
+    max-width: 100%;
+  }
+}
+
+@media screen and (min-width: 641px) and (max-width: 768px) {
+  #modal {
+    max-width: 80%;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #modal {
+    max-width: 50%;
+  }
+}
+</style>
