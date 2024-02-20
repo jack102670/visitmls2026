@@ -6,7 +6,7 @@
   
           <div class="bg-[#f7fbff] dark:bg-[#25262b] rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
             <div class="flex items-center justify-center h-full">
-              <p class="text-2xl font-bold text-slate-900 dark:text-white">New Request</p>
+              <p class="text-2xl font-bold text-slate-900 dark:text-white">New Request vv</p>
             </div>
             <!-- <h3 class="text-slate-900 dark:text-white mt-5 text-base font-medium tracking-tight">Writes Upside-Down</h3>
             <p class="text-slate-500 dark:text-slate-300 mt-2 text-sm">
@@ -17,7 +17,7 @@
             <div>
               <button @click="openModal" class="bg-blue-500 text-white p-2 rounded text-2xl font-bold">Open Modal</button>
               <!-- Use ModalComponent -->
-              <modal :modalOpen="modalOpen" :closeModal="closeModal">
+              <modal :modalOpen="modalOpen" :closeModal="closeModal">  
                 <!-- Modal content goes here -->
                 <div>
                     <p class="text-lg">Do you want to approve this?</p>
