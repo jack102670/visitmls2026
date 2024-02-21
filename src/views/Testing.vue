@@ -1,4 +1,7 @@
 <template>
+  <div class="mx-auto">
+    <h1 class="text-center text-green-500 border-l-0 text-3xl font-bold">testing</h1>
+  </div>
   <div class="mx-auto items-center">
     <h2>File Upload</h2>
     <!-- FilePond component for file upload -->
