@@ -490,114 +490,122 @@ export default {
 
       // Adding tables for detailed sections like Equipment, Hazard, etc.
       const addTableSection = (title, data) => {
-  if (yPos > 280) {
-    doc.addPage();
-    yPos = 10;
-  }
-
-  addSectionHeading(title);
-
-  doc.autoTable({
-    startY: yPos,
-    theme: "grid",
-    margin: { left: 14 },
-    headStyles: { fillColor: [22, 9, 137] }, // Customize head style
-    styles: {
-      cellPadding: { top: 2, right: 4, bottom: 2, left: 4 },
-      fontSize: 10,
-      overflow: "linebreak", // Ensure no line breaks
-      cellWidth: "wrap", // Use 'wrap' to allow cells to expand based on content
-    },
-    columnStyles: { 0: { cellWidth: "auto" } }, // Ensure the column automatically adjusts to content
-    head: [[title]],
-    body: data.map((item) => [item]),
-    willDrawCell: function (data) {
-      // Adjust the `minCellWidth` based on the content length if necessary
-      const textLength =
-        (doc.getStringUnitWidth(data.cell.raw) *
-          doc.internal.getFontSize()) /
-        doc.internal.scaleFactor;
-      if (textLength > data.cell.width) {
-        data.cell.styles.minCellWidth = textLength;
-      }
-    },
-    beforePageContent: function(data) {
-      // Check if there's enough space for the whole table
-      const spaceLeft = doc.internal.pageSize.height - data.cursor.y;
-      const tableHeight = doc.autoTable.previous.finalY - doc.autoTable.previous.finalY;
-      if (tableHeight > spaceLeft) {
-        doc.addPage(); // Add a new page if there's not enough space for the whole table
-        yPos = 10; // Reset Y position
-      }
-    },
-    didDrawPage: function (data) {
-      yPos = data.cursor.y + 10; // Update Y position for next content
-    },
-  });
-};
-
-
-      if (this.ptwData.equipment.length > 0) {
-        addTableSection("Equipment", this.ptwData.equipment || []);
-      }
-      if (this.ptwData.hazard.length > 0) {
-        addTableSection("Hazard", this.ptwData.hazard);
-      }
-      if (this.ptwData.isolation.length > 0) {
-        addTableSection("Isolation", this.ptwData.isolation);
-      }
-      if (this.ptwData.plantSupport.length > 0) {
-        addTableSection("Plant Support", this.ptwData.plantSupport);
-      }
-
-      if (yPos > 280) {
-        doc.addPage();
-        yPos = 10;
-      }
-
-      addSectionHeading("Jobs Hazard Analysis");
-      const jobDescriptionInfo = [
-        ["Job Description:", this.ptwData.jha.jobDesc || "N/A"],
-      ];
-
-      // Check for a new page if needed
-      if (yPos > 280) {
-        doc.addPage();
-        yPos = 10;
-      }
-
-      // Check if job description exists
-      if (this.ptwData.jha.jobDesc != null) {
-        // Add a section heading for "Job Description"
-      
-
-        // Use autoTable to create the two-column layout for "Job Description" section
-        doc.autoTable({
-          startY: yPos,
-          theme: "plain",
-          styles: { fontSize: 10, cellPadding: 1 },
-          columnStyles: {
-            0: { fontStyle: "bold", cellWidth: 40 }, // Label column
-            1: {}, // Value column
-          },
-          body: jobDescriptionInfo,
-          willDrawCell: (data) => {
-            // Prevents lines from being drawn
-            if (data.section === "body") {
-              data.cell.styles.lineWidth = 0;
-            }
-          },
-          didDrawPage: (data) => {
-            yPos = data.cursor.y + 10; // Update yPos for the next section
-          },
-        });
-
-        // Check for a new page if needed after adding the section
         if (yPos > 280) {
           doc.addPage();
           yPos = 10;
         }
+
+        addSectionHeading(title);
+
+        doc.autoTable({
+          startY: yPos,
+          theme: "grid",
+          margin: { left: 14 },
+          headStyles: { fillColor: [22, 9, 137] }, // Customize head style
+          styles: {
+            cellPadding: { top: 2, right: 4, bottom: 2, left: 4 },
+            fontSize: 10,
+            overflow: "linebreak", // Ensure no line breaks
+            cellWidth: "wrap", // Use 'wrap' to allow cells to expand based on content
+          },
+          columnStyles: { 0: { cellWidth: "auto" } }, // Ensure the column automatically adjusts to content
+          head: [[title]],
+          body: data.map((item) => [item]),
+          willDrawCell: function (data) {
+            // Adjust the `minCellWidth` based on the content length if necessary
+            const textLength =
+              (doc.getStringUnitWidth(data.cell.raw) *
+                doc.internal.getFontSize()) /
+              doc.internal.scaleFactor;
+            if (textLength > data.cell.width) {
+              data.cell.styles.minCellWidth = textLength;
+            }
+          },
+          beforePageContent: function (data) {
+            // Check if there's enough space for the whole table
+            const spaceLeft = doc.internal.pageSize.height - data.cursor.y;
+            const tableHeight =
+              doc.autoTable.previous.finalY - doc.autoTable.previous.finalY;
+            if (tableHeight > spaceLeft) {
+              doc.addPage(); // Add a new page if there's not enough space for the whole table
+              yPos = 10; // Reset Y position
+            }
+          },
+          didDrawPage: function (data) {
+            yPos = data.cursor.y + 10; // Update Y position for next content
+          },
+        });
+      };
+
+      const sectionData = [];
+
+      // Equipment
+      if (this.ptwData.equipment.length > 0) {
+        sectionData.push({ title: "Equipment", data: this.ptwData.equipment });
       }
+      // Hazard
+      if (this.ptwData.hazard.length > 0) {
+        sectionData.push({ title: "Hazard", data: this.ptwData.hazard });
+      }
+      // Isolation
+      if (this.ptwData.isolation.length > 0) {
+        sectionData.push({ title: "Isolation", data: this.ptwData.isolation });
+      }
+      // Plant Support
+      if (this.ptwData.plantSupport.length > 0) {
+        sectionData.push({
+          title: "Plant Support",
+          data: this.ptwData.plantSupport,
+        });
+      }
+
+      // Jobs Hazard Analysis
+      const jobDescriptionInfo = [
+        ["Job Description:", this.ptwData.jha.jobDesc || "N/A"],
+      ];
+
+      // Check if there's enough space for each section's title and content
+      sectionData.forEach((section) => {
+        const requiredSpace = 30 + section.data.length * 10; // Space for title and content
+        if (yPos + requiredSpace > 280) {
+          doc.addPage();
+          yPos = 10;
+        }
+
+        addTableSection(section.title, section.data);
+      });
+
+      // Check if there's enough space for the "Jobs Hazard Analysis" section
+      const jobDescriptionSpace = 30 + jobDescriptionInfo.length * 10; // Space for title and content
+      if (yPos + jobDescriptionSpace > 280) {
+        doc.addPage();
+        yPos = 10;
+      }
+
+      // Jobs Hazard Analysis
+      addSectionHeading("Jobs Hazard Analysis");
+
+      // Use autoTable to create the two-column layout for "Job Description" section
+      doc.autoTable({
+        startY: yPos,
+        theme: "plain",
+        styles: { fontSize: 10, cellPadding: 1 },
+        columnStyles: {
+          0: { fontStyle: "bold", cellWidth: 40 }, // Label column
+          1: {}, // Value column
+        },
+        body: jobDescriptionInfo,
+        willDrawCell: (data) => {
+          // Prevents lines from being drawn
+          if (data.section === "body") {
+            data.cell.styles.lineWidth = 0;
+          }
+        },
+        didDrawPage: (data) => {
+          yPos = data.cursor.y + 10; // Update yPos for the next section
+        },
+      });
+
       doc.autoTable({
         startY: yPos,
         head: [["Sequence Task", "Potential Hazard", "Preventive Measures"]],
@@ -662,137 +670,176 @@ export default {
         });
 
         // For lists within the "Hot Work" section, use addListSection
-        if (this.ptwData.hotWork.reqGeneral.length > 0) {
-          addTableSection(
-            "General Requirements",
-            this.ptwData.hotWork?.reqGeneral
-          );
-        }
-        if (this.ptwData.hotWork.req_Enc_Equip.length > 0) {
-          addTableSection(
-            "Distance Requirements",
-            this.ptwData.hotWork?.reqDistance
-          );
-        }
-        if (this.ptwData.hotWork.req_Enc_Equip.length > 0) {
-          addTableSection(
-            "Enclosed Equipment Requirements",
-            this.ptwData.hotWork?.req_Enc_Equip
-          );
-        }
-        if (this.ptwData.hotWork.req_FireMon.length > 0) {
-          addTableSection(
-            "Fire Monitor Requirements",
-            this.ptwData.hotWork?.req_FireMon
-          );
-        }
-        addTableSection("Walls Requirements", this.ptwData.hotWork?.req_Walls);
+   // Hot Work Requirements
+const hotWorkRequirements = [
+  {
+    title: "General Requirements",
+    data: this.ptwData.hotWork?.reqGeneral,
+  },
+  {
+    title: "Distance Requirements",
+    data: this.ptwData.hotWork?.reqDistance,
+  },
+  {
+    title: "Enclosed Equipment Requirements",
+    data: this.ptwData.hotWork?.req_Enc_Equip,
+  },
+  {
+    title: "Fire Monitor Requirements",
+    data: this.ptwData.hotWork?.req_FireMon,
+  },
+  {
+    title: "Walls Requirements",
+    data: this.ptwData.hotWork?.req_Walls,
+  },
+];
+
+// Add hot work requirements sections to sectionData
+hotWorkRequirements.forEach((requirement) => {
+  if (requirement.data && requirement.data.length > 0) {
+    sectionData.push(requirement);
+  }
+});
+
+// Check if there's enough space for the "Hot Work Requirements" section
+const hotWorkSpace = 30 + hotWorkRequirements.length * 10; // Space for title and content
+if (yPos + hotWorkSpace > 280) {
+  doc.addPage();
+  yPos = 10;
+}
+
+// Iterate over hotWorkRequirements and add table sections
+hotWorkRequirements.forEach((section) => {
+  if (section.data && section.data.length > 0) {
+    // Check if there's enough space for the current section's title and content
+    const sectionSpace = 30 + (section.data.length * 10); // Space for title and content
+    if (yPos + sectionSpace > 280) {
+      doc.addPage();
+      yPos = 10;
+    }
+
+    // Add the table section
+    addTableSection(section.title, section.data);
+  }
+});
+
       }
       // Add a section heading for "Hot Work"
-
       const workAtHeightInfo = [
-        [
-          "Company Name:",
-          this.ptwData.wah?.companyName || "N/A",
-          "Contractor Name:",
-          this.ptwData.wah?.contractorName || "N/A",
-        ],
-        ["Work Location:", this.ptwData.wah?.workLocation || "N/A"],
-        [
-          "Start Date/Time:",
-          this.ptwData.wah?.startDateTime || "N/A",
-          "Complete Date/Time:",
-          this.ptwData.wah?.completeDateTime || "N/A",
-        ],
-        ["Work Description:", this.ptwData.wah?.workDescription || "N/A"],
-      ];
-      if (yPos > 280) {
-        doc.addPage();
-        yPos = 10;
+  [
+    "Company Name:",
+    this.ptwData.wah?.companyName || "N/A",
+    "Contractor Name:",
+    this.ptwData.wah?.contractorName || "N/A",
+  ],
+  ["Work Location:", this.ptwData.wah?.workLocation || "N/A"],
+  [
+    "Start Date/Time:",
+    this.ptwData.wah?.startDateTime || "N/A",
+    "Complete Date/Time:",
+    this.ptwData.wah?.completeDateTime || "N/A",
+  ],
+  ["Work Description:", this.ptwData.wah?.workDescription || "N/A"],
+];
+
+// Check if there's enough space for the "Work at Height" section
+const workAtHeightSpace = 30 + workAtHeightInfo.length * 10; // Space for title and content
+if (yPos + workAtHeightSpace > 280) {
+  doc.addPage();
+  yPos = 10;
+}
+
+// Add the "Work at Height" section if applicable
+if (this.ptwData.wah.companyName != null) {
+  addSectionHeading("Work at Height");
+
+  // Use autoTable to create the two-column layout for "Work at Height" section
+  doc.autoTable({
+    startY: yPos,
+    theme: "plain",
+    styles: { fontSize: 10, cellPadding: 1 },
+    columnStyles: {
+      0: { fontStyle: "bold", cellWidth: 40 }, // Label column
+      1: { cellWidth: 60 }, // Value column
+      2: { fontStyle: "bold", cellWidth: 40 }, // Second label column
+      3: { cellWidth: 60 }, // Second value column
+    },
+    body: workAtHeightInfo,
+    willDrawCell: (data) => {
+      // Prevents lines from being drawn
+      if (data.section === "body") {
+        data.cell.styles.lineWidth = 0;
       }
+    },
+    didDrawPage: (data) => {
+      yPos = data.cursor.y + 10; // Update yPos for the next section
+    },
+  });
 
-      if (this.ptwData.wah.companyName != null) {
-        addSectionHeading("Work at Height");
+  // Adding additional lists as tables for "Work at Height"
+const workAtHeightSections = [
+  { title: "Hazards", data: this.ptwData.wah?.waH_Hazard },
+  { title: "Ladders", data: this.ptwData.wah?.waH_Ladders },
+  { title: "Scaffolding", data: this.ptwData.wah?.waH_Scaffolding },
+  { title: "Lift Trucks", data: this.ptwData.wah?.waH_LiftTruck },
+  { title: "Man Cages", data: this.ptwData.wah?.waH_ManCage },
+  { title: "Emergency Procedures", data: this.ptwData.wah?.waH_Emergency },
+  { title: "Control Measures", data: this.ptwData.wah?.waH_ControlMeasure },
+];
 
-        // Use autoTable to create the two-column layout for "Work at Height" section
-        doc.autoTable({
-          startY: yPos,
-          theme: "plain",
-          styles: { fontSize: 10, cellPadding: 1 },
-          columnStyles: {
-            0: { fontStyle: "bold", cellWidth: 40 }, // Label column
-            1: { cellWidth: 60 }, // Value column
-            2: { fontStyle: "bold", cellWidth: 40 }, // Second label column
-            3: { cellWidth: 60 }, // Second value column
-          },
-          body: workAtHeightInfo,
-          willDrawCell: (data) => {
-            // Prevents lines from being drawn
-            if (data.section === "body") {
-              data.cell.styles.lineWidth = 0;
-            }
-          },
-          didDrawPage: (data) => {
-            yPos = data.cursor.y + 10; // Update yPos for the next section
-          },
-        });
-        // Adding additional lists as tables for "Work at Height"
-        if (this.ptwData.wah.waH_Hazard.length > 0) {
-          addTableSection("Hazards", this.ptwData.wah?.waH_Hazard || []);
-        }
-        if (this.ptwData.wah.waH_Ladders.length > 0) {
-          addTableSection("Ladders", this.ptwData.wah?.waH_Ladders || []);
-        }
-        if (this.ptwData.wah.waH_Scaffolding.length > 0) {
-          addTableSection(
-            "Scaffolding",
-            this.ptwData.wah?.waH_Scaffolding || []
-          );
-        }
-        if (this.ptwData.wah.waH_LiftTruck.length > 0) {
-          addTableSection("Lift Trucks", this.ptwData.wah?.waH_LiftTruck || []);
-        }
-        if (this.ptwData.wah.waH_ManCage.length > 0) {
-          addTableSection("Man Cages", this.ptwData.wah?.waH_ManCage || []);
-        }
-        if (this.ptwData.wah.waH_Emergency.length > 0) {
-          addTableSection(
-            "Emergency Procedures",
-            this.ptwData.wah?.waH_Emergency || []
-          );
-        }
-        if (this.ptwData.wah.waH_ControlMeasure.length > 0) {
-          addTableSection(
-            "Control Measures",
-            this.ptwData.wah?.waH_ControlMeasure || []
-          );
-        }
-      }
+workAtHeightSections.forEach((section) => {
+  if (section.data && section.data.length > 0) {
+    // Check if there's enough space for the current section's title and content
+    const sectionSpace = 30 + (section.data.length * 10); // Space for title and content
+    if (yPos + sectionSpace > 280) {
+      doc.addPage();
+      yPos = 10;
+    }
 
-      yPos += 60;
+    // Add the table section
+    addTableSection(section.title, section.data);
+  }
+});
 
-      doc.autoTable({
-        startY: yPos,
-        head: [["ADMIN FEEDBACK", ""]],
-        body: [
-          // ["TICKETSTATUS", this.ptwData.safetyAdminStatus],
-          ["COMMENT", this.ptwData.safetyAdminComment],
-          ["STATUS", this.ptwData.safetyAdminStatus],
-          ["BY", this.ptwData.safetyModifiedBy],
-          ["LAST MODIFIED", this.ptwData.safetyModifiedDate],
-        ],
+}
 
-        theme: "grid",
-        margin: { left: 14 },
-        headStyles: { fillColor: [22, 9, 89] }, // Customize head style
-        didDrawPage: function (data) {
-          yPos = data.cursor.y + 10; // Update Y position for next content
-        },
-      });
-      // Add a section heading for "Work at Height"
+yPos += 10; // Update yPos for the next section
 
-      // Finish up
-      doc.save(this.ptwData.refNumber + ".pdf");
+// Add the "ADMIN FEEDBACK" section
+// Calculate the space required for the "ADMIN FEEDBACK" section
+const adminFeedbackSpace = 10 ; // 4 rows with a height of 10 each
+
+// Check if there's enough space for the "ADMIN FEEDBACK" section
+if (yPos + adminFeedbackSpace > 280) {
+  doc.addPage();
+  yPos = 10;
+}
+
+// Draw the "ADMIN FEEDBACK" section
+doc.autoTable({
+  startY: yPos,
+  head: [["ADMIN FEEDBACK", ""]],
+  body: [
+    ["COMMENT", this.ptwData.safetyAdminComment],
+    ["STATUS", this.ptwData.safetyAdminStatus],
+    ["BY", this.ptwData.safetyModifiedBy],
+    ["LAST MODIFIED", this.ptwData.safetyModifiedDate],
+  ],
+  theme: "grid",
+  margin: { left: 14 },
+  headStyles: { fillColor: [22, 9, 89] }, // Customize head style
+  didDrawPage: function (data) {
+    yPos = data.cursor.y + 10; // Update Y position for next content
+  },
+});
+
+// Increment yPos to leave space before saving the document
+yPos += adminFeedbackSpace;
+
+
+
+// Finish up
+doc.save(this.ptwData.refNumber + ".pdf");
     },
 
     getFileName(file) {
