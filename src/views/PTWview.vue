@@ -453,7 +453,7 @@ export default {
           0: { fontStyle: "bold", cellWidth: 40 }, // Label columns
           1: { cellWidth: 60 }, // Value columns
           2: { fontStyle: "bold", cellWidth: 40 }, // Label columns
-          3: { cellWidth: 60 }, // Value columns
+          3: { cellWidth: 50 }, // Value columns
         },
         body: basicInfo,
         showHead: "firstPage",
@@ -490,58 +490,114 @@ export default {
 
       // Adding tables for detailed sections like Equipment, Hazard, etc.
       const addTableSection = (title, data) => {
-        if (yPos > 280) {
-          doc.addPage();
-          yPos = 2;
-        }
-        addSectionHeading(title);
-        doc.autoTable({
-          startY: yPos,
-          theme: "grid",
-          margin: { left: 14 },
-          headStyles: { fillColor: [22, 9, 137] }, // Customize head style
-          styles: {
-            cellPadding: { top: 2, right: 4, bottom: 2, left: 4 },
-            fontSize: 10,
-            overflow: "linebreak", // Change this to 'visible' if you want to avoid any line breaks
-            cellWidth: "wrap", // Use 'wrap' to allow cells to expand based on content
-          },
-          columnStyles: { 0: { cellWidth: "auto" } }, // Ensure the column automatically adjusts to content
-          head: [[title]],
-          body: data.map((item) => [item]),
-          willDrawCell: function (data) {
-            // Adjust the `minCellWidth` based on the content length if necessary
-            const textLength =
-              (doc.getStringUnitWidth(data.cell.raw) *
-                doc.internal.getFontSize()) /
-              doc.internal.scaleFactor;
-            if (textLength > data.cell.width) {
-              data.cell.styles.minCellWidth = textLength;
-            }
-          },
-          didDrawPage: function (data) {
-            yPos = data.cursor.y + 10; // Update Y position for next content
-          },
-        });
-      };
+  if (yPos > 280) {
+    doc.addPage();
+    yPos = 10;
+  }
+
+  addSectionHeading(title);
+
+  doc.autoTable({
+    startY: yPos,
+    theme: "grid",
+    margin: { left: 14 },
+    headStyles: { fillColor: [22, 9, 137] }, // Customize head style
+    styles: {
+      cellPadding: { top: 2, right: 4, bottom: 2, left: 4 },
+      fontSize: 10,
+      overflow: "linebreak", // Ensure no line breaks
+      cellWidth: "wrap", // Use 'wrap' to allow cells to expand based on content
+    },
+    columnStyles: { 0: { cellWidth: "auto" } }, // Ensure the column automatically adjusts to content
+    head: [[title]],
+    body: data.map((item) => [item]),
+    willDrawCell: function (data) {
+      // Adjust the `minCellWidth` based on the content length if necessary
+      const textLength =
+        (doc.getStringUnitWidth(data.cell.raw) *
+          doc.internal.getFontSize()) /
+        doc.internal.scaleFactor;
+      if (textLength > data.cell.width) {
+        data.cell.styles.minCellWidth = textLength;
+      }
+    },
+    beforePageContent: function(data) {
+      // Check if there's enough space for the whole table
+      const spaceLeft = doc.internal.pageSize.height - data.cursor.y;
+      const tableHeight = doc.autoTable.previous.finalY - doc.autoTable.previous.finalY;
+      if (tableHeight > spaceLeft) {
+        doc.addPage(); // Add a new page if there's not enough space for the whole table
+        yPos = 10; // Reset Y position
+      }
+    },
+    didDrawPage: function (data) {
+      yPos = data.cursor.y + 10; // Update Y position for next content
+    },
+  });
+};
+
 
       if (this.ptwData.equipment.length > 0) {
-      addTableSection("Equipment", this.ptwData.equipment || []);}
+        addTableSection("Equipment", this.ptwData.equipment || []);
+      }
       if (this.ptwData.hazard.length > 0) {
-      addTableSection("Hazard", this.ptwData.hazard);}
+        addTableSection("Hazard", this.ptwData.hazard);
+      }
       if (this.ptwData.isolation.length > 0) {
-      addTableSection("Isolation", this.ptwData.isolation);}
+        addTableSection("Isolation", this.ptwData.isolation);
+      }
       if (this.ptwData.plantSupport.length > 0) {
-      addTableSection("Plant Support", this.ptwData.plantSupport);}
+        addTableSection("Plant Support", this.ptwData.plantSupport);
+      }
 
       if (yPos > 280) {
         doc.addPage();
-        yPos = 2;
+        yPos = 10;
       }
 
       addSectionHeading("Jobs Hazard Analysis");
-      // "Job Description",
-      //     this.ptwData.jha.jobDesc || "N/A",
+      const jobDescriptionInfo = [
+        ["Job Description:", this.ptwData.jha.jobDesc || "N/A"],
+      ];
+
+      // Check for a new page if needed
+      if (yPos > 280) {
+        doc.addPage();
+        yPos = 10;
+      }
+
+      // Check if job description exists
+      if (this.ptwData.jha.jobDesc != null) {
+        // Add a section heading for "Job Description"
+      
+
+        // Use autoTable to create the two-column layout for "Job Description" section
+        doc.autoTable({
+          startY: yPos,
+          theme: "plain",
+          styles: { fontSize: 10, cellPadding: 1 },
+          columnStyles: {
+            0: { fontStyle: "bold", cellWidth: 40 }, // Label column
+            1: {}, // Value column
+          },
+          body: jobDescriptionInfo,
+          willDrawCell: (data) => {
+            // Prevents lines from being drawn
+            if (data.section === "body") {
+              data.cell.styles.lineWidth = 0;
+            }
+          },
+          didDrawPage: (data) => {
+            yPos = data.cursor.y + 10; // Update yPos for the next section
+          },
+        });
+
+        // Check for a new page if needed after adding the section
+        if (yPos > 280) {
+          doc.addPage();
+          yPos = 10;
+        }
+      }
       doc.autoTable({
         startY: yPos,
         head: [["Sequence Task", "Potential Hazard", "Preventive Measures"]],
@@ -606,13 +662,12 @@ export default {
         });
 
         // For lists within the "Hot Work" section, use addListSection
-        if (this.ptwData.hotWork.reqGeneral.length >0) {
-        
-        addTableSection(
-          
-          "General Requirements",
-          this.ptwData.hotWork?.reqGeneral
-        );}
+        if (this.ptwData.hotWork.reqGeneral.length > 0) {
+          addTableSection(
+            "General Requirements",
+            this.ptwData.hotWork?.reqGeneral
+          );
+        }
         if (this.ptwData.hotWork.req_Enc_Equip.length > 0) {
           addTableSection(
             "Distance Requirements",
@@ -682,49 +737,58 @@ export default {
           },
         });
         // Adding additional lists as tables for "Work at Height"
-        if (this.ptwData.wah.waH_Hazard.length >0) {
-        addTableSection("Hazards", this.ptwData.wah?.waH_Hazard || []);}
-        if (this.ptwData.wah.waH_Ladders.length >0) {
-        addTableSection("Ladders", this.ptwData.wah?.waH_Ladders || []);}
-        if (this.ptwData.wah.waH_Scaffolding.length >0) {
-        addTableSection("Scaffolding", this.ptwData.wah?.waH_Scaffolding || []);}
-        if (this.ptwData.wah.waH_LiftTruck.length >0) {
-        addTableSection("Lift Trucks", this.ptwData.wah?.waH_LiftTruck || []);}
-        if (this.ptwData.wah.waH_ManCage.length >0) {
-        
-        addTableSection("Man Cages", this.ptwData.wah?.waH_ManCage || []);}
-        if (this.ptwData.wah.waH_Emergency.length >0) {
-        addTableSection(
-          "Emergency Procedures",
-          this.ptwData.wah?.waH_Emergency || []
-        );}
-        if (this.ptwData.wah.waH_ControlMeasure.length >0) {
-        addTableSection(
-          "Control Measures",
-          this.ptwData.wah?.waH_ControlMeasure || []
-        );}
+        if (this.ptwData.wah.waH_Hazard.length > 0) {
+          addTableSection("Hazards", this.ptwData.wah?.waH_Hazard || []);
+        }
+        if (this.ptwData.wah.waH_Ladders.length > 0) {
+          addTableSection("Ladders", this.ptwData.wah?.waH_Ladders || []);
+        }
+        if (this.ptwData.wah.waH_Scaffolding.length > 0) {
+          addTableSection(
+            "Scaffolding",
+            this.ptwData.wah?.waH_Scaffolding || []
+          );
+        }
+        if (this.ptwData.wah.waH_LiftTruck.length > 0) {
+          addTableSection("Lift Trucks", this.ptwData.wah?.waH_LiftTruck || []);
+        }
+        if (this.ptwData.wah.waH_ManCage.length > 0) {
+          addTableSection("Man Cages", this.ptwData.wah?.waH_ManCage || []);
+        }
+        if (this.ptwData.wah.waH_Emergency.length > 0) {
+          addTableSection(
+            "Emergency Procedures",
+            this.ptwData.wah?.waH_Emergency || []
+          );
+        }
+        if (this.ptwData.wah.waH_ControlMeasure.length > 0) {
+          addTableSection(
+            "Control Measures",
+            this.ptwData.wah?.waH_ControlMeasure || []
+          );
+        }
       }
 
       yPos += 60;
 
-doc.autoTable({
-  startY: yPos,
-  head: [["ADMIN FEEDBACK", ""]],
-  body: [
-    // ["TICKETSTATUS", this.ptwData.safetyAdminStatus],
-    ["COMMENT",  this.ptwData.safetyAdminComment],
-    ["STATUS",  this.ptwData.safetyAdminStatus],
-    ["BY",  this.ptwData.safetyModifiedBy],
-    ["LAST MODIFIED",  this.ptwData.safetyModifiedDate],
-  ],
+      doc.autoTable({
+        startY: yPos,
+        head: [["ADMIN FEEDBACK", ""]],
+        body: [
+          // ["TICKETSTATUS", this.ptwData.safetyAdminStatus],
+          ["COMMENT", this.ptwData.safetyAdminComment],
+          ["STATUS", this.ptwData.safetyAdminStatus],
+          ["BY", this.ptwData.safetyModifiedBy],
+          ["LAST MODIFIED", this.ptwData.safetyModifiedDate],
+        ],
 
-  theme: "grid",
-  margin: { left: 14 },
-  headStyles: { fillColor: [22, 9, 89] }, // Customize head style
-  didDrawPage: function (data) {
-    yPos = data.cursor.y + 10; // Update Y position for next content
-  },
-});
+        theme: "grid",
+        margin: { left: 14 },
+        headStyles: { fillColor: [22, 9, 89] }, // Customize head style
+        didDrawPage: function (data) {
+          yPos = data.cursor.y + 10; // Update Y position for next content
+        },
+      });
       // Add a section heading for "Work at Height"
 
       // Finish up

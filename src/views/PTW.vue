@@ -975,8 +975,7 @@
                     id="sprinklersOperable"
                     type="checkbox"
                     v-model="reqGeneral"
-                    value="Available sprinklers, hose streams and extinguishers are in
-                service and operable."
+                    value="Available sprinklers, hose streams and extinguishers are in service and operable."
                   />
                   Available sprinklers, hose streams and extinguishers are in
                   service and operable.
@@ -991,8 +990,7 @@
                     id="hotWorkEquipment"
                     type="checkbox"
                     v-model="reqGeneral"
-                    value="Hot work equipment is in good working condition in accordance
-                with manufacturer’s specifications."
+                    value="Hot work equipment is in good working condition in accordance with manufacturer’s specifications."
                   />
                   Hot work equipment is in good working condition in accordance
                   with manufacturer’s specifications.
@@ -1007,8 +1005,7 @@
                     id="specialPermission"
                     type="checkbox"
                     v-model="reqGeneral"
-                    value="Special permission obtained to conduct hot work on metal vessels
-                or piping lined with rubber or plastic."
+                    value="Special permission obtained to conduct hot work on metal vessels or piping lined with rubber or plastic."
                   />
                   Special permission obtained to conduct hot work on metal
                   vessels or piping lined with rubber or plastic.
@@ -1041,8 +1038,7 @@
                     id="flammableRemoved"
                     type="checkbox"
                     v-model="requirement"
-                    value="Flammable liquid, dust, lint, and oily deposits removed and
-                floors swept clean."
+                    value="Flammable liquid, dust, lint, and oily deposits removed and floors swept clean."
                   />
                   Flammable liquid, dust, lint, and oily deposits removed and
                   floors swept clean.
@@ -1071,8 +1067,7 @@
                     id="combustibleFloors"
                     type="checkbox"
                     v-model="requirement"
-                    value="Combustible floors wet down or covered with damp sand or
-                fire-resistive/noncombustible materials or equivalent."
+                    value="Combustible floors wet down or covered with damp sand or fire-resistive/noncombustible materials or equivalent."
                   />
                   Combustible floors wet down or covered with damp sand or
                   fire-resistive/noncombustible materials or equivalent.
@@ -1101,8 +1096,7 @@
                     id="removeMaterial"
                     type="checkbox"
                     v-model="requirement"
-                    value=" Remove flammable and combustible material where possible.
-                Otherwise protect with fire blankets, guards or metal shields."
+                    value=" Remove flammable and combustible material where possible. Otherwise protect with fire blankets, guards or metal shields."
                   />
                   Remove flammable and combustible material where possible.
                   Otherwise protect with fire blankets, guards or metal shields.
@@ -1149,8 +1143,7 @@
                     id="noncombustibleConstruction"
                     type="checkbox"
                     v-model="req_Walls"
-                    value="Construction is noncombustible and without combustible coverings
-                or insulation."
+                    value="Construction is noncombustible and without combustible coverings or insulation."
                   />
                   Construction is noncombustible and without combustible
                   coverings or insulation.
@@ -1165,8 +1158,7 @@
                     id="combustibleMaterialMoved"
                     type="checkbox"
                     v-model="req_Walls"
-                    value="Combustible material on other side of walls, ceilings, or roofs
-                is moved away."
+                    value="Combustible material on other side of walls, ceilings, or roofs is moved away."
                   />
                   Combustible material on other side of walls, ceilings, or
                   roofs is moved away.
@@ -1243,8 +1235,7 @@
                   id="fireWatchProvided"
                   type="checkbox"
                   v-model="reqDistance"
-                  value=" Fire watch is provided during and for a minimum of 30 min. after
-              hot work, including any break activity."
+                  value=" Fire watch is provided during and for a minimum of 30 min. after hot work, including any break activity."
                 />
                 Fire watch is provided during and for a minimum of 30 min. after
                 hot work, including any break activity.
@@ -1259,8 +1250,7 @@
                   id="fireWatchExtinguishers"
                   type="checkbox"
                   v-model="reqDistance"
-                  value="Fire watch is provided with suitable extinguishers and, where
-              practical, a charged small hose."
+                  value="Fire watch is provided with suitable extinguishers and, where practical, a charged small hose."
                 />
                 Fire watch is provided with suitable extinguishers and, where
                 practical, a charged small hose.
@@ -1303,8 +1293,7 @@
                   id="fireWatchMonitoringExtended"
                   type="checkbox"
                   v-model="reqDistance"
-                  value="Per the PAI/fire watch, monitoring of hot work area has been
-              extended beyond the 30 min."
+                  value="Per the PAI/fire watch, monitoring of hot work area has been extended beyond the 30 min."
                 />
                 Per the PAI/fire watch, monitoring of hot work area has been
                 extended beyond the 30 min.
@@ -1834,8 +1823,7 @@
                       id="ladderSecured"
                       type="checkbox"
                       v-model="waH_Ladders"
-                      value="Is the ladder secured top and bottom? (not applicable for step
-                  ladders)"
+                      value="Is the ladder secured top and bottom? (not applicable for step ladders)"
                     />
                     Is the ladder secured top and bottom? (not applicable for
                     step ladders)
@@ -1852,8 +1840,7 @@
                       id="ladderExtended"
                       type="checkbox"
                       v-model="waH_Ladders"
-                      value="Is the ladder extended with at least three (3) rungs or 900mm
-                  overlap?"
+                      value="Is the ladder extended with at least three (3) rungs or 900mm overlap?"
                     />
                     Is the ladder extended with at least three (3) rungs or
                     900mm overlap?
@@ -1983,8 +1970,7 @@
                       id="wheelsLocked"
                       type="checkbox"
                       v-model="waH_Scaffolding"
-                      value="Are the wheels in locked position when in use? (e.g. mobile
-                  scaffold)"
+                      value="Are the wheels in locked position when in use? (e.g. mobile scaffold)"
                     />
                     Are the wheels in locked position when in use? (e.g. mobile
                     scaffold)
@@ -2228,8 +2214,7 @@
                     id="emergencyProcedures"
                     type="checkbox"
                     v-model="waH_Emergency"
-                    value="Have emergency and rescue procedures been established, tested
-                and recorded? (These items can be recorded in JHA)"
+                    value="Have emergency and rescue procedures been established, tested and recorded? (These items can be recorded in JHA)"
                   />
                   Have emergency and rescue procedures been established, tested
                   and recorded? (These items can be recorded in JHA)
@@ -2246,8 +2231,7 @@
                     id="communicationArrangements"
                     type="checkbox"
                     v-model="waH_Emergency"
-                    value="Have appropriate communication arrangements been established for
-                potential emergencies?"
+                    value="Have appropriate communication arrangements been established for potential emergencies?"
                   />
                   Have appropriate communication arrangements been established
                   for potential emergencies?
@@ -2286,8 +2270,7 @@
                     id="specificJHA"
                     type="checkbox"
                     v-model="waH_ControlMeasure"
-                    value=" A task/site specific JHA, or equivalent, has been developed and
-                appropriately addresses identified work at height hazards?"
+                    value=" A task/site specific JHA, or equivalent, has been developed and appropriately addresses identified work at height hazards?"
                   />
                   A task/site specific JHA, or equivalent, has been developed
                   and appropriately addresses identified work at height hazards?
@@ -2304,8 +2287,7 @@
                     id="jhaReviewed"
                     type="checkbox"
                     v-model="waH_ControlMeasure"
-                    value="The JHA, or equivalent, has been reviewed and is understood by
-                those involved in the task?"
+                    value="The JHA, or equivalent, has been reviewed and is understood by those involved in the task?"
                   />
                   The JHA, or equivalent, has been reviewed and is understood by
                   those involved in the task?
@@ -2322,9 +2304,7 @@
                     id="competentTraining"
                     type="checkbox"
                     v-model="waH_ControlMeasure"
-                    value="Those involved in the work at height activities are
-                appropriately competent and can produce evidence of training
-                where requested?"
+                    value="Those involved in the work at height activities are appropriately competent and can produce evidence of training where requested?"
                   />
                   Those involved in the work at height activities are
                   appropriately competent and can produce evidence of training
@@ -2379,7 +2359,7 @@
                   for="authority"
                   >Authority</label
                 > -->
-                <!-- <label
+              <!-- <label
                   id="authority"
                   class="form-textarea mt-1 block w-full"
                   rows="3"
@@ -2426,7 +2406,6 @@
                   />
                 </div>
               </div> -->
-
             </div>
           </form>
           <div class="flex justify-end mt-6">
@@ -2726,7 +2705,6 @@ export default {
     };
   },
   computed: {
-    
     capitalizedDepartment: {
       get() {
         return this.customdepartment;
