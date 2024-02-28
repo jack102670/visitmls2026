@@ -30,9 +30,8 @@
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="password"
-                  >Contractor / Vendor Name <span class="text-red-500"
-                    >*</span
-                  ></label
+                  >Contractor / Vendor Name
+                  <span class="text-red-500">*</span></label
                 >
                 <input
                   id="Contractorvendorname"
@@ -561,188 +560,31 @@
             <h2
               class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white"
             >
-              C[2] Safety Measure
+              C[2] Safety Measure {{ safetyMeasure }}
             </h2>
             <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
-              <div>
+              <div v-for="item in safetyMeasureOptions" :key="item">
                 <label class="text-gray-700 dark:text-gray-200">
                   <input
                     type="checkbox"
-                    value="Risk Assessment"
+                    :value="item"
                     v-model="safetyMeasure"
                   />
-                  Risk Assessment
+                  {{ item }}
                 </label>
               </div>
-
-              <!-- Barricades -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Barricades"
-                    v-model="safetyMeasure"
-                  />
-                  Barricades
-                </label>
-              </div>
-
-              <!-- First Aid Kit -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="First Aid Kit"
-                    v-model="safetyMeasure"
-                  />
-                  First Aid Kit
-                </label>
-              </div>
-
-              <!-- Fire Extinguisher -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Fire Extinguisher"
-                    v-model="safetyMeasure"
-                  />
-                  Fire Extinguisher
-                </label>
-              </div>
-
-              <!-- Continuous Supervision -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Continuous Supervision"
-                    v-model="safetyMeasure"
-                  />
-                  Continuous Supervision
-                </label>
-              </div>
-
-              <!-- Warning Signs -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Warning Signs"
-                    v-model="safetyMeasure"
-                  />
-                  Warning Signs
-                </label>
-              </div>
-
-              <!-- Noise Meter -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Noise Meter"
-                    v-model="safetyMeasure"
-                  />
-                  Noise Meter
-                </label>
-              </div>
-
-              <!-- Air Ventilation/Exhaust -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Air Ventilation/Exhaust"
-                    v-model="safetyMeasure"
-                  />
-                  Air Ventilation/Exhaust
-                </label>
-              </div>
-
-              <!-- Communication -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Communication"
-                    v-model="safetyMeasure"
-                  />
-                  Communication
-                </label>
-              </div>
-
-              <!-- Other Safety Measure -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Other Safety Measure"
-                    v-model="safetyMeasure"
-                  />
-                  Other
-                </label>
-              </div>
-
-              <!-- Electrical Isolation -->
             </div>
+
             <h2
               class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white"
             >
-              C[3] Isolation
+              C[3] Isolation {{ isolation }}
             </h2>
             <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
-              <div>
+              <div v-for="item in isolationOptions" :key="item">
                 <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="I-Electrical"
-                    v-model="isolation"
-                  />
-                  Electrical
-                </label>
-              </div>
-
-              <!-- Fire Alarm -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Fire Alarm"
-                    v-model="isolation"
-                  />
-                  Fire Alarm
-                </label>
-              </div>
-
-              <!-- First Aid Kit 2 -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input type="checkbox" value="Traffic" v-model="isolation" />
-                  Traffic
-                </label>
-              </div>
-
-              <!-- Chemical/Gas -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Chemical/Gas"
-                    v-model="isolation"
-                  />
-                  Chemical/Gas
-                </label>
-              </div>
-
-              <!-- Other Isolation -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Other Isolation"
-                    v-model="isolation"
-                  />
-                  Others
+                  <input type="checkbox" :value="item" v-model="isolation" />
+                  {{ item }}
                 </label>
               </div>
             </div>
@@ -1347,7 +1189,9 @@
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Contractorcompany"
-                  >Contractor Company :<span class="text-red-500">*</span></label
+                  >Contractor Company :<span class="text-red-500"
+                    >*</span
+                  ></label
                 >
                 <input
                   v-model="contractorName"
@@ -2630,6 +2474,27 @@ export default {
   },
   data() {
     return {
+      safetyMeasureOptions: [
+        "Risk Assessment",
+        "Barricades",
+        "First Aid Kit",
+        "Fire Extinguisher",
+        "Continuous Supervision",
+        "Warning Signs",
+        "Noise Meter",
+        "Air Ventilation/Exhaust",
+        "Communication",
+        "Other Safety Measure",
+      ],
+      isolationOptions: [
+        "I-Electrical",
+        "Fire Alarm",
+        "Traffic",
+        "Chemical/Gas",
+        "Other Isolation",
+        "CHANGED",
+      ], // Original options
+
       ptwData: [],
       department: "",
       hotWorkLocation: "",
@@ -2651,7 +2516,7 @@ export default {
       reqGeneral: [],
       uniqueCode: "",
       equipment: [],
-      safetyMeasure: [],
+      // safetyMeasure: [],
       isolation: [],
       plantSupport: [],
       hotWorks: false,
@@ -2689,7 +2554,7 @@ export default {
       datetimestart: "",
       Datetimecomplete: "",
 
-      companyName: "test",
+      companyName: "",
       contractorName: "",
       workLocation: "",
       workDescription: "",
@@ -2727,14 +2592,13 @@ export default {
   mounted() {
     // this.branch = store.getSelectedLocation();
     this.userDetails = store.getSession().userDetails;
-    this.fetchPTWData()
+    this.fetchPTWData();
   },
   methods: {
     fetchPTWData() {
       this.isLoading = true;
       this.error = null;
 
-     
       const refNumber = getRefNumber();
 
       axios
@@ -2743,83 +2607,123 @@ export default {
           this.ptwData = response.data;
           this.isLoading = false;
 
-          
           this.branch = this.ptwData.branch;
-          this.companyName = this.ptwData.companyname;
+          this.Companyname = this.ptwData.companyName;
           this.Contractorvendorname = this.ptwData.vendorName;
           this.department = this.ptwData.staffDetails.departmentName;
-      // hotWorkLocation: "",
-      // othersDetails: "",
-      // othersPPE: "",
-      // showOthersInput: false,
-      // branch: "",
-      // showConfirmButton: true,
-      // showLoadingButton: false,
-      // mancage: false,
-      // liftruckScissorlift: false,
-      // checkladder: false,
-      // checkscaffolding: false,
-      // requirement: [],
-      // reqDistance: [],
-      // req_Enc_Equip: [],
-      // req_FireMon: [],
-      // req_Walls: [],
-      // reqGeneral: [],
-      // uniqueCode: "",
-      // equipment: [],
-      // safetyMeasure: [],
-      // isolation: [],
-      // plantSupport: [],
-      // hotWorks: false,
-      // workingAtHeight: false,
-      // file: [],
+          this.datefrom = this.ptwData.dateFrom;
+          this.dateto = this.ptwData.dateUntil;
+          this.Location = this.ptwData.workLocation;
+          this.Description = this.ptwData.workDescription;
 
-      // hazards: [],
+          this.requestername = this.ptwData.staffDetails.pktStaffName;
+          this.Staffemail = this.ptwData.staffDetails.pktStaffEmail;
+          this.finalDepartment = this.ptwData.staffDetails.departmentName;
+          this.equipment = this.ptwData.equipment;
+          this.hazards = this.ptwData.hazard;
+          this.safetyMeasure = this.ptwData.safetyMeasure;
+          this.isolation = this.ptwData.isolation;
+          this.plantSupport = this.ptwData.plantSupport;
+          this.Jobdescription = this.ptwData.jha.jobDesc;
+          this.tasks = this.ptwData.jhaDetails;
+          this.Worksdescription = this.ptwData.hotWork.workDescription;
+          this.datetimestart = this.ptwData.hotWork.dateTimeStart;
+          this.Datetimecomplete = this.ptwData.hotWork.dateTimeComplete;
+          this.requirement = this.ptwData.hotWork.requirement;
+          this.reqDistance = this.ptwData.hotWork.reqDistance;
+          this.req_Enc_Equip = this.ptwData.hotWork.req_Enc_Equip;
+          this.req_FireMon = this.ptwData.hotWork.req_FireMon;
+          this.req_Walls = this.ptwData.hotWork.req_Walls;
+          this.reqGeneral = this.ptwData.hotWork.reqGeneral;
+          this.companyName = this.ptwData.wah.companyName;
+          this.contractorName = this.ptwData.wah.contractorName;
+          this.Location = this.ptwData.wah.workLocation;
+          this.Description = this.ptwData.wah.workDescription;
+          this.startDateTime = this.ptwData.wah.startDateTime;
+          this.completeDateTime = this.ptwData.wah.completeDateTime;
+          this.contractorAuthority = this.ptwData.wah.contractorAuthority;
+          this.filesName = this.ptwData.wah.filesName;
+          this.waH_Hazard = this.ptwData.wah.waH_Hazard;
+          this.waH_Ladders = this.ptwData.wah.waH_Ladders;
+          this.waH_Scaffolding = this.ptwData.wah.waH_Scaffolding;
+          this.waH_LiftTruck = this.ptwData.wah.waH_LiftTruck;
+          this.waH_ManCage = this.ptwData.wah.waH_ManCage;
+          this.waH_Emergency = this.ptwData.wah.waH_Emergency;
+          this.waH_ControlMeasure = this.ptwData.wah.waH_ControlMeasure;
+          this.userDetails.userId = this.ptwData.userId;
 
-      // files1: [],
-      // files2: [],
-      // formData: {},
-      // isModalVisible: false,
-      // departments: template.departments,
-      // userDetails: [],
-      // tasks: [
-      //   {
-      //     sequenceTask: "",
-      //     potentialHazard: "",
-      //     preventiveMeasures: "",
-      //   },
-      // ],
+          // hotWorkLocation: "",
+          // othersDetails: "",
+          // othersPPE: "",
+          // showOthersInput: false,
+          // branch: "",
+          // showConfirmButton: true,
+          // showLoadingButton: false,
+          // mancage: false,
+          // liftruckScissorlift: false,
+          // checkladder: false,
+          // checkscaffolding: false,
+          // requirement: [],
+          // reqDistance: [],
+          // req_Enc_Equip: [],
+          // req_FireMon: [],
+          // req_Walls: [],
+          // reqGeneral: [],
+          // uniqueCode: "",
+          // equipment: [],
+          // safetyMeasure: [],
+          this.isolation = this.ptwData.isolation;
+          // plantSupport: [],
+          // hotWorks: false,
+          // workingAtHeight: false,
+          // file: [],
 
-      // Jobdescription: "",
-      // dateto: "",
-      // datefrom: "",
-      this.Staffemail = this.ptwData.staffDetails.pktStaffEmail;
-      // requestername: "",
-      // Description: "",
-      // Location: "",
-      // Companyname: "",
-      // Vemail: "",
-      // Phonenumber: 0,
-      // Contractorvendorname: "",
-      // Worksdescription: "",
-      // datetimestart: "",
-      // Datetimecomplete: "",
+          // hazards: [],
 
-      // companyName: "test",
-      // contractorName: "",
-      // workLocation: "",
-      // workDescription: "",
-      // startDateTime: "",
-      // completeDateTime: "",
-      // contractorAuthority: 0,
-      // filesName: "",
-      // waH_Hazard: [],
-      // waH_Ladders: [],
-      // waH_Scaffolding: [],
-      // waH_LiftTruck: [],
-      // waH_ManCage: [],
-      // waH_Emergency: [],
-      // waH_ControlMeasure: [],
+          // files1: [],
+          // files2: [],
+          // formData: {},
+          // isModalVisible: false,
+          // departments: template.departments,
+          // userDetails: [],
+          // tasks: [
+          //   {
+          //     sequenceTask: "",
+          //     potentialHazard: "",
+          //     preventiveMeasures: "",
+          //   },
+          // ],
+
+          // Jobdescription: "",
+          // dateto: "",
+          // datefrom: "",
+          this.Staffemail = this.ptwData.staffDetails.pktStaffEmail;
+          // requestername: "",
+          // Description: "",
+          this.Location = this.ptwData.workLocation;
+          // Companyname: "",
+          this.Vemail = this.ptwData.vendorEmail;
+          this.Phonenumber = this.ptwData.phoneNumber;
+          // Contractorvendorname: "",
+          // Worksdescription: "",
+          // datetimestart: "",
+          // Datetimecomplete: "",
+
+          // this.CompanyName = this.ptwData.companyName;
+          // contractorName: "",
+          // workLocation: "",
+          // workDescription: "",
+          // startDateTime: "",
+          // completeDateTime: "",
+          // contractorAuthority: 0,
+          // filesName: "",
+          // waH_Hazard: [],
+          // waH_Ladders: [],
+          // waH_Scaffolding: [],
+          // waH_LiftTruck: [],
+          // waH_ManCage: [],
+          // waH_Emergency: [],
+          // waH_ControlMeasure: [],
           // Log the received ptwData
           console.log("PTW Data:", this.ptwData);
         })
