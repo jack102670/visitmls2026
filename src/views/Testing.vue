@@ -24,20 +24,30 @@
     <div v-if="isLoading" class="full-screen-loader">
       <div class="spinner"></div>
     </div>
+
+    <!-- Display retrieved files -->
+    <div v-if="!isLoading && files.length > 0" class="file-list">
+      <h3>Retrieved Files:</h3>
+      <ul>
+        <li v-for="(file, index) in files" :key="index">
+          <span>{{ file.source }}</span> <!-- Display file name -->
+          <button class="bg-red-500 p-1 rounded-md" @click="deleteFile(file)">Delete</button> <!-- Button to delete file -->
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
+
 <script>
+import axios from "axios";
 import vueFilePond from "vue-filepond";
 import "filepond/dist/filepond.min.css";
-import FilePondPluginFilePoster from "filepond-plugin-file-poster";
 import FilePondPluginFileRename from "filepond-plugin-file-rename";
 import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-import axios from "axios";
 
 const FilePond = vueFilePond(
-  FilePondPluginFilePoster,
   FilePondPluginFileRename,
   FilePondPluginFileValidateSize,
   FilePondPluginFileValidateType
@@ -57,8 +67,8 @@ export default {
     };
   },
   mounted() {
-    // Retrieve files from the server when the component mounts
-    this.retrieveFiles();
+    // Retrieve files from the API when the component mounts
+    this.retrieveFilesFromApi();
   },
   methods: {
     renameFile(file) {
@@ -71,14 +81,10 @@ export default {
       }
     },
     handleRemoveFile(error, fileItem) {
-      // Find the index of the file to remove
-      const index = this.files.findIndex(
-        (file) => file.id === fileItem.file.id
-      );
+      // Remove file from the files array
+      const index = this.files.findIndex((file) => file.id === fileItem.file.id);
       if (index !== -1) {
-        // Remove file from the files array
         this.files.splice(index, 1);
-        // TODO: Make a request to delete the file from the server
       }
     },
     submitFiles() {
@@ -87,7 +93,7 @@ export default {
       this.files.forEach((file) => {
         formData.append("filecollection", file, file.name);
       });
-      const url = `http://172.28.28.91:8085/api/Files/MultiUploadImage/81a30a52-96c3-485f-bd7e-f2a0b4ffcf26/BR7a765869`;
+      const url = `http://172.28.28.91:8085/api/Files/MultiUploadImage/${this.userId}/BR81a36842`;
       axios
         .post(url, formData)
         .then((response) => {
@@ -99,48 +105,54 @@ export default {
           this.loading = false;
         });
     },
-    retrieveFiles() {
-  this.isLoading = true;
-  // Retrieve files from the server
-  const url = "http://172.28.28.91:8085/api/Files/GetMultiImage/81a30a52-96c3-485f-bd7e-f2a0b4ffcf26/BR81a36842";
-  fetch(url)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      // Clear the existing files in the FilePond instance
-      this.$refs.pond.removeFiles();
-
-      // Convert the retrieved URLs to FilePond objects
-      const files = data.map((url) => ({
-        source: url, // Assuming the URL is the source
-        options: {
-          type: 'remote', // Assuming the files are remote
-        },
-        metadata: {
-          // You can add additional metadata if needed
-        }
-      }));
-
-      // Add the converted files to the FilePond instance
-      this.$refs.pond.addFiles(files);
-
-      this.isLoading = false;
-      console.log("Retrieved files:", files);
-    })
-    .catch((error) => {
-      console.error("Error retrieving files:", error);
-      this.isLoading = false;
-    });
-}
-
-
-  },
+    retrieveFilesFromApi() {
+      this.isLoading = true;
+      // Retrieve files from the server
+      const url = `http://172.28.28.91:8085/api/Files/GetMultiImage/${this.userId}/BR81a36842`;
+      fetch(url)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          this.files = data.map((url) => ({
+            source: url,
+            options: {
+              type: 'remote',
+            },
+            metadata: {}
+          }));
+          this.isLoading = false;
+        })
+        .catch((error) => {
+          console.error("Error retrieving files:", error);
+          this.isLoading = false;
+        });
+    },
+    // Function to delete a file
+    deleteFile(file) {
+      const fileId = file.id; // Assuming you have an ID for each file
+      // Make API call to delete the file
+      const deleteUrl = `http://172.28.28.91:8085/api/Files/DeleteFile/${fileId}`;
+      axios.delete(deleteUrl)
+        .then((response) => {
+          console.log("File deleted:", response.data);
+          // Remove the file from the files array
+          const index = this.files.findIndex((f) => f.id === fileId);
+          if (index !== -1) {
+            this.files.splice(index, 1);
+          }
+        })
+        .catch((error) => {
+          console.error("Error deleting file:", error);
+        });
+    }
+  }
 };
 </script>
+
 <style>
 .full-screen-loader {
   position: fixed;

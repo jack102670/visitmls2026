@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
 
 import Login from "../views/Login.vue";
-
+import editptw from "../views/Ptwedit.vue";
 import Newsidebar from "../components/Newsidebar.vue";
 import Managerequest from "../views/Managerequest.vue";
 import ManagerequestSafety from "../views/ManagerequestSafety.vue";
@@ -24,6 +24,7 @@ import Dashboardvendor from "../views/Dashboardvendor.vue";
 import Incidentreportsafety from "../views/Incidentreportsafety.vue";
 import { store } from "../views/store.js";
 const routes = [
+ 
   {
     path: "/test",
     name: "testing",
@@ -113,6 +114,11 @@ const routes = [
         name: "PTWview2",
         component: PTWView,
         
+      },
+      {
+        path: "ptwedit",
+        name: "ptwedit",
+        component :editptw,   
       },
 
     ],

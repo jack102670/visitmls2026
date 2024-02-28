@@ -1,3 +1,15 @@
+
+let refNumber = ''; // Variable to store refNumber
+
+export function setRefNumber(newRefNumber) {
+  refNumber = newRefNumber;
+}
+
+export function getRefNumber() {
+  return refNumber;
+}
+
+
 export const store = {
   data: {
     selectedLocation: null,
