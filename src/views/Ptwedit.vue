@@ -412,25 +412,22 @@
           </h2>
 
           <form>
-            
-
-          
             <h2
               class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white"
             >
-              C[1] Personal Protective Equipment 
-            
-
-            </h2>  
-            
-
-
+              C[1] Personal Protective Equipment
+            </h2>
 
             <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
               <!-- Loop through safety equipment options -->
               <div v-for="(item, index) in equipmentOptions" :key="index">
                 <label class="text-gray-700 dark:text-gray-200">
-                  <input type="checkbox" :value="item" v-model="equipment" disabled />
+                  <input
+                    type="checkbox"
+                    :value="item"
+                    v-model="equipment"
+                    disabled
+                  />
                   {{ item }}
                 </label>
               </div>
@@ -489,7 +486,12 @@
             <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
               <div v-for="item in isolationOptions" :key="item">
                 <label class="text-gray-700 dark:text-gray-200">
-                  <input type="checkbox" :value="item" v-model="isolation" disabled/>
+                  <input
+                    type="checkbox"
+                    :value="item"
+                    v-model="isolation"
+                    disabled
+                  />
                   {{ item }}
                 </label>
               </div>
@@ -497,16 +499,16 @@
             <h2
               class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white"
             >
-              C[4] Plant  {{ plantSupport }}
+              C[4] Plant {{ plantSupport }}
             </h2>
             <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
-      <div v-for="(item, index) in plantSupportOptions" :key="index">
-        <label class="text-gray-700 dark:text-gray-200">
-          <input type="checkbox" :value="item" v-model="plantSupport" />
-          {{ item }}
-        </label>
-      </div>
-    </div>
+              <div v-for="(item, index) in plantSupportOptions" :key="index">
+                <label class="text-gray-700 dark:text-gray-200">
+                  <input type="checkbox" :value="item" v-model="plantSupport" />
+                  {{ item }}
+                </label>
+              </div>
+            </div>
           </form>
           <!-- <div class="flex justify-between mt-6">
               <button
@@ -683,49 +685,15 @@
               <hr />
             </div>
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
-              <div>
-                <label
-                  for="sprinklersOperable"
-                  class="text-gray-700 dark:text-gray-200"
-                >
+              <div v-for="(item, index) in reqGeneralOptions" :key="index">
+                <label class="text-gray-700 dark:text-gray-200">
                   <input
-                    id="sprinklersOperable"
                     type="checkbox"
                     v-model="reqGeneral"
-                    value="Available sprinklers, hose streams and extinguishers are in service and operable."
+                    :value="item"
+                    disabled
                   />
-                  Available sprinklers, hose streams and extinguishers are in
-                  service and operable.
-                </label>
-              </div>
-              <div>
-                <label
-                  for="hotWorkEquipment"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="hotWorkEquipment"
-                    type="checkbox"
-                    v-model="reqGeneral"
-                    value="Hot work equipment is in good working condition in accordance with manufacturer’s specifications."
-                  />
-                  Hot work equipment is in good working condition in accordance
-                  with manufacturer’s specifications.
-                </label>
-              </div>
-              <div>
-                <label
-                  for="specialPermission"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="specialPermission"
-                    type="checkbox"
-                    v-model="reqGeneral"
-                    value="Special permission obtained to conduct hot work on metal vessels or piping lined with rubber or plastic."
-                  />
-                  Special permission obtained to conduct hot work on metal
-                  vessels or piping lined with rubber or plastic.
+                  {{ item }}
                 </label>
               </div>
             </div>
@@ -744,93 +712,18 @@
               <hr />
             </div>
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-              <!-- Checklist Section 2 -->
-
-              <div>
+              <div v-for="(item, index) in requirementOptions" :key="index">
                 <label
-                  for="flammableRemoved"
+                  :for="'requirementCheckbox_' + index"
                   class="text-gray-700 dark:text-gray-200"
                 >
                   <input
-                    id="flammableRemoved"
+                    :id="'requirementCheckbox_' + index"
                     type="checkbox"
                     v-model="requirement"
-                    value="Flammable liquid, dust, lint, and oily deposits removed and floors swept clean."
+                    :value="item"
                   />
-                  Flammable liquid, dust, lint, and oily deposits removed and
-                  floors swept clean.
-                </label>
-              </div>
-              <div>
-                <label
-                  for="explosiveAtmosphere"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="explosiveAtmosphere"
-                    type="checkbox"
-                    v-model="requirement"
-                    value="Explosive atmosphere in area eliminated."
-                  />
-                  Explosive atmosphere in area eliminated.
-                </label>
-              </div>
-              <div>
-                <label
-                  for="combustibleFloors"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="combustibleFloors"
-                    type="checkbox"
-                    v-model="requirement"
-                    value="Combustible floors wet down or covered with damp sand or fire-resistive/noncombustible materials or equivalent."
-                  />
-                  Combustible floors wet down or covered with damp sand or
-                  fire-resistive/noncombustible materials or equivalent.
-                </label>
-              </div>
-              <div>
-                <label
-                  for="electricalShockProtection"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="electricalShockProtection"
-                    type="checkbox"
-                    v-model="requirement"
-                    value="Personnel protected from electrical shock when floors are wet."
-                  />
-                  Personnel protected from electrical shock when floors are wet.
-                </label>
-              </div>
-              <div>
-                <label
-                  for="removeMaterial"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="removeMaterial"
-                    type="checkbox"
-                    v-model="requirement"
-                    value=" Remove flammable and combustible material where possible. Otherwise protect with fire blankets, guards or metal shields."
-                  />
-                  Remove flammable and combustible material where possible.
-                  Otherwise protect with fire blankets, guards or metal shields.
-                </label>
-              </div>
-              <div>
-                <label
-                  for="openingsCovered"
-                  class="text-gray-700 dark:text-gray-200"
-                >
-                  <input
-                    id="openingsCovered"
-                    type="checkbox"
-                    v-model="requirement"
-                    value="All wall and floor openings covered."
-                  />
-                  All wall and floor openings covered.
+                  {{ item }}
                 </label>
               </div>
             </div>
@@ -2349,11 +2242,24 @@ export default {
   },
   data() {
     return {
+      requirementOptions: [
+        "Flammable liquid, dust, lint, and oily deposits removed and floors swept clean.",
+        "Explosive atmosphere in area eliminated.",
+        "Combustible floors wet down or covered with damp sand or fire-resistive/noncombustible materials or equivalent.",
+        "Personnel protected from electrical shock when floors are wet.",
+        "Remove flammable and combustible material where possible. Otherwise protect with fire blankets, guards or metal shields.",
+        "All wall and floor openings covered.",
+      ],
+      reqGeneralOptions: [
+        "Available sprinklers, hose streams and extinguishers are in service and operable.",
+        "Hot work equipment is in good working condition in accordance with manufacturer’s specifications.",
+        "Special permission obtained to conduct hot work on metal vessels or piping lined with rubber or plastic.",
+      ],
       plantSupportOptions: [
         "Water",
         "PS-Electrical",
         "Compressed Air",
-        "Illumination"
+        "Illumination",
       ],
       equipmentOptions: [
         "Safety Helmet or Hard Hats",
@@ -2387,7 +2293,7 @@ export default {
         "Other Isolation",
         "CHANGED",
       ], // Original options
-      preequipment:[],
+      preequipment: [],
       ptwData: [],
       department: "",
       hotWorkLocation: "",
@@ -2627,14 +2533,14 @@ export default {
     },
 
     addOthersToEquipment() {
-    if (this.othersPPE.trim() !== '') {
-      this.equipmentOptions.push(this.othersPPE);
-      // Reset the input field and hide it
-      this.othersPPE = '';
-      this.showOthersInput = false;
-    }
-  },
-  removeEquipment(index) {
+      if (this.othersPPE.trim() !== "") {
+        this.equipmentOptions.push(this.othersPPE);
+        // Reset the input field and hide it
+        this.othersPPE = "";
+        this.showOthersInput = false;
+      }
+    },
+    removeEquipment(index) {
       this.equipmentOptions.splice(index, 1);
     },
 

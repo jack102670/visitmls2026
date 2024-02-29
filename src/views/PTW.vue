@@ -2836,8 +2836,19 @@ export default {
         .post("http://172.28.28.91:8085/api/Main/InsertPTW", combinedFormData)
         .then((response) => {
           console.log("Server response:", response.data);
-          this.uploadMultiImage();
-          // Handle the response, such as showing a success message
+          // Call uploadMultiImage() after form submission succeeds
+          this.uploadMultiImage()
+            .then(() => {
+              // Upload of images succeeded
+              console.log("Form submitted and images uploaded successfully!");
+              // alert("Form submitted and images uploaded successfully!");
+              // this.$router.push("/"); // Navigate to new route
+            })
+            .catch((error) => {
+              // Handle error in uploading images
+              console.error("Error uploading images:", error);
+              alert("Error uploading images. Please try again.");
+            });
         })
         .catch((error) => {
           console.log("Error submitting form:", error);
@@ -2850,6 +2861,11 @@ export default {
               error.response.status
             );
             console.log("Response data:", error.response.data);
+            // Handle errors related to the data received from the server
+            if (error.response.data.error) {
+              console.log("Server error:", error.response.data.error);
+              // Handle specific error cases
+            }
           } else if (error.request) {
             // The request was made but no response was received
             console.log("No response received:", error.request);
@@ -2859,6 +2875,34 @@ export default {
           }
         });
     },
+
+    // Define uploadMultiImage function to return a promise
+    uploadMultiImage() {
+      return new Promise((resolve, reject) => {
+        let formData = new FormData();
+        this.files1.forEach((file) => {
+          formData.append("filecollection", file, file.name);
+        });
+        this.files2.forEach((file) => {
+          formData.append("filecollection", file, file.name);
+        });
+
+        const url = `http://172.28.28.91:8085/api/Files/MultiUploadImage/${this.userDetails.userId}/${this.uniqueCode}`;
+
+        axios
+          .post(url, formData)
+          .then((response) => {
+            console.log("Upload successful:", response.data);
+            this.closeModal();
+            resolve(); // Resolve the promise if upload succeeds
+          })
+          .catch((error) => {
+            console.error("Error uploading images:", error);
+            reject(error); // Reject the promise if upload fails
+          });
+      });
+    },
+
     addTask() {
       this.tasks.push({
         sequenceTask: "",
@@ -2869,36 +2913,7 @@ export default {
     removeTask(index) {
       this.tasks.splice(index, 1);
     },
-    uploadMultiImage() {
-      let formData = new FormData();
-      this.files1.forEach((file) => {
-        formData.append("filecollection", file, file.name);
-      });
-      this.files2.forEach((file) => {
-        formData.append("filecollection", file, file.name);
-      });
 
-      const url = `http://172.28.28.91:8085/api/Files/MultiUploadImage/${this.userDetails.userId}/${this.uniqueCode}`;
-
-      axios
-        .post(url, formData)
-        .then((response) => {
-          console.log("Upload successful:", response.data);
-
-          this.closeModal();
-          this.$router.push("/");
-        })
-        .catch((error) => {
-          if (error.response) {
-            console.error("Error data:", error.response.data);
-            console.error("Error status:", error.response.status);
-          } else if (error.request) {
-            console.error("Error request:", error.request);
-          } else {
-            console.error("Error message:", error.message);
-          }
-        });
-    },
     generateUniqueCode() {
       // Check if this.userId is defined
       if (this.userDetails.userId) {
