@@ -412,7 +412,7 @@
           </h2>
 
           <form>
-            <div class="flex justify-between">
+            
 
           
             <h2
@@ -422,20 +422,15 @@
             
 
             </h2>  
-            <div class="grid grid-cols-1 items-center space-x-2 text-xs" style="white-space: pre-line;">
-  <span v-for="(item, index) in preequipment" :key="index" class="px-2 py-1 bg-gray-200 rounded flex items-center space-x-1">
-    <span>{{ item }}</span>
-    <button class="text-red-500 p-1" @click="removeEquipment(index)"> x</button>
-  </span>
-</div>
+            
 
 
-</div>
+
             <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
               <!-- Loop through safety equipment options -->
               <div v-for="(item, index) in equipmentOptions" :key="index">
                 <label class="text-gray-700 dark:text-gray-200">
-                  <input type="checkbox" :value="item" v-model="equipment" />
+                  <input type="checkbox" :value="item" v-model="equipment" disabled />
                   {{ item }}
                 </label>
               </div>
@@ -479,6 +474,7 @@
                     type="checkbox"
                     :value="item"
                     v-model="safetyMeasure"
+                    disabled
                   />
                   {{ item }}
                 </label>
@@ -493,7 +489,7 @@
             <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
               <div v-for="item in isolationOptions" :key="item">
                 <label class="text-gray-700 dark:text-gray-200">
-                  <input type="checkbox" :value="item" v-model="isolation" />
+                  <input type="checkbox" :value="item" v-model="isolation" disabled/>
                   {{ item }}
                 </label>
               </div>
@@ -501,47 +497,16 @@
             <h2
               class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white"
             >
-              C[4] Plant Support
+              C[4] Plant  {{ plantSupport }}
             </h2>
             <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input type="checkbox" v-model="plantSupport" value="Water" />
-                  Water
-                </label>
-              </div>
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="PS-Electrical"
-                    v-model="plantSupport"
-                  />
-                  Electrical
-                </label>
-              </div>
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Compressed Air"
-                    v-model="plantSupport"
-                  />
-                  Compressed Air
-                </label>
-              </div>
-
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Illumination"
-                    v-model="plantSupport"
-                  />
-                  Illumination
-                </label>
-              </div>
-            </div>
+      <div v-for="(item, index) in plantSupportOptions" :key="index">
+        <label class="text-gray-700 dark:text-gray-200">
+          <input type="checkbox" :value="item" v-model="plantSupport" />
+          {{ item }}
+        </label>
+      </div>
+    </div>
           </form>
           <!-- <div class="flex justify-between mt-6">
               <button
@@ -2384,6 +2349,12 @@ export default {
   },
   data() {
     return {
+      plantSupportOptions: [
+        "Water",
+        "PS-Electrical",
+        "Compressed Air",
+        "Illumination"
+      ],
       equipmentOptions: [
         "Safety Helmet or Hard Hats",
         "Breathing Apparatus",
