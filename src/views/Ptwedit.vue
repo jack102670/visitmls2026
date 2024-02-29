@@ -412,128 +412,31 @@
           </h2>
 
           <form>
+            <div class="flex justify-between">
+
+          
             <h2
               class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white"
             >
-              C[1] Personal Protective Equipment
-            </h2>
+              C[1] Personal Protective Equipment 
+            
+
+            </h2>  
+            <div class="grid grid-cols-1 items-center space-x-2 text-xs" style="white-space: pre-line;">
+  <span v-for="(item, index) in preequipment" :key="index" class="px-2 py-1 bg-gray-200 rounded flex items-center space-x-1">
+    <span>{{ item }}</span>
+    <button class="text-red-500 p-1" @click="removeEquipment(index)"> x</button>
+  </span>
+</div>
+
+
+</div>
             <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
-              <div>
+              <!-- Loop through safety equipment options -->
+              <div v-for="(item, index) in equipmentOptions" :key="index">
                 <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Safety Helmet or Hard Hats"
-                    v-model="equipment"
-                  />
-                  Safety Helmet or Hard hats
-                </label>
-              </div>
-
-              <!-- Breathing Apparatus -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Breathing Apparatus"
-                    v-model="equipment"
-                  />
-                  Breathing Apparatus
-                </label>
-              </div>
-
-              <!-- Safety Shoes -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Safety Shoes"
-                    v-model="equipment"
-                  />
-                  Safety Shoes
-                </label>
-              </div>
-
-              <!-- Safety Glasses/Goggles -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Safety Glasses/Goggles"
-                    v-model="equipment"
-                  />
-                  Safety Glasses/Goggles
-                </label>
-              </div>
-
-              <!-- Respirator/Mask -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Respirator/Mask"
-                    v-model="equipment"
-                  />
-                  Respirator/Mask
-                </label>
-              </div>
-
-              <!-- Safety Harness -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Safety Harness"
-                    v-model="equipment"
-                  />
-                  Safety Harness
-                </label>
-              </div>
-
-              <!-- High-visibility Clothing or Vest -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="High-visibility Clothing or Vest"
-                    v-model="equipment"
-                  />
-                  High-visibility Clothing or Vest
-                </label>
-              </div>
-
-              <!-- Face Shield -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Face Shield"
-                    v-model="equipment"
-                  />
-                  Face Shield
-                </label>
-              </div>
-
-              <!-- Earplug or Ear Muff -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Earplug or Ear Muff"
-                    v-model="equipment"
-                  />
-                  Earplug or Ear Muff
-                </label>
-              </div>
-
-              <!-- Gloves (cotton/leather/rubber) -->
-              <div>
-                <label class="text-gray-700 dark:text-gray-200">
-                  <input
-                    type="checkbox"
-                    value="Gloves (cotton/leather/rubber)"
-                    v-model="equipment"
-                  />
-                  Gloves (cotton/leather/rubber)
+                  <input type="checkbox" :value="item" v-model="equipment" />
+                  {{ item }}
                 </label>
               </div>
               <div>
@@ -546,6 +449,7 @@
                   Others
                 </label>
               </div>
+
               <!-- Conditional rendering for the input field -->
               <div v-if="showOthersInput">
                 <input
@@ -553,8 +457,14 @@
                   type="text"
                   v-model="othersPPE"
                   placeholder="Specify others..."
-                  @blur="addOthersToEquipment"
+                  @keyup.enter="addOthersToEquipment"
                 />
+                <button
+                  @click="addOthersToEquipment"
+                  class="px-4 py-2 mt-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                >
+                  Save
+                </button>
               </div>
             </div>
             <h2
@@ -2474,6 +2384,18 @@ export default {
   },
   data() {
     return {
+      equipmentOptions: [
+        "Safety Helmet or Hard Hats",
+        "Breathing Apparatus",
+        "Safety Shoes",
+        "Safety Glasses/Goggles",
+        "Respirator/Mask",
+        "Safety Harness",
+        "High-visibility Clothing or Vest",
+        "Face Shield",
+        "Earplug or Ear Muff",
+        "Gloves (cotton/leather/rubber)",
+      ],
       safetyMeasureOptions: [
         "Risk Assessment",
         "Barricades",
@@ -2494,7 +2416,7 @@ export default {
         "Other Isolation",
         "CHANGED",
       ], // Original options
-
+      preequipment:[],
       ptwData: [],
       department: "",
       hotWorkLocation: "",
@@ -2734,8 +2656,15 @@ export default {
     },
 
     addOthersToEquipment() {
-      this.equipment.push(this.othersPPE);
-      this.othersPPE = "";
+    if (this.othersPPE.trim() !== '') {
+      this.equipmentOptions.push(this.othersPPE);
+      // Reset the input field and hide it
+      this.othersPPE = '';
+      this.showOthersInput = false;
+    }
+  },
+  removeEquipment(index) {
+      this.equipmentOptions.splice(index, 1);
     },
 
     renameFile(file) {
