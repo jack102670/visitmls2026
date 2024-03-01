@@ -2294,7 +2294,7 @@ export default {
         "CHANGED",
       ], // Original options
       preequipment: [],
-      ptwData: [],
+      ptwData: [  { workDescription: "" }, ],
       department: "",
       hotWorkLocation: "",
       othersDetails: "",
@@ -2414,7 +2414,8 @@ export default {
           this.dateto = this.ptwData.dateUntil;
           this.Location = this.ptwData.workLocation;
           this.Description = this.ptwData.workDescription;
-
+           this.WorksDescription = this.ptwData.wah.workDescription;
+           this.Worksdescription = this.ptwData.hotWork.workDescription;
           this.requestername = this.ptwData.staffDetails.pktStaffName;
           this.Staffemail = this.ptwData.staffDetails.pktStaffEmail;
           this.finalDepartment = this.ptwData.staffDetails.departmentName;
@@ -2425,7 +2426,7 @@ export default {
           this.plantSupport = this.ptwData.plantSupport;
           this.Jobdescription = this.ptwData.jha.jobDesc;
           this.tasks = this.ptwData.jhaDetails;
-          this.Worksdescription = this.ptwData.hotWork.workDescription;
+        
           this.datetimestart = this.ptwData.hotWork.dateTimeStart;
           this.Datetimecomplete = this.ptwData.hotWork.dateTimeComplete;
           this.requirement = this.ptwData.hotWork.requirement;
@@ -2437,7 +2438,7 @@ export default {
           this.companyName = this.ptwData.wah.companyName;
           this.contractorName = this.ptwData.wah.contractorName;
           this.Location = this.ptwData.wah.workLocation;
-          this.Description = this.ptwData.wah.workDescription;
+        
           this.startDateTime = this.ptwData.wah.startDateTime;
           this.completeDateTime = this.ptwData.wah.completeDateTime;
           this.contractorAuthority = this.ptwData.wah.contractorAuthority;
