@@ -29,7 +29,7 @@
             class="h- mx-auto bg-gray-100 border-0 rounded dark:bg-gray-700"
           />
           <div class="flex pt-0 justify-end">
-            <div class="flex pt-5 gap-12">
+            <div class="flex pt-5 gap-12 lg:grid-cols-2">
               <div class="flex flex-col ml-5">
                 <button
                   class="w-64 relative p-3 rounded-2xl border-4 text-xl relative bg-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-3xl border text-white"

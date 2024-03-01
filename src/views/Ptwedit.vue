@@ -112,13 +112,13 @@
                   required
                   type="date"
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                 disabled/>
               </div>
               <div>
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="dateto"
-                  >Date To<span class="text-red-500">*</span></label
+                  >Date Finish<span class="text-red-500">*</span></label
                 >
                 <input
                   id="dateto"
@@ -127,6 +127,20 @@
                   required
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
+              </div>
+              <div>
+                <label
+                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  for="dateto"
+                  >Previous Date</label
+                >
+                <input
+                  id="dateto"
+                  type="date"
+                  v-model="remark"
+                  required
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                disabled/>
               </div>
             </div>
             <div
@@ -2295,6 +2309,7 @@ export default {
       ], // Original options
       preequipment: [],
       ptwData: [  { workDescription: "" }, ],
+      remark:"",
       department: "",
       hotWorkLocation: "",
       othersDetails: "",
@@ -2414,8 +2429,9 @@ export default {
           this.dateto = this.ptwData.dateUntil;
           this.Location = this.ptwData.workLocation;
           this.Description = this.ptwData.workDescription;
-           this.WorksDescription = this.ptwData.wah.workDescription;
-           this.Worksdescription = this.ptwData.hotWork.workDescription;
+          this.WorksDescription = this.ptwData.wah?.workDescription ?? "";
+this.Worksdescription = this.ptwData.hotWork?.workDescription ?? "";
+
           this.requestername = this.ptwData.staffDetails.pktStaffName;
           this.Staffemail = this.ptwData.staffDetails.pktStaffEmail;
           this.finalDepartment = this.ptwData.staffDetails.departmentName;
@@ -2426,30 +2442,33 @@ export default {
           this.plantSupport = this.ptwData.plantSupport;
           this.Jobdescription = this.ptwData.jha.jobDesc;
           this.tasks = this.ptwData.jhaDetails;
+          this.remark = this.ptwData.remark;
         
-          this.datetimestart = this.ptwData.hotWork.dateTimeStart;
-          this.Datetimecomplete = this.ptwData.hotWork.dateTimeComplete;
-          this.requirement = this.ptwData.hotWork.requirement;
-          this.reqDistance = this.ptwData.hotWork.reqDistance;
-          this.req_Enc_Equip = this.ptwData.hotWork.req_Enc_Equip;
-          this.req_FireMon = this.ptwData.hotWork.req_FireMon;
-          this.req_Walls = this.ptwData.hotWork.req_Walls;
-          this.reqGeneral = this.ptwData.hotWork.reqGeneral;
-          this.companyName = this.ptwData.wah.companyName;
-          this.contractorName = this.ptwData.wah.contractorName;
-          this.Location = this.ptwData.wah.workLocation;
-        
-          this.startDateTime = this.ptwData.wah.startDateTime;
-          this.completeDateTime = this.ptwData.wah.completeDateTime;
-          this.contractorAuthority = this.ptwData.wah.contractorAuthority;
-          this.filesName = this.ptwData.wah.filesName;
-          this.waH_Hazard = this.ptwData.wah.waH_Hazard;
-          this.waH_Ladders = this.ptwData.wah.waH_Ladders;
-          this.waH_Scaffolding = this.ptwData.wah.waH_Scaffolding;
-          this.waH_LiftTruck = this.ptwData.wah.waH_LiftTruck;
-          this.waH_ManCage = this.ptwData.wah.waH_ManCage;
-          this.waH_Emergency = this.ptwData.wah.waH_Emergency;
-          this.waH_ControlMeasure = this.ptwData.wah.waH_ControlMeasure;
+          this.datetimestart = this.ptwData.hotWork.dateTimeStart ?? "";
+this.Datetimecomplete = this.ptwData.hotWork.dateTimeComplete ?? "";
+this.requirement = this.ptwData.hotWork.requirement ?? "";
+this.reqDistance = this.ptwData.hotWork.reqDistance ?? "";
+this.req_Enc_Equip = this.ptwData.hotWork.req_Enc_Equip ?? "";
+this.req_FireMon = this.ptwData.hotWork.req_FireMon ?? "";
+this.req_Walls = this.ptwData.hotWork.req_Walls ?? "";
+this.reqGeneral = this.ptwData.hotWork.reqGeneral ?? "";
+this.companyName = this.ptwData.wah.companyName ?? "";
+
+this.contractorName = this.ptwData.wah.contractorName ?? "";
+this.Location = this.ptwData.wah.workLocation ?? "";
+
+this.startDateTime = this.ptwData.wah.startDateTime ?? "";
+this.completeDateTime = this.ptwData.wah.completeDateTime ?? "";
+this.contractorAuthority = this.ptwData.wah.contractorAuthority ?? "";
+this.filesName = this.ptwData.wah.filesName ?? "";
+this.waH_Hazard = this.ptwData.wah.waH_Hazard ?? "";
+this.waH_Ladders = this.ptwData.wah.waH_Ladders ?? "";
+this.waH_Scaffolding = this.ptwData.wah.waH_Scaffolding ?? "";
+this.waH_LiftTruck = this.ptwData.wah.waH_LiftTruck ?? "";
+this.waH_ManCage = this.ptwData.wah.waH_ManCage ?? "";
+this.waH_Emergency = this.ptwData.wah.waH_Emergency ?? "";
+this.waH_ControlMeasure = this.ptwData.wah.waH_ControlMeasure ?? "";
+
           this.userDetails.userId = this.ptwData.userId;
 
           // hotWorkLocation: "",
@@ -2581,16 +2600,19 @@ export default {
         this.finalDepartment = this.department;
       }
       let combinedFormData = {
-        branch: store.getSelectedLocation(),
+        branch: this.ptwData.branch,
         vendorName: this.Contractorvendorname,
         vendorEmail: this.Vemail,
         companyName: this.Companyname,
         phoneNumber: this.Phonenumber,
         dateFrom: this.datefrom,
+        DateLog: this.ptwData.dateUntil,
         dateUntil: this.dateto,
+        refNumber: this.ptwData.refNumber,
+      
         workLocation: this.Location,
         workDescription: this.Description,
-        uniqueCode: this.generateUniqueCode(),
+        uniqueCode: this.ptwData.uniqueCode,
         staffDetails: {
           pktStaffName: this.requestername,
           pktStaffEmail: this.Staffemail,
@@ -2631,6 +2653,7 @@ export default {
         },
 
         wah: {
+          
           companyName: this.companyName,
           contractorName: this.contractorName,
           workLocation: this.workLocation,
@@ -2638,7 +2661,7 @@ export default {
           startDateTime: this.startDateTime,
           completeDateTime: this.completeDateTime,
           contractorAuthority: this.contractorAuthority,
-          filesName: this.filesName,
+          filesName: "this.filesName",
           waH_Hazard: this.waH_Hazard,
           waH_Ladders: this.waH_Ladders,
           waH_Scaffolding: this.waH_Scaffolding,
@@ -2652,7 +2675,7 @@ export default {
       };
 
       axios
-        .post("http://172.28.28.91:8085/api/Main/InsertPTW", combinedFormData)
+        .put("http://172.28.28.91:8085/api/Main/UserUpdatePTW", combinedFormData)
         .then((response) => {
           console.log("Server response:", response.data);
           this.uploadMultiImage();
@@ -2678,16 +2701,6 @@ export default {
           }
         });
     },
-    addTask() {
-      this.tasks.push({
-        sequenceTask: "",
-        potentialHazard: "",
-        preventiveMeasures: "",
-      });
-    },
-    removeTask(index) {
-      this.tasks.splice(index, 1);
-    },
     uploadMultiImage() {
       let formData = new FormData();
       this.files1.forEach((file) => {
@@ -2697,7 +2710,7 @@ export default {
         formData.append("filecollection", file, file.name);
       });
 
-      const url = `http://172.28.28.91:8085/api/Files/MultiUploadImage/${this.userDetails.userId}/${this.uniqueCode}`;
+      const url = `http://172.28.28.91:8085/api/Files/MultiUploadImage/${this.userDetails.userId}/${this.ptwData.uniqueCode}`;
 
       axios
         .post(url, formData)
@@ -2718,6 +2731,17 @@ export default {
           }
         });
     },
+    addTask() {
+      this.tasks.push({
+        sequenceTask: "",
+        potentialHazard: "",
+        preventiveMeasures: "",
+      });
+    },
+    removeTask(index) {
+      this.tasks.splice(index, 1);
+    },
+  
     generateUniqueCode() {
       // Check if this.userId is defined
       if (this.userDetails.userId) {
