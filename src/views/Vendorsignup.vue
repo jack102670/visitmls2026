@@ -243,6 +243,7 @@ export default {
       userConfirmPassword: "",
       userCompany: "",
       pktStaffName:"",
+      files: [],
     };
   },
 
@@ -252,12 +253,13 @@ export default {
       this.files.forEach((file) => {
         formData.append("filecollection", file);
       });
-      console.log("userid uniqcode:", this.userDetails.userId, this.uniqueCode);
+      console.log("userid uniqcode:", this.userEmail, this.uniqueCode);
       const url = `http://172.28.28.91:8085/api/Files/MultiUploadImage/${this.userEmail}/${this.uniqueCode}`;
 
       axios
         .post(url, formData)
         .then((response) => {
+          this.$router.push("/Vendorlogin");
           console.log("Upload successful:", response.data);
         })
         .catch((error) => {
@@ -283,9 +285,9 @@ export default {
     },
     generateUniqueCode() {
       // Check if this.userId is defined
-      if (this.userDetails.userId) {
+      if (this.userEmail) {
         // Use part of the userId for uniqueness, e.g., 4 characters
-        const userIdFragment = this.userDetails.userId.substring(0, 4);
+        const userEmailFragment = this.userEmail.substring(0, 4);
 
         // Generate a random number and pad it to 2 characters
         const randomNumber = Math.floor(Math.random() * 100)
@@ -296,7 +298,7 @@ export default {
         const timestamp = Date.now().toString().slice(-2);
 
         // Construct the uniqueCode
-        this.uniqueCode = `BR${userIdFragment}${randomNumber}${timestamp}`;
+        this.uniqueCode = `SIGNUP${userEmailFragment}${randomNumber}${timestamp}`;
         console.log("Unique Code:", this.uniqueCode);
         return this.uniqueCode;
       } else {
@@ -317,10 +319,11 @@ export default {
           userConfirmPassword: this.userConfirmPassword,
           userCompany: this.userCompany,
           pktStaffName: this.pktStaffName,
+          uniqueCode: this.generateUniqueCode(),
         })
         .then((response) => {
           alert(response.data.message);
-          this.$router.push("/Vendorlogin");
+          this.uploadMultiImage();
           console.log("Server response:", response.data);
         })
         .catch((error) => {
