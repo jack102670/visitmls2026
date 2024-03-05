@@ -141,8 +141,14 @@
                         <td
                           class="px-3 py-2 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                         >
-                          {{ requester.files }}
+                          <div v-for="file in requester.files" :key="file">
+                            <a class="text-blue-500 block mb-1" :href="file" target="_blank">&#8226; {{ getFileName(file) }}</a>
+
+                            <br />
+                            <!-- Add a line break after each file link -->
+                          </div>
                         </td>
+
                         <td class="px-3 py-2 ml text-sm whitespace-nowrap">
                           <div class="flex items-center gap-x-1">
                             <button
@@ -176,7 +182,6 @@
                                   fill="#1C64F2"
                                 ></path>
                               </svg>
-                            
                             </button>
 
                             <button
@@ -209,7 +214,6 @@
                                   fill="#1C64F2"
                                 ></path>
                               </svg>
-                         
                             </button>
                           </div>
                         </td>
@@ -296,6 +300,10 @@ export default {
       } finally {
         requester.rejectLoading = false;
       }
+    },
+    getFileName(file) {
+      const parts = file.split("/");
+      return parts[parts.length - 1];
     },
   },
 };

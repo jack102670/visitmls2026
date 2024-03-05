@@ -1299,6 +1299,7 @@ export default {
     },
   },
   methods: {
+    
     handleFilePondInit() {
       console.log("FilePond has initialized");
 
