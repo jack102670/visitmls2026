@@ -1311,7 +1311,7 @@
                     name="ptwAdminStatus"
                     value="RESUBMISSION"
                     v-model="getRequest.safetyAdminStatus"
-                    :disabled="getRequest.safetyAdminStatus === 'COMPLETED'"
+                    :disabled="getRequest.ticketStatus === 'CLOSE'"
                     :checked="getRequest.safetyAdminStatus === 'RESUBMISSION'"
                   />
                   RESUBMISSION
@@ -1322,7 +1322,7 @@
                     name="ptwAdminStatus"
                     value="APPROVED"
                     v-model="getRequest.safetyAdminStatus"
-                    :disabled="getRequest.safetyAdminStatus === 'COMPLETED'"
+                    :disabled="getRequest.ticketStatus === 'CLOSE'"
                     :checked="getRequest.safetyAdminStatus === 'APPROVED'"
                   />
                   APPROVED
@@ -1333,7 +1333,7 @@
                     name="ptwAdminStatus"
                     value="COMPLETED"
                     v-model="getRequest.safetyAdminStatus"
-                    :disabled="getRequest.safetyAdminStatus === 'COMPLETED'"
+                    :disabled="getRequest.ticketStatus === 'CLOSE'"
                     :checked="getRequest.safetyAdminStatus === 'COMPLETED'"
                   />
                   COMPLETED
@@ -1352,7 +1352,7 @@
               </label>
               <input
                 v-model="getRequest.safetyModifiedBy"
-         
+                :disabled="getRequest.ticketStatus === 'CLOSE'"
                 type="text"
                 name="ptwPreparedBy"
                 id="ptwPreparedBy"
@@ -1371,7 +1371,7 @@
           </label>
           <textarea
             v-model="getRequest.safetyAdminComment"
-          
+            :disabled="getRequest.ticketStatus === 'CLOSE'"
             id="ptwDescription"
             class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
             rows="2"
@@ -1382,7 +1382,7 @@
           <div v-show="showConfirmButton">
             <button
               @click="adminsafetyUpdate()"
-    
+              :disabled="getRequest.ticketStatus === 'CLOSE'"
               type="button"
               class="text-center rounded-2xl bg-sky-800 shadow-md p-3 my-1 w-full text-white py-2.5 px-5 mr-2 text-sm font-medium text-gray-900 rounded border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 items-center"
             >
@@ -1541,6 +1541,7 @@ export default {
           adminComment: this.getRequest.safetyAdminComment,
           modifiedBy: this.getRequest.safetyModifiedBy,
           userEmail: this.getRequest.vendorEmail,
+          dateFinish: this.getRequest.dateUntil,
         })
         .then(() => {
           // Handle success

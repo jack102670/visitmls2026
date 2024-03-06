@@ -1453,6 +1453,57 @@
           </form>
           </div>
           <div v-show="showPTWForm">
+            <hr />
+        <div class="p-1 rounded-lg">
+          <h2 class="text-md font-semibold text-black capitalize">
+            Feedback From Safety
+          </h2>
+          <hr />
+        </div>
+        <div class="bg-[#F9FAFB] rounded-md">
+          <table class="min-w-full table-auto border-collapse border-gray-800">
+            <thead class="">
+              <tr>
+                <th class="border-gray-600 px-4 py-2 text-sm font-semibold">
+                  Status
+                </th>
+                <th class="border-gray-600 px-4 py-2 text-sm font-semibold">
+                  Comments
+                </th>
+                <th class="border-gray-600 px-4 py-2 text-sm font-semibold">
+                  By
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr class="justify-centre text-center">
+                <td
+                  class="border-gray-600 px-4 py-2"
+                  :class="
+                    getStatusContainerClass(getRequest2.safetyAdminStatus)
+                  "
+                >
+                  <span
+                    :class="getStatusDotClass(getRequest2.safetyAdminStatus)"
+                  ></span>
+                  <h2
+                    :class="getStatusTextClass(getRequest2.safetyAdminStatus)"
+                  >
+                    {{ getRequest2.safetyAdminStatus }}
+                  </h2>
+                </td>
+                <td class="border-gray-600 px-4 py-2">
+                  {{ getRequest2.safetyAdminComment }}
+                </td>
+                <td class="border-gray-600 px-4 py-2">
+                  {{ getRequest2.safetyModifiedBy }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <hr />
+        </div>
             <div class="flex justify-between gap-4 mt-4">
               <div class="w-full md:w-1/3">
                 <div class="mb-4">
@@ -1484,10 +1535,10 @@
                         type="radio"
                         name="ptwAdminStatus"
                         value="RESUBMISSION"
-                        v-model="getRequest2.securityAdminStatus"
+                        v-model="getRequest2.safetyAdminStatus"
                         
                         :checked="
-                          getRequest2.securityAdminStatus === 'RESUBMISSION'
+                          getRequest2.safetyAdminStatus === 'RESUBMISSION'
                         "
                         :disabled="getRequest2.ticketStatus === 'CLOSE'"
                       />
@@ -1549,7 +1600,7 @@
                 required
               ></textarea>
             </div>
-            <div class="flex justify-end mt-6">
+            <div class="flex justify-end mt-3">
               <div v-show="showConfirmButton">
                 <button
                   @click="adminsecurityUpdate()"
@@ -1684,15 +1735,24 @@ export default {
     adminsecurityUpdate() {
       this.showConfirmButton = false;
       this.showLoadingButton = true;
+ 
+      console.log('refNumber:', this.getRequest2.refNumber);
+  console.log('ticketStatus:', "open");
+  console.log('adminStatus:', this.getRequest2.securityAdminStatus);
+  console.log('adminComment:', this.getRequest2.securityAdminComment);
+  console.log('modifiedBy:', this.getRequest2.securityModifiedBy);
+  console.log('userEmail:', this.getRequest2.vendorEmail);
+  console.log('dateFinish:', this.getRequest2.dateUntil);
       axios
         .put("http://172.28.28.91:8085/api/Admin/AdminSecUpdatePTW", {
-          // Use the correct property name
-          refNumber: this.getRequest.refNumber,
+  
+          refNumber: this.getRequest2.refNumber,
           ticketStatus: "open",
-          adminStatus: this.getRequest.securityAdminStatus,
-          adminComment: this.getRequest.securityAdminComment,
-          modifiedBy: this.getRequest.securityModifiedBy,
-          userEmail: this.getRequest.vendorEmail,
+          adminStatus: this.getRequest2.securityAdminStatus,
+          adminComment: this.getRequest2.securityAdminComment,
+          modifiedBy: this.getRequest2.securityModifiedBy,
+          userEmail: this.getRequest2.vendorEmail,
+          dateFinish: this.getRequest2.dateUntil,
         })
         .then(() => {
           // Handle success
@@ -2063,7 +2123,7 @@ export default {
       };
       // Get the class for the combination of ticketStatus and adminStatus
       // You can adjust this format based on your needs
-      return colorMap[Status] || "bg-gray-800"; // Default to a dark color if the combination is not recognized
+      return colorMap[Status] || ""; // Default to a dark color if the combination is not recognized
     },
     getStatusDotClass(Status) {
       const colorMap = {
