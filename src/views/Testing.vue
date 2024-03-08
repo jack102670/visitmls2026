@@ -1,187 +1,189 @@
 <template>
-  <div class="mx-auto">
-    <h1 class="text-center text-green-500 border-l-0 text-3xl font-bold">testing</h1>
-  </div>
-  <div class="mx-auto items-center">
-    <h2>File Upload</h2>
-    <!-- FilePond component for file upload -->
-    <FilePond
-      ref="pond"
-      :files="files"
-      name="file"
-      :server="null"
-      :allowMultiple="true"
-      :maxFileSize="'5MB'"
-      :acceptedFileTypes="['image/png', 'image/jpeg', 'application/pdf']"
-      @addfile="handleAddFile"
-      :fileRenameFunction="renameFile"
-      @removefile="handleRemoveFile"
-    />
+  <div class="container mx-auto py-8">
+    <!-- Render selected form options -->
+    <div v-for="(form, index) in formOptions" :key="index">
+      <h2 class="text-lg font-semibold mb-2">{{ form.name }}</h2>
+      <!-- Your form fields -->
+      <div class="mb-2">
+        <select v-model="form.selectedForm" class="p-2 mb-4">
+          <option value="">Select Form</option>
+          <option value="form1">Form 1</option>
+          <option value="form2">Form 2</option>
+        </select>
+      
+        <!-- Form 1 -->
+        <div v-if="form.selectedForm === 'form1'" class="bg-gray-200 p-4 my-4">
+          <h2 class="text-lg font-semibold mb-2">Form 1</h2>
+          <!-- Your form fields for Form 1 -->
+          <input type="text" placeholder="Name" class="border p-2 mb-2" v-model="form.fields[0].value">
+          <input type="email" placeholder="Email" class="border p-2 mb-2" v-model="form.fields[1].value">
+          <!-- Add more fields as needed -->
+        </div>
+      
+        <!-- Form 2 -->
+        <div v-if="form.selectedForm === 'form2'" class="bg-gray-200 p-4 my-4">
+          <h2 class="text-lg font-semibold mb-2">testkit </h2>
+          <!-- Your form fields for Form 2 -->
+          <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
+            <div>
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="requesterName"
+                >Requester Name<span class="text-red-500">*</span></label
+              >
+              <input
+              
+                id="requesterName"
+                type="text"
+                required
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              />
+            </div>
 
-    <!-- button to trigger file submission -->
-    <button @click="submitFiles" :disabled="loading">Submit</button>
+         
+            <div>
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="username"
+                >Phone Number<span class="text-red-500">*</span></label
+              >
+              <input
+  
+                id="number"
+                type="number"
+                required
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              />
+            </div>
 
-    <div v-if="isLoading" class="full-screen-loader">
-      <div class="spinner"></div>
+            <!-- Add v-model to other inputs as needed -->
+          </div>
+          <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
+            <!-- Add v-model to other inputs as needed -->
+          </div>
+          <div class="grid grid-cols-2 gap-6 mt-4 sm:grid-cols-2">
+            <div>
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="username"
+                >No. Stock In Box <span class="text-red-500">*</span></label
+              >
+              <input
+
+                id="stockinbox"
+                type="number"
+                required
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              />
+            </div>
+
+            <div>
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="emailAddress"
+                >No. Stock In (kit)<span class="text-red-500">*</span></label
+              >
+              <input
+             
+                id="stockinkit"
+                type="number"
+                required
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              />
+            </div>
+            <div>
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="emailAddress"
+                >No. Of Kit Out<span class="text-red-500">*</span></label
+              >
+              <input
+     
+                id="kitout"
+                type="number"
+                required
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              />
+            </div>
+            <div>
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="emailAddress"
+                >No. Of Balance Kit<span class="text-red-500">*</span></label
+              >
+              <input
+       
+                id="balacekit"
+                type="number"
+                required
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              />
+            </div>
+            <div>
+              <label
+                class="font-semibold text-gray-700 dark:text-gray-200"
+                for="emailAddress"
+                >Remark<span class="text-red-500">*</span></label
+              >
+              <input
+       
+                id="balacekit"
+                type="text"
+                required
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              />
+            </div>
+
+            <!-- Add v-model to other inputs as needed -->
+          </div>
+          <!-- Add more fields as needed -->
+        </div>
+      </div>
     </div>
 
-    <!-- Display retrieved files -->
-    <div v-if="!isLoading && files.length > 0" class="file-list">
-      <h3>Retrieved Files:</h3>
-      <ul>
-        <li v-for="(file, index) in files" :key="index">
-          <span>{{ file.source }}</span> <!-- Display file name -->
-          <button class="bg-red-500 p-1 rounded-md" @click="deleteFile(file)">Delete</button> <!-- Button to delete file -->
-        </li>
-      </ul>
+    <!-- Add or remove form option -->
+    <div class="flex justify-between mb-4">
+      <button @click="addFormOption" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">Add</button>
+      <button @click="removeFormOption" class="bg-red-500 text-white font-bold py-2 px-4 rounded">Remove</button>
     </div>
   </div>
 </template>
 
-
 <script>
-import axios from "axios";
-import vueFilePond from "vue-filepond";
-import "filepond/dist/filepond.min.css";
-import FilePondPluginFileRename from "filepond-plugin-file-rename";
-import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size";
-import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-
-const FilePond = vueFilePond(
-  FilePondPluginFileRename,
-  FilePondPluginFileValidateSize,
-  FilePondPluginFileValidateType
-);
-
 export default {
-  name: "TestingViews",
-  components: {
-    FilePond,
-  },
+  name: "DynamicForms",
+  
   data() {
     return {
-      files: [], // Store file data here
-      userId: "81a30a52-96c3-485f-bd7e-f2a0b4ffcf26", // Replace with the actual user ID
-      loading: false,
-      isLoading: false,
+      formOptions: [
+        { id: 1, name: 'Form 1', selectedForm: '', fields: [{ value: '', placeholder: 'Field 1' }, { value: '', placeholder: 'Field 2' }] }
+      ]
     };
   },
-  mounted() {
-    // Retrieve files from the API when the component mounts
-    this.retrieveFilesFromApi();
-  },
+  
   methods: {
-    renameFile(file) {
-      return `testing_${file.name}`;
-    },
-    handleAddFile(error, fileItem) {
-      if (!error) {
-        console.log("Added file name:", fileItem.file.name);
-        this.files.push(fileItem.file);
-      }
-    },
-    handleRemoveFile(error, fileItem) {
-      // Remove file from the files array
-      const index = this.files.findIndex((file) => file.id === fileItem.file.id);
-      if (index !== -1) {
-        this.files.splice(index, 1);
-      }
-    },
-    submitFiles() {
-      this.loading = true;
-      let formData = new FormData();
-      this.files.forEach((file) => {
-        formData.append("filecollection", file, file.name);
+    addFormOption() {
+      // Clone the last form and increment the id and name
+      const lastForm = this.formOptions[this.formOptions.length - 1];
+      const newForm = { id: lastForm.id + 1, name: `Form ${lastForm.id + 1}`, selectedForm: '', fields: [] };
+      // Clone the fields of the last form
+      lastForm.fields.forEach(field => {
+        newForm.fields.push({ value: '', placeholder: field.placeholder });
       });
-      const url = `http://172.28.28.91:8085/api/Files/MultiUploadImage/${this.userId}/BR81a36842`;
-      axios
-        .post(url, formData)
-        .then((response) => {
-          console.log("Upload successful:", response.data);
-          this.loading = false;
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          this.loading = false;
-        });
+      // Insert the new form at the end
+      this.formOptions.push(newForm);
     },
-    retrieveFilesFromApi() {
-      this.isLoading = true;
-      // Retrieve files from the server
-      const url = `http://172.28.28.91:8085/api/Files/GetMultiImage/${this.userId}/BR81a36842`;
-      fetch(url)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          this.files = data.map((url) => ({
-            source: url,
-            options: {
-              type: 'remote',
-            },
-            metadata: {}
-          }));
-          this.isLoading = false;
-        })
-        .catch((error) => {
-          console.error("Error retrieving files:", error);
-          this.isLoading = false;
-        });
-    },
-    // Function to delete a file
-    deleteFile(file) {
-      const fileId = file.id; // Assuming you have an ID for each file
-      // Make API call to delete the file
-      const deleteUrl = `http://172.28.28.91:8085/api/Files/DeleteFile/${fileId}`;
-      axios.delete(deleteUrl)
-        .then((response) => {
-          console.log("File deleted:", response.data);
-          // Remove the file from the files array
-          const index = this.files.findIndex((f) => f.id === fileId);
-          if (index !== -1) {
-            this.files.splice(index, 1);
-          }
-        })
-        .catch((error) => {
-          console.error("Error deleting file:", error);
-        });
+    removeFormOption() {
+      // Ensure at least one form remains
+      if (this.formOptions.length > 1) {
+        // Remove the form at the specified index
+        this.formOptions.pop();
+      }
     }
   }
 };
 </script>
 
 <style>
-.full-screen-loader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.spinner {
-  border: 5px solid #f3f3f3;
-  border-top: 5px solid #3498db;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 2s linear infinite;
-}
+/* Add your custom styles here */
 </style>
