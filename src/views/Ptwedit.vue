@@ -132,7 +132,7 @@
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="dateto"
-                  >Previous Date</label
+                  >Previous Date Finish</label
                 >
                 <input
                   id="dateto"
@@ -2442,7 +2442,7 @@ this.Worksdescription = this.ptwData.hotWork?.workDescription ?? "";
           this.plantSupport = this.ptwData.plantSupport;
           this.Jobdescription = this.ptwData.jha.jobDesc;
           this.tasks = this.ptwData.jhaDetails;
-          this.remark = this.ptwData.remark;
+          this.remark = this.ptwData.dateLog;
         
           this.datetimestart = this.ptwData.hotWork.dateTimeStart ?? "";
 this.Datetimecomplete = this.ptwData.hotWork.dateTimeComplete ?? "";
@@ -2606,7 +2606,7 @@ this.waH_ControlMeasure = this.ptwData.wah.waH_ControlMeasure ?? "";
         companyName: this.Companyname,
         phoneNumber: this.Phonenumber,
         dateFrom: this.datefrom,
-        DateLog: this.ptwData.dateUntil,
+        dateLog: this.ptwData.dateUntil,
         dateUntil: this.dateto,
         refNumber: this.ptwData.refNumber,
       
@@ -2661,7 +2661,7 @@ this.waH_ControlMeasure = this.ptwData.wah.waH_ControlMeasure ?? "";
           startDateTime: this.startDateTime,
           completeDateTime: this.completeDateTime,
           contractorAuthority: this.contractorAuthority,
-          filesName: "this.filesName",
+          filesName: this.filesName,
           waH_Hazard: this.waH_Hazard,
           waH_Ladders: this.waH_Ladders,
           waH_Scaffolding: this.waH_Scaffolding,

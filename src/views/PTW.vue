@@ -2841,8 +2841,8 @@ export default {
             .then(() => {
               // Upload of images succeeded
               console.log("Form submitted and images uploaded successfully!");
-              // alert("Form submitted and images uploaded successfully!");
-              // this.$router.push("/"); // Navigate to new route
+              alert("Form submitted and images uploaded successfully!");
+              this.$router.push("/"); // Navigate to new route
             })
             .catch((error) => {
               // Handle error in uploading images

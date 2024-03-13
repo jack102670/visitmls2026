@@ -1,150 +1,70 @@
 <template>
-  <div class="container mx-auto py-8">
-    <!-- Render selected form options -->
-    <div v-for="(form, index) in formOptions" :key="index">
-      <h2 class="text-lg font-semibold mb-2">{{ form.name }}</h2>
-      <!-- Your form fields -->
-      <div class="mb-2">
-        <select v-model="form.selectedForm" class="p-2 mb-4">
-          <option value="">Select Form</option>
-          <option value="form1">Form 1</option>
-          <option value="form2">Form 2</option>
-        </select>
-      
-        <!-- Form 1 -->
-        <div v-if="form.selectedForm === 'form1'" class="bg-gray-200 p-4 my-4">
-          <h2 class="text-lg font-semibold mb-2">Form 1</h2>
-          <!-- Your form fields for Form 1 -->
-          <input type="text" placeholder="Name" class="border p-2 mb-2" v-model="form.fields[0].value">
-          <input type="email" placeholder="Email" class="border p-2 mb-2" v-model="form.fields[1].value">
-          <!-- Add more fields as needed -->
-        </div>
-      
-        <!-- Form 2 -->
-        <div v-if="form.selectedForm === 'form2'" class="bg-gray-200 p-4 my-4">
-          <h2 class="text-lg font-semibold mb-2">testkit </h2>
-          <!-- Your form fields for Form 2 -->
-          <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
-            <div>
-              <label
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                for="requesterName"
-                >Requester Name<span class="text-red-500">*</span></label
-              >
-              <input
-              
-                id="requesterName"
-                type="text"
-                required
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
-            </div>
-
-         
-            <div>
-              <label
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                for="username"
-                >Phone Number<span class="text-red-500">*</span></label
-              >
-              <input
-  
-                id="number"
-                type="number"
-                required
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
-            </div>
-
-            <!-- Add v-model to other inputs as needed -->
-          </div>
-          <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
-            <!-- Add v-model to other inputs as needed -->
-          </div>
-          <div class="grid grid-cols-2 gap-6 mt-4 sm:grid-cols-2">
-            <div>
-              <label
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                for="username"
-                >No. Stock In Box <span class="text-red-500">*</span></label
-              >
-              <input
-
-                id="stockinbox"
-                type="number"
-                required
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
-            </div>
-
-            <div>
-              <label
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                for="emailAddress"
-                >No. Stock In (kit)<span class="text-red-500">*</span></label
-              >
-              <input
-             
-                id="stockinkit"
-                type="number"
-                required
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
-            </div>
-            <div>
-              <label
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                for="emailAddress"
-                >No. Of Kit Out<span class="text-red-500">*</span></label
-              >
-              <input
-     
-                id="kitout"
-                type="number"
-                required
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
-            </div>
-            <div>
-              <label
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                for="emailAddress"
-                >No. Of Balance Kit<span class="text-red-500">*</span></label
-              >
-              <input
-       
-                id="balacekit"
-                type="number"
-                required
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
-            </div>
-            <div>
-              <label
-                class="font-semibold text-gray-700 dark:text-gray-200"
-                for="emailAddress"
-                >Remark<span class="text-red-500">*</span></label
-              >
-              <input
-       
-                id="balacekit"
-                type="text"
-                required
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
-            </div>
-
-            <!-- Add v-model to other inputs as needed -->
-          </div>
-          <!-- Add more fields as needed -->
-        </div>
-      </div>
-    </div>
-
-    <!-- Add or remove form option -->
-    <div class="flex justify-between mb-4">
-      <button @click="addFormOption" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">Add</button>
-      <button @click="removeFormOption" class="bg-red-500 text-white font-bold py-2 px-4 rounded">Remove</button>
+  <div>
+    <div v-for="(item, index) in items" :key="index" class="mb-4">
+      <select v-model="item.selectedOption" @change="onSelectChange(index)" class="border rounded px-3 py-2">
+        <option v-for="option in options" :key="option.id" :value="option.id">{{ option.label }}</option>
+      </select>
+      <template v-if="item.selectedOption === 1">
+        <h1>this is form 1</h1>
+        <input 
+          v-model="item.email"
+          type="email"
+          :placeholder="'Enter your email ' + (index + 1)" 
+        /><br>
+        <span>Gender</span><br>
+        <input 
+          type="radio" 
+          :id="'male' + index"
+          :value="'Male' + index" 
+          v-model="item.gender"
+        />
+        <label :for="'male' + index">Male</label>
+        <input 
+          type="radio" 
+          :id="'female' + index"
+          :value="'Female' + index" 
+          v-model="item.gender"
+        />
+        <label :for="'female' + index">Female</label><br>
+        <input 
+          class="submit" 
+          type="submit" 
+          value="Submit"
+        >
+        <button @click="duplicateItem(index)" class="ml-2 bg-green-500 text-white px-3 py-2 rounded">Duplicate</button>
+        <button @click="removeItem(index)" v-if="index !== 0" class="ml-2 bg-red-500 text-white px-3 py-2 rounded">Remove</button>
+   
+ 
+      </template>
+      <template v-else-if="item.selectedOption === 2">
+        <h1>this is form 2</h1>
+        <input 
+          v-model="item.username"
+          type="text"
+          :placeholder="'Enter your username ' + (index + 1)" 
+        /><br>
+        <span>Password</span><br>
+        <input 
+          v-model="item.password"
+          type="password"
+          :placeholder="'Enter your password ' + (index + 1)" 
+        /><br>
+        <span>Confirm Password</span><br>
+        <input 
+          v-model="item.confirmPassword"
+          type="password"
+          :placeholder="'Confirm your password ' + (index + 1)" 
+        /><br>
+        <input 
+          class="submit" 
+          type="submit" 
+          value="Submit"
+        >
+        <button @click="duplicateItem(index)" class="ml-2 bg-green-500 text-white px-3 py-2 rounded">Duplicate</button>
+        <button @click="removeItem(index)" v-if="index !== 0" class="ml-2 bg-red-500 text-white px-3 py-2 rounded">Remove</button>
+   
+      </template>
+      <!-- Add more conditions for other options as needed -->
     </div>
   </div>
 </template>
@@ -152,38 +72,32 @@
 <script>
 export default {
   name: "DynamicForms",
-  
   data() {
     return {
-      formOptions: [
-        { id: 1, name: 'Form 1', selectedForm: '', fields: [{ value: '', placeholder: 'Field 1' }, { value: '', placeholder: 'Field 2' }] }
-      ]
+      options: [
+        { id: 1, label: 'Form One' },
+        { id: 2, label: 'Form Two' },
+        // Add more options as needed
+      ],
+      items: [{ selectedOption: null, email: '', gender: '', username: '', password: '', confirmPassword: '' }],
     };
   },
-  
   methods: {
-    addFormOption() {
-      // Clone the last form and increment the id and name
-      const lastForm = this.formOptions[this.formOptions.length - 1];
-      const newForm = { id: lastForm.id + 1, name: `Form ${lastForm.id + 1}`, selectedForm: '', fields: [] };
-      // Clone the fields of the last form
-      lastForm.fields.forEach(field => {
-        newForm.fields.push({ value: '', placeholder: field.placeholder });
-      });
-      // Insert the new form at the end
-      this.formOptions.push(newForm);
+    duplicateItem(index) {
+      const newItem = JSON.parse(JSON.stringify(this.items[index])); // Deep copy the item
+      this.items.splice(index + 1, 0, newItem);
     },
-    removeFormOption() {
-      // Ensure at least one form remains
-      if (this.formOptions.length > 1) {
-        // Remove the form at the specified index
-        this.formOptions.pop();
+    removeItem(index) {
+      this.items.splice(index, 1);
+    },
+    onSelectChange(index) {
+      if (index === this.items.length - 1 && this.items[index].selectedOption) {
+        this.addItem(index);
       }
-    }
-  }
+    },
+    addItem() {
+      this.items.push({ selectedOption: null, email: '', gender: '' });
+    },
+  },
 };
 </script>
-
-<style>
-/* Add your custom styles here */
-</style>
