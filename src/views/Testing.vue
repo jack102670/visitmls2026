@@ -1,103 +1,105 @@
 <template>
-  <div>
-    <div v-for="(item, index) in items" :key="index" class="mb-4">
-      <select v-model="item.selectedOption" @change="onSelectChange(index)" class="border rounded px-3 py-2">
-        <option v-for="option in options" :key="option.id" :value="option.id">{{ option.label }}</option>
-      </select>
-      <template v-if="item.selectedOption === 1">
-        <h1>this is form 1</h1>
-        <input 
-          v-model="item.email"
-          type="email"
-          :placeholder="'Enter your email ' + (index + 1)" 
-        /><br>
-        <span>Gender</span><br>
-        <input 
-          type="radio" 
-          :id="'male' + index"
-          :value="'Male' + index" 
-          v-model="item.gender"
-        />
-        <label :for="'male' + index">Male</label>
-        <input 
-          type="radio" 
-          :id="'female' + index"
-          :value="'Female' + index" 
-          v-model="item.gender"
-        />
-        <label :for="'female' + index">Female</label><br>
-        <input 
-          class="submit" 
-          type="submit" 
-          value="Submit"
-        >
-        <button @click="duplicateItem(index)" class="ml-2 bg-green-500 text-white px-3 py-2 rounded">Duplicate</button>
-        <button @click="removeItem(index)" v-if="index !== 0" class="ml-2 bg-red-500 text-white px-3 py-2 rounded">Remove</button>
+  <div class="pdf-container">
+    <div class="pdf-box">
+      <button class="generate-button" @click="generatePdf">Generate PDF</button>
    
- 
-      </template>
-      <template v-else-if="item.selectedOption === 2">
-        <h1>this is form 2</h1>
-        <input 
-          v-model="item.username"
-          type="text"
-          :placeholder="'Enter your username ' + (index + 1)" 
-        /><br>
-        <span>Password</span><br>
-        <input 
-          v-model="item.password"
-          type="password"
-          :placeholder="'Enter your password ' + (index + 1)" 
-        /><br>
-        <span>Confirm Password</span><br>
-        <input 
-          v-model="item.confirmPassword"
-          type="password"
-          :placeholder="'Confirm your password ' + (index + 1)" 
-        /><br>
-        <input 
-          class="submit" 
-          type="submit" 
-          value="Submit"
-        >
-        <button @click="duplicateItem(index)" class="ml-2 bg-green-500 text-white px-3 py-2 rounded">Duplicate</button>
-        <button @click="removeItem(index)" v-if="index !== 0" class="ml-2 bg-red-500 text-white px-3 py-2 rounded">Remove</button>
-   
-      </template>
-      <!-- Add more conditions for other options as needed -->
     </div>
   </div>
 </template>
 
 <script>
+import jsPDF from 'jspdf';
+
 export default {
   name: "DynamicForms",
   data() {
     return {
-      options: [
-        { id: 1, label: 'Form One' },
-        { id: 2, label: 'Form Two' },
-        // Add more options as needed
-      ],
-      items: [{ selectedOption: null, email: '', gender: '', username: '', password: '', confirmPassword: '' }],
+      pdfUrl: null,
     };
   },
   methods: {
-    duplicateItem(index) {
-      const newItem = JSON.parse(JSON.stringify(this.items[index])); // Deep copy the item
-      this.items.splice(index + 1, 0, newItem);
-    },
-    removeItem(index) {
-      this.items.splice(index, 1);
-    },
-    onSelectChange(index) {
-      if (index === this.items.length - 1 && this.items[index].selectedOption) {
-        this.addItem(index);
-      }
-    },
-    addItem() {
-      this.items.push({ selectedOption: null, email: '', gender: '' });
-    },
-  },
-};
+    generatePdf() {
+      const doc = new jsPDF('p', 'mm', 'a4');
+
+      const logo = new Image();
+      logo.src = require('@/assets/logo.png');
+
+      doc.addImage(logo, 'PNG', 15, 10, 20, 20);
+
+      doc.text('PKT LOGISTICS (M) SDN BHD', 45, 15);
+      doc.text('PERMIT TO WORK', 45, 20);
+
+      doc.setFontSize(12);
+      doc.text('Report#: ', 15, 35);
+      doc.text('Date of Incident: ', 15, 40);
+      doc.text('Incident Time: ', 15, 45);
+      doc.text('Name of Parties Involved: ', 15, 50);
+  
+      doc.text('Witness/ Victim/ Suspect: ', 15, 55);
+         doc.text('Security Team Member: ', 130, 35);
+      doc.text('Location of Incident: ', 130, 40);
+
+      doc.setFontSize(12);
+      doc.text('DETAILED DESCRIPTION OF INCIDENT (If necessary, attach additional supporting sheets) ', 15, 90);
+      doc.rect(11, 85, 180, 7);
+      doc.rect(11, 85, 180, 30);
+
+      doc.setFontSize(12);
+      doc.text('Disposition of the Case: ', 15, 125);
+      doc.rect(11, 120, 180, 7);
+      doc.rect(11, 120, 180, 30);
+
+
+     
+
+      // Add more form fields here
+
+      const pdfData = doc.output('dataurlnewwindow');
+  
+      this.pdfUrl = pdfData;
+    }
+  }
+}
 </script>
+
+<style>
+.pdf-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.pdf-box {
+  border: 2px solid #007bff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #f8f9fa;
+}
+
+.generate-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.pdf-preview {
+  margin-bottom: 10px;
+}
+
+.download-link {
+  display: block;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+}
+</style>

@@ -2508,24 +2508,35 @@ export default {
           yPos
         );
         yPos += 55;
-        const labelX = 15;
-        const descriptionX = 60;
+        // const labelX = 15;
+        // const descriptionX = 60;
 
         doc.setFont(undefined, "bold");
-        doc.text("INCIDENT DETAILS", labelX, yPos);
+        // doc.text("INCIDENT DETAILS", labelX, yPos);
         // doc.setFont(undefined,"normal");
-
-        doc.text("  : " + tableRows[7][1] || "N/A", descriptionX, yPos, {
+        doc.text('DETAILED DESCRIPTION OF INCIDENT ', 15, yPos);
+      doc.rect(14, 100, 182, 7);
+      doc.rect(14, 100, 182, 30);
+      doc.setFont(undefined, "normal");
+        doc.text(tableRows[7][1] || "N/A", 15, yPos += 6, {
           align: "left",
-          maxWidth: 120,
+          maxWidth: 178,
         });
-        yPos += 50;
+        yPos += 30;
 
         // yPos += 90;
 
+        doc.setFont(undefined, "bold");
+        // doc.text("INCIDENT DETAILS", labelX, yPos);
+        // doc.setFont(undefined,"normal");
+        doc.text('Disposition of the Case:', 15, yPos  += 5);
+      doc.rect(14, 140, 182, 7);
+      
+
+        yPos += 1.2;
         doc.autoTable({
           startY: yPos,
-          head: [["ADMIN FEEDBACK", ""]],
+          
           body: [
             ["TICKETSTATUS", tableRows[11][1]],
             ["COMMENT", tableRows[10][1]],
@@ -2536,7 +2547,7 @@ export default {
 
           theme: "grid",
           margin: { left: 14 },
-          headStyles: { fillColor: [22, 9, 89] }, // Customize head style
+       
           didDrawPage: function (data) {
             yPos = data.cursor.y + 10; // Update Y position for next content
           },
