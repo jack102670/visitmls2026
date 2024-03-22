@@ -1659,6 +1659,7 @@ export default {
   components: { Modal },
   data() {
     return {
+      dateFinish: "",
       userDetails: [],
       length: 0,
       securityFiles: [],
@@ -1776,6 +1777,7 @@ export default {
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
             userEmail: this.getRequest.userEmail,
+            dateFinish: "",
           })
           .then((response) => {
             "Server response:", response.data;
@@ -1800,6 +1802,7 @@ export default {
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
             userEmail: this.getRequest.userEmail,
+            dateFinish: "",
           })
           .then((response) => {
             "Server response:", response.data;
@@ -1824,6 +1827,7 @@ export default {
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
             userEmail: this.getRequest.userEmail,
+            dateFinish: "",
           })
           .then((response) => {
             "Server response:", response.data;
@@ -1848,6 +1852,7 @@ export default {
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
             userEmail: this.getRequest.userEmail,
+            dateFinish: "",
           })
           .then((response) => {
             "Server response:", response.data;
@@ -1872,6 +1877,7 @@ export default {
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
             userEmail: this.getRequest.userEmail,
+            dateFinish: "",
           })
           .then((response) => {
             "Server response:", response.data;
@@ -1896,6 +1902,7 @@ export default {
             adminComment: this.getRequest.adminComment,
             modifiedBy: this.getRequest.modifiedBy,
             userEmail: this.getRequest.userEmail,
+            dateFinish: "",
           })
           .then((response) => {
             "Server response:", response.data;
@@ -2534,6 +2541,11 @@ export default {
       
 
         yPos += 1.2;
+        const styles = {
+    lineWidth: 0.1,  // Set the border width
+    lineColor: [0, 0, 0],  // Set the border color to black (RGB: 0,0,0)
+    textColor: [0, 0, 0]
+  };
         doc.autoTable({
           startY: yPos,
           
@@ -2544,7 +2556,7 @@ export default {
             ["BY", tableRows[13][1]],
             ["LAST MODIFIED", tableRows[12][1]],
           ],
-
+          styles: styles,  // Apply styles to the table
           theme: "grid",
           margin: { left: 14 },
        

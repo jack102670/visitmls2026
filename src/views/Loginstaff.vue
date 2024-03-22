@@ -179,7 +179,7 @@ export default {
           // Determine the user's role
           let role;
           if (
-            response.data.result.userdetails.email === "afifah.hasani@pktgroup.com"
+            response.data.result.userdetails.userName.includes("SAFETY")
           ) {
             role = "safety";
           } 
@@ -187,7 +187,7 @@ export default {
 
 
          else if (
-            response.data.result.userdetails.email === "ict.intern@pktgroup.com"
+          response.data.result.userdetails.userName.includes("SECURITY")
           ) {
             role = "admin";
           }else {
