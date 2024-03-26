@@ -1384,12 +1384,12 @@
                     Last edited: {{ getRequest.modifiedDate }}
                   </label>
                   <input
-                  required
+                  required disabled
                     v-model="getRequest.modifiedBy"
                     type="text"
                     name="preparedBy"
                     id="preparedBy"
-                    :disabled="getRequest.ticketStatus === 'CLOSE'"
+                   
                     class="w-full rounded-md border border-gray-300 bg-white py-2 px-4 text-sm text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
                   />
                 </div>
@@ -1646,8 +1646,9 @@
 </template>
 
 <script>
-// import { store } from "../views/store.js";
+ import { store } from "../views/store.js";
 import Modal from "../components/vmodaladmin.vue";
+//import { store } from "../views/store.js";
 import $ from "jquery";
 import "datatables.net-dt";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
@@ -1696,6 +1697,8 @@ export default {
         staffDetails:[],
       },
 
+      
+
 
       keysToExclude: ["uniqueCode", "files", "userId", "id"],
       name: ["Branch", "Department", "Phone Number"],
@@ -1705,6 +1708,7 @@ export default {
   computed: {},
 
   mounted() {
+    this.userDetails = store.getSession().userDetails;
     // this.role = store.getRole();
     // if (this.role !== "admin") {
     //   this.$router.push("/Managerequest");
@@ -1741,7 +1745,7 @@ export default {
   console.log('ticketStatus:', "open");
   console.log('adminStatus:', this.getRequest2.securityAdminStatus);
   console.log('adminComment:', this.getRequest2.securityAdminComment);
-  console.log('modifiedBy:', this.getRequest2.securityModifiedBy);
+  console.log('modifiedBy:', this.store);
   console.log('userEmail:', this.getRequest2.vendorEmail);
   console.log('dateFinish:', this.getRequest2.dateUntil);
       axios
@@ -1751,7 +1755,7 @@ export default {
           ticketStatus: "open",
           adminStatus: this.getRequest2.securityAdminStatus,
           adminComment: this.getRequest2.securityAdminComment,
-          modifiedBy: this.getRequest2.securityModifiedBy,
+          modifiedBy: this.userDetails.userName,
           userEmail: this.getRequest2.vendorEmail,
           dateFinish: this.getRequest2.dateUntil,
         })
@@ -1775,7 +1779,7 @@ export default {
             ticketStatus: "open",
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
-            modifiedBy: this.getRequest.modifiedBy,
+            modifiedBy: this.userDetails.userName,
             userEmail: this.getRequest.userEmail,
             dateFinish: "",
           })
@@ -1800,7 +1804,7 @@ export default {
             ticketStatus: "open",
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
-            modifiedBy: this.getRequest.modifiedBy,
+            modifiedBy: this.userDetails.userName,
             userEmail: this.getRequest.userEmail,
             dateFinish: "",
           })
@@ -1825,7 +1829,7 @@ export default {
             ticketStatus: "open",
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
-            modifiedBy: this.getRequest.modifiedBy,
+            modifiedBy: this.userDetails.userName,
             userEmail: this.getRequest.userEmail,
             dateFinish: "",
           })
@@ -1850,7 +1854,7 @@ export default {
             ticketStatus: "open",
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
-            modifiedBy: this.getRequest.modifiedBy,
+            modifiedBy: this.userDetails.userName,
             userEmail: this.getRequest.userEmail,
             dateFinish: "",
           })
@@ -1875,7 +1879,7 @@ export default {
             ticketStatus: "open",
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
-            modifiedBy: this.getRequest.modifiedBy,
+            modifiedBy: this.userDetails.userName,
             userEmail: this.getRequest.userEmail,
             dateFinish: "",
           })
@@ -1900,7 +1904,7 @@ export default {
             ticketStatus: "open",
             adminStatus: this.getRequest.adminStatus,
             adminComment: this.getRequest.adminComment,
-            modifiedBy: this.getRequest.modifiedBy,
+            modifiedBy: this.userDetails.userName,
             userEmail: this.getRequest.userEmail,
             dateFinish: "",
           })

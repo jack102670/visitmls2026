@@ -1431,7 +1431,7 @@
 </template>
 
 <script>
-// import { store } from "../views/store.js";
+ import { store } from "../views/store.js";
 import Modal from "../components/vmodaladmin.vue";
 import $ from "jquery";
 import "datatables.net-dt";
@@ -1475,6 +1475,7 @@ export default {
   computed: {},
 
   mounted() {
+    this.userDetails = store.getSession().userDetails;
     // this.role = store.getRole();
     // if (this.role === "safety") {
     //   this.$router.push("/ManagerequestSafety");
@@ -1539,7 +1540,7 @@ export default {
           ticketStatus: "open",
           adminStatus: this.getRequest.safetyAdminStatus,
           adminComment: this.getRequest.safetyAdminComment,
-          modifiedBy: this.getRequest.safetyModifiedBy,
+          modifiedBy: this.userDetails.userName,
           userEmail: this.getRequest.vendorEmail,
           dateFinish: this.getRequest.dateUntil,
         })

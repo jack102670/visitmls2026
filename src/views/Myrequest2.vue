@@ -1424,7 +1424,7 @@
                           for="preparedBy"
                           class="mb-2 block text-sm font-semibold text-gray-700"
                         >
-                          LAST EDITED: {{ getRequest.modifiedDate }} BY ADMIN
+                          LAST EDITED: {{ getRequest.modifiedDate }} BY 
                           {{ getRequest.modifiedBy }}
                         </label>
                         <!-- Admin Status Section -->
