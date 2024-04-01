@@ -352,11 +352,11 @@ export default {
     },
   },
   created() {
-    // Retrieve the theme from localStorage when the component is created
+
     const storedTheme = localStorage.getItem("theme");
 
     if (storedTheme) {
-      // Apply the stored theme without toggling
+    
       this.isLightTheme = storedTheme === "light";
       this.isLightTheme = storedTheme === "dark";
 
