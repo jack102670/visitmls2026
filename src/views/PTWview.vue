@@ -225,9 +225,7 @@
                   <strong>Contractor Name:</strong>
                   {{ ptwData.wah.contractorName }}
                 </div>
-                <div>
-                  <strong>Work Location:</strong> {{ ptwData.wah.workLocation }}
-                </div>
+             
                 <div>
                   <strong>Work Description:</strong>
                   {{ ptwData.wah.workDescription }}

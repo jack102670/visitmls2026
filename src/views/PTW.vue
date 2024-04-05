@@ -1385,7 +1385,7 @@
                 />
               </div>
 
-              <div>
+              <!-- <div>
                 <label
                   class="font-semibold text-gray-700 dark:text-gray-200"
                   for="Location"
@@ -1403,7 +1403,7 @@
                   <option value="Maintenance">Maintenance</option>
                   <option value="ICT">ICT</option>
                 </select>
-              </div>
+              </div> -->
             </div>
             <div
               class="grid-cols-1 gap-6 mt-4 sm:grid-cols-1 mx-auto cursor-pointer flex w-full"
@@ -2814,7 +2814,7 @@ export default {
         wah: {
           companyName: this.companyName,
           contractorName: this.contractorName,
-          workLocation: this.workLocation,
+          workLocation: "",
           workDescription: this.workDescription,
           startDateTime: this.startDateTime,
           completeDateTime: this.completeDateTime,

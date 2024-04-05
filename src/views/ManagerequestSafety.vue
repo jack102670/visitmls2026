@@ -85,7 +85,15 @@
                           class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
-                            <span>Status</span>
+                            <span>Safety Status</span>
+                          </div>
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        >
+                          <div class="flex items-center gap-x-3">
+                            <span>Security Status</span>
                           </div>
                         </th>
 
@@ -164,6 +172,28 @@
                           {{ requester.dateRequested }}
                         </td>
 
+                        <td
+                          class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                        >
+                          <div
+                            :class="
+                              getStatusContainerClass(requester.adminStatus)
+                            "
+                          >
+                            <span
+                              :class="getStatusDotClass(requester.adminStatus)"
+                            ></span>
+                            <h2
+                              :class="getStatusTextClass(requester.adminStatus)"
+                            >
+                              {{
+                                requester.adminStatus === ""
+                                  ? "OPEN"
+                                  : requester.adminStatus
+                              }}
+                            </h2>
+                          </div>
+                        </td>
                         <td
                           class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                         >
