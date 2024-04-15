@@ -53,12 +53,16 @@
             </tr>
 
             <tr>
-              <td class="py-2 px-4 font-medium">Date From:</td>
+              <td class="py-2 px-4 font-medium">Date Start:</td>
               <td class="py-2 px-4">{{ ptwData.dateFrom }}</td>
             </tr>
             <tr>
-              <td class="py-2 px-4 font-medium">Date Until:</td>
+              <td class="py-2 px-4 font-medium">Date Finish:</td>
               <td class="py-2 px-4">{{ ptwData.dateUntil }}</td>
+            </tr>
+            <tr>
+              <td class="py-2 px-4 font-medium">Date Finish Before Extension:</td>
+              <td class="py-2 px-4">{{ ptwData.dateLog }}</td>
             </tr>
             <tr>
               <td class="py-2 px-4 font-medium">Work Location:</td>

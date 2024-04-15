@@ -64,12 +64,21 @@
                           </div>
                         </th>
 
+                        <th  v-if="role === 'vendor'"
+                          scope="col"
+                          class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        >
+                          <div class="flex items-center gap-x-3">
+                            <span> Safety Status</span>
+                          </div>
+                        </th>
                         <th
                           scope="col"
                           class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
-                            <span>Status</span>
+                            <span  v-if="role === 'vendor'">Security Status</span>
+                            <span v-else>Status</span>
                           </div>
                         </th>
 
@@ -164,7 +173,29 @@
                             </h2>
                           </div>
                         </td>
-
+                        <td
+                        v-if="role === 'vendor'"
+                          class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                        >
+                          <div
+                            :class="
+                              getStatusContainerClass(requester.securityAdminStatus)
+                            "
+                          >
+                            <span
+                              :class="getStatusDotClass(requester.securityAdminStatus)"
+                            ></span>
+                            <h2
+                              :class="getStatusTextClass(requester.securityAdminStatus)"
+                            >
+                              {{
+                                requester.securityAdminStatus === ""
+                                  ? "OPEN"
+                                  : requester.securityAdminStatus
+                              }}
+                            </h2>
+                          </div>
+                        </td>
                         <td
                           v-else
                           class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"

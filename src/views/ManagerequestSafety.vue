@@ -177,19 +177,19 @@
                         >
                           <div
                             :class="
-                              getStatusContainerClass(requester.adminStatus)
+                              getStatusContainerClass(requester.safetyAdminStatus)
                             "
                           >
                             <span
-                              :class="getStatusDotClass(requester.adminStatus)"
+                              :class="getStatusDotClass(requester.safetyAdminStatus)"
                             ></span>
                             <h2
-                              :class="getStatusTextClass(requester.adminStatus)"
+                              :class="getStatusTextClass(requester.safetyAdminStatus)"
                             >
                               {{
-                                requester.adminStatus === ""
+                                requester.safetyAdminStatus === ""
                                   ? "OPEN"
-                                  : requester.adminStatus
+                                  : requester.safetyAdminStatus
                               }}
                             </h2>
                           </div>
@@ -199,19 +199,19 @@
                         >
                           <div
                             :class="
-                              getStatusContainerClass(requester.adminStatus)
+                              getStatusContainerClass(requester.securityAdminStatus)
                             "
                           >
                             <span
-                              :class="getStatusDotClass(requester.adminStatus)"
+                              :class="getStatusDotClass(requester.securityAdminStatus)"
                             ></span>
                             <h2
-                              :class="getStatusTextClass(requester.adminStatus)"
+                              :class="getStatusTextClass(requester.securityAdminStatus)"
                             >
                               {{
-                                requester.adminStatus === ""
+                                requester.securityAdminStatus === ""
                                   ? "OPEN"
-                                  : requester.adminStatus
+                                  : requester.securityAdminStatus
                               }}
                             </h2>
                           </div>
@@ -1195,7 +1195,7 @@
               >
                 Last edited: {{ getRequest.modifiedDate }}
               </label>
-              <input
+              <input disabled
                 v-model="getRequest.modifiedBy"
                 type="text"
                 name="preparedBy"
@@ -1357,7 +1357,7 @@
                   />
                   APPROVED
                 </label>
-                <label class="flex items-center text-sm text-gray-700">
+                <!-- <label class="flex items-center text-sm text-gray-700">
                   <input
                     type="radio"
                     name="ptwAdminStatus"
@@ -1367,7 +1367,7 @@
                     :checked="getRequest.safetyAdminStatus === 'COMPLETED'"
                   />
                   COMPLETED
-                </label>
+                </label> -->
               </div>
             </div>
           </div>
@@ -1382,7 +1382,8 @@
               </label>
               <input
                 v-model="getRequest.safetyModifiedBy"
-                :disabled="getRequest.ticketStatus === 'CLOSE'"
+                disabled
+              
                 type="text"
                 name="ptwPreparedBy"
                 id="ptwPreparedBy"
