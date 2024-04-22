@@ -22,9 +22,18 @@ import manageVendor from "../views/AccApproval.vue";
 import testing from "../views/Testing.vue";
 import Dashboardvendor from "../views/Dashboardvendor.vue";
 import Incidentreportsafety from "../views/Incidentreportsafety.vue";
+import BoxInfo from "../views/e-claim/BoxInfo.vue"
 import { store } from "../views/store.js";
 const routes = [
  
+  {
+    path: "/eclaim",
+    name: "BoxInfo",
+    components: {
+      default: BoxInfo,
+    },
+  }, 
+  
   {
     path: "/test",
     name: "testing",
