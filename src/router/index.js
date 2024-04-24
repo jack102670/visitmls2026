@@ -22,25 +22,46 @@ import manageVendor from "../views/AccApproval.vue";
 import testing from "../views/Testing.vue";
 import Dashboardvendor from "../views/Dashboardvendor.vue";
 import Incidentreportsafety from "../views/Incidentreportsafety.vue";
-import BoxInfo from "../components/e-claim/BoxInfo.vue"
-import AllClaim from "../views/e-claim/AllClaim.vue"
+import BoxInfo from "../components/e-claim/BoxInfo.vue";
+import AllClaim from "../views/e-claim/AllClaim.vue";
+import SummaryReport from "../views/e-claim/SummaryReport";
 import { store } from "../views/store.js";
 const routes = [
-  
+
   {
     path: "/eclaim/",
     name: "BoxInfo",
     components: {
       default: BoxInfo,
       Sidebar: Newsidebar,
-    }, 
-  }, 
+    },
+    children: [
+      {
+        path: "",
+        name: "AllClaim",
+        components: AllClaim,
+      },
 
+      {
+        path: "summary",
+        name: "SummaryReport",
+        components: SummaryReport,
+      },
+    ],
+  },
   {
-    path: "/allclaim",
-    name: "AllClaim",
+    path: "/AllClaim",
+    name: "AllClaim2",
     components: {
       default: AllClaim,
+    },
+  },
+
+  {
+    path: "/summary",
+    name: "SummaryReport",
+    components: {
+      default: SummaryReport,
     },
   },
 
@@ -65,7 +86,7 @@ const routes = [
         name: "NewrequestDefault",
         component: Myrequest2,
       },
-  
+
 
       {
         path: "cctvform",
@@ -117,7 +138,7 @@ const routes = [
       Sidebar: Newsidebar,
     },
     children: [
-       {
+      {
         path: "",
         name: "NewrequestDefault2",
         component: Myrequest2,
@@ -132,12 +153,12 @@ const routes = [
         path: "/PTWview2/:refNumber",
         name: "PTWview2",
         component: PTWView,
-        
+
       },
       {
         path: "ptwedit",
         name: "ptwedit",
-        component :editptw,   
+        component: editptw,
       },
 
     ],
@@ -162,11 +183,11 @@ const routes = [
   {
     path: "/manageVendor",
     name: "manageVendor",
-    components:{
-        default: manageVendor,
-    Sidebar: Newsidebar,
+    components: {
+      default: manageVendor,
+      Sidebar: Newsidebar,
     }
-  
+
   },
   {
     path: "/PTW",
@@ -216,7 +237,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
- 
+
   const publicPages = ["Login", "Loginstaff", "Vendorsingup", "testing"]; // Add other public route names as necessary
 
   // Check if the current route requires authentication
