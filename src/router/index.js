@@ -22,18 +22,28 @@ import manageVendor from "../views/AccApproval.vue";
 import testing from "../views/Testing.vue";
 import Dashboardvendor from "../views/Dashboardvendor.vue";
 import Incidentreportsafety from "../views/Incidentreportsafety.vue";
-import BoxInfo from "../views/e-claim/BoxInfo.vue"
+import BoxInfo from "../components/e-claim/BoxInfo.vue"
+import AllClaim from "../views/e-claim/AllClaim.vue"
 import { store } from "../views/store.js";
 const routes = [
- 
+  
   {
-    path: "/eclaim",
+    path: "/eclaim/",
     name: "BoxInfo",
     components: {
       default: BoxInfo,
-    },
+      Sidebar: Newsidebar,
+    }, 
   }, 
-  
+
+  {
+    path: "/allclaim",
+    name: "AllClaim",
+    components: {
+      default: AllClaim,
+    },
+  },
+
   {
     path: "/test",
     name: "testing",
