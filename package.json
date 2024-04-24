@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-   
     "build": "npm run build:tailwind && vue-cli-service build",
     "lint": "vue-cli-service lint",
     "build:tailwind": "npx tailwindcss -i ./src/input.css -o ./src/assets/css/output.css",
@@ -14,6 +13,7 @@
     "@vueuse/core": "^10.7.0",
     "axios": "^1.6.2",
     "core-js": "^3.8.3",
+    "d3-org-chart": "^3.1.1",
     "datatables.net-dt": "^1.13.10",
     "filepond": "^4.30.6",
     "filepond-plugin-file-poster": "^2.5.1",
