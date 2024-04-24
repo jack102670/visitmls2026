@@ -35,20 +35,8 @@ const routes = [
       default: BoxInfo,
       Sidebar: Newsidebar,
     },
-    children: [
-      {
-        path: "",
-        name: "AllClaim",
-        components: AllClaim,
-      },
-
-      {
-        path: "summary",
-        name: "SummaryReport",
-        components: SummaryReport,
-      },
-    ],
   },
+  
   {
     path: "/AllClaim",
     name: "AllClaim2",
