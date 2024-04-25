@@ -1,349 +1,403 @@
 <template>
-    <div>
-      <h1
-        style="
-          background-color: #032539;
-          color: #fef9ef;
-          text-align: center;
-          padding: 1rem;
-          font-size: 1.5em;
-          z-index: 1;
-        "
+  <div>
+    <h1
+      style="
+        background-color: #032539;
+        color: #fef9ef;
+        text-align: center;
+        padding: 1rem;
+        font-size: 1.5em;
+        z-index: 1;
+      "
+    >
+      Organization Chart
+    </h1>
+    <div class="space-x-3 p-1 relative space-y-1">
+      <button
+        class="border rounded-lg p-1.5 border-gray-500 text-gray-800 hover:text-slate-900 hover:bg-slate-200"
+        @click="fitChart"
       >
-        Organization Chart
-      </h1>
-      <div class="space-x-3 p-1 relative space-y-1">
-        <button
-          class="border rounded-lg p-1.5 border-gray-500 text-gray-800 hover:text-slate-900 hover:bg-slate-200"
-          @click="fitChart"
+        Fit to the screen
+      </button>
+
+      <button
+        class="border rounded-lg p-1.5 border-gray-500border border-gray-500 text-gray-800 hover:text-slate-900 hover:bg-slate-200"
+        @click="cycleLayout"
+      >
+        Change Layout
+      </button>
+
+      <button
+        class="border rounded-lg p-1.5 border-gray-500border border-gray-500 text-gray-800 hover:text-slate-900 hover:bg-slate-200"
+        @click="fullscreen"
+      >
+        Full Screen
+      </button>
+      <button
+        class="border rounded-lg p-1.5 border-gray-500border border-gray-500 text-gray-800 hover:text-slate-900 hover:bg-slate-200"
+        @click="expandAllNodes"
+      >
+        Expand All
+      </button>
+      <button
+        class="border rounded-lg p-1.5 border-gray-500border border-gray-500 text-gray-800 hover:text-slate-900 hover:bg-slate-200"
+        @click="collapseAllNodes"
+      >
+        Collapse All
+      </button>
+      <!-- Export buttons -->
+      <button
+        class="border rounded-lg p-1.5 border-gray-500 text-gray-800 hover:text-slate-900 hover:bg-slate-200"
+        @click="exportCurrentImage"
+      >
+        Export Current
+      </button>
+
+      <button
+        class="border rounded-lg p-1.5 border-gray-500 text-gray-800 hover:text-slate-900 hover:bg-slate-200"
+        @click="exportFullImage"
+      >
+        Export Full
+      </button>
+
+      <button
+        class="border rounded-lg p-1.5 border-gray-500 text-gray-800 hover:text-slate-900 hover:bg-slate-200"
+        @click="exportSvg"
+      >
+        Export SVG
+      </button>
+
+      <button
+        class="border rounded-lg p-1.5 border-gray-500 text-gray-800 hover:text-slate-900 hover:bg-slate-200"
+        @click="exportPdf"
+      >
+        Export PDF
+      </button>
+      <button
+        @click="showAddNodeModal"
+        class="bg-[#032539] hover:bg-[#032539c7] text-[#FBF3F2] border rounded-lg p-1.5"
+      >
+        Add Node to Root
+      </button>
+      <div class="flex pt-1 search:right-2 search:top-2 search:absolute">
+        <input
+          class="p-2 rounded"
+          type="text"
+          placeholder="Search..."
+          v-model="searchQuery"
+          @input="filterChart"
+        />
+      </div>
+    </div>
+    <div
+      v-if="isAddNodeModalOpen"
+      class="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
+      @click.self="closeAddNodeModal"
+    >
+      <div class="modal-content bg-white rounded-lg p-8">
+        <span
+          @click="closeAddNodeModal"
+          class="close absolute top-0 right-0 mt-4 mr-4 text-gray-600 cursor-pointer"
+          >&times;</span
         >
-          Fit to the screen
-        </button>
-  
-        <button
-          class="border rounded-lg p-1.5 border-gray-500border border-gray-500 text-gray-800 hover:text-slate-900 hover:bg-slate-200"
-          @click="cycleLayout"
-        >
-          Change Layout
-        </button>
-  
-        <button
-          class="border rounded-lg p-1.5 border-gray-500border border-gray-500 text-gray-800 hover:text-slate-900 hover:bg-slate-200"
-          @click="fullscreen"
-        >
-          Full Screen
-        </button>
-        <button
-          class="border rounded-lg p-1.5 border-gray-500border border-gray-500 text-gray-800 hover:text-slate-900 hover:bg-slate-200"
-          @click="expandAllNodes"
-        >
-          Expand All
-        </button>
-        <button
-          class="border rounded-lg p-1.5 border-gray-500border border-gray-500 text-gray-800 hover:text-slate-900 hover:bg-slate-200"
-          @click="collapseAllNodes"
-        >
-          Collapse All
-        </button>
-        <!-- Export buttons -->
-        <button
-          class="border rounded-lg p-1.5 border-gray-500 text-gray-800 hover:text-slate-900 hover:bg-slate-200"
-          @click="exportCurrentImage"
-        >
-          Export Current
-        </button>
-  
-        <button
-          class="border rounded-lg p-1.5 border-gray-500 text-gray-800 hover:text-slate-900 hover:bg-slate-200"
-          @click="exportFullImage"
-        >
-          Export Full
-        </button>
-  
-        <button
-          class="border rounded-lg p-1.5 border-gray-500 text-gray-800 hover:text-slate-900 hover:bg-slate-200"
-          @click="exportSvg"
-        >
-          Export SVG
-        </button>
-  
-        <button
-          class="border rounded-lg p-1.5 border-gray-500 text-gray-800 hover:text-slate-900 hover:bg-slate-200"
-          @click="exportPdf"
-        >
-          Export PDF
-        </button>
-        <button
-          @click="showAddNodeModal"
-          class="bg-[#032539] hover:bg-[#032539c7] text-[#FBF3F2] border rounded-lg p-1.5"
-        >
-          Add Node to Root
-        </button>
-        <div class="flex pt-1 search:right-2 search:top-2 search:absolute">
+        <h2 class="text-xl font-bold mb-4">Add Node</h2>
+        <div class="mb-4">
+          <label for="nodeId" class="block text-gray-700 font-bold mb-2"
+            >Node ID:</label
+          >
           <input
-            class="p-2 rounded"
             type="text"
-            placeholder="Search..."
-            v-model="searchQuery"
-            @input="filterChart"
+            id="nodeId"
+            v-model="newNode.id"
+            class="border rounded-md px-4 py-2 w-full"
           />
         </div>
-      </div>
-      <div
-        v-if="isAddNodeModalOpen"
-        class="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
-        @click.self="closeAddNodeModal"
-      >
-        <div class="modal-content bg-white rounded-lg p-8">
-          <span
-            @click="closeAddNodeModal"
-            class="close absolute top-0 right-0 mt-4 mr-4 text-gray-600 cursor-pointer"
-            >&times;</span
+        <div class="mb-4">
+          <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+            >Node Name:</label
           >
-          <h2 class="text-xl font-bold mb-4">Add Node</h2>
-          <div class="mb-4">
-            <label for="nodeId" class="block text-gray-700 font-bold mb-2"
-              >Node ID:</label
-            >
+          <input
+            type="text"
+            id="nodeName"
+            v-model="newNode.name"
+            class="border rounded-md px-4 py-2 w-full"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+            >Parent Id:</label
+          >
+
+          <!-- Search input -->
+          <div
+            class="min-h-auto bg-gray-50 py-6 flex flex-col items-center justify-center relative overflow-hidden sm:py-12"
+          >
             <input
-              type="text"
-              id="nodeId"
-              v-model="newNode.id"
-              class="border rounded-md px-4 py-2 w-full"
+              v-model="search"
+              @click="toggleDropdown"
+              type="search"
+              placeholder="Search Here..."
+              class="py-3 px-4 w-1/2 rounded shadow font-thin focus:outline-none focus:shadow-lg focus:shadow-slate-200 duration-100 shadow-gray-100"
             />
-          </div>
-          <div class="mb-4">
-            <label for="nodeName" class="block text-gray-700 font-bold mb-2"
-              >Node Name:</label
-            >
-            <input
-              type="text"
-              id="nodeName"
-              v-model="newNode.name"
-              class="border rounded-md px-4 py-2 w-full"
-            />
-          </div>
-          <div class="mb-4">
-            <label for="nodeName" class="block text-gray-700 font-bold mb-2"
-              >Parent Id:</label
-            >
-            <input
-              type="text"
+
+            <select
               id="nodeNameda"
               v-model="newNode.parentId"
               class="border rounded-md px-4 py-2 w-full"
-            />
+            >
+              <option value="">Select Parent Id</option>
+              <option
+                v-for="item in filteredItems"
+                :key="item.id"
+                :value="item.id"
+              >
+                {{ item.id }} - {{ item.name }}
+              </option>
+            </select>
           </div>
-          <!-- Add more input fields for other properties if needed -->
-          <button
-            @click="addNodeToRoot"
-            class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
-          >
-            Add Node
-          </button>
         </div>
+
+        <!-- Add more input fields for other properties if needed -->
+        <button
+          @click="addNodeToRoot"
+          class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+        >
+          Add Node
+        </button>
       </div>
-      <!-- Your template -->
-      <!-- Your template -->
-      <div
-        v-if="isClickModal"
-        class="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
-        @click.self="closeClickModal"
-      >
-        <div class="modal-content bg-white rounded-lg p-8">
-          <!-- Modal header -->
-          <!-- Your existing modal header content -->
-  
-          <!-- Modal content -->
-          <div class="mb-4">
-            <label for="nodeId" class="block text-gray-700 font-bold mb-2"
-              >Node ID:</label
-            >
-            <input
-              type="text"
-              id="nodeId"
-              v-model="clickedNodeData.id"
-              :disabled="!isEditMode"
-              class="border rounded-md px-4 py-2 w-full"
-            />
-          </div>
-          <div class="mb-4">
-            <label for="nodeName" class="block text-gray-700 font-bold mb-2"
-              >Node Name:</label
-            >
-            <input
-              type="text"
-              id="nodeName"
-              v-model="clickedNodeData.name"
-              :disabled="!isEditMode"
-              class="border rounded-md px-4 py-2 w-full"
-            />
-          </div>
-          <div class="mb-4">
-            <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
-              >Parent ID:</label
-            >
-            <input
-              type="text"
-              id="nodeParentId"
-              v-model="clickedNodeData.parentId"
-              :disabled="!isEditMode"
-              class="border rounded-md px-4 py-2 w-full"
-            />
-          </div>
-          <!-- Add/Edit node button -->
-          <button
-            @click="toggleEditMode"
-            class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
-          >
-            {{ isEditMode ? "Save" : "Edit" }}
-            <!-- Change button text based on edit mode -->
-          </button>
-  
-          <!-- Delete node button -->
-          <button
-            @click="deleteNode(clickedNodeData.id)"
-            class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-  
-      <div ref="chartContainer"></div>
     </div>
-  </template>
-  
-  <script>
-  import axios from "axios";
-  import { OrgChart } from "d3-org-chart";
-  
-  // import employeesData from '../views/data'
-  import html2canvas from "html2canvas";
-  import jsPDF from "jspdf";
-  
-  export default {
-    name: "TestComponent",
-    data() {
-      return {
-        isAddNodeModalOpen: false,
-        newNode: {
-          id: "",
-          name: "",
-          parentId: "",
-          // Add more properties as needed
-        },
-        clickedNodeData: {
-          id: "",
-          name: "",
-          parentId: "",
-        },
-        data: [],
-        chartReference: null,
-        layoutIndex: 0,
-        layoutPositions: ["top", "right", "left", "bottom"],
-        isFullscreen: false,
-        highlightedNodeId: null,
-        searchQuery: "",
-        isChartMinimized: false,
-        chart: null,
-        isClickModal: false,
-        isEditMode: false,
-      };
-    },
-    created() {
-      this.fetchData();
-    },
-    methods: {
-      toggleEditMode() {
-        if (this.isEditMode) {
-          this.saveNode(); // Call saveNode method if in edit mode
-        } else {
-          this.isEditMode = !this.isEditMode; // Toggle edit mode
-        }
+    <!-- Your template -->
+    <!-- Your template -->
+    <div
+      v-if="isClickModal"
+      class="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
+      @click.self="closeClickModal"
+    >
+      <div class="modal-content bg-white rounded-lg p-8">
+        <!-- Modal header -->
+        <!-- Your existing modal header content -->
+
+        <!-- Modal content -->
+        <div class="mb-4">
+          <label for="nodeId" class="block text-gray-700 font-bold mb-2"
+            >Node ID:</label
+          >
+          <input
+            type="text"
+            id="nodeId"
+            v-model="clickedNodeData.id"
+            :disabled="!isEditMode"
+            class="border rounded-md px-4 py-2 w-full"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+            >Node Name:</label
+          >
+          <input
+            type="text"
+            id="nodeName"
+            v-model="clickedNodeData.name"
+            :disabled="!isEditMode"
+            class="border rounded-md px-4 py-2 w-full"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
+            >Parent ID:</label
+          >
+          <input
+            type="text"
+            id="nodeParentId"
+            v-model="clickedNodeData.parentId"
+            :disabled="!isEditMode"
+            class="border rounded-md px-4 py-2 w-full"
+          />
+        </div>
+        <!-- Add/Edit node button -->
+        <button
+          @click="toggleEditMode"
+          class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+        >
+          {{ isEditMode ? "Save" : "Edit" }}
+          <!-- Change button text based on edit mode -->
+        </button>
+
+        <!-- Delete node button -->
+        <button
+          @click="deleteNode(clickedNodeData.id)"
+          class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+
+    <div ref="chartContainer"></div>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+import { OrgChart } from "d3-org-chart";
+
+// import employeesData from '../views/data'
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+
+export default {
+  name: "TestComponent",
+  data() {
+    return {
+      isAddNodeModalOpen: false,
+      newNode: {
+        id: "",
+        name: "",
+        parentId: "",
+        // Add more properties as needed
       },
-      async saveNode() {
-        try {
-          // Assuming you have an API endpoint for updating nodes
-          const response = await axios.put("your_api_endpoint_here", {
-            id: this.clickedNodeData.id,
-            name: this.clickedNodeData.name,
-            parentId: this.clickedNodeData.parentId,
-            // Add other properties as needed
-          });
-  
-          console.log("Node updated successfully:", response.data);
-          this.isClickModal = false; // Close the modal after successful update
-        } catch (error) {
-          console.error("Error updating node:", error);
-        }
+      clickedNodeData: {
+        id: "",
+        name: "",
+        parentId: "",
       },
-      deleteNode(nodeId) {
-        // Find the index of the node with the specified ID in the data array
-        const nodeIndex = this.data.findIndex((node) => node.id === nodeId);
-  
-        // If the node with the specified ID is found
-        if (nodeIndex !== -1) {
-          // Remove the node from the data array
-          this.data.splice(nodeIndex, 1);
-          // Re-render the chart to reflect the changes
+      data: [],
+      chartReference: null,
+      layoutIndex: 0,
+      layoutPositions: ["top", "right", "left", "bottom"],
+      isFullscreen: false,
+      highlightedNodeId: null,
+      searchQuery: "",
+      isChartMinimized: false,
+      chart: null,
+      isClickModal: false,
+      isEditMode: false,
+      showDropdown: false,
+      search: "",
+      open: false,
+    };
+  },
+  computed: {
+    filteredData() {
+      return this.data.filter((item) =>
+        item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    },
+    filteredItems() {
+      return this.data.filter((item) =>
+        item.name.toLowerCase().startsWith(this.search.toLowerCase())
+      );
+    },
+  },
+  created() {
+    this.fetchData();
+  },
+  methods: {
+    toggleDropdown() {
+      this.open = !this.open;
+      if (this.open) {
+        document.addEventListener("click", this.handleClickOutside);
+      } else {
+        document.removeEventListener("click", this.handleClickOutside);
+      }
+    },
+    handleClickOutside(event) {
+      if (!this.$el.contains(event.target)) {
+        this.open = false;
+        document.removeEventListener("click", this.handleClickOutside);
+      }
+    },
+    toggleEditMode() {
+      if (this.isEditMode) {
+        this.saveNode(); // Call saveNode method if in edit mode
+      } else {
+        this.isEditMode = !this.isEditMode; // Toggle edit mode
+      }
+    },
+    async saveNode() {
+      try {
+        // Assuming you have an API endpoint for updating nodes
+        const response = await axios.put("your_api_endpoint_here", {
+          id: this.clickedNodeData.id,
+          name: this.clickedNodeData.name,
+          parentId: this.clickedNodeData.parentId,
+          // Add other properties as needed
+        });
+
+        console.log("Node updated successfully:", response.data);
+        this.isClickModal = false; // Close the modal after successful update
+      } catch (error) {
+        console.error("Error updating node:", error);
+      }
+    },
+    deleteNode(nodeId) {
+      // Find the index of the node with the specified ID in the data array
+      const nodeIndex = this.data.findIndex((node) => node.id === nodeId);
+
+      // If the node with the specified ID is found
+      if (nodeIndex !== -1) {
+        // Remove the node from the data array
+        this.data.splice(nodeIndex, 1);
+        // Re-render the chart to reflect the changes
+        this.renderChart();
+        // Close any modal or reset any state related to the deleted node if needed
+        this.isClickModal = false;
+      } else {
+        console.error("Node not found:", nodeId);
+      }
+    },
+
+    closeClickModal() {
+      this.isClickModal = false;
+      this.isEditMode = false;
+    },
+    addNode() {
+      // Here you can implement the logic to add the node based on this.clickedNodeData
+      // For example, you can call an API to add the node to your data source
+      console.log("Adding node:", this.clickedNodeData);
+
+      // After adding the node, you might want to close the modal
+      this.isClickModal = false;
+    },
+    fetchData() {
+      axios
+        .get("http://172.28.28.91:86/api/User/Get_all_employees")
+        .then((response) => {
+          console.log("Fetched data:", response.data);
+
+          // Extract the result array from the response data
+          const resultArray = response.data.result;
+
+          // Transform keys of the items in the result array
+          const modifiedData = resultArray.map((item) => ({
+            id: item.emp_id,
+            parentId: item.reportinG_TO,
+            name: item.name,
+            positionName: item.positioN_TITLE,
+            phone: item.phonE_NUMBER,
+            email: item.emaiL_ADDRESS,
+            team: "", // You may need to provide a value for the team key
+            location: item.homE_ADDRESS,
+            department: item.department,
+            description: "", // You may need to provide a description value
+            imageUrl:
+              "https://gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50", // You may need to provide an image URL
+          }));
+
+          console.log("Fetched and modified data:", modifiedData);
+
+          // Assign the modified data to your component's data property
+          this.data = modifiedData;
+
+          // Perform any other actions with the data
+          // For example, render a chart
+          console.log("Value of this selepas fetcg:", this.data);
           this.renderChart();
-          // Close any modal or reset any state related to the deleted node if needed
-          this.isClickModal = false;
-        } else {
-          console.error("Node not found:", nodeId);
-        }
-      },
-  
-      closeClickModal() {
-        this.isClickModal = false;
-      },
-      addNode() {
-        // Here you can implement the logic to add the node based on this.clickedNodeData
-        // For example, you can call an API to add the node to your data source
-        console.log("Adding node:", this.clickedNodeData);
-  
-        // After adding the node, you might want to close the modal
-        this.isClickModal = false;
-      },
-      fetchData() {
-        axios
-          .get("http://172.28.28.91:86/api/User/Get_all_employees")
-          .then((response) => {
-            console.log("Fetched data:", response.data);
-  
-            // Extract the result array from the response data
-            const resultArray = response.data.result;
-  
-            // Transform keys of the items in the result array
-            const modifiedData = resultArray.map((item) => ({
-              id: item.emp_id,
-              parentId: item.reportinG_TO,
-              name: item.name,
-              positionName: item.positioN_TITLE,
-              phone: item.phonE_NUMBER,
-              email: item.emaiL_ADDRESS,
-              team: "", // You may need to provide a value for the team key
-              location: item.homE_ADDRESS,
-              department: item.department,
-              description: "", // You may need to provide a description value
-              imageUrl: "https://gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50", // You may need to provide an image URL
-            }));
-  
-            console.log("Fetched and modified data:", modifiedData);
-  
-            // Assign the modified data to your component's data property
-            this.data = modifiedData;
-  
-            // Perform any other actions with the data
-            // For example, render a chart
-            this.renderChart();
-          })
-          .catch((error) => {
-            console.error("Error fetching data:", error);
-          });
-      
-  
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+
       // Promise.resolve(employeesData)
       //   .then((data) => {
       //     console.log('Fetched data:', data)
@@ -358,22 +412,21 @@
       console.log("renderChart method called");
       console.log("Value of this:", this);
       // Existing logic of the renderChart method...
-  
+
       if (!this.chartReference) {
         this.chartReference = new OrgChart();
       }
-  
+
       this.chartReference
         .container(this.$refs.chartContainer)
         .data(this.data)
         .nodeWidth(() => 250)
-            .initialZoom(0.7)
-            .nodeHeight(() => 175)
-            .childrenMargin(() => 40)
-            .compactMarginBetween(() => 15)
-            .compactMarginPair(() => 80)
+        .initialZoom(0.7)
+        .nodeHeight(() => 175)
+        .childrenMargin(() => 40)
+        .compactMarginBetween(() => 15)
+        .compactMarginPair(() => 80)
         .nodeContent((d) => {
-  
           return `
               <div style="padding-top:30px;background-color:none;margin-left:1px;height:${
                 d.height
@@ -384,7 +437,9 @@
   
                   <img src=" ${
                     d.data.imageUrl
-                  }" style="margin-top:-30px;margin-left:${d.width / 2 - 30}px;border-radius:100px;width:60px;height:60px;" />
+                  }" style="margin-top:-30px;margin-left:${
+                    d.width / 2 - 30
+                  }px;border-radius:100px;width:60px;height:60px;" />
   
                  <div style="margin-right:10px;margin-top:1px;float:right;font-size:10px">${
                    d.data.id
@@ -409,7 +464,7 @@
                 </div>     
         </div>
     `;
-            })
+        })
         .layout(this.layoutPositions[this.layoutIndex])
         .render();
       this.chartReference.onNodeClick((node) => {
@@ -421,14 +476,14 @@
           positionName: node.data.positionName,
           phone: node.data.phone,
         };
-  
+
         // Log the clicked node data for debugging
         console.log("Clicked Node Data:", this.clickedNodeData);
-  
+
         // Open the add node modal
         this.isClickModal = true;
       });
-  
+
       console.log("Chart rendered:", this.chartReference);
     },
     fitChart() {
@@ -438,7 +493,7 @@
     },
     cycleLayout() {
       this.layoutIndex = (this.layoutIndex + 1) % this.layoutPositions.length;
-  
+
       this.renderChart();
     },
     fullscreen() {
@@ -498,16 +553,16 @@
     filterChart(event) {
       const value = event.target.value.toLowerCase();
       const chart = this.chartReference;
-  
+
       // Clear previous highlighting
       chart.clearHighlighting();
-  
+
       // Get chart nodes
       const data = chart.data();
       let foundNode = null;
-  
+
       // Un-minimize the chart if it's currently minimized
-  
+
       // Loop over data and check if input value matches any name
       data.forEach((d) => {
         if (value !== "" && d.name && d.name.toLowerCase().includes(value)) {
@@ -520,10 +575,10 @@
           }
         }
       });
-  
+
       // Update data and re-render the chart
       chart.data(data).render().fit();
-  
+
       // If a matching node is found, navigate to it
       if (foundNode) {
         // Delay focusing on the node to ensure it's rendered
@@ -572,7 +627,7 @@
         });
       }
     },
-  
+
     exportFullImage() {
       console.log("Exporting full image...");
       if (this.chartReference) {
@@ -601,7 +656,7 @@
     },
     exportPdf() {
       const chartContainer = this.$refs.chartContainer;
-  
+
       if (chartContainer) {
         html2canvas(chartContainer).then((canvas) => {
           const imgData = canvas.toDataURL("image/jpeg", 1.0);
@@ -634,7 +689,6 @@
         this.closeAddNodeModal();
       }
     },
-    }
-  };
-  </script>
-  
+  },
+};
+</script>

@@ -1,30 +1,34 @@
 <template>
-  <div>
-    <form @submit.prevent="submitForm">
-      <label for="itemDropdown">Select an item:</label>
-      <select v-model="selectedItem" id="itemDropdown">
-  <option value="" disabled>Select an option</option>
-  <option v-for="quote in quotes" :key="quote.id" :value="quote.id">
-    {{ quote.emp_id }} -
-    {{ quote.name }}
-  </option>
-</select>
+  <div class="min-h-screen bg-gray-50 py-6 flex flex-col items-center justify-center relative overflow-hidden sm:py-12">
+    <input v-model="search" @click="toggleDropdown" type="search" placeholder="Search Here..." class="py-3 px-4 w-1/2 rounded shadow font-thin focus:outline-none focus:shadow-lg focus:shadow-slate-200 duration-100 shadow-gray-100">
 
-      <button type="submit">Submit</button>
-    </form>
-    <p v-if="selectedItem">Selected Item: {{ selectedItem }}</p>
+    <ul v-show="open" class="w-1/2">
+      <template v-for="item in filteredItems" :key="item">
+        <li class="w-full text-gray-700 p-4 mt-2 bg-white">{{ item.name }}</li>
+      </template>
+    </ul>
   </div>
+  
 </template>
 
 <script>
 export default {
-  name: 'TestingView',
+  name:'TesviVIew',
   data() {
     return {
+      search: '',
+      open: false,
+      items: ['Bitcoin', 'Ethereum', 'Siacoin'],
       quotes: [], // Array to hold fetched quotes
       displayedQuotes: [], // Array to hold subset of fetched quotes to display
       selectedItem: null // Variable to hold selected item
     };
+  },
+  computed: {
+    filteredItems() {
+      return this.quotes.filter((item) =>item.name.toLowerCase().includes(this.search.toLowerCase())
+      );
+    }
   },
   methods: {
     fetchData() {
@@ -50,15 +54,25 @@ console.log(this.quotes);
     submitForm() {
       // Handle form submission here, e.g., send selectedItem to server
       console.log('Form submitted. Selected item:', this.selectedItem);
+    },toggleDropdown() {
+      this.open = !this.open;
+      if (this.open) {
+        document.addEventListener('click', this.handleClickOutside);
+      } else {
+        document.removeEventListener('click', this.handleClickOutside);
+      }
+    },
+    handleClickOutside(event) {
+      if (!this.$el.contains(event.target)) {
+        this.open = false;
+        document.removeEventListener('click', this.handleClickOutside);
+      }
     }
   },
   mounted() {
     // Fetch data from API when component is mounted
     this.fetchData();
   }
+
 };
 </script>
-
-<style scoped>
-/* Your component-specific styles go here */
-</style>
