@@ -327,7 +327,7 @@
               location: item.homE_ADDRESS,
               department: item.department,
               description: "", // You may need to provide a description value
-              imageUrl: "", // You may need to provide an image URL
+              imageUrl: "https://gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50", // You may need to provide an image URL
             }));
   
             console.log("Fetched and modified data:", modifiedData);
