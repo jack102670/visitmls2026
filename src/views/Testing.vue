@@ -102,7 +102,9 @@
         >
         <h2 class="text-xl font-bold mb-4">Add Node</h2>
         <div class="mb-4">
-          <label for="nodeId" class="block text-gray-700 font-bold mb-2">Node ID:</label>
+          <label for="nodeId" class="block text-gray-700 font-bold mb-2"
+            >Node ID:</label
+          >
           <input
             type="text"
             id="nodeId"
@@ -111,7 +113,9 @@
           />
         </div>
         <div class="mb-4">
-          <label for="nodeName" class="block text-gray-700 font-bold mb-2">Node Name:</label>
+          <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+            >Node Name:</label
+          >
           <input
             type="text"
             id="nodeName"
@@ -120,7 +124,9 @@
           />
         </div>
         <div class="mb-4">
-          <label for="nodeName" class="block text-gray-700 font-bold mb-2">Parent Id:</label>
+          <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+            >Parent Id:</label
+          >
           <input
             type="text"
             id="nodeNameda"
@@ -138,466 +144,496 @@
       </div>
     </div>
     <!-- Your template -->
-   <!-- Your template -->
-   <div
-    v-if="isClickModal"
-    class="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
-    @click.self="closeClickModal"
-  >
-    <div class="modal-content bg-white rounded-lg p-8">
-      <!-- Modal header -->
-      <!-- Your existing modal header content -->
+    <!-- Your template -->
+    <div
+      v-if="isClickModal"
+      class="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
+      @click.self="closeClickModal"
+    >
+      <div class="modal-content bg-white rounded-lg p-8">
+        <!-- Modal header -->
+        <!-- Your existing modal header content -->
 
-      <!-- Modal content -->
-      <div class="mb-4">
-        <label for="nodeId" class="block text-gray-700 font-bold mb-2">Node ID:</label>
-        <input
-          type="text"
-          id="nodeId"
-          v-model="clickedNodeData.id"
-          :disabled="!isEditMode" 
-          class="border rounded-md px-4 py-2 w-full"
-        />
-      </div>
-      <div class="mb-4">
-        <label for="nodeName" class="block text-gray-700 font-bold mb-2">Node Name:</label>
-        <input
-          type="text"
-          id="nodeName"
-          v-model="clickedNodeData.name"
-          :disabled="!isEditMode" 
-          class="border rounded-md px-4 py-2 w-full"
-        />
-      </div>
-      <div class="mb-4">
-        <label for="nodeParentId" class="block text-gray-700 font-bold mb-2">Parent ID:</label>
-        <input
-          type="text"
-          id="nodeParentId"
-          v-model="clickedNodeData.parentId"
-          :disabled="!isEditMode"
-          class="border rounded-md px-4 py-2 w-full"
-        />
-      </div>
-      <!-- Add/Edit node button -->
-      <button
-  @click="toggleEditMode"
-  class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
->
-  {{ isEditMode ? 'Save' : 'Edit' }} <!-- Change button text based on edit mode -->
-</button>
+        <!-- Modal content -->
+        <div class="mb-4">
+          <label for="nodeId" class="block text-gray-700 font-bold mb-2"
+            >Node ID:</label
+          >
+          <input
+            type="text"
+            id="nodeId"
+            v-model="clickedNodeData.id"
+            :disabled="!isEditMode"
+            class="border rounded-md px-4 py-2 w-full"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+            >Node Name:</label
+          >
+          <input
+            type="text"
+            id="nodeName"
+            v-model="clickedNodeData.name"
+            :disabled="!isEditMode"
+            class="border rounded-md px-4 py-2 w-full"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
+            >Parent ID:</label
+          >
+          <input
+            type="text"
+            id="nodeParentId"
+            v-model="clickedNodeData.parentId"
+            :disabled="!isEditMode"
+            class="border rounded-md px-4 py-2 w-full"
+          />
+        </div>
+        <!-- Add/Edit node button -->
+        <button
+          @click="toggleEditMode"
+          class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+        >
+          {{ isEditMode ? "Save" : "Edit" }}
+          <!-- Change button text based on edit mode -->
+        </button>
 
-      <!-- Delete node button -->
-      <button
-  @click="deleteNode(clickedNodeData.id)"
-  class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
->
-  Delete
-</button>
-
+        <!-- Delete node button -->
+        <button
+          @click="deleteNode(clickedNodeData.id)"
+          class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+        >
+          Delete
+        </button>
+      </div>
     </div>
-  </div>
-
 
     <div ref="chartContainer"></div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-import { OrgChart } from 'd3-org-chart'
+import axios from "axios";
+import { OrgChart } from "d3-org-chart";
 
 // import employeesData from '../views/data'
-import html2canvas from 'html2canvas'
-import jsPDF from 'jspdf'
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 export default {
-  name: 'TestComponent',
+  name: "TestComponent",
   data() {
     return {
       isAddNodeModalOpen: false,
       newNode: {
-        id: '',
-        name: '',
-        parentId: ''
+        id: "",
+        name: "",
+        parentId: "",
         // Add more properties as needed
       },
       clickedNodeData: {
-        id: '',
-        name: '',
-        parentId: ''
+        id: "",
+        name: "",
+        parentId: "",
       },
       data: [],
       chartReference: null,
       layoutIndex: 0,
-      layoutPositions: ['top', 'right', 'left', 'bottom'],
+      layoutPositions: ["top", "right", "left", "bottom"],
       isFullscreen: false,
       highlightedNodeId: null,
-      searchQuery: '',
+      searchQuery: "",
       isChartMinimized: false,
       chart: null,
       isClickModal: false,
       isEditMode: false,
-    }
+    };
   },
   created() {
-    this.fetchData()
+    this.fetchData();
   },
   methods: {
     toggleEditMode() {
-    if (this.isEditMode) {
-      this.saveNode(); // Call saveNode method if in edit mode
-    } else {
-      this.isEditMode = !this.isEditMode; // Toggle edit mode
-    }
-  },
+      if (this.isEditMode) {
+        this.saveNode(); // Call saveNode method if in edit mode
+      } else {
+        this.isEditMode = !this.isEditMode; // Toggle edit mode
+      }
+    },
     async saveNode() {
-    try {
-      // Assuming you have an API endpoint for updating nodes
-      const response = await axios.put('your_api_endpoint_here', {
-        id: this.clickedNodeData.id,
-        name: this.clickedNodeData.name,
-        parentId: this.clickedNodeData.parentId,
-        // Add other properties as needed
-      });
-      
-      console.log('Node updated successfully:', response.data);
-      this.isClickModal = false; // Close the modal after successful update
-    } catch (error) {
-      console.error('Error updating node:', error);
-    }
-  },
-  deleteNode(nodeId) {
-    // Find the index of the node with the specified ID in the data array
-    const nodeIndex = this.data.findIndex(node => node.id === nodeId);
+      try {
+        // Assuming you have an API endpoint for updating nodes
+        const response = await axios.put("your_api_endpoint_here", {
+          id: this.clickedNodeData.id,
+          name: this.clickedNodeData.name,
+          parentId: this.clickedNodeData.parentId,
+          // Add other properties as needed
+        });
 
-    // If the node with the specified ID is found
-    if (nodeIndex !== -1) {
-      // Remove the node from the data array
-      this.data.splice(nodeIndex, 1);
-      // Re-render the chart to reflect the changes
-      this.renderChart();
-      // Close any modal or reset any state related to the deleted node if needed
-      this.isClickModal = false;
-    } else {
-      console.error('Node not found:', nodeId);
-    }
-  },
+        console.log("Node updated successfully:", response.data);
+        this.isClickModal = false; // Close the modal after successful update
+      } catch (error) {
+        console.error("Error updating node:", error);
+      }
+    },
+    deleteNode(nodeId) {
+      // Find the index of the node with the specified ID in the data array
+      const nodeIndex = this.data.findIndex((node) => node.id === nodeId);
+
+      // If the node with the specified ID is found
+      if (nodeIndex !== -1) {
+        // Remove the node from the data array
+        this.data.splice(nodeIndex, 1);
+        // Re-render the chart to reflect the changes
+        this.renderChart();
+        // Close any modal or reset any state related to the deleted node if needed
+        this.isClickModal = false;
+      } else {
+        console.error("Node not found:", nodeId);
+      }
+    },
 
     closeClickModal() {
-      this.isClickModal = false
+      this.isClickModal = false;
     },
     addNode() {
       // Here you can implement the logic to add the node based on this.clickedNodeData
       // For example, you can call an API to add the node to your data source
-      console.log('Adding node:', this.clickedNodeData)
+      console.log("Adding node:", this.clickedNodeData);
 
       // After adding the node, you might want to close the modal
-      this.isClickModal = false
+      this.isClickModal = false;
     },
     fetchData() {
-  axios
-    .get('http://172.28.28.91:86/api/User/Get_all_employees')
-    .then((response) => {
-      console.log('Fetched data:', response.data);
-      
-      // Extract the result array from the response data
-      const resultArray = response.data.result;
+      axios
+        .get("http://172.28.28.91:86/api/User/Get_all_employees")
+        .then((response) => {
+          console.log("Fetched data:", response.data);
 
-      // Transform keys of the items in the result array
-      const modifiedData = resultArray.map((item) => ({
-        id: item.emp_id,
-        parentId: item.reportinG_TO,
-        name: item.name,
-        positionName: item.positioN_TITLE,
-        phone: item.phonE_NUMBER,
-        email: item.emaiL_ADDRESS,
-        team: "", // You may need to provide a value for the team key
-        location: item.homE_ADDRESS,
-        department: item.department,
-        description: "", // You may need to provide a description value
-        imageUrl: "", // You may need to provide an image URL
-      }));
+          // Extract the result array from the response data
+          const resultArray = response.data.result;
 
-      console.log('Fetched and modified data:', modifiedData);
+          // Transform keys of the items in the result array
+          const modifiedData = resultArray.map((item) => ({
+            id: item.emp_id,
+            parentId: item.reportinG_TO,
+            name: item.name,
+            positionName: item.positioN_TITLE,
+            phone: item.phonE_NUMBER,
+            email: item.emaiL_ADDRESS,
+            team: "", // You may need to provide a value for the team key
+            location: item.homE_ADDRESS,
+            department: item.department,
+            description: "", // You may need to provide a description value
+            imageUrl: "", // You may need to provide an image URL
+          }));
 
-      // Assign the modified data to your component's data property
-      this.data = modifiedData;
+          console.log("Fetched and modified data:", modifiedData);
 
-      // Perform any other actions with the data
-      // For example, render a chart
-      this.renderChart();
-    })
-    .catch((error) => {
-      console.error('Error fetching data:', error);
+          // Assign the modified data to your component's data property
+          this.data = modifiedData;
+
+          // Perform any other actions with the data
+          // For example, render a chart
+          this.renderChart();
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    
+
+    // Promise.resolve(employeesData)
+    //   .then((data) => {
+    //     console.log('Fetched data:', data)
+    //     this.data = data
+    //     this.renderChart()
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error fetching data:', error)
+    //   })
+  },
+  renderChart() {
+    console.log("renderChart method called");
+    console.log("Value of this:", this);
+    // Existing logic of the renderChart method...
+
+    if (!this.chartReference) {
+      this.chartReference = new OrgChart();
+    }
+
+    this.chartReference
+      .container(this.$refs.chartContainer)
+      .data(this.data)
+      .nodeWidth(() => 250)
+          .initialZoom(0.7)
+          .nodeHeight(() => 175)
+          .childrenMargin(() => 40)
+          .compactMarginBetween(() => 15)
+          .compactMarginPair(() => 80)
+      .nodeContent((d) => {
+
+        return `
+            <div style="padding-top:30px;background-color:none;margin-left:1px;height:${
+              d.height
+            }px;border-radius:2px;overflow:visible">
+              <div style="height:${
+                d.height - 32
+              }px;padding-top:0px;background-color:white;border:1px solid lightgray;">
+
+                <img src=" ${
+                  d.data.imageUrl
+                }" style="margin-top:-30px;margin-left:${d.width / 2 - 30}px;border-radius:100px;width:60px;height:60px;" />
+
+               <div style="margin-right:10px;margin-top:1px;float:right;font-size:10px">${
+                 d.data.id
+               }</div>
+               
+               <div style="margin-top:-30px;background-color:#293171;height:10px;width:${
+                 d.width - 2
+               }px;border-radius:1px"></div>
+
+               <div style="padding:20px; padding-top:35px;text-align:center">
+                   <div style="color:#111672;font-size:10px;font-weight:bold"> ${
+                     d.data.name
+                   } </div>
+                   <div style="color:#404040;font-size:10px;margin-top:4px"> ${
+                     d.data.positionName
+                   } </div>
+               </div> 
+               <div style="display:flex;justify-content:space-between;padding-left:15px;padding-right:15px;">
+                 <div > Manages:  ${d.data._directSubordinates} 👤</div>  
+                 <div > Oversees: ${d.data._totalSubordinates} 👤</div>    
+               </div>
+              </div>     
+      </div>
+  `;
+          })
+      .layout(this.layoutPositions[this.layoutIndex])
+      .render();
+    this.chartReference.onNodeClick((node) => {
+      // Assuming `node` contains the data directly
+      this.clickedNodeData = {
+        id: node.data.id,
+        parentId: node.data.parentId,
+        name: node.data.name,
+        positionName: node.data.positionName,
+        phone: node.data.phone,
+      };
+
+      // Log the clicked node data for debugging
+      console.log("Clicked Node Data:", this.clickedNodeData);
+
+      // Open the add node modal
+      this.isClickModal = true;
     });
-},
 
-      // Promise.resolve(employeesData)
-      //   .then((data) => {
-      //     console.log('Fetched data:', data)
-      //     this.data = data
-      //     this.renderChart()
-      //   })
-      //   .catch((error) => {
-      //     console.error('Error fetching data:', error)
-      //   })
-    },
-    renderChart() {
-   
-  console.log('renderChart method called');
-  console.log('Value of this:', this);
-  // Existing logic of the renderChart method...
+    console.log("Chart rendered:", this.chartReference);
+  },
+  fitChart() {
+    if (this.chartReference) {
+      this.chartReference.fit();
+    }
+  },
+  cycleLayout() {
+    this.layoutIndex = (this.layoutIndex + 1) % this.layoutPositions.length;
 
-
-      if (!this.chartReference) {
-        this.chartReference = new OrgChart()
+    this.renderChart();
+  },
+  fullscreen() {
+    const chartContainer = this.$refs.chartContainer;
+    if (!this.isFullscreen) {
+      if (chartContainer.requestFullscreen) {
+        chartContainer.requestFullscreen();
+      } else if (chartContainer.mozRequestFullScreen) {
+        /* Firefox */
+        chartContainer.mozRequestFullScreen();
+      } else if (chartContainer.webkitRequestFullscreen) {
+        /* Chrome, Safari & Opera */
+        chartContainer.webkitRequestFullscreen();
+      } else if (chartContainer.msRequestFullscreen) {
+        /* IE/Edge */
+        chartContainer.msRequestFullscreen();
       }
-      this.chartReference
-        .container(this.$refs.chartContainer)
-        .data(this.data)
-        .nodeHeight(() => 85 + 25)
-        .nodeWidth(() => 220 + 2)
-        .childrenMargin(() => 50)
-        .compactMarginBetween(() => 35)
-        .compactMarginPair(() => 30)
-        .neighbourMargin(() => 20)
-        .nodeContent((d) => {
-          const color = '#FBF3F2'
-
-          const imageDiffVert = 25 + 2
-          return `
-            <div style='width:${d.width}px;height:${d.height}px;padding-top:${imageDiffVert - 2}px;padding-left:1px;padding-right:1px'>
-              <div style="font-family: 'Inter', sans-serif;background-color:${color};margin-left:-1px;width:${d.width - 2}px;height:${d.height - imageDiffVert}px;border-radius:10px;border: ${this.highlightedNodeId === d.data.id ? '5px solid #9c8321' : '1px solid #9c8321'}">
-                <div style="display:flex;justify-content:flex-end;margin-top:5px;margin-right:8px">#${d.data.id}</div>
-                <div style="background-color:${color};margin-top:${-imageDiffVert - 20}px;margin-left:${15}px;border-radius:100px;width:50px;height:50px;"></div>
-                <div style="margin-top:${-imageDiffVert - 20}px;"><img src="${d.data.imageUrl}" style="margin-left:${20}px;border-radius:100px;width:40px;height:40px;" /></div>
-                <div style="font-size:15px;color:#032539;margin-left:20px;margin-top:10px">${d.data.name}</div>
-                <div style="color:#9C8321;margin-left:20px;margin-top:3px;font-size:10px;">${d.data.department}</div>
-                <div style="color:#032539;margin-left:10px;margin-top:10px;font-size:6px;">${d.data.description}</div>
-              </div>
-            </div>
-          `
-        })
-        .layout(this.layoutPositions[this.layoutIndex])
-        .render()
-        this.chartReference.onNodeClick((node) => {
-  // Assuming `node` contains the data directly
-  this.clickedNodeData = {
-    id: node.data.id,
-    parentId: node.data.parentId,
-    name: node.data.name,
-    positionName: node.data.positionName,
-    phone: node.data.phone
-  };
-
-  // Log the clicked node data for debugging
-  console.log('Clicked Node Data:', this.clickedNodeData);
-
-  // Open the add node modal
-  this.isClickModal = true;
-});
-
-
-      console.log('Chart rendered:', this.chartReference)
-    },
-    fitChart() {
-      if (this.chartReference) {
-        this.chartReference.fit()
-      }
-    },
-    cycleLayout() {
-      this.layoutIndex = (this.layoutIndex + 1) % this.layoutPositions.length
-
-      this.renderChart()
-    },
-    fullscreen() {
-      const chartContainer = this.$refs.chartContainer
-      if (!this.isFullscreen) {
-        if (chartContainer.requestFullscreen) {
-          chartContainer.requestFullscreen()
-        } else if (chartContainer.mozRequestFullScreen) {
-          /* Firefox */
-          chartContainer.mozRequestFullScreen()
-        } else if (chartContainer.webkitRequestFullscreen) {
-          /* Chrome, Safari & Opera */
-          chartContainer.webkitRequestFullscreen()
-        } else if (chartContainer.msRequestFullscreen) {
-          /* IE/Edge */
-          chartContainer.msRequestFullscreen()
-        }
-      } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen()
-        } else if (document.mozCancelFullScreen) {
-          /* Firefox */
-          document.mozCancelFullScreen()
-        } else if (document.webkitExitFullscreen) {
-          /* Chrome, Safari & Opera */
-          document.webkitExitFullscreen()
-        } else if (document.msExitFullscreen) {
-          /* IE/Edge */
-          document.msExitFullscreen()
-        }
-      }
-      this.isFullscreen = !this.isFullscreen
-    },
-    toggleHighlight(nodeId) {
-      if (this.highlightedNodeId === nodeId) {
-        this.clearHighlighting()
-      } else {
-        this.setHighlighted(nodeId)
-      }
-    },
-    setHighlighted(nodeId) {
-      // Your code to highlight the specified node
-      // Example:
-      // Update node class, change color, etc.
-      this.highlightedNodeId = nodeId
-      // Trigger re-rendering of the chart
-      this.renderChart()
-    },
-    clearHighlighting() {
-      // Your code to clear highlighting
-      // Example:
-      // Reset all nodes to default state
-      this.highlightedNodeId = null
-      // Trigger re-rendering of the chart
-      this.renderChart()
-    },
-    filterChart(event) {
-      const value = event.target.value.toLowerCase()
-      const chart = this.chartReference
-
-      // Clear previous highlighting
-      chart.clearHighlighting()
-
-      // Get chart nodes
-      const data = chart.data()
-      let foundNode = null
-
-      // Un-minimize the chart if it's currently minimized
-
-      // Loop over data and check if input value matches any name
-      data.forEach((d) => {
-        if (value !== '' && d.name && d.name.toLowerCase().includes(value)) {
-          // If matches, mark node as highlighted
-          d._highlighted = true
-          d._expanded = true
-          // Keep track of the first matching node found
-          if (!foundNode) {
-            foundNode = d
-          }
-        }
-      })
-
-      // Update data and re-render the chart
-      chart.data(data).render().fit()
-
-      // If a matching node is found, navigate to it
-      if (foundNode) {
-        // Delay focusing on the node to ensure it's rendered
-        setTimeout(() => {
-          const nodeElement = document.querySelector(`[data-node-id="${foundNode.id}"]`)
-          if (nodeElement) {
-            nodeElement.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })
-          }
-        }, 200) // Adjust delay as needed
-      }
-    },
-    expandAllNodes() {
-      if (this.chartReference) {
-        this.chartReference.expandAll().fit()
-      }
-    },
-    collapseAllNodes() {
-      if (this.chartReference) {
-        this.chartReference.collapseAll().fit()
-      }
-    },
-    exportCurrentImage() {
-      console.log('Exporting current image...')
-      if (this.chartReference) {
-        this.chartReference.exportImg({
-          save: true,
-          format: 'png',
-          quality: 1,
-          full: false,
-          background: '#ffffff',
-          width: null,
-          height: null,
-          filename: 'chart',
-          style: {
-            'font-family': 'Arial',
-            'font-size': '12px',
-            'text-align': 'left',
-            'background-color': '#ffffff'
-          }
-        })
-      }
-    },
-
-    exportFullImage() {
-      console.log('Exporting full image...')
-      if (this.chartReference) {
-        this.chartReference.exportImg({
-          save: true,
-          format: 'png',
-          quality: 1,
-          full: true,
-          background: '#ffffff',
-          width: null,
-          height: null,
-          filename: 'chart',
-          style: {
-            'font-family': 'Arial',
-            'font-size': '12px',
-            'text-align': 'left',
-            'background-color': '#ffffff'
-          }
-        })
-      }
-    },
-    exportSvg() {
-      if (this.chartReference) {
-        this.chartReference.exportSvg()
-      }
-    },
-    exportPdf() {
-      const chartContainer = this.$refs.chartContainer
-
-      if (chartContainer) {
-        html2canvas(chartContainer).then((canvas) => {
-          const imgData = canvas.toDataURL('image/jpeg', 1.0)
-          const pdf = new jsPDF()
-          const width = pdf.internal.pageSize.getWidth()
-          const height = (canvas.height * width) / canvas.width
-          pdf.addImage(imgData, 'JPEG', 0, 0, width, height)
-          pdf.save('chart.pdf')
-        })
-      }
-    },
-    showAddNodeModal() {
-      this.isAddNodeModalOpen = true
-    },
-    closeAddNodeModal() {
-      this.isAddNodeModalOpen = false
-    },
-    addNodeToRoot() {
-      if (this.chartReference) {
-        // Call the method to add a node to the root with the values from the form
-        this.chartReference.addNode(this.newNode).render()
-        // Reset the form values
-        this.newNode = {
-          id: '',
-          name: '',
-          parentId: ''
-          // Reset other properties as needed
-        }
-        // Close the modal
-        this.closeAddNodeModal()
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        /* Firefox */
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        /* Chrome, Safari & Opera */
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        /* IE/Edge */
+        document.msExitFullscreen();
       }
     }
-  }
+    this.isFullscreen = !this.isFullscreen;
+  },
+  toggleHighlight(nodeId) {
+    if (this.highlightedNodeId === nodeId) {
+      this.clearHighlighting();
+    } else {
+      this.setHighlighted(nodeId);
+    }
+  },
+  setHighlighted(nodeId) {
+    // Your code to highlight the specified node
+    // Example:
+    // Update node class, change color, etc.
+    this.highlightedNodeId = nodeId;
+    // Trigger re-rendering of the chart
+    this.renderChart();
+  },
+  clearHighlighting() {
+    // Your code to clear highlighting
+    // Example:
+    // Reset all nodes to default state
+    this.highlightedNodeId = null;
+    // Trigger re-rendering of the chart
+    this.renderChart();
+  },
+  filterChart(event) {
+    const value = event.target.value.toLowerCase();
+    const chart = this.chartReference;
 
+    // Clear previous highlighting
+    chart.clearHighlighting();
+
+    // Get chart nodes
+    const data = chart.data();
+    let foundNode = null;
+
+    // Un-minimize the chart if it's currently minimized
+
+    // Loop over data and check if input value matches any name
+    data.forEach((d) => {
+      if (value !== "" && d.name && d.name.toLowerCase().includes(value)) {
+        // If matches, mark node as highlighted
+        d._highlighted = true;
+        d._expanded = true;
+        // Keep track of the first matching node found
+        if (!foundNode) {
+          foundNode = d;
+        }
+      }
+    });
+
+    // Update data and re-render the chart
+    chart.data(data).render().fit();
+
+    // If a matching node is found, navigate to it
+    if (foundNode) {
+      // Delay focusing on the node to ensure it's rendered
+      setTimeout(() => {
+        const nodeElement = document.querySelector(
+          `[data-node-id="${foundNode.id}"]`
+        );
+        if (nodeElement) {
+          nodeElement.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "center",
+          });
+        }
+      }, 200); // Adjust delay as needed
+    }
+  },
+  expandAllNodes() {
+    if (this.chartReference) {
+      this.chartReference.expandAll().fit();
+    }
+  },
+  collapseAllNodes() {
+    if (this.chartReference) {
+      this.chartReference.collapseAll().fit();
+    }
+  },
+  exportCurrentImage() {
+    console.log("Exporting current image...");
+    if (this.chartReference) {
+      this.chartReference.exportImg({
+        save: true,
+        format: "png",
+        quality: 1,
+        full: false,
+        background: "#ffffff",
+        width: null,
+        height: null,
+        filename: "chart",
+        style: {
+          "font-family": "Arial",
+          "font-size": "12px",
+          "text-align": "left",
+          "background-color": "#ffffff",
+        },
+      });
+    }
+  },
+
+  exportFullImage() {
+    console.log("Exporting full image...");
+    if (this.chartReference) {
+      this.chartReference.exportImg({
+        save: true,
+        format: "png",
+        quality: 1,
+        full: true,
+        background: "#ffffff",
+        width: null,
+        height: null,
+        filename: "chart",
+        style: {
+          "font-family": "Arial",
+          "font-size": "12px",
+          "text-align": "left",
+          "background-color": "#ffffff",
+        },
+      });
+    }
+  },
+  exportSvg() {
+    if (this.chartReference) {
+      this.chartReference.exportSvg();
+    }
+  },
+  exportPdf() {
+    const chartContainer = this.$refs.chartContainer;
+
+    if (chartContainer) {
+      html2canvas(chartContainer).then((canvas) => {
+        const imgData = canvas.toDataURL("image/jpeg", 1.0);
+        const pdf = new jsPDF();
+        const width = pdf.internal.pageSize.getWidth();
+        const height = (canvas.height * width) / canvas.width;
+        pdf.addImage(imgData, "JPEG", 0, 0, width, height);
+        pdf.save("chart.pdf");
+      });
+    }
+  },
+  showAddNodeModal() {
+    this.isAddNodeModalOpen = true;
+  },
+  closeAddNodeModal() {
+    this.isAddNodeModalOpen = false;
+  },
+  addNodeToRoot() {
+    if (this.chartReference) {
+      // Call the method to add a node to the root with the values from the form
+      this.chartReference.addNode(this.newNode).render();
+      // Reset the form values
+      this.newNode = {
+        id: "",
+        name: "",
+        parentId: "",
+        // Reset other properties as needed
+      };
+      // Close the modal
+      this.closeAddNodeModal();
+    }
+  },
+  }
+};
 </script>
