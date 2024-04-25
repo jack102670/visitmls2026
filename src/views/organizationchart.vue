@@ -124,38 +124,33 @@
           />
         </div>
         <div class="mb-4">
-          <label for="nodeName" class="block text-gray-700 font-bold mb-2"
-            >Parent Id:</label
-          >
+  <label for="nodeName" class="block text-gray-700 font-bold mb-2">Parent Id:</label>
+  <!-- Search input -->
+  <input
+    type="text"
+    v-model="searchQuery"
+    placeholder="Search..."
+    @input="showDropdownmethod" 
+    class="border rounded-md px-4 py-2 w-full"
+  />
+  <!-- Dropdown list -->
+  <select
+    v-if="showDropdown && filteredData.length > 0" 
+    id="nodeNameda"
+    v-model="newNode.parentId"
+    class="border rounded-md px-4 py-2 w-full"
+  >
+    <option value="">Select Parent Id</option>
+    <!-- Dropdown options -->
+    <option v-for="item in filteredData" :key="item.id" :value="item.id">
+      {{ item.id }} - {{ item.name }} 
+    </option>
+  </select>
+  <div v-else-if="showDropdown && filteredData.length === 0" class="border rounded-md px-4 py-2 w-full">
+    No results found
+  </div>
+</div>
 
-          <!-- Search input -->
-          <div
-            class="min-h-auto bg-gray-50 py-6 flex flex-col items-center justify-center relative overflow-hidden sm:py-12"
-          >
-            <input
-              v-model="search"
-              @click="toggleDropdown"
-              type="search"
-              placeholder="Search Here..."
-              class="py-3 px-4 w-1/2 rounded shadow font-thin focus:outline-none focus:shadow-lg focus:shadow-slate-200 duration-100 shadow-gray-100"
-            />
-
-            <select
-              id="nodeNameda"
-              v-model="newNode.parentId"
-              class="border rounded-md px-4 py-2 w-full"
-            >
-              <option value="">Select Parent Id</option>
-              <option
-                v-for="item in filteredItems"
-                :key="item.id"
-                :value="item.id"
-              >
-                {{ item.id }} - {{ item.name }}
-              </option>
-            </select>
-          </div>
-        </div>
 
         <!-- Add more input fields for other properties if needed -->
         <button
@@ -273,39 +268,20 @@ export default {
       isClickModal: false,
       isEditMode: false,
       showDropdown: false,
-      search: "",
-      open: false,
     };
   },
   computed: {
     filteredData() {
-      return this.data.filter((item) =>
-        item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
-    },
-    filteredItems() {
-      return this.data.filter((item) =>
-        item.name.toLowerCase().startsWith(this.search.toLowerCase())
-      );
+      return this.data.filter(item => item.name.toLowerCase().includes(this.searchQuery.toLowerCase()));
     },
   },
   created() {
     this.fetchData();
   },
   methods: {
-    toggleDropdown() {
-      this.open = !this.open;
-      if (this.open) {
-        document.addEventListener("click", this.handleClickOutside);
-      } else {
-        document.removeEventListener("click", this.handleClickOutside);
-      }
-    },
-    handleClickOutside(event) {
-      if (!this.$el.contains(event.target)) {
-        this.open = false;
-        document.removeEventListener("click", this.handleClickOutside);
-      }
+    
+    showDropdownmethod() {
+      this.showDropdown = true; // Set showDropdown to true when input is entered
     },
     toggleEditMode() {
       if (this.isEditMode) {
