@@ -126,30 +126,31 @@
         <div class="mb-4">
   <label for="nodeName" class="block text-gray-700 font-bold mb-2">Parent Id:</label>
   <!-- Search input -->
-  <input
-    type="text"
-    v-model="searchQuery"
-    placeholder="Search..."
-    @input="showDropdownmethod" 
-    class="border rounded-md px-4 py-2 w-full"
-  />
-  <!-- Dropdown list -->
-  <select
-    v-if="showDropdown && filteredData.length > 0" 
-    id="nodeNameda"
-    v-model="newNode.parentId"
-    class="border rounded-md px-4 py-2 w-full"
-  >
-    <option value="">Select Parent Id</option>
-    <!-- Dropdown options -->
-    <option v-for="item in filteredData" :key="item.id" :value="item.id">
-      {{ item.id }} - {{ item.name }} 
-    </option>
-  </select>
-  <div v-else-if="showDropdown && filteredData.length === 0" class="border rounded-md px-4 py-2 w-full">
-    No results found
-  </div>
-</div>
+ 
+      <input
+        id="autocompleteInput"
+        placeholder="Select country name"
+        class="px-5 py-3 w-full border border-gray-300 rounded-md"
+        v-model="newNode.parentId"
+    
+        @keyup="onKeyUp"
+      />
+      <div
+        id="dropdown"
+        class="w-80 h-60 border border-gray-300 rounded-md bg-white absolute overflow-y-auto"
+        v-show="showDropdown"
+      >
+        <div
+          v-for="item in filteredData"
+          :key="item.name"
+          @click="selectOption(item.id)"
+          class="px-5 py-3 border-b border-gray-200 text-stone-600 cursor-pointer hover:bg-slate-100 transition-colors overflow-y-auto"
+          
+        >
+         {{ item.id }} - {{ item.name }}
+        </div>
+      </div>
+    </div>
 
 
         <!-- Add more input fields for other properties if needed -->
@@ -244,6 +245,7 @@ export default {
   name: "TestComponent",
   data() {
     return {
+      keyword: '',
       isAddNodeModalOpen: false,
       newNode: {
         id: "",
@@ -272,17 +274,27 @@ export default {
   },
   computed: {
     filteredData() {
-      return this.data.filter(item => item.name.toLowerCase().includes(this.searchQuery.toLowerCase()));
+      return this.data.filter(item => item.name.toUpperCase().includes(this.newNode.parentId.toUpperCase()));
+    },
+    
+    filteredCountries() {
+      return this.data.filter(item =>
+        item.name.toLowerCase().includes(this.keyword.toLowerCase())
+      );
     },
   },
   created() {
     this.fetchData();
   },
-  methods: {
-    
-    showDropdownmethod() {
-      this.showDropdown = true; // Set showDropdown to true when input is entered
+  methods: { onKeyUp() {
+      this.showDropdown = true;
     },
+    selectOption(selectedOption) {
+      this.newNode.parentId = selectedOption;
+      this.showDropdown = false;
+    },
+    
+   
     toggleEditMode() {
       if (this.isEditMode) {
         this.saveNode(); // Call saveNode method if in edit mode
@@ -668,3 +680,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+#dropdown {
+  max-height: 200px; /* Adjust this value to fit your needs */
+}
+</style>
