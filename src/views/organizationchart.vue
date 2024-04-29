@@ -94,45 +94,52 @@
       class="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
       @click.self="closeAddNodeModal"
     >
-      <div class="modal-content bg-white rounded-lg p-8">
-        <span
-          @click="closeAddNodeModal"
-          class="close absolute top-0 right-0 mt-4 mr-4 text-gray-600 cursor-pointer"
-          >&times;</span
-        >
-        <h2 class="text-xl font-bold mb-4">Add Node</h2>
-        <div class="mb-4">
-          <label for="nodeId" class="block text-gray-700 font-bold mb-2"
-            >Node ID:</label
-          >
-          <input
-            type="text"
-            id="nodeId"
-            v-model="newNode.id"
-            class="border rounded-md px-4 py-2 w-full"
-          />
-        </div>
-        <div class="mb-4">
-          <label for="nodeName" class="block text-gray-700 font-bold mb-2"
-            >Node Name:</label
-          >
-          <input
-            type="text"
-            id="nodeName"
-            v-model="newNode.name"
-            class="border rounded-md px-4 py-2 w-full"
-          />
-        </div>
-        <div class="mb-4">
-  <label for="nodeName" class="block text-gray-700 font-bold mb-2">Parent Id:</label>
-  <!-- Search input -->
- 
+    <div
+  class="modal-content bg-white rounded-lg p-8"
+  style="max-height: calc(100vh - 20px); overflow-y: auto;"
+>
+  <span
+    @click="closeAddNodeModal"
+    class="close absolute top-0 right-0 mt-4 mr-4 text-gray-600 cursor-pointer"
+    >&times;</span
+  >
+  <h2 class="text-xl font-bold mb-4">Add Node</h2>
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+  >
+    <div class="mb-4">
+      <label for="nodeId" class="block text-gray-700 font-bold mb-2"
+        >Node ID:</label
+      >
+      <input
+        type="text"
+        id="nodeId"
+        v-model="newNode.id"
+        class="border rounded-md px-4 py-2 w-full"
+      />
+    </div>
+    <div class="mb-4">
+      <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+        >Node Name:</label
+      >
+      <input
+        type="text"
+        id="nodeName"
+        v-model="newNode.name"
+        class="border rounded-md px-4 py-2 w-full"
+      />
+    </div>
+    <div class="mb-4">
+      <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+        >Parent Id:</label
+      >
+      <!-- Search input -->
+
       <input
         id="autocompleteInput"
         placeholder="Select country name"
         class="px-5 py-3 w-full border border-gray-300 rounded-md"
         v-model="newNode.parentId"
-    
         @keyup="onKeyUp"
       />
       <div
@@ -145,22 +152,100 @@
           :key="item.name"
           @click="selectOption(item.id)"
           class="px-5 py-3 border-b border-gray-200 text-stone-600 cursor-pointer hover:bg-slate-100 transition-colors overflow-y-auto"
-          
         >
-         {{ item.id }} - {{ item.name }}
+          {{ item.id }} - {{ item.name }}
         </div>
       </div>
     </div>
+    <div class="mb-4">
+      <label for="positionCode" class="block text-gray-700 font-bold mb-2"
+        >Position Code:</label
+      >
+      <input
+        type="text"
+        id="positionCode"
+        v-model="newNode.positionCode"
+        class="border rounded-md px-4 py-2 w-full"
+      />
+    </div>
+    <div class="mb-4">
+      <label for="positionTitle" class="block text-gray-700 font-bold mb-2"
+        >Position Title:</label
+      >
+      <input
+        type="text"
+        id="positionTitle"
+        v-model="newNode.positionTitle"
+        class="border rounded-md px-4 py-2 w-full"
+      />
+    </div>
+    <div class="mb-4">
+      <label for="emailAddress" class="block text-gray-700 font-bold mb-2"
+        >Email Address:</label
+      >
+      <input
+        type="email"
+        id="emailAddress"
+        v-model="newNode.emailAddress"
+        class="border rounded-md px-4 py-2 w-full"
+      />
+    </div>
+    <div class="mb-4">
+      <label for="phoneNumber" class="block text-gray-700 font-bold mb-2"
+        >Phone Number:</label
+      >
+      <input
+        type="text"
+        id="phoneNumber"
+        v-model="newNode.phoneNumber"
+        class="border rounded-md px-4 py-2 w-full"
+      />
+    </div>
+    <div class="mb-4">
+      <label for="homeAddress" class="block text-gray-700 font-bold mb-2"
+        >Home Address:</label
+      >
+      <input
+        type="text"
+        id="homeAddress"
+        v-model="newNode.homeAddress"
+        class="border rounded-md px-4 py-2 w-full"
+      />
+    </div>
+    <div class="mb-4">
+      <label for="spouse" class="block text-gray-700 font-bold mb-2"
+        >Spouse:</label
+      >
+      <input
+        type="text"
+        id="spouse"
+        v-model="newNode.spouse"
+        class="border rounded-md px-4 py-2 w-full"
+      />
+    </div>
+    <div class="mb-4">
+      <label for="department" class="block text-gray-700 font-bold mb-2"
+        >Department:</label
+      >
+      <input
+        type="text"
+        id="department"
+        v-model="newNode.department"
+        class="border rounded-md px-4 py-2 w-full"
+      />
+    </div>
+  </div>
 
+  <button
+    @click="addNodeAndSave"
+    class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+  >
+    Add Node
+  </button>
+</div>
 
-        <!-- Add more input fields for other properties if needed -->
-        <button
-          @click="addNodeToRoot"
-          class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
-        >
-          Add Node
-        </button>
-      </div>
+    
+
     </div>
     <!-- Your template -->
     <!-- Your template -->
@@ -236,23 +321,35 @@
 <script>
 import axios from "axios";
 import { OrgChart } from "d3-org-chart";
+import FormData from 'form-data';
+
+
 
 // import employeesData from '../views/data'
 import html2canvas from "html2canvas";
+// import { POSITION } from "html2canvas/dist/types/css/property-descriptors/position";
 import jsPDF from "jspdf";
 
 export default {
   name: "TestComponent",
   data() {
     return {
-      keyword: '',
+      keyword: "",
       isAddNodeModalOpen: false,
       newNode: {
-        id: "",
-        name: "",
-        parentId: "",
-        // Add more properties as needed
-      },
+  id: "",
+  name: "",
+  parentId: "",
+  reporting_to: "",
+  position_code: "",
+  position_title: "",
+  email_address: "",
+  phone_number: "",
+  home_address: "",
+  spouse: "",
+  department: ""
+  // Add more properties as needed
+},
       clickedNodeData: {
         id: "",
         name: "",
@@ -274,11 +371,13 @@ export default {
   },
   computed: {
     filteredData() {
-      return this.data.filter(item => item.name.toUpperCase().includes(this.newNode.parentId.toUpperCase()));
+      return this.data.filter((item) =>
+        item.name.toUpperCase().includes(this.newNode.parentId.toUpperCase())
+      );
     },
-    
+
     filteredCountries() {
-      return this.data.filter(item =>
+      return this.data.filter((item) =>
         item.name.toLowerCase().includes(this.keyword.toLowerCase())
       );
     },
@@ -286,15 +385,15 @@ export default {
   created() {
     this.fetchData();
   },
-  methods: { onKeyUp() {
+  methods: {
+    onKeyUp() {
       this.showDropdown = true;
     },
     selectOption(selectedOption) {
       this.newNode.parentId = selectedOption;
       this.showDropdown = false;
     },
-    
-   
+
     toggleEditMode() {
       if (this.isEditMode) {
         this.saveNode(); // Call saveNode method if in edit mode
@@ -302,38 +401,80 @@ export default {
         this.isEditMode = !this.isEditMode; // Toggle edit mode
       }
     },
-    async saveNode() {
-      try {
-        // Assuming you have an API endpoint for updating nodes
-        const response = await axios.put("your_api_endpoint_here", {
-          id: this.clickedNodeData.id,
-          name: this.clickedNodeData.name,
-          parentId: this.clickedNodeData.parentId,
-          // Add other properties as needed
-        });
+    async addNodeAndSave() {
+  try {
+    // First, add the node to the organization chart
+    if (this.chartReference) {
+      // Add the node to the chart
+      this.chartReference.addNode(this.newNode).render();
+    }
 
-        console.log("Node updated successfully:", response.data);
-        this.isClickModal = false; // Close the modal after successful update
-      } catch (error) {
-        console.error("Error updating node:", error);
-      }
-    },
-    deleteNode(nodeId) {
-      // Find the index of the node with the specified ID in the data array
-      const nodeIndex = this.data.findIndex((node) => node.id === nodeId);
+    // Then, save the node data to the database
+    const formData = new FormData();
+    formData.append('emp_id', this.newNode.id);
+    formData.append('name', this.newNode.name);
+    formData.append('reporting_to', this.newNode.reporting_to);
+    formData.append('position_code', this.newNode.position_code);
+    formData.append('position_title', this.newNode.position_title);
+    formData.append('email_address', this.newNode.email_address);
+    formData.append('phone_number', this.newNode.phone_number);
+    formData.append('home_address', this.newNode.home_address);
+    formData.append('spouse', this.newNode.spouse);
+    formData.append('department', this.newNode.department);
 
-      // If the node with the specified ID is found
-      if (nodeIndex !== -1) {
-        // Remove the node from the data array
-        this.data.splice(nodeIndex, 1);
-        // Re-render the chart to reflect the changes
-        this.renderChart();
-        // Close any modal or reset any state related to the deleted node if needed
-        this.isClickModal = false;
-      } else {
-        console.error("Node not found:", nodeId);
-      }
-    },
+    // Make the POST request using axios
+    const uploadResponse = await axios.post(
+      'http://172.28.28.91:97/api/Admin/InsertNewEmployee',
+      formData,
+    );
+
+    console.log('Node added and saved successfully:', uploadResponse.data);
+    // Reset the form values
+    this.newNode = {
+      id: "",
+      name: "",
+      parentId: "",
+      reporting_to: "",
+      position_code: "",
+      position_title: "",
+      email_address: "",
+      phone_number: "",
+      home_address: "",
+      spouse: "",
+      department: ""
+      // Add other properties as needed
+    };
+  } catch (error) {
+    console.error('Error adding and saving node:', error);
+    // Handle errors
+  }
+},
+
+  
+    async deleteNode(nodeId) {
+  try {
+    // Send a request to your API to delete the node using the nodeId
+    await axios.delete(`http://172.28.28.91:97/api/Admin/DeleteEmployee/${nodeId}`);
+    
+    // If the deletion is successful, remove the node from the data array
+    const nodeIndex = this.data.findIndex((node) => node.id === nodeId);
+    if (nodeIndex !== -1) {
+      this.data.splice(nodeIndex, 1);
+      
+      // Re-render the chart to reflect the changes
+      this.renderChart();
+      
+      // Close any modal or reset any state related to the deleted node if needed
+      this.isClickModal = false;
+    } else {
+      console.error("Node not found:", nodeId);
+    }
+  } catch (error) {
+    console.error("Error deleting node:", error);
+    // Handle errors, such as displaying an error message to the user
+  }
+},
+
 
     closeClickModal() {
       this.isClickModal = false;
@@ -349,7 +490,7 @@ export default {
     },
     fetchData() {
       axios
-        .get("http://172.28.28.91:86/api/User/Get_all_employees")
+        .get("http://172.28.28.91:97/api/User/GetAllEmployees")
         .then((response) => {
           console.log("Fetched data:", response.data);
 
@@ -359,17 +500,16 @@ export default {
           // Transform keys of the items in the result array
           const modifiedData = resultArray.map((item) => ({
             id: item.emp_id,
-            parentId: item.reportinG_TO,
+            parentId: item.reporting_to,
             name: item.name,
-            positionName: item.positioN_TITLE,
-            phone: item.phonE_NUMBER,
-            email: item.emaiL_ADDRESS,
+            positionName: item.position_title,
+            phone: item.phone_number,
+            email: item.email_address,
             team: "", // You may need to provide a value for the team key
-            location: item.homE_ADDRESS,
+            location: item.home_address,
             department: item.department,
             description: "", // You may need to provide a description value
-            imageUrl:
-              "https://gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50", // You may need to provide an image URL
+            imageUrl: item.profile_picture, // You may need to provide an image URL
           }));
 
           console.log("Fetched and modified data:", modifiedData);
@@ -485,28 +625,27 @@ export default {
       this.renderChart();
     },
     fullscreen() {
-    const chartContainer = this.$refs.chartContainer;
-    if (!this.isFullscreen) {
-      if (chartContainer.requestFullscreen) {
-        chartContainer.requestFullscreen();
-      } else if (chartContainer.mozRequestFullScreen) {
-        /* Firefox */
-        chartContainer.mozRequestFullScreen();
-      } else if (chartContainer.webkitRequestFullscreen) {
-        /* Chrome, Safari & Opera */
-        chartContainer.webkitRequestFullscreen();
-      } else if (chartContainer.msRequestFullscreen) {
-        /* IE/Edge */
-        chartContainer.msRequestFullscreen();
+      const chartContainer = this.$refs.chartContainer;
+      if (!this.isFullscreen) {
+        if (chartContainer.requestFullscreen) {
+          chartContainer.requestFullscreen();
+        } else if (chartContainer.mozRequestFullScreen) {
+          /* Firefox */
+          chartContainer.mozRequestFullScreen();
+        } else if (chartContainer.webkitRequestFullscreen) {
+          /* Chrome, Safari & Opera */
+          chartContainer.webkitRequestFullscreen();
+        } else if (chartContainer.msRequestFullscreen) {
+          /* IE/Edge */
+          chartContainer.msRequestFullscreen();
+        }
+        // Listen for the keydown event on the document
+        document.addEventListener("keydown", this.handleKeyDown);
       }
-      // Listen for the keydown event on the document
-      document.addEventListener("keydown", this.handleKeyDown);
-    }
-    // Toggle isFullscreen value
-    this.isFullscreen = !this.isFullscreen;
-    this.isFullscreen = false;
-  },
- 
+      // Toggle isFullscreen value
+      this.isFullscreen = !this.isFullscreen;
+      this.isFullscreen = false;
+    },
 
     toggleHighlight(nodeId) {
       if (this.highlightedNodeId === nodeId) {
@@ -656,20 +795,22 @@ export default {
       this.isAddNodeModalOpen = false;
     },
     addNodeToRoot() {
-      if (this.chartReference) {
-        // Call the method to add a node to the root with the values from the form
-        this.chartReference.addNode(this.newNode).render();
-        // Reset the form values
-        this.newNode = {
-          id: "",
-          name: "",
-          parentId: "",
-          // Reset other properties as needed
-        };
-        // Close the modal
-        this.closeAddNodeModal();
-      }
-    },
+  console.log("addNodeToRoot method called");
+  if (this.chartReference) {
+    // Call the method to add a node to the root with the values from the form
+    this.chartReference.addNode(this.newNode).render();
+    // Reset the form values
+    this.newNode = {
+      id: "",
+      name: "",
+      parentId: "",
+      // Reset other properties as needed
+    };
+    // Close the modal
+    this.closeAddNodeModal();
+  }
+},
+
   },
 };
 </script>
