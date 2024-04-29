@@ -26,6 +26,7 @@ import BoxInfo from "../components/e-claim/BoxInfo.vue";
 import AllClaim from "../views/e-claim/AllClaim.vue";
 import SummaryReport from "../views/e-claim/SummaryReport";
 import organizationchart from "../views/organizationchart.vue";
+import TableClaim from "../views/e-claim/TableClaim.vue";
 import { store } from "../views/store.js";
 const routes = [
   {
@@ -36,6 +37,7 @@ const routes = [
 
     },
   },
+
   {
     path: "/eclaim/",
     name: "BoxInfo",
@@ -46,7 +48,7 @@ const routes = [
   },
   
   {
-    path: "/AllClaim",
+    path: "/allclaim",
     name: "AllClaim2",
     components: {
       default: AllClaim,
@@ -58,6 +60,14 @@ const routes = [
     name: "SummaryReport",
     components: {
       default: SummaryReport,
+    },
+  },
+
+  {
+    path: "/table",
+    name: "TableClaim",
+    components: {
+      default: TableClaim,
     },
   },
 
