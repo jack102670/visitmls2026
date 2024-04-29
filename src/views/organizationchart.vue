@@ -124,34 +124,33 @@
           />
         </div>
         <div class="mb-4">
-  <label for="nodeName" class="block text-gray-700 font-bold mb-2">Parent Id:</label>
-  <!-- Search input -->
- 
-      <input
-        id="autocompleteInput"
-        placeholder="Select country name"
-        class="px-5 py-3 w-full border border-gray-300 rounded-md"
-        v-model="newNode.parentId"
-    
-        @keyup="onKeyUp"
-      />
-      <div
-        id="dropdown"
-        class="w-80 h-60 border border-gray-300 rounded-md bg-white absolute overflow-y-auto"
-        v-show="showDropdown"
-      >
-        <div
-          v-for="item in filteredData"
-          :key="item.name"
-          @click="selectOption(item.id)"
-          class="px-5 py-3 border-b border-gray-200 text-stone-600 cursor-pointer hover:bg-slate-100 transition-colors overflow-y-auto"
-          
-        >
-         {{ item.id }} - {{ item.name }}
-        </div>
-      </div>
-    </div>
+          <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+            >Parent Id:</label
+          >
+          <!-- Search input -->
 
+          <input
+            id="autocompleteInput"
+            placeholder="Select country name"
+            class="px-5 py-3 w-full border border-gray-300 rounded-md"
+            v-model="newNode.parentId"
+            @keyup="onKeyUp"
+          />
+          <div
+            id="dropdown"
+            class="w-80 h-60 border border-gray-300 rounded-md bg-white absolute overflow-y-auto"
+            v-show="showDropdown"
+          >
+            <div
+              v-for="item in filteredData"
+              :key="item.name"
+              @click="selectOption(item.id)"
+              class="px-5 py-3 border-b border-gray-200 text-stone-600 cursor-pointer hover:bg-slate-100 transition-colors overflow-y-auto"
+            >
+              {{ item.id }} - {{ item.name }}
+            </div>
+          </div>
+        </div>
 
         <!-- Add more input fields for other properties if needed -->
         <button
@@ -239,13 +238,14 @@ import { OrgChart } from "d3-org-chart";
 
 // import employeesData from '../views/data'
 import html2canvas from "html2canvas";
+// import { POSITION } from "html2canvas/dist/types/css/property-descriptors/position";
 import jsPDF from "jspdf";
 
 export default {
   name: "TestComponent",
   data() {
     return {
-      keyword: '',
+      keyword: "",
       isAddNodeModalOpen: false,
       newNode: {
         id: "",
@@ -274,11 +274,13 @@ export default {
   },
   computed: {
     filteredData() {
-      return this.data.filter(item => item.name.toUpperCase().includes(this.newNode.parentId.toUpperCase()));
+      return this.data.filter((item) =>
+        item.name.toUpperCase().includes(this.newNode.parentId.toUpperCase())
+      );
     },
-    
+
     filteredCountries() {
-      return this.data.filter(item =>
+      return this.data.filter((item) =>
         item.name.toLowerCase().includes(this.keyword.toLowerCase())
       );
     },
@@ -286,15 +288,15 @@ export default {
   created() {
     this.fetchData();
   },
-  methods: { onKeyUp() {
+  methods: {
+    onKeyUp() {
       this.showDropdown = true;
     },
     selectOption(selectedOption) {
       this.newNode.parentId = selectedOption;
       this.showDropdown = false;
     },
-    
-   
+
     toggleEditMode() {
       if (this.isEditMode) {
         this.saveNode(); // Call saveNode method if in edit mode
@@ -305,12 +307,24 @@ export default {
     async saveNode() {
       try {
         // Assuming you have an API endpoint for updating nodes
-        const response = await axios.put("your_api_endpoint_here", {
-          id: this.clickedNodeData.id,
-          name: this.clickedNodeData.name,
-          parentId: this.clickedNodeData.parentId,
-          // Add other properties as needed
-        });
+        const response = await axios.put(
+          "http://172.28.28.91:87/api/Admin/InsertNewEmployee",
+          {
+            emp_id: "999",
+            name: "John Doe",
+            reporting_to: "PKTM1178",
+            position_code: "NGETES",
+            position_title: "NGETES",
+            email_address: "example@example.com",
+            phone_number: 1234567890,
+            home_address: "123 Main St",
+            spouse: "Jane Doe",
+            department: "NGETES",
+            profile_picture: null,
+
+            // Add other properties as needed
+          }
+        );
 
         console.log("Node updated successfully:", response.data);
         this.isClickModal = false; // Close the modal after successful update
@@ -349,7 +363,7 @@ export default {
     },
     fetchData() {
       axios
-        .get("http://172.28.28.91:86/api/User/Get_all_employees")
+        .get("http://172.28.28.91:97/api/User/GetAllEmployees")
         .then((response) => {
           console.log("Fetched data:", response.data);
 
@@ -368,8 +382,7 @@ export default {
             location: item.homE_ADDRESS,
             department: item.department,
             description: "", // You may need to provide a description value
-            imageUrl:
-              "https://gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50", // You may need to provide an image URL
+            imageUrl: item.profile_picture, // You may need to provide an image URL
           }));
 
           console.log("Fetched and modified data:", modifiedData);
@@ -485,28 +498,27 @@ export default {
       this.renderChart();
     },
     fullscreen() {
-    const chartContainer = this.$refs.chartContainer;
-    if (!this.isFullscreen) {
-      if (chartContainer.requestFullscreen) {
-        chartContainer.requestFullscreen();
-      } else if (chartContainer.mozRequestFullScreen) {
-        /* Firefox */
-        chartContainer.mozRequestFullScreen();
-      } else if (chartContainer.webkitRequestFullscreen) {
-        /* Chrome, Safari & Opera */
-        chartContainer.webkitRequestFullscreen();
-      } else if (chartContainer.msRequestFullscreen) {
-        /* IE/Edge */
-        chartContainer.msRequestFullscreen();
+      const chartContainer = this.$refs.chartContainer;
+      if (!this.isFullscreen) {
+        if (chartContainer.requestFullscreen) {
+          chartContainer.requestFullscreen();
+        } else if (chartContainer.mozRequestFullScreen) {
+          /* Firefox */
+          chartContainer.mozRequestFullScreen();
+        } else if (chartContainer.webkitRequestFullscreen) {
+          /* Chrome, Safari & Opera */
+          chartContainer.webkitRequestFullscreen();
+        } else if (chartContainer.msRequestFullscreen) {
+          /* IE/Edge */
+          chartContainer.msRequestFullscreen();
+        }
+        // Listen for the keydown event on the document
+        document.addEventListener("keydown", this.handleKeyDown);
       }
-      // Listen for the keydown event on the document
-      document.addEventListener("keydown", this.handleKeyDown);
-    }
-    // Toggle isFullscreen value
-    this.isFullscreen = !this.isFullscreen;
-    this.isFullscreen = false;
-  },
- 
+      // Toggle isFullscreen value
+      this.isFullscreen = !this.isFullscreen;
+      this.isFullscreen = false;
+    },
 
     toggleHighlight(nodeId) {
       if (this.highlightedNodeId === nodeId) {
