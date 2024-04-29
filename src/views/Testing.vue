@@ -65,7 +65,7 @@ export default {
   },
   computed: {
     filteredCountries() {
-      return this.quotes.filter(c =>
+      return this.countries.filter(c =>
         c.name.toLowerCase().includes(this.keyword.toLowerCase())
       );
     },
