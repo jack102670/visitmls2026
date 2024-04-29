@@ -212,7 +212,7 @@
         class="border rounded-md px-4 py-2 w-full"
       />
     </div>
-    <div class="mb-4">
+<!--<div class="mb-4">
       <label for="spouse" class="block text-gray-700 font-bold mb-2"
         >Spouse:</label
       >
@@ -222,7 +222,7 @@
         v-model="newNode.spouse"
         class="border rounded-md px-4 py-2 w-full"
       />
-    </div>
+    </div>-->
     <div class="mb-4">
       <label for="department" class="block text-gray-700 font-bold mb-2"
         >Department:</label
@@ -346,7 +346,7 @@ export default {
   email_address: "",
   phone_number: "",
   home_address: "",
-  spouse: "",
+  //spouse: "",
   department: ""
   // Add more properties as needed
 },
@@ -403,43 +403,49 @@ export default {
     },
     async addNodeAndSave() {
   try {
-    // First, add the node to the organization chart
-    if (this.chartReference) {
-      // Add the node to the chart
-      this.chartReference.addNode(this.newNode).render();
-    }
-
-    // Then, save the node data to the database
+    // Save the node data to the database first
     const formData = new FormData();
     formData.append('emp_id', this.newNode.id);
     formData.append('name', this.newNode.name);
-    formData.append('reporting_to', this.newNode.reporting_to);
-    formData.append('position_code', this.newNode.position_code);
-    formData.append('position_title', this.newNode.position_title);
-    formData.append('email_address', this.newNode.email_address);
-    formData.append('phone_number', this.newNode.phone_number);
-    formData.append('home_address', this.newNode.home_address);
-    formData.append('spouse', this.newNode.spouse);
-    formData.append('department', this.newNode.department);
+    formData.append('reporting_to', this.newNode.parentId); // Assuming parent_id is correct
+    formData.append('position_code', this.newNode.positionCode); // Use correct property name
+    formData.append('position_title', this.newNode.positionTitle); // Use correct property name
+    formData.append('email_address', this.newNode.emailAddress); // Use correct property name
+    formData.append('phone_number', this.newNode.phoneNumber); // Use correct property name
+    formData.append('home_address', this.newNode.homeAddress); // Use correct property name
+    formData.append('spouse', this.newNode.spouse); // Use correct property name
+    formData.append('department', this.newNode.department); // Use correct property name
 
-    // Make the POST request using axios
     const uploadResponse = await axios.post(
       'http://172.28.28.91:97/api/Admin/InsertNewEmployee',
       formData,
     );
 
-    console.log('Node added and saved successfully:', uploadResponse.data);
+    console.log('Node data saved to the database:', uploadResponse.data);
+
+    // After saving to the database, add the node to the organization chart
+    if (this.chartReference) {
+      // Ensure that parentId is provided and not empty
+      if (this.newNode.parentId.trim() !== "") {
+        // Add the node to the chart
+        this.chartReference.addNode(this.newNode).render();
+      } else {
+        console.error('Error: ParentId is empty or not provided.');
+        // Handle the case where parentId is not provided
+        // For example, display an error message to the user
+      }
+    }
+
     // Reset the form values
     this.newNode = {
       id: "",
       name: "",
       parentId: "",
-      reporting_to: "",
-      position_code: "",
-      position_title: "",
-      email_address: "",
-      phone_number: "",
-      home_address: "",
+      positionCode: "",
+      positionTitle: "",
+      emailAddress: "",
+      phoneNumber: "",
+      homeAddress: "",
       spouse: "",
       department: ""
       // Add other properties as needed
