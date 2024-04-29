@@ -485,36 +485,29 @@ export default {
       this.renderChart();
     },
     fullscreen() {
-      const chartContainer = this.$refs.chartContainer;
-      if (!this.isFullscreen) {
-        if (chartContainer.requestFullscreen) {
-          chartContainer.requestFullscreen();
-        } else if (chartContainer.mozRequestFullScreen) {
-          /* Firefox */
-          chartContainer.mozRequestFullScreen();
-        } else if (chartContainer.webkitRequestFullscreen) {
-          /* Chrome, Safari & Opera */
-          chartContainer.webkitRequestFullscreen();
-        } else if (chartContainer.msRequestFullscreen) {
-          /* IE/Edge */
-          chartContainer.msRequestFullscreen();
-        }
-      } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        } else if (document.mozCancelFullScreen) {
-          /* Firefox */
-          document.mozCancelFullScreen();
-        } else if (document.webkitExitFullscreen) {
-          /* Chrome, Safari & Opera */
-          document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) {
-          /* IE/Edge */
-          document.msExitFullscreen();
-        }
+    const chartContainer = this.$refs.chartContainer;
+    if (!this.isFullscreen) {
+      if (chartContainer.requestFullscreen) {
+        chartContainer.requestFullscreen();
+      } else if (chartContainer.mozRequestFullScreen) {
+        /* Firefox */
+        chartContainer.mozRequestFullScreen();
+      } else if (chartContainer.webkitRequestFullscreen) {
+        /* Chrome, Safari & Opera */
+        chartContainer.webkitRequestFullscreen();
+      } else if (chartContainer.msRequestFullscreen) {
+        /* IE/Edge */
+        chartContainer.msRequestFullscreen();
       }
-      this.isFullscreen = !this.isFullscreen;
-    },
+      // Listen for the keydown event on the document
+      document.addEventListener("keydown", this.handleKeyDown);
+    }
+    // Toggle isFullscreen value
+    this.isFullscreen = !this.isFullscreen;
+    this.isFullscreen = false;
+  },
+ 
+
     toggleHighlight(nodeId) {
       if (this.highlightedNodeId === nodeId) {
         this.clearHighlighting();
