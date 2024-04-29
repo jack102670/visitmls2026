@@ -25,9 +25,17 @@ import Incidentreportsafety from "../views/Incidentreportsafety.vue";
 import BoxInfo from "../components/e-claim/BoxInfo.vue";
 import AllClaim from "../views/e-claim/AllClaim.vue";
 import SummaryReport from "../views/e-claim/SummaryReport";
+import organizationchart from "../views/organizationchart.vue";
 import { store } from "../views/store.js";
 const routes = [
+  {
+    path: "/organizationchart",
+    name: "organizationchart",
+    components: {
+      default: organizationchart,
 
+    },
+  },
   {
     path: "/eclaim/",
     name: "BoxInfo",
