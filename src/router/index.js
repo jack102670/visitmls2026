@@ -23,10 +23,10 @@ import testing from "../views/Testing.vue";
 import Dashboardvendor from "../views/Dashboardvendor.vue";
 import Incidentreportsafety from "../views/Incidentreportsafety.vue";
 import BoxInfo from "../components/e-claim/BoxInfo.vue";
-import AllClaim from "../views/e-claim/AllClaim.vue";
+import AllClaim from "../components/e-claim/AllClaim.vue";
 import SummaryReport from "../views/e-claim/SummaryReport";
 import organizationchart from "../views/organizationchart.vue";
-import TableClaim from "../views/e-claim/TableClaim.vue";
+import TableClaim from "../components/e-claim/TableClaim.vue";
 import { store } from "../views/store.js";
 const routes = [
   {
