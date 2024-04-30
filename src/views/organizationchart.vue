@@ -13,6 +13,7 @@
       Organization Chart
     </h1>
     <div class="space-x-3 p-1 relative space-y-1">
+  
       <button
         class="border rounded-lg p-1.5 border-gray-500 text-gray-800 hover:text-slate-900 hover:bg-slate-200"
         @click="fitChart"
@@ -94,125 +95,127 @@
       class="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
       @click.self="closeAddNodeModal"
     >
-    <div
-  class="modal-content bg-white rounded-lg p-8"
-  style="max-height: calc(100vh - 20px); overflow-y: auto;"
->
-  <span
-    @click="closeAddNodeModal"
-    class="close absolute top-0 right-0 mt-4 mr-4 text-gray-600 cursor-pointer"
-    >&times;</span
-  >
-  <h2 class="text-xl font-bold mb-4">Add Node</h2>
-  <div
-    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-  >
-    <div class="mb-4">
-      <label for="nodeId" class="block text-gray-700 font-bold mb-2"
-        >Node ID:</label
-      >
-      <input
-        type="text"
-        id="nodeId"
-        v-model="newNode.id"
-        class="border rounded-md px-4 py-2 w-full"
-      />
-    </div>
-    <div class="mb-4">
-      <label for="nodeName" class="block text-gray-700 font-bold mb-2"
-        >Node Name:</label
-      >
-      <input
-        type="text"
-        id="nodeName"
-        v-model="newNode.name"
-        class="border rounded-md px-4 py-2 w-full"
-      />
-    </div>
-    <div class="mb-4">
-      <label for="nodeName" class="block text-gray-700 font-bold mb-2"
-        >Parent Id:</label
-      >
-      <!-- Search input -->
-
-      <input
-        id="autocompleteInput"
-        placeholder="Select country name"
-        class="px-5 py-3 w-full border border-gray-300 rounded-md"
-        v-model="newNode.parentId"
-        @keyup="onKeyUp"
-      />
       <div
-        id="dropdown"
-        class="w-80 h-60 border border-gray-300 rounded-md bg-white absolute overflow-y-auto"
-        v-show="showDropdown"
+        class="modal-content bg-white rounded-lg p-8"
+        style="max-height: calc(100vh - 20px); overflow-y: auto"
       >
-        <div
-          v-for="item in filteredData"
-          :key="item.name"
-          @click="selectOption(item.id)"
-          class="px-5 py-3 border-b border-gray-200 text-stone-600 cursor-pointer hover:bg-slate-100 transition-colors overflow-y-auto"
+        <span
+          @click="closeAddNodeModal"
+          class="close absolute top-0 right-0 mt-4 mr-4 text-gray-600 cursor-pointer"
+          >&times;</span
         >
-          {{ item.id }} - {{ item.name }}
-        </div>
-      </div>
-    </div>
-    <div class="mb-4">
-      <label for="positionCode" class="block text-gray-700 font-bold mb-2"
-        >Position Code:</label
-      >
-      <input
-        type="text"
-        id="positionCode"
-        v-model="newNode.positionCode"
-        class="border rounded-md px-4 py-2 w-full"
-      />
-    </div>
-    <div class="mb-4">
-      <label for="positionTitle" class="block text-gray-700 font-bold mb-2"
-        >Position Title:</label
-      >
-      <input
-        type="text"
-        id="positionTitle"
-        v-model="newNode.positionTitle"
-        class="border rounded-md px-4 py-2 w-full"
-      />
-    </div>
-    <div class="mb-4">
-      <label for="emailAddress" class="block text-gray-700 font-bold mb-2"
-        >Email Address:</label
-      >
-      <input
-        type="email"
-        id="emailAddress"
-        v-model="newNode.emailAddress"
-        class="border rounded-md px-4 py-2 w-full"
-      />
-    </div>
-    <div class="mb-4">
-      <label for="phoneNumber" class="block text-gray-700 font-bold mb-2"
-        >Phone Number:</label
-      >
-      <input
-        type="text"
-        id="phoneNumber"
-        v-model="newNode.phoneNumber"
-        class="border rounded-md px-4 py-2 w-full"
-      />
-    </div>
-    <div class="mb-4">
-      <label for="homeAddress" class="block text-gray-700 font-bold mb-2"
-        >Home Address:</label
-      >
-      <input
-        type="text"
-        id="homeAddress"
-        v-model="newNode.homeAddress"
-        class="border rounded-md px-4 py-2 w-full"
-      />
-    </div>
-<!--<div class="mb-4">
+        <h2 class="text-xl font-bold mb-4">Add Node</h2>
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+        >
+          <div class="mb-4">
+            <label for="nodeId" class="block text-gray-700 font-bold mb-2"
+              >Node ID:</label
+            >
+            <input
+              type="text"
+              id="nodeId"
+              v-model="newNode.id"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+              >Node Name:</label
+            >
+            <input
+              type="text"
+              id="nodeName"
+              v-model="newNode.name"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+              >Parent Id:</label
+            >
+            <!-- Search input -->
+
+            <input
+              id="autocompleteInput"
+              placeholder="Select country name"
+              class="px-5 py-3 w-full border border-gray-300 rounded-md"
+              v-model="newNode.parentId"
+              @keyup="onKeyUp"
+            />
+            <div
+              id="dropdown"
+              class="w-80 h-60 border border-gray-300 rounded-md bg-white absolute overflow-y-auto"
+              v-show="showDropdown"
+            >
+              <div
+                v-for="item in filteredData"
+                :key="item.name"
+                @click="selectOption(item.id)"
+                class="px-5 py-3 border-b border-gray-200 text-stone-600 cursor-pointer hover:bg-slate-100 transition-colors overflow-y-auto"
+              >
+                {{ item.id }} - {{ item.name }}
+              </div>
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="positionCode" class="block text-gray-700 font-bold mb-2"
+              >Position Code:</label
+            >
+            <input
+              type="text"
+              id="positionCode"
+              v-model="newNode.positionCode"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="positionTitle"
+              class="block text-gray-700 font-bold mb-2"
+              >Position Title:</label
+            >
+            <input
+              type="text"
+              id="positionTitle"
+              v-model="newNode.positionTitle"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="emailAddress" class="block text-gray-700 font-bold mb-2"
+              >Email Address:</label
+            >
+            <input
+              type="email"
+              id="emailAddress"
+              v-model="newNode.emailAddress"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="phoneNumber" class="block text-gray-700 font-bold mb-2"
+              >Phone Number:</label
+            >
+            <input
+              type="text"
+              id="phoneNumber"
+              v-model="newNode.phoneNumber"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="homeAddress" class="block text-gray-700 font-bold mb-2"
+              >Home Address:</label
+            >
+            <input
+              type="text"
+              id="homeAddress"
+              v-model="newNode.homeAddress"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
+          <!--<div class="mb-4">
       <label for="spouse" class="block text-gray-700 font-bold mb-2"
         >Spouse:</label
       >
@@ -223,29 +226,26 @@
         class="border rounded-md px-4 py-2 w-full"
       />
     </div>-->
-    <div class="mb-4">
-      <label for="department" class="block text-gray-700 font-bold mb-2"
-        >Department:</label
-      >
-      <input
-        type="text"
-        id="department"
-        v-model="newNode.department"
-        class="border rounded-md px-4 py-2 w-full"
-      />
-    </div>
-  </div>
+          <div class="mb-4">
+            <label for="department" class="block text-gray-700 font-bold mb-2"
+              >Department:</label
+            >
+            <input
+              type="text"
+              id="department"
+              v-model="newNode.department"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
+        </div>
 
-  <button
-    @click="addNodeAndSave"
-    class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
-  >
-    Add Node
-  </button>
-</div>
-
-    
-
+        <button
+          @click="addNodeAndSave"
+          class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+        >
+          Add Node
+        </button>
+      </div>
     </div>
     <!-- Your template -->
     <!-- Your template -->
@@ -254,63 +254,73 @@
       class="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
       @click.self="closeClickModal"
     >
-      <div class="modal-content bg-white rounded-lg p-8">
+      <div
+        class="modal-content bg-white rounded-lg p-8"
+        style="max-height: calc(100vh - 20px); overflow-y: auto"
+      >
         <!-- Modal header -->
         <!-- Your existing modal header content -->
-
-        <!-- Modal content -->
-        <div class="mb-4">
-          <label for="nodeId" class="block text-gray-700 font-bold mb-2"
-            >Node ID:</label
-          >
-          <input
-            type="text"
-            id="nodeId"
-            v-model="clickedNodeData.id"
-            :disabled="!isEditMode"
-            class="border rounded-md px-4 py-2 w-full"
-          />
-        </div>
-        <div class="mb-4">
-          <label for="nodeName" class="block text-gray-700 font-bold mb-2"
-            >Node Name:</label
-          >
-          <input
-            type="text"
-            id="nodeName"
-            v-model="clickedNodeData.name"
-            :disabled="!isEditMode"
-            class="border rounded-md px-4 py-2 w-full"
-          />
-        </div>
-        <div class="mb-4">
-          <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
-            >Parent ID:</label
-          >
-          <input
-            type="text"
-            id="nodeParentId"
-            v-model="clickedNodeData.parentId"
-            :disabled="!isEditMode"
-            class="border rounded-md px-4 py-2 w-full"
-          />
-        </div>
-        <!-- Add/Edit node button -->
-        <button
-          @click="toggleEditMode"
-          class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
         >
-          {{ isEditMode ? "Save" : "Edit" }}
-          <!-- Change button text based on edit mode -->
-        </button>
+          <!-- Modal content -->
+          <div class="mb-4">
+    <input type="file" class="filepond" ref="filepond" accept="image/*">
+    <button @click="saveToFilePond">Save</button>
+  </div>
+          <div class="mb-4">
+            <label for="nodeId" class="block text-gray-700 font-bold mb-2"
+              >Node ID:</label
+            >
+            <input
+              type="text"
+              id="nodeId"
+              v-model="clickedNodeData.id"
+              :disabled="!isEditMode"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+              >Node Name:</label
+            >
+            <input
+              type="text"
+              id="nodeName"
+              v-model="clickedNodeData.name"
+              :disabled="!isEditMode"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
+              >Parent ID:</label
+            >
+            <input
+              type="text"
+              id="nodeParentId"
+              v-model="clickedNodeData.parentId"
+              :disabled="!isEditMode"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
+          <!-- Add/Edit node button -->
+          <button
+            @click="toggleEditMode"
+            class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+          >
+            {{ isEditMode ? "Save" : "Edit" }}
+            <!-- Change button text based on edit mode -->
+          </button>
 
-        <!-- Delete node button -->
-        <button
-          @click="deleteNode(clickedNodeData.id)"
-          class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
-        >
-          Delete
-        </button>
+          <!-- Delete node button -->
+          <button
+            @click="deleteNode(clickedNodeData.id)"
+            class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+          >
+            Delete
+          </button>
+        </div>
       </div>
     </div>
 
@@ -319,37 +329,58 @@
 </template>
 
 <script>
+import {create,registerPlugin } from "filepond";
+
+import FilePondPluginFileEncode from "filepond-plugin-file-encode";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
+import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import FilePondPluginImageCrop from "filepond-plugin-image-crop";
+import FilePondPluginImageResize from "filepond-plugin-image-resize";
+import FilePondPluginImageTransform from "filepond-plugin-image-transform";
+
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+import "filepond/dist/filepond.min.css";
 import axios from "axios";
 import { OrgChart } from "d3-org-chart";
-import FormData from 'form-data';
-
-
+import FormData from "form-data";
 
 // import employeesData from '../views/data'
 import html2canvas from "html2canvas";
 // import { POSITION } from "html2canvas/dist/types/css/property-descriptors/position";
 import jsPDF from "jspdf";
 
+registerPlugin(
+  FilePondPluginFileEncode,
+  FilePondPluginFileValidateType,
+  FilePondPluginImageExifOrientation,
+  FilePondPluginImagePreview,
+  FilePondPluginImageCrop,
+  FilePondPluginImageResize,
+  FilePondPluginImageTransform
+);
+
 export default {
   name: "TestComponent",
   data() {
     return {
+      files: [],
       keyword: "",
       isAddNodeModalOpen: false,
       newNode: {
-  id: "",
-  name: "",
-  parentId: "",
-  reporting_to: "",
-  position_code: "",
-  position_title: "",
-  email_address: "",
-  phone_number: "",
-  home_address: "",
-  //spouse: "",
-  department: ""
-  // Add more properties as needed
-},
+        id: "",
+        name: "",
+        parentId: "",
+        reporting_to: "",
+        position_code: "",
+        position_title: "",
+        email_address: "",
+        phone_number: "",
+        home_address: "",
+        //spouse: "",
+        department: "",
+        // Add more properties as needed
+      },
       clickedNodeData: {
         id: "",
         name: "",
@@ -382,10 +413,87 @@ export default {
       );
     },
   },
+  mounted() {
+    
+  },
+  watch: {
+    isClickModal(newVal) {
+      if (newVal) {
+        // Modal is shown, initialize FilePond
+        this.$nextTick(() => {
+          this.initializeFilePond();
+        });
+    }}
+  },
   created() {
     this.fetchData();
+  //  this.$nextTick(() => {
+  //     this.initializeFilePond();
+  //   }); 
   },
   methods: {
+    initializeFilePond() {
+      console.log("check filepond", this.$refs.filepond);
+      if (this.$refs.filepond) {
+        const pond = create(this.$refs.filepond, {
+          labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
+          stylePanelLayout: "compact circle",
+          imagePreviewHeight: 150,
+          imageCropAspectRatio: "1:1",
+          imageResizeTargetWidth: 150,
+          imageResizeTargetHeight: 150,
+          styleLoadIndicatorPosition: "center bottom",
+          styleButtonRemoveItemPosition: "center bottom",
+        });
+
+        pond.on("addfile", (error, file) => {
+          if (!error) {
+            console.log("Added file name:", file.file.name); // Access file name
+            this.files = [file.file]; // Replace files array with the new file
+          }
+        });
+
+        pond.on("removefile", () => {
+          this.files = []; // Clear files array when file is removed
+        });
+      } else {
+        console.error("FilePond element not found.");
+      }
+    },
+    saveToFilePond() {
+      if (this.files.length === 0) {
+        console.error("No files selected.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("profile_picture", this.files[0]);
+      formData.append("emp_id", "1");
+      formData.append("name", "John Doe");
+      formData.append("reporting_to", "PKTM2582");
+      formData.append("position_code", "NGETES");
+      formData.append("position_title", "NGETES");
+      formData.append("email_address", "example@example.com");
+      formData.append("phone_number", "1234567890");
+      formData.append("home_address", "123 Main St");
+      formData.append("department", "NGETES");
+
+      axios
+        .put("http://172.28.28.91:97/api/Admin/UpdateEmployee", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          console.log("File uploaded successfully:", response.data);
+          // Handle response from server
+        })
+        .catch((error) => {
+          console.error("Error uploading file:", error);
+          // Handle error
+        });
+    },
+
     onKeyUp() {
       this.showDropdown = true;
     },
@@ -402,85 +510,85 @@ export default {
       }
     },
     async addNodeAndSave() {
-  try {
-    // Save the node data to the database first
-    const formData = new FormData();
-    formData.append('emp_id', this.newNode.id);
-    formData.append('name', this.newNode.name);
-    formData.append('reporting_to', this.newNode.parentId); // Assuming parent_id is correct
-    formData.append('position_code', this.newNode.positionCode); // Use correct property name
-    formData.append('position_title', this.newNode.positionTitle); // Use correct property name
-    formData.append('email_address', this.newNode.emailAddress); // Use correct property name
-    formData.append('phone_number', this.newNode.phoneNumber); // Use correct property name
-    formData.append('home_address', this.newNode.homeAddress); // Use correct property name
-    formData.append('spouse', this.newNode.spouse); // Use correct property name
-    formData.append('department', this.newNode.department); // Use correct property name
+      try {
+        // Save the node data to the database first
+        const formData = new FormData();
+        formData.append("emp_id", this.newNode.id);
+        formData.append("name", this.newNode.name);
+        formData.append("reporting_to", this.newNode.parentId); // Assuming parent_id is correct
+        formData.append("position_code", this.newNode.positionCode); // Use correct property name
+        formData.append("position_title", this.newNode.positionTitle); // Use correct property name
+        formData.append("email_address", this.newNode.emailAddress); // Use correct property name
+        formData.append("phone_number", this.newNode.phoneNumber); // Use correct property name
+        formData.append("home_address", this.newNode.homeAddress); // Use correct property name
+        formData.append("spouse", this.newNode.spouse); // Use correct property name
+        formData.append("department", this.newNode.department); // Use correct property name
 
-    const uploadResponse = await axios.post(
-      'http://172.28.28.91:97/api/Admin/InsertNewEmployee',
-      formData,
-    );
+        const uploadResponse = await axios.post(
+          "http://172.28.28.91:97/api/Admin/InsertNewEmployee",
+          formData
+        );
 
-    console.log('Node data saved to the database:', uploadResponse.data);
+        console.log("Node data saved to the database:", uploadResponse.data);
 
-    // After saving to the database, add the node to the organization chart
-    if (this.chartReference) {
-      // Ensure that parentId is provided and not empty
-      if (this.newNode.parentId.trim() !== "") {
-        // Add the node to the chart
-        this.chartReference.addNode(this.newNode).render();
-      } else {
-        console.error('Error: ParentId is empty or not provided.');
-        // Handle the case where parentId is not provided
-        // For example, display an error message to the user
+        // After saving to the database, add the node to the organization chart
+        if (this.chartReference) {
+          // Ensure that parentId is provided and not empty
+          if (this.newNode.parentId.trim() !== "") {
+            // Add the node to the chart
+            this.chartReference.addNode(this.newNode).render();
+          } else {
+            console.error("Error: ParentId is empty or not provided.");
+            // Handle the case where parentId is not provided
+            // For example, display an error message to the user
+          }
+        }
+
+        // Reset the form values
+        this.newNode = {
+          id: "",
+          name: "",
+          parentId: "",
+          positionCode: "",
+          positionTitle: "",
+          emailAddress: "",
+          phoneNumber: "",
+          homeAddress: "",
+          spouse: "",
+          department: "",
+          // Add other properties as needed
+        };
+      } catch (error) {
+        console.error("Error adding and saving node:", error);
+        // Handle errors
       }
-    }
+    },
 
-    // Reset the form values
-    this.newNode = {
-      id: "",
-      name: "",
-      parentId: "",
-      positionCode: "",
-      positionTitle: "",
-      emailAddress: "",
-      phoneNumber: "",
-      homeAddress: "",
-      spouse: "",
-      department: ""
-      // Add other properties as needed
-    };
-  } catch (error) {
-    console.error('Error adding and saving node:', error);
-    // Handle errors
-  }
-},
-
-  
     async deleteNode(nodeId) {
-  try {
-    // Send a request to your API to delete the node using the nodeId
-    await axios.delete(`http://172.28.28.91:97/api/Admin/DeleteEmployee/${nodeId}`);
-    
-    // If the deletion is successful, remove the node from the data array
-    const nodeIndex = this.data.findIndex((node) => node.id === nodeId);
-    if (nodeIndex !== -1) {
-      this.data.splice(nodeIndex, 1);
-      
-      // Re-render the chart to reflect the changes
-      this.renderChart();
-      
-      // Close any modal or reset any state related to the deleted node if needed
-      this.isClickModal = false;
-    } else {
-      console.error("Node not found:", nodeId);
-    }
-  } catch (error) {
-    console.error("Error deleting node:", error);
-    // Handle errors, such as displaying an error message to the user
-  }
-},
+      try {
+        // Send a request to your API to delete the node using the nodeId
+        await axios.delete(
+          `http://172.28.28.91:97/api/Admin/DeleteEmployee/${nodeId}`
+        );
 
+        // If the deletion is successful, remove the node from the data array
+        const nodeIndex = this.data.findIndex((node) => node.id === nodeId);
+        if (nodeIndex !== -1) {
+          this.data.splice(nodeIndex, 1);
+
+          // Re-render the chart to reflect the changes
+          this.renderChart();
+
+          // Close any modal or reset any state related to the deleted node if needed
+          this.isClickModal = false;
+        } else {
+          console.error("Node not found:", nodeId);
+        }
+      } catch (error) {
+        console.error("Error deleting node:", error);
+        // Handle errors, such as displaying an error message to the user
+      }
+    },
 
     closeClickModal() {
       this.isClickModal = false;
@@ -508,6 +616,7 @@ export default {
             id: item.emp_id,
             parentId: item.reporting_to,
             name: item.name,
+            positionCode: item.position_code,
             positionName: item.position_title,
             phone: item.phone_number,
             email: item.email_address,
@@ -601,6 +710,7 @@ export default {
         })
         .layout(this.layoutPositions[this.layoutIndex])
         .render();
+        
       this.chartReference.onNodeClick((node) => {
         // Assuming `node` contains the data directly
         this.clickedNodeData = {
@@ -609,16 +719,23 @@ export default {
           name: node.data.name,
           positionName: node.data.positionName,
           phone: node.data.phone,
+          email: node.data.email,
+          department: node.data.department,
+          imageUrl: node.data.imageUrl,
+          address: node.data.location,
+          positioncode: node.data.positionCode,
         };
 
         // Log the clicked node data for debugging
         console.log("Clicked Node Data:", this.clickedNodeData);
-
-        // Open the add node modal
         this.isClickModal = true;
+        this.initializeFilePond();
+        // Open the add node modal
+        
       });
 
       console.log("Chart rendered:", this.chartReference);
+   
     },
     fitChart() {
       if (this.chartReference) {
@@ -801,22 +918,21 @@ export default {
       this.isAddNodeModalOpen = false;
     },
     addNodeToRoot() {
-  console.log("addNodeToRoot method called");
-  if (this.chartReference) {
-    // Call the method to add a node to the root with the values from the form
-    this.chartReference.addNode(this.newNode).render();
-    // Reset the form values
-    this.newNode = {
-      id: "",
-      name: "",
-      parentId: "",
-      // Reset other properties as needed
-    };
-    // Close the modal
-    this.closeAddNodeModal();
-  }
-},
-
+      console.log("addNodeToRoot method called");
+      if (this.chartReference) {
+        // Call the method to add a node to the root with the values from the form
+        this.chartReference.addNode(this.newNode).render();
+        // Reset the form values
+        this.newNode = {
+          id: "",
+          name: "",
+          parentId: "",
+          // Reset other properties as needed
+        };
+        // Close the modal
+        this.closeAddNodeModal();
+      }
+    },
   },
 };
 </script>
