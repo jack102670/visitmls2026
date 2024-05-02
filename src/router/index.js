@@ -27,7 +27,6 @@ import AllClaim from "../components/e-claim/AllClaim.vue";
 import SummaryReport from "../views/e-claim/SummaryReport";
 import organizationchart from "../views/organizationchart.vue";
 import TableClaim from "../components/e-claim/TableClaim.vue";
-import popupClaimant from "../views/e-claim/popupClaimant.vue";
 import { store } from "../views/store.js";
 const routes = [
   {
@@ -61,14 +60,6 @@ const routes = [
     name: "SummaryReport",
     components: {
       default: SummaryReport,
-    },
-  },
-
-  {
-    path: "/popup",
-    name: "popupClaimant",
-    components: {
-      default: popupClaimant,
     },
   },
 

@@ -104,7 +104,7 @@
               <div class="ml-5">
                 <span class="text-2xl font-bold">00</span>
                 <span class="block text-sm text-gray-500 font-semibold"
-                  >All Booking</span
+                  >All Claims</span
                 >
               </div>
               <div
@@ -121,7 +121,7 @@
 </template>
 
 <script>
-export default {};
+
 </script>
 
 <style>
