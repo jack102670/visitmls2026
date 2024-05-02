@@ -13,7 +13,6 @@
       Organization Chart
     </h1>
     <div class="space-x-3 p-1 relative space-y-1">
-  
       <button
         class="border rounded-lg p-1.5 border-gray-500 text-gray-800 hover:text-slate-900 hover:bg-slate-200"
         @click="fitChart"
@@ -265,9 +264,14 @@
         >
           <!-- Modal content -->
           <div class="mb-4">
-    <input type="file" class="filepond" ref="filepond" accept="image/*">
-    <button @click="saveToFilePond">Save</button>
-  </div>
+            <input
+              type="file"
+              class="filepond"
+              ref="filepond"
+              accept="image/*"
+            />
+            <button @click="saveToFilePond">Save</button>
+          </div>
           <div class="mb-4">
             <label for="nodeId" class="block text-gray-700 font-bold mb-2"
               >Node ID:</label
@@ -329,7 +333,7 @@
 </template>
 
 <script>
-import {create,registerPlugin } from "filepond";
+import { create, registerPlugin } from "filepond";
 
 import FilePondPluginFileEncode from "filepond-plugin-file-encode";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
@@ -385,6 +389,7 @@ export default {
         id: "",
         name: "",
         parentId: "",
+        imageUrl: "",
       },
       data: [],
       chartReference: null,
@@ -413,9 +418,7 @@ export default {
       );
     },
   },
-  mounted() {
-    
-  },
+  mounted() {},
   watch: {
     isClickModal(newVal) {
       if (newVal) {
@@ -423,13 +426,14 @@ export default {
         this.$nextTick(() => {
           this.initializeFilePond();
         });
-    }}
+      }
+    },
   },
   created() {
     this.fetchData();
-  //  this.$nextTick(() => {
-  //     this.initializeFilePond();
-  //   }); 
+    //  this.$nextTick(() => {
+    //     this.initializeFilePond();
+    //   });
   },
   methods: {
     initializeFilePond() {
@@ -444,7 +448,18 @@ export default {
           imageResizeTargetHeight: 150,
           styleLoadIndicatorPosition: "center bottom",
           styleButtonRemoveItemPosition: "center bottom",
+          files: [
+            {
+              source: this.clickedNodeData.imageUrl,
+           //   options: {
+               // type: 'local'
+             // }
+            }
+          ]
         });
+        console.log("check filepond", this.clickedNodeData.imageUrl);
+
+  
 
         pond.on("addfile", (error, file) => {
           if (!error) {
@@ -456,6 +471,7 @@ export default {
         pond.on("removefile", () => {
           this.files = []; // Clear files array when file is removed
         });
+        
       } else {
         console.error("FilePond element not found.");
       }
@@ -526,7 +542,7 @@ export default {
 
         const uploadResponse = await axios.post(
           "http://172.28.28.91:97/api/Admin/InsertNewEmployee",
-          formData
+          formData 
         );
 
         console.log("Node data saved to the database:", uploadResponse.data);
@@ -603,43 +619,46 @@ export default {
       this.isClickModal = false;
     },
     fetchData() {
-      axios
-        .get("http://172.28.28.91:97/api/User/GetAllEmployees")
-        .then((response) => {
-          console.log("Fetched data:", response.data);
+  fetch("http://172.28.28.91:86/api/User/GetAllEmployee", {
+    mode: 'cors' // Adding CORS mode
+  })
+    .then(response => response.json())
+    .then((response) => {
+      console.log("Fetched data:", response);
 
-          // Extract the result array from the response data
-          const resultArray = response.data.result;
+      // Extract the result array from the response data
+      const resultArray = response.result;
 
-          // Transform keys of the items in the result array
-          const modifiedData = resultArray.map((item) => ({
-            id: item.emp_id,
-            parentId: item.reporting_to,
-            name: item.name,
-            positionCode: item.position_code,
-            positionName: item.position_title,
-            phone: item.phone_number,
-            email: item.email_address,
-            team: "", // You may need to provide a value for the team key
-            location: item.home_address,
-            department: item.department,
-            description: "", // You may need to provide a description value
-            imageUrl: item.profile_picture, // You may need to provide an image URL
-          }));
+      // Transform keys of the items in the result array
+      const modifiedData = resultArray.map((item) => ({
+        id: item.emp_id,
+        parentId: item.reporting_to,
+        name: item.name,
+        positionCode: item.position_code,
+        positionName: item.position_title,
+        phone: item.phone_number,
+        email: item.email_address,
+        team: "", // You may need to provide a value for the team key
+        location: item.home_address,
+        department: item.department,
+        description: "", // You may need to provide a description value
+        imageUrl: item.profile_picture, // You may need to provide an image URL
+      }));
 
-          console.log("Fetched and modified data:", modifiedData);
+      console.log("Fetched and modified data:", modifiedData);
 
-          // Assign the modified data to your component's data property
-          this.data = modifiedData;
+      // Assign the modified data to your component's data property
+      this.data = modifiedData;
 
-          // Perform any other actions with the data
-          // For example, render a chart
-          console.log("Value of this selepas fetcg:", this.data);
-          this.renderChart();
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-        });
+      // Perform any other actions with the data
+      // For example, render a chart
+      console.log("Value of this selepas fetcg:", this.data);
+      this.renderChart();
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    });
+
 
       // Promise.resolve(employeesData)
       //   .then((data) => {
@@ -710,7 +729,7 @@ export default {
         })
         .layout(this.layoutPositions[this.layoutIndex])
         .render();
-        
+
       this.chartReference.onNodeClick((node) => {
         // Assuming `node` contains the data directly
         this.clickedNodeData = {
@@ -729,13 +748,11 @@ export default {
         // Log the clicked node data for debugging
         console.log("Clicked Node Data:", this.clickedNodeData);
         this.isClickModal = true;
-        this.initializeFilePond();
+
         // Open the add node modal
-        
       });
 
       console.log("Chart rendered:", this.chartReference);
-   
     },
     fitChart() {
       if (this.chartReference) {
