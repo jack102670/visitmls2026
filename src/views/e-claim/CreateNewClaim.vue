@@ -1,3 +1,4 @@
+<!-- Create New Claim for Claimant View-->
 <template>
   <main
     class="flex-1 overflow-x-hidden text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64 h-auto"
