@@ -703,31 +703,48 @@ export default {
     },
 
     async deleteNode(nodeId) {
-      
-      try {
-        // Send a request to your API to delete the node using the nodeId
-        await axios.delete(
-          `http://172.28.28.91:97/api/Admin/DeleteEmployee/${nodeId}`
-        );
+  try {
+    // Check if the node is being referred to by another node
+    if (this.hasReferenceToOtherUser(this.data, nodeId)) {
+      window.alert('Cannot delete user because it is referred to by another user.');
+      return; // Exit the function if the node is being referred to
+    }
 
-        // If the deletion is successful, remove the node from the data array
-        const nodeIndex = this.data.findIndex((node) => node.id === nodeId);
-        if (nodeIndex !== -1) {
-          this.data.splice(nodeIndex, 1);
+    // If the node is not being referred to, proceed with deletion
+    // Send a request to your API to delete the node using the nodeId
+    await axios.delete(
+      `http://172.28.28.91:97/api/Admin/DeleteEmployee/${nodeId}`
+    );
 
-          // Re-render the chart to reflect the changes
-          this.renderChart();
+    // If the deletion is successful, remove the node from the data array
+    const nodeIndex = this.data.findIndex((node) => node.id === nodeId);
+    if (nodeIndex !== -1) {
+      this.data.splice(nodeIndex, 1);
 
-          // Close any modal or reset any state related to the deleted node if needed
-          this.isClickModal = false;
-        } else {
-          console.error("Node not found:", nodeId);
-        }
-      } catch (error) {
-        console.error("Error deleting node:", error);
-        // Handle errors, such as displaying an error message to the user
-      }
-    },
+      // Re-render the chart to reflect the changes
+      this.renderChart();
+
+      // Close any modal or reset any state related to the deleted node if needed
+      this.isClickModal = false;
+    } else {
+      console.error("Node not found:", nodeId);
+    }
+  } catch (error) {
+    console.error("Error deleting node:", error);
+    // Handle errors, such as displaying an error message to the user
+  }
+},
+
+hasReferenceToOtherUser(data, userId) {
+  // Iterate through the data array
+  for (let i = 0; i < data.length; i++) {
+    // Check if the parentId of any user matches the userId
+    if (data[i].parentId === userId) {
+      return true; // If a match is found, return true
+    }
+  }
+  return false; // If no match is found, return false
+},
 
     closeClickModal() {
       this.isClickModal = false;
