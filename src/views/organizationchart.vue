@@ -137,7 +137,7 @@
 
             <input
               id="autocompleteInput"
-              placeholder="Select country name"
+              placeholder="Select name"
               class="px-5 py-3 w-full border border-gray-300 rounded-md"
               v-model="newNode.parentId"
               @keyup="onKeyUp"
@@ -259,19 +259,21 @@
       >
         <!-- Modal header -->
         <!-- Your existing modal header content -->
+        
+
         <div
           class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
         >
           <!-- Modal content -->
-          <div class="mb-4">
-            <input
-              type="file"
-              class="filepond"
-              ref="filepond"
-              accept="image/*"
-            />
-            <button @click="saveToFilePond">Save</button>
-          </div>
+          <div class="w-28 ml-10">
+    <input 
+        type="file"
+        class="filepond"
+        ref="filepond"
+        accept="image/*"
+    />
+</div>
+
           <div class="mb-4">
             <label for="nodeId" class="block text-gray-700 font-bold mb-2"
               >Node ID:</label
@@ -308,8 +310,81 @@
               class="border rounded-md px-4 py-2 w-full"
             />
           </div>
+          <div class="mb-4">
+            <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
+              >Department:</label
+            >
+            <input
+              type="text"
+              id="nodedepartment"
+              v-model="clickedNodeData.department"
+              :disabled="!isEditMode"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
+              >Email:</label
+            >
+            <input
+              type="text"
+              id="email"
+              v-model="clickedNodeData.email"
+              :disabled="!isEditMode"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
+              >phone number:</label
+            >
+            <input
+              type="text"
+              id="phonenumber"
+              v-model="clickedNodeData.phone"
+              :disabled="!isEditMode"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
+              >Position:</label
+            >
+            <input
+              type="text"
+              id="positioname"
+              v-model="clickedNodeData.positionName"
+              :disabled="!isEditMode"
+              class="border rounded-md px-4 py-2 w-full overflow-x-auto"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
+              >position code:</label
+            >
+            <input
+              type="text"
+              id="positioncode"
+              v-model="clickedNodeData.positioncode"
+              :disabled="!isEditMode"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
+              >address:</label
+            >
+            <input
+              type="text"
+              id="address"
+              v-model="clickedNodeData.address"
+              :disabled="!isEditMode"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
           <!-- Add/Edit node button -->
-          <button
+         
+        </div> <div class=" flex justify-end" ><button
             @click="toggleEditMode"
             class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
           >
@@ -319,12 +394,11 @@
 
           <!-- Delete node button -->
           <button
-            @click="deleteNode(clickedNodeData.id)"
+          @click="confirmDelete(clickedNodeData.id)"
             class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
           >
             Delete
-          </button>
-        </div>
+          </button></div>
       </div>
     </div>
 
@@ -389,7 +463,7 @@ export default {
         id: "",
         name: "",
         parentId: "",
-        imageUrl: "",
+        
       },
       data: [],
       chartReference: null,
@@ -436,6 +510,16 @@ export default {
     //   });
   },
   methods: {
+    confirmDelete(id) {
+        // Display a confirmation dialog
+        if (window.confirm('Are you sure you want to delete this user?')) {
+            // If the user clicks "OK", proceed with the deletion
+            this.deleteNode(id);
+        } else {
+            // If the user clicks "Cancel", do nothing
+            // You can add additional handling here if needed
+        }
+    },
     initializeFilePond() {
       console.log("check filepond", this.$refs.filepond);
       if (this.$refs.filepond) {
@@ -484,15 +568,15 @@ export default {
 
       const formData = new FormData();
       formData.append("profile_picture", this.files[0]);
-      formData.append("emp_id", "1");
-      formData.append("name", "John Doe");
-      formData.append("reporting_to", "PKTM2582");
-      formData.append("position_code", "NGETES");
-      formData.append("position_title", "NGETES");
-      formData.append("email_address", "example@example.com");
-      formData.append("phone_number", "1234567890");
-      formData.append("home_address", "123 Main St");
-      formData.append("department", "NGETES");
+      formData.append("emp_id", this.clickedNodeData.id);
+      formData.append("name", this.clickedNodeData.name);
+      formData.append("reporting_to", this.clickedNodeData.parentId);
+      formData.append("position_code", this.clickedNodeData.positionCode);
+      
+      formData.append("email_address", this.clickedNodeData.email);
+      formData.append("phone_number", this.clickedNodeData.phone);
+      formData.append("home_address", this.clickedNodeData.address);
+      formData.append("department", this.clickedNodeData.department);
 
       axios
         .put("http://172.28.28.91:97/api/Admin/UpdateEmployee", formData, {
@@ -525,6 +609,42 @@ export default {
         this.isEditMode = !this.isEditMode; // Toggle edit mode
       }
     },
+    saveNode(){
+      if (this.files.length === 0) {
+        console.error("No files selected.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("profile_picture", this.files[0]);
+      formData.append("emp_id", this.clickedNodeData.id);
+      formData.append("name", this.clickedNodeData.name);
+      formData.append("reporting_to", this.clickedNodeData.parentId);
+      formData.append("position_code", this.clickedNodeData.positionCode);
+      formData.append('position_title', this.clickedNodeData.positionName);
+      formData.append("email_address", this.clickedNodeData.email);
+      formData.append("phone_number", this.clickedNodeData.phone);
+      formData.append("home_address", this.clickedNodeData.address);
+      formData.append("department", this.clickedNodeData.department);
+
+      axios
+        .put("http://172.28.28.91:97/api/Admin/UpdateEmployee", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          console.log("File uploaded successfully:", response.data);
+         this.isClickModal=false;
+         this.isEditMode= false,
+          this.renderChart();
+        })
+        .catch((error) => {
+          console.error("Error uploading file:", error);
+          // Handle error
+        });
+    },
+
     async addNodeAndSave() {
       try {
         // Save the node data to the database first
@@ -574,6 +694,8 @@ export default {
           department: "",
           // Add other properties as needed
         };
+        this.isAddNodeModalOpen = false;
+        this.renderChart();
       } catch (error) {
         console.error("Error adding and saving node:", error);
         // Handle errors
@@ -581,30 +703,48 @@ export default {
     },
 
     async deleteNode(nodeId) {
-      try {
-        // Send a request to your API to delete the node using the nodeId
-        await axios.delete(
-          `http://172.28.28.91:97/api/Admin/DeleteEmployee/${nodeId}`
-        );
+  try {
+    // Check if the node is being referred to by another node
+    if (this.hasReferenceToOtherUser(this.data, nodeId)) {
+      window.alert('Cannot delete user because it is referred to by another user.');
+      return; // Exit the function if the node is being referred to
+    }
 
-        // If the deletion is successful, remove the node from the data array
-        const nodeIndex = this.data.findIndex((node) => node.id === nodeId);
-        if (nodeIndex !== -1) {
-          this.data.splice(nodeIndex, 1);
+    // If the node is not being referred to, proceed with deletion
+    // Send a request to your API to delete the node using the nodeId
+    await axios.delete(
+      `http://172.28.28.91:97/api/Admin/DeleteEmployee/${nodeId}`
+    );
 
-          // Re-render the chart to reflect the changes
-          this.renderChart();
+    // If the deletion is successful, remove the node from the data array
+    const nodeIndex = this.data.findIndex((node) => node.id === nodeId);
+    if (nodeIndex !== -1) {
+      this.data.splice(nodeIndex, 1);
 
-          // Close any modal or reset any state related to the deleted node if needed
-          this.isClickModal = false;
-        } else {
-          console.error("Node not found:", nodeId);
-        }
-      } catch (error) {
-        console.error("Error deleting node:", error);
-        // Handle errors, such as displaying an error message to the user
-      }
-    },
+      // Re-render the chart to reflect the changes
+      this.renderChart();
+
+      // Close any modal or reset any state related to the deleted node if needed
+      this.isClickModal = false;
+    } else {
+      console.error("Node not found:", nodeId);
+    }
+  } catch (error) {
+    console.error("Error deleting node:", error);
+    // Handle errors, such as displaying an error message to the user
+  }
+},
+
+hasReferenceToOtherUser(data, userId) {
+  // Iterate through the data array
+  for (let i = 0; i < data.length; i++) {
+    // Check if the parentId of any user matches the userId
+    if (data[i].parentId === userId) {
+      return true; // If a match is found, return true
+    }
+  }
+  return false; // If no match is found, return false
+},
 
     closeClickModal() {
       this.isClickModal = false;
