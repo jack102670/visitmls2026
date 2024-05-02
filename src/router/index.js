@@ -23,10 +23,12 @@ import testing from "../views/Testing.vue";
 import Dashboardvendor from "../views/Dashboardvendor.vue";
 import Incidentreportsafety from "../views/Incidentreportsafety.vue";
 import BoxInfo from "../components/e-claim/BoxInfo.vue";
+import AdminBoxInfo from "../components/e-claim/AdminBoxInfo.vue";
 import SummaryReport from "../views/e-claim/SummaryReport";
 import organizationchart from "../views/organizationchart.vue";
 import TableClaim from "../components/e-claim/TableClaim.vue";
 import CreateNewClaim from "../views/e-claim/CreateNewClaim.vue";
+import ClaimReport from "../views/e-claim/ClaimReport.vue";
 import { store } from "../views/store.js";
 const routes = [
   {
@@ -35,6 +37,15 @@ const routes = [
     components: {
       default: organizationchart,
 
+    },
+  },
+
+  {
+    path: "/admin",
+    name: "AdminBoxInfo",
+    components: {
+      default: AdminBoxInfo,
+      Sidebar: Newsidebar,
     },
   },
 
@@ -52,6 +63,14 @@ const routes = [
     name: "CreateNewClaim",
     components: {
       default: CreateNewClaim,
+    },
+  },
+
+  {
+    path: "/claimreport",
+    name: "ClaimReport",
+    components: {
+      default: ClaimReport,
     },
   },
 
