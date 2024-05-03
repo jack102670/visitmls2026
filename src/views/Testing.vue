@@ -1,168 +1,85 @@
 <template>
-  <div>
-    <img :src="imgData" alt="">
-    <div>
-      <input type="file" class="filepond" ref="filepond" accept="image/*">
-      <input type="file" class="filepond2" ref="filepond2" accept="image/*">
-      <button @click="saveToFilePond">Save</button>
+  <div class="w-full h-[100vh] bg-slate-200 flex justify-center items-center flex-col">
+    <div class="w-96 relative" @click.stop><select v-model="selectedContinent">
+  <option disabled value="">Please select a continent</option>
+  <option>Asia</option>
+  <option>Europe</option>
+  <!-- Add other continents as needed -->
+</select>
+
+<select v-model="selectedCountry">
+  <option disabled value="">Please select a country</option>
+  <option v-for="country in filteredCountries" :key="country.code" :value="country.code">
+    {{ country.name }}
+  </option>
+</select>
+      <input
+        id="autocompleteInput"
+        placeholder="Select country name"
+        class="px-5 py-3 w-full border border-gray-300 rounded-md"
+        v-model="keyword"
+        @keyup="onKeyUp"
+      />
+      <div
+        id="dropdown"
+        class="w-full h-60 border border-gray-300 rounded-md bg-white absolute overflow-y-auto"
+        v-show="showDropdown"
+      >
+        <div
+          v-for="country in filteredCountries"
+          :key="country.code"
+          @click="selectOption(country.name)"
+          class="px-5 py-3 border-b border-gray-200 text-stone-600 cursor-pointer hover:bg-slate-100 transition-colors"
+        >
+          {{ country.name }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
-
 <script>
-import { create, registerPlugin } from 'filepond';
-import axios from 'axios';
-
-import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-import FilePondPluginImageCrop from 'filepond-plugin-image-crop';
-import FilePondPluginImageResize from 'filepond-plugin-image-resize';
-import FilePondPluginImageTransform from 'filepond-plugin-image-transform';
-
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-import 'filepond/dist/filepond.min.css';
-
-registerPlugin(
-  FilePondPluginFileEncode,
-  FilePondPluginFileValidateType,
-  FilePondPluginImageExifOrientation,
-  FilePondPluginImagePreview,
-  FilePondPluginImageCrop,
-  FilePondPluginImageResize,
-  FilePondPluginImageTransform
-);
-
 export default {
-  name: 'CircleFilePond',
+  name: 'TesviVIew',
   data() {
     return {
-      files: [],
-      imgData: 'http://172.28.28.91:86/images/cd7724ad8b5d85ee734d43c3c1e11b5b3ee1bdf3b6f05cfe9287ebf7a5bd0bbf.png'
+      countries: [
+        { name: "Afghanistan", code: "AF", continent: "Asia" },
+        // ... other countries
+        { name: "Belgium", code: "BE", continent: "Europe" },
+        // ...
+      ],
+      keyword: '',
+      showDropdown: false,
+      quotes: [],
+      selectedContinent: '', // Add this line
     };
   },
-  mounted() {
-    this.$nextTick(() => {
-      this.initializeFilePond();
-      this.fetchImage();
-    });
+methods: {
+  onKeyUp() {
+    this.showDropdown = true;
   },
-  methods: {
-    initializeFilePond() {
-      if (this.$refs.filepond) {
-        const pond = create(this.$refs.filepond, {
-          labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
-          stylePanelLayout: 'compact circle',
-          imagePreviewHeight: 150,
-          imageCropAspectRatio: '1:1',
-          imageResizeTargetWidth: 150,
-          imageResizeTargetHeight: 150,
-          styleLoadIndicatorPosition: 'center bottom',
-          styleButtonRemoveItemPosition: 'center bottom',
-          files: [
-            {
-              source: this.imgData,
-           //   options: {
-               // type: 'local'
-             // }
-            }
-          ]
-        });
-
-        pond.on('addfile', (error, file) => {
-          if (!error) {
-            console.log("Added file name:", file.file.name); // Access file name
-            this.files = [file.file]; // Replace files array with the new file
-          }
-        });
-
-        pond.on('removefile', () => {
-          this.files = []; // Clear files array when file is removed
-        });
-      }
-      else if(this.$refs.filepond2) {
-        const pond2 = create(this.$refs.filepond2, {
-          labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
-          stylePanelLayout: 'compact circle',
-          imagePreviewHeight: 150,
-          imageCropAspectRatio: '1:1',
-          imageResizeTargetWidth: 150,
-          imageResizeTargetHeight: 150,
-          styleLoadIndicatorPosition: 'center bottom',
-          styleButtonRemoveItemPosition: 'center bottom',
-          files: [
-            {
-              source: this.imgData,
-           //   options: {
-               // type: 'local'
-             // }
-            }
-          ]
-        });
-
-        pond2.on('addfile', (error, file) => {
-          if (!error) {
-            console.log("Added file name:", file.file.name); // Access file name
-            this.files = [file.file]; // Replace files array with the new file
-          }
-        });
-
-        pond2.on('removefile', () => {
-          this.files = []; // Clear files array when file is removed
-        });
-      } else {
-        console.error("FilePond element not found.");
-      }
-    },
-    async fetchImage() {
-  try {
-    const response = await axios.get('/api/images/226c61980387fea890a49ac352f76473ca458f20b4decb675b9a8c32ffb28dda.png', {
-      responseType: 'arraybuffer'
-    });
-    const base64Data = btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
-    this.imgData = `data:${response.headers['content-type'].toLowerCase()};base64,${base64Data}`;
-  } catch (error) {
-    console.error('Error fetching image:', error);
+  selectOption(name) {
+    this.keyword = name;
+    this.showDropdown = false;
   }
 },
-
-    saveToFilePond() {
-      if (this.files.length === 0) {
-        console.error("No files selected.");
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append('profile_picture', this.files[0]);
-      formData.append('emp_id', '1');
-      formData.append('name', 'John Doe');
-      formData.append('reporting_to', 'PKTM2582');
-      formData.append('position_code', 'NGETES');
-      formData.append('position_title', 'NGETES');
-      formData.append('email_address', 'example@example.com');
-      formData.append('phone_number', '1234567890');
-      formData.append('home_address', '123 Main St');
-      formData.append('department', 'NGETES');
-
-      axios.put('http://172.28.28.91:97/api/Admin/UpdateEmployee', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-      .then(response => {
-        console.log('File uploaded successfully:', response.data);
-        // Handle response from server
-      })
-      .catch(error => {
-        console.error('Error uploading file:', error);
-        // Handle error
-      });
+computed: {
+  filteredCountries() {
+    if (!this.keyword && !this.selectedContinent) {
+      return this.countries;
     }
+    return this.countries.filter(country => {
+      const keywordMatch = !this.keyword || country.name.toLowerCase().includes(this.keyword.toLowerCase());
+      const continentMatch = !this.selectedContinent || country.continent === this.selectedContinent;
+      return keywordMatch && continentMatch;
+    });
   }
+},
+  // ...
 };
 </script>
-
 <style scoped>
-/* Your styles here */
+#dropdown {
+  max-height: 200px; /* Adjust this value to fit your needs */
+}
 </style>

@@ -654,7 +654,7 @@ export default {
       formData.append("emp_id", this.clickedNodeData.id);
       formData.append("name", this.clickedNodeData.name);
       formData.append("reporting_to", this.clickedNodeData.parentId);
-      formData.append("position_code", this.clickedNodeData.positionCode);
+      formData.append("position_code", this.clickedNodeData.positioncode);
       formData.append("position_title", this.clickedNodeData.positionName);
       formData.append("email_address", this.clickedNodeData.email);
       formData.append("phone_number", this.clickedNodeData.phone);
@@ -684,7 +684,7 @@ export default {
           console.log("File uploaded successfully:", response.data);
           this.isClickModal = false;
           this.isEditMode = false;
-          this.renderChart();
+          this.fetchData();
         })
         .catch((error) => {
           console.error("Error uploading file:", error);
