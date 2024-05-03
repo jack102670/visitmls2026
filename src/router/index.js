@@ -63,6 +63,7 @@ const routes = [
     name: "CreateNewClaim",
     components: {
       default: CreateNewClaim,
+      Sidebar: Newsidebar,
     },
   },
 
@@ -71,6 +72,7 @@ const routes = [
     name: "ClaimReport",
     components: {
       default: ClaimReport,
+      Sidebar: Newsidebar,
     },
   },
 

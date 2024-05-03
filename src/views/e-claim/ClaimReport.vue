@@ -7,11 +7,14 @@
       <div
         class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
-        <div class="mt-2 flex justify-between">
-          <h3 class="ml-4 text-2xl font-bold text-blue-900">
+        <div
+          class="relative overflow-hidden mt-2 grid cols-start-1 md:flex justify-between"
+        >
+          <h3 class="ml-4 text-3xl font-bold text-blue-900">
             WEBINAR AT PENANG
           </h3>
-          <div
+
+          <!-- <div
             class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
           >
             <div
@@ -20,7 +23,7 @@
               <span class="h-1.5 w-1.5 rounded-full bg-red-500"></span>
               <h2 class="text-sm font-normal text-red-500">Unsubmitted</h2>
             </div>
-          </div>
+          </div> -->
 
           <div class="mt-1 mr-4 gap-2 flex flex-row-reverse">
             <button
@@ -45,14 +48,65 @@
             </button>
           </div>
         </div>
-        <section class="px-4 mx-auto">
-          <div class="mt-5 flex justify-between sm: grid grid-cols-1">
-            <h5 class="text-sm font-semibold text-gray-600">Designation :</h5>
-            <h5 class="text-sm font-semibold text-gray-600">Company Name :</h5>
-            <h5 class="text-sm font-semibold text-gray-600">Cost Center :</h5>
-            <h5 class="text-sm font-semibold text-gray-600">
-              Date of Report :
-            </h5>
+        <section class="mt-5 px-4 mx-auto">
+          <div class="grid grid-cols-14 gap-4">
+            <div class="col-start-1 col-end-8">
+              <h3 class="text-md font-semibold text-gray-600">
+                MOHD HAZMAN BIN MOHD ADANAN
+              </h3>
+            </div>
+
+            <div class="col-start-8 col-end-9">
+              <h5 class="text-sm font-semibold text-gray-600">Designation</h5>
+            </div>
+            <div class="col-start-9">
+              <h5 class="text-sm font-semibold text-gray-600">:</h5>
+            </div>
+            <div class="col-end-12 col-span-2">
+              <h5 class="text-sm font-semibold text-gray-600">
+                FRONT-END DEVELOPER
+              </h5>
+            </div>
+
+             <div class="col-start-1 col-end-4">
+              <h3 class="text-sm font-semibold text-gray-600">Department :  ICT</h3>
+            </div>
+
+            <div class="col-start-8 col-end-9">
+              <h5 class="text-sm font-semibold text-gray-600">
+                Company's Name
+              </h5>
+            </div>
+            <div class="col-start-9">
+              <h5 class="text-sm font-semibold text-gray-600">:</h5>
+            </div>
+            <div class="col-end-12 col-span-2">
+              <h5 class="text-sm font-semibold text-gray-600">
+                PKT LOGISTICS (M) SDN. BHD.
+              </h5>
+            </div>
+
+            <div class="col-start-8 col-end-9">
+              <h5 class="text-sm font-semibold text-gray-600">Cost Center</h5>
+            </div>
+            <div class="col-start-9">
+              <h5 class="text-sm font-semibold text-gray-600">:</h5>
+            </div>
+            <div class="col-end-12 col-span-2">
+              <h5 class="text-sm font-semibold text-gray-600">OAH</h5>
+            </div>
+
+            <div class="col-start-8 col-end-9">
+              <h5 class="text-sm font-semibold text-gray-600">
+                Date of Report
+              </h5>
+            </div>
+            <div class="col-start-9">
+              <h5 class="text-sm font-semibold text-gray-600">:</h5>
+            </div>
+            <div class="col-end-12 col-span-2">
+              <h5 class="text-sm font-semibold text-gray-600">5 JULY 2024</h5>
+            </div>
           </div>
         </section>
 
