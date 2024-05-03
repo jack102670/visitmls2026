@@ -259,20 +259,34 @@
       >
         <!-- Modal header -->
         <!-- Your existing modal header content -->
-        
 
         <div
           class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
         >
           <!-- Modal content -->
-          <div class="w-28 ml-10">
-    <input 
-        type="file"
-        class="filepond"
-        ref="filepond"
-        accept="image/*"
-    />
-</div>
+          <div class="w-full">
+            <img
+              :src="this.clickedNodeData.imageUrl"
+              alt=""
+              class="w-28 ml-10"
+            />
+            <div v-show="showupdatepicture">
+              <input
+                type="file"
+                class="filepond"
+                ref="filepond"
+                accept="image/*"
+              />
+            </div>
+            <div v-show="hide">
+              <input
+                type="file"
+                class="filepond2"
+                ref="filepond2"
+                accept="image/*"
+              />
+            </div>
+          </div>
 
           <div class="mb-4">
             <label for="nodeId" class="block text-gray-700 font-bold mb-2"
@@ -383,8 +397,9 @@
             />
           </div>
           <!-- Add/Edit node button -->
-         
-        </div> <div class=" flex justify-end" ><button
+        </div>
+        <div class="flex justify-end">
+          <button
             @click="toggleEditMode"
             class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
           >
@@ -394,11 +409,12 @@
 
           <!-- Delete node button -->
           <button
-          @click="confirmDelete(clickedNodeData.id)"
+            @click="confirmDelete(clickedNodeData.id)"
             class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
           >
             Delete
-          </button></div>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -442,6 +458,8 @@ export default {
   name: "TestComponent",
   data() {
     return {
+      hide: false,
+      files2: [],
       files: [],
       keyword: "",
       isAddNodeModalOpen: false,
@@ -463,7 +481,6 @@ export default {
         id: "",
         name: "",
         parentId: "",
-        
       },
       data: [],
       chartReference: null,
@@ -477,6 +494,7 @@ export default {
       isClickModal: false,
       isEditMode: false,
       showDropdown: false,
+      showupdatepicture: false,
     };
   },
   computed: {
@@ -499,6 +517,7 @@ export default {
         // Modal is shown, initialize FilePond
         this.$nextTick(() => {
           this.initializeFilePond();
+          this.initializeFilePond2();
         });
       }
     },
@@ -511,19 +530,40 @@ export default {
   },
   methods: {
     confirmDelete(id) {
-        // Display a confirmation dialog
-        if (window.confirm('Are you sure you want to delete this user?')) {
-            // If the user clicks "OK", proceed with the deletion
-            this.deleteNode(id);
-        } else {
-            // If the user clicks "Cancel", do nothing
-            // You can add additional handling here if needed
-        }
+      // Display a confirmation dialog
+      if (window.confirm("Are you sure you want to delete this user?")) {
+        // If the user clicks "OK", proceed with the deletion
+        this.deleteNode(id);
+      } else {
+        // If the user clicks "Cancel", do nothing
+        // You can add additional handling here if needed
+      }
     },
     initializeFilePond() {
       console.log("check filepond", this.$refs.filepond);
       if (this.$refs.filepond) {
         const pond = create(this.$refs.filepond, {
+          labelIdle: `Drag & Drop to update your picture`,
+        });
+        console.log("check filepond", this.clickedNodeData.imageUrl);
+
+        pond.on("addfile", (error, file) => {
+          if (!error) {
+            console.log("Added file name:", file.file.name); // Access file name
+            this.files2 = [file.file]; // Replace files array with the new file
+          }
+        });
+
+        pond.on("removefile", () => {
+          this.files2 = []; // Clear files array when file is removed
+        });
+      } else {
+        console.error("FilePond element not found.");
+      }
+    },
+    initializeFilePond2() {
+      if (this.$refs.filepond2) {
+        const pond2 = create(this.$refs.filepond2, {
           labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
           stylePanelLayout: "compact circle",
           imagePreviewHeight: 150,
@@ -535,64 +575,60 @@ export default {
           files: [
             {
               source: this.clickedNodeData.imageUrl,
-           //   options: {
-               // type: 'local'
-             // }
-            }
-          ]
+              //   options: {
+              // type: 'local'
+              // }
+            },
+          ],
         });
-        console.log("check filepond", this.clickedNodeData.imageUrl);
 
-  
-
-        pond.on("addfile", (error, file) => {
+        pond2.on("addfile", (error, file) => {
           if (!error) {
             console.log("Added file name:", file.file.name); // Access file name
             this.files = [file.file]; // Replace files array with the new file
-          }
+          } // Event handler for the second FilePond instance
         });
 
-        pond.on("removefile", () => {
-          this.files = []; // Clear files array when file is removed
+        pond2.on("removefile", () => {
+          // Event handler for file removal in the second FilePond instance
         });
-        
       } else {
-        console.error("FilePond element not found.");
+        console.error("FilePond element 2 not found.");
       }
     },
-    saveToFilePond() {
-      if (this.files.length === 0) {
-        console.error("No files selected.");
-        return;
-      }
+    // saveToFilePond() {
+    //   if (this.files.length === 0) {
+    //     console.error("No files selected.");
+    //     return;
+    //   }
 
-      const formData = new FormData();
-      formData.append("profile_picture", this.files[0]);
-      formData.append("emp_id", this.clickedNodeData.id);
-      formData.append("name", this.clickedNodeData.name);
-      formData.append("reporting_to", this.clickedNodeData.parentId);
-      formData.append("position_code", this.clickedNodeData.positionCode);
-      
-      formData.append("email_address", this.clickedNodeData.email);
-      formData.append("phone_number", this.clickedNodeData.phone);
-      formData.append("home_address", this.clickedNodeData.address);
-      formData.append("department", this.clickedNodeData.department);
+    //   const formData = new FormData();
+    //   formData.append("profile_picture", this.files[0]);
+    //   formData.append("emp_id", this.clickedNodeData.id);
+    //   formData.append("name", this.clickedNodeData.name);
+    //   formData.append("reporting_to", this.clickedNodeData.parentId);
+    //   formData.append("position_code", this.clickedNodeData.positionCode);
 
-      axios
-        .put("http://172.28.28.91:97/api/Admin/UpdateEmployee", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          console.log("File uploaded successfully:", response.data);
-          // Handle response from server
-        })
-        .catch((error) => {
-          console.error("Error uploading file:", error);
-          // Handle error
-        });
-    },
+    //   formData.append("email_address", this.clickedNodeData.email);
+    //   formData.append("phone_number", this.clickedNodeData.phone);
+    //   formData.append("home_address", this.clickedNodeData.address);
+    //   formData.append("department", this.clickedNodeData.department);
+
+    //   axios
+    //     .put("http://172.28.28.91:97/api/Admin/UpdateEmployee", formData, {
+    //       headers: {
+    //         "Content-Type": "multipart/form-data",
+    //       },
+    //     })
+    //     .then((response) => {
+    //       console.log("File uploaded successfully:", response.data);
+    //       // Handle response from server
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error uploading file:", error);
+    //       // Handle error
+    //     });
+    // },
 
     onKeyUp() {
       this.showDropdown = true;
@@ -607,26 +643,37 @@ export default {
         this.saveNode(); // Call saveNode method if in edit mode
       } else {
         this.isEditMode = !this.isEditMode; // Toggle edit mode
+        this.showupdatepicture = !this.showupdatepicture;
       }
     },
-    saveNode(){
-      if (this.files.length === 0) {
-        console.error("No files selected.");
-        return;
-      }
-
+    saveNode() {
+      // Create a new FormData object
       const formData = new FormData();
-      formData.append("profile_picture", this.files[0]);
+
+      // Append employee data to the FormData object
       formData.append("emp_id", this.clickedNodeData.id);
       formData.append("name", this.clickedNodeData.name);
       formData.append("reporting_to", this.clickedNodeData.parentId);
       formData.append("position_code", this.clickedNodeData.positionCode);
-      formData.append('position_title', this.clickedNodeData.positionName);
+      formData.append("position_title", this.clickedNodeData.positionName);
       formData.append("email_address", this.clickedNodeData.email);
       formData.append("phone_number", this.clickedNodeData.phone);
       formData.append("home_address", this.clickedNodeData.address);
       formData.append("department", this.clickedNodeData.department);
+      // Check if a new profile picture file is selected
+      if (this.files2.length > 0) {
+        // Append newly selected profile picture file to the FormData object
+        formData.append("profile_picture", this.files2[0]);
+      } else if (this.files.length > 0) {
+        // If no new picture is uploaded, append the existing picture
+        formData.append("profile_picture", this.files[0]);
+      } else {
+        console.error("No picture available.");
+        // Optionally, you can handle this case by appending a placeholder or omitting the profile_picture field
+      }
 
+      // Now formData contains all the necessary data including the profile picture
+      // Proceed with your API call using formData
       axios
         .put("http://172.28.28.91:97/api/Admin/UpdateEmployee", formData, {
           headers: {
@@ -635,8 +682,8 @@ export default {
         })
         .then((response) => {
           console.log("File uploaded successfully:", response.data);
-         this.isClickModal=false;
-         this.isEditMode= false,
+          this.isClickModal = false;
+          this.isEditMode = false;
           this.renderChart();
         })
         .catch((error) => {
@@ -662,7 +709,7 @@ export default {
 
         const uploadResponse = await axios.post(
           "http://172.28.28.91:97/api/Admin/InsertNewEmployee",
-          formData 
+          formData
         );
 
         console.log("Node data saved to the database:", uploadResponse.data);
@@ -703,48 +750,50 @@ export default {
     },
 
     async deleteNode(nodeId) {
-  try {
-    // Check if the node is being referred to by another node
-    if (this.hasReferenceToOtherUser(this.data, nodeId)) {
-      window.alert('Cannot delete user because it is referred to by another user.');
-      return; // Exit the function if the node is being referred to
-    }
+      try {
+        // Check if the node is being referred to by another node
+        if (this.hasReferenceToOtherUser(this.data, nodeId)) {
+          window.alert(
+            "Cannot delete user because it is referred to by another user."
+          );
+          return; // Exit the function if the node is being referred to
+        }
 
-    // If the node is not being referred to, proceed with deletion
-    // Send a request to your API to delete the node using the nodeId
-    await axios.delete(
-      `http://172.28.28.91:97/api/Admin/DeleteEmployee/${nodeId}`
-    );
+        // If the node is not being referred to, proceed with deletion
+        // Send a request to your API to delete the node using the nodeId
+        await axios.delete(
+          `http://172.28.28.91:97/api/Admin/DeleteEmployee/${nodeId}`
+        );
 
-    // If the deletion is successful, remove the node from the data array
-    const nodeIndex = this.data.findIndex((node) => node.id === nodeId);
-    if (nodeIndex !== -1) {
-      this.data.splice(nodeIndex, 1);
+        // If the deletion is successful, remove the node from the data array
+        const nodeIndex = this.data.findIndex((node) => node.id === nodeId);
+        if (nodeIndex !== -1) {
+          this.data.splice(nodeIndex, 1);
 
-      // Re-render the chart to reflect the changes
-      this.renderChart();
+          // Re-render the chart to reflect the changes
+          this.renderChart();
 
-      // Close any modal or reset any state related to the deleted node if needed
-      this.isClickModal = false;
-    } else {
-      console.error("Node not found:", nodeId);
-    }
-  } catch (error) {
-    console.error("Error deleting node:", error);
-    // Handle errors, such as displaying an error message to the user
-  }
-},
+          // Close any modal or reset any state related to the deleted node if needed
+          this.isClickModal = false;
+        } else {
+          console.error("Node not found:", nodeId);
+        }
+      } catch (error) {
+        console.error("Error deleting node:", error);
+        // Handle errors, such as displaying an error message to the user
+      }
+    },
 
-hasReferenceToOtherUser(data, userId) {
-  // Iterate through the data array
-  for (let i = 0; i < data.length; i++) {
-    // Check if the parentId of any user matches the userId
-    if (data[i].parentId === userId) {
-      return true; // If a match is found, return true
-    }
-  }
-  return false; // If no match is found, return false
-},
+    hasReferenceToOtherUser(data, userId) {
+      // Iterate through the data array
+      for (let i = 0; i < data.length; i++) {
+        // Check if the parentId of any user matches the userId
+        if (data[i].parentId === userId) {
+          return true; // If a match is found, return true
+        }
+      }
+      return false; // If no match is found, return false
+    },
 
     closeClickModal() {
       this.isClickModal = false;
@@ -759,46 +808,45 @@ hasReferenceToOtherUser(data, userId) {
       this.isClickModal = false;
     },
     fetchData() {
-  fetch("http://172.28.28.91:86/api/User/GetAllEmployee", {
-    mode: 'cors' // Adding CORS mode
-  })
-    .then(response => response.json())
-    .then((response) => {
-      console.log("Fetched data:", response);
+      fetch("http://172.28.28.91:86/api/User/GetAllEmployee", {
+        mode: "cors", // Adding CORS mode
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          console.log("Fetched data:", response);
 
-      // Extract the result array from the response data
-      const resultArray = response.result;
+          // Extract the result array from the response data
+          const resultArray = response.result;
 
-      // Transform keys of the items in the result array
-      const modifiedData = resultArray.map((item) => ({
-        id: item.emp_id,
-        parentId: item.reporting_to,
-        name: item.name,
-        positionCode: item.position_code,
-        positionName: item.position_title,
-        phone: item.phone_number,
-        email: item.email_address,
-        team: "", // You may need to provide a value for the team key
-        location: item.home_address,
-        department: item.department,
-        description: "", // You may need to provide a description value
-        imageUrl: item.profile_picture, // You may need to provide an image URL
-      }));
+          // Transform keys of the items in the result array
+          const modifiedData = resultArray.map((item) => ({
+            id: item.emp_id,
+            parentId: item.reporting_to,
+            name: item.name,
+            positionCode: item.position_code,
+            positionName: item.position_title,
+            phone: item.phone_number,
+            email: item.email_address,
+            team: "", // You may need to provide a value for the team key
+            location: item.home_address,
+            department: item.department,
+            description: "", // You may need to provide a description value
+            imageUrl: item.profile_picture, // You may need to provide an image URL
+          }));
 
-      console.log("Fetched and modified data:", modifiedData);
+          console.log("Fetched and modified data:", modifiedData);
 
-      // Assign the modified data to your component's data property
-      this.data = modifiedData;
+          // Assign the modified data to your component's data property
+          this.data = modifiedData;
 
-      // Perform any other actions with the data
-      // For example, render a chart
-      console.log("Value of this selepas fetcg:", this.data);
-      this.renderChart();
-    })
-    .catch((error) => {
-      console.error("Error fetching data:", error);
-    });
-
+          // Perform any other actions with the data
+          // For example, render a chart
+          console.log("Value of this selepas fetcg:", this.data);
+          this.renderChart();
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
 
       // Promise.resolve(employeesData)
       //   .then((data) => {
@@ -888,7 +936,8 @@ hasReferenceToOtherUser(data, userId) {
         // Log the clicked node data for debugging
         console.log("Clicked Node Data:", this.clickedNodeData);
         this.isClickModal = true;
-
+        this.files = this.clickedNodeData.imageUrl;
+        console.log("img files", this.files);
         // Open the add node modal
       });
 
