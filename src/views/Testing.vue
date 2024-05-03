@@ -1,7 +1,11 @@
 <template>
   <div>
-    <input type="file" class="filepond" ref="filepond" accept="image/*">
-    <button @click="saveToFilePond">Save</button>
+    <img :src="imgData" alt="">
+    <div>
+      <input type="file" class="filepond" ref="filepond" accept="image/*">
+      <input type="file" class="filepond2" ref="filepond2" accept="image/*">
+      <button @click="saveToFilePond">Save</button>
+    </div>
   </div>
 </template>
 
@@ -35,12 +39,13 @@ export default {
   data() {
     return {
       files: [],
-      imgUrl: 'http://172.28.28.91:97/images/8a1acd1e3bdca355f040a6f6eb1d2a9976b57f33fa8118bc6e3df06bfa9d5aeb.png' // Replace this with your image URL
+      imgData: 'http://172.28.28.91:86/images/cd7724ad8b5d85ee734d43c3c1e11b5b3ee1bdf3b6f05cfe9287ebf7a5bd0bbf.png'
     };
   },
   mounted() {
     this.$nextTick(() => {
       this.initializeFilePond();
+      this.fetchImage();
     });
   },
   methods: {
@@ -57,7 +62,7 @@ export default {
           styleButtonRemoveItemPosition: 'center bottom',
           files: [
             {
-              source: this.imgUrl,
+              source: this.imgData,
            //   options: {
                // type: 'local'
              // }
@@ -75,10 +80,53 @@ export default {
         pond.on('removefile', () => {
           this.files = []; // Clear files array when file is removed
         });
+      }
+      else if(this.$refs.filepond2) {
+        const pond2 = create(this.$refs.filepond2, {
+          labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
+          stylePanelLayout: 'compact circle',
+          imagePreviewHeight: 150,
+          imageCropAspectRatio: '1:1',
+          imageResizeTargetWidth: 150,
+          imageResizeTargetHeight: 150,
+          styleLoadIndicatorPosition: 'center bottom',
+          styleButtonRemoveItemPosition: 'center bottom',
+          files: [
+            {
+              source: this.imgData,
+           //   options: {
+               // type: 'local'
+             // }
+            }
+          ]
+        });
+
+        pond2.on('addfile', (error, file) => {
+          if (!error) {
+            console.log("Added file name:", file.file.name); // Access file name
+            this.files = [file.file]; // Replace files array with the new file
+          }
+        });
+
+        pond2.on('removefile', () => {
+          this.files = []; // Clear files array when file is removed
+        });
       } else {
         console.error("FilePond element not found.");
       }
     },
+    async fetchImage() {
+  try {
+    const response = await axios.get('/api/images/226c61980387fea890a49ac352f76473ca458f20b4decb675b9a8c32ffb28dda.png', {
+      responseType: 'arraybuffer'
+    });
+    const base64Data = btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+    this.imgData = `data:${response.headers['content-type'].toLowerCase()};base64,${base64Data}`;
+  } catch (error) {
+    console.error('Error fetching image:', error);
+  }
+},
+
     saveToFilePond() {
       if (this.files.length === 0) {
         console.error("No files selected.");
