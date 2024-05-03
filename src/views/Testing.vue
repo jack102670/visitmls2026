@@ -3,6 +3,7 @@
     <img :src="imgData" alt="">
     <div>
       <input type="file" class="filepond" ref="filepond" accept="image/*">
+      <input type="file" class="filepond2" ref="filepond2" accept="image/*">
       <button @click="saveToFilePond">Save</button>
     </div>
   </div>
@@ -38,7 +39,7 @@ export default {
   data() {
     return {
       files: [],
-      imgData: ''
+      imgData: 'http://172.28.28.91:86/images/cd7724ad8b5d85ee734d43c3c1e11b5b3ee1bdf3b6f05cfe9287ebf7a5bd0bbf.png'
     };
   },
   mounted() {
@@ -59,7 +60,14 @@ export default {
           imageResizeTargetHeight: 150,
           styleLoadIndicatorPosition: 'center bottom',
           styleButtonRemoveItemPosition: 'center bottom',
-          files: []
+          files: [
+            {
+              source: this.imgData,
+           //   options: {
+               // type: 'local'
+             // }
+            }
+          ]
         });
 
         pond.on('addfile', (error, file) => {
@@ -70,6 +78,37 @@ export default {
         });
 
         pond.on('removefile', () => {
+          this.files = []; // Clear files array when file is removed
+        });
+      }
+      else if(this.$refs.filepond2) {
+        const pond2 = create(this.$refs.filepond2, {
+          labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
+          stylePanelLayout: 'compact circle',
+          imagePreviewHeight: 150,
+          imageCropAspectRatio: '1:1',
+          imageResizeTargetWidth: 150,
+          imageResizeTargetHeight: 150,
+          styleLoadIndicatorPosition: 'center bottom',
+          styleButtonRemoveItemPosition: 'center bottom',
+          files: [
+            {
+              source: this.imgData,
+           //   options: {
+               // type: 'local'
+             // }
+            }
+          ]
+        });
+
+        pond2.on('addfile', (error, file) => {
+          if (!error) {
+            console.log("Added file name:", file.file.name); // Access file name
+            this.files = [file.file]; // Replace files array with the new file
+          }
+        });
+
+        pond2.on('removefile', () => {
           this.files = []; // Clear files array when file is removed
         });
       } else {

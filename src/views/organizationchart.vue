@@ -265,12 +265,24 @@
         >
           <!-- Modal content -->
           <div class="w-full">
-            <img :src="this.clickedNodeData.imageUrl" alt="" class="w-28 ml-10" />
+            <img
+              :src="this.clickedNodeData.imageUrl"
+              alt=""
+              class="w-28 ml-10"
+            />
             <div v-show="showupdatepicture">
               <input
                 type="file"
                 class="filepond"
                 ref="filepond"
+                accept="image/*"
+              />
+            </div>
+            <div v-show="hide">
+              <input
+                type="file"
+                class="filepond2"
+                ref="filepond2"
                 accept="image/*"
               />
             </div>
@@ -446,6 +458,8 @@ export default {
   name: "TestComponent",
   data() {
     return {
+      hide: false,
+      files2: [],
       files: [],
       keyword: "",
       isAddNodeModalOpen: false,
@@ -503,6 +517,7 @@ export default {
         // Modal is shown, initialize FilePond
         this.$nextTick(() => {
           this.initializeFilePond();
+          this.initializeFilePond2();
         });
       }
     },
@@ -535,50 +550,85 @@ export default {
         pond.on("addfile", (error, file) => {
           if (!error) {
             console.log("Added file name:", file.file.name); // Access file name
-            this.files = [file.file]; // Replace files array with the new file
+            this.files2 = [file.file]; // Replace files array with the new file
           }
         });
 
         pond.on("removefile", () => {
-          this.files = []; // Clear files array when file is removed
+          this.files2 = []; // Clear files array when file is removed
         });
       } else {
         console.error("FilePond element not found.");
       }
     },
-    saveToFilePond() {
-      if (this.files.length === 0) {
-        console.error("No files selected.");
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append("profile_picture", this.files[0]);
-      formData.append("emp_id", this.clickedNodeData.id);
-      formData.append("name", this.clickedNodeData.name);
-      formData.append("reporting_to", this.clickedNodeData.parentId);
-      formData.append("position_code", this.clickedNodeData.positionCode);
-
-      formData.append("email_address", this.clickedNodeData.email);
-      formData.append("phone_number", this.clickedNodeData.phone);
-      formData.append("home_address", this.clickedNodeData.address);
-      formData.append("department", this.clickedNodeData.department);
-
-      axios
-        .put("http://172.28.28.91:97/api/Admin/UpdateEmployee", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          console.log("File uploaded successfully:", response.data);
-          // Handle response from server
-        })
-        .catch((error) => {
-          console.error("Error uploading file:", error);
-          // Handle error
+    initializeFilePond2() {
+      if (this.$refs.filepond2) {
+        const pond2 = create(this.$refs.filepond2, {
+          labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
+          stylePanelLayout: "compact circle",
+          imagePreviewHeight: 150,
+          imageCropAspectRatio: "1:1",
+          imageResizeTargetWidth: 150,
+          imageResizeTargetHeight: 150,
+          styleLoadIndicatorPosition: "center bottom",
+          styleButtonRemoveItemPosition: "center bottom",
+          files: [
+            {
+              source: this.clickedNodeData.imageUrl,
+              //   options: {
+              // type: 'local'
+              // }
+            },
+          ],
         });
+
+        pond2.on("addfile", (error, file) => {
+          if (!error) {
+            console.log("Added file name:", file.file.name); // Access file name
+            this.files = [file.file]; // Replace files array with the new file
+          } // Event handler for the second FilePond instance
+        });
+
+        pond2.on("removefile", () => {
+          // Event handler for file removal in the second FilePond instance
+        });
+      } else {
+        console.error("FilePond element 2 not found.");
+      }
     },
+    // saveToFilePond() {
+    //   if (this.files.length === 0) {
+    //     console.error("No files selected.");
+    //     return;
+    //   }
+
+    //   const formData = new FormData();
+    //   formData.append("profile_picture", this.files[0]);
+    //   formData.append("emp_id", this.clickedNodeData.id);
+    //   formData.append("name", this.clickedNodeData.name);
+    //   formData.append("reporting_to", this.clickedNodeData.parentId);
+    //   formData.append("position_code", this.clickedNodeData.positionCode);
+
+    //   formData.append("email_address", this.clickedNodeData.email);
+    //   formData.append("phone_number", this.clickedNodeData.phone);
+    //   formData.append("home_address", this.clickedNodeData.address);
+    //   formData.append("department", this.clickedNodeData.department);
+
+    //   axios
+    //     .put("http://172.28.28.91:97/api/Admin/UpdateEmployee", formData, {
+    //       headers: {
+    //         "Content-Type": "multipart/form-data",
+    //       },
+    //     })
+    //     .then((response) => {
+    //       console.log("File uploaded successfully:", response.data);
+    //       // Handle response from server
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error uploading file:", error);
+    //       // Handle error
+    //     });
+    // },
 
     onKeyUp() {
       this.showDropdown = true;
@@ -597,48 +647,50 @@ export default {
       }
     },
     saveNode() {
-  const formData = new FormData();
-  formData.append("emp_id", this.clickedNodeData.id);
-  formData.append("name", this.clickedNodeData.name);
-  formData.append("reporting_to", this.clickedNodeData.parentId);
-  formData.append("position_code", this.clickedNodeData.positionCode);
-  formData.append("position_title", this.clickedNodeData.positionName);
-  formData.append("email_address", this.clickedNodeData.email);
-  formData.append("phone_number", this.clickedNodeData.phone);
-  formData.append("home_address", this.clickedNodeData.address);
-  formData.append("department", this.clickedNodeData.department);
+      // Create a new FormData object
+      const formData = new FormData();
 
-  if (this.files.length === 0) {
-    console.error("No picture updated.");
-    // Append existing image URL as an object
+      // Append employee data to the FormData object
+      formData.append("emp_id", this.clickedNodeData.id);
+      formData.append("name", this.clickedNodeData.name);
+      formData.append("reporting_to", this.clickedNodeData.parentId);
+      formData.append("position_code", this.clickedNodeData.positionCode);
+      formData.append("position_title", this.clickedNodeData.positionName);
+      formData.append("email_address", this.clickedNodeData.email);
+      formData.append("phone_number", this.clickedNodeData.phone);
+      formData.append("home_address", this.clickedNodeData.address);
+      formData.append("department", this.clickedNodeData.department);
+      // Check if a new profile picture file is selected
+      if (this.files2.length > 0) {
+        // Append newly selected profile picture file to the FormData object
+        formData.append("profile_picture", this.files2[0]);
+      } else if (this.files.length > 0) {
+        // If no new picture is uploaded, append the existing picture
+        formData.append("profile_picture", this.files[0]);
+      } else {
+        console.error("No picture available.");
+        // Optionally, you can handle this case by appending a placeholder or omitting the profile_picture field
+      }
 
-
-// Append the imageData object as a string to the FormData object
-formData.append("profile_picture", this.clickedNodeData.imageUrl);
-  } else {
-    // Append selected file if there is one
-    formData.append("profile_picture", this.files[0]);
-  }
-
-  axios
-    .put("http://172.28.28.91:97/api/Admin/UpdateEmployee", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-    .then((response) => {
-      console.log("File uploaded successfully:", response.data);
-      this.isClickModal = false;
-      this.isEditMode = false;
-      this.renderChart();
-    })
-    .catch((error) => {
-      console.error("Error uploading file:", error);
-      // Handle error
-    });
-},
-
-
+      // Now formData contains all the necessary data including the profile picture
+      // Proceed with your API call using formData
+      axios
+        .put("http://172.28.28.91:97/api/Admin/UpdateEmployee", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          console.log("File uploaded successfully:", response.data);
+          this.isClickModal = false;
+          this.isEditMode = false;
+          this.renderChart();
+        })
+        .catch((error) => {
+          console.error("Error uploading file:", error);
+          // Handle error
+        });
+    },
 
     async addNodeAndSave() {
       try {
@@ -884,8 +936,8 @@ formData.append("profile_picture", this.clickedNodeData.imageUrl);
         // Log the clicked node data for debugging
         console.log("Clicked Node Data:", this.clickedNodeData);
         this.isClickModal = true;
-this.files = this.clickedNodeData.imageUrl;
-console.log("img files",this.files);
+        this.files = this.clickedNodeData.imageUrl;
+        console.log("img files", this.files);
         // Open the add node modal
       });
 
