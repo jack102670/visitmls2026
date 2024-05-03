@@ -266,6 +266,7 @@
         >
           <!-- Modal content -->
           <div class="w-28 ml-10">
+            <img :src="this.clickedNodeData.imageUrl" alt="">
     <input 
         type="file"
         class="filepond"
@@ -474,7 +475,7 @@ export default {
       searchQuery: "",
       isChartMinimized: false,
       chart: null,
-      isClickModal: false,
+      isClickModal: true,
       isEditMode: false,
       showDropdown: false,
     };
@@ -524,22 +525,9 @@ export default {
       console.log("check filepond", this.$refs.filepond);
       if (this.$refs.filepond) {
         const pond = create(this.$refs.filepond, {
-          labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
-          stylePanelLayout: "compact circle",
-          imagePreviewHeight: 150,
-          imageCropAspectRatio: "1:1",
-          imageResizeTargetWidth: 150,
-          imageResizeTargetHeight: 150,
-          styleLoadIndicatorPosition: "center bottom",
-          styleButtonRemoveItemPosition: "center bottom",
-          files: [
-            {
-              source: this.clickedNodeData.imageUrl,
-           //   options: {
-               // type: 'local'
-             // }
-            }
-          ]
+          labelIdle: `Drag & Drop to update your picture`,
+       
+       
         });
         console.log("check filepond", this.clickedNodeData.imageUrl);
 
