@@ -1,7 +1,10 @@
 <template>
   <div>
-    <input type="file" class="filepond" ref="filepond" accept="image/*">
-    <button @click="saveToFilePond">Save</button>
+    <img :src="imgData" alt="">
+    <div>
+      <input type="file" class="filepond" ref="filepond" accept="image/*">
+      <button @click="saveToFilePond">Save</button>
+    </div>
   </div>
 </template>
 
@@ -35,12 +38,13 @@ export default {
   data() {
     return {
       files: [],
-      imgUrl: 'http://172.28.28.91:97/images/8a1acd1e3bdca355f040a6f6eb1d2a9976b57f33fa8118bc6e3df06bfa9d5aeb.png' // Replace this with your image URL
+      imgData: ''
     };
   },
   mounted() {
     this.$nextTick(() => {
       this.initializeFilePond();
+      this.fetchImage();
     });
   },
   methods: {
@@ -55,14 +59,7 @@ export default {
           imageResizeTargetHeight: 150,
           styleLoadIndicatorPosition: 'center bottom',
           styleButtonRemoveItemPosition: 'center bottom',
-          files: [
-            {
-              source: this.imgUrl,
-           //   options: {
-               // type: 'local'
-             // }
-            }
-          ]
+          files: []
         });
 
         pond.on('addfile', (error, file) => {
@@ -79,6 +76,18 @@ export default {
         console.error("FilePond element not found.");
       }
     },
+    async fetchImage() {
+  try {
+    const response = await axios.get('/api/images/226c61980387fea890a49ac352f76473ca458f20b4decb675b9a8c32ffb28dda.png', {
+      responseType: 'arraybuffer'
+    });
+    const base64Data = btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+    this.imgData = `data:${response.headers['content-type'].toLowerCase()};base64,${base64Data}`;
+  } catch (error) {
+    console.error('Error fetching image:', error);
+  }
+},
+
     saveToFilePond() {
       if (this.files.length === 0) {
         console.error("No files selected.");
