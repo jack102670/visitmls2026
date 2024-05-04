@@ -117,18 +117,26 @@
               v-model="newNode.id"
               class="border rounded-md px-4 py-2 w-full"
             />
-          </div>
-          <div class="mb-4">
-            <label for="nodeName" class="block text-gray-700 font-bold mb-2"
-              >Node Name:</label
+          </div> <div class="mb-4">
+            <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
+              >Department:</label
             >
-            <input
-              type="text"
-              id="nodeName"
-              v-model="newNode.name"
+            <select
+              name="nodedepartment"
               class="border rounded-md px-4 py-2 w-full"
-            />
+              v-model="newNode.department"
+              id=""
+            >
+              <option
+                v-for="department in departments"
+                :key="department.code"
+                :value="department.code"
+              >
+                {{ department.name }}
+              </option>
+            </select>
           </div>
+
           <div class="mb-4">
             <label for="nodeName" class="block text-gray-700 font-bold mb-2"
               >Parent Id:</label
@@ -140,7 +148,7 @@
               placeholder="Select name"
               class="px-5 py-3 w-full border border-gray-300 rounded-md"
               v-model="newNode.parentId"
-              @keyup="onKeyUp"
+              @click="onKeyUp"
             />
             <div
               id="dropdown"
@@ -148,7 +156,7 @@
               v-show="showDropdown"
             >
               <div
-                v-for="item in filteredData"
+                v-for="item in filteredParentidNewNode"
                 :key="item.name"
                 @click="selectOption(item.id)"
                 class="px-5 py-3 border-b border-gray-200 text-stone-600 cursor-pointer hover:bg-slate-100 transition-colors overflow-y-auto"
@@ -156,6 +164,17 @@
                 {{ item.id }} - {{ item.name }}
               </div>
             </div>
+          </div>
+          <div class="mb-4">
+            <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+              >Node Name:</label
+            >
+            <input
+              type="text"
+              id="nodeName"
+              v-model="newNode.name"
+              class="border rounded-md px-4 py-2 w-full"
+            />
           </div>
           <div class="mb-4">
             <label for="positionCode" class="block text-gray-700 font-bold mb-2"
@@ -225,17 +244,7 @@
         class="border rounded-md px-4 py-2 w-full"
       />
     </div>-->
-          <div class="mb-4">
-            <label for="department" class="block text-gray-700 font-bold mb-2"
-              >Department:</label
-            >
-            <input
-              type="text"
-              id="department"
-              v-model="newNode.department"
-              class="border rounded-md px-4 py-2 w-full"
-            />
-          </div>
+         
         </div>
 
         <button
@@ -314,28 +323,54 @@
           </div>
           <div class="mb-4">
             <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
-              >Parent ID:</label
-            >
-            <input
-              type="text"
-              id="nodeParentId"
-              v-model="clickedNodeData.parentId"
-              :disabled="!isEditMode"
-              class="border rounded-md px-4 py-2 w-full"
-            />
-          </div>
-          <div class="mb-4">
-            <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
               >Department:</label
             >
-            <input
-              type="text"
-              id="nodedepartment"
-              v-model="clickedNodeData.department"
-              :disabled="!isEditMode"
+            <select
+              name="nodedepartment"
               class="border rounded-md px-4 py-2 w-full"
-            />
+              :disabled="!isEditMode"
+              v-model="clickedNodeData.department"
+              id=""
+            >
+              <option
+                v-for="department in departments"
+                :key="department.code"
+                :value="department.code"
+              >
+                {{ department.name }}
+              </option>
+            </select>
           </div>
+                    <div class="mb-4">
+            <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+              >Parent Id:</label
+            >
+            <!-- Search input -->
+
+            <input
+              :disabled="!isEditMode"
+              id="autocompleteInput"
+              placeholder="Select name"
+              class="px-5 py-3 w-full border border-gray-300 rounded-md"
+              v-model="clickedNodeData.parentId"
+              @click="onKeyUp"
+            />
+            <div
+              id="dropdown"
+              class="w-80 h-60 border border-gray-300 rounded-md bg-white absolute overflow-y-auto"
+              v-show="showDropdown"
+            >
+              <div
+                v-for="item in filteredParentid"
+                :key="item.name"
+                @click="selectParentId(item.id)"
+                class="px-5 py-3 border-b border-gray-200 text-stone-600 cursor-pointer hover:bg-slate-100 transition-colors overflow-y-auto"
+              >
+                {{ item.id }} - {{ item.name }}
+              </div>
+            </div>
+          </div>
+
           <div class="mb-4">
             <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
               >Email:</label
@@ -458,6 +493,14 @@ export default {
   name: "TestComponent",
   data() {
     return {
+      departments: [
+        { name: "HR", code: "HR" },
+        { name: "ICT", code: "ICT" },
+        { name: "IT", code: "IT" },
+        { name: "Finance", code: "Finance" },
+        { name: "Marketing", code: "Marketing" },
+        { name: "Sales", code: "Sales" },
+      ],
       hide: false,
       files2: [],
       files: [],
@@ -495,6 +538,7 @@ export default {
       isEditMode: false,
       showDropdown: false,
       showupdatepicture: false,
+      selectedepartment: "",
     };
   },
   computed: {
@@ -503,11 +547,33 @@ export default {
         item.name.toUpperCase().includes(this.newNode.parentId.toUpperCase())
       );
     },
-
-    filteredCountries() {
-      return this.data.filter((item) =>
-        item.name.toLowerCase().includes(this.keyword.toLowerCase())
-      );
+    filteredParentidNewNode() {
+      if (!this.newNode.parentId && !this.newNode.department) {
+      return this.data;
+      }
+      return this.data.filter((person) => {
+      const keywordMatch = this.newNode.parentId
+        ? person.name.toLowerCase().includes(this.newNode.parentId.toLowerCase())
+        : true;
+      const departmentMatch = this.newNode.department
+        ? person.department.toLowerCase() === this.newNode.department.toLowerCase()
+        : true;
+      return keywordMatch && departmentMatch;
+      });
+    },
+    filteredParentid() {
+      if (!this.clickedNodeData.parentId && !this.clickedNodeData.department) {
+      return this.data;
+      }
+      return this.data.filter((person) => {
+      const keywordMatch = this.clickedNodeData.parentId
+        ? person.name.toLowerCase().includes(this.clickedNodeData.parentId.toLowerCase())
+        : true;
+      const departmentMatch = this.clickedNodeData.department
+        ? person.department.toLowerCase() === this.clickedNodeData.department.toLowerCase()
+        : true;
+      return keywordMatch && departmentMatch;
+      });
     },
   },
   mounted() {},
@@ -635,6 +701,10 @@ export default {
     },
     selectOption(selectedOption) {
       this.newNode.parentId = selectedOption;
+      this.showDropdown = false;
+    },
+    selectParentId(selectedOption) {
+      this.clickedNodeData.parentId = selectedOption;
       this.showDropdown = false;
     },
 
