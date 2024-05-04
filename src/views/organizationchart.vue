@@ -117,7 +117,8 @@
               v-model="newNode.id"
               class="border rounded-md px-4 py-2 w-full"
             />
-          </div> <div class="mb-4">
+          </div>
+          <div class="mb-4">
             <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
               >Department:</label
             >
@@ -244,7 +245,6 @@
         class="border rounded-md px-4 py-2 w-full"
       />
     </div>-->
-         
         </div>
 
         <button
@@ -341,7 +341,7 @@
               </option>
             </select>
           </div>
-                    <div class="mb-4">
+          <div class="mb-4">
             <label for="nodeName" class="block text-gray-700 font-bold mb-2"
               >Parent Id:</label
             >
@@ -359,14 +359,15 @@
               id="dropdown"
               class="w-80 h-60 border border-gray-300 rounded-md bg-white absolute overflow-y-auto"
               v-show="showDropdown"
+              
             >
               <div
-                v-for="item in filteredParentid"
-                :key="item.name"
-                @click="selectParentId(item.id)"
-                class="px-5 py-3 border-b border-gray-200 text-stone-600 cursor-pointer hover:bg-slate-100 transition-colors overflow-y-auto"
+              v-for="item in filteredParentid"
+              :key="item.name"
+              @click="selectParentId(item.id)"
+              class="px-5 py-3 border-b border-gray-200 text-stone-600 cursor-pointer hover:bg-slate-100 transition-colors overflow-y-auto"
               >
-                {{ item.id }} - {{ item.name }}
+              {{ item.id }} - {{ item.name }}
               </div>
             </div>
           </div>
@@ -549,30 +550,36 @@ export default {
     },
     filteredParentidNewNode() {
       if (!this.newNode.parentId && !this.newNode.department) {
-      return this.data;
+        return this.data;
       }
       return this.data.filter((person) => {
-      const keywordMatch = this.newNode.parentId
-        ? person.name.toLowerCase().includes(this.newNode.parentId.toLowerCase())
-        : true;
-      const departmentMatch = this.newNode.department
-        ? person.department.toLowerCase() === this.newNode.department.toLowerCase()
-        : true;
-      return keywordMatch && departmentMatch;
+        const keywordMatch = this.newNode.parentId
+          ? person.name
+              .toLowerCase()
+              .includes(this.newNode.parentId.toLowerCase())
+          : true;
+        const departmentMatch = this.newNode.department
+          ? person.department.toLowerCase() ===
+            this.newNode.department.toLowerCase()
+          : true;
+        return keywordMatch && departmentMatch;
       });
     },
     filteredParentid() {
       if (!this.clickedNodeData.parentId && !this.clickedNodeData.department) {
-      return this.data;
+        return this.data;
       }
       return this.data.filter((person) => {
-      const keywordMatch = this.clickedNodeData.parentId
-        ? person.name.toLowerCase().includes(this.clickedNodeData.parentId.toLowerCase())
-        : true;
-      const departmentMatch = this.clickedNodeData.department
-        ? person.department.toLowerCase() === this.clickedNodeData.department.toLowerCase()
-        : true;
-      return keywordMatch && departmentMatch;
+        const keywordMatch = this.clickedNodeData.parentId
+          ? person.name
+              .toLowerCase()
+              .includes(this.clickedNodeData.parentId.toLowerCase())
+          : true;
+        const departmentMatch = this.clickedNodeData.department
+          ? person.department.toLowerCase() ===
+            this.clickedNodeData.department.toLowerCase()
+          : true;
+        return keywordMatch && departmentMatch;
       });
     },
   },
