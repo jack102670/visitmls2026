@@ -14,7 +14,7 @@
               Claim for Reimbursement of All Expenses
             </h3>
           </div>
-          <hr class="h-mx-auto bg-gray-100 border-0 rounded" />
+          <hr class="h-mx-auto bg-gray-100 border-0 rounded">
           <div class="flex flex-col ml-14 mt-5">
             <button
               @click="showContent"
