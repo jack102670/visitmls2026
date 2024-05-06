@@ -68,8 +68,10 @@
               </h5>
             </div>
 
-             <div class="col-start-1 col-end-4">
-              <h3 class="text-sm font-semibold text-gray-600">Department :  ICT</h3>
+            <div class="col-start-1 col-end-4">
+              <h3 class="text-sm font-semibold text-gray-600">
+                Department ICT
+              </h3>
             </div>
 
             <div class="col-start-8 col-end-9">
@@ -168,12 +170,60 @@
             </div>
           </div>
         </section>
+
+     <!--   <section class="px-4 mx-auto">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link" :class="{'active': current_step == 1}" href="#" @click.prevent="goToStep(value:1)">From</a>
+            </li> 
+            <li class="nav-item">
+              <a class="nav-link" :class="{'disabled': max_step<2, 'active': current_step == 2}"  href="#" @click.prevent="goToStep(value:2)">To</a>
+            </li>  
+            <li class="nav-item">
+              <a class="nav-link" :class="{'disabled': max_step<3, 'active': current_step == 3}" href="#" @click.prevent="goToStep(value:3)">Passenger</a>
+            </li>       
+          </ul>
+
+          <div class="tab-content border-0">
+            <div class="tab-from" v-show="current_step == 1">
+              <div class="form-group">
+                <label for="from_country" class="form-label required">From Country
+                </label>
+              </div>
+            </div>
+
+            <div class="tab-from" v-show="current_step == 2">
+              <div class="form-group">
+                <label for="to_country" class="form-label required">From Country
+                </label>
+              </div>
+            </div>
+
+            <div class="tab-from" v-show="current_step == 3">
+              <div class="form-group">
+                <label for="from_country" class="form-label required">From Country
+                </label>
+              </div>
+            </div>
+            <div class="mb-3">Price: <strong>${{ price }}</strong></div>
+            <button class="btn btn-primary" @click="advanceStep">
+              <span v-if="max_step === 3">Submit</span>
+              <span v-else>Next</span>
+            </button>
+          </div>
+        </section> -->
       </div>
     </div>
   </main>
 </template>
 
 <script>
+  export default {
+    data(){
+      return {
+      }
+    }
+  }
 </script>
 
 <style>
