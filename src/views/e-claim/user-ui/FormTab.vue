@@ -119,7 +119,7 @@ export default {
           ]
         },
          {
-          title: 'Mdical Leave Reimbursement',
+          title: 'Medical Leave Reimbursement',
           gridLayout: 'grid-cols-3',
           fields: [
             { id: 'age', label: 'Age', type: 'number', placeholder: 'Enter your age', value: '', gridClass: 'sm:col-span-1' },
