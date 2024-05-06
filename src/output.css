@@ -843,10 +843,13 @@ video {
   margin-top: 2.25rem;
 }
 
+<<<<<<< HEAD
 .mb-3 {
   margin-bottom: 0.75rem;
 }
 
+=======
+>>>>>>> fbfc3895c63980bee40dac543c14bf1286d4d5ec
 .block {
   display: block;
 }
@@ -1656,6 +1659,11 @@ video {
 .bg-slate-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(226 232 240 / var(--tw-bg-opacity));
+}
+
+.bg-slate-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(148 163 184 / var(--tw-bg-opacity));
 }
 
 .bg-white {
