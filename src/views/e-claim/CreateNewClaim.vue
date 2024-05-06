@@ -178,11 +178,12 @@
         <div class="mt-9 mr-4 gap-3 flex flex-row-reverse">
           <div class="flex justify-center mt-6">
             <button
-              type="submit"
-              class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
-            >
-              Submit
-            </button>
+    type="submit"
+    @click.prevent="submitForm"
+    class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+  >
+    Submit
+  </button>
           </div>
           <div class="flex justify-center mt-6">
             <button
@@ -199,8 +200,27 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      claimantName: '',
+      companyName: '',
+      department: '',
+      costCenter: '',
+      designation: '',
+      reportName: '',
+      internalOrder: '',
+      reportDate: '',
+      reportStartDate: '',
+      reportEndDate: '',
+      memo: ''
+    };
+  },
+ methods: {
+  submitForm() {
+    this.$emit('form-submitted', this.$data);
+    console.log('Form submitted', this.$data);  // Add this line
+  }
+}
+};
 </script>
-
-<style>
-</style>
