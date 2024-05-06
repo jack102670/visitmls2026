@@ -14,9 +14,16 @@
                 Claim for Reimbursement of All Expenses
               </h3>
             </div>
-            <div>
-              <button class="p-2 ml-4 bg-slate-400">Add claim</button>
-            </div>
+            <div class="flex ml-14 mt-5">
+  <button class="p-2 flex items-center">Add claim 
+    <span class="ml-2 border border-2 px-4 border-blue-800 ">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+      </svg>
+    </span>
+  </button>
+</div>
+
             <hr class="h-mx-auto bg-gray-100 border-0 rounded" />
           </div>
   
@@ -28,6 +35,7 @@
           
         </div>
       </div>
+      
       
     </main>
     
