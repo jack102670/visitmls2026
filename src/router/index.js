@@ -31,6 +31,7 @@ import CreateNewClaim from "../views/e-claim/CreateNewClaim.vue";
 import ClaimReport from "../views/e-claim/ClaimReport.vue";
 import { store } from "../views/store.js";
 import Eclaimhomepage from "../views/e-claim/user-ui/eclaimhomepage.vue";
+import FormTab from "../views/e-claim/user-ui/FormTab.vue";
 const routes = [
   {
     path: "/eclaimhomepage",
@@ -40,6 +41,7 @@ const routes = [
       Sidebar: Newsidebar,
     },
   },
+
   {
     path: "/organizationchart",
     name: "organizationchart",
@@ -81,6 +83,15 @@ const routes = [
     name: "ClaimReport",
     components: {
       default: ClaimReport,
+      Sidebar: Newsidebar,
+    },
+  },
+
+  {
+    path: "/tab",
+    name: "FormTab",
+    components: {
+      default: FormTab,
       Sidebar: Newsidebar,
     },
   },
