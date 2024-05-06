@@ -30,7 +30,16 @@ import TableClaim from "../components/e-claim/TableClaim.vue";
 import CreateNewClaim from "../views/e-claim/CreateNewClaim.vue";
 import ClaimReport from "../views/e-claim/ClaimReport.vue";
 import { store } from "../views/store.js";
+import Eclaimhomepage from "../views/e-claim/user-ui/eclaimhomepage.vue";
 const routes = [
+  {
+    path: "/eclaimhomepage",
+    name: "eclaimhomepages",
+    components: {
+      default: Eclaimhomepage,
+      Sidebar: Newsidebar,
+    },
+  },
   {
     path: "/organizationchart",
     name: "organizationchart",
