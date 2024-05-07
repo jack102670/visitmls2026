@@ -1,11 +1,6 @@
 <template>
-  <main
-    class="flex-1 overflow-x-hidden text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64 h-auto"
-  >
-    <div class="container mx-auto">
-      <div
-        class="relative overflow-hidden bg-[#f7fbff] border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
-      >
+ 
+    
         <div
           class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
         >
@@ -73,9 +68,8 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </main>
+      
+   
 </template>
 
 <script>

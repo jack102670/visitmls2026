@@ -30,7 +30,7 @@
               class="w-30 p-1 rounded-lg items-center border-4 text-sm dark:bg-gray-900 dark:border-gray-700 bg-green-700 border text-white"
             >
               <div class="flex justify-center">
-                <span class="mr-2 ml-2 text-slate-100 hover:text-blue-200"
+                <span class="mr-2 ml-2 text-slate-100 hover:text-blue-200" @click="showtab = !showtab"
                   >Add Expenses</span
                 >
               </div>
@@ -171,17 +171,24 @@
             </div>
           </div>
         </section>
+        <tab class="mt-10" v-show="showtab" ></tab>
       </div>
     </div>
   </main>
 </template>
 
 <script>
+import tab from "./user-ui/FormTab.vue";
+
 import { formStore } from "../store.js";
 export default {
+  components: {
+    tab,
+  },
   data() {
     return {
       claims: [],
+      showtab: false,
     };
   },
 
