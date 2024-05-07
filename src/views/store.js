@@ -1,4 +1,42 @@
+export const formStore = {
+  formData: {
+    claimantName: '',
+    companyName: '',
+    department: '',
+    costCenter: '',
+    designation: '',
+    reportName: '',
+    internalOrder: '',
+    reportDate: '',
+    reportStartDate: '',
+    reportEndDate: '',
+    memo: ''
+  },
 
+  setFormData(data) {
+    this.formData = { ...this.formData, ...data };
+  },
+
+  getFormData() {
+    return this.formData;
+  },
+
+  clearFormData() {
+    this.formData = {
+      claimantName: '',
+      companyName: '',
+      department: '',
+      costCenter: '',
+      designation: '',
+      reportName: '',
+      internalOrder: '',
+      reportDate: '',
+      reportStartDate: '',
+      reportEndDate: '',
+      memo: ''
+    };
+  }
+};
 let refNumber = ''; // Variable to store refNumber
 
 export function setRefNumber(newRefNumber) {
