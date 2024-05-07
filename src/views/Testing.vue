@@ -145,31 +145,37 @@
       </div>
     </div>
   </main>
-  <CreateNewClaim @form-submitted="handleFormData" />
+
 </template>
 
 <script>
-import CreateNewClaim from '../views/e-claim/CreateNewClaim.vue';
+import { formStore } from './store.js';
 
 export default {
   name: 'TestinSg',
   components: {
-    CreateNewClaim,
-      
-    
+    // Your components here
   },
   data() {
     return {
       claims: []
     };
   },
-methods: {
-  handleFormData(formData) {
-    this.claims.push(formData);
-    console.log('Received form data', formData);  // Add this line
+  created() {
+    this.fetchClaims();
+  },
+  methods: {
+  fetchClaims() {
+    // Retrieve the formData from the store and push it into the claims array
+    const formData = formStore.getFormData();
+    if (formData) {
+      this.claims.push(formData);
+    }
+    
+    // Log the claims array to the console
+    console.log('Claims:', this.claims);
   }
-
 }
-  // ...
+
 };
 </script>
