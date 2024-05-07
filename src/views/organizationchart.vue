@@ -886,7 +886,7 @@ export default {
       this.isClickModal = false;
     },
     fetchData() {
-      fetch("http://172.28.28.91:86/api/User/GetAllEmployee", {
+      fetch("http://172.28.28.91:97/api/User/GetAllEmployees", {
         mode: "cors", // Adding CORS mode
       })
         .then((response) => response.json())
