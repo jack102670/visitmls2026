@@ -1,4 +1,4 @@
-<!-- Box Info for Admin View-->
+<!-- Box Info for User View-->
 <template>
   <main class="flex-1 text overflow-y-auto bg-[#CED1DA] p-4 sm:ml-64">
     <div class="container mx-auto">
