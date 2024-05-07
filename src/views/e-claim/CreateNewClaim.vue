@@ -14,9 +14,25 @@
           <form @submit.prevent="showModal">
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
-                <label class="font-semibold text-gray-700 dark:text-gray-200" for="claimantName">Claimant's Name <span class="text-red-500">*</span></label>
-                <input placeholder="e.g ALI BIN ABU" v-model="formData.claimantName" id="claimantName" type="text" value="required" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
-                <input v-model="branch" id="claimantName" type="hidden" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+                <label
+                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  for="claimantName"
+                  >Claimant's Name <span class="text-red-500">*</span></label
+                >
+                <input
+                  placeholder="e.g ALI BIN ABU"
+                  v-model="capitalizedClaimantName"
+                  id="claimantName"
+                  type="text"
+                  value="required"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                />
+                <input
+                  v-model="branch"
+                  id="claimantName"
+                  type="hidden"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                />
               </div>
               <div>
                 <label class="font-semibold text-gray-700 dark:text-gray-200">Company's Name<span class="text-red-500">*</span></label>
@@ -47,9 +63,24 @@
             </div>
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
-                <label class="font-semibold text-gray-700 dark:text-gray-200" for="claimantName">Report Name<span class="text-red-500">*</span></label>
-                <input v-model="formData.reportName" id="ReportName" type="text" value="required" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
-                <input v-model="branch" id="ReportName" type="hidden" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+                <label
+                  class="font-semibold text-gray-700 dark:text-gray-200"
+                  for="claimantName"
+                  >Report Name<span class="text-red-500">*</span></label
+                >
+                <input
+                  v-model="capitalizedReportName"
+                  id="ReportName"
+                  type="text"
+                  value="required"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                />
+                <input
+                  v-model="branch"
+                  id="ReportName"
+                  type="hidden"
+                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                />
               </div>
               <div>
                 <label class="font-semibold text-gray-700 dark:text-gray-200">Internal Order</label>

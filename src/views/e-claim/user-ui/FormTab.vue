@@ -7,9 +7,9 @@
         class="relative overflow-hidden bg-[#f7fbff] border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
         <div
-          class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
+          class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
         >
-          <div class="flex">
+          <div class="md:flex justify-center flex-col-1 grid grid-col-1">
             <button
               v-for="(tab, index) in tabs"
               :key="index"
@@ -25,14 +25,18 @@
           </div>
 
           <div
-            class="mt-5 max-w-4xl p-6 mx-auto bg-white border-2 border-e-gray-200 rounded-md dark:bg-gray-800"
+            class="relative overflow-hidden mt-5 max-w-4xl p-6 mx-auto bg-white border-2 border-e-gray-200 rounded-md dark:bg-gray-800"
           >
             <div
               v-for="(tab, index) in tabs"
               :key="index"
               v-show="activeTab === index"
             >
-              <h2 class="text-xl font-semibold mb-2">{{ tab.title }}</h2>
+              <h2
+                class="text-2xl font-bold text-gray-700 capitalize dark:text-white"
+              >
+                {{ tab.title }}
+              </h2>
               <form @submit.prevent="submitForm(tab)">
                 <div
                   v-for="(field, fieldIndex) in tab.fields"
@@ -81,62 +85,138 @@ export default {
       activeTab: 0,
       tabs: [
         {
-          title: 'Local Travelling',
-          gridLayout: 'grid-cols-1', 
+          title: "Local Travelling",
+          gridLayout: "grid-cols-1",
           fields: [
-            { id: 'name', label: 'Name', type: 'text', placeholder: 'Enter your name', value: '', gridClass: 'sm:col-span-1' },
-            { id: 'email', label: 'Email', type: 'email', placeholder: 'Enter your email', value: '', gridClass: 'sm:col-span-1' }
-          ]
+            {
+              id: "name",
+              label: "Name",
+              type: "text",
+              placeholder: "Enter your name",
+              value: "",
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "email",
+              label: "Email",
+              type: "email",
+              placeholder: "Enter your email",
+              value: "",
+              gridClass: "sm:col-span-1",
+            },
+          ],
         },
         {
-          title: 'Overseas Travelling with Accommodation',
-          gridLayout: 'grid-cols-3', // 
+          title: "Overseas Travelling with Accommodation",
+          gridLayout: "grid-cols-3", //
           fields: [
-            { id: 'age', label: 'Age', type: 'number', placeholder: 'Enter your age', value: '', gridClass: 'sm:col-span-1' },
-            { id: 'city', label: 'City', type: 'text', placeholder: 'Enter your city', value: '', gridClass: 'sm:col-span-2' }
-          ]
+            {
+              id: "age",
+              label: "Age",
+              type: "number",
+              placeholder: "Enter your age",
+              value: "",
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "city",
+              label: "City",
+              type: "text",
+              placeholder: "Enter your city",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+          ],
         },
         {
-          title: 'Entertainment',
+          title: "Entertainment",
           fields: [
-            { id: 'address', label: 'Address', type: 'text', placeholder: 'Enter your address', value: '', gridClass: 'sm:col-span-1' }
-          ]
+            {
+              id: "address",
+              label: "Address",
+              type: "text",
+              placeholder: "Enter your address",
+              value: "",
+              gridClass: "sm:col-span-1",
+            },
+          ],
         },
-         {
-          title: 'Staff Refreshment',
-          gridLayout: 'grid-cols-3', 
+        {
+          title: "Staff Refreshment",
+          gridLayout: "grid-cols-3",
           fields: [
-            { id: 'age', label: 'Age', type: 'number', placeholder: 'Enter your age', value: '', gridClass: 'sm:col-span-1' },
-            { id: 'city', label: 'City', type: 'text', placeholder: 'Enter your city', value: '', gridClass: 'sm:col-span-2' }
-          ]
+            {
+              id: "age",
+              label: "Age",
+              type: "number",
+              placeholder: "Enter your age",
+              value: "",
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "city",
+              label: "City",
+              type: "text",
+              placeholder: "Enter your city",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+          ],
         },
-         {
-          title: 'Handphone Reimbursement',
-          gridLayout: 'grid-cols-3',
+        {
+          title: "Handphone Reimbursement",
+          gridLayout: "grid-cols-3",
           fields: [
-            { id: 'age', label: 'Age', type: 'number', placeholder: 'Enter your age', value: '', gridClass: 'sm:col-span-1' },
-            { id: 'city', label: 'City', type: 'text', placeholder: 'Enter your city', value: '', gridClass: 'sm:col-span-2' }
-          ]
+            {
+              id: "age",
+              label: "Age",
+              type: "number",
+              placeholder: "Enter your age",
+              value: "",
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "city",
+              label: "City",
+              type: "text",
+              placeholder: "Enter your city",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+          ],
         },
-         {
-          title: 'Medical Leave Reimbursement',
-          gridLayout: 'grid-cols-3',
+        {
+          title: "Medical Leave Reimbursement",
+          gridLayout: "grid-cols-3",
           fields: [
-            { id: 'age', label: 'Age', type: 'number', placeholder: 'Enter your age', value: '', gridClass: 'sm:col-span-1' },
-            { id: 'city', label: 'City', type: 'text', placeholder: 'Enter your city', value: '', gridClass: 'sm:col-span-2' }
-          ]
+            {
+              id: "age",
+              label: "Age",
+              type: "number",
+              placeholder: "Enter your age",
+              value: "",
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "city",
+              label: "City",
+              type: "text",
+              placeholder: "Enter your city",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+          ],
         },
-      ]
+      ],
     };
   },
   methods: {
     submitForm(tab) {
       console.log(tab.fields); // You can perform your form submission logic here
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
-
 </style>
