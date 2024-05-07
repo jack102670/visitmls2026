@@ -23,7 +23,7 @@ import testing from "../views/Testing.vue";
 import Dashboardvendor from "../views/Dashboardvendor.vue";
 import Incidentreportsafety from "../views/Incidentreportsafety.vue";
 import UserHomepage from "../components/e-claim/UserHomepage.vue";
-import AdminHomepage from "../components/e-claim/AdminHompage.vue";
+import AdminHomepage from "../components/e-claim/AdminHomepage.vue";
 import SummaryReport from "../views/e-claim/SummaryReport";
 import organizationchart from "../views/organizationchart.vue";
 import CreateNewClaim from "../views/e-claim/CreateNewClaim.vue";
