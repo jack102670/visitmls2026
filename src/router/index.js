@@ -22,8 +22,8 @@ import manageVendor from "../views/AccApproval.vue";
 import testing from "../views/Testing.vue";
 import Dashboardvendor from "../views/Dashboardvendor.vue";
 import Incidentreportsafety from "../views/Incidentreportsafety.vue";
-import BoxInfo from "../components/e-claim/BoxInfo.vue";
-import AdminBoxInfo from "../components/e-claim/AdminBoxInfo.vue";
+import UserHomepage from "../components/e-claim/UserHomepage.vue";
+import AdminHomepage from "../components/e-claim/AdminHompage.vue";
 import SummaryReport from "../views/e-claim/SummaryReport";
 import organizationchart from "../views/organizationchart.vue";
 import CreateNewClaim from "../views/e-claim/CreateNewClaim.vue";
@@ -51,19 +51,19 @@ const routes = [
   },
 
   {
-    path: "/admin",
-    name: "AdminBoxInfo",
+    path: "/eclaimadmin",
+    name: "AdminHomepage",
     components: {
-      default: AdminBoxInfo,
+      default: AdminHomepage,
       Sidebar: Newsidebar,
     },
   },
 
   {
     path: "/eclaim/",
-    name: "BoxInfo",
+    name: "eclaimuser",
     components: {
-      default: BoxInfo,
+      default: UserHomepage,
       Sidebar: Newsidebar,
     },
   },
