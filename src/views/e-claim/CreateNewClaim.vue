@@ -119,12 +119,13 @@ export default {
   methods: {
     submitForm() {
       // Update form data in the form store
+      formStore.clearFormData();
       formStore.setFormData(this.formData);
 
       // Log the form data before navigation
       console.log('Form submitted', formStore.getFormData());
 
-      this.$router.push({ name: 'testing' });
+      this.$router.push({ name: 'ClaimReport' });
       // Get the router instance
       // ...
     }
