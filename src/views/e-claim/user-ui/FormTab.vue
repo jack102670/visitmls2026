@@ -42,8 +42,11 @@
             <label
               :for="field.id"
               class="block text-gray-700 text-sm font-bold mb-2"
-              >{{ field.label }}</label
             >
+              {{ field.label }}
+              <span v-if="field.required" style="color: red;">*</span>
+            </label>
+            
             <input
               v-model="field.value"
               :id="field.id"
@@ -82,6 +85,7 @@ export default {
               label: "Date",
               type: "date",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -89,6 +93,7 @@ export default {
               label: "Destination / Purpose",
               type: "text",
               value: "",
+              required: true,
               gridClass: "sm:col-span-1",
             },
             {
@@ -137,6 +142,7 @@ export default {
               label: "Date",
               type: "date",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -144,6 +150,7 @@ export default {
               label: "Description",
               type: "text",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
