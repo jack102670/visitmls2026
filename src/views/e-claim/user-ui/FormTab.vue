@@ -75,7 +75,7 @@ export default {
       tabs: [
         {
           title: "Local Travelling",
-          gridLayout: "grid-cols-1",
+          gridLayout: "grid-cols-3",
           fields: [
             {
               id: "date",
@@ -130,7 +130,7 @@ export default {
         },
         {
           title: "Overseas Travelling with Accommodation",
-          gridLayout: "grid-cols-1", //
+          gridLayout: "grid-cols-3", //
           fields: [
             {
               id: "date",
@@ -140,10 +140,72 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "city",
-              label: "City",
+              id: "Description",
+              label: "Description",
               type: "text",
-              placeholder: "Enter your city",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "ForeignCurrencyAccommodation",
+              label: "Foreign Currency",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "ExchangeRateAccommodation",
+              label: "Exchange Rate",
+              type: "text",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "RMforAccommodation",
+              label: "RM",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "ForeignCurrencyOthers",
+              label: "Foreign Currency",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "ExchangeRateOthers",
+              label: "Exchange Rate",
+              type: "text",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "RMforOthers",
+              label: "RM",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "MealAllowance",
+              label: "Meal Allowance(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "AirportLimoTeksi",
+              label: "Airport Limo / Teksi(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "RMforMealTransport",
+              label: "RM",
+              type: "number",
               value: "",
               gridClass: "sm:col-span-2",
             },
@@ -151,11 +213,54 @@ export default {
         },
         {
           title: "Entertainment",
+          gridLayout: "grid-cols-3",
           fields: [
             {
               id: "date",
               label: "Date",
               type: "date",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "PersonEntertained",
+              label: "Person Entertained",
+              type: "text",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "TypeofEntertainment",
+              label: "Type of Entertainment",
+              type: "text",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "Company",
+              label: "Company",
+              type: "text",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "Venue",
+              label: "Venue",
+              type: "text",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "Reference",
+              label: "Reference",
+              type: "text",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "AmountRM",
+              label: "Amount(RM)",
+              type: "number",
               value: "",
               gridClass: "sm:col-span-2",
             },
@@ -173,10 +278,44 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "city",
-              label: "City",
+              id: "NameofStaff",
+              label: "Name of Staff",
               type: "text",
-              placeholder: "Enter your city",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "TypeofRefreshment",
+              label: "Type of Refreshment",
+              type: "text",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "Company",
+              label: "Company",
+              type: "text",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "Venue",
+              label: "Venue",
+              type: "text",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "Reference",
+              label: "Reference",
+              type: "text",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "AmountRM",
+              label: "Amount(RM)",
+              type: "number",
               value: "",
               gridClass: "sm:col-span-2",
             },
