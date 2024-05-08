@@ -11,14 +11,14 @@
           'bg-gray-300': activeTab === index,
           'hover:bg-gray-200': activeTab !== index,
         }"
-        class="px-4 py-2 mr-2 rounded-md focus:outline-none"
+        class="px-4 py-2 mr-2 rounded-sm focus:outline-none border border-gray-300"
       >
         {{ tab.title }}
       </button>
     </div>
 
     <div
-      class="relative overflow-hidden mt-5 max-w-4xl p-6 mx-auto bg-white border-2 border-e-gray-200 rounded-md dark:bg-gray-800"
+      class="relative overflow-hidden mt-5 max-w-4xl p-6  bg-white border-2 border-e-gray-200 rounded-md dark:bg-gray-800"
     >
       <div
         v-for="(tab, index) in tabs"
