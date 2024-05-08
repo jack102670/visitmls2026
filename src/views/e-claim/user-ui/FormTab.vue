@@ -201,23 +201,26 @@ export default {
 
   methods: {
     submitForm(tab) {
-  // Create an empty object to hold the formatted form data
-  const formattedData = {};
+      // Create an empty object to hold the formatted form data
+      const formattedData = {};
 
-  // Iterate through the fields of the current tab
-  tab.fields.forEach(field => {
-    // Use the field label as the key and the field value as the value
-    formattedData[field.label] = field.value;
-  });
+      // Iterate through the fields of the current tab
+      tab.fields.forEach(field => {
+        // Use the field label as the key and the field value as the value
+        formattedData[field.label] = field.value;
+      });
 
-  // Emit the formatted form data
-  this.$emit("formSubmitted", formattedData);
+      // Add the tab title to the formatted data
+      formattedData["tabTitle"] = tab.title;
 
-  // Log the formatted form data to the console
-  console.log("Formatted Form Data:", formattedData);
-},
+      // Emit the formatted form data
+      this.$emit("formSubmitted", formattedData);
 
-},
+      // Log the formatted form data to the console
+      console.log("Formatted Form Data:", formattedData);
+    },
+  },
+
 };
 </script>
 
