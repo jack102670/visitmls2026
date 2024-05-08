@@ -46,7 +46,7 @@
               {{ field.label }}
               <span v-if="field.required" style="color: red;">*</span>
             </label>
-            
+
             <input
               v-model="field.value"
               :id="field.id"
@@ -77,7 +77,7 @@ export default {
       date : '',
       tabs: [
         {
-          title: "Local Travelling",
+          title: "Local Travelling Form",
           gridLayout: "grid-cols-3",
           fields: [
             {
@@ -134,7 +134,7 @@ export default {
           ],
         },
         {
-          title: "Overseas Travelling with Accommodation",
+          title: "Overseas Travelling with Accommodation Form",
           gridLayout: "grid-cols-3", //
           fields: [
             {
@@ -219,7 +219,7 @@ export default {
           ],
         },
         {
-          title: "Entertainment",
+          title: "Entertainment Form",
           gridLayout: "grid-cols-3",
           fields: [
             {
@@ -227,6 +227,7 @@ export default {
               label: "Date",
               type: "date",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -234,6 +235,7 @@ export default {
               label: "Person Entertained",
               type: "text",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -241,6 +243,7 @@ export default {
               label: "Type of Entertainment",
               type: "text",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -248,6 +251,7 @@ export default {
               label: "Company",
               type: "text",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -255,6 +259,7 @@ export default {
               label: "Venue",
               type: "text",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -262,6 +267,7 @@ export default {
               label: "Reference",
               type: "text",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -274,7 +280,7 @@ export default {
           ],
         },
         {
-          title: "Staff Refreshment",
+          title: "Staff Refreshment Form",
           gridLayout: "grid-cols-3",
           fields: [
             {
@@ -282,6 +288,7 @@ export default {
               label: "Date",
               type: "date",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -289,6 +296,7 @@ export default {
               label: "Name of Staff",
               type: "text",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -296,6 +304,7 @@ export default {
               label: "Type of Refreshment",
               type: "text",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -303,6 +312,7 @@ export default {
               label: "Company",
               type: "text",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -310,6 +320,7 @@ export default {
               label: "Venue",
               type: "text",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -317,6 +328,7 @@ export default {
               label: "Reference",
               type: "text",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -329,7 +341,7 @@ export default {
           ],
         },
         {
-          title: "Handphone Reimbursement",
+          title: "Handphone Reimbursement Form",
           gridLayout: "grid-cols-3",
           fields: [
             {
@@ -337,6 +349,7 @@ export default {
               label: "Month",
               type: "text",
               value: "",
+              required: true,
               gridClass: "sm:col-span-1",
             },
             {
@@ -344,6 +357,7 @@ export default {
               label: "Year",
               type: "text",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -351,6 +365,7 @@ export default {
               label: "Bank Name",
               type: "text",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -358,6 +373,7 @@ export default {
               label: "Account Bank No.",
               type: "number",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -365,6 +381,7 @@ export default {
               label: "Account Holder Name",
               type: "text",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -384,7 +401,7 @@ export default {
           ],
         },
         {
-          title: "Medical Leave Reimbursement",
+          title: "Medical Leave Reimbursement Form",
           gridLayout: "grid-cols-3",
           fields: [
             {
@@ -392,6 +409,7 @@ export default {
               label: "Date of Medical Leave",
               type: "date",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -399,6 +417,7 @@ export default {
               label: "Reason for Medical Leave",
               type: "text",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -406,6 +425,7 @@ export default {
               label: "Bank Name",
               type: "text",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -413,6 +433,7 @@ export default {
               label: "Account Bank No.",
               type: "number",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -420,6 +441,7 @@ export default {
               label: "Account Holder Name",
               type: "text",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
