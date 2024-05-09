@@ -83,7 +83,11 @@ export default {
       date: "",
       tabs: [
         {
+<<<<<<< HEAD
           title: "Local Travelling",
+=======
+          title: "local travelling Form",
+>>>>>>> 585d84acad6706e56b074ae5bbefbf999cb55c3b
           gridLayout: "grid-cols-3",
           fields: [
             {
@@ -140,7 +144,11 @@ export default {
           ],
         },
         {
+<<<<<<< HEAD
           title: "Overseas Travelling with Accommodation",
+=======
+          title: "overseas travelling with accommodation",
+>>>>>>> 585d84acad6706e56b074ae5bbefbf999cb55c3b
           gridLayout: "grid-cols-3", //
           fields: [
             {
@@ -227,8 +235,12 @@ export default {
           ],
         },
         {
+<<<<<<< HEAD
           title: "Entertainment",
           gridLayout: "grid-cols-3",
+=======
+          title: "entertainment",
+>>>>>>> 585d84acad6706e56b074ae5bbefbf999cb55c3b
           fields: [
             {
               id: "dateE",
