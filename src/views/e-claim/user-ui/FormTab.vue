@@ -32,7 +32,7 @@
         <div class="pt-4">
           <hr class="" />
 
-          <div class="m-2">
+          <div class="m-2 pt-2">
             <form @submit.prevent="submitForm(tab)">
               <div
                 v-for="(field, fieldIndex) in tab.fields"
@@ -51,7 +51,6 @@
                   {{ field.label }}
                   <span v-if="field.required" style="color: red">*</span>
                 </label>
-
                 <input
                   v-model="field.value"
                   :id="field.id"
@@ -84,11 +83,11 @@ export default {
       date: "",
       tabs: [
         {
-          title: "Local Travelling Form",
+          title: "Local Travelling",
           gridLayout: "grid-cols-3",
           fields: [
             {
-              id: "date",
+              id: "dateLT",
               label: "Date",
               type: "date",
               value: "",
@@ -96,7 +95,7 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "DestinationPurpose",
+              id: "DestinationPurposeLT",
               label: "Destination / Purpose",
               type: "text",
               value: "",
@@ -104,35 +103,35 @@ export default {
               gridClass: "sm:col-span-1",
             },
             {
-              id: "MileageKM",
+              id: "MileageKMLT",
               label: "Mileage(KM)",
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
             },
             {
-              id: "MileageRM",
+              id: "MileageRMLT",
               label: "Total Mileage(RM)",
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
             },
             {
-              id: "Toll",
+              id: "TollLT",
               label: "Toll(RM)",
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
             },
             {
-              id: "Parking",
+              id: "ParkingLT",
               label: "Parking(RM)",
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
             },
             {
-              id: "TotalRM",
+              id: "TotalRMLT",
               label: "Total(RM)",
               type: "number",
               value: "",
@@ -141,11 +140,11 @@ export default {
           ],
         },
         {
-          title: "Overseas Travelling with Accommodation Form",
+          title: "Overseas Travelling with Accommodation",
           gridLayout: "grid-cols-3", //
           fields: [
             {
-              id: "date",
+              id: "dateOT",
               label: "Date",
               type: "date",
               value: "",
@@ -153,7 +152,7 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "Description",
+              id: "DescriptionOT",
               label: "Description",
               type: "text",
               value: "",
@@ -161,7 +160,7 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "ForeignCurrencyAccommodation",
+              id: "ForeignCurrencyAccommodationOT",
               label: "Foreign Currency",
               type: "number",
               placeholder: "Accommodation",
@@ -169,21 +168,21 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "ExchangeRateAccommodation",
+              id: "ExchangeRateAccommodationOT",
               label: "Exchange Rate",
               type: "text",
               value: "",
               gridClass: "sm:col-span-2",
             },
             {
-              id: "RMforAccommodation",
+              id: "RMforAccommodationOT",
               label: "RM",
               type: "number",
               value: "",
               gridClass: "sm:col-span-2",
             },
             {
-              id: "ForeignCurrencyOthers",
+              id: "ForeignCurrencyOthersOT",
               label: "Foreign Currency",
               type: "number",
               placeholder: "Others",
@@ -191,35 +190,35 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "ExchangeRateOthers",
+              id: "ExchangeRateOthersOT",
               label: "Exchange Rate",
               type: "text",
               value: "",
               gridClass: "sm:col-span-2",
             },
             {
-              id: "RMforOthers",
+              id: "RMforOthersOT",
               label: "RM",
               type: "number",
               value: "",
               gridClass: "sm:col-span-2",
             },
             {
-              id: "MealAllowance",
+              id: "MealAllowanceOT",
               label: "Meal Allowance(RM)",
               type: "number",
               value: "",
               gridClass: "sm:col-span-2",
             },
             {
-              id: "AirportLimoTeksi",
+              id: "AirportLimoTeksiOT",
               label: "Airport Limo / Teksi(RM)",
               type: "number",
               value: "",
               gridClass: "sm:col-span-2",
             },
             {
-              id: "RMforMealTransport",
+              id: "RMforMealTransportOT",
               label: "RM",
               type: "number",
               value: "",
@@ -228,11 +227,11 @@ export default {
           ],
         },
         {
-          title: "Entertainment Form",
+          title: "Entertainment",
           gridLayout: "grid-cols-3",
           fields: [
             {
-              id: "date",
+              id: "dateE",
               label: "Date",
               type: "date",
               value: "",
@@ -240,7 +239,7 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "PersonEntertained",
+              id: "PersonEntertainedE",
               label: "Person Entertained",
               type: "text",
               value: "",
@@ -248,7 +247,7 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "TypeofEntertainment",
+              id: "TypeofEntertainmentE",
               label: "Type of Entertainment",
               type: "text",
               value: "",
@@ -256,7 +255,7 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "Company",
+              id: "CompanyE",
               label: "Company",
               type: "text",
               value: "",
@@ -264,7 +263,7 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "Venue",
+              id: "VenueE",
               label: "Venue",
               type: "text",
               value: "",
@@ -272,15 +271,16 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "Reference",
+              id: "ReferenceE",
               label: "Reference",
               type: "text",
               value: "",
+              options: ["Option 1", "Option 2", "Option 3"],
               required: true,
               gridClass: "sm:col-span-2",
             },
             {
-              id: "AmountRM",
+              id: "AmountRME",
               label: "Amount(RM)",
               type: "number",
               value: "",
@@ -289,11 +289,11 @@ export default {
           ],
         },
         {
-          title: "Staff Refreshment Form",
+          title: "Staff Refreshment",
           gridLayout: "grid-cols-3",
           fields: [
             {
-              id: "date",
+              id: "dateSR",
               label: "Date",
               type: "date",
               value: "",
@@ -301,7 +301,7 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "NameofStaff",
+              id: "NameofStaffSR",
               label: "Name of Staff",
               type: "text",
               value: "",
@@ -309,7 +309,7 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "TypeofRefreshment",
+              id: "TypeofRefreshmentSR",
               label: "Type of Refreshment",
               type: "text",
               value: "",
@@ -317,7 +317,7 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "Company",
+              id: "CompanySR",
               label: "Company",
               type: "text",
               value: "",
@@ -325,7 +325,7 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "Venue",
+              id: "VenueSR",
               label: "Venue",
               type: "text",
               value: "",
@@ -333,7 +333,7 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "Reference",
+              id: "ReferenceSR",
               label: "Reference",
               type: "text",
               value: "",
@@ -341,7 +341,7 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "AmountRM",
+              id: "AmountRMSR",
               label: "Amount(RM)",
               type: "number",
               value: "",
@@ -350,11 +350,11 @@ export default {
           ],
         },
         {
-          title: "Handphone Reimbursement Form",
+          title: "Handphone Reimbursement",
           gridLayout: "grid-cols-3",
           fields: [
             {
-              id: "Month",
+              id: "MonthHR",
               label: "Month",
               type: "text",
               value: "",
@@ -362,7 +362,7 @@ export default {
               gridClass: "sm:col-span-1",
             },
             {
-              id: "Year",
+              id: "YearHR",
               label: "Year",
               type: "text",
               value: "",
@@ -370,7 +370,7 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "BankName",
+              id: "BankNameHR",
               label: "Bank Name",
               type: "text",
               value: "",
@@ -378,7 +378,7 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "AccBankNumber",
+              id: "AccBankNumberHR",
               label: "Account Bank No.",
               type: "number",
               value: "",
@@ -386,7 +386,7 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "AccHolderName",
+              id: "AccHolderNameHR",
               label: "Account Holder Name",
               type: "text",
               value: "",
@@ -394,14 +394,14 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "LimitedAmount",
+              id: "LimitedAmountHR",
               label: "Limited Amount(RM)",
               type: "number",
               value: "",
               gridClass: "sm:col-span-2",
             },
             {
-              id: "ClaimsAmount",
+              id: "ClaimsAmountHR",
               label: "Claims Amount(RM)",
               type: "number",
               value: "",
@@ -410,11 +410,11 @@ export default {
           ],
         },
         {
-          title: "Medical Leave Reimbursement Form",
+          title: "Medical Leave Reimbursement",
           gridLayout: "grid-cols-3",
           fields: [
             {
-              id: "date",
+              id: "dateML",
               label: "Date of Medical Leave",
               type: "date",
               value: "",
@@ -430,7 +430,7 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "BankName",
+              id: "BankNameML",
               label: "Bank Name",
               type: "text",
               value: "",
@@ -438,7 +438,7 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "AccBankNumber",
+              id: "AccBankNumberML",
               label: "Account Bank No.",
               type: "number",
               value: "",
@@ -446,7 +446,7 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "AccHolderName",
+              id: "AccHolderNameML",
               label: "Account Holder Name",
               type: "text",
               value: "",
@@ -454,7 +454,7 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "ClaimsAmount",
+              id: "ClaimsAmountML",
               label: "Claims Amount(RM)",
               type: "number",
               value: "",
