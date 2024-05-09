@@ -60,7 +60,7 @@
               <td class="py-2 px-4 font-medium">Date Finish:</td>
               <td class="py-2 px-4">{{ ptwData.dateUntil }}</td>
             </tr>
-            <tr>
+            <tr v-if="ptwData.dateLog !==null">
               <td class="py-2 px-4 font-medium">Date Finish Before Extension:</td>
               <td class="py-2 px-4">{{ ptwData.dateLog }}</td>
             </tr>
@@ -147,7 +147,7 @@
               </td>
             </tr>
 
-            <tr>
+            <tr v-if="ptwData.hotWork.workDescription !== null && ptwData.hotWork.workDescription !== ''">
               <td class="py-2 px-4 font-medium">Hot Work:</td>
               <td class="py-2 px-4">
                 <div>
@@ -219,7 +219,7 @@
               </td>
             </tr>
 
-            <tr>
+            <tr v-if="ptwData.wah.companyName  !== null && ptwData.wah.companyName  !== ''">
               <td class="py-2 px-4 font-medium">Work at Height:</td>
               <td class="py-2 px-4">
                 <div>
