@@ -170,7 +170,7 @@
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                         >
-                          {{ claim.Email }}
+                          {{ claim.tabTitle }}
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
@@ -193,6 +193,132 @@
         </section>
         <tab class="mt-10" v-show="showtab" @formSubmitted="addClaim"></tab>
       </div>
+      <div
+      v-if="isClickModal"
+      class="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
+      @click.self="closeClickModal"
+    >
+      <div
+        class="modal-content bg-white rounded-lg p-8"
+        style="max-height: calc(100vh - 20px); overflow-y: auto"
+      >
+        <!-- Modal header -->
+        <!-- Your existing modal header content -->
+
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+        >
+          <!-- Modal content -->
+     
+
+          <div class="mb-4">
+            <label for="nodeId" class="block text-gray-700 font-bold mb-2"
+              >Node ID:</label
+            >
+            <input
+              type="text"
+              id="nodeId"
+       
+              :disabled="!isEditMode"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+              >Node Name:</label
+            >
+            <input
+              type="text"
+              id="nodeName"
+           
+              :disabled="!isEditMode"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
+   
+          
+
+          <div class="mb-4">
+            <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
+              >Email:</label
+            >
+            <input
+              type="text"
+              id="email"
+           
+              :disabled="!isEditMode"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
+              >phone number:</label
+            >
+            <input
+              type="text"
+              id="phonenumber"
+         
+              :disabled="!isEditMode"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
+              >Position:</label
+            >
+            <input
+              type="text"
+              id="positioname"
+          
+              :disabled="!isEditMode"
+              class="border rounded-md px-4 py-2 w-full overflow-x-auto"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
+              >position code:</label
+            >
+            <input
+              type="text"
+              id="positioncode"
+     
+              :disabled="!isEditMode"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
+              >address:</label
+            >
+            <input
+              type="text"
+              id="address"
+      
+              :disabled="!isEditMode"
+              class="border rounded-md px-4 py-2 w-full"
+            />
+          </div>
+          <!-- Add/Edit node button -->
+        </div>
+        <div class="flex justify-end">
+          <button
+            @click="toggleEditMode"
+            class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+          >
+            {{ isEditMode ? "Save" : "Edit" }}
+            <!-- Change button text based on edit mode -->
+          </button>
+
+          <!-- Delete node button -->
+          <button @click="isClickModal = false"
+            
+            class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
     </div>
   </main>
 </template>
@@ -200,6 +326,7 @@
 import axios from "axios";
 import tab from "./e-claim/user-ui/FormTab.vue";
 import { formStore } from "./store.js";
+
 
 export default {
   name: "TEtstS",
@@ -211,6 +338,8 @@ export default {
       claims: [],
       showtab: false,
       dataclaims: [],
+      isClickModal: true,
+      isEditMode: false,
     };
   },
   created() {
@@ -371,6 +500,7 @@ export default {
       // Push new form data into the claims array
       this.dataclaims.push(formData);
       console.log("Data Claims:", this.dataclaims);
+      this.showtab= false;
     },
   },
 };
