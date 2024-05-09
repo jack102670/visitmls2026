@@ -34,7 +34,6 @@
 
           <div class="m-2">
             <form @submit.prevent="submitForm(tab)">
-              <!-- Form Fields -->
               <div
                 v-for="(field, fieldIndex) in tab.fields"
                 :key="fieldIndex"
@@ -53,7 +52,6 @@
                   <span v-if="field.required" style="color: red">*</span>
                 </label>
 
-                <!-- Input or Select based on type -->
                 <template v-if="field.type === 'select'">
                   <select
                     v-model="field.value"
@@ -69,7 +67,10 @@
                     </option>
                   </select>
                 </template>
-                <template v-else-if="field.type === 'text' && field.isOtherOption">
+
+                <template
+                  v-else-if="field.type === 'text' && field.isOtherOption"
+                >
                   <input
                     v-model="field.value"
                     :id="field.id"
@@ -78,6 +79,7 @@
                     class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                   />
                 </template>
+
                 <template v-else>
                   <input
                     v-model="field.value"
@@ -89,7 +91,6 @@
                 </template>
               </div>
 
-              <!-- Save Button -->
               <div class="flex items-center justify-between">
                 <button
                   type="submit"
@@ -294,11 +295,10 @@ export default {
                 { label: "DINNER", value: "DINNER" },
                 { label: "TEA BREAK", value: "TEA BREAK" },
                 { label: "OTHERS", value: "OTHERS" },
-
               ],
               gridClass: "sm:col-span-2",
             },
-             {
+            {
               id: "OtherTypeofEntertainmentE",
               label: "Other Type of Entertainment",
               type: "text",
@@ -331,7 +331,10 @@ export default {
               required: true,
               options: [
                 { label: "CLIENT(EXISTING)", value: "CLIENT(EXISTING)" },
-                { label: "CLIENT(NEW/POTENTIAL)", value: "CLIENT(NEW/POTENTIAL)" },
+                {
+                  label: "CLIENT(NEW/POTENTIAL)",
+                  value: "CLIENT(NEW/POTENTIAL)",
+                },
                 { label: "NON TRADE", value: "NON TRADE" },
               ],
               gridClass: "sm:col-span-2",
@@ -371,17 +374,16 @@ export default {
               type: "select",
               value: "",
               required: true,
-               options: [
+              options: [
                 { label: "BREAKFAST", value: "BREAKFAST" },
                 { label: "LUNCH", value: "LUNCH" },
                 { label: "DINNER", value: "DINNER" },
                 { label: "TEA BREAK", value: "TEA BREAK" },
                 { label: "OTHERS", value: "OTHERS" },
-
               ],
               gridClass: "sm:col-span-2",
             },
-             {
+            {
               id: "OtherTypeofStaffRefreshmentSR",
               label: "Other Type of Staff Refreshment",
               type: "text",
@@ -469,9 +471,37 @@ export default {
               value: "",
               required: true,
               options: [
-                { label: "Movie", value: "movie" },
-                { label: "Concert", value: "concert" },
-                { label: "Dining", value: "dining" },
+                { label: "HONG LEONG BANK", value: "HONG LEONG BANK" },
+                { label: "AGROBANK", value: "AGROBANK" },
+                { label: "AFFIN BANK BERHAD", value: "AFFIN BANK BERHAD" },
+                {
+                  label: "ALLIANCE BANK MALAYSIA BERHAD",
+                  value: "ALLIANCE BANK MALAYSIA BERHAD",
+                },
+                { label: "AMBANK BERHAD", value: "AMBANK BERHAD" },
+                { label: "BANK ISLAM MALAYSIA", value: "BANK ISLAM MALAYSIA" },
+                {
+                  label: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
+                  value: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
+                },
+                { label: "BANK MUAMALAT", value: "BANK MUAMALAT" },
+                {
+                  label: "BANK SIMPANAN NASIONAL BERHAD",
+                  value: "BANK SIMPANAN NASIONAL BERHAD",
+                },
+                { label: "CIMB BANK BERHAD", value: "CIMB BANK BERHAD" },
+                { label: "CITIBANK BERHAD", value: "CITIBANK BERHAD" },
+                {
+                  label: "HSBC BANK MALAYSIA BERHAD",
+                  value: "HSBC BANK MALAYSIA BERHAD",
+                },
+                { label: "MAYBANK", value: "MAYBANK" },
+                { label: "PUBLIC BANK", value: "PUBLIC BANK" },
+                { label: "RHB BANK", value: "RHB BANK" },
+                {
+                  label: "OCBC BANK MALAYSIA BERHAD",
+                  value: "OCBC BANK MALAYSIA BERHAD",
+                },
               ],
               gridClass: "sm:col-span-2",
             },
@@ -534,9 +564,37 @@ export default {
               value: "",
               required: true,
               options: [
-                { label: "Movie", value: "movie" },
-                { label: "Concert", value: "concert" },
-                { label: "Dining", value: "dining" },
+                { label: "HONG LEONG BANK", value: "HONG LEONG BANK" },
+                { label: "AGROBANK", value: "AGROBANK" },
+                { label: "AFFIN BANK BERHAD", value: "AFFIN BANK BERHAD" },
+                {
+                  label: "ALLIANCE BANK MALAYSIA BERHAD",
+                  value: "ALLIANCE BANK MALAYSIA BERHAD",
+                },
+                { label: "AMBANK BERHAD", value: "AMBANK BERHAD" },
+                { label: "BANK ISLAM MALAYSIA", value: "BANK ISLAM MALAYSIA" },
+                {
+                  label: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
+                  value: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
+                },
+                { label: "BANK MUAMALAT", value: "BANK MUAMALAT" },
+                {
+                  label: "BANK SIMPANAN NASIONAL BERHAD",
+                  value: "BANK SIMPANAN NASIONAL BERHAD",
+                },
+                { label: "CIMB BANK BERHAD", value: "CIMB BANK BERHAD" },
+                { label: "CITIBANK BERHAD", value: "CITIBANK BERHAD" },
+                {
+                  label: "HSBC BANK MALAYSIA BERHAD",
+                  value: "HSBC BANK MALAYSIA BERHAD",
+                },
+                { label: "MAYBANK", value: "MAYBANK" },
+                { label: "PUBLIC BANK", value: "PUBLIC BANK" },
+                { label: "RHB BANK", value: "RHB BANK" },
+                {
+                  label: "OCBC BANK MALAYSIA BERHAD",
+                  value: "OCBC BANK MALAYSIA BERHAD",
+                },
               ],
               gridClass: "sm:col-span-2",
             },
