@@ -10,7 +10,11 @@
         <div
           class="relative overflow-hidden mt-2 grid cols-start-1 md:flex justify-between"
         >
-          <h3 class="ml-4 text-3xl font-bold text-blue-900" v-for="(claim, index) in claims" :key="index">
+          <h3
+            class="ml-4 text-3xl font-bold text-blue-900"
+            v-for="(claim, index) in claims"
+            :key="index"
+          >
             {{ claim.reportName }}
           </h3>
           <!-- Buttons Section -->
@@ -20,7 +24,9 @@
               class="w-30 p-1 rounded-lg items-center border-4 text-sm dark:bg-gray-900 dark:border-gray-700 bg-green-700 border text-white"
             >
               <div class="flex justify-center">
-                <span class="mr-2 ml-2 text-slate-100 hover:text-blue-200"
+                <span
+                  class="mr-2 ml-2 text-slate-100 hover:text-blue-200"
+                  @click="sendToAPI"
                   >Submit Claim</span
                 >
               </div>
@@ -30,7 +36,9 @@
               class="w-30 p-1 rounded-lg items-center border-4 text-sm dark:bg-gray-900 dark:border-gray-700 bg-green-700 border text-white"
             >
               <div class="flex justify-center">
-                <span class="mr-2 ml-2 text-slate-100 hover:text-blue-200" @click="showtab = !showtab"
+                <span
+                  class="mr-2 ml-2 text-slate-100 hover:text-blue-200"
+                  @click="showtab = !showtab"
                   >Add Expenses</span
                 >
               </div>
@@ -40,51 +48,62 @@
 
         <!-- Summary Section -->
         <section class="mt-5 px-4 mx-auto">
-  <div class="grid grid-cols-14 gap-4">
-    <!-- Iterate over each claim -->
-    <template v-for="(claim, index) in claims" :key="index">
-      <!-- Display Claimant's Name -->
-      <div class="col-start-1 col-end-8">
-        <h3 class="text-md font-semibold text-gray-600">{{ claim.claimantName }}</h3>
-      </div>
-      <!-- Display Designation -->
-      <div class="col-start-8 col-end-9">
-        <h5 class="text-sm font-semibold text-gray-600">Designation</h5>
-      </div>
-      <div class="col-start-9">
-        <h5 class="text-sm font-semibold text-gray-600">:</h5>
-      </div>
-      <div class="col-end-12 col-span-2">
-        <h5 class="text-sm font-semibold text-gray-600">{{ claim.designation }}</h5>
-      </div>
-      <!-- Display Company's Name -->
-      <div class="col-start-1 col-end-4">
-        <h3 class="text-sm font-semibold text-gray-600">Department {{claim.department}}</h3>
-      </div>
-      <!-- Display Cost Center -->
-      <div class="col-start-8 col-end-9">
-        <h5 class="text-sm font-semibold text-gray-600">Cost Center</h5>
-      </div>
-      <div class="col-start-9">
-        <h5 class="text-sm font-semibold text-gray-600">:</h5>
-      </div>
-      <div class="col-end-12 col-span-2">
-        <h5 class="text-sm font-semibold text-gray-600">{{ claim.costCenter }}</h5>
-      </div>
-      <!-- Display Date of Report -->
-      <div class="col-start-8 col-end-9">
-        <h5 class="text-sm font-semibold text-gray-600">Date of Report</h5>
-      </div>
-      <div class="col-start-9">
-        <h5 class="text-sm font-semibold text-gray-600">:</h5>
-      </div>
-      <div class="col-end-12 col-span-2">
-        <h5 class="text-sm font-semibold text-gray-600">{{ claim.reportDate }}</h5>
-      </div>
-    </template>
-  </div>
-</section>
-
+          <div class="grid grid-cols-14 gap-4">
+            <!-- Iterate over each claim -->
+            <template v-for="(claim, index) in claims" :key="index">
+              <!-- Display Claimant's Name -->
+              <div class="col-start-1 col-end-8">
+                <h3 class="text-md font-semibold text-gray-600">
+                  {{ claim.claimantName }}
+                </h3>
+              </div>
+              <!-- Display Designation -->
+              <div class="col-start-8 col-end-9">
+                <h5 class="text-sm font-semibold text-gray-600">Designation</h5>
+              </div>
+              <div class="col-start-9">
+                <h5 class="text-sm font-semibold text-gray-600">:</h5>
+              </div>
+              <div class="col-end-12 col-span-2">
+                <h5 class="text-sm font-semibold text-gray-600">
+                  {{ claim.designation }}
+                </h5>
+              </div>
+              <!-- Display Company's Name -->
+              <div class="col-start-1 col-end-4">
+                <h3 class="text-sm font-semibold text-gray-600">
+                  Department {{ claim.department }}
+                </h3>
+              </div>
+              <!-- Display Cost Center -->
+              <div class="col-start-8 col-end-9">
+                <h5 class="text-sm font-semibold text-gray-600">Cost Center</h5>
+              </div>
+              <div class="col-start-9">
+                <h5 class="text-sm font-semibold text-gray-600">:</h5>
+              </div>
+              <div class="col-end-12 col-span-2">
+                <h5 class="text-sm font-semibold text-gray-600">
+                  {{ claim.costCenter }}
+                </h5>
+              </div>
+              <!-- Display Date of Report -->
+              <div class="col-start-8 col-end-9">
+                <h5 class="text-sm font-semibold text-gray-600">
+                  Date of Report
+                </h5>
+              </div>
+              <div class="col-start-9">
+                <h5 class="text-sm font-semibold text-gray-600">:</h5>
+              </div>
+              <div class="col-end-12 col-span-2">
+                <h5 class="text-sm font-semibold text-gray-600">
+                  {{ claim.reportDate }}
+                </h5>
+              </div>
+            </template>
+          </div>
+        </section>
 
         <!-- Table Section -->
         <section class="container px-4 mx-auto">
@@ -142,28 +161,28 @@
                       class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
                     >
                       <tr v-for="(claim, index) in dataclaims" :key="index">
-                      <!-- Display claim details in each cell -->
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                      >
-                        {{ index + 1 }}
-                      </td>
-                      <td
-                        class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                      >
-                        {{ claim.Email }}
-                      </td>
-                      <td
-                        class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                      >
-                        {{ claim.Name }}
-                      </td>
-                    
-                      <td
-                        class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                      >
-                      <button @click="deleteClaim(index)">Delete</button>
-                      </td>
+                        <!-- Display claim details in each cell -->
+                        <td
+                          class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                        >
+                          {{ index + 1 }}
+                        </td>
+                        <td
+                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                        >
+                          {{ claim.Email }}
+                        </td>
+                        <td
+                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                        >
+                          {{ claim.Name }}
+                        </td>
+
+                        <td
+                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                        >
+                          <button @click="deleteClaim(index)">Delete</button>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -172,17 +191,18 @@
             </div>
           </div>
         </section>
-        <tab class="mt-10" v-show="showtab" @formSubmitted="addClaim" ></tab>
+        <tab class="mt-10" v-show="showtab" @formSubmitted="addClaim"></tab>
       </div>
     </div>
   </main>
 </template>
 <script>
+import axios from "axios";
 import tab from "./e-claim/user-ui/FormTab.vue";
 import { formStore } from "./store.js";
 
 export default {
-  name: 'TEtstS',
+  name: "TEtstS",
   components: {
     tab,
   },
@@ -197,9 +217,145 @@ export default {
     this.fetchClaims();
   },
   methods: {
+    async sendToAPI() {
+      // Group claims by tabTitle
+      const groupedClaims = this.dataclaims.reduce((acc, claim) => {
+        if (!acc[claim.tabTitle]) {
+          acc[claim.tabTitle] = [];
+        }
+        acc[claim.tabTitle].push(claim);
+        return acc;
+      }, {});
+
+      // Iterate over each group and send to respective API
+      for (const title in groupedClaims) {
+        if (Object.hasOwnProperty.call(groupedClaims, title)) {
+          const claimsToSend = groupedClaims[title];
+          console.log(`Claims to send for ${title}:`, claimsToSend); // Log the claimsToSend object
+
+          // Now you can iterate over claimsToSend to see each individual claim
+          for (const claim of claimsToSend) {
+            // Log each claim to see its structure and content
+            console.log("Individual claim:", claim);
+
+            // Now you can access each property of the claim and use it to construct the correct input for your database
+            const inputForDatabase = {
+              Name: claim.Name,
+              Email: claim.Email,
+              // Map other fields as needed
+            };
+            console.log("Input for database:", inputForDatabase);
+          }
+
+          try {
+            let axiosInstance;
+            switch (title.toLowerCase()) {
+              case "local travelling": {
+                for (const claim of claimsToSend) {
+                  // Iterate over each claim
+                  const thisisforlocal1 = {
+                    mileage_km: 23,
+                    destination: claim.tabTitle,
+                    date_event: "2024-05-07", // Example date
+                    park_fee: 32,
+                    toll_fee: 23,
+                    total_fee: 23,
+                    approver_email: claim.Email, // Access Email property from claim object
+                    verifier_email: "verifier1@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    unique_code: "ABC1233",
+                    reference_number: "pktm222",
+                  };
+                  axiosInstance = axios.create({
+                    baseURL:
+                      "http://172.28.28.91:97/api/User/InsertLocalOutstation",
+                  });
+                  const response1 = await axiosInstance.post(
+                    "/",
+                    thisisforlocal1
+                  );
+                  console.log(`Data sent for ${title} 1:`, response1.data);
+                }
+                break;
+              }
+              case "overseas travelling with accommodation":
+                for (const claim of claimsToSend) {
+                  // Iterate over each claim
+                  // Dummy data for a claim
+                  const thisisforoversea = {
+                    description : claim.tabTitle,
+                    meal_allowance: "50",
+                    date_event: "2024-05-07", // Example date
+                    transport_fee: claim.Age,
+                    total_fee: 80,
+                    accom_foreign_total: 150,
+                    accom_foreign_currency: 423,
+                    accom_exchange_rate: 1.25,
+                    other_foreign_currency: 433,
+                    other_exchange_rate: 1.1,
+                    other_foreign_total: 220,
+                    reference_number: "pktm222",
+                    unique_code: claim.City,
+
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
+                    serial_number: "123456789",
+                  };
+
+                  axiosInstance = axios.create({
+                    baseURL:
+                      "http://172.28.28.91:97/api/User/InsertOverseasOutstation",
+                  });
+                  const response2 = await axiosInstance.post(
+                    "/",
+                    thisisforoversea
+                  );
+                  console.log(`Data sent for ${title} 2:`, response2.data);
+                }
+                break;
+              case "entertainment":
+                axiosInstance = axios.create({
+                  baseURL: "http://localhost:3000/claims/entertainment",
+                });
+                claimsToSend.map((claim) => this.mapToEntertainment(claim));
+                break;
+              // Add cases for other tab titles here
+              default:
+                console.error(`No endpoint found for ${title}`);
+                continue; // Skip to the next iteration
+            }
+          } catch (error) {
+            if (error.response) {
+              // The request was made and the server responded with a status code
+              // that falls out of the range of 2xx
+              console.error(
+                `Error sending data for ${title}:`,
+                error.response.data
+              );
+            } else if (error.request) {
+              // The request was made but no response was received
+              console.error(
+                `Error sending data for ${title}: No response received`
+              );
+            } else {
+              // Something happened in setting up the request that triggered an error
+              console.error(`Error sending data for ${title}:`, error.message);
+            }
+          }
+        }
+      }
+    },
+
+    // Add mapping functions for other endpoints as needed
+
     deleteClaim(index) {
-    this.dataclaims.splice(index, 1);
-  },
+      this.dataclaims.splice(index, 1);
+    },
     // other methods...
     fetchClaims() {
       // Retrieve the formData from the store and push it into the claims array
@@ -219,6 +375,3 @@ export default {
   },
 };
 </script>
-
-
-

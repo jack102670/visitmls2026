@@ -2702,6 +2702,7 @@ export default {
       waH_ManCage: [],
       waH_Emergency: [],
       waH_ControlMeasure: [],
+      customdepartment: "",
     };
   },
   computed: {

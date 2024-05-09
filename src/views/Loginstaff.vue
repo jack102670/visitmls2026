@@ -1,11 +1,10 @@
 <template>
   <!-- component -->
   <div class="background-image h-screen w-screen flex items-center">
-    
     <div
       class="h-max mx-auto flex flex-col items-center bg-[#18273F] shadow-lg bg-opacity-90 rounded-xl p-5"
     >
-    <h1
+      <h1
         class="text-slate-200 shadow-text-2xl text-2xl font-bold text-center pt-5 pb-10"
       >
         Services Portal System
@@ -15,7 +14,7 @@
         src="@/assets/images/pkt-blue-logo.jpg"
         alt=""
       />
-      
+
       <h5
         class="text-slate-200 shadow-text-2xl text-xl font-bold text-center pb-5"
       >
@@ -67,7 +66,9 @@
             class="bg-blue-900 w-full py-2 rounded-md text-white font-bold cursor-pointer hover:bg-blue-700"
             type="submit"
             @click.prevent="login"
-          >Login</button>
+          >
+            Login
+          </button>
         </div>
         <div v-show="showLoadingButton">
           <button
@@ -143,15 +144,14 @@ export default {
     const session = store.getSession();
 
     if (session) {
-      if (store.getRole() ==='admin'){
-      this.$router.push("/");
-     } 
-     if (store.getRole() ==='user'){
-      this.$router.push("/dashboard");
-     } 
-     else if (store.getRole() ==='vendor'){
-      this.$router.push("/dashboardvendor");
-     } 
+      if (store.getRole() === "admin") {
+        this.$router.push("/");
+      }
+      if (store.getRole() === "user") {
+        this.$router.push("/dashboard");
+      } else if (store.getRole() === "vendor") {
+        this.$router.push("/dashboardvendor");
+      }
     }
   },
 
@@ -178,33 +178,35 @@ export default {
 
           // Determine the user's role
           let role;
-          if (
-            response.data.result.userdetails.userName.includes("SD")
-          ) {
+          if (response.data.result.userdetails.userName.includes("SD")) {
             role = "safety";
-          } 
-
-
-
-         else if (
-          response.data.result.userdetails.userName.includes("SEC")
+          } else if (
+            response.data.result.userdetails.userName.includes("SEC")
           ) {
             role = "admin";
-          }else {
+          } else if (
+            response.data.result.userdetails.userName.includes("Hazman")
+          ) {
+            role = "admin";
+          } 
+          else if (
+            response.data.result.userdetails.userName.includes("Erna")
+          ) {
+            role = "safety";
+          } else {
             role = "user";
           }
 
           // Set the session with user details, token, and role
           // Make sure store.setSession is an async function or returns a Promise
-           store.setSession(userDetails, token, role);
+          store.setSession(userDetails, token, role);
 
           // Redirect to a specific route based on the user's role
           if (role === "admin") {
             this.$router.push("/Managerequest");
           } else if (role === "user") {
             this.$router.push("/Dashboard");
-          }
-          else if (role === "safety") {
+          } else if (role === "safety") {
             this.$router.push("/ManagerequestSafety");
           }
         } else {

@@ -31,7 +31,16 @@ import ClaimReport from "../views/e-claim/ClaimReport.vue";
 import { store } from "../views/store.js";
 import Eclaimhomepage from "../views/e-claim/user-ui/eclaimhomepage.vue";
 import FormTab from "../views/e-claim/user-ui/FormTab.vue";
+import testing2 from "../views/Testing2.vue";
 const routes = [
+  {
+    path: "/test2",
+    name: "testing2",
+    components: {
+      default: testing2,
+      
+    },
+  },
   {
     path: "/eclaimhomepage",
     name: "eclaimhomepages",

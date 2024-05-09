@@ -73,7 +73,7 @@ export default {
       activeTab: 0,
       tabs: [
         {
-          title: "Local Travelling",
+          title: "local travelling",
           gridLayout: "grid-cols-1",
           fields: [
             {
@@ -95,7 +95,7 @@ export default {
           ],
         },
         {
-          title: "Overseas Travelling with Accommodation",
+          title: "overseas travelling with accommodation",
           gridLayout: "grid-cols-3", //
           fields: [
             {
@@ -117,7 +117,7 @@ export default {
           ],
         },
         {
-          title: "Entertainment",
+          title: "entertainment",
           fields: [
             {
               id: "address",
