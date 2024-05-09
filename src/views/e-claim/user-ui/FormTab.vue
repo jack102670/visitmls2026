@@ -34,6 +34,7 @@
 
           <div class="m-2">
             <form @submit.prevent="submitForm(tab)">
+              <!-- Form Fields -->
               <div
                 v-for="(field, fieldIndex) in tab.fields"
                 :key="fieldIndex"
@@ -52,17 +53,46 @@
                   <span v-if="field.required" style="color: red">*</span>
                 </label>
 
-                <input
-                  v-model="field.value"
-                  :id="field.id"
-                  :type="field.type"
-                  :placeholder="field.placeholder"
-                  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                <!-- Input or Select based on type -->
+                <template v-if="field.type === 'select'">
+                  <select
+                    v-model="field.value"
+                    :id="field.id"
+                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                  >
+                    <option
+                      v-for="(option, optionIndex) in field.options"
+                      :key="optionIndex"
+                      :value="option.value"
+                    >
+                      {{ option.label }}
+                    </option>
+                  </select>
+                </template>
+                <template v-else-if="field.type === 'text' && field.isOtherOption">
+                  <input
+                    v-model="field.value"
+                    :id="field.id"
+                    :type="field.type"
+                    :placeholder="field.placeholder"
+                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                  />
+                </template>
+                <template v-else>
+                  <input
+                    v-model="field.value"
+                    :id="field.id"
+                    :type="field.type"
+                    :placeholder="field.placeholder"
+                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                  />
+                </template>
               </div>
+
+              <!-- Save Button -->
               <div class="flex items-center justify-between">
                 <button
-                  type="save"
+                  type="submit"
                   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
                   Save
@@ -98,9 +128,14 @@ export default {
             {
               id: "DestinationPurposeLT",
               label: "Destination / Purpose",
-              type: "text",
+              type: "select",
               value: "",
               required: true,
+              options: [
+                { label: "LABEL 1", value: "LABEL 1" },
+                { label: "LABEL 2", value: "LABEL 2" },
+                { label: "LABEL 3", value: "LABEL 3" },
+              ],
               gridClass: "sm:col-span-1",
             },
             {
@@ -250,9 +285,26 @@ export default {
             {
               id: "TypeofEntertainmentE",
               label: "Type of Entertainment",
-              type: "text",
+              type: "select",
               value: "",
               required: true,
+              options: [
+                { label: "BREAKFAST", value: "BREAKFAST" },
+                { label: "LUNCH", value: "LUNCH" },
+                { label: "DINNER", value: "DINNER" },
+                { label: "TEA BREAK", value: "TEA BREAK" },
+                { label: "OTHERS", value: "OTHERS" },
+
+              ],
+              gridClass: "sm:col-span-2",
+            },
+             {
+              id: "OtherTypeofEntertainmentE",
+              label: "Other Type of Entertainment",
+              type: "text",
+              value: "",
+              placeholder: "Specify other type",
+              isOtherOption: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -274,9 +326,14 @@ export default {
             {
               id: "ReferenceE",
               label: "Reference",
-              type: "text",
+              type: "select",
               value: "",
               required: true,
+              options: [
+                { label: "CLIENT(EXISTING)", value: "CLIENT(EXISTING)" },
+                { label: "CLIENT(NEW/POTENTIAL)", value: "CLIENT(NEW/POTENTIAL)" },
+                { label: "NON TRADE", value: "NON TRADE" },
+              ],
               gridClass: "sm:col-span-2",
             },
             {
@@ -311,9 +368,26 @@ export default {
             {
               id: "TypeofRefreshmentSR",
               label: "Type of Refreshment",
-              type: "text",
+              type: "select",
               value: "",
               required: true,
+               options: [
+                { label: "BREAKFAST", value: "BREAKFAST" },
+                { label: "LUNCH", value: "LUNCH" },
+                { label: "DINNER", value: "DINNER" },
+                { label: "TEA BREAK", value: "TEA BREAK" },
+                { label: "OTHERS", value: "OTHERS" },
+
+              ],
+              gridClass: "sm:col-span-2",
+            },
+             {
+              id: "OtherTypeofStaffRefreshmentSR",
+              label: "Other Type of Staff Refreshment",
+              type: "text",
+              value: "",
+              placeholder: "Specify other type",
+              isOtherOption: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -335,9 +409,14 @@ export default {
             {
               id: "ReferenceSR",
               label: "Reference",
-              type: "text",
+              type: "select",
               value: "",
               required: true,
+              options: [
+                { label: "GIFT TO CLIENT", value: "GIFT TO CLIENT" },
+                { label: "GIFT TO OTHERS", value: "GIFT TO OTHERS" },
+                { label: "MEAL FOR STAFF", value: "MEAL FOR STAFF" },
+              ],
               gridClass: "sm:col-span-2",
             },
             {
@@ -356,15 +435,29 @@ export default {
             {
               id: "MonthHR",
               label: "Month",
-              type: "text",
+              type: "select",
               value: "",
               required: true,
+              options: [
+                { label: "JANUARY", value: "JANUARY" },
+                { label: "FEBRUARY", value: "FEBRUARY" },
+                { label: "MARCH", value: "MARCH" },
+                { label: "APRIL", value: "APRIL" },
+                { label: "MAY", value: "MAY" },
+                { label: "JUNE", value: "JUNE" },
+                { label: "JULY", value: "JULY" },
+                { label: "AUGUST", value: "AUGUST" },
+                { label: "SEPTEMBER", value: "SEPTEMBER" },
+                { label: "OCTOBER", value: "OCTOBER" },
+                { label: "NOVEMBER", value: "NOVEMBER" },
+                { label: "DECEMBER", value: "DECEMBER" },
+              ],
               gridClass: "sm:col-span-1",
             },
             {
               id: "YearHR",
               label: "Year",
-              type: "text",
+              type: "number",
               value: "",
               required: true,
               gridClass: "sm:col-span-2",
@@ -372,9 +465,14 @@ export default {
             {
               id: "BankNameHR",
               label: "Bank Name",
-              type: "text",
+              type: "select",
               value: "",
               required: true,
+              options: [
+                { label: "Movie", value: "movie" },
+                { label: "Concert", value: "concert" },
+                { label: "Dining", value: "dining" },
+              ],
               gridClass: "sm:col-span-2",
             },
             {
@@ -432,9 +530,14 @@ export default {
             {
               id: "BankNameML",
               label: "Bank Name",
-              type: "text",
+              type: "select",
               value: "",
               required: true,
+              options: [
+                { label: "Movie", value: "movie" },
+                { label: "Concert", value: "concert" },
+                { label: "Dining", value: "dining" },
+              ],
               gridClass: "sm:col-span-2",
             },
             {
