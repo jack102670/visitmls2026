@@ -151,7 +151,7 @@
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
-                            <span>deleted</span>
+                            <span>Action</span>
                           </div>
                         </th>
                       </tr>
@@ -182,6 +182,7 @@
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                         >
                           <button @click="deleteClaim(index)">Delete</button>
+                          <button @click="showDetails(claim)">show details</button>
                         </td>
                       </tr>
                     </tbody>
@@ -213,24 +214,24 @@
 
           <div class="mb-4">
             <label for="nodeId" class="block text-gray-700 font-bold mb-2"
-              >Node ID:</label
+              >Date:</label
             >
             <input
               type="text"
               id="nodeId"
-       
+         v-model="selectedClaimDetails.Date"
               :disabled="!isEditMode"
               class="border rounded-md px-4 py-2 w-full"
             />
           </div>
           <div class="mb-4">
             <label for="nodeName" class="block text-gray-700 font-bold mb-2"
-              >Node Name:</label
+              >Destination / Purpose:</label
             >
             <input
               type="text"
               id="nodeName"
-           
+           v-model="selectedClaimDetails.Destination"
               :disabled="!isEditMode"
               class="border rounded-md px-4 py-2 w-full"
             />
@@ -240,64 +241,53 @@
 
           <div class="mb-4">
             <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
-              >Email:</label
+              >Mileage(KM):</label
             >
             <input
               type="text"
               id="email"
-           
+           v-model="selectedClaimDetails.Mileage"
               :disabled="!isEditMode"
               class="border rounded-md px-4 py-2 w-full"
             />
           </div>
           <div class="mb-4">
             <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
-              >phone number:</label
+              >Toll:</label
             >
             <input
               type="text"
               id="phonenumber"
-         
+         v-model="selectedClaimDetails.Toll"
               :disabled="!isEditMode"
               class="border rounded-md px-4 py-2 w-full"
             />
           </div>
           <div class="mb-4">
             <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
-              >Position:</label
+              >Parking:</label
             >
             <input
               type="text"
               id="positioname"
-          
+          v-model="selectedClaimDetails.Parking"
               :disabled="!isEditMode"
               class="border rounded-md px-4 py-2 w-full overflow-x-auto"
             />
           </div>
           <div class="mb-4">
             <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
-              >position code:</label
+              >Total:</label
             >
             <input
               type="text"
               id="positioncode"
-     
+     v-model="selectedClaimDetails.Total"
               :disabled="!isEditMode"
               class="border rounded-md px-4 py-2 w-full"
             />
           </div>
-          <div class="mb-4">
-            <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
-              >address:</label
-            >
-            <input
-              type="text"
-              id="address"
-      
-              :disabled="!isEditMode"
-              class="border rounded-md px-4 py-2 w-full"
-            />
-          </div>
+        
           <!-- Add/Edit node button -->
         </div>
         <div class="flex justify-end">
@@ -340,12 +330,19 @@ export default {
       dataclaims: [],
       isClickModal: true,
       isEditMode: false,
+      selectedClaimDetails: {},
     };
   },
   created() {
     this.fetchClaims();
   },
   methods: {
+    showDetails(claim) {
+    this.selectedClaimDetails = claim;
+    this.isClickModal = true; // Show the modal
+    console.log("Selected claim details:", this.selectedClaimDetails);
+
+  },
     async sendToAPI() {
       // Group claims by tabTitle
       const groupedClaims = this.dataclaims.reduce((acc, claim) => {
