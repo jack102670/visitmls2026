@@ -15,26 +15,26 @@
             </h3>
           </div>
           <div class="flex ml-14 mt-5">
-            <router-link :to="{name:'CreateNewClaim'}">
-            <button class="p-2 flex items-center">
-              Add claim
-              <span class="ml-2 border border-2 px-4 border-blue-800">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M12 4.5v15m7.5-7.5h-15"
-                  />
-                </svg>
-              </span>
-            </button></router-link>
+            <router-link :to="{ name: 'CreateNewClaim' }">
+              <button class="p-2 flex items-center">
+                Add claim
+                <span class="ml-2 border border-2 px-4 border-blue-800">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 4.5v15m7.5-7.5h-15"
+                    />
+                  </svg>
+                </span></button
+            ></router-link>
           </div>
 
           <hr class="h-mx-auto bg-gray-100 border-0 rounded" />
@@ -42,11 +42,13 @@
         <section class="container px-4 mx-auto pt-12">
           <div class="flex justify-between items-center">
             <div>
-              <h2 class="text-lg font-medium text-gray-800 dark:text-white ml-1">
+              <h2
+                class="text-lg font-medium text-gray-800 dark:text-white ml-1"
+              >
                 Claim
                 <span
                   class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400"
-                  >
+                >
                 </span>
               </h2>
             </div>
@@ -125,9 +127,7 @@
                     <tbody
                       class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
                     >
-                      <tr
-                      
-                      >
+                      <tr>
                         <td
                           class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                         >
@@ -136,9 +136,7 @@
                               <div>
                                 <h2
                                   class="font-medium text-gray-500 dark:text-gray-300"
-                                >
-                             
-                                </h2>
+                                ></h2>
                               </div>
                             </div>
                           </div>
@@ -150,38 +148,28 @@
                             <div class="flex items-center gap-x-2">
                               <div>
                                 <!-- Conditionally display 'Badge Request' if typeofrequest includes 'br' -->
-                              
                               </div>
                             </div>
                           </div>
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        >
-                       
-                        </td>
+                        ></td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        >
-                     
-                        </td>
+                        ></td>
 
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        >
-                       
-                        </td>
+                        ></td>
 
                         <td
                           class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                        >
-                       
-                        </td>
+                        ></td>
 
                         <td class="px-4 py-4 ml text-sm whitespace-nowrap">
                           <div class="flex items-center gap-x-6">
                             <button
-                           
                               class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
                             >
                               <svg
@@ -264,7 +252,7 @@
 
 <script>
 export default {
-  name: "homepageeclaiM",
+  name: 'homepageeclaiM',
 };
 </script>
 
