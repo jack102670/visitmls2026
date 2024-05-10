@@ -182,7 +182,9 @@
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                         >
                           <button @click="deleteClaim(index)">Delete</button>
-                          <button @click="showDetails(claim)">show details</button>
+                          <button @click="showDetails(claim)">
+                            show details
+                          </button>
                         </td>
                       </tr>
                     </tbody>
@@ -195,120 +197,125 @@
         <tab class="mt-10" v-show="showtab" @formSubmitted="addClaim"></tab>
       </div>
       <div
-      v-if="isClickModal"
-      class="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
-      @click.self="closeClickModal"
-    >
-      <div
-        class="modal-content bg-white rounded-lg p-8"
-        style="max-height: calc(100vh - 20px); overflow-y: auto"
+        v-if="isClickModal"
+        class="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
+        @click.self="closeClickModal"
       >
-        <!-- Modal header -->
-        <!-- Your existing modal header content -->
-
         <div
-          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+          class="modal-content bg-white rounded-lg p-8"
+          style="max-height: calc(100vh - 20px); overflow-y: auto"
         >
-          <!-- Modal content -->
-     
+          <!-- Modal header -->
+          <!-- Your existing modal header content -->
 
-          <div class="mb-4">
-            <label for="nodeId" class="block text-gray-700 font-bold mb-2"
-              >Date:</label
-            >
-            <input
-              type="text"
-              id="nodeId"
-         v-model="selectedClaimDetails.Date"
-              :disabled="!isEditMode"
-              class="border rounded-md px-4 py-2 w-full"
-            />
-          </div>
-          <div class="mb-4">
-            <label for="nodeName" class="block text-gray-700 font-bold mb-2"
-              >Destination / Purpose:</label
-            >
-            <input
-              type="text"
-              id="nodeName"
-           v-model="selectedClaimDetails.Destination"
-              :disabled="!isEditMode"
-              class="border rounded-md px-4 py-2 w-full"
-            />
-          </div>
-   
-          
-
-          <div class="mb-4">
-            <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
-              >Mileage(KM):</label
-            >
-            <input
-              type="text"
-              id="email"
-           v-model="selectedClaimDetails.Mileage"
-              :disabled="!isEditMode"
-              class="border rounded-md px-4 py-2 w-full"
-            />
-          </div>
-          <div class="mb-4">
-            <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
-              >Toll:</label
-            >
-            <input
-              type="text"
-              id="phonenumber"
-         v-model="selectedClaimDetails.Toll"
-              :disabled="!isEditMode"
-              class="border rounded-md px-4 py-2 w-full"
-            />
-          </div>
-          <div class="mb-4">
-            <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
-              >Parking:</label
-            >
-            <input
-              type="text"
-              id="positioname"
-          v-model="selectedClaimDetails.Parking"
-              :disabled="!isEditMode"
-              class="border rounded-md px-4 py-2 w-full overflow-x-auto"
-            />
-          </div>
-          <div class="mb-4">
-            <label for="nodeParentId" class="block text-gray-700 font-bold mb-2"
-              >Total:</label
-            >
-            <input
-              type="text"
-              id="positioncode"
-     v-model="selectedClaimDetails.Total"
-              :disabled="!isEditMode"
-              class="border rounded-md px-4 py-2 w-full"
-            />
-          </div>
-        
-          <!-- Add/Edit node button -->
-        </div>
-        <div class="flex justify-end">
-          <button
-            @click="toggleEditMode"
-            class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
           >
-            {{ isEditMode ? "Save" : "Edit" }}
-            <!-- Change button text based on edit mode -->
-          </button>
+            <!-- Modal content -->
 
-          <!-- Delete node button -->
-          <button @click="isClickModal = false"
-            
-            class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
-          >
-            Cancel
-          </button>
+            <div class="mb-4">
+              <label for="nodeId" class="block text-gray-700 font-bold mb-2"
+                >Date:</label
+              >
+              <input
+                type="text"
+                id="nodeId"
+                v-model="selectedClaimDetails.dateLT"
+                :disabled="!isEditMode"
+                class="border rounded-md px-4 py-2 w-full"
+              />
+            </div>
+            <div class="mb-4">
+              <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+                >Destination / Purpose:</label
+              >
+              <input
+                type="text"
+                id="nodeName"
+                v-model="selectedClaimDetails.DestinationPurposeLT"
+                :disabled="!isEditMode"
+                class="border rounded-md px-4 py-2 w-full"
+              />
+            </div>
+
+            <div class="mb-4">
+              <label
+                for="nodeParentId"
+                class="block text-gray-700 font-bold mb-2"
+                >Mileage(KM):</label
+              >
+              <input
+                type="text"
+                id="email"
+                v-model="selectedClaimDetails.MileageKMLT"
+                :disabled="!isEditMode"
+                class="border rounded-md px-4 py-2 w-full"
+              />
+            </div>
+            <div class="mb-4">
+              <label
+                for="nodeParentId"
+                class="block text-gray-700 font-bold mb-2"
+                >Toll:</label
+              >
+              <input
+                type="text"
+                id="phonenumber"
+                v-model="selectedClaimDetails.Toll"
+                :disabled="!isEditMode"
+                class="border rounded-md px-4 py-2 w-full"
+              />
+            </div>
+            <div class="mb-4">
+              <label
+                for="nodeParentId"
+                class="block text-gray-700 font-bold mb-2"
+                >Parking:</label
+              >
+              <input
+                type="text"
+                id="positioname"
+                v-model="selectedClaimDetails.ParkingLT"
+                :disabled="!isEditMode"
+                class="border rounded-md px-4 py-2 w-full overflow-x-auto"
+              />
+            </div>
+            <div class="mb-4">
+              <label
+                for="nodeParentId"
+                class="block text-gray-700 font-bold mb-2"
+                >Total:</label
+              >
+              <input
+                type="text"
+                id="positioncode"
+                v-model="selectedClaimDetails.TollLT"
+                :disabled="!isEditMode"
+                class="border rounded-md px-4 py-2 w-full"
+              />
+            </div>
+
+            <!-- Add/Edit node button -->
+          </div>
+          <div class="flex justify-end">
+            <button
+              @click="toggleEditMode"
+              class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+            >
+              {{ isEditMode ? "Save" : "Edit" }}
+              <!-- Change button text based on edit mode -->
+            </button>
+
+            <!-- Delete node button -->
+            <button
+              @click="isClickModal = false"
+              class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   </main>
 </template>
@@ -316,7 +323,6 @@
 import axios from "axios";
 import tab from "./e-claim/user-ui/FormTab.vue";
 import { formStore } from "./store.js";
-
 
 export default {
   name: "TEtstS",
@@ -338,11 +344,10 @@ export default {
   },
   methods: {
     showDetails(claim) {
-    this.selectedClaimDetails = claim;
-    this.isClickModal = true; // Show the modal
-    console.log("Selected claim details:", this.selectedClaimDetails);
-
-  },
+      this.selectedClaimDetails = claim;
+      this.isClickModal = true; // Show the modal
+      console.log("Selected claim details:", this.selectedClaimDetails);
+    },
     async sendToAPI() {
       // Group claims by tabTitle
       const groupedClaims = this.dataclaims.reduce((acc, claim) => {
@@ -411,7 +416,7 @@ export default {
                   // Iterate over each claim
                   // Dummy data for a claim
                   const thisisforoversea = {
-                    description : claim.tabTitle,
+                    description: claim.tabTitle,
                     meal_allowance: "50",
                     date_event: "2024-05-07", // Example date
                     transport_fee: claim.Age,
@@ -497,7 +502,7 @@ export default {
       // Push new form data into the claims array
       this.dataclaims.push(formData);
       console.log("Data Claims:", this.dataclaims);
-      this.showtab= false;
+      this.showtab = false;
     },
   },
 };

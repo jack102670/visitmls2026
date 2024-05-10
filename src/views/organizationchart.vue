@@ -149,7 +149,7 @@
               placeholder="Select name"
               class="px-5 py-3 w-full border border-gray-300 rounded-md"
               v-model="newNode.parentId"
-              @click="onKeyUp"
+              @keyup="onKeyUp"
             />
             <div
               id="dropdown"
@@ -353,7 +353,7 @@
               placeholder="Select name"
               class="px-5 py-3 w-full border border-gray-300 rounded-md"
               v-model="clickedNodeData.parentId"
-              @click="onKeyUp"
+              @keyup="onKeyUp"
             />
             <div
               id="dropdown"

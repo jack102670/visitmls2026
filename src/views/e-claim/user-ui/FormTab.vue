@@ -635,7 +635,7 @@ export default {
       // Iterate through the fields of the current tab
       tab.fields.forEach((field) => {
         // Use the field label as the key and the field value as the value
-        formattedData[field.label] = field.value;
+        formattedData[field.id] = field.value;
       });
 
       // Add the tab title to the formatted data
