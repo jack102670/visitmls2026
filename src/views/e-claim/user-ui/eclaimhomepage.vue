@@ -7,7 +7,9 @@
       >
         <div class="flex justify-between">
           <div class="flex justify-start flex-col ml-5">
-            <h2 class="text-3xl font-bold text-blue-900">PKT GROUP OF</h2>
+            <h2 class="text-3xl font-bold text-blue-900">
+              PKT GROUP OF COMPANIES
+            </h2>
             <h3 class="text-xl font-bold text-blue-800">
               Claim for Reimbursement of All Expenses
             </h3>
