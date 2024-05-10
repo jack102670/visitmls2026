@@ -295,6 +295,7 @@
                 accept="image/*"
               />
             </div>
+          <div v-show="showupdatepicture"  class="flex justify-end"> </div>
           </div>
 
           <div class="mb-4">
@@ -723,51 +724,63 @@ export default {
         this.showupdatepicture = !this.showupdatepicture;
       }
     },
-    saveNode() {
-      // Create a new FormData object
-      const formData = new FormData();
+    uploadimg() {  const formData = new FormData();
 
-      // Append employee data to the FormData object
-      formData.append("emp_id", this.clickedNodeData.id);
-      formData.append("name", this.clickedNodeData.name);
-      formData.append("reporting_to", this.clickedNodeData.parentId);
-      formData.append("position_code", this.clickedNodeData.positioncode);
-      formData.append("position_title", this.clickedNodeData.positionName);
-      formData.append("email_address", this.clickedNodeData.email);
-      formData.append("phone_number", this.clickedNodeData.phone);
-      formData.append("home_address", this.clickedNodeData.address);
-      formData.append("department", this.clickedNodeData.department);
-      // Check if a new profile picture file is selected
-      if (this.files2.length > 0) {
-        // Append newly selected profile picture file to the FormData object
-        formData.append("profile_picture", this.files2[0]);
-      } else if (this.files.length > 0) {
-        // If no new picture is uploaded, append the existing picture
-        formData.append("profile_picture", this.files[0]);
-      } else {
-        console.error("No picture available.");
-        // Optionally, you can handle this case by appending a placeholder or omitting the profile_picture field
-      }
+// Append employee data to the FormData object
+formData.append("emp_id", this.clickedNodeData.id);
+formData.append("profile_picture", this.files2[0]);
 
-      // Now formData contains all the necessary data including the profile picture
-      // Proceed with your API call using formData
-      axios
-        .put("http://172.28.28.91:97/api/Admin/UpdateEmployee", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          console.log("File uploaded successfully:", response.data);
-          this.isClickModal = false;
-          this.isEditMode = false;
-          this.fetchData();
-        })
-        .catch((error) => {
-          console.error("Error uploading file:", error);
-          // Handle error
-        });
+
+
+axios
+  .put("http://172.28.28.91:97/api/Admin/UpdateImage", formData)
+  .then((response) => {
+    console.log("File uploaded successfully:", response.data);
+  
+    this.fetchData();
+  })
+  .catch((error) => {
+    console.error("Error uploading file:", error);
+    // Handle error
+  });
+    
     },
+    saveNode() {
+  // Prepare the employee data object
+  const employeeData = {
+    emp_id: this.clickedNodeData.id,
+    name: this.clickedNodeData.name,
+    reporting_to: this.clickedNodeData.parentId,
+    position_code: this.clickedNodeData.positioncode,
+    position_title: this.clickedNodeData.positionName,
+    email_address: this.clickedNodeData.email,
+    phone_number: this.clickedNodeData.phone,
+    home_address: this.clickedNodeData.address,
+    department: this.clickedNodeData.department
+    // Add other employee data fields as needed
+  };
+
+  // Make the PUT request with JSON data
+  axios
+    .put("http://172.28.28.91:97/api/Admin/UpdateEmployee", employeeData, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then((response) => {
+      console.log("Employee data updated successfully:", response.data);
+      this.fetchData();
+      this.uploadimg();
+      this.isClickModal = false;
+      this.isEditMode = false;
+    
+    })
+    .catch((error) => {
+      console.error("Error updating employee data:", error);
+      // Handle error
+    });
+},
+
 
     async addNodeAndSave() {
       try {
