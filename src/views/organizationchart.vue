@@ -77,7 +77,7 @@
         @click="showAddNodeModal"
         class="bg-[#032539] hover:bg-[#032539c7] text-[#FBF3F2] border rounded-lg p-1.5"
       >
-        Add Node to Root
+        Add Node
       </button>
       <div class="flex pt-1 search:right-2 search:top-2 search:absolute">
         <input
@@ -107,6 +107,19 @@
         <div
           class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
         >
+        <div class="mb-4">
+            <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+              >Picture:</label
+            >
+            <div>
+              <input
+                type="file"
+                class="filepond"
+                ref="filepond3"
+                accept="image/*"
+              />
+            </div>
+          </div>
           <div class="mb-4">
             <label for="nodeId" class="block text-gray-700 font-bold mb-2"
               >Node ID:</label
@@ -166,19 +179,7 @@
               </div>
             </div>
           </div>
-          <div class="mb-4">
-            <label for="nodeName" class="block text-gray-700 font-bold mb-2"
-              >Picture:</label
-            >
-            <div>
-              <input
-                type="file"
-                class="filepond"
-                ref="filepond"
-                accept="image/*"
-              />
-            </div>
-          </div>
+          
           <div class="mb-4">
             <label for="nodeName" class="block text-gray-700 font-bold mb-2"
               >Node Name:</label
@@ -608,6 +609,15 @@ export default {
         });
       }
     },
+    isAddNodeModalOpen(newVal) {
+      if (newVal) {
+        // Modal is shown, initialize FilePond
+        this.$nextTick(() => {
+          this.initializeFilePond3();
+
+        });
+      }
+    },
   },
   created() {
     this.fetchData();
@@ -624,6 +634,28 @@ export default {
       } else {
         // If the user clicks "Cancel", do nothing
         // You can add additional handling here if needed
+      }
+    },
+    initializeFilePond3() {
+      console.log("check filepond", this.$refs.filepond3);
+      if (this.$refs.filepond3) {
+        const pond = create(this.$refs.filepond3, {
+          labelIdle: `Drag & Drop to update your picture`,
+        });
+        console.log("check filepond", this.clickedNodeData.imageUrl);
+
+        pond.on("addfile", (error, file) => {
+          if (!error) {
+            console.log("Added file name:", file.file.name); // Access file name
+            this.files2 = [file.file]; // Replace files array with the new file
+          }
+        });
+
+        pond.on("removefile", () => {
+          this.files2 = []; // Clear files array when file is removed
+        });
+      } else {
+        console.error("FilePond element not found.");
       }
     },
     initializeFilePond() {
@@ -809,6 +841,7 @@ axios
         formData.append("home_address", this.newNode.homeAddress); // Use correct property name
         formData.append("spouse", this.newNode.spouse); // Use correct property name
         formData.append("department", this.newNode.department); // Use correct property name
+        formData.append("profile_picture", this.files2[0]);
 
         const uploadResponse = await axios.post(
           "http://172.28.28.91:97/api/Admin/InsertNewEmployee",
