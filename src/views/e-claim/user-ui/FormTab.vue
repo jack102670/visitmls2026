@@ -99,11 +99,6 @@
                       @removefile="handleRemoveFile"
                     />
                   </div>
-                  <ul>
-                    <li v-for="file in field.value" :key="file.name">
-                      {{ file.name }}
-                    </li>
-                  </ul>
                 </template>
 
                 <template v-else>
