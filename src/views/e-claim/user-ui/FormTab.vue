@@ -94,13 +94,13 @@
               <div class="pt-4">
                 <hr class="" />
 
-                <div class="mt-4">
+                <div class="mt-4 flex flex-row-reverse">
                   <div class="grid grid-cols-1 sm:grid-cols-2">
                     <label class="block text-gray-700 text-xl font-bold mb-2">
-                      Total (RM)
+                      Total  :
                     </label>
                     <div class="block text-gray-700 text-xl font-bold mb-2">
-                      {{ calculateTotal(tab) }}
+                     RM {{ calculateTotal(tab) }}
                     </div>
                   </div>
                 </div>
