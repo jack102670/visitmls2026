@@ -56,7 +56,7 @@
                   <select
                     v-model="field.value"
                     :id="field.id"
-                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                   >
                     <option
                       v-for="(option, optionIndex) in field.options"
@@ -76,8 +76,34 @@
                     :id="field.id"
                     :type="field.type"
                     :placeholder="field.placeholder"
-                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                   />
+                </template>
+
+                <template v-else-if="field.type === 'file'">
+                  <div class="pt-3">
+                    <FilePond
+                      ref="pond"
+                      name="file"
+                      :server="null"
+                      :allowMultiple="true"
+                      :maxFileSize="'5MB'"
+                      :acceptedFileTypes="[
+                        'image/png',
+                        'image/jpeg',
+                        'application/pdf',
+                        'application/vnd.ms-excel',
+                        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                      ]"
+                      @addfile="handleAddFile"
+                      @removefile="handleRemoveFile"
+                    />
+                  </div>
+                  <ul>
+                    <li v-for="file in field.value" :key="file.name">
+                      {{ file.name }}
+                    </li>
+                  </ul>
                 </template>
 
                 <template v-else>
@@ -86,7 +112,7 @@
                     :id="field.id"
                     :type="field.type"
                     :placeholder="field.placeholder"
-                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                   />
                 </template>
               </div>
@@ -97,10 +123,10 @@
                 <div class="mt-4">
                   <div class="grid grid-cols-1 sm:grid-cols-2">
                     <label class="block text-gray-700 text-xl font-bold mb-2">
-                      Total (RM)
+                      Total  :
                     </label>
                     <div class="block text-gray-700 text-xl font-bold mb-2">
-                      {{ calculateTotal(tab) }}
+                     RM {{ calculateTotal(tab) }}
                     </div>
                   </div>
                 </div>
@@ -125,11 +151,19 @@
 </template>
 
 <script>
+import { FilePond } from 'vue-filepond';
+import 'filepond/dist/filepond.min.css';
+
 export default {
+  components: {
+    FilePond,
+  },
+
   data() {
     return {
       activeTab: 0,
       date: "",
+      uploadedFiles: [],
       tabs: [
         {
           title: "Local Travelling",
@@ -181,6 +215,13 @@ export default {
               id: "ParkingLT",
               label: "Parking(RM)",
               type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "UploadLT",
+              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
               value: "",
               gridClass: "sm:col-span-1",
             },
@@ -260,13 +301,6 @@ export default {
             {
               id: "AirportLimoTeksiOT",
               label: "Airport Limo / Teksi(RM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "RMforMealTransportOT",
-              label: "RM",
               type: "number",
               value: "",
               gridClass: "sm:col-span-2",
@@ -356,6 +390,13 @@ export default {
               value: "",
               gridClass: "sm:col-span-2",
             },
+            {
+              id: "UploadE",
+              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
+              value: "",
+              gridClass: "sm:col-span-1",
+            },
           ],
         },
         {
@@ -437,6 +478,13 @@ export default {
               type: "number",
               value: "",
               gridClass: "sm:col-span-2",
+            },
+            {
+              id: "UploadSR",
+              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
+              value: "",
+              gridClass: "sm:col-span-1",
             },
           ],
         },
@@ -545,6 +593,13 @@ export default {
               value: "",
               gridClass: "sm:col-span-2",
             },
+            {
+              id: "UploadHR",
+              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
+              value: "",
+              gridClass: "sm:col-span-1",
+            },
           ],
         },
         {
@@ -631,6 +686,13 @@ export default {
               value: "",
               gridClass: "sm:col-span-2",
             },
+            {
+              id: "UploadML",
+              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
+              value: "",
+              gridClass: "sm:col-span-1",
+            },
           ],
         },
       ],
@@ -638,6 +700,31 @@ export default {
   },
 
   methods: {
+    handleAddFile(file) {
+      // Push the selected file to the uploadedFiles array
+      this.uploadedFiles.push(file.file);
+
+      // Log the selected files
+      console.log("Selected Files:", this.uploadedFiles);
+
+      // Update the field value to the uploadedFiles array
+      this.$set(this.field, 'value', this.uploadedFiles);
+    },
+
+    handleRemoveFile(file) {
+      // Remove the file from the uploadedFiles array
+      const index = this.uploadedFiles.findIndex(f => f === file.file);
+      if (index !== -1) {
+        this.uploadedFiles.splice(index, 1);
+      }
+
+      // Log the selected files
+      console.log("Selected Files:", this.uploadedFiles);
+
+      // Update the field value to the uploadedFiles array
+      this.$set(this.field, 'value', this.uploadedFiles);
+    },
+    
     calculateTotal(tab) {
       let total = 0;
       tab.fields.forEach((field) => {
