@@ -800,6 +800,7 @@ axios
     console.error("Error uploading file:", error);
     // Handle error
   });
+  this.files2 = [];
     
     },
     saveNode() {
@@ -874,7 +875,7 @@ axios
             // For example, display an error message to the user
           }
         }
-
+        this.files2 = [];
         // Reset the form values
         this.newNode = {
           id: "",
@@ -890,7 +891,7 @@ axios
           // Add other properties as needed
         };
         this.isAddNodeModalOpen = false;
-        this.renderChart();
+        this.fetchData();
       } catch (error) {
         console.error("Error adding and saving node:", error);
         // Handle errors
