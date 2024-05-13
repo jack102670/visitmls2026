@@ -264,13 +264,6 @@ export default {
               value: "",
               gridClass: "sm:col-span-2",
             },
-            {
-              id: "RMforMealTransportOT",
-              label: "RM",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-2",
-            },
           ],
         },
         {
