@@ -153,7 +153,7 @@
 
           <div class="mb-4">
             <label for="nodeName" class="block text-gray-700 font-bold mb-2"
-              >Parent Id:</label
+              >Reporting To:</label
             >
             <!-- Search input -->
 
@@ -175,7 +175,7 @@
                 @click="selectOption(item.id)"
                 class="px-5 py-3 border-b border-gray-200 text-stone-600 cursor-pointer hover:bg-slate-100 transition-colors overflow-y-auto"
               >
-                {{ item.id }} - {{ item.name }}
+              {{ item.department }} -  {{ item.id }} - {{ item.name }}
               </div>
             </div>
           </div>
@@ -358,7 +358,7 @@
           </div>
           <div class="mb-4">
             <label for="nodeName" class="block text-gray-700 font-bold mb-2"
-              >Parent Id:</label
+              >Reporting To:</label
             >
             <!-- Search input -->
 
@@ -516,6 +516,7 @@ export default {
         { name: "Finance", code: "Finance" },
         { name: "Marketing", code: "Marketing" },
         { name: "Sales", code: "Sales" },
+        { name: "D'TOR OFFICE", code: "D'TOR OFFICE"}
       ],
       hide: false,
       files2: [],
@@ -564,41 +565,41 @@ export default {
       );
     },
     filteredParentidNewNode() {
-      if (!this.newNode.parentId && !this.newNode.department) {
+      if (!this.newNode.parentId) {
         return this.data;
       }
-      return this.data.filter((person) => {
-        const keywordMatch = this.newNode.parentId
-          ? person.name
-              .toLowerCase()
-              .includes(this.newNode.parentId.toLowerCase())
-          : true;
-        const departmentMatch = this.newNode.department
-          ? person.department.toLowerCase() ===
-            this.newNode.department.toLowerCase()
-          : true;
-        return keywordMatch && departmentMatch;
-      });
+     return this.data.filter((person) => {
+  const keywordMatch = this.newNode.parentId
+    ? (person.name && person.name.toLowerCase().includes(this.newNode.parentId.toLowerCase())) ||
+      (person.department && person.department.toLowerCase().includes(this.newNode.parentId.toLowerCase())) ||
+      (person.id && person.id.toLowerCase().includes(this.newNode.parentId.toLowerCase()))
+    : true;
+
+  return keywordMatch;
+});
     },
     filteredParentid() {
-      if (!this.clickedNodeData.parentId && !this.clickedNodeData.department) {
+      if (!this.clickedNodeData.parentId) {
         return this.data;
       }
       return this.data.filter((person) => {
         const keywordMatch = this.clickedNodeData.parentId
-          ? person.name
-              .toLowerCase()
-              .includes(this.clickedNodeData.parentId.toLowerCase())
-          : true;
-        const departmentMatch = this.clickedNodeData.department
-          ? person.department.toLowerCase() ===
-            this.clickedNodeData.department.toLowerCase()
-          : true;
-        return keywordMatch && departmentMatch;
+    ? (person.name && person.name.toLowerCase().includes(this.clickedNodeData.parentId.toLowerCase())) ||
+      (person.department && person.department.toLowerCase().includes(this.clickedNodeData.parentId.toLowerCase())) ||
+      (person.id && person.id.toLowerCase().includes(this.clickedNodeData.parentId.toLowerCase()))
+    : true;
+        return keywordMatch ;
       });
     },
   },
-  mounted() {},
+  mounted() {
+    // Attach click event listener to the document body
+    document.body.addEventListener('click', this.closeDropdownOnClickOutside);
+  },
+  beforeUnmount() {
+    // Remove click event listener when component is destroyed
+    document.body.removeEventListener('click', this.closeDropdownOnClickOutside);
+  },
   watch: {
     isClickModal(newVal) {
       if (newVal) {
@@ -625,7 +626,18 @@ export default {
     //     this.initializeFilePond();
     //   });
   },
-  methods: {
+  methods: { closeDropdownOnClickOutside(event) {
+      // Check if the clicked element is outside the dropdown
+      const dropdown = document.getElementById('dropdown');
+      if (dropdown && !dropdown.contains(event.target)) {
+        this.showDropdown = false;
+      }
+    },
+    outsideClick(e) {
+      if (!this.$refs.dropdown.contains(e.target)) {
+        this.showDropdown = false;
+      }
+    },
     confirmDelete(id) {
       // Display a confirmation dialog
       if (window.confirm("Are you sure you want to delete this user?")) {
@@ -734,7 +746,7 @@ export default {
     //   formData.append("department", this.clickedNodeData.department);
 
     //   axios
-    //     .put("http://172.28.28.91:97/api/Admin/UpdateEmployee", formData, {
+    //     .put("http://172.28.28.91:99/api/Admin/UpdateEmployee", formData, {
     //       headers: {
     //         "Content-Type": "multipart/form-data",
     //       },

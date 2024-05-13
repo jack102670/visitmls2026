@@ -153,7 +153,7 @@
 
           <div class="mb-4">
             <label for="nodeName" class="block text-gray-700 font-bold mb-2"
-              >Parent Id:</label
+              >Reporting To:</label
             >
             <!-- Search input -->
 
@@ -175,7 +175,7 @@
                 @click="selectOption(item.id)"
                 class="px-5 py-3 border-b border-gray-200 text-stone-600 cursor-pointer hover:bg-slate-100 transition-colors overflow-y-auto"
               >
-                {{ item.id }} - {{ item.name }}
+              {{ item.department }} -  {{ item.id }} - {{ item.name }}
               </div>
             </div>
           </div>
@@ -512,10 +512,11 @@ export default {
       departments: [
         { name: "HR", code: "HR" },
         { name: "ICT", code: "ICT" },
-        { name: "IT", code: "IT" },
+
         { name: "Finance", code: "Finance" },
         { name: "Marketing", code: "Marketing" },
         { name: "Sales", code: "Sales" },
+        { name: "D'TOR OFFICE", code: "D'TOR OFFICE"}
       ],
       hide: false,
       files2: [],
@@ -564,37 +565,30 @@ export default {
       );
     },
     filteredParentidNewNode() {
-      if (!this.newNode.parentId && !this.newNode.department) {
+      if (!this.newNode.parentId) {
         return this.data;
       }
-      return this.data.filter((person) => {
-        const keywordMatch = this.newNode.parentId
-          ? person.name
-              .toLowerCase()
-              .includes(this.newNode.parentId.toLowerCase())
-          : true;
-        const departmentMatch = this.newNode.department
-          ? person.department.toLowerCase() ===
-            this.newNode.department.toLowerCase()
-          : true;
-        return keywordMatch && departmentMatch;
-      });
+     return this.data.filter((person) => {
+  const keywordMatch = this.newNode.parentId
+    ? (person.name && person.name.toLowerCase().includes(this.newNode.parentId.toLowerCase())) ||
+      (person.department && person.department.toLowerCase().includes(this.newNode.parentId.toLowerCase())) ||
+      (person.id && person.id.toLowerCase().includes(this.newNode.parentId.toLowerCase()))
+    : true;
+
+  return keywordMatch;
+});
     },
     filteredParentid() {
-      if (!this.clickedNodeData.parentId && !this.clickedNodeData.department) {
+      if (!this.clickedNodeData.parentId) {
         return this.data;
       }
       return this.data.filter((person) => {
         const keywordMatch = this.clickedNodeData.parentId
-          ? person.name
-              .toLowerCase()
-              .includes(this.clickedNodeData.parentId.toLowerCase())
-          : true;
-        const departmentMatch = this.clickedNodeData.department
-          ? person.department.toLowerCase() ===
-            this.clickedNodeData.department.toLowerCase()
-          : true;
-        return keywordMatch && departmentMatch;
+    ? (person.name && person.name.toLowerCase().includes(this.clickedNodeData.parentId.toLowerCase())) ||
+      (person.department && person.department.toLowerCase().includes(this.clickedNodeData.parentId.toLowerCase())) ||
+      (person.id && person.id.toLowerCase().includes(this.clickedNodeData.parentId.toLowerCase()))
+    : true;
+        return keywordMatch ;
       });
     },
   },
