@@ -79,7 +79,7 @@
                     class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                   />
                 </template>
-                
+
                 <template v-else>
                   <input
                     v-model="field.value"
@@ -91,17 +91,34 @@
                 </template>
               </div>
 
-              <div class="flex items-center justify-between">
-                <button
-                  type="submit"
-                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                >
-                  Save
-                </button>
+              <div class="pt-4">
+                <hr class="" />
+
+                <div class="mt-4">
+                  <div class="grid grid-cols-1 sm:grid-cols-2">
+                    <label class="block text-gray-700 text-xl font-bold mb-2">
+                      Total (RM)
+                    </label>
+                    <div class="block text-gray-700 text-xl font-bold mb-2">
+                      {{ calculateTotal(tab) }}
+                    </div>
+                  </div>
+                </div>
               </div>
             </form>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="mt-4 mr-6 flex flex-row-reverse">
+      <div class="flex items-center justify-between">
+        <button
+          type="submit"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Save
+        </button>
       </div>
     </div>
   </div>
@@ -167,13 +184,6 @@ export default {
               value: "",
               gridClass: "sm:col-span-1",
             },
-            {
-              id: "TotalRMLT",
-              label: "Total(RM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-1",
-            },
           ],
         },
         {
@@ -199,7 +209,7 @@ export default {
             {
               id: "ForeignCurrencyAccommodationOT",
               label: "Foreign Currency",
-              type: "number",
+              type: "text",
               placeholder: "Accommodation",
               value: "",
               gridClass: "sm:col-span-2",
@@ -221,7 +231,7 @@ export default {
             {
               id: "ForeignCurrencyOthersOT",
               label: "Foreign Currency",
-              type: "number",
+              type: "text",
               placeholder: "Others",
               value: "",
               gridClass: "sm:col-span-2",
@@ -628,6 +638,21 @@ export default {
   },
 
   methods: {
+    calculateTotal(tab) {
+      let total = 0;
+      tab.fields.forEach((field) => {
+        if (
+          field.type === "number" &&
+          !isNaN(parseFloat(field.value)) &&
+          field.id !== "MileageKMLT" &&
+          field.id !== "LimitedAmountHR"
+        ) {
+          total += parseFloat(field.value);
+        }
+      });
+      return total.toFixed(2);
+    },
+
     submitForm(tab) {
       // Create an empty object to hold the formatted form data
       const formattedData = {};
