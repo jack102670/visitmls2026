@@ -94,24 +94,17 @@
               <div class="pt-4">
                 <hr class="" />
 
-                <div class="mt-4 flex flex-row-reverse">
+                <div class="mt-4">
                   <div class="grid grid-cols-1 sm:grid-cols-2">
                     <label class="block text-gray-700 text-xl font-bold mb-2">
-                      Total  :
+                      Total (RM)
                     </label>
                     <div class="block text-gray-700 text-xl font-bold mb-2">
-                     RM {{ calculateTotal(tab) }}
+                      {{ calculateTotal(tab) }}
                     </div>
                   </div>
                 </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="mt-4 mr-6 flex flex-row-reverse">
+              </div> <div class="mt-4 mr-6 flex flex-row-reverse">
       <div class="flex items-center justify-between">
         <button
           type="submit"
@@ -121,6 +114,13 @@
         </button>
       </div>
     </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+   
   </div>
 </template>
 
@@ -260,6 +260,13 @@ export default {
             {
               id: "AirportLimoTeksiOT",
               label: "Airport Limo / Teksi(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "RMforMealTransportOT",
+              label: "RM",
               type: "number",
               value: "",
               gridClass: "sm:col-span-2",

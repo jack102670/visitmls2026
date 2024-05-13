@@ -948,6 +948,7 @@ axios
       this.isClickModal = false;
       this.isEditMode = false;
       this.showupdatepicture = false;
+      
     },
     addNode() {
       // Here you can implement the logic to add the node based on this.clickedNodeData
@@ -1272,6 +1273,7 @@ axios
     },
     closeAddNodeModal() {
       this.isAddNodeModalOpen = false;
+      this.showupdatepicture = false;
     },
     addNodeToRoot() {
       console.log("addNodeToRoot method called");
