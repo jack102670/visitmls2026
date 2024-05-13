@@ -208,111 +208,221 @@
           <!-- Modal header -->
           <!-- Your existing modal header content -->
 
-          <div
-            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-          >
-            <!-- Modal content -->
+          <div v-if="selectedClaimType === 'LocalTravelling'">
+            <div
+              class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+            >
+              <!-- Modal content -->
 
-            <div class="mb-4">
-              <label for="nodeId" class="block text-gray-700 font-bold mb-2"
-                >Date:</label
-              >
-              <input
-                type="text"
-                id="nodeId"
-                v-model="selectedClaimDetails.dateLT"
-                :disabled="!isEditMode"
-                class="border rounded-md px-4 py-2 w-full"
-              />
-            </div>
-            <div class="mb-4">
-              <label for="nodeName" class="block text-gray-700 font-bold mb-2"
-                >Destination / Purpose:</label
-              >
-              <input
-                type="text"
-                id="nodeName"
-                v-model="selectedClaimDetails.DestinationPurposeLT"
-                :disabled="!isEditMode"
-                class="border rounded-md px-4 py-2 w-full"
-              />
-            </div>
+              <div class="mb-4">
+                <label for="nodeId" class="block text-gray-700 font-bold mb-2"
+                  >Date:</label
+                >
+                <input
+                  type="text"
+                  id="nodeId"
+                  v-model="localTravellingDetails.dateLT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2 w-full"
+                />
+              </div>
+              <div class="mb-4">
+                <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+                  >Destination / Purpose:</label
+                >
+                <input
+                  type="text"
+                  id="nodeName"
+                  v-model="localTravellingDetails.DestinationPurposeLT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2 w-full"
+                />
+              </div>
 
-            <div class="mb-4">
-              <label
-                for="nodeParentId"
-                class="block text-gray-700 font-bold mb-2"
-                >Mileage(KM):</label
-              >
-              <input
-                type="text"
-                id="email"
-                v-model="selectedClaimDetails.MileageKMLT"
-                :disabled="!isEditMode"
-                class="border rounded-md px-4 py-2 w-full"
-              />
-            </div>
-            <div class="mb-4">
-              <label
-                for="nodeParentId"
-                class="block text-gray-700 font-bold mb-2"
-                >Toll:</label
-              >
-              <input
-                type="text"
-                id="phonenumber"
-                v-model="selectedClaimDetails.Toll"
-                :disabled="!isEditMode"
-                class="border rounded-md px-4 py-2 w-full"
-              />
-            </div>
-            <div class="mb-4">
-              <label
-                for="nodeParentId"
-                class="block text-gray-700 font-bold mb-2"
-                >Parking:</label
-              >
-              <input
-                type="text"
-                id="positioname"
-                v-model="selectedClaimDetails.ParkingLT"
-                :disabled="!isEditMode"
-                class="border rounded-md px-4 py-2 w-full overflow-x-auto"
-              />
-            </div>
-            <div class="mb-4">
-              <label
-                for="nodeParentId"
-                class="block text-gray-700 font-bold mb-2"
-                >Total:</label
-              >
-              <input
-                type="text"
-                id="positioncode"
-                v-model="selectedClaimDetails.TollLT"
-                :disabled="!isEditMode"
-                class="border rounded-md px-4 py-2 w-full"
-              />
-            </div>
+              <div class="mb-4">
+                <label
+                  for="nodeParentId"
+                  class="block text-gray-700 font-bold mb-2"
+                  >Mileage(KM):</label
+                >
+                <input
+                  type="text"
+                  id="email"
+                  v-model="localTravellingDetails.MileageKMLT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2 w-full"
+                />
+              </div>
+              <div class="mb-4">
+                <label
+                  for="nodeParentId"
+                  class="block text-gray-700 font-bold mb-2"
+                  >Toll:</label
+                >
+                <input
+                  type="text"
+                  id="phonenumber"
+                  v-model="localTravellingDetails.TollLT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2 w-full"
+                />
+              </div>
+              <div class="mb-4">
+                <label
+                  for="nodeParentId"
+                  class="block text-gray-700 font-bold mb-2"
+                  >Parking:</label
+                >
+                <input
+                  type="text"
+                  id="positioname"
+                  v-model="localTravellingDetails.ParkingLT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2 w-full overflow-x-auto"
+                />
+              </div>
+              <div class="mb-4">
+                <label
+                  for="nodeParentId"
+                  class="block text-gray-700 font-bold mb-2"
+                  >Total:</label
+                >
+                <input
+                  type="text"
+                  id="positioncode"
+                  v-model="localTravellingDetails.TollLT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2 w-full"
+                />
+              </div>
 
-            <!-- Add/Edit node button -->
+              <!-- Add/Edit node button -->
+            </div>
+            <div class="flex justify-end">
+              <button
+                @click="toggleEditMode"
+                class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+              >
+                {{ isEditMode ? "Save" : "Edit" }}
+                <!-- Change button text based on edit mode -->
+              </button>
+
+              <!-- Delete node button -->
+              <button
+                @click="isClickModal = false"
+                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
-          <div class="flex justify-end">
-            <button
-              @click="toggleEditMode"
-              class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+          <div v-else-if="selectedClaimType === 'OverseasTravelling'">
+            <div
+              class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
             >
-              {{ isEditMode ? "Save" : "Edit" }}
-              <!-- Change button text based on edit mode -->
-            </button>
+              <!-- Modal content -->
 
-            <!-- Delete node button -->
-            <button
-              @click="isClickModal = false"
-              class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
-            >
-              Cancel
-            </button>
+              <div class="mb-4">
+                <label for="nodeId" class="block text-gray-700 font-bold mb-2"
+                  >Date:</label
+                >
+                <input
+                  type="text"
+                  id="nodeId"
+                  v-model="overseasTravellingDetails.dateOT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2 w-full"
+                />
+              </div>
+              <div class="mb-4">
+                <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+                  >Description:</label
+                >
+                <input
+                  type="text"
+                  id="nodeName"
+                  v-model="overseasTravellingDetails.descriptionOT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2 w-full"
+                />
+              </div>
+
+              <div class="mb-4">
+                <label
+                  for="nodeParentId"
+                  class="block text-gray-700 font-bold mb-2"
+                  >Foreign Currency</label
+                >
+                <input
+                  type="text"
+                  id="email"
+                  v-model="overseasTravellingDetails.ForeignCurrencyAccommodationOT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2 w-full"
+                />
+              </div>
+              <div class="mb-4">
+                <label
+                  for="nodeParentId"
+                  class="block text-gray-700 font-bold mb-2"
+                  >Exchange Rate:</label
+                >
+                <input
+                  type="text"
+                  id="phonenumber"
+                  v-model="overseasTravellingDetails.ExchangeRateAccommodationOT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2 w-full"
+                />
+              </div>
+              <div class="mb-4">
+                <label
+                  for="nodeParentId"
+                  class="block text-gray-700 font-bold mb-2"
+                  >Parking:</label
+                >
+                <input
+                  type="text"
+                  id="positioname"
+                  v-model="overseasTravellingDetails.ParkingLT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2 w-full overflow-x-auto"
+                />
+              </div>
+              <div class="mb-4">
+                <label
+                  for="nodeParentId"
+                  class="block text-gray-700 font-bold mb-2"
+                  >Total:</label
+                >
+                <input
+                  type="text"
+                  id="positioncode"
+                  v-model="overseasTravellingDetails.TollLT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2 w-full"
+                />
+              </div>
+
+              <!-- Add/Edit node button -->
+            </div>
+            <div class="flex justify-end">
+              <button
+                @click="toggleEditMode"
+                class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+              >
+                {{ isEditMode ? "Save" : "Edit" }}
+                <!-- Change button text based on edit mode -->
+              </button>
+
+              <!-- Delete node button -->
+              <button
+                @click="isClickModal = false"
+                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -334,9 +444,11 @@ export default {
       claims: [],
       showtab: false,
       dataclaims: [],
-      isClickModal: true,
+      isClickModal: false,
       isEditMode: false,
       selectedClaimDetails: {},
+      localTravellingDetails: {}, // Object to store details for Local Travelling
+      overseasTravellingDetails: {},
     };
   },
   created() {
@@ -344,10 +456,21 @@ export default {
   },
   methods: {
     showDetails(claim) {
-      this.selectedClaimDetails = claim;
+      // Update selectedClaimType based on the type of claim
+      this.selectedClaimType = claim.tabTitle.replace(/\s+/g, ""); // Remove spaces from claim type
+      // Update corresponding details object based on claim type
+      switch (this.selectedClaimType) {
+        case "LocalTravelling":
+          this.localTravellingDetails = claim;
+          break;
+        case "OverseasTravellingwithAccommodation":
+          this.overseasTravellingDetails = claim;
+          break;
+        // Add cases for other types of claims
+      }
       this.isClickModal = true; // Show the modal
-      console.log("Selected claim details:", this.selectedClaimDetails);
     },
+
     async sendToAPI() {
       // Group claims by tabTitle
       const groupedClaims = this.dataclaims.reduce((acc, claim) => {
