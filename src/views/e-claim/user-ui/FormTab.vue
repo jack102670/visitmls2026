@@ -1,12 +1,13 @@
 <template>
   <div
     class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
-  >
+  > 
     <div class="sm:flex justify-center flex-col-1">
       <button
         v-for="(tab, index) in tabs"
         :key="index"
         @click="activeTab = index"
+        
         :class="{
           'bg-gray-300': activeTab === index,
           'hover:bg-gray-200': activeTab !== index,
@@ -56,7 +57,7 @@
                   <select
                     v-model="field.value"
                     :id="field.id"
-                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                   >
                     <option
                       v-for="(option, optionIndex) in field.options"
@@ -76,30 +77,95 @@
                     :id="field.id"
                     :type="field.type"
                     :placeholder="field.placeholder"
-                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                   />
                 </template>
-                
+
+                <template v-else-if="field.type === 'file'">
+                  <div class="pt-3">
+                    <FilePond
+                      ref="pond"
+                      name="file"
+                      :allow-multiple="field.allowMultiple"
+                      :accepted-file-types="field.acceptedFileTypes"
+                      :max-file-size="field.maxFileSize"
+                      @addfile="handleAddFile(field)"
+                      @removefile="handleRemoveFile(field)"
+                    />
+                  </div>
+                </template>
+
                 <template v-else>
                   <input
                     v-model="field.value"
                     :id="field.id"
                     :type="field.type"
                     :placeholder="field.placeholder"
-                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                   />
                 </template>
               </div>
 
-              <div class="flex items-center justify-between">
-                <button
-                  type="submit"
-                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                >
-                  Save
-                </button>
+              <div class="pt-4">
+                <hr class="" />
+
+                <div class="mt-4">
+                  <div class="grid grid-cols-1 sm:grid-cols-2">
+                    <label class="block text-gray-700 text-xl font-bold mb-2">
+                      Total :
+                    </label>
+                    <div class="block text-gray-700 text-xl font-bold mb-2">
+                      RM {{ calculateTotal(tab) }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-4 mr-6 flex flex-row-reverse">
+                <div class="flex items-center justify-between">
+                  <button
+                    type="submit"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  >
+                    Save
+                  </button>
+                </div>
               </div>
             </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="friendly-ui">
+    <div
+      v-if="chooseform"
+      class="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
+    >
+      <div
+        class="modal-content bg-white rounded-lg p-8 shadow-lg relative"
+        style="max-height: calc(100vh - 20px); overflow-y: auto"
+      >
+        <span
+          class="close absolute top-0 right-0 mt-4 mr-4 text-gray-600 cursor-pointer text-2xl"
+          @click="closeModal"
+        >&times;</span>
+        <h2 class="text-2xl font-bold mb-6 text-center">Select Department To Refer</h2>
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-6"
+        >
+          <div
+            class="department-box bg-blue-500 text-white rounded-lg p-6 cursor-pointer flex flex-col items-center justify-center transform transition-transform duration-300 hover:scale-105 shadow-lg"
+            @click="referHR"
+          >
+            <i class="fas fa-users fa-3x mb-4"></i>
+            <span class="text-lg font-semibold">Human Resources</span>
+          </div>
+          <div
+            class="department-box bg-green-500 text-white rounded-lg p-6 cursor-pointer flex flex-col items-center justify-center transform transition-transform duration-300 hover:scale-105 shadow-lg"
+            @click="referFinance"
+          >
+            <i class="fas fa-dollar-sign fa-3x mb-4"></i>
+            <span class="text-lg font-semibold">Finance</span>
           </div>
         </div>
       </div>
@@ -108,14 +174,35 @@
 </template>
 
 <script>
+import vueFilePond from "vue-filepond";
+import "filepond/dist/filepond.min.css";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
+
+// Create component
+const FilePond = vueFilePond(
+  FilePondPluginFileValidateType,
+  FilePondPluginImagePreview
+);
+
 export default {
+  components: {
+    FilePond,
+  },
+
   data() {
     return {
+      chooseform: true,
+      
       activeTab: 0,
       date: "",
+      uploadedFiles: [],
       tabs: [
-        {
+
+        { form: "HR",
           title: "Local Travelling",
+
           gridLayout: "grid-cols-3",
           fields: [
             {
@@ -168,16 +255,29 @@ export default {
               gridClass: "sm:col-span-1",
             },
             {
-              id: "TotalRMLT",
-              label: "Total(RM)",
-              type: "number",
+              id: "UploadLT",
+              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
               value: "",
+              required: true,
+              allowMultiple: true,
+              server: null,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
               gridClass: "sm:col-span-1",
             },
           ],
         },
-        {
+
+        { form: "HR",
           title: "Overseas Travelling with Accommodation",
+
           gridLayout: "grid-cols-3", //
           fields: [
             {
@@ -199,7 +299,7 @@ export default {
             {
               id: "ForeignCurrencyAccommodationOT",
               label: "Foreign Currency",
-              type: "number",
+              type: "text",
               placeholder: "Accommodation",
               value: "",
               gridClass: "sm:col-span-2",
@@ -221,7 +321,7 @@ export default {
             {
               id: "ForeignCurrencyOthersOT",
               label: "Foreign Currency",
-              type: "number",
+              type: "text",
               placeholder: "Others",
               value: "",
               gridClass: "sm:col-span-2",
@@ -255,11 +355,22 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "RMforMealTransportOT",
-              label: "RM",
-              type: "number",
+              id: "UploadOT",
+              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
               value: "",
-              gridClass: "sm:col-span-2",
+              required: true,
+              allowMultiple: true,
+              server: null,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
             },
           ],
         },
@@ -346,6 +457,24 @@ export default {
               value: "",
               gridClass: "sm:col-span-2",
             },
+            {
+              id: "UploadE",
+              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
+              value: "",
+              required: true,
+              allowMultiple: true,
+              server: null,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
+            },
           ],
         },
         {
@@ -427,6 +556,24 @@ export default {
               type: "number",
               value: "",
               gridClass: "sm:col-span-2",
+            },
+            {
+              id: "UploadSR",
+              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
+              value: "",
+              required: true,
+              allowMultiple: true,
+              server: null,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
             },
           ],
         },
@@ -535,6 +682,24 @@ export default {
               value: "",
               gridClass: "sm:col-span-2",
             },
+            {
+              id: "UploadHR",
+              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
+              value: "",
+              required: true,
+              allowMultiple: true,
+              server: null,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
+            },
           ],
         },
         {
@@ -621,6 +786,24 @@ export default {
               value: "",
               gridClass: "sm:col-span-2",
             },
+            {
+              id: "UploadML",
+              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
+              value: "",
+              required: true,
+              allowMultiple: true,
+              server: null,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
+            },
           ],
         },
       ],
@@ -628,6 +811,44 @@ export default {
   },
 
   methods: {
+    handleAddFile(field) {
+      return (file) => {
+        // Push the selected file to the uploadedFiles array
+        field.value.push(file.file);
+
+        // Log the selected files
+        console.log("Selected Files:", field.value);
+      };
+    },
+
+    handleRemoveFile(field) {
+      return (file) => {
+        // Remove the file from the uploadedFiles array
+        const index = field.value.findIndex((f) => f === file.file);
+        if (index !== -1) {
+          field.value.splice(index, 1);
+        }
+
+        // Log the selected files
+        console.log("Selected Files:", field.value);
+      };
+    },
+
+    calculateTotal(tab) {
+      let total = 0;
+      tab.fields.forEach((field) => {
+        if (
+          field.type === "number" &&
+          !isNaN(parseFloat(field.value)) &&
+          field.id !== "MileageKMLT" &&
+          field.id !== "LimitedAmountHR"
+        ) {
+          total += parseFloat(field.value);
+        }
+      });
+      return total.toFixed(2);
+    },
+
     submitForm(tab) {
       // Create an empty object to hold the formatted form data
       const formattedData = {};
@@ -635,7 +856,7 @@ export default {
       // Iterate through the fields of the current tab
       tab.fields.forEach((field) => {
         // Use the field label as the key and the field value as the value
-        formattedData[field.label] = field.value;
+        formattedData[field.id] = field.value;
       });
 
       // Add the tab title to the formatted data

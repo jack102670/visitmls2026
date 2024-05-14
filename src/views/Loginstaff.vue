@@ -184,16 +184,7 @@ export default {
             response.data.result.userdetails.userName.includes("SEC")
           ) {
             role = "admin";
-          } else if (
-            response.data.result.userdetails.userName.includes("Hazman")
-          ) {
-            role = "admin";
-          } 
-          else if (
-            response.data.result.userdetails.userName.includes("Erna")
-          ) {
-            role = "safety";
-          } else {
+           } else {
             role = "user";
           }
 

@@ -358,7 +358,7 @@
           </div>
           <div class="mb-4">
             <label for="nodeName" class="block text-gray-700 font-bold mb-2"
-              >Parent Id:</label
+              >Reporting To:</label
             >
             <!-- Search input -->
 
@@ -512,7 +512,7 @@ export default {
       departments: [
         { name: "HR", code: "HR" },
         { name: "ICT", code: "ICT" },
-
+        { name: "IT", code: "IT" },
         { name: "Finance", code: "Finance" },
         { name: "Marketing", code: "Marketing" },
         { name: "Sales", code: "Sales" },
@@ -592,7 +592,14 @@ export default {
       });
     },
   },
-  mounted() {},
+  mounted() {
+    // Attach click event listener to the document body
+    document.body.addEventListener('click', this.closeDropdownOnClickOutside);
+  },
+  beforeUnmount() {
+    // Remove click event listener when component is destroyed
+    document.body.removeEventListener('click', this.closeDropdownOnClickOutside);
+  },
   watch: {
     isClickModal(newVal) {
       if (newVal) {
@@ -619,7 +626,18 @@ export default {
     //     this.initializeFilePond();
     //   });
   },
-  methods: {
+  methods: { closeDropdownOnClickOutside(event) {
+      // Check if the clicked element is outside the dropdown
+      const dropdown = document.getElementById('dropdown');
+      if (dropdown && !dropdown.contains(event.target)) {
+        this.showDropdown = false;
+      }
+    },
+    outsideClick(e) {
+      if (!this.$refs.dropdown.contains(e.target)) {
+        this.showDropdown = false;
+      }
+    },
     confirmDelete(id) {
       // Display a confirmation dialog
       if (window.confirm("Are you sure you want to delete this user?")) {
@@ -728,7 +746,7 @@ export default {
     //   formData.append("department", this.clickedNodeData.department);
 
     //   axios
-    //     .put("http://172.28.28.91:97/api/Admin/UpdateEmployee", formData, {
+    //     .put("http://172.28.28.91:99/api/Admin/UpdateEmployee", formData, {
     //       headers: {
     //         "Content-Type": "multipart/form-data",
     //       },
@@ -772,7 +790,7 @@ formData.append("profile_picture", this.files2[0]);
 
 
 axios
-  .put("http://172.28.28.91:97/api/Admin/UpdateImage", formData)
+  .put("http://172.28.28.91:99/api/Admin/UpdateImage", formData)
   .then((response) => {
     console.log("File uploaded successfully:", response.data);
   
@@ -782,6 +800,7 @@ axios
     console.error("Error uploading file:", error);
     // Handle error
   });
+  this.files2 = [];
     
     },
     saveNode() {
@@ -801,7 +820,7 @@ axios
 
   // Make the PUT request with JSON data
   axios
-    .put("http://172.28.28.91:97/api/Admin/UpdateEmployee", employeeData, {
+    .put("http://172.28.28.91:99/api/Admin/UpdateEmployee", employeeData, {
       headers: {
         "Content-Type": "application/json"
       }
@@ -838,7 +857,7 @@ axios
         formData.append("profile_picture", this.files2[0]);
 
         const uploadResponse = await axios.post(
-          "http://172.28.28.91:97/api/Admin/InsertNewEmployee",
+          "http://172.28.28.91:99/api/Admin/InsertNewEmployee",
           formData
         );
 
@@ -856,7 +875,7 @@ axios
             // For example, display an error message to the user
           }
         }
-
+        this.files2 = [];
         // Reset the form values
         this.newNode = {
           id: "",
@@ -872,7 +891,7 @@ axios
           // Add other properties as needed
         };
         this.isAddNodeModalOpen = false;
-        this.renderChart();
+        this.fetchData();
       } catch (error) {
         console.error("Error adding and saving node:", error);
         // Handle errors
@@ -892,7 +911,7 @@ axios
         // If the node is not being referred to, proceed with deletion
         // Send a request to your API to delete the node using the nodeId
         await axios.delete(
-          `http://172.28.28.91:97/api/Admin/DeleteEmployee/${nodeId}`
+          `http://172.28.28.91:99/api/Admin/DeleteEmployee/${nodeId}`
         );
 
         // If the deletion is successful, remove the node from the data array
@@ -929,6 +948,7 @@ axios
       this.isClickModal = false;
       this.isEditMode = false;
       this.showupdatepicture = false;
+      
     },
     addNode() {
       // Here you can implement the logic to add the node based on this.clickedNodeData
@@ -939,7 +959,7 @@ axios
       this.isClickModal = false;
     },
     fetchData() {
-      fetch("http://172.28.28.91:97/api/User/GetAllEmployees", {
+      fetch("http://172.28.28.91:99/api/User/GetAllEmployees", {
         mode: "cors", // Adding CORS mode
       })
         .then((response) => response.json())
@@ -1253,6 +1273,7 @@ axios
     },
     closeAddNodeModal() {
       this.isAddNodeModalOpen = false;
+      this.showupdatepicture = false;
     },
     addNodeToRoot() {
       console.log("addNodeToRoot method called");
