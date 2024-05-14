@@ -85,18 +85,11 @@
                     <FilePond
                       ref="pond"
                       name="file"
-                      :server="null"
-                      :allowMultiple="true"
-                      :maxFileSize="'5MB'"
-                      :acceptedFileTypes="[
-                        'image/png',
-                        'image/jpeg',
-                        'application/pdf',
-                        'application/vnd.ms-excel',
-                        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                      ]"
-                      @addfile="handleAddFile"
-                      @removefile="handleRemoveFile"
+                      :allow-multiple="field.allowMultiple"
+                      :accepted-file-types="field.acceptedFileTypes"
+                      :max-file-size="field.maxFileSize"
+                      @addfile="handleAddFile(field)"
+                      @removefile="handleRemoveFile(field)"
                     />
                   </div>
                 </template>
@@ -118,43 +111,44 @@
                 <div class="mt-4">
                   <div class="grid grid-cols-1 sm:grid-cols-2">
                     <label class="block text-gray-700 text-xl font-bold mb-2">
-                      Total  :
+                      Total :
                     </label>
                     <div class="block text-gray-700 text-xl font-bold mb-2">
-                     RM {{ calculateTotal(tab) }}
+                      RM {{ calculateTotal(tab) }}
                     </div>
                   </div>
                 </div>
-              </div> <div class="mt-4 mr-6 flex flex-row-reverse">
-      <div class="flex items-center justify-between">
-        <button
-          type="submit"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        >
-          Save
-        </button>
-      </div>
-    </div>
+              </div>
+              <div class="mt-4 mr-6 flex flex-row-reverse">
+                <div class="flex items-center justify-between">
+                  <button
+                    type="submit"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
             </form>
           </div>
         </div>
       </div>
     </div>
-
-   
   </div>
 </template>
 
 <script>
-import vueFilePond from 'vue-filepond';
-import 'filepond/dist/filepond.min.css';
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import vueFilePond from "vue-filepond";
+import "filepond/dist/filepond.min.css";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 
 // Create component
-const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
-
+const FilePond = vueFilePond(
+  FilePondPluginFileValidateType,
+  FilePondPluginImagePreview
+);
 
 export default {
   components: {
@@ -168,7 +162,7 @@ export default {
       uploadedFiles: [],
       tabs: [
         {
-          title: "Local Travelling",
+          title: "Local/Outstation Travelling",
           gridLayout: "grid-cols-3",
           fields: [
             {
@@ -225,12 +219,23 @@ export default {
               label: "Upload File(s). (png, jpeg, pdf or xlsx)",
               type: "file",
               value: "",
+              required: true,
+              allowMultiple: true,
+              server: null,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
               gridClass: "sm:col-span-1",
             },
           ],
         },
         {
-          title: "Overseas Travelling with Accommodation",
+          title: "Outstation/Overseas Travelling with Accommodation",
           gridLayout: "grid-cols-3", //
           fields: [
             {
@@ -306,6 +311,24 @@ export default {
               type: "number",
               value: "",
               gridClass: "sm:col-span-2",
+            },
+            {
+              id: "UploadOT",
+              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
+              value: "",
+              required: true,
+              allowMultiple: true,
+              server: null,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
             },
           ],
         },
@@ -397,6 +420,17 @@ export default {
               label: "Upload File(s). (png, jpeg, pdf or xlsx)",
               type: "file",
               value: "",
+              required: true,
+              allowMultiple: true,
+              server: null,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
               gridClass: "sm:col-span-1",
             },
           ],
@@ -486,6 +520,17 @@ export default {
               label: "Upload File(s). (png, jpeg, pdf or xlsx)",
               type: "file",
               value: "",
+              required: true,
+              allowMultiple: true,
+              server: null,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
               gridClass: "sm:col-span-1",
             },
           ],
@@ -600,6 +645,17 @@ export default {
               label: "Upload File(s). (png, jpeg, pdf or xlsx)",
               type: "file",
               value: "",
+              required: true,
+              allowMultiple: true,
+              server: null,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
               gridClass: "sm:col-span-1",
             },
           ],
@@ -693,6 +749,17 @@ export default {
               label: "Upload File(s). (png, jpeg, pdf or xlsx)",
               type: "file",
               value: "",
+              required: true,
+              allowMultiple: true,
+              server: null,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
               gridClass: "sm:col-span-1",
             },
           ],
@@ -702,31 +769,29 @@ export default {
   },
 
   methods: {
-    handleAddFile(file) {
-      // Push the selected file to the uploadedFiles array
-      this.uploadedFiles.push(file.file);
+    handleAddFile(field) {
+      return (file) => {
+        // Push the selected file to the uploadedFiles array
+        field.value.push(file.file);
 
-      // Log the selected files
-      console.log("Selected Files:", this.uploadedFiles);
-
-      // Update the field value to the uploadedFiles array
-      this.$set(this.field, 'value', this.uploadedFiles);
+        // Log the selected files
+        console.log("Selected Files:", field.value);
+      };
     },
 
-    handleRemoveFile(file) {
-      // Remove the file from the uploadedFiles array
-      const index = this.uploadedFiles.findIndex(f => f === file.file);
-      if (index !== -1) {
-        this.uploadedFiles.splice(index, 1);
-      }
+    handleRemoveFile(field) {
+      return (file) => {
+        // Remove the file from the uploadedFiles array
+        const index = field.value.findIndex((f) => f === file.file);
+        if (index !== -1) {
+          field.value.splice(index, 1);
+        }
 
-      // Log the selected files
-      console.log("Selected Files:", this.uploadedFiles);
-
-      // Update the field value to the uploadedFiles array
-      this.$set(this.field, 'value', this.uploadedFiles);
+        // Log the selected files
+        console.log("Selected Files:", field.value);
+      };
     },
-    
+
     calculateTotal(tab) {
       let total = 0;
       tab.fields.forEach((field) => {
