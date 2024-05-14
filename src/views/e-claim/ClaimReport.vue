@@ -220,10 +220,6 @@ export default {
       // Log the claims array to the console
       console.log('Claims:', this.claims);
     },
-  // Log the claims array to the console
-  console.log("Claims:", this.claims);
-}
-
   },
 };
 </script>
