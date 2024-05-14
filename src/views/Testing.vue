@@ -3,7 +3,6 @@
     class="flex-1 overflow-x-hidden text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64 h-auto"
   >
     <div class="container mx-auto">
-      
       <div
         class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
@@ -317,11 +316,7 @@
               </button>
             </div>
           </div>
-          <div
-            v-else-if="
-              selectedClaimType === 'OverseasTravellingwithAccommodation'
-            "
-          >
+          <div v-else-if="selectedClaimType === 'OverseasTravellingwithAccommodation'">
             <div
               class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
             >
@@ -361,9 +356,7 @@
                 <input
                   type="text"
                   id="email"
-                  v-model="
-                    overseasTravellingDetails.ForeignCurrencyAccommodationOT
-                  "
+                  v-model="overseasTravellingDetails.ForeignCurrencyAccommodationOT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
@@ -377,9 +370,7 @@
                 <input
                   type="text"
                   id="phonenumber"
-                  v-model="
-                    overseasTravellingDetails.ExchangeRateAccommodationOT
-                  "
+                  v-model="overseasTravellingDetails.ExchangeRateAccommodationOT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
@@ -453,8 +444,7 @@
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
-              </div>
-              <div class="mb-4">
+              </div> <div class="mb-4">
                 <label
                   for="nodeParentId"
                   class="block text-gray-700 font-bold mb-2"
@@ -467,8 +457,7 @@
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
-              </div>
-              <div class="mb-4">
+              </div> <div class="mb-4">
                 <label
                   for="nodeParentId"
                   class="block text-gray-700 font-bold mb-2"
@@ -610,8 +599,7 @@
                 Cancel
               </button>
             </div>
-          </div>
-          <div v-if="selectedClaimType === 'Entertaiment'">
+          </div> <div v-if="selectedClaimType === 'Entertaiment'">
             <div
               class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
             >
@@ -697,8 +685,7 @@
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
-              </div>
-              <div class="mb-4">
+              </div> <div class="mb-4">
                 <label
                   for="nodeParentId"
                   class="block text-gray-700 font-bold mb-2"
@@ -711,8 +698,7 @@
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
-              </div>
-              <div class="mb-4">
+              </div> <div class="mb-4">
                 <label
                   for="nodeParentId"
                   class="block text-gray-700 font-bold mb-2"
@@ -746,8 +732,7 @@
                 Cancel
               </button>
             </div>
-          </div>
-          <div v-if="selectedClaimType === 'StaffRefreshment'">
+          </div> <div v-if="selectedClaimType === 'StaffRefreshment'">
             <div
               class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
             >
@@ -801,9 +786,7 @@
                 <input
                   type="text"
                   id="phonenumber"
-                  v-model="
-                    staffRefreshmentDetails.OtherTypeofStaffRefreshmentSR
-                  "
+                  v-model="staffRefreshmentDetails.OtherTypeofStaffRefreshmentSR"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
@@ -835,8 +818,7 @@
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
-              </div>
-              <div class="mb-4">
+              </div> <div class="mb-4">
                 <label
                   for="nodeParentId"
                   class="block text-gray-700 font-bold mb-2"
@@ -849,8 +831,7 @@
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
-              </div>
-              <div class="mb-4">
+              </div> <div class="mb-4">
                 <label
                   for="nodeParentId"
                   class="block text-gray-700 font-bold mb-2"
@@ -884,8 +865,7 @@
                 Cancel
               </button>
             </div>
-          </div>
-          <div v-if="selectedClaimType === 'HandphoneReimbursement'">
+          </div> <div v-if="selectedClaimType === 'HandphoneReimbursement'">
             <div
               class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
             >
@@ -971,8 +951,7 @@
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
-              </div>
-              <div class="mb-4">
+              </div> <div class="mb-4">
                 <label
                   for="nodeParentId"
                   class="block text-gray-700 font-bold mb-2"
@@ -1007,6 +986,7 @@
               </button>
             </div>
           </div>
+          
         </div>
       </div>
     </div>
@@ -1050,21 +1030,21 @@ export default {
           this.overseasTravellingDetails = claim;
           break;
 
-        case "Entertainment":
-          this.entertainmentDetails = claim;
-          break;
+          case "Entertainment":
+            this.entertainmentDetails = claim;
+            break;
 
-        case "StaffRefreshment":
-          this.staffRefreshmentDetails = claim;
-          break;
+            case "StaffRefreshment":
+              this.staffRefreshmentDetails = claim;
+              break;
 
-        case "HandphoneReimbursement":
-          this.handphoneReimbursementDetails = claim;
-          break;
+              case "HandphoneReimbursement":
+                this.handphoneReimbursementDetails = claim;
+                break;
 
-        case "MedicalLeaveReimbursement":
-          this.medicalLeaveReimbursementDetails = claim;
-          break;
+                case "MedicalLeaveReimbursement":
+                  this.medicalLeaveReimbursementDetails = claim;
+                  break;
         // Add cases for other types of claims
       }
       this.isClickModal = true; // Show the modal
@@ -1224,6 +1204,7 @@ export default {
       // Push new form data into the claims array
       this.dataclaims.push(formData);
       console.log("Data Claims:", this.dataclaims);
+      
     },
   },
 };
