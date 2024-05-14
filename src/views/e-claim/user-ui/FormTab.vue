@@ -136,41 +136,7 @@
       </div>
     </div>
   </div>
-  <div class="friendly-ui">
-    <div
-      v-if="chooseform"
-      class="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
-    >
-      <div
-        class="modal-content bg-white rounded-lg p-8 shadow-lg relative"
-        style="max-height: calc(100vh - 20px); overflow-y: auto"
-      >
-        <span
-          class="close absolute top-0 right-0 mt-4 mr-4 text-gray-600 cursor-pointer text-2xl"
-          @click="closeModal"
-        >&times;</span>
-        <h2 class="text-2xl font-bold mb-6 text-center">Select Department To Refer</h2>
-        <div
-          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-6"
-        >
-          <div
-            class="department-box bg-blue-500 text-white rounded-lg p-6 cursor-pointer flex flex-col items-center justify-center transform transition-transform duration-300 hover:scale-105 shadow-lg"
-            @click="referHR"
-          >
-            <i class="fas fa-users fa-3x mb-4"></i>
-            <span class="text-lg font-semibold">Human Resources</span>
-          </div>
-          <div
-            class="department-box bg-green-500 text-white rounded-lg p-6 cursor-pointer flex flex-col items-center justify-center transform transition-transform duration-300 hover:scale-105 shadow-lg"
-            @click="referFinance"
-          >
-            <i class="fas fa-dollar-sign fa-3x mb-4"></i>
-            <span class="text-lg font-semibold">Finance</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+ 
 </template>
 
 <script>
