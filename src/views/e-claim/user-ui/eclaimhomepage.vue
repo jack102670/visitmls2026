@@ -15,26 +15,25 @@
             </h3>
           </div>
           <div class="flex ml-14 mt-5">
-            <router-link :to="{ name: 'CreateNewClaim' }">
-              <button class="p-2 flex items-center">
-                Add claim
-                <span class="ml-2 border border-2 px-4 border-blue-800">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-6 h-6"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M12 4.5v15m7.5-7.5h-15"
-                    />
-                  </svg>
-                </span></button
-            ></router-link>
+            <button @click="ChangePopUp()" class="p-2 flex items-center">
+              Add claim
+              <span class="ml-2 border border-2 px-4 border-blue-800">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 4.5v15m7.5-7.5h-15"
+                  />
+                </svg>
+              </span>
+            </button>
           </div>
 
           <hr class="h-mx-auto bg-gray-100 border-0 rounded" />
@@ -247,13 +246,78 @@
         ></div>
       </div>
     </div>
+    <NewClaimPopUp
+      v-if="popup"
+      @close="ChangePopUp()"
+      :class="[animate ? 'PopUpAnimation' : 'BackAnimation']"
+    />
   </main>
 </template>
 
 <script>
+// import CreateNewClaimPopUp from '@/components/e-claim/CreateNewClaimPopUp.vue';
+import NewClaimPopUp from '@/components/e-claim/NewClaimPopUp.vue';
+
 export default {
+  components: {
+    // CreateNewClaimPopUp,
+    NewClaimPopUp,
+  },
   name: 'homepageeclaiM',
+  data() {
+    return {
+      popup: false,
+      animate: false,
+    };
+  },
+  methods: {
+    ChangePopUp() {
+      if (this.popup == true) {
+        this.animate = !this.animate;
+
+        setTimeout(() => {
+          this.popup = !this.popup;
+        }, 500);
+      } else {
+        this.popup = !this.popup;
+        this.animate = !this.animate;
+      }
+    },
+  },
 };
 </script>
 
-<style></style>
+<style>
+.PopUpAnimation .popup {
+  animation: PopUpKeyframes 0.45s ease;
+}
+
+.BackAnimation .popup {
+  animation: PopDownKeyframes 0.45s ease forwards;
+}
+@keyframes PopUpKeyframes {
+  0% {
+    transform: scale(0);
+  }
+  65%,
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes PopDownKeyframes {
+  0% {
+    transform: scale(1);
+  }
+  30%,
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+</style>
