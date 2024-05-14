@@ -7,10 +7,11 @@ export const formStore = {
     designation: '',
     reportName: '',
     internalOrder: '',
+    reportType: '',
     reportDate: '',
     reportStartDate: '',
     reportEndDate: '',
-    memo: ''
+    memo: '',
   },
 
   setFormData(data) {
@@ -30,12 +31,13 @@ export const formStore = {
       designation: '',
       reportName: '',
       internalOrder: '',
+      reportType: '',
       reportDate: '',
       reportStartDate: '',
       reportEndDate: '',
-      memo: ''
+      memo: '',
     };
-  }
+  },
 };
 let refNumber = ''; // Variable to store refNumber
 
@@ -46,7 +48,6 @@ export function setRefNumber(newRefNumber) {
 export function getRefNumber() {
   return refNumber;
 }
-
 
 export const store = {
   data: {
@@ -62,12 +63,12 @@ export const store = {
     this.data.selectedLocation = location ? location.name : null;
 
     // Save to local storage
-    localStorage.setItem("selectedLocation", this.data.selectedLocation);
+    localStorage.setItem('selectedLocation', this.data.selectedLocation);
   },
 
   getSelectedLocation() {
     if (!this.data.selectedLocation) {
-      this.data.selectedLocation = localStorage.getItem("selectedLocation");
+      this.data.selectedLocation = localStorage.getItem('selectedLocation');
     }
     return this.data.selectedLocation;
   },
@@ -79,18 +80,18 @@ export const store = {
     this.data.role = role; // Set the role
 
     // Store user details, token, and role in localStorage
-    localStorage.setItem("userdetails", JSON.stringify(userdetails));
-    localStorage.setItem("token", token);
-    localStorage.setItem("role", role);
+    localStorage.setItem('userdetails', JSON.stringify(userdetails));
+    localStorage.setItem('token', token);
+    localStorage.setItem('role', role);
   },
   setOGR(OGR) {
     this.data.OGR = OGR;
-    localStorage.setItem("OGR", OGR.toString()); // Assuming OGR is a number
+    localStorage.setItem('OGR', OGR.toString()); // Assuming OGR is a number
   },
 
   getOGR() {
     if (this.data.OGR === null) {
-      this.data.OGR = localStorage.getItem("OGR");
+      this.data.OGR = localStorage.getItem('OGR');
     }
     return this.data.OGR;
   },
@@ -98,7 +99,7 @@ export const store = {
   // New method to get the user role
   getRole() {
     if (!this.role) {
-      this.role = localStorage.getItem("role");
+      this.role = localStorage.getItem('role');
     }
     return this.role;
   },
@@ -110,15 +111,15 @@ export const store = {
     this.data.OGR = null;
 
     // Clear session from localStorage
-    localStorage.removeItem("userdetails");
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    localStorage.removeItem("OGR");
+    localStorage.removeItem('userdetails');
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('OGR');
   },
 
   getSession() {
-    const userDetails = JSON.parse(localStorage.getItem("userdetails"));
-    const token = localStorage.getItem("token");
+    const userDetails = JSON.parse(localStorage.getItem('userdetails'));
+    const token = localStorage.getItem('token');
 
     if (userDetails && token) {
       return { userDetails, token };

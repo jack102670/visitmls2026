@@ -10,7 +10,11 @@
         <div
           class="relative overflow-hidden mt-2 grid cols-start-1 md:flex justify-between"
         >
-          <h3 class="ml-4 text-3xl font-bold text-blue-900" v-for="(claim, index) in claims" :key="index">
+          <h3
+            class="ml-4 text-3xl font-bold text-blue-900"
+            v-for="(claim, index) in claims"
+            :key="index"
+          >
             {{ claim.reportName }}
           </h3>
           <!-- Buttons Section -->
@@ -25,66 +29,67 @@
                 >
               </div>
             </button>
-            <button
-              @click="showContent"
-              class="w-30 p-1 rounded-lg items-center border-4 text-sm dark:bg-gray-900 dark:border-gray-700 bg-green-700 border text-white"
-            >
-              <div class="flex justify-center">
-                <span class="mr-2 ml-2 text-slate-100 hover:text-blue-200" @click="showtab = !showtab"
-                  >Add Expenses</span
-                >
-              </div>
-            </button>
           </div>
         </div>
 
         <!-- Summary Section -->
         <section class="mt-5 px-4 mx-auto">
-  <div class="grid grid-cols-14 gap-4">
-    <!-- Iterate over each claim -->
-    <template v-for="(claim, index) in claims" :key="index">
-      <!-- Display Claimant's Name -->
-      <div class="col-start-1 col-end-8">
-        <h3 class="text-md font-semibold text-gray-600">{{ claim.claimantName }}</h3>
-      </div>
-      <!-- Display Designation -->
-      <div class="col-start-8 col-end-9">
-        <h5 class="text-sm font-semibold text-gray-600">Designation</h5>
-      </div>
-      <div class="col-start-9">
-        <h5 class="text-sm font-semibold text-gray-600">:</h5>
-      </div>
-      <div class="col-end-12 col-span-2">
-        <h5 class="text-sm font-semibold text-gray-600">{{ claim.designation }}</h5>
-      </div>
-      <!-- Display Company's Name -->
-      <div class="col-start-1 col-end-4">
-        <h3 class="text-sm font-semibold text-gray-600">Department {{claim.department}}</h3>
-      </div>
-      <!-- Display Cost Center -->
-      <div class="col-start-8 col-end-9">
-        <h5 class="text-sm font-semibold text-gray-600">Cost Center</h5>
-      </div>
-      <div class="col-start-9">
-        <h5 class="text-sm font-semibold text-gray-600">:</h5>
-      </div>
-      <div class="col-end-12 col-span-2">
-        <h5 class="text-sm font-semibold text-gray-600">{{ claim.costCenter }}</h5>
-      </div>
-      <!-- Display Date of Report -->
-      <div class="col-start-8 col-end-9">
-        <h5 class="text-sm font-semibold text-gray-600">Date of Report</h5>
-      </div>
-      <div class="col-start-9">
-        <h5 class="text-sm font-semibold text-gray-600">:</h5>
-      </div>
-      <div class="col-end-12 col-span-2">
-        <h5 class="text-sm font-semibold text-gray-600">{{ claim.reportDate }}</h5>
-      </div>
-    </template>
-  </div>
-</section>
-
+          <div class="grid grid-cols-14 gap-4">
+            <!-- Iterate over each claim -->
+            <template v-for="(claim, index) in claims" :key="index">
+              <!-- Display Claimant's Name -->
+              <div class="col-start-1 col-end-8">
+                <h3 class="text-md font-semibold text-gray-600">
+                  {{ claim.claimantName }}
+                </h3>
+              </div>
+              <!-- Display Designation -->
+              <div class="col-start-8 col-end-9">
+                <h5 class="text-sm font-semibold text-gray-600">Designation</h5>
+              </div>
+              <div class="col-start-9">
+                <h5 class="text-sm font-semibold text-gray-600">:</h5>
+              </div>
+              <div class="col-end-12 col-span-2">
+                <h5 class="text-sm font-semibold text-gray-600">
+                  {{ claim.designation }}
+                </h5>
+              </div>
+              <!-- Display Company's Name -->
+              <div class="col-start-1 col-end-4">
+                <h3 class="text-sm font-semibold text-gray-600">
+                  Department {{ claim.department }}
+                </h3>
+              </div>
+              <!-- Display Cost Center -->
+              <div class="col-start-8 col-end-9">
+                <h5 class="text-sm font-semibold text-gray-600">Cost Center</h5>
+              </div>
+              <div class="col-start-9">
+                <h5 class="text-sm font-semibold text-gray-600">:</h5>
+              </div>
+              <div class="col-end-12 col-span-2">
+                <h5 class="text-sm font-semibold text-gray-600">
+                  {{ claim.costCenter }}
+                </h5>
+              </div>
+              <!-- Display Date of Report -->
+              <div class="col-start-8 col-end-9">
+                <h5 class="text-sm font-semibold text-gray-600">
+                  Date of Report
+                </h5>
+              </div>
+              <div class="col-start-9">
+                <h5 class="text-sm font-semibold text-gray-600">:</h5>
+              </div>
+              <div class="col-end-12 col-span-2">
+                <h5 class="text-sm font-semibold text-gray-600">
+                  {{ claim.reportDate }}
+                </h5>
+              </div>
+            </template>
+          </div>
+        </section>
 
         <!-- Table Section -->
         <section class="container px-4 mx-auto">
@@ -171,16 +176,16 @@
             </div>
           </div>
         </section>
-        <tab class="mt-10" v-show="showtab" ></tab>
+        <tab class="mt-10" :type="claims[0].reportType"></tab>
       </div>
     </div>
   </main>
 </template>
 
 <script>
-import tab from "./user-ui/FormTab.vue";
+import tab from './user-ui/FormTab.vue';
 
-import { formStore } from "../store.js";
+import { formStore } from '../store.js';
 export default {
   components: {
     tab,
@@ -188,7 +193,6 @@ export default {
   data() {
     return {
       claims: [],
-      showtab: false,
     };
   },
 
@@ -205,7 +209,7 @@ export default {
       }
 
       // Log the claims array to the console
-      console.log("Claims:", this.claims);
+      console.log('Claims:', this.claims);
     },
   },
 };
