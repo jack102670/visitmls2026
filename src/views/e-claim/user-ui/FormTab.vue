@@ -1,12 +1,13 @@
 <template>
   <div
     class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
-  >
+  > 
     <div class="sm:flex justify-center flex-col-1">
       <button
         v-for="(tab, index) in tabs"
         :key="index"
         @click="activeTab = index"
+        v-show="tab.form"
         :class="{
           'bg-gray-300': activeTab === index,
           'hover:bg-gray-200': activeTab !== index,
@@ -135,6 +136,41 @@
       </div>
     </div>
   </div>
+  <div class="friendly-ui">
+    <div
+      v-if="chooseform"
+      class="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
+    >
+      <div
+        class="modal-content bg-white rounded-lg p-8 shadow-lg relative"
+        style="max-height: calc(100vh - 20px); overflow-y: auto"
+      >
+        <span
+          class="close absolute top-0 right-0 mt-4 mr-4 text-gray-600 cursor-pointer text-2xl"
+          @click="closeModal"
+        >&times;</span>
+        <h2 class="text-2xl font-bold mb-6 text-center">Select Department To Refer</h2>
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-6"
+        >
+          <div
+            class="department-box bg-blue-500 text-white rounded-lg p-6 cursor-pointer flex flex-col items-center justify-center transform transition-transform duration-300 hover:scale-105 shadow-lg"
+            @click="referHR"
+          >
+            <i class="fas fa-users fa-3x mb-4"></i>
+            <span class="text-lg font-semibold">Human Resources</span>
+          </div>
+          <div
+            class="department-box bg-green-500 text-white rounded-lg p-6 cursor-pointer flex flex-col items-center justify-center transform transition-transform duration-300 hover:scale-105 shadow-lg"
+            @click="referFinance"
+          >
+            <i class="fas fa-dollar-sign fa-3x mb-4"></i>
+            <span class="text-lg font-semibold">Finance</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -157,12 +193,19 @@ export default {
 
   data() {
     return {
+      chooseform: true,
+      form: "HR",
       activeTab: 0,
       date: "",
       uploadedFiles: [],
       tabs: [
+<<<<<<< Updated upstream
         {
           title: "Local/Outstation Travelling",
+=======
+        { form: "HR",
+          title: "Local Travelling",
+>>>>>>> Stashed changes
           gridLayout: "grid-cols-3",
           fields: [
             {
@@ -234,8 +277,13 @@ export default {
             },
           ],
         },
+<<<<<<< Updated upstream
         {
           title: "Outstation/Overseas Travelling with Accommodation",
+=======
+        { form: "HR",
+          title: "Overseas Travelling with Accommodation",
+>>>>>>> Stashed changes
           gridLayout: "grid-cols-3", //
           fields: [
             {
