@@ -199,13 +199,10 @@ export default {
       date: "",
       uploadedFiles: [],
       tabs: [
-<<<<<<< Updated upstream
-        {
-          title: "Local/Outstation Travelling",
-=======
+
         { form: "HR",
           title: "Local Travelling",
->>>>>>> Stashed changes
+
           gridLayout: "grid-cols-3",
           fields: [
             {
@@ -277,13 +274,10 @@ export default {
             },
           ],
         },
-<<<<<<< Updated upstream
-        {
-          title: "Outstation/Overseas Travelling with Accommodation",
-=======
+
         { form: "HR",
           title: "Overseas Travelling with Accommodation",
->>>>>>> Stashed changes
+
           gridLayout: "grid-cols-3", //
           fields: [
             {
