@@ -194,7 +194,7 @@
             </div>
           </div>
         </section>
-        <tab class="mt-10" v-show="showtab" @formSubmitted="addClaim"></tab>
+        <tab class="mt-10" @formSubmitted="addClaim"></tab>
       </div>
       <div
         v-if="isClickModal"
@@ -316,7 +316,11 @@
               </button>
             </div>
           </div>
-          <div v-else-if="selectedClaimType === 'OverseasTravellingwithAccommodation'">
+          <div
+            v-else-if="
+              selectedClaimType === 'OverseasTravellingwithAccommodation'
+            "
+          >
             <div
               class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
             >
@@ -356,7 +360,9 @@
                 <input
                   type="text"
                   id="email"
-                  v-model="overseasTravellingDetails.ForeignCurrencyAccommodationOT"
+                  v-model="
+                    overseasTravellingDetails.ForeignCurrencyAccommodationOT
+                  "
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
@@ -370,7 +376,9 @@
                 <input
                   type="text"
                   id="phonenumber"
-                  v-model="overseasTravellingDetails.ExchangeRateAccommodationOT"
+                  v-model="
+                    overseasTravellingDetails.ExchangeRateAccommodationOT
+                  "
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
@@ -444,7 +452,8 @@
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
-              </div> <div class="mb-4">
+              </div>
+              <div class="mb-4">
                 <label
                   for="nodeParentId"
                   class="block text-gray-700 font-bold mb-2"
@@ -457,7 +466,8 @@
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
-              </div> <div class="mb-4">
+              </div>
+              <div class="mb-4">
                 <label
                   for="nodeParentId"
                   class="block text-gray-700 font-bold mb-2"
@@ -599,7 +609,8 @@
                 Cancel
               </button>
             </div>
-          </div> <div v-if="selectedClaimType === 'Entertaiment'">
+          </div>
+          <div v-if="selectedClaimType === 'Entertaiment'">
             <div
               class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
             >
@@ -685,7 +696,8 @@
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
-              </div> <div class="mb-4">
+              </div>
+              <div class="mb-4">
                 <label
                   for="nodeParentId"
                   class="block text-gray-700 font-bold mb-2"
@@ -698,7 +710,8 @@
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
-              </div> <div class="mb-4">
+              </div>
+              <div class="mb-4">
                 <label
                   for="nodeParentId"
                   class="block text-gray-700 font-bold mb-2"
@@ -732,7 +745,8 @@
                 Cancel
               </button>
             </div>
-          </div> <div v-if="selectedClaimType === 'StaffRefreshment'">
+          </div>
+          <div v-if="selectedClaimType === 'StaffRefreshment'">
             <div
               class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
             >
@@ -786,7 +800,9 @@
                 <input
                   type="text"
                   id="phonenumber"
-                  v-model="staffRefreshmentDetails.OtherTypeofStaffRefreshmentSR"
+                  v-model="
+                    staffRefreshmentDetails.OtherTypeofStaffRefreshmentSR
+                  "
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
@@ -818,7 +834,8 @@
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
-              </div> <div class="mb-4">
+              </div>
+              <div class="mb-4">
                 <label
                   for="nodeParentId"
                   class="block text-gray-700 font-bold mb-2"
@@ -831,7 +848,8 @@
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
-              </div> <div class="mb-4">
+              </div>
+              <div class="mb-4">
                 <label
                   for="nodeParentId"
                   class="block text-gray-700 font-bold mb-2"
@@ -865,7 +883,8 @@
                 Cancel
               </button>
             </div>
-          </div> <div v-if="selectedClaimType === 'HandphoneReimbursement'">
+          </div>
+          <div v-if="selectedClaimType === 'HandphoneReimbursement'">
             <div
               class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
             >
@@ -951,7 +970,8 @@
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
-              </div> <div class="mb-4">
+              </div>
+              <div class="mb-4">
                 <label
                   for="nodeParentId"
                   class="block text-gray-700 font-bold mb-2"
@@ -986,7 +1006,6 @@
               </button>
             </div>
           </div>
-          
         </div>
       </div>
     </div>
@@ -1030,21 +1049,21 @@ export default {
           this.overseasTravellingDetails = claim;
           break;
 
-          case "Entertainment":
-            this.entertainmentDetails = claim;
-            break;
+        case "Entertainment":
+          this.entertainmentDetails = claim;
+          break;
 
-            case "StaffRefreshment":
-              this.staffRefreshmentDetails = claim;
-              break;
+        case "StaffRefreshment":
+          this.staffRefreshmentDetails = claim;
+          break;
 
-              case "HandphoneReimbursement":
-                this.handphoneReimbursementDetails = claim;
-                break;
+        case "HandphoneReimbursement":
+          this.handphoneReimbursementDetails = claim;
+          break;
 
-                case "MedicalLeaveReimbursement":
-                  this.medicalLeaveReimbursementDetails = claim;
-                  break;
+        case "MedicalLeaveReimbursement":
+          this.medicalLeaveReimbursementDetails = claim;
+          break;
         // Add cases for other types of claims
       }
       this.isClickModal = true; // Show the modal
@@ -1191,20 +1210,29 @@ export default {
     },
     // other methods...
     fetchClaims() {
-      // Retrieve the formData from the store and push it into the claims array
-      const formData = formStore.getFormData();
-      if (formData) {
-        this.claims.push(formData);
-      }
+  // Retrieve the current formData
+  const formData = formStore.getFormData();
 
-      // Log the claims array to the console
-      console.log("Claims:", this.claims);
-    },
+  if (formData.claimantName !=="") {
+    // Set the claims array to contain only the new formData
+    this.claims = [formData];
+    
+    // Update the local storage with the new claims array
+    localStorage.setItem('claims', JSON.stringify(this.claims));
+  } else {
+    // If no formData, retrieve the claims array from local storage
+    const storedClaims = JSON.parse(localStorage.getItem('claims')) || [];
+    this.claims = storedClaims;
+  }
+
+  // Log the claims array to the console
+  console.log("Claims:", this.claims);
+},
+
     addClaim(formData) {
       // Push new form data into the claims array
       this.dataclaims.push(formData);
       console.log("Data Claims:", this.dataclaims);
-      
     },
   },
 };

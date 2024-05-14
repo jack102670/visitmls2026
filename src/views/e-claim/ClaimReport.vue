@@ -201,7 +201,7 @@ export default {
   // Retrieve the current formData
   const formData = formStore.getFormData();
 
-  if (formData) {
+  if (formData.claimantName !=="") {
     // Set the claims array to contain only the new formData
     this.claims = [formData];
     
