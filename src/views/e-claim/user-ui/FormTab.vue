@@ -7,7 +7,7 @@
         v-for="(tab, index) in tabs"
         :key="index"
         @click="activeTab = index"
-        v-show="tab.form"
+        
         :class="{
           'bg-gray-300': activeTab === index,
           'hover:bg-gray-200': activeTab !== index,
@@ -194,7 +194,7 @@ export default {
   data() {
     return {
       chooseform: true,
-      form: "HR",
+      
       activeTab: 0,
       date: "",
       uploadedFiles: [],
