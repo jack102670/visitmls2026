@@ -178,10 +178,10 @@ export default {
 
           // Determine the user's role
           let role;
-          if (response.data.result.userdetails.userName.includes("SD")) {
+          if (response.data.result.userdetails.userName.includes("Safety")) {
             role = "safety";
           } else if (
-            response.data.result.userdetails.userName.includes("SEC")
+            response.data.result.userdetails.userName.includes("Sec")
           ) {
             role = "admin";
            } else {

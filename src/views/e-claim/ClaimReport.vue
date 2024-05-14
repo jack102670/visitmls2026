@@ -202,15 +202,28 @@ export default {
 
   methods: {
     fetchClaims() {
-      // Retrieve the formData from the store and push it into the claims array
+      // Retrieve the current formData
       const formData = formStore.getFormData();
+
       if (formData) {
-        this.claims.push(formData);
+        // Set the claims array to contain only the new formData
+        this.claims = [formData];
+
+        // Update the local storage with the new claims array
+        localStorage.setItem('claims', JSON.stringify(this.claims));
+      } else {
+        // If no formData, retrieve the claims array from local storage
+        const storedClaims = JSON.parse(localStorage.getItem('claims')) || [];
+        this.claims = storedClaims;
       }
 
       // Log the claims array to the console
       console.log('Claims:', this.claims);
     },
+  // Log the claims array to the console
+  console.log("Claims:", this.claims);
+}
+
   },
 };
 </script>
