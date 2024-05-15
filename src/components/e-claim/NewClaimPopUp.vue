@@ -206,7 +206,7 @@
 </template>
 <script>
 import { formStore } from '../../views/store.js'; // Import your form store
-
+import axios from 'axios';
 export default {
   emits: ['close'],
   data() {
@@ -235,23 +235,42 @@ export default {
       this.active += page;
 
       if (this.active > 0) {
-        // Update form data in the form store
-        formStore.clearFormData();
-        formStore.setFormData(this.formData);
+      // Update form data in the form store
+      formStore.clearFormData();
+      formStore.setFormData(this.formData);
 
-        // Log the form data before navigation
-        console.log('Form submitted', formStore.getFormData());
+      // Log the form data before navigation
+      console.log('Form submitted', formStore.getFormData());
 
-        this.$router.push({ name: 'ClaimReport' });
-        // Get the router instance
-        // ...
-        this.active = 0;
-      }
+      // Send API request using axios
+      const apiData = {
+        name: this.formData.claimantName,
+        company_name: this.formData.companyName,
+        department: this.formData.department,
+        designation_title: this.formData.designation,
+        claim_startdate: this.formData.reportStartDate,
+        claim_enddate: this.formData.reportEndDate
+      };
+
+      // Send API request using axios
+      axios.post('http://172.28.28.91:97/api/User/InsertClaimDetails', apiData)
+        .then(response => {
+          // Handle success response
+          console.log('API response', response.data);
+          this.$router.push({ name: 'ClaimReport' });
+        })
+        .catch(error => {
+          // Handle error response
+          console.error('API error', error);
+        });
+
+      this.active = 0;
+    }
 
       if (this.active < 0) {
-        // close the create new claim pop up
-        this.$emit('close');
-        this.active = 0;
+      // close the create new claim pop up
+      this.$emit('close');
+      this.active = 0;
       }
     },
   },
