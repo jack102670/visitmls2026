@@ -1088,38 +1088,64 @@ export default {
     savenode(){
       this.isClickModal=false;
     },
-    showDetails(claim) {
-      // Update selectedClaimType based on the type of claim
-      this.selectedClaimType = claim.tabTitle.replace(/\s+/g, ""); // Remove spaces from claim type
-      // Update corresponding details object based on claim type
-      switch (this.selectedClaimType) {
-        case "LocalTravelling":
-          this.localTravellingDetails = claim;
-          break;
-        case "OverseasTravellingwithAccommodation":
-          this.overseasTravellingDetails = claim;
-          break;
+   showDetails(claim) {
+  // Update selectedClaimType based on the type of claim
+  this.selectedClaimType = claim.tabTitle.replace(/\s+/g, ""); // Remove spaces from claim type
 
-        case "Entertainment":
-          this.entertainmentDetails = claim;
-          break;
+  // Update corresponding details object based on claim type
+  switch (this.selectedClaimType) {
+    case "LocalTravelling":
+      this.localTravellingDetails = claim;
+      console.log('Local Travelling Details:', this.localTravellingDetails);
+      break;
+    case "OverseasTravellingwithAccommodation":
+      this.overseasTravellingDetails = claim;
+      console.log('Overseas Travelling Details:', this.overseasTravellingDetails);
+      break;
+    case "Entertainment":
+      this.entertainmentDetails = claim;
+      console.log('Entertainment Details:', this.entertainmentDetails);
+      break;
+    case "StaffRefreshment":
+      this.staffRefreshmentDetails = claim;
+      console.log('Staff Refreshment Details:', this.staffRefreshmentDetails);
+      break;
+    case "HandphoneReimbursement":
+      this.handphoneReimbursementDetails = claim;
+      console.log('Handphone Reimbursement Details:', this.handphoneReimbursementDetails);
+      break;
+    case "MedicalLeaveReimbursement":
+      this.medicalLeaveReimbursementDetails = claim;
+      console.log('Medical Leave Reimbursement Details:', this.medicalLeaveReimbursementDetails);
+      break;
+    // Add cases for other types of claims
+  }
+  this.isClickModal = true; // Show the modal
+},
+generateUniqueCodeLT() {
+      // Check if this.userId is defined
+      if (this.userDetails.userId) {
+        // Use part of the userId for uniqueness, e.g., 4 characters
+        const userIdFragment = this.userDetails.userId.substring(0, 4);
 
-        case "StaffRefreshment":
-          this.staffRefreshmentDetails = claim;
-          break;
+        // Generate a random number and pad it to 2 characters
+        const randomNumber = Math.floor(Math.random() * 100)
+          .toString()
+          .padStart(2, "0");
 
-        case "HandphoneReimbursement":
-          this.handphoneReimbursementDetails = claim;
-          break;
+        // Create a timestamp and take the last 2 digits for uniqueness
+        const timestamp = Date.now().toString().slice(-2);
 
-        case "MedicalLeaveReimbursement":
-          this.medicalLeaveReimbursementDetails = claim;
-          break;
-        // Add cases for other types of claims
+        // Construct the uniqueCode
+        this.uniqueCode = `LT${userIdFragment}${randomNumber}${timestamp}`;
+        console.log("Unique Code:", this.uniqueCode);
+        return this.uniqueCode;
+      } else {
+        console.error("User ID is undefined.");
+        // You may want to handle this case differently based on your application logic.
+        return "";
       }
-      this.isClickModal = true; // Show the modal
     },
-
     async sendToAPI() {
       // Group claims by tabTitle
       const groupedClaims = this.dataclaims.reduce((acc, claim) => {
@@ -1136,19 +1162,6 @@ export default {
           const claimsToSend = groupedClaims[title];
           console.log(`Claims to send for ${title}:`, claimsToSend); // Log the claimsToSend object
 
-          // Now you can iterate over claimsToSend to see each individual claim
-          for (const claim of claimsToSend) {
-            // Log each claim to see its structure and content
-            console.log("Individual claim:", claim);
-
-            // Now you can access each property of the claim and use it to construct the correct input for your database
-            const inputForDatabase = {
-              Name: claim.Name,
-              Email: claim.Email,
-              // Map other fields as needed
-            };
-            console.log("Input for database:", inputForDatabase);
-          }
 
           try {
             let axiosInstance;
@@ -1157,18 +1170,18 @@ export default {
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   const thisisforlocal1 = {
-                    mileage_km: 23,
-                    destination: claim.tabTitle,
-                    date_event: "2024-05-07", // Example date
-                    park_fee: 32,
-                    toll_fee: 23,
-                    total_fee: 23,
-                    approver_email: claim.Email, // Access Email property from claim object
+                    mileage_km: claim.MileageKMLT,
+                    destination: claim.DestinationPurposeLT,
+                    date_event: claim.dateLT, // Example date
+                    park_fee: claim.ParkingLT,
+                    toll_fee: claim.TollLT,
+                    total_fee: claim.UploadLT,
+                    approver_email: "verifier1@example.com" , // Access Email property from claim object
                     verifier_email: "verifier1@example.com",
                     approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
                     verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
                     requester_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    unique_code: "ABC1233",
+                    unique_code: this.generateUniqueCodeLT(),
                     reference_number: "pktm222",
                   };
                   axiosInstance = axios.create({
