@@ -1055,6 +1055,7 @@
 import tab from "./user-ui/FormTab.vue";
 import axios from "axios";
 import { formStore } from "../store.js";
+import { store } from "../store.js";
 export default {
   name: "TEtstS",
   components: {
@@ -1075,6 +1076,7 @@ export default {
   },
   created() {
     this.fetchClaims();
+    this.userDetails = store.getSession().userDetails;
   },
   methods: {
     toggleEditMode() {
@@ -1122,30 +1124,43 @@ export default {
   }
   this.isClickModal = true; // Show the modal
 },
-generateUniqueCodeLT() {
-      // Check if this.userId is defined
-      if (this.userDetails.userId) {
-        // Use part of the userId for uniqueness, e.g., 4 characters
-        const userIdFragment = this.userDetails.userId.substring(0, 4);
+generateUniqueCode(tabTitle) {
+  // Check if this.userId is defined
+  if (this.userDetails.userId) {
+    // Use part of the userId for uniqueness, e.g., 4 characters
+    const userIdFragment = this.userDetails.userId.substring(0, 4);
 
-        // Generate a random number and pad it to 2 characters
-        const randomNumber = Math.floor(Math.random() * 100)
-          .toString()
-          .padStart(2, "0");
+    // Generate a random number and pad it to 2 characters
+    const randomNumber = Math.floor(Math.random() * 100).toString().padStart(2, "0");
 
-        // Create a timestamp and take the last 2 digits for uniqueness
-        const timestamp = Date.now().toString().slice(-2);
+    // Create a timestamp and take the last 2 digits for uniqueness
+    const timestamp = Date.now().toString().slice(-2);
 
-        // Construct the uniqueCode
-        this.uniqueCode = `LT${userIdFragment}${randomNumber}${timestamp}`;
-        console.log("Unique Code:", this.uniqueCode);
-        return this.uniqueCode;
-      } else {
-        console.error("User ID is undefined.");
-        // You may want to handle this case differently based on your application logic.
+    // Determine the prefix based on the location
+    let prefix = "";
+    switch (tabTitle) {
+      case "Local Travelling":
+        prefix = "LT";
+        break;
+      case "Overseas Travelling with Accommodation":
+        prefix = "OV";
+        break;
+      default:
+        console.error("Invalid location provided:", tabTitle);
         return "";
-      }
-    },
+    }
+
+    // Construct the uniqueCode
+    const uniqueCode = `${prefix}${userIdFragment}${randomNumber}${timestamp}`;
+    console.log("Unique Code:", uniqueCode);
+    return uniqueCode;
+  } else {
+    console.error("User ID is undefined.");
+    // You may want to handle this case differently based on your application logic.
+    return "";
+  }
+}
+,
     async sendToAPI() {
       // Group claims by tabTitle
       const groupedClaims = this.dataclaims.reduce((acc, claim) => {
@@ -1175,13 +1190,13 @@ generateUniqueCodeLT() {
                     date_event: claim.dateLT, // Example date
                     park_fee: claim.ParkingLT,
                     toll_fee: claim.TollLT,
-                    total_fee: claim.UploadLT,
+                    total_fee: 10,
                     approver_email: "verifier1@example.com" , // Access Email property from claim object
                     verifier_email: "verifier1@example.com",
                     approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
                     verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
                     requester_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    unique_code: this.generateUniqueCodeLT(),
+                    unique_code: this.generateUniqueCode(claim.tabTitle),
                     reference_number: "pktm222",
                   };
                   axiosInstance = axios.create({
