@@ -28,6 +28,7 @@ import SummaryReport from '../views/e-claim/SummaryReport';
 import organizationchart from '../views/organizationchart.vue';
 import CreateNewClaim from '../views/e-claim/CreateNewClaim.vue';
 import ClaimReport from '../views/e-claim/ClaimReport.vue';
+import TabTest from '../views/e-claim/TabTest.vue';
 import { store } from '../views/store.js';
 import Eclaimhomepage from '../views/e-claim/user-ui/eclaimhomepage.vue';
 import FormTab from '../views/e-claim/user-ui/FormTab.vue';
@@ -123,6 +124,14 @@ const routes = [
     components: {
       default: SummaryReport,
       Sidebar: Newsidebar,
+    },
+  },
+
+  {
+    path: '/tabtest',
+    name: 'tabtesting',
+    components: {
+      default: TabTest,
     },
   },
 

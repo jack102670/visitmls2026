@@ -1124,6 +1124,10 @@ video {
   width: 30%;
 }
 
+.w-\[40rem\] {
+  width: 40rem;
+}
+
 .w-\[45\%\] {
   width: 45%;
 }
@@ -1148,18 +1152,6 @@ video {
   min-width: 100%;
 }
 
-.min-w-60 {
-  min-width: 15rem;
-}
-
-.min-w-96 {
-  min-width: 24rem;
-}
-
-.min-w-72 {
-  min-width: 18rem;
-}
-
 .max-w-2xl {
   max-width: 42rem;
 }
@@ -1174,10 +1166,6 @@ video {
 
 .max-w-md {
   max-width: 28rem;
-}
-
-.max-w-60 {
-  max-width: 15rem;
 }
 
 .flex-1 {
@@ -1219,6 +1207,12 @@ video {
   cursor: pointer;
 }
 
+.select-none {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
@@ -1245,10 +1239,6 @@ video {
 
 .flex-wrap {
   flex-wrap: wrap;
-}
-
-.flex-nowrap {
-  flex-wrap: nowrap;
 }
 
 .items-center {
