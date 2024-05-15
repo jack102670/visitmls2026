@@ -1124,6 +1124,10 @@ video {
   width: 30%;
 }
 
+.w-\[40rem\] {
+  width: 40rem;
+}
+
 .w-\[45\%\] {
   width: 45%;
 }
@@ -1201,6 +1205,12 @@ video {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.select-none {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 
 .grid-cols-1 {
@@ -1293,6 +1303,12 @@ video {
 .gap-x-6 {
   -moz-column-gap: 1.5rem;
        column-gap: 1.5rem;
+}
+
+.space-x-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .space-x-3 > :not([hidden]) ~ :not([hidden]) {
@@ -2725,6 +2741,10 @@ video {
 
   .sm\:ml-64 {
     margin-left: 16rem;
+  }
+
+  .sm\:ml-\[8rem\] {
+    margin-left: 8rem;
   }
 
   .sm\:mr-3 {
