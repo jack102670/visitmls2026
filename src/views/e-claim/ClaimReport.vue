@@ -1145,6 +1145,18 @@ generateUniqueCode(tabTitle) {
       case "Overseas Travelling with Accommodation":
         prefix = "OV";
         break;
+        case "Entertainment":
+        prefix = "ENT";
+        break;
+        case "Staff Refreshment":
+        prefix = "SR";
+        break;
+        case "Handphone Reimbursement":
+        prefix = "HR";
+        break;
+        case "Medical Leave Reimbursement":
+        prefix = "MLR";
+        break;
       default:
         console.error("Invalid location provided:", tabTitle);
         return "";
@@ -1152,6 +1164,54 @@ generateUniqueCode(tabTitle) {
 
     // Construct the uniqueCode
     const uniqueCode = `${prefix}${userIdFragment}${randomNumber}${timestamp}`;
+    console.log("Unique Code:", uniqueCode);
+    return uniqueCode;
+  } else {
+    console.error("User ID is undefined.");
+    // You may want to handle this case differently based on your application logic.
+    return "";
+  }
+}
+,generateUniqueCodeSN(tabTitle) {
+  // Check if this.userId is defined
+  if (this.userDetails.userId) {
+    // Use part of the userId for uniqueness, e.g., 4 characters
+    const userIdFragment = this.userDetails.userId.substring(0, 4);
+
+    // Generate a random number and pad it to 2 characters
+    const randomNumber = Math.floor(Math.random() * 100).toString().padStart(2, "0");
+
+    // Create a timestamp and take the last 2 digits for uniqueness
+    const timestamp = Date.now().toString().slice(-2);
+
+    // Determine the prefix based on the location
+    let prefix = "";
+    switch (tabTitle) {
+      case "Local Travelling":
+        prefix = "LT";
+        break;
+      case "Overseas Travelling with Accommodation":
+        prefix = "OV";
+        break;
+        case "Entertainment":
+        prefix = "ENT";
+        break;
+        case "Staff Refreshment":
+        prefix = "SR";
+        break;
+        case "Handphone Reimbursement":
+        prefix = "HR";
+        break;
+        case "Medical Leave Reimbursement":
+        prefix = "MLR";
+        break;
+      default:
+        console.error("Invalid location provided:", tabTitle);
+        return "";
+    }
+
+    // Construct the uniqueCode
+    const uniqueCode = `SN${prefix}${userIdFragment}${randomNumber}${timestamp}`;
     console.log("Unique Code:", uniqueCode);
     return uniqueCode;
   } else {
@@ -1216,26 +1276,26 @@ generateUniqueCode(tabTitle) {
                   // Iterate over each claim
                   // Dummy data for a claim
                   const thisisforoversea = {
-                    description: claim.tabTitle,
-                    meal_allowance: "50",
-                    date_event: "2024-05-07", // Example date
-                    transport_fee: claim.Age,
-                    total_fee: 80,
-                    accom_foreign_total: 150,
-                    accom_foreign_currency: 423,
-                    accom_exchange_rate: 1.25,
-                    other_foreign_currency: 433,
-                    other_exchange_rate: 1.1,
-                    other_foreign_total: 220,
+                    description: claim.DescriptionOT,
+                    meal_allowance: claim.MealAllowanceOT,
+                    date_event: claim.dateOT, // Example date
+                    transport_fee: claim.AirportLimoTeksiOT,
+                    total_fee: 99,
+                    accom_foreign_total: 100,
+                    accom_foreign_currency: claim.ForeignCurrencyAccommodationOT,
+                    accom_exchange_rate: claim.ExchangeRateAccommodationOT,
+                    other_foreign_currency: claim.ForeignCurrencyOthersOT,
+                    other_exchange_rate: claim.ExchangeRateOthersOT,
+                    other_foreign_total: 200,
                     reference_number: "pktm222",
-                    unique_code: claim.City,
+                    unique_code: this.generateUniqueCode(claim.tabTitle),
 
                     approver_email: "approver@example.com",
                     verifier_email: "verifier@example.com",
                     approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
                     verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
                     requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
-                    serial_number: "123456789",
+                    serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
 
                   axiosInstance = axios.create({
@@ -1249,11 +1309,138 @@ generateUniqueCode(tabTitle) {
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case "entertainment":
+              case "Entertainment":
+                for (const claim of claimsToSend) {
+                  // Iterate over each claim
+                  // Dummy data for a claim
+                  const thisisforentertainment = {
+                    date_event: claim.dateE, // Example date
+                    person_entertained: claim.PersonEntertainedE,
+                    type_of_entertainment: claim.TypeofEntertainmentE,
+                    other_type_of_entertainment: claim.OtherTypeofEntertainmentE,
+                    company: claim.CompanyE,
+                    venue: claim.VenueE,
+                    reference: claim.ReferenceE,
+                    amount: claim.AmountRME,
+                    reference_number: "pktm222",
+                    unique_code: this.generateUniqueCode(claim.tabTitle),
+
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
+                    serial_number: this.generateUniqueCodeSN(claim.tabTitle),
+                  };
                 axiosInstance = axios.create({
                   baseURL: "http://localhost:3000/claims/entertainment",
                 });
-                claimsToSend.map((claim) => this.mapToEntertainment(claim));
+                const response2 = await axiosInstance.post(
+                    "/",
+                    thisisforentertainment
+                  );
+                  console.log(`Data sent for ${title} 2:`, response2.data);
+                }
+                break;
+
+                case "Staff Refreshment":
+                for (const claim of claimsToSend) {
+                  // Iterate over each claim
+                  // Dummy data for a claim
+                  const thisisforstaffrefreshment = {
+                    date_event: claim.dateE, // Example date
+                    person_entertained: claim.PersonEntertainedE,
+                    type_of_entertainment: claim.TypeofEntertainmentE,
+                    other_type_of_entertainment: claim.OtherTypeofEntertainmentE,
+                    company: claim.CompanyE,
+                    venue: claim.VenueE,
+                    reference: claim.ReferenceE,
+                    amount: claim.AmountRME,
+                    reference_number: "pktm222",
+                    unique_code: this.generateUniqueCode(claim.tabTitle),
+
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
+                    serial_number: this.generateUniqueCodeSN(claim.tabTitle),
+                  };
+                axiosInstance = axios.create({
+                  baseURL: "http://localhost:3000/claims/entertainment",
+                });
+                const response2 = await axiosInstance.post(
+                    "/",
+                    thisisforstaffrefreshment
+                  );
+                  console.log(`Data sent for ${title} 2:`, response2.data);
+                }
+                break;
+                case "Handphone Reimbursement":
+                for (const claim of claimsToSend) {
+                  // Iterate over each claim
+                  // Dummy data for a claim
+                  const thisisforHandphoneReimbursement = {
+                    date_event: claim.dateE, // Example date
+                    person_entertained: claim.PersonEntertainedE,
+                    type_of_entertainment: claim.TypeofEntertainmentE,
+                    other_type_of_entertainment: claim.OtherTypeofEntertainmentE,
+                    company: claim.CompanyE,
+                    venue: claim.VenueE,
+                    reference: claim.ReferenceE,
+                    amount: claim.AmountRME,
+                    reference_number: "pktm222",
+                    unique_code: this.generateUniqueCode(claim.tabTitle),
+
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
+                    serial_number: this.generateUniqueCodeSN(claim.tabTitle),
+                  };
+                axiosInstance = axios.create({
+                  baseURL: "http://localhost:3000/claims/entertainment",
+                });
+                const response2 = await axiosInstance.post(
+                    "/",
+                    thisisforHandphoneReimbursement
+                  );
+                  console.log(`Data sent for ${title} 2:`, response2.data);
+                }
+                break;
+                case "Medical Leave Reimbursement":
+                for (const claim of claimsToSend) {
+                  // Iterate over each claim
+                  // Dummy data for a claim
+                  const thisisforMedicalLeaveReimbursement = {
+                    date_event: claim.dateE, // Example date
+                    person_entertained: claim.PersonEntertainedE,
+                    type_of_entertainment: claim.TypeofEntertainmentE,
+                    other_type_of_entertainment: claim.OtherTypeofEntertainmentE,
+                    company: claim.CompanyE,
+                    venue: claim.VenueE,
+                    reference: claim.ReferenceE,
+                    amount: claim.AmountRME,
+                    reference_number: "pktm222",
+                    unique_code: this.generateUniqueCode(claim.tabTitle),
+
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
+                    serial_number: this.generateUniqueCodeSN(claim.tabTitle),
+                  };
+                axiosInstance = axios.create({
+                  baseURL: "http://localhost:3000/claims/entertainment",
+                });
+                const response2 = await axiosInstance.post(
+                    "/",
+                    thisisforMedicalLeaveReimbursement
+                  );
+                  console.log(`Data sent for ${title} 2:`, response2.data);
+                }
                 break;
               // Add cases for other tab titles here
               default:
