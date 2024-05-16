@@ -46,16 +46,11 @@
         </div>
 
         <div v-if="activeSubTab !== null">
-          <!-- Render different forms based on the active sub-tab -->
           <template v-if="activeSubTab === 0">
-            <!-- Entertainment Form -->
-            <div v-if="tab.title === 'Entertainment'">
-            </div>
+            <div v-if="tab.title === 'Entertainment'"></div>
           </template>
           <template v-else-if="activeSubTab === 1">
-            <!-- Attendees Detail Form -->
             <div v-if="tab.title === 'Entertainment'">
-              <!-- Form fields for Attendees Detail -->
               <div
                 v-for="(field, fieldIndex) in attendeesDetailFields"
                 :key="fieldIndex"
@@ -73,7 +68,7 @@
                   {{ field.label }}
                   <span v-if="field.required" style="color: red">*</span>
                 </label>
-                <!-- Render input fields based on field type -->
+
                 <input
                   v-model="field.value"
                   :id="field.id"
@@ -86,7 +81,7 @@
           </template>
         </div>
 
-        <div class="pt-4">
+        <div class="pt-1">
           <hr class="" />
 
           <div class="m-2">
