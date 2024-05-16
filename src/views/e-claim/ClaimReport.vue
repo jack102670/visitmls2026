@@ -1309,11 +1309,138 @@ generateUniqueCode(tabTitle) {
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case "entertainment":
+              case "Entertainment":
+                for (const claim of claimsToSend) {
+                  // Iterate over each claim
+                  // Dummy data for a claim
+                  const thisisforentertainment = {
+                    date_event: claim.dateE, // Example date
+                    person_entertained: claim.PersonEntertainedE,
+                    type_of_entertainment: claim.TypeofEntertainmentE,
+                    other_type_of_entertainment: claim.OtherTypeofEntertainmentE,
+                    company: claim.CompanyE,
+                    venue: claim.VenueE,
+                    reference: claim.ReferenceE,
+                    amount: claim.AmountRME,
+                    reference_number: "pktm222",
+                    unique_code: this.generateUniqueCode(claim.tabTitle),
+
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
+                    serial_number: this.generateUniqueCodeSN(claim.tabTitle),
+                  };
                 axiosInstance = axios.create({
                   baseURL: "http://localhost:3000/claims/entertainment",
                 });
-                claimsToSend.map((claim) => this.mapToEntertainment(claim));
+                const response2 = await axiosInstance.post(
+                    "/",
+                    thisisforentertainment
+                  );
+                  console.log(`Data sent for ${title} 2:`, response2.data);
+                }
+                break;
+
+                case "Staff Refreshment":
+                for (const claim of claimsToSend) {
+                  // Iterate over each claim
+                  // Dummy data for a claim
+                  const thisisforstaffrefreshment = {
+                    date_event: claim.dateE, // Example date
+                    person_entertained: claim.PersonEntertainedE,
+                    type_of_entertainment: claim.TypeofEntertainmentE,
+                    other_type_of_entertainment: claim.OtherTypeofEntertainmentE,
+                    company: claim.CompanyE,
+                    venue: claim.VenueE,
+                    reference: claim.ReferenceE,
+                    amount: claim.AmountRME,
+                    reference_number: "pktm222",
+                    unique_code: this.generateUniqueCode(claim.tabTitle),
+
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
+                    serial_number: this.generateUniqueCodeSN(claim.tabTitle),
+                  };
+                axiosInstance = axios.create({
+                  baseURL: "http://localhost:3000/claims/entertainment",
+                });
+                const response2 = await axiosInstance.post(
+                    "/",
+                    thisisforstaffrefreshment
+                  );
+                  console.log(`Data sent for ${title} 2:`, response2.data);
+                }
+                break;
+                case "Handphone Reimbursement":
+                for (const claim of claimsToSend) {
+                  // Iterate over each claim
+                  // Dummy data for a claim
+                  const thisisforHandphoneReimbursement = {
+                    date_event: claim.dateE, // Example date
+                    person_entertained: claim.PersonEntertainedE,
+                    type_of_entertainment: claim.TypeofEntertainmentE,
+                    other_type_of_entertainment: claim.OtherTypeofEntertainmentE,
+                    company: claim.CompanyE,
+                    venue: claim.VenueE,
+                    reference: claim.ReferenceE,
+                    amount: claim.AmountRME,
+                    reference_number: "pktm222",
+                    unique_code: this.generateUniqueCode(claim.tabTitle),
+
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
+                    serial_number: this.generateUniqueCodeSN(claim.tabTitle),
+                  };
+                axiosInstance = axios.create({
+                  baseURL: "http://localhost:3000/claims/entertainment",
+                });
+                const response2 = await axiosInstance.post(
+                    "/",
+                    thisisforHandphoneReimbursement
+                  );
+                  console.log(`Data sent for ${title} 2:`, response2.data);
+                }
+                break;
+                case "Medical Leave Reimbursement":
+                for (const claim of claimsToSend) {
+                  // Iterate over each claim
+                  // Dummy data for a claim
+                  const thisisforMedicalLeaveReimbursement = {
+                    date_event: claim.dateE, // Example date
+                    person_entertained: claim.PersonEntertainedE,
+                    type_of_entertainment: claim.TypeofEntertainmentE,
+                    other_type_of_entertainment: claim.OtherTypeofEntertainmentE,
+                    company: claim.CompanyE,
+                    venue: claim.VenueE,
+                    reference: claim.ReferenceE,
+                    amount: claim.AmountRME,
+                    reference_number: "pktm222",
+                    unique_code: this.generateUniqueCode(claim.tabTitle),
+
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
+                    serial_number: this.generateUniqueCodeSN(claim.tabTitle),
+                  };
+                axiosInstance = axios.create({
+                  baseURL: "http://localhost:3000/claims/entertainment",
+                });
+                const response2 = await axiosInstance.post(
+                    "/",
+                    thisisforMedicalLeaveReimbursement
+                  );
+                  console.log(`Data sent for ${title} 2:`, response2.data);
+                }
                 break;
               // Add cases for other tab titles here
               default:
