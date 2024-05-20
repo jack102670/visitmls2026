@@ -147,6 +147,7 @@
               class="px-4 py-2 mr-2 rounded-sm focus:outline-none border border-gray-300"
             >
               {{ subTab.title }}
+              <span v-if="subTab.title === 'Attendees'"> ({{ attendees.length }})</span>
             </button>
           </div>
 
@@ -155,11 +156,10 @@
             :key="subIndex"
             v-show="activeSubTab === subIndex"
           >
-            <div class="pt-1">
+            <div class="pt-4">
               <hr />
               <div class="m-2">
                 <form @submit.prevent="submitForm(subTab)">
-                  <!-- Sub-tabs form structure -->
                   <div
                     v-for="(field, fieldIndex) in subTab.fields"
                     :key="fieldIndex"
@@ -244,197 +244,295 @@
                         </div>
                       </div>
                     </div>
-                    <div class="mt-4 mr-6 flex flex-row-reverse">
-                      <div class="flex items-center justify-between">
-                        <button
-                          type="submit"
-                          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  </div>
+
+                  <div v-if="subTab.title === 'Attendees'" class="mt-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2"
+                      >Select Company</label
+                    >
+                    <select
+                      v-model="selectedCompanyType"
+                      class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    >
+                      <option value="">Select</option>
+                      <option value="pkt">PKT LOGISTICS (M) SDN. BHD.</option>
+                      <option value="other">Other Company</option>
+                    </select>
+                    <button
+                      type="button"
+                      @click="showModal = true"
+                      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                    >
+                      Add Attendee
+                    </button>
+
+                    <!-- Modal -->
+                    <div
+                      v-if="showModal"
+                      class="fixed z-10 inset-0 overflow-y-auto"
+                    >
+                      <div
+                        class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+                      >
+                        <div
+                          class="fixed inset-0 transition-opacity"
+                          aria-hidden="true"
                         >
-                          Save
-                        </button>
+                          <div
+                            class="absolute inset-0 bg-gray-500 opacity-75"
+                          ></div>
+                        </div>
+                        <span
+                          class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                          aria-hidden="true"
+                          >&#8203;</span
+                        >
+                        <div
+                          class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-lg sm:w-full"
+                        >
+                          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <div class="sm:flex sm:items-start">
+                              <div
+                                class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left"
+                              >
+                                <h3
+                                  class="text-lg leading-6 font-medium text-gray-900"
+                                  id="modal-title"
+                                >
+                                  {{
+                                    selectedCompanyType === "pkt"
+                                      ? "Add PKT LOGISTICS (M) SDN. BHD. Attendee"
+                                      : "Add Other Company Attendee"
+                                  }}
+                                </h3>
+                                <div class="mt-2">
+                                  <div v-if="selectedCompanyType === 'pkt'">
+                                    <label
+                                      class="block text-gray-700 text-sm font-bold mb-2"
+                                      for="name"
+                                      >Name</label
+                                    >
+                                    <input
+                                      v-model="modalForm.name"
+                                      id="name"
+                                      type="text"
+                                      placeholder="Enter name"
+                                      class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                                      required
+                                    />
+                                    <label
+                                      class="block text-gray-700 text-sm font-bold mb-2"
+                                      for="staffId"
+                                      >Staff ID</label
+                                    >
+                                    <input
+                                      v-model="modalForm.staffId"
+                                      id="staffId"
+                                      type="text"
+                                      placeholder="Enter Staff ID"
+                                      class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                                      required
+                                    />
+                                  </div>
+                                  <div
+                                    v-else-if="selectedCompanyType === 'other'"
+                                  >
+                                    <label
+                                      class="block text-gray-700 text-sm font-bold mb-2"
+                                      for="name"
+                                      >Name</label
+                                    >
+                                    <input
+                                      v-model="modalForm.name"
+                                      id="name"
+                                      type="text"
+                                      placeholder="Enter name"
+                                      class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                                      required
+                                    />
+                                    <label
+                                      class="block text-gray-700 text-sm font-bold mb-2"
+                                      for="companyName"
+                                      >Company's Name</label
+                                    >
+                                    <input
+                                      v-model="modalForm.companyName"
+                                      id="companyName"
+                                      type="text"
+                                      placeholder="Enter Company's Name"
+                                      class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                                      required
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
+                          >
+                            <button
+                              type="button"
+                              @click="addAttendee"
+                              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                            >
+                              Save
+                            </button>
+                            <button
+                              type="button"
+                              @click="showModal = false"
+                              class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
                       </div>
+                    </div>
+                    <!-- End of Modal -->
+
+                    <!-- PKT LOGISTICS (M) SDN. BHD. Attendees Table -->
+                    <div v-if="selectedCompanyType === 'pkt'" class="mt-4">
+                      <table class="min-w-full leading-normal">
+                        <thead>
+                          <tr>
+                            <th
+                              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                            >
+                              Name
+                            </th>
+                            <th
+                              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                            >
+                              Staff ID
+                            </th>
+                            <th
+                              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                            >
+                              Company's Name
+                            </th>
+                            <th
+                              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                            >
+                              Actions
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            v-for="(attendee, index) in attendees"
+                            :key="'pkt-' + index"
+                          >
+                            <td
+                              class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                            >
+                              {{ attendee.name }}
+                            </td>
+                            <td
+                              class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                            >
+                              {{ attendee.staffId }}
+                            </td>
+                            <td
+                              class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                            >
+                              {{ attendee.companyName }}
+                            </td>
+                            <td
+                              class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                            >
+                              <button
+                                @click="removeAttendee(index)"
+                                class="text-red-600 hover:text-red-900"
+                              >
+                                Remove
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- End of PKT LOGISTICS (M) SDN. BHD. Attendees Table -->
+
+                    <!-- Other Company Attendees Table -->
+                    <div v-if="selectedCompanyType === 'other'" class="mt-4">
+                      <table class="min-w-full leading-normal">
+                        <thead>
+                          <tr>
+                            <th
+                              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                            >
+                              Name
+                            </th>
+                            <th
+                              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                            >
+                              Staff ID
+                            </th>
+                            <th
+                              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                            >
+                              Company's Name
+                            </th>
+                            <th
+                              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                            >
+                              Actions
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            v-for="(attendee, index) in attendees"
+                            :key="'other-' + index"
+                          >
+                            <td
+                              class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                            >
+                              {{ attendee.name }}
+                            </td>
+                            <td
+                              class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                            >
+                              {{ attendee.staffId }}
+                            </td>
+                            <td
+                              class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                            >
+                              {{ attendee.companyName }}
+                            </td>
+                            <td
+                              class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
+                            >
+                              <button
+                                @click="removeAttendee(index)"
+                                class="text-red-600 hover:text-red-900"
+                              >
+                                Remove
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- End of Other Company Attendees Table -->
+                  </div>
+                  <div class="mt-4 mr-6 flex flex-row-reverse">
+                    <div class="flex items-center justify-between">
+                      <button
+                        type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      >
+                        Save
+                      </button>
                     </div>
                   </div>
                 </form>
-
-                <!-- Attendees form table and buttons -->
-                <div v-if="subTab.title === 'Attendees'">
-                  <div class="mt-4">
-                    <button
-                      @click="openModal('pkt')"
-                      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    >
-                      Add Attendee (PKT LOGISTICS)
-                    </button>
-                    <button
-                      @click="openModal('other')"
-                      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 ml-2 rounded focus:outline-none focus:shadow-outline"
-                    >
-                      Add Attendee (Other Company)
-                    </button>
-                  </div>
-
-                  <table class="min-w-full divide-y divide-gray-200 mt-4">
-                    <thead>
-                      <tr>
-                        <th
-                          class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
-                          Name
-                        </th>
-                        <th
-                          class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
-                          Company/Staff ID
-                        </th>
-                        <th
-                          class="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
-                          Actions
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                      <tr
-                        v-for="(attendee, index) in subTab.attendees"
-                        :key="index"
-                      >
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          {{ attendee.name }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                          {{ attendee.companyOrId }}
-                        </td>
-                        <td
-                          class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
-                        >
-                          <button
-                            @click="removeAttendee(subTab, index)"
-                            class="text-red-600 hover:text-red-900"
-                          >
-                            Remove
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
               </div>
             </div>
           </div>
         </div>
         <!-- End of Entertainment tab -->
-      </div>
-    </div>
-  </div>
-  <!-- Modal for PKT LOGISTICS -->
-  <div v-if="showPktModal" class="fixed z-10 inset-0 overflow-y-auto">
-    <div
-      class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
-    >
-      <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-      </div>
-      <span
-        class="hidden sm:inline-block sm:align-middle sm:h-screen"
-        aria-hidden="true"
-      ></span>
-      <div
-        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-      >
-        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-          <div class="sm:flex sm:items-start">
-            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-              <h3 class="text-lg leading-6 font-medium text-gray-900">
-                Add Attendee from PKT LOGISTICS (M) SDN. BHD.
-              </h3>
-              <div class="mt-2">
-                <input
-                  v-model="newAttendee.name"
-                  type="text"
-                  placeholder="Name"
-                  class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring"
-                />
-                <input
-                  v-model="newAttendee.staffId"
-                  type="text"
-                  placeholder="Staff ID"
-                  class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-          <button
-            @click="saveAttendee('pkt')"
-            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm"
-          >
-            Save
-          </button>
-          <button
-            @click="closeModal"
-            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal for Other Company -->
-  <div v-if="showOtherModal" class="fixed z-10 inset-0 overflow-y-auto">
-    <div
-      class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
-    >
-      <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-      </div>
-      <span
-        class="hidden sm:inline-block sm:align-middle sm:h-screen"
-        aria-hidden="true"
-      ></span>
-      <div
-        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-      >
-        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-          <div class="sm:flex sm:items-start">
-            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-              <h3 class="text-lg leading-6 font-medium text-gray-900">
-                Add Attendee from Other Company
-              </h3>
-              <div class="mt-2">
-                <input
-                  v-model="newAttendee.name"
-                  type="text"
-                  placeholder="Name"
-                  class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring"
-                />
-                <input
-                  v-model="newAttendee.companyName"
-                  type="text"
-                  placeholder="Company's Name"
-                  class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-          <button
-            @click="saveAttendee('other')"
-            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm"
-          >
-            Save
-          </button>
-          <button
-            @click="closeModal"
-            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-          >
-            Cancel
-          </button>
-        </div>
       </div>
     </div>
   </div>
@@ -464,13 +562,14 @@ export default {
       activeSubTab: null,
       date: "",
       uploadedFiles: [],
-      showPktModal: false,
-      showOtherModal: false,
-      newAttendee: {
+      showModal: false,
+      selectedCompanyType: "",
+      modalForm: {
         name: "",
         staffId: "",
         companyName: "",
       },
+      attendees: [],
       tabs: [
         {
           title: "Local/Outstation Travelling",
@@ -1076,21 +1175,8 @@ export default {
         },
         {
           title: "Attendees",
-          attendees: [], // Initialize attendees array here
-          fields: [
-            {
-              id: "attendeesList",
-              label: "Attendees List",
-              type: "table",
-              value: [],
-              gridClass: "sm:col-span-2",
-              columns: [
-                { label: "Name", key: "name" },
-                { label: "ID/Company", key: "idCompany" },
-                { label: "Actions", key: "actions" },
-              ],
-            },
-          ],
+          attendees: [],
+          fields: [],
         },
       ],
     };
@@ -1120,40 +1206,25 @@ export default {
       };
     },
 
-    openModal(type) {
-      if (type === "pkt") {
-        this.showPktModal = true;
-      } else {
-        this.showOtherModal = true;
+    addAttendee() {
+      if (this.selectedCompanyType === "pkt") {
+        this.attendees.push({
+          name: this.modalForm.name,
+          staffId: this.modalForm.staffId,
+        });
+      } else if (this.selectedCompanyType === "other") {
+        this.attendees.push({
+          name: this.modalForm.name,
+          companyName: this.modalForm.companyName,
+        });
       }
+      this.modalForm.name = "";
+      this.modalForm.staffId = "";
+      this.modalForm.companyName = "";
+      this.showModal = false;
     },
-    closeModal() {
-      this.showPktModal = false;
-      this.showOtherModal = false;
-      this.newAttendee = {
-        name: "",
-        staffId: "",
-        companyName: "",
-      };
-    },
-    saveAttendee(type) {
-      let attendee;
-      if (type === "pkt") {
-        attendee = {
-          name: this.newAttendee.name,
-          companyOrId: this.newAttendee.staffId,
-        };
-      } else {
-        attendee = {
-          name: this.newAttendee.name,
-          companyOrId: this.newAttendee.companyName,
-        };
-      }
-      this.tabs[1].attendees.push(attendee);
-      this.closeModal();
-    },
-    removeAttendee(tab, index) {
-      tab.attendees.splice(index, 1);
+    removeAttendee(index) {
+      this.attendees.splice(index, 1);
     },
 
     calculateTotal(tab) {
