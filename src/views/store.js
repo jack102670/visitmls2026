@@ -12,6 +12,9 @@ export const formStore = {
     reportStartDate: '',
     reportEndDate: '',
     memo: '',
+
+    selectedOption:'',
+
   },
 
   setFormData(data) {
@@ -36,6 +39,9 @@ export const formStore = {
       reportStartDate: '',
       reportEndDate: '',
       memo: '',
+
+      selectedOption:'',
+
     };
   },
 };

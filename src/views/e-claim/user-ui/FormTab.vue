@@ -315,7 +315,7 @@ export default {
             {
               id: 'MealAllowanceOT',
               label: 'Meal Allowance(RM)',
-              type: 'number',
+              type: 'text',
               value: '',
               gridClass: 'sm:col-span-2',
             },

@@ -7,7 +7,7 @@
     "build": "npm run build:tailwind && vue-cli-service build",
     "lint": "vue-cli-service lint",
     "build:tailwind": "npx tailwindcss -i ./src/input.css -o ./src/assets/css/output.css",
-    "dev": "npm run build:tailwind --watch & vue-cli-service serve"
+    "dev": "npx tailwindcss -i ./src/input.css -o ./src/assets/css/output.css --watch "
   },
   "dependencies": {
     "@vueuse/core": "^10.7.0",
