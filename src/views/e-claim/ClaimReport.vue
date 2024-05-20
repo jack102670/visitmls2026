@@ -11,17 +11,17 @@
           class="relative overflow-hidden mt-2 grid cols-start-1 md:flex justify-between"
         >
           <h3
-            class="ml-4 text-3xl font-bold text-blue-900"
+            class="ml-4 text-4xl font-bold text-blue-900"
             v-for="(claim, index) in claims"
             :key="index"
           >
             {{ claim.reportName }}
           </h3>
           <!-- Buttons Section -->
-          <div class="mt-1 mr-4 gap-2 flex flex-row-reverse">
+          <div class="md:mr-4 md:mt-0 mt-5 gap-2 flex flex-row-reverse">
             <button
               @click="showContent"
-              class="w-30 p-1 rounded-lg items-center border-4 text-sm dark:bg-gray-900 dark:border-gray-700 bg-green-700 border text-white"
+              class="w-36 h-12 p-1 font-semibold rounded-lg items-center text-sm dark:bg-gray-900 dark:border-gray-700 bg-green-700 border text-white"
             >
               <div class="flex justify-center">
                 <span class="mr-2 ml-2 text-slate-100 hover:text-blue-200"
@@ -33,56 +33,70 @@
         </div>
 
         <!-- Summary Section -->
-        <section class="mt-5 px-4 mx-auto">
+        <section class="mt-8 px-4 mx-auto">
           <div class="grid grid-cols-14 gap-4">
             <!-- Iterate over each claim -->
             <template v-for="(claim, index) in claims" :key="index">
               <!-- Display Claimant's Name -->
-              <div class="col-start-1 col-end-8">
+              <div class="col-start-1 col-end-2">
+                <h5 class="text-sm font-semibold text-gray-600">
+                  Claimaint's Name
+                </h5>
+              </div>
+              <div class="col-start-2">
+                <h5 class="text-sm font-semibold text-gray-600">:</h5>
+              </div>
+              <div class="col-start-3 lg:col-end-8 col-end-14">
                 <h3 class="text-md font-semibold text-gray-600">
                   {{ claim.claimantName }}
                 </h3>
               </div>
               <!-- Display Designation -->
-              <div class="col-start-8 col-end-9">
+              <div class="lg:col-start-8 lg:col-end-9 col-start-1 col-end-2">
                 <h5 class="text-sm font-semibold text-gray-600">Designation</h5>
               </div>
-              <div class="col-start-9">
+              <div class="lg:col-start-9 col-start-2">
                 <h5 class="text-sm font-semibold text-gray-600">:</h5>
               </div>
-              <div class="col-end-12 col-span-2">
+              <div class="lg:col-start-10 col-start-3">
                 <h5 class="text-sm font-semibold text-gray-600">
                   {{ claim.designation }}
                 </h5>
               </div>
               <!-- Display Company's Name -->
-              <div class="col-start-1 col-end-4">
+              <div class="col-start-1 col-end-2">
+                <h5 class="text-sm font-semibold text-gray-600">Department</h5>
+              </div>
+              <div class="col-start-2">
+                <h5 class="text-sm font-semibold text-gray-600">:</h5>
+              </div>
+              <div class="col-start-3 col-end-8 lg:col-end-14">
                 <h3 class="text-sm font-semibold text-gray-600">
-                  Department {{ claim.department }}
+                  {{ claim.department }}
                 </h3>
               </div>
               <!-- Display Cost Center -->
-              <div class="col-start-8 col-end-9">
+              <div class="lg:col-start-8 lg:col-end-9 col-start-1 col-end-2">
                 <h5 class="text-sm font-semibold text-gray-600">Cost Center</h5>
               </div>
-              <div class="col-start-9">
+              <div class="lg:col-start-9 col-start-2">
                 <h5 class="text-sm font-semibold text-gray-600">:</h5>
               </div>
-              <div class="col-end-12 col-span-2">
+              <div class="lg:col-start-10 col-start-3">
                 <h5 class="text-sm font-semibold text-gray-600">
                   {{ claim.costCenter }}
                 </h5>
               </div>
               <!-- Display Date of Report -->
-              <div class="col-start-8 col-end-9">
+              <div class="lg:col-start-8 lg:col-end-9 col-start-1 col-end-2">
                 <h5 class="text-sm font-semibold text-gray-600">
                   Date of Report
                 </h5>
               </div>
-              <div class="col-start-9">
+              <div class="lg:col-start-9 col-start-2">
                 <h5 class="text-sm font-semibold text-gray-600">:</h5>
               </div>
-              <div class="col-end-12 col-span-2">
+              <div class="lg:col-start-10 col-start-3">
                 <h5 class="text-sm font-semibold text-gray-600">
                   {{ claim.reportDate }}
                 </h5>
@@ -124,14 +138,7 @@
                             <span>Type Of Claim</span>
                           </div>
                         </th>
-                        <th
-                          scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                        >
-                          <div class="flex items-center gap-x-3">
-                            <span>Particulars</span>
-                          </div>
-                        </th>
+
                         <th
                           scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
@@ -158,11 +165,7 @@
                         >
                           {{ claim.claimType }}
                         </td>
-                        <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        >
-                          {{ claim.particulars }}
-                        </td>
+
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                         >
