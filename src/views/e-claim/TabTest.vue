@@ -147,7 +147,9 @@
               class="px-4 py-2 mr-2 rounded-sm focus:outline-none border border-gray-300"
             >
               {{ subTab.title }}
-              <span v-if="subTab.title === 'Attendees'"> ({{ attendees.length }})</span>
+              <span v-if="subTab.title === 'Attendees'">
+                ({{ attendees.length }})</span
+              >
             </button>
           </div>
 
@@ -445,7 +447,20 @@
                                 @click="removeAttendee(index)"
                                 class="text-red-600 hover:text-red-900"
                               >
-                                Remove
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke-width="1.5"
+                                  stroke="currentColor"
+                                  class="w-5 h-5"
+                                >
+                                  <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                  />
+                                </svg>
                               </button>
                             </td>
                           </tr>
@@ -508,7 +523,20 @@
                                 @click="removeAttendee(index)"
                                 class="text-red-600 hover:text-red-900"
                               >
-                                Remove
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke-width="1.5"
+                                  stroke="currentColor"
+                                  class="w-5 h-5"
+                                >
+                                  <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                  />
+                                </svg>
                               </button>
                             </td>
                           </tr>
@@ -668,18 +696,18 @@ export default {
             {
               id: "ForeignCurrencyAccommodationOT",
               label: "Foreign Currency",
-              type: "select", 
+              type: "select",
               value: "",
               placeholder: "Accommodation",
-              options: [], 
+              options: [],
               gridClass: "sm:col-span-2",
             },
             {
               id: "ExchangeRateAccommodationOT",
               label: "Exchange Rate",
-              type: "select", 
+              type: "select",
               value: "",
-              options: [], 
+              options: [],
               gridClass: "sm:col-span-2",
             },
             {
@@ -692,18 +720,18 @@ export default {
             {
               id: "ForeignCurrencyOthersOT",
               label: "Foreign Currency",
-              type: "select", 
+              type: "select",
               value: "",
               placeholder: "Other",
-              options: [], 
+              options: [],
               gridClass: "sm:col-span-2",
             },
             {
               id: "ExchangeRateOthersOT",
               label: "Exchange Rate",
-              type: "select", 
+              type: "select",
               value: "",
-              options: [], 
+              options: [],
               gridClass: "sm:col-span-2",
             },
             {
@@ -1220,14 +1248,14 @@ export default {
       if (this.selectedCompanyType === "pkt") {
         this.attendees.push({
           name: this.modalForm.name,
-          companyName: 'PKT LOGISTICS (M) SDN. BHD.',
+          companyName: "PKT LOGISTICS (M) SDN. BHD.",
           staffId: this.modalForm.staffId,
         });
       } else if (this.selectedCompanyType === "other") {
         this.attendees.push({
           name: this.modalForm.name,
           companyName: this.modalForm.companyName,
-          staffId: '-',
+          staffId: "-",
         });
       }
       this.modalForm.name = "";
@@ -1287,44 +1315,55 @@ export default {
     },
 
     fetchForeignCurrencyOptions() {
-      axios.get('/api/foreign-currency')
-        .then(response => {
-          const foreignCurrencyOptions = response.data.map(currency => ({
+      axios
+        .get("/api/foreign-currency")
+        .then((response) => {
+          const foreignCurrencyOptions = response.data.map((currency) => ({
             label: currency.name,
-            value: currency.code
+            value: currency.code,
           }));
-          this.updateFieldOptions('ForeignCurrencyAccommodationOT', foreignCurrencyOptions);
-          this.updateFieldOptions('ForeignCurrencyOthersOT', foreignCurrencyOptions);
+          this.updateFieldOptions(
+            "ForeignCurrencyAccommodationOT",
+            foreignCurrencyOptions
+          );
+          this.updateFieldOptions(
+            "ForeignCurrencyOthersOT",
+            foreignCurrencyOptions
+          );
         })
-        .catch(error => {
-          console.error('Error fetching foreign currency options:', error);
+        .catch((error) => {
+          console.error("Error fetching foreign currency options:", error);
         });
     },
 
     fetchExchangeRateOptions() {
-      axios.get('/api/exchange-rates')
-        .then(response => {
-          const exchangeRateOptions = response.data.map(rate => ({
+      axios
+        .get("/api/exchange-rates")
+        .then((response) => {
+          const exchangeRateOptions = response.data.map((rate) => ({
             label: rate.rate,
-            value: rate.code
+            value: rate.code,
           }));
-          this.updateFieldOptions('ExchangeRateAccommodationOT', exchangeRateOptions);
-          this.updateFieldOptions('ExchangeRateOthersOT', exchangeRateOptions);
+          this.updateFieldOptions(
+            "ExchangeRateAccommodationOT",
+            exchangeRateOptions
+          );
+          this.updateFieldOptions("ExchangeRateOthersOT", exchangeRateOptions);
         })
-        .catch(error => {
-          console.error('Error fetching exchange rate options:', error);
+        .catch((error) => {
+          console.error("Error fetching exchange rate options:", error);
         });
     },
 
     updateFieldOptions(fieldId, options) {
-      this.tabs.forEach(tab => {
-        tab.fields.forEach(field => {
+      this.tabs.forEach((tab) => {
+        tab.fields.forEach((field) => {
           if (field.id === fieldId) {
             field.options = options;
           }
         });
       });
-    }
+    },
   },
 };
 </script>
