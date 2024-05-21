@@ -540,6 +540,7 @@
 
 <script>
 import vueFilePond from "vue-filepond";
+import axios from "axios";
 import "filepond/dist/filepond.min.css";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
@@ -667,16 +668,18 @@ export default {
             {
               id: "ForeignCurrencyAccommodationOT",
               label: "Foreign Currency",
-              type: "text",
-              placeholder: "Accommodation",
+              type: "select", 
               value: "",
+              placeholder: "Accommodation",
+              options: [], 
               gridClass: "sm:col-span-2",
             },
             {
               id: "ExchangeRateAccommodationOT",
               label: "Exchange Rate",
-              type: "text",
+              type: "select", 
               value: "",
+              options: [], 
               gridClass: "sm:col-span-2",
             },
             {
@@ -689,16 +692,18 @@ export default {
             {
               id: "ForeignCurrencyOthersOT",
               label: "Foreign Currency",
-              type: "text",
-              placeholder: "Others",
+              type: "select", 
               value: "",
+              placeholder: "Other",
+              options: [], 
               gridClass: "sm:col-span-2",
             },
             {
               id: "ExchangeRateOthersOT",
               label: "Exchange Rate",
-              type: "text",
+              type: "select", 
               value: "",
+              options: [], 
               gridClass: "sm:col-span-2",
             },
             {
@@ -1182,6 +1187,11 @@ export default {
     };
   },
 
+  mounted() {
+    this.fetchForeignCurrencyOptions(); // Fetch foreign currency options on mount
+    this.fetchExchangeRateOptions(); // Fetch exchange rate options on mount
+  },
+
   methods: {
     handleAddFile(field) {
       return (file) => {
@@ -1275,6 +1285,46 @@ export default {
         console.log(`Form submitted for tab: ${tab.title}`, tab.fields);
       }
     },
+
+    fetchForeignCurrencyOptions() {
+      axios.get('/api/foreign-currency')
+        .then(response => {
+          const foreignCurrencyOptions = response.data.map(currency => ({
+            label: currency.name,
+            value: currency.code
+          }));
+          this.updateFieldOptions('ForeignCurrencyAccommodationOT', foreignCurrencyOptions);
+          this.updateFieldOptions('ForeignCurrencyOthersOT', foreignCurrencyOptions);
+        })
+        .catch(error => {
+          console.error('Error fetching foreign currency options:', error);
+        });
+    },
+
+    fetchExchangeRateOptions() {
+      axios.get('/api/exchange-rates')
+        .then(response => {
+          const exchangeRateOptions = response.data.map(rate => ({
+            label: rate.rate,
+            value: rate.code
+          }));
+          this.updateFieldOptions('ExchangeRateAccommodationOT', exchangeRateOptions);
+          this.updateFieldOptions('ExchangeRateOthersOT', exchangeRateOptions);
+        })
+        .catch(error => {
+          console.error('Error fetching exchange rate options:', error);
+        });
+    },
+
+    updateFieldOptions(fieldId, options) {
+      this.tabs.forEach(tab => {
+        tab.fields.forEach(field => {
+          if (field.id === fieldId) {
+            field.options = options;
+          }
+        });
+      });
+    }
   },
 };
 </script>
