@@ -261,7 +261,7 @@
                     <button
                       type="button"
                       @click="showModal = true"
-                      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
                     >
                       Add Attendee
                     </button>
@@ -1210,12 +1210,14 @@ export default {
       if (this.selectedCompanyType === "pkt") {
         this.attendees.push({
           name: this.modalForm.name,
+          companyName: 'PKT LOGISTICS (M) SDN. BHD.',
           staffId: this.modalForm.staffId,
         });
       } else if (this.selectedCompanyType === "other") {
         this.attendees.push({
           name: this.modalForm.name,
           companyName: this.modalForm.companyName,
+          staffId: '-',
         });
       }
       this.modalForm.name = "";
