@@ -507,13 +507,13 @@ export default {
   data() {
     return {
       activeTab: 0,
-      activeSubTab: null,
+      activeSubTab: 0,
       date: "",
       uploadedFiles: [],
       showModal: false,
-      selectedAttendeeType: "",
+      selectedAttendeeType: "pkt",
       selectedCompanyName: "",
-      pktCompanies: ["PKT Branch 1", "PKT Branch 2", "PKT Branch 3"], // Example companies
+      pktCompanies: ["PKT Branch 1", "PKT Branch 2", "PKT Branch 3"], 
       modalForm: {
         name: "",
         staffId: "",
