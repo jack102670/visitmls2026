@@ -841,39 +841,7 @@ export default {
               type: "select",
               value: "",
               required: true,
-              options: [
-                { label: "HONG LEONG BANK", value: "HONG LEONG BANK" },
-                { label: "AGROBANK", value: "AGROBANK" },
-                { label: "AFFIN BANK BERHAD", value: "AFFIN BANK BERHAD" },
-                {
-                  label: "ALLIANCE BANK MALAYSIA BERHAD",
-                  value: "ALLIANCE BANK MALAYSIA BERHAD",
-                },
-                { label: "AMBANK BERHAD", value: "AMBANK BERHAD" },
-                { label: "BANK ISLAM MALAYSIA", value: "BANK ISLAM MALAYSIA" },
-                {
-                  label: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
-                  value: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
-                },
-                { label: "BANK MUAMALAT", value: "BANK MUAMALAT" },
-                {
-                  label: "BANK SIMPANAN NASIONAL BERHAD",
-                  value: "BANK SIMPANAN NASIONAL BERHAD",
-                },
-                { label: "CIMB BANK BERHAD", value: "CIMB BANK BERHAD" },
-                { label: "CITIBANK BERHAD", value: "CITIBANK BERHAD" },
-                {
-                  label: "HSBC BANK MALAYSIA BERHAD",
-                  value: "HSBC BANK MALAYSIA BERHAD",
-                },
-                { label: "MAYBANK", value: "MAYBANK" },
-                { label: "PUBLIC BANK", value: "PUBLIC BANK" },
-                { label: "RHB BANK", value: "RHB BANK" },
-                {
-                  label: "OCBC BANK MALAYSIA BERHAD",
-                  value: "OCBC BANK MALAYSIA BERHAD",
-                },
-              ],
+              options: [],
               gridClass: "sm:col-span-2",
             },
             {
@@ -1137,8 +1105,9 @@ export default {
   },
 
   mounted() {
-    this.fetchForeignCurrencyOptions(); // Fetch foreign currency options on mount
-    this.fetchExchangeRateOptions(); // Fetch exchange rate options on mount
+    this.fetchForeignCurrencyOptions(); 
+    this.fetchExchangeRateOptions(); 
+    this.fetchBankNames();
   },
 
   methods: {
@@ -1280,6 +1249,22 @@ export default {
         })
         .catch((error) => {
           console.error("Error fetching exchange rate options:", error);
+        });
+    },
+
+    fetchBankNames() {
+      axios
+        .get("https://api.openbankproject.com/obp/v4.0.0/banks")
+        .then((response) => {
+          const bankOptions = response.data.banks.map((bank) => ({
+            label: bank.full_name,
+            value: bank.id,
+          }));
+          this.updateFieldOptions("BankNameHR", bankOptions);
+          this.updateFieldOptions("BankNameML", bankOptions);
+        })
+        .catch((error) => {
+          console.error("Error fetching bank names:", error);
         });
     },
 
