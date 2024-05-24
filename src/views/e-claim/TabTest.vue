@@ -838,19 +838,7 @@ export default {
               type: "select",
               value: "",
               required: true,
-              options: [
-                { label: "JANUARY", value: "JANUARY" },
-                { label: "FEBRUARY", value: "FEBRUARY" },
-                { label: "MARCH", value: "MARCH" },
-                { label: "APRIL", value: "APRIL" },
-                { label: "MAY", value: "MAY" },
-                { label: "JUNE", value: "JUNE" },
-                { label: "JULY", value: "JULY" },
-                { label: "AUGUST", value: "AUGUST" },
-                { label: "SEPTEMBER", value: "SEPTEMBER" },
-                { label: "OCTOBER", value: "OCTOBER" },
-                { label: "NOVEMBER", value: "NOVEMBER" },
-                { label: "DECEMBER", value: "DECEMBER" },
+              options: [  
               ],
               gridClass: "sm:col-span-1",
             },
@@ -1163,8 +1151,11 @@ export default {
       ],
     };
   },
-
+  created() {
+  this.fetchData();
+},
   mounted() {
+   
     // Populate the year range with the last 20 years
     const currentYear = new Date().getFullYear();
     for (let i = currentYear; i >= currentYear - 20; i--) {
@@ -1176,35 +1167,27 @@ export default {
 
   methods: {
     fetchData() {
-      fetch("https://hazman97.github.io/months-api/months.json", {
-        mode: "cors", // Adding CORS mode
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          console.log("Fetched data:", response);
+    fetch("https://hazman97.github.io/months-api/months.json", {
+    
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        // Iterate over each tab
+        this.tabs.forEach(tab => {
+          // Find the MonthHR field in the current tab
+          const field = tab.fields.find(field => field.id === 'MonthHR');
 
-          // Assign the modified data to your component's data property
-          this.data = response.result;
-
-          // Perform any other actions with the data
-          // For example, render a chart
-          console.log("Value of this selepas fetcg:", this.data);
-          this.renderChart();
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
+          // Assign the fetched data to the options property of the MonthHR field
+          if (field) {
+            field.options = response.months
+            console.log("Months:", field.options);
+          }
         });
-
-      // Promise.resolve(employeesData)
-      //   .then((data) => {
-      //     console.log('Fetched data:', data)
-      //     this.data = data
-      //     this.renderChart()
-      //   })
-      //   .catch((error) => {
-      //     console.error('Error fetching data:', error)
-      //   })
-    },
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  },
 
     handleAddFile(field) {
       return (file) => {
