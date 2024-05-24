@@ -1175,6 +1175,37 @@ export default {
   },
 
   methods: {
+    fetchData() {
+      fetch("https://hazman97.github.io/months-api/months.json", {
+        mode: "cors", // Adding CORS mode
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          console.log("Fetched data:", response);
+
+          // Assign the modified data to your component's data property
+          this.data = response.result;
+
+          // Perform any other actions with the data
+          // For example, render a chart
+          console.log("Value of this selepas fetcg:", this.data);
+          this.renderChart();
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+
+      // Promise.resolve(employeesData)
+      //   .then((data) => {
+      //     console.log('Fetched data:', data)
+      //     this.data = data
+      //     this.renderChart()
+      //   })
+      //   .catch((error) => {
+      //     console.error('Error fetching data:', error)
+      //   })
+    },
+
     handleAddFile(field) {
       return (file) => {
         field.value.push(file.file);
