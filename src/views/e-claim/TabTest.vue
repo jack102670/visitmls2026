@@ -72,8 +72,15 @@
                     <select
                       v-model="field.value"
                       :id="field.id"
-                      class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
-                      <option v-for="year in yearRange" :key="year" :value="year">{{ year }}</option>
+                      class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    >
+                      <option
+                        v-for="year in yearRange"
+                        :key="year"
+                        :value="year"
+                      >
+                        {{ year }}
+                      </option>
                     </select>
                   </template>
 
@@ -506,6 +513,7 @@
 
 <script>
 import vueFilePond from "vue-filepond";
+import axios from "axios";
 import "filepond/dist/filepond.min.css";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
@@ -851,7 +859,7 @@ export default {
               label: "Year",
               type: "year",
               value: "",
-              required: true ,
+              required: true,
               options: this.years,
               gridClass: "sm:col-span-2",
             },
@@ -1157,12 +1165,14 @@ export default {
   },
 
   mounted() {
-  // Populate the year range with the last 20 years
-  const currentYear = new Date().getFullYear();
-  for (let i = currentYear; i >= currentYear - 20; i--) {
-    this.yearRange.push(i);
-  }
-},
+    // Populate the year range with the last 20 years
+    const currentYear = new Date().getFullYear();
+    for (let i = currentYear; i >= currentYear - 20; i--) {
+      this.yearRange.push(i);
+    }
+
+    this.fetchForeignCurrencyOptions();
+  },
 
   methods: {
     handleAddFile(field) {
@@ -1247,6 +1257,29 @@ export default {
         tab.attendees.push(newAttendee);
       } else {
         console.log(`Form submitted for tab: ${tab.title}`, tab.fields);
+      }
+    },
+
+    async fetchForeignCurrencyOptions() {
+      try {
+        const response = await axios.get(
+          "https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_3ixmcwYkizJk2QzfkEmAvorMqlreeDrqtHEabUHs"
+        );
+        const exchangeRates = response.data.rates;
+        this.tabs[1].fields.find(
+          (field) => field.id === "ForeignCurrencyAccommodationOT"
+        ).options = Object.keys(exchangeRates).map((currency) => ({
+          label: currency,
+          value: currency,
+        }));
+        this.tabs[1].fields.find(
+          (field) => field.id === "ForeignCurrencyOthersOT"
+        ).options = Object.keys(exchangeRates).map((currency) => ({
+          label: currency,
+          value: currency,
+        }));
+      } catch (error) {
+        console.error("Error fetching foreign currency data:", error);
       }
     },
   },
