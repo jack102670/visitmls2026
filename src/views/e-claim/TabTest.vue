@@ -257,7 +257,10 @@
                           v-model="selectedAttendeeType"
                           class="form-radio"
                         />
-                        <span class="ml-2 block text-sm font-medium text-gray-700 ">PKT Staff</span>
+                        <span
+                          class="ml-2 block text-sm font-medium text-gray-700"
+                          >PKT Staff</span
+                        >
                       </label>
                       <label class="inline-flex items-center">
                         <input
@@ -266,7 +269,10 @@
                           v-model="selectedAttendeeType"
                           class="form-radio"
                         />
-                        <span class="ml-2 block text-sm font-medium text-gray-700">Not a Staff</span>
+                        <span
+                          class="ml-2 block text-sm font-medium text-gray-700"
+                          >Not a Staff</span
+                        >
                       </label>
                     </div>
 
@@ -366,16 +372,16 @@
 
                     <!-- Attendees Table -->
                     <div class="mt-4">
-                      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                      <table
+                        class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                      >
                         <thead class="bg-gray-50 dark:bg-gray-800">
                           <tr>
                             <th
                               scope="col"
                               class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                             >
-                              <div
-                                class="flex items-center gap-x-3"
-                              >
+                              <div class="flex items-center gap-x-3">
                                 <span>Name</span>
                               </div>
                             </th>
@@ -383,9 +389,7 @@
                               scope="col"
                               class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                             >
-                              <div
-                                class="flex items-center gap-x-3"
-                              >
+                              <div class="flex items-center gap-x-3">
                                 <span>Staff ID</span>
                               </div>
                             </th>
@@ -393,9 +397,7 @@
                               scope="col"
                               class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                             >
-                              <div
-                                class="flex items-center gap-x-3"
-                              >
+                              <div class="flex items-center gap-x-3">
                                 <span>Company's Name</span>
                               </div>
                             </th>
@@ -403,9 +405,7 @@
                               scope="col"
                               class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                             >
-                              <div
-                                class="flex items-center gap-x-3"
-                              >
+                              <div class="flex items-center gap-x-3">
                                 <span>Status</span>
                               </div>
                             </th>
@@ -413,32 +413,42 @@
                               scope="col"
                               class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                             >
-                              <div
-                                class="flex items-center gap-x-3"
-                              >
+                              <div class="flex items-center gap-x-3">
                                 <span>Action</span>
                               </div>
                             </th>
                           </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                        <tbody
+                          class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
+                        >
                           <tr
                             v-for="(attendee, index) in attendees"
                             :key="index"
                           >
-                            <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
                               {{ attendee.name }}
                             </td>
-                            <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
                               {{ attendee.staffId || "-" }}
                             </td>
-                            <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
                               {{ attendee.companyName }}
                             </td>
-                            <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
                               {{ attendee.status }}
                             </td>
-                            <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
                               <button
                                 @click="removeAttendee(index)"
                                 class="text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
@@ -487,7 +497,6 @@
 
 <script>
 import vueFilePond from "vue-filepond";
-import axios from "axios";
 import "filepond/dist/filepond.min.css";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
@@ -513,7 +522,7 @@ export default {
       showModal: false,
       selectedAttendeeType: "pkt",
       selectedCompanyName: "",
-      pktCompanies: ["PKT Branch 1", "PKT Branch 2", "PKT Branch 3"], 
+      pktCompanies: ["PKT Branch 1", "PKT Branch 2", "PKT Branch 3"],
       modalForm: {
         name: "",
         staffId: "",
@@ -830,9 +839,10 @@ export default {
             {
               id: "YearHR",
               label: "Year",
-              type: "number",
+              type: "select",
               value: "",
               required: true,
+              options: [],
               gridClass: "sm:col-span-2",
             },
             {
@@ -841,7 +851,39 @@ export default {
               type: "select",
               value: "",
               required: true,
-              options: [],
+              options: [
+                { label: "HONG LEONG BANK", value: "HONG LEONG BANK" },
+                { label: "AGROBANK", value: "AGROBANK" },
+                { label: "AFFIN BANK BERHAD", value: "AFFIN BANK BERHAD" },
+                {
+                  label: "ALLIANCE BANK MALAYSIA BERHAD",
+                  value: "ALLIANCE BANK MALAYSIA BERHAD",
+                },
+                { label: "AMBANK BERHAD", value: "AMBANK BERHAD" },
+                { label: "BANK ISLAM MALAYSIA", value: "BANK ISLAM MALAYSIA" },
+                {
+                  label: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
+                  value: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
+                },
+                { label: "BANK MUAMALAT", value: "BANK MUAMALAT" },
+                {
+                  label: "BANK SIMPANAN NASIONAL BERHAD",
+                  value: "BANK SIMPANAN NASIONAL BERHAD",
+                },
+                { label: "CIMB BANK BERHAD", value: "CIMB BANK BERHAD" },
+                { label: "CITIBANK BERHAD", value: "CITIBANK BERHAD" },
+                {
+                  label: "HSBC BANK MALAYSIA BERHAD",
+                  value: "HSBC BANK MALAYSIA BERHAD",
+                },
+                { label: "MAYBANK", value: "MAYBANK" },
+                { label: "PUBLIC BANK", value: "PUBLIC BANK" },
+                { label: "RHB BANK", value: "RHB BANK" },
+                {
+                  label: "OCBC BANK MALAYSIA BERHAD",
+                  value: "OCBC BANK MALAYSIA BERHAD",
+                },
+              ],
               gridClass: "sm:col-span-2",
             },
             {
@@ -1104,32 +1146,20 @@ export default {
     };
   },
 
-  mounted() {
-    this.fetchForeignCurrencyOptions(); 
-    this.fetchExchangeRateOptions(); 
-    this.fetchBankNames();
-  },
-
   methods: {
     handleAddFile(field) {
       return (file) => {
-        // Push the selected file to the uploadedFiles array
         field.value.push(file.file);
-
-        // Log the selected files
         console.log("Selected Files:", field.value);
       };
     },
 
     handleRemoveFile(field) {
       return (file) => {
-        // Remove the file from the uploadedFiles array
         const index = field.value.findIndex((f) => f === file.file);
         if (index !== -1) {
           field.value.splice(index, 1);
         }
-
-        // Log the selected files
         console.log("Selected Files:", field.value);
       };
     },
@@ -1180,22 +1210,14 @@ export default {
     },
 
     submitForm(tab) {
-      // Create an empty object to hold the formatted form data
       const formattedData = {};
-
-      // Iterate through the fields of the current tab
       tab.fields.forEach((field) => {
-        // Use the field label as the key and the field value as the value
         formattedData[field.id] = field.value;
       });
 
-      // Add the tab title to the formatted data
       formattedData["tabTitle"] = tab.title;
-
-      // Emit the formatted form data
       this.$emit("formSubmitted", formattedData);
 
-      // Log the formatted form data to the console
       console.log("Formatted Form Data:", formattedData);
 
       if (tab.title === "Attendees") {
@@ -1206,76 +1228,8 @@ export default {
         });
         tab.attendees.push(newAttendee);
       } else {
-        // Handle other forms submission
         console.log(`Form submitted for tab: ${tab.title}`, tab.fields);
       }
-    },
-
-    fetchForeignCurrencyOptions() {
-      axios
-        .get("/api/foreign-currency")
-        .then((response) => {
-          const foreignCurrencyOptions = response.data.map((currency) => ({
-            label: currency.name,
-            value: currency.code,
-          }));
-          this.updateFieldOptions(
-            "ForeignCurrencyAccommodationOT",
-            foreignCurrencyOptions
-          );
-          this.updateFieldOptions(
-            "ForeignCurrencyOthersOT",
-            foreignCurrencyOptions
-          );
-        })
-        .catch((error) => {
-          console.error("Error fetching foreign currency options:", error);
-        });
-    },
-
-    fetchExchangeRateOptions() {
-      axios
-        .get("/api/exchange-rates")
-        .then((response) => {
-          const exchangeRateOptions = response.data.map((rate) => ({
-            label: rate.rate,
-            value: rate.code,
-          }));
-          this.updateFieldOptions(
-            "ExchangeRateAccommodationOT",
-            exchangeRateOptions
-          );
-          this.updateFieldOptions("ExchangeRateOthersOT", exchangeRateOptions);
-        })
-        .catch((error) => {
-          console.error("Error fetching exchange rate options:", error);
-        });
-    },
-
-    fetchBankNames() {
-      axios
-        .get("https://api.openbankproject.com/obp/v4.0.0/banks")
-        .then((response) => {
-          const bankOptions = response.data.banks.map((bank) => ({
-            label: bank.full_name,
-            value: bank.id,
-          }));
-          this.updateFieldOptions("BankNameHR", bankOptions);
-          this.updateFieldOptions("BankNameML", bankOptions);
-        })
-        .catch((error) => {
-          console.error("Error fetching bank names:", error);
-        });
-    },
-
-    updateFieldOptions(fieldId, options) {
-      this.tabs.forEach((tab) => {
-        tab.fields.forEach((field) => {
-          if (field.id === fieldId) {
-            field.options = options;
-          }
-        });
-      });
     },
   },
 };
