@@ -29,61 +29,75 @@
           </svg>
         </button>
         <div class="flex justify-center">
-          <h1 class="text-blue-900 font-bold text-xl text">
+          <h1 class="font-bold text-xl text">
             SUMMARY CLAIM FOR REIMBURSEMENT OF ALL EXPENSES
           </h1>
         </div>
 
         <!-- Information -->
-        <div class="flex justify-between my-4">
-          <div>
-            <div class="mt-5 h-12">
-              <h2 class="font-semibold">Name of Company :</h2>
-              <p class="text-gray-600">PKT LOGISTIC (M) SDN BHD</p>
-            </div>
-            <div class="mt-5 h-12">
-              <h2 class="font-semibold">Name of Claimaint :</h2>
-              <p class="text-gray-600">PKT LOGISTIC (M) SDN BHD</p>
-            </div>
-            <div class="mt-5 h-12">
-              <h2 class="font-semibold">Designation :</h2>
-              <p class="text-gray-600">PKT LOGISTIC (M) SDN BHD</p>
-            </div>
-          </div>
-          <div class="text-right">
-            <div class="mt-5 h-12">
-              <button
-                v-show="!seeMore"
-                @click="seeMore = !seeMore"
-                class="bg-green-600 hover:bg-green-700 text-white rounded-xl px-8 text-sm font-bold py-2"
+        <div class="flex justify-between items-center my-4">
+          <h1 class="text-blue-900 font-bold text-3xl">Webinars</h1>
+
+          <div class="mt-5 h-12">
+            <button
+              v-show="!seeMore"
+              @click="seeMore = !seeMore"
+              class="bg-green-600 hover:bg-green-700 text-white rounded-xl px-8 text-sm font-bold py-2"
+            >
+              See More
+            </button>
+            <button v-show="seeMore" @click="PrintSummary">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-10 h-10"
               >
-                See More
-              </button>
-              <button v-show="seeMore" @click="PrintSummary">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-10 h-10"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div class="mt-5 h-12">
-              <h2 class="font-semibold">Date of Claim :</h2>
-              <p class="text-gray-600">PKT LOGISTIC (M) SDN BHD</p>
-            </div>
-            <div class="mt-5 h-12">
-              <h2 class="font-semibold">Claim for the Month Ended :</h2>
-              <p class="text-gray-600">PKT LOGISTIC (M) SDN BHD</p>
-            </div>
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-2 lg:grid-cols-4 gap-2 [&>*:nth-child(even)]:text-right lg:[&>*:nth-child(even)]:text-left"
+        >
+          <div class="mt-5 h-12">
+            <h2 class="font-semibold">Name of Company :</h2>
+            <p class="text-gray-600">PKT LOGISTIC (M) SDN BHD</p>
+          </div>
+          <div class="mt-5 h-12">
+            <h2 class="font-semibold">Name of Claimaint :</h2>
+            <p class="text-gray-600">TEOW CHEE WEN</p>
+          </div>
+          <div class="mt-5 h-12">
+            <h2 class="font-semibold">Designation :</h2>
+            <p class="text-gray-600">DEVELOPER</p>
+          </div>
+          <div class="mt-5 h-12">
+            <h2 class="font-semibold">Department :</h2>
+            <p class="text-gray-600">ICT</p>
+          </div>
+          <div class="mt-5 h-12">
+            <h2 class="font-semibold">Cost Center :</h2>
+            <p class="text-gray-600">The Ship</p>
+          </div>
+          <div class="mt-5 h-12">
+            <h2 class="font-semibold">Report Type :</h2>
+            <p class="text-gray-600">Finance</p>
+          </div>
+          <div class="mt-5 h-12">
+            <h2 class="font-semibold">Date of Claim :</h2>
+            <p class="text-gray-600">20 MAY 2024</p>
+          </div>
+          <div class="mt-5 h-12">
+            <h2 class="font-semibold">Claim for the Month Ended :</h2>
+            <p class="text-gray-600">31 MAY 2024</p>
           </div>
         </div>
 
@@ -156,7 +170,7 @@
                     <div
                       v-show="key == 'Receipts'"
                       class="text-blue-700 flex items-center justify-center cursor-pointer"
-                      @click="openImg = !openImg"
+                      @click.prevent="DownloadFile()"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -188,38 +202,6 @@
               </table>
             </div>
           </div>
-
-          <!-- Image showing -->
-          <div
-            class="fixed w-screen h-screen top-0 left-0 flex justify-center items-center"
-            v-show="openImg"
-          >
-            <div
-              class="absolute bg-black w-screen h-screen top-0 left-0 z-40 opacity-35"
-              @click="openImg = false"
-            ></div>
-            <img
-              src="../../assets/images/pkt-blue-logo.jpg"
-              alt=""
-              class="w-96 h-96 opacity-100 z-50"
-            />
-            <div class="absolute right-10 top-10 z-50" @click="openImg = false">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="white"
-                class="w-12 h-12"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6 18 18 6M6 6l12 12"
-                />
-              </svg>
-            </div>
-          </div>
         </div>
 
         <!-- Status Table -->
@@ -247,11 +229,24 @@
               <th
                 class="text-xs lg:text-base text-center font-semibold border-r-2 border-gray-400"
               >
-                VERIFIED
+                <!-- Status Bar -->
+                <div
+                  class="mx-auto rounded-full py-2 text-center lg:w-[90%] w-full"
+                  :class="{
+                    'bg-orange-200': statusVerifier == 'PENDING',
+                    'bg-green-200': statusVerifier == 'VERIFIED',
+                    'bg-red-200': statusVerifier == 'REJECTED',
+                    'text-orange-500': statusVerifier == 'PENDING',
+                    'text-green-500': statusVerifier == 'VERIFIED',
+                    'text-red-500': statusVerifier == 'REJECTED',
+                  }"
+                >
+                  <p>{{ statusVerifier }}</p>
+                </div>
               </th>
               <td class="pl-6">MANIRAJA</td>
               <td class="">HEAD OF DEPARTMENT</td>
-              <td class="">20 JULY 2024</td>
+              <td class="">{{ dateVerifier }}</td>
             </tr>
             <tr
               class="h-14 text-left text-xs lg:text-base border-t-2 border-gray-400"
@@ -259,11 +254,24 @@
               <th
                 class="text-xs lg:text-base text-center font-semibold border-r-2 border-gray-400"
               >
-                APPROVED
+                <!-- Status Bar -->
+                <div
+                  class="mx-auto rounded-full py-2 text-center lg:w-[90%] w-full"
+                  :class="{
+                    'bg-orange-200': statusApprover == 'PENDING',
+                    'bg-green-200': statusApprover == 'APPROVED',
+                    'bg-red-200': statusApprover == 'REJECTED',
+                    'text-orange-500': statusApprover == 'PENDING',
+                    'text-green-500': statusApprover == 'APPROVED',
+                    'text-red-500': statusApprover == 'REJECTED',
+                  }"
+                >
+                  <p>{{ statusApprover }}</p>
+                </div>
               </th>
               <td class="pl-6">SHU LAN</td>
               <td class="">HR</td>
-              <td class="">20 JULY 2024</td>
+              <td class="">{{ dateApprover }}</td>
             </tr>
           </table>
         </div>
@@ -271,7 +279,7 @@
         <!-- Resubmission table -->
 
         <div
-          v-show="reject"
+          v-show="rejectApprover || rejectVerifier"
           class="text-xs lg:text-base border-2 mt-10 border-gray-400 rounded-2xl"
           id="table-overflow"
         >
@@ -294,12 +302,9 @@
                 class="text-xs lg:text-sm font-medium border-r-2 border-gray-400"
               >
                 <div
-                  class="mx-auto bg-red-200 rounded-full py-2 flex justify-around items-center text-red-500 lg:w-[90%] w-full"
+                  class="mx-auto bg-red-200 rounded-full py-2 text-center text-red-500 lg:w-[90%] w-full"
                 >
-                  <span
-                    class="w-2 h-2 lg:w-3 lg:h-3 ml-2 rounded-[100%] bg-red-600"
-                  ></span>
-                  <p class="mr-2">RESUBMISSION</p>
+                  <p>RESUBMISSION</p>
                 </div>
               </th>
               <td class="pl-6">{{ remark }}</td>
@@ -310,7 +315,7 @@
         <!-- Remark table -->
 
         <div
-          v-show="approve"
+          v-show="approve || verified"
           class="text-xs lg:text-base border-2 mt-10 border-gray-400 rounded-2xl"
           id="table-overflow"
         >
@@ -331,7 +336,12 @@
 
         <!-- Button -->
         <div
-          v-show="approve != true && reject != true"
+          v-show="
+            approve != true &&
+            verified != true &&
+            rejectApprover != true &&
+            rejectVerifier != true
+          "
           class=".detail-table w-full lg:flex-row flex flex-col justify-between h-24 items-center pt-6"
         >
           <div class="flex w-full items-center">
@@ -385,29 +395,6 @@
           </div>
         </div>
 
-        <!-- Approve Success Notification -->
-        <div
-          v-show="approveSuccess"
-          class="bg-gray-100 px-10 py-3 rounded-full fixed left-[50%] top-10 z-50 flex justify-center items-center"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="green"
-            class="w-8 h-8"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
-            />
-          </svg>
-
-          <h1>APPROVE SUCCESSFULLY</h1>
-        </div>
-
         <!-- Reject Confirmation -->
         <div
           v-show="confirmReject"
@@ -431,7 +418,7 @@
               </button>
               <button
                 class="rounded-lg px-4 py-2 w-28 text-lg bg-red-600 hover:bg-red-700 text-white ml-2"
-                @click="(confirmReject = false), (reject = true)"
+                @click="ConfirmReject"
               >
                 Reject
               </button>
@@ -444,17 +431,29 @@
 </template>
 
 <script>
+import moment from 'moment';
+import fileSaver from 'file-saver';
 export default {
   data() {
     return {
+      // need to get from API
+      role: 'approver',
+
       seeMore: false,
-      openImg: false,
       confirmReject: false,
       confirmApprove: false,
       approveSuccess: false,
-      reject: false,
+
+      // need to fetch from or post to API
+      rejectApprover: false,
+      rejectVerifier: false,
       approve: false,
+      verified: false,
+      dateApprover: '',
+      dateVerifier: '',
       remark: '',
+
+      // need to fetch from API
       claimData: [
         {
           no: 1,
@@ -489,7 +488,7 @@ export default {
           tabTitle: 'Local Travelling',
         },
         {
-          No: 2,
+          No: 1,
           date: '2024-05-16',
           DestinationPurpose: 'LABEL 1',
           MileageKM: 40,
@@ -498,10 +497,10 @@ export default {
           Toll: 20,
           Receipts: '',
           Total: 150,
-          tabTitle: 'Local Travelling',
+          tabTitle: 'Oversea Travelling',
         },
         {
-          No: 3,
+          No: 1,
           date: '2024-05-16',
           DestinationPurpose: 'LABEL 1',
           MileageKM: 40,
@@ -510,7 +509,7 @@ export default {
           Toll: 20,
           Receipts: '',
           Total: 150,
-          tabTitle: 'Local Travelling',
+          tabTitle: 'Entertainment',
         },
       ],
     };
@@ -523,18 +522,85 @@ export default {
       }
       return num;
     },
+    // status of verifier to change the status color and title in table
+    // need to post to database
+    statusVerifier() {
+      let status = 'PENDING';
+      if (this.rejectVerifier) {
+        status = 'REJECTED';
+      } else if (this.verified) {
+        status = 'VERIFIED';
+      } else {
+        status = 'PENDING';
+      }
+
+      return status;
+    },
+
+    // status of approver to change the status color and title in table
+    // need to post to database
+    statusApprover() {
+      let status = 'PENDING';
+      if (this.rejectApprover) {
+        status = 'REJECTED';
+      } else if (this.approve) {
+        status = 'APPROVED';
+      } else {
+        status = 'PENDING';
+      }
+
+      return status;
+    },
   },
   methods: {
     PrintSummary() {
       print();
     },
+    // click function after confirm the approve
     ConfirmApprove() {
       this.confirmApprove = false;
-      this.approve = true;
-      this.approveSuccess = true;
-      setTimeout(() => {
-        this.approveSuccess = false;
-      }, 2000);
+      this.ApproveOrReject('Approve');
+    },
+
+    // click function after confirm the reject
+    ConfirmReject() {
+      this.confirmReject = false;
+      this.reject = true;
+      this.ApproveOrReject('Reject');
+    },
+
+    //approve or reject action
+    // need to post to database
+    ApproveOrReject(AoR) {
+      if (AoR == 'Approve') {
+        if (this.role == 'approver') {
+          this.approve = true;
+          this.dateApprover = moment(new Date()).format('D MMM YYYY');
+        } else if (this.role == 'verifier') {
+          this.verified = true;
+          this.dateVerifier = moment(new Date()).format('D MMM YYYY');
+        }
+
+        // redirect to dashboard and show animation
+        this.$eventBus.emit('approveSuccess');
+        this.$router.push({ name: 'AdminDashboardpage' });
+      } else if (AoR == 'Reject') {
+        if (this.role == 'approver') {
+          this.rejectApprover = true;
+          this.dateApprover = moment(new Date()).format('D MMM YYYY');
+        } else if (this.role == 'verifier') {
+          this.rejectVerifier = true;
+          this.dateVerifier = moment(new Date()).format('D MMM YYYY');
+        }
+      }
+    },
+
+    // Download the file
+    DownloadFile() {
+      let url =
+        'https://pktgroup.com/wp-content/uploads/2021/03/OAH-News-Header-800x400.jpg';
+
+      fileSaver.saveAs(url, 'pkt.jpg');
     },
   },
 };
