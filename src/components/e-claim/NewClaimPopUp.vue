@@ -51,7 +51,8 @@
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             >
               <option value="" disabled selected></option>
-              <option value="IT DEPARTMENT">IT DEPARTNEMT</option>
+              <option value="ICT">ICT</option>
+              <option value="Finance">Finance</option>
             </select>
           </div>
           <div>
@@ -226,11 +227,35 @@ export default {
         reportStartDate: formStore.formData.reportStartDate,
         reportEndDate: formStore.formData.reportEndDate,
         memo: formStore.formData.memo,
+        uniqueCode: formStore.formData.uniqueCode,
       },
       branch: '', // Add the missing branch property
     };
   },
-  methods: {
+  methods: {generateUniqueCode() {
+      // Check if this.userId is defined
+      if (this.formData.claimantName) {
+        // Use part of the claimantName for uniqueness, e.g., 4 characters
+        const claimantNameFragment = this.formData.claimantName.substring(0, 4);
+
+        // Generate a random number and pad it to 2 characters
+        const randomNumber = Math.floor(Math.random() * 100)
+          .toString()
+          .padStart(2, "0");
+
+
+        const timestamp = Date.now().toString().slice(-2);
+
+
+        this.formData.uniqueCode = `Claim${claimantNameFragment}${randomNumber}${timestamp}`;
+        console.log("Unique Code:", this.formData.uniqueCode);
+        return this.formData.uniqueCode;
+      } else {
+        console.error("User ID is undefined.");
+
+        return "";
+      }
+    },
     submitForm(page) {
       this.active += page;
 
@@ -249,7 +274,9 @@ export default {
         department: this.formData.department,
         designation_title: this.formData.designation,
         claim_startdate: this.formData.reportStartDate,
-        claim_enddate: this.formData.reportEndDate
+        claim_enddate: this.formData.reportEndDate,
+        reference_number: this.generateUniqueCode(),
+        report_name: this.formData.reportName,
       };
 
       // Send API request using axios
@@ -278,7 +305,7 @@ export default {
 </script>
 <style scoped>
 .formStepCircle:not(:first-child)::before {
-  content: '';
+  content: "";
   background-color: rgb(209 213 219);
   width: 100%;
   height: 3px;

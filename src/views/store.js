@@ -12,6 +12,7 @@ export const formStore = {
     reportStartDate: '',
     reportEndDate: '',
     memo: '',
+    uniqueCode: '',
 
     selectedOption:'',
 
@@ -39,7 +40,7 @@ export const formStore = {
       reportStartDate: '',
       reportEndDate: '',
       memo: '',
-
+      uniqueCode: '',
       selectedOption:'',
 
     };
