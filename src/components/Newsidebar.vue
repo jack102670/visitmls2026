@@ -2,7 +2,7 @@
   <!-- component -->
   <button
     :style="sidebarPosition"
-    class="toggle-btn block sm:hidden fixed z-50 p-2 bg-slate-200 text-blue-900 rounded-full"
+    class="toggle-btn block fixed z-50 p-2 bg-slate-200 text-blue-900 rounded-full"
     @click.stop="toggleSidebar"
   >
     <svg
@@ -300,7 +300,7 @@ export default {
   name: 'NewsidebarComponent',
   data() {
     return {
-      open: false,
+      open: true,
       isLightTheme: true,
       userDetails: [],
       role: 'admin',
@@ -371,6 +371,12 @@ export default {
     },
     toggleSidebar() {
       this.open = !this.open;
+      const element = document.querySelector('main');
+      if (element && !this.open) {
+        element.classList.add('become-big');
+      } else if (element && this.open) {
+        element.classList.remove('become-big');
+      }
     },
   },
   created() {
@@ -393,16 +399,23 @@ export default {
 };
 </script>
 
-<style scoped>
-@media (max-width: 640px) {
-  .animate-open {
-    transform: translateX(0);
-    transition: 0.5s ease;
-  }
+<style>
+.animate-open {
+  transform: translateX(0);
+  transition: 0.5s ease;
+}
 
-  .animate-close {
-    transform: translateX(-100%);
-    transition: 0.5s ease;
-  }
+.animate-close {
+  transform: translateX(-100%);
+  transition: 0.5s ease;
+}
+
+.become-big {
+  margin-left: 0;
+  transition: all 0.5s ease;
+}
+
+main {
+  transition: all 0.5s ease;
 }
 </style>
