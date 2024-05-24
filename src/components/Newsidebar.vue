@@ -2,11 +2,10 @@
   <!-- component -->
   <button
     :style="sidebarPosition"
-    class="toggle-btn sm:block md:hidden fixed z-50 p-2 bg-slate-200 text-blue-900 rounded-full"
+    class="toggle-btn block sm:hidden fixed z-50 p-2 bg-slate-200 text-blue-900 rounded-full"
     @click.stop="toggleSidebar"
   >
     <svg
-      :style="{ transform: 'rotate(' + arrowRotation + 'deg)' }"
       class="w-6 h-6"
       fill="none"
       stroke="currentColor"
@@ -23,8 +22,6 @@
   </button>
   <aside
     :class="{
-      hidden: !open,
-      'sm:hidden': !open,
       fixed: open,
       'top-0': open,
       'left-0': open,
@@ -42,8 +39,10 @@
       'rtl:border-l': open,
       'dark:bg-gray-900': open,
       'dark:border-gray-700': open,
+      'animate-open': open,
+      'animate-close': !open,
     }"
-    class="sm:hidden md:block fixed top-0 left-0 z-40 w-64 h-screen flex flex-col px-4 py-8 overflow-y-auto bg-[#160959] border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700"
+    class="sm:block fixed top-0 left-0 z-40 w-64 h-screen flex flex-col px-4 py-8 overflow-y-auto bg-[#160959] border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700"
   >
     <a href="/" class="flex justify-center items-center">
       <img
@@ -92,7 +91,9 @@
       <h4 class="text-slate-200 dark:text-gray-200 font-medium text-center">
         Welcome,
       </h4>
-      <p class="text-sm font-medium text-slate-200 dark:text-gray-400 mt-1 text-center justify-center">
+      <p
+        class="text-sm font-medium text-slate-200 dark:text-gray-400 mt-1 text-center justify-center"
+      >
         {{ userDetails.userName }}
       </p>
     </div>
@@ -172,7 +173,7 @@
           :to="{ name: 'ManagerequestSafety' }"
         >
           <svg
-            class="w-5 h-5 "
+            class="w-5 h-5"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -194,7 +195,7 @@
           :to="{ name: 'manageVendor' }"
         >
           <svg
-            class="w-6 h-6 "
+            class="w-6 h-6"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -210,6 +211,28 @@
           </svg>
 
           <span class="mx-4 font-medium">Manage Vendor</span>
+        </router-link>
+        <router-link
+          v-if="role === 'admin'"
+          class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
+          :to="{ name: 'AdminDashboardpage' }"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z"
+            />
+          </svg>
+
+          <span class="mx-4 font-medium">Dashboard</span>
         </router-link>
 
         <a
@@ -271,16 +294,16 @@
 </template>
 
 <script>
-import { store } from "../views/store.js";
+import { store } from '../views/store.js';
 
 export default {
-  name: "NewsidebarComponent",
+  name: 'NewsidebarComponent',
   data() {
     return {
       open: false,
       isLightTheme: true,
       userDetails: [],
-      role: "",
+      role: 'admin',
       showLogOutButton: true,
       showLoadingButton: false,
     };
@@ -288,29 +311,28 @@ export default {
   computed: {
     sidebarPosition() {
       return {
-        left: this.open ? "240px" : "4px",
-        top: this.open ? "9px" : "9px", // Add your top position style here
+        left: this.open ? '240px' : '4px',
+        top: this.open ? '9px' : '9px', // Add your top position style here
+        transition: this.open ? 'all 0.5s ease-out' : 'all 0.6s ease-in',
+        transform: this.open ? 'rotate(0deg)' : 'rotate(180deg)',
       };
-    },
-    arrowRotation() {
-      return this.open ? "360" : "180";
     },
   },
   mounted() {
     this.userDetails = store.getSession().userDetails;
     this.token = store.data.token;
     this.role = store.getRole();
-    console.log(this.userDetails, "user details");
+    console.log(this.userDetails, 'user details');
     // Fetch data when the component is mounted
 
     //this.currentUser();
   },
   beforeCreate() {
-    if (!localStorage.getItem("reloaded")) {
-      localStorage.setItem("reloaded", "true");
+    if (!localStorage.getItem('reloaded')) {
+      localStorage.setItem('reloaded', 'true');
       window.location.reload();
     } else {
-      localStorage.removeItem("reloaded");
+      localStorage.removeItem('reloaded');
       // Additional code for your component
     }
   },
@@ -319,27 +341,27 @@ export default {
       this.showLogOutButton = false;
       this.showLoadingButton = true;
       store.clearSession();
-      this.$router.push("/"); // Redirect to login
+      this.$router.push('/'); // Redirect to login
     },
     // logoutAPI(){
     //   axios.post("http://172.28.28.91:8085api/Security/logout")
     // },
     toggleTheme() {
       const root = document.documentElement;
-      const isDarkMode = root.classList.contains("dark");
+      const isDarkMode = root.classList.contains('dark');
 
       if (isDarkMode) {
-        root.classList.remove("dark");
-        root.removeAttribute("data-mode");
+        root.classList.remove('dark');
+        root.removeAttribute('data-mode');
       } else {
-        root.classList.add("dark");
-        root.setAttribute("data-mode", "dark");
+        root.classList.add('dark');
+        root.setAttribute('data-mode', 'dark');
       }
 
       this.isLightTheme = !isDarkMode;
 
       // Store the current theme in localStorage
-      localStorage.setItem("theme", this.isLightTheme ? "light" : "dark");
+      localStorage.setItem('theme', this.isLightTheme ? 'light' : 'dark');
     },
     toggleDropdown() {
       this.dropdownOpen = !this.dropdownOpen;
@@ -352,23 +374,35 @@ export default {
     },
   },
   created() {
-
-    const storedTheme = localStorage.getItem("theme");
+    const storedTheme = localStorage.getItem('theme');
 
     if (storedTheme) {
-    
-      this.isLightTheme = storedTheme === "light";
-      this.isLightTheme = storedTheme === "dark";
+      this.isLightTheme = storedTheme === 'light';
+      this.isLightTheme = storedTheme === 'dark';
 
       const root = document.documentElement;
       if (this.isLightTheme) {
-        root.classList.remove("light");
-        root.removeAttribute("data-mode");
+        root.classList.remove('light');
+        root.removeAttribute('data-mode');
       } else {
-        root.classList.add("dark");
-        root.setAttribute("data-mode", "dark");
+        root.classList.add('dark');
+        root.setAttribute('data-mode', 'dark');
       }
     }
   },
 };
 </script>
+
+<style scoped>
+@media (max-width: 640px) {
+  .animate-open {
+    transform: translateX(0);
+    transition: 0.5s ease;
+  }
+
+  .animate-close {
+    transform: translateX(-100%);
+    transition: 0.5s ease;
+  }
+}
+</style>

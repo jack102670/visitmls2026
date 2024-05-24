@@ -35,6 +35,7 @@ import FormTab from '../views/e-claim/user-ui/FormTab.vue';
 import testing2 from '../views/Testing2.vue';
 import organizationchartdemo from '../views/organizationchartdemo.vue';
 import AdminSummaryClaimpage from '../components/e-claim/AdminSummaryClaimpage.vue';
+import AdminDashboardpage from '../components/e-claim/AdminDashboardpage.vue';
 const routes = [
   {
     path: '/test2',
@@ -79,6 +80,14 @@ const routes = [
     name: 'AdminSummaryClaimpage',
     components: {
       default: AdminSummaryClaimpage,
+      Sidebar: Newsidebar,
+    },
+  },
+  {
+    path: '/admindashboard',
+    name: 'AdminDashboardpage',
+    components: {
+      default: AdminDashboardpage,
       Sidebar: Newsidebar,
     },
   },
