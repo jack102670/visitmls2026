@@ -188,12 +188,20 @@
                         >
                           {{ claim.Name }}
                         </td>
+                        <td
+                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                        >
+                          <span v-if="claim.dateLT">{{ claim.dateLT }}</span>
+                          <span v-if="claim.dateOT">{{ claim.dateOT }}</span>
+                          <span v-if="claim.dateML">{{ claim.dateML }}</span>
+                          <span v-if="claim.dateE">{{ claim.dateE }}</span>
+                        </td>
 
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2"
                         >
                           <button
-                            @click="showDetails(claim)"
+                            @click="showDetails(claim,index)"
                             class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
                           >
                             <svg
@@ -208,26 +216,6 @@
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                              />
-                            </svg>
-                          </button>
-
-                          <button
-                            @click="deleteClaim(index)"
-                            class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke-width="1.5"
-                              stroke="currentColor"
-                              class="w-5 h-5"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                               />
                             </svg>
                           </button>
@@ -258,13 +246,13 @@
           <!-- Modal header -->
           <!-- Your existing modal header content -->
 
-          <div>
+          <div v-if="selectedClaimType === 'LocalTravelling'">
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
-              <h1 class="text-3xl font-bold ">Local Travelling Form</h1>
-              <hr class="mt-2 mb-4">
+              <h1 class="text-3xl font-bold">Local Travelling Form</h1>
+              <hr class="mt-2 mb-4" />
 
-              <div class="flex  justify-between items-center mb-4">
+              <div class="flex justify-between items-center mb-4">
                 <label for="nodeId" class="text-gray-700 font-bold mr-2"
                   >Date:</label
                 >
@@ -314,7 +302,6 @@
                 />
               </div>
 
-
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Toll:</label
@@ -347,23 +334,17 @@
                 <input
                   type="text"
                   id="positioncode"
-                  v-model="localTravellingDetails.TollLT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
               </div>
- <hr>
+              <hr />
               <div class="flex justify-center items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2 text-2xl"
-                  >Total:</label
+                <label
+                  for="nodeParentId"
+                  class="text-gray-700 font-bold mr-2 text-2xl"
+                  >Total: RM {{ totallocalTravellingDetails }}</label
                 >
-                <input
-                  type="text"
-                  id="positioncode"
-                  v-model="localTravellingDetails.TollLT"
-                  :disabled="!isEditMode"
-                  class="border px-4 py-2"
-                />
               </div>
 
               <!-- Add/Edit node button -->
@@ -377,13 +358,31 @@
                 <!-- Change button text based on edit mode -->
               </button>
 
-              <!-- Delete node button -->
               <button
                 v-show="!isEditMode"
                 @click="isClickModal = false"
-                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+                class="bg-[#160959] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
               >
                 Cancel
+              </button>
+              <button
+                @click="deleteForm()"
+                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
               </button>
             </div>
           </div>
@@ -569,6 +568,25 @@
               >
                 Cancel
               </button>
+              <button
+                @click="deleteForm"
+                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
           <div v-if="selectedClaimType === 'MedicalLeaveReimbursement'">
@@ -697,7 +715,7 @@
                   class="border rounded-md px-4 py-2 w-full"
                 />
               </div>
-          <!--<div class="mb-4">
+              <!--<div class="mb-4">
                 <label for="nodeName" class="block text-gray-700 font-bold mb-2"
                   >Person Entertained:</label
                 >
@@ -1094,6 +1112,8 @@ export default {
   },
   data() {
     return {
+      index :null,
+      formToDelete: null,
       claims: [],
       showtab: false,
       dataclaims: [],
@@ -1104,6 +1124,15 @@ export default {
       overseasTravellingDetails: {},
       cancel: true,
     };
+  },
+  computed: {
+    totallocalTravellingDetails() {
+      return (
+        (parseInt(this.localTravellingDetails.MileageRMLT) || 0) +
+        (parseInt(this.localTravellingDetails.ParkingLT) || 0) +
+        (parseInt(this.localTravellingDetails.TollLT) || 0)
+      );
+    },
   },
   created() {
     this.fetchClaims();
@@ -1124,10 +1153,12 @@ export default {
     savenode() {
       this.isClickModal = false;
     },
-    showDetails(claim) {
+    showDetails(claim,index) {
+      this.index = index;
+      console.log("Current index", this.index);
       // Update selectedClaimType based on the type of claim
       this.selectedClaimType = claim.tabTitle.replace(/\s+/g, ""); // Remove spaces from claim type
-
+      this.formToDelete = index;
       // Update corresponding details object based on claim type
       switch (this.selectedClaimType) {
         case "LocalTravelling":
@@ -1136,6 +1167,7 @@ export default {
           break;
         case "OverseasTravellingwithAccommodation":
           this.overseasTravellingDetails = claim;
+          
           console.log(
             "Overseas Travelling Details:",
             this.overseasTravellingDetails
@@ -1364,7 +1396,7 @@ export default {
                   // Dummy data for a claim
                   const thisisforentertainment = {
                     date_event: claim.dateE, // Example date
-                 // person_entertained: claim.PersonEntertainedE,
+                    // person_entertained: claim.PersonEntertainedE,
                     type_of_entertainment: claim.TypeofEntertainmentE,
                     other_type_of_entertainment:
                       claim.OtherTypeofEntertainmentE,
@@ -1524,8 +1556,11 @@ export default {
 
     // Add mapping functions for other endpoints as needed
 
-    deleteClaim(index) {
-      this.dataclaims.splice(index, 1);
+    deleteForm() {
+      if (this.index !== -1) {
+        this.dataclaims.splice(this.index,1);
+      }
+      this.isClickModal = false; // Close the modal
     },
     // other methods...
     fetchClaims() {
