@@ -47,7 +47,7 @@
                 Claim
                 <span
                   class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400"
-                >
+                >1
                 </span>
               </h2>
             </div>
@@ -135,7 +135,7 @@
                               <div>
                                 <h2
                                   class="font-medium text-gray-500 dark:text-gray-300"
-                                ></h2>
+                                >HQ</h2>
                               </div>
                             </div>
                           </div>
@@ -149,22 +149,22 @@
                                 <!-- Conditionally display 'Badge Request' if typeofrequest includes 'br' -->
                               </div>
                             </div>
-                          </div>
+                          </div>Entertainment
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        ></td>
+                        > MR MAN </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        ></td>
+                        > ET2584232</td>
 
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        ></td>
+                        > 20 July 2024</td>
 
                         <td
                           class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                        ></td>
+                        > pending</td>
 
                         <td class="px-4 py-4 ml text-sm whitespace-nowrap">
                           <div class="flex items-center gap-x-6">
@@ -256,14 +256,14 @@
 
 <script>
 // import CreateNewClaimPopUp from '@/components/e-claim/CreateNewClaimPopUp.vue';
-import NewClaimPopUp from '@/components/e-claim/NewClaimPopUp.vue';
+import NewClaimPopUp from "@/components/e-claim/NewClaimPopUp.vue";
 
 export default {
   components: {
     // CreateNewClaimPopUp,
     NewClaimPopUp,
   },
-  name: 'homepageeclaiM',
+  name: "homepageeclaiM",
   data() {
     return {
       popup: false,

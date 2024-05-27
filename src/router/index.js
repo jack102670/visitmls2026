@@ -36,7 +36,16 @@ import testing2 from '../views/Testing2.vue';
 import organizationchartdemo from '../views/organizationchartdemo.vue';
 import AdminSummaryClaimpage from '../components/e-claim/AdminSummaryClaimpage.vue';
 import AdminDashboardpage from '../components/e-claim/AdminDashboardpage.vue';
+import Homepage from '../views/homepage.vue';
 const routes = [
+  {
+    path: '/homepage',
+    name: 'UserHomepage',
+    components: {
+      default: Homepage,
+      Sidebar: Newsidebar,
+    },
+  },
   {
     path: '/test2',
     name: 'testing2',
