@@ -681,7 +681,7 @@
                   class="border rounded-md px-4 py-2 w-full"
                 />
               </div>
-              <div class="mb-4">
+          <!--<div class="mb-4">
                 <label for="nodeName" class="block text-gray-700 font-bold mb-2"
                   >Person Entertained:</label
                 >
@@ -692,7 +692,7 @@
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
-              </div>
+              </div> -->
 
               <div class="mb-4">
                 <label
@@ -1345,7 +1345,7 @@ export default {
                   // Dummy data for a claim
                   const thisisforentertainment = {
                     date_event: claim.dateE, // Example date
-                    person_entertained: claim.PersonEntertainedE,
+                 // person_entertained: claim.PersonEntertainedE,
                     type_of_entertainment: claim.TypeofEntertainmentE,
                     other_type_of_entertainment:
                       claim.OtherTypeofEntertainmentE,
