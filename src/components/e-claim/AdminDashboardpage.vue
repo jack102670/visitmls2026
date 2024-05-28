@@ -154,7 +154,12 @@ export default {
           claimant: 'Teow Chee Wen',
           amount: 729.3,
           date: '20 May 2024',
-          status: 'PENDING',
+          status:
+            localStorage.getItem('ApproveOrNot') == 'approve'
+              ? 'APPROVED'
+              : localStorage.getItem('ApproveOrNot') == 'reject'
+                ? 'REJECTED'
+                : 'PENDING',
         },
         {
           reportName: 'Program',
@@ -205,8 +210,19 @@ export default {
     },
   },
   mounted() {
-    this.$eventBus.on('approveSuccess', this.ShowNotification);
+    // Sidebar close or open
+    let openOrNot = localStorage.getItem('openOrNot');
+    const element = document.querySelector('main');
+    if (element && openOrNot == 'false') {
+      element.classList.add('become-big');
+    } else if (element && openOrNot == 'true') {
+      element.classList.remove('become-big');
+    }
+
     this.initializeDataTable();
+
+    // for testing purposes only
+    localStorage.setItem('ApproveOrNot', 'pending');
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <!-- Summary Report for Admin View-->
-<template> 
+<template>
   <main
     class="flex-1 overflow-x-hidden text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64 h-auto"
   >
@@ -188,8 +188,18 @@
 </template>
 
 <script>
-export default {};
+export default {
+  mounted() {
+    // Sidebar close or open
+    let openOrNot = localStorage.getItem('openOrNot');
+    const element = document.querySelector('main');
+    if (element && openOrNot == 'false') {
+      element.classList.add('become-big');
+    } else if (element && openOrNot == 'true') {
+      element.classList.remove('become-big');
+    }
+  },
+};
 </script>
 
-<style>
-</style>
+<style></style>

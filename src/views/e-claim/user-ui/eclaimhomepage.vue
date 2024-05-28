@@ -284,6 +284,16 @@ export default {
       }
     },
   },
+  mounted() {
+    // Sidebar close or open
+    let openOrNot = localStorage.getItem('openOrNot');
+    const element = document.querySelector('main');
+    if (element && openOrNot == 'false') {
+      element.classList.add('become-big');
+    } else if (element && openOrNot == 'true') {
+      element.classList.remove('become-big');
+    }
+  },
 };
 </script>
 

@@ -31,7 +31,6 @@
                 >
               </div>
             </button>
-      
           </div>
         </div>
 
@@ -159,7 +158,6 @@
                           </div>
                         </th>
                         <th
-
                           scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
@@ -1092,6 +1090,16 @@ export default {
   created() {
     this.fetchClaims();
     this.userDetails = store.getSession().userDetails;
+  },
+  mounted() {
+    // Sidebar close or open
+    let openOrNot = localStorage.getItem('openOrNot');
+    const element = document.querySelector('main');
+    if (element && openOrNot == 'false') {
+      element.classList.add('become-big');
+    } else if (element && openOrNot == 'true') {
+      element.classList.remove('become-big');
+    }
   },
   methods: {
     toggleEditMode() {

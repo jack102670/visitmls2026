@@ -533,7 +533,7 @@ export default {
         },
         {
           no: 3,
-          type: 'Outstation/Overseas Travelling Expenses',
+          type: 'Entertainment',
           particulars: 'as attached travelling voucher',
           amount: 300,
         },
@@ -560,7 +560,7 @@ export default {
           Parking: 10,
           Toll: 20,
           Receipts: '',
-          Total: 150,
+          Total: 279.3,
           tabTitle: 'Oversea Travelling',
         },
         {
@@ -572,7 +572,7 @@ export default {
           Parking: 10,
           Toll: 20,
           Receipts: '',
-          Total: 150,
+          Total: 300,
           tabTitle: 'Entertainment',
         },
       ],
@@ -646,6 +646,7 @@ export default {
         }
 
         this.loading = true;
+        localStorage.setItem('ApproveOrNot', 'approve');
 
         setTimeout(() => {
           this.approveSuccess = true;
@@ -662,6 +663,7 @@ export default {
           this.rejectVerifier = true;
           this.dateVerifier = moment(new Date()).format('D MMM YYYY');
         }
+        localStorage.setItem('ApproveOrNot', 'reject');
       }
     },
 
@@ -672,6 +674,16 @@ export default {
 
       fileSaver.saveAs(url, 'pkt.jpg');
     },
+  },
+  mounted() {
+    // Sidebar close or open
+    let openOrNot = localStorage.getItem('openOrNot');
+    const element = document.querySelector('main');
+    if (element && openOrNot == 'false') {
+      element.classList.add('become-big');
+    } else if (element && openOrNot == 'true') {
+      element.classList.remove('become-big');
+    }
   },
 };
 </script>

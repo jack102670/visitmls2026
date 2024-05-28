@@ -300,7 +300,7 @@ export default {
   name: 'NewsidebarComponent',
   data() {
     return {
-      open: true,
+      open: localStorage.getItem('openOrNot') == 'false' ? false : true,
       isLightTheme: true,
       userDetails: [],
       role: 'admin',
@@ -377,6 +377,7 @@ export default {
       } else if (element && this.open) {
         element.classList.remove('become-big');
       }
+      localStorage.setItem('openOrNot', this.open);
     },
   },
   created() {
