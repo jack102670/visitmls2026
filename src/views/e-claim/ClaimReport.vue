@@ -246,7 +246,15 @@
           <!-- Modal header -->
           <!-- Your existing modal header content -->
 
-          <div v-if="selectedClaimType === 'LocalTravelling'">
+          <div >
+            <div class="flex justify-end">
+            <button
+    v-show="!isEditMode"
+    @click="isClickModal = false"
+    class="border-2 hover:bg-blue-800 text-black font-bold py-2 px-4 rounded-full ml-2"
+>
+    X
+</button></div>
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
               <h1 class="text-3xl font-bold">Local Travelling Form</h1>
@@ -358,13 +366,7 @@
                 <!-- Change button text based on edit mode -->
               </button>
 
-              <button
-                v-show="!isEditMode"
-                @click="isClickModal = false"
-                class="bg-[#160959] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
-              >
-                Cancel
-              </button>
+           
               <button
                 @click="deleteForm()"
                 class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"

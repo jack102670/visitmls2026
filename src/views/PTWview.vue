@@ -92,60 +92,59 @@
                 {{ ptwData.staffDetails.departmentName }}
               </td>
             </tr>
-            <tr>
-              <td class="py-2 px-4 font-medium">Equipment:</td>
-              <td class="py-2 px-4">
-                <div v-for="item in ptwData.equipment" :key="item">
-                  {{ item }}
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="py-2 px-4 font-medium">Hazard:</td>
-              <td class="py-2 px-4">
-                <div v-for="item in ptwData.hazard" :key="item">
-                  {{ item }}
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="py-2 px-4 font-medium">Isolation:</td>
-              <td class="py-2 px-4">
-                <div v-for="item in ptwData.isolation" :key="item">
-                  {{ item }}
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="py-2 px-4 font-medium">Plant Support:</td>
-              <td class="py-2 px-4">
-                <div v-for="item in ptwData.plantSupport" :key="item">
-                  {{ item }}
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="py-2 px-4 font-medium">Jobs Hazard Analysis:</td>
-
-              <td class="py-2 px-4">
-                <div
-                  v-for="detail in ptwData.jhaDetails"
-                  :key="detail.sequenceTask"
-                >
-                  <div>
-                    <strong>Sequence Task:</strong> {{ detail.sequenceTask }}
-                  </div>
-                  <div>
-                    <strong>Potential Hazard:</strong>
-                    {{ detail.potentialHazard }}
-                  </div>
-                  <div>
-                    <strong>Preventive Measures:</strong>
-                    {{ detail.preventiveMeasures }}
-                  </div>
-                </div>
-              </td>
-            </tr>
+       <tr v-if="ptwData.equipment !== null && ptwData.equipment.length > 0">
+  <td class="py-2 px-4 font-medium">Equipment:</td>
+  <td class="py-2 px-4">
+    <div v-for="item in ptwData.equipment" :key="item">
+      {{ item }}
+    </div>
+  </td>
+</tr>
+<tr v-if="ptwData.hazard !== null && ptwData.hazard.length > 0">
+  <td class="py-2 px-4 font-medium">Hazard:</td>
+  <td class="py-2 px-4">
+    <div v-for="item in ptwData.hazard" :key="item">
+      {{ item }}
+    </div>
+  </td>
+</tr>
+<tr v-if="ptwData.isolation !== null && ptwData.isolation.length > 0">
+  <td class="py-2 px-4 font-medium">Isolation:</td>
+  <td class="py-2 px-4">
+    <div v-for="item in ptwData.isolation" :key="item">
+      {{ item }}
+    </div>
+  </td>
+</tr>
+<tr v-if="ptwData.plantSupport !== null && ptwData.plantSupport.length > 0">
+  <td class="py-2 px-4 font-medium">Plant Support:</td>
+  <td class="py-2 px-4">
+    <div v-for="item in ptwData.plantSupport" :key="item">
+      {{ item }}
+    </div>
+  </td>
+</tr>
+          <tr v-if="ptwData.jhaDetails !== null && ptwData.jhaDetails.length > 0">
+  <td class="py-2 px-4 font-medium">Jobs Hazard Analysis:</td>
+  <td class="py-2 px-4">
+    <div
+      v-for="detail in ptwData.jhaDetails"
+      :key="detail.sequenceTask"
+    >
+      <div>
+        <strong>Sequence Task:</strong> {{ detail.sequenceTask }}
+      </div>
+      <div>
+        <strong>Potential Hazard:</strong>
+        {{ detail.potentialHazard }}
+      </div>
+      <div>
+        <strong>Preventive Measures:</strong>
+        {{ detail.preventiveMeasures }}
+      </div>
+    </div>
+  </td>
+</tr>
 
             <tr v-if="ptwData.hotWork.workDescription !== null && ptwData.hotWork.workDescription !== ''">
               <td class="py-2 px-4 font-medium">Hot Work:</td>
@@ -244,25 +243,25 @@
                 </div>
                 <!-- Other properties can be added similarly -->
 
-                <div>
-                  <strong>Hazards:</strong>
-                  <ul>
-                    <li v-for="item in ptwData.wah.waH_Hazard" :key="item">
-                      {{ item }}
-                    </li>
-                  </ul>
-                </div>
+<div v-if="ptwData.wah.waH_Hazard !== null && ptwData.wah.waH_Hazard.length > 0">
+  <strong>Hazards:</strong>
+  <ul>
+    <li v-for="item in ptwData.wah.waH_Hazard" :key="item">
+      {{ item }}
+    </li>
+  </ul>
+</div>
 
-                <div>
-                  <strong>Ladders:</strong>
-                  <ul>
-                    <li v-for="item in ptwData.wah.waH_Ladders" :key="item">
-                      {{ item }}
-                    </li>
-                  </ul>
-                </div>
+<div v-if="ptwData.wah.waH_Ladders !== null && ptwData.wah.waH_Ladders.length > 0">
+  <strong>Ladders:</strong>
+  <ul>
+    <li v-for="item in ptwData.wah.waH_Ladders" :key="item">
+      {{ item }}
+    </li>
+  </ul>
+</div>
 
-                <div>
+                <div v-if="ptwData.wah.waH_Scaffolding !== null && ptwData.wah.waH_Scaffolding.length > 0">
                   <strong>Scaffolding:</strong>
                   <ul>
                     <li v-for="item in ptwData.wah.waH_Scaffolding" :key="item">
@@ -271,7 +270,7 @@
                   </ul>
                 </div>
 
-                <div>
+                <div  v-if="ptwData.wah.waH_LiftTruck !== null && ptwData.wah.waH_LiftTruck.length > 0">
                   <strong>Lift Trucks:</strong>
                   <ul>
                     <li v-for="item in ptwData.wah.waH_LiftTruck" :key="item">
@@ -280,7 +279,7 @@
                   </ul>
                 </div>
 
-                <div>
+                <div  v-if="ptwData.wah.waH_ManCage !== null && ptwData.wah.waH_ManCage.length > 0">
                   <strong>Man Cages:</strong>
                   <ul>
                     <li v-for="item in ptwData.wah.waH_ManCage" :key="item">
@@ -288,49 +287,42 @@
                     </li>
                   </ul>
                 </div>
+<div v-if="ptwData.wah.waH_Emergency !== null && ptwData.wah.waH_Emergency.length > 0">
+  <strong>Emergency Procedures:</strong>
+  <ul>
+    <li v-for="item in ptwData.wah.waH_Emergency" :key="item">
+      {{ item }}
+    </li>
+  </ul>
+</div>
 
-                <div>
-                  <strong>Emergency Procedures:</strong>
-                  <ul>
-                    <li v-for="item in ptwData.wah.waH_Emergency" :key="item">
-                      {{ item }}
-                    </li>
-                  </ul>
-                </div>
-
-                <div>
-                  <strong>Control Measures:</strong>
-                  <ul>
-                    <li
-                      v-for="item in ptwData.wah.waH_ControlMeasure"
-                      :key="item"
-                    >
-                      {{ item }}
-                    </li>
-                  </ul>
-                </div>
+              <div v-if="ptwData.wah.waH_ControlMeasure !== null && ptwData.wah.waH_ControlMeasure.length > 0">
+  <strong>Control Measures:</strong>
+  <ul>
+    <li v-for="item in ptwData.wah.waH_ControlMeasure" :key="item">
+      {{ item }}
+    </li>
+  </ul>
+</div>
 
                 <!-- Optionally, add other arrays and properties similarly -->
               </td>
             </tr>
 
-            <tr>
-              <td class="py-2 px-4 font-medium">Files Upload:</td>
-              <td class="py-2 px-4">
-                <ul>
-                  <li
-                    class="bg-blue-100 p-4 gap-2"
-                    v-for="file in ptwData.files"
-                    :key="file"
-                  >
-                    <a class="text-blue-500" target="_blank" :href="file">{{
-                      getFileName(file)
-                    }}</a>
-                  </li>
-                </ul>
-              </td>
-            </tr>
-
+          <tr v-if="ptwData.files !== null && ptwData.files.length > 0">
+  <td class="py-2 px-4 font-medium">Files Upload:</td>
+  <td class="py-2 px-4">
+    <ul>
+      <li
+        class="bg-blue-100 p-4 gap-2"
+        v-for="file in ptwData.files"
+        :key="file"
+      >
+        <a class="text-blue-500" target="_blank" :href="file">{{ getFileName(file) }}</a>
+      </li>
+    </ul>
+  </td>
+</tr>
             <!-- ... (Other modal content) ... -->
 
             <!-- ... (Other modal content) ... -->
