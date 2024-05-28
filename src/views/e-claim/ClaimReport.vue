@@ -232,6 +232,8 @@
           class="mt-10"
           @formSubmitted="addClaim"
           :type="claims[0].reportType"
+          @file-added="handleFileAdded"
+    @file-removed="handleFileRemoved"
         ></tab>
       </div>
       <div
@@ -251,7 +253,7 @@
             <button
     v-show="!isEditMode"
     @click="isClickModal = false"
-    class="border-2 hover:bg-blue-800 text-black font-bold py-2 px-4 rounded-full ml-2"
+    class=" bg-[#2B87DB] hover:bg-[#2774bc]  text-white font-bold py-2 px-4 rounded-full ml-2"
 >
     X
 </button></div>
@@ -360,7 +362,7 @@
             <div class="flex justify-end">
               <button
                 @click="toggleEditMode"
-                class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+                class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
               >
                 {{ isEditMode ? "Save" : "Edit" }}
                 <!-- Change button text based on edit mode -->
@@ -1119,7 +1121,7 @@ export default {
       claims: [],
       showtab: false,
       dataclaims: [],
-      isClickModal: true,
+      isClickModal: false,
       isEditMode: false,
       selectedClaimDetails: {},
       localTravellingDetails: {}, // Object to store details for Local Travelling
@@ -1589,6 +1591,15 @@ export default {
       // Push new form data into the claims array
       this.dataclaims.push(formData);
       console.log("Data Claims:", this.dataclaims);
+    },
+    handleFileAdded(file, field) {
+      console.log('File added:', file);
+      console.log('Updated field value:', field.value);
+    },
+    
+    handleFileRemoved(file, field) {
+      console.log('File removed:', file);
+      console.log('Updated field value:', field.value);
     },
   },
 };
