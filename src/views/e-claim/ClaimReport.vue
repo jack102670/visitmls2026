@@ -188,12 +188,20 @@
                         >
                           {{ claim.Name }}
                         </td>
+                        <td
+                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                        >
+                          <span v-if="claim.dateLT">{{ claim.dateLT }}</span>
+                          <span v-if="claim.dateOT">{{ claim.dateOT }}</span>
+                          <span v-if="claim.dateML">{{ claim.dateML }}</span>
+                          <span v-if="claim.dateE">{{ claim.dateE }}</span>
+                        </td>
 
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2"
                         >
                           <button
-                            @click="showDetails(claim)"
+                            @click="showDetails(claim,index)"
                             class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
                           >
                             <svg
@@ -208,26 +216,6 @@
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                              />
-                            </svg>
-                          </button>
-
-                          <button
-                            @click="deleteClaim(index)"
-                            class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke-width="1.5"
-                              stroke="currentColor"
-                              class="w-5 h-5"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                               />
                             </svg>
                           </button>
@@ -258,14 +246,22 @@
           <!-- Modal header -->
           <!-- Your existing modal header content -->
 
-          <div v-if="selectedClaimType === 'LocalTravelling'">
-            <div
-              class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-            >
+          <div >
+            <div class="flex justify-end">
+            <button
+    v-show="!isEditMode"
+    @click="isClickModal = false"
+    class="border-2 hover:bg-blue-800 text-black font-bold py-2 px-4 rounded-full ml-2"
+>
+    X
+</button></div>
+            <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
+              <h1 class="text-3xl font-bold">Local Travelling Form</h1>
+              <hr class="mt-2 mb-4" />
 
-              <div class="mb-4">
-                <label for="nodeId" class="block text-gray-700 font-bold mb-2"
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeId" class="text-gray-700 font-bold mr-2"
                   >Date:</label
                 >
                 <input
@@ -273,11 +269,11 @@
                   id="nodeId"
                   v-model="localTravellingDetails.dateLT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
-                <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeName" class="text-gray-700 font-bold mr-2"
                   >Destination / Purpose:</label
                 >
                 <input
@@ -285,14 +281,12 @@
                   id="nodeName"
                   v-model="localTravellingDetails.DestinationPurposeLT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
 
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Mileage(KM):</label
                 >
                 <input
@@ -300,13 +294,24 @@
                   id="email"
                   v-model="localTravellingDetails.MileageKMLT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Total Mileage(RM):</label
+                >
+                <input
+                  type="text"
+                  id="email"
+                  v-model="localTravellingDetails.MileageRMLT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Toll:</label
                 >
                 <input
@@ -314,13 +319,12 @@
                   id="phonenumber"
                   v-model="localTravellingDetails.TollLT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Parking:</label
                 >
                 <input
@@ -328,22 +332,27 @@
                   id="positioname"
                   v-model="localTravellingDetails.ParkingLT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full overflow-x-auto"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
-                  >Total:</label
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Upload File(s):</label
                 >
                 <input
                   type="text"
                   id="positioncode"
-                  v-model="localTravellingDetails.TollLT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
+              </div>
+              <hr />
+              <div class="flex justify-center items-center mb-4">
+                <label
+                  for="nodeParentId"
+                  class="text-gray-700 font-bold mr-2 text-2xl"
+                  >Total: RM {{ totallocalTravellingDetails }}</label
+                >
               </div>
 
               <!-- Add/Edit node button -->
@@ -353,24 +362,34 @@
                 @click="toggleEditMode"
                 class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
               >
-                {{ isEditMode ? 'Save' : 'Edit' }}
+                {{ isEditMode ? "Save" : "Edit" }}
                 <!-- Change button text based on edit mode -->
               </button>
 
-              <!-- Delete node button -->
+           
               <button
-                v-show="!isEditMode"
-                @click="isClickModal = false"
+                @click="deleteForm()"
                 class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
               >
-                Cancel
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
               </button>
             </div>
           </div>
           <div
-            v-else-if="
-              selectedClaimType === 'OverseasTravellingwithAccommodation'
-            "
+            v-if="selectedClaimType === 'OverseasTravellingwithAccommodation'"
           >
             <div
               class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
@@ -540,7 +559,7 @@
                 @click="toggleEditMode"
                 class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
               >
-                {{ isEditMode ? 'Save' : 'Edit' }}
+                {{ isEditMode ? "Save" : "Edit" }}
                 <!-- Change button text based on edit mode -->
               </button>
 
@@ -550,6 +569,25 @@
                 class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
               >
                 Cancel
+              </button>
+              <button
+                @click="deleteForm"
+                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
               </button>
             </div>
           </div>
@@ -648,7 +686,7 @@
                 @click="toggleEditMode"
                 class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
               >
-                {{ isEditMode ? 'Save' : 'Edit' }}
+                {{ isEditMode ? "Save" : "Edit" }}
                 <!-- Change button text based on edit mode -->
               </button>
 
@@ -679,7 +717,7 @@
                   class="border rounded-md px-4 py-2 w-full"
                 />
               </div>
-              <div class="mb-4">
+              <!--<div class="mb-4">
                 <label for="nodeName" class="block text-gray-700 font-bold mb-2"
                   >Person Entertained:</label
                 >
@@ -690,7 +728,7 @@
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 w-full"
                 />
-              </div>
+              </div> -->
 
               <div class="mb-4">
                 <label
@@ -784,7 +822,7 @@
                 @click="toggleEditMode"
                 class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
               >
-                {{ isEditMode ? 'Save' : 'Edit' }}
+                {{ isEditMode ? "Save" : "Edit" }}
                 <!-- Change button text based on edit mode -->
               </button>
 
@@ -922,7 +960,7 @@
                 @click="toggleEditMode"
                 class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
               >
-                {{ isEditMode ? 'Save' : 'Edit' }}
+                {{ isEditMode ? "Save" : "Edit" }}
                 <!-- Change button text based on edit mode -->
               </button>
 
@@ -1044,7 +1082,7 @@
                 @click="toggleEditMode"
                 class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
               >
-                {{ isEditMode ? 'Save' : 'Edit' }}
+                {{ isEditMode ? "Save" : "Edit" }}
                 <!-- Change button text based on edit mode -->
               </button>
 
@@ -1065,27 +1103,38 @@
 </template>
 
 <script>
-import tab from './user-ui/FormTab.vue';
-import axios from 'axios';
-import { formStore } from '../store.js';
-import { store } from '../store.js';
+import tab from "./user-ui/FormTab.vue";
+import axios from "axios";
+import { formStore } from "../store.js";
+import { store } from "../store.js";
 export default {
-  name: 'TEtstS',
+  name: "TEtstS",
   components: {
     tab,
   },
   data() {
     return {
+      index :null,
+      formToDelete: null,
       claims: [],
       showtab: false,
       dataclaims: [],
-      isClickModal: false,
+      isClickModal: true,
       isEditMode: false,
       selectedClaimDetails: {},
       localTravellingDetails: {}, // Object to store details for Local Travelling
       overseasTravellingDetails: {},
       cancel: true,
     };
+  },
+  computed: {
+    totallocalTravellingDetails() {
+      return (
+        (parseInt(this.localTravellingDetails.MileageRMLT) || 0) +
+        (parseInt(this.localTravellingDetails.ParkingLT) || 0) +
+        (parseInt(this.localTravellingDetails.TollLT) || 0)
+      );
+    },
   },
   created() {
     this.fetchClaims();
@@ -1110,48 +1159,54 @@ export default {
         this.isEditMode = !this.isEditMode;
       }
     },
+    closeClickModal() {
+      this.isClickModal = false;
+    },
     savenode() {
       this.isClickModal = false;
     },
-    showDetails(claim) {
+    showDetails(claim,index) {
+      this.index = index;
+      console.log("Current index", this.index);
       // Update selectedClaimType based on the type of claim
-      this.selectedClaimType = claim.tabTitle.replace(/\s+/g, ''); // Remove spaces from claim type
-
+      this.selectedClaimType = claim.tabTitle.replace(/\s+/g, ""); // Remove spaces from claim type
+      this.formToDelete = index;
       // Update corresponding details object based on claim type
       switch (this.selectedClaimType) {
-        case 'LocalTravelling':
+        case "LocalTravelling":
           this.localTravellingDetails = claim;
-          console.log('Local Travelling Details:', this.localTravellingDetails);
+          console.log("Local Travelling Details:", this.localTravellingDetails);
           break;
-        case 'OverseasTravellingwithAccommodation':
+        case "OverseasTravellingwithAccommodation":
           this.overseasTravellingDetails = claim;
+          
           console.log(
-            'Overseas Travelling Details:',
+            "Overseas Travelling Details:",
             this.overseasTravellingDetails
           );
           break;
-        case 'Entertainment':
+        case "Entertainment":
           this.entertainmentDetails = claim;
-          console.log('Entertainment Details:', this.entertainmentDetails);
+          console.log("Entertainment Details:", this.entertainmentDetails);
           break;
-        case 'StaffRefreshment':
+        case "StaffRefreshment":
           this.staffRefreshmentDetails = claim;
           console.log(
-            'Staff Refreshment Details:',
+            "Staff Refreshment Details:",
             this.staffRefreshmentDetails
           );
           break;
-        case 'HandphoneReimbursement':
+        case "HandphoneReimbursement":
           this.handphoneReimbursementDetails = claim;
           console.log(
-            'Handphone Reimbursement Details:',
+            "Handphone Reimbursement Details:",
             this.handphoneReimbursementDetails
           );
           break;
-        case 'MedicalLeaveReimbursement':
+        case "MedicalLeaveReimbursement":
           this.medicalLeaveReimbursementDetails = claim;
           console.log(
-            'Medical Leave Reimbursement Details:',
+            "Medical Leave Reimbursement Details:",
             this.medicalLeaveReimbursementDetails
           );
           break;
@@ -1168,45 +1223,45 @@ export default {
         // Generate a random number and pad it to 2 characters
         const randomNumber = Math.floor(Math.random() * 100)
           .toString()
-          .padStart(2, '0');
+          .padStart(2, "0");
 
         // Create a timestamp and take the last 2 digits for uniqueness
         const timestamp = Date.now().toString().slice(-2);
 
         // Determine the prefix based on the location
-        let prefix = '';
+        let prefix = "";
         switch (tabTitle) {
-          case 'Local Travelling':
-            prefix = 'LT';
+          case "Local Travelling":
+            prefix = "LT";
             break;
-          case 'Overseas Travelling with Accommodation':
-            prefix = 'OV';
+          case "Overseas Travelling with Accommodation":
+            prefix = "OV";
             break;
-          case 'Entertainment':
-            prefix = 'ENT';
+          case "Entertainment":
+            prefix = "ENT";
             break;
-          case 'Staff Refreshment':
-            prefix = 'SR';
+          case "Staff Refreshment":
+            prefix = "SR";
             break;
-          case 'Handphone Reimbursement':
-            prefix = 'HR';
+          case "Handphone Reimbursement":
+            prefix = "HR";
             break;
-          case 'Medical Leave Reimbursement':
-            prefix = 'MLR';
+          case "Medical Leave Reimbursement":
+            prefix = "MLR";
             break;
           default:
-            console.error('Invalid location provided:', tabTitle);
-            return '';
+            console.error("Invalid location provided:", tabTitle);
+            return "";
         }
 
         // Construct the uniqueCode
         const uniqueCode = `${prefix}${userIdFragment}${randomNumber}${timestamp}`;
-        console.log('Unique Code:', uniqueCode);
+        console.log("Unique Code:", uniqueCode);
         return uniqueCode;
       } else {
-        console.error('User ID is undefined.');
+        console.error("User ID is undefined.");
         // You may want to handle this case differently based on your application logic.
-        return '';
+        return "";
       }
     },
     generateUniqueCodeSN(tabTitle) {
@@ -1218,45 +1273,45 @@ export default {
         // Generate a random number and pad it to 2 characters
         const randomNumber = Math.floor(Math.random() * 100)
           .toString()
-          .padStart(2, '0');
+          .padStart(2, "0");
 
         // Create a timestamp and take the last 2 digits for uniqueness
         const timestamp = Date.now().toString().slice(-2);
 
         // Determine the prefix based on the location
-        let prefix = '';
+        let prefix = "";
         switch (tabTitle) {
-          case 'Local Travelling':
-            prefix = 'LT';
+          case "Local Travelling":
+            prefix = "LT";
             break;
-          case 'Overseas Travelling with Accommodation':
-            prefix = 'OV';
+          case "Overseas Travelling with Accommodation":
+            prefix = "OV";
             break;
-          case 'Entertainment':
-            prefix = 'ENT';
+          case "Entertainment":
+            prefix = "ENT";
             break;
-          case 'Staff Refreshment':
-            prefix = 'SR';
+          case "Staff Refreshment":
+            prefix = "SR";
             break;
-          case 'Handphone Reimbursement':
-            prefix = 'HR';
+          case "Handphone Reimbursement":
+            prefix = "HR";
             break;
-          case 'Medical Leave Reimbursement':
-            prefix = 'MLR';
+          case "Medical Leave Reimbursement":
+            prefix = "MLR";
             break;
           default:
-            console.error('Invalid location provided:', tabTitle);
-            return '';
+            console.error("Invalid location provided:", tabTitle);
+            return "";
         }
 
         // Construct the uniqueCode
         const uniqueCode = `SN${prefix}${userIdFragment}${randomNumber}${timestamp}`;
-        console.log('Unique Code:', uniqueCode);
+        console.log("Unique Code:", uniqueCode);
         return uniqueCode;
       } else {
-        console.error('User ID is undefined.');
+        console.error("User ID is undefined.");
         // You may want to handle this case differently based on your application logic.
-        return '';
+        return "";
       }
     },
     async sendToAPI() {
@@ -1278,7 +1333,7 @@ export default {
           try {
             let axiosInstance;
             switch (title.toLowerCase()) {
-              case 'local travelling': {
+              case "local travelling": {
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   const thisisforlocal1 = {
@@ -1288,27 +1343,27 @@ export default {
                     park_fee: claim.ParkingLT,
                     toll_fee: claim.TollLT,
                     total_fee: 10,
-                    approver_email: 'verifier1@example.com', // Access Email property from claim object
-                    verifier_email: 'verifier1@example.com',
-                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    requester_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
+                    approver_email: "verifier1@example.com", // Access Email property from claim object
+                    verifier_email: "verifier1@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
                     unique_code: this.generateUniqueCode(claim.tabTitle),
-                    reference_number: 'pktm222',
+                    reference_number: "pktm222",
                   };
                   axiosInstance = axios.create({
                     baseURL:
-                      'http://172.28.28.91:97/api/User/InsertLocalOutstation',
+                      "http://172.28.28.91:97/api/User/InsertLocalOutstation",
                   });
                   const response1 = await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforlocal1
                   );
                   console.log(`Data sent for ${title} 1:`, response1.data);
                 }
                 break;
               }
-              case 'overseas travelling with accommodation':
+              case "overseas travelling with accommodation":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -1325,35 +1380,35 @@ export default {
                     other_foreign_currency: claim.ForeignCurrencyOthersOT,
                     other_exchange_rate: claim.ExchangeRateOthersOT,
                     other_foreign_total: 200,
-                    reference_number: 'pktm222',
+                    reference_number: "pktm222",
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: 'approver@example.com',
-                    verifier_email: 'verifier@example.com',
-                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
 
                   axiosInstance = axios.create({
                     baseURL:
-                      'http://172.28.28.91:97/api/User/InsertOverseasOutstation',
+                      "http://172.28.28.91:97/api/User/InsertOverseasOutstation",
                   });
                   const response2 = await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforoversea
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case 'Entertainment':
+              case "Entertainment":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
                   const thisisforentertainment = {
                     date_event: claim.dateE, // Example date
-                    person_entertained: claim.PersonEntertainedE,
+                    // person_entertained: claim.PersonEntertainedE,
                     type_of_entertainment: claim.TypeofEntertainmentE,
                     other_type_of_entertainment:
                       claim.OtherTypeofEntertainmentE,
@@ -1361,28 +1416,28 @@ export default {
                     venue: claim.VenueE,
                     reference: claim.ReferenceE,
                     amount: claim.AmountRME,
-                    reference_number: 'pktm222',
+                    reference_number: "pktm222",
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: 'approver@example.com',
-                    verifier_email: 'verifier@example.com',
-                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
                   axiosInstance = axios.create({
-                    baseURL: 'http://localhost:3000/claims/entertainment',
+                    baseURL: "http://localhost:3000/claims/entertainment",
                   });
                   const response2 = await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforentertainment
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
 
-              case 'Staff Refreshment':
+              case "Staff Refreshment":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -1396,27 +1451,27 @@ export default {
                     venue: claim.VenueE,
                     reference: claim.ReferenceE,
                     amount: claim.AmountRME,
-                    reference_number: 'pktm222',
+                    reference_number: "pktm222",
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: 'approver@example.com',
-                    verifier_email: 'verifier@example.com',
-                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
                   axiosInstance = axios.create({
-                    baseURL: 'http://localhost:3000/claims/entertainment',
+                    baseURL: "http://localhost:3000/claims/entertainment",
                   });
                   const response2 = await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforstaffrefreshment
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case 'Handphone Reimbursement':
+              case "Handphone Reimbursement":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -1430,27 +1485,27 @@ export default {
                     venue: claim.VenueE,
                     reference: claim.ReferenceE,
                     amount: claim.AmountRME,
-                    reference_number: 'pktm222',
+                    reference_number: "pktm222",
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: 'approver@example.com',
-                    verifier_email: 'verifier@example.com',
-                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
                   axiosInstance = axios.create({
-                    baseURL: 'http://localhost:3000/claims/entertainment',
+                    baseURL: "http://localhost:3000/claims/entertainment",
                   });
                   const response2 = await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforHandphoneReimbursement
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case 'Medical Leave Reimbursement':
+              case "Medical Leave Reimbursement":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -1464,21 +1519,21 @@ export default {
                     venue: claim.VenueE,
                     reference: claim.ReferenceE,
                     amount: claim.AmountRME,
-                    reference_number: 'pktm222',
+                    reference_number: "pktm222",
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: 'approver@example.com',
-                    verifier_email: 'verifier@example.com',
-                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
                   axiosInstance = axios.create({
-                    baseURL: 'http://localhost:3000/claims/entertainment',
+                    baseURL: "http://localhost:3000/claims/entertainment",
                   });
                   const response2 = await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforMedicalLeaveReimbursement
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
@@ -1513,34 +1568,37 @@ export default {
 
     // Add mapping functions for other endpoints as needed
 
-    deleteClaim(index) {
-      this.dataclaims.splice(index, 1);
+    deleteForm() {
+      if (this.index !== -1) {
+        this.dataclaims.splice(this.index,1);
+      }
+      this.isClickModal = false; // Close the modal
     },
     // other methods...
     fetchClaims() {
       // Retrieve the current formData
       const formData = formStore.getFormData();
 
-      if (formData.claimantName !== '') {
+      if (formData.claimantName !== "") {
         // Set the claims array to contain only the new formData
         this.claims = [formData];
 
         // Update the local storage with the new claims array
-        localStorage.setItem('claims', JSON.stringify(this.claims));
+        localStorage.setItem("claims", JSON.stringify(this.claims));
       } else {
         // If no formData, retrieve the claims array from local storage
-        const storedClaims = JSON.parse(localStorage.getItem('claims')) || [];
+        const storedClaims = JSON.parse(localStorage.getItem("claims")) || [];
         this.claims = storedClaims;
       }
 
       // Log the claims array to the console
-      console.log('Claims:', this.claims);
+      console.log("Claims:", this.claims);
     },
 
     addClaim(formData) {
       // Push new form data into the claims array
       this.dataclaims.push(formData);
-      console.log('Data Claims:', this.dataclaims);
+      console.log("Data Claims:", this.dataclaims);
     },
   },
 };
