@@ -1,11 +1,11 @@
 <template>
   <main
-    class="flex-1 text overflow-y-auto bg-[#CED1DA] p-4 sm:ml-64"
+    class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 dark:text-white p-4 sm:ml-64"
     id="summaryPrint"
   >
     <div class="container mx-auto text-xs lg:text-base" id="summaryPrint">
       <div
-        class="relative overflow-hidden bg-[#f7fbff] border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
+        class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
         <!-- Head Title -->
         <button
@@ -36,13 +36,15 @@
 
         <!-- Information -->
         <div class="flex justify-between items-center my-4">
-          <h1 class="text-blue-900 font-bold text-3xl">Webinars</h1>
+          <h1 class="text-blue-900 dark:text-blue-600 font-bold text-3xl">
+            Webinars
+          </h1>
 
           <div class="mt-5 h-12">
             <button
               v-show="!seeMore"
               @click="seeMore = !seeMore"
-              class="bg-green-600 hover:bg-green-700 text-white rounded-xl px-8 text-sm font-bold py-2"
+              class="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white rounded-xl px-8 text-sm font-bold py-2"
             >
               See More
             </button>
@@ -69,45 +71,51 @@
         >
           <div class="mt-5 h-12">
             <h2 class="font-semibold">Name of Company :</h2>
-            <p class="text-gray-600">PKT LOGISTIC (M) SDN BHD</p>
+            <p class="text-gray-600 dark:text-gray-400">
+              PKT LOGISTIC (M) SDN BHD
+            </p>
           </div>
           <div class="mt-5 h-12">
             <h2 class="font-semibold">Name of Claimaint :</h2>
-            <p class="text-gray-600">TEOW CHEE WEN</p>
+            <p class="text-gray-600 dark:text-gray-400">TEOW CHEE WEN</p>
           </div>
           <div class="mt-5 h-12">
             <h2 class="font-semibold">Designation :</h2>
-            <p class="text-gray-600">DEVELOPER</p>
+            <p class="text-gray-600 dark:text-gray-400">DEVELOPER</p>
           </div>
           <div class="mt-5 h-12">
             <h2 class="font-semibold">Department :</h2>
-            <p class="text-gray-600">ICT</p>
+            <p class="text-gray-600 dark:text-gray-400">ICT</p>
           </div>
           <div class="mt-5 h-12">
             <h2 class="font-semibold">Cost Center :</h2>
-            <p class="text-gray-600">The Ship</p>
+            <p class="text-gray-600 dark:text-gray-400">The Ship</p>
           </div>
           <div class="mt-5 h-12">
             <h2 class="font-semibold">Report Type :</h2>
-            <p class="text-gray-600">Finance</p>
+            <p class="text-gray-600 dark:text-gray-400">Finance</p>
           </div>
           <div class="mt-5 h-12">
             <h2 class="font-semibold">Date of Claim :</h2>
-            <p class="text-gray-600">20 MAY 2024</p>
+            <p class="text-gray-600 dark:text-gray-400">20 MAY 2024</p>
           </div>
           <div class="mt-5 h-12">
             <h2 class="font-semibold">Claim for the Month Ended :</h2>
-            <p class="text-gray-600">31 MAY 2024</p>
+            <p class="text-gray-600 dark:text-gray-400">31 MAY 2024</p>
           </div>
         </div>
 
         <!-- Summary -->
         <div class="summary" v-show="!seeMore">
           <!-- Claim Table -->
-          <div class="border-2 mt-10 border-gray-400 rounded-2xl">
+          <div
+            class="border-2 mt-10 border-gray-400 dark:border-gray-600 rounded-2xl"
+          >
             <table class="w-full">
               <!-- title -->
-              <tr class="h-14 bg-gray-300 text-left rounded-2xl">
+              <tr
+                class="h-14 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl"
+              >
                 <th class="rounded-tl-2xl w-[20%] text-center">NO</th>
                 <th class="w-[60%]">TYPE OF CLAIM</th>
                 <th class="w-[20%]">AMOUNT (RM)</th>
@@ -127,7 +135,7 @@
 
               <!-- total -->
               <tr
-                class="border-t-2 border-gray-400 h-14 text-base lg:text-lg font-semibold"
+                class="border-t-2 border-gray-400 dark:border-gray-600 h-14 text-base lg:text-lg font-semibold"
               >
                 <td colspan="2" class="px-6 text-right">TOTAL:</td>
                 <td>{{ totalAmount }}</td>
@@ -147,12 +155,12 @@
               {{ detail.tabTitle }}
             </h1>
             <div
-              class="border-2 border-gray-400 rounded-2xl overflow-y-auto"
+              class="border-2 border-gray-400 dark:border-gray-600 rounded-2xl overflow-y-auto"
               id="table-overflow"
             >
               <table class="w-full">
                 <!-- title -->
-                <tr class="h-14 bg-gray-300 rounded-2xl">
+                <tr class="h-14 bg-gray-300 dark:bg-gray-700 rounded-2xl">
                   <th class="px-3" v-for="(val, key, i) in detail" :key="i">
                     {{ key }}
                   </th>
@@ -193,7 +201,7 @@
 
                 <!-- total -->
                 <tr
-                  class="border-t-2 border-gray-400 h-14 text-base lg:text-lg font-semibold"
+                  class="border-t-2 border-gray-400 dark:border-gray-600 h-14 text-base lg:text-lg font-semibold"
                 >
                   <td class="px-3">TOTAL:</td>
                   <td>RM{{ detail.Total }}</td>
@@ -206,14 +214,14 @@
 
         <!-- Status Table -->
         <div
-          class="text-xs lg:text-base border-2 mt-10 border-gray-400 rounded-2xl"
+          class="text-xs lg:text-base border-2 mt-10 border-gray-400 dark:border-gray-600 rounded-2xl"
           id="table-overflow"
         >
           <table class="w-full">
             <!-- title -->
-            <tr class="h-14 bg-gray-300 text-left rounded-2xl">
+            <tr class="h-14 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
               <th
-                class="rounded-tl-2xl w-[20%] text-center border-r-2 border-gray-400"
+                class="rounded-tl-2xl w-[20%] text-center border-r-2 border-gray-400 dark:border-gray-600"
               >
                 STATUS
               </th>
@@ -224,21 +232,26 @@
 
             <!-- table information -->
             <tr
-              class="h-14 text-left text-xs lg:text-base border-t-2 border-gray-400"
+              class="h-14 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
             >
               <th
-                class="text-xs lg:text-base text-center font-semibold border-r-2 border-gray-400"
+                class="text-xs lg:text-base text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
               >
                 <!-- Status Bar -->
                 <div
                   class="mx-auto rounded-full py-2 text-center lg:w-[90%] w-full"
                   :class="{
-                    'bg-orange-200': statusVerifier == 'PENDING',
-                    'bg-green-200': statusVerifier == 'VERIFIED',
-                    'bg-red-200': statusVerifier == 'REJECTED',
-                    'text-orange-500': statusVerifier == 'PENDING',
-                    'text-green-500': statusVerifier == 'VERIFIED',
-                    'text-red-500': statusVerifier == 'REJECTED',
+                    'bg-orange-200 dark:bg-orange-500':
+                      statusVerifier == 'PENDING',
+                    'bg-green-200 dark:bg-green-500':
+                      statusVerifier == 'VERIFIED',
+                    'bg-red-200 dark:bg-red-500': statusVerifier == 'REJECTED',
+                    'text-orange-500 dark:text-orange-100':
+                      statusVerifier == 'PENDING',
+                    'text-green-500 dark:text-green-100':
+                      statusVerifier == 'VERIFIED',
+                    'text-red-500 dark:text-red-100':
+                      statusVerifier == 'REJECTED',
                   }"
                 >
                   <p>{{ statusVerifier }}</p>
@@ -249,21 +262,26 @@
               <td class="">{{ dateVerifier }}</td>
             </tr>
             <tr
-              class="h-14 text-left text-xs lg:text-base border-t-2 border-gray-400"
+              class="h-14 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
             >
               <th
-                class="text-xs lg:text-base text-center font-semibold border-r-2 border-gray-400"
+                class="text-xs lg:text-base text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
               >
                 <!-- Status Bar -->
                 <div
                   class="mx-auto rounded-full py-2 text-center lg:w-[90%] w-full"
                   :class="{
-                    'bg-orange-200': statusApprover == 'PENDING',
-                    'bg-green-200': statusApprover == 'APPROVED',
-                    'bg-red-200': statusApprover == 'REJECTED',
-                    'text-orange-500': statusApprover == 'PENDING',
-                    'text-green-500': statusApprover == 'APPROVED',
-                    'text-red-500': statusApprover == 'REJECTED',
+                    'bg-orange-200 dark:bg-orange-500':
+                      statusApprover == 'PENDING',
+                    'bg-green-200 dark:bg-green-500':
+                      statusApprover == 'APPROVED',
+                    'bg-red-200 dark:bg-red-500': statusApprover == 'REJECTED',
+                    'text-orange-500 dark:text-orange-100':
+                      statusApprover == 'PENDING',
+                    'text-green-500 dark:text-green-100':
+                      statusApprover == 'APPROVED',
+                    'text-red-500 dark:text-red-100':
+                      statusApprover == 'REJECTED',
                   }"
                 >
                   <p>{{ statusApprover }}</p>
@@ -280,14 +298,14 @@
 
         <div
           v-show="rejectApprover || rejectVerifier"
-          class="text-xs lg:text-base border-2 mt-10 border-gray-400 rounded-2xl"
+          class="text-xs lg:text-base border-2 mt-10 border-gray-400 dark:border-gray-600 rounded-2xl"
           id="table-overflow"
         >
           <table class="w-full">
             <!-- title -->
-            <tr class="h-14 bg-gray-300 text-left rounded-2xl">
+            <tr class="h-14 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
               <th
-                class="rounded-tl-2xl w-[20%] text-center border-r-2 border-gray-400"
+                class="rounded-tl-2xl w-[20%] text-center border-r-2 border-gray-400 dark:border-gray-600"
               >
                 STATUS
               </th>
@@ -296,13 +314,13 @@
 
             <!-- table information -->
             <tr
-              class="h-14 text-left text-xs lg:text-base border-t-2 border-gray-400"
+              class="h-14 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
             >
               <th
-                class="text-xs lg:text-sm font-medium border-r-2 border-gray-400"
+                class="text-xs lg:text-sm font-medium border-r-2 border-gray-400 dark:border-gray-600"
               >
                 <div
-                  class="mx-auto bg-red-200 rounded-full py-2 text-center text-red-500 lg:w-[90%] w-full"
+                  class="mx-auto bg-red-200 dark:bg-red-500 rounded-full py-2 text-center text-red-500 dark:text-red-100 lg:w-[90%] w-full"
                 >
                   <p>RESUBMISSION</p>
                 </div>
@@ -316,18 +334,18 @@
 
         <div
           v-show="approve || verified"
-          class="text-xs lg:text-base border-2 mt-10 border-gray-400 rounded-2xl"
+          class="text-xs lg:text-base border-2 mt-10 border-gray-400 dark:border-gray-600 rounded-2xl"
           id="table-overflow"
         >
           <table class="w-full">
             <!-- title -->
-            <tr class="h-14 bg-gray-300 rounded-2xl">
+            <tr class="h-14 bg-gray-300 dark:bg-gray-700 rounded-2xl">
               <th class="pl-6">Remark</th>
             </tr>
 
             <!-- table information -->
             <tr
-              class="h-14 text-left text-xs lg:text-base border-t-2 border-gray-400"
+              class="h-14 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
             >
               <td class="pl-6">{{ remark }}</td>
             </tr>
@@ -347,7 +365,7 @@
           <div class="flex w-full items-center">
             <label class="font-semibold mr-2 mb-4">Remark: </label>
             <input
-              class="py-3 px-2 mb-4 w-full lg:w-96 rounded-lg outline-none border-gray-400 border-2"
+              class="py-3 px-2 mb-4 w-full lg:w-96 rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
               type="text"
               placeholder="Eg. Blurry Receipt Image"
               v-model="remark"
@@ -358,7 +376,7 @@
               @click="confirmApprove = true"
               class="mr-2 lg:text-lg font-semibold py-3 w-36 bg-blue-800 hover:bg-blue-900 rounded-lg text-white"
             >
-              Approve
+              Verify
             </button>
             <button
               @click="confirmReject = true"
@@ -372,12 +390,12 @@
         <!-- Approve Confirmation -->
         <div
           v-show="confirmApprove"
-          class="bg-gray-500 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
+          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
         >
           <div
-            class="bg-white w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center"
+            class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center"
           >
-            <h1 class="text-2xl font-bold">Do you confirm to approve?</h1>
+            <h1 class="text-2xl font-bold">Do you confirm to verify?</h1>
             <div class="flex mt-4">
               <button
                 class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
@@ -398,14 +416,14 @@
         <!-- Reject Confirmation -->
         <div
           v-show="confirmReject"
-          class="bg-gray-500 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
+          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
         >
           <div
-            class="bg-white w-96 px-8 h-52 rounded-xl fixed flex flex-col justify-center items-center"
+            class="bg-white dark:bg-gray-900 w-96 px-8 h-52 rounded-xl fixed flex flex-col justify-center items-center"
           >
             <h1 class="text-xl font-bold">Please write the remark to reject</h1>
             <input
-              class="py-4 px-2 w-4/5 rounded-lg mt-4 outline-none border-gray-300 border-2"
+              class="py-4 px-2 w-4/5 rounded-lg mt-4 outline-none border-gray-300 dark:border-gray-600 dark:bg-gray-500 border-2"
               placeholder="Eg. Blurry Receipt Image"
               v-model="remark"
             />
@@ -432,7 +450,7 @@
           v-if="approveSuccess"
         >
           <div
-            class="bg-gray-100 px-10 py-3 rounded-full z-50 flex justify-center items-center"
+            class="bg-gray-100 dark:bg-gray-500 px-10 py-3 rounded-full z-50 flex justify-center items-center"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -449,7 +467,7 @@
               />
             </svg>
 
-            <h1>APPROVE SUCCESSFULLY</h1>
+            <h1>VERIFIED SUCCESSFULLY</h1>
           </div>
         </div>
 
@@ -500,7 +518,7 @@ export default {
   data() {
     return {
       // need to get from API
-      role: 'approver',
+      role: 'verifier',
 
       seeMore: false,
       confirmReject: false,
@@ -541,7 +559,7 @@ export default {
       details: [
         {
           No: 1,
-          date: '2024-05-16',
+          Date: '2024-05-16',
           DestinationPurpose: 'LABEL 1',
           MileageKM: 40,
           MileageRM: 80,
@@ -553,24 +571,24 @@ export default {
         },
         {
           No: 1,
-          date: '2024-05-16',
-          DestinationPurpose: 'LABEL 1',
-          MileageKM: 40,
-          MileageRM: 80,
-          Parking: 10,
-          Toll: 20,
+          Date: '2024-05-16',
+          DestinationPurpose: 'Thailand',
+          ForeignCurrency: 100,
+          MealAllowance: 30.3,
+          Airport: 100,
+          Teksi: 49,
           Receipts: '',
           Total: 279.3,
           tabTitle: 'Oversea Travelling',
         },
         {
           No: 1,
-          date: '2024-05-16',
-          DestinationPurpose: 'LABEL 1',
-          MileageKM: 40,
-          MileageRM: 80,
-          Parking: 10,
-          Toll: 20,
+          Date: '2024-05-16',
+          Type: 'BREAKFAST',
+          Company: 'PKT',
+          Venue: 'Lighthouse level 7',
+          reference: 'client',
+          amount: 300,
           Receipts: '',
           Total: 300,
           tabTitle: 'Entertainment',
@@ -714,6 +732,10 @@ tr:last-child th:last-child {
 @media print {
   @page {
     size: A4 portrait;
+  }
+
+  * {
+    color: black;
   }
 
   body *:not(#summaryPrint):not(#summaryPrint *) {

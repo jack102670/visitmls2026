@@ -1,10 +1,16 @@
 <template>
-  <main class="flex-1 text overflow-y-auto bg-[#CED1DA] p-4 sm:ml-64">
+  <main
+    class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 p-4 sm:ml-64"
+  >
     <div class="container mx-auto">
       <div
-        class="relative overflow-hidden bg-[#f7fbff] border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
+        class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 dark:text-white border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
-        <h1 class="text-blue-800 text-xl md:text-2xl font-bold">DASHBOARD</h1>
+        <h1
+          class="text-blue-800 dark:text-blue-600 text-xl md:text-2xl font-bold"
+        >
+          DASHBOARD
+        </h1>
 
         <!-- Datatable -->
         <div class="flex flex-col mt-6">
@@ -83,16 +89,20 @@
                         <h1
                           class="rounded-xl text-center py-1 w-full"
                           :class="{
-                            'bg-orange-200': claim.status == 'PENDING',
-                            'bg-green-200':
+                            'bg-orange-200 dark:bg-orange-500':
+                              claim.status == 'PENDING',
+                            'bg-green-200 dark:bg-green-500':
                               claim.status == 'APPROVED' ||
                               claim.status == 'VERIFIED',
-                            'bg-red-200': claim.status == 'REJECTED',
-                            'text-orange-500': claim.status == 'PENDING',
-                            'text-green-500':
+                            'bg-red-200 dark:bg-red-500':
+                              claim.status == 'REJECTED',
+                            'text-orange-500 dark:text-orange-100':
+                              claim.status == 'PENDING',
+                            'text-green-500 dark:text-green-100':
                               claim.status == 'APPROVED' ||
                               claim.status == 'VERIFIED',
-                            'text-red-500': claim.status == 'REJECTED',
+                            'text-red-500 dark:text-red-100':
+                              claim.status == 'REJECTED',
                           }"
                         >
                           {{ claim.status }}
@@ -156,7 +166,7 @@ export default {
           date: '20 May 2024',
           status:
             localStorage.getItem('ApproveOrNot') == 'approve'
-              ? 'APPROVED'
+              ? 'VERIFIED'
               : localStorage.getItem('ApproveOrNot') == 'reject'
                 ? 'REJECTED'
                 : 'PENDING',
