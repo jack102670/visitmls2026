@@ -201,7 +201,7 @@
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2"
                         >
                           <button
-                            @click="showDetails(claim,index)"
+                            @click="showDetails(claim, index)"
                             class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
                           >
                             <svg
@@ -233,7 +233,7 @@
           @formSubmitted="addClaim"
           :type="claims[0].reportType"
           @file-added="handleFileAdded"
-    @file-removed="handleFileRemoved"
+          @file-removed="handleFileRemoved"
         ></tab>
       </div>
       <div
@@ -248,15 +248,16 @@
           <!-- Modal header -->
           <!-- Your existing modal header content -->
 
-          <div >
+          <div>
             <div class="flex justify-end">
-            <button
-    v-show="!isEditMode"
-    @click="isClickModal = false"
-    class=" bg-[#2B87DB] hover:bg-[#2774bc]  text-white font-bold py-2 px-4 rounded-full ml-2"
->
-    X
-</button></div>
+              <button
+                v-show="!isEditMode"
+                @click="isClickModal = false"
+                class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
+              >
+                X
+              </button>
+            </div>
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
               <h1 class="text-3xl font-bold">Local Travelling Form</h1>
@@ -368,7 +369,6 @@
                 <!-- Change button text based on edit mode -->
               </button>
 
-           
               <button
                 @click="deleteForm()"
                 class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
@@ -1116,7 +1116,7 @@ export default {
   },
   data() {
     return {
-      index :null,
+      index: null,
       formToDelete: null,
       claims: [],
       showtab: false,
@@ -1157,7 +1157,7 @@ export default {
     savenode() {
       this.isClickModal = false;
     },
-    showDetails(claim,index) {
+    showDetails(claim, index) {
       this.index = index;
       console.log("Current index", this.index);
       // Update selectedClaimType based on the type of claim
@@ -1171,7 +1171,7 @@ export default {
           break;
         case "OverseasTravellingwithAccommodation":
           this.overseasTravellingDetails = claim;
-          
+
           console.log(
             "Overseas Travelling Details:",
             this.overseasTravellingDetails
@@ -1562,7 +1562,7 @@ export default {
 
     deleteForm() {
       if (this.index !== -1) {
-        this.dataclaims.splice(this.index,1);
+        this.dataclaims.splice(this.index, 1);
       }
       this.isClickModal = false; // Close the modal
     },
@@ -1593,13 +1593,13 @@ export default {
       console.log("Data Claims:", this.dataclaims);
     },
     handleFileAdded(file, field) {
-      console.log('File added:', file);
-      console.log('Updated field value:', field.value);
+      console.log("File added:", file);
+      console.log("Updated field value:", field.value);
     },
-    
+
     handleFileRemoved(file, field) {
-      console.log('File removed:', file);
-      console.log('Updated field value:', field.value);
+      console.log("File removed:", file);
+      console.log("Updated field value:", field.value);
     },
   },
 };
