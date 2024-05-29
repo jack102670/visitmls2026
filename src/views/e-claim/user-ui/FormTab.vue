@@ -163,7 +163,7 @@
               }"
               class="px-4 py-2 mr-2 rounded-sm focus:outline-none border border-gray-300"
             >
-              {{ subTab.title }}
+               {{ subTab.title === 'Entertainment' ? subTab.title + ' - ' + combinedData.type : subTab.title }}
               <span v-if="subTab.title === 'Attendees'">
                 ({{ attendees.length }})</span
               >
@@ -490,16 +490,26 @@
                       </table>
                     </div>
                   </div>
-                  <div class="mt-4 mr-6 flex flex-row-reverse">
-                    <div class="flex items-center justify-between">
-                      <button
-                        type="submit"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </div>
+                   <div class="mt-4 mr-6 flex flex-row-reverse">
+              <div class="flex items-center justify-between">
+                <button
+                  v-if="subTab.title === 'Details'"
+                  type="button"
+                  @click="nextTab"
+                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                >
+                  Next
+                </button>
+                <button
+                  v-else-if="subTab.title === 'Attendees'"
+                  type="button"
+                  @click="saveForm"
+                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
                 </form>
               </div>
             </div>
@@ -1268,6 +1278,25 @@ export default {
       return total.toFixed(2);
     },
 
+    nextTab() {
+      // Switch to the next tab
+      this.activeSubTab += 1;
+    },
+
+    saveAndCombineData() {
+      // Combine data from Details and Attendees tabs
+      const combinedData = {
+        details: this.entertainmentTabs[0].fields.reduce((acc, field) => {
+          acc[field.id] = field.value;
+          return acc;
+        }, {}),
+        attendees: this.attendees,
+      };
+
+      // Emit event with combined data
+      this.$emit("combinedData", combinedData);
+    },
+
     submitForm(tab) {
       // Create an empty object to hold the formatted form data
       const formattedData = {};
@@ -1298,6 +1327,7 @@ export default {
         console.log(`Form submitted for tab: ${tab.title}`, tab.fields);
       }
     },
+
   },
 };
 </script>
