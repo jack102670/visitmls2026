@@ -106,10 +106,10 @@
                         :accepted-file-types="field.acceptedFileTypes"
                         :max-file-size="field.maxFileSize"
                         @addfile="handleAddFile(field)"
-                        @removefile="handleRemoveFile(field)"
+  @removefile="handleRemoveFile(field)"
                       />
                     </div>
-                  </template>
+                  </template >
 
                   <template v-else>
                     <input
@@ -226,20 +226,19 @@
                     </template>
 
                     <template v-else-if="field.type === 'file'">
-                      <div class="pt-3">
-                        <FilePond
-                          ref="pond"
-                          name="file"
-                          :allow-multiple="field.allowMultiple"
-                          :accepted-file-types="field.acceptedFileTypes"
-                          :max-file-size="field.maxFileSize"
-                          @addfile="handleAddFile(field)"
-                          @removefile="handleRemoveFile(field)"
-                        />
-                      </div>
-                    </template>
-
-                    <template v-else>
+                    <div class="pt-3">
+                      <FilePond
+                        ref="pond"
+                        name="file"
+                        :allow-multiple="field.allowMultiple"
+                        :accepted-file-types="field.acceptedFileTypes"
+                        :max-file-size="field.maxFileSize"
+                        @addfile="handleAddFile(field)"
+  @removefile="handleRemoveFile(field)"
+                      />
+                    </div>
+                  </template >
+                  <template v-else>
                       <input
                         v-model="field.value"
                         :id="field.id"
@@ -614,7 +613,7 @@ export default {
               id: 'UploadLT',
               label: 'Upload File(s). (png, jpeg, pdf or xlsx)',
               type: 'file',
-              value: '',
+              value: [],
               required: true,
               allowMultiple: true,
               server: null,
@@ -716,7 +715,7 @@ export default {
               id: 'UploadOT',
               label: 'Upload File(s). (png, jpeg, pdf or xlsx)',
               type: 'file',
-              value: '',
+              value: [],
               required: true,
               allowMultiple: true,
               server: null,
@@ -825,7 +824,7 @@ export default {
               id: 'UploadSR',
               label: 'Upload File(s). (png, jpeg, pdf or xlsx)',
               type: 'file',
-              value: '',
+              value: [],
               required: true,
               allowMultiple: true,
               server: null,
@@ -1058,7 +1057,7 @@ export default {
               id: 'UploadML',
               label: 'Upload File(s). (png, jpeg, pdf or xlsx)',
               type: 'file',
-              value: '',
+              value: [],
               required: true,
               allowMultiple: true,
               server: null,
@@ -1155,7 +1154,7 @@ export default {
               id: "UploadE",
               label: "Upload File(s). (png, jpeg, pdf or xlsx)",
               type: "file",
-              value: "",
+              value: [],
               required: true,
               allowMultiple: true,
               server: null,
@@ -1190,27 +1189,39 @@ export default {
 
   methods: {
     handleAddFile(field) {
-      return (file) => {
-        // Push the selected file to the uploadedFiles array
-        field.value.push(file.file);
+    return (error, file) => {
+      if (error) {
+        console.error('An error occurred during file upload:', error);
+        return;
+      }
+      
+      // Add the file to the field's value array
+      field.value.push(file);
+      
+      console.log('File added:', file);
+      console.log('Updated field value:', field.value);
+    };
+  },
 
-        // Log the selected files
-        console.log('Selected Files:', field.value);
-      };
-    },
-
-    handleRemoveFile(field) {
-      return (file) => {
-        // Remove the file from the uploadedFiles array
-        const index = field.value.findIndex((f) => f === file.file);
-        if (index !== -1) {
-          field.value.splice(index, 1);
-        }
-
-        // Log the selected files
-        console.log('Selected Files:', field.value);
-      };
-    },
+  handleRemoveFile(field) {
+    return (error, file) => {
+      if (error) {
+        console.error('An error occurred during file removal:', error);
+        return;
+      }
+      
+      // Find the index of the file in the field's value array
+      const index = field.value.findIndex(f => f === file);
+      
+      // Remove the file from the field's value array
+      if (index !== -1) {
+        field.value.splice(index, 1);
+      }
+      
+      console.log('File removed:', file);
+      console.log('Updated field value:', field.value);
+    };
+  },
 
     addAttendee() {
       const { name, staffId, companyName } = this.modalForm;
