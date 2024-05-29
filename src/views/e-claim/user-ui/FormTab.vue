@@ -99,14 +99,21 @@
 
                   <template v-else-if="field.type === 'file'">
                     <div class="pt-3">
-                      <FilePond
+                      <file-pond
+                        :name="field.id"
                         ref="pond"
-                        name="file"
-                        :allow-multiple="field.allowMultiple"
+                        label-idle="Drop files here..."
+                      
+                        @init="handleFilePondInit"
+                        @addfile="
+                          (error, file) => handleAddFile(error, file, field)
+                        "
+                        @removefile="
+                          (error, file) => handleRemoveFile(error, file, field)
+                        "
                         :accepted-file-types="field.acceptedFileTypes"
                         :max-file-size="field.maxFileSize"
-                        @addfile="handleAddFile(field)"
-                        @removefile="handleRemoveFile(field)"
+                        :allow-multiple="field.allowMultiple"
                       />
                     </div>
                   </template>
@@ -1198,39 +1205,36 @@ export default {
   },
 
   methods: {
-    handleAddFile(field) {
-      return (error, file) => {
-        if (error) {
-          console.error("An error occurred during file upload:", error);
-          return;
-        }
-
-        // Add the file to the field's value array
-        field.value.push(file);
-
-        console.log("File added:", file);
-        console.log("Updated field value:", field.value);
-      };
+    handleFilePondInit() {
+      console.log("FilePond has initialized");
     },
+    handleAddFile(error, file, field) {
+      if (error) {
+        console.error("Error adding file:", error.message);
+        return;
+      }
+      field.value.push(file.file);
+      console.log("File added:", file.file);
+      console.log("Updated files:", field.value);
+    },
+    handleRemoveFile(error, file, field) {
+      if (error) {
+        console.error(
+          "An error occurred while removing the file:",
+          error.message
+        );
+        return;
+      }
 
-    handleRemoveFile(field) {
-      return (error, file) => {
-        if (error) {
-          console.error("An error occurred during file removal:", error);
-          return;
-        }
+      const fileObject = file.file;
 
-        // Find the index of the file in the field's value array
-        const index = field.value.findIndex((f) => f === file);
-
-        // Remove the file from the field's value array
-        if (index !== -1) {
-          field.value.splice(index, 1);
-        }
-
-        console.log("File removed:", file);
+      // Find and remove the file object from the field's value array
+      const index = field.value.findIndex((f) => f.name === fileObject.name);
+      if (index !== -1) {
+        field.value.splice(index, 1);
+        console.log("File removed:", fileObject.name, fileObject);
         console.log("Updated field value:", field.value);
-      };
+      }
     },
 
     addAttendee() {
@@ -1310,9 +1314,10 @@ export default {
           field.value = "";
         });
         tab.attendees.push(newAttendee);
-      } else {
-        console.log(`Form submitted for tab: ${tab.title}`, tab.fields);
       }
+      //  else {
+      //   console.log(`Form submitted for tab: ${tab.title}`, tab.fields);
+      // }
     },
   },
 };

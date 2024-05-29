@@ -1184,6 +1184,7 @@ export default {
         case "LocalTravelling":
           this.localTravellingDetails = claim;
           console.log("Local Travelling Details:", this.localTravellingDetails);
+         console.log("upload",this.localTravellingDetails.UploadLT) ;
           break;
         case "OverseasTravellingwithAccommodation":
           this.overseasTravellingDetails = claim;
