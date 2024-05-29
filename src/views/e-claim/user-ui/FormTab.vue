@@ -509,7 +509,7 @@
                 </button>
                 <button
                   v-else-if="subTab.title === 'Attendees'"
-                  type="button"
+                  type="submit"
                   @click="saveForm"
                   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
@@ -1291,6 +1291,7 @@ export default {
       // Create an empty object to hold the formatted form data
       const formattedData = {};
 
+      
       // Iterate through the fields of the current tab
       tab.fields.forEach((field) => {
         // Use the field label as the key and the field value as the value
