@@ -490,26 +490,25 @@
                       </table>
                     </div>
                   </div>
-                   <div class="mt-4 mr-6 flex flex-row-reverse">
-              <div class="flex items-center justify-between">
-                <button
-                  v-if="subTab.title === 'Details'"
-                  type="button"
-                  @click="nextTab"
-                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                >
-                  Next
-                </button>
-                <button
-                  v-else-if="subTab.title === 'Attendees'"
-                  type="button"
-                  @click="saveForm"
-                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                >
-                  Save
-                </button>
-              </div>
-            </div>
+                  <div class="mt-4 mr-6 flex flex-row-reverse">
+                    <div class="flex items-center justify-between">
+                      <button
+                        v-if="subTab.title === 'Details'"
+                        type="button"
+                        @click="nextTab"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      >
+                        Next
+                      </button>
+                      <button
+                        v-else-if="subTab.title === 'Attendees'"
+                        type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
                 </form>
               </div>
             </div>
@@ -881,9 +880,10 @@ export default {
             {
               id: "YearHR",
               label: "Year",
-              type: "number",
+              type: "year",
               value: "",
               required: true,
+              options: this.years,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1259,6 +1259,7 @@ export default {
       this.modalForm.staffId = "";
       this.modalForm.companyName = "";
     },
+    
     removeAttendee(index) {
       this.attendees.splice(index, 1);
     },
@@ -1282,7 +1283,7 @@ export default {
       // Switch to the next tab
       this.activeSubTab += 1;
     },
-    
+
     submitForm(tab) {
       // Create an empty object to hold the formatted form data
       const formattedData = {};

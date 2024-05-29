@@ -339,16 +339,28 @@
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
-  <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Upload File(s):</label>
-  <div class="flex flex-wrap">
-    <div v-for="(file, index) in localTravellingDetails.UploadLT" :key="index" class="m-2">
-      <div class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24">
-        <img :src="createObjectURL(file)" :alt="file.name" class="w-full h-full object-cover">
-      </div>
-    </div>
-  </div>
-</div>
-             
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Upload File(s):</label
+                >
+                <div class="flex flex-wrap">
+                  <div
+                    v-for="(file, index) in localTravellingDetails.UploadLT"
+                    :key="index"
+                    class="m-2"
+                  >
+                    <div
+                      class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
+                    >
+                      <img
+                        :src="createObjectURL(file)"
+                        :alt="file.name"
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <hr />
               <div class="flex justify-center items-center mb-4">
                 <label
@@ -1105,8 +1117,6 @@
 </template>
 
 <script>
-
-
 import tab from "./user-ui/FormTab.vue";
 import axios from "axios";
 import { formStore } from "../store.js";
@@ -1116,7 +1126,6 @@ export default {
   name: "TEtstS",
   components: {
     tab,
-    
   },
   data() {
     return {
