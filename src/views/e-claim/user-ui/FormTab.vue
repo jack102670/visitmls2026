@@ -99,20 +99,15 @@
 
                   <template v-else-if="field.type === 'file'">
                     <div class="pt-3">
-                     <file-pond
-      
-        :name="field.id"
-        ref="pond"
-        label-idle="Drop files here..."
-        :files="field.value"
-    
-        @init="handleFilePondInit"
-        @addfile="(error, file) => handleAddFile(error, file, field)"
-        :accepted-file-types="field.acceptedFileTypes"
-        :max-file-size="field.maxFileSize"
-        :allow-multiple="field.allowMultiple"
-       
-      />
+                      <FilePond
+                        ref="pond"
+                        name="file"
+                        :allow-multiple="field.allowMultiple"
+                        :accepted-file-types="field.acceptedFileTypes"
+                        :max-file-size="field.maxFileSize"
+                        @addfile="handleAddFile(field)"
+                        @removefile="handleRemoveFile(field)"
+                      />
                     </div>
                   </template>
 
@@ -168,7 +163,7 @@
               }"
               class="px-4 py-2 mr-2 rounded-sm focus:outline-none border border-gray-300"
             >
-               {{ subTab.title === 'Entertainment' ? subTab.title + ' - ' + combinedData.type : subTab.title }}
+              {{ subTab.title }}
               <span v-if="subTab.title === 'Attendees'">
                 ({{ attendees.length }})</span
               >
@@ -230,7 +225,7 @@
                       />
                     </template>
 
-                    <!-- <template v-else-if="field.type === 'file'">
+                    <template v-else-if="field.type === 'file'">
                       <div class="pt-3">
                         <FilePond
                           ref="pond"
@@ -242,7 +237,7 @@
                           @removefile="handleRemoveFile(field)"
                         />
                       </div>
-                    </template> -->
+                    </template>
                     <template v-else>
                       <input
                         v-model="field.value"
@@ -1203,38 +1198,40 @@ export default {
   },
 
   methods: {
-    handleFilePondInit() {
-    console.log('FilePond has initialized');
-  },
-  handleAddFile(error, file, field) {
-      if (error) {
-        console.error('Error adding file:', error.message);
-        return;
-      }
-      field.value.push(file.file);
-      console.log('File added:', file.file);
-      console.log('Updated files:', field.value);
+    handleAddFile(field) {
+      return (error, file) => {
+        if (error) {
+          console.error("An error occurred during file upload:", error);
+          return;
+        }
+
+        // Add the file to the field's value array
+        field.value.push(file);
+
+        console.log("File added:", file);
+        console.log("Updated field value:", field.value);
+      };
     },
 
-handleRemoveFile(field, file) {
-  if (field === null) {
-    console.error('field is null');
-    return;
-  }
+    handleRemoveFile(field) {
+      return (error, file) => {
+        if (error) {
+          console.error("An error occurred during file removal:", error);
+          return;
+        }
 
-  if (!Array.isArray(field.value)) {
-    console.error('field.value is not an array');
-    return;
-  }
+        // Find the index of the file in the field's value array
+        const index = field.value.findIndex((f) => f === file);
 
-  const index = field.value.findIndex(f => f === file);
-  if (index !== -1) {
-    field.value.splice(index, 1);
-  }
+        // Remove the file from the field's value array
+        if (index !== -1) {
+          field.value.splice(index, 1);
+        }
 
-  console.log('File removed:', file);
-  console.log('Updated field value:', field.value);
-},
+        console.log("File removed:", file);
+        console.log("Updated field value:", field.value);
+      };
+    },
 
     addAttendee() {
       const { name, staffId, companyName } = this.modalForm;
@@ -1285,21 +1282,7 @@ handleRemoveFile(field, file) {
       // Switch to the next tab
       this.activeSubTab += 1;
     },
-
-    saveAndCombineData() {
-      // Combine data from Details and Attendees tabs
-      const combinedData = {
-        details: this.entertainmentTabs[0].fields.reduce((acc, field) => {
-          acc[field.id] = field.value;
-          return acc;
-        }, {}),
-        attendees: this.attendees,
-      };
-
-      // Emit event with combined data
-      this.$emit("combinedData", combinedData);
-    },
-
+    
     submitForm(tab) {
       // Create an empty object to hold the formatted form data
       const formattedData = {};
@@ -1330,7 +1313,6 @@ handleRemoveFile(field, file) {
         console.log(`Form submitted for tab: ${tab.title}`, tab.fields);
       }
     },
-
   },
 };
 </script>
