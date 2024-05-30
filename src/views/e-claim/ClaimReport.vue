@@ -707,7 +707,7 @@
             </div>
           </div>
 
-          <div v-if="selectedClaimType === 'Entertaiment'">
+          <div v-if="selectedClaimType === 'Entertainment'">
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
               <h1 class="text-3xl font-bold">Entertainment Claim Form</h1>
@@ -801,6 +801,15 @@
                   class="border rounded-md px-4 py-2"
                 />
               </div>
+             <div class="flex justify-between items-center mb-4" v-for="(attendee, index) in entertainmentDetails.attendees" :key="index">
+  <label for="amount" class="text-gray-700 font-bold mr-2">Attendee: {{ index +1 }}</label>
+  <div>
+    <p>Name: {{ attendee.name }}</p>
+    <p>Company Name: {{ attendee.companyName }}</p>
+    <p>Staff ID: {{ attendee.staffId }}</p>
+    <p>Status: {{ attendee.status }}</p>
+  </div>
+</div>
             </div>
 
             <div class="flex justify-end">
