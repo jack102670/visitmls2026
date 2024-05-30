@@ -103,7 +103,7 @@
                         :name="field.id"
                         ref="pond"
                         label-idle="Drop files here..."
-                        @init="handleFilePondInit"
+                      
                         @addfile="
                           (error, file) => handleAddFile(error, file, field)
                         "
@@ -1204,35 +1204,35 @@ export default {
   },
 
   methods: {
-    handleAddFile(error, file, field) {
-      if (error) {
-        console.error("Error adding file:", error.message);
-        return;
-      }
-      field.value.push(file.file);
-      console.log("File added:", file.file);
-      console.log("Updated files:", field.value);
-    },
+  handleAddFile(error, file, field) {
+  if (error) {
+    console.error("Error adding file:", error.message);
+    return;
+  }
+  field.value = [...field.value, file.file];
+  console.log("File added:", file.file);
+  console.log("Updated files:", field.value);
+},
 
-    handleRemoveFile(error, file, field) {
-      if (error) {
-        console.error(
-          "An error occurred while removing the file:",
-          error.message
-        );
-        return;
-      }
+handleRemoveFile(error, file, field) {
+  if (error) {
+    console.error(
+      "An error occurred while removing the file:",
+      error.message
+    );
+    return;
+  }
 
-      const fileObject = file.file;
+  const fileObject = file.file;
 
-      // Find and remove the file object from the field's value array
-      const index = field.value.findIndex((f) => f.name === fileObject.name);
-      if (index !== -1) {
-        field.value.splice(index, 1);
-        console.log("File removed:", fileObject.name, fileObject);
-        console.log("Updated field value:", field);
-      }
-    },
+  // Find and remove the file object from the field's value array
+  const index = field.value.findIndex((f) => f.name === fileObject.name);
+  if (index !== -1) {
+    field.value = [...field.value.slice(0, index), ...field.value.slice(index + 1)];
+    console.log("File removed:", fileObject.name, fileObject);
+    console.log("Updated field value:", field);
+  }
+},
 
     addAttendee() {
       const { name, staffId, companyName } = this.modalForm;
