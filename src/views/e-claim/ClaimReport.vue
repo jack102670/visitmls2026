@@ -810,15 +810,21 @@
                   class="border rounded-md px-4 py-2"
                 />
               </div>
-             <div class="flex justify-between items-center mb-4" v-for="(attendee, index) in entertainmentDetails.attendees" :key="index">
-  <label for="amount" class="text-gray-700 font-bold mr-2">Attendee: {{ index +1 }}</label>
-  <div>
-    <p>Name: {{ attendee.name }}</p>
-    <p>Company Name: {{ attendee.companyName }}</p>
-    <p>Staff ID: {{ attendee.staffId }}</p>
-    <p>Status: {{ attendee.status }}</p>
-  </div>
-</div>
+              <div
+                class="flex justify-between items-center mb-4"
+                v-for="(attendee, index) in entertainmentDetails.attendees"
+                :key="index"
+              >
+                <label for="amount" class="text-gray-700 font-bold mr-2"
+                  >Attendee: {{ index + 1 }}</label
+                >
+                <div>
+                  <p>Name: {{ attendee.name }}</p>
+                  <p>Company Name: {{ attendee.companyName }}</p>
+                  <p>Staff ID: {{ attendee.staffId }}</p>
+                  <p>Status: {{ attendee.status }}</p>
+                </div>
+              </div>
             </div>
 
             <div class="flex justify-end">
@@ -968,92 +974,108 @@
           </div>
 
           <div v-if="selectedClaimType === 'HandphoneReimbursement'">
-  <div class="flex-1 gap-4 justify-center items-center">
-    <!-- Modal content -->
-    <div class="flex justify-end">
-      <button
-        v-show="!isEditMode"
-        @click="isClickModal = false"
-        class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
-      >
-        X
-      </button>
-    </div>
-    <h1 class="text-3xl font-bold">Handphone Reimbursement Form</h1>
-    <hr class="mt-2 mb-4" />
+            <div class="flex-1 gap-4 justify-center items-center">
+              <!-- Modal content -->
+              <div class="flex justify-end">
+                <button
+                  v-show="!isEditMode"
+                  @click="isClickModal = false"
+                  class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
+                >
+                  X
+                </button>
+              </div>
+              <h1 class="text-3xl font-bold">Handphone Reimbursement Form</h1>
+              <hr class="mt-2 mb-4" />
 
-    <div class="flex flex-col">
-      <div class="flex justify-between items-center mb-4">
-        <label for="nodeId" class="text-gray-700 font-bold mr-2">Month:</label>
-        <input
-          type="text"
-          id="nodeId"
-          v-model="handphoneReimbursementDetails.MonthHR"
-          :disabled="!isEditMode"
-          class="border rounded-md px-4 py-2"
-        />
-      </div>
-      <div class="flex justify-between items-center mb-4">
-        <label for="nodeName" class="text-gray-700 font-bold mr-2">Year:</label>
-        <input
-          type="text"
-          id="nodeName"
-          v-model="handphoneReimbursementDetails.YearHR"
-          :disabled="!isEditMode"
-          class="border rounded-md px-4 py-2"
-        />
-      </div>
-      <div class="flex justify-between items-center mb-4">
-        <label for="bankName" class="text-gray-700 font-bold mr-2">Bank Name:</label>
-        <input
-          type="text"
-          id="bankName"
-          v-model="handphoneReimbursementDetails.BankNameHR"
-          :disabled="!isEditMode"
-          class="border rounded-md px-4 py-2"
-        />
-      </div>
-      <div class="flex justify-between items-center mb-4">
-        <label for="accBankNumber" class="text-gray-700 font-bold mr-2">Account Bank No:</label>
-        <input
-          type="text"
-          id="accBankNumber"
-          v-model="handphoneReimbursementDetails.AccBankNumberHR"
-          :disabled="!isEditMode"
-          class="border rounded-md px-4 py-2"
-        />
-      </div>
-      <div class="flex justify-between items-center mb-4">
-        <label for="accHolderName" class="text-gray-700 font-bold mr-2">Account Holder Name:</label>
-        <input
-          type="text"
-          id="accHolderName"
-          v-model="handphoneReimbursementDetails.AccHolderNameHR"
-          :disabled="!isEditMode"
-          class="border rounded-md px-4 py-2"
-        />
-      </div>
-      <div class="flex justify-between items-center mb-4">
-        <label for="claimsAmount" class="text-gray-700 font-bold mr-2">Claims Amount (RM):</label>
-        <input
-          type="text"
-          id="claimsAmount"
-          v-model="handphoneReimbursementDetails.ClaimsAmountHR"
-          :disabled="!isEditMode"
-          class="border rounded-md px-4 py-2"
-        />
-      </div>
-    </div>
+              <div class="flex flex-col">
+                <div class="flex justify-between items-center mb-4">
+                  <label for="nodeId" class="text-gray-700 font-bold mr-2"
+                    >Month:</label
+                  >
+                  <input
+                    type="text"
+                    id="nodeId"
+                    v-model="handphoneReimbursementDetails.MonthHR"
+                    :disabled="!isEditMode"
+                    class="border rounded-md px-4 py-2"
+                  />
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                  <label for="nodeName" class="text-gray-700 font-bold mr-2"
+                    >Year:</label
+                  >
+                  <input
+                    type="text"
+                    id="nodeName"
+                    v-model="handphoneReimbursementDetails.YearHR"
+                    :disabled="!isEditMode"
+                    class="border rounded-md px-4 py-2"
+                  />
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                  <label for="bankName" class="text-gray-700 font-bold mr-2"
+                    >Bank Name:</label
+                  >
+                  <input
+                    type="text"
+                    id="bankName"
+                    v-model="handphoneReimbursementDetails.BankNameHR"
+                    :disabled="!isEditMode"
+                    class="border rounded-md px-4 py-2"
+                  />
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                  <label
+                    for="accBankNumber"
+                    class="text-gray-700 font-bold mr-2"
+                    >Account Bank No:</label
+                  >
+                  <input
+                    type="text"
+                    id="accBankNumber"
+                    v-model="handphoneReimbursementDetails.AccBankNumberHR"
+                    :disabled="!isEditMode"
+                    class="border rounded-md px-4 py-2"
+                  />
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                  <label
+                    for="accHolderName"
+                    class="text-gray-700 font-bold mr-2"
+                    >Account Holder Name:</label
+                  >
+                  <input
+                    type="text"
+                    id="accHolderName"
+                    v-model="handphoneReimbursementDetails.AccHolderNameHR"
+                    :disabled="!isEditMode"
+                    class="border rounded-md px-4 py-2"
+                  />
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                  <label for="claimsAmount" class="text-gray-700 font-bold mr-2"
+                    >Claims Amount (RM):</label
+                  >
+                  <input
+                    type="text"
+                    id="claimsAmount"
+                    v-model="handphoneReimbursementDetails.ClaimsAmountHR"
+                    :disabled="!isEditMode"
+                    class="border rounded-md px-4 py-2"
+                  />
+                </div>
+              </div>
 
-    <div class="flex justify-end">
-      <button
-        @click="toggleEditMode"
-        class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
-      >
-        {{ isEditMode ? "Save" : "Edit" }}
-      </button>
-      <!-- You can uncomment the cancel button if needed -->
-      <!--
+              <div class="flex justify-end">
+                <button
+                  @click="toggleEditMode"
+                  class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+                >
+                  {{ isEditMode ? "Save" : "Edit" }}
+                </button>
+                <!-- You can uncomment the cancel button if needed -->
+                <!--
       <button
         @click="isClickModal = false"
         class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
@@ -1061,10 +1083,9 @@
         Cancel
       </button>
       -->
-    </div>
-  </div>
-</div>
-
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1280,7 +1301,7 @@ export default {
     },
     async sendToAPI() {
       // Group claims by tabTitle
-      this.$router.push({ name: 'eclaimhomepages' });
+      this.$router.push({ name: "eclaimhomepages" });
       const groupedClaims = this.dataclaims.reduce((acc, claim) => {
         if (!acc[claim.tabTitle]) {
           acc[claim.tabTitle] = [];
