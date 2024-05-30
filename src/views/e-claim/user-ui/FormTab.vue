@@ -103,7 +103,6 @@
                         :name="field.id"
                         ref="pond"
                         label-idle="Drop files here..."
-                      
                         @init="handleFilePondInit"
                         @addfile="
                           (error, file) => handleAddFile(error, file, field)
@@ -1263,7 +1262,7 @@ export default {
       this.modalForm.staffId = "";
       this.modalForm.companyName = "";
     },
-    
+
     removeAttendee(index) {
       this.attendees.splice(index, 1);
     },
@@ -1291,9 +1290,7 @@ export default {
     submitForm(tab) {
       // Create an empty object to hold the formatted form data
       const formattedData = {};
-     
 
-      
       // Iterate through the fields of the current tab
       tab.fields.forEach((field) => {
         // Use the field label as the key and the field value as the value
@@ -1321,36 +1318,37 @@ export default {
       //   console.log(`Form submitted for tab: ${tab.title}`, tab.fields);
       // }
     },
-   submitForm2() {
+    submitForm2() {
   // Create an empty object to hold the formatted form data
   const formattedData = {};
 
-  // Iterate over all tabs
-  this.entertainmentTabs.forEach((tab) => {
-    // Iterate through the fields of the current tab
-    tab.fields.forEach((field) => {
-      // Use the field label as the key and the field value as the value
-      formattedData[field.id] = field.value;
-    });
+      // Iterate over all tabs
+      this.entertainmentTabs.forEach((tab) => {
+        // Iterate through the fields of the current tab
+        tab.fields.forEach((field) => {
+          // Use the field label as the key and the field value as the value
+          formattedData[field.id] = field.value;
+        });
 
-    // If the tab is the "Attendees" tab, add the attendees to the formatted data
-  
+    // If the tab is the "Attendees" tab, process the attendees
     if (tab.title === "Attendees") {
-        // Assuming you have access to the attendees array
-        tab.attendees = this.attendees;
-        formattedData["attendees"] = tab.attendees;
+      const newAttendee = {};
+      tab.fields.forEach((field) => {
+        newAttendee[field.id] = field.value;
+        field.value = "";
+      });
+      tab.attendees.push(newAttendee);
     }
   });
 
-    
   // Add the tab title to the formatted data
   formattedData["tabTitle"] = "Entertainment";
 
-  // Emit the formatted form data
-  this.$emit("formSubmitted", formattedData);
+      // Emit the formatted form data
+      this.$emit("formSubmitted", formattedData);
 
   // Log the formatted form data to the console
-  console.log("Form Data: Entertaiment", formattedData);
+  console.log("Formatted Form Data:", formattedData);
 },
   },
 };
