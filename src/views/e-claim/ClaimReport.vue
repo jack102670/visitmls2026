@@ -90,7 +90,7 @@
                 </h5>
               </div>
               <!-- Display Date of Report -->
-              <div class="lg:col-start-8 lg:col-end-9 col-start-1 col-end-2">
+              <!-- <div class="lg:col-start-8 lg:col-end-9 col-start-1 col-end-2">
                 <h5 class="text-sm font-semibold text-gray-600">
                   Date of Report
                 </h5>
@@ -102,7 +102,7 @@
                 <h5 class="text-sm font-semibold text-gray-600">
                   {{ claim.reportDate }}
                 </h5>
-              </div>
+              </div> -->
             </template>
           </div>
         </section>
