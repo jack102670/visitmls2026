@@ -1334,17 +1334,15 @@ export default {
     });
 
     // If the tab is the "Attendees" tab, add the attendees to the formatted data
+  
     if (tab.title === "Attendees") {
-      const newAttendee = {};
-      tab.fields.forEach((field) => {
-        newAttendee[field.id] = field.value;
-        field.value = "";
-      });
-      tab.attendees.push(newAttendee);
-      formattedData["attendees"] = tab.attendees;
+        // Assuming you have access to the attendees array
+        tab.attendees = this.attendees;
+        formattedData["attendees"] = tab.attendees;
     }
   });
 
+    
   // Add the tab title to the formatted data
   formattedData["tabTitle"] = "Entertainment";
 
@@ -1352,7 +1350,7 @@ export default {
   this.$emit("formSubmitted", formattedData);
 
   // Log the formatted form data to the console
-  console.log("Formatted Form Data:", formattedData);
+  console.log("Form Data: Entertaiment", formattedData);
 },
   },
 };
