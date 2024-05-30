@@ -688,9 +688,9 @@ export default {
     // Download the file
     DownloadFile() {
       let url =
-        'https://pktgroup.com/wp-content/uploads/2021/03/OAH-News-Header-800x400.jpg';
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/ReceiptSwiss.jpg/170px-ReceiptSwiss.jpg';
 
-      fileSaver.saveAs(url, 'pkt.jpg');
+      fileSaver.saveAs(url, 'receipt.jpg');
     },
   },
   mounted() {
