@@ -1204,36 +1204,39 @@ export default {
   },
 
   methods: {
-    handleFilePondInit() {
-      console.log("FilePond has initialized");
-    },
-    handleAddFile(error, file, field) {
-      if (error) {
-        console.error("Error adding file:", error.message);
-        return;
-      }
-      field.value.push(file.file);
-      console.log("File added:", file.file);
-      console.log("Updated files:", field.value);
-    },
-    handleRemoveFile(error, file, field) {
-      if (error) {
-        console.error(
-          "An error occurred while removing the file:",
-          error.message
-        );
-        return;
-      }
+    handleAddFile(field) {
+      return (error, file) => {
+        if (error) {
+          console.error("An error occurred during file upload:", error);
+          return;
+        }
 
-      const fileObject = file.file;
+        // Add the file to the field's value array
+        field.value.push(file);
 
-      // Find and remove the file object from the field's value array
-      const index = field.value.findIndex((f) => f.name === fileObject.name);
-      if (index !== -1) {
-        field.value.splice(index, 1);
-        console.log("File removed:", fileObject.name, fileObject);
+        console.log("File added:", file);
         console.log("Updated field value:", field.value);
-      }
+      };
+    },
+
+    handleRemoveFile(field) {
+      return (error, file) => {
+        if (error) {
+          console.error("An error occurred during file removal:", error);
+          return;
+        }
+
+        // Find the index of the file in the field's value array
+        const index = field.value.findIndex((f) => f === file);
+
+        // Remove the file from the field's value array
+        if (index !== -1) {
+          field.value.splice(index, 1);
+        }
+
+        console.log("File removed:", file);
+        console.log("Updated field value:", field.value);
+      };
     },
 
     addAttendee() {
@@ -1274,7 +1277,9 @@ export default {
           field.type === "number" &&
           !isNaN(parseFloat(field.value)) &&
           field.id !== "MileageKMLT" &&
-          field.id !== "LimitedAmountHR"
+          field.id !== "LimitedAmountHR" &&
+          field.id !== "AccBankNumberHR" &&
+          field.id !== "AccBankNumberML"
         ) {
           total += parseFloat(field.value);
         }
