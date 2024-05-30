@@ -47,7 +47,7 @@
                 Claim
                 <span
                   class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400"
-                >1
+                  >1
                 </span>
               </h2>
             </div>
@@ -135,7 +135,9 @@
                               <div>
                                 <h2
                                   class="font-medium text-gray-500 dark:text-gray-300"
-                                >HQ</h2>
+                                >
+                                  HQ
+                                </h2>
                               </div>
                             </div>
                           </div>
@@ -149,22 +151,40 @@
                                 <!-- Conditionally display 'Badge Request' if typeofrequest includes 'br' -->
                               </div>
                             </div>
-                          </div>Entertainment
+                          </div>
+                          Entertainment
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        > MR MAN </td>
+                        >
+                          MR MAN
+                        </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        > ET2584232</td>
+                        >
+                          ET2584232
+                        </td>
 
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        > 20 July 2024</td>
+                        >
+                          20 July 2024
+                        </td>
 
                         <td
                           class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                        > pending</td>
+                        >
+                          <span
+                            class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800"
+                          >
+                            <span
+                              class="h-1.5 w-1.5 rounded-full bg-red-500"
+                            ></span>
+                            <span class="text-sm font-normal text-red-500"
+                              >Pending</span
+                            >
+                          </span>
+                        </td>
 
                         <td class="px-4 py-4 ml text-sm whitespace-nowrap">
                           <div class="flex items-center gap-x-6">
@@ -286,12 +306,12 @@ export default {
   },
   mounted() {
     // Sidebar close or open
-    let openOrNot = localStorage.getItem('openOrNot');
-    const element = document.querySelector('main');
-    if (element && openOrNot == 'false') {
-      element.classList.add('become-big');
-    } else if (element && openOrNot == 'true') {
-      element.classList.remove('become-big');
+    let openOrNot = localStorage.getItem("openOrNot");
+    const element = document.querySelector("main");
+    if (element && openOrNot == "false") {
+      element.classList.add("become-big");
+    } else if (element && openOrNot == "true") {
+      element.classList.remove("become-big");
     }
   },
 };
