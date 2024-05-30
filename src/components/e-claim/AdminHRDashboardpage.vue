@@ -160,9 +160,9 @@ export default {
       // need to fetch from API
       claimsData: [
         {
-          reportName: 'Webinars',
-          claimant: 'Teow Chee Wen',
-          amount: 729.3,
+          reportName: 'MC',
+          claimant: 'Ali Mohammad',
+          amount: 30,
           date: '20 May 2024',
           status:
             localStorage.getItem('ApproveOrNot') == 'approve'
@@ -172,39 +172,18 @@ export default {
                 : 'PENDING',
         },
         {
-          reportName: 'Program',
-          claimant: 'Wong Jin Wai',
-          amount: 224.0,
-          date: '20 May 2024',
-          status: 'PENDING',
-        },
-        {
-          reportName: 'Company Trip ',
-          claimant: 'Tan Seng Xing',
-          amount: 2000.0,
-          date: '19 May 2024',
-          status: 'APPROVED',
-        },
-        {
-          reportName: 'Staff Party ',
-          claimant: 'Lee Pei Xuan',
-          amount: 500.0,
+          reportName: 'Phone Reimbursement',
+          claimant: 'Dinesh',
+          amount: 42,
           date: '19 May 2024',
           status: 'VERIFIED',
-        },
-        {
-          reportName: 'Celebration ',
-          claimant: 'Teow Chee Wen',
-          amount: 700.0,
-          date: '19 May 2024',
-          status: 'REJECTED',
         },
       ],
     };
   },
   methods: {
     ViewClaim() {
-      this.$router.push({ name: 'AdminSummaryClaimpage' });
+      this.$router.push({ name: 'AdminHRSummaryClaimpage' });
     },
     ShowNotification() {
       console.log(123);

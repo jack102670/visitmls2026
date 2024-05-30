@@ -35,7 +35,9 @@ import FormTab from '../views/e-claim/user-ui/FormTab.vue';
 import testing2 from '../views/Testing2.vue';
 import organizationchartdemo from '../views/organizationchartdemo.vue';
 import AdminSummaryClaimpage from '../components/e-claim/AdminSummaryClaimpage.vue';
+import AdminHRSummaryClaimpage from '../components/e-claim/AdminHRSummaryClaimpage.vue';
 import AdminDashboardpage from '../components/e-claim/AdminDashboardpage.vue';
+import AdminHRDashboardpage from '../components/e-claim/AdminHRDashboardpage.vue';
 import Homepage from '../views/homepage.vue';
 const routes = [
   {
@@ -93,10 +95,26 @@ const routes = [
     },
   },
   {
+    path: '/adminhrsummaryclaim',
+    name: 'AdminHRSummaryClaimpage',
+    components: {
+      default: AdminHRSummaryClaimpage,
+      Sidebar: Newsidebar,
+    },
+  },
+  {
     path: '/admindashboard',
     name: 'AdminDashboardpage',
     components: {
       default: AdminDashboardpage,
+      Sidebar: Newsidebar,
+    },
+  },
+  {
+    path: '/adminhrdashboard',
+    name: 'AdminHRDashboardpage',
+    components: {
+      default: AdminHRDashboardpage,
       Sidebar: Newsidebar,
     },
   },
