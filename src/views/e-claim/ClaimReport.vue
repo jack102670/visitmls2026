@@ -90,7 +90,7 @@
                 </h5>
               </div>
               <!-- Display Date of Report -->
-              <div class="lg:col-start-8 lg:col-end-9 col-start-1 col-end-2">
+              <!-- <div class="lg:col-start-8 lg:col-end-9 col-start-1 col-end-2">
                 <h5 class="text-sm font-semibold text-gray-600">
                   Date of Report
                 </h5>
@@ -102,7 +102,7 @@
                 <h5 class="text-sm font-semibold text-gray-600">
                   {{ claim.reportDate }}
                 </h5>
-              </div>
+              </div> -->
             </template>
           </div>
         </section>
@@ -195,13 +195,14 @@
                           <span v-if="claim.dateOT">{{ claim.dateOT }}</span>
                           <span v-if="claim.dateML">{{ claim.dateML }}</span>
                           <span v-if="claim.dateE">{{ claim.dateE }}</span>
+                          <span v-if="claim.dateSR">{{ claim.dateSR }}</span>
                         </td>
 
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2"
                         >
                           <button
-                            @click="showDetails(claim,index)"
+                            @click="showDetails(claim, index)"
                             class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
                           >
                             <svg
@@ -233,7 +234,7 @@
           @formSubmitted="addClaim"
           :type="claims[0].reportType"
           @file-added="handleFileAdded"
-    @file-removed="handleFileRemoved"
+          @file-removed="handleFileRemoved"
         ></tab>
       </div>
       <div
@@ -247,16 +248,16 @@
         >
           <!-- Modal header -->
           <!-- Your existing modal header content -->
-
-          <div >
+          <div v-if="selectedClaimType === 'LocalTravelling'">
             <div class="flex justify-end">
-            <button
-    v-show="!isEditMode"
-    @click="isClickModal = false"
-    class=" bg-[#2B87DB] hover:bg-[#2774bc]  text-white font-bold py-2 px-4 rounded-full ml-2"
->
-    X
-</button></div>
+              <button
+                v-show="!isEditMode"
+                @click="isClickModal = false"
+                class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
+              >
+                X
+              </button>
+            </div>
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
               <h1 class="text-3xl font-bold">Local Travelling Form</h1>
@@ -341,13 +342,25 @@
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Upload File(s):</label
                 >
-                <input
-                  type="text"
-                  id="positioncode"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
-                />
+                <div class="flex flex-wrap">
+                  <div
+                    v-for="(file, index) in localTravellingDetails.UploadLT"
+                    :key="index"
+                    class="m-2"
+                  >
+                    <div
+                      class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
+                    >
+                      <img
+                        :src="createObjectURL(file)"
+                        :alt="file.name"
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
+
               <hr />
               <div class="flex justify-center items-center mb-4">
                 <label
@@ -368,7 +381,6 @@
                 <!-- Change button text based on edit mode -->
               </button>
 
-           
               <button
                 @click="deleteForm()"
                 class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
@@ -393,13 +405,22 @@
           <div
             v-if="selectedClaimType === 'OverseasTravellingwithAccommodation'"
           >
-            <div
-              class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-            >
+            <div class="flex justify-end">
+              <button
+                v-show="!isEditMode"
+                @click="isClickModal = false"
+                class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
+              >
+                X
+              </button>
+            </div>
+            <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
+              <h1 class="text-3xl font-bold">Overseas Travelling Form</h1>
+              <hr class="mt-2 mb-4" />
 
-              <div class="mb-4">
-                <label for="nodeId" class="block text-gray-700 font-bold mb-2"
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeId" class="text-gray-700 font-bold mr-2"
                   >Date:</label
                 >
                 <input
@@ -407,11 +428,11 @@
                   id="nodeId"
                   v-model="overseasTravellingDetails.dateOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
-                <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeName" class="text-gray-700 font-bold mr-2"
                   >Description:</label
                 >
                 <input
@@ -419,138 +440,130 @@
                   id="nodeName"
                   v-model="overseasTravellingDetails.DescriptionOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
 
-              <div class="mb-4">
+              <div class="flex justify-between items-center mb-4">
                 <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
-                  >Foreign Currency</label
-                >
-                <input
-                  type="text"
-                  id="email"
-                  v-model="
-                    overseasTravellingDetails.ForeignCurrencyAccommodationOT
-                  "
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
-                />
-              </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
-                  >Exchange Rate:</label
-                >
-                <input
-                  type="text"
-                  id="phonenumber"
-                  v-model="
-                    overseasTravellingDetails.ExchangeRateAccommodationOT
-                  "
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
-                />
-              </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
-                  >RM:</label
-                >
-                <input
-                  type="text"
-                  id="positioname"
-                  v-model="overseasTravellingDetails.RMforAccommodationOT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full overflow-x-auto"
-                />
-              </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+                  for="foreignCurrency"
+                  class="text-gray-700 font-bold mr-2"
                   >Foreign Currency:</label
                 >
                 <input
                   type="text"
-                  id="positioncode"
-                  v-model="overseasTravellingDetails.ForeignCurrencyOthersOT"
+                  id="foreignCurrency"
+                  v-model="
+                    overseasTravellingDetails.ForeignCurrencyAccommodationOT
+                  "
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+              <div class="flex justify-between items-center mb-4">
+                <label for="exchangeRate" class="text-gray-700 font-bold mr-2"
                   >Exchange Rate:</label
                 >
                 <input
                   type="text"
-                  id="positioncode"
-                  v-model="overseasTravellingDetails.ExchangeRateOthersOT"
+                  id="exchangeRate"
+                  v-model="
+                    overseasTravellingDetails.ExchangeRateAccommodationOT
+                  "
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
+              <div class="flex justify-between items-center mb-4">
                 <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+                  for="rmAccommodation"
+                  class="text-gray-700 font-bold mr-2"
                   >RM:</label
                 >
                 <input
                   type="text"
-                  id="positioncode"
-                  v-model="overseasTravellingDetails.RMforOthersOT"
+                  id="rmAccommodation"
+                  v-model="overseasTravellingDetails.RMforAccommodationOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2 overflow-x-auto"
                 />
               </div>
-              <div class="mb-4">
+              <div class="flex justify-between items-center mb-4">
                 <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+                  for="foreignCurrencyOthers"
+                  class="text-gray-700 font-bold mr-2"
+                  >Foreign Currency:</label
+                >
+                <input
+                  type="text"
+                  id="foreignCurrencyOthers"
+                  v-model="overseasTravellingDetails.ForeignCurrencyOthersOT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label
+                  for="exchangeRateOthers"
+                  class="text-gray-700 font-bold mr-2"
+                  >Exchange Rate:</label
+                >
+                <input
+                  type="text"
+                  id="exchangeRateOthers"
+                  v-model="overseasTravellingDetails.ExchangeRateOthersOT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="rmOthers" class="text-gray-700 font-bold mr-2"
+                  >RM:</label
+                >
+                <input
+                  type="text"
+                  id="rmOthers"
+                  v-model="overseasTravellingDetails.RMforOthersOT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="mealAllowance" class="text-gray-700 font-bold mr-2"
                   >Meal Allowance(RM):</label
                 >
                 <input
                   type="text"
-                  id="positioncode"
+                  id="mealAllowance"
                   v-model="overseasTravellingDetails.MealAllowanceOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+              <div class="flex justify-between items-center mb-4">
+                <label for="airportLimo" class="text-gray-700 font-bold mr-2"
                   >Airport Limo / Teksi(RM):</label
                 >
                 <input
                   type="text"
-                  id="positioncode"
+                  id="airportLimo"
                   v-model="overseasTravellingDetails.AirportLimoTeksiOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
+              <div class="flex justify-between items-center mb-4">
                 <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+                  for="rmMealTransport"
+                  class="text-gray-700 font-bold mr-2"
                   >RM:</label
                 >
                 <input
                   type="text"
-                  id="positioncode"
+                  id="rmMealTransport"
                   v-model="overseasTravellingDetails.RMforMealTransportOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
 
@@ -559,19 +572,18 @@
             <div class="flex justify-end">
               <button
                 @click="toggleEditMode"
-                class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+                class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
               >
                 {{ isEditMode ? "Save" : "Edit" }}
                 <!-- Change button text based on edit mode -->
               </button>
 
-              <!-- Delete node button -->
-              <button
+              <!-- <button
                 @click="isClickModal = false"
                 class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
               >
                 Cancel
-              </button>
+              </button> -->
               <button
                 @click="deleteForm"
                 class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
@@ -593,14 +605,26 @@
               </button>
             </div>
           </div>
-          <div v-if="selectedClaimType === 'MedicalLeaveReimbursement'">
-            <div
-              class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-            >
-              <!-- Modal content -->
 
-              <div class="mb-4">
-                <label for="nodeId" class="block text-gray-700 font-bold mb-2"
+          <div v-if="selectedClaimType === 'MedicalLeaveReimbursement'">
+            <div class="flex-1 gap-4 justify-center items-center">
+              <!-- Modal content -->
+              <div class="flex justify-end">
+                <button
+                  v-show="!isEditMode"
+                  @click="isClickModal = false"
+                  class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
+                >
+                  X
+                </button>
+              </div>
+              <h1 class="text-3xl font-bold">
+                Medical Leave Reimbursement Form
+              </h1>
+              <hr class="mt-2 mb-4" />
+
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeId" class="text-gray-700 font-bold mr-2"
                   >Date:</label
                 >
                 <input
@@ -608,11 +632,11 @@
                   id="nodeId"
                   v-model="medicalLeaveReimbursementDetails.dateML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
-                <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeName" class="text-gray-700 font-bold mr-2"
                   >Reason for Medical Leave:</label
                 >
                 <input
@@ -620,95 +644,95 @@
                   id="nodeName"
                   v-model="medicalLeaveReimbursementDetails.ReasonML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
 
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+              <div class="flex justify-between items-center mb-4">
+                <label for="bankName" class="text-gray-700 font-bold mr-2"
                   >Bank Name:</label
                 >
                 <input
                   type="text"
-                  id="email"
+                  id="bankName"
                   v-model="medicalLeaveReimbursementDetails.BankNameML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+              <div class="flex justify-between items-center mb-4">
+                <label for="accBankNumber" class="text-gray-700 font-bold mr-2"
                   >Account Bank No:</label
                 >
                 <input
                   type="text"
-                  id="phonenumber"
+                  id="accBankNumber"
                   v-model="medicalLeaveReimbursementDetails.AccBankNumberML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+              <div class="flex justify-between items-center mb-4">
+                <label for="accHolderName" class="text-gray-700 font-bold mr-2"
                   >Account Holder Name:</label
                 >
                 <input
                   type="text"
-                  id="positioname"
+                  id="accHolderName"
                   v-model="medicalLeaveReimbursementDetails.AccHolderNameML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full overflow-x-auto"
+                  class="border rounded-md px-4 py-2 overflow-x-auto"
                 />
               </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
-                  >Claims Amount(RM):</label
+              <div class="flex justify-between items-center mb-4">
+                <label for="claimsAmount" class="text-gray-700 font-bold mr-2"
+                  >Claims Amount (RM):</label
                 >
                 <input
                   type="text"
-                  id="positioncode"
+                  id="claimsAmount"
                   v-model="medicalLeaveReimbursementDetails.ClaimsAmountML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-
-              <!-- Add/Edit node button -->
             </div>
+
             <div class="flex justify-end">
               <button
                 @click="toggleEditMode"
-                class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+                class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
               >
                 {{ isEditMode ? "Save" : "Edit" }}
                 <!-- Change button text based on edit mode -->
               </button>
 
-              <!-- Delete node button -->
-              <button
+              <!-- <button
                 @click="isClickModal = false"
                 class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
               >
                 Cancel
-              </button>
+              </button> -->
             </div>
           </div>
-          <div v-if="selectedClaimType === 'Entertaiment'">
-            <div
-              class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-            >
-              <!-- Modal content -->
 
-              <div class="mb-4">
-                <label for="nodeId" class="block text-gray-700 font-bold mb-2"
+          <div v-if="selectedClaimType === 'Entertainment'">
+            <div class="flex-1 gap-4 justify-center items-center">
+              <!-- Modal content -->
+              <div class="flex justify-end">
+              <button
+                v-show="!isEditMode"
+                @click="isClickModal = false"
+                class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
+              >
+                X
+              </button>
+            </div>
+              <h1 class="text-3xl font-bold">Entertainment Claim Form</h1>
+              <hr class="mt-2 mb-4" />
+
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeId" class="text-gray-700 font-bold mr-2"
                   >Date:</label
                 >
                 <input
@@ -716,135 +740,230 @@
                   id="nodeId"
                   v-model="entertainmentDetails.dateE"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <!--<div class="mb-4">
-                <label for="nodeName" class="block text-gray-700 font-bold mb-2"
-                  >Person Entertained:</label
-                >
-                <input
-                  type="text"
-                  id="nodeName"
-                  v-model="entertainmentDetails.PersonEntertainedE"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
-                />
-              </div> -->
-
-              <div class="mb-4">
+              <div class="flex justify-between items-center mb-4">
                 <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+                  for="typeOfEntertainment"
+                  class="text-gray-700 font-bold mr-2"
                   >Type of Entertainment:</label
                 >
                 <input
                   type="text"
-                  id="email"
+                  id="typeOfEntertainment"
                   v-model="entertainmentDetails.TypeofEntertainmentE"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
+              <div class="flex justify-between items-center mb-4">
                 <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+                  for="otherTypeOfEntertainment"
+                  class="text-gray-700 font-bold mr-2"
                   >Other Type of Entertainment:</label
                 >
                 <input
                   type="text"
-                  id="phonenumber"
+                  id="otherTypeOfEntertainment"
                   v-model="entertainmentDetails.OtherTypeofEntertainmentE"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+              <div class="flex justify-between items-center mb-4">
+                <label for="company" class="text-gray-700 font-bold mr-2"
                   >Company:</label
                 >
                 <input
                   type="text"
-                  id="positioname"
+                  id="company"
                   v-model="entertainmentDetails.CompanyE"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full overflow-x-auto"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+              <div class="flex justify-between items-center mb-4">
+                <label for="venue" class="text-gray-700 font-bold mr-2"
                   >Venue:</label
                 >
                 <input
                   type="text"
-                  id="positioncode"
+                  id="venue"
                   v-model="entertainmentDetails.VenueE"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+              <div class="flex justify-between items-center mb-4">
+                <label for="reference" class="text-gray-700 font-bold mr-2"
                   >Reference:</label
                 >
                 <input
                   type="text"
-                  id="positioncode"
+                  id="reference"
                   v-model="entertainmentDetails.ReferenceE"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
-                  >Amount(RM):</label
+              <div class="flex justify-between items-center mb-4">
+                <label for="amount" class="text-gray-700 font-bold mr-2"
+                  >Amount (RM):</label
                 >
                 <input
                   type="text"
-                  id="positioncode"
+                  id="amount"
                   v-model="entertainmentDetails.AmountRME"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
 
-              <!-- Add/Edit node button -->
+              <!-- Attendees table -->
+              <div class="mb-4">
+                <h2 class="text-xl font-bold">Attendees</h2>
+                <table
+                  class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                >
+                  <thead class="bg-gray-50 dark:bg-gray-800">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>No</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Name</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Staff ID</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Company's Name</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Status</span>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
+                  >
+                    <tr
+                      v-for="(
+                        attendee, index
+                      ) in entertainmentDetails.attendees"
+                      :key="index"
+                    >
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ index + 1 }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ attendee.name }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ attendee.staffId }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ attendee.companyName }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ attendee.status }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
+
             <div class="flex justify-end">
               <button
                 @click="toggleEditMode"
-                class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+                class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
               >
                 {{ isEditMode ? "Save" : "Edit" }}
                 <!-- Change button text based on edit mode -->
               </button>
-
-              <!-- Delete node button -->
               <button
+                @click="deleteForm()"
+                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+              </button>
+
+              <!-- <button
                 @click="isClickModal = false"
                 class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
               >
                 Cancel
-              </button>
+              </button> -->
             </div>
           </div>
-          <div v-if="selectedClaimType === 'StaffRefreshment'">
-            <div
-              class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-            >
-              <!-- Modal content -->
 
-              <div class="mb-4">
-                <label for="nodeId" class="block text-gray-700 font-bold mb-2"
+          <div v-if="selectedClaimType === 'StaffRefreshment'">
+            <div class="flex-1 gap-4 justify-center items-center">
+              <!-- Modal content -->
+              <div class="flex justify-end">
+              <button
+                v-show="!isEditMode"
+                @click="isClickModal = false"
+                class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
+              >
+                X
+              </button>
+            </div>
+              <h1 class="text-3xl font-bold">Staff Refreshment Claim Form</h1>
+              <hr class="mt-2 mb-4" />
+
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeId" class="text-gray-700 font-bold mr-2"
                   >Date:</label
                 >
                 <input
@@ -852,11 +971,11 @@
                   id="nodeId"
                   v-model="staffRefreshmentDetails.dateSR"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
-                <label for="nodeName" class="block text-gray-700 font-bold mb-2"
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeName" class="text-gray-700 font-bold mr-2"
                   >Name of Staff:</label
                 >
                 <input
@@ -864,238 +983,255 @@
                   id="nodeName"
                   v-model="staffRefreshmentDetails.NameofStaffSR"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-
-              <div class="mb-4">
+              <div class="flex justify-between items-center mb-4">
                 <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+                  for="typeOfRefreshment"
+                  class="text-gray-700 font-bold mr-2"
                   >Type of Refreshment:</label
                 >
                 <input
                   type="text"
-                  id="email"
+                  id="typeOfRefreshment"
                   v-model="staffRefreshmentDetails.TypeofRefreshmentSR"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
+              <div class="flex justify-between items-center mb-4">
                 <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+                  for="otherTypeOfRefreshment"
+                  class="text-gray-700 font-bold mr-2"
                   >Other Type of Staff Refreshment:</label
                 >
                 <input
                   type="text"
-                  id="phonenumber"
+                  id="otherTypeOfRefreshment"
                   v-model="
                     staffRefreshmentDetails.OtherTypeofStaffRefreshmentSR
                   "
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+              <div class="flex justify-between items-center mb-4">
+                <label for="company" class="text-gray-700 font-bold mr-2"
                   >Company:</label
                 >
                 <input
                   type="text"
-                  id="positioname"
+                  id="company"
                   v-model="staffRefreshmentDetails.CompanySR"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full overflow-x-auto"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+              <div class="flex justify-between items-center mb-4">
+                <label for="venue" class="text-gray-700 font-bold mr-2"
                   >Venue:</label
                 >
                 <input
                   type="text"
-                  id="positioncode"
+                  id="venue"
                   v-model="staffRefreshmentDetails.VenueSR"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
+              <div class="flex justify-between items-center mb-4">
+                <label for="reference" class="text-gray-700 font-bold mr-2"
                   >Reference:</label
                 >
                 <input
                   type="text"
-                  id="positioncode"
+                  id="reference"
                   v-model="staffRefreshmentDetails.ReferenceSR"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
-                  >Amount(RM):</label
+              <div class="flex justify-between items-center mb-4">
+                <label for="amount" class="text-gray-700 font-bold mr-2"
+                  >Amount (RM):</label
                 >
                 <input
                   type="text"
-                  id="positioncode"
+                  id="amount"
                   v-model="staffRefreshmentDetails.AmountRMSR"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
+                  class="border rounded-md px-4 py-2"
                 />
               </div>
-
-              <!-- Add/Edit node button -->
             </div>
+
             <div class="flex justify-end">
               <button
                 @click="toggleEditMode"
-                class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+                class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
               >
                 {{ isEditMode ? "Save" : "Edit" }}
                 <!-- Change button text based on edit mode -->
               </button>
-
-              <!-- Delete node button -->
               <button
+                @click="deleteForm()"
+                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+              </button>
+              <!-- <button
                 @click="isClickModal = false"
                 class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
               >
                 Cancel
-              </button>
+              </button> -->
             </div>
           </div>
+
           <div v-if="selectedClaimType === 'HandphoneReimbursement'">
-            <div
-              class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-            >
+            <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
+              <div class="flex justify-end">
+                <button
+                  v-show="!isEditMode"
+                  @click="isClickModal = false"
+                  class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
+                >
+                  X
+                </button>
+              </div>
+              <h1 class="text-3xl font-bold">Handphone Reimbursement Form</h1>
+              <hr class="mt-2 mb-4" />
 
-              <div class="mb-4">
-                <label for="nodeId" class="block text-gray-700 font-bold mb-2"
-                  >Month:</label
-                >
-                <input
-                  type="text"
-                  id="nodeId"
-                  v-model="handphoneReimbursementDetails.MonthHR"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
-                />
-              </div>
-              <div class="mb-4">
-                <label for="nodeName" class="block text-gray-700 font-bold mb-2"
-                  >Year:</label
-                >
-                <input
-                  type="text"
-                  id="nodeName"
-                  v-model="handphoneReimbursementDetails.YearHR"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
-                />
-              </div>
-
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
-                  >Bank Name:</label
-                >
-                <input
-                  type="text"
-                  id="email"
-                  v-model="handphoneReimbursementDetails.BankNameHR"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
-                />
-              </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
-                  >Account Bank No:</label
-                >
-                <input
-                  type="text"
-                  id="phonenumber"
-                  v-model="handphoneReimbursementDetails.AccBankNumberHR"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
-                />
-              </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
-                  >Account Holder Name:</label
-                >
-                <input
-                  type="text"
-                  id="positioname"
-                  v-model="handphoneReimbursementDetails.AccHolderNameHR"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full overflow-x-auto"
-                />
-              </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
-                  >Limited Amount(RM):</label
-                >
-                <input
-                  type="text"
-                  id="positioncode"
-                  v-model="handphoneReimbursementDetails.LimitedAmountHR"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
-                />
-              </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
-                  >Claims Amount(RM):</label
-                >
-                <input
-                  type="text"
-                  id="positioncode"
-                  v-model="handphoneReimbursementDetails.ClaimsAmountHR"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
-                />
+              <div class="flex flex-col">
+                <div class="flex justify-between items-center mb-4">
+                  <label for="nodeId" class="text-gray-700 font-bold mr-2"
+                    >Month:</label
+                  >
+                  <input
+                    type="text"
+                    id="nodeId"
+                    v-model="handphoneReimbursementDetails.MonthHR"
+                    :disabled="!isEditMode"
+                    class="border rounded-md px-4 py-2"
+                  />
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                  <label for="nodeName" class="text-gray-700 font-bold mr-2"
+                    >Year:</label
+                  >
+                  <input
+                    type="text"
+                    id="nodeName"
+                    v-model="handphoneReimbursementDetails.YearHR"
+                    :disabled="!isEditMode"
+                    class="border rounded-md px-4 py-2"
+                  />
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                  <label for="bankName" class="text-gray-700 font-bold mr-2"
+                    >Bank Name:</label
+                  >
+                  <input
+                    type="text"
+                    id="bankName"
+                    v-model="handphoneReimbursementDetails.BankNameHR"
+                    :disabled="!isEditMode"
+                    class="border rounded-md px-4 py-2"
+                  />
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                  <label
+                    for="accBankNumber"
+                    class="text-gray-700 font-bold mr-2"
+                    >Account Bank No:</label
+                  >
+                  <input
+                    type="text"
+                    id="accBankNumber"
+                    v-model="handphoneReimbursementDetails.AccBankNumberHR"
+                    :disabled="!isEditMode"
+                    class="border rounded-md px-4 py-2"
+                  />
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                  <label
+                    for="accHolderName"
+                    class="text-gray-700 font-bold mr-2"
+                    >Account Holder Name:</label
+                  >
+                  <input
+                    type="text"
+                    id="accHolderName"
+                    v-model="handphoneReimbursementDetails.AccHolderNameHR"
+                    :disabled="!isEditMode"
+                    class="border rounded-md px-4 py-2"
+                  />
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                  <label for="claimsAmount" class="text-gray-700 font-bold mr-2"
+                    >Claims Amount (RM):</label
+                  >
+                  <input
+                    type="text"
+                    id="claimsAmount"
+                    v-model="handphoneReimbursementDetails.ClaimsAmountHR"
+                    :disabled="!isEditMode"
+                    class="border rounded-md px-4 py-2"
+                  />
+                </div>
               </div>
 
-              <!-- Add/Edit node button -->
-            </div>
-            <div class="flex justify-end">
-              <button
-                @click="toggleEditMode"
-                class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
-              >
-                {{ isEditMode ? "Save" : "Edit" }}
-                <!-- Change button text based on edit mode -->
-              </button>
-
-              <!-- Delete node button -->
-              <button
-                v-show="cancel"
-                @click="isClickModal = false"
+              <div class="flex justify-end">
+                <button
+                  @click="toggleEditMode"
+                  class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+                >
+                  {{ isEditMode ? "Save" : "Edit" }}
+                </button>
+                <button
+                @click="deleteForm()"
                 class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
               >
-                Cancel
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
               </button>
+                <!-- You can uncomment the cancel button if needed -->
+                <!--
+      <button
+        @click="isClickModal = false"
+        class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+      >
+        Cancel
+      </button>
+      -->
+              </div>
             </div>
           </div>
         </div>
@@ -1109,6 +1245,7 @@ import tab from "./user-ui/FormTab.vue";
 import axios from "axios";
 import { formStore } from "../store.js";
 import { store } from "../store.js";
+
 export default {
   name: "TEtstS",
   components: {
@@ -1116,7 +1253,7 @@ export default {
   },
   data() {
     return {
-      index :null,
+      index: null,
       formToDelete: null,
       claims: [],
       showtab: false,
@@ -1153,6 +1290,9 @@ export default {
     }
   },
   methods: {
+    createObjectURL(file) {
+      return URL.createObjectURL(file);
+    },
     toggleEditMode() {
       if (this.isEditMode) {
         this.savenode();
@@ -1167,7 +1307,7 @@ export default {
     savenode() {
       this.isClickModal = false;
     },
-    showDetails(claim,index) {
+    showDetails(claim, index) {
       this.index = index;
       console.log("Current index", this.index);
       // Update selectedClaimType based on the type of claim
@@ -1178,10 +1318,11 @@ export default {
         case "LocalTravelling":
           this.localTravellingDetails = claim;
           console.log("Local Travelling Details:", this.localTravellingDetails);
+          console.log("upload", this.localTravellingDetails.UploadLT);
           break;
         case "OverseasTravellingwithAccommodation":
           this.overseasTravellingDetails = claim;
-          
+
           console.log(
             "Overseas Travelling Details:",
             this.overseasTravellingDetails
@@ -1318,6 +1459,7 @@ export default {
     },
     async sendToAPI() {
       // Group claims by tabTitle
+      this.$router.push({ name: "eclaimhomepages" });
       const groupedClaims = this.dataclaims.reduce((acc, claim) => {
         if (!acc[claim.tabTitle]) {
           acc[claim.tabTitle] = [];
@@ -1572,7 +1714,7 @@ export default {
 
     deleteForm() {
       if (this.index !== -1) {
-        this.dataclaims.splice(this.index,1);
+        this.dataclaims.splice(this.index, 1);
       }
       this.isClickModal = false; // Close the modal
     },
@@ -1603,13 +1745,13 @@ export default {
       console.log("Data Claims:", this.dataclaims);
     },
     handleFileAdded(file, field) {
-      console.log('File added:', file);
-      console.log('Updated field value:', field.value);
+      console.log("File added:", file);
+      console.log("Updated field value:", field.value);
     },
-    
+
     handleFileRemoved(file, field) {
-      console.log('File removed:', file);
-      console.log('Updated field value:', field.value);
+      console.log("File removed:", file);
+      console.log("Updated field value:", field.value);
     },
   },
 };

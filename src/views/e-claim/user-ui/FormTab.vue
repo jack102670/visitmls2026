@@ -99,17 +99,23 @@
 
                   <template v-else-if="field.type === 'file'">
                     <div class="pt-3">
-                      <FilePond
+                      <file-pond
+                        :name="field.id"
                         ref="pond"
-                        name="file"
-                        :allow-multiple="field.allowMultiple"
+                        label-idle="Drop files here..."
+                      
+                        @addfile="
+                          (error, file) => handleAddFile(error, file, field)
+                        "
+                        @removefile="
+                          (error, file) => handleRemoveFile(error, file, field)
+                        "
                         :accepted-file-types="field.acceptedFileTypes"
                         :max-file-size="field.maxFileSize"
-                        @addfile="handleAddFile(field)"
-  @removefile="handleRemoveFile(field)"
+                        :allow-multiple="field.allowMultiple"
                       />
                     </div>
-                  </template >
+                  </template>
 
                   <template v-else>
                     <input
@@ -150,7 +156,7 @@
           </form>
         </div>
 
-          <!-- Entertainment tab -->
+        <!-- Entertainment tab -->
         <div v-else>
           <div class="tabs">
             <button
@@ -178,7 +184,7 @@
             <div class="pt-4">
               <hr />
               <div class="m-2">
-                <form @submit.prevent="submitForm(subTab)">
+                <form @submit.prevent="submitForm2(subTab)">
                   <div
                     v-for="(field, fieldIndex) in subTab.fields"
                     :key="fieldIndex"
@@ -226,19 +232,19 @@
                     </template>
 
                     <template v-else-if="field.type === 'file'">
-                    <div class="pt-3">
-                      <FilePond
-                        ref="pond"
-                        name="file"
-                        :allow-multiple="field.allowMultiple"
-                        :accepted-file-types="field.acceptedFileTypes"
-                        :max-file-size="field.maxFileSize"
-                        @addfile="handleAddFile(field)"
-  @removefile="handleRemoveFile(field)"
-                      />
-                    </div>
-                  </template >
-                  <template v-else>
+                      <div class="pt-3">
+                        <FilePond
+                          ref="pond"
+                          name="file"
+                          :allow-multiple="field.allowMultiple"
+                          :accepted-file-types="field.acceptedFileTypes"
+                          :max-file-size="field.maxFileSize"
+                          @addfile="handleAddFile(field)"
+                          @removefile="handleRemoveFile(field)"
+                        />
+                      </div>
+                    </template>
+                    <template v-else>
                       <input
                         v-model="field.value"
                         :id="field.id"
@@ -493,6 +499,15 @@
                   <div class="mt-4 mr-6 flex flex-row-reverse">
                     <div class="flex items-center justify-between">
                       <button
+                        v-if="subTab.title === 'Details'"
+                        type="button"
+                        @click="nextTab"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      >
+                        Next
+                      </button>
+                      <button
+                        v-else-if="subTab.title === 'Attendees'"
                         type="submit"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                       >
@@ -506,17 +521,17 @@
           </div>
         </div>
         <!-- End of Entertainment tab-->
-        </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
-import vueFilePond from 'vue-filepond';
-import 'filepond/dist/filepond.min.css';
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import vueFilePond from "vue-filepond";
+import "filepond/dist/filepond.min.css";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 
 // Create component
 const FilePond = vueFilePond(
@@ -537,7 +552,7 @@ export default {
     return {
       chooseform: true,
 
-      activeTab: this.type == 'Finance' ? 0 : 4,
+      activeTab: this.type == "Finance" ? 0 : 4,
       activeSubTab: 0,
       date: "",
       yearRange: [],
@@ -554,522 +569,523 @@ export default {
       attendees: [],
       tabs: [
         {
-          form: 'HR',
-          title: 'Local Travelling',
-          tabType: 'Finance',
+          form: "HR",
+          title: "Local Travelling",
+          tabType: "Finance",
 
-          gridLayout: 'grid-cols-3',
+          gridLayout: "grid-cols-3",
           fields: [
             {
-              id: 'dateLT',
-              label: 'Date',
-              type: 'date',
-              value: '',
+              id: "dateLT",
+              label: "Date",
+              type: "date",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'DestinationPurposeLT',
-              label: 'Destination / Purpose',
-              type: 'select',
-              value: '',
+              id: "DestinationPurposeLT",
+              label: "Destination / Purpose",
+              type: "select",
+              value: "",
               required: true,
               options: [
-                { label: 'LABEL 1', value: 'LABEL 1' },
-                { label: 'LABEL 2', value: 'LABEL 2' },
-                { label: 'LABEL 3', value: 'LABEL 3' },
+                { label: "LABEL 1", value: "LABEL 1" },
+                { label: "LABEL 2", value: "LABEL 2" },
+                { label: "LABEL 3", value: "LABEL 3" },
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
             {
-              id: 'MileageKMLT',
-              label: 'Mileage(KM)',
-              type: 'number',
-              value: '',
-              gridClass: 'sm:col-span-1',
+              id: "MileageKMLT",
+              label: "Mileage(KM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
             },
             {
-              id: 'MileageRMLT',
-              label: 'Total Mileage(RM)',
-              type: 'number',
-              value: '',
-              gridClass: 'sm:col-span-1',
+              id: "MileageRMLT",
+              label: "Total Mileage(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
             },
             {
-              id: 'TollLT',
-              label: 'Toll(RM)',
-              type: 'number',
-              value: '',
-              gridClass: 'sm:col-span-1',
+              id: "TollLT",
+              label: "Toll(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
             },
             {
-              id: 'ParkingLT',
-              label: 'Parking(RM)',
-              type: 'number',
-              value: '',
-              gridClass: 'sm:col-span-1',
+              id: "ParkingLT",
+              label: "Parking(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
             },
             {
-              id: 'UploadLT',
-              label: 'Upload File(s). (png, jpeg, pdf or xlsx)',
-              type: 'file',
+              id: "UploadLT",
+              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
               value: [],
               required: true,
               allowMultiple: true,
               server: null,
-              maxFileSize: '5MB',
+              maxFileSize: "5MB",
               acceptedFileTypes: [
-                'image/png',
-                'image/jpeg',
-                'application/pdf',
-                'application/vnd.ms-excel',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
           ],
         },
 
         {
-          form: 'HR',
-          title: 'Overseas Travelling with Accommodation',
-          tabType: 'Finance',
+          form: "HR",
+          title: "Overseas Travelling with Accommodation",
+          tabType: "Finance",
 
-          gridLayout: 'grid-cols-3', //
+          gridLayout: "grid-cols-3", //
           fields: [
             {
-              id: 'dateOT',
-              label: 'Date',
-              type: 'date',
-              value: '',
+              id: "dateOT",
+              label: "Date",
+              type: "date",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'DescriptionOT',
-              label: 'Description',
-              type: 'text',
-              value: '',
+              id: "DescriptionOT",
+              label: "Description",
+              type: "text",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'ForeignCurrencyAccommodationOT',
-              label: 'Foreign Currency',
-              type: 'text',
-              placeholder: 'Accommodation',
-              value: '',
-              gridClass: 'sm:col-span-2',
+              id: "ForeignCurrencyAccommodationOT",
+              label: "Foreign Currency",
+              type: "text",
+              placeholder: "Accommodation",
+              value: "",
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'ExchangeRateAccommodationOT',
-              label: 'Exchange Rate',
-              type: 'text',
-              value: '',
-              gridClass: 'sm:col-span-2',
+              id: "ExchangeRateAccommodationOT",
+              label: "Exchange Rate",
+              type: "text",
+              value: "",
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'RMforAccommodationOT',
-              label: 'RM',
-              type: 'number',
-              value: '',
-              gridClass: 'sm:col-span-2',
+              id: "RMforAccommodationOT",
+              label: "RM",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'ForeignCurrencyOthersOT',
-              label: 'Foreign Currency',
-              type: 'text',
-              placeholder: 'Others',
-              value: '',
-              gridClass: 'sm:col-span-2',
+              id: "ForeignCurrencyOthersOT",
+              label: "Foreign Currency",
+              type: "text",
+              placeholder: "Others",
+              value: "",
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'ExchangeRateOthersOT',
-              label: 'Exchange Rate',
-              type: 'text',
-              value: '',
-              gridClass: 'sm:col-span-2',
+              id: "ExchangeRateOthersOT",
+              label: "Exchange Rate",
+              type: "text",
+              value: "",
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'RMforOthersOT',
-              label: 'RM',
-              type: 'number',
-              value: '',
-              gridClass: 'sm:col-span-2',
+              id: "RMforOthersOT",
+              label: "RM",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'MealAllowanceOT',
-              label: 'Meal Allowance(RM)',
-              type: 'text',
-              value: '',
-              gridClass: 'sm:col-span-2',
+              id: "MealAllowanceOT",
+              label: "Meal Allowance(RM)",
+              type: "text",
+              value: "",
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'AirportLimoTeksiOT',
-              label: 'Airport Limo / Teksi(RM)',
-              type: 'number',
-              value: '',
-              gridClass: 'sm:col-span-2',
+              id: "AirportLimoTeksiOT",
+              label: "Airport Limo / Teksi(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'UploadOT',
-              label: 'Upload File(s). (png, jpeg, pdf or xlsx)',
-              type: 'file',
+              id: "UploadOT",
+              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
               value: [],
               required: true,
               allowMultiple: true,
               server: null,
-              maxFileSize: '5MB',
+              maxFileSize: "5MB",
               acceptedFileTypes: [
-                'image/png',
-                'image/jpeg',
-                'application/pdf',
-                'application/vnd.ms-excel',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
           ],
         },
         {
-          title: 'Entertainment',
-          tabType: 'Finance',
+          title: "Entertainment",
+          tabType: "Finance",
 
-          gridLayout: 'grid-cols-3',
+          gridLayout: "grid-cols-3",
           fields: [],
         },
         {
-          title: 'Staff Refreshment',
-          tabType: 'Finance',
+          title: "Staff Refreshment",
+          tabType: "Finance",
 
-          gridLayout: 'grid-cols-3',
+          gridLayout: "grid-cols-3",
           fields: [
             {
-              id: 'dateSR',
-              label: 'Date',
-              type: 'date',
-              value: '',
+              id: "dateSR",
+              label: "Date",
+              type: "date",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'NameofStaffSR',
-              label: 'Name of Staff',
-              type: 'text',
-              value: '',
+              id: "NameofStaffSR",
+              label: "Name of Staff",
+              type: "text",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'TypeofRefreshmentSR',
-              label: 'Type of Refreshment',
-              type: 'select',
-              value: '',
+              id: "TypeofRefreshmentSR",
+              label: "Type of Refreshment",
+              type: "select",
+              value: "",
               required: true,
               options: [
-                { label: 'BREAKFAST', value: 'BREAKFAST' },
-                { label: 'LUNCH', value: 'LUNCH' },
-                { label: 'DINNER', value: 'DINNER' },
-                { label: 'TEA BREAK', value: 'TEA BREAK' },
-                { label: 'OTHERS', value: 'OTHERS' },
+                { label: "BREAKFAST", value: "BREAKFAST" },
+                { label: "LUNCH", value: "LUNCH" },
+                { label: "DINNER", value: "DINNER" },
+                { label: "TEA BREAK", value: "TEA BREAK" },
+                { label: "OTHERS", value: "OTHERS" },
               ],
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'OtherTypeofStaffRefreshmentSR',
-              label: 'Other Type of Staff Refreshment',
-              type: 'text',
-              value: '',
-              placeholder: 'Specify other type',
+              id: "OtherTypeofStaffRefreshmentSR",
+              label: "Other Type of Staff Refreshment",
+              type: "text",
+              value: "",
+              placeholder: "Specify other type",
               isOtherOption: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'CompanySR',
-              label: 'Company',
-              type: 'text',
-              value: '',
+              id: "CompanySR",
+              label: "Company",
+              type: "text",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'VenueSR',
-              label: 'Venue',
-              type: 'text',
-              value: '',
+              id: "VenueSR",
+              label: "Venue",
+              type: "text",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'ReferenceSR',
-              label: 'Reference',
-              type: 'select',
-              value: '',
+              id: "ReferenceSR",
+              label: "Reference",
+              type: "select",
+              value: "",
               required: true,
               options: [
-                { label: 'GIFT TO CLIENT', value: 'GIFT TO CLIENT' },
-                { label: 'GIFT TO OTHERS', value: 'GIFT TO OTHERS' },
-                { label: 'MEAL FOR STAFF', value: 'MEAL FOR STAFF' },
+                { label: "GIFT TO CLIENT", value: "GIFT TO CLIENT" },
+                { label: "GIFT TO OTHERS", value: "GIFT TO OTHERS" },
+                { label: "MEAL FOR STAFF", value: "MEAL FOR STAFF" },
               ],
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'AmountRMSR',
-              label: 'Amount(RM)',
-              type: 'number',
-              value: '',
-              gridClass: 'sm:col-span-2',
+              id: "AmountRMSR",
+              label: "Amount(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'UploadSR',
-              label: 'Upload File(s). (png, jpeg, pdf or xlsx)',
-              type: 'file',
+              id: "UploadSR",
+              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
               value: [],
               required: true,
               allowMultiple: true,
               server: null,
-              maxFileSize: '5MB',
+              maxFileSize: "5MB",
               acceptedFileTypes: [
-                'image/png',
-                'image/jpeg',
-                'application/pdf',
-                'application/vnd.ms-excel',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
           ],
         },
         {
-          title: 'Handphone Reimbursement',
-          tabType: 'HR',
+          title: "Handphone Reimbursement",
+          tabType: "HR",
 
-          gridLayout: 'grid-cols-3',
+          gridLayout: "grid-cols-3",
           fields: [
             {
-              id: 'MonthHR',
-              label: 'Month',
-              type: 'select',
-              value: '',
+              id: "MonthHR",
+              label: "Month",
+              type: "select",
+              value: "",
               required: true,
               options: [
-                { label: 'JANUARY', value: 'JANUARY' },
-                { label: 'FEBRUARY', value: 'FEBRUARY' },
-                { label: 'MARCH', value: 'MARCH' },
-                { label: 'APRIL', value: 'APRIL' },
-                { label: 'MAY', value: 'MAY' },
-                { label: 'JUNE', value: 'JUNE' },
-                { label: 'JULY', value: 'JULY' },
-                { label: 'AUGUST', value: 'AUGUST' },
-                { label: 'SEPTEMBER', value: 'SEPTEMBER' },
-                { label: 'OCTOBER', value: 'OCTOBER' },
-                { label: 'NOVEMBER', value: 'NOVEMBER' },
-                { label: 'DECEMBER', value: 'DECEMBER' },
+                { label: "JANUARY", value: "JANUARY" },
+                { label: "FEBRUARY", value: "FEBRUARY" },
+                { label: "MARCH", value: "MARCH" },
+                { label: "APRIL", value: "APRIL" },
+                { label: "MAY", value: "MAY" },
+                { label: "JUNE", value: "JUNE" },
+                { label: "JULY", value: "JULY" },
+                { label: "AUGUST", value: "AUGUST" },
+                { label: "SEPTEMBER", value: "SEPTEMBER" },
+                { label: "OCTOBER", value: "OCTOBER" },
+                { label: "NOVEMBER", value: "NOVEMBER" },
+                { label: "DECEMBER", value: "DECEMBER" },
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
             {
-              id: 'YearHR',
-              label: 'Year',
-              type: 'number',
-              value: '',
+              id: "YearHR",
+              label: "Year",
+              type: "year",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              options: this.years,
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'BankNameHR',
-              label: 'Bank Name',
-              type: 'select',
-              value: '',
+              id: "BankNameHR",
+              label: "Bank Name",
+              type: "select",
+              value: "",
               required: true,
               options: [
-                { label: 'HONG LEONG BANK', value: 'HONG LEONG BANK' },
-                { label: 'AGROBANK', value: 'AGROBANK' },
-                { label: 'AFFIN BANK BERHAD', value: 'AFFIN BANK BERHAD' },
+                { label: "HONG LEONG BANK", value: "HONG LEONG BANK" },
+                { label: "AGROBANK", value: "AGROBANK" },
+                { label: "AFFIN BANK BERHAD", value: "AFFIN BANK BERHAD" },
                 {
-                  label: 'ALLIANCE BANK MALAYSIA BERHAD',
-                  value: 'ALLIANCE BANK MALAYSIA BERHAD',
+                  label: "ALLIANCE BANK MALAYSIA BERHAD",
+                  value: "ALLIANCE BANK MALAYSIA BERHAD",
                 },
-                { label: 'AMBANK BERHAD', value: 'AMBANK BERHAD' },
-                { label: 'BANK ISLAM MALAYSIA', value: 'BANK ISLAM MALAYSIA' },
+                { label: "AMBANK BERHAD", value: "AMBANK BERHAD" },
+                { label: "BANK ISLAM MALAYSIA", value: "BANK ISLAM MALAYSIA" },
                 {
-                  label: 'BANK KERJASAMA RAKYAT MALAYSIA BERHAD',
-                  value: 'BANK KERJASAMA RAKYAT MALAYSIA BERHAD',
+                  label: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
+                  value: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
                 },
-                { label: 'BANK MUAMALAT', value: 'BANK MUAMALAT' },
+                { label: "BANK MUAMALAT", value: "BANK MUAMALAT" },
                 {
-                  label: 'BANK SIMPANAN NASIONAL BERHAD',
-                  value: 'BANK SIMPANAN NASIONAL BERHAD',
+                  label: "BANK SIMPANAN NASIONAL BERHAD",
+                  value: "BANK SIMPANAN NASIONAL BERHAD",
                 },
-                { label: 'CIMB BANK BERHAD', value: 'CIMB BANK BERHAD' },
-                { label: 'CITIBANK BERHAD', value: 'CITIBANK BERHAD' },
+                { label: "CIMB BANK BERHAD", value: "CIMB BANK BERHAD" },
+                { label: "CITIBANK BERHAD", value: "CITIBANK BERHAD" },
                 {
-                  label: 'HSBC BANK MALAYSIA BERHAD',
-                  value: 'HSBC BANK MALAYSIA BERHAD',
+                  label: "HSBC BANK MALAYSIA BERHAD",
+                  value: "HSBC BANK MALAYSIA BERHAD",
                 },
-                { label: 'MAYBANK', value: 'MAYBANK' },
-                { label: 'PUBLIC BANK', value: 'PUBLIC BANK' },
-                { label: 'RHB BANK', value: 'RHB BANK' },
+                { label: "MAYBANK", value: "MAYBANK" },
+                { label: "PUBLIC BANK", value: "PUBLIC BANK" },
+                { label: "RHB BANK", value: "RHB BANK" },
                 {
-                  label: 'OCBC BANK MALAYSIA BERHAD',
-                  value: 'OCBC BANK MALAYSIA BERHAD',
+                  label: "OCBC BANK MALAYSIA BERHAD",
+                  value: "OCBC BANK MALAYSIA BERHAD",
                 },
               ],
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'AccBankNumberHR',
-              label: 'Account Bank No.',
-              type: 'number',
-              value: '',
+              id: "AccBankNumberHR",
+              label: "Account Bank No.",
+              type: "number",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'AccHolderNameHR',
-              label: 'Account Holder Name',
-              type: 'text',
-              value: '',
+              id: "AccHolderNameHR",
+              label: "Account Holder Name",
+              type: "text",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'LimitedAmountHR',
-              label: 'Limited Amount(RM)',
-              type: 'number',
-              value: '',
-              gridClass: 'sm:col-span-2',
+              id: "LimitedAmountHR",
+              label: "Limited Amount(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'ClaimsAmountHR',
-              label: 'Claims Amount(RM)',
-              type: 'number',
-              value: '',
-              gridClass: 'sm:col-span-2',
+              id: "ClaimsAmountHR",
+              label: "Claims Amount(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'UploadHR',
-              label: 'Upload File(s). (png, jpeg, pdf or xlsx)',
-              type: 'file',
-              value: '',
+              id: "UploadHR",
+              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
+              value: "",
               required: true,
               allowMultiple: true,
               server: null,
-              maxFileSize: '5MB',
+              maxFileSize: "5MB",
               acceptedFileTypes: [
-                'image/png',
-                'image/jpeg',
-                'application/pdf',
-                'application/vnd.ms-excel',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
           ],
         },
         {
-          title: 'Medical Leave Reimbursement',
-          tabType: 'HR',
+          title: "Medical Leave Reimbursement",
+          tabType: "HR",
 
-          gridLayout: 'grid-cols-3',
+          gridLayout: "grid-cols-3",
           fields: [
             {
-              id: 'dateML',
-              label: 'Date of Medical Leave',
-              type: 'date',
-              value: '',
+              id: "dateML",
+              label: "Date of Medical Leave",
+              type: "date",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'ReasonML',
-              label: 'Reason for Medical Leave',
-              type: 'text',
-              value: '',
+              id: "ReasonML",
+              label: "Reason for Medical Leave",
+              type: "text",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'BankNameML',
-              label: 'Bank Name',
-              type: 'select',
-              value: '',
+              id: "BankNameML",
+              label: "Bank Name",
+              type: "select",
+              value: "",
               required: true,
               options: [
-                { label: 'HONG LEONG BANK', value: 'HONG LEONG BANK' },
-                { label: 'AGROBANK', value: 'AGROBANK' },
-                { label: 'AFFIN BANK BERHAD', value: 'AFFIN BANK BERHAD' },
+                { label: "HONG LEONG BANK", value: "HONG LEONG BANK" },
+                { label: "AGROBANK", value: "AGROBANK" },
+                { label: "AFFIN BANK BERHAD", value: "AFFIN BANK BERHAD" },
                 {
-                  label: 'ALLIANCE BANK MALAYSIA BERHAD',
-                  value: 'ALLIANCE BANK MALAYSIA BERHAD',
+                  label: "ALLIANCE BANK MALAYSIA BERHAD",
+                  value: "ALLIANCE BANK MALAYSIA BERHAD",
                 },
-                { label: 'AMBANK BERHAD', value: 'AMBANK BERHAD' },
-                { label: 'BANK ISLAM MALAYSIA', value: 'BANK ISLAM MALAYSIA' },
+                { label: "AMBANK BERHAD", value: "AMBANK BERHAD" },
+                { label: "BANK ISLAM MALAYSIA", value: "BANK ISLAM MALAYSIA" },
                 {
-                  label: 'BANK KERJASAMA RAKYAT MALAYSIA BERHAD',
-                  value: 'BANK KERJASAMA RAKYAT MALAYSIA BERHAD',
+                  label: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
+                  value: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
                 },
-                { label: 'BANK MUAMALAT', value: 'BANK MUAMALAT' },
+                { label: "BANK MUAMALAT", value: "BANK MUAMALAT" },
                 {
-                  label: 'BANK SIMPANAN NASIONAL BERHAD',
-                  value: 'BANK SIMPANAN NASIONAL BERHAD',
+                  label: "BANK SIMPANAN NASIONAL BERHAD",
+                  value: "BANK SIMPANAN NASIONAL BERHAD",
                 },
-                { label: 'CIMB BANK BERHAD', value: 'CIMB BANK BERHAD' },
-                { label: 'CITIBANK BERHAD', value: 'CITIBANK BERHAD' },
+                { label: "CIMB BANK BERHAD", value: "CIMB BANK BERHAD" },
+                { label: "CITIBANK BERHAD", value: "CITIBANK BERHAD" },
                 {
-                  label: 'HSBC BANK MALAYSIA BERHAD',
-                  value: 'HSBC BANK MALAYSIA BERHAD',
+                  label: "HSBC BANK MALAYSIA BERHAD",
+                  value: "HSBC BANK MALAYSIA BERHAD",
                 },
-                { label: 'MAYBANK', value: 'MAYBANK' },
-                { label: 'PUBLIC BANK', value: 'PUBLIC BANK' },
-                { label: 'RHB BANK', value: 'RHB BANK' },
+                { label: "MAYBANK", value: "MAYBANK" },
+                { label: "PUBLIC BANK", value: "PUBLIC BANK" },
+                { label: "RHB BANK", value: "RHB BANK" },
                 {
-                  label: 'OCBC BANK MALAYSIA BERHAD',
-                  value: 'OCBC BANK MALAYSIA BERHAD',
+                  label: "OCBC BANK MALAYSIA BERHAD",
+                  value: "OCBC BANK MALAYSIA BERHAD",
                 },
               ],
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'AccBankNumberML',
-              label: 'Account Bank No.',
-              type: 'number',
-              value: '',
+              id: "AccBankNumberML",
+              label: "Account Bank No.",
+              type: "number",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'AccHolderNameML',
-              label: 'Account Holder Name',
-              type: 'text',
-              value: '',
+              id: "AccHolderNameML",
+              label: "Account Holder Name",
+              type: "text",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'ClaimsAmountML',
-              label: 'Claims Amount(RM)',
-              type: 'number',
-              value: '',
-              gridClass: 'sm:col-span-2',
+              id: "ClaimsAmountML",
+              label: "Claims Amount(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'UploadML',
-              label: 'Upload File(s). (png, jpeg, pdf or xlsx)',
-              type: 'file',
+              id: "UploadML",
+              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
               value: [],
               required: true,
               allowMultiple: true,
               server: null,
-              maxFileSize: '5MB',
+              maxFileSize: "5MB",
               acceptedFileTypes: [
-                'image/png',
-                'image/jpeg',
-                'application/pdf',
-                'application/vnd.ms-excel',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
           ],
         },
@@ -1188,40 +1204,35 @@ export default {
   },
 
   methods: {
-    handleAddFile(field) {
-    return (error, file) => {
-      if (error) {
-        console.error('An error occurred during file upload:', error);
-        return;
-      }
-      
-      // Add the file to the field's value array
-      field.value.push(file);
-      
-      console.log('File added:', file);
-      console.log('Updated field value:', field.value);
-    };
-  },
+  handleAddFile(error, file, field) {
+  if (error) {
+    console.error("Error adding file:", error.message);
+    return;
+  }
+  field.value = [...field.value, file.file];
+  console.log("File added:", file.file);
+  console.log("Updated files:", field.value);
+},
 
-  handleRemoveFile(field) {
-    return (error, file) => {
-      if (error) {
-        console.error('An error occurred during file removal:', error);
-        return;
-      }
-      
-      // Find the index of the file in the field's value array
-      const index = field.value.findIndex(f => f === file);
-      
-      // Remove the file from the field's value array
-      if (index !== -1) {
-        field.value.splice(index, 1);
-      }
-      
-      console.log('File removed:', file);
-      console.log('Updated field value:', field.value);
-    };
-  },
+handleRemoveFile(error, file, field) {
+  if (error) {
+    console.error(
+      "An error occurred while removing the file:",
+      error.message
+    );
+    return;
+  }
+
+  const fileObject = file.file;
+
+  // Find and remove the file object from the field's value array
+  const index = field.value.findIndex((f) => f.name === fileObject.name);
+  if (index !== -1) {
+    field.value = [...field.value.slice(0, index), ...field.value.slice(index + 1)];
+    console.log("File removed:", fileObject.name, fileObject);
+    console.log("Updated field value:", field);
+  }
+},
 
     addAttendee() {
       const { name, staffId, companyName } = this.modalForm;
@@ -1249,6 +1260,7 @@ export default {
       this.modalForm.staffId = "";
       this.modalForm.companyName = "";
     },
+
     removeAttendee(index) {
       this.attendees.splice(index, 1);
     },
@@ -1257,15 +1269,22 @@ export default {
       let total = 0;
       tab.fields.forEach((field) => {
         if (
-          field.type === 'number' &&
+          field.type === "number" &&
           !isNaN(parseFloat(field.value)) &&
-          field.id !== 'MileageKMLT' &&
-          field.id !== 'LimitedAmountHR'
+          field.id !== "MileageKMLT" &&
+          field.id !== "LimitedAmountHR" &&
+          field.id !== "AccBankNumberHR" &&
+          field.id !== "AccBankNumberML"
         ) {
           total += parseFloat(field.value);
         }
       });
       return total.toFixed(2);
+    },
+
+    nextTab() {
+      // Switch to the next tab
+      this.activeSubTab += 1;
     },
 
     submitForm(tab) {
@@ -1279,26 +1298,51 @@ export default {
       });
 
       // Add the tab title to the formatted data
-      formattedData['tabTitle'] = tab.title;
+      formattedData["tabTitle"] = tab.title;
 
       // Emit the formatted form data
-      this.$emit('formSubmitted', formattedData);
+      this.$emit("formSubmitted", formattedData);
 
       // Log the formatted form data to the console
-      console.log('Formatted Form Data:', formattedData);
+      console.log("Formatted Form Data:", formattedData);
 
-       if (tab.title === "Attendees") {
+      if (tab.title === "Attendees") {
         const newAttendee = {};
         tab.fields.forEach((field) => {
           newAttendee[field.id] = field.value;
           field.value = "";
         });
         tab.attendees.push(newAttendee);
-      } else {
-        console.log(`Form submitted for tab: ${tab.title}`, tab.fields);
       }
+      //  else {
+      //   console.log(`Form submitted for tab: ${tab.title}`, tab.fields);
+      // }
     },
+    submitForm2() {
+      // Create an empty object to hold the formatted form data
+      const formattedData = {};
 
+      // Iterate over all tabs
+      this.entertainmentTabs.forEach((tab) => {
+        // Iterate through the fields of the current tab
+        tab.fields.forEach((field) => {
+          // Use the field label as the key and the field value as the value
+          formattedData[field.id] = field.value;
+        });
+
+        tab.attendees = [...this.attendees];
+        formattedData["attendees"] = [...tab.attendees];
+      });
+
+      // Add the tab title to the formatted data
+      formattedData["tabTitle"] = "Entertainment";
+
+      // Emit the formatted form data
+      this.$emit("formSubmitted", formattedData);
+
+      // Log the formatted form data to the console
+      console.log("Formatted Form Data:", formattedData);
+    },
   },
 };
 </script>
