@@ -195,6 +195,7 @@
                           <span v-if="claim.dateOT">{{ claim.dateOT }}</span>
                           <span v-if="claim.dateML">{{ claim.dateML }}</span>
                           <span v-if="claim.dateE">{{ claim.dateE }}</span>
+                          <span v-if="claim.dateSR">{{ claim.dateSR }}</span>
                         </td>
 
                         <td
