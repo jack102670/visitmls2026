@@ -1321,7 +1321,7 @@ export default {
       //   console.log(`Form submitted for tab: ${tab.title}`, tab.fields);
       // }
     },
-    submitForm2() {
+   submitForm2() {
   // Create an empty object to hold the formatted form data
   const formattedData = {};
 
@@ -1333,7 +1333,7 @@ export default {
       formattedData[field.id] = field.value;
     });
 
-    // If the tab is the "Attendees" tab, process the attendees
+    // If the tab is the "Attendees" tab, add the attendees to the formatted data
     if (tab.title === "Attendees") {
       const newAttendee = {};
       tab.fields.forEach((field) => {
@@ -1341,6 +1341,7 @@ export default {
         field.value = "";
       });
       tab.attendees.push(newAttendee);
+      formattedData["attendees"] = tab.attendees;
     }
   });
 
