@@ -1204,20 +1204,24 @@ export default {
   },
 
   methods: {
-    handleAddFile(field) {
-      return (error, file) => {
-        if (error) {
-          console.error("An error occurred during file upload:", error);
-          return;
-        }
-
-        // Add the file to the field's value array
-        field.value.push(file);
-
-        console.log("File added:", file);
-        console.log("Updated field value:", field.value);
-      };
+    handleFilePondInit() {
+      console.log("FilePond has initialized");
     },
+  handleAddFile(error, file, field) {
+  if (error) {
+    console.error("Error adding file:", error.message);
+    return;
+  }
+
+  // Create a deep copy of the file.file object
+  const fileCopy = JSON.parse(JSON.stringify(file.file));
+
+  // Add the copy of the file to the field's value array
+  field.value.push(fileCopy);
+
+  console.log("File added:", fileCopy);
+  console.log("Updated files:", field.value);
+},
 
     handleRemoveFile(field) {
       return (error, file) => {
@@ -1324,8 +1328,8 @@ export default {
       // }
     },
     submitForm2() {
-  // Create an empty object to hold the formatted form data
-  const formattedData = {};
+      // Create an empty object to hold the formatted form data
+      const formattedData = {};
 
       // Iterate over all tabs
       this.entertainmentTabs.forEach((tab) => {
@@ -1335,20 +1339,19 @@ export default {
           formattedData[field.id] = field.value;
         });
 
- tab.attendees = [...this.attendees];
-formattedData["attendees"] = [...tab.attendees];
-    
-  });
+        tab.attendees = [...this.attendees];
+        formattedData["attendees"] = [...tab.attendees];
+      });
 
-  // Add the tab title to the formatted data
-  formattedData["tabTitle"] = "Entertainment";
+      // Add the tab title to the formatted data
+      formattedData["tabTitle"] = "Entertainment";
 
       // Emit the formatted form data
       this.$emit("formSubmitted", formattedData);
 
-  // Log the formatted form data to the console
-  console.log("Formatted Form Data:", formattedData);
-},
+      // Log the formatted form data to the console
+      console.log("Formatted Form Data:", formattedData);
+    },
   },
 };
 </script>
