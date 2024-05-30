@@ -609,6 +609,15 @@
           <div v-if="selectedClaimType === 'MedicalLeaveReimbursement'">
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
+              <div class="flex justify-end">
+              <button
+                v-show="!isEditMode"
+                @click="isClickModal = false"
+                class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
+              >
+                X
+              </button>
+            </div>
               <h1 class="text-3xl font-bold">
                 Medical Leave Reimbursement Form
               </h1>
@@ -959,127 +968,103 @@
           </div>
 
           <div v-if="selectedClaimType === 'HandphoneReimbursement'">
-            <div
-              class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-            >
-              <!-- Modal content -->
+  <div class="flex-1 gap-4 justify-center items-center">
+    <!-- Modal content -->
+    <div class="flex justify-end">
+      <button
+        v-show="!isEditMode"
+        @click="isClickModal = false"
+        class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
+      >
+        X
+      </button>
+    </div>
+    <h1 class="text-3xl font-bold">Handphone Reimbursement Form</h1>
+    <hr class="mt-2 mb-4" />
 
-              <div class="mb-4">
-                <label for="nodeId" class="block text-gray-700 font-bold mb-2"
-                  >Month:</label
-                >
-                <input
-                  type="text"
-                  id="nodeId"
-                  v-model="handphoneReimbursementDetails.MonthHR"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
-                />
-              </div>
-              <div class="mb-4">
-                <label for="nodeName" class="block text-gray-700 font-bold mb-2"
-                  >Year:</label
-                >
-                <input
-                  type="text"
-                  id="nodeName"
-                  v-model="handphoneReimbursementDetails.YearHR"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
-                />
-              </div>
+    <div class="flex flex-col">
+      <div class="flex justify-between items-center mb-4">
+        <label for="nodeId" class="text-gray-700 font-bold mr-2">Month:</label>
+        <input
+          type="text"
+          id="nodeId"
+          v-model="handphoneReimbursementDetails.MonthHR"
+          :disabled="!isEditMode"
+          class="border rounded-md px-4 py-2"
+        />
+      </div>
+      <div class="flex justify-between items-center mb-4">
+        <label for="nodeName" class="text-gray-700 font-bold mr-2">Year:</label>
+        <input
+          type="text"
+          id="nodeName"
+          v-model="handphoneReimbursementDetails.YearHR"
+          :disabled="!isEditMode"
+          class="border rounded-md px-4 py-2"
+        />
+      </div>
+      <div class="flex justify-between items-center mb-4">
+        <label for="bankName" class="text-gray-700 font-bold mr-2">Bank Name:</label>
+        <input
+          type="text"
+          id="bankName"
+          v-model="handphoneReimbursementDetails.BankNameHR"
+          :disabled="!isEditMode"
+          class="border rounded-md px-4 py-2"
+        />
+      </div>
+      <div class="flex justify-between items-center mb-4">
+        <label for="accBankNumber" class="text-gray-700 font-bold mr-2">Account Bank No:</label>
+        <input
+          type="text"
+          id="accBankNumber"
+          v-model="handphoneReimbursementDetails.AccBankNumberHR"
+          :disabled="!isEditMode"
+          class="border rounded-md px-4 py-2"
+        />
+      </div>
+      <div class="flex justify-between items-center mb-4">
+        <label for="accHolderName" class="text-gray-700 font-bold mr-2">Account Holder Name:</label>
+        <input
+          type="text"
+          id="accHolderName"
+          v-model="handphoneReimbursementDetails.AccHolderNameHR"
+          :disabled="!isEditMode"
+          class="border rounded-md px-4 py-2"
+        />
+      </div>
+      <div class="flex justify-between items-center mb-4">
+        <label for="claimsAmount" class="text-gray-700 font-bold mr-2">Claims Amount (RM):</label>
+        <input
+          type="text"
+          id="claimsAmount"
+          v-model="handphoneReimbursementDetails.ClaimsAmountHR"
+          :disabled="!isEditMode"
+          class="border rounded-md px-4 py-2"
+        />
+      </div>
+    </div>
 
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
-                  >Bank Name:</label
-                >
-                <input
-                  type="text"
-                  id="email"
-                  v-model="handphoneReimbursementDetails.BankNameHR"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
-                />
-              </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
-                  >Account Bank No:</label
-                >
-                <input
-                  type="text"
-                  id="phonenumber"
-                  v-model="handphoneReimbursementDetails.AccBankNumberHR"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
-                />
-              </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
-                  >Account Holder Name:</label
-                >
-                <input
-                  type="text"
-                  id="positioname"
-                  v-model="handphoneReimbursementDetails.AccHolderNameHR"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full overflow-x-auto"
-                />
-              </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
-                  >Limited Amount(RM):</label
-                >
-                <input
-                  type="text"
-                  id="positioncode"
-                  v-model="handphoneReimbursementDetails.LimitedAmountHR"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
-                />
-              </div>
-              <div class="mb-4">
-                <label
-                  for="nodeParentId"
-                  class="block text-gray-700 font-bold mb-2"
-                  >Claims Amount(RM):</label
-                >
-                <input
-                  type="text"
-                  id="positioncode"
-                  v-model="handphoneReimbursementDetails.ClaimsAmountHR"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 w-full"
-                />
-              </div>
+    <div class="flex justify-end">
+      <button
+        @click="toggleEditMode"
+        class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+      >
+        {{ isEditMode ? "Save" : "Edit" }}
+      </button>
+      <!-- You can uncomment the cancel button if needed -->
+      <!--
+      <button
+        @click="isClickModal = false"
+        class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+      >
+        Cancel
+      </button>
+      -->
+    </div>
+  </div>
+</div>
 
-              <!-- Add/Edit node button -->
-            </div>
-            <div class="flex justify-end">
-              <button
-                @click="toggleEditMode"
-                class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
-              >
-                {{ isEditMode ? "Save" : "Edit" }}
-                <!-- Change button text based on edit mode -->
-              </button>
-
-              <button
-                v-show="cancel"
-                @click="isClickModal = false"
-                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>
