@@ -162,6 +162,14 @@
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
+                            <span>Amount</span>
+                          </div>
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        >
+                          <div class="flex items-center gap-x-3">
                             <span>Action</span>
                           </div>
                         </th>
@@ -187,6 +195,7 @@
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                         >
                           <span v-if="claim.DestinationPurposeLT">{{ claim.DestinationPurposeLT }}</span>
+                          <span v-if="claim.DescriptionOT">{{ claim.DescriptionOT }}</span>
                           <span v-if="claim.VenueE">{{ claim.VenueE }}</span>
                           <span v-if="claim.VenueSR">{{ claim.VenueSR }}</span>
                         </td>
@@ -199,7 +208,15 @@
                           <span v-if="claim.dateE">{{ claim.dateE }}</span>
                           <span v-if="claim.dateSR">{{ claim.dateSR }}</span>
                         </td>
-
+                        <td
+                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                        >
+                          <span v-if="claim.AmountRME">RM {{ claim.AmountRME }}</span>
+                          <span v-if="claim.AmountRMSR">RM {{ claim.AmountRMSR }}</span>
+                          <span v-if="claim.ClaimsAmountML">RM {{ claim.ClaimsAmountML }}</span>
+                          <span v-if="claim.ClaimsAmountHR">RM {{ claim.ClaimsAmountHR }}</span>
+                          <span v-else>RM {{ totallocalTravellingDetails }}</span>
+                        </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2"
                         >
@@ -556,14 +573,14 @@
               </div>
               <div class="flex justify-between items-center mb-4">
                 <label
-                  for="rmMealTransport"
+                  for="rmOtherExpenses"
                   class="text-gray-700 font-bold mr-2"
-                  >RM:</label
+                  >Other Expenses(RM):</label
                 >
                 <input
                   type="text"
-                  id="rmMealTransport"
-                  v-model="overseasTravellingDetails.RMforMealTransportOT"
+                  id="rmOtherExpenses"
+                  v-model="overseasTravellingDetails.OtherExpensesOT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
@@ -1276,6 +1293,14 @@ export default {
         (parseInt(this.localTravellingDetails.TollLT) || 0)
       );
     },
+    totalOverseasTravellingAmount() {
+      return (
+        (parseInt(this.overseasTravellingDetails.RMforAccommodationOT) || 0) +
+        (parseInt(this.overseasTravellingDetails.MealAllowanceOT) || 0) +
+        (parseInt(this.overseasTravellingDetails.AirportLimoTeksiOT) || 0) +
+        (parseInt(this.overseasTravellingDetails.OtherExpensesOT) || 0)
+      );
+    },
   },
   created() {
     this.fetchClaims();
@@ -1283,12 +1308,12 @@ export default {
   },
   mounted() {
     // Sidebar close or open
-    let openOrNot = localStorage.getItem('openOrNot');
-    const element = document.querySelector('main');
-    if (element && openOrNot == 'false') {
-      element.classList.add('become-big');
-    } else if (element && openOrNot == 'true') {
-      element.classList.remove('become-big');
+    let openOrNot = localStorage.getItem("openOrNot");
+    const element = document.querySelector("main");
+    if (element && openOrNot == "false") {
+      element.classList.add("become-big");
+    } else if (element && openOrNot == "true") {
+      element.classList.remove("become-big");
     }
   },
   methods: {
@@ -1518,6 +1543,7 @@ export default {
                     meal_allowance: claim.MealAllowanceOT,
                     date_event: claim.dateOT, // Example date
                     transport_fee: claim.AirportLimoTeksiOT,
+                    other_expenses: claim.OtherExpensesOT,
                     total_fee: 99,
                     accom_foreign_total: 100,
                     accom_foreign_currency:

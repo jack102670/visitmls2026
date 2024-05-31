@@ -612,7 +612,7 @@ export default {
             },
             {
               id: "TollLT",
-              label: "Toll(RM)",
+              label: "Toll/Touch 'n Go(RM)",
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
@@ -722,6 +722,13 @@ export default {
             {
               id: "AirportLimoTeksiOT",
               label: "Airport Limo / Teksi(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "OtherExpensesOT",
+              label: "Other Expenses(RM)",
               type: "number",
               value: "",
               gridClass: "sm:col-span-2",
