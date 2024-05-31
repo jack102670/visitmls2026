@@ -590,9 +590,9 @@ export default {
               value: "",
               required: true,
               options: [
-                { label: "LABEL 1", value: "LABEL 1" },
-                { label: "LABEL 2", value: "LABEL 2" },
-                { label: "LABEL 3", value: "LABEL 3" },
+                { label: "DESTINATION 1", value: "DESTINATION 1" },
+                { label: "DESTINATION 2", value: "DESTINATION 2" },
+                { label: "DESTINATION 3", value: "DESTINATION 3" },
               ],
               gridClass: "sm:col-span-1",
             },

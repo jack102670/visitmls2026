@@ -80,7 +80,7 @@
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
-                            <span>Type Of Request</span>
+                            <span>Type Of Claim</span>
                           </div>
                         </th>
                         <th
@@ -88,7 +88,7 @@
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
-                            <span>Requester</span>
+                            <span>Claimant's Name</span>
                           </div>
                         </th>
                         <th
@@ -181,7 +181,7 @@
                               class="h-1.5 w-1.5 rounded-full bg-red-500"
                             ></span>
                             <span class="text-sm font-normal text-red-500"
-                              >Pending</span
+                              >PENDING</span
                             >
                           </span>
                         </td>

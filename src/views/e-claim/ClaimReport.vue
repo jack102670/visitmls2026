@@ -186,7 +186,9 @@
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                         >
-                          {{ claim.Name }}
+                          <span v-if="claim.DestinationPurposeLT">{{ claim.DestinationPurposeLT }}</span>
+                          <span v-if="claim.VenueE">{{ claim.VenueE }}</span>
+                          <span v-if="claim.VenueSR">{{ claim.VenueSR }}</span>
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
