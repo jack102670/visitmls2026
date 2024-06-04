@@ -10,13 +10,23 @@
         <div
           class="relative overflow-hidden mt-2 grid cols-start-1 md:flex justify-between"
         >
-          <h3
-            class="ml-4 text-4xl font-bold text-blue-900"
-            v-for="(claim, index) in claims"
-            :key="index"
-          >
-            {{ claim.reportName }}
-          </h3>
+          <div class="flex items-center flex-wrap">
+            <div class="flex items-center">
+              <h3
+                class="ml-4 text-3xl font-bold text-blue-900"
+                v-for="(claim, index) in claims"
+                :key="index"
+              >
+                {{ claim.reportName }}
+              </h3>
+            </div>
+            <div class="flex items-center ml-4 mt-2 md:mt-0">
+              <span class="text-3xl font-bold text-blue-900">|</span>
+              <span class="ml-4 text-2xl font-bold text-blue-900"
+                >RM {{ grandTotal }}</span
+              >
+            </div>
+          </div>
           <!-- Buttons Section -->
           <div class="md:mr-4 md:mt-0 mt-5 gap-2 flex flex-row-reverse">
             <button
@@ -255,7 +265,7 @@
                           </button>
                         </td>
                       </tr>
-                      <tr>
+                      <tr class="bg-gray-50 dark:bg-gray-800">
                         <td
                           colspan="4"
                           class="px-4 py-4 text-sm font-normal text-gray-500 whitespace-nowrap text-right"
@@ -1332,14 +1342,16 @@ export default {
       );
     },
     grandTotal() {
-        return this.dataclaims.reduce((total, claim) => {
+      return this.dataclaims
+        .reduce((total, claim) => {
           let amount = 0;
           if (claim.AmountRME) amount += parseFloat(claim.AmountRME);
           if (claim.AmountRMSR) amount += parseFloat(claim.AmountRMSR);
           if (claim.ClaimsAmountML) amount += parseFloat(claim.ClaimsAmountML);
           if (claim.ClaimsAmountHR) amount += parseFloat(claim.ClaimsAmountHR);
           return total + amount;
-        }, 0).toFixed(2);
+        }, 0)
+        .toFixed(2);
     },
   },
   created() {

@@ -125,7 +125,7 @@
                 />
               </div>
             </div>
-            <div>
+        <!--<div>
               <div>
                 <label class="font-semibold text-gray-700 dark:text-gray-200"
                   >Internal Order</label
@@ -135,7 +135,7 @@
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
-            </div>
+            </div>-->
           </div>
 
           <!-- Date Details -->
@@ -244,7 +244,7 @@ export default {
         costCenter: formStore.formData.costCenter,
         designation: formStore.formData.designation,
         reportName: formStore.formData.reportName,
-        internalOrder: formStore.formData.internalOrder,
+      //internalOrder: formStore.formData.internalOrder,
         reportDate: formStore.formData.reportDate,
         reportStartDate: formStore.formData.reportStartDate,
         reportEndDate: formStore.formData.reportEndDate,
