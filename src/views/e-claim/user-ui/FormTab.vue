@@ -839,6 +839,13 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
+              id: "OtherExpensesOT",
+              label: "Others Expenses",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
               id: "UploadOT",
               label: "Upload File(s). (png, jpeg, pdf or xlsx)",
               type: "file",
