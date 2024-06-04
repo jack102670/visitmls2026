@@ -230,7 +230,6 @@
                           <span v-if="claim.ClaimsAmountML">RM {{ claim.ClaimsAmountML }}</span>
                           <span v-if="claim.ClaimsAmountHR">RM {{ claim.ClaimsAmountHR }}</span>
                           <span v-else>RM {{ claim.totalRM }}</span>
-
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2"
