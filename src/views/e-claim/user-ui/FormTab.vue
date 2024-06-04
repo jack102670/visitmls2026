@@ -724,7 +724,7 @@ export default {
             },
             {
               id: "TollLT",
-              label: "Toll(RM)",
+              label: "Toll/Touch' n Go(RM)",
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
