@@ -225,11 +225,9 @@
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                         >
+                          <span v-if="claim.totalRM ">RM {{ claim.totalRM }}</span>
                           <span v-if="claim.AmountRME">RM {{ claim.AmountRME }}</span>
-                          <span v-if="claim.AmountRMSR">RM {{ claim.AmountRMSR }}</span>
-                          <span v-if="claim.ClaimsAmountML">RM {{ claim.ClaimsAmountML }}</span>
-                          <span v-if="claim.ClaimsAmountHR">RM {{ claim.ClaimsAmountHR }}</span>
-                          <span v-else>RM {{ claim.totalRM }}</span>
+                          
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2"
@@ -1320,9 +1318,7 @@ export default {
         .reduce((total, claim) => {
           let amount = 0;
           if (claim.AmountRME) amount += parseFloat(claim.AmountRME);
-          if (claim.AmountRMSR) amount += parseFloat(claim.AmountRMSR);
-          if (claim.ClaimsAmountML) amount += parseFloat(claim.ClaimsAmountML);
-          if (claim.ClaimsAmountHR) amount += parseFloat(claim.ClaimsAmountHR);
+          if (claim.totalRM) amount += parseFloat(claim.totalRM);
           return total + amount;
         }, 0)
         .toFixed(2);
