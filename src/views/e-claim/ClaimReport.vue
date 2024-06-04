@@ -194,8 +194,12 @@
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                         >
-                          <span v-if="claim.DestinationPurposeLT">{{ claim.DestinationPurposeLT }}</span>
-                          <span v-if="claim.DescriptionOT">{{ claim.DescriptionOT }}</span>
+                          <span v-if="claim.DestinationPurposeLT">{{
+                            claim.DestinationPurposeLT
+                          }}</span>
+                          <span v-if="claim.DescriptionOT">{{
+                            claim.DescriptionOT
+                          }}</span>
                           <span v-if="claim.VenueE">{{ claim.VenueE }}</span>
                           <span v-if="claim.VenueSR">{{ claim.VenueSR }}</span>
                         </td>
@@ -211,11 +215,21 @@
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                         >
-                          <span v-if="claim.AmountRME">RM {{ claim.AmountRME }}</span>
-                          <span v-if="claim.AmountRMSR">RM {{ claim.AmountRMSR }}</span>
-                          <span v-if="claim.ClaimsAmountML">RM {{ claim.ClaimsAmountML }}</span>
-                          <span v-if="claim.ClaimsAmountHR">RM {{ claim.ClaimsAmountHR }}</span>
-                          <span v-else>RM {{ totallocalTravellingDetails }}</span>
+                          <span v-if="claim.AmountRME"
+                            >RM {{ claim.AmountRME }}</span
+                          >
+                          <span v-if="claim.AmountRMSR"
+                            >RM {{ claim.AmountRMSR }}</span
+                          >
+                          <span v-if="claim.ClaimsAmountML"
+                            >RM {{ claim.ClaimsAmountML }}</span
+                          >
+                          <span v-if="claim.ClaimsAmountHR"
+                            >RM {{ claim.ClaimsAmountHR }}</span
+                          >
+                          <span v-else
+                            >RM {{ totallocalTravellingDetails }}</span
+                          >
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2"
@@ -240,6 +254,22 @@
                             </svg>
                           </button>
                         </td>
+                      </tr>
+                      <tr>
+                        <td
+                          colspan="4"
+                          class="px-4 py-4 text-sm font-normal text-gray-500 whitespace-nowrap text-right"
+                        >
+                          Grand Total:
+                        </td>
+                        <td
+                          class="px-4 py-4 text-md font-semibold text-gray-500 whitespace-nowrap"
+                        >
+                          RM {{ grandTotal }}
+                        </td>
+                        <td
+                          class="px-4 py-4 text-md font-semibold text-gray-500 whitespace-nowrap"
+                        ></td>
                       </tr>
                     </tbody>
                   </table>
@@ -739,14 +769,14 @@
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
               <div class="flex justify-end">
-              <button
-                v-show="!isEditMode"
-                @click="isClickModal = false"
-                class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
-              >
-                X
-              </button>
-            </div>
+                <button
+                  v-show="!isEditMode"
+                  @click="isClickModal = false"
+                  class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
+                >
+                  X
+                </button>
+              </div>
               <h1 class="text-3xl font-bold">Entertainment Claim Form</h1>
               <hr class="mt-2 mb-4" />
 
@@ -970,14 +1000,14 @@
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
               <div class="flex justify-end">
-              <button
-                v-show="!isEditMode"
-                @click="isClickModal = false"
-                class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
-              >
-                X
-              </button>
-            </div>
+                <button
+                  v-show="!isEditMode"
+                  @click="isClickModal = false"
+                  class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
+                >
+                  X
+                </button>
+              </div>
               <h1 class="text-3xl font-bold">Staff Refreshment Claim Form</h1>
               <hr class="mt-2 mb-4" />
 
@@ -1223,24 +1253,24 @@
                   {{ isEditMode ? "Save" : "Edit" }}
                 </button>
                 <button
-                @click="deleteForm()"
-                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5"
+                  @click="deleteForm()"
+                  class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                  />
-                </svg>
-              </button>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-5 h-5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                    />
+                  </svg>
+                </button>
                 <!-- You can uncomment the cancel button if needed -->
                 <!--
       <button
@@ -1300,6 +1330,16 @@ export default {
         (parseInt(this.overseasTravellingDetails.AirportLimoTeksiOT) || 0) +
         (parseInt(this.overseasTravellingDetails.OtherExpensesOT) || 0)
       );
+    },
+    grandTotal() {
+        return this.dataclaims.reduce((total, claim) => {
+          let amount = 0;
+          if (claim.AmountRME) amount += parseFloat(claim.AmountRME);
+          if (claim.AmountRMSR) amount += parseFloat(claim.AmountRMSR);
+          if (claim.ClaimsAmountML) amount += parseFloat(claim.ClaimsAmountML);
+          if (claim.ClaimsAmountHR) amount += parseFloat(claim.ClaimsAmountHR);
+          return total + amount;
+        }, 0).toFixed(2);
     },
   },
   created() {
