@@ -14,7 +14,7 @@ export const formStore = {
     memo: '',
     uniqueCode: '',
 
-    selectedOption:'',
+    selectedOption:'Finance',
 
   },
 
