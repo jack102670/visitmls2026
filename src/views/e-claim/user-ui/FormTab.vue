@@ -612,7 +612,7 @@ export default {
             },
             {
               id: "TollLT",
-              label: "Toll/Touch 'n Go(RM)",
+              label: "Toll(RM)",
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
@@ -722,13 +722,6 @@ export default {
             {
               id: "AirportLimoTeksiOT",
               label: "Airport Limo / Teksi(RM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "OtherExpensesOT",
-              label: "Other Expenses(RM)",
               type: "number",
               value: "",
               gridClass: "sm:col-span-2",
@@ -1306,6 +1299,8 @@ handleRemoveFile(error, file, field) {
 
       // Add the tab title to the formatted data
       formattedData["tabTitle"] = tab.title;
+
+      formattedData["totalRM"] = this.calculateTotal(tab);
 
       // Emit the formatted form data
       this.$emit("formSubmitted", formattedData);
