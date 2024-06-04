@@ -60,8 +60,10 @@
               <td class="py-2 px-4 font-medium">Date Finish:</td>
               <td class="py-2 px-4">{{ ptwData.dateUntil }}</td>
             </tr>
-            <tr v-if="ptwData.dateLog !==null">
-              <td class="py-2 px-4 font-medium">Date Finish Before Extension:</td>
+            <tr v-if="ptwData.dateLog !== null">
+              <td class="py-2 px-4 font-medium">
+                Date Finish Before Extension:
+              </td>
               <td class="py-2 px-4">{{ ptwData.dateLog }}</td>
             </tr>
             <tr>
@@ -92,61 +94,76 @@
                 {{ ptwData.staffDetails.departmentName }}
               </td>
             </tr>
-       <tr v-if="ptwData.equipment !== null && ptwData.equipment.length > 0">
-  <td class="py-2 px-4 font-medium">Equipment:</td>
-  <td class="py-2 px-4">
-    <div v-for="item in ptwData.equipment" :key="item">
-      {{ item }}
-    </div>
-  </td>
-</tr>
-<tr v-if="ptwData.hazard !== null && ptwData.hazard.length > 0">
-  <td class="py-2 px-4 font-medium">Hazard:</td>
-  <td class="py-2 px-4">
-    <div v-for="item in ptwData.hazard" :key="item">
-      {{ item }}
-    </div>
-  </td>
-</tr>
-<tr v-if="ptwData.isolation !== null && ptwData.isolation.length > 0">
-  <td class="py-2 px-4 font-medium">Isolation:</td>
-  <td class="py-2 px-4">
-    <div v-for="item in ptwData.isolation" :key="item">
-      {{ item }}
-    </div>
-  </td>
-</tr>
-<tr v-if="ptwData.plantSupport !== null && ptwData.plantSupport.length > 0">
-  <td class="py-2 px-4 font-medium">Plant Support:</td>
-  <td class="py-2 px-4">
-    <div v-for="item in ptwData.plantSupport" :key="item">
-      {{ item }}
-    </div>
-  </td>
-</tr>
+            <tr
+              v-if="ptwData.equipment !== null && ptwData.equipment.length > 0"
+            >
+              <td class="py-2 px-4 font-medium">Equipment:</td>
+              <td class="py-2 px-4">
+                <div v-for="item in ptwData.equipment" :key="item">
+                  {{ item }}
+                </div>
+              </td>
+            </tr>
+            <tr v-if="ptwData.hazard !== null && ptwData.hazard.length > 0">
+              <td class="py-2 px-4 font-medium">Hazard:</td>
+              <td class="py-2 px-4">
+                <div v-for="item in ptwData.hazard" :key="item">
+                  {{ item }}
+                </div>
+              </td>
+            </tr>
+            <tr
+              v-if="ptwData.isolation !== null && ptwData.isolation.length > 0"
+            >
+              <td class="py-2 px-4 font-medium">Isolation:</td>
+              <td class="py-2 px-4">
+                <div v-for="item in ptwData.isolation" :key="item">
+                  {{ item }}
+                </div>
+              </td>
+            </tr>
+            <tr
+              v-if="
+                ptwData.plantSupport !== null && ptwData.plantSupport.length > 0
+              "
+            >
+              <td class="py-2 px-4 font-medium">Plant Support:</td>
+              <td class="py-2 px-4">
+                <div v-for="item in ptwData.plantSupport" :key="item">
+                  {{ item }}
+                </div>
+              </td>
+            </tr>
           <tr v-if="ptwData.jhaDetails !== null && ptwData.jhaDetails.length > 0">
-  <td class="py-2 px-4 font-medium">Jobs Hazard Analysis:</td>
-  <td class="py-2 px-4">
-    <div
-      v-for="detail in ptwData.jhaDetails"
-      :key="detail.sequenceTask"
-    >
-      <div>
-        <strong>Sequence Task:</strong> {{ detail.sequenceTask }}
-      </div>
-      <div>
-        <strong>Potential Hazard:</strong>
-        {{ detail.potentialHazard }}
-      </div>
-      <div>
-        <strong>Preventive Measures:</strong>
-        {{ detail.preventiveMeasures }}
-      </div>
-    </div>
-  </td>
+    <td class="py-2 px-4 font-medium">Jobs Hazard Analysis:</td>
+    <td class="py-2 px-4">
+        <table class="w-full table-auto bg-white rounded-lg shadow-md border-collapse border-2 ">
+            <thead class="bg-blue-900 text-white text-sm">
+                <tr>
+                    <th class="px-4 py-2 border-2 border-gray-200"></th>
+                    <th class="px-4 py-2 border-2 border-gray-200">Sequence Task</th>
+                    <th class="px-4 py-2 border-2 border-gray-200">Potential Hazard</th>
+                    <th class="px-4 py-2 border-2 border-gray-200">Preventive Measures</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(detail, index) in ptwData.jhaDetails" :key="detail.sequenceTask" :class="{ 'bg-gray-100': index % 2 === 1 }">
+                    <td class="px-4 py-2 border-2 border-gray-200">{{ index + 1 }}</td>
+                    <td class="px-4 py-2 border-2 border-gray-200">{{ detail.sequenceTask }}</td>
+                    <td class="px-4 py-2 border-2 border-gray-200">{{ detail.potentialHazard }}</td>
+                    <td class="px-4 py-2 border-2 border-gray-200">{{ detail.preventiveMeasures }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </td>
 </tr>
 
-            <tr v-if="ptwData.hotWork.workDescription !== null && ptwData.hotWork.workDescription !== ''">
+            <tr
+              v-if="
+                ptwData.hotWork.workDescription !== null &&
+                ptwData.hotWork.workDescription !== ''
+              "
+            >
               <td class="py-2 px-4 font-medium">Hot Work:</td>
               <td class="py-2 px-4">
                 <div>
@@ -218,7 +235,12 @@
               </td>
             </tr>
 
-            <tr v-if="ptwData.wah.companyName  !== null && ptwData.wah.companyName  !== ''">
+            <tr
+              v-if="
+                ptwData.wah.companyName !== null &&
+                ptwData.wah.companyName !== ''
+              "
+            >
               <td class="py-2 px-4 font-medium">Work at Height:</td>
               <td class="py-2 px-4">
                 <div>
@@ -228,7 +250,7 @@
                   <strong>Contractor Name:</strong>
                   {{ ptwData.wah.contractorName }}
                 </div>
-             
+
                 <div>
                   <strong>Work Description:</strong>
                   {{ ptwData.wah.workDescription }}
@@ -243,25 +265,40 @@
                 </div>
                 <!-- Other properties can be added similarly -->
 
-<div v-if="ptwData.wah.waH_Hazard !== null && ptwData.wah.waH_Hazard.length > 0">
-  <strong>Hazards:</strong>
-  <ul>
-    <li v-for="item in ptwData.wah.waH_Hazard" :key="item">
-      {{ item }}
-    </li>
-  </ul>
-</div>
+                <div
+                  v-if="
+                    ptwData.wah.waH_Hazard !== null &&
+                    ptwData.wah.waH_Hazard.length > 0
+                  "
+                >
+                  <strong>Hazards:</strong>
+                  <ul>
+                    <li v-for="item in ptwData.wah.waH_Hazard" :key="item">
+                      {{ item }}
+                    </li>
+                  </ul>
+                </div>
 
-<div v-if="ptwData.wah.waH_Ladders !== null && ptwData.wah.waH_Ladders.length > 0">
-  <strong>Ladders:</strong>
-  <ul>
-    <li v-for="item in ptwData.wah.waH_Ladders" :key="item">
-      {{ item }}
-    </li>
-  </ul>
-</div>
+                <div
+                  v-if="
+                    ptwData.wah.waH_Ladders !== null &&
+                    ptwData.wah.waH_Ladders.length > 0
+                  "
+                >
+                  <strong>Ladders:</strong>
+                  <ul>
+                    <li v-for="item in ptwData.wah.waH_Ladders" :key="item">
+                      {{ item }}
+                    </li>
+                  </ul>
+                </div>
 
-                <div v-if="ptwData.wah.waH_Scaffolding !== null && ptwData.wah.waH_Scaffolding.length > 0">
+                <div
+                  v-if="
+                    ptwData.wah.waH_Scaffolding !== null &&
+                    ptwData.wah.waH_Scaffolding.length > 0
+                  "
+                >
                   <strong>Scaffolding:</strong>
                   <ul>
                     <li v-for="item in ptwData.wah.waH_Scaffolding" :key="item">
@@ -270,7 +307,12 @@
                   </ul>
                 </div>
 
-                <div  v-if="ptwData.wah.waH_LiftTruck !== null && ptwData.wah.waH_LiftTruck.length > 0">
+                <div
+                  v-if="
+                    ptwData.wah.waH_LiftTruck !== null &&
+                    ptwData.wah.waH_LiftTruck.length > 0
+                  "
+                >
                   <strong>Lift Trucks:</strong>
                   <ul>
                     <li v-for="item in ptwData.wah.waH_LiftTruck" :key="item">
@@ -279,7 +321,12 @@
                   </ul>
                 </div>
 
-                <div  v-if="ptwData.wah.waH_ManCage !== null && ptwData.wah.waH_ManCage.length > 0">
+                <div
+                  v-if="
+                    ptwData.wah.waH_ManCage !== null &&
+                    ptwData.wah.waH_ManCage.length > 0
+                  "
+                >
                   <strong>Man Cages:</strong>
                   <ul>
                     <li v-for="item in ptwData.wah.waH_ManCage" :key="item">
@@ -287,42 +334,57 @@
                     </li>
                   </ul>
                 </div>
-<div v-if="ptwData.wah.waH_Emergency !== null && ptwData.wah.waH_Emergency.length > 0">
-  <strong>Emergency Procedures:</strong>
-  <ul>
-    <li v-for="item in ptwData.wah.waH_Emergency" :key="item">
-      {{ item }}
-    </li>
-  </ul>
-</div>
+                <div
+                  v-if="
+                    ptwData.wah.waH_Emergency !== null &&
+                    ptwData.wah.waH_Emergency.length > 0
+                  "
+                >
+                  <strong>Emergency Procedures:</strong>
+                  <ul>
+                    <li v-for="item in ptwData.wah.waH_Emergency" :key="item">
+                      {{ item }}
+                    </li>
+                  </ul>
+                </div>
 
-              <div v-if="ptwData.wah.waH_ControlMeasure !== null && ptwData.wah.waH_ControlMeasure.length > 0">
-  <strong>Control Measures:</strong>
-  <ul>
-    <li v-for="item in ptwData.wah.waH_ControlMeasure" :key="item">
-      {{ item }}
-    </li>
-  </ul>
-</div>
+                <div
+                  v-if="
+                    ptwData.wah.waH_ControlMeasure !== null &&
+                    ptwData.wah.waH_ControlMeasure.length > 0
+                  "
+                >
+                  <strong>Control Measures:</strong>
+                  <ul>
+                    <li
+                      v-for="item in ptwData.wah.waH_ControlMeasure"
+                      :key="item"
+                    >
+                      {{ item }}
+                    </li>
+                  </ul>
+                </div>
 
                 <!-- Optionally, add other arrays and properties similarly -->
               </td>
             </tr>
 
-          <tr v-if="ptwData.files !== null && ptwData.files.length > 0">
-  <td class="py-2 px-4 font-medium">Files Upload:</td>
-  <td class="py-2 px-4">
-    <ul>
-      <li
-        class="bg-blue-100 p-4 gap-2"
-        v-for="file in ptwData.files"
-        :key="file"
-      >
-        <a class="text-blue-500" target="_blank" :href="file">{{ getFileName(file) }}</a>
-      </li>
-    </ul>
-  </td>
-</tr>
+            <tr v-if="ptwData.files !== null && ptwData.files.length > 0">
+              <td class="py-2 px-4 font-medium">Files Upload:</td>
+              <td class="py-2 px-4">
+                <ul>
+                  <li
+                    class="bg-blue-100 p-4 gap-2"
+                    v-for="file in ptwData.files"
+                    :key="file"
+                  >
+                    <a class="text-blue-500" target="_blank" :href="file">{{
+                      getFileName(file)
+                    }}</a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
             <!-- ... (Other modal content) ... -->
 
             <!-- ... (Other modal content) ... -->
@@ -664,176 +726,178 @@ export default {
         });
 
         // For lists within the "Hot Work" section, use addListSection
-   // Hot Work Requirements
-const hotWorkRequirements = [
-  {
-    title: "General Requirements",
-    data: this.ptwData.hotWork?.reqGeneral,
-  },
-  {
-    title: "Distance Requirements",
-    data: this.ptwData.hotWork?.reqDistance,
-  },
-  {
-    title: "Enclosed Equipment Requirements",
-    data: this.ptwData.hotWork?.req_Enc_Equip,
-  },
-  {
-    title: "Fire Monitor Requirements",
-    data: this.ptwData.hotWork?.req_FireMon,
-  },
-  {
-    title: "Walls Requirements",
-    data: this.ptwData.hotWork?.req_Walls,
-  },
-];
+        // Hot Work Requirements
+        const hotWorkRequirements = [
+          {
+            title: "General Requirements",
+            data: this.ptwData.hotWork?.reqGeneral,
+          },
+          {
+            title: "Distance Requirements",
+            data: this.ptwData.hotWork?.reqDistance,
+          },
+          {
+            title: "Enclosed Equipment Requirements",
+            data: this.ptwData.hotWork?.req_Enc_Equip,
+          },
+          {
+            title: "Fire Monitor Requirements",
+            data: this.ptwData.hotWork?.req_FireMon,
+          },
+          {
+            title: "Walls Requirements",
+            data: this.ptwData.hotWork?.req_Walls,
+          },
+        ];
 
-// Add hot work requirements sections to sectionData
-hotWorkRequirements.forEach((requirement) => {
-  if (requirement.data && requirement.data.length > 0) {
-    sectionData.push(requirement);
-  }
-});
+        // Add hot work requirements sections to sectionData
+        hotWorkRequirements.forEach((requirement) => {
+          if (requirement.data && requirement.data.length > 0) {
+            sectionData.push(requirement);
+          }
+        });
 
-// Check if there's enough space for the "Hot Work Requirements" section
-const hotWorkSpace = 30 + hotWorkRequirements.length * 10; // Space for title and content
-if (yPos + hotWorkSpace > 280) {
-  doc.addPage();
-  yPos = 10;
-}
+        // Check if there's enough space for the "Hot Work Requirements" section
+        const hotWorkSpace = 30 + hotWorkRequirements.length * 10; // Space for title and content
+        if (yPos + hotWorkSpace > 280) {
+          doc.addPage();
+          yPos = 10;
+        }
 
-// Iterate over hotWorkRequirements and add table sections
-hotWorkRequirements.forEach((section) => {
-  if (section.data && section.data.length > 0) {
-    // Check if there's enough space for the current section's title and content
-    const sectionSpace = 30 + (section.data.length * 10); // Space for title and content
-    if (yPos + sectionSpace > 280) {
-      doc.addPage();
-      yPos = 10;
-    }
+        // Iterate over hotWorkRequirements and add table sections
+        hotWorkRequirements.forEach((section) => {
+          if (section.data && section.data.length > 0) {
+            // Check if there's enough space for the current section's title and content
+            const sectionSpace = 30 + section.data.length * 10; // Space for title and content
+            if (yPos + sectionSpace > 280) {
+              doc.addPage();
+              yPos = 10;
+            }
 
-    // Add the table section
-    addTableSection(section.title, section.data);
-  }
-});
-
+            // Add the table section
+            addTableSection(section.title, section.data);
+          }
+        });
       }
       // Add a section heading for "Hot Work"
       const workAtHeightInfo = [
-  [
-    "Company Name:",
-    this.ptwData.wah?.companyName || "N/A",
-    "Contractor Name:",
-    this.ptwData.wah?.contractorName || "N/A",
-  ],
-  ["Work Location:", this.ptwData.wah?.workLocation || "N/A"],
-  [
-    "Start Date/Time:",
-    this.ptwData.wah?.startDateTime || "N/A",
-    "Complete Date/Time:",
-    this.ptwData.wah?.completeDateTime || "N/A",
-  ],
-  ["Work Description:", this.ptwData.wah?.workDescription || "N/A"],
-];
+        [
+          "Company Name:",
+          this.ptwData.wah?.companyName || "N/A",
+          "Contractor Name:",
+          this.ptwData.wah?.contractorName || "N/A",
+        ],
+        ["Work Location:", this.ptwData.wah?.workLocation || "N/A"],
+        [
+          "Start Date/Time:",
+          this.ptwData.wah?.startDateTime || "N/A",
+          "Complete Date/Time:",
+          this.ptwData.wah?.completeDateTime || "N/A",
+        ],
+        ["Work Description:", this.ptwData.wah?.workDescription || "N/A"],
+      ];
 
-// Check if there's enough space for the "Work at Height" section
-const workAtHeightSpace = 30 + workAtHeightInfo.length * 10; // Space for title and content
-if (yPos + workAtHeightSpace > 280) {
-  doc.addPage();
-  yPos = 10;
-}
-
-// Add the "Work at Height" section if applicable
-if (this.ptwData.wah.companyName != null) {
-  addSectionHeading("Work at Height");
-
-  // Use autoTable to create the two-column layout for "Work at Height" section
-  doc.autoTable({
-    startY: yPos,
-    theme: "plain",
-    styles: { fontSize: 10, cellPadding: 1 },
-    columnStyles: {
-      0: { fontStyle: "bold", cellWidth: 40 }, // Label column
-      1: { cellWidth: 60 }, // Value column
-      2: { fontStyle: "bold", cellWidth: 40 }, // Second label column
-      3: { cellWidth: 60 }, // Second value column
-    },
-    body: workAtHeightInfo,
-    willDrawCell: (data) => {
-      // Prevents lines from being drawn
-      if (data.section === "body") {
-        data.cell.styles.lineWidth = 0;
+      // Check if there's enough space for the "Work at Height" section
+      const workAtHeightSpace = 30 + workAtHeightInfo.length * 10; // Space for title and content
+      if (yPos + workAtHeightSpace > 280) {
+        doc.addPage();
+        yPos = 10;
       }
-    },
-    didDrawPage: (data) => {
-      yPos = data.cursor.y + 10; // Update yPos for the next section
-    },
-  });
 
-  // Adding additional lists as tables for "Work at Height"
-const workAtHeightSections = [
-  { title: "Hazards", data: this.ptwData.wah?.waH_Hazard },
-  { title: "Ladders", data: this.ptwData.wah?.waH_Ladders },
-  { title: "Scaffolding", data: this.ptwData.wah?.waH_Scaffolding },
-  { title: "Lift Trucks", data: this.ptwData.wah?.waH_LiftTruck },
-  { title: "Man Cages", data: this.ptwData.wah?.waH_ManCage },
-  { title: "Emergency Procedures", data: this.ptwData.wah?.waH_Emergency },
-  { title: "Control Measures", data: this.ptwData.wah?.waH_ControlMeasure },
-];
+      // Add the "Work at Height" section if applicable
+      if (this.ptwData.wah.companyName != null) {
+        addSectionHeading("Work at Height");
 
-workAtHeightSections.forEach((section) => {
-  if (section.data && section.data.length > 0) {
-    // Check if there's enough space for the current section's title and content
-    const sectionSpace = 30 + (section.data.length * 10); // Space for title and content
-    if (yPos + sectionSpace > 280) {
-      doc.addPage();
-      yPos = 10;
-    }
+        // Use autoTable to create the two-column layout for "Work at Height" section
+        doc.autoTable({
+          startY: yPos,
+          theme: "plain",
+          styles: { fontSize: 10, cellPadding: 1 },
+          columnStyles: {
+            0: { fontStyle: "bold", cellWidth: 40 }, // Label column
+            1: { cellWidth: 60 }, // Value column
+            2: { fontStyle: "bold", cellWidth: 40 }, // Second label column
+            3: { cellWidth: 60 }, // Second value column
+          },
+          body: workAtHeightInfo,
+          willDrawCell: (data) => {
+            // Prevents lines from being drawn
+            if (data.section === "body") {
+              data.cell.styles.lineWidth = 0;
+            }
+          },
+          didDrawPage: (data) => {
+            yPos = data.cursor.y + 10; // Update yPos for the next section
+          },
+        });
 
-    // Add the table section
-    addTableSection(section.title, section.data);
-  }
-});
+        // Adding additional lists as tables for "Work at Height"
+        const workAtHeightSections = [
+          { title: "Hazards", data: this.ptwData.wah?.waH_Hazard },
+          { title: "Ladders", data: this.ptwData.wah?.waH_Ladders },
+          { title: "Scaffolding", data: this.ptwData.wah?.waH_Scaffolding },
+          { title: "Lift Trucks", data: this.ptwData.wah?.waH_LiftTruck },
+          { title: "Man Cages", data: this.ptwData.wah?.waH_ManCage },
+          {
+            title: "Emergency Procedures",
+            data: this.ptwData.wah?.waH_Emergency,
+          },
+          {
+            title: "Control Measures",
+            data: this.ptwData.wah?.waH_ControlMeasure,
+          },
+        ];
 
-}
+        workAtHeightSections.forEach((section) => {
+          if (section.data && section.data.length > 0) {
+            // Check if there's enough space for the current section's title and content
+            const sectionSpace = 30 + section.data.length * 10; // Space for title and content
+            if (yPos + sectionSpace > 280) {
+              doc.addPage();
+              yPos = 10;
+            }
 
-yPos += 10; // Update yPos for the next section
+            // Add the table section
+            addTableSection(section.title, section.data);
+          }
+        });
+      }
 
-// Add the "ADMIN FEEDBACK" section
-// Calculate the space required for the "ADMIN FEEDBACK" section
-const adminFeedbackSpace = 10 ; // 4 rows with a height of 10 each
+      yPos += 10; // Update yPos for the next section
 
-// Check if there's enough space for the "ADMIN FEEDBACK" section
-if (yPos + adminFeedbackSpace > 280) {
-  doc.addPage();
-  yPos = 10;
-}
+      // Add the "ADMIN FEEDBACK" section
+      // Calculate the space required for the "ADMIN FEEDBACK" section
+      const adminFeedbackSpace = 10; // 4 rows with a height of 10 each
 
-// Draw the "ADMIN FEEDBACK" section
-doc.autoTable({
-  startY: yPos,
-  head: [["ADMIN FEEDBACK", ""]],
-  body: [
-    ["COMMENT", this.ptwData.safetyAdminComment],
-    ["STATUS", this.ptwData.safetyAdminStatus],
-    ["BY", this.ptwData.safetyModifiedBy],
-    ["LAST MODIFIED", this.ptwData.safetyModifiedDate],
-  ],
-  theme: "grid",
-  margin: { left: 14 },
-  headStyles: { fillColor: [22, 9, 89] }, // Customize head style
-  didDrawPage: function (data) {
-    yPos = data.cursor.y + 10; // Update Y position for next content
-  },
-});
+      // Check if there's enough space for the "ADMIN FEEDBACK" section
+      if (yPos + adminFeedbackSpace > 280) {
+        doc.addPage();
+        yPos = 10;
+      }
 
-// Increment yPos to leave space before saving the document
-yPos += adminFeedbackSpace;
+      // Draw the "ADMIN FEEDBACK" section
+      doc.autoTable({
+        startY: yPos,
+        head: [["ADMIN FEEDBACK", ""]],
+        body: [
+          ["COMMENT", this.ptwData.safetyAdminComment],
+          ["STATUS", this.ptwData.safetyAdminStatus],
+          ["BY", this.ptwData.safetyModifiedBy],
+          ["LAST MODIFIED", this.ptwData.safetyModifiedDate],
+        ],
+        theme: "grid",
+        margin: { left: 14 },
+        headStyles: { fillColor: [22, 9, 89] }, // Customize head style
+        didDrawPage: function (data) {
+          yPos = data.cursor.y + 10; // Update Y position for next content
+        },
+      });
 
+      // Increment yPos to leave space before saving the document
+      yPos += adminFeedbackSpace;
 
-
-// Finish up
-doc.save(this.ptwData.refNumber + ".pdf");
+      // Finish up
+      doc.save(this.ptwData.refNumber + ".pdf");
     },
 
     getFileName(file) {

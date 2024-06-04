@@ -120,26 +120,56 @@
                   class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
-               <div>
-    <label class="font-semibold text-gray-700 dark:text-gray-200">
-        Claims For
-    </label>
-    <div class="grid w-full sm:w-[20rem] md:w-[30rem] lg:w-[40rem] grid-cols-1 sm:grid-cols-2 gap-2 rounded-xl bg-gray-200 p-2">
-        <div>
-            <input type="radio" name="option" id="HR" value="HR" class="peer hidden" v-model="formData.selectedOption" checked />
-            <label for="HR" class="block cursor-pointer select-none rounded-xl p-2 text-center" :class="{'bg-blue-500 font-bold text-white': formData.selectedOption === 'HR',}">
-                HR
-            </label>
-        </div>
+                <div>
+                <label class="font-semibold text-gray-700 dark:text-gray-200">
+                  Claims For</label
+                >
+                <div
+                  class="grid w-[40rem] grid-cols-2 gap-2 rounded-xl bg-gray-200 p-2"
+                >
+                  <div>
+                  <input
+                    type="radio"
+                    name="option"
+                    id="HR"
+                    value="HR"
+                    class="peer hidden"
+                    v-model="formData.selectedOption"
+                    checked
+                  />
+                  <label
+                    for="HR"
+                    class="block cursor-pointer select-none rounded-xl p-2 text-center"
+                    :class="{
+                    'bg-blue-500 font-bold text-white':
+                    formData.selectedOption === 'HR',
+                    }"
+                  >
+                    HR
+                  </label>
+                  </div>
 
-        <div>
-            <input type="radio" name="option" id="Finance" value="Finance" class="peer hidden" v-model="formData.selectedOption" />
-            <label for="Finance" class="block cursor-pointer select-none rounded-xl p-2 text-center" :class="{'bg-blue-500 font-bold text-white': formData.selectedOption === 'Finance',}">
-                Finance
-            </label>
-        </div>
-    </div>
-
+                  <div>
+                  <input
+                    type="radio"
+                    name="option"
+                    id="Finance"
+                    value="Finance"
+                    class="peer hidden"
+                    v-model="formData.selectedOption"
+                  />
+                  <label
+                    for="Finance"
+                    class="block cursor-pointer select-none rounded-xl p-2 text-center"
+                    :class="{
+                    'bg-blue-500 font-bold text-white':
+                    formData.selectedOption === 'Finance',
+                    }"
+                  >
+                    Finance
+                  </label>
+                  </div>
+                </div>
                 </div>
             </div>
             <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-3">
@@ -240,7 +270,6 @@ export default {
         reportEndDate: formStore.formData.reportEndDate,
         memo: formStore.formData.memo,
         selectedOption: formStore.formData.selectedOption,
-        
       },
       branch: "", // Add the missing branch property
     };
