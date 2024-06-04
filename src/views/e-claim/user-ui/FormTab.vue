@@ -53,6 +53,53 @@
                     <span v-if="field.required" style="color: red">*</span>
                   </label>
 
+                  <template>
+                    <div v-if="tab.title === 'Local Travelling'">
+                      <!-- Location Fields -->
+                      <div class="grid grid-cols-1 sm:grid-cols-2">
+                        <label
+                          for="LocationStart"
+                          class="block text-gray-700 text-sm font-bold mb-2"
+                        >
+                          Starting Point Location
+                          <span style="color: red">*</span>
+                        </label>
+                        <input
+                          v-model="
+                            tab.fields.find(
+                              (field) => field.id === 'LocationStart'
+                            ).value
+                          "
+                          id="LocationStart"
+                          type="text"
+                          placeholder="Enter starting point location"
+                          class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                        />
+
+                        <label
+                          for="LocationEnd"
+                          class="block text-gray-700 text-sm font-bold mb-2"
+                        >
+                          End Point Location
+                          <span style="color: red">*</span>
+                        </label>
+                        <input
+                          v-model="
+                            tab.fields.find(
+                              (field) => field.id === 'LocationEnd'
+                            ).value
+                          "
+                          id="LocationEnd"
+                          type="text"
+                          placeholder="Enter end point location"
+                          class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                        />
+                      </div>
+                      <!-- End of Location Fields -->
+                    </div>
+                    <!-- End of existing code -->
+                  </template>
+
                   <template v-if="field.type === 'select'">
                     <select
                       v-model="field.value"
@@ -85,6 +132,29 @@
                     </select>
                   </template>
 
+                  <template v-else-if="field.type === 'checkbox-group'">
+                    <div class="grid grid-cols-2">
+                      <div
+                        class="p-4 pt-2 pb-2 flex items-center"
+                        v-for="option in field.options"
+                        :key="option.value"
+                      >
+                        <input
+                          type="checkbox"
+                          :id="option.value"
+                          :value="option.value"
+                          v-model="field.value"
+                          class="mr-2"
+                        />
+                        <label
+                          :for="option.value"
+                          class="text-sm text-gray-700"
+                          >{{ option.label }}</label
+                        >
+                      </div>
+                    </div>
+                  </template>
+
                   <template
                     v-else-if="field.type === 'text' && field.isOtherOption"
                   >
@@ -103,7 +173,6 @@
                         :name="field.id"
                         ref="pond"
                         label-idle="Drop files here..."
-                      
                         @addfile="
                           (error, file) => handleAddFile(error, file, field)
                         "
@@ -593,6 +662,49 @@ export default {
                 { label: "DESTINATION 1", value: "DESTINATION 1" },
                 { label: "DESTINATION 2", value: "DESTINATION 2" },
                 { label: "DESTINATION 3", value: "DESTINATION 3" },
+              ],
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "TransportLT",
+              label: "Travelling Mode By",
+              type: "checkbox-group",
+              value: [],
+              required: true,
+              options: [
+                { label: "Personal Car", value: "Personal Car" },
+                { label: "Company Car", value: "Company Car" },
+                { label: "Others", value: "Others" },
+              ],
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "LocationStart",
+              label: "Starting Point Location",
+              type: "text",
+              placeholder: "From Where",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "LocationEnd",
+              label: "End Point Location",
+              type: "text",
+              placeholder: "To Where",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "1@2wayLT",
+              label: "Trip",
+              type: "checkbox-group",
+              value: [],
+              required: true,
+              options: [
+                { label: "Round Trip", value: "Round Trip" },
+                { label: "One Way", value: "One Way" },
               ],
               gridClass: "sm:col-span-1",
             },
@@ -1211,35 +1323,38 @@ export default {
   },
 
   methods: {
-  handleAddFile(error, file, field) {
-  if (error) {
-    console.error("Error adding file:", error.message);
-    return;
-  }
-  field.value = [...field.value, file.file];
-  console.log("File added:", file.file);
-  console.log("Updated files:", field.value);
-},
+    handleAddFile(error, file, field) {
+      if (error) {
+        console.error("Error adding file:", error.message);
+        return;
+      }
+      field.value = [...field.value, file.file];
+      console.log("File added:", file.file);
+      console.log("Updated files:", field.value);
+    },
 
-handleRemoveFile(error, file, field) {
-  if (error) {
-    console.error(
-      "An error occurred while removing the file:",
-      error.message
-    );
-    return;
-  }
+    handleRemoveFile(error, file, field) {
+      if (error) {
+        console.error(
+          "An error occurred while removing the file:",
+          error.message
+        );
+        return;
+      }
 
-  const fileObject = file.file;
+      const fileObject = file.file;
 
-  // Find and remove the file object from the field's value array
-  const index = field.value.findIndex((f) => f.name === fileObject.name);
-  if (index !== -1) {
-    field.value = [...field.value.slice(0, index), ...field.value.slice(index + 1)];
-    console.log("File removed:", fileObject.name, fileObject);
-    console.log("Updated field value:", field);
-  }
-},
+      // Find and remove the file object from the field's value array
+      const index = field.value.findIndex((f) => f.name === fileObject.name);
+      if (index !== -1) {
+        field.value = [
+          ...field.value.slice(0, index),
+          ...field.value.slice(index + 1),
+        ];
+        console.log("File removed:", fileObject.name, fileObject);
+        console.log("Updated field value:", field);
+      }
+    },
 
     addAttendee() {
       const { name, staffId, companyName } = this.modalForm;

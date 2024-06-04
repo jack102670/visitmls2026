@@ -265,22 +265,6 @@
                           </button>
                         </td>
                       </tr>
-                      <tr class="bg-gray-50 dark:bg-gray-800">
-                        <td
-                          colspan="4"
-                          class="px-4 py-4 text-sm font-normal text-gray-500 whitespace-nowrap text-right"
-                        >
-                          Grand Total:
-                        </td>
-                        <td
-                          class="px-4 py-4 text-md font-semibold text-gray-500 whitespace-nowrap"
-                        >
-                          RM {{ grandTotal }}
-                        </td>
-                        <td
-                          class="px-4 py-4 text-md font-semibold text-gray-500 whitespace-nowrap"
-                        ></td>
-                      </tr>
                     </tbody>
                   </table>
                 </div>
