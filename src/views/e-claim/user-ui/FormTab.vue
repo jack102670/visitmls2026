@@ -53,53 +53,6 @@
                     <span v-if="field.required" style="color: red">*</span>
                   </label>
 
-                  <template>
-                    <div v-if="tab.title === 'Local Travelling'">
-                      <!-- Location Fields -->
-                      <div class="grid grid-cols-1 sm:grid-cols-2">
-                        <label
-                          for="LocationStart"
-                          class="block text-gray-700 text-sm font-bold mb-2"
-                        >
-                          Starting Point Location
-                          <span style="color: red">*</span>
-                        </label>
-                        <input
-                          v-model="
-                            tab.fields.find(
-                              (field) => field.id === 'LocationStart'
-                            ).value
-                          "
-                          id="LocationStart"
-                          type="text"
-                          placeholder="Enter starting point location"
-                          class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                        />
-
-                        <label
-                          for="LocationEnd"
-                          class="block text-gray-700 text-sm font-bold mb-2"
-                        >
-                          End Point Location
-                          <span style="color: red">*</span>
-                        </label>
-                        <input
-                          v-model="
-                            tab.fields.find(
-                              (field) => field.id === 'LocationEnd'
-                            ).value
-                          "
-                          id="LocationEnd"
-                          type="text"
-                          placeholder="Enter end point location"
-                          class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                        />
-                      </div>
-                      <!-- End of Location Fields -->
-                    </div>
-                    <!-- End of existing code -->
-                  </template>
-
                   <template v-if="field.type === 'select'">
                     <select
                       v-model="field.value"
@@ -132,7 +85,7 @@
                     </select>
                   </template>
 
-                  <template v-else-if="field.type === 'checkbox-group'">
+                  <template v-else-if="field.type === 'radio-group'">
                     <div class="grid grid-cols-2">
                       <div
                         class="p-4 pt-2 pb-2 flex items-center"
@@ -140,8 +93,9 @@
                         :key="option.value"
                       >
                         <input
-                          type="checkbox"
+                          type="radio"
                           :id="option.value"
+                          :name="field.id"
                           :value="option.value"
                           v-model="field.value"
                           class="mr-2"
@@ -149,8 +103,9 @@
                         <label
                           :for="option.value"
                           class="text-sm text-gray-700"
-                          >{{ option.label }}</label
                         >
+                          {{ option.label }}
+                        </label>
                       </div>
                     </div>
                   </template>
@@ -653,22 +608,9 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "DestinationPurposeLT",
-              label: "Destination / Purpose",
-              type: "select",
-              value: "",
-              required: true,
-              options: [
-                { label: "DESTINATION 1", value: "DESTINATION 1" },
-                { label: "DESTINATION 2", value: "DESTINATION 2" },
-                { label: "DESTINATION 3", value: "DESTINATION 3" },
-              ],
-              gridClass: "sm:col-span-1",
-            },
-            {
               id: "TransportLT",
               label: "Travelling Mode By",
-              type: "checkbox-group",
+              type: "radio-group",
               value: [],
               required: true,
               options: [
@@ -699,7 +641,7 @@ export default {
             {
               id: "1@2wayLT",
               label: "Trip",
-              type: "checkbox-group",
+              type: "radio-group",
               value: [],
               required: true,
               options: [
