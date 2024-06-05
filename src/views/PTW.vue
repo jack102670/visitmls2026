@@ -688,8 +688,13 @@
             <h2
               class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white"
             >
-              C[3] Isolation <span class="text-red-500">*</span> 
-            </h2><span v-if="!isIsolationChecked" class="text-red-500 text-sm normal-case ">At least one checkbox must be checked.</span>
+              C[3] Isolation <span class="text-red-500">*</span>
+            </h2>
+            <span
+              v-if="!isIsolationChecked"
+              class="text-red-500 text-sm normal-case"
+              >At least one checkbox must be checked.</span
+            >
             <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
               <div>
                 <label class="text-gray-700 dark:text-gray-200">
@@ -719,7 +724,12 @@
               <!-- First Aid Kit 2 -->
               <div>
                 <label class="text-gray-700 dark:text-gray-200">
-                  <input type="checkbox" value="Traffic" v-model="isolation"     @change="validateIsolation" />
+                  <input
+                    type="checkbox"
+                    value="Traffic"
+                    v-model="isolation"
+                    @change="validateIsolation"
+                  />
                   Traffic
                 </label>
               </div>
@@ -2032,9 +2042,9 @@
                       id="ladderCondition"
                       type="checkbox"
                       v-model="waH_Ladders"
-                      value="Is the ladder in good condition and suitable for the task?"
+                      value="The ladder is in good condition and suitable for the task."
                     />
-                    Is the ladder in good condition and suitable for the task?
+                    The ladder is in good condition and suitable for the task.
                   </label>
                 </div>
 
@@ -2048,9 +2058,9 @@
                       id="ladderHeight"
                       type="checkbox"
                       v-model="waH_Ladders"
-                      value="Is the ladder tall enough for the task?"
+                      value="The ladder is tall enough for the task."
                     />
-                    Is the ladder tall enough for the task?
+                    The ladder is tall enough for the task.
                   </label>
                 </div>
 
@@ -2064,9 +2074,9 @@
                       id="ladderLevel"
                       type="checkbox"
                       v-model="waH_Ladders"
-                      value="Is the ladder on a level footing?"
+                      value="The ladder is on a level footing."
                     />
-                    Is the ladder on a level footing?
+                    The ladder is on a level footing.
                   </label>
                 </div>
 
@@ -2080,9 +2090,10 @@
                       id="areaBarricaded"
                       type="checkbox"
                       v-model="waH_Ladders"
-                      value="Is the area below barricaded?"
+                      value="The area below is barricaded
+"
                     />
-                    Is the area below barricaded?
+                    The area below is barricaded
                   </label>
                 </div>
 
@@ -2096,9 +2107,9 @@
                       id="ladderSecured"
                       type="checkbox"
                       v-model="waH_Ladders"
-                      value="Is the ladder secured top and bottom? (not applicable for step ladders)"
+                      value="The ladder is secured top and bottom. (not applicable for step ladders)"
                     />
-                    Is the ladder secured top and bottom? (not applicable for
+                    The ladder is secured top and bottom. (not applicable for
                     step ladders)
                   </label>
                 </div>
@@ -2113,10 +2124,10 @@
                       id="ladderExtended"
                       type="checkbox"
                       v-model="waH_Ladders"
-                      value="Is the ladder extended with at least three (3) rungs or 900mm overlap?"
+                      value="The ladder is extended with at least three (3) rungs or 900mm overlap."
                     />
-                    Is the ladder extended with at least three (3) rungs or
-                    900mm overlap?
+                    The ladder is extended with at least three (3) rungs or
+                    900mm overlap.
                   </label>
                 </div>
 
@@ -2130,9 +2141,9 @@
                       id="ladderRatio"
                       type="checkbox"
                       v-model="waH_Ladders"
-                      value="Is the ladder position 1 in 4 ratio?"
+                      value="The ladder is positioned to 1 in 4 ratios?"
                     />
-                    Is the ladder position 1 in 4 ratio?
+                    The ladder is positioned to 1 in 4 ratios?
                   </label>
                 </div>
               </div>
@@ -2163,9 +2174,9 @@
                       id="kickBoards"
                       type="checkbox"
                       v-model="waH_Scaffolding"
-                      value=" Are kick boards in place?"
+                      value="Kick boards are in place."
                     />
-                    Are kick boards in place?
+                    Kick boards are in place.
                   </label>
                 </div>
 
@@ -2179,9 +2190,9 @@
                       id="handRails"
                       type="checkbox"
                       v-model="waH_Scaffolding"
-                      value="Are hand rails in place?"
+                      value="Mid rails are in place."
                     />
-                    Are hand rails in place?
+                    Mid rails are in place.
                   </label>
                 </div>
 
@@ -2211,9 +2222,9 @@
                       id="internalLadder"
                       type="checkbox"
                       v-model="waH_Scaffolding"
-                      value="Is the ladder installed internally (if applicable)?"
+                      value="The ladder is installed internally (if applicable)."
                     />
-                    Is the ladder installed internally (if applicable)?
+                    The ladder is installed internally (if applicable).
                   </label>
                 </div>
 
@@ -2227,9 +2238,9 @@
                       id="solidFooting"
                       type="checkbox"
                       v-model="waH_Scaffolding"
-                      value="Is the scaffold on a solid footing?"
+                      value="The scaffolding is on a solid footing."
                     />
-                    Is the scaffold on a solid footing?
+                    The scaffolding is on a solid footing.
                   </label>
                 </div>
 
@@ -2260,9 +2271,9 @@
                       id="areaBarricadedScaffold"
                       type="checkbox"
                       v-model="waH_Scaffolding"
-                      value="Is the area below barricaded?"
+                      value="The area below is barricaded."
                     />
-                    Is the area below barricaded?
+                    The area below is barricaded.
                   </label>
                 </div>
 
@@ -2276,9 +2287,9 @@
                       id="safeWorkingLimits"
                       type="checkbox"
                       v-model="waH_Scaffolding"
-                      value="Is the scaffold operating within safe working limits?"
+                      value="The scaffold is operated within safe working limits."
                     />
-                    Is the scaffold operating within safe working limits?
+                    The scaffold is operated within safe working limits.
                   </label>
                 </div>
 
@@ -2292,9 +2303,9 @@
                       id="freeFromObstructions"
                       type="checkbox"
                       v-model="waH_Scaffolding"
-                      value="Is the area free from overhead obstructions?"
+                      value="The area is free from overhead obstructions."
                     />
-                    Is the area free from overhead obstructions?
+                    The area is free from overhead obstructions.
                   </label>
                 </div>
 
@@ -2308,9 +2319,9 @@
                       id="competentPerson"
                       type="checkbox"
                       v-model="waH_Scaffolding"
-                      value="Is the scaffold erected by a competent person?"
+                      value="The scaffolding is erected by a competent person."
                     />
-                    Is the scaffold erected by a competent person?
+                    The scaffolding is erected by a competent person.
                   </label>
                 </div>
               </div>
@@ -2340,9 +2351,9 @@
                       id="permissionToUse"
                       type="checkbox"
                       v-model="waH_LiftTruck"
-                      value="Permission to use attained?"
+                      value="Permission to use attained."
                     />
-                    Permission to use attained?
+                    Permission to use attained.
                   </label>
                 </div>
 
@@ -2356,9 +2367,9 @@
                       id="equipmentGoodOrder"
                       type="checkbox"
                       v-model="waH_LiftTruck"
-                      value="Equipment in good working order?"
+                      value="Equipment in good working order."
                     />
-                    Equipment in good working order?
+                    Equipment in good working order.
                   </label>
                 </div>
 
@@ -2372,9 +2383,9 @@
                       id="batteryCharged"
                       type="checkbox"
                       v-model="waH_LiftTruck"
-                      value="Battery fully charged?"
+                      value="Battery fully charged."
                     />
-                    Battery fully charged?
+                    Battery fully charged.
                   </label>
                 </div>
 
@@ -2388,9 +2399,9 @@
                       id="equipmentChecked"
                       type="checkbox"
                       v-model="waH_LiftTruck"
-                      value="Equipment physically checked?"
+                      value="Equipment physically checked."
                     />
-                    Equipment physically checked?
+                    Equipment physically checked.
                   </label>
                 </div>
               </div>
@@ -2421,9 +2432,9 @@
                       id="securingChain"
                       type="checkbox"
                       v-model="waH_ManCage"
-                      value="Securing chain and shackle available?"
+                      value="Securing chain and shackle available."
                     />
-                    Securing chain and shackle available?
+                    Securing chain and shackle available.
                   </label>
                 </div>
 
@@ -2437,9 +2448,9 @@
                       id="freeOfDamage"
                       type="checkbox"
                       v-model="waH_ManCage"
-                      value="Free of physical damage?"
+                      value="Free of physical damage."
                     />
-                    Free of physical damage?
+                    Free of physical damage.
                   </label>
                 </div>
 
@@ -2453,9 +2464,9 @@
                       id="slotSize"
                       type="checkbox"
                       v-model="waH_ManCage"
-                      value="Appropriate slot size for forks available?"
+                      value="Appropriate slot size for forks available."
                     />
-                    Appropriate slot size for forks available?
+                    Appropriate slot size for forks available.
                   </label>
                 </div>
               </div>
@@ -2487,10 +2498,10 @@
                     id="emergencyProcedures"
                     type="checkbox"
                     v-model="waH_Emergency"
-                    value="Have emergency and rescue procedures been established, tested and recorded? (These items can be recorded in JHA)"
+                    value="Have emergency and rescue procedures been established, tested and recorded. (These items can be recorded in JHA)"
                   />
                   Have emergency and rescue procedures been established, tested
-                  and recorded? (These items can be recorded in JHA)
+                  and recorded. (These items can be recorded in JHA)
                 </label>
               </div>
 
@@ -2504,10 +2515,10 @@
                     id="communicationArrangements"
                     type="checkbox"
                     v-model="waH_Emergency"
-                    value="Have appropriate communication arrangements been established for potential emergencies?"
+                    value="Have appropriate communication arrangements been established for potential emergencies."
                   />
                   Have appropriate communication arrangements been established
-                  for potential emergencies?
+                  for potential emergencies.
                 </label>
               </div>
 
@@ -2543,10 +2554,11 @@
                     id="specificJHA"
                     type="checkbox"
                     v-model="waH_ControlMeasure"
-                    value=" A task/site specific JHA, or equivalent, has been developed and appropriately addresses identified work at height hazards?"
+                    value="A task/site specific JHA, or equivalent, has been developed and appropriately addresses identified work at height hazards."
                   />
+
                   A task/site specific JHA, or equivalent, has been developed
-                  and appropriately addresses identified work at height hazards?
+                  and appropriately addresses identified work at height hazards.
                 </label>
               </div>
 
@@ -2560,10 +2572,10 @@
                     id="jhaReviewed"
                     type="checkbox"
                     v-model="waH_ControlMeasure"
-                    value="The JHA, or equivalent, has been reviewed and is understood by those involved in the task?"
+                    value="The JHA, or equivalent, has been reviewed and is understood by those involved in the task."
                   />
                   The JHA, or equivalent, has been reviewed and is understood by
-                  those involved in the task?
+                  those involved in the task.
                 </label>
               </div>
 
@@ -2577,11 +2589,9 @@
                     id="competentTraining"
                     type="checkbox"
                     v-model="waH_ControlMeasure"
-                    value="Those involved in the work at height activities are appropriately competent and can produce evidence of training where requested?"
+                    value="Those involved in the work at height activities are appropriately competent and can produce evidence of training where requested."
                   />
-                  Those involved in the work at height activities are
-                  appropriately competent and can produce evidence of training
-                  where requested?
+                  Those involved in the work at height activities are appropriately competent and can produce evidence of training where requested.
                 </label>
               </div>
             </div>
@@ -2997,7 +3007,7 @@ export default {
   },
   methods: {
     validateIsolation() {
-        this.isIsolationChecked = this.isolation.length > 0;
+      this.isIsolationChecked = this.isolation.length > 0;
     },
     addOthersToEquipment() {
       this.equipment.push(this.othersPPE);
