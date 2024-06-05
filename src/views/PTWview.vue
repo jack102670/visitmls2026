@@ -44,6 +44,10 @@
               <td class="py-2 px-4">{{ ptwData.vendorName }}</td>
             </tr>
             <tr>
+              <td class="py-2 px-4 font-medium">Vendor Email:</td>
+              <td class="py-2 px-4">{{ ptwData.vendorEmail }}</td>
+            </tr>
+            <tr>
               <td class="py-2 px-4 font-medium">Company:</td>
               <td class="py-2 px-4">{{ ptwData.companyName }}</td>
             </tr>
@@ -53,11 +57,11 @@
             </tr>
 
             <tr>
-              <td class="py-2 px-4 font-medium">Date Start:</td>
+              <td class="py-2 px-4 font-medium">Start Date:</td>
               <td class="py-2 px-4">{{ ptwData.dateFrom }}</td>
             </tr>
             <tr>
-              <td class="py-2 px-4 font-medium">Date Finish:</td>
+              <td class="py-2 px-4 font-medium">End Date:</td>
               <td class="py-2 px-4">{{ ptwData.dateUntil }}</td>
             </tr>
             <tr v-if="ptwData.dateLog !== null">
@@ -79,17 +83,17 @@
               <td class="py-2 px-4">{{ ptwData.dateRequested }}</td>
             </tr>
             <tr>
-              <td class="py-2 px-4 font-medium">PKT Staff Name:</td>
+              <td class="py-2 px-4 font-medium">Location PIC:</td>
               <td class="py-2 px-4">{{ ptwData.staffDetails.pktStaffName }}</td>
             </tr>
             <tr>
-              <td class="py-2 px-4 font-medium">PKT Staff Email:</td>
+              <td class="py-2 px-4 font-medium">PIC Email:</td>
               <td class="py-2 px-4">
                 {{ ptwData.staffDetails.pktStaffEmail }}
               </td>
             </tr>
             <tr>
-              <td class="py-2 px-4 font-medium">PKT Staff Department:</td>
+              <td class="py-2 px-4 font-medium">PIC Department:</td>
               <td class="py-2 px-4">
                 {{ ptwData.staffDetails.departmentName }}
               </td>
