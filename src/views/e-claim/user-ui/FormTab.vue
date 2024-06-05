@@ -53,7 +53,38 @@
                     <span v-if="field.required" style="color: red">*</span>
                   </label>
 
-                  <template v-if="field.type === 'select'">
+                  <template
+                    v-if="
+                      field.id === 'MileageKMLT' || field.id === 'MileageRMLT'
+                    "
+                  >
+                    <div
+                      v-if="
+                        tab.fields
+                          .find((f) => f.id === 'TransportLT')
+                          .value.includes('Company Car')
+                      "
+                    >
+                      <p class="text-red-500 text-sm">
+                        Note: If you choose Company Car, you cannot claim
+                        Mileage.
+                      </p>
+                    </div>
+                    <input
+                      v-model="field.value"
+                      :id="field.id"
+                      :type="field.type"
+                      :placeholder="field.placeholder"
+                      class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                      :disabled="
+                        tab.fields
+                          .find((f) => f.id === 'TransportLT')
+                          .value.includes('Company Car')
+                      "
+                    />
+                  </template>
+
+                  <template v-else-if="field.type === 'select'">
                     <select
                       v-model="field.value"
                       :id="field.id"
@@ -580,6 +611,7 @@ export default {
       activeSubTab: 0,
       date: "",
       yearRange: [],
+      isCompanyCar: false,
       uploadedFiles: [],
       showModal: false,
       selectedAttendeeType: "pkt",
@@ -1264,6 +1296,21 @@ export default {
     }
   },
 
+  watch: {
+    // Watch for changes in the "Travelling Mode By" field
+    'tabs[0].fields': {
+      handler(newFields) {
+        // Find the "Travelling Mode By" field
+        const transportField = newFields.find(field => field.id === 'TransportLT');
+        if (transportField) {
+          // Update the flag based on the selected option
+          this.isCompanyCar = transportField.value.includes('Company Car');
+        }
+      },
+      deep: true // Watch for nested changes in fields array
+    }
+  },
+
   methods: {
     handleAddFile(error, file, field) {
       if (error) {
@@ -1331,18 +1378,32 @@ export default {
 
     calculateTotal(tab) {
       let total = 0;
+      let isRoundTrip = false; // Flag to track if Round Trip is selected
+
+      // Iterate through the fields of the current tab
       tab.fields.forEach((field) => {
+        // Check if Round Trip is selected
+        if (field.id === "1@2wayLT" && field.value.includes("Round Trip")) {
+          isRoundTrip = true;
+        }
+
+        // Calculate the total based on the field value
         if (
           field.type === "number" &&
           !isNaN(parseFloat(field.value)) &&
           field.id !== "MileageKMLT" &&
           field.id !== "LimitedAmountHR" &&
           field.id !== "AccBankNumberHR" &&
-          field.id !== "AccBankNumberML"
+          field.id !== "AccBankNumberML" &&
+          // Check if Company Car is not selected
+          (!this.isCompanyCar || (field.id !== "MileageKMLT" && field.id !== "MileageRMLT"))
         ) {
-          total += parseFloat(field.value);
+          // If Round Trip is selected, double up the calculation
+          total += isRoundTrip ? parseFloat(field.value) * 2 : parseFloat(field.value);
         }
       });
+
+      // Return the total
       return total.toFixed(2);
     },
 

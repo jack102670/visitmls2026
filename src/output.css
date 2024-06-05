@@ -2127,6 +2127,10 @@ video {
   text-transform: capitalize;
 }
 
+.normal-case {
+  text-transform: none;
+}
+
 .leading-4 {
   line-height: 1rem;
 }
