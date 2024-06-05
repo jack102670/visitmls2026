@@ -688,13 +688,10 @@
             <h2
               class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white"
             >
-              C[3] Isolation <span class="text-red-500">*</span>
+              C[3] Isolation <span class="text-red-500">required</span>
             </h2>
-            <span
-              v-if="!isIsolationChecked"
-              class="text-red-500 text-sm normal-case"
-              >At least one checkbox must be checked.</span
-            >
+       
+            
             <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
               <div>
                 <label class="text-gray-700 dark:text-gray-200">
@@ -702,7 +699,7 @@
                     type="checkbox"
                     value="I-Electrical"
                     v-model="isolation"
-                    @change="validateIsolation"
+                 
                   />
                   Electrical
                 </label>
@@ -715,7 +712,7 @@
                     type="checkbox"
                     value="Fire Alarm"
                     v-model="isolation"
-                    @change="validateIsolation"
+                  
                   />
                   Fire Alarm
                 </label>
@@ -728,7 +725,7 @@
                     type="checkbox"
                     value="Traffic"
                     v-model="isolation"
-                    @change="validateIsolation"
+             
                   />
                   Traffic
                 </label>
@@ -741,7 +738,7 @@
                     type="checkbox"
                     value="Chemical/Gas"
                     v-model="isolation"
-                    @change="validateIsolation"
+               
                   />
                   Chemical/Gas
                 </label>
@@ -754,7 +751,7 @@
                     type="checkbox"
                     value="Other Isolation"
                     v-model="isolation"
-                    @change="validateIsolation"
+                
                   />
                   Others
                 </label>
