@@ -7,7 +7,7 @@ export const formStore = {
     designation: '',
     reportName: '',
     internalOrder: '',
-    reportType: '',
+    reportType: 'Finance',
     reportDate: '',
     reportStartDate: '',
     reportEndDate: '',

@@ -72,15 +72,10 @@
               for="designation"
               >Designation<span class="text-red-500">*</span></label
             >
-            <select
+            <input
               v-model="formData.designation"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            >
-              <option value="" disabled selected></option>
-              <option value="HR">HR</option>
-              <option value="HOD">HOD</option>
-              <option value="IT DEVELOPER">IT DEVELOPER</option>
-            </select>
+            />
           </div>
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
@@ -104,7 +99,7 @@
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             />
           </div>
-          <div>
+          <!-- <div>
             <label class="font-semibold text-gray-700 dark:text-gray-200"
               >Internal Order</label
             >
@@ -112,20 +107,58 @@
               v-model="formData.internalOrder"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             />
-          </div>
-          <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200"
-              >Report Type</label
-            >
-            <select
-              v-model="formData.reportType"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            >
-              <option value="" disabled selected></option>
-              <option value="Finance">Finance</option>
-              <option value="HR">HR</option>
-            </select>
-          </div>
+          </div> -->
+         <div>
+  <label class="font-semibold text-gray-700 dark:text-gray-200">
+    Claim Type
+  </label>
+  <div
+    class="grid w-full sm:w-[15rem] md:w-[20rem] lg:w-[30rem] xl:w-[40rem] grid-cols-1 sm:grid-cols-2 gap-2 rounded-xl bg-gray-100 p-2 sm:p-1"
+  >
+    <div>
+      <input
+        type="radio"
+        name="option"
+        id="HR"
+        value="HR"
+        class="peer hidden"
+        v-model="formData.reportType"
+        checked
+      />
+      <label
+        for="HR"
+        class="block cursor-pointer select-none rounded-xl p-2 sm:p-1 text-center text-sm sm:text-base"
+        :class="{
+          'bg-blue-900 font-bold text-white':
+            formData.reportType === 'HR',
+        }"
+      >
+        HR
+      </label>
+    </div>
+
+    <div>
+      <input
+        type="radio"
+        name="option"
+        id="Finance"
+        value="Finance"
+        class="peer hidden"
+        v-model="formData.reportType"
+      />
+      <label
+        for="Finance"
+        class="block cursor-pointer select-none rounded-xl p-2 sm:p-1 text-center text-sm sm:text-base"
+        :class="{
+          'bg-blue-900 font-bold text-white':
+            formData.reportType === 'Finance',
+        }"
+      >
+        Finance
+      </label>
+    </div>
+  </div>
+</div>
         </div>
         <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-3">
           <!-- <div>
@@ -141,7 +174,7 @@
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             />
           </div> -->
-          <div>
+          <!-- <div>
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="ReportStartDate"
@@ -166,9 +199,9 @@
               type="date"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             />
-          </div>
+          </div> -->
         </div>
-        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
+        <!-- <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
           <div>
             <label class="font-semibold text-gray-700 dark:text-gray-200"
               >Memo</label
@@ -178,7 +211,7 @@
               class="block w-full px-4 py-8 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             />
           </div>
-        </div>
+        </div> -->
       </form>
 
       <!-- button -->
@@ -207,7 +240,8 @@
 </template>
 <script>
 import { formStore } from '../../views/store.js'; // Import your form store
-import axios from 'axios';
+import { store } from '../../views/store.js';
+// import axios from 'axios';
 export default {
   emits: ['close'],
   data() {
@@ -230,7 +264,13 @@ export default {
         uniqueCode: formStore.formData.uniqueCode,
       },
       branch: '', // Add the missing branch property
+      userDetails: {},
     };
+  },
+  mounted() {
+    // Get the branch from the store
+    this.userDetails = store.getSession().userDetails;
+    this.formData.claimantName = this.userDetails.userName;
   },
   methods: {generateUniqueCode() {
       // Check if this.userId is defined
@@ -266,32 +306,33 @@ export default {
 
       // Log the form data before navigation
       console.log('Form submitted', formStore.getFormData());
+      this.$router.push({ name: 'ClaimReport' });
 
       // Send API request using axios
-      const apiData = {
-        name: this.formData.claimantName,
-        company_name: this.formData.companyName,
-        department: this.formData.department,
-        designation_title: this.formData.designation,
-        claim_startdate: this.formData.reportStartDate,
-        claim_enddate: this.formData.reportEndDate,
-        reference_number: this.generateUniqueCode(),
-        report_name: this.formData.reportName,
-      };
+      // const apiData = {
+      //   name: this.formData.claimantName,
+      //   company_name: this.formData.companyName,
+      //   department: this.formData.department,
+      //   designation_title: this.formData.designation,
+      //   claim_startdate: this.formData.reportStartDate,
+      //   claim_enddate: this.formData.reportEndDate,
+      //   reference_number: this.generateUniqueCode(),
+      //   report_name: this.formData.reportName,
+      // };
 
-      // Send API request using axios
-      axios.post('http://172.28.28.91:97/api/User/InsertClaimDetails', apiData)
-        .then(response => {
-          // Handle success response
-          console.log('API response', response.data);
-          this.$router.push({ name: 'ClaimReport' });
-        })
-        .catch(error => {
-          // Handle error response
-          console.error('API error', error);
-        });
+      // // Send API request using axios
+      // axios.post('http://172.28.28.91:97/api/User/InsertClaimDetails', apiData)
+      //   .then(response => {
+      //     // Handle success response
+      //     console.log('API response', response.data);
+      //     this.$router.push({ name: 'ClaimReport' });
+      //   })
+      //   .catch(error => {
+      //     // Handle error response
+      //     console.error('API error', error);
+      //   });
 
-      this.active = 0;
+      // this.active = 0;
     }
 
       if (this.active < 0) {
