@@ -45,110 +45,118 @@
                     field.gridClass,
                   ]"
                 >
-                  <label
-                    :for="field.id"
-                    class="block text-gray-700 text-sm font-bold mb-2"
+                  <template
+                    v-if="
+                      !isCompanyTransport ||
+                      (field.id !== 'MileageKMLT' && field.id !== 'MileageRMLT')
+                    "
                   >
-                    {{ field.label }}
-                    <span v-if="field.required" style="color: red">*</span>
-                  </label>
-
-                  <template v-if="field.type === 'select'">
-                    <select
-                      v-model="field.value"
-                      :id="field.id"
-                      class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    <label
+                      :for="field.id"
+                      class="block text-gray-700 text-sm font-bold mb-2"
                     >
-                      <option
-                        v-for="(option, optionIndex) in field.options"
-                        :key="optionIndex"
-                        :value="option.value"
-                      >
-                        {{ option.label }}
-                      </option>
-                    </select>
-                  </template>
+                      {{ field.label }}
+                      <span v-if="field.required" style="color: red">*</span>
+                    </label>
 
-                  <template v-else-if="field.type === 'year'">
-                    <select
-                      v-model="field.value"
-                      :id="field.id"
-                      class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    >
-                      <option
-                        v-for="year in yearRange"
-                        :key="year"
-                        :value="year"
+                    <template v-if="field.type === 'select'">
+                      <select
+                        v-model="field.value"
+                        :id="field.id"
+                        class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                       >
-                        {{ year }}
-                      </option>
-                    </select>
-                  </template>
-
-                  <template v-else-if="field.type === 'radio-group'">
-                    <div class="grid grid-cols-2">
-                      <div
-                        class="p-4 pt-2 pb-2 flex items-center"
-                        v-for="option in field.options"
-                        :key="option.value"
-                      >
-                        <input
-                          type="radio"
-                          :id="option.value"
-                          :name="field.id"
+                        <option
+                          v-for="(option, optionIndex) in field.options"
+                          :key="optionIndex"
                           :value="option.value"
-                          v-model="field.value"
-                          class="mr-2"
-                        />
-                        <label
-                          :for="option.value"
-                          class="text-sm text-gray-700"
                         >
                           {{ option.label }}
-                        </label>
+                        </option>
+                      </select>
+                    </template>
+
+                    <template v-else-if="field.type === 'year'">
+                      <select
+                        v-model="field.value"
+                        :id="field.id"
+                        class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                      >
+                        <option
+                          v-for="year in yearRange"
+                          :key="year"
+                          :value="year"
+                        >
+                          {{ year }}
+                        </option>
+                      </select>
+                    </template>
+
+                    <template v-else-if="field.type === 'radio-group'">
+                      <div class="grid grid-cols-2">
+                        <div
+                          class="p-4 pt-2 pb-2 flex items-center"
+                          v-for="option in field.options"
+                          :key="option.value"
+                        >
+                          <input
+                            type="radio"
+                            :id="option.value"
+                            :name="field.id"
+                            :value="option.value"
+                            v-model="field.value"
+                            class="mr-2"
+                          />
+                          <label
+                            :for="option.value"
+                            class="text-sm text-gray-700"
+                          >
+                            {{ option.label }}
+                          </label>
+                        </div>
                       </div>
-                    </div>
-                  </template>
+                    </template>
 
-                  <template
-                    v-else-if="field.type === 'text' && field.isOtherOption"
-                  >
-                    <input
-                      v-model="field.value"
-                      :id="field.id"
-                      :type="field.type"
-                      :placeholder="field.placeholder"
-                      class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    />
-                  </template>
-
-                  <template v-else-if="field.type === 'file'">
-                    <div class="pt-3">
-                      <file-pond
-                        :name="field.id"
-                        ref="pond"
-                        label-idle="Drop files here..."
-                        @addfile="
-                          (error, file) => handleAddFile(error, file, field)
-                        "
-                        @removefile="
-                          (error, file) => handleRemoveFile(error, file, field)
-                        "
-                        :accepted-file-types="field.acceptedFileTypes"
-                        :max-file-size="field.maxFileSize"
-                        :allow-multiple="field.allowMultiple"
+                    <template
+                      v-else-if="field.type === 'text' && field.isOtherOption"
+                    >
+                      <input
+                        v-model="field.value"
+                        :id="field.id"
+                        :type="field.type"
+                        :placeholder="field.placeholder"
+                        class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                       />
-                    </div>
-                  </template>
+                    </template>
 
-                  <template v-else>
-                    <input
-                      v-model="field.value"
-                      :id="field.id"
-                      :type="field.type"
-                      :placeholder="field.placeholder"
-                      class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    />
+                    <template v-else-if="field.type === 'file'">
+                      <div class="pt-3">
+                        <file-pond
+                          :name="field.id"
+                          ref="pond"
+                          label-idle="Drop files here..."
+                          @addfile="
+                            (error, file) => handleAddFile(error, file, field)
+                          "
+                          @removefile="
+                            (error, file) =>
+                              handleRemoveFile(error, file, field)
+                          "
+                          :accepted-file-types="field.acceptedFileTypes"
+                          :max-file-size="field.maxFileSize"
+                          :allow-multiple="field.allowMultiple"
+                        />
+                      </div>
+                    </template>
+
+                    <template v-else>
+                      <input
+                        v-model="field.value"
+                        :id="field.id"
+                        :type="field.type"
+                        :placeholder="field.placeholder"
+                        class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                      />
+                    </template>
                   </template>
                 </div>
 
@@ -652,10 +660,11 @@ export default {
             },
             {
               id: "MileageKMLT",
-              label: "Mileage(KM)",
+              label: "Mileage/Kilometer(KM)",
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
+              hidden: false,
             },
             {
               id: "MileageRMLT",
@@ -663,6 +672,7 @@ export default {
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
+              hidden: false,
             },
             {
               id: "TollLT",
@@ -728,6 +738,7 @@ export default {
               type: "text",
               placeholder: "Accommodation",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -735,6 +746,7 @@ export default {
               label: "Exchange Rate",
               type: "text",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -742,6 +754,7 @@ export default {
               label: "RM",
               type: "number",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -776,13 +789,6 @@ export default {
             {
               id: "AirportLimoTeksiOT",
               label: "Airport Limo / Teksi(RM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "OtherExpensesOT",
-              label: "Others Expenses",
               type: "number",
               value: "",
               gridClass: "sm:col-span-2",
@@ -1256,6 +1262,35 @@ export default {
     };
   },
 
+  computed: {
+    isCompanyTransport() {
+      const tab = this.tabs.find((tab) => tab.title === "Local Travelling");
+      if (!tab) return false;
+      const transportField = tab.fields.find(
+        (field) => field.id === "TransportLT"
+      );
+      return transportField && transportField.value === "Company Transport";
+    },
+  },
+
+  watch: {
+    tabs: {
+      handler(newTabs) {
+        newTabs.forEach((tab) => {
+          if (tab.title === "Local Travelling") {
+            const transportField = tab.fields.find(
+              (field) => field.id === "TransportLT"
+            );
+            if (transportField) {
+              this.updateFieldVisibility(transportField.value);
+            }
+          }
+        });
+      },
+      deep: true,
+    },
+  },
+
   mounted() {
     // Populate the year range with the last 20 years
     const currentYear = new Date().getFullYear();
@@ -1298,6 +1333,28 @@ export default {
       }
     },
 
+    updateFieldVisibility(transportValue) {
+      const localTravellingTab = this.tabs.find(
+        (tab) => tab.title === "Local Travelling"
+      );
+      if (!localTravellingTab) return;
+      const mileageKMLTField = localTravellingTab.fields.find(
+        (field) => field.id === "MileageKMLT"
+      );
+      const mileageRMLTField = localTravellingTab.fields.find(
+        (field) => field.id === "MileageRMLT"
+      );
+      if (!mileageKMLTField || !mileageRMLTField) return;
+
+      if (transportValue === "Company Transport") {
+        mileageKMLTField.hidden = true;
+        mileageRMLTField.hidden = true;
+      } else {
+        mileageKMLTField.hidden = false;
+        mileageRMLTField.hidden = false;
+      }
+    },
+
     addAttendee() {
       const { name, staffId, companyName } = this.modalForm;
       if (this.selectedAttendeeType === "pkt" && name && staffId) {
@@ -1333,6 +1390,13 @@ export default {
       let total = 0;
       let isRoundTrip = false; // Flag to track if Round Trip is selected
 
+      // Check if the transport mode is Company Transport
+      const isCompanyTransport = tab.fields.some(
+        (field) =>
+          field.id === "TransportLT" &&
+          field.value.includes("Company Transport")
+      );
+
       // Iterate through the fields of the current tab
       tab.fields.forEach((field) => {
         // Check if Round Trip is selected
@@ -1347,7 +1411,8 @@ export default {
           field.id !== "MileageKMLT" &&
           field.id !== "LimitedAmountHR" &&
           field.id !== "AccBankNumberHR" &&
-          field.id !== "AccBankNumberML"
+          field.id !== "AccBankNumberML" &&
+          (!isCompanyTransport || field.id !== "MileageRMLT")
         ) {
           // If Round Trip is selected, double up the calculation
           total += isRoundTrip

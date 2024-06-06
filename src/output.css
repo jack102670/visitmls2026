@@ -1380,8 +1380,18 @@ video {
   overflow-x: hidden;
 }
 
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .whitespace-nowrap {
   white-space: nowrap;
+}
+
+.break-words {
+  overflow-wrap: break-word;
 }
 
 .rounded {
@@ -2125,10 +2135,6 @@ video {
 
 .capitalize {
   text-transform: capitalize;
-}
-
-.normal-case {
-  text-transform: none;
 }
 
 .leading-4 {

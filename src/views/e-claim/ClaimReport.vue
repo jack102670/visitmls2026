@@ -8,27 +8,30 @@
       >
         <!-- Header Section -->
         <div
-          class="relative overflow-hidden mt-2 grid cols-start-1 md:flex justify-between"
+          class="relative overflow-hidden mt-2 grid cols-start-1 md:flex justify-between items-center"
         >
           <div class="flex items-center flex-wrap">
-            <div class="flex items-center">
+            <div class="flex items-center flex-shrink-0">
               <h3
                 class="ml-4 text-3xl font-bold text-blue-900"
                 v-for="(claim, index) in claims"
                 :key="index"
+                style="max-width: 400px"
               >
                 {{ claim.reportName }}
               </h3>
             </div>
-            <div class="flex items-center ml-4 mt-2 md:mt-0">
+            <div class="flex items-center ml-4 mt-2 md:mt-0 flex-shrink-0">
               <span class="text-3xl font-bold text-blue-900">|</span>
               <span class="ml-4 text-2xl font-bold text-blue-900"
-                >RM {{ grandTotal }}</span
+                >Grand Total : RM {{ grandTotal }}</span
               >
             </div>
           </div>
           <!-- Buttons Section -->
-          <div class="md:mr-4 md:mt-0 mt-5 gap-2 flex flex-row-reverse">
+          <div
+            class="md:mr-4 md:mt-0 mt-5 gap-2 flex flex-row-reverse flex-shrink-0"
+          >
             <button
               @click="showContent"
               class="w-36 h-12 p-1 font-semibold rounded-lg items-center text-sm dark:bg-gray-900 dark:border-gray-700 bg-green-700 border text-white"
@@ -204,8 +207,8 @@
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                         >
-                          <span v-if="claim.DestinationPurposeLT">{{
-                            claim.DestinationPurposeLT
+                          <span v-if="claim.LocationEnd">{{
+                            claim.LocationEnd
                           }}</span>
                           <span v-if="claim.DescriptionOT">{{
                             claim.DescriptionOT
@@ -225,9 +228,12 @@
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                         >
-                          <span v-if="claim.totalRM ">RM {{ claim.totalRM }}</span>
-                          <span v-if="claim.AmountRME">RM {{ claim.AmountRME }}</span>
-                          
+                          <span v-if="claim.totalRM"
+                            >RM {{ claim.totalRM }}</span
+                          >
+                          <span v-if="claim.AmountRME"
+                            >RM {{ claim.AmountRME }}</span
+                          >
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2"
@@ -579,20 +585,6 @@
                   type="text"
                   id="airportLimo"
                   v-model="overseasTravellingDetails.AirportLimoTeksiOT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
-                />
-              </div>
-              <div class="flex justify-between items-center mb-4">
-                <label
-                  for="rmOtherExpenses"
-                  class="text-gray-700 font-bold mr-2"
-                  >Other Expenses(RM):</label
-                >
-                <input
-                  type="text"
-                  id="rmOtherExpenses"
-                  v-model="overseasTravellingDetails.OtherExpensesOT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
@@ -1806,3 +1798,6 @@ export default {
   },
 };
 </script>
+
+<style>
+</style>
