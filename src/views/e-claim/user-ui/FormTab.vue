@@ -28,7 +28,7 @@
       >
         <h2 class="text-2xl font-bold text-gray-700 capitalize dark:text-white">
           {{ tab.title }} Form
-        </h2>
+        </h2> 
 
         <div v-if="tab.title !== 'Entertainment'">
           <form @submit.prevent="submitForm(tab)">
@@ -156,7 +156,7 @@
                         :placeholder="field.placeholder"
                         class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                       />
-                    </template>
+                    </template> 
                   </template>
                 </div>
 
