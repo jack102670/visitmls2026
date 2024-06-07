@@ -58,7 +58,7 @@
                       {{ field.label }}
                       <span v-if="field.required" style="color: red">*</span>
                     </label>
-
+                    
                     <template v-if="field.type === 'select'">
                       <select
                         v-model="field.value"
@@ -626,6 +626,15 @@ export default {
                 { label: "Company Transport", value: "Company Transport" },
                 { label: "Others", value: "Others" },
               ],
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "TransportSpec",
+              label: "Transport Specification",
+              type: "text",
+              placeholder: "Specify Transport",
+              value: "",
+              required: true,
               gridClass: "sm:col-span-1",
             },
             {
@@ -1352,7 +1361,7 @@ export default {
       } else {
         mileageKMLTField.hidden = false;
         mileageRMLTField.hidden = false;
-      }
+      } 
     },
 
     addAttendee() {
