@@ -62,10 +62,12 @@
   </template>
   
   <script>
+  import { store } from '../views/store.js';
   export default {
     name: "BoxInfo",
     data() {
       return {
+        
         cards: [
           {
             title: "E-claim System",
@@ -91,6 +93,9 @@
         ],
       };
     },
+    mounted() {
+    store.setControlView(null);
+  },
   };
   </script>
   

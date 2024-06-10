@@ -275,6 +275,7 @@
 </template>
 
 <script>
+import { store } from '../../store.js';
 // import CreateNewClaimPopUp from '@/components/e-claim/CreateNewClaimPopUp.vue';
 import NewClaimPopUp from "@/components/e-claim/NewClaimPopUp.vue";
 
@@ -306,6 +307,7 @@ export default {
   },
   mounted() {
     // Sidebar close or open
+    store.setControlView('eclaim');
     let openOrNot = localStorage.getItem("openOrNot");
     const element = document.querySelector("main");
     if (element && openOrNot == "false") {

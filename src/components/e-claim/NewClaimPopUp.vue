@@ -3,7 +3,7 @@
     class="bg-gray-500 bg-opacity-40 w-screen h-screen absolute left-0 top-0 z-50 flex justify-center items-center"
   >
     <div
-      class="popup overflow-y-auto lg:w-3/5 md:w-3/4 w-5/6 bg-white h-[90%] rounded-xl relative px-10 pb-6"
+      class="popup overflow-y-auto lg:w-3/5 md:w-3/4 w-5/6 bg-white h-[80%] rounded-xl relative px-10 pb-6"
     >
       <!-- Heading Title -->
       <h1 class="text-3xl font-bold py-6 border-b-2 border-black">
@@ -35,7 +35,7 @@
             <input
               placeholder="e.g PKT LOGISTICS (M) SDN BHD"
               v-model="formData.companyName"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white uppercase border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             />
           </div>
         </div>
@@ -112,55 +112,17 @@
   <label class="font-semibold text-gray-700 dark:text-gray-200">
     Claim Type
   </label>
-  <div
-    class="grid w-full sm:w-[15rem] md:w-[20rem] lg:w-[30rem] xl:w-[40rem] grid-cols-1 sm:grid-cols-2 gap-2 rounded-xl bg-gray-100 p-2 sm:p-1"
-  >
-    <div>
-      <input
-        type="radio"
-        name="option"
-        id="HR"
-        value="HR"
-        class="peer hidden"
-        v-model="formData.reportType"
-        checked
-      />
-      <label
-        for="HR"
-        class="block cursor-pointer select-none rounded-xl p-2 sm:p-1 text-center text-sm sm:text-base"
-        :class="{
-          'bg-blue-900 font-bold text-white':
-            formData.reportType === 'HR',
-        }"
-      >
-        HR
-      </label>
-    </div>
 
-    <div>
-      <input
-        type="radio"
-        name="option"
-        id="Finance"
-        value="Finance"
-        class="peer hidden"
-        v-model="formData.reportType"
-      />
-      <label
-        for="Finance"
-        class="block cursor-pointer select-none rounded-xl p-2 sm:p-1 text-center text-sm sm:text-base"
-        :class="{
-          'bg-blue-900 font-bold text-white':
-            formData.reportType === 'Finance',
-        }"
-      >
-        Finance
-      </label>
-    </div>
-  </div>
+<div         class="space-x-3 block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+>
+  <input type="radio" id="HR" name="claimType" value="HR" v-model="formData.reportType">
+  <label for="HR">HR</label>
+
+  <input type="radio" id="Finance" name="claimType" value="Finance" v-model="formData.reportType">
+  <label for="Finance">Finance</label>
 </div>
         </div>
-        <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-3">
+        <!-- <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-3"> -->
           <!-- <div>
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
