@@ -1517,6 +1517,7 @@ export default {
   },
   data() {
     return {
+      role: "",
       getRequest: [],
       isModalVisible: false,
       isModalVisible2: false,

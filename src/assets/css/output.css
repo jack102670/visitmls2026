@@ -996,6 +996,22 @@ video {
   height: 100vh;
 }
 
+.h-\[80\%\] {
+  height: 80%;
+}
+
+.h-\[\%\] {
+  height: %;
+}
+
+.h-\[88\%\] {
+  height: 88%;
+}
+
+.h-\[70\%\] {
+  height: 70%;
+}
+
 .max-h-32 {
   max-height: 8rem;
 }
@@ -1150,10 +1166,6 @@ video {
 
 .w-screen {
   width: 100vw;
-}
-
-.w-\[15rem\] {
-  width: 15rem;
 }
 
 .min-w-full {
@@ -1341,6 +1353,18 @@ video {
   --tw-space-y-reverse: 0;
   margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+}
+
+.space-x-1 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.25rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-x-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(1rem * var(--tw-space-x-reverse));
+  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .divide-y > :not([hidden]) ~ :not([hidden]) {
@@ -2944,10 +2968,6 @@ video {
     height: 5rem;
   }
 
-  .sm\:w-\[20rem\] {
-    width: 20rem;
-  }
-
   .sm\:w-\[15rem\] {
     width: 15rem;
   }
@@ -2986,12 +3006,12 @@ video {
     border-radius: 1.5rem;
   }
 
-  .sm\:p-20 {
-    padding: 5rem;
-  }
-
   .sm\:p-1 {
     padding: 0.25rem;
+  }
+
+  .sm\:p-20 {
+    padding: 5rem;
   }
 
   .sm\:px-12 {
@@ -3004,6 +3024,11 @@ video {
     padding-bottom: 3rem;
   }
 
+  .sm\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
   .sm\:text-lg {
     font-size: 1.125rem;
     line-height: 1.75rem;
@@ -3012,11 +3037,6 @@ video {
   .sm\:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
-  }
-
-  .sm\:text-base {
-    font-size: 1rem;
-    line-height: 1.5rem;
   }
 
   .sm\:leading-7 {
@@ -3051,10 +3071,6 @@ video {
 
   .md\:w-4\/5 {
     width: 80%;
-  }
-
-  .md\:w-\[30rem\] {
-    width: 30rem;
   }
 
   .md\:w-\[20rem\] {
@@ -3157,16 +3173,12 @@ video {
     width: 24rem;
   }
 
-  .lg\:w-\[90\%\] {
-    width: 90%;
-  }
-
-  .lg\:w-\[40rem\] {
-    width: 40rem;
-  }
-
   .lg\:w-\[30rem\] {
     width: 30rem;
+  }
+
+  .lg\:w-\[90\%\] {
+    width: 90%;
   }
 
   .lg\:grid-cols-2 {

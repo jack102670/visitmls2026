@@ -196,7 +196,7 @@ export default {
           if (role === "admin") {
             this.$router.push("/Managerequest");
           } else if (role === "user") {
-            this.$router.push("/Dashboard");
+            this.$router.push("/homepage");
           } else if (role === "safety") {
             this.$router.push("/ManagerequestSafety");
           }
