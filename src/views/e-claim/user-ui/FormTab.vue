@@ -28,7 +28,7 @@
       >
         <h2 class="text-2xl font-bold text-gray-700 capitalize dark:text-white">
           {{ tab.title }} Form
-        </h2> 
+        </h2>
 
         <div v-if="tab.title !== 'Entertainment'">
           <form @submit.prevent="submitForm(tab)">
@@ -58,7 +58,7 @@
                       {{ field.label }}
                       <span v-if="field.required" style="color: red">*</span>
                     </label>
-                    
+
                     <template v-if="field.type === 'select'">
                       <select
                         v-model="field.value"
@@ -156,9 +156,188 @@
                         :placeholder="field.placeholder"
                         class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                       />
-                    </template> 
+                    </template>
                   </template>
                 </div>
+
+                <!-- Add Other Expenses -->
+                <section>
+                  <!-- Add Other Expenses Button-->
+                  <div
+                    v-if="
+                      tab.title === 'Overseas Travelling with Accommodation'
+                    "
+                    class="mt-4"
+                  >
+                    <span class="block text-gray-700 text-sm font-bold mb-2"
+                      >Other Expenses (If any)
+                    </span>
+                    <button
+                      type="button"
+                      class="px-4 py-2 bg-blue-500 text-white rounded"
+                      @click="showOtherExpensesModal = true"
+                    >
+                      Add Expenses
+                    </button>
+                  </div>
+
+                  <!-- Modal Form for Other Expenses -->
+                  <div
+                    v-if="showOtherExpensesModal"
+                    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+                  >
+                    <div
+                      class="relative p-8 bg-white w-full max-w-md m-auto flex-col flex rounded-lg"
+                    >
+                      <h3 class="text-lg font-medium mb-4">
+                        Add Other Expense
+                      </h3>
+                      <form @submit.prevent="addOtherExpense">
+                        <div class="mb-4">
+                          <label
+                            class="block text-sm font-medium text-gray-700"
+                            for="expenseName"
+                            >Expense Name</label
+                          >
+                          <input
+                            v-model="newExpense.name"
+                            id="expenseName"
+                            type="text"
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                            required
+                          />
+                        </div>
+                        <div class="mb-4">
+                          <label
+                            class="block text-sm font-medium text-gray-700"
+                            for="expenseAmount"
+                            >Amount (RM)</label
+                          >
+                          <input
+                            v-model="newExpense.amount"
+                            id="expenseAmount"
+                            type="number"
+                            placeholder="Amount (RM)"
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                            required
+                          />
+                        </div>
+                        <div class="flex justify-end">
+                          <button
+                            type="submit"
+                            class="px-4 py-2 bg-blue-500 text-white rounded mr-2"
+                          >
+                            Submit
+                          </button>
+                          <button
+                            @click="showOtherExpensesModal = false"
+                            class="px-4 py-2 bg-gray-300 text-black rounded"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+                  <!-- Other Expenses Table -->
+                  <div
+                    v-if="
+                      tab.title === 'Overseas Travelling with Accommodation' &&
+                      otherExpenses.length > 0
+                    "
+                    class="mt-4"
+                  >
+                    <table
+                      class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                    >
+                      <thead class="bg-gray-50 dark:bg-gray-800">
+                        <tr>
+                          <th
+                            scope="col"
+                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                          >
+                            <div class="flex items-center gap-x-3">
+                              <span>Expense</span>
+                            </div>
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                          >
+                            <div class="flex items-center gap-x-3">
+                              <span>Amount(RM)</span>
+                            </div>
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                          >
+                            <div class="flex items-center gap-x-3">
+                              <span>Action</span>
+                            </div>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody
+                        class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
+                      >
+                        <tr
+                          v-for="(expense, index) in otherExpenses"
+                          :key="index"
+                        >
+                          <td
+                            class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                          >
+                            {{ expense.name }}
+                          </td>
+                          <td
+                            class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                          >
+                            RM {{ expense.amount }}
+                          </td>
+                          <td
+                            class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                          >
+                            <button
+                              class="text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
+                              @click="removeExpense(index)"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-5 h-5"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                />
+                              </svg>
+                            </button>
+                          </td>
+                        </tr>
+                        <tr class="bg-gray-50 dark:bg-gray-800">
+                          <td
+                            class="px-4 py-2 border text-sm font-normal text-right text-gray-500 dark:text-gray-400"
+                            colspan="2"
+                          >
+                            Total Amount
+                          </td>
+                          <td
+                            class="px-4 py-2 border text-sm font-medium text-gray-700 whitespace-nowrap"
+                          >
+                            RM {{ calculateOverseasTotal() }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
+                <!-- End of Add Other Expenses Section -->
 
                 <div class="pt-4">
                   <hr class="" />
@@ -589,6 +768,12 @@ export default {
       date: "",
       yearRange: [],
       uploadedFiles: [],
+      otherExpenses: [],
+      showOtherExpensesModal: false,
+      newExpense: {
+        name: "",
+        amount: 0,
+      },
       showModal: false,
       selectedAttendeeType: "pkt",
       selectedCompanyName: "",
@@ -1361,7 +1546,26 @@ export default {
       } else {
         mileageKMLTField.hidden = false;
         mileageRMLTField.hidden = false;
-      } 
+      }
+    },
+
+    addOtherExpense() {
+      this.otherExpenses.push({ ...this.newExpense });
+      this.newExpense.name = "";
+      this.newExpense.amount = 0;
+      this.showOtherExpensesModal = false;
+    },
+
+    removeExpense(index) {
+      this.otherExpenses.splice(index, 1);
+    },
+
+    calculateOverseasTotal() {
+      let total = 0;
+      for (const expense of this.otherExpenses) {
+        total += parseFloat(expense.amount) || 0;
+      }
+      return total;
     },
 
     addAttendee() {
@@ -1430,6 +1634,11 @@ export default {
         }
       });
 
+       // If the tab title is "Overseas Travelling with Accommodation", add the total of other expenses
+      if (tab.title === "Overseas Travelling with Accommodation") {
+        total += this.calculateOverseasTotal();
+      }
+
       // Return the total
       return total.toFixed(2);
     },
@@ -1468,9 +1677,6 @@ export default {
         });
         tab.attendees.push(newAttendee);
       }
-      //  else {
-      //   console.log(`Form submitted for tab: ${tab.title}`, tab.fields);
-      // }
     },
     submitForm2() {
       // Create an empty object to hold the formatted form data
