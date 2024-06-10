@@ -816,10 +816,19 @@ export default {
             {
               id: "TransportSpec",
               label: "Transport Specification",
-              type: "text",
-              placeholder: "Specify Transport",
+              type: "select",
               value: "",
               required: true,
+              options: [
+                { label: "Motorcycle", value: "Motorcycle" },
+                { label: "Car", value: "Car" },
+                { label: "Van", value: "Van" },
+                { label: "Truck", value: "Truck" },
+                { label: "Bus", value: "Bus" },
+                { label: "Train", value: "Train" },
+                { label: "Ship", value: "Ship" },
+                { label: "Airplane", value: "Airplane" },
+              ],
               gridClass: "sm:col-span-1",
             },
             {
@@ -841,7 +850,7 @@ export default {
               gridClass: "sm:col-span-1",
             },
             {
-              id: "1@2wayLT",
+              id: "tripwayLT",
               label: "Trip",
               type: "radio-group",
               value: [],
@@ -1613,7 +1622,7 @@ export default {
       // Iterate through the fields of the current tab
       tab.fields.forEach((field) => {
         // Check if Round Trip is selected
-        if (field.id === "1@2wayLT" && field.value.includes("Round Trip")) {
+        if (field.id === "tripwayLT" && field.value.includes("Round Trip")) {
           isRoundTrip = true;
         }
 

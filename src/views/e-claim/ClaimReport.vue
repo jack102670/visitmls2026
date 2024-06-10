@@ -314,17 +314,64 @@
               </div>
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeName" class="text-gray-700 font-bold mr-2"
-                  >Destination / Purpose:</label
+                  >Travelling Mode By:</label
                 >
                 <input
                   type="text"
-                  id="nodeName"
-                  v-model="localTravellingDetails.DestinationPurposeLT"
+                  id="transport"
+                  v-model="localTravellingDetails.TransportLT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
               </div>
-
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Transport Specification:</label
+                >
+                <input
+                  type="text"
+                  id="transportSpecify"
+                  v-model="localTravellingDetails.TransportSpec"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Location Start:</label
+                >
+                <input
+                  type="text"
+                  id="locationstart"
+                  v-model="localTravellingDetails.LocationStart"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Location End:</label
+                >
+                <input
+                  type="text"
+                  id="locationend"
+                  v-model="localTravellingDetails.LocationEnd"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Trip:</label
+                >
+                <input
+                  type="text"
+                  id="triplt"
+                  v-model="localTravellingDetails.tripwayLT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Mileage(KM):</label
@@ -588,6 +635,67 @@
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
+              </div>
+
+              <!-- Other Expenses table -->
+              <div class="mb-4">
+                <h2 class="text-xl font-bold">Other Expenses</h2>
+                <table
+                  class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                >
+                  <thead class="bg-gray-50 dark:bg-gray-800">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>No</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Expense</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Amount(RM)</span>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
+                  >
+                    <tr
+                      v-for="(expense, index) in overseasTravellingDetails.otherExpenses"
+                      :key="index"
+                    >
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ index + 1 }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ expense.name }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ expense.amount }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
 
               <!-- Add/Edit node button -->
@@ -1363,11 +1471,7 @@ export default {
           break;
         case "OverseasTravellingwithAccommodation":
           this.overseasTravellingDetails = claim;
-
-          console.log(
-            "Overseas Travelling Details:",
-            this.overseasTravellingDetails
-          );
+          console.log("Overseas Travelling Details:", this.overseasTravellingDetails);
           break;
         case "Entertainment":
           this.entertainmentDetails = claim;
