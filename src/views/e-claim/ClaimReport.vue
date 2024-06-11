@@ -695,6 +695,15 @@
                 </table>
               </div>
 
+              <hr />
+              <div class="flex justify-center items-center mb-4">
+                <label
+                  for="nodeParentId"
+                  class="text-gray-700 font-bold mr-2 text-2xl"
+                  >Total: RM {{ totalOverseasTravellingAmount }}</label
+                >
+              </div>
+
               <!-- Add/Edit node button -->
             </div>
             <div class="flex justify-end">
