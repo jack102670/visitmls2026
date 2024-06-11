@@ -40,22 +40,57 @@
           </div>
         </div>
         <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-3">
-          <div>
+          <div class="relative">
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="department"
-              >Department<span class="text-red-500">*</span></label
             >
-            <select
-              v-model="formData.department"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              Department<span class="text-red-500">*</span>
+            </label>
+            <div class="flex justify-between">
+              <input
+                type="text"
+                placeholder="Department.."
+                v-model="formData.department"
+                @click="toggleDropdown"
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              />
+              <div
+                class="bg-gray-200 py-4 px-2 mt-2 rounded"
+                @click="toggleDropdown"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 21 21"
+                  stroke="currentColor"
+                  class="h-2 w-4 text-gray-600"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            <div
+              v-show="dropdownVisible"
+              class="dropdown-content absolute left-0 bg-gray-100 w-full max-h-56 overflow-y-auto border border-gray-300 z-10 mt-2 rounded shadow-lg"
             >
-              <option value="" disabled selected></option>
-              <option value="ICT">ICT</option>
-              <option value="Finance">Finance</option>
-            </select>
+              <a
+                v-for="department in filteredDepartments"
+                :key="department.department"
+                @click="selectDepartment(department.department)"
+                class="block text-black py-2 px-4 hover:bg-gray-200"
+              >
+                {{ department.department }}
+              </a>
+            </div>
           </div>
-          <div>
+
+          <!-- <div>
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="designation"
@@ -65,7 +100,7 @@
               v-model="formData.costCenter"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             />
-          </div>
+          </div> -->
           <div>
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
@@ -214,7 +249,7 @@
   </div>
 </template>
 <script>
-import moment from 'moment';
+import moment from "moment";
 import { formStore } from "../../views/store.js"; // Import your form store
 import { store } from "../../views/store.js";
 // import axios from 'axios';
@@ -222,6 +257,9 @@ export default {
   emits: ["close"],
   data() {
     return {
+      dropdownVisible: false,
+      search: "",
+      departments: [],
       active: 0,
 
       formData: {
@@ -243,30 +281,63 @@ export default {
       userDetails: {},
     };
   },
+  computed: {
+    filteredDepartments() {
+      return this.departments.filter((department) => {
+        return department.department
+          .toLowerCase()
+          .includes(this.formData.department.toLowerCase());
+      });
+    },
+  },
   mounted() {
+    this.fetchDepartments();
     // Get the branch from the store
     this.userDetails = store.getSession().userDetails;
     this.formData.claimantName = this.userDetails.userName;
   },
+
   methods: {
+    toggleDropdown() {
+      this.dropdownVisible = !this.dropdownVisible;
+    },
+    selectDepartment(department) {
+      this.formData.department = department;
+      this.dropdownVisible = false;
+    },
+    async fetchDepartments() {
+      try {
+        const response = await fetch(
+          "http://172.28.28.91:97/api/User/GetDepartment"
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        this.departments = data.result;
+        console.log(this.departments);
+      } catch (error) {
+        console.error(`Error fetching departments: ${error}`);
+      }
+    },
     generateSerialNumber() {
-      let names = this.formData.reportName.split(' ');
+      let names = this.formData.reportName.split(" ");
       let shortform = [];
 
       for (let i = 0; i < names.length; i++) {
         shortform[i] = names[i][0];
       }
-      let datetime = moment(new Date()).format('YYYY/MM/mmss');
+      let datetime = moment(new Date()).format("YYYY/MM/mmss");
       let sn =
-        shortform.join('').toString() +
-        '/' +
+        shortform.join("").toString() +
+        "/" +
         this.formData.reportType +
-        '/' +
+        "/" +
         datetime;
       console.log(sn);
       this.formData.uniqueCode = sn;
       return sn;
-},
+    },
     submitForm(page) {
       this.active += page;
 
@@ -317,6 +388,9 @@ export default {
 };
 </script>
 <style scoped>
+.dropdown-content {
+  max-height: 10rem; /* max-h-56 in Tailwind CSS */
+}
 .formStepCircle:not(:first-child)::before {
   content: "";
   background-color: rgb(209 213 219);
