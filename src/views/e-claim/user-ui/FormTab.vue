@@ -1521,10 +1521,7 @@ export default {
         );
         return;
       }
-
       const fileObject = file.file;
-
-      // Find and remove the file object from the field's value array
       const index = field.value.findIndex((f) => f.name === fileObject.name);
       if (index !== -1) {
         field.value = [
@@ -1610,7 +1607,7 @@ export default {
 
     calculateTotal(tab) {
       let total = 0;
-      let isRoundTrip = false; // Flag to track if Round Trip is selected
+      let isRoundTrip = false;
 
       // Check if the transport mode is Company Transport
       const isCompanyTransport = tab.fields.some(
@@ -1658,24 +1655,13 @@ export default {
     },
 
     submitForm(tab) {
-      // Create an empty object to hold the formatted form data
       const formattedData = {};
-
-      // Iterate through the fields of the current tab
       tab.fields.forEach((field) => {
-        // Use the field label as the key and the field value as the value
         formattedData[field.id] = field.value;
       });
-
-      // Add the tab title to the formatted data
       formattedData["tabTitle"] = tab.title;
-
       formattedData["totalRM"] = this.calculateTotal(tab);
-
-      // Emit the formatted form data
       this.$emit("formSubmitted", formattedData);
-
-      // Log the formatted form data to the console
       console.log("Formatted Form Data:", formattedData);
 
       if (tab.title === "Attendees") {
@@ -1688,28 +1674,17 @@ export default {
       }
     },
     submitForm2() {
-      // Create an empty object to hold the formatted form data
       const formattedData = {};
-
-      // Iterate over all tabs
       this.entertainmentTabs.forEach((tab) => {
-        // Iterate through the fields of the current tab
         tab.fields.forEach((field) => {
-          // Use the field label as the key and the field value as the value
           formattedData[field.id] = field.value;
-        });
+      });
 
         tab.attendees = [...this.attendees];
         formattedData["attendees"] = [...tab.attendees];
       });
-
-      // Add the tab title to the formatted data
       formattedData["tabTitle"] = "Entertainment";
-
-      // Emit the formatted form data
       this.$emit("formSubmitted", formattedData);
-
-      // Log the formatted form data to the console
       console.log("Formatted Form Data:", formattedData);
     },
   },
