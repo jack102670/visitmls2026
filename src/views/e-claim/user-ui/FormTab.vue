@@ -1653,22 +1653,25 @@ export default {
       this.activeSubTab += 1;
     },
 
-   submitForm(tab) {
-  const formattedData = {};
-  tab.fields.forEach((field) => {
-    formattedData[field.id] = field.value;
-  });
-  formattedData["tabTitle"] = tab.title;
-  formattedData["totalRM"] = this.calculateTotal(tab);
+    submitForm(tab) {
+      const formattedData = {};
+      tab.fields.forEach((field) => {
+        formattedData[field.id] = field.value;
+      });
+      formattedData["tabTitle"] = tab.title;
+      formattedData["totalRM"] = this.calculateTotal(tab);
 
-  if (tab.title === "Overseas Travelling with Accommodation" && this.otherExpenses.length > 0) {
-    // Add otherExpenses to formattedData
-    formattedData["otherExpenses"] = [...this.otherExpenses];
-  }
+      if (
+        tab.title === "Overseas Travelling with Accommodation" &&
+        this.otherExpenses.length > 0
+      ) {
+        // Add otherExpenses to formattedData
+        formattedData["otherExpenses"] = [...this.otherExpenses];
+      }
 
-  this.$emit("formSubmitted", formattedData);
-  console.log("Formatted Form Data:", formattedData);
-},
+      this.$emit("formSubmitted", formattedData);
+      console.log("Formatted Form Data:", formattedData);
+    },
     submitForm2() {
       const formattedData = {};
       this.entertainmentTabs.forEach((tab) => {

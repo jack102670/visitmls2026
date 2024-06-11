@@ -1422,9 +1422,10 @@ export default {
     totalOverseasTravellingAmount() {
       return (
         (parseInt(this.overseasTravellingDetails.RMforAccommodationOT) || 0) +
+        (parseInt(this.overseasTravellingDetails.RMforOthersOT) || 0) +
         (parseInt(this.overseasTravellingDetails.MealAllowanceOT) || 0) +
         (parseInt(this.overseasTravellingDetails.AirportLimoTeksiOT) || 0) +
-        (parseInt(this.overseasTravellingDetails.OtherExpensesOT) || 0)
+        (parseInt(this.overseasTravellingDetails.otherExpenses[0].amount) || 0)  
       );
     },
     grandTotal() {
@@ -1678,7 +1679,7 @@ export default {
                     meal_allowance: claim.MealAllowanceOT,
                     date_event: claim.dateOT, // Example date
                     transport_fee: claim.AirportLimoTeksiOT,
-                    other_expenses: claim.OtherExpensesOT,
+                    other_expenses: claim.otherExpenses,
                     total_fee: 99,
                     accom_foreign_total: 100,
                     accom_foreign_currency:

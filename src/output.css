@@ -915,6 +915,10 @@ video {
   height: 3.5rem;
 }
 
+.h-2 {
+  height: 0.5rem;
+}
+
 .h-20 {
   height: 5rem;
 }
@@ -1004,12 +1008,12 @@ video {
   max-height: 8rem;
 }
 
-.max-h-\[1000px\] {
-  max-height: 1000px;
+.max-h-56 {
+  max-height: 14rem;
 }
 
-.max-h-\[200px\] {
-  max-height: 200px;
+.max-h-\[1000px\] {
+  max-height: 1000px;
 }
 
 .max-h-\[300px\] {
