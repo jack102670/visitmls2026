@@ -90,7 +90,7 @@
               id="ReportName"
               type="text"
               value="required"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              class="block w-full px-4 py-2 mt-2 capitalize text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             />
             <input
               v-model="branch"
@@ -214,6 +214,7 @@
   </div>
 </template>
 <script>
+import moment from 'moment';
 import { formStore } from "../../views/store.js"; // Import your form store
 import { store } from "../../views/store.js";
 // import axios from 'axios';
@@ -248,35 +249,31 @@ export default {
     this.formData.claimantName = this.userDetails.userName;
   },
   methods: {
-    generateUniqueCode() {
-      // Check if this.userId is defined
-      if (this.formData.claimantName) {
-        // Use part of the claimantName for uniqueness, e.g., 4 characters
-        const claimantNameFragment = this.formData.claimantName.substring(0, 4);
+    generateSerialNumber() {
+      let names = this.formData.reportName.split(' ');
+      let shortform = [];
 
-        // Generate a random number and pad it to 2 characters
-        const randomNumber = Math.floor(Math.random() * 100)
-          .toString()
-          .padStart(2, "0");
-
-        const timestamp = Date.now().toString().slice(-2);
-
-        this.formData.uniqueCode = `Claim${claimantNameFragment}${randomNumber}${timestamp}`;
-        console.log("Unique Code:", this.formData.uniqueCode);
-        return this.formData.uniqueCode;
-      } else {
-        console.error("User ID is undefined.");
-
-        return "";
+      for (let i = 0; i < names.length; i++) {
+        shortform[i] = names[i][0];
       }
-    },
+      let datetime = moment(new Date()).format('YYYY/MM/mmss');
+      let sn =
+        shortform.join('').toString() +
+        '/' +
+        this.formData.reportType +
+        '/' +
+        datetime;
+      console.log(sn);
+      this.formData.uniqueCode = sn;
+      return sn;
+},
     submitForm(page) {
       this.active += page;
 
       if (this.active > 0) {
         // Update form data in the form store
         formStore.clearFormData();
-        this.generateUniqueCode();
+        this.generateSerialNumber();
         formStore.setFormData(this.formData);
 
         // Log the form data before navigation
