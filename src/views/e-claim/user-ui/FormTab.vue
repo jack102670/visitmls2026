@@ -1559,6 +1559,7 @@ export default {
       this.newExpense.name = "";
       this.newExpense.amount = 0;
       this.showOtherExpensesModal = false;
+      console.log("Other Expenses:", this.otherExpenses);
     },
 
     removeExpense(index) {
@@ -1639,7 +1640,7 @@ export default {
         }
       });
 
-       // If the tab title is "Overseas Travelling with Accommodation", add the total of other expenses
+      // If the tab title is "Overseas Travelling with Accommodation", add the total of other expenses
       if (tab.title === "Overseas Travelling with Accommodation") {
         total += this.calculateOverseasTotal();
       }
@@ -1653,31 +1654,28 @@ export default {
       this.activeSubTab += 1;
     },
 
-    submitForm(tab) {
-      const formattedData = {};
-      tab.fields.forEach((field) => {
-        formattedData[field.id] = field.value;
-      });
-      formattedData["tabTitle"] = tab.title;
-      formattedData["totalRM"] = this.calculateTotal(tab);
-      this.$emit("formSubmitted", formattedData);
-      console.log("Formatted Form Data:", formattedData);
+   submitForm(tab) {
+  const formattedData = {};
+  tab.fields.forEach((field) => {
+    formattedData[field.id] = field.value;
+  });
+  formattedData["tabTitle"] = tab.title;
+  formattedData["totalRM"] = this.calculateTotal(tab);
 
-      if (tab.title === "Attendees") {
-        const newAttendee = {};
-        tab.fields.forEach((field) => {
-          newAttendee[field.id] = field.value;
-          field.value = "";
-        });
-        tab.attendees.push(newAttendee);
-      }
-    },
+  if (tab.title === "Overseas Travelling with Accommodation" && this.otherExpenses.length > 0) {
+    // Add otherExpenses to formattedData
+    formattedData["otherExpenses"] = [...this.otherExpenses];
+  }
+
+  this.$emit("formSubmitted", formattedData);
+  console.log("Formatted Form Data:", formattedData);
+},
     submitForm2() {
       const formattedData = {};
       this.entertainmentTabs.forEach((tab) => {
         tab.fields.forEach((field) => {
           formattedData[field.id] = field.value;
-      });
+        });
 
         tab.attendees = [...this.attendees];
         formattedData["attendees"] = [...tab.attendees];
