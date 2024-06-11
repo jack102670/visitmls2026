@@ -108,21 +108,34 @@
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             />
           </div> -->
-         <div>
-  <label class="font-semibold text-gray-700 dark:text-gray-200">
-    Claim Type
-  </label>
+          <div>
+            <label class="font-semibold text-gray-700 dark:text-gray-200">
+              Claim Type
+            </label>
 
-<div         class="space-x-3 block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
->
-  <input type="radio" id="HR" name="claimType" value="HR" v-model="formData.reportType">
-  <label for="HR">HR</label>
+            <div
+              class="space-x-3 block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            >
+              <input
+                type="radio"
+                id="HR"
+                name="claimType"
+                value="HR"
+                v-model="formData.reportType"
+              />
+              <label for="HR">HR</label>
 
-  <input type="radio" id="Finance" name="claimType" value="Finance" v-model="formData.reportType">
-  <label for="Finance">Finance</label>
-</div>
-        </div>
-        <!-- <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-3"> -->
+              <input
+                type="radio"
+                id="Finance"
+                name="claimType"
+                value="Finance"
+                v-model="formData.reportType"
+              />
+              <label for="Finance">Finance</label>
+            </div>
+          </div>
+          <!-- <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-3"> -->
           <!-- <div>
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
@@ -201,11 +214,11 @@
   </div>
 </template>
 <script>
-import { formStore } from '../../views/store.js'; // Import your form store
-import { store } from '../../views/store.js';
+import { formStore } from "../../views/store.js"; // Import your form store
+import { store } from "../../views/store.js";
 // import axios from 'axios';
 export default {
-  emits: ['close'],
+  emits: ["close"],
   data() {
     return {
       active: 0,
@@ -225,7 +238,7 @@ export default {
         memo: formStore.formData.memo,
         uniqueCode: formStore.formData.uniqueCode,
       },
-      branch: '', // Add the missing branch property
+      branch: "", // Add the missing branch property
       userDetails: {},
     };
   },
@@ -234,7 +247,8 @@ export default {
     this.userDetails = store.getSession().userDetails;
     this.formData.claimantName = this.userDetails.userName;
   },
-  methods: {generateUniqueCode() {
+  methods: {
+    generateUniqueCode() {
       // Check if this.userId is defined
       if (this.formData.claimantName) {
         // Use part of the claimantName for uniqueness, e.g., 4 characters
@@ -245,9 +259,7 @@ export default {
           .toString()
           .padStart(2, "0");
 
-
         const timestamp = Date.now().toString().slice(-2);
-
 
         this.formData.uniqueCode = `Claim${claimantNameFragment}${randomNumber}${timestamp}`;
         console.log("Unique Code:", this.formData.uniqueCode);
@@ -262,45 +274,46 @@ export default {
       this.active += page;
 
       if (this.active > 0) {
-      // Update form data in the form store
-      formStore.clearFormData();
-      formStore.setFormData(this.formData);
+        // Update form data in the form store
+        formStore.clearFormData();
+        this.generateUniqueCode();
+        formStore.setFormData(this.formData);
 
-      // Log the form data before navigation
-      console.log('Form submitted', formStore.getFormData());
-      this.$router.push({ name: 'ClaimReport' });
+        // Log the form data before navigation
+        console.log("Form submitted", formStore.getFormData());
+        this.$router.push({ name: "ClaimReport" });
 
-      // Send API request using axios
-      // const apiData = {
-      //   name: this.formData.claimantName,
-      //   company_name: this.formData.companyName,
-      //   department: this.formData.department,
-      //   designation_title: this.formData.designation,
-      //   claim_startdate: this.formData.reportStartDate,
-      //   claim_enddate: this.formData.reportEndDate,
-      //   reference_number: this.generateUniqueCode(),
-      //   report_name: this.formData.reportName,
-      // };
+        // Send API request using axios
+        // const apiData = {
+        //   name: this.formData.claimantName,
+        //   company_name: this.formData.companyName,
+        //   department: this.formData.department,
+        //   designation_title: this.formData.designation,
+        //   claim_startdate: this.formData.reportStartDate,
+        //   claim_enddate: this.formData.reportEndDate,
+        //   reference_number: this.generateUniqueCode(),
+        //   report_name: this.formData.reportName,
+        // };
 
-      // // Send API request using axios
-      // axios.post('http://172.28.28.91:97/api/User/InsertClaimDetails', apiData)
-      //   .then(response => {
-      //     // Handle success response
-      //     console.log('API response', response.data);
-      //     this.$router.push({ name: 'ClaimReport' });
-      //   })
-      //   .catch(error => {
-      //     // Handle error response
-      //     console.error('API error', error);
-      //   });
+        // // Send API request using axios
+        // axios.post('http://172.28.28.91:97/api/User/InsertClaimDetails', apiData)
+        //   .then(response => {
+        //     // Handle success response
+        //     console.log('API response', response.data);
+        //     this.$router.push({ name: 'ClaimReport' });
+        //   })
+        //   .catch(error => {
+        //     // Handle error response
+        //     console.error('API error', error);
+        //   });
 
-      // this.active = 0;
-    }
+        // this.active = 0;
+      }
 
       if (this.active < 0) {
-      // close the create new claim pop up
-      this.$emit('close');
-      this.active = 0;
+        // close the create new claim pop up
+        this.$emit("close");
+        this.active = 0;
       }
     },
   },
