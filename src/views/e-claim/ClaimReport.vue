@@ -671,9 +671,9 @@
                     class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
                   >
                     <tr
-                      v-for="(expense, index) in overseasTravellingDetails.otherExpenses"
-                      :key="index"
-                    >
+                          v-for="(expense, index) in overseasTravellingDetails.otherExpenses"
+                          :key="index"
+                        >
                       <td
                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                       >
@@ -1389,7 +1389,7 @@ export default {
       isEditMode: false,
       selectedClaimDetails: {},
       localTravellingDetails: {}, // Object to store details for Local Travelling
-      overseasTravellingDetails: {},
+      overseasTravellingDetails: { otherExpenses: [] },
       cancel: true,
     };
   },

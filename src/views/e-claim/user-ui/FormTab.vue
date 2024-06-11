@@ -160,7 +160,7 @@
                   </template>
                 </div>
 
-                <!-- Add Other Expenses -->
+                <!-- Add Other Expenses Section-->
                 <section>
                   <!-- Add Other Expenses Button-->
                   <div
@@ -911,12 +911,11 @@ export default {
             },
           ],
         },
-
         {
           form: "HR",
           title: "Overseas Travelling with Accommodation",
           tabType: "Finance",
-
+          
           gridLayout: "grid-cols-3", //
           fields: [
             {
