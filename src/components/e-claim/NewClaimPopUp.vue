@@ -12,7 +12,7 @@
 
       <!-- Form -->
       <form @submit.prevent="showModal" class="text-sm py-2">
-        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 overflow-y-auto">
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
@@ -28,15 +28,54 @@
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             />
           </div>
-          <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200"
+          <div class="relative">
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="companyName"
               >Company's Name<span class="text-red-500">*</span></label
             >
-            <input
-              placeholder="e.g PKT LOGISTICS (M) SDN BHD"
-              v-model="formData.companyName"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white uppercase border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+
+            <div class="flex justify-between">
+              <input
+                type="text"
+                placeholder="Company name.."
+                v-model="formData.companyName"
+                @click="toggleDropdown2"
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              />
+              <div
+                class="bg-gray-200 py-4 px-2 mt-2 rounded"
+                @click="toggleDropdown2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 21 21"
+                  stroke="currentColor"
+                  class="h-2 w-4 text-gray-600"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            <div
+              v-show="dropdownVisible2"
+              class="dropdown-content absolute left-0 bg-gray-100 w-full max-h-56 overflow-y-auto border border-gray-300 z-10 mt-2 rounded shadow-lg"
+            >
+              <a
+                v-for="Company in filteredCompanyName"
+                :key="Company.company_name"
+                @click="selectCompanyName(Company.company_name)"
+                class="block text-black py-2 px-4 hover:bg-gray-200"
+              >
+                {{ Company.company_name }}
+              </a>
+            </div>
           </div>
         </div>
         <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-3">
@@ -258,8 +297,10 @@ export default {
   data() {
     return {
       dropdownVisible: false,
+      dropdownVisible2: false,
       search: "",
       departments: [],
+      Companies: [],
       active: 0,
 
       formData: {
@@ -289,8 +330,20 @@ export default {
           .includes(this.formData.department.toLowerCase());
       });
     },
+    filteredCompanyName() {
+      return this.Companies.filter((park) => {
+        const searchTerm = this.formData.companyName.toLowerCase();
+        return (
+          (park.company_code &&
+            park.company_code.toLowerCase().includes(searchTerm)) ||
+          (park.company_name &&
+            park.company_name.toLowerCase().includes(searchTerm))
+        );
+      });
+    },
   },
   mounted() {
+    this.fetchCompany();
     this.fetchDepartments();
     // Get the branch from the store
     this.userDetails = store.getSession().userDetails;
@@ -304,6 +357,28 @@ export default {
     selectDepartment(department) {
       this.formData.department = department;
       this.dropdownVisible = false;
+    },
+    toggleDropdown2() {
+      this.dropdownVisible2 = !this.dropdownVisible2;
+    },
+    selectCompanyName(Company) {
+      this.formData.companyName = Company;
+      this.dropdownVisible2 = false;
+    },
+    async fetchCompany() {
+      try {
+        const response = await fetch(
+          "http://172.28.28.91:97/api/User/GetCompany"
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        this.Companies = data.result;
+        console.log(this.Companies, "company");
+      } catch (error) {
+        console.error(`Error fetching departments: ${error}`);
+      }
     },
     async fetchDepartments() {
       try {
