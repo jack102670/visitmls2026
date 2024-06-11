@@ -285,7 +285,6 @@
           style="max-height: calc(100vh - 20px); overflow-y: auto"
         >
           <!-- Modal header -->
-          <!-- Your existing modal header content -->
           <div v-if="selectedClaimType === 'LocalTravelling'">
             <div class="flex justify-end">
               <button
@@ -373,25 +372,23 @@
                   class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Mileage(KM):</label
-                >
+
+              <div v-if="!isCompanyTransport" class="flex justify-between items-center mb-4">
+                <label for="mileagekm" class="text-gray-700 font-bold mr-2">Mileage(KM):</label>
                 <input
                   type="text"
-                  id="email"
+                  id="mileagekm"
                   v-model="localTravellingDetails.MileageKMLT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Total Mileage(RM):</label
-                >
+
+              <div v-if="!isCompanyTransport" class="flex justify-between items-center mb-4">
+                <label for="mileagerm" class="text-gray-700 font-bold mr-2">Total Mileage(RM):</label>
                 <input
                   type="text"
-                  id="email"
+                  id="mileagerm"
                   v-model="localTravellingDetails.MileageRMLT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
@@ -487,9 +484,8 @@
               </button>
             </div>
           </div>
-          <div
-            v-if="selectedClaimType === 'OverseasTravellingwithAccommodation'"
-          >
+
+          <div v-if="selectedClaimType === 'OverseasTravellingwithAccommodation'">
             <div class="flex justify-end">
               <button
                 v-show="!isEditMode"
@@ -676,9 +672,9 @@
                     class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
                   >
                     <tr
-                      v-for="(expense, index) in overseasTravellingDetails.otherExpenses"
-                      :key="index"
-                    >
+                          v-for="(expense, index) in overseasTravellingDetails.otherExpenses"
+                          :key="index"
+                        >
                       <td
                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                       >
@@ -697,6 +693,15 @@
                     </tr>
                   </tbody>
                 </table>
+              </div>
+
+              <hr />
+              <div class="flex justify-center items-center mb-4">
+                <label
+                  for="nodeParentId"
+                  class="text-gray-700 font-bold mr-2 text-2xl"
+                  >Total: RM {{ totalOverseasTravellingAmount }}</label
+                >
               </div>
 
               <!-- Add/Edit node button -->
@@ -1394,17 +1399,25 @@ export default {
       isEditMode: false,
       selectedClaimDetails: {},
       localTravellingDetails: {}, // Object to store details for Local Travelling
-      overseasTravellingDetails: {},
+      overseasTravellingDetails: { otherExpenses: [] },
       cancel: true,
     };
   },
   computed: {
     totallocalTravellingDetails() {
-      return (
-        (parseInt(this.localTravellingDetails.MileageRMLT) || 0) +
+      let total =
+        (this.localTravellingDetails.TransportLT === 'Company Transport' ? 0 : (parseInt(this.localTravellingDetails.MileageRMLT) || 0)) +
         (parseInt(this.localTravellingDetails.ParkingLT) || 0) +
-        (parseInt(this.localTravellingDetails.TollLT) || 0)
-      );
+        (parseInt(this.localTravellingDetails.TollLT) || 0);
+      
+      if (this.localTravellingDetails.tripwayLT === 'Round Trip') {
+        total *= 2;
+      }
+
+      return total;
+    },
+    isCompanyTransport() {
+      return this.localTravellingDetails.TransportLT === 'Company Transport';
     },
     totalOverseasTravellingAmount() {
       return (
@@ -1425,10 +1438,12 @@ export default {
         .toFixed(2);
     },
   },
+
   created() {
     this.fetchClaims();
     this.userDetails = store.getSession().userDetails;
   },
+
   mounted() {
     // Sidebar close or open
     let openOrNot = localStorage.getItem("openOrNot");
@@ -1439,6 +1454,7 @@ export default {
       element.classList.remove("become-big");
     }
   },
+
   methods: {
     createObjectURL(file) {
       return URL.createObjectURL(file);
