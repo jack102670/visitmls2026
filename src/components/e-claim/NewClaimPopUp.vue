@@ -3,7 +3,7 @@
     class="bg-gray-500 bg-opacity-40 w-screen h-screen absolute left-0 top-0 z-50 flex justify-center items-center"
   >
     <div
-      class="popup overflow-y-auto lg:w-3/5 md:w-3/4 w-5/6 bg-white h-[80%] rounded-xl relative px-10 pb-6"
+      class="popup overflow-y-auto lg:w-3/5 md:w-3/4 w-5/6 bg-white h-[70%] rounded-xl relative px-10 pb-6"
     >
       <!-- Heading Title -->
       <h1 class="text-3xl font-bold py-6 border-b-2 border-black">
@@ -44,7 +44,7 @@
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
               <div
-                class="bg-gray-200 py-4 px-2 mt-2 rounded"
+                class="bg-slate-200 py-4 px-2 mt-2 rounded"
                 @click="toggleDropdown2"
               >
                 <svg
@@ -95,7 +95,7 @@
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
               <div
-                class="bg-gray-200 py-4 px-2 mt-2 rounded"
+                class="bg-slate-200 py-4 px-2 mt-2 rounded"
                 @click="toggleDropdown"
               >
                 <svg
