@@ -93,16 +93,18 @@
                   {{ claim.department }}
                 </h3>
               </div>
-              <!-- Display Cost Center -->
+              <!-- Display Company Name -->
               <div class="lg:col-start-8 lg:col-end-9 col-start-1 col-end-2">
-                <h5 class="text-sm font-semibold text-gray-600">Cost Center</h5>
+                <h5 class="text-sm font-semibold text-gray-600">
+                  Company's Name
+                </h5>
               </div>
               <div class="lg:col-start-9 col-start-2">
                 <h5 class="text-sm font-semibold text-gray-600">:</h5>
               </div>
               <div class="lg:col-start-10 col-start-3">
                 <h5 class="text-sm font-semibold text-gray-600">
-                  {{ claim.costCenter }}
+                  {{ claim.companyName }}
                 </h5>
               </div>
               <!-- Display Date of Report -->
@@ -852,13 +854,14 @@
             </div>
 
             <hr />
-              <div class="flex justify-center items-center mb-4">
-                <label
-                  for="nodeParentId"
-                  class="text-gray-700 font-bold mr-2 text-2xl"
-                  >Total: RM {{ medicalLeaveReimbursementDetails.ClaimsAmountML }}</label
-                >
-              </div>
+            <div class="flex justify-center items-center mb-4">
+              <label
+                for="nodeParentId"
+                class="text-gray-700 font-bold mr-2 text-2xl"
+                >Total: RM
+                {{ medicalLeaveReimbursementDetails.ClaimsAmountML }}</label
+              >
+            </div>
 
             <div class="flex justify-end">
               <button
@@ -987,7 +990,7 @@
                 <label
                   for="nodeParentId"
                   class="text-gray-700 font-bold mr-2 text-2xl"
-                  >Total: RM {{ entertainmentDetails.AmountRME}}</label
+                  >Total: RM {{ entertainmentDetails.AmountRME }}</label
                 >
               </div>
 
@@ -1238,13 +1241,13 @@
             </div>
 
             <hr />
-              <div class="flex justify-center items-center mb-4">
-                <label
-                  for="nodeParentId"
-                  class="text-gray-700 font-bold mr-2 text-2xl"
-                  >Total: RM {{ staffRefreshmentDetails.AmountRMSR }}</label
-                >
-              </div>
+            <div class="flex justify-center items-center mb-4">
+              <label
+                for="nodeParentId"
+                class="text-gray-700 font-bold mr-2 text-2xl"
+                >Total: RM {{ staffRefreshmentDetails.AmountRMSR }}</label
+              >
+            </div>
 
             <div class="flex justify-end">
               <button
@@ -1381,7 +1384,8 @@
                 <label
                   for="nodeParentId"
                   class="text-gray-700 font-bold mr-2 text-2xl"
-                  >Total: RM {{ handphoneReimbursementDetails.ClaimsAmountHR }}</label
+                  >Total: RM
+                  {{ handphoneReimbursementDetails.ClaimsAmountHR }}</label
                 >
               </div>
 
@@ -1456,6 +1460,7 @@ export default {
       cancel: true,
     };
   },
+
   computed: {
     totallocalTravellingDetails() {
       let total =
@@ -1474,18 +1479,20 @@ export default {
     isCompanyTransport() {
       return this.localTravellingDetails.TransportLT === "Company Transport";
     },
-  totalOverseasTravellingAmount() {
-    let total = (
+    totalOverseasTravellingAmount() {
+      let total =
         (parseInt(this.overseasTravellingDetails.RMforAccommodationOT) || 0) +
         (parseInt(this.overseasTravellingDetails.RMforOthersOT) || 0) +
         (parseInt(this.overseasTravellingDetails.MealAllowanceOT) || 0) +
         (parseInt(this.overseasTravellingDetails.AirportLimoTeksiOT) || 0) +
-        this.overseasTravellingDetails.otherExpenses.reduce((total, expense) => total + (parseInt(expense.amount) || 0), 0)
-    );
+        this.overseasTravellingDetails.otherExpenses.reduce(
+          (total, expense) => total + (parseInt(expense.amount) || 0),
+          0
+        );
 
-    this.totalplusmethod(total);
-    return total;
-},
+      this.totalplusmethod(total);
+      return total;
+    },
     grandTotal() {
       return this.dataclaims
         .reduce((total, claim) => {
@@ -1533,12 +1540,12 @@ export default {
     closeClickModal() {
       this.isClickModal = false;
     },
-savenode() {
-  // Log the entire dataclaims array
- this.dataclaims[this.index].totalRM = this.totalplus; 
-  this.isClickModal = false;
-},
- 
+    savenode() {
+      // Log the entire dataclaims array
+      this.dataclaims[this.index].totalRM = this.totalplus;
+      this.isClickModal = false;
+    },
+
     showDetails(claim, index) {
       this.index = index;
       console.log("Current index", this.index);
