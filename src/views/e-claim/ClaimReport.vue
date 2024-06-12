@@ -93,16 +93,18 @@
                   {{ claim.department }}
                 </h3>
               </div>
-              <!-- Display Cost Center -->
+              <!-- Display Company Name -->
               <div class="lg:col-start-8 lg:col-end-9 col-start-1 col-end-2">
-                <h5 class="text-sm font-semibold text-gray-600">Cost Center</h5>
+                <h5 class="text-sm font-semibold text-gray-600">
+                  Company's Name
+                </h5>
               </div>
               <div class="lg:col-start-9 col-start-2">
                 <h5 class="text-sm font-semibold text-gray-600">:</h5>
               </div>
               <div class="lg:col-start-10 col-start-3">
                 <h5 class="text-sm font-semibold text-gray-600">
-                  {{ claim.costCenter }}
+                  {{ claim.companyName }}
                 </h5>
               </div>
               <!-- Display Date of Report -->
@@ -1458,6 +1460,7 @@ export default {
       cancel: true,
     };
   },
+
   computed: {
     totallocalTravellingDetails() {
       let total =
