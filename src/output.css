@@ -979,8 +979,8 @@ video {
   height: 65%;
 }
 
-.h-\[80\%\] {
-  height: 80%;
+.h-\[70\%\] {
+  height: 70%;
 }
 
 .h-\[90\%\] {
@@ -1002,10 +1002,6 @@ video {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-\[70\%\] {
-  height: 70%;
 }
 
 .max-h-32 {
