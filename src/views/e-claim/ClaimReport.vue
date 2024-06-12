@@ -42,7 +42,7 @@
               <div class="flex justify-center">
                 <span
                   class="mr-2 ml-2 text-slate-100 hover:text-blue-200"
-                  @click="sendToAPI"
+                  @click="senttheclaim"
                   >Submit Claim</span
                 >
               </div>
@@ -852,13 +852,14 @@
             </div>
 
             <hr />
-              <div class="flex justify-center items-center mb-4">
-                <label
-                  for="nodeParentId"
-                  class="text-gray-700 font-bold mr-2 text-2xl"
-                  >Total: RM {{ medicalLeaveReimbursementDetails.ClaimsAmountML }}</label
-                >
-              </div>
+            <div class="flex justify-center items-center mb-4">
+              <label
+                for="nodeParentId"
+                class="text-gray-700 font-bold mr-2 text-2xl"
+                >Total: RM
+                {{ medicalLeaveReimbursementDetails.ClaimsAmountML }}</label
+              >
+            </div>
 
             <div class="flex justify-end">
               <button
@@ -987,7 +988,7 @@
                 <label
                   for="nodeParentId"
                   class="text-gray-700 font-bold mr-2 text-2xl"
-                  >Total: RM {{ entertainmentDetails.AmountRME}}</label
+                  >Total: RM {{ entertainmentDetails.AmountRME }}</label
                 >
               </div>
 
@@ -1238,13 +1239,13 @@
             </div>
 
             <hr />
-              <div class="flex justify-center items-center mb-4">
-                <label
-                  for="nodeParentId"
-                  class="text-gray-700 font-bold mr-2 text-2xl"
-                  >Total: RM {{ staffRefreshmentDetails.AmountRMSR }}</label
-                >
-              </div>
+            <div class="flex justify-center items-center mb-4">
+              <label
+                for="nodeParentId"
+                class="text-gray-700 font-bold mr-2 text-2xl"
+                >Total: RM {{ staffRefreshmentDetails.AmountRMSR }}</label
+              >
+            </div>
 
             <div class="flex justify-end">
               <button
@@ -1381,7 +1382,8 @@
                 <label
                   for="nodeParentId"
                   class="text-gray-700 font-bold mr-2 text-2xl"
-                  >Total: RM {{ handphoneReimbursementDetails.ClaimsAmountHR }}</label
+                  >Total: RM
+                  {{ handphoneReimbursementDetails.ClaimsAmountHR }}</label
                 >
               </div>
 
@@ -1474,18 +1476,20 @@ export default {
     isCompanyTransport() {
       return this.localTravellingDetails.TransportLT === "Company Transport";
     },
-  totalOverseasTravellingAmount() {
-    let total = (
+    totalOverseasTravellingAmount() {
+      let total =
         (parseInt(this.overseasTravellingDetails.RMforAccommodationOT) || 0) +
         (parseInt(this.overseasTravellingDetails.RMforOthersOT) || 0) +
         (parseInt(this.overseasTravellingDetails.MealAllowanceOT) || 0) +
         (parseInt(this.overseasTravellingDetails.AirportLimoTeksiOT) || 0) +
-        this.overseasTravellingDetails.otherExpenses.reduce((total, expense) => total + (parseInt(expense.amount) || 0), 0)
-    );
+        this.overseasTravellingDetails.otherExpenses.reduce(
+          (total, expense) => total + (parseInt(expense.amount) || 0),
+          0
+        );
 
-    this.totalplusmethod(total);
-    return total;
-},
+      this.totalplusmethod(total);
+      return total;
+    },
     grandTotal() {
       return this.dataclaims
         .reduce((total, claim) => {
@@ -1533,12 +1537,12 @@ export default {
     closeClickModal() {
       this.isClickModal = false;
     },
-savenode() {
-  // Log the entire dataclaims array
- this.dataclaims[this.index].totalRM = this.totalplus; 
-  this.isClickModal = false;
-},
- 
+    savenode() {
+      // Log the entire dataclaims array
+      this.dataclaims[this.index].totalRM = this.totalplus;
+      this.isClickModal = false;
+    },
+
     showDetails(claim, index) {
       this.index = index;
       console.log("Current index", this.index);
@@ -1686,6 +1690,32 @@ savenode() {
         console.error("User ID is undefined.");
         // You may want to handle this case differently based on your application logic.
         return "";
+      }
+    },
+    async senttheclaim() {
+      const apiData = {
+        name: this.claims[0].claimantName,
+        company_name: this.claims[0].companyName,
+        department: this.claims[0].department,
+        designation_title: this.claims[0].designation,
+        grand_total: this.grandTotal,
+        reference_number: this.claims[0].uniqueCode,
+        report_name: this.claims[0].reportName,
+        requester_id: this.userDetails.userId,
+      };
+
+      try {
+        // Send API request using axios
+        const response = await axios.post(
+          "http://172.28.28.91:97/api/User/InsertClaimDetails",
+          apiData
+        );
+        // Handle success response
+        console.log("API response", response.data);
+        this.sendToAPI();
+      } catch (error) {
+        // Handle error response
+        console.error("API error", error);
       }
     },
     async sendToAPI() {
