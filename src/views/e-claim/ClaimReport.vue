@@ -42,7 +42,7 @@
               <div class="flex justify-center">
                 <span
                   class="mr-2 ml-2 text-slate-100 hover:text-blue-200"
-                  @click="sendToAPI"
+                  @click="senttheclaim"
                   >Submit Claim</span
                 >
               </div>
@@ -1706,6 +1706,32 @@ export default {
         console.error("User ID is undefined.");
         // You may want to handle this case differently based on your application logic.
         return "";
+      }
+    },
+    async senttheclaim() {
+      const apiData = {
+        name: this.claims[0].claimantName,
+        company_name: this.claims[0].companyName,
+        department: this.claims[0].department,
+        designation_title: this.claims[0].designation,
+        grand_total: this.grandTotal,
+        reference_number: this.claims[0].uniqueCode,
+        report_name: this.claims[0].reportName,
+        requester_id: this.userDetails.userId,
+      };
+
+      try {
+        // Send API request using axios
+        const response = await axios.post(
+          "http://172.28.28.91:97/api/User/InsertClaimDetails",
+          apiData
+        );
+        // Handle success response
+        console.log("API response", response.data);
+        this.sendToAPI();
+      } catch (error) {
+        // Handle error response
+        console.error("API error", error);
       }
     },
     async sendToAPI() {
