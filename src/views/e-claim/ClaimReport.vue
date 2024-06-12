@@ -7,10 +7,12 @@
         class="bg-[#f7fbff] dark:bg-gray-800 relative dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
         <!-- Header Section -->
-        <p class="absolute right-0 mr-2 top-1 pt-2 text-sm text-gray-500" > SN:{{ claims[0].uniqueCode }}</p>
+        <p class="absolute right-0 mr-2 top-1 pt-2 text-sm text-gray-500">
+          SN:{{ claims[0].uniqueCode }}
+        </p>
         <div
           class="relative overflow-hidden mt-2 grid cols-start-1 md:flex justify-between items-center"
-        > 
+        >
           <div class="flex items-center flex-wrap">
             <div class="flex items-center flex-shrink-0">
               <h3
@@ -373,8 +375,13 @@
                 />
               </div>
 
-              <div v-if="!isCompanyTransport" class="flex justify-between items-center mb-4">
-                <label for="mileagekm" class="text-gray-700 font-bold mr-2">Mileage(KM):</label>
+              <div
+                v-if="!isCompanyTransport"
+                class="flex justify-between items-center mb-4"
+              >
+                <label for="mileagekm" class="text-gray-700 font-bold mr-2"
+                  >Mileage(KM):</label
+                >
                 <input
                   type="text"
                   id="mileagekm"
@@ -384,8 +391,13 @@
                 />
               </div>
 
-              <div v-if="!isCompanyTransport" class="flex justify-between items-center mb-4">
-                <label for="mileagerm" class="text-gray-700 font-bold mr-2">Total Mileage(RM):</label>
+              <div
+                v-if="!isCompanyTransport"
+                class="flex justify-between items-center mb-4"
+              >
+                <label for="mileagerm" class="text-gray-700 font-bold mr-2"
+                  >Total Mileage(RM):</label
+                >
                 <input
                   type="text"
                   id="mileagerm"
@@ -485,7 +497,9 @@
             </div>
           </div>
 
-          <div v-if="selectedClaimType === 'OverseasTravellingwithAccommodation'">
+          <div
+            v-if="selectedClaimType === 'OverseasTravellingwithAccommodation'"
+          >
             <div class="flex justify-end">
               <button
                 v-show="!isEditMode"
@@ -672,9 +686,11 @@
                     class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
                   >
                     <tr
-                          v-for="(expense, index) in overseasTravellingDetails.otherExpenses"
-                          :key="index"
-                        >
+                      v-for="(
+                        expense, index
+                      ) in overseasTravellingDetails.otherExpenses"
+                      :key="index"
+                    >
                       <td
                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                       >
@@ -1426,6 +1442,7 @@ export default {
   },
   data() {
     return {
+      totalplus: 0,
       index: null,
       formToDelete: null,
       claims: [],
@@ -1442,28 +1459,33 @@ export default {
   computed: {
     totallocalTravellingDetails() {
       let total =
-        (this.localTravellingDetails.TransportLT === 'Company Transport' ? 0 : (parseInt(this.localTravellingDetails.MileageRMLT) || 0)) +
+        (this.localTravellingDetails.TransportLT === "Company Transport"
+          ? 0
+          : parseInt(this.localTravellingDetails.MileageRMLT) || 0) +
         (parseInt(this.localTravellingDetails.ParkingLT) || 0) +
         (parseInt(this.localTravellingDetails.TollLT) || 0);
-      
-      if (this.localTravellingDetails.tripwayLT === 'Round Trip') {
+
+      if (this.localTravellingDetails.tripwayLT === "Round Trip") {
         total *= 2;
       }
-
+      this.totalplusmethod(total);
       return total;
     },
     isCompanyTransport() {
-      return this.localTravellingDetails.TransportLT === 'Company Transport';
+      return this.localTravellingDetails.TransportLT === "Company Transport";
     },
-    totalOverseasTravellingAmount() {
-      return (
+  totalOverseasTravellingAmount() {
+    let total = (
         (parseInt(this.overseasTravellingDetails.RMforAccommodationOT) || 0) +
         (parseInt(this.overseasTravellingDetails.RMforOthersOT) || 0) +
         (parseInt(this.overseasTravellingDetails.MealAllowanceOT) || 0) +
         (parseInt(this.overseasTravellingDetails.AirportLimoTeksiOT) || 0) +
         this.overseasTravellingDetails.otherExpenses.reduce((total, expense) => total + (parseInt(expense.amount) || 0), 0)
-      );
-    },
+    );
+
+    this.totalplusmethod(total);
+    return total;
+},
     grandTotal() {
       return this.dataclaims
         .reduce((total, claim) => {
@@ -1493,6 +1515,10 @@ export default {
   },
 
   methods: {
+    totalplusmethod(total) {
+      this.totalplus = total;
+      console.log("totalplus", this.totalplus);
+    },
     createObjectURL(file) {
       return URL.createObjectURL(file);
     },
@@ -1507,9 +1533,12 @@ export default {
     closeClickModal() {
       this.isClickModal = false;
     },
-    savenode() {
-      this.isClickModal = false;
-    },
+savenode() {
+  // Log the entire dataclaims array
+ this.dataclaims[this.index].totalRM = this.totalplus; 
+  this.isClickModal = false;
+},
+ 
     showDetails(claim, index) {
       this.index = index;
       console.log("Current index", this.index);
@@ -1525,7 +1554,10 @@ export default {
           break;
         case "OverseasTravellingwithAccommodation":
           this.overseasTravellingDetails = claim;
-          console.log("Overseas Travelling Details:", this.overseasTravellingDetails);
+          console.log(
+            "Overseas Travelling Details:",
+            this.overseasTravellingDetails
+          );
           break;
         case "Entertainment":
           this.entertainmentDetails = claim;
@@ -1957,5 +1989,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
