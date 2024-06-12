@@ -224,6 +224,21 @@
                             required
                           />
                         </div>
+                        <div class="mb-4">
+                          <label
+                            class="block text-sm font-medium text-gray-700"
+                            for="expenseAmount"
+                            >Description</label
+                          >
+                          <input
+                            v-model="newExpense.description"
+                            id="expenseDescription"
+                            type="text"
+
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                            required
+                          />
+                        </div>
                         <div class="flex justify-end">
                           <button
                             type="submit"
@@ -276,6 +291,14 @@
                             class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                           >
                             <div class="flex items-center gap-x-3">
+                              <span>Description</span>
+                            </div>
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                          >
+                            <div class="flex items-center gap-x-3">
                               <span>Action</span>
                             </div>
                           </th>
@@ -297,6 +320,11 @@
                             class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                           >
                             RM {{ expense.amount }}
+                          </td>
+                          <td
+                            class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                          >
+                            {{ expense.description }}
                           </td>
                           <td
                             class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
@@ -1554,6 +1582,10 @@ export default {
         mileageKMLTField.hidden = false;
         mileageRMLTField.hidden = false;
       }
+    },
+
+    handleTransportChange(value) {
+      this.showTransportSpec = value === "Personal Transport" || value === "Others";
     },
 
     addOtherExpense() {
