@@ -835,6 +835,15 @@
               </div>
             </div>
 
+            <hr />
+              <div class="flex justify-center items-center mb-4">
+                <label
+                  for="nodeParentId"
+                  class="text-gray-700 font-bold mr-2 text-2xl"
+                  >Total: RM {{ medicalLeaveReimbursementDetails.ClaimsAmountML }}</label
+                >
+              </div>
+
             <div class="flex justify-end">
               <button
                 @click="toggleEditMode"
@@ -955,6 +964,15 @@
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
+              </div>
+
+              <hr />
+              <div class="flex justify-center items-center mb-4">
+                <label
+                  for="nodeParentId"
+                  class="text-gray-700 font-bold mr-2 text-2xl"
+                  >Total: RM {{ entertainmentDetails.AmountRME}}</label
+                >
               </div>
 
               <!-- Attendees table -->
@@ -1203,6 +1221,15 @@
               </div>
             </div>
 
+            <hr />
+              <div class="flex justify-center items-center mb-4">
+                <label
+                  for="nodeParentId"
+                  class="text-gray-700 font-bold mr-2 text-2xl"
+                  >Total: RM {{ staffRefreshmentDetails.AmountRMSR }}</label
+                >
+              </div>
+
             <div class="flex justify-end">
               <button
                 @click="toggleEditMode"
@@ -1333,6 +1360,15 @@
                 </div>
               </div>
 
+              <hr />
+              <div class="flex justify-center items-center mb-4">
+                <label
+                  for="nodeParentId"
+                  class="text-gray-700 font-bold mr-2 text-2xl"
+                  >Total: RM {{ handphoneReimbursementDetails.ClaimsAmountHR }}</label
+                >
+              </div>
+
               <div class="flex justify-end">
                 <button
                   @click="toggleEditMode"
@@ -1425,7 +1461,7 @@ export default {
         (parseInt(this.overseasTravellingDetails.RMforOthersOT) || 0) +
         (parseInt(this.overseasTravellingDetails.MealAllowanceOT) || 0) +
         (parseInt(this.overseasTravellingDetails.AirportLimoTeksiOT) || 0) +
-        (parseInt(this.overseasTravellingDetails.otherExpenses[0].amount) || 0)  
+        this.overseasTravellingDetails.otherExpenses.reduce((total, expense) => total + (parseInt(expense.amount) || 0), 0)
       );
     },
     grandTotal() {
