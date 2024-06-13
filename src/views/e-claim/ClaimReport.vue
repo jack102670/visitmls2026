@@ -1802,13 +1802,9 @@ export default {
                     park_fee: claim.ParkingLT,
                     toll_fee: claim.TollLT,
                     total_fee: 10,
-                    approver_email: "verifier1@example.com", // Access Email property from claim object
-                    verifier_email: "verifier1@example.com",
-                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    requester_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    
                     unique_code: this.generateUniqueCode(claim.tabTitle),
-                    reference_number: "pktm222",
+                    reference_number: this.claims[0].uniqueCode,
                   };
                   axiosInstance = axios.create({
                     baseURL:
