@@ -502,9 +502,7 @@
             </div>
           </div>
 
-          <div
-            v-if="selectedClaimType === 'OverseasTravellingwithAccommodation'"
-          >
+          <div v-if="selectedClaimType === 'OverseasTravellingwithAccommodation'">
             <div class="flex justify-end">
               <button
                 v-show="!isEditMode"
@@ -1482,9 +1480,9 @@ export default {
       let total =
         (this.localTravellingDetails.TransportLT === "Company Transport"
           ? 0
-          : parseInt(this.localTravellingDetails.MileageRMLT) || 0) +
-        (parseInt(this.localTravellingDetails.ParkingLT) || 0) +
-        (parseInt(this.localTravellingDetails.TollLT) || 0);
+          : parseFloat(this.localTravellingDetails.MileageRMLT) || 0) +
+        (parseFloat(this.localTravellingDetails.ParkingLT) || 0) +
+        (parseFloat(this.localTravellingDetails.TollLT) || 0);
 
       if (this.localTravellingDetails.tripwayLT === "Round Trip") {
         total *= 2;
@@ -1492,28 +1490,35 @@ export default {
       this.totalplusmethod(total);
       return total;
     },
+
     isCompanyTransport() {
       return this.localTravellingDetails.TransportLT === "Company Transport";
     },
+
     totalOverseasTravellingAmount() {
-  let otherExpensesTotal = 0;
-  if (this.overseasTravellingDetails && this.overseasTravellingDetails.otherExpenses) {
-    otherExpensesTotal = this.overseasTravellingDetails.otherExpenses.reduce(
-      (total, expense) => total + (parseInt(expense.amount) || 0),
-      0
-    );
-  }
+      let otherExpensesTotal = 0;
+      if (
+        this.overseasTravellingDetails &&
+        this.overseasTravellingDetails.otherExpenses
+      ) {
+        otherExpensesTotal =
+          this.overseasTravellingDetails.otherExpenses.reduce(
+            (total, expense) => total + (parseFloat(expense.amount) || 0),
+            0
+          );
+      }
 
-  let total =
-    (parseInt(this.overseasTravellingDetails.RMforAccommodationOT) || 0) +
-    (parseInt(this.overseasTravellingDetails.RMforOthersOT) || 0) +
-    (parseInt(this.overseasTravellingDetails.MealAllowanceOT) || 0) +
-    (parseInt(this.overseasTravellingDetails.AirportLimoTeksiOT) || 0) +
-    otherExpensesTotal;
+      let total =
+        (parseFloat(this.overseasTravellingDetails.RMforAccommodationOT) || 0) +
+        (parseFloat(this.overseasTravellingDetails.RMforOthersOT) || 0) +
+        (parseFloat(this.overseasTravellingDetails.MealAllowanceOT) || 0) +
+        (parseFloat(this.overseasTravellingDetails.AirportLimoTeksiOT) || 0) +
+        otherExpensesTotal;
 
-  this.totalplusmethod(total);
-  return total;
-},
+      this.totalplusmethod(total);
+      return total;
+    },
+
     grandTotal() {
       return this.dataclaims
         .reduce((total, claim) => {
