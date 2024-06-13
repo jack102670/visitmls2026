@@ -39,7 +39,16 @@ import AdminHRSummaryClaimpage from '../components/e-claim/AdminHRSummaryClaimpa
 import AdminDashboardpage from '../components/e-claim/AdminDashboardpage.vue';
 import AdminHRDashboardpage from '../components/e-claim/AdminHRDashboardpage.vue';
 import Homepage from '../views/homepage.vue';
+import verified from '../views/e-claim/verifiedpage.vue';
 const routes = [
+  {
+    path: '/verified',
+    name: 'verified',
+    components: {
+      default: verified,
+      Sidebar: Newsidebar,
+    },
+  },
   {
     path: '/homepage',
     name: 'UserHomepage',
