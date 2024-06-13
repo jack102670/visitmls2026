@@ -1469,7 +1469,7 @@ export default {
       isClickModal: false,
       isEditMode: false,
       selectedClaimDetails: {},
-      localTravellingDetails: {}, // Object to store details for Local Travelling
+      localTravellingDetails: {},
       overseasTravellingDetails: { otherExpenses: [] },
       medicalLeaveReimbursementDetails: {},
       entertainmentDetails: {},
