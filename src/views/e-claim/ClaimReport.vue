@@ -328,7 +328,10 @@
                   class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="flex justify-between items-center mb-4">
+              <div
+                v-if="!isCompanyTransport"
+                class="flex justify-between items-center mb-4"
+              >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Transport Specification:</label
                 >

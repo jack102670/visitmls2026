@@ -48,7 +48,7 @@
                   <template
                     v-if="
                       !isCompanyTransport ||
-                      (field.id !== 'MileageKMLT' && field.id !== 'MileageRMLT')
+                      (field.id !== 'MileageKMLT' && field.id !== 'MileageRMLT' && field.id !== 'TransportSpec')
                     "
                   >
                     <label
@@ -116,9 +116,7 @@
                       </div>
                     </template>
 
-                    <template
-                      v-else-if="field.type === 'text' && field.isOtherOption"
-                    >
+                    <template v-else-if="field.type === 'text' && field.isOtherOption">
                       <input
                         v-model="field.value"
                         :id="field.id"
@@ -860,6 +858,7 @@ export default {
                 { label: "Ship", value: "Ship" },
                 { label: "Airplane", value: "Airplane" },
               ],
+              hidden: false,
               gridClass: "sm:col-span-1",
             },
             {
@@ -1499,7 +1498,7 @@ export default {
       const tab = this.tabs.find((tab) => tab.title === "Local Travelling");
       if (!tab) return false;
       const transportField = tab.fields.find(
-        (field) => field.id === "TransportLT"
+        (field) => field.id === "TransportLT" && "TransportSpec" 
       );
       return transportField && transportField.value === "Company Transport";
     },
@@ -1511,7 +1510,7 @@ export default {
         newTabs.forEach((tab) => {
           if (tab.title === "Local Travelling") {
             const transportField = tab.fields.find(
-              (field) => field.id === "TransportLT"
+              (field) => field.id === "TransportLT" && "TransportSpec"
             );
             if (transportField) {
               this.updateFieldVisibility(transportField.value);
@@ -1573,14 +1572,19 @@ export default {
       const mileageRMLTField = localTravellingTab.fields.find(
         (field) => field.id === "MileageRMLT"
       );
-      if (!mileageKMLTField || !mileageRMLTField) return;
+      const TransportSpecField = localTravellingTab.fields.find(
+        (field) => field.id === "MileageRMLT"
+      );
+      if (!mileageKMLTField || !mileageRMLTField || !TransportSpecField ) return;
 
       if (transportValue === "Company Transport") {
         mileageKMLTField.hidden = true;
         mileageRMLTField.hidden = true;
+        TransportSpecField.hidden = true;
       } else {
         mileageKMLTField.hidden = false;
         mileageRMLTField.hidden = false;
+        TransportSpecField.hidden = false;
       }
     },
 
