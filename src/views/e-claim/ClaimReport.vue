@@ -1493,19 +1493,24 @@ export default {
       return this.localTravellingDetails.TransportLT === "Company Transport";
     },
     totalOverseasTravellingAmount() {
-      let total =
-        (parseInt(this.overseasTravellingDetails.RMforAccommodationOT) || 0) +
-        (parseInt(this.overseasTravellingDetails.RMforOthersOT) || 0) +
-        (parseInt(this.overseasTravellingDetails.MealAllowanceOT) || 0) +
-        (parseInt(this.overseasTravellingDetails.AirportLimoTeksiOT) || 0) +
-        this.overseasTravellingDetails.otherExpenses.reduce(
-          (total, expense) => total + (parseInt(expense.amount) || 0),
-          0
-        );
+  let otherExpensesTotal = 0;
+  if (this.overseasTravellingDetails && this.overseasTravellingDetails.otherExpenses) {
+    otherExpensesTotal = this.overseasTravellingDetails.otherExpenses.reduce(
+      (total, expense) => total + (parseInt(expense.amount) || 0),
+      0
+    );
+  }
 
-      this.totalplusmethod(total);
-      return total;
-    },
+  let total =
+    (parseInt(this.overseasTravellingDetails.RMforAccommodationOT) || 0) +
+    (parseInt(this.overseasTravellingDetails.RMforOthersOT) || 0) +
+    (parseInt(this.overseasTravellingDetails.MealAllowanceOT) || 0) +
+    (parseInt(this.overseasTravellingDetails.AirportLimoTeksiOT) || 0) +
+    otherExpensesTotal;
+
+  this.totalplusmethod(total);
+  return total;
+},
     grandTotal() {
       return this.dataclaims
         .reduce((total, claim) => {
