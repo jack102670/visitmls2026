@@ -873,7 +873,7 @@
                 for="nodeParentId"
                 class="text-gray-700 font-bold mr-2 text-2xl"
                 >Total: RM
-                {{ medicalLeaveReimbursementDetails.ClaimsAmountML }}</label
+                {{ totalMedicalLeaveReimbursementDetails }}</label
               >
             </div>
 
@@ -1259,7 +1259,7 @@
               <label
                 for="nodeParentId"
                 class="text-gray-700 font-bold mr-2 text-2xl"
-                >Total: RM {{ staffRefreshmentDetails.AmountRMSR }}</label
+                >Total: RM {{ totalStaffRefreshmentDetails }}</label
               >
             </div>
 
@@ -1399,7 +1399,7 @@
                   for="nodeParentId"
                   class="text-gray-700 font-bold mr-2 text-2xl"
                   >Total: RM
-                  {{ handphoneReimbursementDetails.ClaimsAmountHR }}</label
+                  {{ totalHandphoneReimbursementDetails }}</label
                 >
               </div>
 
@@ -1471,6 +1471,10 @@ export default {
       selectedClaimDetails: {},
       localTravellingDetails: {}, // Object to store details for Local Travelling
       overseasTravellingDetails: { otherExpenses: [] },
+      medicalLeaveReimbursementDetails: {},
+      entertainmentDetails: {},
+      staffRefreshmentDetails: {},
+      handphoneReimbursementDetails: {},
       cancel: true,
     };
   },
@@ -1515,6 +1519,27 @@ export default {
         (parseFloat(this.overseasTravellingDetails.AirportLimoTeksiOT) || 0) +
         otherExpensesTotal;
 
+      this.totalplusmethod(total);
+      return total;
+    },
+
+    totalMedicalLeaveReimbursementDetails() {
+      let total = 
+      (parseFloat(this.medicalLeaveReimbursementDetails.ClaimsAmountML) || 0) 
+      this.totalplusmethod(total);
+      return total;
+    },
+
+    totalStaffRefreshmentDetails() {
+      let total = 
+      (parseFloat(this.staffRefreshmentDetails.AmountRMSR) || 0) 
+      this.totalplusmethod(total);
+      return total;
+    },
+
+    totalHandphoneReimbursementDetails() {
+      let total = 
+      (parseFloat(this.handphoneReimbursementDetails.ClaimsAmountHR) || 0) 
       this.totalplusmethod(total);
       return total;
     },
