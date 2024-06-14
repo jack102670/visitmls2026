@@ -4,25 +4,40 @@
   >
     <div class="container mx-auto">
       <div
-        class="relative bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
+        class="bg-[#f7fbff] dark:bg-gray-800 relative dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
         <h1 class="text-base italic absolute top-4 right-4 text-gray-500">
           SN: {{ claims[0].uniqueCode }}
         </h1>
         <!-- Header Section -->
+        <p class="absolute right-0 mr-2 top-1 pt-2 text-sm text-gray-500">
+          SN:{{ claims[0].uniqueCode }}
+        </p>
         <div
-          class="relative overflow-hidden mt-2 grid cols-start-1 md:flex justify-between"
+          class="relative overflow-hidden mt-2 grid cols-start-1 md:flex justify-between items-center"
         >
-          <h3
-            class="ml-4 text-4xl font-bold text-blue-900"
-            v-for="(claim, index) in claims"
-            :key="index"
-          >
-            {{ claim.reportName }}
-          </h3>
-
+          <div class="flex items-center flex-wrap">
+            <div class="flex items-center flex-shrink-0">
+              <h3
+                class="ml-4 text-3xl font-bold text-blue-900"
+                v-for="(claim, index) in claims"
+                :key="index"
+                style="max-width: 400px"
+              >
+                {{ claim.reportName }}
+              </h3>
+            </div>
+            <div class="flex items-center ml-4 mt-2 md:mt-0 flex-shrink-0">
+              <span class="text-3xl font-bold text-blue-900">|</span>
+              <span class="ml-4 text-2xl font-bold text-blue-900"
+                >Grand Total : RM {{ grandTotal }}</span
+              >
+            </div>
+          </div>
           <!-- Buttons Section -->
-          <div class="md:mr-4 md:mt-0 mt-5 gap-2 flex flex-row-reverse">
+          <div
+            class="md:mr-4 md:mt-0 mt-5 gap-2 flex flex-row-reverse flex-shrink-0"
+          >
             <button
               @click="showContent"
               class="w-36 h-12 p-1 font-semibold rounded-lg items-center text-sm dark:bg-gray-900 dark:border-gray-700 bg-green-700 border text-white"
@@ -30,7 +45,7 @@
               <div class="flex justify-center">
                 <span
                   class="mr-2 ml-2 text-slate-100 hover:text-blue-200"
-                  @click="sendToAPI"
+                  @click="senttheclaim"
                   >Submit Claim</span
                 >
               </div>
@@ -81,16 +96,18 @@
                   {{ claim.department }}
                 </h3>
               </div>
-              <!-- Display Cost Center -->
+              <!-- Display Company Name -->
               <div class="lg:col-start-8 lg:col-end-9 col-start-1 col-end-2">
-                <h5 class="text-sm font-semibold text-gray-600">Cost Center</h5>
+                <h5 class="text-sm font-semibold text-gray-600">
+                  Company's Name
+                </h5>
               </div>
               <div class="lg:col-start-9 col-start-2">
                 <h5 class="text-sm font-semibold text-gray-600">:</h5>
               </div>
               <div class="lg:col-start-10 col-start-3">
                 <h5 class="text-sm font-semibold text-gray-600">
-                  {{ claim.costCenter }}
+                  {{ claim.companyName }}
                 </h5>
               </div>
               <!-- Display Date of Report -->
@@ -166,6 +183,14 @@
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
+                            <span>Amount</span>
+                          </div>
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        >
+                          <div class="flex items-center gap-x-3">
                             <span>Action</span>
                           </div>
                         </th>
@@ -190,7 +215,14 @@
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                         >
-                          {{ claim.Name }}
+                          <span v-if="claim.LocationEnd">{{
+                            claim.LocationEnd
+                          }}</span>
+                          <span v-if="claim.DescriptionOT">{{
+                            claim.DescriptionOT
+                          }}</span>
+                          <span v-if="claim.VenueE">{{ claim.VenueE }}</span>
+                          <span v-if="claim.VenueSR">{{ claim.VenueSR }}</span>
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
@@ -201,7 +233,16 @@
                           <span v-if="claim.dateE">{{ claim.dateE }}</span>
                           <span v-if="claim.dateSR">{{ claim.dateSR }}</span>
                         </td>
-
+                        <td
+                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                        >
+                          <span v-if="claim.totalRM"
+                            >RM {{ claim.totalRM }}</span
+                          >
+                          <span v-if="claim.AmountRME"
+                            >RM {{ claim.AmountRME }}</span
+                          >
+                        </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2"
                         >
@@ -251,7 +292,6 @@
           style="max-height: calc(100vh - 20px); overflow-y: auto"
         >
           <!-- Modal header -->
-          <!-- Your existing modal header content -->
           <div v-if="selectedClaimType === 'LocalTravelling'">
             <div class="flex justify-end">
               <button
@@ -281,36 +321,94 @@
               </div>
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeName" class="text-gray-700 font-bold mr-2"
-                  >Destination / Purpose:</label
+                  >Travelling Mode By:</label
                 >
                 <input
                   type="text"
-                  id="nodeName"
-                  v-model="localTravellingDetails.DestinationPurposeLT"
+                  id="transport"
+                  v-model="localTravellingDetails.TransportLT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+              <div
+                v-if="!isCompanyTransport"
+                class="flex justify-between items-center mb-4"
+              >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Transport Specification:</label
+                >
+                <input
+                  type="text"
+                  id="transportSpecify"
+                  v-model="localTravellingDetails.TransportSpec"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Location Start:</label
+                >
+                <input
+                  type="text"
+                  id="locationstart"
+                  v-model="localTravellingDetails.LocationStart"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Location End:</label
+                >
+                <input
+                  type="text"
+                  id="locationend"
+                  v-model="localTravellingDetails.LocationEnd"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Trip:</label
+                >
+                <input
+                  type="text"
+                  id="triplt"
+                  v-model="localTravellingDetails.tripwayLT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
               </div>
 
-              <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+              <div
+                v-if="!isCompanyTransport"
+                class="flex justify-between items-center mb-4"
+              >
+                <label for="mileagekm" class="text-gray-700 font-bold mr-2"
                   >Mileage(KM):</label
                 >
                 <input
                   type="text"
-                  id="email"
+                  id="mileagekm"
                   v-model="localTravellingDetails.MileageKMLT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+
+              <div
+                v-if="!isCompanyTransport"
+                class="flex justify-between items-center mb-4"
+              >
+                <label for="mileagerm" class="text-gray-700 font-bold mr-2"
                   >Total Mileage(RM):</label
                 >
                 <input
                   type="text"
-                  id="email"
+                  id="mileagerm"
                   v-model="localTravellingDetails.MileageRMLT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
@@ -406,6 +504,7 @@
               </button>
             </div>
           </div>
+
           <div
             v-if="selectedClaimType === 'OverseasTravellingwithAccommodation'"
           >
@@ -556,19 +655,90 @@
                   class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="flex justify-between items-center mb-4">
-                <label
-                  for="rmMealTransport"
-                  class="text-gray-700 font-bold mr-2"
-                  >RM:</label
+
+              <!-- Other Expenses table -->
+              <div class="mb-4">
+                <h2 class="text-xl font-bold">Other Expenses</h2>
+                <table
+                  class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
                 >
-                <input
-                  type="text"
-                  id="rmMealTransport"
-                  v-model="overseasTravellingDetails.RMforMealTransportOT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
-                />
+                  <thead class="bg-gray-50 dark:bg-gray-800">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>No</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Expense</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Amount(RM)</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Description</span>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
+                  >
+                    <tr
+                      v-for="(
+                        expense, index
+                      ) in overseasTravellingDetails.otherExpenses"
+                      :key="index"
+                    >
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ index + 1 }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ expense.name }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ expense.amount }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ expense.description }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <hr />
+              <div class="flex justify-center items-center mb-4">
+                <label
+                  for="nodeParentId"
+                  class="text-gray-700 font-bold mr-2 text-2xl"
+                  >Total: RM {{ totalOverseasTravellingAmount }}</label
+                >
               </div>
 
               <!-- Add/Edit node button -->
@@ -702,6 +872,15 @@
               </div>
             </div>
 
+            <hr />
+            <div class="flex justify-center items-center mb-4">
+              <label
+                for="nodeParentId"
+                class="text-gray-700 font-bold mr-2 text-2xl"
+                >Total: RM {{ totalMedicalLeaveReimbursementDetails }}</label
+              >
+            </div>
+
             <div class="flex justify-end">
               <button
                 @click="toggleEditMode"
@@ -822,6 +1001,15 @@
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
+              </div>
+
+              <hr />
+              <div class="flex justify-center items-center mb-4">
+                <label
+                  for="nodeParentId"
+                  class="text-gray-700 font-bold mr-2 text-2xl"
+                  >Total: RM {{ entertainmentDetails.AmountRME }}</label
+                >
               </div>
 
               <!-- Attendees table -->
@@ -1070,6 +1258,15 @@
               </div>
             </div>
 
+            <hr />
+            <div class="flex justify-center items-center mb-4">
+              <label
+                for="nodeParentId"
+                class="text-gray-700 font-bold mr-2 text-2xl"
+                >Total: RM {{ totalStaffRefreshmentDetails }}</label
+              >
+            </div>
+
             <div class="flex justify-end">
               <button
                 @click="toggleEditMode"
@@ -1200,6 +1397,15 @@
                 </div>
               </div>
 
+              <hr />
+              <div class="flex justify-center items-center mb-4">
+                <label
+                  for="nodeParentId"
+                  class="text-gray-700 font-bold mr-2 text-2xl"
+                  >Total: RM {{ totalHandphoneReimbursementDetails }}</label
+                >
+              </div>
+
               <div class="flex justify-end">
                 <button
                   @click="toggleEditMode"
@@ -1257,6 +1463,7 @@ export default {
   },
   data() {
     return {
+      totalplus: 0,
       index: null,
       formToDelete: null,
       claims: [],
@@ -1265,24 +1472,97 @@ export default {
       isClickModal: false,
       isEditMode: false,
       selectedClaimDetails: {},
-      localTravellingDetails: {}, // Object to store details for Local Travelling
-      overseasTravellingDetails: {},
+      localTravellingDetails: {},
+      overseasTravellingDetails: { otherExpenses: [] },
+      medicalLeaveReimbursementDetails: {},
+      entertainmentDetails: {},
+      staffRefreshmentDetails: {},
+      handphoneReimbursementDetails: {},
       cancel: true,
     };
   },
+
   computed: {
     totallocalTravellingDetails() {
-      return (
-        (parseInt(this.localTravellingDetails.MileageRMLT) || 0) +
-        (parseInt(this.localTravellingDetails.ParkingLT) || 0) +
-        (parseInt(this.localTravellingDetails.TollLT) || 0)
-      );
+      let total =
+        (this.localTravellingDetails.TransportLT === 'Company Transport'
+          ? 0
+          : parseFloat(this.localTravellingDetails.MileageRMLT) || 0) +
+        (parseFloat(this.localTravellingDetails.ParkingLT) || 0) +
+        (parseFloat(this.localTravellingDetails.TollLT) || 0);
+
+      if (this.localTravellingDetails.tripwayLT === 'Round Trip') {
+        total *= 2;
+      }
+      this.totalplusmethod(total);
+      return total;
+    },
+
+    isCompanyTransport() {
+      return this.localTravellingDetails.TransportLT === 'Company Transport';
+    },
+
+    totalOverseasTravellingAmount() {
+      let otherExpensesTotal = 0;
+      if (
+        this.overseasTravellingDetails &&
+        this.overseasTravellingDetails.otherExpenses
+      ) {
+        otherExpensesTotal =
+          this.overseasTravellingDetails.otherExpenses.reduce(
+            (total, expense) => total + (parseFloat(expense.amount) || 0),
+            0
+          );
+      }
+
+      let total =
+        (parseFloat(this.overseasTravellingDetails.RMforAccommodationOT) || 0) +
+        (parseFloat(this.overseasTravellingDetails.RMforOthersOT) || 0) +
+        (parseFloat(this.overseasTravellingDetails.MealAllowanceOT) || 0) +
+        (parseFloat(this.overseasTravellingDetails.AirportLimoTeksiOT) || 0) +
+        otherExpensesTotal;
+
+      this.totalplusmethod(total);
+      return total;
+    },
+
+    totalMedicalLeaveReimbursementDetails() {
+      let total =
+        parseFloat(this.medicalLeaveReimbursementDetails.ClaimsAmountML) || 0;
+      this.totalplusmethod(total);
+      return total;
+    },
+
+    totalStaffRefreshmentDetails() {
+      let total = parseFloat(this.staffRefreshmentDetails.AmountRMSR) || 0;
+      this.totalplusmethod(total);
+      return total;
+    },
+
+    totalHandphoneReimbursementDetails() {
+      let total =
+        parseFloat(this.handphoneReimbursementDetails.ClaimsAmountHR) || 0;
+      this.totalplusmethod(total);
+      return total;
+    },
+
+    grandTotal() {
+      return this.dataclaims
+        .reduce((total, claim) => {
+          let amount = 0;
+          if (claim.AmountRME) amount += parseFloat(claim.AmountRME);
+          if (claim.totalRM) amount += parseFloat(claim.totalRM);
+          return total + amount;
+        }, 0)
+        .toFixed(2);
     },
   },
+
   created() {
     this.fetchClaims();
     this.userDetails = store.getSession().userDetails;
   },
+
   mounted() {
     // Sidebar close or open
     let openOrNot = localStorage.getItem('openOrNot');
@@ -1293,7 +1573,12 @@ export default {
       element.classList.remove('become-big');
     }
   },
+
   methods: {
+    totalplusmethod(total) {
+      this.totalplus = total;
+      console.log('totalplus', this.totalplus);
+    },
     createObjectURL(file) {
       return URL.createObjectURL(file);
     },
@@ -1309,8 +1594,11 @@ export default {
       this.isClickModal = false;
     },
     savenode() {
+      // Log the entire dataclaims array
+      this.dataclaims[this.index].totalRM = this.totalplus;
       this.isClickModal = false;
     },
+
     showDetails(claim, index) {
       this.index = index;
       console.log('Current index', this.index);
@@ -1326,7 +1614,6 @@ export default {
           break;
         case 'OverseasTravellingwithAccommodation':
           this.overseasTravellingDetails = claim;
-
           console.log(
             'Overseas Travelling Details:',
             this.overseasTravellingDetails
@@ -1461,6 +1748,32 @@ export default {
         return '';
       }
     },
+    async senttheclaim() {
+      const apiData = {
+        name: this.claims[0].claimantName,
+        company_name: this.claims[0].companyName,
+        department: this.claims[0].department,
+        designation_title: this.claims[0].designation,
+        grand_total: this.grandTotal,
+        reference_number: this.claims[0].uniqueCode,
+        report_name: this.claims[0].reportName,
+        requester_id: this.userDetails.userId,
+      };
+
+      try {
+        // Send API request using axios
+        const response = await axios.post(
+          'http://172.28.28.91:97/api/User/InsertClaimDetails',
+          apiData
+        );
+        // Handle success response
+        console.log('API response', response.data);
+        this.sendToAPI();
+      } catch (error) {
+        // Handle error response
+        console.error('API error', error);
+      }
+    },
     async sendToAPI() {
       // Group claims by tabTitle
       this.$router.push({ name: 'eclaimhomepages' });
@@ -1496,8 +1809,10 @@ export default {
                     approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
                     verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
                     requester_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
+
                     unique_code: this.generateUniqueCode(claim.tabTitle),
                     reference_number: 'pktm222',
+                    reference_number: this.claims[0].uniqueCode,
                   };
                   axiosInstance = axios.create({
                     baseURL:
@@ -1520,6 +1835,7 @@ export default {
                     meal_allowance: claim.MealAllowanceOT,
                     date_event: claim.dateOT, // Example date
                     transport_fee: claim.AirportLimoTeksiOT,
+                    other_expenses: claim.otherExpenses,
                     total_fee: 99,
                     accom_foreign_total: 100,
                     accom_foreign_currency:
@@ -1760,3 +2076,5 @@ export default {
   },
 };
 </script>
+
+<style></style>

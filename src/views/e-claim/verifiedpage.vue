@@ -14,27 +14,27 @@
               Claim for Reimbursement of All Expenses
             </h3>
           </div>
-          <div class="flex ml-14 mt-5">
-            <button @click="ChangePopUp()" class="p-2 flex items-center">
-              Add claim
-              <span class="ml-2 border border-2 px-4 border-blue-800">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M12 4.5v15m7.5-7.5h-15"
-                  />
-                </svg>
-              </span>
-            </button>
-          </div>
+          <!-- <div class="flex ml-14 mt-5">
+              <button @click="ChangePopUp()" class="p-2 flex items-center">
+                Add claim
+                <span class="ml-2 border border-2 px-4 border-blue-800">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 4.5v15m7.5-7.5h-15"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div> -->
 
           <hr class="h-mx-auto bg-gray-100 border-0 rounded" />
         </div>
@@ -42,9 +42,9 @@
           <div class="flex justify-between items-center">
             <div>
               <h2
-                class="text-lg font-medium text-gray-800 dark:text-white ml-1"
+                class="text-lg font-medium text-gray-800 dark:text-white ml-1 capitalize"
               >
-                Claim
+                verifier claim
                 <span
                   class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400"
                   >1
@@ -80,7 +80,15 @@
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
-                            <span>Type Of Request</span>
+                            <span>Report Name</span>
+                          </div>
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        >
+                          <div class="flex items-center gap-x-3">
+                            <span>Date</span>
                           </div>
                         </th>
                         <th
@@ -96,18 +104,11 @@
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
-                            <span>Reference Number</span>
+                            <span>Amount</span>
                           </div>
                         </th>
 
-                        <th
-                          scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                        >
-                          <div class="flex items-center gap-x-3">
-                            <span>Date</span>
-                          </div>
-                        </th>
+                   
 
                         <th
                           scope="col"
@@ -126,7 +127,7 @@
                     <tbody
                       class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
                     >
-                      <tr>
+                      <tr v-for="(item, index) in items" :key="index">
                         <td
                           class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                         >
@@ -136,7 +137,7 @@
                                 <h2
                                   class="font-medium text-gray-500 dark:text-gray-300"
                                 >
-                                  HQ
+                              HQ
                                 </h2>
                               </div>
                             </div>
@@ -152,44 +153,58 @@
                               </div>
                             </div>
                           </div>
-                          Entertainment
+                          {{ item.report_name }}
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                         >
-                          MR MAN
+                          {{ item.date_requested
+ }}
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                         >
-                          ET2584232
+                          {{ item.man }}
                         </td>
-
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                         >
-                          20 July 2024
+                          RM {{ item.grand_total }}
                         </td>
-
+                   
                         <td
                           class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                         >
                           <span
-                            class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800"
+                            :class="`inline-flex items-center px-3 py-1 rounded-full gap-x-2 ${
+                              item.admin_status === 'APPROVED. WAITING FOR PAYMENT.'
+                                ? 'bg-red-100/60 dark:bg-gray-800'
+                                : 'bg-green-100/60 dark:bg-gray-800'
+                            }`"
                           >
                             <span
-                              class="h-1.5 w-1.5 rounded-full bg-red-500"
+                              :class="`h-1.5 w-1.5 rounded-full ${
+                                item.admin_status === 'APPROVED. WAITING FOR PAYMENT.'
+                                  ? 'bg-red-500'
+                                  : 'bg-green-500'
+                              }`"
                             ></span>
-                            <span class="text-sm font-normal text-red-500"
-                              >PENDING</span
+                            <span
+                              :class="`text-sm font-normal ${
+                                item.admin_status === 'APPROVED. WAITING FOR PAYMENT.'
+                                  ? 'text-red-500'
+                                  : 'text-green-500'
+                              }`"
+                              >{{ item.admin_status }}</span
                             >
                           </span>
                         </td>
-
                         <td class="px-4 py-4 ml text-sm whitespace-nowrap">
                           <div class="flex items-center gap-x-6">
+                            <!-- buttons here -->
                             <button
-                              class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
+                      @click="ViewClaim()"
+                              class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -211,46 +226,6 @@
                                 />
                               </svg>
                             </button>
-                            <!-- this button for edit and deleted  -->
-                            <!-- <button
-          v-if="requester.status === 'Pending'"
-          class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-5 h-5"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-            />
-          </svg>
-        </button>
-
-        <button
-          v-if="requester.status === 'Pending'"
-          class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-5 h-5"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-            />
-          </svg>
-        </button> -->
                           </div>
                         </td>
                       </tr>
@@ -266,32 +241,40 @@
         ></div>
       </div>
     </div>
-    <NewClaimPopUp
-      v-if="popup"
-      @close="ChangePopUp()"
-      :class="[animate ? 'PopUpAnimation' : 'BackAnimation']"
-    />
   </main>
 </template>
 
 <script>
-import { store } from '../../store.js';
-// import CreateNewClaimPopUp from '@/components/e-claim/CreateNewClaimPopUp.vue';
-import NewClaimPopUp from "@/components/e-claim/NewClaimPopUp.vue";
+import { store } from "../store.js";
 
 export default {
   components: {
     // CreateNewClaimPopUp,
-    NewClaimPopUp,
   },
-  name: "homepageeclaiM",
+  name: "homepageeclaiMq",
   data() {
     return {
+      items: [
+        // add more items as needed
+      ],
       popup: false,
       animate: false,
+      userDetails: [],
     };
   },
   methods: {
+    ViewClaim() {
+      this.$router.push({ name: 'AdminSummaryClaimpage' });
+    },
+    fetchData() {
+      fetch(`http://172.28.28.91:86/api/ApproverVerifier/GetAllRequestVerifier/F4ECECFA-7D9C-4D11-BA8E-3338AC3D4F48`)
+        .then(response => response.json())
+        .then(data => {
+          this.items = data.result;
+          console.log('api data',this.items);
+        })
+        .catch(error => console.error(error));
+    },
     ChangePopUp() {
       if (this.popup == true) {
         this.animate = !this.animate;
@@ -307,7 +290,9 @@ export default {
   },
   mounted() {
     // Sidebar close or open
-    store.setControlView('eclaim');
+    this.userDetails = store.getSession().userDetails;
+    this.fetchData();
+    store.setControlView("eclaim");
     let openOrNot = localStorage.getItem("openOrNot");
     const element = document.querySelector("main");
     if (element && openOrNot == "false") {

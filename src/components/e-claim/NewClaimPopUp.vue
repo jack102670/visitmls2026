@@ -3,7 +3,7 @@
     class="bg-gray-500 bg-opacity-40 w-screen h-screen absolute left-0 top-0 z-50 flex justify-center items-center"
   >
     <div
-      class="popup overflow-y-auto lg:w-3/5 md:w-3/4 w-5/6 bg-white h-[90%] sm:h-[85%] rounded-xl relative px-10 pb-6"
+      class="popup overflow-y-auto lg:w-3/5 md:w-3/4 w-5/6 bg-white h-[70%] rounded-xl relative px-10 pb-6"
     >
       <!-- Heading Title -->
       <h1 class="text-3xl font-bold py-6 border-b-2 border-black">
@@ -12,8 +12,124 @@
 
       <!-- Form -->
       <form @submit.prevent="showModal" class="text-sm py-2">
-        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1 overflow-y-auto">
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="claimantName"
+              >Claimant's Name <span class="text-red-500">*</span></label
+            >
+            <input
+              placeholder="e.g ALI BIN ABU"
+              v-model="formData.claimantName"
+              id="claimantName"
+              type="text"
+              value="required"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+          <div class="relative">
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="companyName"
+              >Company's Name<span class="text-red-500">*</span></label
+            >
+
+            <div class="flex justify-between">
+              <input
+                type="text"
+                placeholder="Company name.."
+                v-model="formData.companyName"
+                @click="toggleDropdown2"
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              />
+              <div
+                class="bg-slate-200 py-4 px-2 mt-2 rounded"
+                @click="toggleDropdown2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 21 21"
+                  stroke="currentColor"
+                  class="h-2 w-4 text-gray-600"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            <div
+              v-show="dropdownVisible2"
+              class="dropdown-content absolute left-0 bg-gray-100 w-full max-h-56 overflow-y-auto border border-gray-300 z-10 mt-2 rounded shadow-lg"
+            >
+              <a
+                v-for="Company in filteredCompanyName"
+                :key="Company.company_name"
+                @click="selectCompanyName(Company.company_name)"
+                class="block text-black py-2 px-4 hover:bg-gray-200"
+              >
+                {{ Company.company_name }}
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-3">
+          <div class="relative">
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="department"
+            >
+              Department<span class="text-red-500">*</span>
+            </label>
+            <div class="flex justify-between">
+              <input
+                type="text"
+                placeholder="Department.."
+                v-model="formData.department"
+                @click="toggleDropdown"
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              />
+              <div
+                class="bg-slate-200 py-4 px-2 mt-2 rounded"
+                @click="toggleDropdown"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 21 21"
+                  stroke="currentColor"
+                  class="h-2 w-4 text-gray-600"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            <div
+              v-show="dropdownVisible"
+              class="dropdown-content absolute left-0 bg-gray-100 w-full max-h-56 overflow-y-auto border border-gray-300 z-10 mt-2 rounded shadow-lg"
+            >
+              <a
+                v-for="department in filteredDepartments"
+                :key="department.department"
+                @click="selectDepartment(department.department)"
+                class="block text-black py-2 px-4 hover:bg-gray-200"
+              >
+                {{ department.department }}
+              </a>
+            </div>
+          </div>
+
+          <!-- <div>
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="designation"
@@ -23,7 +139,7 @@
               v-model="formData.costCenter"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             />
-          </div>
+          </div> -->
           <div>
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
@@ -48,41 +164,115 @@
               id="ReportName"
               type="text"
               value="required"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
-            <input
-              v-model="branch"
-              id="ReportName"
-              type="hidden"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              class="block w-full px-4 py-2 mt-2 capitalize text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             />
           </div>
-
-          <div class="flex flex-col">
+          <!-- <div>
             <label class="font-semibold text-gray-700 dark:text-gray-200"
-              >Report Type</label
+              >Internal Order</label
             >
-            <div class="flex my-3">
-              <input
-                type="radio"
-                value="Finance"
-                id="Finance"
-                v-model="formData.reportType"
-                checked
-              />
-              <label for="Finance" class="text-base mr-6 ml-2">Finance</label>
-              <input
-                type="radio"
-                value="HR"
-                id="HR"
-                v-model="formData.reportType"
-              />
-              <label for="HR" class="text-base ml-2">HR</label>
+            <input
+              v-model="formData.internalOrder"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div> -->
+          <div>
+            <label class="font-semibold text-gray-700 dark:text-gray-200">
+              Claim Type
+            </label>
+
+            <div
+              class="space-x-3 block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            >
+              <!-- HR Group -->
+              <div
+                class="relative inline-block"
+                @mouseover="showHRMessage = true"
+                @mouseleave="showHRMessage = false"
+              >
+                <input
+                  type="radio"
+                  id="HR"
+                  name="claimType"
+                  value="HR"
+                  v-model="formData.reportType"
+                  class="mr-2"
+                />
+                <label for="HR">HR</label>
+                <div
+                  class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
+                  v-show="showHRMessage"
+                >
+                  Boo!
+                </div>
+              </div>
+
+              <!-- Finance Group -->
+              <div
+                class="relative inline-block"
+                @mouseover="showFinanceMessage = true"
+                @mouseleave="showFinanceMessage = false"
+              >
+                <input
+                  type="radio"
+                  id="Finance"
+                  name="claimType"
+                  value="Finance"
+                  v-model="formData.reportType"
+                  class="mr-2"
+                />
+                <label for="Finance">Finance</label>
+                <div
+                  class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
+                  v-show="showFinanceMessage"
+                >
+                  lorem
+                </div>
+              </div>
             </div>
           </div>
+          <!-- <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-3"> -->
+          <!-- <div>
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="ReportDate"
+              >Report Date</label
+            >
+            <input
+              v-model="formData.reportDate"
+              id="ReportDate"
+              type="date"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div> -->
+          <!-- <div>
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="ReportStartDate"
+              >Report Start Date</label
+            >
+            <input
+              v-model="formData.reportStartDate"
+              id="ReportStartDate"
+              type="date"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+          <div>
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="ReportEndDate"
+              >Report End Date</label
+            >
+            <input
+              v-model="formData.reportEndDate"
+              id="ReportEndDate"
+              type="date"
+              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div> -->
         </div>
-
-        <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1">
+        <!-- <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
           <div>
             <label class="font-semibold text-gray-700 dark:text-gray-200"
               >Note:
@@ -92,7 +282,7 @@
               7 days will be paid in next month</label
             >
           </div>
-        </div>
+        </div> -->
       </form>
 
       <!-- button -->
@@ -120,13 +310,21 @@
   </div>
 </template>
 <script>
-import { formStore } from '../../views/store.js'; // Import your form store
-import axios from 'axios';
-import moment from 'moment';
+import moment from "moment";
+import { formStore } from "../../views/store.js"; // Import your form store
+import { store } from "../../views/store.js";
+// import axios from 'axios';
 export default {
-  emits: ['close'],
+  emits: ["close"],
   data() {
     return {
+      showHRMessage: false,
+      showFinanceMessage: false,
+      dropdownVisible: false,
+      dropdownVisible2: false,
+      search: "",
+      departments: [],
+      Companies: [],
       active: 0,
 
       formData: {
@@ -144,45 +342,110 @@ export default {
         memo: formStore.formData.memo,
         uniqueCode: formStore.formData.uniqueCode,
       },
-      branch: '', // Add the missing branch property
+      branch: "", // Add the missing branch property
+      userDetails: {},
     };
   },
+  watch: {
+    'formData.reportName': function(newVal) {
+      this.formData.reportName = this.capitalizeWords(newVal);
+    },
+
+    // this is for full capital
+    'formData.designation': function(newVal) {
+      this.formData.designation = newVal.toUpperCase();
+    }
+  },
+  computed: {
+
+    filteredDepartments() {
+      return this.departments.filter((department) => {
+        return department.department
+          .toLowerCase()
+          .includes(this.formData.department.toLowerCase());
+      });
+    },
+    filteredCompanyName() {
+      return this.Companies.filter((park) => {
+        const searchTerm = this.formData.companyName.toLowerCase();
+        return (
+          (park.company_code &&
+            park.company_code.toLowerCase().includes(searchTerm)) ||
+          (park.company_name &&
+            park.company_name.toLowerCase().includes(searchTerm))
+        );
+      });
+    },
+  },
+  mounted() {
+    this.fetchCompany();
+    this.fetchDepartments();
+    // Get the branch from the store
+    this.userDetails = store.getSession().userDetails;
+    this.formData.claimantName = this.userDetails.userName;
+  },
+
   methods: {
-    generateUniqueCode() {
-      // Check if this.userId is defined
-      if (this.formData.claimantName) {
-        // Use part of the claimantName for uniqueness, e.g., 4 characters
-        const claimantNameFragment = this.formData.claimantName.substring(0, 4);
-
-        // Generate a random number and pad it to 2 characters
-        const randomNumber = Math.floor(Math.random() * 100)
-          .toString()
-          .padStart(2, '0');
-
-        const timestamp = Date.now().toString().slice(-2);
-
-        this.formData.uniqueCode = `Claim${claimantNameFragment}${randomNumber}${timestamp}`;
-        console.log('Unique Code:', this.formData.uniqueCode);
-        return this.formData.uniqueCode;
-      } else {
-        console.error('User ID is undefined.');
-
-        return '';
+    capitalizeWords(str) {
+      return str.replace(/\b\w/g, char => char.toUpperCase());
+    },
+    toggleDropdown() {
+      this.dropdownVisible = !this.dropdownVisible;
+    },
+    selectDepartment(department) {
+      this.formData.department = department;
+      this.dropdownVisible = false;
+    },
+    toggleDropdown2() {
+      this.dropdownVisible2 = !this.dropdownVisible2;
+    },
+    selectCompanyName(Company) {
+      this.formData.companyName = Company;
+      this.dropdownVisible2 = false;
+    },
+    async fetchCompany() {
+      try {
+        const response = await fetch(
+          "http://172.28.28.91:97/api/User/GetCompany"
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        this.Companies = data.result;
+        console.log(this.Companies, "company");
+      } catch (error) {
+        console.error(`Error fetching departments: ${error}`);
+      }
+    },
+    async fetchDepartments() {
+      try {
+        const response = await fetch(
+          "http://172.28.28.91:97/api/User/GetDepartment"
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        this.departments = data.result;
+        console.log(this.departments);
+      } catch (error) {
+        console.error(`Error fetching departments: ${error}`);
       }
     },
     generateSerialNumber() {
-      let names = this.formData.reportName.split(' ');
+      let names = this.formData.reportName.split(" ");
       let shortform = [];
 
       for (let i = 0; i < names.length; i++) {
         shortform[i] = names[i][0];
       }
-      let datetime = moment(new Date()).format('YYYY/MM/mmss');
+      let datetime = moment(new Date()).format("YYYY/MM/mmss");
       let sn =
-        shortform.join('').toString() +
-        '/' +
+        shortform.join("").toString() +
+        "/" +
         this.formData.reportType +
-        '/' +
+        "/" +
         datetime;
       console.log(sn);
       this.formData.uniqueCode = sn;
@@ -192,47 +455,52 @@ export default {
       this.active += page;
 
       if (this.active > 0) {
-        // Send API request using axios
-        const apiData = {
-          name: 'Teow',
-          company_name: 'PKT',
-          department: 'ICT',
-          designation_title: this.formData.designation,
-          claim_startdate: '2024-06-20',
-          claim_enddate: '2024-06-30',
-          reference_number: this.generateSerialNumber(),
-          report_name: this.formData.reportName,
-        };
-
         // Update form data in the form store
         formStore.clearFormData();
+        this.generateSerialNumber();
         formStore.setFormData(this.formData);
 
         // Log the form data before navigation
         console.log('Form submitted', formStore.getFormData());
-
-        console.log(apiData);
+        // Log the form data before navigation
+        console.log("Form submitted", formStore.getFormData());
+        this.$router.push({ name: "ClaimReport" });
 
         // Send API request using axios
-        axios
-          .post('http://172.28.28.91:97/api/User/InsertClaimDetails', apiData)
-          .then((response) => {
-            // Handle success response
-            console.log('API response', response.data);
+        // const apiData = {
+        //   name: this.formData.claimantName,
+        //   company_name: this.formData.companyName,
+        //   department: this.formData.department,
+        //   designation_title: this.formData.designation,
+        //   claim_startdate: this.formData.reportStartDate,
+        //   claim_enddate: this.formData.reportEndDate,
+        //   reference_number: this.generateUniqueCode(),
+        //   report_name: this.formData.reportName,
+        // };
 
-            this.$router.push({ name: 'ClaimReport' });
-          })
-          .catch((error) => {
-            // Handle error response
-            console.error('API error', error);
-          });
+        // // Send API request using axios
+        // axios.post('http://172.28.28.91:97/api/User/InsertClaimDetails', apiData)
+        //   .then(response => {
+        //     // Handle success response
+        //     console.log('API response', response.data);
+        //     this.$router.push({ name: 'ClaimReport' });
+        //   })
+        //   .catch(error => {
+        //     // Handle error response
+        //     console.error('API error', error);
+        //   });
 
         this.active = 0;
+      }
+        // this.active = 0;
       }
 
       if (this.active < 0) {
         // close the create new claim pop up
         this.$emit('close');
+        this.active = 0;
+        // close the create new claim pop up
+        this.$emit("close");
         this.active = 0;
       }
     },
@@ -240,6 +508,9 @@ export default {
 };
 </script>
 <style scoped>
+.dropdown-content {
+  max-height: 10rem; /* max-h-56 in Tailwind CSS */
+}
 .formStepCircle:not(:first-child)::before {
   content: '';
   background-color: rgb(209 213 219);

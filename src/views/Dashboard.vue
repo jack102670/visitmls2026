@@ -242,6 +242,8 @@ export default {
 
   mounted() {
     // this.role = store.getRole();
+    store.setControlView('services-portal');
+
     this.fetchRequesters();
     // this.userDetails = store.getSession().userDetails;
     // this.token = store.data.token;

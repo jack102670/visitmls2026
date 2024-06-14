@@ -688,8 +688,10 @@
             <h2
               class="text-md font-bold text-gray-700 pt-4 capitalize dark:text-white"
             >
-              C[3] Isolation
+              C[3] Isolation <span class="text-red-500">required</span>
             </h2>
+       
+            
             <div class="grid grid-cols-1 pt-4 gap-6 mt-4 sm:grid-cols-2">
               <div>
                 <label class="text-gray-700 dark:text-gray-200">
@@ -697,6 +699,7 @@
                     type="checkbox"
                     value="I-Electrical"
                     v-model="isolation"
+                 
                   />
                   Electrical
                 </label>
@@ -709,6 +712,7 @@
                     type="checkbox"
                     value="Fire Alarm"
                     v-model="isolation"
+                  
                   />
                   Fire Alarm
                 </label>
@@ -717,7 +721,12 @@
               <!-- First Aid Kit 2 -->
               <div>
                 <label class="text-gray-700 dark:text-gray-200">
-                  <input type="checkbox" value="Traffic" v-model="isolation" />
+                  <input
+                    type="checkbox"
+                    value="Traffic"
+                    v-model="isolation"
+             
+                  />
                   Traffic
                 </label>
               </div>
@@ -729,6 +738,7 @@
                     type="checkbox"
                     value="Chemical/Gas"
                     v-model="isolation"
+               
                   />
                   Chemical/Gas
                 </label>
@@ -741,6 +751,7 @@
                     type="checkbox"
                     value="Other Isolation"
                     v-model="isolation"
+                
                   />
                   Others
                 </label>
@@ -816,7 +827,7 @@
           <h2
             class="text-lg font-semibold text-gray-700 capitalize dark:text-white"
           >
-            Upload Files (List of Local, Foreign and Consent Letter)
+            Documents Related
           </h2>
 
           <form>
@@ -869,7 +880,6 @@
         <section
           class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800"
         >
-        
           <div class=" ">
             <h2
               class="text-lg font-bold text-slate-200 p-1 rounded capitalize bg-[#160959e2] dark:text-white"
@@ -878,138 +888,274 @@
             </h2>
           </div>
           <div class="container mx-auto mt-4 bg-[#fff327] rounded-md">
-    <div class="text-center text-white font-bold flex-col">
-      <div class="text-6xl text-black">WARNING</div>
-      <div class="text-2xl mt-2 text-black">HOT WORK IN PROGRESS!</div>
-      <div class="text-2xl text-black">Watch for fire!</div>
-      <div class="pt-2 text-black">
-        <p>
-          In case of emergency, call the contacts listed below before attemping
-          to exthingush the fire.
-        </p>
-      </div>
-    </div>
-    <div class="bg-gray-100 shadow-md rounded mt-4 m-3">
-      <table class="w-full text-left text-gray-600">
-        <thead>
-          <tr class="border-b border-gray-400 bg-black text-slate-300">
-            <th class="p-2">Contact</th>
-            <th class="p-2">Number</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-b border-gray-900">
-            <td class="p-2">John Doe</td>
-            <td class="p-2">555-555-5555</td>
-          </tr>
-          <tr class="border-b border-gray-900">
-            <td class="p-2">Jane Smith</td>
-            <td class="p-2">555-555-5556</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="mt-10">
-      <p class="font-bold ml-2">
-        Construction and Occupancy Factors for Post-Work Fire Watch and
-        Monitoring Periods
-      </p>
-      <div class="pt-10"></div>
-      <table class="w-full shadow-md rounded overflow-hidden">
-        <thead>
-          <tr class=" text-white">
-            <th colspan="2" class="text-center font-bold py-4">
-             
-            </th>
-            <th colspan="6" class=" bg-black text-center font-bold py-2">
-              Construction Factors
-            </th>
-          </tr>
-          <tr class="text-left border-b border-gray-900 ">
-            <th
-              colspan="2" class="px-6 py-3">
-            </th>
-            <th colspan="2" class="px-3 py-1 border bg-white border-gray-900 text-sm">Noncombustible Construction or FM Approved classs 1 or Class A building materials</th>
-            <th colspan="2" class="px-3 py-1 border bg-white border-gray-900 text-sm">Combustible Construction without concealed cavities</th>
-            <th colspan="2" class="px-3 py-1 border bg-white border-gray-900 text-sm">
-              Combustible Construction with Fire Retardant
-            </th>
-          </tr>
-          <tr class="text-left border-b border-gray-400">
-            <th colspan="2" class="px-3 py-1 border bg-black border-gray-900 text-white">Occupacity Factors</th>
-            <th colspan="1" class="px-3 py-1 border bg-white border-gray-900">Watch</th>
-            <th colspan="1" class="px-3 py-1 border bg-white border-gray-900">Monitor</th>
-            <th colspan="1" class="px-3 py-1 border bg-white border-gray-900">Watch</th>
-            <th colspan="1" class="px-3 py-1 border bg-white border-gray-900">Monitor</th>
-            <th colspan="1" class="px-3 py-1 border bg-white border-gray-900">Watch</th>
-            <th colspan="1" class="px-3 py-1 border bg-white border-gray-900">Monitor</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-b border-gray-400">
-            <td colspan="2" class="px-3 py-1 border bg-white border-gray-900">Noncombustible with any combustibles contained within closed equipment (e.g, ignitable liquid within piping)
-       
-            </td>
-            <td class="px-3 py-1 border bg-white border-gray-900">30 minutes</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">0 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">1 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">3 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">1 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">5 hours</td>
-          </tr>
-          <tr class="border-b border-gray-400">
-            <td colspan="2" class="px-3 py-1 border bg-white border-gray-900">Office, retail or manufacturing with limited combustible loading
-       
-            </td>
-            <td class="px-3 py-1 border bg-white border-gray-900">1 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">1 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">1 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">3 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">1 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">5 hours</td>
-          </tr>
-          <tr class="border-b border-gray-400">
-            <td colspan="2" class="px-3 py-1 border bg-white border-gray-900"> Manufacturing with moderate to significant combustible loading except as noted below
-       
-            </td>
-            <td class="px-3 py-1 border bg-white border-gray-900">1 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">2 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">1 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">3 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">1 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">5 hours</td>
-          </tr>
-          <tr class="border-b border-gray-400">
-            <td colspan="2" class="px-3 py-1 border bg-white border-gray-900">Warehousing
-       
-            </td>
-            <td class="px-3 py-1 border bg-white border-gray-900">1 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">2 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">1 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">3 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">1 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">5 hours</td>
-          </tr>
-          <tr class="border-b border-gray-400">
-            <td colspan="2" class="px-3 py-1 border bg-white border-gray-900">Exceptions: Occupancies with processing or having bulk storage of combustible materials capable of supporting slow-growing fires (e.g., paper, pulp, textile fibers, wood, bark, grain, coal or charcoal)
-       
-            </td>
-            <td class="px-3 py-1 border bg-white border-gray-900">1 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">3 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">1 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">3 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">1 hours</td>
-            <td class="px-3 py-1 border bg-white border-gray-900">5 hours</td>
-          </tr>
-        </tbody>
-        
-      </table>
-      <div class="pt-4 p-3">
-        <h1>When performing torch-applied roofing, apply additional precautions and conduct a minimum 2 hours fire watch and 2 hours fire monitoring. If an infrared camera is utilized, reduce to a 1 hour fire watch and 1 hour fire monitoring. </h1>
-     <h1 class="pt-4">When performing hot work on/in equipment containing nonremovable combustible linings or parts, apply additional precautions and conduct a minimum 1 hour fire watch and 3 hours fire monitoring within the equipment, and in the surrounding areas per Table above</h1>
-      </div>
-    </div>
-  </div>
+            <div class="text-center text-white font-bold flex-col">
+              <div class="text-6xl text-black">WARNING</div>
+              <div class="text-2xl mt-2 text-black">HOT WORK IN PROGRESS!</div>
+              <div class="text-2xl text-black">Watch for fire!</div>
+              <div class="pt-2 text-black">
+                <p>
+                  In case of emergency, call the contacts listed below before
+                  attemping to exthingush the fire.
+                </p>
+              </div>
+            </div>
+            <div class="bg-gray-100 shadow-md rounded mt-4 m-3">
+              <table class="w-full text-left text-gray-600">
+                <thead>
+                  <tr class="border-b border-gray-400 bg-black text-slate-300">
+                    <th class="p-2">Contact</th>
+                    <th class="p-2">Number</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-b border-gray-900">
+                    <td class="p-2">John Doe</td>
+                    <td class="p-2">555-555-5555</td>
+                  </tr>
+                  <tr class="border-b border-gray-900">
+                    <td class="p-2">Jane Smith</td>
+                    <td class="p-2">555-555-5556</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="mt-10">
+              <p class="font-bold ml-2">
+                Construction and Occupancy Factors for Post-Work Fire Watch and
+                Monitoring Periods
+              </p>
+              <div class="pt-10"></div>
+              <table class="w-full shadow-md rounded overflow-hidden">
+                <thead>
+                  <tr class="text-white">
+                    <th colspan="2" class="text-center font-bold py-4"></th>
+                    <th colspan="6" class="bg-black text-center font-bold py-2">
+                      Construction Factors
+                    </th>
+                  </tr>
+                  <tr class="text-left border-b border-gray-900">
+                    <th colspan="2" class="px-6 py-3"></th>
+                    <th
+                      colspan="2"
+                      class="px-3 py-1 border bg-white border-gray-900 text-sm"
+                    >
+                      Noncombustible Construction or FM Approved classs 1 or
+                      Class A building materials
+                    </th>
+                    <th
+                      colspan="2"
+                      class="px-3 py-1 border bg-white border-gray-900 text-sm"
+                    >
+                      Combustible Construction without concealed cavities
+                    </th>
+                    <th
+                      colspan="2"
+                      class="px-3 py-1 border bg-white border-gray-900 text-sm"
+                    >
+                      Combustible Construction with Fire Retardant
+                    </th>
+                  </tr>
+                  <tr class="text-left border-b border-gray-400">
+                    <th
+                      colspan="2"
+                      class="px-3 py-1 border bg-black border-gray-900 text-white"
+                    >
+                      Occupacity Factors
+                    </th>
+                    <th
+                      colspan="1"
+                      class="px-3 py-1 border bg-white border-gray-900"
+                    >
+                      Watch
+                    </th>
+                    <th
+                      colspan="1"
+                      class="px-3 py-1 border bg-white border-gray-900"
+                    >
+                      Monitor
+                    </th>
+                    <th
+                      colspan="1"
+                      class="px-3 py-1 border bg-white border-gray-900"
+                    >
+                      Watch
+                    </th>
+                    <th
+                      colspan="1"
+                      class="px-3 py-1 border bg-white border-gray-900"
+                    >
+                      Monitor
+                    </th>
+                    <th
+                      colspan="1"
+                      class="px-3 py-1 border bg-white border-gray-900"
+                    >
+                      Watch
+                    </th>
+                    <th
+                      colspan="1"
+                      class="px-3 py-1 border bg-white border-gray-900"
+                    >
+                      Monitor
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-b border-gray-400">
+                    <td
+                      colspan="2"
+                      class="px-3 py-1 border bg-white border-gray-900"
+                    >
+                      Noncombustible with any combustibles contained within
+                      closed equipment (e.g, ignitable liquid within piping)
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      30 minutes
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      0 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      1 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      3 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      1 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      5 hours
+                    </td>
+                  </tr>
+                  <tr class="border-b border-gray-400">
+                    <td
+                      colspan="2"
+                      class="px-3 py-1 border bg-white border-gray-900"
+                    >
+                      Office, retail or manufacturing with limited combustible
+                      loading
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      1 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      1 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      1 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      3 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      1 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      5 hours
+                    </td>
+                  </tr>
+                  <tr class="border-b border-gray-400">
+                    <td
+                      colspan="2"
+                      class="px-3 py-1 border bg-white border-gray-900"
+                    >
+                      Manufacturing with moderate to significant combustible
+                      loading except as noted below
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      1 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      2 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      1 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      3 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      1 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      5 hours
+                    </td>
+                  </tr>
+                  <tr class="border-b border-gray-400">
+                    <td
+                      colspan="2"
+                      class="px-3 py-1 border bg-white border-gray-900"
+                    >
+                      Warehousing
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      1 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      2 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      1 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      3 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      1 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      5 hours
+                    </td>
+                  </tr>
+                  <tr class="border-b border-gray-400">
+                    <td
+                      colspan="2"
+                      class="px-3 py-1 border bg-white border-gray-900"
+                    >
+                      Exceptions: Occupancies with processing or having bulk
+                      storage of combustible materials capable of supporting
+                      slow-growing fires (e.g., paper, pulp, textile fibers,
+                      wood, bark, grain, coal or charcoal)
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      1 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      3 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      1 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      3 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      1 hours
+                    </td>
+                    <td class="px-3 py-1 border bg-white border-gray-900">
+                      5 hours
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="pt-4 p-3">
+                <h1>
+                  When performing torch-applied roofing, apply additional
+                  precautions and conduct a minimum 2 hours fire watch and 2
+                  hours fire monitoring. If an infrared camera is utilized,
+                  reduce to a 1 hour fire watch and 1 hour fire monitoring.
+                </h1>
+                <h1 class="pt-4">
+                  When performing hot work on/in equipment containing
+                  nonremovable combustible linings or parts, apply additional
+                  precautions and conduct a minimum 1 hour fire watch and 3
+                  hours fire monitoring within the equipment, and in the
+                  surrounding areas per Table above
+                </h1>
+              </div>
+            </div>
+          </div>
 
           <form>
             <div
@@ -1893,9 +2039,9 @@
                       id="ladderCondition"
                       type="checkbox"
                       v-model="waH_Ladders"
-                      value="Is the ladder in good condition and suitable for the task?"
+                      value="The ladder is in good condition and suitable for the task."
                     />
-                    Is the ladder in good condition and suitable for the task?
+                    The ladder is in good condition and suitable for the task.
                   </label>
                 </div>
 
@@ -1909,9 +2055,9 @@
                       id="ladderHeight"
                       type="checkbox"
                       v-model="waH_Ladders"
-                      value="Is the ladder tall enough for the task?"
+                      value="The ladder is tall enough for the task."
                     />
-                    Is the ladder tall enough for the task?
+                    The ladder is tall enough for the task.
                   </label>
                 </div>
 
@@ -1925,9 +2071,9 @@
                       id="ladderLevel"
                       type="checkbox"
                       v-model="waH_Ladders"
-                      value="Is the ladder on a level footing?"
+                      value="The ladder is on a level footing."
                     />
-                    Is the ladder on a level footing?
+                    The ladder is on a level footing.
                   </label>
                 </div>
 
@@ -1941,9 +2087,10 @@
                       id="areaBarricaded"
                       type="checkbox"
                       v-model="waH_Ladders"
-                      value="Is the area below barricaded?"
+                      value="The area below is barricaded
+"
                     />
-                    Is the area below barricaded?
+                    The area below is barricaded
                   </label>
                 </div>
 
@@ -1957,9 +2104,9 @@
                       id="ladderSecured"
                       type="checkbox"
                       v-model="waH_Ladders"
-                      value="Is the ladder secured top and bottom? (not applicable for step ladders)"
+                      value="The ladder is secured top and bottom. (not applicable for step ladders)"
                     />
-                    Is the ladder secured top and bottom? (not applicable for
+                    The ladder is secured top and bottom. (not applicable for
                     step ladders)
                   </label>
                 </div>
@@ -1974,10 +2121,10 @@
                       id="ladderExtended"
                       type="checkbox"
                       v-model="waH_Ladders"
-                      value="Is the ladder extended with at least three (3) rungs or 900mm overlap?"
+                      value="The ladder is extended with at least three (3) rungs or 900mm overlap."
                     />
-                    Is the ladder extended with at least three (3) rungs or
-                    900mm overlap?
+                    The ladder is extended with at least three (3) rungs or
+                    900mm overlap.
                   </label>
                 </div>
 
@@ -1991,9 +2138,9 @@
                       id="ladderRatio"
                       type="checkbox"
                       v-model="waH_Ladders"
-                      value="Is the ladder position 1 in 4 ratio?"
+                      value="The ladder is positioned to 1 in 4 ratios?"
                     />
-                    Is the ladder position 1 in 4 ratio?
+                    The ladder is positioned to 1 in 4 ratios?
                   </label>
                 </div>
               </div>
@@ -2024,9 +2171,9 @@
                       id="kickBoards"
                       type="checkbox"
                       v-model="waH_Scaffolding"
-                      value=" Are kick boards in place?"
+                      value="Kick boards are in place."
                     />
-                    Are kick boards in place?
+                    Kick boards are in place.
                   </label>
                 </div>
 
@@ -2040,9 +2187,9 @@
                       id="handRails"
                       type="checkbox"
                       v-model="waH_Scaffolding"
-                      value="Are hand rails in place?"
+                      value="Mid rails are in place."
                     />
-                    Are hand rails in place?
+                    Mid rails are in place.
                   </label>
                 </div>
 
@@ -2072,9 +2219,9 @@
                       id="internalLadder"
                       type="checkbox"
                       v-model="waH_Scaffolding"
-                      value="Is the ladder installed internally (if applicable)?"
+                      value="The ladder is installed internally (if applicable)."
                     />
-                    Is the ladder installed internally (if applicable)?
+                    The ladder is installed internally (if applicable).
                   </label>
                 </div>
 
@@ -2088,9 +2235,9 @@
                       id="solidFooting"
                       type="checkbox"
                       v-model="waH_Scaffolding"
-                      value="Is the scaffold on a solid footing?"
+                      value="The scaffolding is on a solid footing."
                     />
-                    Is the scaffold on a solid footing?
+                    The scaffolding is on a solid footing.
                   </label>
                 </div>
 
@@ -2121,9 +2268,9 @@
                       id="areaBarricadedScaffold"
                       type="checkbox"
                       v-model="waH_Scaffolding"
-                      value="Is the area below barricaded?"
+                      value="The area below is barricaded."
                     />
-                    Is the area below barricaded?
+                    The area below is barricaded.
                   </label>
                 </div>
 
@@ -2137,9 +2284,9 @@
                       id="safeWorkingLimits"
                       type="checkbox"
                       v-model="waH_Scaffolding"
-                      value="Is the scaffold operating within safe working limits?"
+                      value="The scaffold is operated within safe working limits."
                     />
-                    Is the scaffold operating within safe working limits?
+                    The scaffold is operated within safe working limits.
                   </label>
                 </div>
 
@@ -2153,9 +2300,9 @@
                       id="freeFromObstructions"
                       type="checkbox"
                       v-model="waH_Scaffolding"
-                      value="Is the area free from overhead obstructions?"
+                      value="The area is free from overhead obstructions."
                     />
-                    Is the area free from overhead obstructions?
+                    The area is free from overhead obstructions.
                   </label>
                 </div>
 
@@ -2169,9 +2316,9 @@
                       id="competentPerson"
                       type="checkbox"
                       v-model="waH_Scaffolding"
-                      value="Is the scaffold erected by a competent person?"
+                      value="The scaffolding is erected by a competent person."
                     />
-                    Is the scaffold erected by a competent person?
+                    The scaffolding is erected by a competent person.
                   </label>
                 </div>
               </div>
@@ -2201,9 +2348,9 @@
                       id="permissionToUse"
                       type="checkbox"
                       v-model="waH_LiftTruck"
-                      value="Permission to use attained?"
+                      value="Permission to use attained."
                     />
-                    Permission to use attained?
+                    Permission to use attained.
                   </label>
                 </div>
 
@@ -2217,9 +2364,9 @@
                       id="equipmentGoodOrder"
                       type="checkbox"
                       v-model="waH_LiftTruck"
-                      value="Equipment in good working order?"
+                      value="Equipment in good working order."
                     />
-                    Equipment in good working order?
+                    Equipment in good working order.
                   </label>
                 </div>
 
@@ -2233,9 +2380,9 @@
                       id="batteryCharged"
                       type="checkbox"
                       v-model="waH_LiftTruck"
-                      value="Battery fully charged?"
+                      value="Battery fully charged."
                     />
-                    Battery fully charged?
+                    Battery fully charged.
                   </label>
                 </div>
 
@@ -2249,9 +2396,9 @@
                       id="equipmentChecked"
                       type="checkbox"
                       v-model="waH_LiftTruck"
-                      value="Equipment physically checked?"
+                      value="Equipment physically checked."
                     />
-                    Equipment physically checked?
+                    Equipment physically checked.
                   </label>
                 </div>
               </div>
@@ -2282,9 +2429,9 @@
                       id="securingChain"
                       type="checkbox"
                       v-model="waH_ManCage"
-                      value="Securing chain and shackle available?"
+                      value="Securing chain and shackle available."
                     />
-                    Securing chain and shackle available?
+                    Securing chain and shackle available.
                   </label>
                 </div>
 
@@ -2298,9 +2445,9 @@
                       id="freeOfDamage"
                       type="checkbox"
                       v-model="waH_ManCage"
-                      value="Free of physical damage?"
+                      value="Free of physical damage."
                     />
-                    Free of physical damage?
+                    Free of physical damage.
                   </label>
                 </div>
 
@@ -2314,9 +2461,9 @@
                       id="slotSize"
                       type="checkbox"
                       v-model="waH_ManCage"
-                      value="Appropriate slot size for forks available?"
+                      value="Appropriate slot size for forks available."
                     />
-                    Appropriate slot size for forks available?
+                    Appropriate slot size for forks available.
                   </label>
                 </div>
               </div>
@@ -2348,10 +2495,10 @@
                     id="emergencyProcedures"
                     type="checkbox"
                     v-model="waH_Emergency"
-                    value="Have emergency and rescue procedures been established, tested and recorded? (These items can be recorded in JHA)"
+                    value="Have emergency and rescue procedures been established, tested and recorded. (These items can be recorded in JHA)"
                   />
                   Have emergency and rescue procedures been established, tested
-                  and recorded? (These items can be recorded in JHA)
+                  and recorded. (These items can be recorded in JHA)
                 </label>
               </div>
 
@@ -2365,10 +2512,10 @@
                     id="communicationArrangements"
                     type="checkbox"
                     v-model="waH_Emergency"
-                    value="Have appropriate communication arrangements been established for potential emergencies?"
+                    value="Have appropriate communication arrangements been established for potential emergencies."
                   />
                   Have appropriate communication arrangements been established
-                  for potential emergencies?
+                  for potential emergencies.
                 </label>
               </div>
 
@@ -2404,10 +2551,11 @@
                     id="specificJHA"
                     type="checkbox"
                     v-model="waH_ControlMeasure"
-                    value=" A task/site specific JHA, or equivalent, has been developed and appropriately addresses identified work at height hazards?"
+                    value="A task/site specific JHA, or equivalent, has been developed and appropriately addresses identified work at height hazards."
                   />
+
                   A task/site specific JHA, or equivalent, has been developed
-                  and appropriately addresses identified work at height hazards?
+                  and appropriately addresses identified work at height hazards.
                 </label>
               </div>
 
@@ -2421,10 +2569,10 @@
                     id="jhaReviewed"
                     type="checkbox"
                     v-model="waH_ControlMeasure"
-                    value="The JHA, or equivalent, has been reviewed and is understood by those involved in the task?"
+                    value="The JHA, or equivalent, has been reviewed and is understood by those involved in the task."
                   />
                   The JHA, or equivalent, has been reviewed and is understood by
-                  those involved in the task?
+                  those involved in the task.
                 </label>
               </div>
 
@@ -2438,11 +2586,9 @@
                     id="competentTraining"
                     type="checkbox"
                     v-model="waH_ControlMeasure"
-                    value="Those involved in the work at height activities are appropriately competent and can produce evidence of training where requested?"
+                    value="Those involved in the work at height activities are appropriately competent and can produce evidence of training where requested."
                   />
-                  Those involved in the work at height activities are
-                  appropriately competent and can produce evidence of training
-                  where requested?
+                  Those involved in the work at height activities are appropriately competent and can produce evidence of training where requested.
                 </label>
               </div>
             </div>
@@ -2763,6 +2909,7 @@ export default {
   },
   data() {
     return {
+      isIsolationChecked: false,
       department: "",
       hotWorkLocation: "",
       othersDetails: "",
@@ -2856,6 +3003,9 @@ export default {
     this.userDetails = store.getSession().userDetails;
   },
   methods: {
+    validateIsolation() {
+      this.isIsolationChecked = this.isolation.length > 0;
+    },
     addOthersToEquipment() {
       this.equipment.push(this.othersPPE);
       this.othersPPE = "";

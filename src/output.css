@@ -932,6 +932,10 @@ video {
   height: 3.5rem;
 }
 
+.h-2 {
+  height: 0.5rem;
+}
+
 .h-20 {
   height: 5rem;
 }
@@ -992,6 +996,10 @@ video {
   height: 65%;
 }
 
+.h-\[70\%\] {
+  height: 70%;
+}
+
 .h-\[90\%\] {
   height: 90%;
 }
@@ -1015,6 +1023,10 @@ video {
 
 .max-h-32 {
   max-height: 8rem;
+}
+
+.max-h-56 {
+  max-height: 14rem;
 }
 
 .max-h-\[1000px\] {
@@ -2023,8 +2035,16 @@ video {
   padding-bottom: 1.5rem;
 }
 
+.pl-3 {
+  padding-left: 0.75rem;
+}
+
 .pl-6 {
   padding-left: 1.5rem;
+}
+
+.pr-2 {
+  padding-right: 0.5rem;
 }
 
 .pt-0 {

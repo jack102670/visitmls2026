@@ -45,88 +45,327 @@
                     field.gridClass,
                   ]"
                 >
-                  <label
-                    :for="field.id"
-                    class="block text-gray-700 text-sm font-bold mb-2"
-                  >
-                    {{ field.label }}
-                    <span v-if="field.required" style="color: red">*</span>
-                  </label>
-
-                  <template v-if="field.type === 'select'">
-                    <select
-                      v-model="field.value"
-                      :id="field.id"
-                      class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    >
-                      <option
-                        v-for="(option, optionIndex) in field.options"
-                        :key="optionIndex"
-                        :value="option.value"
-                      >
-                        {{ option.label }}
-                      </option>
-                    </select>
-                  </template>
-
-                  <template v-else-if="field.type === 'year'">
-                    <select
-                      v-model="field.value"
-                      :id="field.id"
-                      class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    >
-                      <option
-                        v-for="year in yearRange"
-                        :key="year"
-                        :value="year"
-                      >
-                        {{ year }}
-                      </option>
-                    </select>
-                  </template>
-
                   <template
-                    v-else-if="field.type === 'text' && field.isOtherOption"
+                    v-if="
+                      !isCompanyTransport ||
+                      (field.id !== 'MileageKMLT' && field.id !== 'MileageRMLT' && field.id !== 'TransportSpec')
+                    "
                   >
-                    <input
-                      v-model="field.value"
-                      :id="field.id"
-                      :type="field.type"
-                      :placeholder="field.placeholder"
-                      class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    />
-                  </template>
+                    <label
+                      :for="field.id"
+                      class="block text-gray-700 text-sm font-bold mb-2"
+                    >
+                      {{ field.label }}
+                      <span v-if="field.required" style="color: red">*</span>
+                    </label>
 
-                  <template v-else-if="field.type === 'file'">
-                    <div class="pt-3">
-                      <file-pond
-                        :name="field.id"
-                        ref="pond"
-                        label-idle="Drop files here..."
-                      
-                        @addfile="
-                          (error, file) => handleAddFile(error, file, field)
-                        "
-                        @removefile="
-                          (error, file) => handleRemoveFile(error, file, field)
-                        "
-                        :accepted-file-types="field.acceptedFileTypes"
-                        :max-file-size="field.maxFileSize"
-                        :allow-multiple="field.allowMultiple"
+                    <template v-if="field.type === 'select'">
+                      <select
+                        v-model="field.value"
+                        :id="field.id"
+                        class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                      >
+                        <option
+                          v-for="(option, optionIndex) in field.options"
+                          :key="optionIndex"
+                          :value="option.value"
+                        >
+                          {{ option.label }}
+                        </option>
+                      </select>
+                    </template>
+
+                    <template v-else-if="field.type === 'year'">
+                      <select
+                        v-model="field.value"
+                        :id="field.id"
+                        class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                      >
+                        <option
+                          v-for="year in yearRange"
+                          :key="year"
+                          :value="year"
+                        >
+                          {{ year }}
+                        </option>
+                      </select>
+                    </template>
+
+                    <template v-else-if="field.type === 'radio-group'">
+                      <div class="grid grid-cols-2">
+                        <div
+                          class="p-4 pt-2 pb-2 flex items-center"
+                          v-for="option in field.options"
+                          :key="option.value"
+                        >
+                          <input
+                            type="radio"
+                            :id="option.value"
+                            :name="field.id"
+                            :value="option.value"
+                            v-model="field.value"
+                            class="mr-2"
+                          />
+                          <label
+                            :for="option.value"
+                            class="text-sm text-gray-700"
+                          >
+                            {{ option.label }}
+                          </label>
+                        </div>
+                      </div>
+                    </template>
+
+                    <template v-else-if="field.type === 'text' && field.isOtherOption">
+                      <input
+                        v-model="field.value"
+                        :id="field.id"
+                        :type="field.type"
+                        :placeholder="field.placeholder"
+                        class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                       />
-                    </div>
-                  </template>
+                    </template>
 
-                  <template v-else>
-                    <input
-                      v-model="field.value"
-                      :id="field.id"
-                      :type="field.type"
-                      :placeholder="field.placeholder"
-                      class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    />
+                    <template v-else-if="field.type === 'file'">
+                      <div class="pt-3">
+                        <file-pond
+                          :name="field.id"
+                          ref="pond"
+                          label-idle="Drop files here..."
+                          @addfile="
+                            (error, file) => handleAddFile(error, file, field)
+                          "
+                          @removefile="
+                            (error, file) =>
+                              handleRemoveFile(error, file, field)
+                          "
+                          :accepted-file-types="field.acceptedFileTypes"
+                          :max-file-size="field.maxFileSize"
+                          :allow-multiple="field.allowMultiple"
+                        />
+                      </div>
+                    </template>
+
+                    <template v-else>
+                      <input
+                        v-model="field.value"
+                        :id="field.id"
+                        :type="field.type"
+                        :placeholder="field.placeholder"
+                        :step="field.type === 'number' ? '0.01' : undefined"
+                        class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                      />
+                    </template>
                   </template>
                 </div>
+
+                <!-- Add Other Expenses Section-->
+                <section>
+                  <!-- Add Other Expenses Button-->
+                  <div
+                    v-if="
+                      tab.title === 'Overseas Travelling with Accommodation'
+                    "
+                    class="mt-4"
+                  >
+                    <span class="block text-gray-700 text-sm font-bold mb-2"
+                      >Other Expenses (If any)
+                    </span>
+                    <button
+                      type="button"
+                      class="px-4 py-2 bg-blue-500 text-white rounded"
+                      @click="showOtherExpensesModal = true"
+                    >
+                      Add Expenses
+                    </button>
+                  </div>
+
+                  <!-- Modal Form for Other Expenses -->
+                  <div
+                    v-if="showOtherExpensesModal"
+                    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+                  >
+                    <div
+                      class="relative p-8 bg-white w-full max-w-md m-auto flex-col flex rounded-lg"
+                    >
+                      <h3 class="text-lg font-medium mb-4">
+                        Add Other Expense
+                      </h3>
+                      <form @submit.prevent="addOtherExpense">
+                        <div class="mb-4">
+                          <label
+                            class="block text-sm font-medium text-gray-700"
+                            for="expenseName"
+                            >Expense Name</label
+                          >
+                          <input
+                            v-model="newExpense.name"
+                            id="expenseName"
+                            type="text"
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                            required
+                          />
+                        </div>
+                        <div class="mb-4">
+                          <label
+                            class="block text-sm font-medium text-gray-700"
+                            for="expenseAmount"
+                            >Amount (RM)</label
+                          >
+                          <input
+                            v-model="newExpense.amount"
+                            id="expenseAmount"
+                            type="number"
+                            placeholder="Amount (RM)"
+                            step= "0.01"
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                            required
+                          />
+                        </div>
+                        <div class="mb-4">
+                          <label
+                            class="block text-sm font-medium text-gray-700"
+                            for="expenseAmount"
+                            >Description</label
+                          >
+                          <input
+                            v-model="newExpense.description"
+                            id="expenseDescription"
+                            type="text"
+
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                            required
+                          />
+                        </div>
+                        <div class="flex justify-end">
+                          <button
+                            type="submit"
+                            class="px-4 py-2 bg-blue-500 text-white rounded mr-2"
+                          >
+                            Submit
+                          </button>
+                          <button
+                            @click="showOtherExpensesModal = false"
+                            class="px-4 py-2 bg-gray-300 text-black rounded"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+                  <!-- Other Expenses Table -->
+                  <div
+                    v-if="
+                      tab.title === 'Overseas Travelling with Accommodation' &&
+                      otherExpenses.length > 0
+                    "
+                    class="mt-4"
+                  >
+                    <table
+                      class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                    >
+                      <thead class="bg-gray-50 dark:bg-gray-800">
+                        <tr>
+                          <th
+                            scope="col"
+                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                          >
+                            <div class="flex items-center gap-x-3">
+                              <span>Expense</span>
+                            </div>
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                          >
+                            <div class="flex items-center gap-x-3">
+                              <span>Amount(RM)</span>
+                            </div>
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                          >
+                            <div class="flex items-center gap-x-3">
+                              <span>Description</span>
+                            </div>
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                          >
+                            <div class="flex items-center gap-x-3">
+                              <span>Action</span>
+                            </div>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody
+                        class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
+                      >
+                        <tr
+                          v-for="(expense, index) in otherExpenses"
+                          :key="index"
+                        >
+                          <td
+                            class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                          >
+                            {{ expense.name }}
+                          </td>
+                          <td
+                            class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                          >
+                            RM {{ expense.amount }}
+                          </td>
+                          <td
+                            class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                          >
+                            {{ expense.description }}
+                          </td>
+                          <td
+                            class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                          >
+                            <button
+                              class="text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
+                              @click="removeExpense(index)"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-5 h-5"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                />
+                              </svg>
+                            </button>
+                          </td>
+                        </tr>
+                        <tr class="bg-gray-50 dark:bg-gray-800">
+                          <td
+                            class="px-4 py-2 border text-sm font-normal text-right text-gray-500 dark:text-gray-400"
+                            colspan="2"
+                          >
+                            Total Amount
+                          </td>
+                          <td
+                            class="px-4 py-2 border text-sm font-medium text-gray-700 whitespace-nowrap"
+                          >
+                            RM {{ calculateOverseasTotal() }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
+                <!-- End of Add Other Expenses Section -->
 
                 <div class="pt-4">
                   <hr class="" />
@@ -250,6 +489,7 @@
                         :id="field.id"
                         :type="field.type"
                         :placeholder="field.placeholder"
+                        :step="field.type === 'number' ? '0.01' : undefined"
                         class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                       />
                     </template>
@@ -557,6 +797,12 @@ export default {
       date: "",
       yearRange: [],
       uploadedFiles: [],
+      otherExpenses: [],
+      showOtherExpensesModal: false,
+      newExpense: {
+        name: "",
+        amount: 0,
+      },
       showModal: false,
       selectedAttendeeType: "pkt",
       selectedCompanyName: "",
@@ -584,24 +830,74 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "DestinationPurposeLT",
-              label: "Destination / Purpose",
+              id: "TransportLT",
+              label: "Travelling Mode By",
+              type: "radio-group",
+              value: [],
+              required: true,
+              options: [
+                { label: "Personal Transport", value: "Personal Transport" },
+                { label: "Company Transport", value: "Company Transport" },
+                { label: "Others", value: "Others" },
+              ],
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "TransportSpec",
+              label: "Transport Specification",
               type: "select",
               value: "",
               required: true,
               options: [
-                { label: "LABEL 1", value: "LABEL 1" },
-                { label: "LABEL 2", value: "LABEL 2" },
-                { label: "LABEL 3", value: "LABEL 3" },
+                { label: "Motorcycle", value: "Motorcycle" },
+                { label: "Car", value: "Car" },
+                { label: "Van", value: "Van" },
+                { label: "Truck", value: "Truck" },
+                { label: "Bus", value: "Bus" },
+                { label: "Train", value: "Train" },
+                { label: "Ship", value: "Ship" },
+                { label: "Airplane", value: "Airplane" },
+              ],
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "LocationStart",
+              label: "Starting Point Location",
+              type: "text",
+              placeholder: "From Where",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "LocationEnd",
+              label: "End Point Location",
+              type: "text",
+              placeholder: "To Where",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "tripwayLT",
+              label: "Trip",
+              type: "radio-group",
+              value: [],
+              required: true,
+              options: [
+                { label: "Round Trip", value: "Round Trip" },
+                { label: "One Way", value: "One Way" },
               ],
               gridClass: "sm:col-span-1",
             },
             {
               id: "MileageKMLT",
-              label: "Mileage(KM)",
+              label: "Mileage/Kilometer(KM)",
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
+              hidden: false,
             },
             {
               id: "MileageRMLT",
@@ -609,10 +905,11 @@ export default {
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
+              hidden: false,
             },
             {
               id: "TollLT",
-              label: "Toll(RM)",
+              label: "Toll/Touch' n Go(RM)",
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
@@ -644,12 +941,10 @@ export default {
             },
           ],
         },
-
         {
           form: "HR",
           title: "Overseas Travelling with Accommodation",
           tabType: "Finance",
-
           gridLayout: "grid-cols-3", //
           fields: [
             {
@@ -674,6 +969,7 @@ export default {
               type: "text",
               placeholder: "Accommodation",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -681,6 +977,7 @@ export default {
               label: "Exchange Rate",
               type: "text",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -688,6 +985,7 @@ export default {
               label: "RM",
               type: "number",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -715,7 +1013,7 @@ export default {
             {
               id: "MealAllowanceOT",
               label: "Meal Allowance(RM)",
-              type: "text",
+              type: "number",
               value: "",
               gridClass: "sm:col-span-2",
             },
@@ -1195,6 +1493,35 @@ export default {
     };
   },
 
+  computed: {
+    isCompanyTransport() {
+      const tab = this.tabs.find((tab) => tab.title === "Local Travelling");
+      if (!tab) return false;
+      const transportField = tab.fields.find(
+        (field) => field.id === "TransportLT" && "TransportSpec" 
+      );
+      return transportField && transportField.value === "Company Transport";
+    },
+  },
+
+  watch: {
+    tabs: {
+      handler(newTabs) {
+        newTabs.forEach((tab) => {
+          if (tab.title === "Local Travelling") {
+            const transportField = tab.fields.find(
+              (field) => field.id === "TransportLT" && "TransportSpec"
+            );
+            if (transportField) {
+              this.updateFieldVisibility(transportField.value);
+            }
+          }
+        });
+      },
+      deep: true,
+    },
+  },
+
   mounted() {
     // Populate the year range with the last 20 years
     const currentYear = new Date().getFullYear();
@@ -1204,35 +1531,86 @@ export default {
   },
 
   methods: {
-  handleAddFile(error, file, field) {
-  if (error) {
-    console.error("Error adding file:", error.message);
-    return;
-  }
-  field.value = [...field.value, file.file];
-  console.log("File added:", file.file);
-  console.log("Updated files:", field.value);
-},
+    handleAddFile(error, file, field) {
+      if (error) {
+        console.error("Error adding file:", error.message);
+        return;
+      }
+      field.value = [...field.value, file.file];
+      console.log("File added:", file.file);
+      console.log("Updated files:", field.value);
+    },
 
-handleRemoveFile(error, file, field) {
-  if (error) {
-    console.error(
-      "An error occurred while removing the file:",
-      error.message
-    );
-    return;
-  }
+    handleRemoveFile(error, file, field) {
+      if (error) {
+        console.error(
+          "An error occurred while removing the file:",
+          error.message
+        );
+        return;
+      }
+      const fileObject = file.file;
+      const index = field.value.findIndex((f) => f.name === fileObject.name);
+      if (index !== -1) {
+        field.value = [
+          ...field.value.slice(0, index),
+          ...field.value.slice(index + 1),
+        ];
+        console.log("File removed:", fileObject.name, fileObject);
+        console.log("Updated field value:", field);
+      }
+    },
 
-  const fileObject = file.file;
+    updateFieldVisibility(transportValue) {
+      const localTravellingTab = this.tabs.find(
+        (tab) => tab.title === "Local Travelling"
+      );
+      if (!localTravellingTab) return;
+      const mileageKMLTField = localTravellingTab.fields.find(
+        (field) => field.id === "MileageKMLT"
+      );
+      const mileageRMLTField = localTravellingTab.fields.find(
+        (field) => field.id === "MileageRMLT"
+      );
+      const TransportSpecField = localTravellingTab.fields.find(
+        (field) => field.id === "MileageRMLT"
+      );
+      if (!mileageKMLTField || !mileageRMLTField || !TransportSpecField ) return;
 
-  // Find and remove the file object from the field's value array
-  const index = field.value.findIndex((f) => f.name === fileObject.name);
-  if (index !== -1) {
-    field.value = [...field.value.slice(0, index), ...field.value.slice(index + 1)];
-    console.log("File removed:", fileObject.name, fileObject);
-    console.log("Updated field value:", field);
-  }
-},
+      if (transportValue === "Company Transport") {
+        mileageKMLTField.hidden = true;
+        mileageRMLTField.hidden = true;
+        TransportSpecField.hidden = true;
+      } else {
+        mileageKMLTField.hidden = false;
+        mileageRMLTField.hidden = false;
+        TransportSpecField.hidden = false;
+      }
+    },
+
+    handleTransportChange(value) {
+      this.showTransportSpec = value === "Personal Transport" || value === "Others";
+    },
+
+    addOtherExpense() {
+      this.otherExpenses.push({ ...this.newExpense });
+      this.newExpense.name = "";
+      this.newExpense.amount = 0;
+      this.showOtherExpensesModal = false;
+      console.log("Other Expenses:", this.otherExpenses);
+    },
+
+    removeExpense(index) {
+      this.otherExpenses.splice(index, 1);
+    },
+
+    calculateOverseasTotal() {
+      let total = 0;
+      for (const expense of this.otherExpenses) {
+        total += parseFloat(expense.amount) || 0;
+      }
+      return total;
+    },
 
     addAttendee() {
       const { name, staffId, companyName } = this.modalForm;
@@ -1267,18 +1645,45 @@ handleRemoveFile(error, file, field) {
 
     calculateTotal(tab) {
       let total = 0;
+      let isRoundTrip = false;
+
+      // Check if the transport mode is Company Transport
+      const isCompanyTransport = tab.fields.some(
+        (field) =>
+          field.id === "TransportLT" &&
+          field.value.includes("Company Transport")
+      );
+
+      // Iterate through the fields of the current tab
       tab.fields.forEach((field) => {
+        // Check if Round Trip is selected
+        if (field.id === "tripwayLT" && field.value.includes("Round Trip")) {
+          isRoundTrip = true;
+        }
+
+        // Calculate the total based on the field value
         if (
           field.type === "number" &&
           !isNaN(parseFloat(field.value)) &&
           field.id !== "MileageKMLT" &&
           field.id !== "LimitedAmountHR" &&
           field.id !== "AccBankNumberHR" &&
-          field.id !== "AccBankNumberML"
+          field.id !== "AccBankNumberML" &&
+          (!isCompanyTransport || field.id !== "MileageRMLT")
         ) {
-          total += parseFloat(field.value);
+          // If Round Trip is selected, double up the calculation
+          total += isRoundTrip
+            ? parseFloat(field.value) * 2
+            : parseFloat(field.value);
         }
       });
+
+      // If the tab title is "Overseas Travelling with Accommodation", add the total of other expenses
+      if (tab.title === "Overseas Travelling with Accommodation") {
+        total += this.calculateOverseasTotal();
+      }
+
+      // Return the total
       return total.toFixed(2);
     },
 
@@ -1288,59 +1693,36 @@ handleRemoveFile(error, file, field) {
     },
 
     submitForm(tab) {
-      // Create an empty object to hold the formatted form data
       const formattedData = {};
-
-      // Iterate through the fields of the current tab
       tab.fields.forEach((field) => {
-        // Use the field label as the key and the field value as the value
         formattedData[field.id] = field.value;
       });
-
-      // Add the tab title to the formatted data
       formattedData["tabTitle"] = tab.title;
+      formattedData["totalRM"] = this.calculateTotal(tab);
 
-      // Emit the formatted form data
-      this.$emit("formSubmitted", formattedData);
-
-      // Log the formatted form data to the console
-      console.log("Formatted Form Data:", formattedData);
-
-      if (tab.title === "Attendees") {
-        const newAttendee = {};
-        tab.fields.forEach((field) => {
-          newAttendee[field.id] = field.value;
-          field.value = "";
-        });
-        tab.attendees.push(newAttendee);
+      if (
+        tab.title === "Overseas Travelling with Accommodation" &&
+        this.otherExpenses.length > 0
+      ) {
+        // Add otherExpenses to formattedData
+        formattedData["otherExpenses"] = [...this.otherExpenses];
       }
-      //  else {
-      //   console.log(`Form submitted for tab: ${tab.title}`, tab.fields);
-      // }
+
+      this.$emit("formSubmitted", formattedData);
+      console.log("Formatted Form Data:", formattedData);
     },
     submitForm2() {
-      // Create an empty object to hold the formatted form data
       const formattedData = {};
-
-      // Iterate over all tabs
       this.entertainmentTabs.forEach((tab) => {
-        // Iterate through the fields of the current tab
         tab.fields.forEach((field) => {
-          // Use the field label as the key and the field value as the value
           formattedData[field.id] = field.value;
         });
 
         tab.attendees = [...this.attendees];
         formattedData["attendees"] = [...tab.attendees];
       });
-
-      // Add the tab title to the formatted data
       formattedData["tabTitle"] = "Entertainment";
-
-      // Emit the formatted form data
       this.$emit("formSubmitted", formattedData);
-
-      // Log the formatted form data to the console
       console.log("Formatted Form Data:", formattedData);
     },
   },

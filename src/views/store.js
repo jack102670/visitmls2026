@@ -7,14 +7,14 @@ export const formStore = {
     designation: '',
     reportName: '',
     internalOrder: '',
-    reportType: '',
+    reportType: 'Finance',
     reportDate: '',
     reportStartDate: '',
     reportEndDate: '',
     memo: '',
     uniqueCode: '',
 
-    selectedOption:'',
+    selectedOption:'Finance',
 
   },
 
@@ -63,8 +63,19 @@ export const store = {
     token: null,
     role: null,
     OGR: null,
+    controlView: null,
+  },
+  setControlView(value) {
+    this.data.controlView = value;
+    localStorage.setItem('controlView', value);
   },
 
+  getControlView() {
+    if (this.data.controlView === null) {
+      this.data.controlView = localStorage.getItem('controlView');
+    }
+    return this.data.controlView;
+  },
   setSelectedLocation(locationId, locations) {
     const location = locations.find((loc) => loc.id === locationId);
     this.data.selectedLocation = location ? location.name : null;
