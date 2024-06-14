@@ -10,8 +10,8 @@
           SN: {{ claims[0].uniqueCode }}
         </h1>
         <!-- Header Section -->
-        <p class="absolute right-0 mr-2 top-1 pt-2 text-sm text-gray-500">
-          SN:{{ claims[0].uniqueCode }}
+        <p class="absolute right-0 mr-2 top-1 pt-2 text-sm text-gray-500 italic">
+          SN: {{ claims[0].uniqueCode }}
         </p>
         <div
           class="relative overflow-hidden mt-2 grid cols-start-1 md:flex justify-between items-center"

@@ -3,7 +3,7 @@
     class="bg-gray-500 bg-opacity-40 w-screen h-screen absolute left-0 top-0 z-50 flex justify-center items-center"
   >
     <div
-      class="popup overflow-y-auto lg:w-3/5 md:w-3/4 w-5/6 bg-white h-[70%] rounded-xl relative px-10 pb-6"
+      class="popup overflow-y-auto lg:w-3/5 md:w-3/4 w-5/6 bg-white h-[90%] rounded-xl relative px-10 pb-6"
     >
       <!-- Heading Title -->
       <h1 class="text-3xl font-bold py-6 border-b-2 border-black">
@@ -13,6 +13,20 @@
       <!-- Form -->
       <form @submit.prevent="showModal" class="text-sm py-2">
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+          <div>
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="claimantName"
+              >Report Name<span class="text-red-500">*</span></label
+            >
+            <input
+              v-model="formData.reportName"
+              id="ReportName"
+              type="text"
+              value="required"
+              class="block w-full px-4 py-2 mt-2 capitalize text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
           <div>
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
@@ -74,6 +88,55 @@
                 class="block text-black py-2 px-4 hover:bg-gray-200"
               >
                 {{ Company.company_name }}
+              </a>
+            </div>
+          </div>
+          <div class="relative">
+            <label
+              class="font-semibold text-gray-700 dark:text-gray-200"
+              for="designation"
+            >
+              Designation<span class="text-red-500">*</span>
+            </label>
+            <div class="flex justify-between">
+              <input
+                type="text"
+                placeholder="Designation.."
+                v-model="formData.designation"
+                @click="toggleDropdown3"
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              />
+              <div
+                class="bg-slate-200 py-4 px-2 mt-2 rounded"
+                @click="toggleDropdown3"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 21 21"
+                  stroke="currentColor"
+                  class="h-2 w-4 text-gray-600"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            <div
+              v-show="dropdownVisible3"
+              class="dropdown-content absolute left-0 bg-gray-100 w-full max-h-56 overflow-y-auto border border-gray-300 z-10 mt-2 rounded shadow-lg"
+            >
+              <a
+                v-for="designation in filteredDesignation"
+                :key="designation.designation"
+                @click="selectDesignation(designation.designation)"
+                class="block text-black py-2 px-4 hover:bg-gray-200"
+              >
+                {{ designation.designation }}
               </a>
             </div>
           </div>
@@ -152,21 +215,7 @@
             />
           </div>
         </div>
-        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
-          <div>
-            <label
-              class="font-semibold text-gray-700 dark:text-gray-200"
-              for="claimantName"
-              >Report Name<span class="text-red-500">*</span></label
-            >
-            <input
-              v-model="formData.reportName"
-              id="ReportName"
-              type="text"
-              value="required"
-              class="block w-full px-4 py-2 mt-2 capitalize text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
-          </div>
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
           <!-- <div>
             <label class="font-semibold text-gray-700 dark:text-gray-200"
               >Internal Order</label
@@ -178,7 +227,8 @@
           </div> -->
           <div>
             <label class="font-semibold text-gray-700 dark:text-gray-200">
-              Claim Type
+              Claim Type <span class="text-red-500">*</span>
+              <span class="text-red-500">*</span>
             </label>
 
             <div
@@ -228,6 +278,51 @@
                 >
                   lorem
                 </div>
+              </div>
+            </div>
+            <div
+              class="space-x-3 block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            >
+              <!-- HR Group -->
+              <div
+                class="relative inline-block"
+                @mouseover="showHRMessage = true"
+                @mouseleave="showHRMessage = false"
+              >
+                <input
+                  type="radio"
+                  id="HR"
+                  name="claimType"
+                  value="HR"
+                  v-model="formData.reportType"
+                  class="mr-2"
+                />
+                <label for="HR">HR</label>
+                <div
+                  class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
+                  v-show="showHRMessage"
+                ></div>
+              </div>
+
+              <!-- Finance Group -->
+              <div
+                class="relative inline-block"
+                @mouseover="showFinanceMessage = true"
+                @mouseleave="showFinanceMessage = false"
+              >
+                <input
+                  type="radio"
+                  id="Finance"
+                  name="claimType"
+                  value="Finance"
+                  v-model="formData.reportType"
+                  class="mr-2"
+                />
+                <label for="Finance">Finance</label>
+                <div
+                  class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
+                  v-show="showFinanceMessage"
+                ></div>
               </div>
             </div>
           </div>
@@ -284,6 +379,21 @@
           </div>
         </div> -->
       </form>
+      <h1 class="text-red-500 text-sm">
+        Note : First 7 days of a month will be paid in this month, else if after
+        7 days will be paid in next month
+      </h1>
+      <h1 class="text-gray-500 text-sm">
+        <span class="text-red-500">*</span
+        ><span class="text-red-500">*</span> HR Forms include Medical Leave and
+        Handphone Reimbursement
+      </h1>
+      <h1 class="text-gray-500 text-sm">
+        <span class="text-red-500">*</span
+        ><span class="text-red-500">*</span> Finance Forms Local Travelling,
+        Overseas Travelling With Accommodation, Entertainment and Staff
+        Refreshment
+      </h1>
 
       <!-- button -->
       <div class="gap-3 flex flex-row-reverse">
@@ -322,9 +432,11 @@ export default {
       showFinanceMessage: false,
       dropdownVisible: false,
       dropdownVisible2: false,
+      dropdownVisible3: false,
       search: "",
       departments: [],
       Companies: [],
+      designations: [],
       active: 0,
 
       formData: {
@@ -358,6 +470,14 @@ export default {
   },
   computed: {
 
+
+    filteredDesignation() {
+      return this.designations.filter((designation) => {
+        return designation.designation
+          .toLowerCase()
+          .includes(this.formData.designation.toLowerCase());
+      });
+    },
     filteredDepartments() {
       return this.departments.filter((department) => {
         return department.department
@@ -378,6 +498,7 @@ export default {
     },
   },
   mounted() {
+    this.fetchDesignations();
     this.fetchCompany();
     this.fetchDepartments();
     // Get the branch from the store
@@ -402,6 +523,28 @@ export default {
     selectCompanyName(Company) {
       this.formData.companyName = Company;
       this.dropdownVisible2 = false;
+    },
+    toggleDropdown3() {
+      this.dropdownVisible3 = !this.dropdownVisible3;
+    },
+    selectDesignation(designation) {
+      this.formData.designation = designation;
+      this.dropdownVisible3 = false;
+    },
+    async fetchDesignations() {
+      try {
+        const response = await fetch(
+          "http://172.28.28.91:97/api/User/GetDesignation"
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        this.designations = data.result;
+        console.log(this.designations, "designation");
+      } catch (error) {
+        console.error(`Error fetching departments: ${error}`);
+      }
     },
     async fetchCompany() {
       try {
