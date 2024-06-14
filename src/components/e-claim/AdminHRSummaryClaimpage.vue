@@ -7,6 +7,9 @@
       <div
         class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
+        <h1 class="text-gray-500 italic absolute top-4 right-4">
+          SN: PW/Finance/2024/06/5520
+        </h1>
         <!-- Head Title -->
         <button
           class="absolute top-1 lg:top-6 p-1 bg-blue-800 hover:bg-blue-900 rounded-[100%]"
@@ -35,12 +38,15 @@
         </div>
 
         <!-- Information -->
-        <div class="flex justify-between items-center my-4">
-          <h1 class="text-blue-900 dark:text-blue-600 font-bold text-3xl">
+        <div class="flex justify-between items-center my-4 w-full">
+          <h1 class="text-blue-900 dark:text-blue-600 font-bold text-4xl">
             Webinars
+            <span v-show="seeMore" class="text-blue-900 dark:text-blue-600"
+              >| RM{{ totalAmount }}</span
+            >
           </h1>
 
-          <div class="mt-5 h-12">
+          <div class="mt-5 h-12 flex items-center">
             <button
               v-show="!seeMore"
               @click="seeMore = !seeMore"
@@ -67,23 +73,24 @@
           </div>
         </div>
         <div
+          id="claimant-informations"
           class="grid grid-cols-2 lg:grid-cols-4 gap-2 [&>*:nth-child(even)]:text-right lg:[&>*:nth-child(even)]:text-left"
         >
           <div class="mt-5 h-12">
+            <h2 class="font-semibold">Name of Claimaint :</h2>
+            <p class="text-gray-600 dark:text-gray-400">ALI MOHAMMAD</p>
+          </div>
+          <div id="toLeft" class="mt-5 h-12">
             <h2 class="font-semibold">Name of Company :</h2>
             <p class="text-gray-600 dark:text-gray-400">
               PKT LOGISTIC (M) SDN BHD
             </p>
           </div>
           <div class="mt-5 h-12">
-            <h2 class="font-semibold">Name of Claimaint :</h2>
-            <p class="text-gray-600 dark:text-gray-400">ALI MOHAMMAD</p>
-          </div>
-          <div class="mt-5 h-12">
             <h2 class="font-semibold">Designation :</h2>
             <p class="text-gray-600 dark:text-gray-400">DEVELOPER</p>
           </div>
-          <div class="mt-5 h-12">
+          <div id="toLeft" class="mt-5 h-12">
             <h2 class="font-semibold">Department :</h2>
             <p class="text-gray-600 dark:text-gray-400">ICT</p>
           </div>
@@ -91,7 +98,7 @@
             <h2 class="font-semibold">Cost Center :</h2>
             <p class="text-gray-600 dark:text-gray-400">The Ship</p>
           </div>
-          <div class="mt-5 h-12">
+          <div id="toLeft" class="mt-5 h-12">
             <h2 class="font-semibold">Report Type :</h2>
             <p class="text-gray-600 dark:text-gray-400">HR</p>
           </div>
@@ -99,7 +106,7 @@
             <h2 class="font-semibold">Date of Claim :</h2>
             <p class="text-gray-600 dark:text-gray-400">25 MAY 2024</p>
           </div>
-          <div class="mt-5 h-12">
+          <div id="toLeft" class="mt-5 h-12">
             <h2 class="font-semibold">Claim for the Month Ended :</h2>
             <p class="text-gray-600 dark:text-gray-400">31 MAY 2024</p>
           </div>
@@ -225,9 +232,10 @@
               >
                 STATUS
               </th>
-              <th class="w-[30%] pl-6">NAME</th>
-              <th class="w-[30%]">DESIGNATION</th>
-              <th class="w-[20%]">DATE</th>
+              <th class="w-[24%] pl-6">NAME</th>
+              <th class="w-[23%]">DESIGNATION</th>
+              <th class="w-[23%]">DEPARTMENT</th>
+              <th class="w-[10%]">DATE</th>
             </tr>
 
             <!-- table information -->
@@ -259,6 +267,7 @@
               </th>
               <td class="pl-6">MANIRAJA</td>
               <td class="">HEAD OF DEPARTMENT</td>
+              <td>ICT</td>
               <td class="">{{ dateVerifier }}</td>
             </tr>
             <tr
@@ -289,6 +298,7 @@
               </th>
               <td class="pl-6">SHU LAN</td>
               <td class="">HR</td>
+              <td>HR</td>
               <td class="">{{ dateApprover }}</td>
             </tr>
           </table>
@@ -704,6 +714,20 @@ tr:last-child th:last-child {
 .details tr th:last-child {
   display: none;
 }
+
+div:has(> table) {
+  overflow-x: auto;
+}
+
+table {
+  min-width: max-content;
+}
+
+table th,
+td {
+  padding-right: 4px;
+  padding-left: 4px;
+}
 </style>
 
 <style>
@@ -736,6 +760,14 @@ tr:last-child th:last-child {
     --tw-ring-color: 0;
   }
 
+  #claimant-informations {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  #toLeft {
+    text-align: left !important;
+  }
+
   #summaryPrint {
     margin-left: 0;
     width: 100vw !important;
@@ -748,7 +780,12 @@ tr:last-child th:last-child {
     box-shadow: 0;
   }
   #summaryPrint button {
-    display: none;
+    display: hidden;
+  }
+
+  #total {
+    position: absolute;
+    right: 10px;
   }
 
   .tab-title {

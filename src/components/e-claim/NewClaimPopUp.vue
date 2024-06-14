@@ -26,7 +26,6 @@
               value="required"
               class="block w-full px-4 py-2 mt-2 capitalize text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             />
-          
           </div>
           <div>
             <label
@@ -192,7 +191,6 @@
               </a>
             </div>
           </div>
-          
 
           <!-- <div>
             <label
@@ -218,7 +216,6 @@
           </div>
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
-       
           <!-- <div>
             <label class="font-semibold text-gray-700 dark:text-gray-200"
               >Internal Order</label
@@ -230,58 +227,104 @@
           </div> -->
           <div>
             <label class="font-semibold text-gray-700 dark:text-gray-200">
-              Claim Type <span class="text-red-500">*</span> <span class="text-red-500">*</span>
+              Claim Type <span class="text-red-500">*</span>
+              <span class="text-red-500">*</span>
             </label>
 
-            <div class="space-x-3 block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
-    
-    <!-- HR Group -->
-    <div 
-      class="relative inline-block"
-      @mouseover="showHRMessage = true"
-      @mouseleave="showHRMessage = false"
-    >
-      <input
-        type="radio"
-        id="HR"
-        name="claimType"
-        value="HR"
-        v-model="formData.reportType"
-        class="mr-2"
-      />
-      <label for="HR">HR</label>
-      <div 
-        class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
-        v-show="showHRMessage"
-      >
-        
-      </div>
-    </div>
-    
-    <!-- Finance Group -->
-    <div 
-      class="relative inline-block"
-      @mouseover="showFinanceMessage = true"
-      @mouseleave="showFinanceMessage = false"
-    >
-      <input
-        type="radio"
-        id="Finance"
-        name="claimType"
-        value="Finance"
-        v-model="formData.reportType"
-        class="mr-2"
-      />
-      <label for="Finance">Finance</label>
-   <div 
-  class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
-  v-show="showFinanceMessage"
->
-  
-</div>
-    </div>
+            <div
+              class="space-x-3 block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            >
+              <!-- HR Group -->
+              <div
+                class="relative inline-block"
+                @mouseover="showHRMessage = true"
+                @mouseleave="showHRMessage = false"
+              >
+                <input
+                  type="radio"
+                  id="HR"
+                  name="claimType"
+                  value="HR"
+                  v-model="formData.reportType"
+                  class="mr-2"
+                />
+                <label for="HR">HR</label>
+                <div
+                  class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
+                  v-show="showHRMessage"
+                >
+                  Boo!
+                </div>
+              </div>
 
-  </div>
+              <!-- Finance Group -->
+              <div
+                class="relative inline-block"
+                @mouseover="showFinanceMessage = true"
+                @mouseleave="showFinanceMessage = false"
+              >
+                <input
+                  type="radio"
+                  id="Finance"
+                  name="claimType"
+                  value="Finance"
+                  v-model="formData.reportType"
+                  class="mr-2"
+                />
+                <label for="Finance">Finance</label>
+                <div
+                  class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
+                  v-show="showFinanceMessage"
+                >
+                  lorem
+                </div>
+              </div>
+            </div>
+            <div
+              class="space-x-3 block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            >
+              <!-- HR Group -->
+              <div
+                class="relative inline-block"
+                @mouseover="showHRMessage = true"
+                @mouseleave="showHRMessage = false"
+              >
+                <input
+                  type="radio"
+                  id="HR"
+                  name="claimType"
+                  value="HR"
+                  v-model="formData.reportType"
+                  class="mr-2"
+                />
+                <label for="HR">HR</label>
+                <div
+                  class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
+                  v-show="showHRMessage"
+                ></div>
+              </div>
+
+              <!-- Finance Group -->
+              <div
+                class="relative inline-block"
+                @mouseover="showFinanceMessage = true"
+                @mouseleave="showFinanceMessage = false"
+              >
+                <input
+                  type="radio"
+                  id="Finance"
+                  name="claimType"
+                  value="Finance"
+                  v-model="formData.reportType"
+                  class="mr-2"
+                />
+                <label for="Finance">Finance</label>
+                <div
+                  class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
+                  v-show="showFinanceMessage"
+                ></div>
+              </div>
+            </div>
           </div>
           <!-- <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-3"> -->
           <!-- <div>
@@ -327,22 +370,34 @@
         <!-- <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
           <div>
             <label class="font-semibold text-gray-700 dark:text-gray-200"
-              >Memo</label
+              >Note:
+            </label>
+            <label class="text-gray-700 dark:text-gray-200"
+              >First 7 days of a month will be paid in this month, else if after
+              7 days will be paid in next month</label
             >
-            <input
-              v-model="formData.memo"
-              class="block w-full px-4 py-8 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
           </div>
         </div> -->
       </form>
-      <h1 class="text-red-500 text-sm ">Note : First 7 days of a month will be paid in this month, else if after 7 days will be paid in next month</h1>
-      <h1 class="text-gray-500 text-sm "><span class="text-red-500">*</span><span class="text-red-500">*</span> HR Forms include Medical Leave and Handphone Reimbursement</h1>
-      <h1 class="text-gray-500 text-sm "><span class="text-red-500">*</span><span class="text-red-500">*</span> Finance Forms Local Travelling, Overseas Travelling With Accommodation, Entertainment and Staff Refreshment</h1>
+      <h1 class="text-red-500 text-sm">
+        Note : First 7 days of a month will be paid in this month, else if after
+        7 days will be paid in next month
+      </h1>
+      <h1 class="text-gray-500 text-sm">
+        <span class="text-red-500">*</span
+        ><span class="text-red-500">*</span> HR Forms include Medical Leave and
+        Handphone Reimbursement
+      </h1>
+      <h1 class="text-gray-500 text-sm">
+        <span class="text-red-500">*</span
+        ><span class="text-red-500">*</span> Finance Forms Local Travelling,
+        Overseas Travelling With Accommodation, Entertainment and Staff
+        Refreshment
+      </h1>
 
       <!-- button -->
-      <div class="mr-4 gap-3 flex flex-row-reverse">
-        <div class="flex justify-center mt-6">
+      <div class="gap-3 flex flex-row-reverse">
+        <div class="flex justify-center mt-10">
           <button
             type="submit"
             @click.prevent="submitForm(1)"
@@ -351,7 +406,7 @@
             Submit
           </button>
         </div>
-        <div class="flex justify-center mt-6">
+        <div class="flex justify-center mt-10">
           <button
             type="cancel"
             @click.prevent="submitForm(-1)"
@@ -385,14 +440,14 @@ export default {
       active: 0,
 
       formData: {
-        claimantName: formStore.formData.claimantName,
+        claimantName: 'Teowcheewen',
         companyName: formStore.formData.companyName,
         department: formStore.formData.department,
         costCenter: formStore.formData.costCenter,
         designation: formStore.formData.designation,
         reportName: formStore.formData.reportName,
         internalOrder: formStore.formData.internalOrder,
-        reportType: formStore.formData.reportType,
+        reportType: 'Finance',
         reportDate: formStore.formData.reportDate,
         reportStartDate: formStore.formData.reportStartDate,
         reportEndDate: formStore.formData.reportEndDate,
@@ -414,6 +469,7 @@ export default {
     }
   },
   computed: {
+
 
     filteredDesignation() {
       return this.designations.filter((designation) => {
@@ -548,6 +604,8 @@ export default {
         formStore.setFormData(this.formData);
 
         // Log the form data before navigation
+        console.log('Form submitted', formStore.getFormData());
+        // Log the form data before navigation
         console.log("Form submitted", formStore.getFormData());
         this.$router.push({ name: "ClaimReport" });
 
@@ -575,10 +633,15 @@ export default {
         //     console.error('API error', error);
         //   });
 
+        this.active = 0;
+      }
         // this.active = 0;
       }
 
       if (this.active < 0) {
+        // close the create new claim pop up
+        this.$emit('close');
+        this.active = 0;
         // close the create new claim pop up
         this.$emit("close");
         this.active = 0;
@@ -592,7 +655,7 @@ export default {
   max-height: 10rem; /* max-h-56 in Tailwind CSS */
 }
 .formStepCircle:not(:first-child)::before {
-  content: "";
+  content: '';
   background-color: rgb(209 213 219);
   width: 100%;
   height: 3px;
