@@ -53,7 +53,7 @@
                   >
                     <label
                       :for="field.id"
-                      class="block text-gray-700 text-sm font-bold mb-2"
+                      class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
                     >
                       {{ field.label }}
                       <span v-if="field.required" style="color: red">*</span>
@@ -63,7 +63,7 @@
                       <select
                         v-model="field.value"
                         :id="field.id"
-                        class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                       >
                         <option
                           v-for="(option, optionIndex) in field.options"
@@ -79,7 +79,7 @@
                       <select
                         v-model="field.value"
                         :id="field.id"
-                        class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                       >
                         <option
                           v-for="year in yearRange"
@@ -122,7 +122,7 @@
                         :id="field.id"
                         :type="field.type"
                         :placeholder="field.placeholder"
-                        class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                       />
                     </template>
 
@@ -153,7 +153,7 @@
                         :type="field.type"
                         :placeholder="field.placeholder"
                         :step="field.type === 'number' ? '0.01' : undefined"
-                        class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                       />
                     </template>
                   </template>
@@ -168,12 +168,12 @@
                     "
                     class="mt-4"
                   >
-                    <span class="block text-gray-700 text-sm font-bold mb-2"
+                    <span class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
                       >Other Expenses (If any)
                     </span>
                     <button
                       type="button"
-                      class="px-4 py-2 bg-blue-500 text-white rounded"
+                      class="px-4 py-2 ml-3 bg-blue-500 text-white rounded"
                       @click="showOtherExpensesModal = true"
                     >
                       Add Expenses
@@ -436,7 +436,7 @@
                   >
                     <label
                       :for="field.id"
-                      class="block text-gray-700 text-sm font-bold mb-2"
+                      class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
                     >
                       {{ field.label }}
                       <span v-if="field.required" style="color: red">*</span>
@@ -446,7 +446,7 @@
                       <select
                         v-model="field.value"
                         :id="field.id"
-                        class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                       >
                         <option
                           v-for="(option, optionIndex) in field.options"
@@ -458,17 +458,6 @@
                       </select>
                     </template>
 
-                    <template
-                      v-else-if="field.type === 'text' && field.isOtherOption"
-                    >
-                      <input
-                        v-model="field.value"
-                        :id="field.id"
-                        :type="field.type"
-                        :placeholder="field.placeholder"
-                        class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                      />
-                    </template>
 
                     <template v-else-if="field.type === 'file'">
                       <div class="pt-3">
@@ -490,7 +479,7 @@
                         :type="field.type"
                         :placeholder="field.placeholder"
                         :step="field.type === 'number' ? '0.01' : undefined"
-                        class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                       />
                     </template>
                   </div>
@@ -1094,7 +1083,6 @@ export default {
               type: "text",
               value: "",
               placeholder: "Specify other type",
-              isOtherOption: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1120,6 +1108,9 @@ export default {
               value: "",
               required: true,
               options: [
+                { label: "ENTERTAINMENT-CLIENT(EXISTING)", value: "ENTERTAINMENT-CLIENT(EXISTING)" },
+                { label: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)", value: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)"},
+                { label: "ENTERTAINMENT-NON TRADE", value: "ENTERTAINMENT-NON TRADE" },
                 { label: "GIFT TO CLIENT", value: "GIFT TO CLIENT" },
                 { label: "GIFT TO OTHERS", value: "GIFT TO OTHERS" },
                 { label: "MEAL FOR STAFF", value: "MEAL FOR STAFF" },
@@ -1154,7 +1145,7 @@ export default {
           ],
         },
         {
-          title: "Handphone Reimbursement",
+          title: "Handphone Bill Reimbursement",
           tabType: "HR",
 
           gridLayout: "grid-cols-3",
@@ -1422,7 +1413,6 @@ export default {
               type: "text",
               value: "",
               placeholder: "Specify other type",
-              isOtherOption: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1448,12 +1438,12 @@ export default {
               value: "",
               required: true,
               options: [
-                { label: "CLIENT(EXISTING)", value: "CLIENT(EXISTING)" },
-                {
-                  label: "CLIENT(NEW/POTENTIAL)",
-                  value: "CLIENT(NEW/POTENTIAL)",
-                },
-                { label: "NON TRADE", value: "NON TRADE" },
+                { label: "ENTERTAINMENT-CLIENT(EXISTING)", value: "ENTERTAINMENT-CLIENT(EXISTING)" },
+                { label: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)", value: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)"},
+                { label: "ENTERTAINMENT-NON TRADE", value: "ENTERTAINMENT-NON TRADE" },
+                { label: "GIFT TO CLIENT", value: "GIFT TO CLIENT" },
+                { label: "GIFT TO OTHERS", value: "GIFT TO OTHERS" },
+                { label: "MEAL FOR STAFF", value: "MEAL FOR STAFF" },
               ],
               gridClass: "sm:col-span-2",
             },
