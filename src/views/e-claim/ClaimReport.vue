@@ -6,9 +6,9 @@
       <div
         class="bg-[#f7fbff] dark:bg-gray-800 relative dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
-        <h1 class="text-base italic absolute top-4 right-4 text-gray-500">
+        <!-- <h1 class="text-base italic absolute top-4 right-4 text-gray-500">
           SN: {{ claims[0].uniqueCode }}
-        </h1>
+        </h1> -->
         <!-- Header Section -->
         <p class="absolute right-0 mr-2 top-1 pt-2 text-sm text-gray-500 italic">
           SN: {{ claims[0].uniqueCode }}

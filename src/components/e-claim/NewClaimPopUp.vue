@@ -36,6 +36,7 @@
             <input
               placeholder="e.g ALI BIN ABU"
               v-model="formData.claimantName"
+              disabled
               id="claimantName"
               type="text"
               value="required"
@@ -280,51 +281,7 @@
                 </div>
               </div>
             </div>
-            <div
-              class="space-x-3 block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            >
-              <!-- HR Group -->
-              <div
-                class="relative inline-block"
-                @mouseover="showHRMessage = true"
-                @mouseleave="showHRMessage = false"
-              >
-                <input
-                  type="radio"
-                  id="HR"
-                  name="claimType"
-                  value="HR"
-                  v-model="formData.reportType"
-                  class="mr-2"
-                />
-                <label for="HR">HR</label>
-                <div
-                  class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
-                  v-show="showHRMessage"
-                ></div>
-              </div>
-
-              <!-- Finance Group -->
-              <div
-                class="relative inline-block"
-                @mouseover="showFinanceMessage = true"
-                @mouseleave="showFinanceMessage = false"
-              >
-                <input
-                  type="radio"
-                  id="Finance"
-                  name="claimType"
-                  value="Finance"
-                  v-model="formData.reportType"
-                  class="mr-2"
-                />
-                <label for="Finance">Finance</label>
-                <div
-                  class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
-                  v-show="showFinanceMessage"
-                ></div>
-              </div>
-            </div>
+            
           </div>
           <!-- <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-3"> -->
           <!-- <div>
@@ -380,8 +337,7 @@
         </div> -->
       </form>
       <h1 class="text-red-500 text-sm">
-        Note : First 7 days of a month will be paid in this month, else if after
-        7 days will be paid in next month
+        Note : Claims made within the first 7 days of a month will be paid within the same month. Claims made after the first 7 days will be paid in the following month
       </h1>
       <h1 class="text-gray-500 text-sm">
         <span class="text-red-500">*</span
