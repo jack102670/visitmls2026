@@ -8,7 +8,7 @@
           <div class="md:flex justify-between">
             <div class="flex justify-start flex-col ml-5">
               <h2 class="text-3xl font-bold text-blue-900">
-                PKT INTERGRATED MANAGEMENT SYSTEM
+                PKT INTEGRATED MANAGEMENT SYSTEM
               </h2>
             </div>
           </div>

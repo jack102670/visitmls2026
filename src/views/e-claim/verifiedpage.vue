@@ -203,7 +203,7 @@
                           <div class="flex items-center gap-x-6">
                             <!-- buttons here -->
                             <button
-                              @click="showDetails(claim, index)"
+                      @click="ViewClaim()"
                               class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
                             >
                               <svg
@@ -263,6 +263,9 @@ export default {
     };
   },
   methods: {
+    ViewClaim() {
+      this.$router.push({ name: 'AdminSummaryClaimpage' });
+    },
     fetchData() {
       fetch(`http://172.28.28.91:86/api/ApproverVerifier/GetAllRequestVerifier/F4ECECFA-7D9C-4D11-BA8E-3338AC3D4F48`)
         .then(response => response.json())
