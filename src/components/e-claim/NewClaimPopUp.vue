@@ -636,8 +636,7 @@ export default {
         this.active = 0;
       }
         // this.active = 0;
-      }
-
+     
       if (this.active < 0) {
         // close the create new claim pop up
         this.$emit('close');

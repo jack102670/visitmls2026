@@ -1812,7 +1812,7 @@ export default {
 
                     unique_code: this.generateUniqueCode(claim.tabTitle),
                     reference_number: 'pktm222',
-                    reference_number: this.claims[0].uniqueCode,
+                    
                   };
                   axiosInstance = axios.create({
                     baseURL:
