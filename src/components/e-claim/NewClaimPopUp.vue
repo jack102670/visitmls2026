@@ -3,7 +3,7 @@
     class="bg-gray-500 bg-opacity-40 w-screen h-screen absolute left-0 top-0 z-50 flex justify-center items-center"
   >
     <div
-      class="popup overflow-y-auto lg:w-3/5 md:w-3/4 w-5/6 bg-white h-[90%] rounded-xl relative px-10 pb-6"
+      class="popup overflow-y-auto lg:w-3/5 md:w-3/4 w-5/6 bg-white h-[90%] sm:h-[85%] rounded-xl relative px-10 pb-6"
     >
       <!-- Heading Title -->
       <h1 class="text-3xl font-bold py-6 border-b-2 border-black">
@@ -12,49 +12,7 @@
 
       <!-- Form -->
       <form @submit.prevent="showModal" class="text-sm py-2">
-        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 overflow-y-auto">
-          <div>
-            <label
-              class="font-semibold text-gray-700 dark:text-gray-200"
-              for="claimantName"
-              >Claimant's Name <span class="text-red-500">*</span></label
-            >
-            <input
-              placeholder="e.g ALI BIN ABU"
-              v-model="formData.claimantName"
-              id="claimantName"
-              type="text"
-              value="required"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
-          </div>
-          <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200"
-              >Company's Name<span class="text-red-500">*</span></label
-            >
-            <input
-              placeholder="e.g PKT LOGISTICS (M) SDN BHD"
-              v-model="formData.companyName"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
-          </div>
-        </div>
-        <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-3">
-          <div>
-            <label
-              class="font-semibold text-gray-700 dark:text-gray-200"
-              for="department"
-              >Department<span class="text-red-500">*</span></label
-            >
-            <select
-              v-model="formData.department"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            >
-              <option value="" disabled selected></option>
-              <option value="ICT">ICT</option>
-              <option value="Finance">Finance</option>
-            </select>
-          </div>
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1 overflow-y-auto">
           <div>
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
@@ -72,18 +30,13 @@
               for="designation"
               >Designation<span class="text-red-500">*</span></label
             >
-            <select
+            <input
               v-model="formData.designation"
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            >
-              <option value="" disabled selected></option>
-              <option value="HR">HR</option>
-              <option value="HOD">HOD</option>
-              <option value="IT DEVELOPER">IT DEVELOPER</option>
-            </select>
+            />
           </div>
         </div>
-        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
           <div>
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
@@ -104,86 +57,47 @@
               class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             />
           </div>
-          <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200"
-              >Internal Order</label
-            >
-            <input
-              v-model="formData.internalOrder"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
-          </div>
-          <div>
+
+          <div class="flex flex-col">
             <label class="font-semibold text-gray-700 dark:text-gray-200"
               >Report Type</label
             >
-            <select
-              v-model="formData.reportType"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            >
-              <option value="" disabled selected></option>
-              <option value="Finance">Finance</option>
-              <option value="HR">HR</option>
-            </select>
+            <div class="flex my-3">
+              <input
+                type="radio"
+                value="Finance"
+                id="Finance"
+                v-model="formData.reportType"
+                checked
+              />
+              <label for="Finance" class="text-base mr-6 ml-2">Finance</label>
+              <input
+                type="radio"
+                value="HR"
+                id="HR"
+                v-model="formData.reportType"
+              />
+              <label for="HR" class="text-base ml-2">HR</label>
+            </div>
           </div>
         </div>
-        <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-3">
-          <!-- <div>
-            <label
-              class="font-semibold text-gray-700 dark:text-gray-200"
-              for="ReportDate"
-              >Report Date</label
-            >
-            <input
-              v-model="formData.reportDate"
-              id="ReportDate"
-              type="date"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
-          </div> -->
-          <div>
-            <label
-              class="font-semibold text-gray-700 dark:text-gray-200"
-              for="ReportStartDate"
-              >Report Start Date</label
-            >
-            <input
-              v-model="formData.reportStartDate"
-              id="ReportStartDate"
-              type="date"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
-          </div>
-          <div>
-            <label
-              class="font-semibold text-gray-700 dark:text-gray-200"
-              for="ReportEndDate"
-              >Report End Date</label
-            >
-            <input
-              v-model="formData.reportEndDate"
-              id="ReportEndDate"
-              type="date"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
-          </div>
-        </div>
-        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
+
+        <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-1">
           <div>
             <label class="font-semibold text-gray-700 dark:text-gray-200"
-              >Memo</label
+              >Note:
+            </label>
+            <label class="text-gray-700 dark:text-gray-200"
+              >First 7 days of a month will be paid in this month, else if after
+              7 days will be paid in next month</label
             >
-            <input
-              v-model="formData.memo"
-              class="block w-full px-4 py-8 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
           </div>
         </div>
       </form>
 
       <!-- button -->
-      <div class="mr-4 gap-3 flex flex-row-reverse">
-        <div class="flex justify-center mt-6">
+      <div class="gap-3 flex flex-row-reverse">
+        <div class="flex justify-center mt-10">
           <button
             type="submit"
             @click.prevent="submitForm(1)"
@@ -192,7 +106,7 @@
             Submit
           </button>
         </div>
-        <div class="flex justify-center mt-6">
+        <div class="flex justify-center mt-10">
           <button
             type="cancel"
             @click.prevent="submitForm(-1)"
@@ -208,6 +122,7 @@
 <script>
 import { formStore } from '../../views/store.js'; // Import your form store
 import axios from 'axios';
+import moment from 'moment';
 export default {
   emits: ['close'],
   data() {
@@ -215,14 +130,14 @@ export default {
       active: 0,
 
       formData: {
-        claimantName: formStore.formData.claimantName,
+        claimantName: 'Teowcheewen',
         companyName: formStore.formData.companyName,
         department: formStore.formData.department,
         costCenter: formStore.formData.costCenter,
         designation: formStore.formData.designation,
         reportName: formStore.formData.reportName,
         internalOrder: formStore.formData.internalOrder,
-        reportType: formStore.formData.reportType,
+        reportType: 'Finance',
         reportDate: formStore.formData.reportDate,
         reportStartDate: formStore.formData.reportStartDate,
         reportEndDate: formStore.formData.reportEndDate,
@@ -232,7 +147,8 @@ export default {
       branch: '', // Add the missing branch property
     };
   },
-  methods: {generateUniqueCode() {
+  methods: {
+    generateUniqueCode() {
       // Check if this.userId is defined
       if (this.formData.claimantName) {
         // Use part of the claimantName for uniqueness, e.g., 4 characters
@@ -241,63 +157,83 @@ export default {
         // Generate a random number and pad it to 2 characters
         const randomNumber = Math.floor(Math.random() * 100)
           .toString()
-          .padStart(2, "0");
-
+          .padStart(2, '0');
 
         const timestamp = Date.now().toString().slice(-2);
 
-
         this.formData.uniqueCode = `Claim${claimantNameFragment}${randomNumber}${timestamp}`;
-        console.log("Unique Code:", this.formData.uniqueCode);
+        console.log('Unique Code:', this.formData.uniqueCode);
         return this.formData.uniqueCode;
       } else {
-        console.error("User ID is undefined.");
+        console.error('User ID is undefined.');
 
-        return "";
+        return '';
       }
+    },
+    generateSerialNumber() {
+      let names = this.formData.reportName.split(' ');
+      let shortform = [];
+
+      for (let i = 0; i < names.length; i++) {
+        shortform[i] = names[i][0];
+      }
+      let datetime = moment(new Date()).format('YYYY/MM/mmss');
+      let sn =
+        shortform.join('').toString() +
+        '/' +
+        this.formData.reportType +
+        '/' +
+        datetime;
+      console.log(sn);
+      this.formData.uniqueCode = sn;
+      return sn;
     },
     submitForm(page) {
       this.active += page;
 
       if (this.active > 0) {
-      // Update form data in the form store
-      formStore.clearFormData();
-      formStore.setFormData(this.formData);
+        // Send API request using axios
+        const apiData = {
+          name: 'Teow',
+          company_name: 'PKT',
+          department: 'ICT',
+          designation_title: this.formData.designation,
+          claim_startdate: '2024-06-20',
+          claim_enddate: '2024-06-30',
+          reference_number: this.generateSerialNumber(),
+          report_name: this.formData.reportName,
+        };
 
-      // Log the form data before navigation
-      console.log('Form submitted', formStore.getFormData());
+        // Update form data in the form store
+        formStore.clearFormData();
+        formStore.setFormData(this.formData);
 
-      // Send API request using axios
-      const apiData = {
-        name: this.formData.claimantName,
-        company_name: this.formData.companyName,
-        department: this.formData.department,
-        designation_title: this.formData.designation,
-        claim_startdate: this.formData.reportStartDate,
-        claim_enddate: this.formData.reportEndDate,
-        reference_number: this.generateUniqueCode(),
-        report_name: this.formData.reportName,
-      };
+        // Log the form data before navigation
+        console.log('Form submitted', formStore.getFormData());
 
-      // Send API request using axios
-      axios.post('http://172.28.28.91:97/api/User/InsertClaimDetails', apiData)
-        .then(response => {
-          // Handle success response
-          console.log('API response', response.data);
-          this.$router.push({ name: 'ClaimReport' });
-        })
-        .catch(error => {
-          // Handle error response
-          console.error('API error', error);
-        });
+        console.log(apiData);
 
-      this.active = 0;
-    }
+        // Send API request using axios
+        axios
+          .post('http://172.28.28.91:97/api/User/InsertClaimDetails', apiData)
+          .then((response) => {
+            // Handle success response
+            console.log('API response', response.data);
+
+            this.$router.push({ name: 'ClaimReport' });
+          })
+          .catch((error) => {
+            // Handle error response
+            console.error('API error', error);
+          });
+
+        this.active = 0;
+      }
 
       if (this.active < 0) {
-      // close the create new claim pop up
-      this.$emit('close');
-      this.active = 0;
+        // close the create new claim pop up
+        this.$emit('close');
+        this.active = 0;
       }
     },
   },
@@ -305,7 +241,7 @@ export default {
 </script>
 <style scoped>
 .formStepCircle:not(:first-child)::before {
-  content: "";
+  content: '';
   background-color: rgb(209 213 219);
   width: 100%;
   height: 3px;
