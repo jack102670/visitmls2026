@@ -873,7 +873,7 @@
                 for="nodeParentId"
                 class="text-gray-700 font-bold mr-2 text-2xl"
                 >Total: RM
-                {{ medicalLeaveReimbursementDetails.ClaimsAmountML }}</label
+                {{ totalMedicalLeaveReimbursementDetails }}</label
               >
             </div>
 
@@ -1259,7 +1259,7 @@
               <label
                 for="nodeParentId"
                 class="text-gray-700 font-bold mr-2 text-2xl"
-                >Total: RM {{ staffRefreshmentDetails.AmountRMSR }}</label
+                >Total: RM {{ totalStaffRefreshmentDetails }}</label
               >
             </div>
 
@@ -1399,7 +1399,7 @@
                   for="nodeParentId"
                   class="text-gray-700 font-bold mr-2 text-2xl"
                   >Total: RM
-                  {{ handphoneReimbursementDetails.ClaimsAmountHR }}</label
+                  {{ totalHandphoneReimbursementDetails }}</label
                 >
               </div>
 
@@ -1469,8 +1469,12 @@ export default {
       isClickModal: false,
       isEditMode: false,
       selectedClaimDetails: {},
-      localTravellingDetails: {}, // Object to store details for Local Travelling
+      localTravellingDetails: {},
       overseasTravellingDetails: { otherExpenses: [] },
+      medicalLeaveReimbursementDetails: {},
+      entertainmentDetails: {},
+      staffRefreshmentDetails: {},
+      handphoneReimbursementDetails: {},
       cancel: true,
     };
   },
@@ -1515,6 +1519,27 @@ export default {
         (parseFloat(this.overseasTravellingDetails.AirportLimoTeksiOT) || 0) +
         otherExpensesTotal;
 
+      this.totalplusmethod(total);
+      return total;
+    },
+
+    totalMedicalLeaveReimbursementDetails() {
+      let total = 
+      (parseFloat(this.medicalLeaveReimbursementDetails.ClaimsAmountML) || 0) 
+      this.totalplusmethod(total);
+      return total;
+    },
+
+    totalStaffRefreshmentDetails() {
+      let total = 
+      (parseFloat(this.staffRefreshmentDetails.AmountRMSR) || 0) 
+      this.totalplusmethod(total);
+      return total;
+    },
+
+    totalHandphoneReimbursementDetails() {
+      let total = 
+      (parseFloat(this.handphoneReimbursementDetails.ClaimsAmountHR) || 0) 
       this.totalplusmethod(total);
       return total;
     },
@@ -1777,13 +1802,9 @@ export default {
                     park_fee: claim.ParkingLT,
                     toll_fee: claim.TollLT,
                     total_fee: 10,
-                    approver_email: "verifier1@example.com", // Access Email property from claim object
-                    verifier_email: "verifier1@example.com",
-                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    requester_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    
                     unique_code: this.generateUniqueCode(claim.tabTitle),
-                    reference_number: "pktm222",
+                    reference_number: this.claims[0].uniqueCode,
                   };
                   axiosInstance = axios.create({
                     baseURL:
