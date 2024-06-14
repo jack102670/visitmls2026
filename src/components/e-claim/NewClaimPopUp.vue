@@ -337,16 +337,16 @@
         </div> -->
       </form>
       <h1 class="text-red-500 text-sm">
-        Note : Claims made within the first 7 days of a month will be paid within the same month. Claims made after the first 7 days will be paid in the following month
+        Note : Claims made in the first week of the month will be processed within that same month. Claims made after the first week will be processed in the following month.
       </h1>
       <h1 class="text-gray-500 text-sm">
         <span class="text-red-500">*</span
-        ><span class="text-red-500">*</span> HR Forms include Medical Leave and
+        ><span class="text-red-500">*</span> HR: Medical Leave and
         Handphone Reimbursement
       </h1>
       <h1 class="text-gray-500 text-sm">
         <span class="text-red-500">*</span
-        ><span class="text-red-500">*</span> Finance Forms Local Travelling,
+        ><span class="text-red-500">*</span> Finance: Local Travelling,
         Overseas Travelling With Accommodation, Entertainment and Staff
         Refreshment
       </h1>
