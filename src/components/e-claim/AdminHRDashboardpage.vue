@@ -35,7 +35,7 @@
                       <th
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
-                        Claimant
+                        Reference Number
                       </th>
                       <th
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
@@ -66,46 +66,60 @@
                       <td
                         class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                       >
-                        {{ claim.reportName }}
+                        {{ claim.report_name }}
                       </td>
                       <td
                         class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                       >
-                        {{ claim.claimant }}
+                        {{ claim.reference_number }}
                       </td>
                       <td
                         class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                       >
-                        RM {{ claim.amount }}
+                        RM {{ claim.grand_total }}
                       </td>
                       <td
                         class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                       >
-                        {{ claim.date }}
+                        {{ claim.date_requested }}
                       </td>
                       <td
                         class="text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                       >
                         <h1
-                          class="rounded-xl text-center py-1 w-full"
+                          class="rounded-xl text-center py-1 w-full h-8"
                           :class="{
                             'bg-orange-200 dark:bg-orange-500':
-                              claim.status == 'PENDING',
+                              claim.admin_status == '',
                             'bg-green-200 dark:bg-green-500':
-                              claim.status == 'APPROVED' ||
-                              claim.status == 'VERIFIED',
+                              claim.admin_status ==
+                                'APPROVED. WAITING FOR PAYMENT.' ||
+                              claim.admin_status ==
+                                'VERIFIED. WAITING FOR APPROVAL.',
                             'bg-red-200 dark:bg-red-500':
-                              claim.status == 'REJECTED',
+                              claim.admin_status == 'REJECTED',
                             'text-orange-500 dark:text-orange-100':
-                              claim.status == 'PENDING',
+                              claim.admin_status == '',
                             'text-green-500 dark:text-green-100':
-                              claim.status == 'APPROVED' ||
-                              claim.status == 'VERIFIED',
+                              claim.admin_status ==
+                                'APPROVED. WAITING FOR PAYMENT.' ||
+                              claim.admin_status ==
+                                'VERIFIED. WAITING FOR APPROVAL.',
                             'text-red-500 dark:text-red-100':
                               claim.status == 'REJECTED',
                           }"
                         >
-                          {{ claim.status }}
+                          {{
+                            claim.admin_status == ''
+                              ? 'PENDING'
+                              : claim.admin_status ==
+                                  'VERIFIED. WAITING FOR APPROVAL.'
+                                ? 'VERIFIED'
+                                : claim.admin_status ==
+                                    'APPROVED. WAITING FOR PAYMENT.'
+                                  ? 'APPROVED'
+                                  : 'REJECTED'
+                          }}
                         </h1>
                       </td>
                       <td
@@ -152,33 +166,14 @@
 import $ from 'jquery';
 import 'datatables.net-dt';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';
+import axios from 'axios';
 export default {
   data() {
     return {
-      approveSuccess: false,
+      userId: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
 
       // need to fetch from API
-      claimsData: [
-        {
-          reportName: 'MC',
-          claimant: 'Ali Mohammad',
-          amount: 30,
-          date: '20 May 2024',
-          status:
-            localStorage.getItem('ApproveOrNot') == 'approve'
-              ? 'VERIFIED'
-              : localStorage.getItem('ApproveOrNot') == 'reject'
-                ? 'REJECTED'
-                : 'PENDING',
-        },
-        {
-          reportName: 'Phone Reimbursement',
-          claimant: 'Dinesh',
-          amount: 42,
-          date: '19 May 2024',
-          status: 'VERIFIED',
-        },
-      ],
+      claimsData: [{ report_name: 'abc' }],
     };
   },
   methods: {
@@ -197,6 +192,21 @@ export default {
     initializeDataTable() {
       $(this.$refs.myTable).DataTable({});
     },
+    FetchClaimsData() {
+      axios
+        .get(
+          'http://172.28.28.91:86/api/ApproverVerifier/GetAllRequestApprover/' +
+            this.userId
+        )
+        .then((response) => {
+          this.claimsData = response.data.result;
+          console.log(this.claimsData);
+
+          this.$nextTick(() => {
+            this.initializeDataTable();
+          });
+        });
+    },
   },
   mounted() {
     // Sidebar close or open
@@ -208,10 +218,11 @@ export default {
       element.classList.remove('become-big');
     }
 
-    this.initializeDataTable();
-
     // for testing purposes only
     localStorage.setItem('ApproveOrNot', 'pending');
+
+    // fetch claims data from api
+    this.FetchClaimsData();
   },
 };
 </script>
