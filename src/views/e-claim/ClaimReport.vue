@@ -218,8 +218,8 @@
                           <span v-if="claim.LocationEnd">{{
                             claim.LocationEnd
                           }}</span>
-                          <span v-if="claim.DescriptionOT">{{
-                            claim.DescriptionOT
+                          <span v-if="claim.PurposeOT">{{
+                            claim.PurposeOT
                           }}</span>
                           <span v-if="claim.VenueE">{{ claim.VenueE }}</span>
                           <span v-if="claim.VenueSR">{{ claim.VenueSR }}</span>
@@ -442,7 +442,7 @@
               </div>
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Upload File(s):</label
+                  >Attachment(s). :</label
                 >
                 <div class="flex flex-wrap">
                   <div
@@ -536,12 +536,12 @@
               </div>
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeName" class="text-gray-700 font-bold mr-2"
-                  >Description:</label
+                  >Purpose:</label
                 >
                 <input
                   type="text"
                   id="nodeName"
-                  v-model="overseasTravellingDetails.DescriptionOT"
+                  v-model="overseasTravellingDetails.PurposeOT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />

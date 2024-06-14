@@ -912,7 +912,7 @@ export default {
             },
             {
               id: "UploadLT",
-              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              label: "Attachment(s). (png, jpeg, pdf or xlsx)",
               type: "file",
               value: [],
               required: true,
@@ -945,8 +945,8 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "DescriptionOT",
-              label: "Description",
+              id: "PurposeOT",
+              label: "Purpose",
               type: "text",
               value: "",
               required: true,
@@ -1015,7 +1015,7 @@ export default {
             },
             {
               id: "UploadOT",
-              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              label: "Attachment(s). (png, jpeg, pdf or xlsx)",
               type: "file",
               value: [],
               required: true,
@@ -1126,7 +1126,7 @@ export default {
             },
             {
               id: "UploadSR",
-              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              label: "Attachment(s). (png, jpeg, pdf or xlsx)",
               type: "file",
               value: [],
               required: true,
@@ -1254,7 +1254,7 @@ export default {
             },
             {
               id: "UploadHR",
-              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              label: "Attachment(s). (png, jpeg, pdf or xlsx)",
               type: "file",
               value: "",
               required: true,
@@ -1360,7 +1360,7 @@ export default {
             },
             {
               id: "UploadML",
-              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              label: "Attachment(s). (png, jpeg, pdf or xlsx)",
               type: "file",
               value: [],
               required: true,
@@ -1456,7 +1456,7 @@ export default {
             },
             {
               id: "UploadE",
-              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              label: "Attachment(s). (png, jpeg, pdf or xlsx)",
               type: "file",
               value: [],
               required: true,
