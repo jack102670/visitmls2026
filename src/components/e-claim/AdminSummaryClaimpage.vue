@@ -7,6 +7,9 @@
       <div
         class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
+        <h1 class="text-gray-500 italic absolute top-4 right-4">
+          SN: {{ serialNumber }}
+        </h1>
         <!-- Head Title -->
         <button
           class="absolute top-1 lg:top-6 p-1 bg-blue-800 hover:bg-blue-900 rounded-[100%]"
@@ -36,11 +39,14 @@
 
         <!-- Information -->
         <div class="flex justify-between items-center my-4">
-          <h1 class="text-blue-900 dark:text-blue-600 font-bold text-3xl">
+          <h1 class="text-blue-900 dark:text-blue-600 font-bold text-4xl">
             Webinars
+            <span v-show="seeMore" class="text-blue-900 dark:text-blue-600"
+              >| RM{{ totalAmount }}</span
+            >
           </h1>
 
-          <div class="mt-5 h-12">
+          <div class="mt-5 h-12 flex items-center">
             <button
               v-show="!seeMore"
               @click="seeMore = !seeMore"
@@ -67,35 +73,32 @@
           </div>
         </div>
         <div
+          id="claimant-informations"
           class="grid grid-cols-2 lg:grid-cols-4 gap-2 [&>*:nth-child(even)]:text-right lg:[&>*:nth-child(even)]:text-left"
         >
           <div class="mt-5 h-12">
+            <h2 class="font-semibold">Name of Claimaint :</h2>
+            <p class="text-gray-600 dark:text-gray-400">TEOW CHEE WEN</p>
+          </div>
+          <div id="toLeft" class="mt-5 h-12">
             <h2 class="font-semibold">Name of Company :</h2>
             <p class="text-gray-600 dark:text-gray-400">
               PKT LOGISTIC (M) SDN BHD
             </p>
           </div>
           <div class="mt-5 h-12">
-            <h2 class="font-semibold">Name of Claimaint :</h2>
-            <p class="text-gray-600 dark:text-gray-400">TEOW CHEE WEN</p>
-          </div>
-          <div class="mt-5 h-12">
             <h2 class="font-semibold">Designation :</h2>
             <p class="text-gray-600 dark:text-gray-400">DEVELOPER</p>
           </div>
-          <div class="mt-5 h-12">
+          <div id="toLeft" class="mt-5 h-12">
             <h2 class="font-semibold">Department :</h2>
             <p class="text-gray-600 dark:text-gray-400">ICT</p>
-          </div>
-          <div class="mt-5 h-12">
-            <h2 class="font-semibold">Cost Center :</h2>
-            <p class="text-gray-600 dark:text-gray-400">The Ship</p>
           </div>
           <div class="mt-5 h-12">
             <h2 class="font-semibold">Report Type :</h2>
             <p class="text-gray-600 dark:text-gray-400">Finance</p>
           </div>
-          <div class="mt-5 h-12">
+          <div id="toLeft" class="mt-5 h-12">
             <h2 class="font-semibold">Date of Claim :</h2>
             <p class="text-gray-600 dark:text-gray-400">20 MAY 2024</p>
           </div>
@@ -225,9 +228,10 @@
               >
                 STATUS
               </th>
-              <th class="w-[30%] pl-6">NAME</th>
-              <th class="w-[30%]">DESIGNATION</th>
-              <th class="w-[20%]">DATE</th>
+              <th class="w-[24%] pl-6">NAME</th>
+              <th class="w-[23%]">DESIGNATION</th>
+              <th class="w-[23%]">DEPARTMENT</th>
+              <th class="w-[10%]">DATE</th>
             </tr>
 
             <!-- table information -->
@@ -259,6 +263,7 @@
               </th>
               <td class="pl-6">MANIRAJA</td>
               <td class="">HEAD OF DEPARTMENT</td>
+              <td>ICT</td>
               <td class="">{{ dateVerifier }}</td>
             </tr>
             <tr
@@ -289,6 +294,7 @@
               </th>
               <td class="pl-6">SHU LAN</td>
               <td class="">HR</td>
+              <td>HR</td>
               <td class="">{{ dateApprover }}</td>
             </tr>
           </table>
@@ -514,6 +520,7 @@
 <script>
 import moment from 'moment';
 import fileSaver from 'file-saver';
+import axios from 'axios';
 export default {
   data() {
     return {
@@ -534,12 +541,13 @@ export default {
       dateApprover: '',
       dateVerifier: '',
       remark: '',
+      serialNumber: 'PW/Finance/2024/06/5520',
 
       // need to fetch from API
       claimData: [
         {
           no: 1,
-          type: 'Local/Outstation Travelling Expenses ',
+          type: 'Local/Outstation Travelling Expenses',
           particulars: 'as attached travelling voucher',
           amount: 150.0,
         },
@@ -659,29 +667,243 @@ export default {
           this.approve = true;
           this.dateApprover = moment(new Date()).format('D MMM YYYY');
         } else if (this.role == 'verifier') {
-          this.verified = true;
-          this.dateVerifier = moment(new Date()).format('D MMM YYYY');
+          // post the status and remark to API
+          for (let c in this.claimData) {
+            this.loading = true;
+
+            if (
+              this.claimData[c].type == 'Local/Outstation Travelling Expenses'
+            ) {
+              const verifyData = {
+                verifier_status: 'Verified',
+                verifier_feedback: this.remark,
+                serial_number: this.serialNumber,
+              };
+              axios
+                .post(
+                  'http://172.28.28.91:97/api/Verifier/InsertVerifierLocal',
+                  verifyData
+                )
+                .then((response) => {
+                  // Handle success response
+                  this.verified = true;
+                  this.dateVerifier = moment(new Date()).format('D MMM YYYY');
+                  console.log('API response', response.data);
+                  localStorage.setItem('ApproveOrNot', 'approve');
+
+                  this.approveSuccess = true;
+                  setTimeout(() => {
+                    this.$router.push({ name: 'AdminDashboardpage' });
+                  }, 1500);
+                })
+                .catch((error) => {
+                  // Handle error response
+                  console.error('API error', error);
+                });
+            }
+            if (
+              this.claimData[c].type ==
+              'Outstation/Overseas Travelling Expenses'
+            ) {
+              const verifyData = {
+                verifier_status: 'Approved',
+                verifier_feedback: this.remark,
+                serial_number: this.serialNumber,
+              };
+              axios
+                .post(
+                  'http://172.28.28.91:97/api/Verifier/InsertVerifierOverseas',
+                  verifyData
+                )
+                .then((response) => {
+                  // Handle success response
+                  this.verified = true;
+                  this.dateVerifier = moment(new Date()).format('D MMM YYYY');
+                  console.log('API response', response.data);
+                  localStorage.setItem('ApproveOrNot', 'approve');
+
+                  this.approveSuccess = true;
+                  setTimeout(() => {
+                    this.$router.push({ name: 'AdminDashboardpage' });
+                  }, 1500);
+                })
+                .catch((error) => {
+                  // Handle error response
+                  console.error('API error', error);
+                });
+            }
+            if (this.claimData[c].type == 'Entertainment') {
+              const verifyData = {
+                verifier_status: 'Approved',
+                verifier_feedback: this.remark,
+                serial_number: this.serialNumber,
+              };
+              axios
+                .post(
+                  'http://172.28.28.91:97/api/Verifier/InsertVerifierEntertainment',
+                  verifyData
+                )
+                .then((response) => {
+                  // Handle success response
+                  this.verified = true;
+                  this.dateVerifier = moment(new Date()).format('D MMM YYYY');
+                  console.log('API response', response.data);
+                  localStorage.setItem('ApproveOrNot', 'approve');
+
+                  this.approveSuccess = true;
+                  setTimeout(() => {
+                    this.$router.push({ name: 'AdminDashboardpage' });
+                  }, 1500);
+                })
+                .catch((error) => {
+                  // Handle error response
+                  console.error('API error', error);
+                });
+            }
+            if (this.claimData[c].type == 'Refreshment') {
+              const verifyData = {
+                verifier_status: 'Approved',
+                verifier_feedback: this.remark,
+                serial_number: this.serialNumber,
+              };
+              axios
+                .post(
+                  'http://172.28.28.91:97/api/Verifier/InsertVerifierRefreshment',
+                  verifyData
+                )
+                .then((response) => {
+                  // Handle success response
+                  this.verified = true;
+                  this.dateVerifier = moment(new Date()).format('D MMM YYYY');
+                  console.log('API response', response.data);
+                  localStorage.setItem('ApproveOrNot', 'approve');
+
+                  this.approveSuccess = true;
+                  setTimeout(() => {
+                    this.$router.push({ name: 'AdminDashboardpage' });
+                  }, 1500);
+                })
+                .catch((error) => {
+                  // Handle error response
+                  console.error('API error', error);
+                });
+            }
+          }
         }
-
-        this.loading = true;
-        localStorage.setItem('ApproveOrNot', 'approve');
-
-        setTimeout(() => {
-          this.approveSuccess = true;
-        }, 1500);
-
-        setTimeout(() => {
-          this.$router.push({ name: 'AdminDashboardpage' });
-        }, 3000);
       } else if (AoR == 'Reject') {
         if (this.role == 'approver') {
           this.rejectApprover = true;
           this.dateApprover = moment(new Date()).format('D MMM YYYY');
         } else if (this.role == 'verifier') {
-          this.rejectVerifier = true;
-          this.dateVerifier = moment(new Date()).format('D MMM YYYY');
+          for (let c in this.claimData) {
+            this.loading = true;
+
+            if (
+              this.claimData[c].type == 'Local/Outstation Travelling Expenses'
+            ) {
+              const verifyData = {
+                verifier_status: 'Rejected',
+                verifier_feedback: this.remark,
+                serial_number: this.serialNumber,
+              };
+              axios
+                .post(
+                  'http://172.28.28.91:97/api/Verifier/InsertVerifierLocal',
+                  verifyData
+                )
+                .then((response) => {
+                  // Handle success response
+                  this.loading = false;
+                  this.rejectVerifier = true;
+                  this.dateVerifier = moment(new Date()).format('D MMM YYYY');
+                  console.log('API response', response.data);
+                  localStorage.setItem('ApproveOrNot', 'reject');
+                })
+                .catch((error) => {
+                  // Handle error response
+                  console.error('API error', error);
+                });
+            }
+            if (
+              this.claimData[c].type ==
+              'Outstation/Overseas Travelling Expenses'
+            ) {
+              const verifyData = {
+                verifier_status: 'Rejected',
+                verifier_feedback: this.remark,
+                serial_number: this.serialNumber,
+              };
+              axios
+                .post(
+                  'http://172.28.28.91:97/api/Verifier/InsertVerifierOverseas',
+                  verifyData
+                )
+                .then((response) => {
+                  // Handle success response
+                  this.loading = false;
+
+                  this.rejectVerifier = true;
+                  this.dateVerifier = moment(new Date()).format('D MMM YYYY');
+                  console.log('API response', response.data);
+                  localStorage.setItem('ApproveOrNot', 'reject');
+                })
+                .catch((error) => {
+                  // Handle error response
+                  console.error('API error', error);
+                });
+            }
+            if (this.claimData[c].type == 'Entertainment') {
+              const verifyData = {
+                verifier_status: 'Rejected',
+                verifier_feedback: this.remark,
+                serial_number: this.serialNumber,
+              };
+              axios
+                .post(
+                  'http://172.28.28.91:97/api/Verifier/InsertVerifierEntertainment',
+                  verifyData
+                )
+                .then((response) => {
+                  // Handle success response
+                  this.loading = false;
+
+                  this.rejectVerifier = true;
+                  this.dateVerifier = moment(new Date()).format('D MMM YYYY');
+                  console.log('API response', response.data);
+                  localStorage.setItem('ApproveOrNot', 'reject');
+                })
+                .catch((error) => {
+                  // Handle error response
+                  console.error('API error', error);
+                });
+            }
+            if (this.claimData[c].type == 'Refreshment') {
+              const verifyData = {
+                verifier_status: 'Rejected',
+                verifier_feedback: this.remark,
+                serial_number: this.serialNumber,
+              };
+              axios
+                .post(
+                  'http://172.28.28.91:97/api/Verifier/InsertVerifierRefreshment',
+                  verifyData
+                )
+                .then((response) => {
+                  // Handle success response
+                  this.loading = false;
+
+                  this.rejectVerifier = true;
+                  this.dateVerifier = moment(new Date()).format('D MMM YYYY');
+                  console.log('API response', response.data);
+                  localStorage.setItem('ApproveOrNot', 'reject');
+                })
+                .catch((error) => {
+                  // Handle error response
+                  console.error('API error', error);
+                });
+            }
+          }
         }
-        localStorage.setItem('ApproveOrNot', 'reject');
       }
     },
 
@@ -726,6 +948,20 @@ tr:last-child th:last-child {
 .details tr th:last-child {
   display: none;
 }
+
+div:has(> table) {
+  overflow-x: auto;
+}
+
+table {
+  min-width: max-content;
+}
+
+table th,
+td {
+  padding-right: 4px;
+  padding-left: 4px;
+}
 </style>
 
 <style>
@@ -758,6 +994,14 @@ tr:last-child th:last-child {
     --tw-ring-color: 0;
   }
 
+  #claimant-informations {
+    grid-template-columns: repeat(4);
+  }
+
+  #toLeft {
+    text-align: left !important;
+  }
+
   #summaryPrint {
     margin-left: 0;
     width: 100vw !important;
@@ -771,6 +1015,11 @@ tr:last-child th:last-child {
   }
   #summaryPrint button {
     display: none;
+  }
+
+  #total {
+    position: absolute;
+    right: 10px;
   }
 
   .tab-title {
