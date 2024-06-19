@@ -48,7 +48,9 @@
                   <template
                     v-if="
                       !isCompanyTransport ||
-                      (field.id !== 'MileageKMLT' && field.id !== 'MileageRMLT' && field.id !== 'TransportSpec')
+                      (field.id !== 'MileageKMLT' &&
+                        field.id !== 'MileageRMLT' &&
+                        field.id !== 'TransportSpec')
                     "
                   >
                     <label
@@ -116,16 +118,6 @@
                       </div>
                     </template>
 
-                    <template v-else-if="field.type === 'text' && field.isOtherOption">
-                      <input
-                        v-model="field.value"
-                        :id="field.id"
-                        :type="field.type"
-                        :placeholder="field.placeholder"
-                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                      />
-                    </template>
-
                     <template v-else-if="field.type === 'file'">
                       <div class="pt-3">
                         <file-pond
@@ -168,7 +160,8 @@
                     "
                     class="mt-4"
                   >
-                    <span class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
+                    <span
+                      class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
                       >Other Expenses (If any)
                     </span>
                     <button
@@ -210,14 +203,12 @@
                           <label
                             class="block text-sm font-medium text-gray-700"
                             for="expenseAmount"
-                            >Amount (RM)</label
+                            >Description</label
                           >
                           <input
-                            v-model="newExpense.amount"
-                            id="expenseAmount"
-                            type="number"
-                            placeholder="Amount (RM)"
-                            step= "0.01"
+                            v-model="newExpense.description"
+                            id="expenseDescription"
+                            type="text"
                             class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                             required
                           />
@@ -226,13 +217,14 @@
                           <label
                             class="block text-sm font-medium text-gray-700"
                             for="expenseAmount"
-                            >Description</label
+                            >Amount (RM)</label
                           >
                           <input
-                            v-model="newExpense.description"
-                            id="expenseDescription"
-                            type="text"
-
+                            v-model="newExpense.amount"
+                            id="expenseAmount"
+                            type="number"
+                            placeholder="Amount (RM)"
+                            step="0.01"
                             class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                             required
                           />
@@ -281,7 +273,7 @@
                             class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                           >
                             <div class="flex items-center gap-x-3">
-                              <span>Amount(RM)</span>
+                              <span>Description</span>
                             </div>
                           </th>
                           <th
@@ -289,7 +281,7 @@
                             class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                           >
                             <div class="flex items-center gap-x-3">
-                              <span>Description</span>
+                              <span>Amount(RM)</span>
                             </div>
                           </th>
                           <th
@@ -310,19 +302,19 @@
                           :key="index"
                         >
                           <td
-                            class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap"
                           >
                             {{ expense.name }}
                           </td>
                           <td
-                            class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap"
                           >
-                            RM {{ expense.amount }}
+                            {{ expense.description }}
                           </td>
                           <td
                             class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                           >
-                            {{ expense.description }}
+                            {{ expense.amount }}
                           </td>
                           <td
                             class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
@@ -351,7 +343,7 @@
                         <tr class="bg-gray-50 dark:bg-gray-800">
                           <td
                             class="px-4 py-2 border text-sm font-normal text-right text-gray-500 dark:text-gray-400"
-                            colspan="2"
+                            colspan="3"
                           >
                             Total Amount
                           </td>
@@ -457,7 +449,6 @@
                         </option>
                       </select>
                     </template>
-
 
                     <template v-else-if="field.type === 'file'">
                       <div class="pt-3">
@@ -1108,9 +1099,18 @@ export default {
               value: "",
               required: true,
               options: [
-                { label: "ENTERTAINMENT-CLIENT(EXISTING)", value: "ENTERTAINMENT-CLIENT(EXISTING)" },
-                { label: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)", value: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)"},
-                { label: "ENTERTAINMENT-NON TRADE", value: "ENTERTAINMENT-NON TRADE" },
+                {
+                  label: "ENTERTAINMENT-CLIENT(EXISTING)",
+                  value: "ENTERTAINMENT-CLIENT(EXISTING)",
+                },
+                {
+                  label: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)",
+                  value: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)",
+                },
+                {
+                  label: "ENTERTAINMENT-NON TRADE",
+                  value: "ENTERTAINMENT-NON TRADE",
+                },
                 { label: "GIFT TO CLIENT", value: "GIFT TO CLIENT" },
                 { label: "GIFT TO OTHERS", value: "GIFT TO OTHERS" },
                 { label: "MEAL FOR STAFF", value: "MEAL FOR STAFF" },
@@ -1273,7 +1273,7 @@ export default {
           ],
         },
         {
-          title: "Medical Leave Reimbursement",
+          title: "Medical Bill Leave Reimbursement",
           tabType: "HR",
 
           gridLayout: "grid-cols-3",
@@ -1288,7 +1288,7 @@ export default {
             },
             {
               id: "ReasonML",
-              label: "Reason for Medical Leave",
+              label: "Reason for Medical",
               type: "text",
               value: "",
               required: true,
@@ -1438,9 +1438,18 @@ export default {
               value: "",
               required: true,
               options: [
-                { label: "ENTERTAINMENT-CLIENT(EXISTING)", value: "ENTERTAINMENT-CLIENT(EXISTING)" },
-                { label: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)", value: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)"},
-                { label: "ENTERTAINMENT-NON TRADE", value: "ENTERTAINMENT-NON TRADE" },
+                {
+                  label: "ENTERTAINMENT-CLIENT(EXISTING)",
+                  value: "ENTERTAINMENT-CLIENT(EXISTING)",
+                },
+                {
+                  label: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)",
+                  value: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)",
+                },
+                {
+                  label: "ENTERTAINMENT-NON TRADE",
+                  value: "ENTERTAINMENT-NON TRADE",
+                },
                 { label: "GIFT TO CLIENT", value: "GIFT TO CLIENT" },
                 { label: "GIFT TO OTHERS", value: "GIFT TO OTHERS" },
                 { label: "MEAL FOR STAFF", value: "MEAL FOR STAFF" },
@@ -1488,7 +1497,7 @@ export default {
       const tab = this.tabs.find((tab) => tab.title === "Local Travelling");
       if (!tab) return false;
       const transportField = tab.fields.find(
-        (field) => field.id === "TransportLT" && "TransportSpec" 
+        (field) => field.id === "TransportLT" && "TransportSpec"
       );
       return transportField && transportField.value === "Company Transport";
     },
@@ -1565,7 +1574,7 @@ export default {
       const TransportSpecField = localTravellingTab.fields.find(
         (field) => field.id === "MileageRMLT"
       );
-      if (!mileageKMLTField || !mileageRMLTField || !TransportSpecField ) return;
+      if (!mileageKMLTField || !mileageRMLTField || !TransportSpecField) return;
 
       if (transportValue === "Company Transport") {
         mileageKMLTField.hidden = true;
@@ -1579,7 +1588,8 @@ export default {
     },
 
     handleTransportChange(value) {
-      this.showTransportSpec = value === "Personal Transport" || value === "Others";
+      this.showTransportSpec =
+        value === "Personal Transport" || value === "Others";
     },
 
     addOtherExpense() {

@@ -10,7 +10,9 @@
           SN: {{ claims[0].uniqueCode }}
         </h1> -->
         <!-- Header Section -->
-        <p class="absolute right-0 mr-2 top-1 pt-2 text-sm text-gray-500 italic">
+        <p
+          class="absolute right-0 mr-2 top-1 pt-2 text-sm text-gray-500 italic"
+        >
           SN: {{ claims[0].uniqueCode }}
         </p>
         <div
@@ -162,7 +164,8 @@
                           </div>
                         </th>
 
-                        <th v-if="claims[0].reportType === 'Finance'"
+                        <th
+                          v-if="claims[0].reportType === 'Finance'"
                           scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
@@ -212,7 +215,8 @@
                         >
                           {{ claim.tabTitle }}
                         </td>
-                        <td v-if="claims[0].reportType === 'Finance'"
+                        <td
+                          v-if="claims[0].reportType === 'Finance'"
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                         >
                           <span v-if="claim.LocationEnd">{{
@@ -479,7 +483,7 @@
                 @click="toggleEditMode"
                 class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
               >
-                {{ isEditMode ? 'Save' : 'Edit' }}
+                {{ isEditMode ? "Save" : "Edit" }}
                 <!-- Change button text based on edit mode -->
               </button>
 
@@ -685,7 +689,7 @@
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
                         <div class="flex items-center gap-x-3">
-                          <span>Amount(RM)</span>
+                          <span>Description</span>
                         </div>
                       </th>
                       <th
@@ -693,7 +697,7 @@
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
                         <div class="flex items-center gap-x-3">
-                          <span>Description</span>
+                          <span>Amount(RM)</span>
                         </div>
                       </th>
                     </tr>
@@ -713,19 +717,19 @@
                         {{ index + 1 }}
                       </td>
                       <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-32"
                       >
                         {{ expense.name }}
                       </td>
                       <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                      >
-                        {{ expense.amount }}
-                      </td>
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-64"
                       >
                         {{ expense.description }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
+                      >
+                        {{ expense.amount }}
                       </td>
                     </tr>
                   </tbody>
@@ -748,7 +752,7 @@
                 @click="toggleEditMode"
                 class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
               >
-                {{ isEditMode ? 'Save' : 'Edit' }}
+                {{ isEditMode ? "Save" : "Edit" }}
                 <!-- Change button text based on edit mode -->
               </button>
 
@@ -780,7 +784,7 @@
             </div>
           </div>
 
-          <div v-if="selectedClaimType === 'MedicalLeaveReimbursement'">
+          <div v-if="selectedClaimType === 'MedicalBillLeaveReimbursement'">
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
               <div class="flex justify-end">
@@ -793,7 +797,7 @@
                 </button>
               </div>
               <h1 class="text-3xl font-bold">
-                Medical Leave Reimbursement Form
+                Medical Bill Reimbursement Form
               </h1>
               <hr class="mt-2 mb-4" />
 
@@ -804,19 +808,19 @@
                 <input
                   type="text"
                   id="nodeId"
-                  v-model="medicalLeaveReimbursementDetails.dateML"
+                  v-model="medicalBillLeaveReimbursementDetails.dateML"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeName" class="text-gray-700 font-bold mr-2"
-                  >Reason for Medical Leave:</label
+                  >Reason:</label
                 >
                 <input
                   type="text"
                   id="nodeName"
-                  v-model="medicalLeaveReimbursementDetails.ReasonML"
+                  v-model="medicalBillLeaveReimbursementDetails.ReasonML"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
@@ -829,7 +833,7 @@
                 <input
                   type="text"
                   id="bankName"
-                  v-model="medicalLeaveReimbursementDetails.BankNameML"
+                  v-model="medicalBillLeaveReimbursementDetails.BankNameML"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
@@ -841,7 +845,7 @@
                 <input
                   type="text"
                   id="accBankNumber"
-                  v-model="medicalLeaveReimbursementDetails.AccBankNumberML"
+                  v-model="medicalBillLeaveReimbursementDetails.AccBankNumberML"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
@@ -853,7 +857,7 @@
                 <input
                   type="text"
                   id="accHolderName"
-                  v-model="medicalLeaveReimbursementDetails.AccHolderNameML"
+                  v-model="medicalBillLeaveReimbursementDetails.AccHolderNameML"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 overflow-x-auto"
                 />
@@ -865,7 +869,7 @@
                 <input
                   type="text"
                   id="claimsAmount"
-                  v-model="medicalLeaveReimbursementDetails.ClaimsAmountML"
+                  v-model="medicalBillLeaveReimbursementDetails.ClaimsAmountML"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
@@ -877,7 +881,7 @@
               <label
                 for="nodeParentId"
                 class="text-gray-700 font-bold mr-2 text-2xl"
-                >Total: RM {{ totalMedicalLeaveReimbursementDetails }}</label
+                >Total: RM {{ totalMedicalBillLeaveReimbursementDetails }}</label
               >
             </div>
 
@@ -886,7 +890,7 @@
                 @click="toggleEditMode"
                 class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
               >
-                {{ isEditMode ? 'Save' : 'Edit' }}
+                {{ isEditMode ? "Save" : "Edit" }}
                 <!-- Change button text based on edit mode -->
               </button>
 
@@ -1107,7 +1111,7 @@
                 @click="toggleEditMode"
                 class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
               >
-                {{ isEditMode ? 'Save' : 'Edit' }}
+                {{ isEditMode ? "Save" : "Edit" }}
                 <!-- Change button text based on edit mode -->
               </button>
               <button
@@ -1272,7 +1276,7 @@
                 @click="toggleEditMode"
                 class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
               >
-                {{ isEditMode ? 'Save' : 'Edit' }}
+                {{ isEditMode ? "Save" : "Edit" }}
                 <!-- Change button text based on edit mode -->
               </button>
               <button
@@ -1303,7 +1307,7 @@
             </div>
           </div>
 
-          <div v-if="selectedClaimType === 'HandphoneReimbursement'">
+          <div v-if="selectedClaimType === 'HandphoneBillReimbursement'">
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
               <div class="flex justify-end">
@@ -1315,7 +1319,7 @@
                   X
                 </button>
               </div>
-              <h1 class="text-3xl font-bold">Handphone Reimbursement Form</h1>
+              <h1 class="text-3xl font-bold">Handphone Bill Reimbursement Form</h1>
               <hr class="mt-2 mb-4" />
 
               <div class="flex flex-col">
@@ -1326,7 +1330,7 @@
                   <input
                     type="text"
                     id="nodeId"
-                    v-model="handphoneReimbursementDetails.MonthHR"
+                    v-model="handphoneBillReimbursementDetails.MonthHR"
                     :disabled="!isEditMode"
                     class="border rounded-md px-4 py-2"
                   />
@@ -1338,7 +1342,7 @@
                   <input
                     type="text"
                     id="nodeName"
-                    v-model="handphoneReimbursementDetails.YearHR"
+                    v-model="handphoneBillReimbursementDetails.YearHR"
                     :disabled="!isEditMode"
                     class="border rounded-md px-4 py-2"
                   />
@@ -1350,7 +1354,7 @@
                   <input
                     type="text"
                     id="bankName"
-                    v-model="handphoneReimbursementDetails.BankNameHR"
+                    v-model="handphoneBillReimbursementDetails.BankNameHR"
                     :disabled="!isEditMode"
                     class="border rounded-md px-4 py-2"
                   />
@@ -1364,7 +1368,7 @@
                   <input
                     type="text"
                     id="accBankNumber"
-                    v-model="handphoneReimbursementDetails.AccBankNumberHR"
+                    v-model="handphoneBillReimbursementDetails.AccBankNumberHR"
                     :disabled="!isEditMode"
                     class="border rounded-md px-4 py-2"
                   />
@@ -1378,7 +1382,7 @@
                   <input
                     type="text"
                     id="accHolderName"
-                    v-model="handphoneReimbursementDetails.AccHolderNameHR"
+                    v-model="handphoneBillReimbursementDetails.AccHolderNameHR"
                     :disabled="!isEditMode"
                     class="border rounded-md px-4 py-2"
                   />
@@ -1390,7 +1394,7 @@
                   <input
                     type="text"
                     id="claimsAmount"
-                    v-model="handphoneReimbursementDetails.ClaimsAmountHR"
+                    v-model="handphoneBillReimbursementDetails.ClaimsAmountHR"
                     :disabled="!isEditMode"
                     class="border rounded-md px-4 py-2"
                   />
@@ -1402,7 +1406,7 @@
                 <label
                   for="nodeParentId"
                   class="text-gray-700 font-bold mr-2 text-2xl"
-                  >Total: RM {{ totalHandphoneReimbursementDetails }}</label
+                  >Total: RM {{ totalHandphoneBillReimbursementDetails }}</label
                 >
               </div>
 
@@ -1411,7 +1415,7 @@
                   @click="toggleEditMode"
                   class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
                 >
-                  {{ isEditMode ? 'Save' : 'Edit' }}
+                  {{ isEditMode ? "Save" : "Edit" }}
                 </button>
                 <button
                   @click="deleteForm()"
@@ -1451,13 +1455,13 @@
 </template>
 
 <script>
-import tab from './user-ui/FormTab.vue';
-import axios from 'axios';
-import { formStore } from '../store.js';
-import { store } from '../store.js';
+import tab from "./user-ui/FormTab.vue";
+import axios from "axios";
+import { formStore } from "../store.js";
+import { store } from "../store.js";
 
 export default {
-  name: 'TEtstS',
+  name: "TEtstS",
   components: {
     tab,
   },
@@ -1474,10 +1478,10 @@ export default {
       selectedClaimDetails: {},
       localTravellingDetails: {},
       overseasTravellingDetails: { otherExpenses: [] },
-      medicalLeaveReimbursementDetails: {},
+      medicalBillLeaveReimbursementDetails: {},
       entertainmentDetails: {},
       staffRefreshmentDetails: {},
-      handphoneReimbursementDetails: {},
+      handphoneBillReimbursementDetails: {},
       cancel: true,
     };
   },
@@ -1485,13 +1489,13 @@ export default {
   computed: {
     totallocalTravellingDetails() {
       let total =
-        (this.localTravellingDetails.TransportLT === 'Company Transport'
+        (this.localTravellingDetails.TransportLT === "Company Transport"
           ? 0
           : parseFloat(this.localTravellingDetails.MileageRMLT) || 0) +
         (parseFloat(this.localTravellingDetails.ParkingLT) || 0) +
         (parseFloat(this.localTravellingDetails.TollLT) || 0);
 
-      if (this.localTravellingDetails.tripwayLT === 'Round Trip') {
+      if (this.localTravellingDetails.tripwayLT === "Round Trip") {
         total *= 2;
       }
       this.totalplusmethod(total);
@@ -1499,7 +1503,7 @@ export default {
     },
 
     isCompanyTransport() {
-      return this.localTravellingDetails.TransportLT === 'Company Transport';
+      return this.localTravellingDetails.TransportLT === "Company Transport";
     },
 
     totalOverseasTravellingAmount() {
@@ -1526,9 +1530,9 @@ export default {
       return total;
     },
 
-    totalMedicalLeaveReimbursementDetails() {
+    totalMedicalBillLeaveReimbursementDetails() {
       let total =
-        parseFloat(this.medicalLeaveReimbursementDetails.ClaimsAmountML) || 0;
+        parseFloat(this.medicalBillLeaveReimbursementDetails.ClaimsAmountML) || 0;
       this.totalplusmethod(total);
       return total;
     },
@@ -1539,9 +1543,9 @@ export default {
       return total;
     },
 
-    totalHandphoneReimbursementDetails() {
+    totalHandphoneBillReimbursementDetails() {
       let total =
-        parseFloat(this.handphoneReimbursementDetails.ClaimsAmountHR) || 0;
+        parseFloat(this.handphoneBillReimbursementDetails.ClaimsAmountHR) || 0;
       this.totalplusmethod(total);
       return total;
     },
@@ -1565,19 +1569,19 @@ export default {
 
   mounted() {
     // Sidebar close or open
-    let openOrNot = localStorage.getItem('openOrNot');
-    const element = document.querySelector('main');
-    if (element && openOrNot == 'false') {
-      element.classList.add('become-big');
-    } else if (element && openOrNot == 'true') {
-      element.classList.remove('become-big');
+    let openOrNot = localStorage.getItem("openOrNot");
+    const element = document.querySelector("main");
+    if (element && openOrNot == "false") {
+      element.classList.add("become-big");
+    } else if (element && openOrNot == "true") {
+      element.classList.remove("become-big");
     }
   },
 
   methods: {
     totalplusmethod(total) {
       this.totalplus = total;
-      console.log('totalplus', this.totalplus);
+      console.log("totalplus", this.totalplus);
     },
     createObjectURL(file) {
       return URL.createObjectURL(file);
@@ -1601,47 +1605,47 @@ export default {
 
     showDetails(claim, index) {
       this.index = index;
-      console.log('Current index', this.index);
+      console.log("Current index", this.index);
       // Update selectedClaimType based on the type of claim
-      this.selectedClaimType = claim.tabTitle.replace(/\s+/g, ''); // Remove spaces from claim type
+      this.selectedClaimType = claim.tabTitle.replace(/\s+/g, ""); // Remove spaces from claim type
       this.formToDelete = index;
       // Update corresponding details object based on claim type
       switch (this.selectedClaimType) {
-        case 'LocalTravelling':
+        case "LocalTravelling":
           this.localTravellingDetails = claim;
-          console.log('Local Travelling Details:', this.localTravellingDetails);
-          console.log('upload', this.localTravellingDetails.UploadLT);
+          console.log("Local Travelling Details:", this.localTravellingDetails);
+          console.log("upload", this.localTravellingDetails.UploadLT);
           break;
-        case 'OverseasTravellingwithAccommodation':
+        case "OverseasTravellingwithAccommodation":
           this.overseasTravellingDetails = claim;
           console.log(
-            'Overseas Travelling Details:',
+            "Overseas Travelling Details:",
             this.overseasTravellingDetails
           );
           break;
-        case 'Entertainment':
+        case "Entertainment":
           this.entertainmentDetails = claim;
-          console.log('Entertainment Details:', this.entertainmentDetails);
+          console.log("Entertainment Details:", this.entertainmentDetails);
           break;
-        case 'StaffRefreshment':
+        case "StaffRefreshment":
           this.staffRefreshmentDetails = claim;
           console.log(
-            'Staff Refreshment Details:',
+            "Staff Refreshment Details:",
             this.staffRefreshmentDetails
           );
           break;
-        case 'HandphoneReimbursement':
+        case "HandphoneBillReimbursement":
           this.handphoneReimbursementDetails = claim;
           console.log(
-            'Handphone Reimbursement Details:',
-            this.handphoneReimbursementDetails
+            "Handphone Bill Reimbursement Details:",
+            this.handphoneBillReimbursementDetails
           );
           break;
-        case 'MedicalLeaveReimbursement':
+        case "MedicalBillReimbursement":
           this.medicalLeaveReimbursementDetails = claim;
           console.log(
-            'Medical Leave Reimbursement Details:',
-            this.medicalLeaveReimbursementDetails
+            "Medical Bill Reimbursement Details:",
+            this.medicalBillLeaveReimbursementDetails
           );
           break;
         // Add cases for other types of claims
@@ -1657,45 +1661,45 @@ export default {
         // Generate a random number and pad it to 2 characters
         const randomNumber = Math.floor(Math.random() * 100)
           .toString()
-          .padStart(2, '0');
+          .padStart(2, "0");
 
         // Create a timestamp and take the last 2 digits for uniqueness
         const timestamp = Date.now().toString().slice(-2);
 
         // Determine the prefix based on the location
-        let prefix = '';
+        let prefix = "";
         switch (tabTitle) {
-          case 'Local Travelling':
-            prefix = 'LT';
+          case "Local Travelling":
+            prefix = "LT";
             break;
-          case 'Overseas Travelling with Accommodation':
-            prefix = 'OV';
+          case "Overseas Travelling with Accommodation":
+            prefix = "OV";
             break;
-          case 'Entertainment':
-            prefix = 'ENT';
+          case "Entertainment":
+            prefix = "ENT";
             break;
-          case 'Staff Refreshment':
-            prefix = 'SR';
+          case "Staff Refreshment":
+            prefix = "SR";
             break;
-          case 'Handphone Reimbursement':
-            prefix = 'HR';
+          case "Handphone Bill Reimbursement":
+            prefix = "HR";
             break;
-          case 'Medical Leave Reimbursement':
-            prefix = 'MLR';
+          case "Medical Bill Reimbursement":
+            prefix = "MLR";
             break;
           default:
-            console.error('Invalid location provided:', tabTitle);
-            return '';
+            console.error("Invalid location provided:", tabTitle);
+            return "";
         }
 
         // Construct the uniqueCode
         const uniqueCode = `${prefix}${userIdFragment}${randomNumber}${timestamp}`;
-        console.log('Unique Code:', uniqueCode);
+        console.log("Unique Code:", uniqueCode);
         return uniqueCode;
       } else {
-        console.error('User ID is undefined.');
+        console.error("User ID is undefined.");
         // You may want to handle this case differently based on your application logic.
-        return '';
+        return "";
       }
     },
     generateUniqueCodeSN(tabTitle) {
@@ -1707,45 +1711,45 @@ export default {
         // Generate a random number and pad it to 2 characters
         const randomNumber = Math.floor(Math.random() * 100)
           .toString()
-          .padStart(2, '0');
+          .padStart(2, "0");
 
         // Create a timestamp and take the last 2 digits for uniqueness
         const timestamp = Date.now().toString().slice(-2);
 
         // Determine the prefix based on the location
-        let prefix = '';
+        let prefix = "";
         switch (tabTitle) {
-          case 'Local Travelling':
-            prefix = 'LT';
+          case "Local Travelling":
+            prefix = "LT";
             break;
-          case 'Overseas Travelling with Accommodation':
-            prefix = 'OV';
+          case "Overseas Travelling with Accommodation":
+            prefix = "OV";
             break;
-          case 'Entertainment':
-            prefix = 'ENT';
+          case "Entertainment":
+            prefix = "ENT";
             break;
-          case 'Staff Refreshment':
-            prefix = 'SR';
+          case "Staff Refreshment":
+            prefix = "SR";
             break;
-          case 'Handphone Reimbursement':
-            prefix = 'HR';
+          case "Handphone Bill Reimbursement":
+            prefix = "HR";
             break;
-          case 'Medical Leave Reimbursement':
-            prefix = 'MLR';
+          case "Medical Bill Reimbursement":
+            prefix = "MLR";
             break;
           default:
-            console.error('Invalid location provided:', tabTitle);
-            return '';
+            console.error("Invalid location provided:", tabTitle);
+            return "";
         }
 
         // Construct the uniqueCode
         const uniqueCode = `SN${prefix}${userIdFragment}${randomNumber}${timestamp}`;
-        console.log('Unique Code:', uniqueCode);
+        console.log("Unique Code:", uniqueCode);
         return uniqueCode;
       } else {
-        console.error('User ID is undefined.');
+        console.error("User ID is undefined.");
         // You may want to handle this case differently based on your application logic.
-        return '';
+        return "";
       }
     },
     async senttheclaim() {
@@ -1763,20 +1767,20 @@ export default {
       try {
         // Send API request using axios
         const response = await axios.post(
-          'http://172.28.28.91:97/api/User/InsertClaimDetails',
+          "http://172.28.28.91:97/api/User/InsertClaimDetails",
           apiData
         );
         // Handle success response
-        console.log('API response', response.data);
+        console.log("API response", response.data);
         this.sendToAPI();
       } catch (error) {
         // Handle error response
-        console.error('API error', error);
+        console.error("API error", error);
       }
     },
     async sendToAPI() {
       // Group claims by tabTitle
-      this.$router.push({ name: 'eclaimhomepages' });
+      this.$router.push({ name: "eclaimhomepages" });
       const groupedClaims = this.dataclaims.reduce((acc, claim) => {
         if (!acc[claim.tabTitle]) {
           acc[claim.tabTitle] = [];
@@ -1794,7 +1798,7 @@ export default {
           try {
             let axiosInstance;
             switch (title.toLowerCase()) {
-              case 'local travelling': {
+              case "local travelling": {
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   const thisisforlocal1 = {
@@ -1804,29 +1808,28 @@ export default {
                     park_fee: claim.ParkingLT,
                     toll_fee: claim.TollLT,
                     total_fee: 10,
-                    approver_email: 'verifier1@example.com', // Access Email property from claim object
-                    verifier_email: 'verifier1@example.com',
-                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    requester_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
+                    approver_email: "verifier1@example.com", // Access Email property from claim object
+                    verifier_email: "verifier1@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
 
                     unique_code: this.generateUniqueCode(claim.tabTitle),
-                    reference_number: 'pktm222',
-                    
+                    reference_number: "pktm222",
                   };
                   axiosInstance = axios.create({
                     baseURL:
-                      'http://172.28.28.91:97/api/User/InsertLocalOutstation',
+                      "http://172.28.28.91:97/api/User/InsertLocalOutstation",
                   });
                   const response1 = await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforlocal1
                   );
                   console.log(`Data sent for ${title} 1:`, response1.data);
                 }
                 break;
               }
-              case 'overseas travelling with accommodation':
+              case "overseas travelling with accommodation":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -1844,29 +1847,29 @@ export default {
                     other_foreign_currency: claim.ForeignCurrencyOthersOT,
                     other_exchange_rate: claim.ExchangeRateOthersOT,
                     other_foreign_total: 200,
-                    reference_number: 'pktm222',
+                    reference_number: "pktm222",
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: 'approver@example.com',
-                    verifier_email: 'verifier@example.com',
-                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
 
                   axiosInstance = axios.create({
                     baseURL:
-                      'http://172.28.28.91:97/api/User/InsertOverseasOutstation',
+                      "http://172.28.28.91:97/api/User/InsertOverseasOutstation",
                   });
                   const response2 = await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforoversea
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case 'Entertainment':
+              case "Entertainment":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -1880,28 +1883,28 @@ export default {
                     venue: claim.VenueE,
                     reference: claim.ReferenceE,
                     amount: claim.AmountRME,
-                    reference_number: 'pktm222',
+                    reference_number: "pktm222",
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: 'approver@example.com',
-                    verifier_email: 'verifier@example.com',
-                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
                   axiosInstance = axios.create({
-                    baseURL: 'http://localhost:3000/claims/entertainment',
+                    baseURL: "http://localhost:3000/claims/entertainment",
                   });
                   const response2 = await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforentertainment
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
 
-              case 'Staff Refreshment':
+              case "Staff Refreshment":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -1915,31 +1918,31 @@ export default {
                     venue: claim.VenueE,
                     reference: claim.ReferenceE,
                     amount: claim.AmountRME,
-                    reference_number: 'pktm222',
+                    reference_number: "pktm222",
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: 'approver@example.com',
-                    verifier_email: 'verifier@example.com',
-                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
                   axiosInstance = axios.create({
-                    baseURL: 'http://localhost:3000/claims/entertainment',
+                    baseURL: "http://localhost:3000/claims/entertainment",
                   });
                   const response2 = await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforstaffrefreshment
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case 'Handphone Reimbursement':
+              case "Handphone Bill Reimbursement":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
-                  const thisisforHandphoneReimbursement = {
+                  const thisisforHandphoneBillReimbursement = {
                     date_event: claim.dateE, // Example date
                     person_entertained: claim.PersonEntertainedE,
                     type_of_entertainment: claim.TypeofEntertainmentE,
@@ -1949,31 +1952,31 @@ export default {
                     venue: claim.VenueE,
                     reference: claim.ReferenceE,
                     amount: claim.AmountRME,
-                    reference_number: 'pktm222',
+                    reference_number: "pktm222",
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: 'approver@example.com',
-                    verifier_email: 'verifier@example.com',
-                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
                   axiosInstance = axios.create({
-                    baseURL: 'http://localhost:3000/claims/entertainment',
+                    baseURL: "http://localhost:3000/claims/entertainment",
                   });
                   const response2 = await axiosInstance.post(
-                    '/',
-                    thisisforHandphoneReimbursement
+                    "/",
+                    thisisforHandphoneBillReimbursement
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case 'Medical Leave Reimbursement':
+              case "Medical Bill Reimbursement":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
-                  const thisisforMedicalLeaveReimbursement = {
+                  const thisisforMedicalBillLeaveReimbursement = {
                     date_event: claim.dateE, // Example date
                     person_entertained: claim.PersonEntertainedE,
                     type_of_entertainment: claim.TypeofEntertainmentE,
@@ -1983,22 +1986,22 @@ export default {
                     venue: claim.VenueE,
                     reference: claim.ReferenceE,
                     amount: claim.AmountRME,
-                    reference_number: 'pktm222',
+                    reference_number: "pktm222",
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: 'approver@example.com',
-                    verifier_email: 'verifier@example.com',
-                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
                   axiosInstance = axios.create({
-                    baseURL: 'http://localhost:3000/claims/entertainment',
+                    baseURL: "http://localhost:3000/claims/entertainment",
                   });
                   const response2 = await axiosInstance.post(
-                    '/',
-                    thisisforMedicalLeaveReimbursement
+                    "/",
+                    thisisforMedicalBillLeaveReimbursement
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
@@ -2043,35 +2046,35 @@ export default {
       // Retrieve the current formData
       const formData = formStore.getFormData();
 
-      if (formData.claimantName !== '') {
+      if (formData.claimantName !== "") {
         // Set the claims array to contain only the new formData
         this.claims = [formData];
 
         // Update the local storage with the new claims array
-        localStorage.setItem('claims', JSON.stringify(this.claims));
+        localStorage.setItem("claims", JSON.stringify(this.claims));
       } else {
         // If no formData, retrieve the claims array from local storage
-        const storedClaims = JSON.parse(localStorage.getItem('claims')) || [];
+        const storedClaims = JSON.parse(localStorage.getItem("claims")) || [];
         this.claims = storedClaims;
       }
 
       // Log the claims array to the console
-      console.log('Claims:', this.claims);
+      console.log("Claims:", this.claims);
     },
 
     addClaim(formData) {
       // Push new form data into the claims array
       this.dataclaims.push(formData);
-      console.log('Data Claims:', this.dataclaims);
+      console.log("Data Claims:", this.dataclaims);
     },
     handleFileAdded(file, field) {
-      console.log('File added:', file);
-      console.log('Updated field value:', field.value);
+      console.log("File added:", file);
+      console.log("Updated field value:", field.value);
     },
 
     handleFileRemoved(file, field) {
-      console.log('File removed:', file);
-      console.log('Updated field value:', field.value);
+      console.log("File removed:", file);
+      console.log("Updated field value:", field.value);
     },
   },
 };
