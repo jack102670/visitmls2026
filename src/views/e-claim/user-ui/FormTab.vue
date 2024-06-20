@@ -53,102 +53,114 @@
                         field.id !== 'TransportSpec')
                     "
                   >
-                    <template v-if="!isPanelClinic || (field.id !== 'OtherClinicSpecML' && field.id !== 'OtherClinicReasonML')">
-
-                      <label
-                      :for="field.id"
-                      class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
+                    <template
+                      v-if="
+                        !isPanelClinic ||
+                        (field.id !== 'OtherClinicSpecML' &&
+                          field.id !== 'OtherClinicReasonML')
+                      "
                     >
-                      {{ field.label }}
-                      <span v-if="field.required" style="color: red">*</span>
-                      </label>
-
-                      <template v-if="field.type === 'select'">
-                      <select
-                        v-model="field.value"
-                        :id="field.id"
-                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                      >
-                        <option
-                          v-for="(option, optionIndex) in field.options"
-                          :key="optionIndex"
-                          :value="option.value"
+                    <template
+                      v-if="field.id !== 'OtherTypeofStaffRefreshmentSR' || isOtherRefreshment"
+                    >
+                        <label
+                          :for="field.id"
+                          class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
                         >
-                          {{ option.label }}
-                        </option>
-                      </select>
-                      </template>
-
-                      <template v-else-if="field.type === 'year'">
-                      <select
-                        v-model="field.value"
-                        :id="field.id"
-                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                      >
-                        <option
-                          v-for="year in yearRange"
-                          :key="year"
-                          :value="year"
-                        >
-                          {{ year }}
-                        </option>
-                      </select>
-                      </template>
-
-                      <template v-else-if="field.type === 'radio-group'">
-                      <div class="grid grid-cols-2">
-                        <div
-                          class="p-4 pt-2 pb-2 flex items-center"
-                          v-for="option in field.options"
-                          :key="option.value"
-                        >
-                          <input
-                            type="radio"
-                            :id="option.value"
-                            :name="field.id"
-                            :value="option.value"
-                            v-model="field.value"
-                            class="mr-2"
-                          />
-                          <label
-                            :for="option.value"
-                            class="text-sm text-gray-700"
+                          {{ field.label }}
+                          <span v-if="field.required" style="color: red"
+                            >*</span
                           >
-                            {{ option.label }}
-                          </label>
-                        </div>
-                      </div>
-                      </template>
+                        </label>
 
-                      <template v-else-if="field.type === 'file'">
-                      <div class="pt-3">
-                        <file-pond
-                          :name="field.id"
-                          ref="pond"
-                          label-idle="Drop files here..."
-                          @addfile="
-                            (error, file) => handleAddFile(error, file, field)
-                          "
-                          @removefile="
-                            (error, file) =>
-                              handleRemoveFile(error, file, field)
-                          "
-                          :accepted-file-types="field.acceptedFileTypes"
-                          :max-file-size="field.maxFileSize"
-                          :allow-multiple="field.allowMultiple"
-                        />
-                      </div>
-                      </template>
+                        <template v-if="field.type === 'select'">
+                          <select
+                            v-model="field.value"
+                            :id="field.id"
+                            class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                          >
+                            <option
+                              v-for="(option, optionIndex) in field.options"
+                              :key="optionIndex"
+                              :value="option.value"
+                            >
+                              {{ option.label }}
+                            </option>
+                          </select>
+                        </template>
 
-                      <template v-else>
-                      <input
-                        v-model="field.value"
-                        :id="field.id"
-                        :type="field.type"
-                        :placeholder="field.placeholder"
-                        :step="field.type === 'number' ? '0.01' : undefined"
-                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                      />
+                        <template v-else-if="field.type === 'year'">
+                          <select
+                            v-model="field.value"
+                            :id="field.id"
+                            class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                          >
+                            <option
+                              v-for="year in yearRange"
+                              :key="year"
+                              :value="year"
+                            >
+                              {{ year }}
+                            </option>
+                          </select>
+                        </template>
+
+                        <template v-else-if="field.type === 'radio-group'">
+                          <div class="grid grid-cols-2">
+                            <div
+                              class="p-4 pt-2 pb-2 flex items-center"
+                              v-for="option in field.options"
+                              :key="option.value"
+                            >
+                              <input
+                                type="radio"
+                                :id="option.value"
+                                :name="field.id"
+                                :value="option.value"
+                                v-model="field.value"
+                                class="mr-2"
+                              />
+                              <label
+                                :for="option.value"
+                                class="text-sm text-gray-700"
+                              >
+                                {{ option.label }}
+                              </label>
+                            </div>
+                          </div>
+                        </template>
+
+                        <template v-else-if="field.type === 'file'">
+                          <div class="pt-3">
+                            <file-pond
+                              :name="field.id"
+                              ref="pond"
+                              label-idle="Drop files here..."
+                              @addfile="
+                                (error, file) =>
+                                  handleAddFile(error, file, field)
+                              "
+                              @removefile="
+                                (error, file) =>
+                                  handleRemoveFile(error, file, field)
+                              "
+                              :accepted-file-types="field.acceptedFileTypes"
+                              :max-file-size="field.maxFileSize"
+                              :allow-multiple="field.allowMultiple"
+                            />
+                          </div>
+                        </template>
+
+                        <template v-else>
+                          <input
+                            v-model="field.value"
+                            :id="field.id"
+                            :type="field.type"
+                            :placeholder="field.placeholder"
+                            :step="field.type === 'number' ? '0.01' : undefined"
+                            class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                          />
+                        </template>
                       </template>
                     </template>
                   </template>
@@ -429,6 +441,9 @@
                       field.gridClass,
                     ]"
                   >
+                  <template
+                      v-if="field.id !== 'OtherTypeofEntertainmentE' || isOtherEntertainment"
+                    >
                     <label
                       :for="field.id"
                       class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
@@ -476,6 +491,7 @@
                         class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                       />
                     </template>
+                  </template>
                   </div>
 
                   <div v-if="subTab.title !== 'Attendees'" class="pt-4">
@@ -1078,6 +1094,7 @@ export default {
               value: "",
               placeholder: "Specify other type",
               gridClass: "sm:col-span-2",
+              hidden: true,
             },
             {
               id: "CompanySR",
@@ -1308,7 +1325,7 @@ export default {
               value: "",
               required: true,
               gridClass: "sm:col-span-2",
-            }, 
+            },
             {
               id: "ClinicSelectionML",
               label: "Clinic Selection",
@@ -1316,7 +1333,10 @@ export default {
               value: [],
               required: true,
               options: [
-                { label: "Mediviron Clinic - Panel", value: "Mediviron Clinic - Panel" },
+                {
+                  label: "Mediviron Clinic - Panel",
+                  value: "Mediviron Clinic - Panel",
+                },
                 { label: "Other Clinic", value: "Other Clinic" },
               ],
               gridClass: "sm:col-span-1",
@@ -1461,6 +1481,7 @@ export default {
               value: "",
               placeholder: "Specify other type",
               gridClass: "sm:col-span-2",
+              hidden: true,
             },
             {
               id: "CompanyE",
@@ -1549,14 +1570,40 @@ export default {
       return transportField && transportField.value === "Company Transport";
     },
     isPanelClinic() {
-      const tab = this.tabs.find((tab) => tab.title === "Medical Bill Reimbursement");
+      const tab = this.tabs.find(
+        (tab) => tab.title === "Medical Bill Reimbursement"
+      );
       if (!tab) return false;
       const clinicField = tab.fields.find(
-        (field) => field.id === "ClinicSelectionML" && "OtherClinicSpecML" && "OtherCliniReasonML"
+        (field) =>
+          field.id === "ClinicSelectionML" &&
+          "OtherClinicSpecML" &&
+          "OtherCliniReasonML"
       );
       return clinicField && clinicField.value === "Mediviron Clinic - Panel";
     },
+    isOtherRefreshment() {
+      const staffRefreshmentTab = this.tabs.find(
+        (tab) => tab.title === "Staff Refreshment"
+      );
+      if (!staffRefreshmentTab) return false;
+      const typeOfRefreshmentField = staffRefreshmentTab.fields.find(
+        (field) => field.id === "TypeofRefreshmentSR"
+      );
+      return typeOfRefreshmentField && typeOfRefreshmentField.value === "OTHERS";
+    },
+    isOtherEntertainment() {
+      const entertainmentTab = this.entertainmentTabs.find(
+        (tab) => tab.title === "Details"
+      );
+      if (!entertainmentTab) return false;
+      const typeOfEntertainmentField = entertainmentTab.fields.find(
+        (field) => field.id === "TypeofEntertainmentE"
+      );
+      return typeOfEntertainmentField && typeOfEntertainmentField.value === "OTHERS";
+    },
   },
+    
 
   watch: {
     tabs: {
@@ -1572,10 +1619,29 @@ export default {
           }
           if (tab.title === "Medical Bill Reimbursement") {
             const clinicField = tab.fields.find(
-              (field) => field.id === "ClinicSelectionML" && "OtherClinicSpecML" && "OtherCliniReasonML"
+              (field) =>
+                field.id === "ClinicSelectionML" &&
+                "OtherClinicSpecML" &&
+                "OtherCliniReasonML"
             );
             if (clinicField) {
               this.updateFieldVisibility2(clinicField.value);
+            }
+          }
+          if (tab.title === "Staff Refreshment") {
+            const typeOfRefreshmentField = tab.fields.find(
+              (field) => field.id === "TypeofRefreshmentSR"
+            );
+            if (typeOfRefreshmentField) {
+              this.updateFieldVisibility3(typeOfRefreshmentField.value);
+            }
+          }
+          if (tab.title === "Details") {
+            const typeOfEntertainmentField = tab.fields.find(
+              (field) => field.id === "TypeofEntertainmentE"
+            );
+            if (typeOfEntertainmentField) {
+              this.updateFieldVisibility4(typeOfEntertainmentField.value);
             }
           }
         });
@@ -1670,6 +1736,32 @@ export default {
         OtherClinicSpecMLField.hidden = false;
         OtherClinicReasonMLField.hidden = false;
       }
+    },
+
+    updateFieldVisibility3(refreshmentValue) {
+      const staffRefreshmentTab = this.tabs.find(
+        (tab) => tab.title === "Staff Refreshment"
+      );
+      if (!staffRefreshmentTab) return;
+      const otherTypeField = staffRefreshmentTab.fields.find(
+        (field) => field.id === "OtherTypeofStaffRefreshmentSR"
+      );
+      if (!otherTypeField) return;
+
+      otherTypeField.hidden = refreshmentValue !== "OTHERS";
+    },
+
+    updateFieldVisibility4(entertainmentValue) {
+      const entertainmentTab = this.entertainmentTabs.find(
+        (tab) => tab.title === "Details"
+      );
+      if (!entertainmentTab) return;
+      const otherTypeField2 = entertainmentTab.fields.find(
+        (field) => field.id === "OtherTypeofEntertainmentE"
+      );
+      if (!otherTypeField2) return;
+
+      otherTypeField2.hidden = entertainmentValue !== "OTHERS";
     },
 
     handleTransportChange(value) {

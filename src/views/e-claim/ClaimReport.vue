@@ -853,7 +853,10 @@
                 />
               </div>
 
-              <div v-if="!isPanelClinic" class="flex justify-between items-center mb-4">
+              <div
+                v-if="!isPanelClinic"
+                class="flex justify-between items-center mb-4"
+              >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Specify Clinic Name:</label
                 >
@@ -866,7 +869,10 @@
                 />
               </div>
 
-              <div v-if="!isPanelClinic" class="flex justify-between items-center mb-4">
+              <div
+                v-if="!isPanelClinic"
+                class="flex justify-between items-center mb-4"
+              >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Reason not Going to Panel Clinic:</label
                 >
@@ -997,7 +1003,10 @@
                   class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="flex justify-between items-center mb-4">
+              <div
+                v-if="!isOtherEntertainment"
+                class="flex justify-between items-center mb-4"
+              >
                 <label
                   for="otherTypeOfEntertainment"
                   class="text-gray-700 font-bold mr-2"
@@ -1249,7 +1258,10 @@
                   class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="flex justify-between items-center mb-4">
+              <div
+                v-if="!isOtherRefreshment"
+                class="flex justify-between items-center mb-4"
+              >
                 <label
                   for="otherTypeOfRefreshment"
                   class="text-gray-700 font-bold mr-2"
@@ -1372,7 +1384,9 @@
                   X
                 </button>
               </div>
-              <h1 class="text-3xl font-bold">Handphone Bill Reimbursement Form</h1>
+              <h1 class="text-3xl font-bold">
+                Handphone Bill Reimbursement Form
+              </h1>
               <hr class="mt-2 mb-4" />
 
               <div class="flex flex-col">
@@ -1560,7 +1574,18 @@ export default {
     },
 
     isPanelClinic() {
-      return this.medicalBillReimbursementDetails.ClinicSelectionML === "Mediviron Clinic - Panel";
+      return (
+        this.medicalBillReimbursementDetails.ClinicSelectionML ===
+        "Mediviron Clinic - Panel"
+      );
+    },
+
+    isOtherEntertainment() {
+      return this.entertainmentDetails.TypeofEntertainmentE === "OTHERS";
+    },
+
+    isOtherRefreshment() {
+      return this.staffRefreshmentDetails.TypeofRefreshmentSR === "OTHERS";
     },
 
     totalOverseasTravellingAmount() {
