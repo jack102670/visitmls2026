@@ -53,15 +53,17 @@
                         field.id !== 'TransportSpec')
                     "
                   >
-                    <label
+                    <template v-if="!isPanelClinic || (field.id !== 'OtherClinicSpecML' && field.id !== 'OtherClinicReasonML')">
+
+                      <label
                       :for="field.id"
                       class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
                     >
                       {{ field.label }}
                       <span v-if="field.required" style="color: red">*</span>
-                    </label>
+                      </label>
 
-                    <template v-if="field.type === 'select'">
+                      <template v-if="field.type === 'select'">
                       <select
                         v-model="field.value"
                         :id="field.id"
@@ -75,9 +77,9 @@
                           {{ option.label }}
                         </option>
                       </select>
-                    </template>
+                      </template>
 
-                    <template v-else-if="field.type === 'year'">
+                      <template v-else-if="field.type === 'year'">
                       <select
                         v-model="field.value"
                         :id="field.id"
@@ -91,9 +93,9 @@
                           {{ year }}
                         </option>
                       </select>
-                    </template>
+                      </template>
 
-                    <template v-else-if="field.type === 'radio-group'">
+                      <template v-else-if="field.type === 'radio-group'">
                       <div class="grid grid-cols-2">
                         <div
                           class="p-4 pt-2 pb-2 flex items-center"
@@ -116,9 +118,9 @@
                           </label>
                         </div>
                       </div>
-                    </template>
+                      </template>
 
-                    <template v-else-if="field.type === 'file'">
+                      <template v-else-if="field.type === 'file'">
                       <div class="pt-3">
                         <file-pond
                           :name="field.id"
@@ -136,9 +138,9 @@
                           :allow-multiple="field.allowMultiple"
                         />
                       </div>
-                    </template>
+                      </template>
 
-                    <template v-else>
+                      <template v-else>
                       <input
                         v-model="field.value"
                         :id="field.id"
@@ -147,6 +149,7 @@
                         :step="field.type === 'number' ? '0.01' : undefined"
                         class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                       />
+                      </template>
                     </template>
                   </template>
                 </div>
@@ -1273,14 +1276,14 @@ export default {
           ],
         },
         {
-          title: "Medical Bill Leave Reimbursement",
+          title: "Medical Bill Reimbursement",
           tabType: "HR",
 
           gridLayout: "grid-cols-3",
           fields: [
             {
               id: "dateML",
-              label: "Date of Medical Leave",
+              label: "Date of Medical Bill",
               type: "date",
               value: "",
               required: true,
@@ -1293,6 +1296,38 @@ export default {
               value: "",
               required: true,
               gridClass: "sm:col-span-2",
+            },
+            {
+              id: "ClinicNameML",
+              label: "Clinic Name",
+              type: "radio-group",
+              value: [],
+              required: true,
+              options: [
+                { label: "Mediviron Clinic - Panel", value: "Mediviron Clinic - Panel" },
+                { label: "Other Clinic", value: "Other Clinic" },
+              ],
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "OtherClinicSpecML",
+              label: "Specify Clinic Name",
+              type: "text",
+              value: "",
+              required: true,
+              placeholder: "Please Enter Clinic Name",
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "OtherClinicReasonML",
+              label: "Reason not Going to Panel Clinic",
+              type: "text",
+              value: "",
+              required: true,
+              placeholder: "Please Enter the Reason",
+              hidden: false,
+              gridClass: "sm:col-span-1",
             },
             {
               id: "BankNameML",
@@ -1501,6 +1536,14 @@ export default {
       );
       return transportField && transportField.value === "Company Transport";
     },
+    isPanelClinic() {
+      const tab = this.tabs.find((tab) => tab.title === "Medical Bill Reimbursement");
+      if (!tab) return false;
+      const clinicField = tab.fields.find(
+        (field) => field.id === "ClinicNameML" && "OtherClinicSpecML" && "OtherCliniReasonML"
+      );
+      return clinicField && clinicField.value === "Mediviron Clinic - Panel";
+    },
   },
 
   watch: {
@@ -1513,6 +1556,14 @@ export default {
             );
             if (transportField) {
               this.updateFieldVisibility(transportField.value);
+            }
+          }
+          if (tab.title === "Medical Bill Reimbursement") {
+            const clinicField = tab.fields.find(
+              (field) => field.id === "ClinicNameML" && "OtherClinicSpecML" && "OtherCliniReasonML"
+            );
+            if (clinicField) {
+              this.updateFieldVisibility2(clinicField.value);
             }
           }
         });
@@ -1572,7 +1623,7 @@ export default {
         (field) => field.id === "MileageRMLT"
       );
       const TransportSpecField = localTravellingTab.fields.find(
-        (field) => field.id === "MileageRMLT"
+        (field) => field.id === "TransportSpec"
       );
       if (!mileageKMLTField || !mileageRMLTField || !TransportSpecField) return;
 
@@ -1584,6 +1635,28 @@ export default {
         mileageKMLTField.hidden = false;
         mileageRMLTField.hidden = false;
         TransportSpecField.hidden = false;
+      }
+    },
+
+    updateFieldVisibility2(ClinicValue) {
+      const medicalBillReimbursementTab = this.tabs.find(
+        (tab) => tab.title === "Medical Bill Reimbursement"
+      );
+      if (!medicalBillReimbursementTab) return;
+      const OtherClinicSpecMLField = medicalBillReimbursementTab.fields.find(
+        (field) => field.id === "OtherClinicSpecML"
+      );
+      const OtherClinicReasonMLField = medicalBillReimbursementTab.fields.find(
+        (field) => field.id === "OtherClinicReasonML"
+      );
+      if (!OtherClinicSpecMLField || !OtherClinicReasonMLField) return;
+
+      if (ClinicValue === "Mediviron Clinic - Panel") {
+        OtherClinicSpecMLField.hidden = true;
+        OtherClinicReasonMLField.hidden = true;
+      } else {
+        OtherClinicSpecMLField.hidden = false;
+        OtherClinicReasonMLField.hidden = false;
       }
     },
 

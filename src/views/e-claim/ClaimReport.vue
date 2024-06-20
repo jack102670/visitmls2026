@@ -391,7 +391,7 @@
                 v-if="!isCompanyTransport"
                 class="flex justify-between items-center mb-4"
               >
-                <label for="mileagekm" class="text-gray-700 font-bold mr-2"
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Mileage(KM):</label
                 >
                 <input
@@ -407,7 +407,7 @@
                 v-if="!isCompanyTransport"
                 class="flex justify-between items-center mb-4"
               >
-                <label for="mileagerm" class="text-gray-700 font-bold mr-2"
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Total Mileage(RM):</label
                 >
                 <input
@@ -784,7 +784,7 @@
             </div>
           </div>
 
-          <div v-if="selectedClaimType === 'MedicalBillLeaveReimbursement'">
+          <div v-if="selectedClaimType === 'MedicalBillReimbursement'">
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
               <div class="flex justify-end">
@@ -803,24 +803,63 @@
 
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeId" class="text-gray-700 font-bold mr-2"
-                  >Date:</label
+                  >Date of Medical Bill:</label
                 >
                 <input
                   type="text"
                   id="nodeId"
-                  v-model="medicalBillLeaveReimbursementDetails.dateML"
+                  v-model="medicalBillReimbursementDetails.dateML"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeName" class="text-gray-700 font-bold mr-2"
-                  >Reason:</label
+                  >Reason for Medical:</label
                 >
                 <input
                   type="text"
                   id="nodeName"
-                  v-model="medicalBillLeaveReimbursementDetails.ReasonML"
+                  v-model="medicalBillReimbursementDetails.ReasonML"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Clinic Name:</label
+                >
+                <input
+                  type="text"
+                  id="ClinicNameML"
+                  v-model="medicalBillReimbursementDetails.ClinicNameML"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+
+              <div v-if="!isPanelClinic" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Specify Clinic Name:</label
+                >
+                <input
+                  type="text"
+                  id="OtherClinicSpecML"
+                  v-model="medicalBillReimbursementDetails.OtherClinicSpecML"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+
+              <div v-if="!isPanelClinic" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Reason not Going to Panel Clinic:</label
+                >
+                <input
+                  type="text"
+                  id="OtherClinicReasonML"
+                  v-model="medicalBillReimbursementDetails.OtherClinicReasonML"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
@@ -833,7 +872,7 @@
                 <input
                   type="text"
                   id="bankName"
-                  v-model="medicalBillLeaveReimbursementDetails.BankNameML"
+                  v-model="medicalBillReimbursementDetails.BankNameML"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
@@ -845,7 +884,7 @@
                 <input
                   type="text"
                   id="accBankNumber"
-                  v-model="medicalBillLeaveReimbursementDetails.AccBankNumberML"
+                  v-model="medicalBillReimbursementDetails.AccBankNumberML"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
@@ -857,7 +896,7 @@
                 <input
                   type="text"
                   id="accHolderName"
-                  v-model="medicalBillLeaveReimbursementDetails.AccHolderNameML"
+                  v-model="medicalBillReimbursementDetails.AccHolderNameML"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 overflow-x-auto"
                 />
@@ -869,7 +908,7 @@
                 <input
                   type="text"
                   id="claimsAmount"
-                  v-model="medicalBillLeaveReimbursementDetails.ClaimsAmountML"
+                  v-model="medicalBillReimbursementDetails.ClaimsAmountML"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
@@ -881,7 +920,7 @@
               <label
                 for="nodeParentId"
                 class="text-gray-700 font-bold mr-2 text-2xl"
-                >Total: RM {{ totalMedicalBillLeaveReimbursementDetails }}</label
+                >Total: RM {{ totalMedicalBillReimbursementDetails }}</label
               >
             </div>
 
@@ -1478,7 +1517,7 @@ export default {
       selectedClaimDetails: {},
       localTravellingDetails: {},
       overseasTravellingDetails: { otherExpenses: [] },
-      medicalBillLeaveReimbursementDetails: {},
+      medicalBillReimbursementDetails: {},
       entertainmentDetails: {},
       staffRefreshmentDetails: {},
       handphoneBillReimbursementDetails: {},
@@ -1506,6 +1545,10 @@ export default {
       return this.localTravellingDetails.TransportLT === "Company Transport";
     },
 
+    isPanelClinic() {
+      return this.medicalBillReimbursementDetails.ClinicNameML === "Mediviron Clinic - Panel";
+    },
+
     totalOverseasTravellingAmount() {
       let otherExpensesTotal = 0;
       if (
@@ -1530,9 +1573,9 @@ export default {
       return total;
     },
 
-    totalMedicalBillLeaveReimbursementDetails() {
+    totalMedicalBillReimbursementDetails() {
       let total =
-        parseFloat(this.medicalBillLeaveReimbursementDetails.ClaimsAmountML) || 0;
+        parseFloat(this.medicalBillReimbursementDetails.ClaimsAmountML) || 0;
       this.totalplusmethod(total);
       return total;
     },
@@ -1635,17 +1678,17 @@ export default {
           );
           break;
         case "HandphoneBillReimbursement":
-          this.handphoneReimbursementDetails = claim;
+          this.handphoneBillReimbursementDetails = claim;
           console.log(
             "Handphone Bill Reimbursement Details:",
             this.handphoneBillReimbursementDetails
           );
           break;
         case "MedicalBillReimbursement":
-          this.medicalLeaveReimbursementDetails = claim;
+          this.medicalBillReimbursementDetails = claim;
           console.log(
             "Medical Bill Reimbursement Details:",
-            this.medicalBillLeaveReimbursementDetails
+            this.medicalBillReimbursementDetails
           );
           break;
         // Add cases for other types of claims
@@ -1976,7 +2019,7 @@ export default {
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
-                  const thisisforMedicalBillLeaveReimbursement = {
+                  const thisisforMedicalBillReimbursement = {
                     date_event: claim.dateE, // Example date
                     person_entertained: claim.PersonEntertainedE,
                     type_of_entertainment: claim.TypeofEntertainmentE,
@@ -2001,7 +2044,7 @@ export default {
                   });
                   const response2 = await axiosInstance.post(
                     "/",
-                    thisisforMedicalBillLeaveReimbursement
+                    thisisforMedicalBillReimbursement
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }

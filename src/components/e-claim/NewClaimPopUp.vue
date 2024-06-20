@@ -341,8 +341,8 @@
       </h1>
       <h1 class="text-gray-500 text-sm">
         <span class="text-red-500">*</span
-        ><span class="text-red-500">*</span> HR: Medical Leave and
-        Handphone Reimbursement
+        ><span class="text-red-500">*</span> HR: Medical Bill and
+        Handphone Bill Reimbursement
       </h1>
       <h1 class="text-gray-500 text-sm">
         <span class="text-red-500">*</span
