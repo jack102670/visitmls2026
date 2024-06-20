@@ -212,6 +212,21 @@
                 </tr>
               </table>
             </div>
+            <div>
+              <div class="flex w-full items-center mt-2">
+                <label class="font-semibold mr-2 mb-4">Remark: </label>
+                <p v-if="approved || rejectApprover" class="mb-4">
+                  {{ singleRemarks[i] }}
+                </p>
+                <input
+                  v-if="!approved && !rejectApprover"
+                  v-model="singleRemarks[i]"
+                  class="py-3 px-2 mb-4 w-full rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
+                  type="text"
+                  placeholder="Enter if having any remarks"
+                />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -247,12 +262,12 @@
                   :class="{
                     'bg-orange-200 dark:bg-orange-500':
                       statusVerifier == 'PENDING',
-                    'bg-green-200 dark:bg-green-500':
+                    'bg-indigo-200 dark:bg-indigo-500':
                       statusVerifier == 'VERIFIED',
                     'bg-red-200 dark:bg-red-500': statusVerifier == 'REJECTED',
                     'text-orange-500 dark:text-orange-100':
                       statusVerifier == 'PENDING',
-                    'text-green-500 dark:text-green-100':
+                    'text-indigo-500 dark:text-indigo-100':
                       statusVerifier == 'VERIFIED',
                     'text-red-500 dark:text-red-100':
                       statusVerifier == 'REJECTED',
@@ -315,7 +330,7 @@
               >
                 STATUS
               </th>
-              <th class="pl-6">Remark</th>
+              <th class="pl-6">Overall Remark</th>
             </tr>
 
             <!-- table information -->
@@ -369,9 +384,11 @@
           class=".detail-table w-full lg:flex-row flex flex-col justify-between h-24 items-center pt-6"
         >
           <div class="flex w-full items-center">
-            <label class="font-semibold mr-2 mb-4">Remark: </label>
+            <label class="font-semibold mr-2 mb-4 lg:mb-0"
+              >Overall Remark:
+            </label>
             <input
-              class="py-3 px-2 mb-4 w-full lg:w-96 rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
+              class="py-3 px-2 mb-4 lg:mb-0 w-full lg:max-w-96 lg:mr-2 rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
               type="text"
               placeholder="Eg. Blurry Receipt Image"
               v-model="remark"
@@ -382,7 +399,7 @@
               @click="confirmApprove = true"
               class="mr-2 lg:text-lg font-semibold py-3 w-36 bg-blue-800 hover:bg-blue-900 rounded-lg text-white"
             >
-              Verify
+              Approve
             </button>
             <button
               @click="confirmReject = true"
@@ -525,7 +542,10 @@ export default {
   data() {
     return {
       // need to get from API
-      role: 'verifier',
+      role: 'approver',
+
+      // remark for every single detail
+      singleRemarks: [],
 
       seeMore: false,
       confirmReject: false,
@@ -621,7 +641,7 @@ export default {
       } else if (this.verified) {
         status = 'VERIFIED';
       } else {
-        status = 'PENDING';
+        status = 'VERIFIED';
       }
 
       return status;
@@ -663,247 +683,55 @@ export default {
     // need to post to database
     ApproveOrReject(AoR) {
       if (AoR == 'Approve') {
-        if (this.role == 'approver') {
-          this.approve = true;
-          this.dateApprover = moment(new Date()).format('D MMM YYYY');
-        } else if (this.role == 'verifier') {
-          // post the status and remark to API
-          for (let c in this.claimData) {
-            this.loading = true;
+        this.approve = true;
+        this.dateApprover = moment(new Date()).format('D MMM YYYY');
+        // post the status and remark to API
+        this.loading = true;
 
-            if (
-              this.claimData[c].type == 'Local/Outstation Travelling Expenses'
-            ) {
-              const verifyData = {
-                verifier_status: 'Verified',
-                verifier_feedback: this.remark,
-                serial_number: this.serialNumber,
-              };
-              axios
-                .post(
-                  'http://172.28.28.91:97/api/Verifier/InsertVerifierLocal',
-                  verifyData
-                )
-                .then((response) => {
-                  // Handle success response
-                  this.verified = true;
-                  this.dateVerifier = moment(new Date()).format('D MMM YYYY');
-                  console.log('API response', response.data);
-                  localStorage.setItem('ApproveOrNot', 'approve');
+        const approveData = {
+          approver_status: 'Approved',
+          approver_feedback: this.remark,
+          serial_number: this.serialNumber,
+        };
+        axios
+          .post('http://172.28.28.91:86/api/Admin/Approve_Claim', approveData)
+          .then((response) => {
+            // Handle success response
+            console.log('API response', response.data);
+            localStorage.setItem('ApproveOrNot', 'approve');
 
-                  this.approveSuccess = true;
-                  setTimeout(() => {
-                    this.$router.push({ name: 'AdminDashboardpage' });
-                  }, 1500);
-                })
-                .catch((error) => {
-                  // Handle error response
-                  console.error('API error', error);
-                });
-            }
-            if (
-              this.claimData[c].type ==
-              'Outstation/Overseas Travelling Expenses'
-            ) {
-              const verifyData = {
-                verifier_status: 'Approved',
-                verifier_feedback: this.remark,
-                serial_number: this.serialNumber,
-              };
-              axios
-                .post(
-                  'http://172.28.28.91:97/api/Verifier/InsertVerifierOverseas',
-                  verifyData
-                )
-                .then((response) => {
-                  // Handle success response
-                  this.verified = true;
-                  this.dateVerifier = moment(new Date()).format('D MMM YYYY');
-                  console.log('API response', response.data);
-                  localStorage.setItem('ApproveOrNot', 'approve');
-
-                  this.approveSuccess = true;
-                  setTimeout(() => {
-                    this.$router.push({ name: 'AdminDashboardpage' });
-                  }, 1500);
-                })
-                .catch((error) => {
-                  // Handle error response
-                  console.error('API error', error);
-                });
-            }
-            if (this.claimData[c].type == 'Entertainment') {
-              const verifyData = {
-                verifier_status: 'Approved',
-                verifier_feedback: this.remark,
-                serial_number: this.serialNumber,
-              };
-              axios
-                .post(
-                  'http://172.28.28.91:97/api/Verifier/InsertVerifierEntertainment',
-                  verifyData
-                )
-                .then((response) => {
-                  // Handle success response
-                  this.verified = true;
-                  this.dateVerifier = moment(new Date()).format('D MMM YYYY');
-                  console.log('API response', response.data);
-                  localStorage.setItem('ApproveOrNot', 'approve');
-
-                  this.approveSuccess = true;
-                  setTimeout(() => {
-                    this.$router.push({ name: 'AdminDashboardpage' });
-                  }, 1500);
-                })
-                .catch((error) => {
-                  // Handle error response
-                  console.error('API error', error);
-                });
-            }
-            if (this.claimData[c].type == 'Refreshment') {
-              const verifyData = {
-                verifier_status: 'Approved',
-                verifier_feedback: this.remark,
-                serial_number: this.serialNumber,
-              };
-              axios
-                .post(
-                  'http://172.28.28.91:97/api/Verifier/InsertVerifierRefreshment',
-                  verifyData
-                )
-                .then((response) => {
-                  // Handle success response
-                  this.verified = true;
-                  this.dateVerifier = moment(new Date()).format('D MMM YYYY');
-                  console.log('API response', response.data);
-                  localStorage.setItem('ApproveOrNot', 'approve');
-
-                  this.approveSuccess = true;
-                  setTimeout(() => {
-                    this.$router.push({ name: 'AdminDashboardpage' });
-                  }, 1500);
-                })
-                .catch((error) => {
-                  // Handle error response
-                  console.error('API error', error);
-                });
-            }
-          }
-        }
+            this.approveSuccess = true;
+            setTimeout(() => {
+              this.$router.push({ name: 'AdminDashboardpage' });
+            }, 1500);
+          })
+          .catch((error) => {
+            // Handle error response
+            console.error('API error', error);
+          });
       } else if (AoR == 'Reject') {
-        if (this.role == 'approver') {
-          this.rejectApprover = true;
-          this.dateApprover = moment(new Date()).format('D MMM YYYY');
-        } else if (this.role == 'verifier') {
-          for (let c in this.claimData) {
-            this.loading = true;
+        this.rejectApprover = true;
+        this.dateApprover = moment(new Date()).format('D MMM YYYY');
+        this.loading = true;
 
-            if (
-              this.claimData[c].type == 'Local/Outstation Travelling Expenses'
-            ) {
-              const verifyData = {
-                verifier_status: 'Rejected',
-                verifier_feedback: this.remark,
-                serial_number: this.serialNumber,
-              };
-              axios
-                .post(
-                  'http://172.28.28.91:97/api/Verifier/InsertVerifierLocal',
-                  verifyData
-                )
-                .then((response) => {
-                  // Handle success response
-                  this.loading = false;
-                  this.rejectVerifier = true;
-                  this.dateVerifier = moment(new Date()).format('D MMM YYYY');
-                  console.log('API response', response.data);
-                  localStorage.setItem('ApproveOrNot', 'reject');
-                })
-                .catch((error) => {
-                  // Handle error response
-                  console.error('API error', error);
-                });
-            }
-            if (
-              this.claimData[c].type ==
-              'Outstation/Overseas Travelling Expenses'
-            ) {
-              const verifyData = {
-                verifier_status: 'Rejected',
-                verifier_feedback: this.remark,
-                serial_number: this.serialNumber,
-              };
-              axios
-                .post(
-                  'http://172.28.28.91:97/api/Verifier/InsertVerifierOverseas',
-                  verifyData
-                )
-                .then((response) => {
-                  // Handle success response
-                  this.loading = false;
+        const approveData = {
+          verifier_status: 'Rejected',
+          verifier_feedback: this.remark,
+          serial_number: this.serialNumber,
+        };
+        axios
+          .post('http://172.28.28.91:86/api/Admin/Approve_Claim', approveData)
+          .then((response) => {
+            // Handle success response
+            this.loading = false;
 
-                  this.rejectVerifier = true;
-                  this.dateVerifier = moment(new Date()).format('D MMM YYYY');
-                  console.log('API response', response.data);
-                  localStorage.setItem('ApproveOrNot', 'reject');
-                })
-                .catch((error) => {
-                  // Handle error response
-                  console.error('API error', error);
-                });
-            }
-            if (this.claimData[c].type == 'Entertainment') {
-              const verifyData = {
-                verifier_status: 'Rejected',
-                verifier_feedback: this.remark,
-                serial_number: this.serialNumber,
-              };
-              axios
-                .post(
-                  'http://172.28.28.91:97/api/Verifier/InsertVerifierEntertainment',
-                  verifyData
-                )
-                .then((response) => {
-                  // Handle success response
-                  this.loading = false;
-
-                  this.rejectVerifier = true;
-                  this.dateVerifier = moment(new Date()).format('D MMM YYYY');
-                  console.log('API response', response.data);
-                  localStorage.setItem('ApproveOrNot', 'reject');
-                })
-                .catch((error) => {
-                  // Handle error response
-                  console.error('API error', error);
-                });
-            }
-            if (this.claimData[c].type == 'Refreshment') {
-              const verifyData = {
-                verifier_status: 'Rejected',
-                verifier_feedback: this.remark,
-                serial_number: this.serialNumber,
-              };
-              axios
-                .post(
-                  'http://172.28.28.91:97/api/Verifier/InsertVerifierRefreshment',
-                  verifyData
-                )
-                .then((response) => {
-                  // Handle success response
-                  this.loading = false;
-
-                  this.rejectVerifier = true;
-                  this.dateVerifier = moment(new Date()).format('D MMM YYYY');
-                  console.log('API response', response.data);
-                  localStorage.setItem('ApproveOrNot', 'reject');
-                })
-                .catch((error) => {
-                  // Handle error response
-                  console.error('API error', error);
-                });
-            }
-          }
-        }
+            console.log('API response', response.data);
+            localStorage.setItem('ApproveOrNot', 'reject');
+          })
+          .catch((error) => {
+            // Handle error response
+            console.error('API error', error);
+          });
       }
     },
 
@@ -972,6 +800,21 @@ td {
 
   * {
     color: black;
+  }
+
+  input {
+    display: none;
+  }
+
+  .details h1 {
+    font-size: 20px;
+    margin-bottom: 6px;
+    margin-top: 6px;
+  }
+
+  .print-div {
+    box-shadow: none;
+    border: none;
   }
 
   body *:not(#summaryPrint):not(#summaryPrint *) {

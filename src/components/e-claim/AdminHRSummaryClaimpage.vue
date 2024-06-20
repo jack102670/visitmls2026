@@ -5,7 +5,7 @@
   >
     <div class="container mx-auto text-xs lg:text-base" id="summaryPrint">
       <div
-        class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
+        class="print-div relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
         <h1 class="text-gray-500 italic absolute top-4 right-4">
           SN: PW/Finance/2024/06/5520
@@ -95,18 +95,14 @@
             <p class="text-gray-600 dark:text-gray-400">ICT</p>
           </div>
           <div class="mt-5 h-12">
-            <h2 class="font-semibold">Cost Center :</h2>
-            <p class="text-gray-600 dark:text-gray-400">The Ship</p>
+            <h2 class="font-semibold">Report Type :</h2>
+            <p class="text-gray-600 dark:text-gray-400">Finance</p>
           </div>
           <div id="toLeft" class="mt-5 h-12">
-            <h2 class="font-semibold">Report Type :</h2>
-            <p class="text-gray-600 dark:text-gray-400">HR</p>
+            <h2 class="font-semibold">Date of Claim :</h2>
+            <p class="text-gray-600 dark:text-gray-400">20 MAY 2024</p>
           </div>
           <div class="mt-5 h-12">
-            <h2 class="font-semibold">Date of Claim :</h2>
-            <p class="text-gray-600 dark:text-gray-400">25 MAY 2024</p>
-          </div>
-          <div id="toLeft" class="mt-5 h-12">
             <h2 class="font-semibold">Claim for the Month Ended :</h2>
             <p class="text-gray-600 dark:text-gray-400">31 MAY 2024</p>
           </div>
@@ -216,6 +212,21 @@
                 </tr>
               </table>
             </div>
+            <div>
+              <div class="flex w-full items-center mt-2">
+                <label class="font-semibold mr-2 mb-4">Remark: </label>
+                <p v-if="approved || rejectApprover" class="mb-4">
+                  {{ singleRemarks[i] }}
+                </p>
+                <input
+                  v-if="!approved && !rejectApprover"
+                  v-model="singleRemarks[i]"
+                  class="py-3 px-2 mb-4 w-full rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
+                  type="text"
+                  placeholder="Enter if having any remarks"
+                />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -251,12 +262,12 @@
                   :class="{
                     'bg-orange-200 dark:bg-orange-500':
                       statusVerifier == 'PENDING',
-                    'bg-green-200 dark:bg-green-500':
+                    'bg-indigo-200 dark:bg-indigo-500':
                       statusVerifier == 'VERIFIED',
                     'bg-red-200 dark:bg-red-500': statusVerifier == 'REJECTED',
                     'text-orange-500 dark:text-orange-100':
                       statusVerifier == 'PENDING',
-                    'text-green-500 dark:text-green-100':
+                    'text-indigo-500 dark:text-indigo-100':
                       statusVerifier == 'VERIFIED',
                     'text-red-500 dark:text-red-100':
                       statusVerifier == 'REJECTED',
@@ -319,7 +330,7 @@
               >
                 STATUS
               </th>
-              <th class="pl-6">Remark</th>
+              <th class="pl-6">Overall Remark</th>
             </tr>
 
             <!-- table information -->
@@ -343,7 +354,7 @@
         <!-- Remark table -->
 
         <div
-          v-show="approve || verified"
+          v-show="approved || verified"
           class="text-xs lg:text-base border-2 mt-10 border-gray-400 dark:border-gray-600 rounded-2xl"
           id="table-overflow"
         >
@@ -355,7 +366,7 @@
 
             <!-- table information -->
             <tr
-              class="h-14 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
+              class="px-6 h-14 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
             >
               <td class="pl-6">{{ remark }}</td>
             </tr>
@@ -365,7 +376,7 @@
         <!-- Button -->
         <div
           v-show="
-            approve != true &&
+            approved != true &&
             verified != true &&
             rejectApprover != true &&
             rejectVerifier != true
@@ -373,9 +384,11 @@
           class=".detail-table w-full lg:flex-row flex flex-col justify-between h-24 items-center pt-6"
         >
           <div class="flex w-full items-center">
-            <label class="font-semibold mr-2 mb-4">Remark: </label>
+            <label class="font-semibold mr-2 mb-4 lg:mb-0"
+              >Overall Remark:
+            </label>
             <input
-              class="py-3 px-2 mb-4 w-full lg:w-96 rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
+              class="py-3 px-2 mb-4 lg:mb-0 w-full lg:max-w-96 lg:mr-2 rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
               type="text"
               placeholder="Eg. Blurry Receipt Image"
               v-model="remark"
@@ -386,7 +399,7 @@
               @click="confirmApprove = true"
               class="mr-2 lg:text-lg font-semibold py-3 w-36 bg-blue-800 hover:bg-blue-900 rounded-lg text-white"
             >
-              Verify
+              Approve
             </button>
             <button
               @click="confirmReject = true"
@@ -528,7 +541,10 @@ export default {
   data() {
     return {
       // need to get from API
-      role: 'verifier',
+      role: 'approver',
+
+      // remark for every single detail
+      singleRemarks: [],
 
       seeMore: false,
       confirmReject: false,
@@ -539,7 +555,7 @@ export default {
       // need to fetch from or post to API
       rejectApprover: false,
       rejectVerifier: false,
-      approve: false,
+      approved: false,
       verified: false,
       dateApprover: '',
       dateVerifier: '',
@@ -601,7 +617,7 @@ export default {
       } else if (this.verified) {
         status = 'VERIFIED';
       } else {
-        status = 'PENDING';
+        status = 'VERIFIED';
       }
 
       return status;
@@ -644,7 +660,7 @@ export default {
     ApproveOrReject(AoR) {
       if (AoR == 'Approve') {
         if (this.role == 'approver') {
-          this.approve = true;
+          this.approved = true;
           this.dateApprover = moment(new Date()).format('D MMM YYYY');
         } else if (this.role == 'verifier') {
           this.verified = true;
@@ -738,6 +754,21 @@ td {
 
   * {
     color: black;
+  }
+
+  input {
+    display: none;
+  }
+
+  .details h1 {
+    font-size: 20px;
+    margin-bottom: 6px;
+    margin-top: 6px;
+  }
+
+  .print-div {
+    box-shadow: none;
+    border: none;
   }
 
   body *:not(#summaryPrint):not(#summaryPrint *) {

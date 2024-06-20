@@ -93,18 +93,20 @@
                               claim.admin_status == '',
                             'bg-green-200 dark:bg-green-500':
                               claim.admin_status ==
-                                'APPROVED. WAITING FOR PAYMENT.' ||
+                              'APPROVED. WAITING FOR PAYMENT.',
+                            'bg-indigo-200 dark:bg-indigo-500':
                               claim.admin_status ==
-                                'VERIFIED. WAITING FOR APPROVAL.',
+                              'VERIFIED. WAITING FOR APPROVAL.',
                             'bg-red-200 dark:bg-red-500':
                               claim.admin_status == 'REJECTED',
                             'text-orange-500 dark:text-orange-100':
                               claim.admin_status == '',
                             'text-green-500 dark:text-green-100':
                               claim.admin_status ==
-                                'APPROVED. WAITING FOR PAYMENT.' ||
+                              'APPROVED. WAITING FOR PAYMENT.',
+                            'text-indigo-500 dark:text-indigo-100':
                               claim.admin_status ==
-                                'VERIFIED. WAITING FOR APPROVAL.',
+                              'VERIFIED. WAITING FOR APPROVAL.',
                             'text-red-500 dark:text-red-100':
                               claim.status == 'REJECTED',
                           }"
@@ -173,7 +175,7 @@ export default {
       userId: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
 
       // need to fetch from API
-      claimsData: [{ report_name: 'abc' }],
+      claimsData: [],
     };
   },
   methods: {
