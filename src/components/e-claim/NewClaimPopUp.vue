@@ -36,6 +36,7 @@
             <input
               placeholder="e.g ALI BIN ABU"
               v-model="formData.claimantName"
+              disabled
               id="claimantName"
               type="text"
               value="required"
@@ -335,19 +336,19 @@
         </div> -->
       </form>
       <h1 class="text-red-500 text-sm">
-        Note : First 7 days of a month will be paid in this month, else if after
-        7 days will be paid in next month
+        Note : Claims made in the first week of the month will be processed
+        within that same month. Claims made after the first week will be
+        processed in the following month.
       </h1>
       <h1 class="text-gray-500 text-sm">
         <span class="text-red-500">*</span
-        ><span class="text-red-500">*</span> HR Forms include Medical Leave and
-        Handphone Reimbursement
+        ><span class="text-red-500">*</span> HR: Medical Bill and Handphone Bill
+        Reimbursement
       </h1>
       <h1 class="text-gray-500 text-sm">
         <span class="text-red-500">*</span
-        ><span class="text-red-500">*</span> Finance Forms Local Travelling,
-        Overseas Travelling With Accommodation, Entertainment and Staff
-        Refreshment
+        ><span class="text-red-500">*</span> Finance: Local Travelling, Overseas
+        Travelling With Accommodation, Entertainment and Staff Refreshment
       </h1>
 
       <!-- button -->
@@ -358,7 +359,7 @@
             @click.prevent="submitForm(1)"
             class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
           >
-            Submit
+            Next
           </button>
         </div>
         <div class="flex justify-center mt-10">

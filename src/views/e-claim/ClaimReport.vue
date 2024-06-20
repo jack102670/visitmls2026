@@ -6,6 +6,9 @@
       <div
         class="bg-[#f7fbff] dark:bg-gray-800 relative dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
+        <!-- <h1 class="text-base italic absolute top-4 right-4 text-gray-500">
+          SN: {{ claims[0].uniqueCode }}
+        </h1> -->
         <!-- Header Section -->
         <p
           class="absolute right-0 mr-2 top-1 pt-2 text-sm text-gray-500 italic"
@@ -162,6 +165,7 @@
                         </th>
 
                         <th
+                          v-if="claims[0].reportType === 'Finance'"
                           scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
@@ -212,13 +216,14 @@
                           {{ claim.tabTitle }}
                         </td>
                         <td
+                          v-if="claims[0].reportType === 'Finance'"
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                         >
                           <span v-if="claim.LocationEnd">{{
                             claim.LocationEnd
                           }}</span>
-                          <span v-if="claim.DescriptionOT">{{
-                            claim.DescriptionOT
+                          <span v-if="claim.PurposeOT">{{
+                            claim.PurposeOT
                           }}</span>
                           <span v-if="claim.VenueE">{{ claim.VenueE }}</span>
                           <span v-if="claim.VenueSR">{{ claim.VenueSR }}</span>
@@ -386,7 +391,7 @@
                 v-if="!isCompanyTransport"
                 class="flex justify-between items-center mb-4"
               >
-                <label for="mileagekm" class="text-gray-700 font-bold mr-2"
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Mileage(KM):</label
                 >
                 <input
@@ -402,7 +407,7 @@
                 v-if="!isCompanyTransport"
                 class="flex justify-between items-center mb-4"
               >
-                <label for="mileagerm" class="text-gray-700 font-bold mr-2"
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Total Mileage(RM):</label
                 >
                 <input
@@ -441,7 +446,7 @@
               </div>
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Upload File(s):</label
+                  >Attachment(s). :</label
                 >
                 <div class="flex flex-wrap">
                   <div
@@ -535,12 +540,12 @@
               </div>
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeName" class="text-gray-700 font-bold mr-2"
-                  >Description:</label
+                  >Purpose:</label
                 >
                 <input
                   type="text"
                   id="nodeName"
-                  v-model="overseasTravellingDetails.DescriptionOT"
+                  v-model="overseasTravellingDetails.PurposeOT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
@@ -684,7 +689,7 @@
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
                         <div class="flex items-center gap-x-3">
-                          <span>Amount(RM)</span>
+                          <span>Description</span>
                         </div>
                       </th>
                       <th
@@ -692,7 +697,7 @@
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
                         <div class="flex items-center gap-x-3">
-                          <span>Description</span>
+                          <span>Amount(RM)</span>
                         </div>
                       </th>
                     </tr>
@@ -712,19 +717,19 @@
                         {{ index + 1 }}
                       </td>
                       <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-32"
                       >
                         {{ expense.name }}
                       </td>
                       <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                      >
-                        {{ expense.amount }}
-                      </td>
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-64"
                       >
                         {{ expense.description }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
+                      >
+                        {{ expense.amount }}
                       </td>
                     </tr>
                   </tbody>
@@ -779,7 +784,7 @@
             </div>
           </div>
 
-          <div v-if="selectedClaimType === 'MedicalLeaveReimbursement'">
+          <div v-if="selectedClaimType === 'MedicalBillReimbursement'">
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
               <div class="flex justify-end">
@@ -792,30 +797,89 @@
                 </button>
               </div>
               <h1 class="text-3xl font-bold">
-                Medical Leave Reimbursement Form
+                Medical Bill Reimbursement Form
               </h1>
               <hr class="mt-2 mb-4" />
 
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeId" class="text-gray-700 font-bold mr-2"
-                  >Date:</label
+                  >Date of Medical Bill:</label
                 >
                 <input
                   type="text"
                   id="nodeId"
-                  v-model="medicalLeaveReimbursementDetails.dateML"
+                  v-model="medicalBillReimbursementDetails.dateML"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
               </div>
+
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeName" class="text-gray-700 font-bold mr-2"
-                  >Reason for Medical Leave:</label
+                  >Medical Category:</label
                 >
                 <input
                   type="text"
                   id="nodeName"
-                  v-model="medicalLeaveReimbursementDetails.ReasonML"
+                  v-model="medicalBillReimbursementDetails.MedicalCategoryML"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Reason for Medical:</label
+                >
+                <input
+                  type="text"
+                  id="nodeParentId"
+                  v-model="medicalBillReimbursementDetails.ReasonML"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Clinic Selection:</label
+                >
+                <input
+                  type="text"
+                  id="ClinicSelectionML"
+                  v-model="medicalBillReimbursementDetails.ClinicSelectionML"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+
+              <div
+                v-if="!isPanelClinic"
+                class="flex justify-between items-center mb-4"
+              >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Specify Clinic Name:</label
+                >
+                <input
+                  type="text"
+                  id="OtherClinicSpecML"
+                  v-model="medicalBillReimbursementDetails.OtherClinicSpecML"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+
+              <div
+                v-if="!isPanelClinic"
+                class="flex justify-between items-center mb-4"
+              >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Reason not Going to Panel Clinic:</label
+                >
+                <input
+                  type="text"
+                  id="OtherClinicReasonML"
+                  v-model="medicalBillReimbursementDetails.OtherClinicReasonML"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
@@ -828,7 +892,7 @@
                 <input
                   type="text"
                   id="bankName"
-                  v-model="medicalLeaveReimbursementDetails.BankNameML"
+                  v-model="medicalBillReimbursementDetails.BankNameML"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
@@ -840,7 +904,7 @@
                 <input
                   type="text"
                   id="accBankNumber"
-                  v-model="medicalLeaveReimbursementDetails.AccBankNumberML"
+                  v-model="medicalBillReimbursementDetails.AccBankNumberML"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
@@ -852,7 +916,7 @@
                 <input
                   type="text"
                   id="accHolderName"
-                  v-model="medicalLeaveReimbursementDetails.AccHolderNameML"
+                  v-model="medicalBillReimbursementDetails.AccHolderNameML"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2 overflow-x-auto"
                 />
@@ -864,7 +928,7 @@
                 <input
                   type="text"
                   id="claimsAmount"
-                  v-model="medicalLeaveReimbursementDetails.ClaimsAmountML"
+                  v-model="medicalBillReimbursementDetails.ClaimsAmountML"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
@@ -876,7 +940,7 @@
               <label
                 for="nodeParentId"
                 class="text-gray-700 font-bold mr-2 text-2xl"
-                >Total: RM {{ totalMedicalLeaveReimbursementDetails }}</label
+                >Total: RM {{ totalMedicalBillReimbursementDetails }}</label
               >
             </div>
 
@@ -939,7 +1003,10 @@
                   class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="flex justify-between items-center mb-4">
+              <div
+                v-if="!isOtherEntertainment"
+                class="flex justify-between items-center mb-4"
+              >
                 <label
                   for="otherTypeOfEntertainment"
                   class="text-gray-700 font-bold mr-2"
@@ -1191,7 +1258,10 @@
                   class="border rounded-md px-4 py-2"
                 />
               </div>
-              <div class="flex justify-between items-center mb-4">
+              <div
+                v-if="!isOtherRefreshment"
+                class="flex justify-between items-center mb-4"
+              >
                 <label
                   for="otherTypeOfRefreshment"
                   class="text-gray-700 font-bold mr-2"
@@ -1302,7 +1372,7 @@
             </div>
           </div>
 
-          <div v-if="selectedClaimType === 'HandphoneReimbursement'">
+          <div v-if="selectedClaimType === 'HandphoneBillReimbursement'">
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
               <div class="flex justify-end">
@@ -1314,7 +1384,9 @@
                   X
                 </button>
               </div>
-              <h1 class="text-3xl font-bold">Handphone Reimbursement Form</h1>
+              <h1 class="text-3xl font-bold">
+                Handphone Bill Reimbursement Form
+              </h1>
               <hr class="mt-2 mb-4" />
 
               <div class="flex flex-col">
@@ -1325,7 +1397,7 @@
                   <input
                     type="text"
                     id="nodeId"
-                    v-model="handphoneReimbursementDetails.MonthHR"
+                    v-model="handphoneBillReimbursementDetails.MonthHR"
                     :disabled="!isEditMode"
                     class="border rounded-md px-4 py-2"
                   />
@@ -1337,7 +1409,7 @@
                   <input
                     type="text"
                     id="nodeName"
-                    v-model="handphoneReimbursementDetails.YearHR"
+                    v-model="handphoneBillReimbursementDetails.YearHR"
                     :disabled="!isEditMode"
                     class="border rounded-md px-4 py-2"
                   />
@@ -1349,7 +1421,7 @@
                   <input
                     type="text"
                     id="bankName"
-                    v-model="handphoneReimbursementDetails.BankNameHR"
+                    v-model="handphoneBillReimbursementDetails.BankNameHR"
                     :disabled="!isEditMode"
                     class="border rounded-md px-4 py-2"
                   />
@@ -1363,7 +1435,7 @@
                   <input
                     type="text"
                     id="accBankNumber"
-                    v-model="handphoneReimbursementDetails.AccBankNumberHR"
+                    v-model="handphoneBillReimbursementDetails.AccBankNumberHR"
                     :disabled="!isEditMode"
                     class="border rounded-md px-4 py-2"
                   />
@@ -1377,7 +1449,7 @@
                   <input
                     type="text"
                     id="accHolderName"
-                    v-model="handphoneReimbursementDetails.AccHolderNameHR"
+                    v-model="handphoneBillReimbursementDetails.AccHolderNameHR"
                     :disabled="!isEditMode"
                     class="border rounded-md px-4 py-2"
                   />
@@ -1389,7 +1461,7 @@
                   <input
                     type="text"
                     id="claimsAmount"
-                    v-model="handphoneReimbursementDetails.ClaimsAmountHR"
+                    v-model="handphoneBillReimbursementDetails.ClaimsAmountHR"
                     :disabled="!isEditMode"
                     class="border rounded-md px-4 py-2"
                   />
@@ -1401,7 +1473,7 @@
                 <label
                   for="nodeParentId"
                   class="text-gray-700 font-bold mr-2 text-2xl"
-                  >Total: RM {{ totalHandphoneReimbursementDetails }}</label
+                  >Total: RM {{ totalHandphoneBillReimbursementDetails }}</label
                 >
               </div>
 
@@ -1473,10 +1545,10 @@ export default {
       selectedClaimDetails: {},
       localTravellingDetails: {},
       overseasTravellingDetails: { otherExpenses: [] },
-      medicalLeaveReimbursementDetails: {},
+      medicalBillReimbursementDetails: {},
       entertainmentDetails: {},
       staffRefreshmentDetails: {},
-      handphoneReimbursementDetails: {},
+      handphoneBillReimbursementDetails: {},
       cancel: true,
     };
   },
@@ -1499,6 +1571,51 @@ export default {
 
     isCompanyTransport() {
       return this.localTravellingDetails.TransportLT === 'Company Transport';
+    },
+
+    isPanelClinic() {
+      return (
+        this.medicalBillReimbursementDetails.ClinicSelectionML ===
+        'Mediviron Clinic - Panel'
+      );
+    },
+
+    isOtherEntertainment() {
+      return this.entertainmentDetails.TypeofEntertainmentE === 'OTHERS';
+    },
+
+    isOtherRefreshment() {
+      return this.staffRefreshmentDetails.TypeofRefreshmentSR === 'OTHERS';
+    },
+
+    isPanelClinic() {
+      return (
+        this.medicalBillReimbursementDetails.ClinicSelectionML ===
+        'Mediviron Clinic - Panel'
+      );
+    },
+
+    isOtherEntertainment() {
+      return this.entertainmentDetails.TypeofEntertainmentE === 'OTHERS';
+    },
+
+    isOtherRefreshment() {
+      return this.staffRefreshmentDetails.TypeofRefreshmentSR === 'OTHERS';
+    },
+
+    isPanelClinic() {
+      return (
+        this.medicalBillReimbursementDetails.ClinicSelectionML ===
+        'Mediviron Clinic - Panel'
+      );
+    },
+
+    isOtherEntertainment() {
+      return this.entertainmentDetails.TypeofEntertainmentE === 'OTHERS';
+    },
+
+    isOtherRefreshment() {
+      return this.staffRefreshmentDetails.TypeofRefreshmentSR === 'OTHERS';
     },
 
     totalOverseasTravellingAmount() {
@@ -1525,9 +1642,9 @@ export default {
       return total;
     },
 
-    totalMedicalLeaveReimbursementDetails() {
+    totalMedicalBillReimbursementDetails() {
       let total =
-        parseFloat(this.medicalLeaveReimbursementDetails.ClaimsAmountML) || 0;
+        parseFloat(this.medicalBillReimbursementDetails.ClaimsAmountML) || 0;
       this.totalplusmethod(total);
       return total;
     },
@@ -1538,9 +1655,9 @@ export default {
       return total;
     },
 
-    totalHandphoneReimbursementDetails() {
+    totalHandphoneBillReimbursementDetails() {
       let total =
-        parseFloat(this.handphoneReimbursementDetails.ClaimsAmountHR) || 0;
+        parseFloat(this.handphoneBillReimbursementDetails.ClaimsAmountHR) || 0;
       this.totalplusmethod(total);
       return total;
     },
@@ -1629,18 +1746,18 @@ export default {
             this.staffRefreshmentDetails
           );
           break;
-        case 'HandphoneReimbursement':
-          this.handphoneReimbursementDetails = claim;
+        case 'HandphoneBillReimbursement':
+          this.handphoneBillReimbursementDetails = claim;
           console.log(
-            'Handphone Reimbursement Details:',
-            this.handphoneReimbursementDetails
+            'Handphone Bill Reimbursement Details:',
+            this.handphoneBillReimbursementDetails
           );
           break;
-        case 'MedicalLeaveReimbursement':
-          this.medicalLeaveReimbursementDetails = claim;
+        case 'MedicalBillReimbursement':
+          this.medicalBillReimbursementDetails = claim;
           console.log(
-            'Medical Leave Reimbursement Details:',
-            this.medicalLeaveReimbursementDetails
+            'Medical Bill Reimbursement Details:',
+            this.medicalBillReimbursementDetails
           );
           break;
         // Add cases for other types of claims
@@ -1676,10 +1793,10 @@ export default {
           case 'Staff Refreshment':
             prefix = 'SR';
             break;
-          case 'Handphone Reimbursement':
+          case 'Handphone Bill Reimbursement':
             prefix = 'HR';
             break;
-          case 'Medical Leave Reimbursement':
+          case 'Medical Bill Reimbursement':
             prefix = 'MLR';
             break;
           default:
@@ -1726,10 +1843,10 @@ export default {
           case 'Staff Refreshment':
             prefix = 'SR';
             break;
-          case 'Handphone Reimbursement':
+          case 'Handphone Bill Reimbursement':
             prefix = 'HR';
             break;
-          case 'Medical Leave Reimbursement':
+          case 'Medical Bill Reimbursement':
             prefix = 'MLR';
             break;
           default:
@@ -1810,6 +1927,7 @@ export default {
                     requester_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
 
                     unique_code: this.generateUniqueCode(claim.tabTitle),
+                    reference_number: 'pktm222',
                     reference_number: 'pktm222',
                   };
                   axiosInstance = axios.create({
@@ -1933,11 +2051,11 @@ export default {
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case 'Handphone Reimbursement':
+              case 'Handphone Bill Reimbursement':
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
-                  const thisisforHandphoneReimbursement = {
+                  const thisisforHandphoneBillReimbursement = {
                     date_event: claim.dateE, // Example date
                     person_entertained: claim.PersonEntertainedE,
                     type_of_entertainment: claim.TypeofEntertainmentE,
@@ -1962,16 +2080,16 @@ export default {
                   });
                   const response2 = await axiosInstance.post(
                     '/',
-                    thisisforHandphoneReimbursement
+                    thisisforHandphoneBillReimbursement
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case 'Medical Leave Reimbursement':
+              case 'Medical Bill Reimbursement':
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
-                  const thisisforMedicalLeaveReimbursement = {
+                  const thisisforMedicalBillReimbursement = {
                     date_event: claim.dateE, // Example date
                     person_entertained: claim.PersonEntertainedE,
                     type_of_entertainment: claim.TypeofEntertainmentE,
@@ -1996,7 +2114,7 @@ export default {
                   });
                   const response2 = await axiosInstance.post(
                     '/',
-                    thisisforMedicalLeaveReimbursement
+                    thisisforMedicalBillReimbursement
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }

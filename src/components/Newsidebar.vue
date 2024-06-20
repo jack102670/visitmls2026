@@ -142,7 +142,7 @@
             />
           </svg>
 
-          <span class="mx-4 font-medium">Dashboard</span>
+          <span class="mx-4 font-medium">Requests Dashboard</span>
         </router-link>
         <router-link 
           to="/Dashboardvendor"
@@ -164,7 +164,7 @@
             />
           </svg>
 
-          <span class="mx-4 font-medium">Dashboard</span>
+          <span class="mx-4 font-medium">Requests Dashboard</span>
         </router-link>
 
         <router-link
@@ -257,7 +257,7 @@
           <span class="mx-4 font-medium">Dashboard Finance</span>
         </router-link>
         <router-link
-    v-if="controlView === 'eclaim' && userDetails.userName.includes('HR')"
+    v-if="controlView === 'eclaim'"
           class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
           :to="{ name: 'verified' }"
         >
@@ -276,10 +276,10 @@
             />
           </svg>
 
-          <span class="mx-4 font-medium">verified</span>
+          <span class="mx-4 font-medium">Verify Claims</span>
         </router-link>
         <router-link
-    v-if="controlView === 'eclaim' "
+    v-if="controlView === 'eclaim'  && userDetails.userName.includes('HR')"
           class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
           :to="{ name: 'AdminHRDashboardpage' }"
         >
@@ -298,7 +298,7 @@
             />
           </svg>
 
-          <span class="mx-4 font-medium">Dashboard HR</span>
+          <span class="mx-4 font-medium">Approve Claims</span>
         </router-link>
 
         <a
