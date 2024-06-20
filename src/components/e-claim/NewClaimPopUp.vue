@@ -359,7 +359,7 @@
             @click.prevent="submitForm(1)"
             class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
           >
-            Submit
+            Next
           </button>
         </div>
         <div class="flex justify-center mt-10">
