@@ -1581,11 +1581,15 @@ export default {
     },
 
     isOtherEntertainment() {
-      return this.entertainmentDetails.TypeofEntertainmentE === "OTHERS";
+      return (
+        this.entertainmentDetails.TypeofEntertainmentE === "BREAKFAST" && "LUNCH" && "DINNER" && "TEA BREAK"
+      );
     },
 
     isOtherRefreshment() {
-      return this.staffRefreshmentDetails.TypeofRefreshmentSR === "OTHERS";
+      return (
+        this.staffRefreshmentDetails.TypeofRefreshmentSR === "BREAKFAST" && "LUNCH" && "DINNER" && "TEA BREAK"
+      );
     },
 
     totalOverseasTravellingAmount() {
