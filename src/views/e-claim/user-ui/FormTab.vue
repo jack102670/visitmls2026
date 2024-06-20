@@ -1290,16 +1290,28 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
+              id: "MedicalCategoryML",
+              label: "Medical Category",
+              type: "select",
+              value: [],
+              required: true,
+              options: [
+                { label: "Medical Check-Up", value: "Medical Check-Up" },
+                { label: "Dental", value: "Dental" },
+              ],
+              gridClass: "sm:col-span-1",
+            },
+            {
               id: "ReasonML",
               label: "Reason for Medical",
               type: "text",
               value: "",
               required: true,
               gridClass: "sm:col-span-2",
-            },
+            }, 
             {
-              id: "ClinicNameML",
-              label: "Clinic Name",
+              id: "ClinicSelectionML",
+              label: "Clinic Selection",
               type: "radio-group",
               value: [],
               required: true,
@@ -1540,7 +1552,7 @@ export default {
       const tab = this.tabs.find((tab) => tab.title === "Medical Bill Reimbursement");
       if (!tab) return false;
       const clinicField = tab.fields.find(
-        (field) => field.id === "ClinicNameML" && "OtherClinicSpecML" && "OtherCliniReasonML"
+        (field) => field.id === "ClinicSelectionML" && "OtherClinicSpecML" && "OtherCliniReasonML"
       );
       return clinicField && clinicField.value === "Mediviron Clinic - Panel";
     },
@@ -1560,7 +1572,7 @@ export default {
           }
           if (tab.title === "Medical Bill Reimbursement") {
             const clinicField = tab.fields.find(
-              (field) => field.id === "ClinicNameML" && "OtherClinicSpecML" && "OtherCliniReasonML"
+              (field) => field.id === "ClinicSelectionML" && "OtherClinicSpecML" && "OtherCliniReasonML"
             );
             if (clinicField) {
               this.updateFieldVisibility2(clinicField.value);

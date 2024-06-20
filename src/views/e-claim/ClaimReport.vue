@@ -813,13 +813,27 @@
                   class="border rounded-md px-4 py-2"
                 />
               </div>
+
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeName" class="text-gray-700 font-bold mr-2"
-                  >Reason for Medical:</label
+                  >Medical Category:</label
                 >
                 <input
                   type="text"
                   id="nodeName"
+                  v-model="medicalBillReimbursementDetails.MedicalCategoryML"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Reason for Medical:</label
+                >
+                <input
+                  type="text"
+                  id="nodeParentId"
                   v-model="medicalBillReimbursementDetails.ReasonML"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
@@ -828,12 +842,12 @@
 
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Clinic Name:</label
+                  >Clinic Selection:</label
                 >
                 <input
                   type="text"
-                  id="ClinicNameML"
-                  v-model="medicalBillReimbursementDetails.ClinicNameML"
+                  id="ClinicSelectionML"
+                  v-model="medicalBillReimbursementDetails.ClinicSelectionML"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
@@ -1546,7 +1560,7 @@ export default {
     },
 
     isPanelClinic() {
-      return this.medicalBillReimbursementDetails.ClinicNameML === "Mediviron Clinic - Panel";
+      return this.medicalBillReimbursementDetails.ClinicSelectionML === "Mediviron Clinic - Panel";
     },
 
     totalOverseasTravellingAmount() {
