@@ -145,11 +145,11 @@
                     class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
                   >
                     <!-- Table Header -->
-                    <thead class="bg-gray-50 dark:bg-gray-800">
+                    <thead class="bg-slate-200 dark:bg-gray-800 text-gray-900">
                       <tr>
                         <th
                           scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>No</span>
@@ -157,7 +157,7 @@
                         </th>
                         <th
                           scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right  dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>Type Of Claim</span>
@@ -167,15 +167,15 @@
                         <th
                           v-if="claims[0].reportType === 'Finance'"
                           scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400"
                         >
-                          <div class="flex items-center gap-x-3">
-                            <span>Destination</span>
+                          <div class="flex items-center gap-x-3 capitalize">
+                            <span>location / purpose </span>
                           </div>
                         </th>
                         <th
                           scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right  dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>Date</span>
@@ -183,7 +183,7 @@
                         </th>
                         <th
                           scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right  dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>Amount</span>
@@ -191,7 +191,7 @@
                         </th>
                         <th
                           scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right  dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>Action</span>

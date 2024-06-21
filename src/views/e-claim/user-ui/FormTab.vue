@@ -9,10 +9,10 @@
         :key="index"
         @click="activeTab = index"
         :class="{
-          'bg-gray-300': activeTab === index,
+          'bg-[#160959] text-white': activeTab === index,
           'hover:bg-gray-200': activeTab !== index,
         }"
-        class="flex-1 px-4 py-4 text-lg mr-2 rounded-sm focus:outline-none border border-gray-300"
+        class="flex-1 px-4 py-1 text-md mr-2 rounded-3xl focus:outline-none border border-gray-300"
       >
         {{ tab.title }}
       </button>
@@ -1174,7 +1174,7 @@ export default {
               id: "MonthHR",
               label: "Month",
               type: "select",
-              value: "",
+              value: "huda beban",
               required: true,
               options: [
                 { label: "JANUARY", value: "JANUARY" },
@@ -1206,6 +1206,7 @@ export default {
               label: "Bank Name",
               type: "select",
               value: "",
+             
               required: true,
               options: [
                 { label: "HONG LEONG BANK", value: "HONG LEONG BANK" },
@@ -1295,6 +1296,159 @@ export default {
         {
           title: "Medical Bill Reimbursement",
           tabType: "HR",
+
+          gridLayout: "grid-cols-3",
+          fields: [
+            {
+              id: "dateML",
+              label: "Date of Medical Bill",
+              type: "date",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "MedicalCategoryML",
+              label: "Medical Category",
+              type: "select",
+              value: [],
+              required: true,
+              options: [
+                { label: "Medical Check-Up", value: "Medical Check-Up" },
+                { label: "Dental", value: "Dental" },
+              ],
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "ReasonML",
+              label: "Reason for Medical",
+              type: "text",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "ClinicSelectionML",
+              label: "Clinic Selection",
+              type: "radio-group",
+              value: [],
+              required: true,
+              options: [
+                {
+                  label: "Mediviron Clinic - Panel",
+                  value: "Mediviron Clinic - Panel",
+                },
+                { label: "Other Clinic", value: "Other Clinic" },
+              ],
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "OtherClinicSpecML",
+              label: "Specify Clinic Name",
+              type: "text",
+              value: "",
+              required: true,
+              placeholder: "Please Enter Clinic Name",
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "OtherClinicReasonML",
+              label: "Reason not Going to Panel Clinic",
+              type: "text",
+              value: "",
+              required: true,
+              placeholder: "Please Enter the Reason",
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "BankNameML",
+              label: "Bank Name",
+              type: "select",
+              value: "",
+              required: true,
+              options: [
+                { label: "HONG LEONG BANK", value: "HONG LEONG BANK" },
+                { label: "AGROBANK", value: "AGROBANK" },
+                { label: "AFFIN BANK BERHAD", value: "AFFIN BANK BERHAD" },
+                {
+                  label: "ALLIANCE BANK MALAYSIA BERHAD",
+                  value: "ALLIANCE BANK MALAYSIA BERHAD",
+                },
+                { label: "AMBANK BERHAD", value: "AMBANK BERHAD" },
+                { label: "BANK ISLAM MALAYSIA", value: "BANK ISLAM MALAYSIA" },
+                {
+                  label: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
+                  value: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
+                },
+                { label: "BANK MUAMALAT", value: "BANK MUAMALAT" },
+                {
+                  label: "BANK SIMPANAN NASIONAL BERHAD",
+                  value: "BANK SIMPANAN NASIONAL BERHAD",
+                },
+                { label: "CIMB BANK BERHAD", value: "CIMB BANK BERHAD" },
+                { label: "CITIBANK BERHAD", value: "CITIBANK BERHAD" },
+                {
+                  label: "HSBC BANK MALAYSIA BERHAD",
+                  value: "HSBC BANK MALAYSIA BERHAD",
+                },
+                { label: "MAYBANK", value: "MAYBANK" },
+                { label: "PUBLIC BANK", value: "PUBLIC BANK" },
+                { label: "RHB BANK", value: "RHB BANK" },
+                {
+                  label: "OCBC BANK MALAYSIA BERHAD",
+                  value: "OCBC BANK MALAYSIA BERHAD",
+                },
+              ],
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "AccBankNumberML",
+              label: "Account Bank No.",
+              type: "number",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "AccHolderNameML",
+              label: "Account Holder Name",
+              type: "text",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "ClaimsAmountML",
+              label: "Claims Amount(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "UploadML",
+              label: "Attachment(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
+              value: [],
+              required: true,
+              allowMultiple: true,
+              server: null,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
+            },
+          ],
+        },
+        {
+          title: "Others",
+          tabType: "Finance",
 
           gridLayout: "grid-cols-3",
           fields: [
