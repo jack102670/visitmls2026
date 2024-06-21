@@ -1561,6 +1561,7 @@ export default {
   },
 
   computed: {
+    
     isCompanyTransport() {
       const tab = this.tabs.find((tab) => tab.title === "Local Travelling");
       if (!tab) return false;
@@ -1659,6 +1660,13 @@ export default {
   },
 
   methods: {
+   
+    formatDate(dateString) {
+    const date = new Date(dateString);
+    return `${date.getDate()} ${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`;
+  },
+  // other methods...
+
     handleAddFile(error, file, field) {
       if (error) {
         console.error("Error adding file:", error.message);
@@ -1870,10 +1878,14 @@ export default {
     },
 
     submitForm(tab) {
-      const formattedData = {};
-      tab.fields.forEach((field) => {
-        formattedData[field.id] = field.value;
-      });
+  const formattedData = {};
+  tab.fields.forEach((field) => {
+    if (field.type === 'date' && field.value) {
+      formattedData[field.id] = this.formatDate(field.value);
+    } else {
+      formattedData[field.id] = field.value;
+    }
+  });
       formattedData["tabTitle"] = tab.title;
       formattedData["totalRM"] = this.calculateTotal(tab);
 
@@ -1891,9 +1903,13 @@ export default {
     submitForm2() {
       const formattedData = {};
       this.entertainmentTabs.forEach((tab) => {
-        tab.fields.forEach((field) => {
-          formattedData[field.id] = field.value;
-        });
+    tab.fields.forEach((field) => {
+      if (field.id === 'dateE') { // replace 'dateField' with the actual id of the date field
+        formattedData[field.id] = this.formatDate(field.value);
+      } else {
+        formattedData[field.id] = field.value;
+      }
+    });
 
         tab.attendees = [...this.attendees];
         formattedData["attendees"] = [...tab.attendees];
