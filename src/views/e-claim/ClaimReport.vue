@@ -990,14 +990,12 @@
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label
-                  for="typeOfEntertainment"
-                  class="text-gray-700 font-bold mr-2"
+                <label for="nodeName" class="text-gray-700 font-bold mr-2"
                   >Type of Entertainment:</label
                 >
                 <input
                   type="text"
-                  id="typeOfEntertainment"
+                  id="nodeName"
                   v-model="entertainmentDetails.TypeofEntertainmentE"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
@@ -1007,50 +1005,48 @@
                 v-if="!isOtherEntertainment"
                 class="flex justify-between items-center mb-4"
               >
-                <label
-                  for="otherTypeOfEntertainment"
-                  class="text-gray-700 font-bold mr-2"
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Other Type of Entertainment:</label
                 >
                 <input
                   type="text"
-                  id="otherTypeOfEntertainment"
+                  id="nodeParentId"
                   v-model="entertainmentDetails.OtherTypeofEntertainmentE"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="company" class="text-gray-700 font-bold mr-2"
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Company:</label
                 >
                 <input
                   type="text"
-                  id="company"
+                  id="nodeParentId"
                   v-model="entertainmentDetails.CompanyE"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="venue" class="text-gray-700 font-bold mr-2"
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Venue:</label
                 >
                 <input
                   type="text"
-                  id="venue"
+                  id="nodeParentId"
                   v-model="entertainmentDetails.VenueE"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="reference" class="text-gray-700 font-bold mr-2"
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Reference:</label
                 >
                 <input
                   type="text"
-                  id="reference"
+                  id="nodeParentId"
                   v-model="entertainmentDetails.ReferenceE"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
@@ -1581,14 +1577,16 @@ export default {
     },
 
     isOtherEntertainment() {
-      return (
-        this.entertainmentDetails.TypeofEntertainmentE === "BREAKFAST" && "LUNCH" && "DINNER" && "TEA BREAK"
+      const validTypes = ["BREAKFAST", "LUNCH", "DINNER", "TEA BREAK"];
+      return validTypes.includes(
+        this.entertainmentDetails.TypeofEntertainmentE
       );
     },
 
     isOtherRefreshment() {
-      return (
-        this.staffRefreshmentDetails.TypeofRefreshmentSR === "BREAKFAST" && "LUNCH" && "DINNER" && "TEA BREAK"
+      const validTypes = ["BREAKFAST", "LUNCH", "DINNER", "TEA BREAK"];
+      return validTypes.includes(
+        this.staffRefreshmentDetails.TypeofRefreshmentSR
       );
     },
 
