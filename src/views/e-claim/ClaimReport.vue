@@ -101,7 +101,7 @@
               <!-- Display Company Name -->
               <div class="lg:col-start-8 lg:col-end-9 col-start-1 col-end-2">
                 <h5 class="text-sm font-semibold text-gray-600">
-                  Company's Name
+                  Company Name
                 </h5>
               </div>
               <div class="lg:col-start-9 col-start-2">
@@ -112,10 +112,10 @@
                   {{ claim.companyName }}
                 </h5>
               </div>
-              <!-- Display Date of Report -->
-              <!-- <div class="lg:col-start-8 lg:col-end-9 col-start-1 col-end-2">
+              <!-- Display Cost Center -->
+              <div class="lg:col-start-8 lg:col-end-9 col-start-1 col-end-2">
                 <h5 class="text-sm font-semibold text-gray-600">
-                  Date of Report
+                  Cost Center
                 </h5>
               </div>
               <div class="lg:col-start-9 col-start-2">
@@ -123,9 +123,9 @@
               </div>
               <div class="lg:col-start-10 col-start-3">
                 <h5 class="text-sm font-semibold text-gray-600">
-                  {{ claim.reportDate }}
+                  {{ claim.costCenter }} 
                 </h5>
-              </div> -->
+              </div>
             </template>
           </div>
         </section>
@@ -1368,6 +1368,104 @@
             </div>
           </div>
 
+          <div v-if="selectedClaimType === 'Others'">
+            <div class="flex-1 gap-4 justify-center items-center">
+              <!-- Modal content -->
+              <div class="flex justify-end">
+                <button
+                  v-show="!isEditMode"
+                  @click="isClickModal = false"
+                  class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
+                >
+                  X
+                </button>
+              </div>
+              <h1 class="text-3xl font-bold">Others Form</h1>
+              <hr class="mt-2 mb-4" />
+
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeId" class="text-gray-700 font-bold mr-2"
+                  >Date:</label
+                >
+                <input
+                  type="text"
+                  id="nodeId"
+                  v-model="othersDetails.dateOthers"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="amount" class="text-gray-700 font-bold mr-2"
+                  >Amount (RM):</label
+                >
+                <input
+                  type="text"
+                  id="amount"
+                  v-model="othersDetails.AmountRMOthers"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="desription" class="text-gray-700 font-bold mr-2"
+                  >Description Of Claim:</label
+                >
+                <input
+                  type="text"
+                  id="DescriptionOthers"
+                  v-model="othersDetails.DescriptionOthers"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+            </div>
+
+            <hr />
+            <div class="flex justify-center items-center mb-4">
+              <label
+                for="nodeParentId"
+                class="text-gray-700 font-bold mr-2 text-2xl"
+                >Total: RM {{ totalOthersDetails }}</label
+              >
+            </div>
+
+            <div class="flex justify-end">
+              <button
+                @click="toggleEditMode"
+                class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
+              >
+                {{ isEditMode ? "Save" : "Edit" }}
+                <!-- Change button text based on edit mode -->
+              </button>
+              <button
+                @click="deleteForm()"
+                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+              </button>
+              <!-- <button
+                @click="isClickModal = false"
+                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+              >
+                Cancel
+              </button> -->
+            </div>
+          </div>
+
           <div v-if="selectedClaimType === 'HandphoneBillReimbursement'">
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
@@ -1544,6 +1642,7 @@ export default {
       medicalBillReimbursementDetails: {},
       entertainmentDetails: {},
       staffRefreshmentDetails: {},
+      othersDetails: {},
       handphoneBillReimbursementDetails: {},
       cancel: true,
     };
@@ -1623,6 +1722,12 @@ export default {
 
     totalStaffRefreshmentDetails() {
       let total = parseFloat(this.staffRefreshmentDetails.AmountRMSR) || 0;
+      this.totalplusmethod(total);
+      return total;
+    },
+
+    totalOthersDetails() {
+      let total = parseFloat(this.othersDetails.AmountRMOthers) || 0;
       this.totalplusmethod(total);
       return total;
     },
@@ -1718,6 +1823,13 @@ export default {
             this.staffRefreshmentDetails
           );
           break;
+          case "Others":
+          this.othersDetails = claim;
+          console.log(
+            "Others Details:",
+            this.othersDetails
+          );
+          break;
         case "HandphoneBillReimbursement":
           this.handphoneBillReimbursementDetails = claim;
           console.log(
@@ -1764,6 +1876,9 @@ export default {
             break;
           case "Staff Refreshment":
             prefix = "SR";
+            break;
+          case "Others":
+            prefix = "OTHERS";
             break;
           case "Handphone Bill Reimbursement":
             prefix = "HR";
@@ -1814,6 +1929,9 @@ export default {
             break;
           case "Staff Refreshment":
             prefix = "SR";
+            break;
+          case "Others":
+            prefix = "OTHERS";
             break;
           case "Handphone Bill Reimbursement":
             prefix = "HR";
@@ -2018,6 +2136,40 @@ export default {
                   const response2 = await axiosInstance.post(
                     "/",
                     thisisforstaffrefreshment
+                  );
+                  console.log(`Data sent for ${title} 2:`, response2.data);
+                }
+                break;
+              case "Others":
+                for (const claim of claimsToSend) {
+                  // Iterate over each claim
+                  // Dummy data for a claim
+                  const thisisforHandphoneBillReimbursement = {
+                    date_event: claim.dateE, // Example date
+                    person_entertained: claim.PersonEntertainedE,
+                    type_of_entertainment: claim.TypeofEntertainmentE,
+                    other_type_of_entertainment:
+                      claim.OtherTypeofEntertainmentE,
+                    company: claim.CompanyE,
+                    venue: claim.VenueE,
+                    reference: claim.ReferenceE,
+                    amount: claim.AmountRME,
+                    reference_number: "pktm222",
+                    unique_code: this.generateUniqueCode(claim.tabTitle),
+
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
+                    serial_number: this.generateUniqueCodeSN(claim.tabTitle),
+                  };
+                  axiosInstance = axios.create({
+                    baseURL: "http://localhost:3000/claims/entertainment",
+                  });
+                  const response2 = await axiosInstance.post(
+                    "/",
+                    thisisforHandphoneBillReimbursement
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
