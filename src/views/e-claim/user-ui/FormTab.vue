@@ -9,14 +9,16 @@
         :key="index"
         @click="activeTab = index"
         :class="[
-        'flex-1 px-4 py-1 text-md mr-2 rounded-3xl focus:outline-none border border-gray-300',
-        {
-          'bg-[#160959] text-white': activeTab === index,
-          'hover:bg-gray-200': activeTab !== index,
-          'px-8 py-4 mr-4': tab.title === 'Handphone Bill Reimbursement' || tab.title === 'Medical Bill Reimbursement'
-        }
-      ]"
-    >
+          'flex-1 px-4 py-1 text-md mr-2 rounded-3xl focus:outline-none border border-gray-300',
+          {
+            'bg-[#160959] text-white': activeTab === index,
+            'hover:bg-gray-200': activeTab !== index,
+            'px-8 py-4 mr-4':
+              tab.title === 'Handphone Bill Reimbursement' ||
+              tab.title === 'Medical Bill Reimbursement',
+          },
+        ]"
+      >
         {{ tab.title }}
       </button>
     </div>
@@ -33,7 +35,11 @@
           {{ tab.title }} Form
         </h2>
 
-        <div v-if="tab.title !== 'Entertainment' && tab.title !== 'Staff Refreshment'">
+        <div
+          v-if="
+            tab.title !== 'Entertainment' && tab.title !== 'Staff Refreshment'
+          "
+        >
           <form @submit.prevent="submitForm(tab)">
             <div class="pt-4">
               <hr class="" />
@@ -63,104 +69,101 @@
                           field.id !== 'OtherClinicReasonML')
                       "
                     >
-                        <label
-                          :for="field.id"
-                          class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
-                        >
-                          {{ field.label }}
-                          <span v-if="field.required" style="color: red"
-                            >*</span
-                          >
-                        </label>
+                      <label
+                        :for="field.id"
+                        class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
+                      >
+                        {{ field.label }}
+                        <span v-if="field.required" style="color: red">*</span>
+                      </label>
 
-                        <template v-if="field.type === 'select'">
-                          <select
-                            v-model="field.value"
-                            :id="field.id"
-                            class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                      <template v-if="field.type === 'select'">
+                        <select
+                          v-model="field.value"
+                          :id="field.id"
+                          class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                        >
+                          <option
+                            v-for="(option, optionIndex) in field.options"
+                            :key="optionIndex"
+                            :value="option.value"
                           >
-                            <option
-                              v-for="(option, optionIndex) in field.options"
-                              :key="optionIndex"
+                            {{ option.label }}
+                          </option>
+                        </select>
+                      </template>
+
+                      <template v-else-if="field.type === 'year'">
+                        <select
+                          v-model="field.value"
+                          :id="field.id"
+                          class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                        >
+                          <option
+                            v-for="year in yearRange"
+                            :key="year"
+                            :value="year"
+                          >
+                            {{ year }}
+                          </option>
+                        </select>
+                      </template>
+
+                      <template v-else-if="field.type === 'radio-group'">
+                        <div class="grid grid-cols-2">
+                          <div
+                            class="p-4 pt-2 pb-2 flex items-center"
+                            v-for="option in field.options"
+                            :key="option.value"
+                          >
+                            <input
+                              type="radio"
+                              :id="option.value"
+                              :name="field.id"
                               :value="option.value"
+                              v-model="field.value"
+                              class="mr-2"
+                            />
+                            <label
+                              :for="option.value"
+                              class="text-sm text-gray-700"
                             >
                               {{ option.label }}
-                            </option>
-                          </select>
-                        </template>
-
-                        <template v-else-if="field.type === 'year'">
-                          <select
-                            v-model="field.value"
-                            :id="field.id"
-                            class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                          >
-                            <option
-                              v-for="year in yearRange"
-                              :key="year"
-                              :value="year"
-                            >
-                              {{ year }}
-                            </option>
-                          </select>
-                        </template>
-
-                        <template v-else-if="field.type === 'radio-group'">
-                          <div class="grid grid-cols-2">
-                            <div
-                              class="p-4 pt-2 pb-2 flex items-center"
-                              v-for="option in field.options"
-                              :key="option.value"
-                            >
-                              <input
-                                type="radio"
-                                :id="option.value"
-                                :name="field.id"
-                                :value="option.value"
-                                v-model="field.value"
-                                class="mr-2"
-                              />
-                              <label
-                                :for="option.value"
-                                class="text-sm text-gray-700"
-                              >
-                                {{ option.label }}
-                              </label>
-                            </div>
+                            </label>
                           </div>
-                        </template>
+                        </div>
+                      </template>
 
-                        <template v-else-if="field.type === 'file'">
-                          <div class="pt-3">
-                            <file-pond
-                              :name="field.id"
-                              ref="pond"
-                              label-idle="Drop files here..."
-                              @addfile="
-                                (error, file) =>
-                                  handleAddFile(error, file, field)
-                              "
-                              @removefile="
-                                (error, file) =>
-                                  handleRemoveFile(error, file, field)
-                              "
-                              :accepted-file-types="field.acceptedFileTypes"
-                              :max-file-size="field.maxFileSize"
-                              :allow-multiple="field.allowMultiple"
-                            />
-                          </div>
-                        </template>
-
-                        <template v-else>
-                          <input
-                            v-model="field.value"
-                            :id="field.id"
-                            :type="field.type"
-                            :placeholder="field.placeholder"
-                            :step="field.type === 'number' ? '0.01' : undefined"
-                            class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                      <template v-else-if="field.type === 'file'">
+                        <div class="pt-3">
+                          <file-pond
+                            :name="field.id"
+                            ref="pond"
+                            label-idle="Drop files here..."
+                            @addfile="
+                              (error, file) => handleAddFile(error, file, field)
+                            "
+                            @removefile="
+                              (error, file) =>
+                                handleRemoveFile(error, file, field)
+                            "
+                            :accepted-file-types="field.acceptedFileTypes"
+                            :max-file-size="field.maxFileSize"
+                            :allow-multiple="field.allowMultiple"
                           />
-                        </template>
+                        </div>
+                      </template>
+
+                      <template v-else>
+                        <input
+                          v-model="field.value"
+                          :id="field.id"
+                          :type="field.type"
+                          :placeholder="field.placeholder"
+                          :step="field.type === 'number' ? '0.01' : undefined"
+                          class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                        />
+                      </template>
                     </template>
                   </template>
                 </div>
@@ -440,57 +443,60 @@
                       field.gridClass,
                     ]"
                   >
-                  <template
-                      v-if="field.id !== 'OtherTypeofEntertainmentE' || isOtherEntertainment"
+                    <template
+                      v-if="
+                        field.id !== 'OtherTypeofEntertainmentE' ||
+                        isOtherEntertainment
+                      "
                     >
-                    <label
-                      :for="field.id"
-                      class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
-                    >
-                      {{ field.label }}
-                      <span v-if="field.required" style="color: red">*</span>
-                    </label>
-
-                    <template v-if="field.type === 'select'">
-                      <select
-                        v-model="field.value"
-                        :id="field.id"
-                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                      <label
+                        :for="field.id"
+                        class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
                       >
-                        <option
-                          v-for="(option, optionIndex) in field.options"
-                          :key="optionIndex"
-                          :value="option.value"
-                        >
-                          {{ option.label }}
-                        </option>
-                      </select>
-                    </template>
+                        {{ field.label }}
+                        <span v-if="field.required" style="color: red">*</span>
+                      </label>
 
-                    <template v-else-if="field.type === 'file'">
-                      <div class="pt-3">
-                        <FilePond
-                          ref="pond"
-                          name="file"
-                          :allow-multiple="field.allowMultiple"
-                          :accepted-file-types="field.acceptedFileTypes"
-                          :max-file-size="field.maxFileSize"
-                          @addfile="handleAddFile(field)"
-                          @removefile="handleRemoveFile(field)"
+                      <template v-if="field.type === 'select'">
+                        <select
+                          v-model="field.value"
+                          :id="field.id"
+                          class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                        >
+                          <option
+                            v-for="(option, optionIndex) in field.options"
+                            :key="optionIndex"
+                            :value="option.value"
+                          >
+                            {{ option.label }}
+                          </option>
+                        </select>
+                      </template>
+
+                      <template v-else-if="field.type === 'file'">
+                        <div class="pt-3">
+                          <FilePond
+                            ref="pond"
+                            name="file"
+                            :allow-multiple="field.allowMultiple"
+                            :accepted-file-types="field.acceptedFileTypes"
+                            :max-file-size="field.maxFileSize"
+                            @addfile="handleAddFile(field)"
+                            @removefile="handleRemoveFile(field)"
+                          />
+                        </div>
+                      </template>
+                      <template v-else>
+                        <input
+                          v-model="field.value"
+                          :id="field.id"
+                          :type="field.type"
+                          :placeholder="field.placeholder"
+                          :step="field.type === 'number' ? '0.01' : undefined"
+                          class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                         />
-                      </div>
+                      </template>
                     </template>
-                    <template v-else>
-                      <input
-                        v-model="field.value"
-                        :id="field.id"
-                        :type="field.type"
-                        :placeholder="field.placeholder"
-                        :step="field.type === 'number' ? '0.01' : undefined"
-                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                      />
-                    </template>
-                  </template>
                   </div>
 
                   <div v-if="subTab.title !== 'Attendees'" class="pt-4">
@@ -788,7 +794,7 @@
             <div class="pt-4">
               <hr />
               <div class="m-2">
-                <form @submit.prevent="submitForm2(subTab)">
+                <form @submit.prevent="submitForm3(subTab)">
                   <div
                     v-for="(field, fieldIndex) in subTab.fields"
                     :key="fieldIndex"
@@ -799,57 +805,60 @@
                       field.gridClass,
                     ]"
                   >
-                  <template
-                      v-if="field.id !== 'OtherTypeofStaffRefreshmentSR' || isOtherRefreshment"
+                    <template
+                      v-if="
+                        field.id !== 'OtherTypeofStaffRefreshmentSR' ||
+                        isOtherRefreshment
+                      "
                     >
-                    <label
-                      :for="field.id"
-                      class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
-                    >
-                      {{ field.label }}
-                      <span v-if="field.required" style="color: red">*</span>
-                    </label>
-
-                    <template v-if="field.type === 'select'">
-                      <select
-                        v-model="field.value"
-                        :id="field.id"
-                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                      <label
+                        :for="field.id"
+                        class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
                       >
-                        <option
-                          v-for="(option, optionIndex) in field.options"
-                          :key="optionIndex"
-                          :value="option.value"
-                        >
-                          {{ option.label }}
-                        </option>
-                      </select>
-                    </template>
+                        {{ field.label }}
+                        <span v-if="field.required" style="color: red">*</span>
+                      </label>
 
-                    <template v-else-if="field.type === 'file'">
-                      <div class="pt-3">
-                        <FilePond
-                          ref="pond"
-                          name="file"
-                          :allow-multiple="field.allowMultiple"
-                          :accepted-file-types="field.acceptedFileTypes"
-                          :max-file-size="field.maxFileSize"
-                          @addfile="handleAddFile(field)"
-                          @removefile="handleRemoveFile(field)"
+                      <template v-if="field.type === 'select'">
+                        <select
+                          v-model="field.value"
+                          :id="field.id"
+                          class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                        >
+                          <option
+                            v-for="(option, optionIndex) in field.options"
+                            :key="optionIndex"
+                            :value="option.value"
+                          >
+                            {{ option.label }}
+                          </option>
+                        </select>
+                      </template>
+
+                      <template v-else-if="field.type === 'file'">
+                        <div class="pt-3">
+                          <FilePond
+                            ref="pond"
+                            name="file"
+                            :allow-multiple="field.allowMultiple"
+                            :accepted-file-types="field.acceptedFileTypes"
+                            :max-file-size="field.maxFileSize"
+                            @addfile="handleAddFile(field)"
+                            @removefile="handleRemoveFile(field)"
+                          />
+                        </div>
+                      </template>
+                      <template v-else>
+                        <input
+                          v-model="field.value"
+                          :id="field.id"
+                          :type="field.type"
+                          :placeholder="field.placeholder"
+                          :step="field.type === 'number' ? '0.01' : undefined"
+                          class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                         />
-                      </div>
+                      </template>
                     </template>
-                    <template v-else>
-                      <input
-                        v-model="field.value"
-                        :id="field.id"
-                        :type="field.type"
-                        :placeholder="field.placeholder"
-                        :step="field.type === 'number' ? '0.01' : undefined"
-                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                      />
-                    </template>
-                  </template>
                   </div>
 
                   <div v-if="subTab.title !== 'Attendees'" class="pt-4">
@@ -1457,7 +1466,7 @@ export default {
               label: "Bank Name",
               type: "select",
               value: "",
-             
+
               required: true,
               options: [
                 { label: "HONG LEONG BANK", value: "HONG LEONG BANK" },
@@ -1854,7 +1863,7 @@ export default {
         },
         {
           title: "Attendees",
-          attendees: [],
+          attendees1: [],
           fields: [],
         },
       ],
@@ -1863,7 +1872,7 @@ export default {
           title: "Details",
           gridLayout: "grid-cols-3",
           fields: [
-             {
+            {
               id: "dateSR",
               label: "Date",
               type: "date",
@@ -1973,7 +1982,6 @@ export default {
   },
 
   computed: {
-    
     isCompanyTransport() {
       const tab = this.tabs.find((tab) => tab.title === "Local Travelling");
       if (!tab) return false;
@@ -2003,7 +2011,9 @@ export default {
       const typeOfRefreshmentField = staffRefreshmentTab.fields.find(
         (field) => field.id === "TypeofRefreshmentSR"
       );
-      return typeOfRefreshmentField && typeOfRefreshmentField.value === "OTHERS";
+      return (
+        typeOfRefreshmentField && typeOfRefreshmentField.value === "OTHERS"
+      );
     },
     isOtherEntertainment() {
       const entertainmentTab = this.entertainmentTabs.find(
@@ -2013,10 +2023,11 @@ export default {
       const typeOfEntertainmentField = entertainmentTab.fields.find(
         (field) => field.id === "TypeofEntertainmentE"
       );
-      return typeOfEntertainmentField && typeOfEntertainmentField.value === "OTHERS";
+      return (
+        typeOfEntertainmentField && typeOfEntertainmentField.value === "OTHERS"
+      );
     },
   },
-    
 
   watch: {
     tabs: {
@@ -2051,7 +2062,7 @@ export default {
           }
           if (tab.title === "Details") {
             const typeOfEntertainmentField = tab.fields.find(
-              (field) => field.id === "TypeofEntertainmentE" 
+              (field) => field.id === "TypeofEntertainmentE"
             );
             if (typeOfEntertainmentField) {
               this.updateFieldVisibility4(typeOfEntertainmentField.value);
@@ -2072,12 +2083,13 @@ export default {
   },
 
   methods: {
-   
     formatDate(dateString) {
-    const date = new Date(dateString);
-    return `${date.getDate()} ${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`;
-  },
-  // other methods...
+      const date = new Date(dateString);
+      return `${date.getDate()} ${date.toLocaleString("default", {
+        month: "long",
+      })} ${date.getFullYear()}`;
+    },
+    // other methods...
 
     handleAddFile(error, file, field) {
       if (error) {
@@ -2290,14 +2302,14 @@ export default {
     },
 
     submitForm(tab) {
-  const formattedData = {};
-  tab.fields.forEach((field) => {
-    if (field.type === 'date' && field.value) {
-      formattedData[field.id] = this.formatDate(field.value);
-    } else {
-      formattedData[field.id] = field.value;
-    }
-  });
+      const formattedData = {};
+      tab.fields.forEach((field) => {
+        if (field.type === "date" && field.value) {
+          formattedData[field.id] = this.formatDate(field.value);
+        } else {
+          formattedData[field.id] = field.value;
+        }
+      });
       formattedData["tabTitle"] = tab.title;
       formattedData["totalRM"] = this.calculateTotal(tab);
 
@@ -2312,21 +2324,41 @@ export default {
       this.$emit("formSubmitted", formattedData);
       console.log("Formatted Form Data:", formattedData);
     },
+
     submitForm2() {
       const formattedData = {};
       this.entertainmentTabs.forEach((tab) => {
-    tab.fields.forEach((field) => {
-      if (field.id === 'dateE') { // replace 'dateField' with the actual id of the date field
-        formattedData[field.id] = this.formatDate(field.value);
-      } else {
-        formattedData[field.id] = field.value;
-      }
-    });
+        tab.fields.forEach((field) => {
+          if (field.id === "dateE") {
+            // replace 'dateField' with the actual id of the date field
+            formattedData[field.id] = this.formatDate(field.value);
+          } else {
+            formattedData[field.id] = field.value;
+          }
+        });
 
         tab.attendees = [...this.attendees];
         formattedData["attendees"] = [...tab.attendees];
       });
       formattedData["tabTitle"] = "Entertainment";
+      this.$emit("formSubmitted", formattedData);
+      console.log("Formatted Form Data:", formattedData);
+    },
+    submitForm3() {
+      const formattedData = {};
+      this.staffRefreshmentTabs.forEach((tab) => {
+        tab.fields.forEach((field) => {
+          if (field.id === "dateSR") {
+            formattedData[field.id] = this.formatDate(field.value);
+          } else {
+            formattedData[field.id] = field.value;
+          }
+        });
+
+        tab.attendees = [...this.attendees];
+        formattedData["attendees"] = [...tab.attendees];
+      });
+      formattedData["tabTitle"] = "Staff Refreshment";
       this.$emit("formSubmitted", formattedData);
       console.log("Formatted Form Data:", formattedData);
     },

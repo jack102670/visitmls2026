@@ -114,16 +114,14 @@
               </div>
               <!-- Display Cost Center -->
               <div class="lg:col-start-8 lg:col-end-9 col-start-1 col-end-2">
-                <h5 class="text-sm font-semibold text-gray-600">
-                  Cost Center
-                </h5>
+                <h5 class="text-sm font-semibold text-gray-600">Cost Center</h5>
               </div>
               <div class="lg:col-start-9 col-start-2">
                 <h5 class="text-sm font-semibold text-gray-600">:</h5>
               </div>
               <div class="lg:col-start-10 col-start-3">
                 <h5 class="text-sm font-semibold text-gray-600">
-                  {{ claim.costCenter }} 
+                  {{ claim.costCenter }}
                 </h5>
               </div>
             </template>
@@ -157,7 +155,7 @@
                         </th>
                         <th
                           scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right  dark:text-gray-400"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>Type Of Claim</span>
@@ -175,7 +173,7 @@
                         </th>
                         <th
                           scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right  dark:text-gray-400"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>Date</span>
@@ -183,7 +181,7 @@
                         </th>
                         <th
                           scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right  dark:text-gray-400"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>Amount</span>
@@ -191,7 +189,7 @@
                         </th>
                         <th
                           scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right  dark:text-gray-400"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>Action</span>
@@ -227,6 +225,7 @@
                           }}</span>
                           <span v-if="claim.VenueE">{{ claim.VenueE }}</span>
                           <span v-if="claim.VenueSR">{{ claim.VenueSR }}</span>
+                          <span v-if="claim.DescriptionOthers">{{ claim.DescriptionOthers }}</span>
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
@@ -236,6 +235,7 @@
                           <span v-if="claim.dateML">{{ claim.dateML }}</span>
                           <span v-if="claim.dateE">{{ claim.dateE }}</span>
                           <span v-if="claim.dateSR">{{ claim.dateSR }}</span>
+                          <span v-if="claim.dateOthers">{{ claim.dateOthers }}</span>
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
@@ -244,7 +244,10 @@
                             >RM {{ claim.totalRM }}</span
                           >
                           <span v-if="claim.AmountRME"
-                            >RM {{ claim.AmountRME }}</span
+                            >RM {{ claim.AmountRME }}</span 
+                          >
+                          <span v-if="claim.AmountRMSR"
+                            >RM {{ claim.AmountRMSR }}</span
                           >
                         </td>
                         <td
@@ -1229,18 +1232,6 @@
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeName" class="text-gray-700 font-bold mr-2"
-                  >Name of Staff:</label
-                >
-                <input
-                  type="text"
-                  id="nodeName"
-                  v-model="staffRefreshmentDetails.NameofStaffSR"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
-                />
-              </div>
-              <div class="flex justify-between items-center mb-4">
                 <label
                   for="typeOfRefreshment"
                   class="text-gray-700 font-bold mr-2"
@@ -1321,15 +1312,104 @@
                   class="border rounded-md px-4 py-2"
                 />
               </div>
-            </div>
 
-            <hr />
-            <div class="flex justify-center items-center mb-4">
-              <label
-                for="nodeParentId"
-                class="text-gray-700 font-bold mr-2 text-2xl"
-                >Total: RM {{ totalStaffRefreshmentDetails }}</label
-              >
+              <hr />
+              <div class="flex justify-center items-center mb-4">
+                <label
+                  for="nodeParentId"
+                  class="text-gray-700 font-bold mr-2 text-2xl"
+                  >Total: RM {{ totalStaffRefreshmentDetails }}</label
+                >
+              </div>
+
+              <!-- Attendees table -->
+              <div class="mb-4">
+                <h2 class="text-xl font-bold">Attendees</h2>
+                <table
+                  class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                >
+                  <thead class="bg-gray-50 dark:bg-gray-800">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>No</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Name</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Staff ID</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Company's Name</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Status</span>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
+                  >
+                    <tr
+                      v-for="(
+                        attendee, index
+                      ) in entertainmentDetails.attendees"
+                      :key="index"
+                    >
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ index + 1 }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ attendee.name }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ attendee.staffId }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ attendee.companyName }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ attendee.status }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             <div class="flex justify-end">
@@ -1745,6 +1825,7 @@ export default {
           let amount = 0;
           if (claim.AmountRME) amount += parseFloat(claim.AmountRME);
           if (claim.totalRM) amount += parseFloat(claim.totalRM);
+          if (claim.AmountRMSR) amount += parseFloat(claim.AmountRMSR);
           return total + amount;
         }, 0)
         .toFixed(2);
@@ -1823,12 +1904,9 @@ export default {
             this.staffRefreshmentDetails
           );
           break;
-          case "Others":
+        case "Others":
           this.othersDetails = claim;
-          console.log(
-            "Others Details:",
-            this.othersDetails
-          );
+          console.log("Others Details:", this.othersDetails);
           break;
         case "HandphoneBillReimbursement":
           this.handphoneBillReimbursementDetails = claim;
