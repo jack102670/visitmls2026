@@ -1996,7 +1996,7 @@ export default {
       return clinicField && clinicField.value === "Mediviron Clinic - Panel";
     },
     isOtherRefreshment() {
-      const staffRefreshmentTab = this.tabs.find(
+      const staffRefreshmentTab = this.staffRefreshmentTabs.find(
         (tab) => tab.title === "Staff Refreshment"
       );
       if (!staffRefreshmentTab) return false;
@@ -2042,17 +2042,19 @@ export default {
             }
           }
           if (tab.title === "Details") {
-            const typeOfEntertainmentField = tab.fields.find(
-              (field) => field.id === "TypeofEntertainmentE" 
-            );
             const typeOfRefreshmentField = tab.fields.find(
               (field) => field.id === "TypeofRefreshmentSR"
             );
-            if (typeOfEntertainmentField) {
-              this.updateFieldVisibility4(typeOfEntertainmentField.value);
-            }
             if (typeOfRefreshmentField) {
               this.updateFieldVisibility3(typeOfRefreshmentField.value);
+            }
+          }
+          if (tab.title === "Details") {
+            const typeOfEntertainmentField = tab.fields.find(
+              (field) => field.id === "TypeofEntertainmentE" 
+            );
+            if (typeOfEntertainmentField) {
+              this.updateFieldVisibility4(typeOfEntertainmentField.value);
             }
           }
         });
