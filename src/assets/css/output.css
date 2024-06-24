@@ -1388,11 +1388,6 @@ video {
   border-color: rgb(209 213 219 / var(--tw-divide-opacity));
 }
 
-.divide-slate-200 > :not([hidden]) ~ :not([hidden]) {
-  --tw-divide-opacity: 1;
-  border-color: rgb(226 232 240 / var(--tw-divide-opacity));
-}
-
 .overflow-auto {
   overflow: auto;
 }
@@ -1851,19 +1846,26 @@ video {
   background-color: rgb(255 255 255 / 0.3);
 }
 
-.bg-slate-50 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(248 250 252 / var(--tw-bg-opacity));
+.bg-slate-100\/60 {
+  background-color: rgb(241 245 249 / 0.6);
 }
 
-.bg-slate-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(241 245 249 / var(--tw-bg-opacity));
+.bg-slate-200\/60 {
+  background-color: rgb(226 232 240 / 0.6);
 }
 
-.bg-slate-500 {
+.bg-slate-300\/60 {
+  background-color: rgb(203 213 225 / 0.6);
+}
+
+.bg-slate-300 {
   --tw-bg-opacity: 1;
-  background-color: rgb(100 116 139 / var(--tw-bg-opacity));
+  background-color: rgb(203 213 225 / var(--tw-bg-opacity));
+}
+
+.bg-slate-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(148 163 184 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-40 {
