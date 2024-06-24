@@ -761,7 +761,7 @@
         <!-- End of Entertainment tab-->
 
         <!-- Staff Refreshment tab -->
-        <div v-else>
+        <div v-if="tab.title == 'Staff Refreshment'">
           <div class="tabs">
             <button
               v-for="(subTab, subIndex) in staffRefreshmentTabs"
@@ -1867,14 +1867,6 @@ export default {
               id: "dateSR",
               label: "Date",
               type: "date",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "NameofStaffSR",
-              label: "Name of Staff",
-              type: "text",
               value: "",
               required: true,
               gridClass: "sm:col-span-2",
