@@ -29,7 +29,7 @@
           {{ tab.title }} Form
         </h2>
 
-        <div v-if="tab.title !== 'Entertainment'">
+          <div v-if="tab.title !== 'Entertainment' && tab.title !== 'Staff Refreshment'">
           <form @submit.prevent="submitForm(tab)">
             <div class="pt-4">
               <hr class="" />
@@ -150,7 +150,7 @@
         </div>
 
         <!-- Entertainment tab -->
-        <div v-else>
+        <div v-if="tab.title !== 'Entertainment'">
           <div class="tabs">
             <button
               v-for="(subTab, subIndex) in entertainmentTabs"
@@ -506,6 +506,365 @@
           </div>
         </div>
         <!-- End of Entertainment tab-->
+
+        <!-- Staff Refreshment tab -->
+        <div v-else>
+          <div class="tabs">
+            <button
+              v-for="(subTab, subIndex) in staffRefreshmentTabs"
+              :key="subIndex"
+              @click="activeSubTab = subIndex"
+              :class="{
+                'bg-gray-300': activeSubTab === subIndex,
+                'hover:bg-gray-200': activeSubTab !== subIndex,
+              }"
+              class="px-4 py-2 mr-2 rounded-sm focus:outline-none border border-gray-300"
+            >
+              {{ subTab.title }}
+              <span v-if="subTab.title === 'Attendees'">
+                ({{ attendees.length }})</span
+              >
+            </button>
+          </div>
+
+          <div
+            v-for="(subTab, subIndex) in staffRefreshmentTabs"
+            :key="subIndex"
+            v-show="activeSubTab === subIndex"
+          >
+            <div class="pt-4">
+              <hr />
+              <div class="m-2">
+                <form @submit.prevent="submitForm2(subTab)">
+                  <div
+                    v-for="(field, fieldIndex) in subTab.fields"
+                    :key="fieldIndex"
+                    :class="[
+                      'grid',
+                      'grid-cols-1',
+                      subTab.gridLayout || 'sm:grid-cols-2',
+                      field.gridClass,
+                    ]"
+                  >
+                  <template
+                      v-if="field.id !== 'OtherTypeofStaffRefreshmentSR' || isOtherRefreshment"
+                    >
+                    <label
+                      :for="field.id"
+                      class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
+                    >
+                      {{ field.label }}
+                      <span v-if="field.required" style="color: red">*</span>
+                    </label>
+
+                    <template v-if="field.type === 'select'">
+                      <select
+                        v-model="field.value"
+                        :id="field.id"
+                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                      >
+                        <option
+                          v-for="(option, optionIndex) in field.options"
+                          :key="optionIndex"
+                          :value="option.value"
+                        >
+                          {{ option.label }}
+                        </option>
+                      </select>
+                    </template>
+
+                    <template v-else-if="field.type === 'file'">
+                      <div class="pt-3">
+                        <FilePond
+                          ref="pond"
+                          name="file"
+                          :allow-multiple="field.allowMultiple"
+                          :accepted-file-types="field.acceptedFileTypes"
+                          :max-file-size="field.maxFileSize"
+                          @addfile="handleAddFile(field)"
+                          @removefile="handleRemoveFile(field)"
+                        />
+                      </div>
+                    </template>
+                    <template v-else>
+                      <input
+                        v-model="field.value"
+                        :id="field.id"
+                        :type="field.type"
+                        :placeholder="field.placeholder"
+                        :step="field.type === 'number' ? '0.01' : undefined"
+                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                      />
+                    </template>
+                  </template>
+                  </div>
+
+                  <div v-if="subTab.title !== 'Attendees'" class="pt-4">
+                    <hr />
+                    <div class="mt-4">
+                      <div class="grid grid-cols-1 sm:grid-cols-2">
+                        <label
+                          class="block text-gray-700 text-xl font-bold mb-2"
+                          >Total :</label
+                        >
+                        <div class="block text-gray-700 text-xl font-bold mb-2">
+                          RM {{ calculateTotal(subTab) }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div v-if="subTab.title === 'Attendees'" class="mt-4">
+                    <div class="mb-4">
+                      <label class="inline-flex items-center mr-4">
+                        <input
+                          type="radio"
+                          value="pkt"
+                          v-model="selectedAttendeeType"
+                          class="form-radio"
+                        />
+                        <span
+                          class="ml-2 block text-sm font-medium text-gray-700"
+                          >PKT Staff</span
+                        >
+                      </label>
+                      <label class="inline-flex items-center">
+                        <input
+                          type="radio"
+                          value="notStaff"
+                          v-model="selectedAttendeeType"
+                          class="form-radio"
+                        />
+                        <span
+                          class="ml-2 block text-sm font-medium text-gray-700"
+                          >Not a Staff</span
+                        >
+                      </label>
+                    </div>
+
+                    <div v-if="selectedAttendeeType === 'pkt'" class="mb-4">
+                      <label
+                        for="companyName"
+                        class="block text-sm font-medium text-gray-700"
+                        >Company’s Name</label
+                      >
+                      <select
+                        v-model="selectedCompanyName"
+                        required
+                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                      >
+                        <option
+                          v-for="company in pktCompanies"
+                          :key="company"
+                          :value="company"
+                        >
+                          {{ company }}
+                        </option>
+                      </select>
+                    </div>
+
+                    <button
+                      @click="showModal = true"
+                      class="px-4 py-2 bg-blue-500 text-white rounded"
+                    >
+                      Add Attendee
+                    </button>
+
+                    <!-- Modal Form -->
+                    <div
+                      v-if="showModal"
+                      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+                    >
+                      <div class="bg-white p-6 rounded-lg w-80">
+                        <h3 class="text-lg font-medium mb-4">Add Attendee</h3>
+                        <div class="mb-4">
+                          <label
+                            for="name"
+                            class="block text-sm font-medium text-gray-700"
+                            >Name</label
+                          >
+                          <input
+                            type="text"
+                            v-model="modalForm.name"
+                            required
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                          />
+                        </div>
+                        <div v-if="selectedAttendeeType === 'pkt'" class="mb-4">
+                          <label
+                            for="staffId"
+                            class="block text-sm font-medium text-gray-700"
+                            >Staff ID</label
+                          >
+                          <input
+                            type="text"
+                            v-model="modalForm.staffId"
+                            required
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                          />
+                        </div>
+                        <div
+                          v-if="selectedAttendeeType === 'notStaff'"
+                          class="mb-4"
+                        >
+                          <label
+                            for="companyName"
+                            class="block text-sm font-medium text-gray-700"
+                            >Company’s Name</label
+                          >
+                          <input
+                            type="text"
+                            v-model="modalForm.companyName"
+                            required
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                          />
+                        </div>
+                        <div class="flex justify-end">
+                          <button
+                            @click="addAttendee"
+                            class="px-4 py-2 bg-blue-500 text-white rounded mr-2"
+                          >
+                            Save
+                          </button>
+                          <button
+                            @click="showModal = false"
+                            class="px-4 py-2 bg-gray-300 text-black rounded"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Attendees Table -->
+                    <div class="mt-4">
+                      <table
+                        class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                      >
+                        <thead class="bg-gray-50 dark:bg-gray-800">
+                          <tr>
+                            <th
+                              scope="col"
+                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            >
+                              <div class="flex items-center gap-x-3">
+                                <span>Name</span>
+                              </div>
+                            </th>
+                            <th
+                              scope="col"
+                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            >
+                              <div class="flex items-center gap-x-3">
+                                <span>Staff ID</span>
+                              </div>
+                            </th>
+                            <th
+                              scope="col"
+                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            >
+                              <div class="flex items-center gap-x-3">
+                                <span>Company's Name</span>
+                              </div>
+                            </th>
+                            <th
+                              scope="col"
+                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            >
+                              <div class="flex items-center gap-x-3">
+                                <span>Status</span>
+                              </div>
+                            </th>
+                            <th
+                              scope="col"
+                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            >
+                              <div class="flex items-center gap-x-3">
+                                <span>Action</span>
+                              </div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody
+                          class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
+                        >
+                          <tr
+                            v-for="(attendee, index) in attendees"
+                            :key="index"
+                          >
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
+                              {{ attendee.name }}
+                            </td>
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
+                              {{ attendee.staffId || "-" }}
+                            </td>
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
+                              {{ attendee.companyName }}
+                            </td>
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
+                              {{ attendee.status }}
+                            </td>
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
+                              <button
+                                @click="removeAttendee(index)"
+                                class="text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke-width="1.5"
+                                  stroke="currentColor"
+                                  class="w-5 h-5"
+                                >
+                                  <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                  />
+                                </svg>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="mt-4 mr-6 flex flex-row-reverse">
+                    <div class="flex items-center justify-between">
+                      <button
+                        v-if="subTab.title === 'Details'"
+                        type="button"
+                        @click="nextTab"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      >
+                        Next
+                      </button>
+                      <button
+                        v-else-if="subTab.title === 'Attendees'"
+                        type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End of Staff Refreshment tab-->
       </div>
     </div>
   </div>
@@ -732,7 +1091,7 @@ export default {
           title: "Staff Refreshment",
           gridLayout: "grid-cols-3",
           fields: [
-            {
+             {
               id: "dateSR",
               label: "Date",
               type: "date",
@@ -769,8 +1128,8 @@ export default {
               type: "text",
               value: "",
               placeholder: "Specify other type",
-              isOtherOption: true,
               gridClass: "sm:col-span-2",
+              hidden: true,
             },
             {
               id: "CompanySR",
@@ -795,6 +1154,18 @@ export default {
               value: "",
               required: true,
               options: [
+                {
+                  label: "ENTERTAINMENT-CLIENT(EXISTING)",
+                  value: "ENTERTAINMENT-CLIENT(EXISTING)",
+                },
+                {
+                  label: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)",
+                  value: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)",
+                },
+                {
+                  label: "ENTERTAINMENT-NON TRADE",
+                  value: "ENTERTAINMENT-NON TRADE",
+                },
                 { label: "GIFT TO CLIENT", value: "GIFT TO CLIENT" },
                 { label: "GIFT TO OTHERS", value: "GIFT TO OTHERS" },
                 { label: "MEAL FOR STAFF", value: "MEAL FOR STAFF" },
@@ -810,9 +1181,9 @@ export default {
             },
             {
               id: "UploadSR",
-              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
+              label: "Attachment(s). (png, jpeg, pdf or xlsx)",
               type: "file",
-              value: "",
+              value: [],
               required: true,
               allowMultiple: true,
               server: null,
