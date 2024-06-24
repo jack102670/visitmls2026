@@ -105,7 +105,15 @@
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
-                            <span>Date</span>
+                            <span>Requested Date</span>
+                          </div>
+                        </th>
+                        <th
+                          scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        >
+                          <div class="flex items-center gap-x-3">
+                            <span>Approved Date</span>
                           </div>
                         </th>
 
@@ -126,65 +134,49 @@
                     <tbody
                       class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
                     >
-                      <tr>
-                        <td
-                          class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                        >
-                          <div class="inline-flex items-center gap-x-3">
-                            <div class="flex items-center gap-x-2">
-                              <div>
-                                <h2
-                                  class="font-medium text-gray-500 dark:text-gray-300"
-                                >
-                                  HQ
-                                </h2>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        >
-                          <div class="inline-flex items-center gap-x-3">
-                            <div class="flex items-center gap-x-2">
-                              <div>
-                                <!-- Conditionally display 'Badge Request' if typeofrequest includes 'br' -->
-                              </div>
-                            </div>
-                          </div>
-                          Entertainment
-                        </td>
-                        <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        >
-                          MR MAN
-                        </td>
-                        <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        >
-                          ET2584232
-                        </td>
-
-                        <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        >
-                          20 July 2024
-                        </td>
-
-                        <td
-                          class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                        >
-                          <span
-                            class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800"
-                          >
-                            <span
-                              class="h-1.5 w-1.5 rounded-full bg-red-500"
-                            ></span>
-                            <span class="text-sm font-normal text-red-500"
-                              >PENDING</span
-                            >
-                          </span>
-                        </td>
+                    <tr v-for="(data, index) in dummyData" :key="index">
+        <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+          <div class="inline-flex items-center gap-x-3">
+            <div class="flex items-center gap-x-2">
+              <div>
+                <h2 class="font-medium text-gray-500 dark:text-gray-300">
+                  {{ data.location }}
+                </h2>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+          <div class="inline-flex items-center gap-x-3">
+            <div class="flex items-center gap-x-2">
+              <div>
+                <!-- Conditionally display 'Badge Request' if typeofrequest includes 'br' -->
+       
+              </div>
+            </div>
+          </div>
+          {{ data.activity }}
+        </td>
+        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+          {{ data.name }}
+        </td>
+        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+          {{ data.id }}
+        </td>
+        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+          {{ data.startDate }}
+        </td>
+        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+          {{ data.endDate }}
+        </td>
+        <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+          <div :class="getStatusContainerClass(data.adminStatus)">
+            <span :class="getStatusDotClass(data.adminStatus)"></span>
+            <h2 :class="getStatusTextClass(data.adminStatus)">
+              {{ data.adminStatus === "" ? "OPEN" : data.adminStatus }}
+            </h2>
+          </div>
+        </td>
 
                         <td class="px-4 py-4 ml text-sm whitespace-nowrap">
                           <div class="flex items-center gap-x-6">
@@ -287,11 +279,86 @@ export default {
   name: "homepageeclaiM",
   data() {
     return {
+      dummyData: [
+        {
+          location: "HQ",
+          typeOfRequest: "Badge Request",
+          activity: "Entertainment",
+          name: "MR MAN",
+          id: "ET2584232",
+          startDate: "20 July 2024",
+          endDate: "20 July 2024",
+          adminStatus: "APPROVED",
+        },
+        {
+          location: "HQ",
+          typeOfRequest: "",
+          activity: "Entertainment",
+          name: "MS WOMAN",
+          id: "ET2584233",
+          startDate: "21 July 2024",
+          endDate: "21 July 2024",
+          adminStatus: "PENDING",
+        },
+        {
+          location: "HQ",
+          typeOfRequest: "",
+          activity: "Entertainment",
+          name: "MS WOMAN",
+          id: "ET2584233",
+          startDate: "21 July 2024",
+          endDate: "21 July 2024",
+          adminStatus: "REIMBURSE",
+        },
+      ],
       popup: false,
       animate: false,
     };
   },
   methods: {
+    getStatusContainerClass(status) {
+      const colorMap = {
+        RESUBMISSION:
+          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800",
+        CLOSE:
+          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800",
+        "": "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800",
+        APPROVED:
+          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800",
+        COMPLETED:
+          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800",
+        REJECTED:
+          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800",
+          PENDING:
+          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800",
+          REIMBURSE:
+          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-white-100/60 dark:bg-gray-800",
+        };
+      return colorMap[status] || "bg-gray-800"; // Default to a dark color if the status is not recognized
+    },
+    getStatusDotClass(status) {
+      const colorMap = {
+        RESUBMISSION: "h-1.5 w-1.5 rounded-full bg-orange-500",
+        "": "h-1.5 w-1.5 rounded-full bg-red-500",
+        APPROVED: "h-1.5 w-1.5 rounded-full bg-emerald-500",
+        COMPLETED: "h-1.5 w-1.5 rounded-full bg-blue-500",
+        REJECTED: "h-1.5 w-1.5 rounded-full bg-red-500",
+        PENDING: "h-1.5 w-1.5 rounded-full bg-orange-500",
+    
+      REIMBURSE: "h-1.5 w-1.5 rounded-full bg-black",   };
+      return colorMap[status] || "h-1.5 w-1.5 rounded-full bg-gray-700"; // Default to a dark color if the status is not recognized
+    },
+    getStatusTextClass(status) {
+      const colorMap = {
+        RESUBMISSION: "text-sm font-normal text-orange-500",
+        "": "text-sm font-normal text-red-500",
+        APPROVED: "text-sm font-normal text-emerald-500",
+        COMPLETED: "text-sm font-normal text-blue-500",
+        REJECTED: "text-sm font-normal text-red-500",
+        PENDING: "text-sm font-normal text-orange-500",
+      REIMBURSE: "text-sm font-normal text-black",  };
+      return colorMap[status] || "text-gray-500"; // Default to a dark color if the status is not recognized
+    },
     ChangePopUp() {
       if (this.popup == true) {
         this.animate = !this.animate;
