@@ -101,7 +101,7 @@
               <!-- Display Company Name -->
               <div class="lg:col-start-8 lg:col-end-9 col-start-1 col-end-2">
                 <h5 class="text-sm font-semibold text-gray-600">
-                  Company's Name
+                  Company Name
                 </h5>
               </div>
               <div class="lg:col-start-9 col-start-2">
@@ -112,20 +112,18 @@
                   {{ claim.companyName }}
                 </h5>
               </div>
-              <!-- Display Date of Report -->
-              <!-- <div class="lg:col-start-8 lg:col-end-9 col-start-1 col-end-2">
-                <h5 class="text-sm font-semibold text-gray-600">
-                  Date of Report
-                </h5>
+              <!-- Display Cost Center -->
+              <div class="lg:col-start-8 lg:col-end-9 col-start-1 col-end-2">
+                <h5 class="text-sm font-semibold text-gray-600">Cost Center</h5>
               </div>
               <div class="lg:col-start-9 col-start-2">
                 <h5 class="text-sm font-semibold text-gray-600">:</h5>
               </div>
               <div class="lg:col-start-10 col-start-3">
                 <h5 class="text-sm font-semibold text-gray-600">
-                  {{ claim.reportDate }}
+                  {{ claim.costCenter }}
                 </h5>
-              </div> -->
+              </div>
             </template>
           </div>
         </section>
@@ -145,11 +143,11 @@
                     class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
                   >
                     <!-- Table Header -->
-                    <thead class="bg-gray-50 dark:bg-gray-800">
+                    <thead class="bg-slate-200 dark:bg-gray-800 text-gray-900">
                       <tr>
                         <th
                           scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>No</span>
@@ -157,7 +155,7 @@
                         </th>
                         <th
                           scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>Type Of Claim</span>
@@ -167,15 +165,15 @@
                         <th
                           v-if="claims[0].reportType === 'Finance'"
                           scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400"
                         >
-                          <div class="flex items-center gap-x-3">
-                            <span>Destination</span>
+                          <div class="flex items-center gap-x-3 capitalize">
+                            <span>location / purpose </span>
                           </div>
                         </th>
                         <th
                           scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>Date</span>
@@ -183,7 +181,7 @@
                         </th>
                         <th
                           scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>Amount</span>
@@ -191,7 +189,7 @@
                         </th>
                         <th
                           scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>Action</span>
@@ -227,6 +225,9 @@
                           }}</span>
                           <span v-if="claim.VenueE">{{ claim.VenueE }}</span>
                           <span v-if="claim.VenueSR">{{ claim.VenueSR }}</span>
+                          <span v-if="claim.DescriptionOthers">{{
+                            claim.DescriptionOthers
+                          }}</span>
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
@@ -236,6 +237,9 @@
                           <span v-if="claim.dateML">{{ claim.dateML }}</span>
                           <span v-if="claim.dateE">{{ claim.dateE }}</span>
                           <span v-if="claim.dateSR">{{ claim.dateSR }}</span>
+                          <span v-if="claim.dateOthers">{{
+                            claim.dateOthers
+                          }}</span>
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
@@ -245,6 +249,9 @@
                           >
                           <span v-if="claim.AmountRME"
                             >RM {{ claim.AmountRME }}</span
+                          >
+                          <span v-if="claim.AmountRMSR"
+                            >RM {{ claim.AmountRMSR }}</span
                           >
                         </td>
                         <td
@@ -990,14 +997,12 @@
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label
-                  for="typeOfEntertainment"
-                  class="text-gray-700 font-bold mr-2"
+                <label for="nodeName" class="text-gray-700 font-bold mr-2"
                   >Type of Entertainment:</label
                 >
                 <input
                   type="text"
-                  id="typeOfEntertainment"
+                  id="nodeName"
                   v-model="entertainmentDetails.TypeofEntertainmentE"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
@@ -1007,50 +1012,48 @@
                 v-if="!isOtherEntertainment"
                 class="flex justify-between items-center mb-4"
               >
-                <label
-                  for="otherTypeOfEntertainment"
-                  class="text-gray-700 font-bold mr-2"
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Other Type of Entertainment:</label
                 >
                 <input
                   type="text"
-                  id="otherTypeOfEntertainment"
+                  id="nodeParentId"
                   v-model="entertainmentDetails.OtherTypeofEntertainmentE"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="company" class="text-gray-700 font-bold mr-2"
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Company:</label
                 >
                 <input
                   type="text"
-                  id="company"
+                  id="nodeParentId"
                   v-model="entertainmentDetails.CompanyE"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="venue" class="text-gray-700 font-bold mr-2"
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Venue:</label
                 >
                 <input
                   type="text"
-                  id="venue"
+                  id="nodeParentId"
                   v-model="entertainmentDetails.VenueE"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="reference" class="text-gray-700 font-bold mr-2"
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Reference:</label
                 >
                 <input
                   type="text"
-                  id="reference"
+                  id="nodeParentId"
                   v-model="entertainmentDetails.ReferenceE"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
@@ -1233,18 +1236,6 @@
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeName" class="text-gray-700 font-bold mr-2"
-                  >Name of Staff:</label
-                >
-                <input
-                  type="text"
-                  id="nodeName"
-                  v-model="staffRefreshmentDetails.NameofStaffSR"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
-                />
-              </div>
-              <div class="flex justify-between items-center mb-4">
                 <label
                   for="typeOfRefreshment"
                   class="text-gray-700 font-bold mr-2"
@@ -1325,6 +1316,193 @@
                   class="border rounded-md px-4 py-2"
                 />
               </div>
+
+              <hr />
+              <div class="flex justify-center items-center mb-4">
+                <label
+                  for="nodeParentId"
+                  class="text-gray-700 font-bold mr-2 text-2xl"
+                  >Total: RM {{ totalStaffRefreshmentDetails }}</label
+                >
+              </div>
+
+              <!-- Attendees table -->
+              <div class="mb-4">
+                <h2 class="text-xl font-bold">Attendees</h2>
+                <table
+                  class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                >
+                  <thead class="bg-gray-50 dark:bg-gray-800">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>No</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Name</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Staff ID</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Company's Name</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Status</span>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
+                  >
+                    <tr
+                      v-for="(
+                        attendee, index
+                      ) in entertainmentDetails.attendees"
+                      :key="index"
+                    >
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ index + 1 }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ attendee.name }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ attendee.staffId }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ attendee.companyName }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        {{ attendee.status }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="flex justify-end">
+              <button
+                @click="toggleEditMode"
+                class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
+              >
+                {{ isEditMode ? 'Save' : 'Edit' }}
+                <!-- Change button text based on edit mode -->
+              </button>
+              <button
+                @click="deleteForm()"
+                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+              </button>
+              <!-- <button
+                @click="isClickModal = false"
+                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+              >
+                Cancel
+              </button> -->
+            </div>
+          </div>
+
+          <div v-if="selectedClaimType === 'Others'">
+            <div class="flex-1 gap-4 justify-center items-center">
+              <!-- Modal content -->
+              <div class="flex justify-end">
+                <button
+                  v-show="!isEditMode"
+                  @click="isClickModal = false"
+                  class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
+                >
+                  X
+                </button>
+              </div>
+              <h1 class="text-3xl font-bold">Others Form</h1>
+              <hr class="mt-2 mb-4" />
+
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeId" class="text-gray-700 font-bold mr-2"
+                  >Date:</label
+                >
+                <input
+                  type="text"
+                  id="nodeId"
+                  v-model="othersDetails.dateOthers"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="amount" class="text-gray-700 font-bold mr-2"
+                  >Amount (RM):</label
+                >
+                <input
+                  type="text"
+                  id="amount"
+                  v-model="othersDetails.AmountRMOthers"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="desription" class="text-gray-700 font-bold mr-2"
+                  >Description Of Claim:</label
+                >
+                <input
+                  type="text"
+                  id="DescriptionOthers"
+                  v-model="othersDetails.DescriptionOthers"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
             </div>
 
             <hr />
@@ -1332,7 +1510,105 @@
               <label
                 for="nodeParentId"
                 class="text-gray-700 font-bold mr-2 text-2xl"
-                >Total: RM {{ totalStaffRefreshmentDetails }}</label
+                >Total: RM {{ totalOthersDetails }}</label
+              >
+            </div>
+
+            <div class="flex justify-end">
+              <button
+                @click="toggleEditMode"
+                class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
+              >
+                {{ isEditMode ? 'Save' : 'Edit' }}
+                <!-- Change button text based on edit mode -->
+              </button>
+              <button
+                @click="deleteForm()"
+                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+              </button>
+              <!-- <button
+                @click="isClickModal = false"
+                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+              >
+                Cancel
+              </button> -->
+            </div>
+          </div>
+
+          <div v-if="selectedClaimType === 'Others'">
+            <div class="flex-1 gap-4 justify-center items-center">
+              <!-- Modal content -->
+              <div class="flex justify-end">
+                <button
+                  v-show="!isEditMode"
+                  @click="isClickModal = false"
+                  class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
+                >
+                  X
+                </button>
+              </div>
+              <h1 class="text-3xl font-bold">Others Form</h1>
+              <hr class="mt-2 mb-4" />
+
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeId" class="text-gray-700 font-bold mr-2"
+                  >Date:</label
+                >
+                <input
+                  type="text"
+                  id="nodeId"
+                  v-model="othersDetails.dateOthers"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="amount" class="text-gray-700 font-bold mr-2"
+                  >Amount (RM):</label
+                >
+                <input
+                  type="text"
+                  id="amount"
+                  v-model="othersDetails.AmountRMOthers"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="desription" class="text-gray-700 font-bold mr-2"
+                  >Description Of Claim:</label
+                >
+                <input
+                  type="text"
+                  id="DescriptionOthers"
+                  v-model="othersDetails.DescriptionOthers"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+            </div>
+
+            <hr />
+            <div class="flex justify-center items-center mb-4">
+              <label
+                for="nodeParentId"
+                class="text-gray-700 font-bold mr-2 text-2xl"
+                >Total: RM {{ totalOthersDetails }}</label
               >
             </div>
 
@@ -1548,6 +1824,7 @@ export default {
       medicalBillReimbursementDetails: {},
       entertainmentDetails: {},
       staffRefreshmentDetails: {},
+      othersDetails: {},
       handphoneBillReimbursementDetails: {},
       cancel: true,
     };
@@ -1581,11 +1858,17 @@ export default {
     },
 
     isOtherEntertainment() {
-      return this.entertainmentDetails.TypeofEntertainmentE === 'OTHERS';
+      const validTypes = ['BREAKFAST', 'LUNCH', 'DINNER', 'TEA BREAK'];
+      return validTypes.includes(
+        this.entertainmentDetails.TypeofEntertainmentE
+      );
     },
 
     isOtherRefreshment() {
-      return this.staffRefreshmentDetails.TypeofRefreshmentSR === 'OTHERS';
+      const validTypes = ['BREAKFAST', 'LUNCH', 'DINNER', 'TEA BREAK'];
+      return validTypes.includes(
+        this.staffRefreshmentDetails.TypeofRefreshmentSR
+      );
     },
 
     totalOverseasTravellingAmount() {
@@ -1625,6 +1908,12 @@ export default {
       return total;
     },
 
+    totalOthersDetails() {
+      let total = parseFloat(this.othersDetails.AmountRMOthers) || 0;
+      this.totalplusmethod(total);
+      return total;
+    },
+
     totalHandphoneBillReimbursementDetails() {
       let total =
         parseFloat(this.handphoneBillReimbursementDetails.ClaimsAmountHR) || 0;
@@ -1638,6 +1927,7 @@ export default {
           let amount = 0;
           if (claim.AmountRME) amount += parseFloat(claim.AmountRME);
           if (claim.totalRM) amount += parseFloat(claim.totalRM);
+          if (claim.AmountRMSR) amount += parseFloat(claim.AmountRMSR);
           return total + amount;
         }, 0)
         .toFixed(2);
@@ -1716,6 +2006,10 @@ export default {
             this.staffRefreshmentDetails
           );
           break;
+        case 'Others':
+          this.othersDetails = claim;
+          console.log('Others Details:', this.othersDetails);
+          break;
         case 'HandphoneBillReimbursement':
           this.handphoneBillReimbursementDetails = claim;
           console.log(
@@ -1762,6 +2056,9 @@ export default {
             break;
           case 'Staff Refreshment':
             prefix = 'SR';
+            break;
+          case 'Others':
+            prefix = 'OTHERS';
             break;
           case 'Handphone Bill Reimbursement':
             prefix = 'HR';
@@ -1812,6 +2109,9 @@ export default {
             break;
           case 'Staff Refreshment':
             prefix = 'SR';
+            break;
+          case 'Others':
+            prefix = 'OTHERS';
             break;
           case 'Handphone Bill Reimbursement':
             prefix = 'HR';
@@ -2016,6 +2316,40 @@ export default {
                   const response2 = await axiosInstance.post(
                     '/',
                     thisisforstaffrefreshment
+                  );
+                  console.log(`Data sent for ${title} 2:`, response2.data);
+                }
+                break;
+              case 'Others':
+                for (const claim of claimsToSend) {
+                  // Iterate over each claim
+                  // Dummy data for a claim
+                  const thisisforHandphoneBillReimbursement = {
+                    date_event: claim.dateE, // Example date
+                    person_entertained: claim.PersonEntertainedE,
+                    type_of_entertainment: claim.TypeofEntertainmentE,
+                    other_type_of_entertainment:
+                      claim.OtherTypeofEntertainmentE,
+                    company: claim.CompanyE,
+                    venue: claim.VenueE,
+                    reference: claim.ReferenceE,
+                    amount: claim.AmountRME,
+                    reference_number: 'pktm222',
+                    unique_code: this.generateUniqueCode(claim.tabTitle),
+
+                    approver_email: 'approver@example.com',
+                    verifier_email: 'verifier@example.com',
+                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
+                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
+                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
+                    serial_number: this.generateUniqueCodeSN(claim.tabTitle),
+                  };
+                  axiosInstance = axios.create({
+                    baseURL: 'http://localhost:3000/claims/entertainment',
+                  });
+                  const response2 = await axiosInstance.post(
+                    '/',
+                    thisisforHandphoneBillReimbursement
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }

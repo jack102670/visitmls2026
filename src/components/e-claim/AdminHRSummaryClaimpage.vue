@@ -41,7 +41,7 @@
         <div class="flex justify-between items-center my-4 w-full">
           <h1 class="text-blue-900 dark:text-blue-600 font-bold text-4xl">
             Webinars
-            <span v-show="seeMore" class="text-blue-900 dark:text-blue-600"
+            <span class="text-blue-900 dark:text-blue-600"
               >| RM{{ totalAmount }}</span
             >
           </h1>
@@ -74,7 +74,7 @@
         </div>
         <div
           id="claimant-informations"
-          class="grid grid-cols-2 lg:grid-cols-4 gap-2 [&>*:nth-child(even)]:text-right lg:[&>*:nth-child(even)]:text-left"
+          class="grid grid-cols-2 lg:grid-cols-3 gap-2 [&>*:nth-child(even)]:text-right lg:[&>*:nth-child(even)]:text-left"
         >
           <div class="mt-5 h-12">
             <h2 class="font-semibold">Name of Claimaint :</h2>
@@ -99,13 +99,18 @@
             <p class="text-gray-600 dark:text-gray-400">Finance</p>
           </div>
           <div id="toLeft" class="mt-5 h-12">
-            <h2 class="font-semibold">Date of Claim :</h2>
-            <p class="text-gray-600 dark:text-gray-400">20 MAY 2024</p>
+            <h2 class="font-semibold">Report Type :</h2>
+            <p class="text-gray-600 dark:text-gray-400">HR</p>
           </div>
           <div class="mt-5 h-12">
+            <h2 class="font-semibold">Date of Claim :</h2>
+            <p class="text-gray-600 dark:text-gray-400">25 MAY 2024</p>
+          </div>
+          <!-- <div id="toLeft" class="mt-5 h-12">
             <h2 class="font-semibold">Claim for the Month Ended :</h2>
             <p class="text-gray-600 dark:text-gray-400">31 MAY 2024</p>
           </div>
+          -->
         </div>
 
         <!-- Summary -->
