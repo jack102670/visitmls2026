@@ -1588,36 +1588,6 @@ export default {
       return this.staffRefreshmentDetails.TypeofRefreshmentSR === 'OTHERS';
     },
 
-    isPanelClinic() {
-      return (
-        this.medicalBillReimbursementDetails.ClinicSelectionML ===
-        'Mediviron Clinic - Panel'
-      );
-    },
-
-    isOtherEntertainment() {
-      return this.entertainmentDetails.TypeofEntertainmentE === 'OTHERS';
-    },
-
-    isOtherRefreshment() {
-      return this.staffRefreshmentDetails.TypeofRefreshmentSR === 'OTHERS';
-    },
-
-    isPanelClinic() {
-      return (
-        this.medicalBillReimbursementDetails.ClinicSelectionML ===
-        'Mediviron Clinic - Panel'
-      );
-    },
-
-    isOtherEntertainment() {
-      return this.entertainmentDetails.TypeofEntertainmentE === 'OTHERS';
-    },
-
-    isOtherRefreshment() {
-      return this.staffRefreshmentDetails.TypeofRefreshmentSR === 'OTHERS';
-    },
-
     totalOverseasTravellingAmount() {
       let otherExpensesTotal = 0;
       if (
@@ -1927,7 +1897,6 @@ export default {
                     requester_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
 
                     unique_code: this.generateUniqueCode(claim.tabTitle),
-                    reference_number: 'pktm222',
                     reference_number: 'pktm222',
                   };
                   axiosInstance = axios.create({

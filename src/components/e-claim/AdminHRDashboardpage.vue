@@ -94,7 +94,7 @@
                             'bg-green-200 dark:bg-green-500':
                               claim.admin_status ==
                               'APPROVED. WAITING FOR PAYMENT.',
-                            'bg-indigo-200 dark:bg-indigo-500':
+                            'bg-amber-200 dark:bg-amber-500':
                               claim.admin_status ==
                               'VERIFIED. WAITING FOR APPROVAL.',
                             'bg-red-200 dark:bg-red-500':
@@ -104,7 +104,7 @@
                             'text-green-500 dark:text-green-100':
                               claim.admin_status ==
                               'APPROVED. WAITING FOR PAYMENT.',
-                            'text-indigo-500 dark:text-indigo-100':
+                            'text-amber-500 dark:text-amber-100':
                               claim.admin_status ==
                               'VERIFIED. WAITING FOR APPROVAL.',
                             'text-red-500 dark:text-red-100':

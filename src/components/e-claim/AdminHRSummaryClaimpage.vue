@@ -262,12 +262,12 @@
                   :class="{
                     'bg-orange-200 dark:bg-orange-500':
                       statusVerifier == 'PENDING',
-                    'bg-indigo-200 dark:bg-indigo-500':
+                    'bg-amber-200 dark:bg-amber-500':
                       statusVerifier == 'VERIFIED',
                     'bg-red-200 dark:bg-red-500': statusVerifier == 'REJECTED',
                     'text-orange-500 dark:text-orange-100':
                       statusVerifier == 'PENDING',
-                    'text-indigo-500 dark:text-indigo-100':
+                    'text-amber-500 dark:text-amber-100':
                       statusVerifier == 'VERIFIED',
                     'text-red-500 dark:text-red-100':
                       statusVerifier == 'REJECTED',
