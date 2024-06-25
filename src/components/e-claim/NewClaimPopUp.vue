@@ -208,7 +208,7 @@
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="companyName"
-              >Cost Center<span class="text-red-500">*</span></label
+              >Cost Center</label
             >
 
             <div class="flex justify-between">
