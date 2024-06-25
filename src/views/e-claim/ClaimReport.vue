@@ -225,7 +225,9 @@
                           }}</span>
                           <span v-if="claim.VenueE">{{ claim.VenueE }}</span>
                           <span v-if="claim.VenueSR">{{ claim.VenueSR }}</span>
-                          <span v-if="claim.DescriptionOthers">{{ claim.DescriptionOthers }}</span>
+                          <span v-if="claim.DescriptionOthers">{{
+                            claim.DescriptionOthers
+                          }}</span>
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
@@ -235,7 +237,9 @@
                           <span v-if="claim.dateML">{{ claim.dateML }}</span>
                           <span v-if="claim.dateE">{{ claim.dateE }}</span>
                           <span v-if="claim.dateSR">{{ claim.dateSR }}</span>
-                          <span v-if="claim.dateOthers">{{ claim.dateOthers }}</span>
+                          <span v-if="claim.dateOthers">{{
+                            claim.dateOthers
+                          }}</span>
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
@@ -244,7 +248,7 @@
                             >RM {{ claim.totalRM }}</span
                           >
                           <span v-if="claim.AmountRME"
-                            >RM {{ claim.AmountRME }}</span 
+                            >RM {{ claim.AmountRME }}</span
                           >
                           <span v-if="claim.AmountRMSR"
                             >RM {{ claim.AmountRMSR }}</span
@@ -311,7 +315,7 @@
             </div>
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
-              <h1 class="text-3xl font-bold">Local Travelling Form</h1>
+              <h1 class="text-3xl font-bold text-blue-900">Local Travelling Form</h1>
               <hr class="mt-2 mb-4" />
 
               <div class="flex justify-between items-center mb-4">
@@ -526,7 +530,7 @@
             </div>
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
-              <h1 class="text-3xl font-bold">Overseas Travelling Form</h1>
+              <h1 class="text-3xl font-bold text-blue-900">Overseas Travelling Form</h1>
               <hr class="mt-2 mb-4" />
 
               <div class="flex justify-between items-center mb-4">
@@ -799,7 +803,7 @@
                   X
                 </button>
               </div>
-              <h1 class="text-3xl font-bold">
+              <h1 class="text-3xl font-bold text-blue-900">
                 Medical Bill Reimbursement Form
               </h1>
               <hr class="mt-2 mb-4" />
@@ -977,7 +981,7 @@
                   X
                 </button>
               </div>
-              <h1 class="text-3xl font-bold">Entertainment Claim Form</h1>
+              <h1 class="text-3xl font-bold text-blue-900">Entertainment Claim Form</h1>
               <hr class="mt-2 mb-4" />
 
               <div class="flex justify-between items-center mb-4">
@@ -1114,7 +1118,7 @@
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
                         <div class="flex items-center gap-x-3">
-                          <span>Company's Name</span>
+                          <span>Company Name</span>
                         </div>
                       </th>
                       <th
@@ -1216,7 +1220,7 @@
                   X
                 </button>
               </div>
-              <h1 class="text-3xl font-bold">Staff Refreshment Claim Form</h1>
+              <h1 class="text-3xl font-bold text-blue-900">Staff Refreshment Claim Form</h1>
               <hr class="mt-2 mb-4" />
 
               <div class="flex justify-between items-center mb-4">
@@ -1246,7 +1250,6 @@
                 />
               </div>
               <div
-                v-if="!isOtherRefreshment"
                 class="flex justify-between items-center mb-4"
               >
                 <label
@@ -1321,95 +1324,6 @@
                   >Total: RM {{ totalStaffRefreshmentDetails }}</label
                 >
               </div>
-
-              <!-- Attendees table -->
-              <div class="mb-4">
-                <h2 class="text-xl font-bold">Attendees</h2>
-                <table
-                  class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
-                >
-                  <thead class="bg-gray-50 dark:bg-gray-800">
-                    <tr>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        <div class="flex items-center gap-x-3">
-                          <span>No</span>
-                        </div>
-                      </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        <div class="flex items-center gap-x-3">
-                          <span>Name</span>
-                        </div>
-                      </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        <div class="flex items-center gap-x-3">
-                          <span>Staff ID</span>
-                        </div>
-                      </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        <div class="flex items-center gap-x-3">
-                          <span>Company's Name</span>
-                        </div>
-                      </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        <div class="flex items-center gap-x-3">
-                          <span>Status</span>
-                        </div>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody
-                    class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
-                  >
-                    <tr
-                      v-for="(
-                        attendee, index
-                      ) in entertainmentDetails.attendees"
-                      :key="index"
-                    >
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                      >
-                        {{ index + 1 }}
-                      </td>
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                      >
-                        {{ attendee.name }}
-                      </td>
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                      >
-                        {{ attendee.staffId }}
-                      </td>
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                      >
-                        {{ attendee.companyName }}
-                      </td>
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                      >
-                        {{ attendee.status }}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
             </div>
 
             <div class="flex justify-end">
@@ -1460,7 +1374,7 @@
                   X
                 </button>
               </div>
-              <h1 class="text-3xl font-bold">Others Form</h1>
+              <h1 class="text-3xl font-bold text-blue-900">Others Form</h1>
               <hr class="mt-2 mb-4" />
 
               <div class="flex justify-between items-center mb-4">
@@ -1558,7 +1472,7 @@
                   X
                 </button>
               </div>
-              <h1 class="text-3xl font-bold">
+              <h1 class="text-3xl font-bold text-blue-900">
                 Handphone Bill Reimbursement Form
               </h1>
               <hr class="mt-2 mb-4" />
@@ -1759,13 +1673,6 @@ export default {
       const validTypes = ["BREAKFAST", "LUNCH", "DINNER", "TEA BREAK"];
       return validTypes.includes(
         this.entertainmentDetails.TypeofEntertainmentE
-      );
-    },
-
-    isOtherRefreshment() {
-      const validTypes = ["BREAKFAST", "LUNCH", "DINNER", "TEA BREAK"];
-      return validTypes.includes(
-        this.staffRefreshmentDetails.TypeofRefreshmentSR
       );
     },
 
