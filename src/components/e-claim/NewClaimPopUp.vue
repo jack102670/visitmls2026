@@ -429,7 +429,7 @@ export default {
       dropdownVisible3: false,
       search: '',
       dropdownVisible4: false,
-      search: '',
+     
       departments: [],
       Companies: [],
       designations: [],
@@ -595,7 +595,7 @@ export default {
       for (let i = 0; i < names.length; i++) {
         shortform[i] = names[i][0];
       }
-      let datetime = moment(new Date()).format('YYYY/MM/mmss');
+    
       let datetime = moment(new Date()).format('YYYY-MM-mmss');
       let sn =
         shortform.join('').toString() +
