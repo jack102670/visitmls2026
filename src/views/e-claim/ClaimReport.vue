@@ -225,9 +225,6 @@
                           }}</span>
                           <span v-if="claim.VenueE">{{ claim.VenueE }}</span>
                           <span v-if="claim.VenueSR">{{ claim.VenueSR }}</span>
-                          <span v-if="claim.DescriptionOthers">{{
-                            claim.DescriptionOthers
-                          }}</span>
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
@@ -299,7 +296,7 @@
         @click.self="closeClickModal"
       >
         <div
-          class="modal-content bg-white rounded-lg p-8"
+          class="modal-content bg-white rounded-lg p-8 w-full sm:w-3/4 lg:max-w-2xl"
           style="max-height: calc(100vh - 20px); overflow-y: auto"
         >
           <!-- Modal header -->
@@ -1093,7 +1090,7 @@
 
               <!-- Attendees table -->
               <div class="mb-4">
-                <h2 class="text-xl font-bold">Attendees</h2>
+                <h2 class="text-xl font-bold text-gray-700">Attendees</h2>
                 <table
                   class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
                 >
@@ -1336,7 +1333,7 @@
 
               <!-- Staff Involved table -->
               <div class="mb-4">
-                <h2 class="text-xl font-bold">Staff Involved</h2>
+                <h2 class="text-xl font-bold text-gray-700">Staff Involved</h2>
                 <table
                   class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
                 >
@@ -1459,7 +1456,7 @@
                   X
                 </button>
               </div>
-              <h1 class="text-3xl font-bold">Others Form</h1>
+              <h1 class="text-3xl font-bold text-blue-900">Others Form</h1>
               <hr class="mt-2 mb-4" />
 
               <div class="flex justify-between items-center mb-4">
@@ -1488,20 +1485,20 @@
               </div>
               <div class="flex justify-between items-center mb-4">
                 <label for="desription" class="text-gray-700 font-bold mr-2"
-                  >Description Of Claim:</label
+                  >Description:</label
                 >
-                <input
-                  type="text"
+                <textarea
                   id="DescriptionOthers"
                   v-model="othersDetails.DescriptionOthers"
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
-                />
+                  rows="4"
+                ></textarea>
               </div>
             </div>
 
             <hr />
-            <div class="flex justify-center items-center mb-4">
+            <div class="flex justify-end items-center mb-4 mt-4">
               <label
                 for="nodeParentId"
                 class="text-gray-700 font-bold mr-2 text-2xl"
@@ -1761,11 +1758,8 @@ export default {
       );
     },
 
-    isOtherRefreshment() {
-      const validTypes = ["BREAKFAST", "LUNCH", "DINNER", "TEA BREAK"];
-      return validTypes.includes(
-        this.staffRefreshmentDetails.TypeofRefreshmentSR
-      );
+    isOtherStaffRefreshment() {
+      return this.staffRefreshmentDetails.TypeofRefreshmentSR !== "OTHERS";
     },
 
     totalOverseasTravellingAmount() {

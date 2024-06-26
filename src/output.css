@@ -871,6 +871,14 @@ video {
   margin-top: 2.25rem;
 }
 
+.ml-8 {
+  margin-left: 2rem;
+}
+
+.ml-7 {
+  margin-left: 1.75rem;
+}
+
 .block {
   display: block;
 }
@@ -1193,6 +1201,18 @@ video {
   width: 100vw;
 }
 
+.w-9 {
+  width: 2.25rem;
+}
+
+.w-3\/4 {
+  width: 75%;
+}
+
+.w-2\/4 {
+  width: 50%;
+}
+
 .min-w-full {
   min-width: 100%;
 }
@@ -1211,6 +1231,10 @@ video {
 
 .max-w-md {
   max-width: 28rem;
+}
+
+.max-w-3xl {
+  max-width: 48rem;
 }
 
 .flex-1 {
@@ -2103,6 +2127,10 @@ video {
 
 .pt-6 {
   padding-top: 1.5rem;
+}
+
+.pl-8 {
+  padding-left: 2rem;
 }
 
 .text-left {
@@ -3031,8 +3059,24 @@ video {
     height: 5rem;
   }
 
+  .sm\:w-3\/4 {
+    width: 75%;
+  }
+
   .sm\:max-w-xl {
     max-width: 36rem;
+  }
+
+  .sm\:max-w-2xl {
+    max-width: 42rem;
+  }
+
+  .sm\:max-w-lg {
+    max-width: 32rem;
+  }
+
+  .sm\:max-w-md {
+    max-width: 28rem;
   }
 
   .sm\:-rotate-6 {
@@ -3121,6 +3165,10 @@ video {
 
   .md\:w-4\/5 {
     width: 80%;
+  }
+
+  .md\:max-w-xl {
+    max-width: 36rem;
   }
 
   .md\:grid-cols-1 {
@@ -3231,6 +3279,10 @@ video {
     max-width: 24rem;
   }
 
+  .lg\:max-w-2xl {
+    max-width: 42rem;
+  }
+
   .lg\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -3285,6 +3337,14 @@ video {
 
   .xl\:h-24 {
     height: 6rem;
+  }
+
+  .xl\:w-3\/4 {
+    width: 75%;
+  }
+
+  .xl\:max-w-2xl {
+    max-width: 42rem;
   }
 
   .xl\:grid-cols-3 {
