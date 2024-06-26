@@ -35,6 +35,16 @@
           {{ tab.title }} Form
         </h2>
 
+        <section>
+          <div v-if="tab.title === 'Others'" class="mt-4">
+            <h1 class="text-gray-500 text-sm">
+              Note: This form is intended for claiming expenses that do not fall
+              under the Local Travelling, Overseas Travelling with
+              Accommodation, Entertainment, and Staff Refreshment.
+            </h1>
+          </div>
+        </section>
+
         <div
           v-if="
             tab.title !== 'Entertainment' && tab.title !== 'Staff Refreshment'
@@ -154,6 +164,16 @@
                         </div>
                       </template>
 
+                      <template v-else-if="field.type === 'long-text'">
+                        <textarea
+                          v-model="field.value"
+                          :id="field.id"
+                          :placeholder="field.placeholder"
+                          class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                          rows="4"
+                        ></textarea>
+                      </template>
+
                       <template v-else>
                         <input
                           v-model="field.value"
@@ -192,7 +212,7 @@
                   </div>
                 </section>
 
-                <!-- Add Other Expenses Section-->
+                <!-- Add Other Expenses for Overseas Section-->
                 <section>
                   <!-- Add Other Expenses Button-->
                   <div
@@ -398,7 +418,7 @@
                     </table>
                   </div>
                 </section>
-                <!-- End of Add Other Expenses Section -->
+                <!-- End of Add Other Expenses for Overseas Section -->
 
                 <div class="pt-4">
                   <hr class="" />
