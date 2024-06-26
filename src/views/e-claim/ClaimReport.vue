@@ -475,7 +475,7 @@
               </div>
 
               <hr />
-              <div class="flex justify-center items-center mb-4">
+              <div class="flex justify-end items-center mb-4 mt-4">
                 <label
                   for="nodeParentId"
                   class="text-gray-700 font-bold mr-2 text-2xl"
@@ -744,7 +744,7 @@
               </div>
 
               <hr />
-              <div class="flex justify-center items-center mb-4">
+              <div class="flex justify-end items-center mb-4 mt-4">
                 <label
                   for="nodeParentId"
                   class="text-gray-700 font-bold mr-2 text-2xl"
@@ -940,10 +940,13 @@
                   class="border rounded-md px-4 py-2"
                 />
               </div>
+              <div v-if="claimsAmountExceedsLimit" class="text-red-500">
+                {{ claimsAmountErrorMessage }}
+              </div>
             </div>
 
             <hr />
-            <div class="flex justify-center items-center mb-4">
+            <div class="flex justify-end items-center mb-4 mt-4">
               <label
                 for="nodeParentId"
                 class="text-gray-700 font-bold mr-2 text-2xl"
@@ -955,6 +958,7 @@
               <button
                 @click="toggleEditMode"
                 class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
+                :disabled="claimsAmountExceedsLimit"
               >
                 {{ isEditMode ? "Save" : "Edit" }}
                 <!-- Change button text based on edit mode -->
@@ -1073,7 +1077,7 @@
               </div>
 
               <hr />
-              <div class="flex justify-center items-center mb-4">
+              <div class="flex justify-end items-center mb-4 mt-4">
                 <label
                   for="nodeParentId"
                   class="text-gray-700 font-bold mr-2 text-2xl"
@@ -1317,7 +1321,7 @@
               </div>
 
               <hr />
-              <div class="flex justify-center items-center mb-4">
+              <div class="flex justify-end items-center mb-4 mt-4">
                 <label
                   for="nodeParentId"
                   class="text-gray-700 font-bold mr-2 text-2xl"
@@ -1416,7 +1420,7 @@
             </div>
 
             <hr />
-            <div class="flex justify-center items-center mb-4">
+            <div class="flex justify-end items-center mb-4 mt-4">
               <label
                 for="nodeParentId"
                 class="text-gray-700 font-bold mr-2 text-2xl"
@@ -1557,7 +1561,7 @@
               </div>
 
               <hr />
-              <div class="flex justify-center items-center mb-4">
+              <div class="flex justify-end items-center mb-4 mt-4">
                 <label
                   for="nodeParentId"
                   class="text-gray-700 font-bold mr-2 text-2xl"
@@ -1705,6 +1709,21 @@ export default {
         parseFloat(this.medicalBillReimbursementDetails.ClaimsAmountML) || 0;
       this.totalplusmethod(total);
       return total;
+    },
+
+    claimsAmountExceedsLimit() {
+      const category = this.medicalBillReimbursementDetails.MedicalCategoryML;
+      const amount = parseFloat(this.medicalBillReimbursementDetails.ClaimsAmountML) || 0;
+      if (category === "Medical Check-Up" && amount > 70) return true;
+      if (category === "Dental" && amount > 200) return true;
+      return false;
+    },
+
+    claimsAmountErrorMessage() {
+      const category = this.medicalBillReimbursementDetails.MedicalCategoryML;
+      if (category === "Medical Check-Up") return "The maximum claim amount for Medical Check-Up is RM 70.";
+      if (category === "Dental") return "The maximum claim amount for Dental is RM 200.";
+      return "";
     },
 
     totalStaffRefreshmentDetails() {

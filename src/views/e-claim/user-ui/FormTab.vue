@@ -181,7 +181,7 @@
                     </h1>
                     <h1 class="text-gray-500 text-sm">
                       <span class="text-red-500">*</span
-                      ><span class="text-red-500">*</span> Medical Check Up: The
+                      ><span class="text-red-500">*</span> Medical Check-Up: The
                       limited amount for Medical Check Up is RM70 per visit and
                       RM700 per year.
                     </h1>
@@ -801,8 +801,8 @@ import "filepond/dist/filepond.min.css";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-import { bankOptions } from "@/javascript/HROptions.js";
-import { monthOptions } from "@/javascript/HROptions.js";
+import { bankOptions } from "@/javascript/eClaimOptions.js";
+import { monthOptions } from "@/javascript/eClaimOptions.js";
 
 // Create component
 const FilePond = vueFilePond(
@@ -1273,6 +1273,7 @@ export default {
               label: "Claims Amount(RM)",
               type: "number",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1340,6 +1341,7 @@ export default {
                 "application/vnd.ms-excel",
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
+              required: true,
               gridClass: "sm:col-span-1",
             },
           ],
