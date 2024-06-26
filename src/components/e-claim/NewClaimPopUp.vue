@@ -658,8 +658,7 @@ export default {
         this.$emit('close');
         this.active = 0;
         // close the create new claim pop up
-        this.$emit('close');
-        this.active = 0;
+  
       }
     },
   },
