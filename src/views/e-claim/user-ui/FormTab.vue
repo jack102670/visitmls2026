@@ -92,7 +92,6 @@
                           </option>
                         </select>
                       </template>
-                      
 
                       <template v-else-if="field.type === 'year'">
                         <select
@@ -571,7 +570,7 @@
                       <label
                         for="companyName"
                         class="block text-sm font-medium text-gray-700"
-                        >Company’s Name</label
+                        >Company Name</label
                       >
                       <select
                         v-model="selectedCompanyName"
@@ -689,7 +688,7 @@
                               class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                             >
                               <div class="flex items-center gap-x-3">
-                                <span>Company's Name</span>
+                                <span>Company Name</span>
                               </div>
                             </th>
                             <th
@@ -790,6 +789,312 @@
           </div>
         </div>
         <!-- End of Entertainment tab-->
+
+        <!-- Staff Refreshment tab -->
+        <div v-if="tab.title === 'Staff Refreshment'">
+          <div class="tabs">
+            <button
+              v-for="(subTab, subIndex) in staffRefreshmentTabs"
+              :key="subIndex"
+              @click="activeSubTab = subIndex"
+              :class="{
+                'bg-gray-300': activeSubTab === subIndex,
+                'hover:bg-gray-200': activeSubTab !== subIndex,
+              }"
+              class="px-4 py-2 mr-2 rounded-sm focus:outline-none border border-gray-300"
+            >
+              {{ subTab.title }}
+              <span v-if="subTab.title === 'Staff Involved'"
+                >({{ staffInvolved.length }})</span
+              >
+            </button>
+          </div>
+
+          <div
+            v-for="(subTab, subIndex) in staffRefreshmentTabs"
+            :key="subIndex"
+            v-show="activeSubTab === subIndex"
+          >
+            <div class="pt-4">
+              <hr />
+              <div class="m-2">
+                <form @submit.prevent="submitForm3(subTab)">
+                  <div
+                    v-for="(field, fieldIndex) in subTab.fields"
+                    :key="fieldIndex"
+                    :class="[
+                      'grid',
+                      'grid-cols-1',
+                      subTab.gridLayout || 'sm:grid-cols-2',
+                      field.gridClass,
+                    ]"
+                  >
+                    <template
+                      v-if="
+                        field.id !== 'OtherTypeofStaffRefreshmentSR' ||
+                        isOtherStaffRefreshment
+                      "
+                    >
+                      <label
+                        :for="field.id"
+                        class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
+                      >
+                        {{ field.label }}
+                        <span v-if="field.required" style="color: red">*</span>
+                      </label>
+
+                      <template v-if="field.type === 'select'">
+                        <select
+                          v-model="field.value"
+                          :id="field.id"
+                          class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                        >
+                          <option
+                            v-for="(option, optionIndex) in field.options"
+                            :key="optionIndex"
+                            :value="option.value"
+                          >
+                            {{ option.label }}
+                          </option>
+                        </select>
+                      </template>
+
+                      <template v-else-if="field.type === 'file'">
+                        <div class="pt-3">
+                          <FilePond
+                            ref="pond"
+                            name="file"
+                            :allow-multiple="field.allowMultiple"
+                            :accepted-file-types="field.acceptedFileTypes"
+                            :max-file-size="field.maxFileSize"
+                            @addfile="handleAddFile(field)"
+                            @removefile="handleRemoveFile(field)"
+                          />
+                        </div>
+                      </template>
+                      <template v-else>
+                        <input
+                          v-model="field.value"
+                          :id="field.id"
+                          :type="field.type"
+                          :placeholder="field.placeholder"
+                          :step="field.type === 'number' ? '0.01' : undefined"
+                          class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                        />
+                      </template>
+                    </template>
+                  </div>
+
+                  <div v-if="subTab.title !== 'Staff Involved'" class="pt-4">
+                    <hr />
+                    <div class="mt-4">
+                      <div class="grid grid-cols-1 sm:grid-cols-2">
+                        <label
+                          class="block text-gray-700 text-xl font-bold mb-2"
+                          >Total :</label
+                        >
+                        <div class="block text-gray-700 text-xl font-bold mb-2">
+                          RM {{ calculateTotal(subTab) }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div v-if="subTab.title === 'Staff Involved'" class="mt-4">
+                    <div class="mb-4">
+                      <label
+                        for="companyName"
+                        class="block text-sm font-medium text-gray-700"
+                        >Company Name</label
+                      >
+                      <select
+                        v-model="selectedCompanyName"
+                        required
+                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                      >
+                        <option
+                          v-for="company in pktCompanies"
+                          :key="company"
+                          :value="company"
+                        >
+                          {{ company }}
+                        </option>
+                      </select>
+                    </div>
+                    <button
+                      @click="showModal = true"
+                      class="px-4 py-2 bg-blue-500 text-white rounded"
+                    >
+                      Add Staff
+                    </button>
+
+                    <!-- Modal Form -->
+                    <div
+                      v-if="showModal"
+                      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+                    >
+                      <div class="bg-white p-6 rounded-lg w-80">
+                        <h3 class="text-lg font-medium mb-4">Add Staff</h3>
+                        <div class="mb-4">
+                          <label
+                            for="name"
+                            class="block text-sm font-medium text-gray-700"
+                            >Name</label
+                          >
+                          <input
+                            type="text"
+                            v-model="modalForm.name"
+                            required
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                          />
+                        </div>
+                        <div class="mb-4">
+                          <label
+                            for="staffId"
+                            class="block text-sm font-medium text-gray-700"
+                            >Staff ID</label
+                          >
+                          <input
+                            type="text"
+                            v-model="modalForm.staffId"
+                            required
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                          />
+                        </div>
+                        <div class="flex justify-end">
+                          <button
+                            @click="addStaff"
+                            class="px-4 py-2 bg-blue-500 text-white rounded mr-2"
+                          >
+                            Save
+                          </button>
+                          <button
+                            @click="showModal = false"
+                            class="px-4 py-2 bg-gray-300 text-black rounded"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Staff Table -->
+                    <div class="mt-4">
+                      <table
+                        class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                      >
+                        <thead class="bg-gray-50 dark:bg-gray-800">
+                          <tr>
+                            <th
+                              scope="col"
+                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            >
+                              <div class="flex items-center gap-x-3">
+                                <span>Name</span>
+                              </div>
+                            </th>
+                            <th
+                              scope="col"
+                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            >
+                              <div class="flex items-center gap-x-3">
+                                <span>Staff ID</span>
+                              </div>
+                            </th>
+                            <th
+                              scope="col"
+                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            >
+                              <div class="flex items-center gap-x-3">
+                                <span>Company Name</span>
+                              </div>
+                            </th>
+                            <th
+                              scope="col"
+                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            >
+                              <div class="flex items-center gap-x-3">
+                                <span>Action</span>
+                              </div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody
+                          class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
+                        >
+                          <tr
+                            v-for="(staff, index) in staffInvolved"
+                            :key="index"
+                          >
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
+                              {{ staff.name }}
+                            </td>
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
+                              {{ staff.staffId || "-" }}
+                            </td>
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
+                              {{ staff.companyName }}
+                            </td>
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
+                              <button
+                                @click="removeStaff(index)"
+                                class="text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke-width="1.5"
+                                  stroke="currentColor"
+                                  class="w-5 h-5"
+                                >
+                                  <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M4 7h16"
+                                  />
+                                </svg>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="mt-4 mr-6 flex flex-row-reverse">
+                    <div class="flex items-center justify-between">
+                      <button
+                        v-if="subTab.title === 'Details'"
+                        type="button"
+                        @click="nextTab"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      >
+                        Next
+                      </button>
+                      <button
+                        v-else-if="subTab.title === 'Staff Involved'"
+                        type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End of Staff Refreshment tab -->
       </div>
     </div>
   </div>
@@ -803,6 +1108,8 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import { bankOptions } from "@/javascript/eClaimOptions.js";
 import { monthOptions } from "@/javascript/eClaimOptions.js";
+import { refOptions } from "@/javascript/eClaimOptions.js";
+import { TypeOptions } from "@/javascript/eClaimOptions.js";
 
 // Create component
 const FilePond = vueFilePond(
@@ -846,6 +1153,7 @@ export default {
         companyName: "",
       },
       attendees: [],
+      staffInvolved: [],
       tabs: [
         {
           form: "HR",
@@ -1366,13 +1674,7 @@ export default {
               type: "select",
               value: "",
               required: true,
-              options: [
-                { label: "BREAKFAST", value: "BREAKFAST" },
-                { label: "LUNCH", value: "LUNCH" },
-                { label: "DINNER", value: "DINNER" },
-                { label: "TEA BREAK", value: "TEA BREAK" },
-                { label: "OTHERS", value: "OTHERS" },
-              ],
+              options: TypeOptions,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1406,23 +1708,7 @@ export default {
               type: "select",
               value: "",
               required: true,
-              options: [
-                {
-                  label: "ENTERTAINMENT-CLIENT(EXISTING)",
-                  value: "ENTERTAINMENT-CLIENT(EXISTING)",
-                },
-                {
-                  label: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)",
-                  value: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)",
-                },
-                {
-                  label: "ENTERTAINMENT-NON TRADE",
-                  value: "ENTERTAINMENT-NON TRADE",
-                },
-                { label: "GIFT TO CLIENT", value: "GIFT TO CLIENT" },
-                { label: "GIFT TO OTHERS", value: "GIFT TO OTHERS" },
-                { label: "MEAL FOR STAFF", value: "MEAL FOR STAFF" },
-              ],
+              options: refOptions,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1454,7 +1740,94 @@ export default {
         },
         {
           title: "Attendees",
-          attendees: [],
+          fields: [],
+        },
+      ],
+      staffRefreshmentTabs: [
+        {
+          title: "Details",
+          gridLayout: "grid-cols-3",
+          fields: [
+            {
+              id: "dateSR",
+              label: "Date",
+              type: "date",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "TypeofRefreshmentSR",
+              label: "Type of Refreshment",
+              type: "select",
+              value: "",
+              required: true,
+              options: TypeOptions,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "OtherTypeofStaffRefreshmentSR",
+              label: "Other Type of Staff Refreshment",
+              type: "text",
+              value: "",
+              placeholder: "Specify other type",
+              gridClass: "sm:col-span-2",
+              hidden: true,
+            },
+            {
+              id: "CompanySR",
+              label: "Company",
+              type: "text",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "VenueSR",
+              label: "Venue",
+              type: "text",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "ReferenceSR",
+              label: "Reference",
+              type: "select",
+              value: "",
+              required: true,
+              options: refOptions,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "AmountRMSR",
+              label: "Amount(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "UploadSR",
+              label: "Attachment(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
+              value: [],
+              required: true,
+              allowMultiple: true,
+              server: null,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
+            },
+          ],
+        },
+        {
+          title: "Staff Involved",
           fields: [],
         },
       ],
@@ -1495,6 +1868,18 @@ export default {
         typeOfEntertainmentField && typeOfEntertainmentField.value === "OTHERS"
       );
     },
+    isOtherStaffRefreshment() {
+      const staffRefreshmentTab = this.staffRefreshmentTabs.find(
+        (tab) => tab.title === "Details"
+      );
+      if (!staffRefreshmentTab) return false;
+      const TypeofRefreshmentField = staffRefreshmentTab.fields.find(
+        (field) => field.id === "TypeofRefreshmentSR"
+      );
+      return (
+        TypeofRefreshmentField && TypeofRefreshmentField.value === "OTHERS"
+      );
+    },
   },
 
   watch: {
@@ -1527,8 +1912,14 @@ export default {
             if (typeOfEntertainmentField) {
               this.updateFieldVisibility4(typeOfEntertainmentField.value);
             }
+            const TypeofRefreshmentField = tab.fields.find(
+              (field) => field.id === "TypeofRefreshmentSR"
+            );
+            if (TypeofRefreshmentField) {
+              this.updateFieldVisibility3(TypeofRefreshmentField.value);
+            }
           }
-           if (tab.title === "Medical Bill Reimbursement") {
+          if (tab.title === "Medical Bill Reimbursement") {
             const medicalCategoryField = tab.fields.find(
               (field) => field.id === "MedicalCategoryML"
             );
@@ -1538,28 +1929,34 @@ export default {
 
             if (medicalCategoryField && claimsAmountField) {
               // Watch for changes in MedicalCategoryML
-              this.$watch(() => medicalCategoryField.value, (newValue) => {
-                if (newValue === "Medical Check-Up") {
-                  claimsAmountField.value = this.LIMIT_MEDICAL_CHECKUP;
-                } else if (newValue === "Dental") {
-                  claimsAmountField.value = this.LIMIT_DENTAL;
+              this.$watch(
+                () => medicalCategoryField.value,
+                (newValue) => {
+                  if (newValue === "Medical Check-Up") {
+                    claimsAmountField.value = this.LIMIT_MEDICAL_CHECKUP;
+                  } else if (newValue === "Dental") {
+                    claimsAmountField.value = this.LIMIT_DENTAL;
+                  }
                 }
-              });
+              );
 
               // Watch for changes in ClaimsAmountML
-              this.$watch(() => claimsAmountField.value, (newValue) => {
-                if (
-                  medicalCategoryField.value === "Medical Check-Up" &&
-                  parseFloat(newValue) > this.LIMIT_MEDICAL_CHECKUP
-                ) {
-                  claimsAmountField.value = this.LIMIT_MEDICAL_CHECKUP;
-                } else if (
-                  medicalCategoryField.value === "Dental" &&
-                  parseFloat(newValue) > this.LIMIT_DENTAL
-                ) {
-                  claimsAmountField.value = this.LIMIT_DENTAL;
+              this.$watch(
+                () => claimsAmountField.value,
+                (newValue) => {
+                  if (
+                    medicalCategoryField.value === "Medical Check-Up" &&
+                    parseFloat(newValue) > this.LIMIT_MEDICAL_CHECKUP
+                  ) {
+                    claimsAmountField.value = this.LIMIT_MEDICAL_CHECKUP;
+                  } else if (
+                    medicalCategoryField.value === "Dental" &&
+                    parseFloat(newValue) > this.LIMIT_DENTAL
+                  ) {
+                    claimsAmountField.value = this.LIMIT_DENTAL;
+                  }
                 }
-              });
+              );
             }
           }
         });
@@ -1664,6 +2061,19 @@ export default {
       }
     },
 
+    updateFieldVisibility3(staffRefreshmentValue) {
+      const staffRefreshmentTab = this.staffRefreshmentTabs.find(
+        (tab) => tab.title === "Details"
+      );
+      if (!staffRefreshmentTab) return;
+      const otherTypeField2 = staffRefreshmentTab.fields.find(
+        (field) => field.id === "OtherTypeofStaffRefreshmentSR"
+      );
+      if (!otherTypeField2) return;
+
+      otherTypeField2.hidden = staffRefreshmentValue !== "OTHERS";
+    },
+
     updateFieldVisibility4(entertainmentValue) {
       const entertainmentTab = this.entertainmentTabs.find(
         (tab) => tab.title === "Details"
@@ -1731,6 +2141,24 @@ export default {
 
     removeAttendee(index) {
       this.attendees.splice(index, 1);
+    },
+
+    addStaff() {
+      const { name, staffId } = this.modalForm;
+      if (this.modalForm.name && this.modalForm.staffId) {
+        this.staffInvolved.push({
+          name,
+          staffId,
+          companyName: this.selectedCompanyName,
+        });
+      }
+      this.showModal = false;
+      this.modalForm.name = "";
+      this.modalForm.staffId = "";
+    },
+
+    removeStaff(index) {
+      this.staffInvolved.splice(index, 1);
     },
 
     calculateTotal(tab) {
@@ -1819,6 +2247,25 @@ export default {
         formattedData["attendees"] = [...tab.attendees];
       });
       formattedData["tabTitle"] = "Entertainment";
+      this.$emit("formSubmitted", formattedData);
+      console.log("Formatted Form Data:", formattedData);
+    },
+
+    submitForm3() {
+      const formattedData = {};
+      this.staffRefreshmentTabs.forEach((tab) => {
+        tab.fields.forEach((field) => {
+          if (field.id === "dateSR") {
+            formattedData[field.id] = this.formatDate(field.value);
+          } else {
+            formattedData[field.id] = field.value;
+          }
+        });
+
+        tab.staffInvolved = [...this.staffInvolved];
+        formattedData["staffInvolved"] = [...tab.staffInvolved];
+      });
+      formattedData["tabTitle"] = "Staff Refreshment";
       this.$emit("formSubmitted", formattedData);
       console.log("Formatted Form Data:", formattedData);
     },

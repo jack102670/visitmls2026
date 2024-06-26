@@ -51,3 +51,11 @@ export const refOptions = [
   { label: "GIFT TO OTHERS", value: "GIFT TO OTHERS" },
   { label: "MEAL FOR STAFF", value: "MEAL FOR STAFF" },
 ];
+
+export const TypeOptions = [
+  { label: "BREAKFAST", value: "BREAKFAST" },
+  { label: "LUNCH", value: "LUNCH" },
+  { label: "DINNER", value: "DINNER" },
+  { label: "TEA BREAK", value: "TEA BREAK" },
+  { label: "OTHERS", value: "OTHERS" },
+];
