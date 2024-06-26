@@ -208,7 +208,7 @@
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="companyName"
-              >Cost Center<span class="text-red-500">*</span></label
+              >Cost Center</label
             >
 
             <div class="flex justify-between">
@@ -319,7 +319,6 @@
                 </div>
               </div>
             </div>
-            
           </div>
           <!-- <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-3"> -->
           <!-- <div>
@@ -375,18 +374,19 @@
         </div> -->
       </form>
       <h1 class="text-red-500 text-sm">
-        Note : Claims made in the first week of the month will be processed within that same month. Claims made after the first week will be processed in the following month.
+        Note : Claims made in the first week of the month will be processed
+        within that same month. Claims made after the first week will be
+        processed in the following month.
       </h1>
       <h1 class="text-gray-500 text-sm">
         <span class="text-red-500">*</span
-        ><span class="text-red-500">*</span> HR: Medical Bill and
-        Handphone Bill Reimbursement
+        ><span class="text-red-500">*</span> HR: Medical Bill and Handphone Bill
+        Reimbursement
       </h1>
       <h1 class="text-gray-500 text-sm">
         <span class="text-red-500">*</span
-        ><span class="text-red-500">*</span> Finance: Local Travelling,
-        Overseas Travelling With Accommodation, Entertainment and Staff
-        Refreshment
+        ><span class="text-red-500">*</span> Finance: Local Travelling, Overseas
+        Travelling With Accommodation, Entertainment and Staff Refreshment
       </h1>
 
       <!-- button -->
@@ -414,12 +414,12 @@
   </div>
 </template>
 <script>
-import moment from "moment";
-import { formStore } from "../../views/store.js"; // Import your form store
-import { store } from "../../views/store.js";
+import moment from 'moment';
+import { formStore } from '../../views/store.js'; // Import your form store
+import { store } from '../../views/store.js';
 // import axios from 'axios';
 export default {
-  emits: ["close"],
+  emits: ['close'],
   data() {
     return {
       showHRMessage: false,
@@ -427,8 +427,9 @@ export default {
       dropdownVisible: false,
       dropdownVisible2: false,
       dropdownVisible3: false,
+      search: '',
       dropdownVisible4: false,
-      search: "",
+     
       departments: [],
       Companies: [],
       designations: [],
@@ -449,23 +450,21 @@ export default {
         memo: formStore.formData.memo,
         uniqueCode: formStore.formData.uniqueCode,
       },
-      branch: "", // Add the missing branch property
+      branch: '', // Add the missing branch property
       userDetails: {},
     };
   },
   watch: {
-    'formData.reportName': function(newVal) {
+    'formData.reportName': function (newVal) {
       this.formData.reportName = this.capitalizeWords(newVal);
     },
 
     // this is for full capital
-    'formData.designation': function(newVal) {
+    'formData.designation': function (newVal) {
       this.formData.designation = newVal.toUpperCase();
-    }
+    },
   },
   computed: {
-
-
     filteredDesignation() {
       return this.designations.filter((designation) => {
         return designation.designation
@@ -514,7 +513,7 @@ export default {
 
   methods: {
     capitalizeWords(str) {
-      return str.replace(/\b\w/g, char => char.toUpperCase());
+      return str.replace(/\b\w/g, (char) => char.toUpperCase());
     },
     toggleDropdown() {
       this.dropdownVisible = !this.dropdownVisible;
@@ -547,14 +546,14 @@ export default {
     async fetchDesignations() {
       try {
         const response = await fetch(
-          "http://172.28.28.91:97/api/User/GetDesignation"
+          'http://172.28.28.91:97/api/User/GetDesignation'
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
         this.designations = data.result;
-        console.log(this.designations, "designation");
+        console.log(this.designations, 'designation');
       } catch (error) {
         console.error(`Error fetching departments: ${error}`);
       }
@@ -562,14 +561,14 @@ export default {
     async fetchCompany() {
       try {
         const response = await fetch(
-          "http://172.28.28.91:97/api/User/GetCompany"
+          'http://172.28.28.91:97/api/User/GetCompany'
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
         this.Companies = data.result;
-        console.log(this.Companies, "company");
+        console.log(this.Companies, 'company');
       } catch (error) {
         console.error(`Error fetching departments: ${error}`);
       }
@@ -577,7 +576,7 @@ export default {
     async fetchDepartments() {
       try {
         const response = await fetch(
-          "http://172.28.28.91:97/api/User/GetDepartment"
+          'http://172.28.28.91:97/api/User/GetDepartment'
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -590,18 +589,22 @@ export default {
       }
     },
     generateSerialNumber() {
-      let names = this.formData.reportName.split(" ");
+      let names = this.formData.reportName.split(' ');
       let shortform = [];
 
       for (let i = 0; i < names.length; i++) {
         shortform[i] = names[i][0];
       }
-      let datetime = moment(new Date()).format("YYYY-MM-mmss");
+    
+      let datetime = moment(new Date()).format('YYYY-MM-mmss');
       let sn =
-        shortform.join("").toString() +
-        "-" +
+        shortform.join('').toString() +
+        '/' +
+        shortform.join('').toString() +
+        '-' +
         this.formData.reportType +
-        "-" +
+        '/' +
+        '-' +
         datetime;
       console.log(sn);
       this.formData.uniqueCode = sn;
@@ -619,8 +622,8 @@ export default {
         // Log the form data before navigation
         console.log('Form submitted', formStore.getFormData());
         // Log the form data before navigation
-        console.log("Form submitted", formStore.getFormData());
-        this.$router.push({ name: "ClaimReport" });
+        console.log('Form submitted', formStore.getFormData());
+        this.$router.push({ name: 'ClaimReport' });
 
         // Send API request using axios
         // const apiData = {
@@ -648,13 +651,15 @@ export default {
 
         this.active = 0;
       }
-        // this.active = 0;
-     
+      // this.active = 0;
+
       if (this.active < 0) {
         // close the create new claim pop up
         this.$emit('close');
         this.active = 0;
- 
+        // close the create new claim pop up
+        this.$emit('close');
+        this.active = 0;
       }
     },
   },

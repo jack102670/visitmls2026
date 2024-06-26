@@ -40,6 +40,7 @@ import AdminDashboardpage from '../components/e-claim/AdminDashboardpage.vue';
 import AdminHRDashboardpage from '../components/e-claim/AdminHRDashboardpage.vue';
 import Homepage from '../views/homepage.vue';
 import verified from '../views/e-claim/verifiedpage.vue';
+import AssignChecker from '../components/e-claim/AssignChecker.vue';
 const routes = [
   {
     path: '/verified',
@@ -124,6 +125,14 @@ const routes = [
     name: 'AdminHRDashboardpage',
     components: {
       default: AdminHRDashboardpage,
+      Sidebar: Newsidebar,
+    },
+  },
+  {
+    path: '/assignchecker',
+    name: 'AssignChecker',
+    components: {
+      default: AssignChecker,
       Sidebar: Newsidebar,
     },
   },

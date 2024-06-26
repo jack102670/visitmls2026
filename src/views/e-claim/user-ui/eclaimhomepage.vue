@@ -67,30 +67,30 @@
                   >
                     <thead class="bg-gray-50 dark:bg-gray-800">
                       <tr>
-                        <th
+                        <!-- <th
                           scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>Branch</span>
                           </div>
-                        </th>
+                        </th> -->
                         <th
                           scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
-                            <span>Type Of Request</span>
+                            <span>Report Name</span>
                           </div>
                         </th>
-                        <th
+                        <!-- <th
                           scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
                           <div class="flex items-center gap-x-3">
                             <span>Requester</span>
                           </div>
-                        </th>
+                        </th> -->
                         <th
                           scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
@@ -134,49 +134,72 @@
                     <tbody
                       class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
                     >
-                    <tr v-for="(data, index) in dummyData" :key="index">
-        <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-          <div class="inline-flex items-center gap-x-3">
-            <div class="flex items-center gap-x-2">
-              <div>
-                <h2 class="font-medium text-gray-500 dark:text-gray-300">
-                  {{ data.location }}
-                </h2>
-              </div>
-            </div>
-          </div>
-        </td>
-        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-          <div class="inline-flex items-center gap-x-3">
-            <div class="flex items-center gap-x-2">
-              <div>
-                <!-- Conditionally display 'Badge Request' if typeofrequest includes 'br' -->
-       
-              </div>
-            </div>
-          </div>
-          {{ data.activity }}
-        </td>
-        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-          {{ data.name }}
-        </td>
-        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-          {{ data.id }}
-        </td>
-        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-          {{ data.startDate }}
-        </td>
-        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-          {{ data.endDate }}
-        </td>
-        <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-          <div :class="getStatusContainerClass(data.adminStatus)">
-            <span :class="getStatusDotClass(data.adminStatus)"></span>
-            <h2 :class="getStatusTextClass(data.adminStatus)">
-              {{ data.adminStatus === "" ? "OPEN" : data.adminStatus }}
-            </h2>
-          </div>
-        </td>
+                      <tr v-for="(data, index) in requests" :key="index">
+                        <!-- <td
+                          class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                        >
+                          <div class="inline-flex items-center gap-x-3">
+                            <div class="flex items-center gap-x-2">
+                              <div>
+                                <h2
+                                  class="font-medium text-gray-500 dark:text-gray-300"
+                                >
+                                  {{ data.location }}
+                                </h2>
+                              </div>
+                            </div>
+                          </div>
+                        </td> -->
+                        <!-- <td
+                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                        >
+                          <div class="inline-flex items-center gap-x-3">
+                            <div class="flex items-center gap-x-2">
+                              <div>
+                               
+                              </div>
+                            </div>
+                          </div>
+                          {{ data.activity }}
+                        </td> -->
+                        <td
+                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                        >
+                          {{ data.report_name }}
+                        </td>
+                        <td
+                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                        >
+                          {{ data.reference_number }}
+                        </td>
+                        <td
+                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                        >
+                          {{ data.date_requested }}
+                        </td>
+                        <td
+                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                        >
+                          {{ data.endDate }}
+                        </td>
+                        <td
+                          class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                        >
+                          <div
+                            :class="getStatusContainerClass(data.admin_status)"
+                          >
+                            <span
+                              :class="getStatusDotClass(data.admin_status)"
+                            ></span>
+                            <h2 :class="getStatusTextClass(data.admin_status)">
+                              {{
+                                data.admin_status === ""
+                                  ? "OPEN"
+                                  : data.admin_status
+                              }}
+                            </h2>
+                          </div>
+                        </td>
 
                         <td class="px-4 py-4 ml text-sm whitespace-nowrap">
                           <div class="flex items-center gap-x-6">
@@ -267,7 +290,7 @@
 </template>
 
 <script>
-import { store } from '../../store.js';
+import { store } from "../../store.js";
 // import CreateNewClaimPopUp from '@/components/e-claim/CreateNewClaimPopUp.vue';
 import NewClaimPopUp from "@/components/e-claim/NewClaimPopUp.vue";
 
@@ -279,6 +302,8 @@ export default {
   name: "homepageeclaiM",
   data() {
     return {
+      userDetails: {},
+      requests: [],
       dummyData: [
         {
           location: "HQ",
@@ -316,6 +341,27 @@ export default {
     };
   },
   methods: {
+    async fetchAllRequests() {
+      const userId = store.getSession().userDetails.userId;
+      console.log("userId", userId);
+      if (!userId) {
+        console.error("UserId is not set.");
+        return;
+      }
+      try {
+        const response = await fetch(
+          `http://172.28.28.91:86/api/User/GetAllRequests/${userId}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch requests");
+        }
+        const data = await response.json();
+        this.requests = data.result; // Update your data property with the fetched data
+        console.log("Fetched requests:", this.requests);
+      } catch (error) {
+        console.error("Error fetching requests:", error);
+      }
+    },
     getStatusContainerClass(status) {
       const colorMap = {
         RESUBMISSION:
@@ -329,11 +375,11 @@ export default {
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800",
         REJECTED:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800",
-          PENDING:
+        PENDING:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800",
-          REIMBURSE:
+        REIMBURSE:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-white-100/60 dark:bg-gray-800",
-        };
+      };
       return colorMap[status] || "bg-gray-800"; // Default to a dark color if the status is not recognized
     },
     getStatusDotClass(status) {
@@ -344,8 +390,9 @@ export default {
         COMPLETED: "h-1.5 w-1.5 rounded-full bg-blue-500",
         REJECTED: "h-1.5 w-1.5 rounded-full bg-red-500",
         PENDING: "h-1.5 w-1.5 rounded-full bg-orange-500",
-    
-      REIMBURSE: "h-1.5 w-1.5 rounded-full bg-black",   };
+
+        REIMBURSE: "h-1.5 w-1.5 rounded-full bg-black",
+      };
       return colorMap[status] || "h-1.5 w-1.5 rounded-full bg-gray-700"; // Default to a dark color if the status is not recognized
     },
     getStatusTextClass(status) {
@@ -356,7 +403,8 @@ export default {
         COMPLETED: "text-sm font-normal text-blue-500",
         REJECTED: "text-sm font-normal text-red-500",
         PENDING: "text-sm font-normal text-orange-500",
-      REIMBURSE: "text-sm font-normal text-black",  };
+        REIMBURSE: "text-sm font-normal text-black",
+      };
       return colorMap[status] || "text-gray-500"; // Default to a dark color if the status is not recognized
     },
     ChangePopUp() {
@@ -374,7 +422,9 @@ export default {
   },
   mounted() {
     // Sidebar close or open
-    store.setControlView('eclaim');
+    this.fetchAllRequests();
+    store.setControlView("eclaim");
+
     let openOrNot = localStorage.getItem("openOrNot");
     const element = document.querySelector("main");
     if (element && openOrNot == "false") {

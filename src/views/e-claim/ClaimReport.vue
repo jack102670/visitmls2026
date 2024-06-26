@@ -490,7 +490,7 @@
                 @click="toggleEditMode"
                 class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
               >
-                {{ isEditMode ? "Save" : "Edit" }}
+                {{ isEditMode ? 'Save' : 'Edit' }}
                 <!-- Change button text based on edit mode -->
               </button>
 
@@ -759,7 +759,7 @@
                 @click="toggleEditMode"
                 class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
               >
-                {{ isEditMode ? "Save" : "Edit" }}
+                {{ isEditMode ? 'Save' : 'Edit' }}
                 <!-- Change button text based on edit mode -->
               </button>
 
@@ -960,7 +960,7 @@
                 class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
                 :disabled="claimsAmountExceedsLimit"
               >
-                {{ isEditMode ? "Save" : "Edit" }}
+                {{ isEditMode ? 'Save' : 'Edit' }}
                 <!-- Change button text based on edit mode -->
               </button>
 
@@ -1180,7 +1180,7 @@
                 @click="toggleEditMode"
                 class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
               >
-                {{ isEditMode ? "Save" : "Edit" }}
+                {{ isEditMode ? 'Save' : 'Edit' }}
                 <!-- Change button text based on edit mode -->
               </button>
               <button
@@ -1335,7 +1335,7 @@
                 @click="toggleEditMode"
                 class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
               >
-                {{ isEditMode ? "Save" : "Edit" }}
+                {{ isEditMode ? 'Save' : 'Edit' }}
                 <!-- Change button text based on edit mode -->
               </button>
               <button
@@ -1433,7 +1433,105 @@
                 @click="toggleEditMode"
                 class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
               >
-                {{ isEditMode ? "Save" : "Edit" }}
+                {{ isEditMode ? 'Save' : 'Edit' }}
+                <!-- Change button text based on edit mode -->
+              </button>
+              <button
+                @click="deleteForm()"
+                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+              </button>
+              <!-- <button
+                @click="isClickModal = false"
+                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+              >
+                Cancel
+              </button> -->
+            </div>
+          </div>
+
+          <div v-if="selectedClaimType === 'Others'">
+            <div class="flex-1 gap-4 justify-center items-center">
+              <!-- Modal content -->
+              <div class="flex justify-end">
+                <button
+                  v-show="!isEditMode"
+                  @click="isClickModal = false"
+                  class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
+                >
+                  X
+                </button>
+              </div>
+              <h1 class="text-3xl font-bold">Others Form</h1>
+              <hr class="mt-2 mb-4" />
+
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeId" class="text-gray-700 font-bold mr-2"
+                  >Date:</label
+                >
+                <input
+                  type="text"
+                  id="nodeId"
+                  v-model="othersDetails.dateOthers"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="amount" class="text-gray-700 font-bold mr-2"
+                  >Amount (RM):</label
+                >
+                <input
+                  type="text"
+                  id="amount"
+                  v-model="othersDetails.AmountRMOthers"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="desription" class="text-gray-700 font-bold mr-2"
+                  >Description Of Claim:</label
+                >
+                <input
+                  type="text"
+                  id="DescriptionOthers"
+                  v-model="othersDetails.DescriptionOthers"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-4 py-2"
+                />
+              </div>
+            </div>
+
+            <hr />
+            <div class="flex justify-center items-center mb-4">
+              <label
+                for="nodeParentId"
+                class="text-gray-700 font-bold mr-2 text-2xl"
+                >Total: RM {{ totalOthersDetails }}</label
+              >
+            </div>
+
+            <div class="flex justify-end">
+              <button
+                @click="toggleEditMode"
+                class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
+              >
+                {{ isEditMode ? 'Save' : 'Edit' }}
                 <!-- Change button text based on edit mode -->
               </button>
               <button
@@ -1574,7 +1672,7 @@
                   @click="toggleEditMode"
                   class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
                 >
-                  {{ isEditMode ? "Save" : "Edit" }}
+                  {{ isEditMode ? 'Save' : 'Edit' }}
                 </button>
                 <button
                   @click="deleteForm()"
@@ -1614,13 +1712,13 @@
 </template>
 
 <script>
-import tab from "./user-ui/FormTab.vue";
-import axios from "axios";
-import { formStore } from "../store.js";
-import { store } from "../store.js";
+import tab from './user-ui/FormTab.vue';
+import axios from 'axios';
+import { formStore } from '../store.js';
+import { store } from '../store.js';
 
 export default {
-  name: "TEtstS",
+  name: 'TEtstS',
   components: {
     tab,
   },
@@ -1649,13 +1747,13 @@ export default {
   computed: {
     totallocalTravellingDetails() {
       let total =
-        (this.localTravellingDetails.TransportLT === "Company Transport"
+        (this.localTravellingDetails.TransportLT === 'Company Transport'
           ? 0
           : parseFloat(this.localTravellingDetails.MileageRMLT) || 0) +
         (parseFloat(this.localTravellingDetails.ParkingLT) || 0) +
         (parseFloat(this.localTravellingDetails.TollLT) || 0);
 
-      if (this.localTravellingDetails.tripwayLT === "Round Trip") {
+      if (this.localTravellingDetails.tripwayLT === 'Round Trip') {
         total *= 2;
       }
       this.totalplusmethod(total);
@@ -1663,20 +1761,27 @@ export default {
     },
 
     isCompanyTransport() {
-      return this.localTravellingDetails.TransportLT === "Company Transport";
+      return this.localTravellingDetails.TransportLT === 'Company Transport';
     },
 
     isPanelClinic() {
       return (
         this.medicalBillReimbursementDetails.ClinicSelectionML ===
-        "Mediviron Clinic - Panel"
+        'Mediviron Clinic - Panel'
       );
     },
 
     isOtherEntertainment() {
-      const validTypes = ["BREAKFAST", "LUNCH", "DINNER", "TEA BREAK"];
+      const validTypes = ['BREAKFAST', 'LUNCH', 'DINNER', 'TEA BREAK'];
       return validTypes.includes(
         this.entertainmentDetails.TypeofEntertainmentE
+      );
+    },
+
+    isOtherRefreshment() {
+      const validTypes = ["BREAKFAST", "LUNCH", "DINNER", "TEA BREAK"];
+      return validTypes.includes(
+        this.staffRefreshmentDetails.TypeofRefreshmentSR
       );
     },
 
@@ -1765,19 +1870,19 @@ export default {
 
   mounted() {
     // Sidebar close or open
-    let openOrNot = localStorage.getItem("openOrNot");
-    const element = document.querySelector("main");
-    if (element && openOrNot == "false") {
-      element.classList.add("become-big");
-    } else if (element && openOrNot == "true") {
-      element.classList.remove("become-big");
+    let openOrNot = localStorage.getItem('openOrNot');
+    const element = document.querySelector('main');
+    if (element && openOrNot == 'false') {
+      element.classList.add('become-big');
+    } else if (element && openOrNot == 'true') {
+      element.classList.remove('become-big');
     }
   },
 
   methods: {
     totalplusmethod(total) {
       this.totalplus = total;
-      console.log("totalplus", this.totalplus);
+      console.log('totalplus', this.totalplus);
     },
     createObjectURL(file) {
       return URL.createObjectURL(file);
@@ -1801,50 +1906,50 @@ export default {
 
     showDetails(claim, index) {
       this.index = index;
-      console.log("Current index", this.index);
+      console.log('Current index', this.index);
       // Update selectedClaimType based on the type of claim
-      this.selectedClaimType = claim.tabTitle.replace(/\s+/g, ""); // Remove spaces from claim type
+      this.selectedClaimType = claim.tabTitle.replace(/\s+/g, ''); // Remove spaces from claim type
       this.formToDelete = index;
       // Update corresponding details object based on claim type
       switch (this.selectedClaimType) {
-        case "LocalTravelling":
+        case 'LocalTravelling':
           this.localTravellingDetails = claim;
-          console.log("Local Travelling Details:", this.localTravellingDetails);
-          console.log("upload", this.localTravellingDetails.UploadLT);
+          console.log('Local Travelling Details:', this.localTravellingDetails);
+          console.log('upload', this.localTravellingDetails.UploadLT);
           break;
-        case "OverseasTravellingwithAccommodation":
+        case 'OverseasTravellingwithAccommodation':
           this.overseasTravellingDetails = claim;
           console.log(
-            "Overseas Travelling Details:",
+            'Overseas Travelling Details:',
             this.overseasTravellingDetails
           );
           break;
-        case "Entertainment":
+        case 'Entertainment':
           this.entertainmentDetails = claim;
-          console.log("Entertainment Details:", this.entertainmentDetails);
+          console.log('Entertainment Details:', this.entertainmentDetails);
           break;
-        case "StaffRefreshment":
+        case 'StaffRefreshment':
           this.staffRefreshmentDetails = claim;
           console.log(
-            "Staff Refreshment Details:",
+            'Staff Refreshment Details:',
             this.staffRefreshmentDetails
           );
           break;
-        case "Others":
+        case 'Others':
           this.othersDetails = claim;
-          console.log("Others Details:", this.othersDetails);
+          console.log('Others Details:', this.othersDetails);
           break;
-        case "HandphoneBillReimbursement":
+        case 'HandphoneBillReimbursement':
           this.handphoneBillReimbursementDetails = claim;
           console.log(
-            "Handphone Bill Reimbursement Details:",
+            'Handphone Bill Reimbursement Details:',
             this.handphoneBillReimbursementDetails
           );
           break;
-        case "MedicalBillReimbursement":
+        case 'MedicalBillReimbursement':
           this.medicalBillReimbursementDetails = claim;
           console.log(
-            "Medical Bill Reimbursement Details:",
+            'Medical Bill Reimbursement Details:',
             this.medicalBillReimbursementDetails
           );
           break;
@@ -1861,48 +1966,48 @@ export default {
         // Generate a random number and pad it to 2 characters
         const randomNumber = Math.floor(Math.random() * 100)
           .toString()
-          .padStart(2, "0");
+          .padStart(2, '0');
 
         // Create a timestamp and take the last 2 digits for uniqueness
         const timestamp = Date.now().toString().slice(-2);
 
         // Determine the prefix based on the location
-        let prefix = "";
+        let prefix = '';
         switch (tabTitle) {
-          case "Local Travelling":
-            prefix = "LT";
+          case 'Local Travelling':
+            prefix = 'LT';
             break;
-          case "Overseas Travelling with Accommodation":
-            prefix = "OV";
+          case 'Overseas Travelling with Accommodation':
+            prefix = 'OV';
             break;
-          case "Entertainment":
-            prefix = "ENT";
+          case 'Entertainment':
+            prefix = 'ENT';
             break;
-          case "Staff Refreshment":
-            prefix = "SR";
+          case 'Staff Refreshment':
+            prefix = 'SR';
             break;
-          case "Others":
-            prefix = "OTHERS";
+          case 'Others':
+            prefix = 'OTHERS';
             break;
-          case "Handphone Bill Reimbursement":
-            prefix = "HR";
+          case 'Handphone Bill Reimbursement':
+            prefix = 'HR';
             break;
-          case "Medical Bill Reimbursement":
-            prefix = "MLR";
+          case 'Medical Bill Reimbursement':
+            prefix = 'MLR';
             break;
           default:
-            console.error("Invalid location provided:", tabTitle);
-            return "";
+            console.error('Invalid location provided:', tabTitle);
+            return '';
         }
 
         // Construct the uniqueCode
         const uniqueCode = `${prefix}${userIdFragment}${randomNumber}${timestamp}`;
-        console.log("Unique Code:", uniqueCode);
+        console.log('Unique Code:', uniqueCode);
         return uniqueCode;
       } else {
-        console.error("User ID is undefined.");
+        console.error('User ID is undefined.');
         // You may want to handle this case differently based on your application logic.
-        return "";
+        return '';
       }
     },
     generateUniqueCodeSN(tabTitle) {
@@ -1914,48 +2019,48 @@ export default {
         // Generate a random number and pad it to 2 characters
         const randomNumber = Math.floor(Math.random() * 100)
           .toString()
-          .padStart(2, "0");
+          .padStart(2, '0');
 
         // Create a timestamp and take the last 2 digits for uniqueness
         const timestamp = Date.now().toString().slice(-2);
 
         // Determine the prefix based on the location
-        let prefix = "";
+        let prefix = '';
         switch (tabTitle) {
-          case "Local Travelling":
-            prefix = "LT";
+          case 'Local Travelling':
+            prefix = 'LT';
             break;
-          case "Overseas Travelling with Accommodation":
-            prefix = "OV";
+          case 'Overseas Travelling with Accommodation':
+            prefix = 'OV';
             break;
-          case "Entertainment":
-            prefix = "ENT";
+          case 'Entertainment':
+            prefix = 'ENT';
             break;
-          case "Staff Refreshment":
-            prefix = "SR";
+          case 'Staff Refreshment':
+            prefix = 'SR';
             break;
-          case "Others":
-            prefix = "OTHERS";
+          case 'Others':
+            prefix = 'OTHERS';
             break;
-          case "Handphone Bill Reimbursement":
-            prefix = "HR";
+          case 'Handphone Bill Reimbursement':
+            prefix = 'HR';
             break;
-          case "Medical Bill Reimbursement":
-            prefix = "MLR";
+          case 'Medical Bill Reimbursement':
+            prefix = 'MLR';
             break;
           default:
-            console.error("Invalid location provided:", tabTitle);
-            return "";
+            console.error('Invalid location provided:', tabTitle);
+            return '';
         }
 
         // Construct the uniqueCode
         const uniqueCode = `SN${prefix}${userIdFragment}${randomNumber}${timestamp}`;
-        console.log("Unique Code:", uniqueCode);
+        console.log('Unique Code:', uniqueCode);
         return uniqueCode;
       } else {
-        console.error("User ID is undefined.");
+        console.error('User ID is undefined.');
         // You may want to handle this case differently based on your application logic.
-        return "";
+        return '';
       }
     },
     async senttheclaim() {
@@ -1973,20 +2078,20 @@ export default {
       try {
         // Send API request using axios
         const response = await axios.post(
-          "http://172.28.28.91:97/api/User/InsertClaimDetails",
+          'http://172.28.28.91:97/api/User/InsertClaimDetails',
           apiData
         );
         // Handle success response
-        console.log("API response", response.data);
+        console.log('API response', response.data);
         this.sendToAPI();
       } catch (error) {
         // Handle error response
-        console.error("API error", error);
+        console.error('API error', error);
       }
     },
     async sendToAPI() {
       // Group claims by tabTitle
-      this.$router.push({ name: "eclaimhomepages" });
+      this.$router.push({ name: 'eclaimhomepages' });
       const groupedClaims = this.dataclaims.reduce((acc, claim) => {
         if (!acc[claim.tabTitle]) {
           acc[claim.tabTitle] = [];
@@ -2004,7 +2109,7 @@ export default {
           try {
             let axiosInstance;
             switch (title.toLowerCase()) {
-              case "local travelling": {
+              case 'local travelling': {
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   const thisisforlocal1 = {
@@ -2014,28 +2119,28 @@ export default {
                     park_fee: claim.ParkingLT,
                     toll_fee: claim.TollLT,
                     total_fee: 10,
-                    approver_email: "verifier1@example.com", // Access Email property from claim object
-                    verifier_email: "verifier1@example.com",
-                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    requester_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    approver_email: 'verifier1@example.com', // Access Email property from claim object
+                    verifier_email: 'verifier1@example.com',
+                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
+                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
+                    requester_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
 
                     unique_code: this.generateUniqueCode(claim.tabTitle),
-                    reference_number: "pktm222",
+                    reference_number: 'pktm222',
                   };
                   axiosInstance = axios.create({
                     baseURL:
-                      "http://172.28.28.91:97/api/User/InsertLocalOutstation",
+                      'http://172.28.28.91:97/api/User/InsertLocalOutstation',
                   });
                   const response1 = await axiosInstance.post(
-                    "/",
+                    '/',
                     thisisforlocal1
                   );
                   console.log(`Data sent for ${title} 1:`, response1.data);
                 }
                 break;
               }
-              case "overseas travelling with accommodation":
+              case 'overseas travelling with accommodation':
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -2053,29 +2158,29 @@ export default {
                     other_foreign_currency: claim.ForeignCurrencyOthersOT,
                     other_exchange_rate: claim.ExchangeRateOthersOT,
                     other_foreign_total: 200,
-                    reference_number: "pktm222",
+                    reference_number: 'pktm222',
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: "approver@example.com",
-                    verifier_email: "verifier@example.com",
-                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
+                    approver_email: 'approver@example.com',
+                    verifier_email: 'verifier@example.com',
+                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
+                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
+                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
 
                   axiosInstance = axios.create({
                     baseURL:
-                      "http://172.28.28.91:97/api/User/InsertOverseasOutstation",
+                      'http://172.28.28.91:97/api/User/InsertOverseasOutstation',
                   });
                   const response2 = await axiosInstance.post(
-                    "/",
+                    '/',
                     thisisforoversea
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case "Entertainment":
+              case 'Entertainment':
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -2089,28 +2194,28 @@ export default {
                     venue: claim.VenueE,
                     reference: claim.ReferenceE,
                     amount: claim.AmountRME,
-                    reference_number: "pktm222",
+                    reference_number: 'pktm222',
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: "approver@example.com",
-                    verifier_email: "verifier@example.com",
-                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
+                    approver_email: 'approver@example.com',
+                    verifier_email: 'verifier@example.com',
+                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
+                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
+                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
                   axiosInstance = axios.create({
-                    baseURL: "http://localhost:3000/claims/entertainment",
+                    baseURL: 'http://localhost:3000/claims/entertainment',
                   });
                   const response2 = await axiosInstance.post(
-                    "/",
+                    '/',
                     thisisforentertainment
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
 
-              case "Staff Refreshment":
+              case 'Staff Refreshment':
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -2124,27 +2229,27 @@ export default {
                     venue: claim.VenueE,
                     reference: claim.ReferenceE,
                     amount: claim.AmountRME,
-                    reference_number: "pktm222",
+                    reference_number: 'pktm222',
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: "approver@example.com",
-                    verifier_email: "verifier@example.com",
-                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
+                    approver_email: 'approver@example.com',
+                    verifier_email: 'verifier@example.com',
+                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
+                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
+                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
                   axiosInstance = axios.create({
-                    baseURL: "http://localhost:3000/claims/entertainment",
+                    baseURL: 'http://localhost:3000/claims/entertainment',
                   });
                   const response2 = await axiosInstance.post(
-                    "/",
+                    '/',
                     thisisforstaffrefreshment
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case "Others":
+              case 'Others':
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -2158,27 +2263,27 @@ export default {
                     venue: claim.VenueE,
                     reference: claim.ReferenceE,
                     amount: claim.AmountRME,
-                    reference_number: "pktm222",
+                    reference_number: 'pktm222',
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: "approver@example.com",
-                    verifier_email: "verifier@example.com",
-                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
+                    approver_email: 'approver@example.com',
+                    verifier_email: 'verifier@example.com',
+                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
+                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
+                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
                   axiosInstance = axios.create({
-                    baseURL: "http://localhost:3000/claims/entertainment",
+                    baseURL: 'http://localhost:3000/claims/entertainment',
                   });
                   const response2 = await axiosInstance.post(
-                    "/",
+                    '/',
                     thisisforHandphoneBillReimbursement
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case "Handphone Bill Reimbursement":
+              case 'Handphone Bill Reimbursement':
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -2192,27 +2297,27 @@ export default {
                     venue: claim.VenueE,
                     reference: claim.ReferenceE,
                     amount: claim.AmountRME,
-                    reference_number: "pktm222",
+                    reference_number: 'pktm222',
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: "approver@example.com",
-                    verifier_email: "verifier@example.com",
-                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
+                    approver_email: 'approver@example.com',
+                    verifier_email: 'verifier@example.com',
+                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
+                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
+                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
                   axiosInstance = axios.create({
-                    baseURL: "http://localhost:3000/claims/entertainment",
+                    baseURL: 'http://localhost:3000/claims/entertainment',
                   });
                   const response2 = await axiosInstance.post(
-                    "/",
+                    '/',
                     thisisforHandphoneBillReimbursement
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case "Medical Bill Reimbursement":
+              case 'Medical Bill Reimbursement':
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -2226,21 +2331,21 @@ export default {
                     venue: claim.VenueE,
                     reference: claim.ReferenceE,
                     amount: claim.AmountRME,
-                    reference_number: "pktm222",
+                    reference_number: 'pktm222',
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: "approver@example.com",
-                    verifier_email: "verifier@example.com",
-                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
+                    approver_email: 'approver@example.com',
+                    verifier_email: 'verifier@example.com',
+                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
+                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
+                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
                   axiosInstance = axios.create({
-                    baseURL: "http://localhost:3000/claims/entertainment",
+                    baseURL: 'http://localhost:3000/claims/entertainment',
                   });
                   const response2 = await axiosInstance.post(
-                    "/",
+                    '/',
                     thisisforMedicalBillReimbursement
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
@@ -2286,35 +2391,35 @@ export default {
       // Retrieve the current formData
       const formData = formStore.getFormData();
 
-      if (formData.claimantName !== "") {
+      if (formData.claimantName !== '') {
         // Set the claims array to contain only the new formData
         this.claims = [formData];
 
         // Update the local storage with the new claims array
-        localStorage.setItem("claims", JSON.stringify(this.claims));
+        localStorage.setItem('claims', JSON.stringify(this.claims));
       } else {
         // If no formData, retrieve the claims array from local storage
-        const storedClaims = JSON.parse(localStorage.getItem("claims")) || [];
+        const storedClaims = JSON.parse(localStorage.getItem('claims')) || [];
         this.claims = storedClaims;
       }
 
       // Log the claims array to the console
-      console.log("Claims:", this.claims);
+      console.log('Claims:', this.claims);
     },
 
     addClaim(formData) {
       // Push new form data into the claims array
       this.dataclaims.push(formData);
-      console.log("Data Claims:", this.dataclaims);
+      console.log('Data Claims:', this.dataclaims);
     },
     handleFileAdded(file, field) {
-      console.log("File added:", file);
-      console.log("Updated field value:", field.value);
+      console.log('File added:', file);
+      console.log('Updated field value:', field.value);
     },
 
     handleFileRemoved(file, field) {
-      console.log("File removed:", file);
-      console.log("Updated field value:", field.value);
+      console.log('File removed:', file);
+      console.log('Updated field value:', field.value);
     },
   },
 };
