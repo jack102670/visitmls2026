@@ -1,7 +1,7 @@
 <template>
   <!-- component -->
   <div class="background-image h-screen w-screen flex items-center">
-    <div
+    <div @keyup.enter="login"
       class="h-max mx-auto flex flex-col items-center bg-[#18273F] shadow-lg bg-opacity-90 rounded-xl p-5"
     >
       <h1
@@ -31,6 +31,7 @@
             name="email"
             placeholder="user"
             v-model="userName"
+            
           />
         </div>
         <div>
