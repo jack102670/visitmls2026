@@ -519,14 +519,20 @@
 
                       <template v-else-if="field.type === 'file'">
                         <div class="pt-3">
-                          <FilePond
+                          <file-pond
+                            :name="field.id"
                             ref="pond"
-                            name="file"
-                            :allow-multiple="field.allowMultiple"
+                            label-idle="Drop files here..."
+                            @addfile="
+                              (error, file) => handleAddFile(error, file, field)
+                            "
+                            @removefile="
+                              (error, file) =>
+                                handleRemoveFile(error, file, field)
+                            "
                             :accepted-file-types="field.acceptedFileTypes"
                             :max-file-size="field.maxFileSize"
-                            @addfile="handleAddFile(field)"
-                            @removefile="handleRemoveFile(field)"
+                            :allow-multiple="field.allowMultiple"
                           />
                         </div>
                       </template>
@@ -881,14 +887,20 @@
 
                       <template v-else-if="field.type === 'file'">
                         <div class="pt-3">
-                          <FilePond
+                          <file-pond
+                            :name="field.id"
                             ref="pond"
-                            name="file"
-                            :allow-multiple="field.allowMultiple"
+                            label-idle="Drop files here..."
+                            @addfile="
+                              (error, file) => handleAddFile(error, file, field)
+                            "
+                            @removefile="
+                              (error, file) =>
+                                handleRemoveFile(error, file, field)
+                            "
                             :accepted-file-types="field.acceptedFileTypes"
                             :max-file-size="field.maxFileSize"
-                            @addfile="handleAddFile(field)"
-                            @removefile="handleRemoveFile(field)"
+                            :allow-multiple="field.allowMultiple"
                           />
                         </div>
                       </template>
@@ -1429,7 +1441,7 @@ export default {
               id: "MonthHR",
               label: "Month",
               type: "select",
-              value: "huda beban",
+              value: "",
               required: true,
               options: monthOptions,
               gridClass: "sm:col-span-1",

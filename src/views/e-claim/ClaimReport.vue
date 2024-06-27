@@ -725,6 +725,28 @@
                   class="border rounded-md px-4 py-2"
                 />
               </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Attachment(s). :</label
+                >
+                <div class="flex flex-wrap">
+                  <div
+                    v-for="(file, index) in overseasTravellingDetails.UploadOT"
+                    :key="index"
+                    class="m-2"
+                  >
+                    <div
+                      class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
+                    >
+                      <img
+                        :src="createObjectURL(file)"
+                        :alt="file.name"
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               <!-- Other Expenses table -->
               <div class="mb-4">
@@ -790,44 +812,69 @@
                       >
                         {{ index + 1 }}
                       </td>
-                    <!-- Name Field -->
-<td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-32">
-  <span v-if="!isEditMode">{{ expense.name }}</span>
-  <input v-else type="text" v-model="expense.name" class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1" />
-</td>
+                      <!-- Name Field -->
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-32"
+                      >
+                        <span v-if="!isEditMode">{{ expense.name }}</span>
+                        <input
+                          v-else
+                          type="text"
+                          v-model="expense.name"
+                          class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1"
+                        />
+                      </td>
 
-<!-- Description Field -->
-<td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-64">
-  <span v-if="!isEditMode">{{ expense.description }}</span>
-  <textarea v-else v-model="expense.description" class="form-textarea mt-1 block w-full border border-gray-400 p-1" rows="2"></textarea>
-</td>
+                      <!-- Description Field -->
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-64"
+                      >
+                        <span v-if="!isEditMode">{{
+                          expense.description
+                        }}</span>
+                        <textarea
+                          v-else
+                          v-model="expense.description"
+                          class="form-textarea mt-1 block w-full border border-gray-400 p-1"
+                          rows="2"
+                        ></textarea>
+                      </td>
 
-<!-- Amount Field -->
-<td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24">
-  <span v-if="!isEditMode">{{ expense.amount }}</span>
-  <input v-else type="number" v-model="expense.amount" class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1" />
-</td>
-<td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-  <button
-                              class="text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
-                              @click="deleteExpense(index)"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                class="w-5 h-5"
-                              >
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                />
-                              </svg>
-                            </button>
-</td>
+                      <!-- Amount Field -->
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
+                      >
+                        <span v-if="!isEditMode">{{ expense.amount }}</span>
+                        <input
+                          v-else
+                          type="number"
+                          v-model="expense.amount"
+                          class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1"
+                        />
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        <button
+                          class="text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
+                          @click="deleteExpense(index)"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                            />
+                          </svg>
+                        </button>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -1081,6 +1128,28 @@
                   class="border rounded-md px-4 py-2"
                 />
               </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Attachment(s). :</label
+                >
+                <div class="flex flex-wrap">
+                  <div
+                    v-for="(file, index) in medicalBillReimbursementDetails.UploadML"
+                    :key="index"
+                    class="m-2"
+                  >
+                    <div
+                      class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
+                    >
+                      <img
+                        :src="createObjectURL(file)"
+                        :alt="file.name"
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div v-if="claimsAmountExceedsLimit" class="text-red-500">
                 {{ claimsAmountErrorMessage }}
               </div>
@@ -1293,6 +1362,28 @@
                   :disabled="!isEditMode"
                   class="border rounded-md px-4 py-2"
                 />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Attachment(s). :</label
+                >
+                <div class="flex flex-wrap">
+                  <div
+                    v-for="(file, index) in entertainmentDetails.UploadE"
+                    :key="index"
+                    class="m-2"
+                  >
+                    <div
+                      class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
+                    >
+                      <img
+                        :src="createObjectURL(file)"
+                        :alt="file.name"
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <hr />
@@ -1595,6 +1686,28 @@
                   class="border rounded-md px-4 py-2"
                 />
               </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Attachment(s). :</label
+                >
+                <div class="flex flex-wrap">
+                  <div
+                    v-for="(file, index) in staffRefreshmentDetails.UploadSR"
+                    :key="index"
+                    class="m-2"
+                  >
+                    <div
+                      class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
+                    >
+                      <img
+                        :src="createObjectURL(file)"
+                        :alt="file.name"
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               <hr />
               <div class="flex justify-end items-center mb-4 mt-4">
@@ -1828,6 +1941,28 @@
                   rows="4"
                 ></textarea>
               </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Attachment(s). :</label
+                >
+                <div class="flex flex-wrap">
+                  <div
+                    v-for="(file, index) in othersDetails.UploadOthers"
+                    :key="index"
+                    class="m-2"
+                  >
+                    <div
+                      class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
+                    >
+                      <img
+                        :src="createObjectURL(file)"
+                        :alt="file.name"
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <hr />
@@ -2028,6 +2163,28 @@
                     class="border rounded-md px-4 py-2"
                   />
                 </div>
+                <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Attachment(s). :</label
+                >
+                <div class="flex flex-wrap">
+                  <div
+                    v-for="(file, index) in handphoneBillReimbursementDetails.UploadHR"
+                    :key="index"
+                    class="m-2"
+                  >
+                    <div
+                      class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
+                    >
+                      <img
+                        :src="createObjectURL(file)"
+                        :alt="file.name"
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
               </div>
 
               <hr />
@@ -2313,9 +2470,9 @@ export default {
 
   methods: {
     deleteExpense(index) {
-    // Assuming `expenses` is the array holding your items
-    this.overseasTravellingDetails.otherExpenses.splice(index, 1);
-  },
+      // Assuming `expenses` is the array holding your items
+      this.overseasTravellingDetails.otherExpenses.splice(index, 1);
+    },
     totalplusmethod(total) {
       this.totalplus = total;
       console.log("totalplus", this.totalplus);
