@@ -326,7 +326,7 @@
                   id="nodeId"
                   v-model="localTravellingDetails.dateLT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -338,7 +338,7 @@
                   id="transport"
                   v-model="localTravellingDetails.TransportLT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div
@@ -353,7 +353,7 @@
                   id="transportSpecify"
                   v-model="localTravellingDetails.TransportSpec"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -365,7 +365,7 @@
                   id="locationstart"
                   v-model="localTravellingDetails.LocationStart"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -377,7 +377,7 @@
                   id="locationend"
                   v-model="localTravellingDetails.LocationEnd"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -389,7 +389,7 @@
                   id="triplt"
                   v-model="localTravellingDetails.tripwayLT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -405,7 +405,7 @@
                   id="mileagekm"
                   v-model="localTravellingDetails.MileageKMLT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -421,7 +421,7 @@
                   id="mileagerm"
                   v-model="localTravellingDetails.MileageRMLT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -434,7 +434,7 @@
                   id="phonenumber"
                   v-model="localTravellingDetails.TollLT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -447,7 +447,7 @@
                   id="positioname"
                   v-model="localTravellingDetails.ParkingLT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -601,7 +601,7 @@
                   id="nodeId"
                   v-model="overseasTravellingDetails.dateOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -613,7 +613,7 @@
                   id="nodeName"
                   v-model="overseasTravellingDetails.PurposeOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -630,7 +630,7 @@
                     overseasTravellingDetails.ForeignCurrencyAccommodationOT
                   "
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -644,7 +644,7 @@
                     overseasTravellingDetails.ExchangeRateAccommodationOT
                   "
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -658,7 +658,7 @@
                   id="rmAccommodation"
                   v-model="overseasTravellingDetails.RMforAccommodationOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 overflow-x-auto"
+                  class="border rounded-md px-16 py-2 overflow-x-auto"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -672,7 +672,7 @@
                   id="foreignCurrencyOthers"
                   v-model="overseasTravellingDetails.ForeignCurrencyOthersOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -686,7 +686,7 @@
                   id="exchangeRateOthers"
                   v-model="overseasTravellingDetails.ExchangeRateOthersOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -698,7 +698,7 @@
                   id="rmOthers"
                   v-model="overseasTravellingDetails.RMforOthersOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -710,7 +710,7 @@
                   id="mealAllowance"
                   v-model="overseasTravellingDetails.MealAllowanceOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -722,7 +722,7 @@
                   id="airportLimo"
                   v-model="overseasTravellingDetails.AirportLimoTeksiOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1005,7 +1005,7 @@
                   id="nodeId"
                   v-model="medicalBillReimbursementDetails.dateML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -1018,7 +1018,7 @@
                   id="nodeName"
                   v-model="medicalBillReimbursementDetails.MedicalCategoryML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -1031,7 +1031,7 @@
                   id="nodeParentId"
                   v-model="medicalBillReimbursementDetails.ReasonML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -1044,7 +1044,7 @@
                   id="ClinicSelectionML"
                   v-model="medicalBillReimbursementDetails.ClinicSelectionML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -1060,7 +1060,7 @@
                   id="OtherClinicSpecML"
                   v-model="medicalBillReimbursementDetails.OtherClinicSpecML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -1076,7 +1076,7 @@
                   id="OtherClinicReasonML"
                   v-model="medicalBillReimbursementDetails.OtherClinicReasonML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -1089,7 +1089,7 @@
                   id="bankName"
                   v-model="medicalBillReimbursementDetails.BankNameML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1101,7 +1101,7 @@
                   id="accBankNumber"
                   v-model="medicalBillReimbursementDetails.AccBankNumberML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1113,7 +1113,7 @@
                   id="accHolderName"
                   v-model="medicalBillReimbursementDetails.AccHolderNameML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 overflow-x-auto"
+                  class="border rounded-md px-16 py-2 overflow-x-auto"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1125,7 +1125,7 @@
                   id="claimsAmount"
                   v-model="medicalBillReimbursementDetails.ClaimsAmountML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1285,7 +1285,7 @@
                   id="nodeId"
                   v-model="entertainmentDetails.dateE"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1297,7 +1297,7 @@
                   id="nodeName"
                   v-model="entertainmentDetails.TypeofEntertainmentE"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div
@@ -1312,7 +1312,7 @@
                   id="nodeParentId"
                   v-model="entertainmentDetails.OtherTypeofEntertainmentE"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1324,7 +1324,7 @@
                   id="nodeParentId"
                   v-model="entertainmentDetails.CompanyE"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1336,7 +1336,7 @@
                   id="nodeParentId"
                   v-model="entertainmentDetails.VenueE"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1348,7 +1348,7 @@
                   id="nodeParentId"
                   v-model="entertainmentDetails.ReferenceE"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1360,7 +1360,7 @@
                   id="amount"
                   v-model="entertainmentDetails.AmountRME"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1606,7 +1606,7 @@
                   id="nodeId"
                   v-model="staffRefreshmentDetails.dateSR"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1618,7 +1618,7 @@
                   id="nodeName"
                   v-model="staffRefreshmentDetails.TypeofRefreshmentSR"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div
@@ -1635,7 +1635,7 @@
                     staffRefreshmentDetails.OtherTypeofStaffRefreshmentSR
                   "
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1647,7 +1647,7 @@
                   id="nodeParentId"
                   v-model="staffRefreshmentDetails.CompanySR"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1659,7 +1659,7 @@
                   id="nodeParentId"
                   v-model="staffRefreshmentDetails.VenueSR"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1671,7 +1671,7 @@
                   id="nodeParentId"
                   v-model="staffRefreshmentDetails.ReferenceSR"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1683,7 +1683,7 @@
                   id="nodeParentId"
                   v-model="staffRefreshmentDetails.AmountRMSR"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1914,7 +1914,7 @@
                   id="nodeId"
                   v-model="othersDetails.dateOthers"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1926,7 +1926,7 @@
                   id="amount"
                   v-model="othersDetails.AmountRMOthers"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1937,7 +1937,7 @@
                   id="DescriptionOthers"
                   v-model="othersDetails.DescriptionOthers"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                   rows="4"
                 ></textarea>
               </div>
@@ -2096,7 +2096,7 @@
                     id="nodeId"
                     v-model="handphoneBillReimbursementDetails.MonthHR"
                     :disabled="!isEditMode"
-                    class="border rounded-md px-4 py-2"
+                    class="border rounded-md px-16 py-2"
                   />
                 </div>
                 <div class="flex justify-between items-center mb-4">
@@ -2108,7 +2108,7 @@
                     id="nodeName"
                     v-model="handphoneBillReimbursementDetails.YearHR"
                     :disabled="!isEditMode"
-                    class="border rounded-md px-4 py-2"
+                    class="border rounded-md px-16 py-2"
                   />
                 </div>
                 <div class="flex justify-between items-center mb-4">
@@ -2120,7 +2120,7 @@
                     id="bankName"
                     v-model="handphoneBillReimbursementDetails.BankNameHR"
                     :disabled="!isEditMode"
-                    class="border rounded-md px-4 py-2"
+                    class="border rounded-md px-16 py-2"
                   />
                 </div>
                 <div class="flex justify-between items-center mb-4">
@@ -2134,7 +2134,7 @@
                     id="accBankNumber"
                     v-model="handphoneBillReimbursementDetails.AccBankNumberHR"
                     :disabled="!isEditMode"
-                    class="border rounded-md px-4 py-2"
+                    class="border rounded-md px-16 py-2"
                   />
                 </div>
                 <div class="flex justify-between items-center mb-4">
@@ -2148,7 +2148,7 @@
                     id="accHolderName"
                     v-model="handphoneBillReimbursementDetails.AccHolderNameHR"
                     :disabled="!isEditMode"
-                    class="border rounded-md px-4 py-2"
+                    class="border rounded-md px-16 py-2"
                   />
                 </div>
                 <div class="flex justify-between items-center mb-4">
@@ -2160,7 +2160,7 @@
                     id="claimsAmount"
                     v-model="handphoneBillReimbursementDetails.ClaimsAmountHR"
                     :disabled="!isEditMode"
-                    class="border rounded-md px-4 py-2"
+                    class="border rounded-md px-16 py-2"
                   />
                 </div>
                 <div class="flex justify-between items-center mb-4">

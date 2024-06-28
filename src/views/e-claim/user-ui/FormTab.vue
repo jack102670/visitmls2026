@@ -266,13 +266,13 @@
                             for="expenseAmount"
                             >Description</label
                           >
-                          <input
+                          <textarea
                             v-model="newExpense.description"
                             id="expenseDescription"
-                            type="text"
                             class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                            rows="4"
                             required
-                          />
+                          ></textarea>
                         </div>
                         <div class="mb-4">
                           <label
