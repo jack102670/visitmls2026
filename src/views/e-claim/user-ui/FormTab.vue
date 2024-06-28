@@ -1178,7 +1178,7 @@ export default {
       showModal: false,
       selectedAttendeeType: "pkt",
       selectedCompanyName: "",
-      pktCompanies: ["PKT Branch 1", "PKT Branch 2", "PKT Branch 3"],
+      pktCompanies: [],
       modalForm: {
         name: "",
         staffId: "",
@@ -2003,6 +2003,7 @@ export default {
     for (let i = currentYear; i >= currentYear - 20; i--) {
       this.yearRange.push(i);
     }
+    this.fetchCompany();
   },
 
   methods: {
@@ -2142,6 +2143,21 @@ export default {
         total += parseFloat(expense.amount) || 0;
       }
       return total;
+    },
+
+    async fetchCompany() {
+      try {
+        const response = await fetch(
+          "http://172.28.28.91:97/api/User/GetCompany"
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        this.pktCompanies = data.result.map((company) => company.company_name);
+      } catch (error) {
+        console.error(`Error fetching company names: ${error}`);
+      }
     },
 
     addAttendee() {
