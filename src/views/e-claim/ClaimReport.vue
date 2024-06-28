@@ -292,7 +292,7 @@
       </div>
       <div
         v-if="isClickModal"
-        class="modal fixed top-0 left-0 w-full flex-1  bg-[#CED1DA] dark:bg-[#111827] p-4 h-auto h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
+        class="modal fixed top-0 left-0 w-full flex-1 bg-[#CED1DA] dark:bg-[#111827] p-4 h-auto h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
         @click.self="closeClickModal"
       >
         <div
@@ -1134,7 +1134,9 @@
                 >
                 <div class="flex flex-wrap">
                   <div
-                    v-for="(file, index) in medicalBillReimbursementDetails.UploadML"
+                    v-for="(
+                      file, index
+                    ) in medicalBillReimbursementDetails.UploadML"
                     :key="index"
                     class="m-2"
                   >
@@ -2164,27 +2166,29 @@
                   />
                 </div>
                 <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Attachment(s). :</label
-                >
-                <div class="flex flex-wrap">
-                  <div
-                    v-for="(file, index) in handphoneBillReimbursementDetails.UploadHR"
-                    :key="index"
-                    class="m-2"
+                  <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                    >Attachment(s). :</label
                   >
+                  <div class="flex flex-wrap">
                     <div
-                      class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
+                      v-for="(
+                        file, index
+                      ) in handphoneBillReimbursementDetails.UploadHR"
+                      :key="index"
+                      class="m-2"
                     >
-                      <img
-                        :src="createObjectURL(file)"
-                        :alt="file.name"
-                        class="w-full h-full object-cover"
-                      />
+                      <div
+                        class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
+                      >
+                        <img
+                          :src="createObjectURL(file)"
+                          :alt="file.name"
+                          class="w-full h-full object-cover"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
               </div>
 
               <hr />
@@ -2450,6 +2454,10 @@ export default {
         }, 0)
         .toFixed(2);
     },
+    referenceNumber() {
+      console.log("Current uniqueCode:", this.claims.uniqueCode);
+      return this.claims.uniqueCode;
+    },
   },
 
   created() {
@@ -2656,16 +2664,23 @@ export default {
         return "";
       }
     },
+    someMethod() {
+      console.log(this.claims.uniqueCode);
+      // Other logic
+    },
     async senttheclaim() {
       const apiData = {
         name: this.claims[0].claimantName,
         company_name: this.claims[0].companyName,
         department: this.claims[0].department,
         designation_title: this.claims[0].designation,
-        grand_total: this.grandTotal,
+        employee_id: "PKTM2582",
+        requester_email: store.getSession().userDetails.email,
         reference_number: this.claims[0].uniqueCode,
         report_name: this.claims[0].reportName,
+        grand_total: this.grandTotal,
         requester_id: this.userDetails.userId,
+        cost_center: this.claims[0].costCenter,
       };
 
       try {
@@ -2705,21 +2720,21 @@ export default {
               case "local travelling": {
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
+                  console.log("Reference Number for claim:", this.claims[0].uniqueCode);
                   const thisisforlocal1 = {
                     mileage_km: claim.MileageKMLT,
-                    destination: claim.DestinationPurposeLT,
+                    starting_point: claim.LocationStart,
+                    end_point: claim.LocationEnd,
                     date_event: claim.dateLT, // Example date
                     park_fee: claim.ParkingLT,
                     toll_fee: claim.TollLT,
-                    total_fee: 10,
-                    approver_email: "verifier1@example.com", // Access Email property from claim object
-                    verifier_email: "verifier1@example.com",
-                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    requester_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-
-                    unique_code: this.generateUniqueCode(claim.tabTitle),
-                    reference_number: "pktm222",
+                    total_fee: claim.totalRM,
+                    unique_code: String(claim.UploadLT),
+                    reference_number: this.claims[0].uniqueCode,
+                    transport_mode: claim.TransportLT,
+                    trip_mode: claim.tripwayLT,
+                    total_mileage: claim.MileageRMLT,
+                    transport_specification: claim.TransportSpec,
                   };
                   axiosInstance = axios.create({
                     baseURL:
@@ -3017,5 +3032,3 @@ export default {
   },
 };
 </script>
-
-<style></style>
