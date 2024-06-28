@@ -35,6 +35,7 @@
           {{ tab.title }} Form
         </h2>
 
+        <!--Note for Others Form-->
         <section>
           <div v-if="tab.title === 'Others'" class="mt-4">
             <h1 class="text-gray-500 text-sm">
@@ -1161,7 +1162,6 @@ export default {
   data() {
     return {
       chooseform: true,
-
       activeTab: this.type == "Finance" ? 0 : 4,
       activeSubTab: 0,
       date: "",
