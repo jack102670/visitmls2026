@@ -225,9 +225,6 @@
                           }}</span>
                           <span v-if="claim.VenueE">{{ claim.VenueE }}</span>
                           <span v-if="claim.VenueSR">{{ claim.VenueSR }}</span>
-                          <span v-if="claim.DescriptionOthers">{{
-                            claim.DescriptionOthers
-                          }}</span>
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
@@ -295,11 +292,11 @@
       </div>
       <div
         v-if="isClickModal"
-        class="modal fixed top-0 left-0 w-full flex-1 overflow-x-hidden text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-[8rem] h-auto h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
+        class="modal fixed top-0 left-0 w-full flex-1 bg-[#CED1DA] dark:bg-[#111827] p-4 h-auto h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
         @click.self="closeClickModal"
       >
         <div
-          class="modal-content bg-white rounded-lg p-8"
+          class="modal-content bg-white rounded-lg p-8 w-full sm:w-3/4 lg:max-w-2xl"
           style="max-height: calc(100vh - 20px); overflow-y: auto"
         >
           <!-- Modal header -->
@@ -315,7 +312,9 @@
             </div>
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
-              <h1 class="text-3xl font-bold">Local Travelling Form</h1>
+              <h1 class="text-3xl font-bold text-blue-900">
+                Local Travelling Form
+              </h1>
               <hr class="mt-2 mb-4" />
 
               <div class="flex justify-between items-center mb-4">
@@ -327,7 +326,7 @@
                   id="nodeId"
                   v-model="localTravellingDetails.dateLT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -339,7 +338,7 @@
                   id="transport"
                   v-model="localTravellingDetails.TransportLT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div
@@ -354,7 +353,7 @@
                   id="transportSpecify"
                   v-model="localTravellingDetails.TransportSpec"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -366,7 +365,7 @@
                   id="locationstart"
                   v-model="localTravellingDetails.LocationStart"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -378,7 +377,7 @@
                   id="locationend"
                   v-model="localTravellingDetails.LocationEnd"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -390,7 +389,7 @@
                   id="triplt"
                   v-model="localTravellingDetails.tripwayLT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -406,7 +405,7 @@
                   id="mileagekm"
                   v-model="localTravellingDetails.MileageKMLT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -422,7 +421,7 @@
                   id="mileagerm"
                   v-model="localTravellingDetails.MileageRMLT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -435,7 +434,7 @@
                   id="phonenumber"
                   v-model="localTravellingDetails.TollLT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -448,7 +447,7 @@
                   id="positioname"
                   v-model="localTravellingDetails.ParkingLT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -475,7 +474,7 @@
               </div>
 
               <hr />
-              <div class="flex justify-center items-center mb-4">
+              <div class="flex justify-end items-center mb-4 mt-4">
                 <label
                   for="nodeParentId"
                   class="text-gray-700 font-bold mr-2 text-2xl"
@@ -488,15 +487,73 @@
             <div class="flex justify-end">
               <button
                 @click="toggleEditMode"
-                class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
+                class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800"
               >
-                {{ isEditMode ? 'Save' : 'Edit' }}
-                <!-- Change button text based on edit mode -->
-              </button>
+                <!-- Edit Icon -->
 
+                <svg
+                  v-if="isEditMode"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <rect
+                    x="3"
+                    y="3"
+                    width="18"
+                    height="18"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linejoin="round"
+                  />
+                  <rect
+                    x="7"
+                    y="3"
+                    width="10"
+                    height="12"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12 8v4"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M5 3h14"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
+                </svg>
+
+                <!-- Save Icon -->
+                <svg
+                  v-else
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                  />
+                </svg>
+              </button>
               <button
                 @click="deleteForm()"
-                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+                class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -530,7 +587,9 @@
             </div>
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
-              <h1 class="text-3xl font-bold">Overseas Travelling Form</h1>
+              <h1 class="text-3xl font-bold text-blue-900">
+                Overseas Travelling Form
+              </h1>
               <hr class="mt-2 mb-4" />
 
               <div class="flex justify-between items-center mb-4">
@@ -542,7 +601,7 @@
                   id="nodeId"
                   v-model="overseasTravellingDetails.dateOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -554,7 +613,7 @@
                   id="nodeName"
                   v-model="overseasTravellingDetails.PurposeOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -571,7 +630,7 @@
                     overseasTravellingDetails.ForeignCurrencyAccommodationOT
                   "
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -585,7 +644,7 @@
                     overseasTravellingDetails.ExchangeRateAccommodationOT
                   "
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -599,7 +658,7 @@
                   id="rmAccommodation"
                   v-model="overseasTravellingDetails.RMforAccommodationOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 overflow-x-auto"
+                  class="border rounded-md px-16 py-2 overflow-x-auto"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -613,7 +672,7 @@
                   id="foreignCurrencyOthers"
                   v-model="overseasTravellingDetails.ForeignCurrencyOthersOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -627,7 +686,7 @@
                   id="exchangeRateOthers"
                   v-model="overseasTravellingDetails.ExchangeRateOthersOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -639,7 +698,7 @@
                   id="rmOthers"
                   v-model="overseasTravellingDetails.RMforOthersOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -651,7 +710,7 @@
                   id="mealAllowance"
                   v-model="overseasTravellingDetails.MealAllowanceOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -663,8 +722,30 @@
                   id="airportLimo"
                   v-model="overseasTravellingDetails.AirportLimoTeksiOT"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Attachment(s). :</label
+                >
+                <div class="flex flex-wrap">
+                  <div
+                    v-for="(file, index) in overseasTravellingDetails.UploadOT"
+                    :key="index"
+                    class="m-2"
+                  >
+                    <div
+                      class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
+                    >
+                      <img
+                        :src="createObjectURL(file)"
+                        :alt="file.name"
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <!-- Other Expenses table -->
@@ -707,6 +788,14 @@
                           <span>Amount(RM)</span>
                         </div>
                       </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span></span>
+                        </div>
+                      </th>
                     </tr>
                   </thead>
                   <tbody
@@ -723,20 +812,68 @@
                       >
                         {{ index + 1 }}
                       </td>
+                      <!-- Name Field -->
                       <td
                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-32"
                       >
-                        {{ expense.name }}
+                        <span v-if="!isEditMode">{{ expense.name }}</span>
+                        <input
+                          v-else
+                          type="text"
+                          v-model="expense.name"
+                          class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1"
+                        />
                       </td>
+
+                      <!-- Description Field -->
                       <td
                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-64"
                       >
-                        {{ expense.description }}
+                        <span v-if="!isEditMode">{{
+                          expense.description
+                        }}</span>
+                        <textarea
+                          v-else
+                          v-model="expense.description"
+                          class="form-textarea mt-1 block w-full border border-gray-400 p-1"
+                          rows="2"
+                        ></textarea>
                       </td>
+
+                      <!-- Amount Field -->
                       <td
                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
                       >
-                        {{ expense.amount }}
+                        <span v-if="!isEditMode">{{ expense.amount }}</span>
+                        <input
+                          v-else
+                          type="number"
+                          v-model="expense.amount"
+                          class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1"
+                        />
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        <button
+                          class="text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
+                          @click="deleteExpense(index)"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                            />
+                          </svg>
+                        </button>
                       </td>
                     </tr>
                   </tbody>
@@ -744,7 +881,7 @@
               </div>
 
               <hr />
-              <div class="flex justify-center items-center mb-4">
+              <div class="flex justify-end items-center mb-4 mt-4">
                 <label
                   for="nodeParentId"
                   class="text-gray-700 font-bold mr-2 text-2xl"
@@ -757,21 +894,73 @@
             <div class="flex justify-end">
               <button
                 @click="toggleEditMode"
-                class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
+                class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800"
               >
-                {{ isEditMode ? 'Save' : 'Edit' }}
-                <!-- Change button text based on edit mode -->
-              </button>
+                <!-- Edit Icon -->
 
-              <!-- <button
-                @click="isClickModal = false"
-                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
-              >
-                Cancel
-              </button> -->
+                <svg
+                  v-if="isEditMode"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <rect
+                    x="3"
+                    y="3"
+                    width="18"
+                    height="18"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linejoin="round"
+                  />
+                  <rect
+                    x="7"
+                    y="3"
+                    width="10"
+                    height="12"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12 8v4"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M5 3h14"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
+                </svg>
+
+                <!-- Save Icon -->
+                <svg
+                  v-else
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                  />
+                </svg>
+              </button>
               <button
-                @click="deleteForm"
-                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+                @click="deleteForm()"
+                class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -796,14 +985,13 @@
               <!-- Modal content -->
               <div class="flex justify-end">
                 <button
-                  v-show="!isEditMode"
                   @click="isClickModal = false"
                   class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
                 >
                   X
                 </button>
               </div>
-              <h1 class="text-3xl font-bold">
+              <h1 class="text-3xl font-bold text-blue-900">
                 Medical Bill Reimbursement Form
               </h1>
               <hr class="mt-2 mb-4" />
@@ -817,7 +1005,7 @@
                   id="nodeId"
                   v-model="medicalBillReimbursementDetails.dateML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -830,7 +1018,7 @@
                   id="nodeName"
                   v-model="medicalBillReimbursementDetails.MedicalCategoryML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -843,7 +1031,7 @@
                   id="nodeParentId"
                   v-model="medicalBillReimbursementDetails.ReasonML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -856,7 +1044,7 @@
                   id="ClinicSelectionML"
                   v-model="medicalBillReimbursementDetails.ClinicSelectionML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -872,7 +1060,7 @@
                   id="OtherClinicSpecML"
                   v-model="medicalBillReimbursementDetails.OtherClinicSpecML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -888,7 +1076,7 @@
                   id="OtherClinicReasonML"
                   v-model="medicalBillReimbursementDetails.OtherClinicReasonML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
 
@@ -901,7 +1089,7 @@
                   id="bankName"
                   v-model="medicalBillReimbursementDetails.BankNameML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -913,7 +1101,7 @@
                   id="accBankNumber"
                   v-model="medicalBillReimbursementDetails.AccBankNumberML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -925,7 +1113,7 @@
                   id="accHolderName"
                   v-model="medicalBillReimbursementDetails.AccHolderNameML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2 overflow-x-auto"
+                  class="border rounded-md px-16 py-2 overflow-x-auto"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -937,13 +1125,40 @@
                   id="claimsAmount"
                   v-model="medicalBillReimbursementDetails.ClaimsAmountML"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Attachment(s). :</label
+                >
+                <div class="flex flex-wrap">
+                  <div
+                    v-for="(
+                      file, index
+                    ) in medicalBillReimbursementDetails.UploadML"
+                    :key="index"
+                    class="m-2"
+                  >
+                    <div
+                      class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
+                    >
+                      <img
+                        :src="createObjectURL(file)"
+                        :alt="file.name"
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div v-if="claimsAmountExceedsLimit" class="text-red-500">
+                {{ claimsAmountErrorMessage }}
               </div>
             </div>
 
             <hr />
-            <div class="flex justify-center items-center mb-4">
+            <div class="flex justify-end items-center mb-4 mt-4">
               <label
                 for="nodeParentId"
                 class="text-gray-700 font-bold mr-2 text-2xl"
@@ -954,10 +1169,88 @@
             <div class="flex justify-end">
               <button
                 @click="toggleEditMode"
-                class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
+                class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800"
               >
-                {{ isEditMode ? 'Save' : 'Edit' }}
-                <!-- Change button text based on edit mode -->
+                <!-- Edit Icon -->
+
+                <svg
+                  v-if="isEditMode"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <rect
+                    x="3"
+                    y="3"
+                    width="18"
+                    height="18"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linejoin="round"
+                  />
+                  <rect
+                    x="7"
+                    y="3"
+                    width="10"
+                    height="12"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12 8v4"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M5 3h14"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
+                </svg>
+
+                <!-- Save Icon -->
+                <svg
+                  v-else
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                  />
+                </svg>
+              </button>
+              <button
+                @click="deleteForm()"
+                class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
               </button>
 
               <!-- <button
@@ -974,14 +1267,15 @@
               <!-- Modal content -->
               <div class="flex justify-end">
                 <button
-                  v-show="!isEditMode"
                   @click="isClickModal = false"
                   class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
                 >
                   X
                 </button>
               </div>
-              <h1 class="text-3xl font-bold">Entertainment Claim Form</h1>
+              <h1 class="text-3xl font-bold text-blue-900">
+                Entertainment Claim Form
+              </h1>
               <hr class="mt-2 mb-4" />
 
               <div class="flex justify-between items-center mb-4">
@@ -993,7 +1287,7 @@
                   id="nodeId"
                   v-model="entertainmentDetails.dateE"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1005,7 +1299,7 @@
                   id="nodeName"
                   v-model="entertainmentDetails.TypeofEntertainmentE"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div
@@ -1020,7 +1314,7 @@
                   id="nodeParentId"
                   v-model="entertainmentDetails.OtherTypeofEntertainmentE"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1032,7 +1326,7 @@
                   id="nodeParentId"
                   v-model="entertainmentDetails.CompanyE"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1044,7 +1338,7 @@
                   id="nodeParentId"
                   v-model="entertainmentDetails.VenueE"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1056,7 +1350,7 @@
                   id="nodeParentId"
                   v-model="entertainmentDetails.ReferenceE"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1068,12 +1362,34 @@
                   id="amount"
                   v-model="entertainmentDetails.AmountRME"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Attachment(s). :</label
+                >
+                <div class="flex flex-wrap">
+                  <div
+                    v-for="(file, index) in entertainmentDetails.UploadE"
+                    :key="index"
+                    class="m-2"
+                  >
+                    <div
+                      class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
+                    >
+                      <img
+                        :src="createObjectURL(file)"
+                        :alt="file.name"
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <hr />
-              <div class="flex justify-center items-center mb-4">
+              <div class="flex justify-end items-center mb-4 mt-4">
                 <label
                   for="nodeParentId"
                   class="text-gray-700 font-bold mr-2 text-2xl"
@@ -1083,7 +1399,7 @@
 
               <!-- Attendees table -->
               <div class="mb-4">
-                <h2 class="text-xl font-bold">Attendees</h2>
+                <h2 class="text-xl font-bold text-gray-700">Attendees</h2>
                 <table
                   class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
                 >
@@ -1118,7 +1434,7 @@
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
                         <div class="flex items-center gap-x-3">
-                          <span>Company's Name</span>
+                          <span>Company Name</span>
                         </div>
                       </th>
                       <th
@@ -1174,14 +1490,73 @@
             <div class="flex justify-end">
               <button
                 @click="toggleEditMode"
-                class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
+                class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800"
               >
-                {{ isEditMode ? 'Save' : 'Edit' }}
-                <!-- Change button text based on edit mode -->
+                <!-- Edit Icon -->
+
+                <svg
+                  v-if="isEditMode"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <rect
+                    x="3"
+                    y="3"
+                    width="18"
+                    height="18"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linejoin="round"
+                  />
+                  <rect
+                    x="7"
+                    y="3"
+                    width="10"
+                    height="12"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12 8v4"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M5 3h14"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
+                </svg>
+
+                <!-- Save Icon -->
+                <svg
+                  v-else
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                  />
+                </svg>
               </button>
               <button
                 @click="deleteForm()"
-                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+                class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -1213,14 +1588,15 @@
               <!-- Modal content -->
               <div class="flex justify-end">
                 <button
-                  v-show="!isEditMode"
                   @click="isClickModal = false"
                   class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
                 >
                   X
                 </button>
               </div>
-              <h1 class="text-3xl font-bold">Staff Refreshment Claim Form</h1>
+              <h1 class="text-3xl font-bold text-blue-900">
+                Staff Refreshment Claim Form
+              </h1>
               <hr class="mt-2 mb-4" />
 
               <div class="flex justify-between items-center mb-4">
@@ -1232,93 +1608,111 @@
                   id="nodeId"
                   v-model="staffRefreshmentDetails.dateSR"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label
-                  for="typeOfRefreshment"
-                  class="text-gray-700 font-bold mr-2"
+                <label for="nodeName" class="text-gray-700 font-bold mr-2"
                   >Type of Refreshment:</label
                 >
                 <input
                   type="text"
-                  id="typeOfRefreshment"
+                  id="nodeName"
                   v-model="staffRefreshmentDetails.TypeofRefreshmentSR"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div
-                v-if="!isOtherRefreshment"
+                v-if="!isOtherStaffRefreshment"
                 class="flex justify-between items-center mb-4"
               >
-                <label
-                  for="otherTypeOfRefreshment"
-                  class="text-gray-700 font-bold mr-2"
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Other Type of Staff Refreshment:</label
                 >
                 <input
                   type="text"
-                  id="otherTypeOfRefreshment"
+                  id="nodeParentId"
                   v-model="
                     staffRefreshmentDetails.OtherTypeofStaffRefreshmentSR
                   "
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="company" class="text-gray-700 font-bold mr-2"
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Company:</label
                 >
                 <input
                   type="text"
-                  id="company"
+                  id="nodeParentId"
                   v-model="staffRefreshmentDetails.CompanySR"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="venue" class="text-gray-700 font-bold mr-2"
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Venue:</label
                 >
                 <input
                   type="text"
-                  id="venue"
+                  id="nodeParentId"
                   v-model="staffRefreshmentDetails.VenueSR"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="reference" class="text-gray-700 font-bold mr-2"
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Reference:</label
                 >
                 <input
                   type="text"
-                  id="reference"
+                  id="nodeParentId"
                   v-model="staffRefreshmentDetails.ReferenceSR"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="amount" class="text-gray-700 font-bold mr-2"
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Amount (RM):</label
                 >
                 <input
                   type="text"
-                  id="amount"
+                  id="nodeParentId"
                   v-model="staffRefreshmentDetails.AmountRMSR"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Attachment(s). :</label
+                >
+                <div class="flex flex-wrap">
+                  <div
+                    v-for="(file, index) in staffRefreshmentDetails.UploadSR"
+                    :key="index"
+                    class="m-2"
+                  >
+                    <div
+                      class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
+                    >
+                      <img
+                        :src="createObjectURL(file)"
+                        :alt="file.name"
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <hr />
-              <div class="flex justify-center items-center mb-4">
+              <div class="flex justify-end items-center mb-4 mt-4">
                 <label
                   for="nodeParentId"
                   class="text-gray-700 font-bold mr-2 text-2xl"
@@ -1326,9 +1720,9 @@
                 >
               </div>
 
-              <!-- Attendees table -->
+              <!-- Staff Involved table -->
               <div class="mb-4">
-                <h2 class="text-xl font-bold">Attendees</h2>
+                <h2 class="text-xl font-bold text-gray-700">Staff Involved</h2>
                 <table
                   class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
                 >
@@ -1363,15 +1757,7 @@
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
                         <div class="flex items-center gap-x-3">
-                          <span>Company's Name</span>
-                        </div>
-                      </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        <div class="flex items-center gap-x-3">
-                          <span>Status</span>
+                          <span>Company Name</span>
                         </div>
                       </th>
                     </tr>
@@ -1381,8 +1767,8 @@
                   >
                     <tr
                       v-for="(
-                        attendee, index
-                      ) in entertainmentDetails.attendees"
+                        staff, index
+                      ) in staffRefreshmentDetails.staffInvolved"
                       :key="index"
                     >
                       <td
@@ -1393,22 +1779,17 @@
                       <td
                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                       >
-                        {{ attendee.name }}
+                        {{ staff.name }}
                       </td>
                       <td
                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                       >
-                        {{ attendee.staffId }}
+                        {{ staff.staffId }}
                       </td>
                       <td
                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                       >
-                        {{ attendee.companyName }}
-                      </td>
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                      >
-                        {{ attendee.status }}
+                        {{ staff.companyName }}
                       </td>
                     </tr>
                   </tbody>
@@ -1419,14 +1800,73 @@
             <div class="flex justify-end">
               <button
                 @click="toggleEditMode"
-                class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
+                class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800"
               >
-                {{ isEditMode ? 'Save' : 'Edit' }}
-                <!-- Change button text based on edit mode -->
+                <!-- Edit Icon -->
+
+                <svg
+                  v-if="isEditMode"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <rect
+                    x="3"
+                    y="3"
+                    width="18"
+                    height="18"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linejoin="round"
+                  />
+                  <rect
+                    x="7"
+                    y="3"
+                    width="10"
+                    height="12"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12 8v4"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M5 3h14"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
+                </svg>
+
+                <!-- Save Icon -->
+                <svg
+                  v-else
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                  />
+                </svg>
               </button>
               <button
                 @click="deleteForm()"
-                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+                class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -1464,7 +1904,7 @@
                   X
                 </button>
               </div>
-              <h1 class="text-3xl font-bold">Others Form</h1>
+              <h1 class="text-3xl font-bold text-blue-900">Others Form</h1>
               <hr class="mt-2 mb-4" />
 
               <div class="flex justify-between items-center mb-4">
@@ -1476,7 +1916,7 @@
                   id="nodeId"
                   v-model="othersDetails.dateOthers"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1488,25 +1928,47 @@
                   id="amount"
                   v-model="othersDetails.AmountRMOthers"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
                 <label for="desription" class="text-gray-700 font-bold mr-2"
-                  >Description Of Claim:</label
+                  >Description:</label
                 >
-                <input
-                  type="text"
+                <textarea
                   id="DescriptionOthers"
                   v-model="othersDetails.DescriptionOthers"
                   :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
-                />
+                  class="border rounded-md px-16 py-2"
+                  rows="4"
+                ></textarea>
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Attachment(s). :</label
+                >
+                <div class="flex flex-wrap">
+                  <div
+                    v-for="(file, index) in othersDetails.UploadOthers"
+                    :key="index"
+                    class="m-2"
+                  >
+                    <div
+                      class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
+                    >
+                      <img
+                        :src="createObjectURL(file)"
+                        :alt="file.name"
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
             <hr />
-            <div class="flex justify-center items-center mb-4">
+            <div class="flex justify-end items-center mb-4 mt-4">
               <label
                 for="nodeParentId"
                 class="text-gray-700 font-bold mr-2 text-2xl"
@@ -1517,16 +1979,56 @@
             <div class="flex justify-end">
               <button
                 @click="toggleEditMode"
-                class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
+                class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800"
               >
-                {{ isEditMode ? 'Save' : 'Edit' }}
-                <!-- Change button text based on edit mode -->
-              </button>
-              <button
-                @click="deleteForm()"
-                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
-              >
+                <!-- Edit Icon -->
+
                 <svg
+                  v-if="isEditMode"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5"
+                >
+                  <rect
+                    x="3"
+                    y="3"
+                    width="18"
+                    height="18"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linejoin="round"
+                  />
+                  <rect
+                    x="7"
+                    y="3"
+                    width="10"
+                    height="12"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12 8v4"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M5 3h14"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
+                </svg>
+
+                <!-- Save Icon -->
+                <svg
+                  v-else
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -1537,92 +2039,13 @@
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
                   />
                 </svg>
               </button>
-              <!-- <button
-                @click="isClickModal = false"
-                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
-              >
-                Cancel
-              </button> -->
-            </div>
-          </div>
-
-          <div v-if="selectedClaimType === 'Others'">
-            <div class="flex-1 gap-4 justify-center items-center">
-              <!-- Modal content -->
-              <div class="flex justify-end">
-                <button
-                  v-show="!isEditMode"
-                  @click="isClickModal = false"
-                  class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
-                >
-                  X
-                </button>
-              </div>
-              <h1 class="text-3xl font-bold">Others Form</h1>
-              <hr class="mt-2 mb-4" />
-
-              <div class="flex justify-between items-center mb-4">
-                <label for="nodeId" class="text-gray-700 font-bold mr-2"
-                  >Date:</label
-                >
-                <input
-                  type="text"
-                  id="nodeId"
-                  v-model="othersDetails.dateOthers"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
-                />
-              </div>
-              <div class="flex justify-between items-center mb-4">
-                <label for="amount" class="text-gray-700 font-bold mr-2"
-                  >Amount (RM):</label
-                >
-                <input
-                  type="text"
-                  id="amount"
-                  v-model="othersDetails.AmountRMOthers"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
-                />
-              </div>
-              <div class="flex justify-between items-center mb-4">
-                <label for="desription" class="text-gray-700 font-bold mr-2"
-                  >Description Of Claim:</label
-                >
-                <input
-                  type="text"
-                  id="DescriptionOthers"
-                  v-model="othersDetails.DescriptionOthers"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-4 py-2"
-                />
-              </div>
-            </div>
-
-            <hr />
-            <div class="flex justify-center items-center mb-4">
-              <label
-                for="nodeParentId"
-                class="text-gray-700 font-bold mr-2 text-2xl"
-                >Total: RM {{ totalOthersDetails }}</label
-              >
-            </div>
-
-            <div class="flex justify-end">
-              <button
-                @click="toggleEditMode"
-                class="bg-[#FA991C] hover:bg-[#fa9a1ce0] text-white font-bold py-2 px-4 rounded"
-              >
-                {{ isEditMode ? 'Save' : 'Edit' }}
-                <!-- Change button text based on edit mode -->
-              </button>
               <button
                 @click="deleteForm()"
-                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+                class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -1660,7 +2083,7 @@
                   X
                 </button>
               </div>
-              <h1 class="text-3xl font-bold">
+              <h1 class="text-3xl font-bold text-blue-900">
                 Handphone Bill Reimbursement Form
               </h1>
               <hr class="mt-2 mb-4" />
@@ -1675,7 +2098,7 @@
                     id="nodeId"
                     v-model="handphoneBillReimbursementDetails.MonthHR"
                     :disabled="!isEditMode"
-                    class="border rounded-md px-4 py-2"
+                    class="border rounded-md px-16 py-2"
                   />
                 </div>
                 <div class="flex justify-between items-center mb-4">
@@ -1687,7 +2110,7 @@
                     id="nodeName"
                     v-model="handphoneBillReimbursementDetails.YearHR"
                     :disabled="!isEditMode"
-                    class="border rounded-md px-4 py-2"
+                    class="border rounded-md px-16 py-2"
                   />
                 </div>
                 <div class="flex justify-between items-center mb-4">
@@ -1699,7 +2122,7 @@
                     id="bankName"
                     v-model="handphoneBillReimbursementDetails.BankNameHR"
                     :disabled="!isEditMode"
-                    class="border rounded-md px-4 py-2"
+                    class="border rounded-md px-16 py-2"
                   />
                 </div>
                 <div class="flex justify-between items-center mb-4">
@@ -1713,7 +2136,7 @@
                     id="accBankNumber"
                     v-model="handphoneBillReimbursementDetails.AccBankNumberHR"
                     :disabled="!isEditMode"
-                    class="border rounded-md px-4 py-2"
+                    class="border rounded-md px-16 py-2"
                   />
                 </div>
                 <div class="flex justify-between items-center mb-4">
@@ -1727,7 +2150,7 @@
                     id="accHolderName"
                     v-model="handphoneBillReimbursementDetails.AccHolderNameHR"
                     :disabled="!isEditMode"
-                    class="border rounded-md px-4 py-2"
+                    class="border rounded-md px-16 py-2"
                   />
                 </div>
                 <div class="flex justify-between items-center mb-4">
@@ -1739,13 +2162,37 @@
                     id="claimsAmount"
                     v-model="handphoneBillReimbursementDetails.ClaimsAmountHR"
                     :disabled="!isEditMode"
-                    class="border rounded-md px-4 py-2"
+                    class="border rounded-md px-16 py-2"
                   />
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                  <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                    >Attachment(s). :</label
+                  >
+                  <div class="flex flex-wrap">
+                    <div
+                      v-for="(
+                        file, index
+                      ) in handphoneBillReimbursementDetails.UploadHR"
+                      :key="index"
+                      class="m-2"
+                    >
+                      <div
+                        class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
+                      >
+                        <img
+                          :src="createObjectURL(file)"
+                          :alt="file.name"
+                          class="w-full h-full object-cover"
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
               <hr />
-              <div class="flex justify-center items-center mb-4">
+              <div class="flex justify-end items-center mb-4 mt-4">
                 <label
                   for="nodeParentId"
                   class="text-gray-700 font-bold mr-2 text-2xl"
@@ -1756,13 +2203,73 @@
               <div class="flex justify-end">
                 <button
                   @click="toggleEditMode"
-                  class="bg-[#FA991C] hover:bg-[#FA991C] text-white font-bold py-2 px-4 rounded"
+                  class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800"
                 >
-                  {{ isEditMode ? 'Save' : 'Edit' }}
+                  <!-- Edit Icon -->
+
+                  <svg
+                    v-if="isEditMode"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-5 h-5"
+                  >
+                    <rect
+                      x="3"
+                      y="3"
+                      width="18"
+                      height="18"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linejoin="round"
+                    />
+                    <rect
+                      x="7"
+                      y="3"
+                      width="10"
+                      height="12"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M12 8v4"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                    />
+                    <path
+                      d="M5 3h14"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+
+                  <!-- Save Icon -->
+                  <svg
+                    v-else
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-5 h-5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                    />
+                  </svg>
                 </button>
                 <button
                   @click="deleteForm()"
-                  class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+                  class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1798,13 +2305,13 @@
 </template>
 
 <script>
-import tab from './user-ui/FormTab.vue';
-import axios from 'axios';
-import { formStore } from '../store.js';
-import { store } from '../store.js';
+import tab from "./user-ui/FormTab.vue";
+import axios from "axios";
+import { formStore } from "../store.js";
+import { store } from "../store.js";
 
 export default {
-  name: 'TEtstS',
+  name: "TEtstS",
   components: {
     tab,
   },
@@ -1833,13 +2340,13 @@ export default {
   computed: {
     totallocalTravellingDetails() {
       let total =
-        (this.localTravellingDetails.TransportLT === 'Company Transport'
+        (this.localTravellingDetails.TransportLT === "Company Transport"
           ? 0
           : parseFloat(this.localTravellingDetails.MileageRMLT) || 0) +
         (parseFloat(this.localTravellingDetails.ParkingLT) || 0) +
         (parseFloat(this.localTravellingDetails.TollLT) || 0);
 
-      if (this.localTravellingDetails.tripwayLT === 'Round Trip') {
+      if (this.localTravellingDetails.tripwayLT === "Round Trip") {
         total *= 2;
       }
       this.totalplusmethod(total);
@@ -1847,28 +2354,25 @@ export default {
     },
 
     isCompanyTransport() {
-      return this.localTravellingDetails.TransportLT === 'Company Transport';
+      return this.localTravellingDetails.TransportLT === "Company Transport";
     },
 
     isPanelClinic() {
       return (
         this.medicalBillReimbursementDetails.ClinicSelectionML ===
-        'Mediviron Clinic - Panel'
+        "Mediviron Clinic - Panel"
       );
     },
 
     isOtherEntertainment() {
-      const validTypes = ['BREAKFAST', 'LUNCH', 'DINNER', 'TEA BREAK'];
+      const validTypes = ["BREAKFAST", "LUNCH", "DINNER", "TEA BREAK"];
       return validTypes.includes(
         this.entertainmentDetails.TypeofEntertainmentE
       );
     },
 
-    isOtherRefreshment() {
-      const validTypes = ['BREAKFAST', 'LUNCH', 'DINNER', 'TEA BREAK'];
-      return validTypes.includes(
-        this.staffRefreshmentDetails.TypeofRefreshmentSR
-      );
+    isOtherStaffRefreshment() {
+      return this.staffRefreshmentDetails.TypeofRefreshmentSR !== "OTHERS";
     },
 
     totalOverseasTravellingAmount() {
@@ -1902,6 +2406,24 @@ export default {
       return total;
     },
 
+    claimsAmountExceedsLimit() {
+      const category = this.medicalBillReimbursementDetails.MedicalCategoryML;
+      const amount =
+        parseFloat(this.medicalBillReimbursementDetails.ClaimsAmountML) || 0;
+      if (category === "Medical Check-Up" && amount > 70) return true;
+      if (category === "Dental" && amount > 200) return true;
+      return false;
+    },
+
+    claimsAmountErrorMessage() {
+      const category = this.medicalBillReimbursementDetails.MedicalCategoryML;
+      if (category === "Medical Check-Up")
+        return "The maximum claim amount for Medical Check-Up is RM 70.";
+      if (category === "Dental")
+        return "The maximum claim amount for Dental is RM 200.";
+      return "";
+    },
+
     totalStaffRefreshmentDetails() {
       let total = parseFloat(this.staffRefreshmentDetails.AmountRMSR) || 0;
       this.totalplusmethod(total);
@@ -1932,6 +2454,10 @@ export default {
         }, 0)
         .toFixed(2);
     },
+    referenceNumber() {
+      console.log("Current uniqueCode:", this.claims.uniqueCode);
+      return this.claims.uniqueCode;
+    },
   },
 
   created() {
@@ -1941,19 +2467,23 @@ export default {
 
   mounted() {
     // Sidebar close or open
-    let openOrNot = localStorage.getItem('openOrNot');
-    const element = document.querySelector('main');
-    if (element && openOrNot == 'false') {
-      element.classList.add('become-big');
-    } else if (element && openOrNot == 'true') {
-      element.classList.remove('become-big');
+    let openOrNot = localStorage.getItem("openOrNot");
+    const element = document.querySelector("main");
+    if (element && openOrNot == "false") {
+      element.classList.add("become-big");
+    } else if (element && openOrNot == "true") {
+      element.classList.remove("become-big");
     }
   },
 
   methods: {
+    deleteExpense(index) {
+      // Assuming `expenses` is the array holding your items
+      this.overseasTravellingDetails.otherExpenses.splice(index, 1);
+    },
     totalplusmethod(total) {
       this.totalplus = total;
-      console.log('totalplus', this.totalplus);
+      console.log("totalplus", this.totalplus);
     },
     createObjectURL(file) {
       return URL.createObjectURL(file);
@@ -1977,50 +2507,50 @@ export default {
 
     showDetails(claim, index) {
       this.index = index;
-      console.log('Current index', this.index);
+      console.log("Current index", this.index);
       // Update selectedClaimType based on the type of claim
-      this.selectedClaimType = claim.tabTitle.replace(/\s+/g, ''); // Remove spaces from claim type
+      this.selectedClaimType = claim.tabTitle.replace(/\s+/g, ""); // Remove spaces from claim type
       this.formToDelete = index;
       // Update corresponding details object based on claim type
       switch (this.selectedClaimType) {
-        case 'LocalTravelling':
+        case "LocalTravelling":
           this.localTravellingDetails = claim;
-          console.log('Local Travelling Details:', this.localTravellingDetails);
-          console.log('upload', this.localTravellingDetails.UploadLT);
+          console.log("Local Travelling Details:", this.localTravellingDetails);
+          console.log("upload", this.localTravellingDetails.UploadLT);
           break;
-        case 'OverseasTravellingwithAccommodation':
+        case "OverseasTravellingwithAccommodation":
           this.overseasTravellingDetails = claim;
           console.log(
-            'Overseas Travelling Details:',
+            "Overseas Travelling Details:",
             this.overseasTravellingDetails
           );
           break;
-        case 'Entertainment':
+        case "Entertainment":
           this.entertainmentDetails = claim;
-          console.log('Entertainment Details:', this.entertainmentDetails);
+          console.log("Entertainment Details:", this.entertainmentDetails);
           break;
-        case 'StaffRefreshment':
+        case "StaffRefreshment":
           this.staffRefreshmentDetails = claim;
           console.log(
-            'Staff Refreshment Details:',
+            "Staff Refreshment Details:",
             this.staffRefreshmentDetails
           );
           break;
-        case 'Others':
+        case "Others":
           this.othersDetails = claim;
-          console.log('Others Details:', this.othersDetails);
+          console.log("Others Details:", this.othersDetails);
           break;
-        case 'HandphoneBillReimbursement':
+        case "HandphoneBillReimbursement":
           this.handphoneBillReimbursementDetails = claim;
           console.log(
-            'Handphone Bill Reimbursement Details:',
+            "Handphone Bill Reimbursement Details:",
             this.handphoneBillReimbursementDetails
           );
           break;
-        case 'MedicalBillReimbursement':
+        case "MedicalBillReimbursement":
           this.medicalBillReimbursementDetails = claim;
           console.log(
-            'Medical Bill Reimbursement Details:',
+            "Medical Bill Reimbursement Details:",
             this.medicalBillReimbursementDetails
           );
           break;
@@ -2037,48 +2567,48 @@ export default {
         // Generate a random number and pad it to 2 characters
         const randomNumber = Math.floor(Math.random() * 100)
           .toString()
-          .padStart(2, '0');
+          .padStart(2, "0");
 
         // Create a timestamp and take the last 2 digits for uniqueness
         const timestamp = Date.now().toString().slice(-2);
 
         // Determine the prefix based on the location
-        let prefix = '';
+        let prefix = "";
         switch (tabTitle) {
-          case 'Local Travelling':
-            prefix = 'LT';
+          case "Local Travelling":
+            prefix = "LT";
             break;
-          case 'Overseas Travelling with Accommodation':
-            prefix = 'OV';
+          case "Overseas Travelling with Accommodation":
+            prefix = "OV";
             break;
-          case 'Entertainment':
-            prefix = 'ENT';
+          case "Entertainment":
+            prefix = "ENT";
             break;
-          case 'Staff Refreshment':
-            prefix = 'SR';
+          case "Staff Refreshment":
+            prefix = "SR";
             break;
-          case 'Others':
-            prefix = 'OTHERS';
+          case "Others":
+            prefix = "OTHERS";
             break;
-          case 'Handphone Bill Reimbursement':
-            prefix = 'HR';
+          case "Handphone Bill Reimbursement":
+            prefix = "HR";
             break;
-          case 'Medical Bill Reimbursement':
-            prefix = 'MLR';
+          case "Medical Bill Reimbursement":
+            prefix = "MLR";
             break;
           default:
-            console.error('Invalid location provided:', tabTitle);
-            return '';
+            console.error("Invalid location provided:", tabTitle);
+            return "";
         }
 
         // Construct the uniqueCode
         const uniqueCode = `${prefix}${userIdFragment}${randomNumber}${timestamp}`;
-        console.log('Unique Code:', uniqueCode);
+        console.log("Unique Code:", uniqueCode);
         return uniqueCode;
       } else {
-        console.error('User ID is undefined.');
+        console.error("User ID is undefined.");
         // You may want to handle this case differently based on your application logic.
-        return '';
+        return "";
       }
     },
     generateUniqueCodeSN(tabTitle) {
@@ -2090,49 +2620,53 @@ export default {
         // Generate a random number and pad it to 2 characters
         const randomNumber = Math.floor(Math.random() * 100)
           .toString()
-          .padStart(2, '0');
+          .padStart(2, "0");
 
         // Create a timestamp and take the last 2 digits for uniqueness
         const timestamp = Date.now().toString().slice(-2);
 
         // Determine the prefix based on the location
-        let prefix = '';
+        let prefix = "";
         switch (tabTitle) {
-          case 'Local Travelling':
-            prefix = 'LT';
+          case "Local Travelling":
+            prefix = "LT";
             break;
-          case 'Overseas Travelling with Accommodation':
-            prefix = 'OV';
+          case "Overseas Travelling with Accommodation":
+            prefix = "OV";
             break;
-          case 'Entertainment':
-            prefix = 'ENT';
+          case "Entertainment":
+            prefix = "ENT";
             break;
-          case 'Staff Refreshment':
-            prefix = 'SR';
+          case "Staff Refreshment":
+            prefix = "SR";
             break;
-          case 'Others':
-            prefix = 'OTHERS';
+          case "Others":
+            prefix = "OTHERS";
             break;
-          case 'Handphone Bill Reimbursement':
-            prefix = 'HR';
+          case "Handphone Bill Reimbursement":
+            prefix = "HR";
             break;
-          case 'Medical Bill Reimbursement':
-            prefix = 'MLR';
+          case "Medical Bill Reimbursement":
+            prefix = "MLR";
             break;
           default:
-            console.error('Invalid location provided:', tabTitle);
-            return '';
+            console.error("Invalid location provided:", tabTitle);
+            return "";
         }
 
         // Construct the uniqueCode
         const uniqueCode = `SN${prefix}${userIdFragment}${randomNumber}${timestamp}`;
-        console.log('Unique Code:', uniqueCode);
+        console.log("Unique Code:", uniqueCode);
         return uniqueCode;
       } else {
-        console.error('User ID is undefined.');
+        console.error("User ID is undefined.");
         // You may want to handle this case differently based on your application logic.
-        return '';
+        return "";
       }
+    },
+    someMethod() {
+      console.log(this.claims.uniqueCode);
+      // Other logic
     },
     async senttheclaim() {
       const apiData = {
@@ -2140,29 +2674,32 @@ export default {
         company_name: this.claims[0].companyName,
         department: this.claims[0].department,
         designation_title: this.claims[0].designation,
-        grand_total: this.grandTotal,
+        employee_id: "PKTM1111",
+        requester_email: store.getSession().userDetails.email,
         reference_number: this.claims[0].uniqueCode,
         report_name: this.claims[0].reportName,
+        grand_total: this.grandTotal,
         requester_id: this.userDetails.userId,
+        cost_center: this.claims[0].costCenter,
       };
 
       try {
         // Send API request using axios
         const response = await axios.post(
-          'http://172.28.28.91:97/api/User/InsertClaimDetails',
+          "http://172.28.28.91:97/api/User/InsertClaimDetails",
           apiData
         );
         // Handle success response
-        console.log('API response', response.data);
+        console.log("API response", response.data);
         this.sendToAPI();
       } catch (error) {
         // Handle error response
-        console.error('API error', error);
+        console.error("API error", error);
       }
     },
     async sendToAPI() {
       // Group claims by tabTitle
-      this.$router.push({ name: 'eclaimhomepages' });
+      this.$router.push({ name: "eclaimhomepages" });
       const groupedClaims = this.dataclaims.reduce((acc, claim) => {
         if (!acc[claim.tabTitle]) {
           acc[claim.tabTitle] = [];
@@ -2180,38 +2717,38 @@ export default {
           try {
             let axiosInstance;
             switch (title.toLowerCase()) {
-              case 'local travelling': {
+              case "local travelling": {
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
+                  console.log("Reference Number for claim:", this.claims[0].uniqueCode);
                   const thisisforlocal1 = {
                     mileage_km: claim.MileageKMLT,
-                    destination: claim.DestinationPurposeLT,
+                    starting_point: claim.LocationStart,
+                    end_point: claim.LocationEnd,
                     date_event: claim.dateLT, // Example date
                     park_fee: claim.ParkingLT,
                     toll_fee: claim.TollLT,
-                    total_fee: 10,
-                    approver_email: 'verifier1@example.com', // Access Email property from claim object
-                    verifier_email: 'verifier1@example.com',
-                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    requester_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-
-                    unique_code: this.generateUniqueCode(claim.tabTitle),
-                    reference_number: 'pktm222',
+                    total_fee: claim.totalRM,
+                    unique_code: String(claim.UploadLT),
+                    reference_number: this.claims[0].uniqueCode,
+                    transport_mode: claim.TransportLT,
+                    trip_mode: claim.tripwayLT,
+                    total_mileage: claim.MileageRMLT,
+                    transport_specification: claim.TransportSpec,
                   };
                   axiosInstance = axios.create({
                     baseURL:
-                      'http://172.28.28.91:97/api/User/InsertLocalOutstation',
+                      "http://172.28.28.91:97/api/User/InsertLocalOutstation",
                   });
                   const response1 = await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforlocal1
                   );
                   console.log(`Data sent for ${title} 1:`, response1.data);
                 }
                 break;
               }
-              case 'overseas travelling with accommodation':
+              case "overseas travelling with accommodation":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -2229,29 +2766,29 @@ export default {
                     other_foreign_currency: claim.ForeignCurrencyOthersOT,
                     other_exchange_rate: claim.ExchangeRateOthersOT,
                     other_foreign_total: 200,
-                    reference_number: 'pktm222',
+                    reference_number: "pktm222",
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: 'approver@example.com',
-                    verifier_email: 'verifier@example.com',
-                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
 
                   axiosInstance = axios.create({
                     baseURL:
-                      'http://172.28.28.91:97/api/User/InsertOverseasOutstation',
+                      "http://172.28.28.91:97/api/User/InsertOverseasOutstation",
                   });
                   const response2 = await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforoversea
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case 'Entertainment':
+              case "Entertainment":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -2265,28 +2802,28 @@ export default {
                     venue: claim.VenueE,
                     reference: claim.ReferenceE,
                     amount: claim.AmountRME,
-                    reference_number: 'pktm222',
+                    reference_number: "pktm222",
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: 'approver@example.com',
-                    verifier_email: 'verifier@example.com',
-                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
                   axiosInstance = axios.create({
-                    baseURL: 'http://localhost:3000/claims/entertainment',
+                    baseURL: "http://localhost:3000/claims/entertainment",
                   });
                   const response2 = await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforentertainment
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
 
-              case 'Staff Refreshment':
+              case "Staff Refreshment":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -2300,27 +2837,27 @@ export default {
                     venue: claim.VenueE,
                     reference: claim.ReferenceE,
                     amount: claim.AmountRME,
-                    reference_number: 'pktm222',
+                    reference_number: "pktm222",
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: 'approver@example.com',
-                    verifier_email: 'verifier@example.com',
-                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
                   axiosInstance = axios.create({
-                    baseURL: 'http://localhost:3000/claims/entertainment',
+                    baseURL: "http://localhost:3000/claims/entertainment",
                   });
                   const response2 = await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforstaffrefreshment
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case 'Others':
+              case "Others":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -2334,27 +2871,27 @@ export default {
                     venue: claim.VenueE,
                     reference: claim.ReferenceE,
                     amount: claim.AmountRME,
-                    reference_number: 'pktm222',
+                    reference_number: "pktm222",
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: 'approver@example.com',
-                    verifier_email: 'verifier@example.com',
-                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
                   axiosInstance = axios.create({
-                    baseURL: 'http://localhost:3000/claims/entertainment',
+                    baseURL: "http://localhost:3000/claims/entertainment",
                   });
                   const response2 = await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforHandphoneBillReimbursement
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case 'Handphone Bill Reimbursement':
+              case "Handphone Bill Reimbursement":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -2368,27 +2905,27 @@ export default {
                     venue: claim.VenueE,
                     reference: claim.ReferenceE,
                     amount: claim.AmountRME,
-                    reference_number: 'pktm222',
+                    reference_number: "pktm222",
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: 'approver@example.com',
-                    verifier_email: 'verifier@example.com',
-                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
                   axiosInstance = axios.create({
-                    baseURL: 'http://localhost:3000/claims/entertainment',
+                    baseURL: "http://localhost:3000/claims/entertainment",
                   });
                   const response2 = await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforHandphoneBillReimbursement
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case 'Medical Bill Reimbursement':
+              case "Medical Bill Reimbursement":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -2402,21 +2939,21 @@ export default {
                     venue: claim.VenueE,
                     reference: claim.ReferenceE,
                     amount: claim.AmountRME,
-                    reference_number: 'pktm222',
+                    reference_number: "pktm222",
                     unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: 'approver@example.com',
-                    verifier_email: 'verifier@example.com',
-                    approver_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    verifier_id: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-                    requester_id: '9d0da821-5de0-42e5-b268-b5e0bc40e8d1',
+                    approver_email: "approver@example.com",
+                    verifier_email: "verifier@example.com",
+                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
+                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
                   axiosInstance = axios.create({
-                    baseURL: 'http://localhost:3000/claims/entertainment',
+                    baseURL: "http://localhost:3000/claims/entertainment",
                   });
                   const response2 = await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforMedicalBillReimbursement
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
@@ -2462,38 +2999,36 @@ export default {
       // Retrieve the current formData
       const formData = formStore.getFormData();
 
-      if (formData.claimantName !== '') {
+      if (formData.claimantName !== "") {
         // Set the claims array to contain only the new formData
         this.claims = [formData];
 
         // Update the local storage with the new claims array
-        localStorage.setItem('claims', JSON.stringify(this.claims));
+        localStorage.setItem("claims", JSON.stringify(this.claims));
       } else {
         // If no formData, retrieve the claims array from local storage
-        const storedClaims = JSON.parse(localStorage.getItem('claims')) || [];
+        const storedClaims = JSON.parse(localStorage.getItem("claims")) || [];
         this.claims = storedClaims;
       }
 
       // Log the claims array to the console
-      console.log('Claims:', this.claims);
+      console.log("Claims:", this.claims);
     },
 
     addClaim(formData) {
       // Push new form data into the claims array
       this.dataclaims.push(formData);
-      console.log('Data Claims:', this.dataclaims);
+      console.log("Data Claims:", this.dataclaims);
     },
     handleFileAdded(file, field) {
-      console.log('File added:', file);
-      console.log('Updated field value:', field.value);
+      console.log("File added:", file);
+      console.log("Updated field value:", field.value);
     },
 
     handleFileRemoved(file, field) {
-      console.log('File removed:', file);
-      console.log('Updated field value:', field.value);
+      console.log("File removed:", file);
+      console.log("Updated field value:", field.value);
     },
   },
 };
 </script>
-
-<style></style>

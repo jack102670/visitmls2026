@@ -35,6 +35,17 @@
           {{ tab.title }} Form
         </h2>
 
+        <!--Note for Others Form-->
+        <section>
+          <div v-if="tab.title === 'Others'" class="mt-4">
+            <h1 class="text-gray-500 text-sm">
+              Note: This form is intended for claiming expenses that do not fall
+              under the Local Travelling, Overseas Travelling with
+              Accommodation, Entertainment, and Staff Refreshment.
+            </h1>
+          </div>
+        </section>
+
         <div
           v-if="
             tab.title !== 'Entertainment' && tab.title !== 'Staff Refreshment'
@@ -154,6 +165,16 @@
                         </div>
                       </template>
 
+                      <template v-else-if="field.type === 'long-text'">
+                        <textarea
+                          v-model="field.value"
+                          :id="field.id"
+                          :placeholder="field.placeholder"
+                          class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                          rows="4"
+                        ></textarea>
+                      </template>
+
                       <template v-else>
                         <input
                           v-model="field.value"
@@ -168,7 +189,31 @@
                   </template>
                 </div>
 
-                <!-- Add Other Expenses Section-->
+                <section>
+                  <div
+                    v-if="tab.title === 'Medical Bill Reimbursement'"
+                    class="mt-4"
+                  >
+                    <h1 class="text-red-500 text-sm">
+                      Note : Claims must be submitted by the 15th of each month.
+                      Submissions made after this date will be processed in the
+                      following month.
+                    </h1>
+                    <h1 class="text-gray-500 text-sm">
+                      <span class="text-red-500">*</span
+                      ><span class="text-red-500">*</span> Medical Check-Up: The
+                      limited amount for Medical Check Up is RM70 per visit and
+                      RM700 per year.
+                    </h1>
+                    <h1 class="text-gray-500 text-sm">
+                      <span class="text-red-500">*</span
+                      ><span class="text-red-500">*</span> Dental: The limited
+                      amount for Dental is RM200 per year.
+                    </h1>
+                  </div>
+                </section>
+
+                <!-- Add Other Expenses for Overseas Section-->
                 <section>
                   <!-- Add Other Expenses Button-->
                   <div
@@ -222,13 +267,13 @@
                             for="expenseAmount"
                             >Description</label
                           >
-                          <input
+                          <textarea
                             v-model="newExpense.description"
                             id="expenseDescription"
-                            type="text"
                             class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                            rows="4"
                             required
-                          />
+                          ></textarea>
                         </div>
                         <div class="mb-4">
                           <label
@@ -374,7 +419,7 @@
                     </table>
                   </div>
                 </section>
-                <!-- End of Add Other Expenses Section -->
+                <!-- End of Add Other Expenses for Overseas Section -->
 
                 <div class="pt-4">
                   <hr class="" />
@@ -475,14 +520,20 @@
 
                       <template v-else-if="field.type === 'file'">
                         <div class="pt-3">
-                          <FilePond
+                          <file-pond
+                            :name="field.id"
                             ref="pond"
-                            name="file"
-                            :allow-multiple="field.allowMultiple"
+                            label-idle="Drop files here..."
+                            @addfile="
+                              (error, file) => handleAddFile(error, file, field)
+                            "
+                            @removefile="
+                              (error, file) =>
+                                handleRemoveFile(error, file, field)
+                            "
                             :accepted-file-types="field.acceptedFileTypes"
                             :max-file-size="field.maxFileSize"
-                            @addfile="handleAddFile(field)"
-                            @removefile="handleRemoveFile(field)"
+                            :allow-multiple="field.allowMultiple"
                           />
                         </div>
                       </template>
@@ -546,7 +597,7 @@
                       <label
                         for="companyName"
                         class="block text-sm font-medium text-gray-700"
-                        >Company’s Name</label
+                        >Company Name</label
                       >
                       <select
                         v-model="selectedCompanyName"
@@ -610,7 +661,7 @@
                           <label
                             for="companyName"
                             class="block text-sm font-medium text-gray-700"
-                            >Company’s Name</label
+                            >Company Name</label
                           >
                           <input
                             type="text"
@@ -664,7 +715,7 @@
                               class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                             >
                               <div class="flex items-center gap-x-3">
-                                <span>Company's Name</span>
+                                <span>Company Name</span>
                               </div>
                             </th>
                             <th
@@ -767,7 +818,7 @@
         <!-- End of Entertainment tab-->
 
         <!-- Staff Refreshment tab -->
-        <div v-if="tab.title == 'Staff Refreshment'">
+        <div v-if="tab.title === 'Staff Refreshment'">
           <div class="tabs">
             <button
               v-for="(subTab, subIndex) in staffRefreshmentTabs"
@@ -780,8 +831,8 @@
               class="px-4 py-2 mr-2 rounded-sm focus:outline-none border border-gray-300"
             >
               {{ subTab.title }}
-              <span v-if="subTab.title === 'Attendees'">
-                ({{ attendees.length }})</span
+              <span v-if="subTab.title === 'Staff Involved'"
+                >({{ staffInvolved.length }})</span
               >
             </button>
           </div>
@@ -808,7 +859,7 @@
                     <template
                       v-if="
                         field.id !== 'OtherTypeofStaffRefreshmentSR' ||
-                        isOtherRefreshment
+                        isOtherStaffRefreshment
                       "
                     >
                       <label
@@ -837,14 +888,20 @@
 
                       <template v-else-if="field.type === 'file'">
                         <div class="pt-3">
-                          <FilePond
+                          <file-pond
+                            :name="field.id"
                             ref="pond"
-                            name="file"
-                            :allow-multiple="field.allowMultiple"
+                            label-idle="Drop files here..."
+                            @addfile="
+                              (error, file) => handleAddFile(error, file, field)
+                            "
+                            @removefile="
+                              (error, file) =>
+                                handleRemoveFile(error, file, field)
+                            "
                             :accepted-file-types="field.acceptedFileTypes"
                             :max-file-size="field.maxFileSize"
-                            @addfile="handleAddFile(field)"
-                            @removefile="handleRemoveFile(field)"
+                            :allow-multiple="field.allowMultiple"
                           />
                         </div>
                       </template>
@@ -861,7 +918,7 @@
                     </template>
                   </div>
 
-                  <div v-if="subTab.title !== 'Attendees'" class="pt-4">
+                  <div v-if="subTab.title !== 'Staff Involved'" class="pt-4">
                     <hr />
                     <div class="mt-4">
                       <div class="grid grid-cols-1 sm:grid-cols-2">
@@ -876,39 +933,12 @@
                     </div>
                   </div>
 
-                  <div v-if="subTab.title === 'Attendees'" class="mt-4">
+                  <div v-if="subTab.title === 'Staff Involved'" class="mt-4">
                     <div class="mb-4">
-                      <label class="inline-flex items-center mr-4">
-                        <input
-                          type="radio"
-                          value="pkt"
-                          v-model="selectedAttendeeType"
-                          class="form-radio"
-                        />
-                        <span
-                          class="ml-2 block text-sm font-medium text-gray-700"
-                          >PKT Staff</span
-                        >
-                      </label>
-                      <label class="inline-flex items-center">
-                        <input
-                          type="radio"
-                          value="notStaff"
-                          v-model="selectedAttendeeType"
-                          class="form-radio"
-                        />
-                        <span
-                          class="ml-2 block text-sm font-medium text-gray-700"
-                          >Not a Staff</span
-                        >
-                      </label>
-                    </div>
-
-                    <div v-if="selectedAttendeeType === 'pkt'" class="mb-4">
                       <label
                         for="companyName"
                         class="block text-sm font-medium text-gray-700"
-                        >Company’s Name</label
+                        >Company Name</label
                       >
                       <select
                         v-model="selectedCompanyName"
@@ -924,12 +954,11 @@
                         </option>
                       </select>
                     </div>
-
                     <button
                       @click="showModal = true"
                       class="px-4 py-2 bg-blue-500 text-white rounded"
                     >
-                      Add Attendee
+                      Add Staff
                     </button>
 
                     <!-- Modal Form -->
@@ -938,7 +967,7 @@
                       class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
                     >
                       <div class="bg-white p-6 rounded-lg w-80">
-                        <h3 class="text-lg font-medium mb-4">Add Attendee</h3>
+                        <h3 class="text-lg font-medium mb-4">Add Staff</h3>
                         <div class="mb-4">
                           <label
                             for="name"
@@ -952,7 +981,7 @@
                             class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                           />
                         </div>
-                        <div v-if="selectedAttendeeType === 'pkt'" class="mb-4">
+                        <div class="mb-4">
                           <label
                             for="staffId"
                             class="block text-sm font-medium text-gray-700"
@@ -965,25 +994,9 @@
                             class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                           />
                         </div>
-                        <div
-                          v-if="selectedAttendeeType === 'notStaff'"
-                          class="mb-4"
-                        >
-                          <label
-                            for="companyName"
-                            class="block text-sm font-medium text-gray-700"
-                            >Company’s Name</label
-                          >
-                          <input
-                            type="text"
-                            v-model="modalForm.companyName"
-                            required
-                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                          />
-                        </div>
                         <div class="flex justify-end">
                           <button
-                            @click="addAttendee"
+                            @click="addStaff"
                             class="px-4 py-2 bg-blue-500 text-white rounded mr-2"
                           >
                             Save
@@ -998,7 +1011,7 @@
                       </div>
                     </div>
 
-                    <!-- Attendees Table -->
+                    <!-- Staff Table -->
                     <div class="mt-4">
                       <table
                         class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
@@ -1026,15 +1039,7 @@
                               class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                             >
                               <div class="flex items-center gap-x-3">
-                                <span>Company's Name</span>
-                              </div>
-                            </th>
-                            <th
-                              scope="col"
-                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                            >
-                              <div class="flex items-center gap-x-3">
-                                <span>Status</span>
+                                <span>Company Name</span>
                               </div>
                             </th>
                             <th
@@ -1051,34 +1056,29 @@
                           class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
                         >
                           <tr
-                            v-for="(attendee, index) in attendees"
+                            v-for="(staff, index) in staffInvolved"
                             :key="index"
                           >
                             <td
                               class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                             >
-                              {{ attendee.name }}
+                              {{ staff.name }}
                             </td>
                             <td
                               class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                             >
-                              {{ attendee.staffId || "-" }}
+                              {{ staff.staffId || "-" }}
                             </td>
                             <td
                               class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                             >
-                              {{ attendee.companyName }}
-                            </td>
-                            <td
-                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                            >
-                              {{ attendee.status }}
+                              {{ staff.companyName }}
                             </td>
                             <td
                               class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                             >
                               <button
-                                @click="removeAttendee(index)"
+                                @click="removeStaff(index)"
                                 class="text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
                               >
                                 <svg
@@ -1092,7 +1092,7 @@
                                   <path
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
-                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M4 7h16"
                                   />
                                 </svg>
                               </button>
@@ -1102,6 +1102,7 @@
                       </table>
                     </div>
                   </div>
+
                   <div class="mt-4 mr-6 flex flex-row-reverse">
                     <div class="flex items-center justify-between">
                       <button
@@ -1113,7 +1114,7 @@
                         Next
                       </button>
                       <button
-                        v-else-if="subTab.title === 'Attendees'"
+                        v-else-if="subTab.title === 'Staff Involved'"
                         type="submit"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                       >
@@ -1126,7 +1127,7 @@
             </div>
           </div>
         </div>
-        <!-- End of Staff Refreshment tab-->
+        <!-- End of Staff Refreshment tab -->
       </div>
     </div>
   </div>
@@ -1138,6 +1139,10 @@ import "filepond/dist/filepond.min.css";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
+import { bankOptions } from "@/javascript/eClaimOptions.js";
+import { monthOptions } from "@/javascript/eClaimOptions.js";
+import { refOptions } from "@/javascript/eClaimOptions.js";
+import { TypeOptions } from "@/javascript/eClaimOptions.js";
 
 // Create component
 const FilePond = vueFilePond(
@@ -1157,11 +1162,12 @@ export default {
   data() {
     return {
       chooseform: true,
-
       activeTab: this.type == "Finance" ? 0 : 4,
       activeSubTab: 0,
       date: "",
       yearRange: [],
+      LIMIT_MEDICAL_CHECKUP: 70,
+      LIMIT_DENTAL: 200,
       uploadedFiles: [],
       otherExpenses: [],
       showOtherExpensesModal: false,
@@ -1172,13 +1178,14 @@ export default {
       showModal: false,
       selectedAttendeeType: "pkt",
       selectedCompanyName: "",
-      pktCompanies: ["PKT Branch 1", "PKT Branch 2", "PKT Branch 3"],
+      pktCompanies: [],
       modalForm: {
         name: "",
         staffId: "",
         companyName: "",
       },
       attendees: [],
+      staffInvolved: [],
       tabs: [
         {
           form: "HR",
@@ -1434,22 +1441,9 @@ export default {
               id: "MonthHR",
               label: "Month",
               type: "select",
-              value: "huda beban",
+              value: "",
               required: true,
-              options: [
-                { label: "JANUARY", value: "JANUARY" },
-                { label: "FEBRUARY", value: "FEBRUARY" },
-                { label: "MARCH", value: "MARCH" },
-                { label: "APRIL", value: "APRIL" },
-                { label: "MAY", value: "MAY" },
-                { label: "JUNE", value: "JUNE" },
-                { label: "JULY", value: "JULY" },
-                { label: "AUGUST", value: "AUGUST" },
-                { label: "SEPTEMBER", value: "SEPTEMBER" },
-                { label: "OCTOBER", value: "OCTOBER" },
-                { label: "NOVEMBER", value: "NOVEMBER" },
-                { label: "DECEMBER", value: "DECEMBER" },
-              ],
+              options: monthOptions,
               gridClass: "sm:col-span-1",
             },
             {
@@ -1465,42 +1459,9 @@ export default {
               id: "BankNameHR",
               label: "Bank Name",
               type: "select",
-              value: "",
-
+              value: "HONG LEONG BANK",
               required: true,
-              options: [
-                { label: "HONG LEONG BANK", value: "HONG LEONG BANK" },
-                { label: "AGROBANK", value: "AGROBANK" },
-                { label: "AFFIN BANK BERHAD", value: "AFFIN BANK BERHAD" },
-                {
-                  label: "ALLIANCE BANK MALAYSIA BERHAD",
-                  value: "ALLIANCE BANK MALAYSIA BERHAD",
-                },
-                { label: "AMBANK BERHAD", value: "AMBANK BERHAD" },
-                { label: "BANK ISLAM MALAYSIA", value: "BANK ISLAM MALAYSIA" },
-                {
-                  label: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
-                  value: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
-                },
-                { label: "BANK MUAMALAT", value: "BANK MUAMALAT" },
-                {
-                  label: "BANK SIMPANAN NASIONAL BERHAD",
-                  value: "BANK SIMPANAN NASIONAL BERHAD",
-                },
-                { label: "CIMB BANK BERHAD", value: "CIMB BANK BERHAD" },
-                { label: "CITIBANK BERHAD", value: "CITIBANK BERHAD" },
-                {
-                  label: "HSBC BANK MALAYSIA BERHAD",
-                  value: "HSBC BANK MALAYSIA BERHAD",
-                },
-                { label: "MAYBANK", value: "MAYBANK" },
-                { label: "PUBLIC BANK", value: "PUBLIC BANK" },
-                { label: "RHB BANK", value: "RHB BANK" },
-                {
-                  label: "OCBC BANK MALAYSIA BERHAD",
-                  value: "OCBC BANK MALAYSIA BERHAD",
-                },
-              ],
+              options: bankOptions,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1626,41 +1587,9 @@ export default {
               id: "BankNameML",
               label: "Bank Name",
               type: "select",
-              value: "",
+              value: "HONG LEONG BANK",
               required: true,
-              options: [
-                { label: "HONG LEONG BANK", value: "HONG LEONG BANK" },
-                { label: "AGROBANK", value: "AGROBANK" },
-                { label: "AFFIN BANK BERHAD", value: "AFFIN BANK BERHAD" },
-                {
-                  label: "ALLIANCE BANK MALAYSIA BERHAD",
-                  value: "ALLIANCE BANK MALAYSIA BERHAD",
-                },
-                { label: "AMBANK BERHAD", value: "AMBANK BERHAD" },
-                { label: "BANK ISLAM MALAYSIA", value: "BANK ISLAM MALAYSIA" },
-                {
-                  label: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
-                  value: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
-                },
-                { label: "BANK MUAMALAT", value: "BANK MUAMALAT" },
-                {
-                  label: "BANK SIMPANAN NASIONAL BERHAD",
-                  value: "BANK SIMPANAN NASIONAL BERHAD",
-                },
-                { label: "CIMB BANK BERHAD", value: "CIMB BANK BERHAD" },
-                { label: "CITIBANK BERHAD", value: "CITIBANK BERHAD" },
-                {
-                  label: "HSBC BANK MALAYSIA BERHAD",
-                  value: "HSBC BANK MALAYSIA BERHAD",
-                },
-                { label: "MAYBANK", value: "MAYBANK" },
-                { label: "PUBLIC BANK", value: "PUBLIC BANK" },
-                { label: "RHB BANK", value: "RHB BANK" },
-                {
-                  label: "OCBC BANK MALAYSIA BERHAD",
-                  value: "OCBC BANK MALAYSIA BERHAD",
-                },
-              ],
+              options: bankOptions,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1684,6 +1613,7 @@ export default {
               label: "Claims Amount(RM)",
               type: "number",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1751,6 +1681,7 @@ export default {
                 "application/vnd.ms-excel",
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
+              required: true,
               gridClass: "sm:col-span-1",
             },
           ],
@@ -1775,13 +1706,7 @@ export default {
               type: "select",
               value: "",
               required: true,
-              options: [
-                { label: "BREAKFAST", value: "BREAKFAST" },
-                { label: "LUNCH", value: "LUNCH" },
-                { label: "DINNER", value: "DINNER" },
-                { label: "TEA BREAK", value: "TEA BREAK" },
-                { label: "OTHERS", value: "OTHERS" },
-              ],
+              options: TypeOptions,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1815,23 +1740,7 @@ export default {
               type: "select",
               value: "",
               required: true,
-              options: [
-                {
-                  label: "ENTERTAINMENT-CLIENT(EXISTING)",
-                  value: "ENTERTAINMENT-CLIENT(EXISTING)",
-                },
-                {
-                  label: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)",
-                  value: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)",
-                },
-                {
-                  label: "ENTERTAINMENT-NON TRADE",
-                  value: "ENTERTAINMENT-NON TRADE",
-                },
-                { label: "GIFT TO CLIENT", value: "GIFT TO CLIENT" },
-                { label: "GIFT TO OTHERS", value: "GIFT TO OTHERS" },
-                { label: "MEAL FOR STAFF", value: "MEAL FOR STAFF" },
-              ],
+              options: refOptions,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1863,7 +1772,6 @@ export default {
         },
         {
           title: "Attendees",
-          attendees1: [],
           fields: [],
         },
       ],
@@ -1886,13 +1794,7 @@ export default {
               type: "select",
               value: "",
               required: true,
-              options: [
-                { label: "BREAKFAST", value: "BREAKFAST" },
-                { label: "LUNCH", value: "LUNCH" },
-                { label: "DINNER", value: "DINNER" },
-                { label: "TEA BREAK", value: "TEA BREAK" },
-                { label: "OTHERS", value: "OTHERS" },
-              ],
+              options: TypeOptions,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1926,23 +1828,7 @@ export default {
               type: "select",
               value: "",
               required: true,
-              options: [
-                {
-                  label: "ENTERTAINMENT-CLIENT(EXISTING)",
-                  value: "ENTERTAINMENT-CLIENT(EXISTING)",
-                },
-                {
-                  label: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)",
-                  value: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)",
-                },
-                {
-                  label: "ENTERTAINMENT-NON TRADE",
-                  value: "ENTERTAINMENT-NON TRADE",
-                },
-                { label: "GIFT TO CLIENT", value: "GIFT TO CLIENT" },
-                { label: "GIFT TO OTHERS", value: "GIFT TO OTHERS" },
-                { label: "MEAL FOR STAFF", value: "MEAL FOR STAFF" },
-              ],
+              options: refOptions,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1973,8 +1859,7 @@ export default {
           ],
         },
         {
-          title: "Attendees",
-          attendees: [],
+          title: "Staff Involved",
           fields: [],
         },
       ],
@@ -2003,18 +1888,6 @@ export default {
       );
       return clinicField && clinicField.value === "Mediviron Clinic - Panel";
     },
-    isOtherRefreshment() {
-      const staffRefreshmentTab = this.staffRefreshmentTabs.find(
-        (tab) => tab.title === "Staff Refreshment"
-      );
-      if (!staffRefreshmentTab) return false;
-      const typeOfRefreshmentField = staffRefreshmentTab.fields.find(
-        (field) => field.id === "TypeofRefreshmentSR"
-      );
-      return (
-        typeOfRefreshmentField && typeOfRefreshmentField.value === "OTHERS"
-      );
-    },
     isOtherEntertainment() {
       const entertainmentTab = this.entertainmentTabs.find(
         (tab) => tab.title === "Details"
@@ -2025,6 +1898,18 @@ export default {
       );
       return (
         typeOfEntertainmentField && typeOfEntertainmentField.value === "OTHERS"
+      );
+    },
+    isOtherStaffRefreshment() {
+      const staffRefreshmentTab = this.staffRefreshmentTabs.find(
+        (tab) => tab.title === "Details"
+      );
+      if (!staffRefreshmentTab) return false;
+      const TypeofRefreshmentField = staffRefreshmentTab.fields.find(
+        (field) => field.id === "TypeofRefreshmentSR"
+      );
+      return (
+        TypeofRefreshmentField && TypeofRefreshmentField.value === "OTHERS"
       );
     },
   },
@@ -2053,19 +1938,57 @@ export default {
             }
           }
           if (tab.title === "Details") {
-            const typeOfRefreshmentField = tab.fields.find(
-              (field) => field.id === "TypeofRefreshmentSR"
-            );
-            if (typeOfRefreshmentField) {
-              this.updateFieldVisibility3(typeOfRefreshmentField.value);
-            }
-          }
-          if (tab.title === "Details") {
             const typeOfEntertainmentField = tab.fields.find(
               (field) => field.id === "TypeofEntertainmentE"
             );
             if (typeOfEntertainmentField) {
               this.updateFieldVisibility4(typeOfEntertainmentField.value);
+            }
+            const TypeofRefreshmentField = tab.fields.find(
+              (field) => field.id === "TypeofRefreshmentSR"
+            );
+            if (TypeofRefreshmentField) {
+              this.updateFieldVisibility3(TypeofRefreshmentField.value);
+            }
+          }
+          if (tab.title === "Medical Bill Reimbursement") {
+            const medicalCategoryField = tab.fields.find(
+              (field) => field.id === "MedicalCategoryML"
+            );
+            const claimsAmountField = tab.fields.find(
+              (field) => field.id === "ClaimsAmountML"
+            );
+
+            if (medicalCategoryField && claimsAmountField) {
+              // Watch for changes in MedicalCategoryML
+              this.$watch(
+                () => medicalCategoryField.value,
+                (newValue) => {
+                  if (newValue === "Medical Check-Up") {
+                    claimsAmountField.value = this.LIMIT_MEDICAL_CHECKUP;
+                  } else if (newValue === "Dental") {
+                    claimsAmountField.value = this.LIMIT_DENTAL;
+                  }
+                }
+              );
+
+              // Watch for changes in ClaimsAmountML
+              this.$watch(
+                () => claimsAmountField.value,
+                (newValue) => {
+                  if (
+                    medicalCategoryField.value === "Medical Check-Up" &&
+                    parseFloat(newValue) > this.LIMIT_MEDICAL_CHECKUP
+                  ) {
+                    claimsAmountField.value = this.LIMIT_MEDICAL_CHECKUP;
+                  } else if (
+                    medicalCategoryField.value === "Dental" &&
+                    parseFloat(newValue) > this.LIMIT_DENTAL
+                  ) {
+                    claimsAmountField.value = this.LIMIT_DENTAL;
+                  }
+                }
+              );
             }
           }
         });
@@ -2080,6 +2003,7 @@ export default {
     for (let i = currentYear; i >= currentYear - 20; i--) {
       this.yearRange.push(i);
     }
+    this.fetchCompany();
   },
 
   methods: {
@@ -2170,17 +2094,17 @@ export default {
       }
     },
 
-    updateFieldVisibility3(refreshmentValue) {
+    updateFieldVisibility3(staffRefreshmentValue) {
       const staffRefreshmentTab = this.staffRefreshmentTabs.find(
         (tab) => tab.title === "Details"
       );
       if (!staffRefreshmentTab) return;
-      const otherTypeField = staffRefreshmentTab.fields.find(
+      const otherTypeField2 = staffRefreshmentTab.fields.find(
         (field) => field.id === "OtherTypeofStaffRefreshmentSR"
       );
-      if (!otherTypeField) return;
+      if (!otherTypeField2) return;
 
-      otherTypeField.hidden = refreshmentValue !== "OTHERS";
+      otherTypeField2.hidden = staffRefreshmentValue !== "OTHERS";
     },
 
     updateFieldVisibility4(entertainmentValue) {
@@ -2221,6 +2145,21 @@ export default {
       return total;
     },
 
+    async fetchCompany() {
+      try {
+        const response = await fetch(
+          "http://172.28.28.91:97/api/User/GetCompany"
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        this.pktCompanies = data.result.map((company) => company.company_name);
+      } catch (error) {
+        console.error(`Error fetching company names: ${error}`);
+      }
+    },
+
     addAttendee() {
       const { name, staffId, companyName } = this.modalForm;
       if (this.selectedAttendeeType === "pkt" && name && staffId) {
@@ -2252,6 +2191,24 @@ export default {
       this.attendees.splice(index, 1);
     },
 
+    addStaff() {
+      const { name, staffId } = this.modalForm;
+      if (this.modalForm.name && this.modalForm.staffId) {
+        this.staffInvolved.push({
+          name,
+          staffId,
+          companyName: this.selectedCompanyName,
+        });
+      }
+      this.showModal = false;
+      this.modalForm.name = "";
+      this.modalForm.staffId = "";
+    },
+
+    removeStaff(index) {
+      this.staffInvolved.splice(index, 1);
+    },
+
     calculateTotal(tab) {
       let total = 0;
       let isRoundTrip = false;
@@ -2263,7 +2220,6 @@ export default {
           field.value.includes("Company Transport")
       );
 
-      // Iterate through the fields of the current tab
       tab.fields.forEach((field) => {
         // Check if Round Trip is selected
         if (field.id === "tripwayLT" && field.value.includes("Round Trip")) {
@@ -2291,7 +2247,6 @@ export default {
       if (tab.title === "Overseas Travelling with Accommodation") {
         total += this.calculateOverseasTotal();
       }
-
       // Return the total
       return total.toFixed(2);
     },
@@ -2330,7 +2285,6 @@ export default {
       this.entertainmentTabs.forEach((tab) => {
         tab.fields.forEach((field) => {
           if (field.id === "dateE") {
-            // replace 'dateField' with the actual id of the date field
             formattedData[field.id] = this.formatDate(field.value);
           } else {
             formattedData[field.id] = field.value;
@@ -2344,6 +2298,7 @@ export default {
       this.$emit("formSubmitted", formattedData);
       console.log("Formatted Form Data:", formattedData);
     },
+
     submitForm3() {
       const formattedData = {};
       this.staffRefreshmentTabs.forEach((tab) => {
@@ -2355,8 +2310,8 @@ export default {
           }
         });
 
-        tab.attendees = [...this.attendees];
-        formattedData["attendees"] = [...tab.attendees];
+        tab.staffInvolved = [...this.staffInvolved];
+        formattedData["staffInvolved"] = [...tab.staffInvolved];
       });
       formattedData["tabTitle"] = "Staff Refreshment";
       this.$emit("formSubmitted", formattedData);
