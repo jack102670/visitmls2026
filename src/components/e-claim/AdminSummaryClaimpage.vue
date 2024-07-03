@@ -41,8 +41,8 @@
         <div class="flex justify-between items-center my-4">
           <h1 class="text-blue-900 dark:text-blue-600 font-bold text-4xl">
             Webinars
-            
-            <span  class="text-blue-900 dark:text-blue-600"
+
+            <span class="text-blue-900 dark:text-blue-600"
               >| RM{{ totalAmount }}</span
             >
           </h1>
@@ -220,11 +220,11 @@
             <div>
               <div class="flex w-full items-center mt-2">
                 <label class="font-semibold mr-2 mb-4">Remark: </label>
-                <p v-if="approved || rejectApprover" class="mb-4">
+                <p v-if="approve || rejectApprover" class="mb-4">
                   {{ singleRemarks[i] }}
                 </p>
                 <input
-                  v-if="!approved && !rejectApprover"
+                  v-if="!approve && !rejectApprover"
                   v-model="singleRemarks[i]"
                   class="py-3 px-2 mb-4 w-full rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
                   type="text"
@@ -312,8 +312,8 @@
                   <p>{{ statusApprover }}</p>
                 </div>
               </th>
-              <td class="pl-6">SHU LAN</td>
-              <td class="">HR</td>
+              <td class="pl-6">XXX</td>
+              <td class="">Finance</td>
               <td>HR</td>
               <td class="">{{ dateApprover }}</td>
             </tr>
@@ -378,6 +378,19 @@
           </table>
         </div>
 
+        <!-- Reimburse Button -->
+        <div
+          v-show="approve && !reimbursed"
+          class="w-full flex justify-center items-center"
+        >
+          <button
+            @click="confirmReimburse = true"
+            class="my-8 lg:text-lg font-semibold py-3 w-36 bg-blue-800 hover:bg-blue-900 rounded-lg text-white"
+          >
+            Reimburse
+          </button>
+        </div>
+
         <!-- Button -->
         <div
           v-show="
@@ -434,6 +447,32 @@
               <button
                 class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
                 @click="ConfirmApprove"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+        l
+        <!-- Reimburse Confirmation -->
+        <div
+          v-show="confirmReimburse"
+          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
+        >
+          <div
+            class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center"
+          >
+            <h1 class="text-2xl font-bold">Do you confirm to reimburse?</h1>
+            <div class="flex mt-4">
+              <button
+                class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
+                @click="confirmReimburse = false"
+              >
+                Back
+              </button>
+              <button
+                class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
+                @click="ConfirmReimburse()"
               >
                 Confirm
               </button>
@@ -555,18 +594,24 @@ export default {
       seeMore: false,
       confirmReject: false,
       confirmApprove: false,
+      confirmReimburse: false,
       approveSuccess: false,
       loading: false,
 
       // need to fetch from or post to API
       rejectApprover: false,
       rejectVerifier: false,
-      approve: false,
+      approve: true,
       verified: false,
-      dateApprover: '',
-      dateVerifier: '',
+      reimbursed: false,
+      dateApprover: '12 Jun 2024',
+      dateVerifier: '8 Jun 2024',
       remark: '',
       serialNumber: 'PW/Finance/2024/06/5520',
+
+      // fetch from backend
+      claimDetails: [],
+      claimDatas: [],
 
       // need to fetch from API
       claimData: [
@@ -649,6 +694,8 @@ export default {
         status = 'VERIFIED';
       }
 
+      status = 'VERIFIED';
+
       return status;
     },
 
@@ -658,6 +705,8 @@ export default {
       let status = 'PENDING';
       if (this.rejectApprover) {
         status = 'REJECTED';
+      } else if (this.reimbursed) {
+        status = 'REIMBURSED';
       } else if (this.approve) {
         status = 'APPROVED';
       } else {
@@ -668,6 +717,18 @@ export default {
     },
   },
   methods: {
+    FetchClaimDetails() {
+      axios
+        .get()
+        .then((response) => (this.claimDetails = response.data.result));
+    },
+    FetchClaimData() {
+      axios
+        .get(
+          'http://172.28.28.91:97/api/User/GetLocalOutstation/:reference_number'
+        )
+        .then((response) => this.claimDatas.push(response));
+    },
     PrintSummary() {
       print();
     },
@@ -682,6 +743,13 @@ export default {
       this.confirmReject = false;
       this.reject = true;
       this.ApproveOrReject('Reject');
+    },
+
+    // click function after confirm the reimburse
+    ConfirmReimburse() {
+      this.confirmReimburse = false;
+      this.reimbursed = true;
+      this.dateApprover = moment(new Date()).format('D MMM YYYY');
     },
 
     //approve or reject action
