@@ -1991,6 +1991,37 @@ export default {
               );
             }
           }
+          if (tab.title === "Handphone Bill Reimbursement") {
+            const limitedAmountField = tab.fields.find(
+              (field) => field.id === "LimitedAmountHR"
+            );
+            const claimsAmountField = tab.fields.find(
+              (field) => field.id === "ClaimsAmountHR"
+            );
+
+            if (limitedAmountField && claimsAmountField) {
+              this.$watch(
+                () => limitedAmountField.value,
+                (newValue) => {
+                  if (
+                    parseFloat(claimsAmountField.value) > parseFloat(newValue)
+                  ) {
+                    claimsAmountField.value = newValue;
+                  }
+                }
+              );
+              this.$watch(
+                () => claimsAmountField.value,
+                (newValue) => {
+                  if (
+                    parseFloat(newValue) > parseFloat(limitedAmountField.value)
+                  ) {
+                    claimsAmountField.value = limitedAmountField.value;
+                  }
+                }
+              );
+            }
+          }
         });
       },
       deep: true,
