@@ -2860,26 +2860,21 @@ export default {
               for (const claim of claimsToSend) {
   const thisisforentertainment = [{
     date_event: claim.dateE,
-    entertaiment_type: claim.TypeofEntertainmentE,
+    entertainment_type: claim.TypeofEntertainmentE,
     other_type_of_entertainment: claim.OtherTypeofEntertainmentE,
-    company: claim.CompanyE,
+    company_name: claim.CompanyE,
     venue_name: claim.VenueE,
     description: claim.ReferenceE,
-    amount: claim.AmountRME,
+    total_fee: claim.AmountRME,
     reference_number: this.claims[0].uniqueCode,
-    unique_code: "stest", // Ensure this is in the correct format and not null/undefined
-    ent: {
-      participant_name: claim.name,
-      participant_emp_id: claim.staffId,
-      participant_status: claim.status,
-      participant_company_name: claim.companyName,
-    }, // Add the required 'ent' field with the appropriate value
-    participant: {
-      participant_name: claim.name,
-      participant_emp_id: claim.staffId,
-      participant_status: claim.status,
-      participant_company_name: claim.companyName,
-    },
+    unique_code: String(claim.UploadE), // Ensure this is in the correct format and not null/undefined
+   // Add the required 'ent' field with the appropriate value
+   participants: claim.attendees ? claim.attendees.map(participant => ({
+    name: participant.name,
+    emp_id: participant.staffId,
+    status: participant.status,
+    company_name: participant.companyName,
+  })) : []
   }];
 
   // Create axios instance

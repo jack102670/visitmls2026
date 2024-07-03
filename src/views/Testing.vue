@@ -1,98 +1,109 @@
 <template>
-  <div v-if="loading">Loading...</div>
-  <div v-else>
-    <div>
-      <h1>Local Outstation Data</h1>
-      <div v-if="error" class="error">{{ error }}</div>
-      <div v-if="!error && results.length === 0">Loading...</div>
-      <div v-else>
-        <div v-for="(result, index) in results" :key="index" class="result">
-          <p><strong>Mileage KM:</strong> {{ result.mileage_km }}</p>
-          <p><strong>Starting Point:</strong> {{ result.starting_point }}</p>
-          <p><strong>End Point:</strong> {{ result.end_point }}</p>
-          <p><strong>Date Event:</strong> {{ result.date_event }}</p>
-          <p><strong>Park Fee:</strong> {{ result.park_fee }}</p>
-          <p><strong>Toll Fee:</strong> {{ result.toll_fee }}</p>
-          <p><strong>Total Fee:</strong> {{ result.total_fee }}</p>
-          <p>
-            <strong>Transport Specification:</strong>
-            {{ result.transport_specification }}
-          </p>
-          <p><strong>Unique Code:</strong></p>
-          <img
-            v-if="isImage(result.unique_code)"
-            :src="getImageUrl(result.unique_code)"
-            alt="Unique Code Image"
-          />
-          <p v-else>{{ result.unique_code }}</p>
-          <p>
-            <strong>Reference Number:</strong> {{ result.reference_number }}
-          </p>
-          <p><strong>Transport Mode:</strong> {{ result.transport_mode }}</p>
-          <p><strong>Trip Mode:</strong> {{ result.trip_mode }}</p>
-          <p><strong>Total Mileage:</strong> {{ result.total_mileage }}</p>
-        </div>
-      </div>
-    </div>
+  <div id="app">
+    <h1>Testing API with File Upload and Vue.js</h1>
+
+    <form @submit.prevent="sendData">
+      <!-- FilePond File Input -->
+      <file-pond
+        name="file"
+        ref="pond"
+        label-idle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+        @init="handleFilePondInit"
+        @processfile="handleFileProcess"
+      ></file-pond>
+      <br /><br />
+
+      <button type="submit">Submit</button>
+    </form>
   </div>
 </template>
 <script>
-import axios from "axios";
+import axios from "axios"; // Ensure Axios is imported
+import vueFilePond from "vue-filepond";
+import "filepond/dist/filepond.min.css";
+
+// Import FilePond plugins if you need any
+// For example, to allow image preview, editing, etc., you can import and register FilePond plugins here.
+
+// Create component
+const FilePond = vueFilePond();
 
 export default {
-  name: "TestingE",
-  data() {
-    return {
-      results: [],
-      error: null,
-      loading: false, // Step 1: Add a loading property
-    };
-  },
-  async mounted() {
-    await this.getLocalOutstationData();
+  name: "manteTesting",
+  components: {
+    FilePond,
   },
   methods: {
-    isImage(uniqueCode) {
-      // Example logic to determine if the uniqueCode is an image
-      return /\.(jpg|jpeg|png|gif)$/i.test(uniqueCode);
+    handleFilePondInit() {
+      console.log("FilePond has initialized");
+      // FilePond instance is now available via this.$refs.pond
     },
-    async getLocalOutstationData() {
-      this.loading = true; // Step 2: Indicate loading has started
-      const baseURL = "http://172.28.28.91:97";
-      const endpoint = "/api/User/GetLocalOutstation/M3M3-Finance-2024-06-4020";
+    handleFileProcess(error, file) {
+      if (error) {
+        console.error("Oh no, something went wrong", error);
+      } else {
+        console.log("File processed: ", file);
+        // You can also send the file directly from here if needed
+      }
+    },
+    sendData() {
+  const dataToSend = {
+    date_event: "2023-04-01",
+    entertainment_type: "Dinner",
+    other_type_of_entertainment: "N/A",
+    company_name: "Example Corp",
+    venue_name: "Example Venue",
+    description: "Team building dinner",
+    total_fee: 15.3,
+    reference_number: "MM-Finance-2024-07-1032",
 
-      try {
-        const response = await axios.get(`${baseURL}${endpoint}`);
-        if (response.data.status_code === "200") {
-          this.results = response.data.result;
-          console.log("Fetched results:", this.results);
-        } else {
-          this.error = response.data.message;
-        }
-      } catch (error) {
-        this.error = "Error retrieving data: " + error.message;
-        console.error("Error retrieving data:", error);
-      } finally {
-        this.loading = false; // Step 3: Indicate loading has finished
-      }
-    },
-    getImageUrl(fileObject) {
-      console.log("Unique Code:", fileObject);
-      if (fileObject instanceof File) {
-        // Implementation remains unchanged
-      }
-    },
+    participants: [
+      {
+        name: "John Doe",
+        emp_id: "12345",
+        status: "Employee",
+        company_name: "Example Corp",
+      },
+    ],
+  };
+
+  // Construct FormData manually
+  const formData = new FormData();
+  formData.append("date_event", dataToSend.date_event);
+  formData.append("entertainment_type", dataToSend.entertainment_type);
+  formData.append("other_type_of_entertainment", dataToSend.other_type_of_entertainment);
+  formData.append("company_name", dataToSend.company_name);
+  formData.append("venue_name", dataToSend.venue_name);
+  formData.append("description", dataToSend.description);
+  formData.append("total_fee", dataToSend.total_fee.toString()); // Ensure it's a string
+  formData.append("reference_number", dataToSend.reference_number);
+
+  // Append participants data
+  formData.append("unique_code", "12345");
+  dataToSend.participants.forEach((participant, index) => {
+    formData.append(`participants[${index}][name]`, participant.name);
+    formData.append(`participants[${index}][emp_id]`, participant.emp_id);
+    formData.append(`participants[${index}][status]`, participant.status);
+    formData.append(`participants[${index}][company_name]`, participant.company_name);
+  });
+
+  // Append file upload
+  // const fileInput = this.$refs.pond.getFile(); // Assuming FilePond reference is set correctly
+  // if (fileInput) {
+  //   formData.append("unique_code", fileInput.file); // Assuming fileInput.file contains the file object
+  // }
+
+  // Sending data with axios
+  // Sending data with axios
+axios.post("http://172.28.28.91:86/api/User/InsertEntertainment", formData)
+  .then((response) => {
+    console.log("Response:", response.data);
+  })
+  .catch((error) => {
+    console.error("Error:", error.response ? error.response.data : "Unknown error");
+  });
+},
+
   },
 };
 </script>
-
-<style scoped>
-.error {
-  color: red;
-}
-.result {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin: 10px 0;
-}
-</style>
