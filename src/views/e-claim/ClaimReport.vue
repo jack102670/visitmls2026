@@ -2154,6 +2154,18 @@
                   />
                 </div>
                 <div class="flex justify-between items-center mb-4">
+                  <label for="limitedAmount" class="text-gray-700 font-bold mr-2"
+                    >Limited Amount (RM):</label
+                  >
+                  <input
+                    type="text"
+                    id="limitedAmount"
+                    v-model="handphoneBillReimbursementDetails.LimitedAmountHR"
+                    :disabled="!isEditMode || nonEditableFields"
+                    class="border rounded-md px-16 py-2"
+                  />
+                </div>
+                <div class="flex justify-between items-center mb-4">
                   <label for="claimsAmount" class="text-gray-700 font-bold mr-2"
                     >Claims Amount (RM):</label
                   >
@@ -2163,6 +2175,7 @@
                     v-model="handphoneBillReimbursementDetails.ClaimsAmountHR"
                     :disabled="!isEditMode"
                     class="border rounded-md px-16 py-2"
+                    @input="adjustClaimsAmount"
                   />
                 </div>
                 <div class="flex justify-between items-center mb-4">
@@ -2481,6 +2494,15 @@ export default {
   },
 
   methods: {
+    adjustClaimsAmount() {
+      const limitedAmount = this.handphoneBillReimbursementDetails.LimitedAmountHR;
+      let claimsAmount = this.handphoneBillReimbursementDetails.ClaimsAmountHR;
+
+      if (claimsAmount > limitedAmount) {
+        this.handphoneBillReimbursementDetails.ClaimsAmountHR = limitedAmount;
+      }
+    },
+
     formatDate(dateString) {
       const date = new Date(dateString);
       return `${date.getDate()} ${date.toLocaleString("default", {
