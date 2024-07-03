@@ -767,11 +767,6 @@ video {
   margin-bottom: auto;
 }
 
-.my-10 {
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
-}
-
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -874,10 +869,6 @@ video {
 
 .mt-9 {
   margin-top: 2.25rem;
-}
-
-.mb-10 {
-  margin-bottom: 2.5rem;
 }
 
 .block {
@@ -1222,10 +1213,6 @@ video {
   max-width: 28rem;
 }
 
-.max-w-3xl {
-  max-width: 48rem;
-}
-
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -1269,14 +1256,6 @@ video {
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
-}
-
-.list-inside {
-  list-style-position: inside;
-}
-
-.list-disc {
-  list-style-type: disc;
 }
 
 .grid-cols-1 {
@@ -1983,6 +1962,11 @@ video {
   padding-right: 3rem;
 }
 
+.px-16 {
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -2124,10 +2108,6 @@ video {
 
 .pt-6 {
   padding-top: 1.5rem;
-}
-
-.pb-1 {
-  padding-bottom: 0.25rem;
 }
 
 .text-left {
@@ -2575,10 +2555,6 @@ video {
   background-color: rgb(250 153 28 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-\[\#fa9a1ce0\]:hover {
-  background-color: #fa9a1ce0;
-}
-
 .hover\:bg-blue-600:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(37 99 235 / var(--tw-bg-opacity));
@@ -2622,6 +2598,11 @@ video {
 .hover\:bg-green-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(21 128 61 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-red-500:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-red-700:hover {
@@ -2672,6 +2653,11 @@ video {
 .hover\:text-slate-900:hover {
   --tw-text-opacity: 1;
   color: rgb(15 23 42 / var(--tw-text-opacity));
+}
+
+.hover\:text-white:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .hover\:text-yellow-500:hover {
@@ -3036,10 +3022,6 @@ video {
     margin-left: 16rem;
   }
 
-  .sm\:ml-\[8rem\] {
-    margin-left: 8rem;
-  }
-
   .sm\:mr-3 {
     margin-right: 0.75rem;
   }
@@ -3054,6 +3036,10 @@ video {
 
   .sm\:h-20 {
     height: 5rem;
+  }
+
+  .sm\:w-3\/4 {
+    width: 75%;
   }
 
   .sm\:max-w-xl {
@@ -3250,6 +3236,10 @@ video {
 
   .lg\:w-\[90\%\] {
     width: 90%;
+  }
+
+  .lg\:max-w-2xl {
+    max-width: 42rem;
   }
 
   .lg\:max-w-96 {

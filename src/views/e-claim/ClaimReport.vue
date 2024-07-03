@@ -2317,6 +2317,7 @@ export default {
   },
   data() {
     return {
+      employeeID: null,
       totalplus: 0,
       index: null,
       formToDelete: null,
@@ -2467,6 +2468,8 @@ export default {
 
   mounted() {
     // Sidebar close or open
+    this.fetchEmployeeID();
+
     let openOrNot = localStorage.getItem("openOrNot");
     const element = document.querySelector("main");
     if (element && openOrNot == "false") {
@@ -2477,6 +2480,46 @@ export default {
   },
 
   methods: {
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      return `${date.getDate()} ${date.toLocaleString("default", {
+        month: "long",
+      })} ${date.getFullYear()}`;
+    },
+    async fetchEmployeeID() {
+      try {
+        const response = await axios.get(
+          "http://172.28.28.91:97/api/User/GetAllEmployees"
+        );
+
+        if (response.data.result && response.data.result.length > 0) {
+          const selectedEmployee = response.data.result.find(
+            (emp) => emp.email_address === store.getSession().userDetails.email
+          );
+          if (selectedEmployee) {
+            if ("emp_id" in selectedEmployee) {
+              this.employeeID = selectedEmployee.emp_id;
+              console.log("Employee ID:", this.employeeID);
+            } else {
+              console.error(
+                "Employee found but employee_id is missing:",
+                selectedEmployee
+              );
+            }
+          } else {
+            console.error(
+              "Employee not found for email:",
+              store.getSession().userDetails.email
+            );
+          }
+        } else {
+          console.error("No employees found in response");
+        }
+      } catch (error) {
+        console.error("Failed to fetch employee ID:", error);
+        // Handle error appropriately
+      }
+    },
     deleteExpense(index) {
       // Assuming `expenses` is the array holding your items
       this.overseasTravellingDetails.otherExpenses.splice(index, 1);
@@ -2668,13 +2711,21 @@ export default {
       console.log(this.claims.uniqueCode);
       // Other logic
     },
+    isValidClaimData() {
+      // Example validation: check if the first claim has a claimantName
+      return this.dataclaims.length > 0;
+    },
     async senttheclaim() {
+      if (!this.isValidClaimData()) {
+        alert("Please add at least one claim data before submit");
+        return;
+      }
       const apiData = {
         name: this.claims[0].claimantName,
         company_name: this.claims[0].companyName,
         department: this.claims[0].department,
         designation_title: this.claims[0].designation,
-        employee_id: "PKTM1111",
+        employee_id: this.employeeID,
         requester_email: store.getSession().userDetails.email,
         reference_number: this.claims[0].uniqueCode,
         report_name: this.claims[0].reportName,
@@ -2684,22 +2735,34 @@ export default {
       };
 
       try {
-        // Send API request using axios
-        const response = await axios.post(
-          "http://172.28.28.91:97/api/User/InsertClaimDetails",
-          apiData
-        );
-        // Handle success response
-        console.log("API response", response.data);
-        this.sendToAPI();
-      } catch (error) {
-        // Handle error response
-        console.error("API error", error);
-      }
+    // Send API request using axios
+    const response = await axios.post(
+      "http://172.28.28.91:97/api/User/InsertClaimDetails",
+      apiData
+    );
+    // Handle success response
+    console.log("API response", response.data);
+    this.sendToAPI();
+  }catch (error) {
+  console.error("API error", error);
+  // Extract the detailed server error message from the response
+  let serverErrorMessage = error.response && error.response.data && error.response.data.message ? error.response.data.message : "";
+
+  // Check if the server error message contains the specific UNIQUE KEY constraint violation message
+  if (serverErrorMessage.includes("Violation of UNIQUE KEY constraint")) {
+    // Handle the UNIQUE KEY constraint violation error specifically
+
+    this.sendToAPI();
+    console.error("Duplicate entry detected for reference number. Not calling sendToAPI.");
+  } else {
+    // If the error is not related to the UNIQUE KEY constraint violation, consider retrying or handling differently
+    console.error("An error occurred that is not a duplicate entry issue. Review error details for appropriate action.");
+  }
+}
     },
     async sendToAPI() {
       // Group claims by tabTitle
-      this.$router.push({ name: "eclaimhomepages" });
+      // this.$router.push({ name: "eclaimhomepages" });
       const groupedClaims = this.dataclaims.reduce((acc, claim) => {
         if (!acc[claim.tabTitle]) {
           acc[claim.tabTitle] = [];
@@ -2720,7 +2783,10 @@ export default {
               case "local travelling": {
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
-                  console.log("Reference Number for claim:", this.claims[0].uniqueCode);
+                  console.log(
+                    "Reference Number for claim:",
+                    this.claims[0].uniqueCode
+                  );
                   const thisisforlocal1 = {
                     mileage_km: claim.MileageKMLT,
                     starting_point: claim.LocationStart,
@@ -2750,31 +2816,31 @@ export default {
               }
               case "overseas travelling with accommodation":
                 for (const claim of claimsToSend) {
-                  // Iterate over each claim
-                  // Dummy data for a claim
+                 
                   const thisisforoversea = {
-                    description: claim.DescriptionOT,
-                    meal_allowance: claim.MealAllowanceOT,
-                    date_event: claim.dateOT, // Example date
+                    description: claim.PurposeOT,
+                meal_allowance: String(claim.MealAllowanceOT),
+                    date_event: claim.dateOT,
                     transport_fee: claim.AirportLimoTeksiOT,
-                    other_expenses: claim.otherExpenses,
-                    total_fee: 99,
-                    accom_foreign_total: 100,
+                    // other_expenses: claim.otherExpenses,
+                    total_fee: claim.totalRM,
+                    accom_foreign_total: claim.RMforAccommodationOT,
                     accom_foreign_currency:
-                      claim.ForeignCurrencyAccommodationOT,
+                    claim.ForeignCurrencyAccommodationOT,
                     accom_exchange_rate: claim.ExchangeRateAccommodationOT,
                     other_foreign_currency: claim.ForeignCurrencyOthersOT,
                     other_exchange_rate: claim.ExchangeRateOthersOT,
-                    other_foreign_total: 200,
-                    reference_number: "pktm222",
-                    unique_code: this.generateUniqueCode(claim.tabTitle),
-
-                    approver_email: "approver@example.com",
-                    verifier_email: "verifier@example.com",
-                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
-                    serial_number: this.generateUniqueCodeSN(claim.tabTitle),
+                    other_foreign_total: claim.RMforOthersOT,
+                    reference_number: this.claims[0].uniqueCode,
+                    unique_code: String(claim.UploadOT),
+                    transportation_mode: String(claim.AirportLimoTeksiOT),
+                    oem: claim.otherExpenses ? claim.otherExpenses.map(expense => ({
+      name: expense.name,
+      amount: expense.amount,
+      description: expense.description,
+    })) : [],
+            
+                    
                   };
 
                   axiosInstance = axios.create({
@@ -2788,39 +2854,46 @@ export default {
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case "Entertainment":
-                for (const claim of claimsToSend) {
-                  // Iterate over each claim
-                  // Dummy data for a claim
-                  const thisisforentertainment = {
-                    date_event: claim.dateE, // Example date
-                    // person_entertained: claim.PersonEntertainedE,
-                    type_of_entertainment: claim.TypeofEntertainmentE,
-                    other_type_of_entertainment:
-                      claim.OtherTypeofEntertainmentE,
-                    company: claim.CompanyE,
-                    venue: claim.VenueE,
-                    reference: claim.ReferenceE,
-                    amount: claim.AmountRME,
-                    reference_number: "pktm222",
-                    unique_code: this.generateUniqueCode(claim.tabTitle),
+              case "entertainment":
+              for (const claim of claimsToSend) {
+  const thisisforentertainment = [{
+    date_event: claim.dateE,
+    entertaiment_type: claim.TypeofEntertainmentE,
+    other_type_of_entertainment: claim.OtherTypeofEntertainmentE,
+    company: claim.CompanyE,
+    venue_name: claim.VenueE,
+    description: claim.ReferenceE,
+    amount: claim.AmountRME,
+    reference_number: this.claims[0].uniqueCode,
+    unique_code: "stest", // Ensure this is in the correct format and not null/undefined
+    ent: {
+      participant_name: claim.name,
+      participant_emp_id: claim.staffId,
+      participant_status: claim.status,
+      participant_company_name: claim.companyName,
+    }, // Add the required 'ent' field with the appropriate value
+    participant: {
+      participant_name: claim.name,
+      participant_emp_id: claim.staffId,
+      participant_status: claim.status,
+      participant_company_name: claim.companyName,
+    },
+  }];
 
-                    approver_email: "approver@example.com",
-                    verifier_email: "verifier@example.com",
-                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
-                    serial_number: this.generateUniqueCodeSN(claim.tabTitle),
-                  };
-                  axiosInstance = axios.create({
-                    baseURL: "http://localhost:3000/claims/entertainment",
-                  });
-                  const response2 = await axiosInstance.post(
-                    "/",
-                    thisisforentertainment
-                  );
-                  console.log(`Data sent for ${title} 2:`, response2.data);
-                }
+  // Create axios instance
+  axiosInstance = axios.create({
+    baseURL: "http://172.28.28.91:86/api/User/InsertEntertainment",
+  });
+
+  // Send the request
+  try {
+    const response3 = await axiosInstance.post("/", thisisforentertainment);
+    console.log(`Data sent for ${title} 3:`, response3.data);
+  } catch (error) {
+    console.error("Error sending data for Entertainment:", error.response.data);
+  }
+}
+
                 break;
 
               case "Staff Refreshment":

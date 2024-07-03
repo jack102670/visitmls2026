@@ -292,7 +292,7 @@
                   class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
                   v-show="showHRMessage"
                 >
-                  Boo!
+                  Medical Bill and Handphone Bill Reimbursement
                 </div>
               </div>
 
@@ -315,7 +315,7 @@
                   class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
                   v-show="showFinanceMessage"
                 >
-                  lorem
+                  Local Travelling, Overseas Travelling With Accommodation, Entertainment, Staff Refreshment, and Others Form
                 </div>
               </div>
             </div>
@@ -386,7 +386,7 @@
       <h1 class="text-gray-500 text-sm">
         <span class="text-red-500">*</span
         ><span class="text-red-500">*</span> Finance: Local Travelling, Overseas
-        Travelling With Accommodation, Entertainment and Staff Refreshment
+        Travelling With Accommodation, Entertainment, Staff Refreshment, and Others Form
       </h1>
 
       <!-- button -->
