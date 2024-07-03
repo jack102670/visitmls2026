@@ -337,7 +337,7 @@
                   type="text"
                   id="transport"
                   v-model="localTravellingDetails.TransportLT"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -352,7 +352,7 @@
                   type="text"
                   id="transportSpecify"
                   v-model="localTravellingDetails.TransportSpec"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -388,7 +388,7 @@
                   type="text"
                   id="triplt"
                   v-model="localTravellingDetails.tripwayLT"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -398,7 +398,7 @@
                 class="flex justify-between items-center mb-4"
               >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Mileage(KM):</label
+                  >Mileage/Kilometer(KM):</label
                 >
                 <input
                   type="text"
@@ -1017,7 +1017,7 @@
                   type="text"
                   id="nodeName"
                   v-model="medicalBillReimbursementDetails.MedicalCategoryML"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -1043,7 +1043,7 @@
                   type="text"
                   id="ClinicSelectionML"
                   v-model="medicalBillReimbursementDetails.ClinicSelectionML"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -1088,7 +1088,7 @@
                   type="text"
                   id="bankName"
                   v-model="medicalBillReimbursementDetails.BankNameML"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -1298,7 +1298,7 @@
                   type="text"
                   id="nodeName"
                   v-model="entertainmentDetails.TypeofEntertainmentE"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -1349,7 +1349,7 @@
                   type="text"
                   id="nodeParentId"
                   v-model="entertainmentDetails.ReferenceE"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -1619,7 +1619,7 @@
                   type="text"
                   id="nodeName"
                   v-model="staffRefreshmentDetails.TypeofRefreshmentSR"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -1672,7 +1672,7 @@
                   type="text"
                   id="nodeParentId"
                   v-model="staffRefreshmentDetails.ReferenceSR"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -2121,7 +2121,7 @@
                     type="text"
                     id="bankName"
                     v-model="handphoneBillReimbursementDetails.BankNameHR"
-                    :disabled="!isEditMode"
+                    :disabled="!isEditMode || nonEditableFields"
                     class="border rounded-md px-16 py-2"
                   />
                 </div>
@@ -2326,6 +2326,7 @@ export default {
       dataclaims: [],
       isClickModal: false,
       isEditMode: false,
+      nonEditableFields: false,
       selectedClaimDetails: {},
       localTravellingDetails: {},
       overseasTravellingDetails: { otherExpenses: [] },
@@ -2534,10 +2535,11 @@ export default {
     toggleEditMode() {
       if (this.isEditMode) {
         this.savenode();
-        this.isEditMode = !this.isEditMode;
+        this.nonEditableFields = false; 
       } else {
-        this.isEditMode = !this.isEditMode;
+        this.nonEditableFields = true; 
       }
+      this.isEditMode = !this.isEditMode;
     },
     closeClickModal() {
       this.isClickModal = false;
