@@ -133,12 +133,12 @@
               <!-- table information -->
               <tr
                 class="h-14 text-left align-top text-xs lg:text-base"
-                v-for="claim in claimData"
+                v-for="claim in claimDatas"
                 :key="claim.no"
               >
-                <td class="text-center font-normal">{{ claim.no }}</td>
-                <td class="font-normal">{{ claim.type }}</td>
-                <td class="font-normal">{{ claim.amount }}</td>
+                <td class="text-center font-normal">{{ claim.No }}</td>
+                <td class="font-normal">{{ claim.Type }}</td>
+                <td class="font-normal">{{ claim.Amount }}</td>
               </tr>
 
               <!-- total -->
@@ -155,12 +155,15 @@
         <!-- Details -->
         <div class="details" v-show="seeMore">
           <div
-            v-for="(detail, i) in details"
+            v-for="(detail, i) in claimDatasDetails"
             :key="i"
             class="detail-table mt-10"
           >
-            <h1 class="my-4 text-3xl font-semibold tab-title">
-              {{ detail.tabTitle }}
+            <h1
+              class="my-4 text-3xl font-semibold tab-title"
+              v-if="detail && detail.length > 0"
+            >
+              {{ detail[0].Tab_Title }}
             </h1>
             <div
               class="border-2 border-gray-400 dark:border-gray-600 rounded-2xl overflow-y-auto"
@@ -169,22 +172,35 @@
               <table class="w-full">
                 <!-- title -->
                 <tr class="h-14 bg-gray-300 dark:bg-gray-700 rounded-2xl">
-                  <th class="px-3" v-for="(val, key, i) in detail" :key="i">
-                    {{ key }}
+                  <th
+                    class="px-6 py-2 w-36 break-words"
+                    v-for="(val, key, i) in detail[0]"
+                    :key="i"
+                  >
+                    {{
+                      key
+                        .split('_')
+
+                        .join(' ')
+                    }}
                   </th>
                 </tr>
                 <tr class="h-4"></tr>
 
                 <!-- table information -->
-                <tr class="h-14 text-left align-top text-xs lg:text-base">
+                <tr
+                  class="h-14 text-left align-top text-xs lg:text-base"
+                  v-for="(item, i) in detail"
+                  :key="i"
+                >
                   <td
-                    class="text-center font-normal"
-                    v-for="(val, key, i) in detail"
+                    class="text-center font-normal px-3"
+                    v-for="(val, key, i) in item"
                     :key="i"
                   >
-                    {{ val }}
+                    {{ key == 'Files' ? '' : val }}
                     <div
-                      v-show="key == 'Receipts'"
+                      v-show="key == 'Files'"
                       class="text-blue-700 flex items-center justify-center cursor-pointer"
                       @click.prevent="DownloadFile()"
                     >
@@ -211,8 +227,8 @@
                 <tr
                   class="border-t-2 border-gray-400 dark:border-gray-600 h-14 text-base lg:text-lg font-semibold"
                 >
-                  <td class="px-3">TOTAL:</td>
-                  <td>RM{{ detail.Total }}</td>
+                  <td class="text-center">TOTAL:</td>
+                  <td class="text-center">RM{{ claimDataTotalAmount[i] }}</td>
                   <td></td>
                 </tr>
               </table>
@@ -453,7 +469,7 @@
             </div>
           </div>
         </div>
-        l
+
         <!-- Reimburse Confirmation -->
         <div
           v-show="confirmReimburse"
@@ -612,6 +628,10 @@ export default {
       // fetch from backend
       claimDetails: [],
       claimDatas: [],
+      claimDatasDetails: [],
+      claimDataTotalAmount: [],
+
+      referenceNumber: 'THTH-Finance-2024-06-1719',
 
       // need to fetch from API
       claimData: [
@@ -677,8 +697,8 @@ export default {
   computed: {
     totalAmount() {
       let num = 0;
-      for (var i = 0; i < this.claimData.length; i++) {
-        num += this.claimData[i].amount;
+      for (var i = 0; i < this.claimDatas.length; i++) {
+        num += this.claimDatas[i].Amount;
       }
       return num;
     },
@@ -722,13 +742,113 @@ export default {
         .get()
         .then((response) => (this.claimDetails = response.data.result));
     },
-    FetchClaimData() {
-      axios
+    async FetchClaimDatasDetails() {
+      await axios
         .get(
-          'http://172.28.28.91:97/api/User/GetLocalOutstation/:reference_number'
+          'http://172.28.28.91:97/api/User/GetLocalOutstation/' +
+            this.referenceNumber
         )
-        .then((response) => this.claimDatas.push(response));
+        .then((response) => {
+          const result = response.data.result;
+          let details = [];
+          let amount = 0;
+          for (let i in result) {
+            amount += result[i].total_fee;
+            const editedDetail = {
+              Mileage_Km: result[i].mileage_km,
+              Starting_Point: result[i].starting_point,
+              End_Point: result[i].end_point,
+              Date_Event: result[i].date_event,
+              Park_Fee: result[i].park_fee,
+              Toll_Fee: result[i].toll_fee,
+              Total_Fee: result[i].total_fee,
+              Transport_Specification: result[i].transport_specification,
+              Transport_Mode: result[i].transport_mode,
+              Trip_Mode: result[i].trip_mode,
+              Total_Mileage: result[i].total_mileage,
+              Files: result[i].files,
+              Tab_Title: 'Local Outstation',
+            };
+            details.push(editedDetail);
+          }
+          this.claimDatasDetails.push(details);
+          this.claimDataTotalAmount.push(amount);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+
+      await axios
+        .get(
+          'http://172.28.28.91:97/api/User/GetOverseasOutstation/' +
+            this.referenceNumber
+        )
+        .then((response) => {
+          const result = response.data.result;
+          let details = [];
+          let amount = 0;
+          for (let i in result) {
+            amount += result[i].total_fee;
+            const editedDetail = {
+              Description: result[i].description,
+              Meal_Allowance: result[i].meal_allowance,
+              Transport_Fee: result[i].transport_fee,
+              Accom_Foreign_Currency: result[i].accom_foreign_currency,
+              Accom_Exchange_Rate: result[i].accom_exchange_rate,
+              Accom_Foreign_Total: result[i].accom_foreign_total,
+              Other_Foreign_Currency: result[i].other_foreign_currency,
+              Other_Exchange_Rate: result[i].other_exchange_rate,
+              Other_Foreign_Total: result[i].other_foreign_total,
+              Transportation_Mode: result[i].transportation_mode,
+              Files: result[i].files,
+              Date: result[i].date_event,
+              Total_Fee: result[i].total_fee,
+              Tab_Title: 'Overseas Outstation',
+            };
+            details.push(editedDetail);
+          }
+          this.claimDatasDetails.push(details);
+          this.claimDataTotalAmount.push(amount);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+
+      // await axios
+      //   .get(
+      //     'http://172.28.28.91:97/api/User/GetRefreshment/' +
+      //       this.referenceNumber
+      //   )
+      //   .then((response) => {
+      //       this.claimDatasDetails.push(response);
+      //
+      //   });
+
+      // await axios
+      //   .get(
+      //     'http://172.28.28.91:97/api/User/GetEntertainment/' +
+      //       this.referenceNumber
+      //   )
+      //   .then((response) => {
+      //       this.claimDatasDetails.push(response);
+      //
+      //   });
+
+      this.claimDatasDetails.forEach((details, index) => {
+        if (details && details.length > 0) {
+          const claimData = {
+            No: index + 1,
+            Type: details[0].Tab_Title, // Ensure details[0] exists before accessing properties
+            Amount: this.claimDataTotalAmount[index],
+          };
+          this.claimDatas.push(claimData);
+        }
+      });
+
+      console.log(this.claimDatas);
+      console.log(this.claimDatasDetails);
     },
+
     PrintSummary() {
       print();
     },
@@ -825,6 +945,8 @@ export default {
     } else if (element && openOrNot == 'true') {
       element.classList.remove('become-big');
     }
+
+    this.FetchClaimDatasDetails();
   },
 };
 </script>
