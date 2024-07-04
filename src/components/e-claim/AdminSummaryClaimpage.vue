@@ -41,8 +41,8 @@
         <div class="flex justify-between items-center my-4">
           <h1 class="text-blue-900 dark:text-blue-600 font-bold text-4xl">
             Webinars
-            
-            <span  class="text-blue-900 dark:text-blue-600"
+
+            <span class="text-blue-900 dark:text-blue-600"
               >| RM{{ totalAmount }}</span
             >
           </h1>
@@ -133,12 +133,12 @@
               <!-- table information -->
               <tr
                 class="h-14 text-left align-top text-xs lg:text-base"
-                v-for="claim in claimData"
+                v-for="claim in claimDatas"
                 :key="claim.no"
               >
-                <td class="text-center font-normal">{{ claim.no }}</td>
-                <td class="font-normal">{{ claim.type }}</td>
-                <td class="font-normal">{{ claim.amount }}</td>
+                <td class="text-center font-normal">{{ claim.No }}</td>
+                <td class="font-normal">{{ claim.Type }}</td>
+                <td class="font-normal">{{ claim.Amount }}</td>
               </tr>
 
               <!-- total -->
@@ -155,12 +155,15 @@
         <!-- Details -->
         <div class="details" v-show="seeMore">
           <div
-            v-for="(detail, i) in details"
+            v-for="(detail, i) in claimDatasDetails"
             :key="i"
             class="detail-table mt-10"
           >
-            <h1 class="my-4 text-3xl font-semibold tab-title">
-              {{ detail.tabTitle }}
+            <h1
+              class="my-4 text-3xl font-semibold tab-title"
+              v-if="detail && detail.length > 0"
+            >
+              {{ detail[0].Tab_Title }}
             </h1>
             <div
               class="border-2 border-gray-400 dark:border-gray-600 rounded-2xl overflow-y-auto"
@@ -169,22 +172,35 @@
               <table class="w-full">
                 <!-- title -->
                 <tr class="h-14 bg-gray-300 dark:bg-gray-700 rounded-2xl">
-                  <th class="px-3" v-for="(val, key, i) in detail" :key="i">
-                    {{ key }}
+                  <th
+                    class="px-6 py-2 w-36 break-words"
+                    v-for="(val, key, i) in detail[0]"
+                    :key="i"
+                  >
+                    {{
+                      key
+                        .split('_')
+
+                        .join(' ')
+                    }}
                   </th>
                 </tr>
                 <tr class="h-4"></tr>
 
                 <!-- table information -->
-                <tr class="h-14 text-left align-top text-xs lg:text-base">
+                <tr
+                  class="h-14 text-left align-top text-xs lg:text-base"
+                  v-for="(item, i) in detail"
+                  :key="i"
+                >
                   <td
-                    class="text-center font-normal"
-                    v-for="(val, key, i) in detail"
+                    class="text-center font-normal px-3"
+                    v-for="(val, key, i) in item"
                     :key="i"
                   >
-                    {{ val }}
+                    {{ key == 'Files' ? '' : val }}
                     <div
-                      v-show="key == 'Receipts'"
+                      v-show="key == 'Files'"
                       class="text-blue-700 flex items-center justify-center cursor-pointer"
                       @click.prevent="DownloadFile()"
                     >
@@ -211,8 +227,8 @@
                 <tr
                   class="border-t-2 border-gray-400 dark:border-gray-600 h-14 text-base lg:text-lg font-semibold"
                 >
-                  <td class="px-3">TOTAL:</td>
-                  <td>RM{{ detail.Total }}</td>
+                  <td class="text-center">TOTAL:</td>
+                  <td class="text-center">RM{{ claimDataTotalAmount[i] }}</td>
                   <td></td>
                 </tr>
               </table>
@@ -220,11 +236,11 @@
             <div>
               <div class="flex w-full items-center mt-2">
                 <label class="font-semibold mr-2 mb-4">Remark: </label>
-                <p v-if="approved || rejectApprover" class="mb-4">
+                <p v-if="approve || rejectApprover" class="mb-4">
                   {{ singleRemarks[i] }}
                 </p>
                 <input
-                  v-if="!approved && !rejectApprover"
+                  v-if="!approve && !rejectApprover"
                   v-model="singleRemarks[i]"
                   class="py-3 px-2 mb-4 w-full rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
                   type="text"
@@ -312,8 +328,8 @@
                   <p>{{ statusApprover }}</p>
                 </div>
               </th>
-              <td class="pl-6">SHU LAN</td>
-              <td class="">HR</td>
+              <td class="pl-6">XXX</td>
+              <td class="">Finance</td>
               <td>HR</td>
               <td class="">{{ dateApprover }}</td>
             </tr>
@@ -378,6 +394,19 @@
           </table>
         </div>
 
+        <!-- Reimburse Button -->
+        <div
+          v-show="approve && !reimbursed"
+          class="w-full flex justify-center items-center"
+        >
+          <button
+            @click="confirmReimburse = true"
+            class="my-8 lg:text-lg font-semibold py-3 w-36 bg-blue-800 hover:bg-blue-900 rounded-lg text-white"
+          >
+            Reimburse
+          </button>
+        </div>
+
         <!-- Button -->
         <div
           v-show="
@@ -434,6 +463,32 @@
               <button
                 class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
                 @click="ConfirmApprove"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reimburse Confirmation -->
+        <div
+          v-show="confirmReimburse"
+          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
+        >
+          <div
+            class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center"
+          >
+            <h1 class="text-2xl font-bold">Do you confirm to reimburse?</h1>
+            <div class="flex mt-4">
+              <button
+                class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
+                @click="confirmReimburse = false"
+              >
+                Back
+              </button>
+              <button
+                class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
+                @click="ConfirmReimburse()"
               >
                 Confirm
               </button>
@@ -555,18 +610,28 @@ export default {
       seeMore: false,
       confirmReject: false,
       confirmApprove: false,
+      confirmReimburse: false,
       approveSuccess: false,
       loading: false,
 
       // need to fetch from or post to API
       rejectApprover: false,
       rejectVerifier: false,
-      approve: false,
+      approve: true,
       verified: false,
-      dateApprover: '',
-      dateVerifier: '',
+      reimbursed: false,
+      dateApprover: '12 Jun 2024',
+      dateVerifier: '8 Jun 2024',
       remark: '',
       serialNumber: 'PW/Finance/2024/06/5520',
+
+      // fetch from backend
+      claimDetails: [],
+      claimDatas: [],
+      claimDatasDetails: [],
+      claimDataTotalAmount: [],
+
+      referenceNumber: 'THTH-Finance-2024-06-1719',
 
       // need to fetch from API
       claimData: [
@@ -632,8 +697,8 @@ export default {
   computed: {
     totalAmount() {
       let num = 0;
-      for (var i = 0; i < this.claimData.length; i++) {
-        num += this.claimData[i].amount;
+      for (var i = 0; i < this.claimDatas.length; i++) {
+        num += this.claimDatas[i].Amount;
       }
       return num;
     },
@@ -649,6 +714,8 @@ export default {
         status = 'VERIFIED';
       }
 
+      status = 'VERIFIED';
+
       return status;
     },
 
@@ -658,6 +725,8 @@ export default {
       let status = 'PENDING';
       if (this.rejectApprover) {
         status = 'REJECTED';
+      } else if (this.reimbursed) {
+        status = 'REIMBURSED';
       } else if (this.approve) {
         status = 'APPROVED';
       } else {
@@ -668,6 +737,118 @@ export default {
     },
   },
   methods: {
+    FetchClaimDetails() {
+      axios
+        .get()
+        .then((response) => (this.claimDetails = response.data.result));
+    },
+    async FetchClaimDatasDetails() {
+      await axios
+        .get(
+          'http://172.28.28.91:97/api/User/GetLocalOutstation/' +
+            this.referenceNumber
+        )
+        .then((response) => {
+          const result = response.data.result;
+          let details = [];
+          let amount = 0;
+          for (let i in result) {
+            amount += result[i].total_fee;
+            const editedDetail = {
+              Mileage_Km: result[i].mileage_km,
+              Starting_Point: result[i].starting_point,
+              End_Point: result[i].end_point,
+              Date_Event: result[i].date_event,
+              Park_Fee: result[i].park_fee,
+              Toll_Fee: result[i].toll_fee,
+              Total_Fee: result[i].total_fee,
+              Transport_Specification: result[i].transport_specification,
+              Transport_Mode: result[i].transport_mode,
+              Trip_Mode: result[i].trip_mode,
+              Total_Mileage: result[i].total_mileage,
+              Files: result[i].files,
+              Tab_Title: 'Local Outstation',
+            };
+            details.push(editedDetail);
+          }
+          this.claimDatasDetails.push(details);
+          this.claimDataTotalAmount.push(amount);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+
+      await axios
+        .get(
+          'http://172.28.28.91:97/api/User/GetOverseasOutstation/' +
+            this.referenceNumber
+        )
+        .then((response) => {
+          const result = response.data.result;
+          let details = [];
+          let amount = 0;
+          for (let i in result) {
+            amount += result[i].total_fee;
+            const editedDetail = {
+              Description: result[i].description,
+              Meal_Allowance: result[i].meal_allowance,
+              Transport_Fee: result[i].transport_fee,
+              Accom_Foreign_Currency: result[i].accom_foreign_currency,
+              Accom_Exchange_Rate: result[i].accom_exchange_rate,
+              Accom_Foreign_Total: result[i].accom_foreign_total,
+              Other_Foreign_Currency: result[i].other_foreign_currency,
+              Other_Exchange_Rate: result[i].other_exchange_rate,
+              Other_Foreign_Total: result[i].other_foreign_total,
+              Transportation_Mode: result[i].transportation_mode,
+              Files: result[i].files,
+              Date: result[i].date_event,
+              Total_Fee: result[i].total_fee,
+              Tab_Title: 'Overseas Outstation',
+            };
+            details.push(editedDetail);
+          }
+          this.claimDatasDetails.push(details);
+          this.claimDataTotalAmount.push(amount);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+
+      // await axios
+      //   .get(
+      //     'http://172.28.28.91:97/api/User/GetRefreshment/' +
+      //       this.referenceNumber
+      //   )
+      //   .then((response) => {
+      //       this.claimDatasDetails.push(response);
+      //
+      //   });
+
+      // await axios
+      //   .get(
+      //     'http://172.28.28.91:97/api/User/GetEntertainment/' +
+      //       this.referenceNumber
+      //   )
+      //   .then((response) => {
+      //       this.claimDatasDetails.push(response);
+      //
+      //   });
+
+      this.claimDatasDetails.forEach((details, index) => {
+        if (details && details.length > 0) {
+          const claimData = {
+            No: index + 1,
+            Type: details[0].Tab_Title, // Ensure details[0] exists before accessing properties
+            Amount: this.claimDataTotalAmount[index],
+          };
+          this.claimDatas.push(claimData);
+        }
+      });
+
+      console.log(this.claimDatas);
+      console.log(this.claimDatasDetails);
+    },
+
     PrintSummary() {
       print();
     },
@@ -682,6 +863,13 @@ export default {
       this.confirmReject = false;
       this.reject = true;
       this.ApproveOrReject('Reject');
+    },
+
+    // click function after confirm the reimburse
+    ConfirmReimburse() {
+      this.confirmReimburse = false;
+      this.reimbursed = true;
+      this.dateApprover = moment(new Date()).format('D MMM YYYY');
     },
 
     //approve or reject action
@@ -757,6 +945,8 @@ export default {
     } else if (element && openOrNot == 'true') {
       element.classList.remove('become-big');
     }
+
+    this.FetchClaimDatasDetails();
   },
 };
 </script>
