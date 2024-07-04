@@ -113,6 +113,35 @@
           </div> -->
         </div>
 
+        <!-- status button after approved -->
+        <div
+          v-show="approve"
+          class="w-[360px] flex bg-gray-500 rounded-full relative my-8"
+        >
+          <div
+            id="toggle"
+            class="transition-all duration-700 ease-in-out absolute w-[120px] h-full rounded-full bg-green-400 left-1/3"
+          ></div>
+          <button
+            @click="StatusToRejected"
+            class="flex-1 text-center px-2 py-3 z-10 text-lg text-black"
+          >
+            Rejected
+          </button>
+          <button
+            @click="StatusToApproved"
+            class="flex-1 text-center px-2 py-3 z-10 text-lg text-black"
+          >
+            Approved
+          </button>
+          <button
+            @click="StatusToReimbursed"
+            class="flex-1 text-center px-2 py-3 z-10 text-lg text-black"
+          >
+            Reimbursed
+          </button>
+        </div>
+
         <!-- Summary -->
         <div class="summary" v-show="!seeMore">
           <!-- Claim Table -->
@@ -172,6 +201,8 @@
               <table class="w-full">
                 <!-- title -->
                 <tr class="h-14 bg-gray-300 dark:bg-gray-700 rounded-2xl">
+                  <th class="w-52">Single Remark</th>
+
                   <th
                     class="px-6 py-2 w-36 break-words"
                     v-for="(val, key, i) in detail[0]"
@@ -193,6 +224,12 @@
                   v-for="(item, i) in detail"
                   :key="i"
                 >
+                  <td>
+                    <input
+                      type="text"
+                      class="py-2 -translate-y-1/4 w-full rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
+                    />
+                  </td>
                   <td
                     class="text-center font-normal px-3"
                     v-for="(val, key, i) in item"
@@ -394,19 +431,6 @@
           </table>
         </div>
 
-        <!-- Reimburse Button -->
-        <div
-          v-show="approve && !reimbursed"
-          class="w-full flex justify-center items-center"
-        >
-          <button
-            @click="confirmReimburse = true"
-            class="my-8 lg:text-lg font-semibold py-3 w-36 bg-blue-800 hover:bg-blue-900 rounded-lg text-white"
-          >
-            Reimburse
-          </button>
-        </div>
-
         <!-- Button -->
         <div
           v-show="
@@ -482,7 +506,7 @@
             <div class="flex mt-4">
               <button
                 class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
-                @click="confirmReimburse = false"
+                @click="(confirmReimburse = false), StatusToApproved()"
               >
                 Back
               </button>
@@ -513,7 +537,7 @@
             <div class="flex mt-4">
               <button
                 class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
-                @click="confirmReject = false"
+                @click="(confirmReject = false), StatusToApproved()"
               >
                 Back
               </button>
@@ -771,8 +795,10 @@ export default {
             };
             details.push(editedDetail);
           }
-          this.claimDatasDetails.push(details);
-          this.claimDataTotalAmount.push(amount);
+          if (details.length > 0) {
+            this.claimDatasDetails.push(details);
+            this.claimDataTotalAmount.push(amount);
+          }
         })
         .catch((e) => {
           console.error(e);
@@ -807,8 +833,10 @@ export default {
             };
             details.push(editedDetail);
           }
-          this.claimDatasDetails.push(details);
-          this.claimDataTotalAmount.push(amount);
+          if (details.length > 0) {
+            this.claimDatasDetails.push(details);
+            this.claimDataTotalAmount.push(amount);
+          }
         })
         .catch((e) => {
           console.error(e);
@@ -934,6 +962,23 @@ export default {
         'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/ReceiptSwiss.jpg/170px-ReceiptSwiss.jpg';
 
       fileSaver.saveAs(url, 'receipt.jpg');
+    },
+    StatusToRejected() {
+      let toggle = document.getElementById('toggle');
+      toggle.style.left = '0';
+      toggle.style.backgroundColor = '#f87171';
+      this.confirmReject = true;
+    },
+    StatusToApproved() {
+      let toggle = document.getElementById('toggle');
+      toggle.style.left = '33.333333%';
+      toggle.style.backgroundColor = '#4ade80';
+    },
+    StatusToReimbursed() {
+      let toggle = document.getElementById('toggle');
+      toggle.style.left = '66.7%';
+      toggle.style.backgroundColor = 'white';
+      this.confirmReimburse = true;
     },
   },
   mounted() {
@@ -1079,16 +1124,21 @@ td {
   }
 
   #table-overflow table th {
-    padding: auto 0;
-    margin: auto 0;
-    font-size: 8px;
-    height: 20px;
+    padding: 0 0;
+    margin: 0 0;
+    font-size: 1px;
+    height: 12px;
+    width: 35px;
+    line-height: 12px;
   }
+
   #summaryPrint #table-overflow table td {
-    padding: auto 0;
-    margin: auto 0;
-    font-size: 8px;
-    height: 20px;
+    padding: 0 0;
+    margin: 0 0;
+    font-size: 1px;
+    height: 10px;
+    width: 35px;
+    line-height: 10px;
   }
 }
 </style>
