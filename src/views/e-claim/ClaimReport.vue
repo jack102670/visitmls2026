@@ -39,7 +39,7 @@
           <!-- Buttons Section -->
           <div
             class="md:mr-4 md:mt-0 mt-5 gap-2 flex flex-row-reverse flex-shrink-0"
-          >
+          > <button @click="fileupload">upload</button>
             <button
               @click="showContent"
               class="w-36 h-12 p-1 font-semibold rounded-lg items-center text-sm dark:bg-gray-900 dark:border-gray-700 bg-green-700 border text-white"
@@ -337,7 +337,7 @@
                   type="text"
                   id="transport"
                   v-model="localTravellingDetails.TransportLT"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -352,7 +352,7 @@
                   type="text"
                   id="transportSpecify"
                   v-model="localTravellingDetails.TransportSpec"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -388,7 +388,7 @@
                   type="text"
                   id="triplt"
                   v-model="localTravellingDetails.tripwayLT"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -398,7 +398,7 @@
                 class="flex justify-between items-center mb-4"
               >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Mileage(KM):</label
+                  >Mileage/Kilometer(KM):</label
                 >
                 <input
                   type="text"
@@ -1017,7 +1017,7 @@
                   type="text"
                   id="nodeName"
                   v-model="medicalBillReimbursementDetails.MedicalCategoryML"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -1043,7 +1043,7 @@
                   type="text"
                   id="ClinicSelectionML"
                   v-model="medicalBillReimbursementDetails.ClinicSelectionML"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -1088,7 +1088,7 @@
                   type="text"
                   id="bankName"
                   v-model="medicalBillReimbursementDetails.BankNameML"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -1298,7 +1298,7 @@
                   type="text"
                   id="nodeName"
                   v-model="entertainmentDetails.TypeofEntertainmentE"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -1349,7 +1349,7 @@
                   type="text"
                   id="nodeParentId"
                   v-model="entertainmentDetails.ReferenceE"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -1619,7 +1619,7 @@
                   type="text"
                   id="nodeName"
                   v-model="staffRefreshmentDetails.TypeofRefreshmentSR"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -1672,7 +1672,7 @@
                   type="text"
                   id="nodeParentId"
                   v-model="staffRefreshmentDetails.ReferenceSR"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -2121,7 +2121,7 @@
                     type="text"
                     id="bankName"
                     v-model="handphoneBillReimbursementDetails.BankNameHR"
-                    :disabled="!isEditMode"
+                    :disabled="!isEditMode || nonEditableFields"
                     class="border rounded-md px-16 py-2"
                   />
                 </div>
@@ -2154,6 +2154,18 @@
                   />
                 </div>
                 <div class="flex justify-between items-center mb-4">
+                  <label for="limitedAmount" class="text-gray-700 font-bold mr-2"
+                    >Limited Amount (RM):</label
+                  >
+                  <input
+                    type="text"
+                    id="limitedAmount"
+                    v-model="handphoneBillReimbursementDetails.LimitedAmountHR"
+                    :disabled="!isEditMode || nonEditableFields"
+                    class="border rounded-md px-16 py-2"
+                  />
+                </div>
+                <div class="flex justify-between items-center mb-4">
                   <label for="claimsAmount" class="text-gray-700 font-bold mr-2"
                     >Claims Amount (RM):</label
                   >
@@ -2163,6 +2175,7 @@
                     v-model="handphoneBillReimbursementDetails.ClaimsAmountHR"
                     :disabled="!isEditMode"
                     class="border rounded-md px-16 py-2"
+                    @input="adjustClaimsAmount"
                   />
                 </div>
                 <div class="flex justify-between items-center mb-4">
@@ -2317,6 +2330,7 @@ export default {
   },
   data() {
     return {
+      storefiles: [],
       employeeID: null,
       totalplus: 0,
       index: null,
@@ -2326,6 +2340,7 @@ export default {
       dataclaims: [],
       isClickModal: false,
       isEditMode: false,
+      nonEditableFields: false,
       selectedClaimDetails: {},
       localTravellingDetails: {},
       overseasTravellingDetails: { otherExpenses: [] },
@@ -2480,6 +2495,15 @@ export default {
   },
 
   methods: {
+    adjustClaimsAmount() {
+      const limitedAmount = this.handphoneBillReimbursementDetails.LimitedAmountHR;
+      let claimsAmount = this.handphoneBillReimbursementDetails.ClaimsAmountHR;
+
+      if (claimsAmount > limitedAmount) {
+        this.handphoneBillReimbursementDetails.ClaimsAmountHR = limitedAmount;
+      }
+    },
+
     formatDate(dateString) {
       const date = new Date(dateString);
       return `${date.getDate()} ${date.toLocaleString("default", {
@@ -2534,10 +2558,11 @@ export default {
     toggleEditMode() {
       if (this.isEditMode) {
         this.savenode();
-        this.isEditMode = !this.isEditMode;
+        this.nonEditableFields = false; 
       } else {
-        this.isEditMode = !this.isEditMode;
+        this.nonEditableFields = true; 
       }
+      this.isEditMode = !this.isEditMode;
     },
     closeClickModal() {
       this.isClickModal = false;
@@ -2735,30 +2760,37 @@ export default {
       };
 
       try {
-    // Send API request using axios
-    const response = await axios.post(
-      "http://172.28.28.91:97/api/User/InsertClaimDetails",
-      apiData
-    );
-    // Handle success response
-    console.log("API response", response.data);
-    this.sendToAPI();
-  }catch (error) {
-  console.error("API error", error);
-  // Extract the detailed server error message from the response
-  let serverErrorMessage = error.response && error.response.data && error.response.data.message ? error.response.data.message : "";
+        // Send API request using axios
+        const response = await axios.post(
+          "http://172.28.28.91:97/api/User/InsertClaimDetails",
+          apiData
+        );
+        // Handle success response
+        console.log("API response", response.data);
+        this.sendToAPI();
+      } catch (error) {
+        console.error("API error", error);
+        // Extract the detailed server error message from the response
+        let serverErrorMessage =
+          error.response && error.response.data && error.response.data.message
+            ? error.response.data.message
+            : "";
 
-  // Check if the server error message contains the specific UNIQUE KEY constraint violation message
-  if (serverErrorMessage.includes("Violation of UNIQUE KEY constraint")) {
-    // Handle the UNIQUE KEY constraint violation error specifically
+        // Check if the server error message contains the specific UNIQUE KEY constraint violation message
+        if (serverErrorMessage.includes("Violation of UNIQUE KEY constraint")) {
+          // Handle the UNIQUE KEY constraint violation error specifically
 
-    this.sendToAPI();
-    console.error("Duplicate entry detected for reference number. Not calling sendToAPI.");
-  } else {
-    // If the error is not related to the UNIQUE KEY constraint violation, consider retrying or handling differently
-    console.error("An error occurred that is not a duplicate entry issue. Review error details for appropriate action.");
-  }
-}
+          this.sendToAPI();
+          console.error(
+            "Duplicate entry detected for reference number. Not calling sendToAPI."
+          );
+        } else {
+          // If the error is not related to the UNIQUE KEY constraint violation, consider retrying or handling differently
+          console.error(
+            "An error occurred that is not a duplicate entry issue. Review error details for appropriate action."
+          );
+        }
+      }
     },
     async sendToAPI() {
       // Group claims by tabTitle
@@ -2816,17 +2848,16 @@ export default {
               }
               case "overseas travelling with accommodation":
                 for (const claim of claimsToSend) {
-                 
                   const thisisforoversea = {
                     description: claim.PurposeOT,
-                meal_allowance: String(claim.MealAllowanceOT),
+                    meal_allowance: String(claim.MealAllowanceOT),
                     date_event: claim.dateOT,
                     transport_fee: claim.AirportLimoTeksiOT,
                     // other_expenses: claim.otherExpenses,
                     total_fee: claim.totalRM,
                     accom_foreign_total: claim.RMforAccommodationOT,
                     accom_foreign_currency:
-                    claim.ForeignCurrencyAccommodationOT,
+                      claim.ForeignCurrencyAccommodationOT,
                     accom_exchange_rate: claim.ExchangeRateAccommodationOT,
                     other_foreign_currency: claim.ForeignCurrencyOthersOT,
                     other_exchange_rate: claim.ExchangeRateOthersOT,
@@ -2834,13 +2865,13 @@ export default {
                     reference_number: this.claims[0].uniqueCode,
                     unique_code: String(claim.UploadOT),
                     transportation_mode: String(claim.AirportLimoTeksiOT),
-                    oem: claim.otherExpenses ? claim.otherExpenses.map(expense => ({
-      name: expense.name,
-      amount: expense.amount,
-      description: expense.description,
-    })) : [],
-            
-                    
+                    oem: claim.otherExpenses
+                      ? claim.otherExpenses.map((expense) => ({
+                          name: expense.name,
+                          amount: expense.amount,
+                          description: expense.description,
+                        }))
+                      : [],
                   };
 
                   axiosInstance = axios.create({
@@ -2855,44 +2886,55 @@ export default {
                 }
                 break;
               case "entertainment":
-              for (const claim of claimsToSend) {
-  const thisisforentertainment = [{
-    date_event: claim.dateE,
-    entertaiment_type: claim.TypeofEntertainmentE,
-    other_type_of_entertainment: claim.OtherTypeofEntertainmentE,
-    company: claim.CompanyE,
-    venue_name: claim.VenueE,
-    description: claim.ReferenceE,
-    amount: claim.AmountRME,
-    reference_number: this.claims[0].uniqueCode,
-    unique_code: "stest", // Ensure this is in the correct format and not null/undefined
-    ent: {
-      participant_name: claim.name,
-      participant_emp_id: claim.staffId,
-      participant_status: claim.status,
-      participant_company_name: claim.companyName,
-    }, // Add the required 'ent' field with the appropriate value
-    participant: {
-      participant_name: claim.name,
-      participant_emp_id: claim.staffId,
-      participant_status: claim.status,
-      participant_company_name: claim.companyName,
-    },
-  }];
+                for (const claim of claimsToSend) {
+                  const fileupload = claim.UploadE;
+                 this.storefiles.push(fileupload);
+                  const thisisforentertainment = [
+                    {
+                      date_event: claim.dateE,
+                      entertainment_type: claim.TypeofEntertainmentE,
+                      other_type_of_entertainment:
+                        claim.OtherTypeofEntertainmentE,
+                      company_name: claim.CompanyE,
+                      venue_name: claim.VenueE,
+                      description: claim.ReferenceE,
+                      total_fee: claim.AmountRME,
+                      reference_number: this.claims[0].uniqueCode,
+                      unique_code: this.generateUniqueCode(), // Ensure this is in the correct format and not null/undefined
+                      // Add the required 'ent' field with the appropriate value
+                   
+                      participants: claim.attendees
+                        ? claim.attendees.map((participant) => ({
+                            name: participant.name,
+                            emp_id: participant.staffId,
+                            status: participant.status,
+                            company_name: participant.companyName,
+                          }))
+                        : [],
+                    },
+                  ];
 
-  // Create axios instance
-  axiosInstance = axios.create({
-    baseURL: "http://172.28.28.91:86/api/User/InsertEntertainment",
-  });
+                  // Create axios instance
+                  axiosInstance = axios.create({
+                    baseURL:
+                      "http://172.28.28.91:86/api/User/InsertEntertainment",
+                  });
 
-  // Send the request
-  try {
-    const response3 = await axiosInstance.post("/", thisisforentertainment);
-    console.log(`Data sent for ${title} 3:`, response3.data);
-  } catch (error) {
-    console.error("Error sending data for Entertainment:", error.response.data);
-  }
-}
+                  // Send the request
+                  try {
+                    const response3 = await axiosInstance.post(
+                      "/",
+                      thisisforentertainment
+                    );
+                    console.log(`Data sent for ${title} 3:`, response3.data);
+                    this.fileupload();
+                  } catch (error) {
+                    console.error(
+                      "Error sending data for Entertainment:",
+                      error.response.data
+                    );
+                  }
+                }
 
                 break;
 
@@ -3059,7 +3101,39 @@ export default {
       }
     },
 
-    // Add mapping functions for other endpoints as needed
+    fileupload() {
+  // Check if this.claims[0] is defined
+  if (!this.dataclaims[0]) {
+    console.error("No claims found. Cannot proceed with the upload.");
+    return;
+  }
+  // Check if this.claims[0].UploadLT is defined
+  if (!this.dataclaims[0].UploadLT) {
+    console.error("UploadLT is undefined. Cannot proceed with the upload.");
+    return;
+  }
+  // Check if this.claims[0].UploadLT.file is defined
+  
+ // Assuming this.dataclaims[0].UploadLT is the object containing the File object
+// and the actual File object is accessible directly as this.dataclaims[0].UploadLT
+const fileToUpload = this.dataclaims[0].UploadLT; // This should be the File object
+const formData = new FormData();
+formData.append("file", fileToUpload);
+
+axios.post("http://localhost:3000/upload", formData, {
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+})
+.then(response => {
+  // Handle success
+  console.log("File uploaded successfully", response.data);
+})
+.catch(error => {
+  // Handle error
+  console.error("Error uploading file:", error);
+});
+},
 
     deleteForm() {
       if (this.index !== -1) {
