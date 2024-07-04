@@ -41,27 +41,34 @@ export default {
       console.log('FilePond has initialized');
     },
     uploadFile() {
-   const fileInput = this.$refs.pond.getFiles();
-console.log(fileInput);
+    const fileInput = this.$refs.pond.getFiles();
+    console.log(fileInput);
+    const formData = new FormData(); // Move FormData creation outside the loop
 
-      if (fileInput.length > 0) {
-        const formData = new FormData();
-        formData.append("file", fileInput[0].file);
+    if (fileInput.length > 0) {
+      fileInput.forEach((fileItem) => {
+        formData.append("filecollection", fileItem.file); // Append each file to the FormData
+      });
 
-        // Using fetch to send the file to your API
-        fetch('http://localhost:3000/upload', {
-          method: 'POST',
-          body: formData,
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Success:', data);
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-      }
+      // Move fetch call outside the loop
+      fetch('http://localhost:3000/upload', {
+        method: 'POST',
+        body: formData,
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Upload failed');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
     }
+  }
   }
 };
 </script>
