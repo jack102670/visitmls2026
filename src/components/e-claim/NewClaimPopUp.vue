@@ -429,7 +429,7 @@ export default {
       dropdownVisible3: false,
       search: '',
       dropdownVisible4: false,
-     
+
       departments: [],
       Companies: [],
       designations: [],
@@ -595,15 +595,13 @@ export default {
       for (let i = 0; i < names.length; i++) {
         shortform[i] = names[i][0];
       }
-    
+
       let datetime = moment(new Date()).format('YYYY-MM-mmss');
       let sn =
         shortform.join('').toString() +
-    
         shortform.join('').toString() +
         '-' +
         this.formData.reportType +
-   
         '-' +
         datetime;
       console.log(sn);
@@ -658,7 +656,6 @@ export default {
         this.$emit('close');
         this.active = 0;
         // close the create new claim pop up
-  
       }
     },
   },

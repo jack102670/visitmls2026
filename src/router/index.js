@@ -42,6 +42,7 @@ import UserFirstTimeLogin from '../components/e-claim/UserFirstTimeLogin.vue';
 import Homepage from '../views/homepage.vue';
 import verified from '../views/e-claim/verifiedpage.vue';
 import AssignChecker from '../components/e-claim/AssignChecker.vue';
+import HRRegisterEmployee from '../components/e-claim/HRRegisterEmployee.vue';
 const routes = [
   {
     path: '/verified',
@@ -126,6 +127,14 @@ const routes = [
     name: 'AdminHRDashboardpage',
     components: {
       default: AdminHRDashboardpage,
+      Sidebar: Newsidebar,
+    },
+  },
+  {
+    path: '/registeremployee',
+    name: 'HrRegisteremployee',
+    components: {
+      default: HRRegisterEmployee,
       Sidebar: Newsidebar,
     },
   },
