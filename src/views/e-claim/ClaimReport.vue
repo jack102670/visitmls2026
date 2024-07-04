@@ -2823,8 +2823,8 @@ export default {
                   const uniqueCode = this.generateUniqueCode(claim.tabTitle);
                   const userId = this.userDetails.userId;
                   console.log(
-                    "Reference Number for claim:",
-                    this.claims[0].uniqueCode
+                    "unik kod:",
+                    uniqueCode
                   );
                   const thisisforlocal1 = {
                     mileage_km: claim.MileageKMLT,
@@ -2892,6 +2892,24 @@ export default {
                         }))
                       : [],
                   };
+                  const uniqueCode = this.generateUniqueCode(claim.tabTitle);
+                  const userId = this.userDetails.userId;
+                  console.log(
+                    "unik kod:",
+                    this.uniqueCode
+                  );
+                  if (claim.UploadOT && claim.UploadOT.length > 0) {
+  // Log the file data to verify it's correct before attempting to upload
+  console.log('Preparing to upload files:', claim.UploadOT);
+
+  // Assuming uploadFile has been adjusted to accept an array of files
+  
+  this.uploadFiles(
+    claim.UploadOT,
+    userId,
+    uniqueCode
+  );
+}
 
                   axiosInstance = axios.create({
                     baseURL:

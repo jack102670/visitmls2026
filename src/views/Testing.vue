@@ -51,7 +51,7 @@ export default {
       });
 
       // Move fetch call outside the loop
-      fetch('http://172.28.28.91:97/api/Files/MultiUploadImage/9d0da821-5de0-42e5-b268-b5e0bc40e8d1/LT9d0d8835man', {
+      fetch('http://localhost:3000/upload', {
         method: 'POST',
         body: formData,
       })
