@@ -39,7 +39,8 @@
           <!-- Buttons Section -->
           <div
             class="md:mr-4 md:mt-0 mt-5 gap-2 flex flex-row-reverse flex-shrink-0"
-          > <button @click="fileupload">upload</button>
+          >
+            <button @click="fileupload">upload</button>
             <button
               @click="showContent"
               class="w-36 h-12 p-1 font-semibold rounded-lg items-center text-sm dark:bg-gray-900 dark:border-gray-700 bg-green-700 border text-white"
@@ -2154,7 +2155,9 @@
                   />
                 </div>
                 <div class="flex justify-between items-center mb-4">
-                  <label for="limitedAmount" class="text-gray-700 font-bold mr-2"
+                  <label
+                    for="limitedAmount"
+                    class="text-gray-700 font-bold mr-2"
                     >Limited Amount (RM):</label
                   >
                   <input
@@ -2496,7 +2499,8 @@ export default {
 
   methods: {
     adjustClaimsAmount() {
-      const limitedAmount = this.handphoneBillReimbursementDetails.LimitedAmountHR;
+      const limitedAmount =
+        this.handphoneBillReimbursementDetails.LimitedAmountHR;
       let claimsAmount = this.handphoneBillReimbursementDetails.ClaimsAmountHR;
 
       if (claimsAmount > limitedAmount) {
@@ -2558,9 +2562,9 @@ export default {
     toggleEditMode() {
       if (this.isEditMode) {
         this.savenode();
-        this.nonEditableFields = false; 
+        this.nonEditableFields = false;
       } else {
-        this.nonEditableFields = true; 
+        this.nonEditableFields = true;
       }
       this.isEditMode = !this.isEditMode;
     },
@@ -2666,7 +2670,8 @@ export default {
             break;
           default:
             console.error("Invalid location provided:", tabTitle);
-            return "";
+            prefix = "CODE";
+            break;
         }
 
         // Construct the uniqueCode
@@ -2815,6 +2820,8 @@ export default {
               case "local travelling": {
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
+                  const uniqueCode = this.generateUniqueCode(claim.tabTitle);
+                  const userId = this.userDetails.userId;
                   console.log(
                     "Reference Number for claim:",
                     this.claims[0].uniqueCode
@@ -2827,7 +2834,7 @@ export default {
                     park_fee: claim.ParkingLT,
                     toll_fee: claim.TollLT,
                     total_fee: claim.totalRM,
-                    unique_code: String(claim.UploadLT),
+                    unique_code: this.generateUniqueCode(claim.tabTitle),
                     reference_number: this.claims[0].uniqueCode,
                     transport_mode: claim.TransportLT,
                     trip_mode: claim.tripwayLT,
@@ -2838,6 +2845,18 @@ export default {
                     baseURL:
                       "http://172.28.28.91:97/api/User/InsertLocalOutstation",
                   });
+                  if (claim.UploadLT && claim.UploadLT.length > 0) {
+  // Log the file data to verify it's correct before attempting to upload
+  console.log('Preparing to upload files:', claim.UploadLT);
+
+  // Assuming uploadFile has been adjusted to accept an array of files
+  
+  this.uploadFiles(
+    claim.UploadLT,
+    userId,
+    uniqueCode
+  );
+}
                   const response1 = await axiosInstance.post(
                     "/",
                     thisisforlocal1
@@ -2888,7 +2907,7 @@ export default {
               case "entertainment":
                 for (const claim of claimsToSend) {
                   const fileupload = claim.UploadE;
-                 this.storefiles.push(fileupload);
+                  this.storefiles.push(fileupload);
                   const thisisforentertainment = [
                     {
                       date_event: claim.dateE,
@@ -2902,7 +2921,7 @@ export default {
                       reference_number: this.claims[0].uniqueCode,
                       unique_code: this.generateUniqueCode(), // Ensure this is in the correct format and not null/undefined
                       // Add the required 'ent' field with the appropriate value
-                   
+
                       participants: claim.attendees
                         ? claim.attendees.map((participant) => ({
                             name: participant.name,
@@ -3101,38 +3120,25 @@ export default {
       }
     },
 
-    fileupload() {
-  // Check if this.claims[0] is defined
-  if (!this.dataclaims[0]) {
-    console.error("No claims found. Cannot proceed with the upload.");
-    return;
-  }
-  // Check if this.claims[0].UploadLT is defined
-  if (!this.dataclaims[0].UploadLT) {
-    console.error("UploadLT is undefined. Cannot proceed with the upload.");
-    return;
-  }
-  // Check if this.claims[0].UploadLT.file is defined
-  
- // Assuming this.dataclaims[0].UploadLT is the object containing the File object
-// and the actual File object is accessible directly as this.dataclaims[0].UploadLT
-const fileToUpload = this.dataclaims[0].UploadLT; // This should be the File object
-const formData = new FormData();
-formData.append("file", fileToUpload);
+    async uploadFiles(files, userId, uniqueCode) {
+  const uploadEndpoint = `http://172.28.28.91:97/api/Files/MultiUploadImage/${userId}/${uniqueCode}`;
+  const formData = new FormData();
 
-axios.post("http://localhost:3000/upload", formData, {
-  headers: {
-    "Content-Type": "multipart/form-data",
-  },
-})
-.then(response => {
-  // Handle success
-  console.log("File uploaded successfully", response.data);
-})
-.catch(error => {
-  // Handle error
-  console.error("Error uploading file:", error);
-});
+  // Iterate over the files array and append each file to formData
+  files.forEach(file => {
+    formData.append("filecollection", file);
+  });
+
+  try {
+    const response = await axios.post(uploadEndpoint, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log("Files uploaded successfully:", response.data);
+  } catch (error) {
+    console.error("Error uploading files:", error);
+  }
 },
 
     deleteForm() {
