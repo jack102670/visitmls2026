@@ -2822,11 +2822,9 @@ export default {
                   // Iterate over each claim
                   const uniqueCode = this.generateUniqueCode(claim.tabTitle);
                   const userId = this.userDetails.userId;
-                  console.log(
-                    "unik kod:",
-                    uniqueCode
-                  );
+                  console.log("unik kod:", uniqueCode);
                   const thisisforlocal1 = {
+                    requester_id: this.userDetails.userId,
                     mileage_km: claim.MileageKMLT,
                     starting_point: claim.LocationStart,
                     end_point: claim.LocationEnd,
@@ -2846,17 +2844,13 @@ export default {
                       "http://172.28.28.91:97/api/User/InsertLocalOutstation",
                   });
                   if (claim.UploadLT && claim.UploadLT.length > 0) {
-  // Log the file data to verify it's correct before attempting to upload
-  console.log('Preparing to upload files:', claim.UploadLT);
+                    // Log the file data to verify it's correct before attempting to upload
+                    console.log("Preparing to upload files:", claim.UploadLT);
 
-  // Assuming uploadFile has been adjusted to accept an array of files
-  
-  this.uploadFiles(
-    claim.UploadLT,
-    userId,
-    uniqueCode
-  );
-}
+                    // Assuming uploadFile has been adjusted to accept an array of files
+
+                    this.uploadFiles(claim.UploadLT, userId, uniqueCode);
+                  }
                   const response1 = await axiosInstance.post(
                     "/",
                     thisisforlocal1
@@ -2868,6 +2862,7 @@ export default {
               case "overseas travelling with accommodation":
                 for (const claim of claimsToSend) {
                   const thisisforoversea = {
+                    requester_id: this.userDetails.userId,
                     description: claim.PurposeOT,
                     meal_allowance: String(claim.MealAllowanceOT),
                     date_event: claim.dateOT,
@@ -2894,22 +2889,15 @@ export default {
                   };
                   const uniqueCode = this.generateUniqueCode(claim.tabTitle);
                   const userId = this.userDetails.userId;
-                  console.log(
-                    "unik kod:",
-                    this.uniqueCode
-                  );
+                  console.log("unik kod:", this.uniqueCode);
                   if (claim.UploadOT && claim.UploadOT.length > 0) {
-  // Log the file data to verify it's correct before attempting to upload
-  console.log('Preparing to upload files:', claim.UploadOT);
+                    // Log the file data to verify it's correct before attempting to upload
+                    console.log("Preparing to upload files:", claim.UploadOT);
 
-  // Assuming uploadFile has been adjusted to accept an array of files
-  
-  this.uploadFiles(
-    claim.UploadOT,
-    userId,
-    uniqueCode
-  );
-}
+                    // Assuming uploadFile has been adjusted to accept an array of files
+
+                    this.uploadFiles(claim.UploadOT, userId, uniqueCode);
+                  }
 
                   axiosInstance = axios.create({
                     baseURL:
@@ -2924,8 +2912,6 @@ export default {
                 break;
               case "entertainment":
                 for (const claim of claimsToSend) {
-                  const fileupload = claim.UploadE;
-                  this.storefiles.push(fileupload);
                   const thisisforentertainment = [
                     {
                       date_event: claim.dateE,
@@ -2950,6 +2936,17 @@ export default {
                         : [],
                     },
                   ];
+                  const uniqueCode = this.generateUniqueCode(claim.tabTitle);
+                  const userId = this.userDetails.userId;
+                  console.log("unik kod:", uniqueCode);
+                  if (claim.UploadE && claim.UploadE.length > 0) {
+                    // Log the file data to verify it's correct before attempting to upload
+                    console.log("Preparing to upload files:", claim.UploadE);
+
+                    // Assuming uploadFile has been adjusted to accept an array of files
+
+                    this.uploadFiles(claim.UploadE, userId, uniqueCode);
+                  }
 
                   // Create axios instance
                   axiosInstance = axios.create({
@@ -2975,32 +2972,45 @@ export default {
 
                 break;
 
-              case "Staff Refreshment":
+              case "staff refreshment":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
                   const thisisforstaffrefreshment = {
-                    date_event: claim.dateE, // Example date
-                    person_entertained: claim.PersonEntertainedE,
-                    type_of_entertainment: claim.TypeofEntertainmentE,
-                    other_type_of_entertainment:
-                      claim.OtherTypeofEntertainmentE,
-                    company: claim.CompanyE,
-                    venue: claim.VenueE,
-                    reference: claim.ReferenceE,
-                    amount: claim.AmountRME,
-                    reference_number: "pktm222",
+                    refreshment_type: claim.OtherTypeofStaffRefreshmentSR ? claim.OtherTypeofStaffRefreshmentSR : claim.TypeofRefreshmentSR,
+                  
+                    date_event: claim.dateSR, // Example date
+                    company_name: claim.CompanySR,
+                    venue_name: claim.VenueSR,
+                    reference_type: claim.ReferenceSR,
+                    total_fee: claim.AmountRMSR,
+                    reference_number: this.claims[0].uniqueCode,
                     unique_code: this.generateUniqueCode(claim.tabTitle),
+                    requester_id: this.userDetails.userId,
+                    sim: claim.staffInvolved
 
-                    approver_email: "approver@example.com",
-                    verifier_email: "verifier@example.com",
-                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
-                    serial_number: this.generateUniqueCodeSN(claim.tabTitle),
+                      ? claim.staffInvolved
+                      .map((participant) => ({
+                          company_name: participant.companyName,
+                          name: participant.name,
+                          emp_id: participant.staffId,
+                       
+                        }))
+                      : [],
                   };
+                  const uniqueCode = this.generateUniqueCode(claim.tabTitle);
+                  const userId = this.userDetails.userId;
+                  console.log("unik kod:", uniqueCode);
+                  if (claim.UploadSR && claim.UploadSR.length > 0) {
+                    // Log the file data to verify it's correct before attempting to upload
+                    console.log("Preparing to upload files:", claim.UploadSR);
+
+                    // Assuming uploadFile has been adjusted to accept an array of files
+
+                    this.uploadFiles(claim.UploadSR, userId, uniqueCode);
+                  }
                   axiosInstance = axios.create({
-                    baseURL: "http://localhost:3000/claims/entertainment",
+                    baseURL: "http://172.28.28.91:97/api/User/InsertStaffRefreshment",
                   });
                   const response2 = await axiosInstance.post(
                     "/",
@@ -3009,32 +3019,32 @@ export default {
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case "Others":
+              case "others":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
                   const thisisforHandphoneBillReimbursement = {
-                    date_event: claim.dateE, // Example date
-                    person_entertained: claim.PersonEntertainedE,
-                    type_of_entertainment: claim.TypeofEntertainmentE,
-                    other_type_of_entertainment:
-                      claim.OtherTypeofEntertainmentE,
-                    company: claim.CompanyE,
-                    venue: claim.VenueE,
-                    reference: claim.ReferenceE,
-                    amount: claim.AmountRME,
-                    reference_number: "pktm222",
-                    unique_code: this.generateUniqueCode(claim.tabTitle),
-
-                    approver_email: "approver@example.com",
-                    verifier_email: "verifier@example.com",
-                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
-                    serial_number: this.generateUniqueCodeSN(claim.tabTitle),
+                    expense_date : claim.dateOthers, // Example date
+                    amount : claim.AmountRMOthers,
+                    description : claim.DescriptionOthers,
+                    unique_code : this.generateUniqueCode(claim.tabTitle),
+                    total_fee : claim.totalRM,
+                    reference_number : this.claims[0].uniqueCode,
+                    requester_id : this.userDetails.userId,
                   };
+                  const uniqueCode = this.generateUniqueCode(claim.tabTitle);
+                  const userId = this.userDetails.userId;
+                  console.log("unik kod:", uniqueCode);
+                  if (claim.UploadOthers && claim.UploadOthers.length > 0) {
+                    // Log the file data to verify it's correct before attempting to upload
+                    console.log("Preparing to upload files:", claim.UploadOthers);
+
+                    // Assuming uploadFile has been adjusted to accept an array of files
+
+                    this.uploadFiles(claim.UploadOthers, userId, uniqueCode);
+                  }
                   axiosInstance = axios.create({
-                    baseURL: "http://localhost:3000/claims/entertainment",
+                    baseURL: "http://172.28.28.91:97/api/User/InsertOthers",
                   });
                   const response2 = await axiosInstance.post(
                     "/",
@@ -3067,6 +3077,17 @@ export default {
                     requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
+                  const uniqueCode = this.generateUniqueCode(claim.tabTitle);
+                  const userId = this.userDetails.userId;
+                  console.log("unik kod:", uniqueCode);
+                  if (claim.UploadLT && claim.UploadLT.length > 0) {
+                    // Log the file data to verify it's correct before attempting to upload
+                    console.log("Preparing to upload files:", claim.UploadLT);
+
+                    // Assuming uploadFile has been adjusted to accept an array of files
+
+                    this.uploadFiles(claim.UploadLT, userId, uniqueCode);
+                  }
                   axiosInstance = axios.create({
                     baseURL: "http://localhost:3000/claims/entertainment",
                   });
@@ -3101,6 +3122,17 @@ export default {
                     requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
                     serial_number: this.generateUniqueCodeSN(claim.tabTitle),
                   };
+                  const uniqueCode = this.generateUniqueCode(claim.tabTitle);
+                  const userId = this.userDetails.userId;
+                  console.log("unik kod:", uniqueCode);
+                  if (claim.UploadLT && claim.UploadLT.length > 0) {
+                    // Log the file data to verify it's correct before attempting to upload
+                    console.log("Preparing to upload files:", claim.UploadLT);
+
+                    // Assuming uploadFile has been adjusted to accept an array of files
+
+                    this.uploadFiles(claim.UploadLT, userId, uniqueCode);
+                  }
                   axiosInstance = axios.create({
                     baseURL: "http://localhost:3000/claims/entertainment",
                   });
@@ -3139,25 +3171,25 @@ export default {
     },
 
     async uploadFiles(files, userId, uniqueCode) {
-  const uploadEndpoint = `http://172.28.28.91:97/api/Files/MultiUploadImage/${userId}/${uniqueCode}`;
-  const formData = new FormData();
+      const uploadEndpoint = `http://172.28.28.91:97/api/Files/MultiUploadImage/${userId}/${uniqueCode}`;
+      const formData = new FormData();
 
-  // Iterate over the files array and append each file to formData
-  files.forEach(file => {
-    formData.append("filecollection", file);
-  });
+      // Iterate over the files array and append each file to formData
+      files.forEach((file) => {
+        formData.append("filecollection", file);
+      });
 
-  try {
-    const response = await axios.post(uploadEndpoint, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    console.log("Files uploaded successfully:", response.data);
-  } catch (error) {
-    console.error("Error uploading files:", error);
-  }
-},
+      try {
+        const response = await axios.post(uploadEndpoint, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        console.log("Files uploaded successfully:", response.data);
+      } catch (error) {
+        console.error("Error uploading files:", error);
+      }
+    },
 
     deleteForm() {
       if (this.index !== -1) {
