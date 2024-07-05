@@ -1,4 +1,3 @@
-<!-- Box Info for User View-->
 <template>
   <main class="flex-1 text overflow-y-auto bg-[#CED1DA] p-4 sm:ml-64">
     <div class="container mx-auto">
@@ -38,6 +37,135 @@
 
           <hr class="h-mx-auto bg-gray-100 border-0 rounded" />
         </div>
+
+      <!-- Box Info Section-->
+      <section>
+        <div
+          class="p-6 mt-5 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7"
+        >
+          <div
+            class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+          >
+            <div class="card m-2">
+              <div class="ml-5">
+                <span class="text-gray-800 text-2xl font-bold">00</span>
+                <span class="block text-sm text-gray-500 font-semibold"
+                  >Resubmission</span
+                >
+              </div>
+              <div
+                class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
+              >
+                <span>See More</span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+          >
+            <div class="card m-2">
+              <div class="ml-5">
+                <span class="text-gray-800 text-2xl font-bold">00</span>
+                <span class="block text-sm text-gray-500 font-semibold"
+                  >Approved</span
+                >
+              </div>
+              <div
+                class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
+              >
+                <span>See More</span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+          >
+            <div class="card m-2">
+              <div class="ml-5">
+                <span class="text-gray-800 text-2xl font-bold">00</span>
+                <span class="block text-sm text-gray-500 font-semibold"
+                  >Completed</span
+                >
+              </div>
+              <div
+                class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
+              >
+                <span>See More</span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+          >
+            <div class="card m-2">
+              <div class="ml-5">
+                <span class="text-gray-800 text-2xl font-bold">00</span>
+                <span class="block text-sm text-gray-500 font-semibold"
+                  >Rejected</span
+                >
+              </div>
+              <div
+                class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
+              >
+                <span>See More</span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+          >
+            <div class="card m-2">
+              <div class="ml-5">
+                <span class="text-gray-800 text-2xl font-bold">00</span>
+                <span class="block text-sm text-gray-500 font-semibold"
+                  >Pending</span
+                >
+              </div>
+              <div
+                class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
+              >
+                <span>See More</span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+          >
+            <div class="card m-2">
+              <div class="ml-5">
+                <span class="text-gray-800 text-2xl font-bold">00</span>
+                <span class="block text-sm text-gray-500 font-semibold"
+                  >Reimburse</span
+                >
+              </div>
+              <div
+                class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
+              >
+                <span>See More</span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+          >
+            <div class="card m-2">
+              <div class="ml-5">
+                <span class="text-gray-800 text-2xl font-bold">00</span>
+                <span class="block text-sm text-gray-500 font-semibold"
+                  >All Claims</span
+                >
+              </div>
+              <div
+                class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
+              >
+                <span>See More</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Claim Table Section-->
         <section class="container px-4 mx-auto pt-12">
           <div class="flex justify-between items-center">
             <div>
@@ -276,6 +404,7 @@
             </div>
           </div>
         </section>
+
         <div
           class="mt-5 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4"
         ></div>

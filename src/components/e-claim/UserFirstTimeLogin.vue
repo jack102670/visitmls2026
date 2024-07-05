@@ -25,36 +25,49 @@
             <hr class="" />
           </section>
 
-          <!-- Profile Picture Section -->
-          <div class="mt-4">
-            <label class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
-              >Profile Picture</label
-            >
-            <div class="flex items-center mt-2">
-              <img
-                :src="profilePicture || defaultProfilePicture"
-                alt="Profile Picture"
-                class="w-24 h-24 rounded-full border-2 border-gray-200"
-              />
-              <div class="ml-4">
-                <input
-                  type="file"
-                  @change="onProfilePictureChange"
-                  class="block w-full text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
-                <button
-                  @click="deleteProfilePicture"
-                  class="mt-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
-
           <form @submit.prevent="handleSubmit">
             <div class="pt-4">
               <div class="m-2">
+                <div class="mt-4">
+                  <label
+                    class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
+                    >Profile Picture</label
+                  >
+                  <div class="flex items-center mt-2">
+                    <img
+                      :src="profilePicture || defaultProfilePicture"
+                      alt="Profile Picture"
+                      class="w-24 h-24 rounded-full border-2 border-gray-200"
+                    />
+                    <div class="ml-4">
+                      <input
+                        type="file"
+                        @change="onProfilePictureChange"
+                        class="block w-full text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                      />
+                      <button
+                        @click="deleteProfilePicture"
+                        class="mt-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="w-4 h-4"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
                 <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                   <div>
                     <label
@@ -123,13 +136,13 @@
                   <div>
                     <label
                       class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
-                      for="bankAccount"
+                      for="bankName"
                     >
-                      Bank Account<span class="text-red-500">*</span>
+                      Bank Name<span class="text-red-500">*</span>
                     </label>
                     <select
-                      v-model="user.bankAccount"
-                      id="bankAccount"
+                      v-model="user.bankName"
+                      id="bankName"
                       class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                       required
                     >
@@ -148,13 +161,28 @@
                       class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
                       for="bankNumber"
                     >
-                      Account Bank Number<span class="text-red-500">*</span>
+                      Bank Account Number<span class="text-red-500">*</span>
                     </label>
                     <input
                       v-model="user.bankNumber"
                       id="bankNumber"
                       type="text"
                       required
+                      class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
+                      for="phoneNumber"
+                    >
+                      Phone Number
+                    </label>
+                    <input
+                      v-model="user.phoneNumber"
+                      id="phoneNumber"
+                      type="text"
                       class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                     />
                   </div>
@@ -173,23 +201,8 @@
                       class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                     />
                   </div>
-
-                  <div>
-                    <label
-                      class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
-                      for="reportingManager"
-                    >
-                      Reporting to Manager
-                    </label>
-                    <input
-                      v-model="user.reportingManager"
-                      id="reportingManager"
-                      type="text"
-                      disabled
-                      class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    />
-                  </div>
                 </div>
+
                 <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
                   <div>
                     <label
@@ -205,6 +218,24 @@
                       class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                       row="4"
                     ></textarea>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                  <div>
+                    <label
+                      class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
+                      for="reportingManager"
+                    >
+                      Reporting Manager
+                    </label>
+                    <input
+                      v-model="user.reportingManager"
+                      id="reportingManager"
+                      type="text"
+                      disabled
+                      class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    />
                   </div>
                 </div>
               </div>
@@ -311,15 +342,15 @@ export default {
     };
   },
 
-   created() {
+  created() {
     this.fetchHrData();
   },
 
   methods: {
     fetchHrData() {
-      this.user.department = 'HR Department'; 
-      this.user.staffId = '123456'; 
-      this.user.reportingManager = 'Manager Name'; 
+      this.user.department = "HR Department";
+      this.user.staffId = "123456";
+      this.user.reportingManager = "Manager Name";
     },
 
     onProfilePictureChange(event) {
@@ -338,6 +369,7 @@ export default {
     },
 
     handleSubmit() {
+      console.log("User data saved:", this.user);
       this.showOtpModal = true;
     },
 
