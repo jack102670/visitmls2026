@@ -107,6 +107,22 @@
                   <div>
                     <label
                       class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
+                      for="workEmail"
+                    >
+                      Work Email<span class="text-red-500">*</span>
+                    </label>
+                    <input
+                      v-model="user.workEmail"
+                      id="workEmail"
+                      type="email"
+                      required
+                      class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
                       for="bankAccount"
                     >
                       Bank Account<span class="text-red-500">*</span>
@@ -138,22 +154,6 @@
                       v-model="user.bankNumber"
                       id="bankNumber"
                       type="text"
-                      required
-                      class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
-                      for="workEmail"
-                    >
-                      Work Email<span class="text-red-500">*</span>
-                    </label>
-                    <input
-                      v-model="user.workEmail"
-                      id="workEmail"
-                      type="email"
                       required
                       class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                     />
@@ -307,11 +307,21 @@ export default {
       showOtpModal: false,
       showSuccessNotification: false,
       profilePicture: null,
-      defaultProfilePicture: "path/to/default/profile/picture.jpg", // Set the path to your default profile picture
+      defaultProfilePicture: require("@/assets/images/profile.png"),
     };
   },
 
+   created() {
+    this.fetchHrData();
+  },
+
   methods: {
+    fetchHrData() {
+      this.user.department = 'HR Department'; 
+      this.user.staffId = '123456'; 
+      this.user.reportingManager = 'Manager Name'; 
+    },
+
     onProfilePictureChange(event) {
       const file = event.target.files[0];
       if (file) {
@@ -353,12 +363,6 @@ export default {
     cancelOtp() {
       this.showOtpModal = false;
     },
-  },
-
-  created() {
-    this.user.department = "Programmer";
-    this.user.staffId = "12345";
-    this.user.reportingManager = "Maniraja";
   },
 };
 </script>
