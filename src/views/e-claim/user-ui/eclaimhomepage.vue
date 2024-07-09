@@ -339,7 +339,7 @@
 
                         <td class="px-4 py-4 ml text-sm whitespace-nowrap">
                           <div class="flex items-center gap-x-6">
-                            <button
+                            <button @click="showModal(data.reference_number)"
                               class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
                             >
                               <svg
@@ -407,6 +407,145 @@
                       </tr>
                     </tbody>
                   </table>
+                  <div
+                    v-if="isClickModal"
+                    class="modal fixed top-0 left-0 w-full flex-1 bg-[#CED1DA] dark:bg-[#111827] p-4 h-auto h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
+                    @click.self="closeClickModal"
+                  >
+                    <div
+                      class="modal-content bg-white rounded-lg p-8 w-full sm:w-3/4 lg:max-w-2xl border border-3 border-[#5037cebf]"
+                      style="max-height: calc(100vh - 20px); overflow-y: auto"
+                    >
+                      <div class="flex justify-between"> 
+                        <p
+                          class=" flex items-center text-2xl uppercase font-semibold text-[#160959] "
+                        >
+                          {{ showYourClaimDetailsModal.name }}<span class="ml-2 flex items-center "
+                            :class="getStatusContainerClass(datatable.status)"
+                          >
+                            <span
+                              :class="getStatusDotClass(datatable.status)"
+                            ></span>
+                            <h2 :class="getStatusTextClass(datatable.status)">
+                              {{
+                                datatable.status === ""
+                                  ? "OPEN"
+                                  : datatable.status
+                              }}
+                            </h2>
+
+                            </span
+                          >
+                        </p>
+                        <button
+                          @click="closeClickModal"
+                          type="button"
+                          class="bg-slate-50 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                        >
+                          <span class="sr-only">Close menu</span>
+                          <!-- Heroicon name: outline/x -->
+                          <svg
+                            class="h-6 w-6"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                      <div></div>
+                      <div class="bg-slate-50 rounded-xl px-2 py-1 mt-1">
+                        <div class="flex">
+                          <h1 class="inline">
+                            <span style="margin-right: 120px">Name</span>
+                          </h1>
+                          <p class="inline">:</p>
+                        </div>
+                        <div class="flex">
+                          <h1 class="inline">
+                            <span style="margin-right: 50px"
+                              >Date Requested</span
+                            >
+                          </h1>
+                          <p class="inline">:</p>
+                        </div>
+                      </div>
+
+                      <div class="p-2 mt-2">
+                        <table
+                          class="w-full rounded-lg overflow-hidden bg-slate-50"
+                        >
+                          <thead class="text-slate-800">
+                            <tr>
+                              <th
+                                class="border-r border-b border-slate-400 p-2 text-center"
+                              >
+                                No
+                              </th>
+                              <th
+                                class="border-r border-b border-slate-400 p-2"
+                              >
+                                Type of Claim
+                              </th>
+                              <th
+                                class="border-r border-b border-slate-400 p-2"
+                              >
+                                Amount
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td
+                                class="border-r border-b border-slate-400 p-2 text-center"
+                              >
+                                1
+                              </td>
+                              <td
+                                class="border-r border-b border-slate-400 p-2"
+                              >
+                                Medical
+                              </td>
+                              <td
+                                class="border-r border-b border-slate-400 p-2"
+                              >
+                                $100
+                              </td>
+                            </tr>
+                            <!-- Repeat <tr> for more rows as needed -->
+                            <tr>
+                              <td class=""></td>
+                              <td
+                                class="border-r border-slate-400 p-2 text-right text-xl font-semibold"
+                              >
+                                Total:
+                              </td>
+                              <td
+                                class="border-r border-slate-400 p-2 text-xl font-semibold"
+                              >
+                                $100
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="flex justify-end">
+                        <button
+                          class="py-1 px-2 bg-blue-800 text-white rounded-full text-sm"
+                        >
+                          See More
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -433,7 +572,7 @@ import NewClaimPopUp from "@/components/e-claim/NewClaimPopUp.vue";
 import $ from "jquery";
 import "datatables.net-dt";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
-
+import axios from "axios";
 export default {
   components: {
     // CreateNewClaimPopUp,
@@ -442,6 +581,7 @@ export default {
   name: "homepageeclaiM",
   data() {
     return {
+      isClickModal: true,
       userDetails: {},
       requests: [],
       dummyData: [
@@ -476,17 +616,80 @@ export default {
           adminStatus: "REIMBURSE",
         },
       ],
+      datatable: [
+        {
+          name: "HQ",
+          status: "APPROVED",
+          date_requested: "20 July 2024",
+        }
+      ],
+       
+      
       popup: false,
       animate: false,
-      sortBy: "date_requested",
-      itemsPerPage: 4,
     };
   },
+  
   methods: {
+    showYourClaimDetailsModal(data) {
+  this.showYourClaimDetailsModal = data.result; // Make sure this matches your data structure
+},
+    async showModal(referenceNumber) {
+  const urls = [
+    `http://172.28.28.91:97/api/User/GetLocalOutstation/${referenceNumber}`,
+    `http://172.28.28.91:97/api/User/GetOverseasOutstation/${referenceNumber}`,
+    `http://172.28.28.91:97/api/User/GetRefreshment/${referenceNumber}`,
+    `http://172.28.28.91:86/api/User/GetEntertainment/${referenceNumber}`,
+    `http://172.28.28.91:86/api/User/GetHandphone/${referenceNumber}`,
+    `http://172.28.28.91:86/api/User/GetMedicalLeave/${referenceNumber}`,
+    `http://172.28.28.91:97/api/User/GetOthers/${referenceNumber}`,
+    `http://172.28.28.91:86/api/User/GetClaimDetails/${referenceNumber}`
+  ];
+
+  // Mapping URLs to modal display functions
+  const modalDisplayFunctions = {
+    'GetLocalOutstation': this.showYourLocalFormModal,
+    'GetOverseasOutstation': this.showYourOverseasFormModal,
+    'GetRefreshment': this.showYourRefreshmentModal,
+    'GetEntertainment': this.showYourEntertainmentModal,
+    'GetHandphone': this.showYourHandphoneModal,
+    'GetMedicalLeave': this.showYourMedicalLeaveModal,
+    'GetOthers': this.showYourOthersModal,
+    'GetClaimDetails': this.showYourClaimDetailsModal
+  };
+
+  try {
+    const responses = await Promise.allSettled(urls.map(url =>
+      axios.get(url).catch(error => ({ error: `Failed to fetch: ${error.message}` }))
+    ));
+
+    responses.forEach((result, index) => {
+      const urlKey = urls[index].match(/Get(\w+)/)[1]; // Extract key from URL
+      if (result.status === 'fulfilled') {
+        console.log(`${urlKey} Data:`, result.value.data);
+        // Dynamically call the corresponding modal display function
+        if (modalDisplayFunctions[urlKey]) {
+          modalDisplayFunctions[urlKey].call(this, result.value.data);
+        }
+      } else {
+        console.log(`Error from ${urls[index]}:`, result.reason);
+        // Handle error or failed request
+      }
+    });
+  } catch (error) {
+    console.error("Error in executing requests:", error);
+    // Handle general error
+  }
+},
+    showYourModalWithData(data) {
+      // Logic to display the modal with the fetched data
+      console.log(data); // For demonstration
+    },
+    closeClickModal() {
+      this.isClickModal = false;
+    },
     initializeDataTable() {
-      $(this.$refs.myTable).DataTable({
-      
-      });
+      $(this.$refs.myTable).DataTable({});
     },
     async fetchAllRequests() {
       const userId = store.getSession().userDetails.userId;
@@ -572,8 +775,9 @@ export default {
     this.fetchAllRequests();
     this.fetchAllRequests().then(() => {
       this.$nextTick(() => {
-      this.initializeDataTable();
-    });});
+        this.initializeDataTable();
+      });
+    });
     store.setControlView("eclaim");
 
     let openOrNot = localStorage.getItem("openOrNot");
