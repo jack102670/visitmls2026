@@ -1,18 +1,37 @@
 <template>
-  <div class="flex flex-col mx-auto relative">
-    <label :for="inputId" class="text-lg text-gray-700">{{ label }}</label>
-    <input
-      :id="inputId"
-      v-model="inputValue"
-      @focus="showDropdown = true"
-      @blur="handleBlur"
-      @input="filterOptions"
-      @keydown.down.prevent="navigateOptions('down')"
-      @keydown.up.prevent="navigateOptions('up')"
-      @keydown.enter.prevent="selectOption(filteredOptions[highlightedIndex])"
-      class="border-2 border-gray-300 p-2 w-60 sm:w-72 2xl:w-96 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-      type="text"
-    />
+  <div class="flex flex-col relative">
+    <label :for="inputId" class="font-semibold text-gray-600"
+      >{{ label }}<span v-if="mandatory" class="text-red-500">*</span></label
+    >
+    <div class="relative">
+      <input
+        :id="inputId"
+        v-model="inputValue"
+        @focus="showDropdown = true"
+        @blur="handleBlur"
+        @input="filterOptions"
+        @keydown.down.prevent="navigateOptions('down')"
+        @keydown.up.prevent="navigateOptions('up')"
+        @keydown.enter.prevent="selectOption(filteredOptions[highlightedIndex])"
+        class="border-2 border-gray-200 p-2 w-full rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+        type="text"
+      />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="absolute top-3 right-3 h-4 w-4"
+        @click="showDropdown = !showDropdown"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="m19.5 8.25-7.5 7.5-7.5-7.5"
+        />
+      </svg>
+    </div>
     <ul
       v-if="showDropdown"
       class="absolute top-full mt-1 w-full border border-gray-300 bg-white dark:bg-gray-800 z-50 h-52 overflow-y-scroll"
@@ -48,6 +67,9 @@ export default {
     options: {
       type: Array,
       required: true,
+    },
+    mandatory: {
+      type: Boolean,
     },
   },
   data() {
