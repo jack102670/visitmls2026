@@ -64,7 +64,7 @@
         </div>
 
         <!-- Box Info Section-->
-        <section>
+         <section>
           <div
             class="p-6 mt-5 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6"
           >
@@ -136,23 +136,6 @@
                 </div>
               </div>
             </div>
-            <!-- <div
-              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
-            >
-              <div class="card m-2">
-                <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold">00</span>
-                  <span class="block text-sm text-gray-500 font-semibold"
-                    >Pending</span
-                  >
-                </div>
-                <div
-                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-                >
-                  <span>See More</span>
-                </div>
-              </div>
-            </div> -->
             <div
               class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
             >
