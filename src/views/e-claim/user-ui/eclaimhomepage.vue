@@ -13,159 +13,184 @@
               Claim for Reimbursement of All Expenses
             </h3>
           </div>
-          <div class="flex ml-14 mt-5">
-            <button @click="ChangePopUp()" class="p-2 flex items-center">
-              Add claim
-              <span class="ml-2 border border-2 px-4 border-blue-800">
+          <div class="flex mt-5">
+            <button
+              @click="ChangePopUp()"
+              class="p-2 flex items-center text-center rounded-full bg-[#160959] text-slate-200"
+            >
+              <span class="px-4">
                 <svg
-                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 48 48"
                   fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
+                    d="M40 23V14L31 4H10C8.89543 4 8 4.89543 8 6V42C8 43.1046 8.89543 44 10 44H22"
+                    stroke="white"
+                    stroke-width="4"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    d="M12 4.5v15m7.5-7.5h-15"
+                  />
+                  <path
+                    d="M33 29V43"
+                    stroke="white"
+                    stroke-width="4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M26 36H33H40"
+                    stroke="white"
+                    stroke-width="4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M30 4V14H40"
+                    stroke="white"
+                    stroke-width="4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
                   />
                 </svg>
               </span>
+              New Claim
             </button>
           </div>
 
           <hr class="h-mx-auto bg-gray-100 border-0 rounded" />
         </div>
 
-      <!-- Box Info Section-->
-      <section>
-        <div
-          class="p-6 mt-5 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7"
-        >
+        <!-- Box Info Section-->
+        <section>
           <div
-            class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+            class="p-6 mt-5 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6"
           >
-            <div class="card m-2">
-              <div class="ml-5">
-                <span class="text-gray-800 text-2xl font-bold">00</span>
-                <span class="block text-sm text-gray-500 font-semibold"
-                  >Resubmission</span
+            <div
+              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+            >
+              <div class="card m-2">
+                <div class="ml-5">
+                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="block text-sm text-gray-500 font-semibold"
+                    >Resubmission</span
+                  >
+                </div>
+                <div
+                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
                 >
+                  <span>See More</span>
+                </div>
               </div>
-              <div
-                class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-              >
-                <span>See More</span>
+            </div>
+            <div
+              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+            >
+              <div class="card m-2">
+                <div class="ml-5">
+                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="block text-sm text-gray-500 font-semibold"
+                    >Approved</span
+                  >
+                </div>
+                <div
+                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
+                >
+                  <span>See More</span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+            >
+              <div class="card m-2">
+                <div class="ml-5">
+                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="block text-sm text-gray-500 font-semibold"
+                    >Completed</span
+                  >
+                </div>
+                <div
+                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
+                >
+                  <span>See More</span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+            >
+              <div class="card m-2">
+                <div class="ml-5">
+                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="block text-sm text-gray-500 font-semibold"
+                    >Rejected</span
+                  >
+                </div>
+                <div
+                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
+                >
+                  <span>See More</span>
+                </div>
+              </div>
+            </div>
+            <!-- <div
+              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+            >
+              <div class="card m-2">
+                <div class="ml-5">
+                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="block text-sm text-gray-500 font-semibold"
+                    >Pending</span
+                  >
+                </div>
+                <div
+                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
+                >
+                  <span>See More</span>
+                </div>
+              </div>
+            </div> -->
+            <div
+              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+            >
+              <div class="card m-2">
+                <div class="ml-5">
+                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="block text-sm text-gray-500 font-semibold"
+                    >Reimburse</span
+                  >
+                </div>
+                <div
+                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
+                >
+                  <span>See More</span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+            >
+              <div class="card m-2">
+                <div class="ml-5">
+                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="block text-sm text-gray-500 font-semibold"
+                    >All Claims</span
+                  >
+                </div>
+                <div
+                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
+                >
+                  <span>See More</span>
+                </div>
               </div>
             </div>
           </div>
-          <div
-            class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
-          >
-            <div class="card m-2">
-              <div class="ml-5">
-                <span class="text-gray-800 text-2xl font-bold">00</span>
-                <span class="block text-sm text-gray-500 font-semibold"
-                  >Approved</span
-                >
-              </div>
-              <div
-                class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-              >
-                <span>See More</span>
-              </div>
-            </div>
-          </div>
-          <div
-            class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
-          >
-            <div class="card m-2">
-              <div class="ml-5">
-                <span class="text-gray-800 text-2xl font-bold">00</span>
-                <span class="block text-sm text-gray-500 font-semibold"
-                  >Completed</span
-                >
-              </div>
-              <div
-                class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-              >
-                <span>See More</span>
-              </div>
-            </div>
-          </div>
-          <div
-            class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
-          >
-            <div class="card m-2">
-              <div class="ml-5">
-                <span class="text-gray-800 text-2xl font-bold">00</span>
-                <span class="block text-sm text-gray-500 font-semibold"
-                  >Rejected</span
-                >
-              </div>
-              <div
-                class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-              >
-                <span>See More</span>
-              </div>
-            </div>
-          </div>
-          <div
-            class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
-          >
-            <div class="card m-2">
-              <div class="ml-5">
-                <span class="text-gray-800 text-2xl font-bold">00</span>
-                <span class="block text-sm text-gray-500 font-semibold"
-                  >Pending</span
-                >
-              </div>
-              <div
-                class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-              >
-                <span>See More</span>
-              </div>
-            </div>
-          </div>
-          <div
-            class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
-          >
-            <div class="card m-2">
-              <div class="ml-5">
-                <span class="text-gray-800 text-2xl font-bold">00</span>
-                <span class="block text-sm text-gray-500 font-semibold"
-                  >Reimburse</span
-                >
-              </div>
-              <div
-                class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-              >
-                <span>See More</span>
-              </div>
-            </div>
-          </div>
-          <div
-            class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
-          >
-            <div class="card m-2">
-              <div class="ml-5">
-                <span class="text-gray-800 text-2xl font-bold">00</span>
-                <span class="block text-sm text-gray-500 font-semibold"
-                  >All Claims</span
-                >
-              </div>
-              <div
-                class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-              >
-                <span>See More</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      <!-- Claim Table Section-->
+        </section>
+
+        <!-- Claim Table Section-->
         <section class="container px-4 mx-auto pt-12">
           <div class="flex justify-between items-center">
             <div>
