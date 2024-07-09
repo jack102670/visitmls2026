@@ -13,159 +13,167 @@
               Claim for Reimbursement of All Expenses
             </h3>
           </div>
-          <div class="flex ml-14 mt-5">
-            <button @click="ChangePopUp()" class="p-2 flex items-center">
-              Add claim
-              <span class="ml-2 border border-2 px-4 border-blue-800">
+          <div class="flex mt-5">
+            <button
+              @click="ChangePopUp()"
+              class="p-2 flex items-center text-center rounded-full bg-[#160959] text-slate-200"
+            >
+              <span class="px-4">
                 <svg
-                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 48 48"
                   fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
+                    d="M40 23V14L31 4H10C8.89543 4 8 4.89543 8 6V42C8 43.1046 8.89543 44 10 44H22"
+                    stroke="white"
+                    stroke-width="4"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    d="M12 4.5v15m7.5-7.5h-15"
+                  />
+                  <path
+                    d="M33 29V43"
+                    stroke="white"
+                    stroke-width="4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M26 36H33H40"
+                    stroke="white"
+                    stroke-width="4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M30 4V14H40"
+                    stroke="white"
+                    stroke-width="4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
                   />
                 </svg>
               </span>
+              New Claim
             </button>
           </div>
 
           <hr class="h-mx-auto bg-gray-100 border-0 rounded" />
         </div>
 
-      <!-- Box Info Section-->
-      <section>
-        <div
-          class="p-6 mt-5 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7"
-        >
+        <!-- Box Info Section-->
+        <section>
           <div
-            class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+            class="p-6 mt-5 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6"
           >
-            <div class="card m-2">
-              <div class="ml-5">
-                <span class="text-gray-800 text-2xl font-bold">00</span>
-                <span class="block text-sm text-gray-500 font-semibold"
-                  >Resubmission</span
+            <div
+              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+            >
+              <div class="card m-2">
+                <div class="ml-5">
+                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="block text-sm text-gray-500 font-semibold"
+                    >Resubmission</span
+                  >
+                </div>
+                <div
+                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
                 >
+                  <span>See More</span>
+                </div>
               </div>
-              <div
-                class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-              >
-                <span>See More</span>
+            </div>
+            <div
+              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+            >
+              <div class="card m-2">
+                <div class="ml-5">
+                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="block text-sm text-gray-500 font-semibold"
+                    >Approved</span
+                  >
+                </div>
+                <div
+                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
+                >
+                  <span>See More</span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+            >
+              <div class="card m-2">
+                <div class="ml-5">
+                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="block text-sm text-gray-500 font-semibold"
+                    >Completed</span
+                  >
+                </div>
+                <div
+                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
+                >
+                  <span>See More</span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+            >
+              <div class="card m-2">
+                <div class="ml-5">
+                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="block text-sm text-gray-500 font-semibold"
+                    >Rejected</span
+                  >
+                </div>
+                <div
+                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
+                >
+                  <span>See More</span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+            >
+              <div class="card m-2">
+                <div class="ml-5">
+                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="block text-sm text-gray-500 font-semibold"
+                    >Reimburse</span
+                  >
+                </div>
+                <div
+                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
+                >
+                  <span>See More</span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+            >
+              <div class="card m-2">
+                <div class="ml-5">
+                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="block text-sm text-gray-500 font-semibold"
+                    >All Claims</span
+                  >
+                </div>
+                <div
+                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
+                >
+                  <span>See More</span>
+                </div>
               </div>
             </div>
           </div>
-          <div
-            class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
-          >
-            <div class="card m-2">
-              <div class="ml-5">
-                <span class="text-gray-800 text-2xl font-bold">00</span>
-                <span class="block text-sm text-gray-500 font-semibold"
-                  >Approved</span
-                >
-              </div>
-              <div
-                class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-              >
-                <span>See More</span>
-              </div>
-            </div>
-          </div>
-          <div
-            class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
-          >
-            <div class="card m-2">
-              <div class="ml-5">
-                <span class="text-gray-800 text-2xl font-bold">00</span>
-                <span class="block text-sm text-gray-500 font-semibold"
-                  >Completed</span
-                >
-              </div>
-              <div
-                class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-              >
-                <span>See More</span>
-              </div>
-            </div>
-          </div>
-          <div
-            class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
-          >
-            <div class="card m-2">
-              <div class="ml-5">
-                <span class="text-gray-800 text-2xl font-bold">00</span>
-                <span class="block text-sm text-gray-500 font-semibold"
-                  >Rejected</span
-                >
-              </div>
-              <div
-                class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-              >
-                <span>See More</span>
-              </div>
-            </div>
-          </div>
-          <div
-            class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
-          >
-            <div class="card m-2">
-              <div class="ml-5">
-                <span class="text-gray-800 text-2xl font-bold">00</span>
-                <span class="block text-sm text-gray-500 font-semibold"
-                  >Pending</span
-                >
-              </div>
-              <div
-                class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-              >
-                <span>See More</span>
-              </div>
-            </div>
-          </div>
-          <div
-            class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
-          >
-            <div class="card m-2">
-              <div class="ml-5">
-                <span class="text-gray-800 text-2xl font-bold">00</span>
-                <span class="block text-sm text-gray-500 font-semibold"
-                  >Reimburse</span
-                >
-              </div>
-              <div
-                class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-              >
-                <span>See More</span>
-              </div>
-            </div>
-          </div>
-          <div
-            class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
-          >
-            <div class="card m-2">
-              <div class="ml-5">
-                <span class="text-gray-800 text-2xl font-bold">00</span>
-                <span class="block text-sm text-gray-500 font-semibold"
-                  >All Claims</span
-                >
-              </div>
-              <div
-                class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-              >
-                <span>See More</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      <!-- Claim Table Section-->
+        </section>
+
+        <!-- Claim Table Section-->
         <section class="container px-4 mx-auto pt-12">
           <div class="flex justify-between items-center">
             <div>
@@ -332,6 +340,7 @@
                         <td class="px-4 py-4 ml text-sm whitespace-nowrap">
                           <div class="flex items-center gap-x-6">
                             <button
+                              @click="showModal(data.reference_number)"
                               class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
                             >
                               <svg
@@ -399,6 +408,145 @@
                       </tr>
                     </tbody>
                   </table>
+                  <!-- <div
+                    v-if="isClickModal"
+                    class="modal fixed top-0 left-0 w-full flex-1 bg-[#CED1DA] dark:bg-[#111827] p-4 h-auto h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
+                    @click.self="closeClickModal"
+                  >
+                    <div
+                      class="modal-content bg-white rounded-lg p-8 w-full sm:w-3/4 lg:max-w-2xl border border-3 border-[#5037cebf]"
+                      style="max-height: calc(100vh - 20px); overflow-y: auto"
+                    >
+                      <div class="flex justify-between">
+                        <p
+                          class="flex items-center text-2xl uppercase font-semibold text-[#160959]"
+                        >
+                          {{ claimDetails.name
+                          }}<span
+                            class="ml-2 flex items-center"
+                            :class="getStatusContainerClass(datatable.status)"
+                          >
+                            <span
+                              :class="getStatusDotClass(datatable.status)"
+                            ></span>
+                            <h2 :class="getStatusTextClass(datatable.status)">
+                              {{
+                                datatable.status === ""
+                                  ? "OPEN"
+                                  : datatable.status
+                              }}
+                            </h2>
+                          </span>
+                        </p>
+                        <button
+                          @click="closeClickModal"
+                          type="button"
+                          class="bg-slate-50 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                        >
+                          <span class="sr-only">Close menu</span>
+                         
+                          <svg
+                            class="h-6 w-6"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                      <div></div>
+                      <div class="bg-slate-50 rounded-xl px-2 py-1 mt-1">
+                        <div class="flex">
+                          <h1 class="inline">
+                            <span style="margin-right: 120px">Name</span>
+                          </h1>
+                          <p class="inline">: {{ claimDetails.name }}</p>
+                        </div>
+                        <div class="flex">
+                          <h1 class="inline">
+                            <span style="margin-right: 50px"
+                              >Date Requested</span
+                            >
+                          </h1>
+                          <p class="inline">: {{ claimDetails.date_requested }}</p>
+                        </div>
+                      </div>
+
+                      <div class="p-2 mt-2">
+                        <table
+                          class="w-full rounded-lg overflow-hidden bg-slate-50"
+                        >
+                          <thead class="text-slate-800">
+                            <tr>
+                              <th
+                                class="border-r border-b border-slate-400 p-2 text-center"
+                              >
+                                No
+                              </th>
+                              <th
+                                class="border-r border-b border-slate-400 p-2"
+                              >
+                                Type of Claim
+                              </th>
+                              <th
+                                class="border-r border-b border-slate-400 p-2"
+                              >
+                                Amount
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="(claim, index) in localOutstation " :key="index">
+                              <td
+                                class="border-r border-b border-slate-400 p-2 text-center"
+                              >
+                                {{ index+1 }}
+                              </td>
+                              <td
+                                class="border-r border-b border-slate-400 p-2"
+                              >
+                                 Local Outstation
+                              </td>
+                              <td
+                                class="border-r border-b border-slate-400 p-2"
+                              >
+                                {{ claim.total_fee }}
+                              </td>
+                            </tr>
+                           
+                            <tr>
+                              <td class=""></td>
+                              <td
+                                class="border-r border-slate-400 p-2 text-right text-xl font-semibold"
+                              >
+                                Total:
+                              </td>
+                              <td
+                                class="border-r border-slate-400 p-2 text-xl font-semibold"
+                              >
+                                $100
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="flex justify-end">
+                        <button
+                          class="py-1 px-2 bg-blue-800 text-white rounded-full text-sm"
+                        >
+                          See More
+                        </button>
+                      </div>
+                    </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -422,7 +570,10 @@
 import { store } from "../../store.js";
 // import CreateNewClaimPopUp from '@/components/e-claim/CreateNewClaimPopUp.vue';
 import NewClaimPopUp from "@/components/e-claim/NewClaimPopUp.vue";
-
+import $ from "jquery";
+import "datatables.net-dt";
+import "datatables.net-dt/css/jquery.dataTables.min.css";
+// import axios from "axios";
 export default {
   components: {
     // CreateNewClaimPopUp,
@@ -431,6 +582,7 @@ export default {
   name: "homepageeclaiM",
   data() {
     return {
+      isClickModal: false,
       userDetails: {},
       requests: [],
       dummyData: [
@@ -465,11 +617,105 @@ export default {
           adminStatus: "REIMBURSE",
         },
       ],
+      datatable: [
+        {
+          name: "HQ",
+          status: "APPROVED",
+          date_requested: "20 July 2024",
+        }
+      ],
+
+
       popup: false,
       animate: false,
+      // localOutstation: [],
+      // overseasOutstation: [],
+      // refreshment: [],
+      // entertainment: [],
+      // handphone: [],
+      // medicalLeave: [],
+      // others: [],
+      // claimDetails: {},
     };
   },
+
   methods: {
+//     async showModal(referenceNumber) {
+//       this.isClickModal = true;
+//   const urls = [
+//     `http://172.28.28.91:97/api/User/GetLocalOutstation/${referenceNumber}`,
+//     `http://172.28.28.91:97/api/User/GetOverseasOutstation/${referenceNumber}`,
+//     `http://172.28.28.91:86/api/User/GetRefreshment/${referenceNumber}`,
+//     `http://172.28.28.91:86/api/User/GetEntertainment/${referenceNumber}`,
+//     `http://172.28.28.91:86/api/User/GetHandphone/${referenceNumber}`,
+//     `http://172.28.28.91:86/api/User/GetMedicalLeave/${referenceNumber}`,
+//     `http://172.28.28.91:97/api/User/GetOthers/${referenceNumber}`,
+//     `http://172.28.28.91:86/api/User/GetClaimDetails/${referenceNumber}`
+//   ];
+
+//   // Mapping URLs to modal display functions
+
+//   try {
+//     const responses = await Promise.allSettled(urls.map(url => fetch(url).then(res => res.json())));
+
+//     responses.forEach((result, index) => {
+//       if (result.status === 'fulfilled') {
+//         const data = result.value; // Assuming each response is an array
+//         // Process and store the array based on the URL index
+//         switch (index) {
+//           case 0:
+//   this.localOutstation = data;
+//   console.log("Local Outstation:", this.localOutstation);
+//   break;
+// case 1:
+//   this.overseasOutstation = data;
+//   console.log("Overseas Outstation:", this.overseasOutstation);
+//   break;
+// case 2:
+//   this.refreshment = data;
+//   console.log("Refreshment:", this.refreshment);
+//   break;
+// case 3:
+//   this.entertainment = data;
+//   console.log("Entertainment:", this.entertainment);
+//   break;
+// case 4:
+//   this.handphone = data;
+//   console.log("Handphone:", this.handphone);
+//   break;
+// case 5:
+//   this.medicalLeave = data;
+//   console.log("Medical Leave:", this.medicalLeave);
+//   break;
+// case 6:
+//   this.others = data;
+//   console.log("Others:", this.others);
+//   break;
+// case 7:
+//   this.claimDetails = data.result;
+//   console.log("Claim Details:", this.claimDetails);
+//   break;
+//           // Add more cases as needed
+//         }
+//       } else {
+//         console.error(`Error fetching data from ${urls[index]}:`, result.reason);
+//       }
+//     });
+//   } catch (error) {
+//     console.error("Error in executing requests:", error);
+//   }
+//     },
+
+    showYourModalWithData(data) {
+      // Logic to display the modal with the fetched data
+      console.log(data); // For demonstration
+    },
+    // closeClickModal() {
+    //   this.isClickModal = false;
+    // },
+    initializeDataTable() {
+      $(this.$refs.myTable).DataTable({});
+    },
     async fetchAllRequests() {
       const userId = store.getSession().userDetails.userId;
       console.log("userId", userId);
@@ -552,6 +798,11 @@ export default {
   mounted() {
     // Sidebar close or open
     this.fetchAllRequests();
+    this.fetchAllRequests().then(() => {
+      this.$nextTick(() => {
+        this.initializeDataTable();
+      });
+    });
     store.setControlView("eclaim");
 
     let openOrNot = localStorage.getItem("openOrNot");
