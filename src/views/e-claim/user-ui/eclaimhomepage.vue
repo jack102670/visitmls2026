@@ -430,6 +430,9 @@
 import { store } from "../../store.js";
 // import CreateNewClaimPopUp from '@/components/e-claim/CreateNewClaimPopUp.vue';
 import NewClaimPopUp from "@/components/e-claim/NewClaimPopUp.vue";
+import $ from "jquery";
+import "datatables.net-dt";
+import "datatables.net-dt/css/jquery.dataTables.min.css";
 
 export default {
   components: {
@@ -475,9 +478,16 @@ export default {
       ],
       popup: false,
       animate: false,
+      sortBy: "date_requested",
+      itemsPerPage: 4,
     };
   },
   methods: {
+    initializeDataTable() {
+      $(this.$refs.myTable).DataTable({
+      
+      });
+    },
     async fetchAllRequests() {
       const userId = store.getSession().userDetails.userId;
       console.log("userId", userId);
@@ -560,6 +570,10 @@ export default {
   mounted() {
     // Sidebar close or open
     this.fetchAllRequests();
+    this.fetchAllRequests().then(() => {
+      this.$nextTick(() => {
+      this.initializeDataTable();
+    });});
     store.setControlView("eclaim");
 
     let openOrNot = localStorage.getItem("openOrNot");
