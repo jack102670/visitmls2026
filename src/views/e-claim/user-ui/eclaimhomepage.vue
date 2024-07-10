@@ -16,7 +16,7 @@
           <div class="flex mt-5">
             <button
     @click="ChangePopUp()"
-    class="flex items-center justify-center text-center rounded-full bg-[#160959] text-slate-200 p-2 text-sm" 
+    class="flex items-center justify-center text-center rounded-full bg-[#160959] text-slate-200 p-2 text-sm hover:bg-[#190a70] hover:text=white" 
     
   >  <svg
       class="mr-1" 
