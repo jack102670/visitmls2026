@@ -69,9 +69,9 @@
             class="p-6 mt-5 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6"
           >
             <div
-              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+              class="relative overflow-hidden hover:bg-blue-fuchsia-100 bg-white max-h-[1000px] shadow-xl  border-x-2 border-y-2  rounded-lg border-fuchsia-300"
             >
-              <div class="card m-2" @click="filterTable('Pending')">
+              <div class="card m-2 " @click="filterTable('Pending')">
                 <div class="ml-5">
                   <span class="text-gray-800 text-2xl font-bold">{{ requests.filter(request => request.status === 'Approved').length }}</span>
                   <span class="block text-sm text-gray-500 font-semibold"
@@ -82,7 +82,7 @@
               </div>
             </div>
             <div
-              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+              class="relative overflow-hidden bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-blue-300 rounded-lg"
             >
               <div class="card m-2" @click="filterTable('Approved')" >
                 <div class="ml-5" >
@@ -95,7 +95,7 @@
               </div>
             </div>
             <div
-              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+              class="relative overflow-hidden bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2  border-green-300  rounded-lg"
             >
               <div class="card m-2" @click="filterTable('completed')">
                 <div class="ml-5">
@@ -108,7 +108,7 @@
               </div>
             </div>
             <div
-              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+              class="relative overflow-hidden bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2  rounded-lg border-red-300"
             >
               <div class="card m-2" @click="filterTable('rejected')">
                 <div class="ml-5">
@@ -121,7 +121,7 @@
               </div>
             </div>
             <div
-              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+              class="relative overflow-hidden bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2  rounded-lg border-yellow-300"
             >
               <div class="card m-2" @click="filterTable('reimburse')">
                 <div class="ml-5">
@@ -134,9 +134,9 @@
               </div>
             </div>
             <div
-              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+              class="relative overflow-hidden bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2  rounded-lg border-teal-300"
             >
-              <div class="card m-2">
+              <div class="card m-2" @click="filterTable('')">
                 <div class="ml-5">
                   <span class="text-gray-800 text-2xl font-bold">{{ this.requests.length }}</span>
                   <span class="block text-sm text-gray-500 font-semibold"
