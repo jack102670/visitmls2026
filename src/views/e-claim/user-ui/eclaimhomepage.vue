@@ -71,86 +71,66 @@
             <div
               class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
             >
-              <div class="card m-2">
+              <div class="card m-2" @click="filterTable('Pending')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="text-gray-800 text-2xl font-bold">{{ requests.filter(request => request.status === 'Approved').length }}</span>
                   <span class="block text-sm text-gray-500 font-semibold"
                     >Resubmission</span
                   >
                 </div>
-                <div
-                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-                >
-                  <span>See More</span>
-                </div>
+               
               </div>
             </div>
             <div
               class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
             >
-              <div class="card m-2">
-                <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold">00</span>
+              <div class="card m-2" @click="filterTable('Approved')" >
+                <div class="ml-5" >
+                  <span class="text-gray-800 text-2xl font-bold">{{   requests.filter(request => request.status === 'Approved').length}}</span>
                   <span class="block text-sm text-gray-500 font-semibold"
                     >Approved</span
                   >
                 </div>
-                <div
-                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-                >
-                  <span>See More</span>
-                </div>
+                
               </div>
             </div>
             <div
               class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
             >
-              <div class="card m-2">
+              <div class="card m-2" @click="filterTable('completed')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="text-gray-800 text-2xl font-bold">{{ requests.filter(request => request.status === 'completed').length }}</span>
                   <span class="block text-sm text-gray-500 font-semibold"
                     >Completed</span
                   >
                 </div>
-                <div
-                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-                >
-                  <span>See More</span>
-                </div>
+               
               </div>
             </div>
             <div
               class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
             >
-              <div class="card m-2">
+              <div class="card m-2" @click="filterTable('rejected')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="text-gray-800 text-2xl font-bold">{{ requests.filter(request => request.status === 'rejected').length }}</span>
                   <span class="block text-sm text-gray-500 font-semibold"
                     >Rejected</span
                   >
                 </div>
-                <div
-                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-                >
-                  <span>See More</span>
-                </div>
+             
               </div>
             </div>
             <div
               class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
             >
-              <div class="card m-2">
+              <div class="card m-2" @click="filterTable('reimburse')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="text-gray-800 text-2xl font-bold"> {{ requests.filter(request => request.status === 'Approved').length }}</span>
                   <span class="block text-sm text-gray-500 font-semibold"
                     >Reimburse</span
                   >
                 </div>
-                <div
-                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-                >
-                  <span>See More</span>
-                </div>
+               
               </div>
             </div>
             <div
@@ -158,16 +138,12 @@
             >
               <div class="card m-2">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="text-gray-800 text-2xl font-bold">{{ this.requests.length }}</span>
                   <span class="block text-sm text-gray-500 font-semibold"
                     >All Claims</span
                   >
                 </div>
-                <div
-                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-                >
-                  <span>See More</span>
-                </div>
+              
               </div>
             </div>
           </div>
@@ -638,6 +614,11 @@ export default {
       // claimDetails: {},
     };
   },
+  computed: {
+  reimburseCount() {
+    return this.requests.filter(request => request.status === 'reimburse').length;
+  }
+},
 
   methods: {
 //     async showModal(referenceNumber) {
@@ -715,6 +696,11 @@ export default {
     // },
     initializeDataTable() {
       $(this.$refs.myTable).DataTable({});
+    },
+    filterTable(status) {
+      // Use DataTables API to search for `status` and redraw the table
+      const dataTable = $(this.$refs.myTable).DataTable();
+      dataTable.search(status).draw();
     },
     async fetchAllRequests() {
       const userId = store.getSession().userDetails.userId;
