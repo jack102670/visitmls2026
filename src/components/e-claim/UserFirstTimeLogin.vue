@@ -277,7 +277,7 @@
                 <h3 class="text-xl leading-6 font-medium text-gray-900">
                   Request OTP Code for Account Activation
                 </h3>
-                <p class="mt-8 mb-4 text-md text-gray-500">
+                <p class="mt-4 mb-8 text-md text-gray-500">
                   To complete your profile activation, please request One-Time
                   Password (OTP) and it will be sent to
                   <strong>{{ user.workEmail }}</strong
@@ -326,7 +326,7 @@
                 <h3 class="text-xl leading-6 font-medium text-gray-900">
                   Enter OTP Code
                 </h3>
-                <p class="mt-8 mb-4 text-md text-gray-500">
+                <p class="mt-4 mb-4 text-md text-gray-500">
                   We’ve sent a code to <strong>{{ user.workEmail }}</strong
                   >.
                 </p>
@@ -347,7 +347,7 @@
                     v-else
                     href="#"
                     @click.prevent="requestNewOtp"
-                    class="text-blue-500 underline"
+                    class="mb-8 text-blue-500 underline"
                   >
                     Click here to resend.
                   </a>
@@ -385,6 +385,7 @@ export default {
     return {
       user: {},
       bankOptions: bankOptions,
+      email: '',
       showRequestOtpModal: false,
       showOtpModal: false,
       timer: 0,
@@ -403,7 +404,7 @@ export default {
     fetchHrData() {
       this.user.department = "HR Department";
       this.user.staffId = "123456";
-      this.user.reportingManager = "DATA";
+      this.user.reportingManager = "Manager ID";
     },
 
     onProfilePictureChange(event) {
