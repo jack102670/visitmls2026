@@ -12,11 +12,15 @@
           and gain access to all features of the system.
         </p>
       </div>
-      <button class="mt-4 text-blue-500 underline mt-2 cursor-pointer">
+      <button
+        class="mt-4 text-blue-500 underline mt-2 cursor-pointer"
+      >
         Click here to verify your email
       </button>
       <div class="mt-2">
-        <button class="text-blue-500 underline cursor-pointer">
+        <button
+          class="text-blue-500 underline cursor-pointer"
+        >
           Click here to update your email
         </button>
       </div>

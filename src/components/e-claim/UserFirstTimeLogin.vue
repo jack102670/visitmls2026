@@ -385,7 +385,6 @@ export default {
     return {
       user: {},
       bankOptions: bankOptions,
-      email: '',
       showRequestOtpModal: false,
       showOtpModal: false,
       timer: 0,
