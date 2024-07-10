@@ -43,7 +43,7 @@
             Webinars
 
             <span class="text-blue-900 dark:text-blue-600"
-              >| RM{{ totalAmount }}</span
+              >| RM{{ claimDetails.grand_total }}</span
             >
           </h1>
 
@@ -79,21 +79,27 @@
         >
           <div class="mt-5 h-12">
             <h2 class="font-semibold">Name of Claimaint :</h2>
-            <p class="text-gray-600 dark:text-gray-400">TEOW CHEE WEN</p>
+            <p class="text-gray-600 dark:text-gray-400">
+              {{ claimDetails.name }}
+            </p>
           </div>
           <div id="toLeft" class="mt-5 h-12">
             <h2 class="font-semibold">Name of Company :</h2>
             <p class="text-gray-600 dark:text-gray-400">
-              PKT LOGISTIC (M) SDN BHD
+              {{ claimDetails.company_name }}
             </p>
           </div>
           <div class="mt-5 h-12">
             <h2 class="font-semibold">Designation :</h2>
-            <p class="text-gray-600 dark:text-gray-400">DEVELOPER</p>
+            <p class="text-gray-600 dark:text-gray-400">
+              {{ claimDetails.designation_title }}
+            </p>
           </div>
           <div id="toLeft" class="mt-5 h-12">
             <h2 class="font-semibold">Department :</h2>
-            <p class="text-gray-600 dark:text-gray-400">ICT</p>
+            <p class="text-gray-600 dark:text-gray-400">
+              {{ claimDetails.department }}
+            </p>
           </div>
           <!-- <div class="mt-5 h-12">
             <h2 class="font-semibold">Report Type :</h2>
@@ -101,11 +107,15 @@
           </div> -->
           <div class="mt-5 h-12">
             <h2 class="font-semibold">Cost Center :</h2>
-            <p class="text-gray-600 dark:text-gray-400">The Ship</p>
+            <p class="text-gray-600 dark:text-gray-400">
+              {{ claimDetails.cost_center }}
+            </p>
           </div>
           <div id="toLeft" class="mt-5 h-12">
             <h2 class="font-semibold">Date of Claim :</h2>
-            <p class="text-gray-600 dark:text-gray-400">20 MAY 2024</p>
+            <p class="text-gray-600 dark:text-gray-400">
+              {{ claimDetails.date_requested }}
+            </p>
           </div>
           <!-- <div class="mt-5 h-12">
             <h2 class="font-semibold">Claim for the Month Ended :</h2>
@@ -114,32 +124,60 @@
         </div>
 
         <!-- status button after approved -->
-        <div
-          v-show="approve"
-          class="w-[360px] flex bg-gray-500 rounded-full relative my-8"
-        >
-          <div
-            id="toggle"
-            class="transition-all duration-700 ease-in-out absolute w-[120px] h-full rounded-full bg-green-400 left-1/3"
-          ></div>
-          <button
-            @click="StatusToRejected"
-            class="flex-1 text-center px-2 py-3 z-10 text-lg text-black"
-          >
-            Rejected
-          </button>
-          <button
-            @click="StatusToApproved"
-            class="flex-1 text-center px-2 py-3 z-10 text-lg text-black"
-          >
-            Approved
-          </button>
-          <button
-            @click="StatusToReimbursed"
-            class="flex-1 text-center px-2 py-3 z-10 text-lg text-black"
-          >
-            Reimbursed
-          </button>
+        <div v-if="approve" class="my-10">
+          <h1 class="text-3xl font-bold mb-2">Status</h1>
+          <div class="relative inline-block text-left">
+            <div>
+              <button
+                @click="toggleDropdown"
+                type="button"
+                :class="
+                  selectedStatus.class +
+                  ' inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 text-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                "
+              >
+                {{ selectedStatus.label }}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="-mr-1 ml-2 mt-1 h-5 w-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div
+              v-if="dropdownOpen"
+              class="origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+            >
+              <div
+                class="py-1"
+                role="menu"
+                aria-orientation="vertical"
+                aria-labelledby="options-menu"
+              >
+                <button
+                  v-for="(status, i) in statuses"
+                  :key="i"
+                  @click="selectStatus(status)"
+                  :class="
+                    status.dropDownClass +
+                    'block px-4 py-2 text-sm  w-full text-left hover:bg-gray-200'
+                  "
+                  role="menuitem"
+                >
+                  {{ status.label }}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Summary -->
@@ -221,8 +259,8 @@
                 <!-- table information -->
                 <tr
                   class="h-14 text-left align-top text-xs lg:text-base"
-                  v-for="(item, i) in detail"
-                  :key="i"
+                  v-for="(item, index) in detail"
+                  :key="index"
                 >
                   <td>
                     <input
@@ -235,7 +273,16 @@
                     v-for="(val, key, i) in item"
                     :key="i"
                   >
-                    {{ key == 'Files' ? '' : val }}
+                    {{
+                      key == 'Files' ? '' : key == 'Staff_Involved' ? '' : val
+                    }}
+                    <div v-show="key == 'Staff_Involved'">
+                      <h1
+                        class="bg-blue-700 hover:bg-blue-800 cursor-pointer text-white p-1 rounded-lg"
+                      >
+                        Details
+                      </h1>
+                    </div>
                     <div
                       v-show="key == 'Files'"
                       class="text-blue-700 flex items-center justify-center cursor-pointer"
@@ -455,13 +502,19 @@
           <div class="flex">
             <button
               @click="confirmApprove = true"
-              class="mr-2 lg:text-lg font-semibold py-3 w-36 bg-blue-800 hover:bg-blue-900 rounded-lg text-white"
+              class="mr-2 lg:text-lg font-semibold py-3 w-16 sm:w-24 md:w-36 bg-blue-800 hover:bg-blue-900 rounded-lg text-white"
             >
               Approve
             </button>
             <button
+              @click="confirmResubmit = true"
+              class="mr-2 lg:text-lg font-semibold py-3 w-16 sm:w-24 md:w-36 bg-yellow-500 hover:bg-yellow-600 rounded-lg text-white"
+            >
+              Resubmit
+            </button>
+            <button
               @click="confirmReject = true"
-              class="lg:text-lg font-semibold py-3 w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white"
+              class="lg:text-lg font-semibold py-3 w-16 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white"
             >
               Reject
             </button>
@@ -476,7 +529,7 @@
           <div
             class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center"
           >
-            <h1 class="text-2xl font-bold">Do you confirm to verify?</h1>
+            <h1 class="text-2xl font-bold">Do you confirm to approve?</h1>
             <div class="flex mt-4">
               <button
                 class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
@@ -487,6 +540,34 @@
               <button
                 class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
                 @click="ConfirmApprove"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resubmit Confirmation -->
+        <div
+          v-show="confirmResubmit"
+          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
+        >
+          <div
+            class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center"
+          >
+            <h1 class="text-2xl font-bold text-center">
+              Do you confirm to return to claimant for resubmission?
+            </h1>
+            <div class="flex mt-4">
+              <button
+                class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
+                @click="confirmResubmit = false"
+              >
+                Back
+              </button>
+              <button
+                class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
+                @click="ConfirmResubmit()"
               >
                 Confirm
               </button>
@@ -631,10 +712,42 @@ export default {
       // remark for every single detail
       singleRemarks: [],
 
+      //remark for every single details in one tab
+      singleColumnRemarks: [],
+
+      dropdownOpen: false,
+      selectedStatus: {
+        label: 'Approved',
+        class: 'bg-green-500 text-white hover:bg-green-600',
+      },
+      statuses: [
+        {
+          label: 'Approved',
+          class: 'bg-green-500 text-white hover:bg-green-600',
+          dropDownClass: 'text-green-500 hover:text-green-600',
+        },
+        {
+          label: 'Rejected',
+          class: 'bg-red-500 text-white hover:bg-red-600',
+          dropDownClass: 'text-red-500 hover:text-red-600',
+        },
+        {
+          label: 'Resubmit',
+          class: 'bg-yellow-500 text-white hover:bg-yellow-600',
+          dropDownClass: 'text-yellow-500 hover:text-yellow-600',
+        },
+        {
+          label: 'Reimbursed',
+          class: 'bg-white text-gray-700 hover:bg-gray-100',
+          dropDownClass: 'text-gray-700 hover:text-gray-800',
+        },
+      ],
+
       seeMore: false,
       confirmReject: false,
       confirmApprove: false,
       confirmReimburse: false,
+      confirmResubmit: false,
       approveSuccess: false,
       loading: false,
 
@@ -644,6 +757,7 @@ export default {
       approve: true,
       verified: false,
       reimbursed: false,
+      resubmit: false,
       dateApprover: '12 Jun 2024',
       dateVerifier: '8 Jun 2024',
       remark: '',
@@ -655,7 +769,7 @@ export default {
       claimDatasDetails: [],
       claimDataTotalAmount: [],
 
-      referenceNumber: 'THTH-Finance-2024-06-1719',
+      referenceNumber: 'TMTM-Finance-2024-07-0451',
 
       // need to fetch from API
       claimData: [
@@ -761,10 +875,22 @@ export default {
     },
   },
   methods: {
-    FetchClaimDetails() {
-      axios
-        .get()
-        .then((response) => (this.claimDetails = response.data.result));
+    toggleDropdown() {
+      this.dropdownOpen = !this.dropdownOpen;
+    },
+    selectStatus(status) {
+      this.selectedStatus = status;
+      this.dropdownOpen = false;
+    },
+    async FetchClaimDetails() {
+      await axios
+        .get(
+          'http://172.28.28.91:86/api/User/GetClaimDetails/' +
+            this.referenceNumber
+        )
+        .then((response) => {
+          this.claimDetails = response.data.result;
+        });
     },
     async FetchClaimDatasDetails() {
       await axios
@@ -842,15 +968,38 @@ export default {
           console.error(e);
         });
 
-      // await axios
-      //   .get(
-      //     'http://172.28.28.91:97/api/User/GetRefreshment/' +
-      //       this.referenceNumber
-      //   )
-      //   .then((response) => {
-      //       this.claimDatasDetails.push(response);
-      //
-      //   });
+      await axios
+        .get(
+          'http://172.28.28.91:97/api/User/GetRefreshment/' +
+            this.referenceNumber
+        )
+        .then((response) => {
+          const result = response.data.result;
+          let details = [];
+          let amount = 0;
+          for (let i in result) {
+            amount += result[i].total_fee;
+            const editedDetail = {
+              Type: result[i].refreshment_type,
+              Date: result[i].date_event,
+              Reference_Type: result[i].reference_type,
+              Venue: result[i].venue_name,
+              Company: result[i].company_name,
+              Total_Fee: result[i].total_fee,
+              Staff_Involved: result[i].sim,
+              Files: result[i].files,
+              Tab_Title: 'Staff Refreshment',
+            };
+            details.push(editedDetail);
+          }
+          if (details.length > 0) {
+            this.claimDatasDetails.push(details);
+            this.claimDataTotalAmount.push(amount);
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+        });
 
       // await axios
       //   .get(
@@ -897,6 +1046,13 @@ export default {
     ConfirmReimburse() {
       this.confirmReimburse = false;
       this.reimbursed = true;
+      this.dateApprover = moment(new Date()).format('D MMM YYYY');
+    },
+
+    // click function after confirm the resubmit
+    ConfirmResubmit() {
+      this.confirmResubmit = false;
+      this.resubmit = true;
       this.dateApprover = moment(new Date()).format('D MMM YYYY');
     },
 
@@ -991,6 +1147,7 @@ export default {
       element.classList.remove('become-big');
     }
 
+    this.FetchClaimDetails();
     this.FetchClaimDatasDetails();
   },
 };

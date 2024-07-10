@@ -2,22 +2,20 @@
   <div>
     <FilePond
       ref="pond"
-      label-idle="Drop files here or Browse"
-      allow-multiple="false"
+      name="filecollection"
+      label-idle="Drop files here"
+      :allow-multiple="true"
+      :server="serverOptions"
+      :oninit="handleFilePondInit"
+      :onprocessfile="handleProcessFile"
       accepted-file-types="image/jpeg, image/png"
-      v-on:init="handleFilePondInit"
     />
-    <button @click="uploadFile">Upload File</button>
   </div>
 </template>
 
-
-
 <script>
 // Import FilePond styles
-import 'filepond/dist/filepond.min.css';
-
-
+import "filepond/dist/filepond.min.css";
 
 import vueFilePond from "vue-filepond";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
@@ -27,48 +25,68 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 // Create the FilePond component with plugins
 const FilePond = vueFilePond(
   FilePondPluginFileValidateType,
-  FilePondPluginImagePreview,
+  FilePondPluginImagePreview
   // Other plugins...
 );
 
 export default {
-  name: 'TestingS',
+  name: "TestingS",
   components: {
-    FilePond
+    FilePond,
+  },
+  data() {
+    return {
+      serverOptions: {
+        process: (fieldName, file, metadata, load, error, progress, abort) => {
+          // Here you can interact with the file or metadata before upload
+          // For example, you could set up the FormData instance here and perform the upload
+
+          const formData = new FormData();
+          formData.append(fieldName, file, file.name);
+
+          const request = new XMLHttpRequest();
+          request.open("POST", "http://localhost:3000/upload");
+
+          // Upload progress
+          request.upload.onprogress = (e) => {
+            progress(e.lengthComputable, e.loaded, e.total);
+          };
+
+          // Successful upload
+          request.onload = function () {
+  if (request.status >= 200 && request.status < 300) {
+    load(request.responseText);
+  } else {
+    // Log the error or display a message to the user
+    console.error("Upload failed with status: " + request.status);
+    error("Upload failed with status: " + request.status);
+  }
+};
+
+// Improved abort function
+return {
+  abort: () => {
+    request.abort();
+    console.log("Upload aborted by the user.");
+    abort("Upload aborted by the user.");
+  }
+};
+        },
+      },
+    };
   },
   methods: {
     handleFilePondInit() {
-      console.log('FilePond has initialized');
+      console.log("FilePond has initialized");
     },
-    uploadFile() {
-    const fileInput = this.$refs.pond.getFiles();
-    console.log(fileInput);
-    const formData = new FormData(); // Move FormData creation outside the loop
-
-    if (fileInput.length > 0) {
-      fileInput.forEach((fileItem) => {
-        formData.append("filecollection", fileItem.file); // Append each file to the FormData
-      });
-
-      // Move fetch call outside the loop
-      fetch('http://localhost:3000/upload', {
-        method: 'POST',
-        body: formData,
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Upload failed');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Success:', data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+    handleProcessFile(error, file) {
+      if (error) {
+        console.error('Error during upload:', error);
+      } else {
+        console.log('File uploaded:', file);
+        // Clear FilePond instance here if needed
+      }
     }
-  }
-  }
+  },
 };
 </script>

@@ -15,49 +15,49 @@
           </div>
           <div class="flex mt-5">
             <button
-              @click="ChangePopUp()"
-              class="p-2 flex items-center text-center rounded-full bg-[#160959] text-slate-200"
-            >
-              <span class="px-4">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 48 48"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M40 23V14L31 4H10C8.89543 4 8 4.89543 8 6V42C8 43.1046 8.89543 44 10 44H22"
-                    stroke="white"
-                    stroke-width="4"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M33 29V43"
-                    stroke="white"
-                    stroke-width="4"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M26 36H33H40"
-                    stroke="white"
-                    stroke-width="4"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M30 4V14H40"
-                    stroke="white"
-                    stroke-width="4"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </span>
-              New Claim
-            </button>
+    @click="ChangePopUp()"
+    class="flex items-center justify-center text-center rounded-full bg-[#160959] text-slate-200 p-2 text-sm hover:bg-[#190a70] hover:text=white" 
+    
+  >  <svg
+      class="mr-1" 
+      width="20"
+      height="20"
+      viewBox="0 0 48 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M40 23V14L31 4H10C8.89543 4 8 4.89543 8 6V42C8 43.1046 8.89543 44 10 44H22"
+        stroke="white"
+        stroke-width="4"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M33 29V43"
+        stroke="white"
+        stroke-width="4"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M26 36H33H40"
+        stroke="white"
+        stroke-width="4"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M30 4V14H40"
+        stroke="white"
+        stroke-width="4"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  
+  New Claim
+</button>
           </div>
 
           <hr class="h-mx-auto bg-gray-100 border-0 rounded" />
