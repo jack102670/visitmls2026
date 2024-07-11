@@ -39,6 +39,7 @@ import AdminHRSummaryClaimpage from '../components/e-claim/AdminHRSummaryClaimpa
 import AdminDashboardpage from '../components/e-claim/AdminDashboardpage.vue';
 import AdminHRDashboardpage from '../components/e-claim/AdminHRDashboardpage.vue';
 import UserFirstTimeLogin from '../components/e-claim/UserFirstTimeLogin.vue';
+import EmailVerificationMessage from '../components/e-claim/EmailVerificationMessage.vue';
 import Homepage from '../views/homepage.vue';
 import verified from '../views/e-claim/verifiedpage.vue';
 import AssignChecker from '../components/e-claim/AssignChecker.vue';
@@ -162,6 +163,15 @@ const routes = [
     name: 'UserFirstTimeLogin',
     components: {
       default: UserFirstTimeLogin,
+      Sidebar: Newsidebar,
+    },
+  },
+
+  {
+    path: '/verifyemail',
+    name: 'EmailVerificationMessage',
+    components: {
+      default: EmailVerificationMessage,
       Sidebar: Newsidebar,
     },
   },

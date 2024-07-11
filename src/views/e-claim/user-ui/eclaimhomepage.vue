@@ -15,49 +15,49 @@
           </div>
           <div class="flex mt-5">
             <button
-              @click="ChangePopUp()"
-              class="p-2 flex items-center text-center rounded-full bg-[#160959] text-slate-200"
-            >
-              <span class="px-4">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 48 48"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M40 23V14L31 4H10C8.89543 4 8 4.89543 8 6V42C8 43.1046 8.89543 44 10 44H22"
-                    stroke="white"
-                    stroke-width="4"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M33 29V43"
-                    stroke="white"
-                    stroke-width="4"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M26 36H33H40"
-                    stroke="white"
-                    stroke-width="4"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M30 4V14H40"
-                    stroke="white"
-                    stroke-width="4"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </span>
-              New Claim
-            </button>
+    @click="ChangePopUp()"
+    class="flex items-center justify-center text-center rounded-full bg-[#160959] text-slate-200 p-2 text-sm hover:bg-[#190a70] hover:text=white" 
+    
+  >  <svg
+      class="mr-1" 
+      width="20"
+      height="20"
+      viewBox="0 0 48 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M40 23V14L31 4H10C8.89543 4 8 4.89543 8 6V42C8 43.1046 8.89543 44 10 44H22"
+        stroke="white"
+        stroke-width="4"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M33 29V43"
+        stroke="white"
+        stroke-width="4"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M26 36H33H40"
+        stroke="white"
+        stroke-width="4"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M30 4V14H40"
+        stroke="white"
+        stroke-width="4"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  
+  New Claim
+</button>
           </div>
 
           <hr class="h-mx-auto bg-gray-100 border-0 rounded" />
@@ -66,115 +66,79 @@
         <!-- Box Info Section-->
         <section>
           <div
-            class="p-6 mt-5 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6"
+            class="p-6 mt-5 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5"
           >
             <div
-              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+              class="relative overflow-hidden hover:bg-fuchsia-100 bg-white max-h-[1000px] shadow-xl  border-x-2 border-y-2  rounded-lg border-fuchsia-300"
             >
-              <div class="card m-2">
+              <div class="card m-2 " @click="filterTable('Pending')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="text-gray-800 text-2xl font-bold">{{ requests.filter(request => request.status === 'Approved').length }}</span>
                   <span class="block text-sm text-gray-500 font-semibold"
                     >Resubmission</span
                   >
                 </div>
-                <div
-                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-                >
-                  <span>See More</span>
-                </div>
+               
               </div>
             </div>
             <div
-              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+              class="relative overflow-hidden hover:bg-blue-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-blue-300 rounded-lg"
             >
-              <div class="card m-2">
-                <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold">00</span>
+              <div class="card m-2" @click="filterTable('Approved')" >
+                <div class="ml-5" >
+                  <span class="text-gray-800 text-2xl font-bold">{{   requests.filter(request => request.status === 'Approved').length}}</span>
                   <span class="block text-sm text-gray-500 font-semibold"
                     >Approved</span
                   >
                 </div>
-                <div
-                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-                >
-                  <span>See More</span>
-                </div>
+                
               </div>
             </div>
+           
             <div
-              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+              class="relative overflow-hidden bg-white max-h-[1000px] hover:bg-red-100 shadow-xl border-x-2 border-y-2  rounded-lg border-red-300"
             >
-              <div class="card m-2">
+              <div class="card m-2" @click="filterTable('rejected')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold">00</span>
-                  <span class="block text-sm text-gray-500 font-semibold"
-                    >Completed</span
-                  >
-                </div>
-                <div
-                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-                >
-                  <span>See More</span>
-                </div>
-              </div>
-            </div>
-            <div
-              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
-            >
-              <div class="card m-2">
-                <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="text-gray-800 text-2xl font-bold">{{ requests.filter(request => request.status === 'rejected').length }}</span>
                   <span class="block text-sm text-gray-500 font-semibold"
                     >Rejected</span
                   >
                 </div>
-                <div
-                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-                >
-                  <span>See More</span>
-                </div>
+             
               </div>
             </div>
             <div
-              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+              class="relative overflow-hidden bg-white max-h-[1000px] shadow-xl hover:bg-yellow-100 border-x-2 border-y-2  rounded-lg border-yellow-300"
             >
-              <div class="card m-2">
+              <div class="card m-2" @click="filterTable('reimburse')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="text-gray-800 text-2xl font-bold"> {{ requests.filter(request => request.status === 'Approved').length }}</span>
                   <span class="block text-sm text-gray-500 font-semibold"
                     >Reimburse</span
                   >
                 </div>
-                <div
-                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-                >
-                  <span>See More</span>
-                </div>
+               
               </div>
             </div>
             <div
-              class="relative overflow-hidden bg-white max-h-[1000px] shadow-md border-x-2 border-y-2 border-blue-700 rounded-lg"
+              class="relative overflow-hidden bg-white max-h-[1000px] hover:bg-teal-100 shadow-xl border-x-2 border-y-2  rounded-lg border-teal-300"
             >
-              <div class="card m-2">
+              <div class="card m-2" @click="filterTable('')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold">00</span>
+                  <span class="text-gray-800 text-2xl font-bold">{{ this.requests.length }}</span>
                   <span class="block text-sm text-gray-500 font-semibold"
                     >All Claims</span
                   >
                 </div>
-                <div
-                  class="flex items-center justify-center w-full top-0 mt-2 bg-blue-700 p-2 text-white text-xs font-bold"
-                >
-                  <span>See More</span>
-                </div>
+              
               </div>
             </div>
           </div>
         </section>
 
         <!-- Claim Table Section-->
-        <section class="container px-4 mx-auto pt-12">
+        <section class="container px-4 mx-auto pt-4">
           <div class="flex justify-between items-center">
             <div>
               <h2
@@ -638,6 +602,11 @@ export default {
       // claimDetails: {},
     };
   },
+  computed: {
+  reimburseCount() {
+    return this.requests.filter(request => request.status === 'reimburse').length;
+  }
+},
 
   methods: {
 //     async showModal(referenceNumber) {
@@ -715,6 +684,11 @@ export default {
     // },
     initializeDataTable() {
       $(this.$refs.myTable).DataTable({});
+    },
+    filterTable(status) {
+      // Use DataTables API to search for `status` and redraw the table
+      const dataTable = $(this.$refs.myTable).DataTable();
+      dataTable.search(status).draw();
     },
     async fetchAllRequests() {
       const userId = store.getSession().userDetails.userId;

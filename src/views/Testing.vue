@@ -1,74 +1,64 @@
 <template>
   <div>
-    <FilePond
-      ref="pond"
-      label-idle="Drop files here or Browse"
-      allow-multiple="false"
-      accepted-file-types="image/jpeg, image/png"
-      v-on:init="handleFilePondInit"
-    />
-    <button @click="uploadFile">Upload File</button>
+    <h1>Welcome to Testing.vue!</h1>
+    <p>This is a basic Vue.js 3 component.</p>
+    <table id="myTable" class="display">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>John Doe</td>
+          <td>john@example.com</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Jane Doe</td>
+          <td>jane@example.com</td>
+        </tr>
+        <!-- Add more rows as needed -->
+      </tbody>
+    </table>
   </div>
 </template>
 
-
-
 <script>
-// Import FilePond styles
-import 'filepond/dist/filepond.min.css';
+import $ from 'jquery';
 
-
-
-import vueFilePond from "vue-filepond";
-import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-// Other plugin imports...
-
-// Create the FilePond component with plugins
-const FilePond = vueFilePond(
-  FilePondPluginFileValidateType,
-  FilePondPluginImagePreview,
-  // Other plugins...
-);
 
 export default {
-  name: 'TestingS',
-  components: {
-    FilePond
+  name: 'DataTableExample',
+  mounted() {
+    this.initializeDataTable();
   },
   methods: {
-    handleFilePondInit() {
-      console.log('FilePond has initialized');
-    },
-    uploadFile() {
-    const fileInput = this.$refs.pond.getFiles();
-    console.log(fileInput);
-    const formData = new FormData(); // Move FormData creation outside the loop
-
-    if (fileInput.length > 0) {
-      fileInput.forEach((fileItem) => {
-        formData.append("filecollection", fileItem.file); // Append each file to the FormData
-      });
-
-      // Move fetch call outside the loop
-      fetch('http://localhost:3000/upload', {
-        method: 'POST',
-        body: formData,
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Upload failed');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Success:', data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
+    initializeDataTable() {
+      $('#example').DataTable({
+        ajax: 'path/to/your/data/source', // Use your actual data source URL here
+        columns: [
+          { data: 'id' },
+          { data: 'name' },
+          { data: 'email' }
+        ],
+        stateSave: true,
+        scrollY: 200,
+        scrollCollapse: true,
+        paging: true,
       });
     }
   }
-  }
-};
+}
 </script>
+<style scoped>
+h1 {
+  color: blue;
+}
+p {
+  font-size: 18px;
+}
+</style>

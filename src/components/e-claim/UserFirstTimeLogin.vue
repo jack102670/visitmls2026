@@ -47,7 +47,7 @@
                       />
                       <button
                         @click="deleteProfilePicture"
-                        class="mt-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600"
+                        class="mt-2 text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +55,7 @@
                           viewBox="0 0 24 24"
                           stroke-width="1.5"
                           stroke="currentColor"
-                          class="w-4 h-4"
+                          class="w-5 h-5"
                         >
                           <path
                             stroke-linecap="round"
@@ -166,7 +166,7 @@
                     <input
                       v-model="user.bankNumber"
                       id="bankNumber"
-                      type="text"
+                      type="number"
                       required
                       class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                     />
@@ -252,6 +252,59 @@
           </form>
         </div>
 
+        <!-- OTP Request Modal -->
+        <div
+          v-if="showRequestOtpModal"
+          class="fixed z-10 inset-0 overflow-y-auto"
+        >
+          <div
+            class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+          >
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+              <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+
+            <span
+              class="hidden sm:inline-block sm:align-middle sm:h-screen"
+              aria-hidden="true"
+              >&#8203;</span
+            >
+
+            <div
+              class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
+            >
+              <div>
+                <h3 class="text-xl leading-6 font-medium text-gray-900">
+                  Request OTP Code for Account Activation
+                </h3>
+                <p class="mt-4 mb-8 text-md text-gray-500">
+                  To complete your profile activation, please request One-Time
+                  Password (OTP) and it will be sent to
+                  <strong>{{ user.workEmail }}</strong
+                  >.
+                </p>
+              </div>
+              <div class="mt-5 sm:mt-6 sm:flex sm:flex-row-reverse">
+                <button
+                  type="button"
+                  @click="sendOtp"
+                  class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-700 text-base font-bold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Request OTP
+                </button>
+                <button
+                  type="button"
+                  @click="cancelRequestOtp"
+                  class="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- OTP Modal -->
         <div v-if="showOtpModal" class="fixed z-10 inset-0 overflow-y-auto">
           <div
             class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
@@ -273,7 +326,7 @@
                 <h3 class="text-xl leading-6 font-medium text-gray-900">
                   Enter OTP Code
                 </h3>
-                <p class="mt-2 mb-4 text-md text-gray-500">
+                <p class="mt-4 mb-4 text-md text-gray-500">
                   We’ve sent a code to <strong>{{ user.workEmail }}</strong
                   >.
                 </p>
@@ -287,10 +340,14 @@
                 </div>
                 <p class="mt-2 text-sm text-gray-500">
                   Didn't get a code?
+                  <span v-if="timer > 0">
+                    Wait {{ timer }} seconds to resend.
+                  </span>
                   <a
+                    v-else
                     href="#"
                     @click.prevent="requestNewOtp"
-                    class="text-blue-500 underline"
+                    class="mb-8 text-blue-500 underline"
                   >
                     Click here to resend.
                   </a>
@@ -302,14 +359,7 @@
                   @click="verifyOtp"
                   class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-700 text-base font-bold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                 >
-                  Submit
-                </button>
-                <button
-                  type="button"
-                  @click="cancelOtp"
-                  class="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm"
-                >
-                  Cancel
+                  Verify
                 </button>
               </div>
             </div>
@@ -335,7 +385,10 @@ export default {
     return {
       user: {},
       bankOptions: bankOptions,
+      showRequestOtpModal: false,
       showOtpModal: false,
+      timer: 0,
+      timerInterval: null,
       showSuccessNotification: false,
       profilePicture: null,
       defaultProfilePicture: require("@/assets/images/profile.png"),
@@ -350,7 +403,7 @@ export default {
     fetchHrData() {
       this.user.department = "HR Department";
       this.user.staffId = "123456";
-      this.user.reportingManager = "Manager Name";
+      this.user.reportingManager = "Manager ID";
     },
 
     onProfilePictureChange(event) {
@@ -370,11 +423,19 @@ export default {
 
     handleSubmit() {
       console.log("User data saved:", this.user);
+      this.showRequestOtpModal = true;
+    },
+
+    sendOtp() {
+      this.showRequestOtpModal = false;
       this.showOtpModal = true;
+      alert("OTP has been sent to your email.");
+      this.startTimer();
     },
 
     verifyOtp() {
       if (this.otp === "123456") {
+        clearInterval(this.timerInterval);
         this.showOtpModal = false;
         this.showSuccessNotification = true;
         setTimeout(() => {
@@ -387,14 +448,32 @@ export default {
     },
 
     requestNewOtp() {
-      // Logic to request a new OTP
-      this.otp = "";
-      alert("A new OTP has been sent to your email.");
+      if (this.timer === 0) {
+        this.otp = "";
+        alert("A new OTP has been sent to your email.");
+        this.startTimer();
+      }
     },
 
-    cancelOtp() {
-      this.showOtpModal = false;
+    cancelRequestOtp() {
+      this.showRequestOtpModal = false;
     },
+
+    startTimer() {
+      this.timer = 120;
+      clearInterval(this.timerInterval);
+      this.timerInterval = setInterval(() => {
+        if (this.timer > 0) {
+          this.timer--;
+        } else {
+          clearInterval(this.timerInterval);
+        }
+      }, 1000);
+    },
+  },
+
+  beforeUnmount() {
+    clearInterval(this.timerInterval);
   },
 };
 </script>
