@@ -18,64 +18,76 @@
 
           <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
             <DropDown
-              inputId="userIdInput"
-              label="User ID"
-              :options="[
-                'User1',
-                'User2',
-                'User3',
-                'User4',
-                'User1',
-                'User2',
-                'User3',
-                'User4',
-              ]"
+              inputId="branchInput"
+              label="Branch"
+              :options="Branches"
               :mandatory="true"
-              v-model="form.userId"
+              @input="(payload) => (form.branch = payload)"
             />
-            <DropDown
-              inputId="employeeIdInput"
-              label="Employee ID"
-              :options="['Emp1', 'Emp2', 'Emp3', 'Emp4']"
-              :mandatory="true"
-              class="mt-6 lg:mt-0 lg:ml-4"
-              v-model="form.employeeId"
-            />
-          </div>
 
-          <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
             <DropDown
               inputId="departmentInput"
               label="Department"
-              :options="['HR', 'Finance', 'IT', 'Marketing']"
+              :options="filteredDepartments"
               :mandatory="true"
-              v-model="form.department"
-            />
-            <DropDown
-              inputId="positionInput"
-              label="Position"
-              :options="['Manager', 'Analyst', 'Developer', 'Designer']"
               class="mt-6 lg:mt-0 lg:ml-4"
-              :mandatory="true"
-              v-model="form.position"
+              @input="(payload) => (form.department = payload)"
             />
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
             <DropDown
+              inputId="userIdInput"
+              label="User ID"
+              :options="filteredUsers"
+              :mandatory="true"
+              @input="(payload) => (form.userId = payload)"
+            />
+            <div class="mt-6 lg:mt-0 lg:ml-4">
+              <label :for="inputId" class="font-semibold text-gray-600"
+                >Employee ID<span class="text-red-500">*</span></label
+              >
+              <input
+                :id="inputId"
+                v-model="form.employeeId"
+                class="border-2 border-gray-200 p-2 w-full rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                type="text"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
+            <DropDown
+              inputId="positionInput"
+              label="Position"
+              :options="AllPositions"
+              :mandatory="true"
+              @input="(payload) => (form.position = payload)"
+            />
+
+            <DropDown
               inputId="reportingDepartmentInput"
               label="Reporting to (Department)"
-              :options="['HR', 'Finance', 'IT', 'Marketing']"
-              v-model="form.reportingDepartment"
-            />
-            <DropDown
-              inputId="reportingIdInput"
-              label="Reporting to (Employee ID)"
-              :options="['ID1', 'ID2', 'ID3', 'ID4']"
+              :options="AllDepartments"
               class="mt-6 lg:mt-0 lg:ml-4"
-              :mandatory="true"
-              v-model="form.reportingId"
+              @input="(payload) => (form.reportingDepartment = payload)"
             />
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
+            <div>
+              <label :for="inputId" class="font-semibold text-gray-600"
+                >Reporting To (Employee ID)<span class="text-red-500"
+                  >*</span
+                ></label
+              >
+              <input
+                :id="inputId"
+                v-model="form.reportingId"
+                class="border-2 border-gray-200 p-2 w-full rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                type="text"
+              />
+            </div>
           </div>
 
           <div class="w-full flex justify-end">
@@ -94,6 +106,7 @@
 
 <script>
 import DropDown from './DropDown.vue';
+import axios from 'axios';
 
 export default {
   components: {
@@ -102,6 +115,7 @@ export default {
   data() {
     return {
       form: {
+        branch: '',
         userId: '', // Initialize with empty values
         employeeId: '',
         department: '',
@@ -109,26 +123,88 @@ export default {
         reportingDepartment: '',
         reportingId: '',
       },
+
+      // option for dropdown
+      fetchOptions: [],
+      Branches: [],
+      filteredDepartments: [],
+      filteredUsers: [],
+      AllDepartments: [],
+      AllPositions: [],
     };
   },
   methods: {
     Register() {
-      // Example: Post the 'form' object to your API endpoint
+      // Post the 'form' object to API
       console.log('Form Data:', this.form);
-      // Replace with actual POST request to your API
-      // axios.post('/api/registration', this.form)
-      //   .then(response => {
-      //     console.log('Response:', response.data);
-      //     // Handle success
-      //   })
-      //   .catch(error => {
-      //     console.error('Error:', error);
-      //     // Handle error
-      //   });
+      const registerData = {
+        userNameId: this.fetchOptions.filter(
+          (item) =>
+            item.userName === this.form.userId &&
+            item.department == this.form.department &&
+            item.branch == this.form.branch
+        )[0].userId,
+        branch: this.form.branch,
+        userName: this.form.userId,
+        employeeId: this.form.employeeId,
+        department: this.form.department,
+        reportingToId: this.form.reportingId,
+        position: this.form.position,
+      };
+      axios
+        .post(
+          'http://172.28.28.91:86/api/Admin/Register_UserProfile',
+          registerData
+        )
+        .then((response) => {
+          console.log('Response:', response.data);
+          // Handle success
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          // Handle error
+        });
+    },
+    async fetchData() {
+      await axios
+        .get('http://172.28.28.91:89/api/Security/getusersAD')
+        .then((response) => {
+          this.fetchOptions = response.data; // Make sure to access response.data
+          this.extractBranches();
+          this.getAllDepartments();
+          this.getAllPositions();
+        })
+        .catch((error) => {
+          this.error = error;
+          console.error('There was an error!', error);
+        });
+    },
+    extractBranches() {
+      const branches = this.fetchOptions.map((item) => item.branch);
+      const uniqueBranches = [...new Set(branches)];
+      this.Branches = uniqueBranches;
+    },
+    getAllDepartments() {
+      const departments = this.fetchOptions.map((item) => item.department);
+      const uniqueDepartments = [...new Set(departments)];
+      this.AllDepartments = uniqueDepartments;
+    },
+    getAllPositions() {
+      axios
+        .get('http://172.28.28.91:97/api/User/GetDesignation')
+        .then((response) => {
+          this.AllPositions = response.data.result.map(
+            (item) => item.designation
+          );
+        })
+        .catch((error) => {
+          this.error = error;
+          console.error('There was an error!', error);
+        });
     },
   },
 
-  mounted() {
+  async mounted() {
     // Sidebar close or open
     let openOrNot = localStorage.getItem('openOrNot');
     const element = document.querySelector('main');
@@ -137,6 +213,39 @@ export default {
     } else if (element && openOrNot == 'true') {
       element.classList.remove('become-big');
     }
+
+    this.fetchData();
+  },
+  watch: {
+    'form.branch'(newBranch) {
+      // This will execute whenever branch value changes
+      let Departments = this.fetchOptions
+        .filter((item) => item.branch === newBranch)
+        .map((item) => item.department);
+
+      const uniqueDepartments = [...new Set(Departments)];
+
+      this.filteredDepartments = uniqueDepartments;
+
+      console.log(this.filteredDepartments);
+    },
+
+    'form.department'(newDepartment) {
+      // This will execute whenever branch value changes
+      let Users = this.fetchOptions
+        .filter(
+          (item) =>
+            item.department === newDepartment &&
+            item.branch === this.form.branch
+        )
+        .map((item) => item.userName);
+
+      const uniqueUsers = [...new Set(Users)];
+
+      this.filteredUsers = uniqueUsers;
+
+      console.log(this.filteredUsers);
+    },
   },
 };
 </script>
