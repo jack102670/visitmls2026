@@ -292,13 +292,6 @@
                 >
                   Request OTP
                 </button>
-                <button
-                  type="button"
-                  @click="cancelRequestOtp"
-                  class="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm"
-                >
-                  Cancel
-                </button>
               </div>
             </div>
           </div>
@@ -366,6 +359,52 @@
           </div>
         </div>
 
+        <!-- Email Verification Modal -->
+        <div
+          v-if="showEmailVerificationModal"
+          class="fixed z-10 inset-0 overflow-y-auto"
+        >
+          <div
+            class="flex items-center justify-center min-h-screen text-center"
+          >
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+              <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <div
+              class="inline-block bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full sm:p-6"
+            >
+              <div>
+                <h3 class="text-xl leading-6 font-medium text-gray-900">
+                  Email Verification Required
+                </h3>
+                <p class="mt-4 mb-8 text-md text-gray-500">
+                  Please verify your email address <strong>{{ user.workEmail }}</strong> to complete the activation
+                  process and gain access to all features of the system.
+                </p>
+                <div class="flex justify-between">
+                  <button
+                    type="button"
+                    @click="
+                      showRequestOtpModal = true;
+                      showEmailVerificationModal = false;
+                    "
+                    class="mt-4 text-blue-500 underline mt-2 cursor-pointer"
+                  >
+                    Click here to verify your email
+                  </button>
+                  <button
+                    type="button"
+                    @click="updateEmail"
+                    class="mt-4 text-blue-500 underline mt-2 cursor-pointer"
+                  >
+                    Click here to update your email
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div
           v-if="showSuccessNotification"
           class="fixed top-4 right-4 p-4 bg-green-500 text-white rounded-lg shadow-lg"
@@ -387,6 +426,7 @@ export default {
       bankOptions: bankOptions,
       showRequestOtpModal: false,
       showOtpModal: false,
+      showEmailVerificationModal: false,
       timer: 0,
       timerInterval: null,
       showSuccessNotification: false,
@@ -421,8 +461,10 @@ export default {
       this.profilePicture = null;
     },
 
-    handleSubmit() {
+     handleSubmit() {
       console.log("User data saved:", this.user);
+      localStorage.setItem('userProfile', JSON.stringify(this.user)); 
+      localStorage.setItem("emailVerificationStatus", "pending");
       this.showRequestOtpModal = true;
     },
 
@@ -438,9 +480,10 @@ export default {
         clearInterval(this.timerInterval);
         this.showOtpModal = false;
         this.showSuccessNotification = true;
+        localStorage.setItem("emailVerificationStatus", "verified");
         setTimeout(() => {
           this.showSuccessNotification = false;
-          this.$router.push("/homepage");
+          this.$router.push("/profile"); // Navigate to UserProfile.vue
         }, 3000);
       } else {
         alert("Invalid OTP. Please try again.");
@@ -455,10 +498,6 @@ export default {
       }
     },
 
-    cancelRequestOtp() {
-      this.showRequestOtpModal = false;
-    },
-
     startTimer() {
       this.timer = 120;
       clearInterval(this.timerInterval);
@@ -470,6 +509,18 @@ export default {
         }
       }, 1000);
     },
+
+    updateEmail() {
+      this.showEmailVerificationModal = false;
+      localStorage.setItem("emailVerificationStatus", "pending");
+    },
+  },
+
+  mounted() {
+    const emailVerificationStatus = localStorage.getItem("emailVerificationStatus");
+    if (emailVerificationStatus === "pending") {
+      this.showEmailVerificationModal = true;
+    }
   },
 
   beforeUnmount() {
