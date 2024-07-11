@@ -13,6 +13,7 @@
         @keydown.down.prevent="navigateOptions('down')"
         @keydown.up.prevent="navigateOptions('up')"
         @keydown.enter.prevent="selectOption(filteredOptions[highlightedIndex])"
+        @change="emitInput"
         class="border-2 border-gray-200 p-2 w-full rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
         type="text"
       />
@@ -80,7 +81,11 @@ export default {
       highlightedIndex: -1,
     };
   },
+
   methods: {
+    emitInput() {
+      this.$emit('input', this.inputValue); // Emit input event with selectedOption
+    },
     filterOptions() {
       this.filteredOptions = this.options.filter((option) =>
         option.toLowerCase().includes(this.inputValue.toLowerCase())

@@ -99,12 +99,13 @@ const routes = [
     },
   },
   {
-    path: '/adminsummaryclaim',
+    path: '/adminsummaryclaim/:rn',
     name: 'AdminSummaryClaimpage',
     components: {
       default: AdminSummaryClaimpage,
       Sidebar: Newsidebar,
     },
+    props: true,
   },
   {
     path: '/adminhrsummaryclaim',

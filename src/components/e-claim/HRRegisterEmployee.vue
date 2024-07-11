@@ -30,14 +30,16 @@
                 'User3',
                 'User4',
               ]"
-              mandatory="true"
+              :mandatory="true"
+              v-model="form.userId"
             />
             <DropDown
               inputId="employeeIdInput"
               label="Employee ID"
               :options="['Emp1', 'Emp2', 'Emp3', 'Emp4']"
-              mandatory="true"
+              :mandatory="true"
               class="mt-6 lg:mt-0 lg:ml-4"
+              v-model="form.employeeId"
             />
           </div>
 
@@ -46,14 +48,16 @@
               inputId="departmentInput"
               label="Department"
               :options="['HR', 'Finance', 'IT', 'Marketing']"
-              mandatory="true"
+              :mandatory="true"
+              v-model="form.department"
             />
             <DropDown
               inputId="positionInput"
               label="Position"
               :options="['Manager', 'Analyst', 'Developer', 'Designer']"
               class="mt-6 lg:mt-0 lg:ml-4"
-              mandatory="true"
+              :mandatory="true"
+              v-model="form.position"
             />
           </div>
 
@@ -62,19 +66,22 @@
               inputId="reportingDepartmentInput"
               label="Reporting to (Department)"
               :options="['HR', 'Finance', 'IT', 'Marketing']"
+              v-model="form.reportingDepartment"
             />
             <DropDown
               inputId="reportingIdInput"
               label="Reporting to (Employee ID)"
               :options="['ID1', 'ID2', 'ID3', 'ID4']"
               class="mt-6 lg:mt-0 lg:ml-4"
-              mandatory="true"
+              :mandatory="true"
+              v-model="form.reportingId"
             />
           </div>
 
           <div class="w-full flex justify-end">
             <button
-              class="py-2 px-6 mt-10 text-white bg-blue-900 hover:bg-blue-950 rounded-md"
+              class="py-2 px-6 mt-10 text-white bg-[#160959] hover:bg-blue-950 rounded-md"
+              @click="Register()"
             >
               Register
             </button>
@@ -91,6 +98,34 @@ import DropDown from './DropDown.vue';
 export default {
   components: {
     DropDown,
+  },
+  data() {
+    return {
+      form: {
+        userId: '', // Initialize with empty values
+        employeeId: '',
+        department: '',
+        position: '',
+        reportingDepartment: '',
+        reportingId: '',
+      },
+    };
+  },
+  methods: {
+    Register() {
+      // Example: Post the 'form' object to your API endpoint
+      console.log('Form Data:', this.form);
+      // Replace with actual POST request to your API
+      // axios.post('/api/registration', this.form)
+      //   .then(response => {
+      //     console.log('Response:', response.data);
+      //     // Handle success
+      //   })
+      //   .catch(error => {
+      //     console.error('Error:', error);
+      //     // Handle error
+      //   });
+    },
   },
 
   mounted() {
