@@ -2,7 +2,7 @@
   <!-- component -->
   <button
     :style="sidebarPosition"
-    class="toggle-btn block fixed z-50 p-2 bg-slate-200 text-blue-900 rounded-full"
+    class="toggle-btn block fixed z-50 p-2 bg-slate-200 text-blue-900 rounded-full mt-4"
     @click.stop="toggleSidebar"
   >
     <svg
