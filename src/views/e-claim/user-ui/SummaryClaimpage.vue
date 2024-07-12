@@ -730,9 +730,9 @@
             <table class="w-4/5 text-center mt-1 mb-8">
               <tr class="bg-gray-300 text-center h-12">
                 <th>No.</th>
-                <th>Company</th>
-                <th>Name</th>
                 <th>Employee ID</th>
+                <th>Name</th>
+                <th>Company</th>
               </tr>
               <tr
                 v-for="(staff, i) in sim"
@@ -740,9 +740,9 @@
                 class="bg-white text-black text-center h-12"
               >
                 <th class="font-normal">{{ i + 1 }}</th>
-                <th class="font-normal">{{ staff.company_name }}</th>
+                <th class="font-normal">{{  staff.emp_id }}</th>
                 <th class="font-normal">{{ staff.name }}</th>
-                <th class="font-normal">{{ staff.emp_id }}</th>
+                <th class="font-normal">{{ staff.company_name }}</th>
               </tr>
             </table>
           </div>
