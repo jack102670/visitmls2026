@@ -249,7 +249,7 @@
               <table class="w-full">
                 <!-- title -->
                 <tr class="h-10 bg-gray-300 dark:bg-gray-700 rounded-2xl text-md">
-                  <th class="w-52">Remark</th>
+                  <!-- <th class="w-52">Remark</th> -->
 
                   <th
                     class="px-6 py-2 w-36 break-words"
@@ -272,12 +272,14 @@
                   v-for="(item, index) in detail"
                   :key="index"
                 >
-                  <td>
-                    <input
+
+                  <!-- <td class="text-center">
+                     <input
                       type="text"
                       class="py-2 -translate-y-1/4 w-full rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
-                    />
-                  </td>
+                    /> 
+                    <label >{{ comment }}</label>
+                  </td> -->
                   <td
                     class="text-center font-normal px-3"
                     v-for="(val, key, i) in item"
@@ -398,9 +400,9 @@
                 </div>
               </th>
               <td class="pl-6">{{ this.claimDetails.verifier_name }}</td>
-              <td class="">HEAD OF DEPARTMENT</td>
-              <td>{{ this.claimDetails.department }}</td>
-              <td class="">{{ dateVerifier }}</td>
+              <td class="">{{  this.claimDetails.verifier_designation }}</td>
+              <td>{{ this.claimDetails.verifier_department }}</td>
+              <td class="">{{ this.claimDetails.verified_date }}</td>
             </tr>
             <tr
               class="h-10 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
@@ -429,9 +431,9 @@
                 </div>
               </th>
               <td class="pl-6">{{ this.claimDetails.approver_name }}</td>
-              <td class="">Finance</td>
-              <td>Finance</td>
-              <td class="">{{ dateApprover }}</td>
+              <td class="">{{this.claimDetails.approver_designation}}</td>
+              <td>{{this.claimDetails.approver_department}}</td>
+              <td class="">{{ this.claimDetails.approved_date }}</td>
             </tr>
           </table>
         </div>
@@ -976,6 +978,7 @@ export default {
       confirmResubmit: false,
       approveSuccess: false,
       loading: false,
+      comment:"",
 
       // need to fetch from or post to API
       rejectApprover: false,
@@ -1104,6 +1107,7 @@ export default {
         )
         .then((response) => {
           this.claimDetails = response.data?.result;
+          console.log(this.claimDetails);
           
           this.statusApprover = this.claimDetails?.admin_status
             .split('.')[0]
@@ -1136,9 +1140,12 @@ export default {
           console.log(result,"local outstation");
           let details = [];
           let amount = 0;
+         // this.comment = result.comment;
           for (let i in result) {
             amount += result[i].total_fee;
+            
             const editedDetail = {
+              Remark: result[i].comment,
               Mileage_Km: result[i].mileage_km,
               Starting_Point: result[i].starting_point,
               End_Point: result[i].end_point,
@@ -1152,6 +1159,7 @@ export default {
               Total_Mileage: result[i].total_mileage,
               Attachments: result[i].files,
               Tab_Title: 'Local Outstation',
+           
             };
             details.push(editedDetail);
           }
@@ -1176,6 +1184,7 @@ export default {
           for (let i in result) {
             amount += result[i].total_fee;
             const editedDetail = {
+              'Remark': result[i].comment,
               Description: result[i].description,
               Meal_Allowance: result[i].meal_allowance,
               'Transport_Fee(RM)': result[i].transport_fee,
@@ -1188,8 +1197,11 @@ export default {
               Transportation_Mode: result[i].transportation_mode,
               Attachments: result[i].files,
               Date: result[i].date_event,
+              
               'Total_Fee(RM)': result[i].total_fee,
-              Tab_Title: 'Overseas Outstation',
+             
+              Tab_Title: 'Overseas Outstation'
+        
             };
             details.push(editedDetail);
           }
@@ -1214,6 +1226,7 @@ export default {
           for (let i in result) {
             amount += result[i].total_fee;
             const editedDetail = {
+              Remark: result[i].comment,
               Type: result[i].refreshment_type,
               Date: result[i].date_event,
               Reference_Type: result[i].reference_type,
@@ -1223,6 +1236,7 @@ export default {
               Staff_Involved: result[i].sim,
               Attachments: result[i].files,
               Tab_Title: 'Staff Refreshment',
+          
             };
             details.push(editedDetail);
           }
@@ -1247,6 +1261,7 @@ export default {
           for (let i in result) {
             amount += result[i].total_fee;
             const editedDetail = {
+              Remark: result[i].comment,
               Type: result[i].entertainment_type,
               Date: result[i].date_event,
               Venue: result[i].venue_name,
@@ -1254,7 +1269,9 @@ export default {
               'Total_Fee(RM)': result[i].total_fee,
               Participants: result[i].participants,
               Attachments: result[i].files,
+              Comment: result[i].comment,
               Tab_Title: 'Entertainment',
+              
             };
             details.push(editedDetail);
           }

@@ -598,7 +598,7 @@ export default {
 
       let datetime = moment(new Date()).format('YYYY-MM-mmss');
       let sn =
-        shortform.join('').toString() +
+        
         shortform.join('').toString() +
         '-' +
         this.formData.reportType +

@@ -40,7 +40,7 @@
           <div
             class="md:mr-4 md:mt-0 mt-5 gap-2 flex flex-row-reverse flex-shrink-0"
           >
-            <button @click="fileupload">upload</button>
+     
             <button
               @click="showContent"
               class="w-36 h-12 p-1 font-semibold rounded-lg items-center text-sm dark:bg-gray-900 dark:border-gray-700 bg-green-700 border text-white"
@@ -3173,7 +3173,7 @@ export default {
     },
 
     async uploadFiles(files, userId, uniqueCode) {
-      const uploadEndpoint = `http://172.28.28.91:97/api/Files/MultiUploadImage/${userId}/${uniqueCode}`;
+      const uploadEndpoint = `http://172.28.28.91:93/api/Files/MultiUploadImage/${userId}/${uniqueCode}`;
       const formData = new FormData();
 
       // Iterate over the files array and append each file to formData
