@@ -73,12 +73,12 @@
       >
         Export PDF
       </button>
-      <button
+      <!-- <button
         @click="showAddNodeModal"
         class="bg-[#032539] hover:bg-[#032539c7] text-[#FBF3F2] border rounded-lg p-1.5"
       >
         Add Node
-      </button>
+      </button> -->
       <div class="flex pt-1 search:right-2 search:top-2 search:absolute">
         <input
           class="p-2 rounded"
