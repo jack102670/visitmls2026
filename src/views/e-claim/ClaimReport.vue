@@ -2522,8 +2522,10 @@ export default {
 
         if (response.data.result && response.data.result.length > 0) {
           const selectedEmployee = response.data.result.find(
-            (emp) => emp.email_address === store.getSession().userDetails.email
-          );
+            (emp) => emp.username_id === store.getSession().userDetails.userId
+           
+          )
+          console.log("Selected Employee:", selectedEmployee);
           if (selectedEmployee) {
             if ("emp_id" in selectedEmployee) {
               this.employeeID = selectedEmployee.emp_id;
