@@ -31,14 +31,14 @@
             />
           </svg>
         </button>
-        <div class="flex justify-center">
+        <div class="flex justify-center pt-2">
           <h1 class="font-bold text-xl text">
             SUMMARY CLAIM FOR REIMBURSEMENT OF ALL EXPENSES
           </h1>
         </div>
 
         <!-- Information -->
-        <div class="flex justify-between items-center my-4">
+        <div class="flex justify-between items-center ">
           <h1
             class="text-blue-900 dark:text-blue-600 font-bold text-4xl"
             id="title"
@@ -192,7 +192,7 @@
             <table class="w-full">
               <!-- title -->
               <tr
-                class="h-14 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl"
+                class="h-10 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl"
               >
                 <th class="rounded-tl-2xl w-[20%] text-center">NO</th>
                 <th class="w-[60%]">TYPE OF CLAIM</th>
@@ -202,7 +202,7 @@
 
               <!-- table information -->
               <tr
-                class="h-14 text-left align-top text-xs lg:text-base"
+                class="h-10 text-left align-top text-xs lg:text-base"
                 v-for="claim in claimDatas"
                 :key="claim.no"
               >
@@ -220,7 +220,7 @@
 
               <!-- total -->
               <tr
-                class="border-t-2 border-gray-400 dark:border-gray-600 h-14 text-base lg:text-lg font-semibold"
+                class="border-t-2 border-gray-400 dark:border-gray-600 h-10 text-base lg:text-lg font-semibold"
               >
                 <td colspan="2" class="px-6 text-right">TOTAL:</td>
                 <td>{{ totalAmount }}</td>
@@ -237,7 +237,7 @@
             class="detail-table mt-10"
           >
             <h1
-              class="my-4 text-3xl font-semibold tab-title"
+              class="my-4 text-2xl font-semibold tab-title"
               v-if="detail && detail.length > 0"
             >
               {{ detail[0].Tab_Title }}
@@ -248,8 +248,8 @@
             >
               <table class="w-full">
                 <!-- title -->
-                <tr class="h-14 bg-gray-300 dark:bg-gray-700 rounded-2xl">
-                  <th class="w-52">Single Remark</th>
+                <tr class="h-10 bg-gray-300 dark:bg-gray-700 rounded-2xl text-md">
+                  <th class="w-52">Remark</th>
 
                   <th
                     class="px-6 py-2 w-36 break-words"
@@ -268,7 +268,7 @@
 
                 <!-- table information -->
                 <tr
-                  class="h-20 text-left align-top text-xs lg:text-base"
+                  class="h-10 text-left align-top text-xs lg:text-base"
                   v-for="(item, index) in detail"
                   :key="index"
                 >
@@ -358,7 +358,7 @@
         >
           <table class="w-full">
             <!-- title -->
-            <tr class="h-14 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
+            <tr class="h-10 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
               <th
                 class="rounded-tl-2xl w-[20%] text-center border-r-2 border-gray-400 dark:border-gray-600"
               >
@@ -372,7 +372,7 @@
 
             <!-- table information -->
             <tr
-              class="h-14 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
+              class="h-10 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
             >
               <th
                 class="text-xs lg:text-base text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
@@ -403,7 +403,7 @@
               <td class="">{{ dateVerifier }}</td>
             </tr>
             <tr
-              class="h-14 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
+              class="h-10 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
             >
               <th
                 class="text-xs lg:text-base text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
@@ -445,7 +445,7 @@
         >
           <table class="w-full">
             <!-- title -->
-            <tr class="h-14 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
+            <tr class="h-10 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
               <th
                 class="rounded-tl-2xl w-[20%] text-center border-r-2 border-gray-400 dark:border-gray-600"
               >
@@ -457,7 +457,7 @@
             <!-- table information -->
             <tr
               v-if="resubmit == true"
-              class="h-14 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
+              class="h-10 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
             >
               <th
                 class="text-xs lg:text-sm font-medium border-r-2 border-gray-400 dark:border-gray-600"
@@ -473,7 +473,7 @@
 
             <tr
               v-if="rejectApprover == true"
-              class="h-14 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
+              class="h-10 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
             >
               <th
                 class="text-xs lg:text-sm font-medium border-r-2 border-gray-400 dark:border-gray-600"
@@ -498,13 +498,13 @@
         >
           <table class="w-full">
             <!-- title -->
-            <tr class="h-14 bg-gray-300 dark:bg-gray-700 rounded-2xl">
+            <tr class="h-10 bg-gray-300 dark:bg-gray-700 rounded-2xl">
               <th class="pl-6">Remark</th>
             </tr>
 
             <!-- table information -->
             <tr
-              class="h-14 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
+              class="h-10 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
             >
               <td class="pl-6">{{ remark }}</td>
             </tr>
@@ -1133,6 +1133,7 @@ export default {
         )
         .then((response) => {
           const result = response.data.result;
+          console.log(result,"local outstation");
           let details = [];
           let amount = 0;
           for (let i in result) {
@@ -1149,7 +1150,7 @@ export default {
               Transport_Mode: result[i].transport_mode,
               Trip_Mode: result[i].trip_mode,
               Total_Mileage: result[i].total_mileage,
-              FilAttachmentses: result[i].files,
+              Attachments: result[i].files,
               Tab_Title: 'Local Outstation',
             };
             details.push(editedDetail);
