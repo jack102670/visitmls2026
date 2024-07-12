@@ -18,9 +18,6 @@
             <hr class="" />
 
             <div class="mt-4">
-              <label class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
-                >Profile Picture</label
-              >
               <div class="flex items-center mt-2">
                 <img
                   :src="user.profilePicture || defaultProfilePicture"
@@ -149,7 +146,6 @@
                   />
                 </p>
               </div>
-
               <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                 <p>
                   <span class="font-semibold text-gray-700 dark:text-gray-200"
@@ -295,47 +291,6 @@
             </div>
           </div>
 
-          <!-- Email Verification Modal -->
-          <div
-            v-if="showEmailVerificationModal"
-            class="fixed z-10 inset-0 overflow-y-auto"
-          >
-            <div
-              class="flex items-center justify-center min-h-screen text-center"
-            >
-              <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-              </div>
-              <div
-                class="inline-block bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full sm:p-6"
-              >
-                <div>
-                  <h3 class="text-xl leading-6 font-medium text-gray-900">
-                    Email Verification Required
-                  </h3>
-                  <p class="mt-4 mb-8 text-md text-gray-500">
-                    Please verify your email address
-                    <strong>{{ user.workEmail }}</strong> to complete the
-                    activation process and gain access to all features of the
-                    system.
-                  </p>
-                  <div class="flex justify-between">
-                    <button
-                      type="button"
-                      @click="
-                        showRequestOtpModal = true;
-                        showEmailVerificationModal = false;
-                      "
-                      class="mt-4 text-blue-500 underline mt-2 cursor-pointer"
-                    >
-                      Click here to verify your email
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <div
             v-if="showSuccessNotification"
             class="fixed top-4 right-4 p-4 bg-green-500 text-white rounded-lg shadow-lg"
@@ -353,12 +308,10 @@ export default {
   data() {
     return {
       user: JSON.parse(localStorage.getItem("userProfile")) || {},
-      profilePicture: null,
       defaultProfilePicture: require("@/assets/images/profile.png"),
       showRequestOtpModal: false,
       showOtpModal: false,
       showSuccessNotification: false,
-      showEmailVerificationModal: false,
       otp: "",
       timer: 0,
       timerInterval: null,
@@ -393,7 +346,6 @@ export default {
         clearInterval(this.timerInterval);
         this.showOtpModal = false;
         this.showSuccessNotification = true;
-        localStorage.setItem("emailVerificationStatus", "verified");
         setTimeout(() => {
           this.showSuccessNotification = false;
           this.$router.push("/homepage");
@@ -422,15 +374,6 @@ export default {
         }
       }, 1000);
     },
-  },
-
-  mounted() {
-    const emailVerificationStatus = localStorage.getItem(
-      "emailVerificationStatus"
-    );
-    if (emailVerificationStatus === "pending") {
-      this.showEmailVerificationModal = true;
-    }
   },
 };
 </script>
