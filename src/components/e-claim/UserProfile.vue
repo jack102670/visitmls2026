@@ -29,7 +29,7 @@
               <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                 <p>
                   <span
-                    class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
+                    class="font-semibold text-gray-600 dark:text-gray-200"
                     >Full Name</span
                   >
                   <input
@@ -41,7 +41,7 @@
                 </p>
                 <p>
                   <span
-                    class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
+                    class="font-semibold text-gray-600 dark:text-gray-200"
                     >Branch</span
                   >
                   <input
@@ -53,7 +53,7 @@
                 </p>
                 <p>
                   <span
-                    class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
+                    class="font-semibold text-gray-600 dark:text-gray-200"
                     >Department</span
                   >
                   <input
@@ -65,7 +65,7 @@
                 </p>
                 <p>
                   <span
-                    class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
+                    class="font-semibold text-gray-600 dark:text-gray-200"
                     >Staff ID</span
                   >
                   <input
@@ -77,7 +77,7 @@
                 </p>
                 <p>
                   <span
-                    class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
+                    class="font-semibold text-gray-600 dark:text-gray-200"
                     >Work Email</span
                   >
                   <input
