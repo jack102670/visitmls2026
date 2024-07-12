@@ -92,43 +92,29 @@
                             'bg-orange-200 dark:bg-orange-500':
                               claim.admin_status == '',
                             'bg-green-200 dark:bg-green-500':
-                              claim.admin_status ==
-                              'APPROVED. WAITING FOR PAYMENT.',
+                              claim.admin_status.split('.')[0] == 'APPROVED',
                             'bg-amber-200 dark:bg-amber-500':
-                              claim.admin_status ==
-                              'VERIFIED. WAITING FOR APPROVAL.',
+                              claim.admin_status.split('.')[0] == 'VERIFIED',
                             'bg-red-200 dark:bg-red-500':
-                              claim.admin_status == 'REJECTED',
+                              claim.admin_status.split('.')[0] == 'REJECTED',
                             'text-orange-500 dark:text-orange-100':
                               claim.admin_status == '',
                             'text-green-500 dark:text-green-100':
-                              claim.admin_status ==
-                              'APPROVED. WAITING FOR PAYMENT.',
+                              claim.admin_status.split('.')[0] == 'APPROVED',
                             'text-amber-500 dark:text-amber-100':
-                              claim.admin_status ==
-                              'VERIFIED. WAITING FOR APPROVAL.',
+                              claim.admin_status.split('.')[0] == 'VERIFIED',
                             'text-red-500 dark:text-red-100':
-                              claim.status == 'REJECTED',
+                              claim.admin_status.split('.')[0] == 'REJECTED',
                           }"
                         >
-                          {{
-                            claim.admin_status == ''
-                              ? 'PENDING'
-                              : claim.admin_status ==
-                                  'VERIFIED. WAITING FOR APPROVAL.'
-                                ? 'VERIFIED'
-                                : claim.admin_status ==
-                                    'APPROVED. WAITING FOR PAYMENT.'
-                                  ? 'APPROVED'
-                                  : 'REJECTED'
-                          }}
+                          {{ claim.admin_status.split('.')[0] }}
                         </h1>
                       </td>
                       <td
                         class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                       >
                         <button
-                          @click="ViewClaim()"
+                          @click="ViewClaim(claim.reference_number)"
                           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
                         >
                           <svg
@@ -179,8 +165,12 @@ export default {
     };
   },
   methods: {
-    ViewClaim() {
-      this.$router.push({ name: 'AdminSummaryClaimpage' });
+    ViewClaim(rn) {
+      console.log(rn);
+      this.$router.push({
+        name: 'AdminSummaryClaimpage',
+        params: { rn: String(rn) },
+      });
     },
     initializeDataTable() {
       $(this.$refs.myTable).DataTable({});
