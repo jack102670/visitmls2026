@@ -304,7 +304,7 @@
                         <td class="px-4 py-4 ml text-sm whitespace-nowrap">
                           <div class="flex items-center gap-x-6">
                             <button
-                              @click="showModal(data.reference_number)"
+                              @click="showclaim(data.reference_number)"
                               class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
                             >
                               <svg
@@ -609,6 +609,10 @@ export default {
 },
 
   methods: {
+    showclaim(rn) {
+    
+      this.$router.push({ name: 'SummaryClaimpage', params: { rn }});
+    },
 //     async showModal(referenceNumber) {
 //       this.isClickModal = true;
 //   const urls = [
