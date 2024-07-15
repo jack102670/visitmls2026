@@ -52,6 +52,8 @@
                 >
               </div>
             </button>
+
+            <button @click="sendToAPI()">sent to api</button>
           </div>
         </div>
 
@@ -2485,6 +2487,7 @@ export default {
 
   mounted() {
     // Sidebar close or open
+
     this.fetchEmployeeID();
 
     let openOrNot = localStorage.getItem("openOrNot");
@@ -2766,7 +2769,7 @@ export default {
 
       try {
         // Send API request using axios
-         await axios.post(
+        await axios.post(
           "http://172.28.28.91:97/api/User/InsertClaimDetails",
           apiData
         );
@@ -2794,6 +2797,7 @@ export default {
           console.error(
             "An error occurred that is not a duplicate entry issue. Review error details for appropriate action."
           );
+          this.sendToAPI();
         }
       }
     },
@@ -2851,10 +2855,7 @@ export default {
 
                     this.uploadFiles(claim.UploadLT, userId, uniqueCode);
                   }
-                  await axiosInstance.post(
-                    "/",
-                    thisisforlocal1
-                  );
+                  await axiosInstance.post("/", thisisforlocal1);
                   // console.log(`Data sent for ${title} 1:`, response1.data);
                 }
                 break;
@@ -2903,10 +2904,7 @@ export default {
                     baseURL:
                       "http://172.28.28.91:97/api/User/InsertOverseasOutstation",
                   });
-                   await axiosInstance.post(
-                    "/",
-                    thisisforoversea
-                  );
+                  await axiosInstance.post("/", thisisforoversea);
                   // console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
@@ -2938,7 +2936,7 @@ export default {
                   ];
                   const uniqueCode = this.generateUniqueCode(claim.tabTitle);
                   const userId = this.userDetails.userId;
-                  // console.log("unik kod:", uniqueCode);
+
                   if (claim.UploadE && claim.UploadE.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
                     // console.log("Preparing to upload files:", claim.UploadE);
@@ -2956,10 +2954,7 @@ export default {
 
                   // Send the request
                   try {
-                    await axiosInstance.post(
-                      "/",
-                      thisisforentertainment
-                    );
+                    await axiosInstance.post("/", thisisforentertainment);
                     // console.log(`Data sent for ${title} 3:`, response3.data);
                     this.fileupload();
                   } catch (error) {
@@ -3012,10 +3007,7 @@ export default {
                     baseURL:
                       "http://172.28.28.91:97/api/User/InsertStaffRefreshment",
                   });
-                   await axiosInstance.post(
-                    "/",
-                    thisisforstaffrefreshment
-                  );
+                  await axiosInstance.post("/", thisisforstaffrefreshment);
                   // console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
@@ -3049,52 +3041,47 @@ export default {
                   axiosInstance = axios.create({
                     baseURL: "http://172.28.28.91:97/api/User/InsertOthers",
                   });
-                   await axiosInstance.post(
+                  await axiosInstance.post(
                     "/",
                     thisisforHandphoneBillReimbursement
                   );
                   // console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case "Handphone Bill Reimbursement":
+              case "handphone bill reimbursement":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
-                  const thisisforHandphoneBillReimbursement = {
-                    date_event: claim.dateE, // Example date
-                    person_entertained: claim.PersonEntertainedE,
-                    type_of_entertainment: claim.TypeofEntertainmentE,
-                    other_type_of_entertainment:
-                      claim.OtherTypeofEntertainmentE,
-                    company: claim.CompanyE,
-                    venue: claim.VenueE,
-                    reference: claim.ReferenceE,
-                    amount: claim.AmountRME,
-                    reference_number: "pktm222",
-                    unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: "approver@example.com",
-                    verifier_email: "verifier@example.com",
-                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
-                    serial_number: this.generateUniqueCodeSN(claim.tabTitle),
+                  const thisisforHandphoneBillReimbursement = {
+                    date_claim: this.todayFormatted(), // Example date
+                    claim_month: claim.MonthHR,
+                    claim_year: `${claim.YearHR}`,
+                    bank_name: claim.BankNameHR,
+                    bank_account: String(claim.AccBankNumberHR),
+                    bank_holder: claim.AccHolderNameHR,
+                    limited_amount: claim.LimitedAmountHR,
+                    claim_amount: claim.totalRM,
+                    unique_code: this.generateUniqueCode(claim.tabTitle),
+                    reference_number: this.claims[0].uniqueCode,
+                    handphone: "",
                   };
                   const uniqueCode = this.generateUniqueCode(claim.tabTitle);
                   const userId = this.userDetails.userId;
                   // console.log("unik kod:", uniqueCode);
-                  if (claim.UploadLT && claim.UploadLT.length > 0) {
+                  if (claim.UploadHR && claim.UploadHR.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
                     // console.log("Preparing to upload files:", claim.UploadLT);
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
-                    this.uploadFiles(claim.UploadLT, userId, uniqueCode);
+                    this.uploadFiles(claim.UploadHR, userId, uniqueCode);
                   }
                   axiosInstance = axios.create({
-                    baseURL: "http://localhost:3000/claims/entertainment",
+                    baseURL:
+                      "http://172.28.28.91:86/api/User/InsertHandphoneReimburse",
                   });
-                   await axiosInstance.post(
+                  await axiosInstance.post(
                     "/",
                     thisisforHandphoneBillReimbursement
                   );
@@ -3139,7 +3126,7 @@ export default {
                   axiosInstance = axios.create({
                     baseURL: "http://localhost:3000/claims/entertainment",
                   });
-                   await axiosInstance.post(
+                  await axiosInstance.post(
                     "/",
                     thisisforMedicalBillReimbursement
                   );
@@ -3172,6 +3159,14 @@ export default {
         }
       }
     },
+    todayFormatted() {
+      const options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      };
+      return new Date().toLocaleDateString("en-US", options);
+    },
 
     async uploadFiles(files, userId, uniqueCode) {
       const uploadEndpoint = `http://172.28.28.91:93/api/Files/MultiUploadImage/${userId}/${uniqueCode}`;
@@ -3183,7 +3178,7 @@ export default {
       });
 
       try {
-         await axios.post(uploadEndpoint, formData, {
+        await axios.post(uploadEndpoint, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -3224,7 +3219,7 @@ export default {
     addClaim(formData) {
       // Push new form data into the claims array
       this.dataclaims.push(formData);
-      // console.log("Data Claims:", this.dataclaims);
+      console.log("Data Claims:", this.dataclaims);
     },
     handleFileAdded() {
       // console.log("File added:", file);
