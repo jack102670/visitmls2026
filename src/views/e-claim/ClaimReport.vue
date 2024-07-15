@@ -293,7 +293,7 @@
       </div>
       <div
         v-if="isClickModal"
-        class="modal fixed top-0 left-0 w-full flex-1 bg-[#CED1DA] dark:bg-[#111827] p-4 h-auto h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
+        class="modal fixed top-0 left-0 w-full flex-1 bg-[#CED1DA] dark:bg-[#111827] p-4 h-auto  bg-opacity-75 flex justify-center items-center"
         @click.self="closeClickModal"
       >
         <div
