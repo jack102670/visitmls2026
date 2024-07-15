@@ -32,7 +32,7 @@
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="claimantName"
-              >Claimant's Name <span class="text-red-500">*</span></label
+              >Claimant Name <span class="text-red-500">*</span></label
             >
             <input
               placeholder="e.g ALI BIN ABU"
@@ -49,7 +49,7 @@
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="companyName"
-              >Company's Name<span class="text-red-500">*</span></label
+              >Company Name<span class="text-red-500">*</span></label
             >
 
             <div class="flex justify-between">
@@ -103,15 +103,15 @@
               Designation<span class="text-red-500">*</span>
             </label>
             <div class="flex justify-between">
-              <input
+              <input disabled
                 type="text"
                 placeholder="Designation.."
                 v-model="formData.designation"
                 required
-                @click="toggleDropdown3"
+                
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
-              <div
+              <!-- <div
                 class="bg-slate-200 py-4 px-2 mt-2 rounded"
                 @click="toggleDropdown3"
               >
@@ -129,7 +129,7 @@
                     d="M19 9l-7 7-7-7"
                   ></path>
                 </svg>
-              </div>
+              </div> -->
             </div>
             <div
               v-show="dropdownVisible3"
@@ -540,6 +540,8 @@ export default {
           if (selectedEmployee) {
             if ("username" in selectedEmployee) {
               this.formData.claimantName = selectedEmployee.name;
+              this.formData.designation = selectedEmployee.position_title;
+              this.fomData.department = selectedEmployee.department;
               // console.log("Employee username:", this.username);
             } else {
               console.error(

@@ -74,12 +74,20 @@
                           <div class="flex items-center gap-x-3">
                             <span>Branch</span>
                           </div>
+                        </th> <th
+                          scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        >
+                          <div class="flex items-center gap-x-3 whitespace-nowrap">
+                            <span>Reference Number</span>
+                          </div>
                         </th>
+                      
                         <th
                           scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
-                          <div class="flex items-center gap-x-3">
+                          <div class="flex items-center gap-x-3 whitespace-nowrap">
                             <span>Report Name</span>
                           </div>
                         </th>
@@ -87,23 +95,23 @@
                           scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
-                          <div class="flex items-center gap-x-3">
-                            <span>Date</span>
+                          <div class="flex items-center gap-x-3 whitespace-nowrap">
+                            <span>Date Requested</span>
                           </div>
                         </th>
                         <th
                           scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
-                          <div class="flex items-center gap-x-3">
-                            <span>Requester</span>
+                          <div class="flex items-center gap-x-3 whitespace-nowrap">
+                            <span>Requester Name</span>
                           </div>
                         </th>
                         <th
                           scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                         >
-                          <div class="flex items-center gap-x-3">
+                          <div class="flex items-center gap-x-3 whitespace-nowrap">
                             <span>Amount</span>
                           </div>
                         </th>
@@ -143,28 +151,28 @@
                             </div>
                           </div>
                         </td>
-                        <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                          <td
+                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-balance"
                         >
-                          <div class="inline-flex items-center gap-x-3">
-                            <div class="flex items-center gap-x-2">
-                              <div>
-                                <!-- Conditionally display 'Badge Request' if typeofrequest includes 'br' -->
-                              </div>
-                            </div>
-                          </div>
+                          {{ item.reference_number
+ }}
+                        </td> <td
+                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-balance "
+                        >
+                        
                           {{ item.report_name }}
                         </td>
+                     
                         <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-balance"
                         >
                           {{ item.date_requested
  }}
                         </td>
                         <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-wrap"
                         >
-                          {{ item.man }}
+                          {{ item.requester_name }}
                         </td>
                         <td
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
@@ -173,7 +181,7 @@
                         </td>
                    
                         <td
-                          class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                          class="px-12 py-4 text-sm font-medium text-gray-700 text-wrap whitespace-nowrap"
                         >
                           <span
                             :class="`inline-flex items-center px-3 py-1 rounded-full gap-x-2 ${
@@ -267,11 +275,11 @@ export default {
       this.$router.push({ name: 'AdminSummaryClaimpage' });
     },
     fetchData() {
-      fetch(`http://172.28.28.91:86/api/ApproverVerifier/GetAllRequestVerifier/F4ECECFA-7D9C-4D11-BA8E-3338AC3D4F48`)
+      fetch(`http://172.28.28.91:86/api/ApproverVerifier/GetAllRequestVerifier/9d0da821-5de0-42e5-b268-b5e0bc40e8d1`)
         .then(response => response.json())
         .then(data => {
           this.items = data.result;
-          // console.log('api data',this.items);
+          console.log('api data',this.items);
         })
         .catch(error => console.error(error));
     },

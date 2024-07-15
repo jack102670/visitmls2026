@@ -91,6 +91,7 @@
                       <template v-if="field.type === 'select'">
                         <select
                           v-model="field.value"
+                          required="required"
                           :id="field.id"
                           class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                         >
@@ -107,6 +108,7 @@
                       <template v-else-if="field.type === 'year'">
                         <select
                           v-model="field.value"
+                          required="required"
                           :id="field.id"
                           class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                         >
@@ -133,6 +135,7 @@
                               :name="field.id"
                               :value="option.value"
                               v-model="field.value"
+                              required="required"
                               class="mr-2"
                             />
                             <label
@@ -149,6 +152,7 @@
                         <div class="pt-3">
                           <file-pond
                             :name="field.id"
+                            required="required"
                             ref="pond"
                             label-idle="Drop files here..."
                             @addfile="
@@ -168,6 +172,7 @@
                       <template v-else-if="field.type === 'long-text'">
                         <textarea
                           v-model="field.value"
+                          required="required"
                           :id="field.id"
                           :placeholder="field.placeholder"
                           class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -178,6 +183,7 @@
                       <template v-else>
                         <input
                           v-model="field.value"
+                          required="required"
                           :id="field.id"
                           :type="field.type"
                           :placeholder="field.placeholder"
@@ -505,6 +511,8 @@
                       <template v-if="field.type === 'select'">
                         <select
                           v-model="field.value"
+                          required="required"
+                          
                           :id="field.id"
                           class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                         >
@@ -522,6 +530,7 @@
                         <div class="pt-3">
                           <file-pond
                             :name="field.id"
+                            required="required"
                             ref="pond"
                             label-idle="Drop files here..."
                             @addfile="
@@ -540,6 +549,7 @@
                       <template v-else>
                         <input
                           v-model="field.value"
+                          required="required"
                           :id="field.id"
                           :type="field.type"
                           :placeholder="field.placeholder"
@@ -572,6 +582,7 @@
                           type="radio"
                           value="pkt"
                           v-model="selectedAttendeeType"
+                           required="required"
                           class="form-radio"
                         />
                         <span
@@ -584,6 +595,8 @@
                           type="radio"
                           value="notStaff"
                           v-model="selectedAttendeeType"
+                           
+                          required="required"
                           class="form-radio"
                         />
                         <span
@@ -2283,9 +2296,24 @@ export default {
     },
 
     nextTab() {
-      // Switch to the next tab
-      this.activeSubTab += 1;
+       
+        // Switch to the next tab only if current tab's validation passes
+        this.activeSubTab += 1;
+  
     },
+    // validateCurrentTab() {
+    //   // Example validation logic for the current tab
+    //   // This needs to be customized based on your actual form structure and requirements
+    //   const currentTabFields = this.formFields[this.activeSubTab];
+    //   for (const key in currentTabFields) {
+    //     if (currentTabFields[key] === '') {
+    //       // Found an unfilled field, validation fails
+    //       return false;
+    //     }
+    //   }
+    //   // All fields in the current tab are filled, validation passes
+    //   return true;
+    // },
 
     submitForm(tab) {
       const formattedData = {};
