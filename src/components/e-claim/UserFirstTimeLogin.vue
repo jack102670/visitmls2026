@@ -299,13 +299,13 @@
               <div>
                 <label
                   class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
-                  for="reportingManager"
+                  for="reporting_to"
                 >
                   Reporting Manager (Employee ID)
                 </label>
                 <input
-                  v-model="user.reportingManagerID"
-                  id="reportingManagerID"
+                  v-model="user.reporting_to"
+                  id="reporting_to"
                   type="text"
                   disabled
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -315,13 +315,13 @@
               <div>
                 <label
                   class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
-                  for="reportingManagerDepartment"
+                  for="reporting_to_dept"
                 >
                   Reporting Manager(Department)
                 </label>
                 <input
-                  v-model="user.reportingManagerDepartment"
-                  id="reportingManagerDepartment"
+                  v-model="user.reporting_to_dept"
+                  id="reporting_to_dept"
                   type="text"
                   disabled
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -348,6 +348,7 @@
 import { bankOptions } from "@/javascript/eClaimOptions.js";
 import Cropper from "cropperjs";
 import "cropperjs/dist/cropper.css";
+import axios from 'axios';
 
 export default {
   data() {
@@ -368,12 +369,23 @@ export default {
 
   methods: {
     fetchHrData() {
-      this.user.branch = "Branch Name";
-      this.user.department = "Department Name";
-      this.user.emp_id = "123456";
-      this.user.reportingManagerID = "Manager Employee ID";
-      this.user.reportingManagerDepartment = "Manager Department";
+      axios.get('http://172.28.28.91:97/api/User/GetAllEmployees')
+        .then(response => {
+          const data = response.data;
+          if (data && data.length > 0) {
+            const user = data[0];
+            this.user.branch = user.branch;
+            this.user.department = user.department;
+            this.user.emp_id = user.emp_id;
+            this.user.reporting_to = user.reporting_to;
+            this.user.reporting_to_dept = user.reporting_to_dept;
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching HR data:', error);
+        });
     },
+
 
     onProfilePictureChange(event) {
       const file = event.target.files[0];
