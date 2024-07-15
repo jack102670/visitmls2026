@@ -149,7 +149,7 @@ export default {
         this.$router.push("/");
       }
       if (store.getRole() === "user") {
-        this.$router.push("/dashboard");
+        this.$router.push("/homepage");
       } else if (store.getRole() === "vendor") {
         this.$router.push("/dashboardvendor");
       }

@@ -31,26 +31,26 @@
             />
           </svg>
         </button>
-        <div class="flex justify-center">
-          <h1 class="font-bold text-lg text">
+        <div class="flex justify-center pt-2">
+          <h1 class="font-bold text-xl text">
             SUMMARY CLAIM FOR REIMBURSEMENT OF ALL EXPENSES
           </h1>
         </div>
 
         <!-- Information -->
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center ">
           <h1
-            class="text-blue-900 dark:text-blue-600 font-bold text-3xl"
+            class="text-blue-900 dark:text-blue-600 font-bold text-4xl"
             id="title"
           >
-            {{ claimDetails.report_name }}
+            Webinars
 
             <span class="text-blue-900 dark:text-blue-600"
               >| RM{{ claimDetails.grand_total }}</span
             >
           </h1>
 
-          <div class="h-12 flex items-center">
+          <div class="mt-5 h-12 flex items-center">
             <button
               v-show="!seeMore"
               @click="seeMore = !seeMore"
@@ -78,27 +78,27 @@
         </div>
         <div
           id="claimant-informations"
-          class="text-sm grid grid-cols-2 lg:grid-cols-3 gap-2 [&>*:nth-child(even)]:text-right lg:[&>*:nth-child(even)]:text-left"
+          class="grid grid-cols-2 lg:grid-cols-3 gap-2 [&>*:nth-child(even)]:text-right lg:[&>*:nth-child(even)]:text-left"
         >
-          <div class="mt-2 h-10">
+          <div class="mt-5 h-12">
             <h2 class="font-semibold">Name of Claimaint :</h2>
             <p class="text-gray-600 dark:text-gray-400">
               {{ claimDetails.name }}
             </p>
           </div>
-          <div id="toLeft" class="mt-2 h-10">
+          <div id="toLeft" class="mt-5 h-12">
             <h2 class="font-semibold">Name of Company :</h2>
             <p class="text-gray-600 dark:text-gray-400">
               {{ claimDetails.company_name }}
             </p>
           </div>
-          <div class="mt-2 h-10">
+          <div class="mt-5 h-12">
             <h2 class="font-semibold">Designation :</h2>
             <p class="text-gray-600 dark:text-gray-400">
               {{ claimDetails.designation_title }}
             </p>
           </div>
-          <div id="toLeft" class="mt-2 h-10">
+          <div id="toLeft" class="mt-5 h-12">
             <h2 class="font-semibold">Department :</h2>
             <p class="text-gray-600 dark:text-gray-400">
               {{ claimDetails.department }}
@@ -108,13 +108,13 @@
             <h2 class="font-semibold">Report Type :</h2>
             <p class="text-gray-600 dark:text-gray-400">Finance</p>
           </div> -->
-          <div class="mt-2 h-10">
+          <div class="mt-5 h-12">
             <h2 class="font-semibold">Cost Center :</h2>
             <p class="text-gray-600 dark:text-gray-400">
               {{ claimDetails.cost_center }}
             </p>
           </div>
-          <div id="toLeft" class="mt-2 h-10">
+          <div id="toLeft" class="mt-5 h-12">
             <h2 class="font-semibold">Date of Claim :</h2>
             <p class="text-gray-600 dark:text-gray-400">
               {{ claimDetails.date_requested }}
@@ -127,8 +127,8 @@
         </div>
 
         <!-- status button after approved -->
-        <div v-if="approve" class="my-3" id="hidden">
-          <h1 class="text-lg font-semibold">Status</h1>
+        <div v-if="approve" class="my-10" id="hidden">
+          <h1 class="text-3xl font-bold mb-2">Status</h1>
           <div class="relative inline-block text-left">
             <div>
               <button
@@ -136,7 +136,7 @@
                 type="button"
                 :class="
                   selectedStatus.class +
-                  ' inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-3 py-1 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                  ' inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 text-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
                 "
               >
                 {{ selectedStatus.label }}
@@ -187,21 +187,22 @@
         <div class="summary" v-show="!seeMore">
           <!-- Claim Table -->
           <div
-            class="border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl"
+            class="border-2 mt-10 border-gray-400 dark:border-gray-600 rounded-2xl"
           >
-            <table class="w-full text-xs">
+            <table class="w-full">
               <!-- title -->
               <tr
-                class="h-8 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl"
+                class="h-10 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl"
               >
                 <th class="rounded-tl-2xl w-[20%] text-center">NO</th>
                 <th class="w-[60%]">TYPE OF CLAIM</th>
                 <th class="w-[20%]">AMOUNT (RM)</th>
               </tr>
+              <tr class="h-4"></tr>
 
               <!-- table information -->
               <tr
-                class="h-8 text-left align-top text-xs lg:text-base"
+                class="h-10 text-left align-top text-xs lg:text-base"
                 v-for="claim in claimDatas"
                 :key="claim.no"
               >
@@ -219,7 +220,7 @@
 
               <!-- total -->
               <tr
-                class="border-t-2 border-gray-400 dark:border-gray-600 h-8 text-base lg:text-lg font-semibold"
+                class="border-t-2 border-gray-400 dark:border-gray-600 h-10 text-base lg:text-lg font-semibold"
               >
                 <td colspan="2" class="px-6 text-right">TOTAL:</td>
                 <td>{{ totalAmount }}</td>
@@ -233,10 +234,10 @@
           <div
             v-for="(detail, i) in claimDatasDetails"
             :key="i"
-            class="detail-table mt-5"
+            class="detail-table mt-10"
           >
             <h1
-              class="mt-4 text-xl font-semibold tab-title"
+              class="my-4 text-2xl font-semibold tab-title"
               v-if="detail && detail.length > 0"
             >
               {{ detail[0].Tab_Title }}
@@ -247,13 +248,11 @@
             >
               <table class="w-full">
                 <!-- title -->
-                <tr
-                  class="h-8 bg-gray-300 dark:bg-gray-700 rounded-2xl text-xs"
-                >
-                  <th class="w-40">Remark</th>
+                <tr class="h-10 bg-gray-300 dark:bg-gray-700 rounded-2xl text-md">
+                  <!-- <th class="w-52">Remark</th> -->
 
                   <th
-                    class="px-6 w-36 break-words text-xs"
+                    class="px-6 py-2 w-36 break-words"
                     v-for="(val, key, i) in detail[0]"
                     :key="i"
                   >
@@ -265,30 +264,24 @@
                     }}
                   </th>
                 </tr>
+                <tr class="h-4"></tr>
 
                 <!-- table information -->
                 <tr
-                  class="h-8 text-left align-top text-xs"
+                  class="h-10 text-left align-top text-xs lg:text-base"
                   v-for="(item, index) in detail"
                   :key="index"
                 >
-                  <td>
-                    <input
-                      @input="
-                        UpdateSingleRemark(
-                          $event,
-                          item.unique_code,
-                          item.Tab_Title
-                        )
-                      "
-                      v-if="!reimbursed"
+
+                  <!-- <td class="text-center">
+                     <input
                       type="text"
-                      class="p-1 text-xs w-full rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
-                    />
-                    <h1 v-if="reimbursed">{{ item.comment }}</h1>
-                  </td>
+                      class="py-2 -translate-y-1/4 w-full rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
+                    /> 
+                    <label >{{ comment }}</label>
+                  </td> -->
                   <td
-                    class="text-center font-normal px-3 align-middle"
+                    class="text-center font-normal px-3"
                     v-for="(val, key, i) in item"
                     :key="i"
                   >
@@ -349,7 +342,7 @@
 
                 <!-- total -->
                 <tr
-                  class="border-t-2 border-gray-400 dark:border-gray-600 h-8 text-base font-semibold"
+                  class="border-t-2 border-gray-400 dark:border-gray-600 h-14 text-base lg:text-lg font-semibold"
                 >
                   <td class="text-center">TOTAL:</td>
                   <td class="text-center">RM{{ claimDataTotalAmount[i] }}</td>
@@ -362,12 +355,12 @@
 
         <!-- Status Table -->
         <div
-          class="text-xs border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl"
+          class="text-xs lg:text-base border-2 mt-10 border-gray-400 dark:border-gray-600 rounded-2xl"
           id="table-overflow"
         >
           <table class="w-full">
             <!-- title -->
-            <tr class="h-8 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
+            <tr class="h-10 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
               <th
                 class="rounded-tl-2xl w-[20%] text-center border-r-2 border-gray-400 dark:border-gray-600"
               >
@@ -381,10 +374,10 @@
 
             <!-- table information -->
             <tr
-              class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
+              class="h-10 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
             >
               <th
-                class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
+                class="text-xs lg:text-base text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
               >
                 <!-- Status Bar -->
                 <div
@@ -406,16 +399,16 @@
                   <p>{{ statusVerifier }}</p>
                 </div>
               </th>
-              <td class="pl-6">{{ claimDetails.verifier_name }}</td>
-              <td class="">{{ claimDetails.verifier_designation }}</td>
-              <td>{{ claimDetails.department }}</td>
-              <td class="">{{ dateVerifier }}</td>
+              <td class="pl-6">{{ this.claimDetails.verifier_name }}</td>
+              <td class="">{{  this.claimDetails.verifier_designation }}</td>
+              <td>{{ this.claimDetails.verifier_department }}</td>
+              <td class="">{{ this.claimDetails.verified_date }}</td>
             </tr>
             <tr
-              class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
+              class="h-10 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
             >
               <th
-                class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
+                class="text-xs lg:text-base text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
               >
                 <!-- Status Bar -->
                 <div
@@ -437,10 +430,10 @@
                   <p>{{ statusApprover }}</p>
                 </div>
               </th>
-              <td class="pl-6">{{ claimDetails.approver_name }}</td>
-              <td class="">{{ claimDetails.approver_designation }}</td>
-              <td>{{ claimDetails.approver_department }}</td>
-              <td class="">{{ dateApprover }}</td>
+              <td class="pl-6">{{ this.claimDetails.approver_name }}</td>
+              <td class="">{{this.claimDetails.approver_designation}}</td>
+              <td>{{this.claimDetails.approver_department}}</td>
+              <td class="">{{ this.claimDetails.approved_date }}</td>
             </tr>
           </table>
         </div>
@@ -449,12 +442,12 @@
 
         <div
           v-show="rejectApprover || resubmit"
-          class="text-xs border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl"
+          class="text-xs lg:text-base border-2 mt-10 border-gray-400 dark:border-gray-600 rounded-2xl"
           id="table-overflow"
         >
           <table class="w-full">
             <!-- title -->
-            <tr class="h-8 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
+            <tr class="h-10 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
               <th
                 class="rounded-tl-2xl w-[20%] text-center border-r-2 border-gray-400 dark:border-gray-600"
               >
@@ -466,10 +459,10 @@
             <!-- table information -->
             <tr
               v-if="resubmit == true"
-              class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
+              class="h-10 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
             >
               <th
-                class="text-x font-medium border-r-2 border-gray-400 dark:border-gray-600"
+                class="text-xs lg:text-sm font-medium border-r-2 border-gray-400 dark:border-gray-600"
               >
                 <div
                   class="mx-auto bg-red-200 dark:bg-red-500 rounded-full py-2 text-center text-red-500 dark:text-red-100 lg:w-[90%] w-full"
@@ -482,10 +475,10 @@
 
             <tr
               v-if="rejectApprover == true"
-              class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
+              class="h-10 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
             >
               <th
-                class="text-xs font-medium border-r-2 border-gray-400 dark:border-gray-600"
+                class="text-xs lg:text-sm font-medium border-r-2 border-gray-400 dark:border-gray-600"
               >
                 <div
                   class="mx-auto bg-red-200 dark:bg-red-500 rounded-full py-2 text-center text-red-500 dark:text-red-100 lg:w-[90%] w-full"
@@ -502,18 +495,18 @@
 
         <div
           v-show="approve || verified"
-          class="text-xs border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl"
+          class="text-xs lg:text-base border-2 mt-10 border-gray-400 dark:border-gray-600 rounded-2xl"
           id="table-overflow"
         >
           <table class="w-full">
             <!-- title -->
-            <tr class="h-8 bg-gray-300 dark:bg-gray-700 rounded-2xl">
+            <tr class="h-10 bg-gray-300 dark:bg-gray-700 rounded-2xl">
               <th class="pl-6">Remark</th>
             </tr>
 
             <!-- table information -->
             <tr
-              class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
+              class="h-10 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
             >
               <td class="pl-6">{{ remark }}</td>
             </tr>
@@ -530,7 +523,7 @@
             resubmit != true &&
             reimbursed != true
           "
-          class=".detail-table w-full lg:flex-row flex flex-col justify-between h-14 items-center pt-6"
+          class=".detail-table w-full lg:flex-row flex flex-col justify-between h-24 items-center pt-6"
         >
           <div class="flex w-full items-center">
             <label class="font-semibold mr-2 mb-4 lg:mb-0"
@@ -543,30 +536,30 @@
               v-model="remark"
             />
           </div>
-          <div class="flex">
+          <!-- <div class="flex">
             <button
               @click="confirmApprove = true"
-              class="mr-2 text-sm font-semibold py-3 w-16 sm:w-24 md:w-36 bg-blue-800 hover:bg-blue-900 rounded-lg text-white"
+              class="mr-2 lg:text-lg font-semibold py-3 w-16 sm:w-24 md:w-36 bg-blue-800 hover:bg-blue-900 rounded-lg text-white"
             >
               Approve
             </button>
             <button
               @click="confirmResubmit = true"
-              class="mr-2 text-sm font-semibold py-3 w-16 sm:w-24 md:w-36 bg-yellow-500 hover:bg-yellow-600 rounded-lg text-white"
+              class="mr-2 lg:text-lg font-semibold py-3 w-16 sm:w-24 md:w-36 bg-yellow-500 hover:bg-yellow-600 rounded-lg text-white"
             >
               Resubmit
             </button>
             <button
               @click="confirmReject = true"
-              class="text-sm font-semibold py-3 w-16 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white"
+              class="lg:text-lg font-semibold py-3 w-16 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white"
             >
               Reject
             </button>
-          </div>
+          </div> -->
         </div>
 
         <!-- Approve Confirmation -->
-        <div
+        <!-- <div
           v-show="confirmApprove"
           class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
         >
@@ -589,10 +582,10 @@
               </button>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- Resubmit Confirmation -->
-        <div
+        <!-- <div
           v-show="confirmResubmit"
           class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
         >
@@ -622,10 +615,10 @@
               </button>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- Reimburse Confirmation -->
-        <div
+        <!-- <div
           v-show="confirmReimburse"
           class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
         >
@@ -650,10 +643,10 @@
               </button>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- Reject Confirmation -->
-        <div
+        <!-- <div
           v-show="confirmReject"
           class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
         >
@@ -681,7 +674,7 @@
               </button>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- Approve Success Notification -->
         <div
@@ -739,9 +732,9 @@
             <table class="w-4/5 text-center mt-1 mb-8">
               <tr class="bg-gray-300 text-center h-12">
                 <th>No.</th>
-                <th>Company</th>
-                <th>Name</th>
                 <th>Employee ID</th>
+                <th>Name</th>
+                <th>Company</th>
               </tr>
               <tr
                 v-for="(staff, i) in sim"
@@ -749,9 +742,9 @@
                 class="bg-white text-black text-center h-12"
               >
                 <th class="font-normal">{{ i + 1 }}</th>
-                <th class="font-normal">{{ staff.company_name }}</th>
+                <th class="font-normal">{{  staff.emp_id }}</th>
                 <th class="font-normal">{{ staff.name }}</th>
-                <th class="font-normal">{{ staff.emp_id }}</th>
+                <th class="font-normal">{{ staff.company_name }}</th>
               </tr>
             </table>
           </div>
@@ -812,7 +805,7 @@
           class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center"
         >
           <div
-            class="bg-white w-full sm:w-4/5 rounded-xl flex flex-col items-center relative pb-6"
+            class="bg-white w-full sm:w-4/5 lg:w-2/5 rounded-xl flex flex-col items-center relative pb-6"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -832,67 +825,53 @@
             <div class="relative flex w-4/5 mx-auto justify-center">
               <h1 class="text-xl font-semibold my-4">Attachments</h1>
             </div>
-            <table v-if="files.length > 0" class="w-4/5 text-center mt-1 mb-8">
-              <tr class="bg-gray-300 text-center h-12">
-                <th>No.</th>
-                <th>File</th>
-                <th>Action</th>
-              </tr>
-              <tr
-                v-for="(file, i) in files"
-                :key="i"
-                class="bg-white text-black text-center h-12 mt-2"
-              >
-                <th class="font-normal">{{ i + 1 }}</th>
-                <th class="font-normal flex">
-                  <img
-                    v-if="
-                      file.split('.').slice(-1)[0].toLowerCase() == 'png' ||
-                      file.split('.').slice(-1)[0].toLowerCase() == 'jpg' ||
-                      file.split('.').slice(-1)[0].toLowerCase() == 'jpeg'
-                    "
-                    :src="file"
-                    alt="attachment"
-                    class="w-20 h-32 object-contain"
+            <div
+              class="w-full px-4 my-6 grid grid-cols-2 lg:grid-cols-3 justify-center items-center"
+            >
+              <div v-for="(file, i) in files" :key="i">
+                <img
+                  v-if="
+                    file.split('.').slice(-1)[0] == 'png' ||
+                    file.split('.').slice(-1)[0] == 'jpg' ||
+                    file.split('.').slice(-1)[0] == 'jpeg'
+                  "
+                  :src="file"
+                  alt="attachment"
+                  class="w-5/6 h-1/2 object-contain mx-auto"
+                />
+                <svg
+                  v-else
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="0.5"
+                  stroke="currentColor"
+                  class="w-5/6 h-1/2 mx-auto"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
                   />
-                  <svg
-                    v-else
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="0.5"
-                    stroke="currentColor"
-                    class="w-20 h-32"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
-                    />
-                  </svg>
+                </svg>
 
-                  <h1 class="ml-2">{{ file }}</h1>
-                </th>
-                <th class="font-normal">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-5 h-5 mx-auto"
-                    @click="DownloadFile(file)"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
-                    />
-                  </svg>
-                </th>
-              </tr>
-            </table>
-
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-5 h-5 mx-auto"
+                  @click="DownloadFile(file)"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
+                  />
+                </svg>
+              </div>
+            </div>
             <div v-if="files.length <= 0" class="w-full">
               <h1 class="mx-auto text-center font-thin text-gray-500">Empty</h1>
             </div>
@@ -999,6 +978,7 @@ export default {
       confirmResubmit: false,
       approveSuccess: false,
       loading: false,
+      comment:"",
 
       // need to fetch from or post to API
       rejectApprover: false,
@@ -1018,10 +998,8 @@ export default {
       claimDatasDetails: [],
       claimDataTotalAmount: [],
 
-      keysToExclude: ['Tab_Title', 'unique_code'],
-
       // referenceNumber: 'TMTM-Finance-2024-07-0451',
-      referenceNumber: '',
+      referenceNumber: 'pktm2222',
 
       // need to fetch from API
       claimData: [
@@ -1128,25 +1106,27 @@ export default {
             this.referenceNumber
         )
         .then((response) => {
-          this.claimDetails = response.data.result;
-          this.statusApprover = this.claimDetails.admin_status
+          this.claimDetails = response.data?.result;
+          // console.log(this.claimDetails);
+          
+          this.statusApprover = this.claimDetails?.admin_status
             .split('.')[0]
             .toUpperCase();
-          this.remark = this.claimDetails.approver_feedback;
+          this.remark = this.claimDetails?.approver_feedback;
 
-          // console.log(this.statusApprover);
+          // // console.log(this.statusApprover);
 
-          if (this.statusApprover == 'APPROVED') {
-            this.approve = true;
-          } else if (this.statusApprover == 'REJECTED') {
-            this.rejectApprover = true;
-          } else if (this.statusApprover == 'RESUBMIT') {
-            this.resubmit = true;
-          } else if (this.statusApprover == 'REIMBURSED') {
-            this.reimbursed = true;
-          } else {
-            this.statusApprover = 'PENDING';
-          }
+          // if (this.statusApprover == 'APPROVED') {
+          //   this.approve = true;
+          // } else if (this.statusApprover == 'REJECTED') {
+          //   this.rejectApprover = true;
+          // } else if (this.statusApprover == 'RESUBMIT') {
+          //   this.resubmit = true;
+          // } else if (this.statusApprover == 'REIMBURSED') {
+          //   this.reimbursed = true;
+          // } else {
+          //   this.statusApprover = 'PENDING';
+          // }
         });
     },
     async FetchClaimDatasDetails() {
@@ -1157,26 +1137,29 @@ export default {
         )
         .then((response) => {
           const result = response.data.result;
+          // console.log(result,"local outstation");
           let details = [];
           let amount = 0;
+         // this.comment = result.comment;
           for (let i in result) {
             amount += result[i].total_fee;
+            
             const editedDetail = {
-              Date_Event: result[i].date_event,
+              Remark: result[i].comment,
+              Mileage_Km: result[i].mileage_km,
               Starting_Point: result[i].starting_point,
               End_Point: result[i].end_point,
-              'Mileage(KM)': result[i].mileage_km,
+              Date_Event: result[i].date_event,
               'Park_Fee(RM)': result[i].park_fee,
               'Toll_Fee(RM)': result[i].toll_fee,
+              'Total_Fee(RM)': result[i].total_fee,
               Transport_Specification: result[i].transport_specification,
               Transport_Mode: result[i].transport_mode,
               Trip_Mode: result[i].trip_mode,
-              'Total_Mileage(RM)': result[i].total_mileage,
-              'Total_Fee(RM)': result[i].total_fee,
+              Total_Mileage: result[i].total_mileage,
               Attachments: result[i].files,
               Tab_Title: 'Local Outstation',
-              unique_code: result[i].unique_code,
-              comment: result[i].comment,
+           
             };
             details.push(editedDetail);
           }
@@ -1201,9 +1184,9 @@ export default {
           for (let i in result) {
             amount += result[i].total_fee;
             const editedDetail = {
+              'Remark': result[i].comment,
               Description: result[i].description,
-              Date: result[i].date_event,
-              'Meal_Allowance_(RM)': result[i].meal_allowance,
+              Meal_Allowance: result[i].meal_allowance,
               'Transport_Fee(RM)': result[i].transport_fee,
               Accom_Foreign_Currency: result[i].accom_foreign_currency,
               Accom_Exchange_Rate: result[i].accom_exchange_rate,
@@ -1212,11 +1195,13 @@ export default {
               Other_Exchange_Rate: result[i].other_exchange_rate,
               Other_Foreign_Total: result[i].other_foreign_total,
               Transportation_Mode: result[i].transportation_mode,
-              'Total_Fee(RM)': result[i].total_fee,
               Attachments: result[i].files,
-              Tab_Title: 'Overseas Outstation',
-              unique_code: result[i].unique_code,
-              comment: result[i].comment,
+              Date: result[i].date_event,
+              
+              'Total_Fee(RM)': result[i].total_fee,
+             
+              Tab_Title: 'Overseas Outstation'
+        
             };
             details.push(editedDetail);
           }
@@ -1241,17 +1226,17 @@ export default {
           for (let i in result) {
             amount += result[i].total_fee;
             const editedDetail = {
+              Remark: result[i].comment,
               Type: result[i].refreshment_type,
               Date: result[i].date_event,
               Reference_Type: result[i].reference_type,
               Venue: result[i].venue_name,
               Company: result[i].company_name,
-              Staff_Involved: result[i].sim,
               'Total_Fee(RM)': result[i].total_fee,
+              Staff_Involved: result[i].sim,
               Attachments: result[i].files,
               Tab_Title: 'Staff Refreshment',
-              unique_code: result[i].unique_code,
-              comment: result[i].comment,
+          
             };
             details.push(editedDetail);
           }
@@ -1276,16 +1261,17 @@ export default {
           for (let i in result) {
             amount += result[i].total_fee;
             const editedDetail = {
+              Remark: result[i].comment,
               Type: result[i].entertainment_type,
               Date: result[i].date_event,
               Venue: result[i].venue_name,
               Company: result[i].company_name,
-              Participants: result[i].participants,
               'Total_Fee(RM)': result[i].total_fee,
+              Participants: result[i].participants,
               Attachments: result[i].files,
+              Comment: result[i].comment,
               Tab_Title: 'Entertainment',
-              unique_code: result[i].unique_code,
-              comment: result[i].comment,
+              
             };
             details.push(editedDetail);
           }
@@ -1339,53 +1325,10 @@ export default {
       this.confirmResubmit = false;
       this.ApproveOrReject('Resubmit');
     },
-    // If any single remark is change, save in the array
-    UpdateSingleRemark(event, uc, tab) {
-      let index = this.singleRemarks.findIndex(
-        (item) => item.unique_code == uc
-      );
-      let data = {
-        remark: event.target.value,
-        unique_code: uc,
-        Tab_Title: tab,
-      };
-
-      if (index !== -1) {
-        if (data.remark.trim() === '') {
-          // Remove the item if the remark is empty
-          this.singleRemarks.splice(index, 1);
-        } else {
-          // Update the existing remark
-          this.singleRemarks[index] = { ...this.singleRemarks[index], ...data };
-        }
-      } else {
-        // Only push new data if the remark is not empty
-        if (data.remark.trim() !== '') {
-          this.singleRemarks.push(data);
-        }
-      }
-    },
 
     //approve or reject action
     // need to post to database
     ApproveOrReject(AoR) {
-      this.singleRemarks.forEach((remark) => {
-        let data = {
-          comment: remark.remark,
-          unique_code: remark.unique_code,
-        };
-        if (remark.Tab_Title == 'Local Outstation') {
-          axios.put(
-            'http://172.28.28.91:86/api/Admin/Approver_Comment_Local',
-            data
-          );
-        } else if (remark.Tab_Title == 'Overseas Outstation') {
-          axios.put(
-            'http://172.28.28.91:86/api/Admin/Approve_Comment_Overseas',
-            data
-          );
-        }
-      });
       if (AoR == 'Approve') {
         this.approve = true;
         this.dateApprover = moment(new Date()).format('D MMM YYYY');
@@ -1549,18 +1492,6 @@ tr:last-child th:last-child {
   display: none;
 }
 .details tr th:last-child {
-  display: none;
-}
-.details tr td:nth-last-child(2) {
-  display: none;
-}
-.details tr th:nth-last-child(2) {
-  display: none;
-}
-.details tr td:nth-last-child(3) {
-  display: none;
-}
-.details tr th:nth-last-child(3) {
   display: none;
 }
 

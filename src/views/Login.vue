@@ -138,7 +138,7 @@ export default {
           }
         ).then((response) => {
         
-          console.log("Server response:", response.data);
+          // console.log("Server response:", response.data);
 
           if (response.data.userId != null) {
           // Extract user details and token

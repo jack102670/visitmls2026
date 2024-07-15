@@ -14,124 +14,137 @@
             </h3>
           </div>
           <div class="flex mt-5">
-            <button
-    @click="ChangePopUp()"
-    class="flex items-center justify-center text-center rounded-full bg-[#160959] text-slate-200 p-2 text-sm hover:bg-[#190a70] hover:text=white" 
-    
-  >  <svg
-      class="mr-1" 
-      width="20"
-      height="20"
-      viewBox="0 0 48 48"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M40 23V14L31 4H10C8.89543 4 8 4.89543 8 6V42C8 43.1046 8.89543 44 10 44H22"
-        stroke="white"
-        stroke-width="4"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M33 29V43"
-        stroke="white"
-        stroke-width="4"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M26 36H33H40"
-        stroke="white"
-        stroke-width="4"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M30 4V14H40"
-        stroke="white"
-        stroke-width="4"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-    </svg>
-  
-  New Claim
-</button>
+            
           </div>
 
           <hr class="h-mx-auto bg-gray-100 border-0 rounded" />
         </div>
+        <div class="pt-4 ml-4"><button
+              @click="ChangePopUp()"
+              class="flex items-center justify-center text-center rounded-full bg-[#160959] text-slate-200 py-2 px-4 text-sm hover:bg-[#190a70] hover:text=white"
+            >
+              <svg
+                class="mr-1"
+                width="20"
+                height="20"
+                viewBox="0 0 48 48"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M40 23V14L31 4H10C8.89543 4 8 4.89543 8 6V42C8 43.1046 8.89543 44 10 44H22"
+                  stroke="white"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M33 29V43"
+                  stroke="white"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M26 36H33H40"
+                  stroke="white"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M30 4V14H40"
+                  stroke="white"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+
+              New Claim
+            </button></div>
 
         <!-- Box Info Section-->
         <section>
           <div
-            class="p-6 mt-5 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5"
+            class="p-5 mt-1 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5"
           >
             <div
-              class="relative overflow-hidden hover:bg-fuchsia-100 bg-white max-h-[1000px] shadow-xl  border-x-2 border-y-2  rounded-lg border-fuchsia-300"
+              class="relative overflow-hidden hover:bg-fuchsia-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 rounded-lg border-fuchsia-300"
             >
-              <div class="card m-2 " @click="filterTable('Pending')">
+              <div class="card m-2" @click="filterTable('Pending')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold">{{ requests.filter(request => request.status === 'Approved').length }}</span>
+                  <span class="text-gray-800 text-2xl font-bold">{{
+                    requests.filter((request) => request.status === "Approved")
+                      .length
+                  }}</span>
                   <span class="block text-sm text-gray-500 font-semibold"
                     >Resubmission</span
                   >
                 </div>
-               
               </div>
             </div>
             <div
               class="relative overflow-hidden hover:bg-blue-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-blue-300 rounded-lg"
             >
-              <div class="card m-2" @click="filterTable('Approved')" >
-                <div class="ml-5" >
-                  <span class="text-gray-800 text-2xl font-bold">{{   requests.filter(request => request.status === 'Approved').length}}</span>
+              <div class="card m-2" @click="filterTable('Approved')">
+                <div class="ml-5">
+                  <span class="text-gray-800 text-2xl font-bold">{{
+                    requests.filter((request) => request.status === "Approved")
+                      .length
+                  }}</span>
                   <span class="block text-sm text-gray-500 font-semibold"
                     >Approved</span
                   >
                 </div>
-                
               </div>
             </div>
-           
+
             <div
-              class="relative overflow-hidden bg-white max-h-[1000px] hover:bg-red-100 shadow-xl border-x-2 border-y-2  rounded-lg border-red-300"
+              class="relative overflow-hidden bg-white max-h-[1000px] hover:bg-red-100 shadow-xl border-x-2 border-y-2 rounded-lg border-red-300"
             >
               <div class="card m-2" @click="filterTable('rejected')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold">{{ requests.filter(request => request.status === 'rejected').length }}</span>
+                  <span class="text-gray-800 text-2xl font-bold">{{
+                    requests.filter((request) => request.status === "rejected")
+                      .length
+                  }}</span>
                   <span class="block text-sm text-gray-500 font-semibold"
                     >Rejected</span
                   >
                 </div>
-             
               </div>
             </div>
             <div
-              class="relative overflow-hidden bg-white max-h-[1000px] shadow-xl hover:bg-yellow-100 border-x-2 border-y-2  rounded-lg border-yellow-300"
+              class="relative overflow-hidden bg-white max-h-[1000px] shadow-xl hover:bg-yellow-100 border-x-2 border-y-2 rounded-lg border-yellow-300"
             >
               <div class="card m-2" @click="filterTable('reimburse')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold"> {{ requests.filter(request => request.status === 'Approved').length }}</span>
+                  <span class="text-gray-800 text-2xl font-bold">
+                    {{
+                      requests.filter(
+                        (request) => request.status === "Approved"
+                      ).length
+                    }}</span
+                  >
                   <span class="block text-sm text-gray-500 font-semibold"
                     >Reimburse</span
                   >
                 </div>
-               
               </div>
             </div>
             <div
-              class="relative overflow-hidden bg-white max-h-[1000px] hover:bg-teal-100 shadow-xl border-x-2 border-y-2  rounded-lg border-teal-300"
+              class="relative overflow-hidden bg-white max-h-[1000px] hover:bg-teal-100 shadow-xl border-x-2 border-y-2 rounded-lg border-teal-300"
             >
               <div class="card m-2" @click="filterTable('')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold">{{ this.requests.length }}</span>
+                  <span class="text-gray-800 text-2xl font-bold">{{
+                    this.requests.length
+                  }}</span>
                   <span class="block text-sm text-gray-500 font-semibold"
                     >All Claims</span
                   >
                 </div>
-              
               </div>
             </div>
           </div>
@@ -304,7 +317,7 @@
                         <td class="px-4 py-4 ml text-sm whitespace-nowrap">
                           <div class="flex items-center gap-x-6">
                             <button
-                              @click="showModal(data.reference_number)"
+                              @click="showclaim(data.reference_number)"
                               class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
                             >
                               <svg
@@ -586,9 +599,8 @@ export default {
           name: "HQ",
           status: "APPROVED",
           date_requested: "20 July 2024",
-        }
+        },
       ],
-
 
       popup: false,
       animate: false,
@@ -603,81 +615,85 @@ export default {
     };
   },
   computed: {
-  reimburseCount() {
-    return this.requests.filter(request => request.status === 'reimburse').length;
-  }
-},
+    reimburseCount() {
+      return this.requests.filter((request) => request.status === "reimburse")
+        .length;
+    },
+  },
 
   methods: {
-//     async showModal(referenceNumber) {
-//       this.isClickModal = true;
-//   const urls = [
-//     `http://172.28.28.91:97/api/User/GetLocalOutstation/${referenceNumber}`,
-//     `http://172.28.28.91:97/api/User/GetOverseasOutstation/${referenceNumber}`,
-//     `http://172.28.28.91:86/api/User/GetRefreshment/${referenceNumber}`,
-//     `http://172.28.28.91:86/api/User/GetEntertainment/${referenceNumber}`,
-//     `http://172.28.28.91:86/api/User/GetHandphone/${referenceNumber}`,
-//     `http://172.28.28.91:86/api/User/GetMedicalLeave/${referenceNumber}`,
-//     `http://172.28.28.91:97/api/User/GetOthers/${referenceNumber}`,
-//     `http://172.28.28.91:86/api/User/GetClaimDetails/${referenceNumber}`
-//   ];
+    showclaim(rn) {
+      this.$router.push({ name: "SummaryClaimpage", params: { rn } });
+    },
+    //     async showModal(referenceNumber) {
+    //       this.isClickModal = true;
+    //   const urls = [
+    //     `http://172.28.28.91:97/api/User/GetLocalOutstation/${referenceNumber}`,
+    //     `http://172.28.28.91:97/api/User/GetOverseasOutstation/${referenceNumber}`,
+    //     `http://172.28.28.91:86/api/User/GetRefreshment/${referenceNumber}`,
+    //     `http://172.28.28.91:86/api/User/GetEntertainment/${referenceNumber}`,
+    //     `http://172.28.28.91:86/api/User/GetHandphone/${referenceNumber}`,
+    //     `http://172.28.28.91:86/api/User/GetMedicalLeave/${referenceNumber}`,
+    //     `http://172.28.28.91:97/api/User/GetOthers/${referenceNumber}`,
+    //     `http://172.28.28.91:86/api/User/GetClaimDetails/${referenceNumber}`
+    //   ];
 
-//   // Mapping URLs to modal display functions
+    //   // Mapping URLs to modal display functions
 
-//   try {
-//     const responses = await Promise.allSettled(urls.map(url => fetch(url).then(res => res.json())));
+    //   try {
+    //     const responses = await Promise.allSettled(urls.map(url => fetch(url).then(res => res.json())));
 
-//     responses.forEach((result, index) => {
-//       if (result.status === 'fulfilled') {
-//         const data = result.value; // Assuming each response is an array
-//         // Process and store the array based on the URL index
-//         switch (index) {
-//           case 0:
-//   this.localOutstation = data;
-//   console.log("Local Outstation:", this.localOutstation);
-//   break;
-// case 1:
-//   this.overseasOutstation = data;
-//   console.log("Overseas Outstation:", this.overseasOutstation);
-//   break;
-// case 2:
-//   this.refreshment = data;
-//   console.log("Refreshment:", this.refreshment);
-//   break;
-// case 3:
-//   this.entertainment = data;
-//   console.log("Entertainment:", this.entertainment);
-//   break;
-// case 4:
-//   this.handphone = data;
-//   console.log("Handphone:", this.handphone);
-//   break;
-// case 5:
-//   this.medicalLeave = data;
-//   console.log("Medical Leave:", this.medicalLeave);
-//   break;
-// case 6:
-//   this.others = data;
-//   console.log("Others:", this.others);
-//   break;
-// case 7:
-//   this.claimDetails = data.result;
-//   console.log("Claim Details:", this.claimDetails);
-//   break;
-//           // Add more cases as needed
-//         }
-//       } else {
-//         console.error(`Error fetching data from ${urls[index]}:`, result.reason);
-//       }
-//     });
-//   } catch (error) {
-//     console.error("Error in executing requests:", error);
-//   }
-//     },
+    //     responses.forEach((result, index) => {
+    //       if (result.status === 'fulfilled') {
+    //         const data = result.value; // Assuming each response is an array
+    //         // Process and store the array based on the URL index
+    //         switch (index) {
+    //           case 0:
+    //   this.localOutstation = data;
+    //   // console.log("Local Outstation:", this.localOutstation);
+    //   break;
+    // case 1:
+    //   this.overseasOutstation = data;
+    //   // console.log("Overseas Outstation:", this.overseasOutstation);
+    //   break;
+    // case 2:
+    //   this.refreshment = data;
+    //   // console.log("Refreshment:", this.refreshment);
+    //   break;
+    // case 3:
+    //   this.entertainment = data;
+    //   // console.log("Entertainment:", this.entertainment);
+    //   break;
+    // case 4:
+    //   this.handphone = data;
+    //   // console.log("Handphone:", this.handphone);
+    //   break;
+    // case 5:
+    //   this.medicalLeave = data;
+    //   // console.log("Medical Leave:", this.medicalLeave);
+    //   break;
+    // case 6:
+    //   this.others = data;
+    //   // console.log("Others:", this.others);
+    //   break;
+    // case 7:
+    //   this.claimDetails = data.result;
+    //   // console.log("Claim Details:", this.claimDetails);
+    //   break;
+    //           // Add more cases as needed
+    //         }
+    //       } else {
+    //         console.error(`Error fetching data from ${urls[index]}:`, result.reason);
+    //       }
+    //     });
+    //   } catch (error) {
+    //     console.error("Error in executing requests:", error);
+    //   }
+    //     },
 
-    showYourModalWithData(data) {
+    showYourModalWithData() {
       // Logic to display the modal with the fetched data
-      console.log(data); // For demonstration
+      // console.log(data); // For demonstration
     },
     // closeClickModal() {
     //   this.isClickModal = false;
@@ -692,7 +708,7 @@ export default {
     },
     async fetchAllRequests() {
       const userId = store.getSession().userDetails.userId;
-      console.log("userId", userId);
+      // console.log("userId", userId);
       if (!userId) {
         console.error("UserId is not set.");
         return;
@@ -706,7 +722,7 @@ export default {
         }
         const data = await response.json();
         this.requests = data.result; // Update your data property with the fetched data
-        console.log("Fetched requests:", this.requests);
+        // console.log("Fetched requests:", this.requests);
       } catch (error) {
         console.error("Error fetching requests:", error);
       }

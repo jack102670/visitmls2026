@@ -1,64 +1,35 @@
 <template>
   <div>
-    <h1>Welcome to Testing.vue!</h1>
+    <h1 class="bg-red-500 text-red-700 text-center font-semibold font-4xl">Welcome to Testing.vue!</h1>
     <p>This is a basic Vue.js 3 component.</p>
-    <table id="myTable" class="display">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Email</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>John Doe</td>
-          <td>john@example.com</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jane Doe</td>
-          <td>jane@example.com</td>
-        </tr>
-        <!-- Add more rows as needed -->
-      </tbody>
-    </table>
+    <select v-model="selectedEmail">
+      <option disabled value="">Please select one</option>
+      <option v-for="user in users" :key="user.userName" :value="user.email">
+        {{ user.userName }}
+      </option>
+    </select>
   </div>
 </template>
 
+
+
 <script>
-import $ from 'jquery';
-
-
 export default {
   name: 'DataTableExample',
-  mounted() {
-    this.initializeDataTable();
+  data() {
+    return {
+      users: [],
+    };
   },
-  methods: {
-    initializeDataTable() {
-      $('#example').DataTable({
-        ajax: 'path/to/your/data/source', // Use your actual data source URL here
-        columns: [
-          { data: 'id' },
-          { data: 'name' },
-          { data: 'email' }
-        ],
-        stateSave: true,
-        scrollY: 200,
-        scrollCollapse: true,
-        paging: true,
-      });
-    }
-  }
+  mounted() {
+    fetch('http://172.28.28.91:89/api/Security/getusersAD')
+      .then(response => response.json())
+      
+      .then(data => {
+        this.users = data;
+        // console.log(data);
+      })
+      .catch(error => console.error('Error fetching users:', error));
+  },
 }
 </script>
-<style scoped>
-h1 {
-  color: blue;
-}
-p {
-  font-size: 18px;
-}
-</style>

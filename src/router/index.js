@@ -39,11 +39,12 @@ import AdminHRSummaryClaimpage from '../components/e-claim/AdminHRSummaryClaimpa
 import AdminDashboardpage from '../components/e-claim/AdminDashboardpage.vue';
 import AdminHRDashboardpage from '../components/e-claim/AdminHRDashboardpage.vue';
 import UserFirstTimeLogin from '../components/e-claim/UserFirstTimeLogin.vue';
-import EmailVerificationMessage from '../components/e-claim/EmailVerificationMessage.vue';
+import UserProfile from '../components/e-claim/UserProfile.vue';
 import Homepage from '../views/homepage.vue';
 import verified from '../views/e-claim/verifiedpage.vue';
 import AssignChecker from '../components/e-claim/AssignChecker.vue';
 import HRRegisterEmployee from '../components/e-claim/HRRegisterEmployee.vue';
+import SummaryClaimpage from '../views/e-claim/user-ui/SummaryClaimpage.vue';
 const routes = [
   {
     path: '/verified',
@@ -109,6 +110,15 @@ const routes = [
     props: true,
   },
   {
+    path: '/summaryclaim/:rn',
+    name: 'SummaryClaimpage',
+    components: {
+      default: SummaryClaimpage,
+      Sidebar: Newsidebar,
+    },
+    props: true,
+  },
+  {
     path: '/adminhrsummaryclaim',
     name: 'AdminHRSummaryClaimpage',
     components: {
@@ -168,10 +178,10 @@ const routes = [
   },
 
   {
-    path: '/verifyemail',
-    name: 'EmailVerificationMessage',
+    path: '/profile',
+    name: 'UserProfile',
     components: {
-      default: EmailVerificationMessage,
+      default: UserProfile,
       Sidebar: Newsidebar,
     },
   },

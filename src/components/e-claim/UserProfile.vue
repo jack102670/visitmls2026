@@ -20,7 +20,7 @@
             <div class="mt-4">
               <div class="flex items-center mt-2">
                 <img
-                  :src="user.profilePicture || defaultProfilePicture"
+                  :src="user.profile_picture || defaultProfilePicture"
                   alt="Profile Picture"
                   class="w-24 h-24 rounded-full border-2 border-gray-200"
                 />
@@ -28,20 +28,18 @@
 
               <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                 <p>
-                  <span
-                    class="font-semibold text-gray-600 dark:text-gray-200"
+                  <span class="font-semibold text-gray-600 dark:text-gray-200"
                     >Full Name</span
                   >
                   <input
                     type="text"
                     disabled
                     class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.fullName"
+                    v-model="user.name"
                   />
                 </p>
                 <p>
-                  <span
-                    class="font-semibold text-gray-600 dark:text-gray-200"
+                  <span class="font-semibold text-gray-600 dark:text-gray-200"
                     >Branch</span
                   >
                   <input
@@ -52,8 +50,7 @@
                   />
                 </p>
                 <p>
-                  <span
-                    class="font-semibold text-gray-600 dark:text-gray-200"
+                  <span class="font-semibold text-gray-600 dark:text-gray-200"
                     >Department</span
                   >
                   <input
@@ -64,27 +61,25 @@
                   />
                 </p>
                 <p>
-                  <span
-                    class="font-semibold text-gray-600 dark:text-gray-200"
+                  <span class="font-semibold text-gray-600 dark:text-gray-200"
                     >Staff ID</span
                   >
                   <input
                     type="text"
                     disabled
                     class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.staffId"
+                    v-model="user.emp_id"
                   />
                 </p>
                 <p>
-                  <span
-                    class="font-semibold text-gray-600 dark:text-gray-200"
+                  <span class="font-semibold text-gray-600 dark:text-gray-200"
                     >Work Email</span
                   >
                   <input
                     type="email"
                     disabled
                     class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.workEmail"
+                    v-model="user.email_address"
                   />
                 </p>
                 <p>
@@ -95,7 +90,7 @@
                     type="text"
                     disabled
                     class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.phoneNumber"
+                    v-model="user.phone_number"
                   />
                 </p>
                 <p>
@@ -106,7 +101,7 @@
                     type="text"
                     disabled
                     class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.bankName"
+                    v-model="user.bank_name"
                   />
                 </p>
                 <p>
@@ -117,7 +112,7 @@
                     type="text"
                     disabled
                     class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.bankNumber"
+                    v-model="user.bank_number"
                   />
                 </p>
                 <p>
@@ -142,7 +137,7 @@
                     row="4"
                     disabled
                     class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.homeAddress"
+                    v-model="user.home_address"
                   />
                 </p>
               </div>
@@ -176,7 +171,7 @@
           <div class="mt-5 sm:mt-6 sm:flex sm:flex-row-reverse">
             <button
               type="button"
-              @click="showRequestOtpModal = true"
+              @click="verifyAndSaveData"
               class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-700 text-base font-bold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
             >
               Verify
@@ -204,6 +199,29 @@
               <div
                 class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
               >
+                <button
+                  @click="closeRequestOtpModal"
+                  type="button"
+                  class="absolute top-0 right-0 mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+                >
+                  <span class="sr-only">Close</span>
+                  <svg
+                    class="h-6 w-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+
                 <div>
                   <h3 class="text-xl leading-6 font-medium text-gray-900">
                     Request OTP Code for Account Activation
@@ -211,7 +229,7 @@
                   <p class="mt-4 mb-8 text-md text-gray-500">
                     To complete your profile activation, please request One-Time
                     Password (OTP) and it will be sent to
-                    <strong>{{ user.workEmail }}</strong
+                    <strong>{{ user.email_address }}</strong
                     >.
                   </p>
                 </div>
@@ -251,7 +269,8 @@
                     Enter OTP Code
                   </h3>
                   <p class="mt-4 mb-4 text-md text-gray-500">
-                    We’ve sent a code to <strong>{{ user.workEmail }}</strong
+                    We’ve sent a code to
+                    <strong>{{ user.email_address }}</strong
                     >.
                   </p>
                   <div class="mt-2">
@@ -304,6 +323,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -324,34 +345,129 @@ export default {
       if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.profilePicture = e.target.result;
+          this.profile_picture = e.target.result;
         };
         reader.readAsDataURL(file);
       }
     },
 
     deleteProfilePicture() {
-      this.profilePicture = null;
+      this.profile_picture = null;
     },
 
-    sendOtp() {
-      this.showRequestOtpModal = false;
-      this.showOtpModal = true;
-      alert("OTP has been sent to your email.");
-      this.startTimer();
+    verifyAndSaveData() {
+      this.saveUserData();
+      this.saveProfilePicture();
+      this.showRequestOtpModal = true;
     },
 
-    verifyOtp() {
-      if (this.otp === "123456") {
-        clearInterval(this.timerInterval);
-        this.showOtpModal = false;
-        this.showSuccessNotification = true;
-        setTimeout(() => {
-          this.showSuccessNotification = false;
-          this.$router.push("/homepage");
-        }, 3000);
-      } else {
-        alert("Invalid OTP. Please try again.");
+    saveUserData() {
+      const updateUserUrl = "http://172.28.28.91:97/api/User/UpdateEmployee";
+      axios
+        .put(updateUserUrl, this.user)
+        .then((response) => {
+          console.log("User data saved successfully:", response.data);
+        })
+        .catch((error) => {
+          console.error("Error saving user data:", error);
+        });
+    },
+
+    saveProfilePicture() {
+      const updateImageUrl = "http://172.28.28.91:97/api/User/UpdateImage";
+      axios
+        .put(updateImageUrl, { profile_picture: this.profile_picture })
+        .then((response) => {
+          console.log("Profile picture saved successfully:", response.data);
+        })
+        .catch((error) => {
+          console.error("Error saving profile picture:", error);
+        });
+    },
+
+    async sendOtp() {
+      try {
+        const response = await axios.post(
+          "http://172.28.28.91:97/api/User/GenerateOTP",
+          { email: this.user.email_address }
+        );
+
+        if (response.data.success) {
+          this.showRequestOtpModal = false;
+          alert("OTP has been sent to your email.");
+          this.showOtpModal = true;
+          this.startTimer();
+        } else {
+          console.error("Backend error:", response.data);
+          alert(
+            response.data.message || "Failed to send OTP. Please try again."
+          );
+        }
+      } catch (error) {
+        console.error("Error sending OTP:", error);
+        if (error.response) {
+          console.error("Response data:", error.response.data);
+          console.error("Response status:", error.response.status);
+          console.error("Response headers:", error.response.headers);
+          alert(
+            `An error occurred: ${
+              error.response.data.message ||
+              "Unable to send OTP. Please try again."
+            }`
+          );
+        } else if (error.request) {
+          console.error("Request data:", error.request);
+          alert(
+            "No response from the server. Please check your network connection and try again."
+          );
+        } else {
+          console.error("Error message:", error.message);
+          alert(`Error: ${error.message}`);
+        }
+      }
+    },
+
+    async verifyOtp() {
+      try {
+        const response = await axios.post(
+          "http://172.28.28.91:97/api/User/ValidateOTP",
+          {
+            email: this.user.email_address,
+            otp: this.otp,
+          }
+        );
+        if (response.data.success) {
+          clearInterval(this.timerInterval);
+          this.showOtpModal = false;
+          this.showSuccessNotification = true;
+          setTimeout(() => {
+            this.showSuccessNotification = false;
+            this.$router.push("/homepage");
+          }, 3000);
+        } else {
+          alert("Invalid OTP. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error verifying OTP:", error);
+        if (error.response) {
+          console.error("Response data:", error.response.data);
+          console.error("Response status:", error.response.status);
+          console.error("Response headers:", error.response.headers);
+          alert(
+            `An error occurred: ${
+              error.response.data.message ||
+              "Unable to verify OTP. Please try again."
+            }`
+          );
+        } else if (error.request) {
+          console.error("Request data:", error.request);
+          alert(
+            "No response from the server. Please check your network connection and try again."
+          );
+        } else {
+          console.error("Error message:", error.message);
+          alert(`Error: ${error.message}`);
+        }
       }
     },
 
@@ -361,6 +477,10 @@ export default {
         alert("A new OTP has been sent to your email.");
         this.startTimer();
       }
+    },
+
+    closeRequestOtpModal() {
+      this.showRequestOtpModal = false;
     },
 
     startTimer() {
