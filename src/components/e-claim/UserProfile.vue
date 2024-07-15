@@ -150,7 +150,7 @@
                     type="text"
                     disabled
                     class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.reportingManagerID"
+                    v-model="user.reporting_to"
                   />
                 </p>
                 <p>
@@ -161,7 +161,7 @@
                     type="text"
                     disabled
                     class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.reportingManagerDepartment"
+                    v-model="user.reporting_to_dept"
                   />
                 </p>
               </div>
@@ -374,9 +374,17 @@ export default {
     },
 
     saveProfilePicture() {
+      const formData = new FormData();
+      formData.append("profile_picture", this.user.profile_picture);
+      formData.append("emp_id", this.user.emp_id);
+
       const updateImageUrl = "http://172.28.28.91:97/api/User/UpdateImage";
       axios
-        .put(updateImageUrl, { profile_picture: this.profile_picture })
+        .put(updateImageUrl, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((response) => {
           console.log("Profile picture saved successfully:", response.data);
         })
