@@ -3048,89 +3048,95 @@ export default {
                   // console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case "handphone bill reimbursement":
-                for (const claim of claimsToSend) {
-                  // Iterate over each claim
-                  // Dummy data for a claim
+                case "handphone bill reimbursement":
+  for (const claim of claimsToSend) {
+    // Iterate over each claim
+    // Dummy data for a claim
 
-                  const thisisforHandphoneBillReimbursement = {
-                    date_claim: this.todayFormatted(), // Example date
-                    claim_month: claim.MonthHR,
-                    claim_year: `${claim.YearHR}`,
-                    bank_name: claim.BankNameHR,
-                    bank_account: String(claim.AccBankNumberHR),
-                    bank_holder: claim.AccHolderNameHR,
-                    limited_amount: claim.LimitedAmountHR,
-                    claim_amount: claim.totalRM,
-                    unique_code: this.generateUniqueCode(claim.tabTitle),
-                    reference_number: this.claims[0].uniqueCode,
-                    handphone: "",
-                  };
-                  const uniqueCode = this.generateUniqueCode(claim.tabTitle);
-                  const userId = this.userDetails.userId;
-                  console.log("unik kod:", uniqueCode);
-                  if (claim.UploadHR && claim.UploadHR.length > 0) {
-                    // Log the file data to verify it's correct before attempting to upload
-                    console.log("Preparing to upload files:", claim.UploadLT);
+    const thisisforHandphoneBillReimbursement = {
+      date_claim: this.todayFormatted(), // Example date
+      claim_month: claim.MonthHR,
+      claim_year: `${claim.YearHR}`,
+      bank_name: claim.BankNameHR,
+      bank_account: String(claim.AccBankNumberHR),
+      bank_holder: claim.AccHolderNameHR,
+      limited_amount: claim.LimitedAmountHR,
+      claim_amount: claim.totalRM,
+      unique_code: this.generateUniqueCode(claim.tabTitle),
+      reference_number: this.claims[0].uniqueCode,
+      handphone: "",
+    };
+    const uniqueCode = this.generateUniqueCode(claim.tabTitle);
+    const userId = this.userDetails.userId;
+    console.log("unik kod:", uniqueCode);
+    if (claim.UploadHR && claim.UploadHR.length > 0) {
+      // Log the file data to verify it's correct before attempting to upload
+      console.log("Preparing to upload files:", claim.UploadLT);
 
-                    // Assuming uploadFile has been adjusted to accept an array of files
+      // Assuming uploadFile has been adjusted to accept an array of files
+      this.uploadFiles(claim.UploadHR, userId, uniqueCode);
+    }
+    const axiosInstance = axios.create({
+      baseURL: "http://172.28.28.91:86/api/User/InsertHandphoneReimburse",
+    });
 
-                    this.uploadFiles(claim.UploadHR, userId, uniqueCode);
-                  }
-                  axiosInstance = axios.create({
-                    baseURL:
-                      "http://172.28.28.91:86/api/User/InsertHandphoneReimburse",
-                  });
-                  await axiosInstance.post(
-                    "/",
-                    thisisforHandphoneBillReimbursement
-                  );
-                  // console.log(`Data sent for ${title} 2:`, response2.data);
-                }
-                break;
-              case "Medical Bill Reimbursement":
+    try {
+      const response = await axiosInstance.post("/", thisisforHandphoneBillReimbursement);
+      console.log(`Data successfully submitted for handphone bill reimbursement:`, response.data);
+      // Handle success here, e.g., update UI or notify user
+    } catch (error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error("Error submitting handphone bill reimbursement:", error.response.data);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("Error submitting handphone bill reimbursement: No response received");
+      } else {
+        // Something happened in setting up the request that triggered an error
+        console.error("Error submitting handphone bill reimbursement:", error.message);
+      }
+      // Handle error here, e.g., show an error message to the user
+    }
+  }
+  break;
+              case "medical bill reimbursement":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
                   const thisisforMedicalBillReimbursement = {
-                    date_event: claim.dateE, // Example date
-                    person_entertained: claim.PersonEntertainedE,
-                    type_of_entertainment: claim.TypeofEntertainmentE,
-                    other_type_of_entertainment:
-                      claim.OtherTypeofEntertainmentE,
-                    company: claim.CompanyE,
-                    venue: claim.VenueE,
-                    reference: claim.ReferenceE,
-                    amount: claim.AmountRME,
-                    reference_number: "pktm222",
-                    unique_code: this.generateUniqueCode(claim.tabTitle),
+            reference_number: this.claims[0].uniqueCode,
+            date_leave_taken: claim.dateML, // Example date
+            reason: claim.ReasonML,
+            bank_name: claim.BankNameML,
+            bank_holder: claim.AccHolderNameML,
+            bank_account: String(claim.AccBankNumberML),
+            claim_amount : String(claim.ClaimsAmountML),
+         
+            unique_code: this.generateUniqueCode(claim.tabTitle),
 
-                    approver_email: "approver@example.com",
-                    verifier_email: "verifier@example.com",
-                    approver_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    verifier_id: "7A7641D6-DEDE-4803-8B7B-93063DE2F077",
-                    requester_id: "9d0da821-5de0-42e5-b268-b5e0bc40e8d1",
-                    serial_number: this.generateUniqueCodeSN(claim.tabTitle),
+                    
                   };
                   const uniqueCode = this.generateUniqueCode(claim.tabTitle);
                   const userId = this.userDetails.userId;
                   console.log("unik kod:", uniqueCode);
-                  if (claim.UploadLT && claim.UploadLT.length > 0) {
+                  if (claim.UploadML && claim.UploadML.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
-                    console.log("Preparing to upload files:", claim.UploadLT);
+                    console.log("Preparing to upload files:", claim.UploadML);
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
-                    this.uploadFiles(claim.UploadLT, userId, uniqueCode);
+                    this.uploadFiles(claim.UploadML, userId, uniqueCode);
                   }
                   axiosInstance = axios.create({
-                    baseURL: "http://localhost:3000/claims/entertainment",
+                    baseURL: "http://172.28.28.91:86/api/User/InsertMedicalLeave",
                   });
                   await axiosInstance.post(
                     "/",
                     thisisforMedicalBillReimbursement
                   );
                   // console.log(`Data sent for ${title} 2:`, response2.data);
+                  console.log("Data sent for Medical Bill Reimbursement");
                 }
                 break;
               // Add cases for other tab titles here
