@@ -20,7 +20,7 @@
             <div class="mt-4">
               <div class="flex items-center mt-2">
                 <img
-                  :src="user.profilePicture || defaultProfilePicture"
+                  :src="user.profile_picture || defaultProfilePicture"
                   alt="Profile Picture"
                   class="w-24 h-24 rounded-full border-2 border-gray-200"
                 />
@@ -345,14 +345,14 @@ export default {
       if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.profilePicture = e.target.result;
+          this.profile_picture = e.target.result;
         };
         reader.readAsDataURL(file);
       }
     },
 
     deleteProfilePicture() {
-      this.profilePicture = null;
+      this.profile_picture = null;
     },
 
     verifyAndSaveData() {
@@ -376,7 +376,7 @@ export default {
     saveProfilePicture() {
       const updateImageUrl = "http://172.28.28.91:97/api/User/UpdateImage";
       axios
-        .put(updateImageUrl, { profilePicture: this.profilePicture })
+        .put(updateImageUrl, { profile_picture: this.profile_picture })
         .then((response) => {
           console.log("Profile picture saved successfully:", response.data);
         })
@@ -394,8 +394,8 @@ export default {
 
         if (response.data.success) {
           this.showRequestOtpModal = false;
-          this.showOtpModal = true;
           alert("OTP has been sent to your email.");
+          this.showOtpModal = true;
           this.startTimer();
         } else {
           console.error("Backend error:", response.data);

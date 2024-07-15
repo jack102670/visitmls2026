@@ -30,7 +30,7 @@
               >
               <div class="flex items-center mt-2">
                 <img
-                  :src="profilePicture || defaultProfilePicture"
+                  :src="profile_picture || defaultProfilePicture"
                   alt="Profile Picture"
                   class="w-24 h-24 rounded-full border-2 border-gray-200"
                 />
@@ -139,12 +139,12 @@
               <div>
                 <label
                   class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
-                  for="fullName"
+                  for="name"
                   >Full Name<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="user.name"
-                  id="fullName"
+                  id="name"
                   type="text"
                   required
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -184,12 +184,12 @@
               <div>
                 <label
                   class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
-                  for="staffId"
+                  for="emp_id"
                   >Staff ID</label
                 >
                 <input
                   v-model="user.emp_id"
-                  id="staffId"
+                  id="emp_id"
                   type="text"
                   disabled
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -214,12 +214,12 @@
               <div>
                 <label
                   class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
-                  for="phoneNumber"
+                  for="phone_number"
                   >Phone Number</label
                 >
                 <input
                   v-model="user.phone_number"
-                  id="phoneNumber"
+                  id="phone_number"
                   type="text"
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
@@ -228,12 +228,12 @@
               <div>
                 <label
                   class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
-                  for="bankName"
+                  for="bank_name"
                   >Bank Name<span class="text-red-500">*</span></label
                 >
                 <select
                   v-model="user.bank_name"
-                  id="bankName"
+                  id="bank_name"
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                   required
                 >
@@ -250,12 +250,12 @@
               <div>
                 <label
                   class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
-                  for="bankNumber"
+                  for="bank_number"
                   >Bank Account Number<span class="text-red-500">*</span></label
                 >
                 <input
                   v-model="user.bank_number"
-                  id="bankNumber"
+                  id="bank_number"
                   type="number"
                   required
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -281,13 +281,13 @@
               <div>
                 <label
                   class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
-                  for="homeAddress"
+                  for="home_address"
                 >
                   Home Address
                 </label>
                 <textarea
                   v-model="user.home_address"
-                  id="homeAddress"
+                  id="home_address"
                   type="text"
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                   row="4"
@@ -354,7 +354,7 @@ export default {
     return {
       user: {},
       bankOptions: bankOptions,
-      profilePicture: null,
+      profile_picture: null,
       tempImageUrl: "",
       cropper: null,
       showCropper: false,
@@ -397,7 +397,7 @@ export default {
 
     cropImage() {
       if (this.cropper) {
-        this.profilePicture = this.cropper.getCroppedCanvas().toDataURL();
+        this.profile_picture = this.cropper.getCroppedCanvas().toDataURL();
         this.cropper.destroy();
         this.cropper = null;
         this.showCropper = false;
@@ -413,11 +413,11 @@ export default {
     },
 
     deleteProfilePicture() {
-      this.profilePicture = null;
+      this.profile_picture = null;
     },
 
     handleSubmit() {
-      this.user.profilePicture = this.profilePicture;
+      this.user.profile_picture = this.profile_picture;
       console.log("User data saved:", this.user);
       localStorage.setItem("userProfile", JSON.stringify(this.user));
       this.$router.push("/profile");
