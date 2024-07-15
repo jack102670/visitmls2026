@@ -36,7 +36,7 @@
                     type="text"
                     disabled
                     class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.fullName"
+                    v-model="user.name"
                   />
                 </p>
                 <p>
@@ -72,7 +72,7 @@
                     type="text"
                     disabled
                     class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.staffId"
+                    v-model="user.emp_id"
                   />
                 </p>
                 <p>
@@ -84,7 +84,7 @@
                     type="email"
                     disabled
                     class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.workEmail"
+                    v-model="user.email_address"
                   />
                 </p>
                 <p>
@@ -95,7 +95,7 @@
                     type="text"
                     disabled
                     class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.phoneNumber"
+                    v-model="user.phone_number"
                   />
                 </p>
                 <p>
@@ -106,7 +106,7 @@
                     type="text"
                     disabled
                     class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.bankName"
+                    v-model="user.bank_name"
                   />
                 </p>
                 <p>
@@ -117,7 +117,7 @@
                     type="text"
                     disabled
                     class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.bankNumber"
+                    v-model="user.bank_number"
                   />
                 </p>
                 <p>
@@ -142,7 +142,7 @@
                     row="4"
                     disabled
                     class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.homeAddress"
+                    v-model="user.home_address"
                   />
                 </p>
               </div>
@@ -211,7 +211,7 @@
                   <p class="mt-4 mb-8 text-md text-gray-500">
                     To complete your profile activation, please request One-Time
                     Password (OTP) and it will be sent to
-                    <strong>{{ user.workEmail }}</strong
+                    <strong>{{ user.email_address }}</strong
                     >.
                   </p>
                 </div>
@@ -251,7 +251,7 @@
                     Enter OTP Code
                   </h3>
                   <p class="mt-4 mb-4 text-md text-gray-500">
-                    We’ve sent a code to <strong>{{ user.workEmail }}</strong
+                    We’ve sent a code to <strong>{{ user.email_address}}</strong
                     >.
                   </p>
                   <div class="mt-2">
@@ -304,6 +304,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -318,31 +320,62 @@ export default {
     };
   },
 
-  methods: {
-    onProfilePictureChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.profilePicture = e.target.result;
-        };
-        reader.readAsDataURL(file);
+ methods: {
+  onProfilePictureChange(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.profilePicture = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  },
+
+  deleteProfilePicture() {
+    this.profilePicture = null;
+  },
+
+  async sendOtp() {
+    try {
+      const response = await axios.post('http://172.28.28.91:97/api/User/GenerateOTP', {
+        email: this.user.email_address,
+      });
+      if (response.data.success) {
+        this.showRequestOtpModal = false;
+        this.showOtpModal = true;
+        alert("OTP has been sent to your email.");
+        this.startTimer();
+      } else {
+        alert("Failed to send OTP. Please try again.");
       }
-    },
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+      if (error.response) {
+        // Server responded with a status other than 2xx
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+        console.error("Response headers:", error.response.headers);
+        alert(`An error occurred: ${error.response.data.message || 'Unable to send OTP. Please try again.'}`);
+      } else if (error.request) {
+        // Request was made but no response was received
+        console.error("Request data:", error.request);
+        alert("No response from the server. Please check your network connection and try again.");
+      } else {
+        // Something else happened
+        console.error("Error message:", error.message);
+        alert(`Error: ${error.message}`);
+      }
+    }
+  },
 
-    deleteProfilePicture() {
-      this.profilePicture = null;
-    },
-
-    sendOtp() {
-      this.showRequestOtpModal = false;
-      this.showOtpModal = true;
-      alert("OTP has been sent to your email.");
-      this.startTimer();
-    },
-
-    verifyOtp() {
-      if (this.otp === "123456") {
+  async verifyOtp() {
+    try {
+      const response = await axios.post('http://172.28.28.91:97/api/User/ValidateOTP', {
+        email: this.user.email_address,
+        otp: this.otp,
+      });
+      if (response.data.success) {
         clearInterval(this.timerInterval);
         this.showOtpModal = false;
         this.showSuccessNotification = true;
@@ -353,27 +386,45 @@ export default {
       } else {
         alert("Invalid OTP. Please try again.");
       }
-    },
-
-    requestNewOtp() {
-      if (this.timer === 0) {
-        this.otp = "";
-        alert("A new OTP has been sent to your email.");
-        this.startTimer();
+    } catch (error) {
+      console.error("Error verifying OTP:", error);
+      if (error.response) {
+        // Server responded with a status other than 2xx
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+        console.error("Response headers:", error.response.headers);
+        alert(`An error occurred: ${error.response.data.message || 'Unable to verify OTP. Please try again.'}`);
+      } else if (error.request) {
+        // Request was made but no response was received
+        console.error("Request data:", error.request);
+        alert("No response from the server. Please check your network connection and try again.");
+      } else {
+        // Something else happened
+        console.error("Error message:", error.message);
+        alert(`Error: ${error.message}`);
       }
-    },
-
-    startTimer() {
-      this.timer = 120;
-      clearInterval(this.timerInterval);
-      this.timerInterval = setInterval(() => {
-        if (this.timer > 0) {
-          this.timer--;
-        } else {
-          clearInterval(this.timerInterval);
-        }
-      }, 1000);
-    },
+    }
   },
+
+  requestNewOtp() {
+    if (this.timer === 0) {
+      this.otp = "";
+      alert("A new OTP has been sent to your email.");
+      this.startTimer();
+    }
+  },
+
+  startTimer() {
+    this.timer = 120;
+    clearInterval(this.timerInterval);
+    this.timerInterval = setInterval(() => {
+      if (this.timer > 0) {
+        this.timer--;
+      } else {
+        clearInterval(this.timerInterval);
+      }
+    }, 1000);
+  },
+}
 };
 </script>
