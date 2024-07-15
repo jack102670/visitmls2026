@@ -2065,8 +2065,8 @@ export default {
         return;
       }
       field.value = [...field.value, file.file];
-      // console.log("File added:", file.file);
-      // console.log("Updated files:", field.value);
+      console.log("File added:", file.file);
+      console.log("Updated files:", field.value);
     },
 
     handleRemoveFile(error, file, field) {
@@ -2084,8 +2084,8 @@ export default {
           ...field.value.slice(0, index),
           ...field.value.slice(index + 1),
         ];
-        // console.log("File removed:", fileObject.name, fileObject);
-        // console.log("Updated field value:", field);
+        console.log("File removed:", fileObject.name, fileObject);
+        console.log("Updated field value:", field);
       }
     },
 
@@ -2174,7 +2174,7 @@ export default {
       this.newExpense.name = "";
       this.newExpense.amount = 0;
       this.showOtherExpensesModal = false;
-      // console.log("Other Expenses:", this.otherExpenses);
+      console.log("Other Expenses:", this.otherExpenses);
     },
 
     removeExpense(index) {
@@ -2336,7 +2336,7 @@ export default {
       }
 
       this.$emit("formSubmitted", formattedData);
-      // console.log("Formatted Form Data:", formattedData);
+      console.log("Formatted Form Data:", formattedData);
     },
 
     submitForm2() {
@@ -2355,7 +2355,7 @@ export default {
       });
       formattedData["tabTitle"] = "Entertainment";
       this.$emit("formSubmitted", formattedData);
-      // console.log("Formatted Form Data:", formattedData);
+      console.log("Formatted Form Data:", formattedData);
     },
 
     submitForm3() {
@@ -2374,7 +2374,7 @@ export default {
       });
       formattedData["tabTitle"] = "Staff Refreshment";
       this.$emit("formSubmitted", formattedData);
-      // console.log("Formatted Form Data:", formattedData);
+      console.log("Formatted Form Data:", formattedData);
     },
   },
 };

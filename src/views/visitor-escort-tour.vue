@@ -301,7 +301,7 @@ export default {
 
       // Construct the uniqueCode
       this.uniqueCode = `VET${userIdFragment}${randomNumber}${timestamp}`;
-      // console.log("Unique Code:", this.uniqueCode);
+      console.log("Unique Code:", this.uniqueCode);
       return this.uniqueCode;
     } else {
       console.error("User ID is undefined.");
@@ -326,7 +326,7 @@ export default {
 
       // Construct the uniqueCode
       this.uniqueCode = `VET${userIdFragment}${randomNumber}${timestamp}`;
-      // console.log("Unique Code:", this.uniqueCode);
+      console.log("Unique Code:", this.uniqueCode);
       return this.uniqueCode;
     } else {
       console.error("User ID is undefined.");
@@ -383,11 +383,11 @@ export default {
               "Server responded with status code:",
               error.response.status
             );
-            // console.log("Response data:", error.response.data);
+            console.log("Response data:", error.response.data);
           } else if (error.request) {
-            // console.log("No response received:", error.request);
+            console.log("No response received:", error.request);
           } else {
-            // console.log("Error creating request:", error.message);
+            console.log("Error creating request:", error.message);
           }
 
           console.error("Error submitting form:", error);

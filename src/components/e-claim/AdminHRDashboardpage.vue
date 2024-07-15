@@ -183,12 +183,12 @@ export default {
       this.$router.push({ name: 'AdminHRSummaryClaimpage' });
     },
     ShowNotification() {
-      // console.log(123);
+      console.log(123);
       this.approveSuccess = true;
-      // console.log(this.approveSuccess);
+      console.log(this.approveSuccess);
       setTimeout(() => {
         this.approveSuccess = false;
-        // console.log(this.approveSuccess);
+        console.log(this.approveSuccess);
       }, 2000);
     },
     initializeDataTable() {
@@ -202,7 +202,7 @@ export default {
         )
         .then((response) => {
           this.claimsData = response.data.result;
-          // console.log(this.claimsData);
+          console.log(this.claimsData);
 
           this.$nextTick(() => {
             this.initializeDataTable();

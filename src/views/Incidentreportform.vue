@@ -300,7 +300,7 @@ export default {
     },
     handleAddFile(error, fileItem) {
       if (!error) {
-        // console.log("Added file name:", fileItem.file.name);
+        console.log("Added file name:", fileItem.file.name);
         this.files.push(fileItem.file);
       }
     },
@@ -323,7 +323,7 @@ export default {
 
         // Construct the uniqueCode
         this.uniqueCode = `IR${userIdFragment}${randomNumber}${timestamp}`;
-        // console.log("Unique Code:", this.uniqueCode);
+        console.log("Unique Code:", this.uniqueCode);
         return this.uniqueCode;
       } else {
         console.error("User ID is undefined.");
@@ -399,11 +399,11 @@ export default {
                 "Server responded with status code:",
                 error.response.status
               );
-              // console.log("Response data:", error.response.data);
+              console.log("Response data:", error.response.data);
             } else if (error.request) {
-              // console.log("No response received:", error.request);
+              console.log("No response received:", error.request);
             } else {
-              // console.log("Error creating request:", error.message);
+              console.log("Error creating request:", error.message);
             }
 
             console.error("Error submitting form:", error);
@@ -419,11 +419,11 @@ export default {
             "Server responded with status code:",
             error.response.status
           );
-          // console.log("Response data:", error.response.data);
+          console.log("Response data:", error.response.data);
         } else if (error.request) {
-          // console.log("No response received:", error.request);
+          console.log("No response received:", error.request);
         } else {
-          // console.log("Error creating request:", error.message);
+          console.log("Error creating request:", error.message);
         }
 
         console.error("Error submitting form:", error);
@@ -436,12 +436,12 @@ export default {
       this.files.forEach((file) => {
         formData.append("filecollection", file);
       });
-      // console.log("userid uniqcode:", this.userDetails.userId, this.uniqueCode);
+      console.log("userid uniqcode:", this.userDetails.userId, this.uniqueCode);
       const url = `http://172.28.28.91:8085/api/Files/MultiUploadImage/${this.userDetails.userId}/${this.uniqueCode}`;
 
       axios.post(url, formData)
         .then(response => {
-          // console.log('Upload successful:', response.data);
+          console.log('Upload successful:', response.data);
 
         })
         .catch((error) => {

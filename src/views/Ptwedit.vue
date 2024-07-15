@@ -2398,7 +2398,7 @@ export default {
     refNumber() {
       // Access the refNumber using getRefNumber function
       const refNumber = getRefNumber();
-      // console.log("Retrieved refNumber:", refNumber); // Add console log statement
+      console.log("Retrieved refNumber:", refNumber); // Add console log statement
       return refNumber;
     },
   },
@@ -2544,7 +2544,7 @@ this.waH_ControlMeasure = this.ptwData.wah.waH_ControlMeasure ?? "";
           // waH_Emergency: [],
           // waH_ControlMeasure: [],
           // Log the received ptwData
-          // console.log("PTW Data:", this.ptwData);
+          console.log("PTW Data:", this.ptwData);
         })
         .catch((error) => {
           this.error = error;
@@ -2677,12 +2677,12 @@ this.waH_ControlMeasure = this.ptwData.wah.waH_ControlMeasure ?? "";
       axios
         .put("http://172.28.28.91:8085/api/Main/UserUpdatePTW", combinedFormData)
         .then((response) => {
-          // console.log("Server response:", response.data);
+          console.log("Server response:", response.data);
           this.uploadMultiImage();
           // Handle the response, such as showing a success message
         })
         .catch((error) => {
-          // console.log("Error submitting form:", error);
+          console.log("Error submitting form:", error);
           // Handle errors, such as showing an error message
           if (error.response) {
             // The request was made and the server responded with a status code
@@ -2691,13 +2691,13 @@ this.waH_ControlMeasure = this.ptwData.wah.waH_ControlMeasure ?? "";
               "Server responded with status code:",
               error.response.status
             );
-            // console.log("Response data:", error.response.data);
+            console.log("Response data:", error.response.data);
           } else if (error.request) {
             // The request was made but no response was received
-            // console.log("No response received:", error.request);
+            console.log("No response received:", error.request);
           } else {
             // Something happened in setting up the request that triggered an Error
-            // console.log("Error message:", error.message);
+            console.log("Error message:", error.message);
           }
         });
     },
@@ -2715,7 +2715,7 @@ this.waH_ControlMeasure = this.ptwData.wah.waH_ControlMeasure ?? "";
       axios
         .post(url, formData)
         .then((response) => {
-          // console.log("Upload successful:", response.data);
+          console.log("Upload successful:", response.data);
 
           this.closeModal();
           this.$router.push("/");
@@ -2758,7 +2758,7 @@ this.waH_ControlMeasure = this.ptwData.wah.waH_ControlMeasure ?? "";
 
         // Construct the uniqueCode
         this.uniqueCode = `PTW${userIdFragment}${randomNumber}${timestamp}`;
-        // console.log("Unique Code:", this.uniqueCode);
+        console.log("Unique Code:", this.uniqueCode);
         return this.uniqueCode;
       } else {
         console.error("User ID is undefined.");

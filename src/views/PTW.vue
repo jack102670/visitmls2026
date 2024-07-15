@@ -3120,12 +3120,12 @@ export default {
       axios
         .post("http://172.28.28.91:8085/api/Main/InsertPTW", combinedFormData)
         .then((response) => {
-          // console.log("Server response:", response.data);
+          console.log("Server response:", response.data);
           // Call uploadMultiImage() after form submission succeeds
           this.uploadMultiImage()
             .then(() => {
               // Upload of images succeeded
-              // console.log("Form submitted and images uploaded successfully!");
+              console.log("Form submitted and images uploaded successfully!");
               alert("Form submitted and images uploaded successfully!");
               this.$router.push("/"); // Navigate to new route
             })
@@ -3136,7 +3136,7 @@ export default {
             });
         })
         .catch((error) => {
-          // console.log("Error submitting form:", error);
+          console.log("Error submitting form:", error);
           // Handle errors, such as showing an error message
           if (error.response) {
             // The request was made and the server responded with a status code
@@ -3145,18 +3145,18 @@ export default {
               "Server responded with status code:",
               error.response.status
             );
-            // console.log("Response data:", error.response.data);
+            console.log("Response data:", error.response.data);
             // Handle errors related to the data received from the server
             if (error.response.data.error) {
-              // console.log("Server error:", error.response.data.error);
+              console.log("Server error:", error.response.data.error);
               // Handle specific error cases
             }
           } else if (error.request) {
             // The request was made but no response was received
-            // console.log("No response received:", error.request);
+            console.log("No response received:", error.request);
           } else {
             // Something happened in setting up the request that triggered an Error
-            // console.log("Error message:", error.message);
+            console.log("Error message:", error.message);
           }
         });
     },
@@ -3177,7 +3177,7 @@ export default {
         axios
           .post(url, formData)
           .then((response) => {
-            // console.log("Upload successful:", response.data);
+            console.log("Upload successful:", response.data);
             this.closeModal();
             resolve(); // Resolve the promise if upload succeeds
           })
@@ -3215,7 +3215,7 @@ export default {
 
         // Construct the uniqueCode
         this.uniqueCode = `PTW${userIdFragment}${randomNumber}${timestamp}`;
-        // console.log("Unique Code:", this.uniqueCode);
+        console.log("Unique Code:", this.uniqueCode);
         return this.uniqueCode;
       } else {
         console.error("User ID is undefined.");

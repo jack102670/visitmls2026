@@ -1301,7 +1301,7 @@ export default {
   methods: {
     
     handleFilePondInit() {
-      // console.log("FilePond has initialized");
+      console.log("FilePond has initialized");
 
       // Example of instance method call on pond reference for the first component
       this.$refs.pond1.getFiles();

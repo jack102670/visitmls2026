@@ -243,7 +243,7 @@ export default {
     // this.userDetails = store.getSession().userDetails;
     // this.token = store.data.token;
     // this.OGR = store.getOGR();
-    // // console.log("OGR from store:", store.getOGR());
+    // console.log("OGR from store:", store.getOGR());
     // this.role = store.getRole();
     // if (this.role === "vendor") {
     //   this.$router.push("/Dashboardvendor");
@@ -264,7 +264,7 @@ export default {
   methods: {
     SetToStore() {
       store.setSelectedLocation(this.selectedLocation, this.locations);
-      // console.log("check location", this.selectedLocation);
+      console.log("check location", this.selectedLocation);
     },
     fetchRequesters() {
       const userDetails = store.getSession().userDetails;
@@ -276,20 +276,20 @@ export default {
       } else if (role === "vendor") {
         url = `http://172.28.28.91:8085/api/Main/GetAllRequestsVendor/${userDetails.userId}`;
       } else {
-        // console.log("Role not authorized or role-specific URL not set");
+        console.log("Role not authorized or role-specific URL not set");
         return;
       }
 
-      // console.log("Fetching requesters for role:", userDetails.role);
+      console.log("Fetching requesters for role:", userDetails.role);
       axios
         .get(url)
         .then((response) => {
           this.requesters = response.data;
-          // console.log("Requesters on dashboard:", this.requesters);
-          // console.log("all", this.requesters.length);
+          console.log("Requesters on dashboard:", this.requesters);
+          console.log("all", this.requesters.length);
           // this.OGR = this.requesters.length;
           // store.setOGR(this.OGR);
-          // // console.log("OGR set to:", this.OGR);
+          // console.log("OGR set to:", this.OGR);
         })
         .catch((error) => {
           console.error("Error fetching requesters:", error);
@@ -304,7 +304,7 @@ export default {
       this.departments = [];
 
       // Log to console to check if the method is being called
-      // console.log("Location changed. Updating departments.");
+      console.log("Location changed. Updating departments.");
 
       this.updateDepartments();
     },
@@ -407,7 +407,7 @@ export default {
       }
 
       // Log to console to check if departments are being updated
-      // console.log("Departments updated:", this.departments);
+      console.log("Departments updated:", this.departments);
     },
 
     onDepartmentChange() {

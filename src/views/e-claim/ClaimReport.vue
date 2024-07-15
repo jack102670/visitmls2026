@@ -41,13 +41,13 @@
             class="md:mr-4 md:mt-0 mt-5 gap-2 flex flex-row-reverse flex-shrink-0"
           >
             <button
-              @click="showContent"
+                @click="senttheclaim"
               class="w-36 h-12 p-1 font-semibold rounded-lg items-center text-sm dark:bg-gray-900 dark:border-gray-700 bg-green-700 border text-white"
             >
               <div class="flex justify-center">
                 <span
                   class="mr-2 ml-2 text-slate-100 hover:text-blue-200"
-                  @click="senttheclaim"
+                
                   >Submit Claim</span
                 >
               </div>
@@ -2475,7 +2475,7 @@ export default {
         .toFixed(2);
     },
     referenceNumber() {
-      // console.log("Current uniqueCode:", this.claims.uniqueCode);
+      console.log("Current uniqueCode:", this.claims.uniqueCode);
       return this.claims.uniqueCode;
     },
   },
@@ -2526,11 +2526,11 @@ export default {
           const selectedEmployee = response.data.result.find(
             (emp) => emp.username_id === store.getSession().userDetails.userId
           );
-          // console.log("Selected Employee:", selectedEmployee);
+          console.log("Selected Employee:", selectedEmployee);
           if (selectedEmployee) {
             if ("emp_id" in selectedEmployee) {
               this.employeeID = selectedEmployee.emp_id;
-              // console.log("Employee ID:", this.employeeID);
+              console.log("Employee ID:", this.employeeID);
             } else {
               console.error(
                 "Employee found but employee_id is missing:",
@@ -2557,7 +2557,7 @@ export default {
     },
     totalplusmethod(total) {
       this.totalplus = total;
-      // console.log("totalplus", this.totalplus);
+      console.log("totalplus", this.totalplus);
     },
     createObjectURL(file) {
       return URL.createObjectURL(file);
@@ -2582,7 +2582,7 @@ export default {
 
     showDetails(claim, index) {
       this.index = index;
-      // console.log("Current index", this.index);
+      console.log("Current index", this.index);
       // Update selectedClaimType based on the type of claim
       this.selectedClaimType = claim.tabTitle.replace(/\s+/g, ""); // Remove spaces from claim type
       this.formToDelete = index;
@@ -2590,8 +2590,8 @@ export default {
       switch (this.selectedClaimType) {
         case "LocalTravelling":
           this.localTravellingDetails = claim;
-          // console.log("Local Travelling Details:", this.localTravellingDetails);
-          // console.log("upload", this.localTravellingDetails.UploadLT);
+          console.log("Local Travelling Details:", this.localTravellingDetails);
+          console.log("upload", this.localTravellingDetails.UploadLT);
           break;
         case "OverseasTravellingwithAccommodation":
           this.overseasTravellingDetails = claim;
@@ -2602,7 +2602,7 @@ export default {
           break;
         case "Entertainment":
           this.entertainmentDetails = claim;
-          // console.log("Entertainment Details:", this.entertainmentDetails);
+          console.log("Entertainment Details:", this.entertainmentDetails);
           break;
         case "StaffRefreshment":
           this.staffRefreshmentDetails = claim;
@@ -2613,7 +2613,7 @@ export default {
           break;
         case "Others":
           this.othersDetails = claim;
-          // console.log("Others Details:", this.othersDetails);
+          console.log("Others Details:", this.othersDetails);
           break;
         case "HandphoneBillReimbursement":
           this.handphoneBillReimbursementDetails = claim;
@@ -2679,7 +2679,7 @@ export default {
 
         // Construct the uniqueCode
         const uniqueCode = `${prefix}${userIdFragment}${randomNumber}${timestamp}`;
-        // console.log("Unique Code:", uniqueCode);
+        console.log("Unique Code:", uniqueCode);
         return uniqueCode;
       } else {
         console.error("User ID is undefined.");
@@ -2732,7 +2732,7 @@ export default {
 
         // Construct the uniqueCode
         const uniqueCode = `SN${prefix}${userIdFragment}${randomNumber}${timestamp}`;
-        // console.log("Unique Code:", uniqueCode);
+        console.log("Unique Code:", uniqueCode);
         return uniqueCode;
       } else {
         console.error("User ID is undefined.");
@@ -2741,7 +2741,7 @@ export default {
       }
     },
     someMethod() {
-      // console.log(this.claims.uniqueCode);
+      console.log(this.claims.uniqueCode);
       // Other logic
     },
     isValidClaimData() {
@@ -2816,7 +2816,7 @@ export default {
       for (const title in groupedClaims) {
         if (Object.hasOwnProperty.call(groupedClaims, title)) {
           const claimsToSend = groupedClaims[title];
-          // console.log(`Claims to send for ${title}:`, claimsToSend); // Log the claimsToSend object
+          console.log(`Claims to send for ${title}:`, claimsToSend); // Log the claimsToSend object
 
           try {
             let axiosInstance;
@@ -2826,7 +2826,7 @@ export default {
                   // Iterate over each claim
                   const uniqueCode = this.generateUniqueCode(claim.tabTitle);
                   const userId = this.userDetails.userId;
-                  // console.log("unik kod:", uniqueCode);
+                  console.log("unik kod:", uniqueCode);
                   const thisisforlocal1 = {
                     requester_id: this.userDetails.userId,
                     mileage_km: claim.MileageKMLT,
@@ -2849,7 +2849,7 @@ export default {
                   });
                   if (claim.UploadLT && claim.UploadLT.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
-                    // console.log("Preparing to upload files:", claim.UploadLT);
+                    console.log("Preparing to upload files:", claim.UploadLT);
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
@@ -2890,10 +2890,10 @@ export default {
                   };
                   const uniqueCode = this.generateUniqueCode(claim.tabTitle);
                   const userId = this.userDetails.userId;
-                  // console.log("unik kod:", this.uniqueCode);
+                  console.log("unik kod:", this.uniqueCode);
                   if (claim.UploadOT && claim.UploadOT.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
-                    // console.log("Preparing to upload files:", claim.UploadOT);
+                    console.log("Preparing to upload files:", claim.UploadOT);
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
@@ -2939,7 +2939,7 @@ export default {
 
                   if (claim.UploadE && claim.UploadE.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
-                    // console.log("Preparing to upload files:", claim.UploadE);
+                    console.log("Preparing to upload files:", claim.UploadE);
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
@@ -2994,10 +2994,10 @@ export default {
                   };
                   const uniqueCode = this.generateUniqueCode(claim.tabTitle);
                   const userId = this.userDetails.userId;
-                  // console.log("unik kod:", uniqueCode);
+                  console.log("unik kod:", uniqueCode);
                   if (claim.UploadSR && claim.UploadSR.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
-                    // console.log("Preparing to upload files:", claim.UploadSR);
+                    console.log("Preparing to upload files:", claim.UploadSR);
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
@@ -3026,7 +3026,7 @@ export default {
                   };
                   const uniqueCode = this.generateUniqueCode(claim.tabTitle);
                   const userId = this.userDetails.userId;
-                  // console.log("unik kod:", uniqueCode);
+                  console.log("unik kod:", uniqueCode);
                   if (claim.UploadOthers && claim.UploadOthers.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
                     console.log(
@@ -3068,10 +3068,10 @@ export default {
                   };
                   const uniqueCode = this.generateUniqueCode(claim.tabTitle);
                   const userId = this.userDetails.userId;
-                  // console.log("unik kod:", uniqueCode);
+                  console.log("unik kod:", uniqueCode);
                   if (claim.UploadHR && claim.UploadHR.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
-                    // console.log("Preparing to upload files:", claim.UploadLT);
+                    console.log("Preparing to upload files:", claim.UploadLT);
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
@@ -3114,10 +3114,10 @@ export default {
                   };
                   const uniqueCode = this.generateUniqueCode(claim.tabTitle);
                   const userId = this.userDetails.userId;
-                  // console.log("unik kod:", uniqueCode);
+                  console.log("unik kod:", uniqueCode);
                   if (claim.UploadLT && claim.UploadLT.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
-                    // console.log("Preparing to upload files:", claim.UploadLT);
+                    console.log("Preparing to upload files:", claim.UploadLT);
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
@@ -3213,13 +3213,13 @@ export default {
       }
 
       // Log the claims array to the console
-      // console.log("Claims:", this.claims);
+      console.log("Claims:", this.claims);
     },
 
     addClaim(formData) {
       // Push new form data into the claims array
       this.dataclaims.push(formData);
-      console.log("Data Claims:", this.dataclaims);
+      // console.log("Data Claims:", this.dataclaims);
     },
     handleFileAdded() {
       // console.log("File added:", file);

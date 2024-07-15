@@ -1563,7 +1563,7 @@ export default {
   methods: {
     editPage(refNumber) {
   
-    // console.log("Editing page for refNumber:", refNumber);
+    console.log("Editing page for refNumber:", refNumber);
     setRefNumber(refNumber);
     
 
@@ -1576,7 +1576,7 @@ export default {
     },
 
     redirectToPTWView(refNumber) {
-      // console.log(refNumber);
+      console.log(refNumber);
 
       this.$router.push({ path: `/PTWView2/${refNumber}` });
     },
@@ -1591,7 +1591,7 @@ export default {
         .get("http://172.28.28.91:8085/api/Main/GetBadgeRequest/" + refNumber)
         .then((response) => {
           this.getRequest = response.data;
-          // console.log("this is get request" + this.getRequest);
+          console.log("this is get request" + this.getRequest);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -1605,7 +1605,7 @@ export default {
         .get("http://172.28.28.91:8085/api/Main/GetIncidentReport/" + refNumber)
         .then((response) => {
           this.getRequest = response.data;
-          // console.log("this is get request" + this.getRequest);
+          console.log("this is get request" + this.getRequest);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -1619,7 +1619,7 @@ export default {
         .get("http://172.28.28.91:8085/api/Main/GetCCTVRequest/" + refNumber)
         .then((response) => {
           this.getRequest = response.data;
-          // console.log("this is get request" + this.getRequest);
+          console.log("this is get request" + this.getRequest);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -1632,7 +1632,7 @@ export default {
         .get("http://172.28.28.91:8085/api/Main/GetVisitor/" + refNumber)
         .then((response) => {
           this.getRequest = response.data;
-          // console.log("this is get request" + this.getRequest);
+          console.log("this is get request" + this.getRequest);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -1645,7 +1645,7 @@ export default {
         .get("http://172.28.28.91:8085/api/Main/GetTestKits/" + refNumber)
         .then((response) => {
           this.getRequest = response.data;
-          // console.log("this is get request" + this.getRequest);
+          console.log("this is get request" + this.getRequest);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -1658,7 +1658,7 @@ export default {
         .get("http://172.28.28.91:8085/api/Main/GetMask/" + refNumber)
         .then((response) => {
           this.getRequest = response.data;
-          // console.log("this is get request" + this.getRequest);
+          console.log("this is get request" + this.getRequest);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -1711,7 +1711,7 @@ export default {
     },
     viewRequestDetails() {
       // You can implement the logic to show the details view here
-      // console.log("see", this.requester);
+      console.log("see", this.requester);
     },
     async fetchRequesters() {
       const userDetails = store.getSession().userDetails;
@@ -1723,11 +1723,11 @@ export default {
       } else if (role === "vendor") {
         url = `http://172.28.28.91:8085/api/Main/GetAllRequestsVendor/${userDetails.userId}`;
       } else {
-        // console.log("Role not authorized or role-specific URL not set");
+        console.log("Role not authorized or role-specific URL not set");
         return;
       }
 
-      // console.log("Fetching requesters for role:", userDetails.role);
+      console.log("Fetching requesters for role:", userDetails.role);
 
       try {
         const response = await fetch(url);
@@ -1736,10 +1736,10 @@ export default {
         }
         const data = await response.json();
         this.requesters = data;
-        // console.log("Requesters data:", this.requesters);
+        console.log("Requesters data:", this.requesters);
         this.OGR = this.requesters.length;
         store.setOGR(this.OGR);
-        // console.log("OGR set to:", this.OGR);
+        console.log("OGR set to:", this.OGR);
       } catch (error) {
         console.error("Error fetching requesters:", error);
       }

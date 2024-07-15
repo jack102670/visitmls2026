@@ -1134,7 +1134,7 @@ export default {
             .toUpperCase();
           this.remark = this.claimDetails.approver_feedback;
 
-          // console.log(this.statusApprover);
+          console.log(this.statusApprover);
 
           if (this.statusApprover == 'APPROVED') {
             this.approve = true;
@@ -1309,8 +1309,8 @@ export default {
         }
       });
 
-      // console.log(this.claimDatas);
-      // console.log(this.claimDatasDetails);
+      console.log(this.claimDatas);
+      console.log(this.claimDatasDetails);
     },
 
     PrintSummary() {
@@ -1399,7 +1399,7 @@ export default {
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
         };
-        // console.log(approveData);
+        console.log(approveData);
         axios
           .put('http://172.28.28.91:86/api/Admin/Approve_Claim', approveData)
           .then((response) => {

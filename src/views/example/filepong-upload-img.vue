@@ -58,7 +58,7 @@ export default {
 
         pond.on('addfile', (error, file) => {
           if (!error) {
-            // console.log("Added file name:", file.file.name); // Access file name
+            console.log("Added file name:", file.file.name); // Access file name
             this.files = [file.file]; // Replace files array with the new file
           }
         });
@@ -94,7 +94,7 @@ export default {
         }
       })
       .then(response => {
-        // console.log('File uploaded successfully:', response.data);
+        console.log('File uploaded successfully:', response.data);
         // Handle response from server
       })
       .catch(error => {

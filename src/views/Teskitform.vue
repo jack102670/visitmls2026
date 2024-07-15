@@ -358,7 +358,7 @@ export default {
         const timestamp = Date.now().toString().slice(-2);
 
         this.uniqueCode = `TK${userIdFragment}${randomNumber}${timestamp}`;
-        // console.log("Unique Code:", this.uniqueCode);
+        console.log("Unique Code:", this.uniqueCode);
         return this.uniqueCode;
       } else {
         console.error("User ID is undefined.");
@@ -403,7 +403,7 @@ export default {
         userName: this.userDetails.userName,
       };
 
-      // console.log("Submitting form data:", uploadForm);
+      console.log("Submitting form data:", uploadForm);
 
       axios
         .post(
@@ -414,23 +414,23 @@ export default {
           this.resetForm();
           this.closeModal();
           this.$router.push("/");
-          // console.log("Server response:", response.data);
+          console.log("Server response:", response.data);
         })
         .catch((error) => {
           if (error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
-            // console.log(error.response.data);
-            // console.log(error.response.status);
-            // console.log(error.response.headers);
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
           } else if (error.request) {
             // The request was made but no response was received
-            // console.log(error.request);
+            console.log(error.request);
           } else {
             // Something happened in setting up the request that triggered an Error
-            // console.log("Error", error.message);
+            console.log("Error", error.message);
           }
-          // console.log(error.config);
+          console.log(error.config);
         });
     },
     showModal() {

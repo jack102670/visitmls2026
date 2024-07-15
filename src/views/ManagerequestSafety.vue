@@ -1548,7 +1548,7 @@ export default {
         return { key: key, value: jsonObject[key] };
       });
     },redirectToPTWView(refNumber) {
-      // console.log(refNumber);
+      console.log(refNumber);
 
       // Construct the full URL you want to navigate to
       const url = `${window.location.origin}/PTWView/${refNumber}`;
@@ -1762,7 +1762,7 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetBadgeRequest/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
-            // console.log("this is get request" + response.data);
+            console.log("this is get request" + response.data);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1782,7 +1782,7 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetVisitor/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
-            // console.log("try" + this.getRequest);
+            console.log("try" + this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1796,7 +1796,7 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetCCTVRequest/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
-            // console.log(this.getRequest);
+            console.log(this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1816,7 +1816,7 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetPTW/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
-            // console.log(this.getRequest);
+            console.log(this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1838,7 +1838,7 @@ export default {
           )
           .then((response) => {
             this.getRequest = response.data;
-            // console.log(this.getRequest);
+            console.log(this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1858,7 +1858,7 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetTestKits/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
-            // console.log(this.getRequest);
+            console.log(this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1878,7 +1878,7 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetMask/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
-            // console.log(this.getRequest);
+            console.log(this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1949,7 +1949,7 @@ export default {
     },
     viewRequestDetails() {
       // You can implement the logic to show the details view here
-      // console.log("see", this.requester);
+      console.log("see", this.requester);
     },
   },
 };

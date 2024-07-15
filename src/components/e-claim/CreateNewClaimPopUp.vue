@@ -256,7 +256,7 @@ export default {
   methods: {
     submitForm(page) {
       this.active += page;
-      // console.log(this.active);
+      console.log(this.active);
 
       if (this.active > 3) {
         // Update form data in the form store
@@ -264,7 +264,7 @@ export default {
         formStore.setFormData(this.formData);
 
         // Log the form data before navigation
-        // console.log('Form submitted', formStore.getFormData());
+        console.log('Form submitted', formStore.getFormData());
 
         this.$router.push({ name: 'ClaimReport' });
         // Get the router instance

@@ -1214,7 +1214,7 @@ export default {
         field.value.push(file.file);
 
         // Log the selected files
-        // console.log("Selected Files:", field.value);
+        console.log("Selected Files:", field.value);
       };
     },
 
@@ -1227,7 +1227,7 @@ export default {
         }
 
         // Log the selected files
-        // console.log("Selected Files:", field.value);
+        console.log("Selected Files:", field.value);
       };
     },
 
@@ -1293,7 +1293,7 @@ export default {
       this.$emit("formSubmitted", formattedData);
 
       // Log the formatted form data to the console
-      // console.log("Formatted Form Data:", formattedData);
+      console.log("Formatted Form Data:", formattedData);
 
       if (tab.title === "Attendees") {
         const newAttendee = {};
@@ -1303,7 +1303,7 @@ export default {
         });
         tab.attendees.push(newAttendee);
       } else {
-        // console.log(`Form submitted for tab: ${tab.title}`, tab.fields);
+        console.log(`Form submitted for tab: ${tab.title}`, tab.fields);
       }
     },
   },
