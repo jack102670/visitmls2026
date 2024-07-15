@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve && npm run dev",
     "build": "npm run build:tailwind && vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build:tailwind": "npx tailwindcss -i ./src/input.css -o ./src/assets/css/output.css",
-    "dev": "npx tailwindcss -i ./src/input.css -o ./src/assets/css/output.css --watch "
+    "build:tailwind": "npx tailwindcss -i ./src/input.css -o ./src/output.css",
+    "dev": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch "
   },
   "dependencies": {
     "@vueuse/core": "^10.7.0",
