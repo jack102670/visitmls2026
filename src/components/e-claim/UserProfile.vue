@@ -28,8 +28,7 @@
 
               <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                 <p>
-                  <span
-                    class="font-semibold text-gray-600 dark:text-gray-200"
+                  <span class="font-semibold text-gray-600 dark:text-gray-200"
                     >Full Name</span
                   >
                   <input
@@ -40,8 +39,7 @@
                   />
                 </p>
                 <p>
-                  <span
-                    class="font-semibold text-gray-600 dark:text-gray-200"
+                  <span class="font-semibold text-gray-600 dark:text-gray-200"
                     >Branch</span
                   >
                   <input
@@ -52,8 +50,7 @@
                   />
                 </p>
                 <p>
-                  <span
-                    class="font-semibold text-gray-600 dark:text-gray-200"
+                  <span class="font-semibold text-gray-600 dark:text-gray-200"
                     >Department</span
                   >
                   <input
@@ -64,8 +61,7 @@
                   />
                 </p>
                 <p>
-                  <span
-                    class="font-semibold text-gray-600 dark:text-gray-200"
+                  <span class="font-semibold text-gray-600 dark:text-gray-200"
                     >Staff ID</span
                   >
                   <input
@@ -76,8 +72,7 @@
                   />
                 </p>
                 <p>
-                  <span
-                    class="font-semibold text-gray-600 dark:text-gray-200"
+                  <span class="font-semibold text-gray-600 dark:text-gray-200"
                     >Work Email</span
                   >
                   <input
@@ -173,6 +168,12 @@
             </div>
           </div>
 
+          <EditProfile
+            v-if="showEditProfileModal"
+            @close="closeEditProfileModal"
+            @update-profile-picture="updateProfilePicture"
+          />
+
           <div class="mt-5 sm:mt-6 sm:flex sm:flex-row-reverse">
             <button
               type="button"
@@ -251,7 +252,8 @@
                     Enter OTP Code
                   </h3>
                   <p class="mt-4 mb-4 text-md text-gray-500">
-                    We’ve sent a code to <strong>{{ user.email_address}}</strong
+                    We’ve sent a code to
+                    <strong>{{ user.email_address }}</strong
                     >.
                   </p>
                   <div class="mt-2">
@@ -304,12 +306,17 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
+import EditProfile from "./UserFirstTimeLogin.vue";
 
 export default {
+  components: {
+    EditProfile,
+  },
   data() {
     return {
-      user: JSON.parse(localStorage.getItem("userProfile")) || {},
+      user:{},
+      showEditProfileModal: false,
       defaultProfilePicture: require("@/assets/images/profile.png"),
       showRequestOtpModal: false,
       showOtpModal: false,
@@ -320,111 +327,151 @@ export default {
     };
   },
 
- methods: {
-  onProfilePictureChange(event) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.profilePicture = e.target.result;
-      };
-      reader.readAsDataURL(file);
+  created() {
+    try {
+      const userProfileString = localStorage.getItem("userProfile");
+      if (userProfileString) {
+        this.user = JSON.parse(userProfileString);
+      }
+    } catch (error) {
+      console.error("Failed to load user profile:", error);
     }
   },
 
-  deleteProfilePicture() {
-    this.profilePicture = null;
-  },
+  methods: {
+    onProfilePictureChange(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.profilePicture = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    },
 
-  async sendOtp() {
-    try {
-      const response = await axios.post('http://172.28.28.91:97/api/User/GenerateOTP', {
-        email: this.user.email_address,
-      });
-      if (response.data.success) {
-        this.showRequestOtpModal = false;
-        this.showOtpModal = true;
-        alert("OTP has been sent to your email.");
+    openEditProfileModal() {
+      this.showEditProfileModal = true;
+    },
+
+    closeEditProfileModal() {
+      this.showEditProfileModal = false;
+    },
+
+    updateProfilePicture(newProfilePicture) {
+      this.profilePicture = newProfilePicture;
+      this.showEditProfileModal = false;
+    },
+
+    deleteProfilePicture() {
+      this.profilePicture = null;
+    },
+
+    async sendOtp() {
+      try {
+        const response = await axios.post(
+          "http://172.28.28.91:97/api/User/GenerateOTP",
+          {
+            email: this.user.email_address,
+          }
+        );
+        if (response.data.success) {
+          this.showRequestOtpModal = false;
+          this.showOtpModal = true;
+          alert("OTP has been sent to your email.");
+          this.startTimer();
+        } else {
+          alert("Failed to send OTP. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error sending OTP:", error);
+        if (error.response) {
+          console.error("Response data:", error.response.data);
+          console.error("Response status:", error.response.status);
+          console.error("Response headers:", error.response.headers);
+          alert(
+            `An error occurred: ${
+              error.response.data.message ||
+              "Unable to send OTP. Please try again."
+            }`
+          );
+        } else if (error.request) {
+          // Request was made but no response was received
+          console.error("Request data:", error.request);
+          alert(
+            "No response from the server. Please check your network connection and try again."
+          );
+        } else {
+          console.error("Error message:", error.message);
+          alert(`Error: ${error.message}`);
+        }
+      }
+    },
+
+    async verifyOtp() {
+      try {
+        const response = await axios.post(
+          "http://172.28.28.91:97/api/User/ValidateOTP",
+          {
+            email: this.user.email_address,
+            otp: this.otp,
+          }
+        );
+        if (response.data.success) {
+          clearInterval(this.timerInterval);
+          this.showOtpModal = false;
+          this.showSuccessNotification = true;
+          setTimeout(() => {
+            this.showSuccessNotification = false;
+            this.$router.push("/homepage");
+          }, 3000);
+        } else {
+          alert("Invalid OTP. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error verifying OTP:", error);
+        if (error.response) {
+          console.error("Response data:", error.response.data);
+          console.error("Response status:", error.response.status);
+          console.error("Response headers:", error.response.headers);
+          alert(
+            `An error occurred: ${
+              error.response.data.message ||
+              "Unable to verify OTP. Please try again."
+            }`
+          );
+        } else if (error.request) {
+          // Request was made but no response was received
+          console.error("Request data:", error.request);
+          alert(
+            "No response from the server. Please check your network connection and try again."
+          );
+        } else {
+          console.error("Error message:", error.message);
+          alert(`Error: ${error.message}`);
+        }
+      }
+    },
+
+    requestNewOtp() {
+      if (this.timer === 0) {
+        this.otp = "";
+        alert("A new OTP has been sent to your email.");
         this.startTimer();
-      } else {
-        alert("Failed to send OTP. Please try again.");
       }
-    } catch (error) {
-      console.error("Error sending OTP:", error);
-      if (error.response) {
-        // Server responded with a status other than 2xx
-        console.error("Response data:", error.response.data);
-        console.error("Response status:", error.response.status);
-        console.error("Response headers:", error.response.headers);
-        alert(`An error occurred: ${error.response.data.message || 'Unable to send OTP. Please try again.'}`);
-      } else if (error.request) {
-        // Request was made but no response was received
-        console.error("Request data:", error.request);
-        alert("No response from the server. Please check your network connection and try again.");
-      } else {
-        // Something else happened
-        console.error("Error message:", error.message);
-        alert(`Error: ${error.message}`);
-      }
-    }
-  },
+    },
 
-  async verifyOtp() {
-    try {
-      const response = await axios.post('http://172.28.28.91:97/api/User/ValidateOTP', {
-        email: this.user.email_address,
-        otp: this.otp,
-      });
-      if (response.data.success) {
-        clearInterval(this.timerInterval);
-        this.showOtpModal = false;
-        this.showSuccessNotification = true;
-        setTimeout(() => {
-          this.showSuccessNotification = false;
-          this.$router.push("/homepage");
-        }, 3000);
-      } else {
-        alert("Invalid OTP. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error verifying OTP:", error);
-      if (error.response) {
-        // Server responded with a status other than 2xx
-        console.error("Response data:", error.response.data);
-        console.error("Response status:", error.response.status);
-        console.error("Response headers:", error.response.headers);
-        alert(`An error occurred: ${error.response.data.message || 'Unable to verify OTP. Please try again.'}`);
-      } else if (error.request) {
-        // Request was made but no response was received
-        console.error("Request data:", error.request);
-        alert("No response from the server. Please check your network connection and try again.");
-      } else {
-        // Something else happened
-        console.error("Error message:", error.message);
-        alert(`Error: ${error.message}`);
-      }
-    }
+    startTimer() {
+      this.timer = 120;
+      clearInterval(this.timerInterval);
+      this.timerInterval = setInterval(() => {
+        if (this.timer > 0) {
+          this.timer--;
+        } else {
+          clearInterval(this.timerInterval);
+        }
+      }, 1000);
+    },
   },
-
-  requestNewOtp() {
-    if (this.timer === 0) {
-      this.otp = "";
-      alert("A new OTP has been sent to your email.");
-      this.startTimer();
-    }
-  },
-
-  startTimer() {
-    this.timer = 120;
-    clearInterval(this.timerInterval);
-    this.timerInterval = setInterval(() => {
-      if (this.timer > 0) {
-        this.timer--;
-      } else {
-        clearInterval(this.timerInterval);
-      }
-    }, 1000);
-  },
-}
 };
 </script>

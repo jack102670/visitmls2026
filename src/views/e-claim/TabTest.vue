@@ -1,1675 +1,379 @@
 <template>
-  <div
-    class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
+  <main
+    class="flex-1 overflow-x-hidden overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64 h-auto"
   >
-    <div class="sm:flex justify-center flex-col-1">
-      <button
-        v-for="(tab, index) in tabs"
-        :key="index"
-        @click="activeTab = index"
-        :class="{
-          'bg-gray-300': activeTab === index,
-          'hover:bg-gray-200': activeTab !== index,
-        }"
-        class="px-4 py-2 mr-2 rounded-sm focus:outline-none border border-gray-300"
-      >
-        {{ tab.title }}
-      </button>
-    </div>
-
-    <div
-      class="relative overflow-hidden mt-5 max-w-4xl p-6 bg-white border-2 border-e-gray-200 rounded-md dark:bg-gray-800"
-    >
+    <div class="container mx-auto">
       <div
-        v-for="(tab, index) in tabs"
-        :key="index"
-        v-show="activeTab === index"
+        class="bg-[#f7fbff] dark:bg-gray-800 relative dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
-        <h2 class="text-2xl font-bold text-gray-700 capitalize dark:text-white">
-          {{ tab.title }} Form
-        </h2>
+        <div
+          class="relative overflow-hidden mt-1 max-w-4xl p-6 bg-white border-2 border-gray-200 rounded-md dark:bg-gray-800"
+        >
+          <div class="profile-container">
+            <h2
+              class="text-3xl font-bold text-gray-700 capitalize dark:text-white mb-4"
+            >
+              Profile
+            </h2>
+            <hr class="" />
 
-          <div v-if="tab.title !== 'Entertainment' && tab.title !== 'Staff Refreshment'">
-          <form @submit.prevent="submitForm(tab)">
-            <div class="pt-4">
-              <hr class="" />
-              <div class="m-2">
-                <div
-                  v-for="(field, fieldIndex) in tab.fields"
-                  :key="fieldIndex"
-                  :class="[
-                    'grid',
-                    'grid-cols-1',
-                    tab.gridLayout || 'sm:grid-cols-2',
-                    field.gridClass,
-                  ]"
-                >
-                  <label
-                    :for="field.id"
-                    class="block text-gray-700 text-sm font-bold mb-2"
+            <div class="mt-4">
+              <div class="flex items-center mt-2">
+                <img
+                  :src="user.profilePicture || defaultProfilePicture"
+                  alt="Profile Picture"
+                  class="w-24 h-24 rounded-full border-2 border-gray-200"
+                />
+              </div>
+
+              <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                <p>
+                  <span
+                    class="font-semibold text-gray-600 dark:text-gray-200"
+                    >Full Name</span
                   >
-                    {{ field.label }}
-                    <span v-if="field.required" style="color: red">*</span>
-                  </label>
-
-                  <template v-if="field.type === 'select'">
-                    <select
-                      v-model="field.value"
-                      :id="field.id"
-                      class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    >
-                      <option
-                        v-for="(option, optionIndex) in field.options"
-                        :key="optionIndex"
-                        :value="option.value"
-                      >
-                        {{ option.label }}
-                      </option>
-                    </select>
-                  </template>
-
-                  <template v-else-if="field.type === 'year'">
-                    <select
-                      v-model="field.value"
-                      :id="field.id"
-                      class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    >
-                      <option
-                        v-for="year in yearRange"
-                        :key="year"
-                        :value="year"
-                      >
-                        {{ year }}
-                      </option>
-                    </select>
-                  </template>
-
-                  <template
-                    v-else-if="field.type === 'text' && field.isOtherOption"
+                  <input
+                    type="text"
+                    disabled
+                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    v-model="user.fullName"
+                  />
+                </p>
+                <p>
+                  <span
+                    class="font-semibold text-gray-600 dark:text-gray-200"
+                    >Branch</span
                   >
-                    <input
-                      v-model="field.value"
-                      :id="field.id"
-                      :type="field.type"
-                      :placeholder="field.placeholder"
-                      class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    />
-                  </template>
-
-                  <template v-else-if="field.type === 'file'">
-                    <div class="pt-3">
-                      <FilePond
-                        ref="pond"
-                        name="file"
-                        :allow-multiple="field.allowMultiple"
-                        :accepted-file-types="field.acceptedFileTypes"
-                        :max-file-size="field.maxFileSize"
-                        @addfile="handleAddFile(field)"
-                        @removefile="handleRemoveFile(field)"
-                      />
-                    </div>
-                  </template>
-
-                  <template v-else>
-                    <input
-                      v-model="field.value"
-                      :id="field.id"
-                      :type="field.type"
-                      :placeholder="field.placeholder"
-                      class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    />
-                  </template>
-                </div>
-
-                <div class="pt-4">
-                  <hr class="" />
-                  <div class="mt-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2">
-                      <label class="block text-gray-700 text-xl font-bold mb-2"
-                        >Total :</label
-                      >
-                      <div class="block text-gray-700 text-xl font-bold mb-2">
-                        RM {{ calculateTotal(tab) }}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="mt-4 mr-6 flex flex-row-reverse">
-                  <div class="flex items-center justify-between">
-                    <button
-                      type="submit"
-                      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    >
-                      Save
-                    </button>
-                  </div>
-                </div>
+                  <input
+                    type="text"
+                    disabled
+                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    v-model="user.branch"
+                  />
+                </p>
+                <p>
+                  <span
+                    class="font-semibold text-gray-600 dark:text-gray-200"
+                    >Department</span
+                  >
+                  <input
+                    type="text"
+                    disabled
+                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    v-model="user.department"
+                  />
+                </p>
+                <p>
+                  <span
+                    class="font-semibold text-gray-600 dark:text-gray-200"
+                    >Staff ID</span
+                  >
+                  <input
+                    type="text"
+                    disabled
+                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    v-model="user.staffId"
+                  />
+                </p>
+                <p>
+                  <span
+                    class="font-semibold text-gray-600 dark:text-gray-200"
+                    >Work Email</span
+                  >
+                  <input
+                    type="email"
+                    disabled
+                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    v-model="user.workEmail"
+                  />
+                </p>
+                <p>
+                  <span class="font-semibold text-gray-700 dark:text-gray-200"
+                    >Phone Number</span
+                  >
+                  <input
+                    type="text"
+                    disabled
+                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    v-model="user.phoneNumber"
+                  />
+                </p>
+                <p>
+                  <span class="font-semibold text-gray-700 dark:text-gray-200"
+                    >Bank Name</span
+                  >
+                  <input
+                    type="text"
+                    disabled
+                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    v-model="user.bankName"
+                  />
+                </p>
+                <p>
+                  <span class="font-semibold text-gray-700 dark:text-gray-200"
+                    >Bank Account Number</span
+                  >
+                  <input
+                    type="text"
+                    disabled
+                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    v-model="user.bankNumber"
+                  />
+                </p>
+                <p>
+                  <span class="font-semibold text-gray-700 dark:text-gray-200"
+                    >Spouse</span
+                  >
+                  <input
+                    type="text"
+                    disabled
+                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    v-model="user.spouse"
+                  />
+                </p>
+              </div>
+              <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
+                <p>
+                  <span class="font-semibold text-gray-700 dark:text-gray-200"
+                    >Home Address</span
+                  >
+                  <textarea
+                    type="text"
+                    row="4"
+                    disabled
+                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    v-model="user.homeAddress"
+                  />
+                </p>
+              </div>
+              <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                <p>
+                  <span class="font-semibold text-gray-700 dark:text-gray-200"
+                    >Reporting Manager (ID)</span
+                  >
+                  <input
+                    type="text"
+                    disabled
+                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    v-model="user.reportingManagerID"
+                  />
+                </p>
+                <p>
+                  <span class="font-semibold text-gray-700 dark:text-gray-200"
+                    >Reporting Manager (Department)</span
+                  >
+                  <input
+                    type="text"
+                    disabled
+                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    v-model="user.reportingManagerDepartment"
+                  />
+                </p>
               </div>
             </div>
-          </form>
-        </div>
+          </div>
 
-        <!-- Entertainment tab -->
-        <div v-if="tab.title !== 'Entertainment'">
-          <div class="tabs">
+          <div class="mt-5 sm:mt-6 sm:flex sm:flex-row-reverse">
             <button
-              v-for="(subTab, subIndex) in entertainmentTabs"
-              :key="subIndex"
-              @click="activeSubTab = subIndex"
-              :class="{
-                'bg-gray-300': activeSubTab === subIndex,
-                'hover:bg-gray-200': activeSubTab !== subIndex,
-              }"
-              class="px-4 py-2 mr-2 rounded-sm focus:outline-none border border-gray-300"
+              type="button"
+              @click="showRequestOtpModal = true"
+              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-700 text-base font-bold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
             >
-              {{ subTab.title }}
-              <span v-if="subTab.title === 'Attendees'">
-                ({{ attendees.length }})</span
-              >
+              Verify
             </button>
           </div>
 
+          <!-- OTP Request Modal -->
           <div
-            v-for="(subTab, subIndex) in entertainmentTabs"
-            :key="subIndex"
-            v-show="activeSubTab === subIndex"
+            v-if="showRequestOtpModal"
+            class="fixed z-10 inset-0 overflow-y-auto"
           >
-            <div class="pt-4">
-              <hr />
-              <div class="m-2">
-                <form @submit.prevent="submitForm(subTab)">
-                  <div
-                    v-for="(field, fieldIndex) in subTab.fields"
-                    :key="fieldIndex"
-                    :class="[
-                      'grid',
-                      'grid-cols-1',
-                      subTab.gridLayout || 'sm:grid-cols-2',
-                      field.gridClass,
-                    ]"
-                  >
-                    <label
-                      :for="field.id"
-                      class="block text-gray-700 text-sm font-bold mb-2"
-                    >
-                      {{ field.label }}
-                      <span v-if="field.required" style="color: red">*</span>
-                    </label>
-
-                    <template v-if="field.type === 'select'">
-                      <select
-                        v-model="field.value"
-                        :id="field.id"
-                        class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                      >
-                        <option
-                          v-for="(option, optionIndex) in field.options"
-                          :key="optionIndex"
-                          :value="option.value"
-                        >
-                          {{ option.label }}
-                        </option>
-                      </select>
-                    </template>
-
-                    <template
-                      v-else-if="field.type === 'text' && field.isOtherOption"
-                    >
-                      <input
-                        v-model="field.value"
-                        :id="field.id"
-                        :type="field.type"
-                        :placeholder="field.placeholder"
-                        class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                      />
-                    </template>
-
-                    <template v-else-if="field.type === 'file'">
-                      <div class="pt-3">
-                        <FilePond
-                          ref="pond"
-                          name="file"
-                          :allow-multiple="field.allowMultiple"
-                          :accepted-file-types="field.acceptedFileTypes"
-                          :max-file-size="field.maxFileSize"
-                          @addfile="handleAddFile(field)"
-                          @removefile="handleRemoveFile(field)"
-                        />
-                      </div>
-                    </template>
-
-                    <template v-else>
-                      <input
-                        v-model="field.value"
-                        :id="field.id"
-                        :type="field.type"
-                        :placeholder="field.placeholder"
-                        class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                      />
-                    </template>
-                  </div>
-
-                  <div v-if="subTab.title !== 'Attendees'" class="pt-4">
-                    <hr />
-                    <div class="mt-4">
-                      <div class="grid grid-cols-1 sm:grid-cols-2">
-                        <label
-                          class="block text-gray-700 text-xl font-bold mb-2"
-                          >Total :</label
-                        >
-                        <div class="block text-gray-700 text-xl font-bold mb-2">
-                          RM {{ calculateTotal(subTab) }}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div v-if="subTab.title === 'Attendees'" class="mt-4">
-                    <div class="mb-4">
-                      <label class="inline-flex items-center mr-4">
-                        <input
-                          type="radio"
-                          value="pkt"
-                          v-model="selectedAttendeeType"
-                          class="form-radio"
-                        />
-                        <span
-                          class="ml-2 block text-sm font-medium text-gray-700"
-                          >PKT Staff</span
-                        >
-                      </label>
-                      <label class="inline-flex items-center">
-                        <input
-                          type="radio"
-                          value="notStaff"
-                          v-model="selectedAttendeeType"
-                          class="form-radio"
-                        />
-                        <span
-                          class="ml-2 block text-sm font-medium text-gray-700"
-                          >Not a Staff</span
-                        >
-                      </label>
-                    </div>
-
-                    <div v-if="selectedAttendeeType === 'pkt'" class="mb-4">
-                      <label
-                        for="companyName"
-                        class="block text-sm font-medium text-gray-700"
-                        >Company’s Name</label
-                      >
-                      <select
-                        v-model="selectedCompanyName"
-                        required
-                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                      >
-                        <option
-                          v-for="company in pktCompanies"
-                          :key="company"
-                          :value="company"
-                        >
-                          {{ company }}
-                        </option>
-                      </select>
-                    </div>
-
-                    <button
-                      @click="showModal = true"
-                      class="px-4 py-2 bg-blue-500 text-white rounded"
-                    >
-                      Add Attendee
-                    </button>
-
-                    <!-- Modal Form -->
-                    <div
-                      v-if="showModal"
-                      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-                    >
-                      <div class="bg-white p-6 rounded-lg w-80">
-                        <h3 class="text-lg font-medium mb-4">Add Attendee</h3>
-                        <div class="mb-4">
-                          <label
-                            for="name"
-                            class="block text-sm font-medium text-gray-700"
-                            >Name</label
-                          >
-                          <input
-                            type="text"
-                            v-model="modalForm.name"
-                            required
-                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                          />
-                        </div>
-                        <div v-if="selectedAttendeeType === 'pkt'" class="mb-4">
-                          <label
-                            for="staffId"
-                            class="block text-sm font-medium text-gray-700"
-                            >Staff ID</label
-                          >
-                          <input
-                            type="text"
-                            v-model="modalForm.staffId"
-                            required
-                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                          />
-                        </div>
-                        <div
-                          v-if="selectedAttendeeType === 'notStaff'"
-                          class="mb-4"
-                        >
-                          <label
-                            for="companyName"
-                            class="block text-sm font-medium text-gray-700"
-                            >Company’s Name</label
-                          >
-                          <input
-                            type="text"
-                            v-model="modalForm.companyName"
-                            required
-                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                          />
-                        </div>
-                        <div class="flex justify-end">
-                          <button
-                            @click="addAttendee"
-                            class="px-4 py-2 bg-blue-500 text-white rounded mr-2"
-                          >
-                            Save
-                          </button>
-                          <button
-                            @click="showModal = false"
-                            class="px-4 py-2 bg-gray-300 text-black rounded"
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Attendees Table -->
-                    <div class="mt-4">
-                      <table
-                        class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
-                      >
-                        <thead class="bg-gray-50 dark:bg-gray-800">
-                          <tr>
-                            <th
-                              scope="col"
-                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                            >
-                              <div class="flex items-center gap-x-3">
-                                <span>Name</span>
-                              </div>
-                            </th>
-                            <th
-                              scope="col"
-                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                            >
-                              <div class="flex items-center gap-x-3">
-                                <span>Staff ID</span>
-                              </div>
-                            </th>
-                            <th
-                              scope="col"
-                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                            >
-                              <div class="flex items-center gap-x-3">
-                                <span>Company's Name</span>
-                              </div>
-                            </th>
-                            <th
-                              scope="col"
-                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                            >
-                              <div class="flex items-center gap-x-3">
-                                <span>Status</span>
-                              </div>
-                            </th>
-                            <th
-                              scope="col"
-                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                            >
-                              <div class="flex items-center gap-x-3">
-                                <span>Action</span>
-                              </div>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody
-                          class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
-                        >
-                          <tr
-                            v-for="(attendee, index) in attendees"
-                            :key="index"
-                          >
-                            <td
-                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                            >
-                              {{ attendee.name }}
-                            </td>
-                            <td
-                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                            >
-                              {{ attendee.staffId || "-" }}
-                            </td>
-                            <td
-                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                            >
-                              {{ attendee.companyName }}
-                            </td>
-                            <td
-                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                            >
-                              {{ attendee.status }}
-                            </td>
-                            <td
-                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                            >
-                              <button
-                                @click="removeAttendee(index)"
-                                class="text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke-width="1.5"
-                                  stroke="currentColor"
-                                  class="w-5 h-5"
-                                >
-                                  <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                  />
-                                </svg>
-                              </button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <div class="mt-4 mr-6 flex flex-row-reverse">
-                    <div class="flex items-center justify-between">
-                      <button
-                        type="submit"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- End of Entertainment tab-->
-
-        <!-- Staff Refreshment tab -->
-        <div v-else>
-          <div class="tabs">
-            <button
-              v-for="(subTab, subIndex) in staffRefreshmentTabs"
-              :key="subIndex"
-              @click="activeSubTab = subIndex"
-              :class="{
-                'bg-gray-300': activeSubTab === subIndex,
-                'hover:bg-gray-200': activeSubTab !== subIndex,
-              }"
-              class="px-4 py-2 mr-2 rounded-sm focus:outline-none border border-gray-300"
+            <div
+              class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
             >
-              {{ subTab.title }}
-              <span v-if="subTab.title === 'Attendees'">
-                ({{ attendees.length }})</span
+              <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+              </div>
+
+              <span
+                class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                aria-hidden="true"
+                >&#8203;</span
               >
-            </button>
-          </div>
 
-          <div
-            v-for="(subTab, subIndex) in staffRefreshmentTabs"
-            :key="subIndex"
-            v-show="activeSubTab === subIndex"
-          >
-            <div class="pt-4">
-              <hr />
-              <div class="m-2">
-                <form @submit.prevent="submitForm2(subTab)">
-                  <div
-                    v-for="(field, fieldIndex) in subTab.fields"
-                    :key="fieldIndex"
-                    :class="[
-                      'grid',
-                      'grid-cols-1',
-                      subTab.gridLayout || 'sm:grid-cols-2',
-                      field.gridClass,
-                    ]"
+              <div
+                class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
+              >
+                <div>
+                  <h3 class="text-xl leading-6 font-medium text-gray-900">
+                    Request OTP Code for Account Activation
+                  </h3>
+                  <p class="mt-4 mb-8 text-md text-gray-500">
+                    To complete your profile activation, please request One-Time
+                    Password (OTP) and it will be sent to
+                    <strong>{{ user.workEmail }}</strong
+                    >.
+                  </p>
+                </div>
+                <div class="mt-5 sm:mt-6 sm:flex sm:flex-row-reverse">
+                  <button
+                    type="button"
+                    @click="sendOtp"
+                    class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-700 text-base font-bold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                   >
-                  <template
-                      v-if="field.id !== 'OtherTypeofStaffRefreshmentSR' || isOtherRefreshment"
-                    >
-                    <label
-                      :for="field.id"
-                      class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
-                    >
-                      {{ field.label }}
-                      <span v-if="field.required" style="color: red">*</span>
-                    </label>
-
-                    <template v-if="field.type === 'select'">
-                      <select
-                        v-model="field.value"
-                        :id="field.id"
-                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                      >
-                        <option
-                          v-for="(option, optionIndex) in field.options"
-                          :key="optionIndex"
-                          :value="option.value"
-                        >
-                          {{ option.label }}
-                        </option>
-                      </select>
-                    </template>
-
-                    <template v-else-if="field.type === 'file'">
-                      <div class="pt-3">
-                        <FilePond
-                          ref="pond"
-                          name="file"
-                          :allow-multiple="field.allowMultiple"
-                          :accepted-file-types="field.acceptedFileTypes"
-                          :max-file-size="field.maxFileSize"
-                          @addfile="handleAddFile(field)"
-                          @removefile="handleRemoveFile(field)"
-                        />
-                      </div>
-                    </template>
-                    <template v-else>
-                      <input
-                        v-model="field.value"
-                        :id="field.id"
-                        :type="field.type"
-                        :placeholder="field.placeholder"
-                        :step="field.type === 'number' ? '0.01' : undefined"
-                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                      />
-                    </template>
-                  </template>
-                  </div>
-
-                  <div v-if="subTab.title !== 'Attendees'" class="pt-4">
-                    <hr />
-                    <div class="mt-4">
-                      <div class="grid grid-cols-1 sm:grid-cols-2">
-                        <label
-                          class="block text-gray-700 text-xl font-bold mb-2"
-                          >Total :</label
-                        >
-                        <div class="block text-gray-700 text-xl font-bold mb-2">
-                          RM {{ calculateTotal(subTab) }}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div v-if="subTab.title === 'Attendees'" class="mt-4">
-                    <div class="mb-4">
-                      <label class="inline-flex items-center mr-4">
-                        <input
-                          type="radio"
-                          value="pkt"
-                          v-model="selectedAttendeeType"
-                          class="form-radio"
-                        />
-                        <span
-                          class="ml-2 block text-sm font-medium text-gray-700"
-                          >PKT Staff</span
-                        >
-                      </label>
-                      <label class="inline-flex items-center">
-                        <input
-                          type="radio"
-                          value="notStaff"
-                          v-model="selectedAttendeeType"
-                          class="form-radio"
-                        />
-                        <span
-                          class="ml-2 block text-sm font-medium text-gray-700"
-                          >Not a Staff</span
-                        >
-                      </label>
-                    </div>
-
-                    <div v-if="selectedAttendeeType === 'pkt'" class="mb-4">
-                      <label
-                        for="companyName"
-                        class="block text-sm font-medium text-gray-700"
-                        >Company’s Name</label
-                      >
-                      <select
-                        v-model="selectedCompanyName"
-                        required
-                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                      >
-                        <option
-                          v-for="company in pktCompanies"
-                          :key="company"
-                          :value="company"
-                        >
-                          {{ company }}
-                        </option>
-                      </select>
-                    </div>
-
-                    <button
-                      @click="showModal = true"
-                      class="px-4 py-2 bg-blue-500 text-white rounded"
-                    >
-                      Add Attendee
-                    </button>
-
-                    <!-- Modal Form -->
-                    <div
-                      v-if="showModal"
-                      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-                    >
-                      <div class="bg-white p-6 rounded-lg w-80">
-                        <h3 class="text-lg font-medium mb-4">Add Attendee</h3>
-                        <div class="mb-4">
-                          <label
-                            for="name"
-                            class="block text-sm font-medium text-gray-700"
-                            >Name</label
-                          >
-                          <input
-                            type="text"
-                            v-model="modalForm.name"
-                            required
-                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                          />
-                        </div>
-                        <div v-if="selectedAttendeeType === 'pkt'" class="mb-4">
-                          <label
-                            for="staffId"
-                            class="block text-sm font-medium text-gray-700"
-                            >Staff ID</label
-                          >
-                          <input
-                            type="text"
-                            v-model="modalForm.staffId"
-                            required
-                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                          />
-                        </div>
-                        <div
-                          v-if="selectedAttendeeType === 'notStaff'"
-                          class="mb-4"
-                        >
-                          <label
-                            for="companyName"
-                            class="block text-sm font-medium text-gray-700"
-                            >Company’s Name</label
-                          >
-                          <input
-                            type="text"
-                            v-model="modalForm.companyName"
-                            required
-                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                          />
-                        </div>
-                        <div class="flex justify-end">
-                          <button
-                            @click="addAttendee"
-                            class="px-4 py-2 bg-blue-500 text-white rounded mr-2"
-                          >
-                            Save
-                          </button>
-                          <button
-                            @click="showModal = false"
-                            class="px-4 py-2 bg-gray-300 text-black rounded"
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Attendees Table -->
-                    <div class="mt-4">
-                      <table
-                        class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
-                      >
-                        <thead class="bg-gray-50 dark:bg-gray-800">
-                          <tr>
-                            <th
-                              scope="col"
-                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                            >
-                              <div class="flex items-center gap-x-3">
-                                <span>Name</span>
-                              </div>
-                            </th>
-                            <th
-                              scope="col"
-                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                            >
-                              <div class="flex items-center gap-x-3">
-                                <span>Staff ID</span>
-                              </div>
-                            </th>
-                            <th
-                              scope="col"
-                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                            >
-                              <div class="flex items-center gap-x-3">
-                                <span>Company's Name</span>
-                              </div>
-                            </th>
-                            <th
-                              scope="col"
-                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                            >
-                              <div class="flex items-center gap-x-3">
-                                <span>Status</span>
-                              </div>
-                            </th>
-                            <th
-                              scope="col"
-                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                            >
-                              <div class="flex items-center gap-x-3">
-                                <span>Action</span>
-                              </div>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody
-                          class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
-                        >
-                          <tr
-                            v-for="(attendee, index) in attendees"
-                            :key="index"
-                          >
-                            <td
-                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                            >
-                              {{ attendee.name }}
-                            </td>
-                            <td
-                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                            >
-                              {{ attendee.staffId || "-" }}
-                            </td>
-                            <td
-                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                            >
-                              {{ attendee.companyName }}
-                            </td>
-                            <td
-                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                            >
-                              {{ attendee.status }}
-                            </td>
-                            <td
-                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                            >
-                              <button
-                                @click="removeAttendee(index)"
-                                class="text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke-width="1.5"
-                                  stroke="currentColor"
-                                  class="w-5 h-5"
-                                >
-                                  <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                  />
-                                </svg>
-                              </button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <div class="mt-4 mr-6 flex flex-row-reverse">
-                    <div class="flex items-center justify-between">
-                      <button
-                        v-if="subTab.title === 'Details'"
-                        type="button"
-                        @click="nextTab"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                      >
-                        Next
-                      </button>
-                      <button
-                        v-else-if="subTab.title === 'Attendees'"
-                        type="submit"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </div>
-                </form>
+                    Request OTP
+                  </button>
+                </div>
               </div>
             </div>
           </div>
+
+          <!-- OTP Modal -->
+          <div v-if="showOtpModal" class="fixed z-10 inset-0 overflow-y-auto">
+            <div
+              class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+            >
+              <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+              </div>
+
+              <span
+                class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                aria-hidden="true"
+                >&#8203;</span
+              >
+
+              <div
+                class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
+              >
+                <div>
+                  <h3 class="text-xl leading-6 font-medium text-gray-900">
+                    Enter OTP Code
+                  </h3>
+                  <p class="mt-4 mb-4 text-md text-gray-500">
+                    We’ve sent a code to <strong>{{ user.workEmail }}</strong
+                    >.
+                  </p>
+                  <div class="mt-2">
+                    <input
+                      type="text"
+                      v-model="otp"
+                      class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                      placeholder="Enter OTP"
+                    />
+                  </div>
+                  <p class="mt-2 text-sm text-gray-500">
+                    Didn't get a code?
+                    <span v-if="timer > 0">
+                      Wait <span class="underline">{{ timer }} seconds</span> to
+                      resend.
+                    </span>
+                    <a
+                      v-else
+                      href="#"
+                      @click.prevent="requestNewOtp"
+                      class="mb-8 text-blue-500 underline"
+                    >
+                      Click here to resend.
+                    </a>
+                  </p>
+                </div>
+                <div class="mt-5 sm:mt-6 sm:flex sm:flex-row-reverse">
+                  <button
+                    type="button"
+                    @click="verifyOtp"
+                    class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-700 text-base font-bold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                  >
+                    Verify
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            v-if="showSuccessNotification"
+            class="fixed top-4 right-4 p-4 bg-green-500 text-white rounded-lg shadow-lg"
+          >
+            Activation successful! Redirecting...
+          </div>
         </div>
-        <!-- End of Staff Refreshment tab-->
       </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>
-import vueFilePond from "vue-filepond";
-import axios from "axios";
-import "filepond/dist/filepond.min.css";
-import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
-import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-
-// Create component
-const FilePond = vueFilePond(
-  FilePondPluginFileValidateType,
-  FilePondPluginImagePreview
-);
-
 export default {
-  components: {
-    FilePond,
-  },
-
   data() {
     return {
-      activeTab: 0,
-      activeSubTab: 0,
-      date: "",
-      yearRange: [],
-      uploadedFiles: [],
-      showModal: false,
-      selectedAttendeeType: "pkt",
-      selectedCompanyName: "",
-      pktCompanies: ["PKT Branch 1", "PKT Branch 2", "PKT Branch 3"],
-      modalForm: {
-        name: "",
-        staffId: "",
-        companyName: "",
-      },
-      attendees: [],
-      tabs: [
-        {
-          title: "Local/Outstation Travelling",
-          gridLayout: "grid-cols-3",
-          fields: [
-            {
-              id: "dateLT",
-              label: "Date",
-              type: "date",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "DestinationPurposeLT",
-              label: "Destination / Purpose",
-              type: "select",
-              value: "",
-              required: true,
-              options: [
-                { label: "LABEL 1", value: "LABEL 1" },
-                { label: "LABEL 2", value: "LABEL 2" },
-                { label: "LABEL 3", value: "LABEL 3" },
-              ],
-              gridClass: "sm:col-span-1",
-            },
-            {
-              id: "MileageKMLT",
-              label: "Mileage(KM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-1",
-            },
-            {
-              id: "MileageRMLT",
-              label: "Total Mileage(RM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-1",
-            },
-            {
-              id: "TollLT",
-              label: "Toll(RM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-1",
-            },
-            {
-              id: "ParkingLT",
-              label: "Parking(RM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-1",
-            },
-            {
-              id: "UploadLT",
-              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
-              type: "file",
-              value: "",
-              required: true,
-              allowMultiple: true,
-              server: null,
-              maxFileSize: "5MB",
-              acceptedFileTypes: [
-                "image/png",
-                "image/jpeg",
-                "application/pdf",
-                "application/vnd.ms-excel",
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-              ],
-              gridClass: "sm:col-span-1",
-            },
-          ],
-        },
-        {
-          title: "Outstation/Overseas Travelling with Accommodation",
-          gridLayout: "grid-cols-3", //
-          fields: [
-            {
-              id: "dateOT",
-              label: "Date",
-              type: "date",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "DescriptionOT",
-              label: "Description",
-              type: "text",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "ForeignCurrencyAccommodationOT",
-              label: "Foreign Currency",
-              type: "select",
-              value: "",
-              placeholder: "Accommodation",
-              options: [],
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "ExchangeRateAccommodationOT",
-              label: "Exchange Rate",
-              type: "select",
-              value: "",
-              options: [],
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "RMforAccommodationOT",
-              label: "RM",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "ForeignCurrencyOthersOT",
-              label: "Foreign Currency",
-              type: "select",
-              value: "",
-              placeholder: "Other",
-              options: [],
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "ExchangeRateOthersOT",
-              label: "Exchange Rate",
-              type: "select",
-              value: "",
-              options: [],
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "RMforOthersOT",
-              label: "RM",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "MealAllowanceOT",
-              label: "Meal Allowance(RM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "AirportLimoTeksiOT",
-              label: "Airport Limo / Teksi(RM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "UploadOT",
-              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
-              type: "file",
-              value: "",
-              required: true,
-              allowMultiple: true,
-              server: null,
-              maxFileSize: "5MB",
-              acceptedFileTypes: [
-                "image/png",
-                "image/jpeg",
-                "application/pdf",
-                "application/vnd.ms-excel",
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-              ],
-              gridClass: "sm:col-span-1",
-            },
-          ],
-        },
-        {
-          title: "Entertainment",
-          gridLayout: "grid-cols-3",
-          fields: [],
-        },
-        {
-          title: "Staff Refreshment",
-          gridLayout: "grid-cols-3",
-          fields: [
-             {
-              id: "dateSR",
-              label: "Date",
-              type: "date",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "NameofStaffSR",
-              label: "Name of Staff",
-              type: "text",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "TypeofRefreshmentSR",
-              label: "Type of Refreshment",
-              type: "select",
-              value: "",
-              required: true,
-              options: [
-                { label: "BREAKFAST", value: "BREAKFAST" },
-                { label: "LUNCH", value: "LUNCH" },
-                { label: "DINNER", value: "DINNER" },
-                { label: "TEA BREAK", value: "TEA BREAK" },
-                { label: "OTHERS", value: "OTHERS" },
-              ],
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "OtherTypeofStaffRefreshmentSR",
-              label: "Other Type of Staff Refreshment",
-              type: "text",
-              value: "",
-              placeholder: "Specify other type",
-              gridClass: "sm:col-span-2",
-              hidden: true,
-            },
-            {
-              id: "CompanySR",
-              label: "Company",
-              type: "text",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "VenueSR",
-              label: "Venue",
-              type: "text",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "ReferenceSR",
-              label: "Reference",
-              type: "select",
-              value: "",
-              required: true,
-              options: [
-                {
-                  label: "ENTERTAINMENT-CLIENT(EXISTING)",
-                  value: "ENTERTAINMENT-CLIENT(EXISTING)",
-                },
-                {
-                  label: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)",
-                  value: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)",
-                },
-                {
-                  label: "ENTERTAINMENT-NON TRADE",
-                  value: "ENTERTAINMENT-NON TRADE",
-                },
-                { label: "GIFT TO CLIENT", value: "GIFT TO CLIENT" },
-                { label: "GIFT TO OTHERS", value: "GIFT TO OTHERS" },
-                { label: "MEAL FOR STAFF", value: "MEAL FOR STAFF" },
-              ],
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "AmountRMSR",
-              label: "Amount(RM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "UploadSR",
-              label: "Attachment(s). (png, jpeg, pdf or xlsx)",
-              type: "file",
-              value: [],
-              required: true,
-              allowMultiple: true,
-              server: null,
-              maxFileSize: "5MB",
-              acceptedFileTypes: [
-                "image/png",
-                "image/jpeg",
-                "application/pdf",
-                "application/vnd.ms-excel",
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-              ],
-              gridClass: "sm:col-span-1",
-            },
-          ],
-        },
-        {
-          title: "Handphone Reimbursement",
-          gridLayout: "grid-cols-3",
-          fields: [
-            {
-              id: "MonthHR",
-              label: "Month",
-              type: "select",
-              value: "",
-              required: true,
-              options: [  
-              ],
-              gridClass: "sm:col-span-1",
-            },
-            {
-              id: "YearHR",
-              label: "Year",
-              type: "year",
-              value: "",
-              required: true,
-              options: this.years,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "BankNameHR",
-              label: "Bank Name",
-              type: "select",
-              value: "",
-              required: true,
-              options: [
-                { label: "HONG LEONG BANK", value: "HONG LEONG BANK" },
-                { label: "AGROBANK", value: "AGROBANK" },
-                { label: "AFFIN BANK BERHAD", value: "AFFIN BANK BERHAD" },
-                {
-                  label: "ALLIANCE BANK MALAYSIA BERHAD",
-                  value: "ALLIANCE BANK MALAYSIA BERHAD",
-                },
-                { label: "AMBANK BERHAD", value: "AMBANK BERHAD" },
-                { label: "BANK ISLAM MALAYSIA", value: "BANK ISLAM MALAYSIA" },
-                {
-                  label: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
-                  value: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
-                },
-                { label: "BANK MUAMALAT", value: "BANK MUAMALAT" },
-                {
-                  label: "BANK SIMPANAN NASIONAL BERHAD",
-                  value: "BANK SIMPANAN NASIONAL BERHAD",
-                },
-                { label: "CIMB BANK BERHAD", value: "CIMB BANK BERHAD" },
-                { label: "CITIBANK BERHAD", value: "CITIBANK BERHAD" },
-                {
-                  label: "HSBC BANK MALAYSIA BERHAD",
-                  value: "HSBC BANK MALAYSIA BERHAD",
-                },
-                { label: "MAYBANK", value: "MAYBANK" },
-                { label: "PUBLIC BANK", value: "PUBLIC BANK" },
-                { label: "RHB BANK", value: "RHB BANK" },
-                {
-                  label: "OCBC BANK MALAYSIA BERHAD",
-                  value: "OCBC BANK MALAYSIA BERHAD",
-                },
-              ],
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "AccBankNumberHR",
-              label: "Account Bank No.",
-              type: "number",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "AccHolderNameHR",
-              label: "Account Holder Name",
-              type: "text",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "LimitedAmountHR",
-              label: "Limited Amount(RM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "ClaimsAmountHR",
-              label: "Claims Amount(RM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "UploadHR",
-              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
-              type: "file",
-              value: "",
-              required: true,
-              allowMultiple: true,
-              server: null,
-              maxFileSize: "5MB",
-              acceptedFileTypes: [
-                "image/png",
-                "image/jpeg",
-                "application/pdf",
-                "application/vnd.ms-excel",
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-              ],
-              gridClass: "sm:col-span-1",
-            },
-          ],
-        },
-        {
-          title: "Medical Leave Reimbursement",
-          gridLayout: "grid-cols-3",
-          fields: [
-            {
-              id: "dateML",
-              label: "Date of Medical Leave",
-              type: "date",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "ReasonML",
-              label: "Reason for Medical Leave",
-              type: "text",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "BankNameML",
-              label: "Bank Name",
-              type: "select",
-              value: "",
-              required: true,
-              options: [
-                { label: "HONG LEONG BANK", value: "HONG LEONG BANK" },
-                { label: "AGROBANK", value: "AGROBANK" },
-                { label: "AFFIN BANK BERHAD", value: "AFFIN BANK BERHAD" },
-                {
-                  label: "ALLIANCE BANK MALAYSIA BERHAD",
-                  value: "ALLIANCE BANK MALAYSIA BERHAD",
-                },
-                { label: "AMBANK BERHAD", value: "AMBANK BERHAD" },
-                { label: "BANK ISLAM MALAYSIA", value: "BANK ISLAM MALAYSIA" },
-                {
-                  label: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
-                  value: "BANK KERJASAMA RAKYAT MALAYSIA BERHAD",
-                },
-                { label: "BANK MUAMALAT", value: "BANK MUAMALAT" },
-                {
-                  label: "BANK SIMPANAN NASIONAL BERHAD",
-                  value: "BANK SIMPANAN NASIONAL BERHAD",
-                },
-                { label: "CIMB BANK BERHAD", value: "CIMB BANK BERHAD" },
-                { label: "CITIBANK BERHAD", value: "CITIBANK BERHAD" },
-                {
-                  label: "HSBC BANK MALAYSIA BERHAD",
-                  value: "HSBC BANK MALAYSIA BERHAD",
-                },
-                { label: "MAYBANK", value: "MAYBANK" },
-                { label: "PUBLIC BANK", value: "PUBLIC BANK" },
-                { label: "RHB BANK", value: "RHB BANK" },
-                {
-                  label: "OCBC BANK MALAYSIA BERHAD",
-                  value: "OCBC BANK MALAYSIA BERHAD",
-                },
-              ],
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "AccBankNumberML",
-              label: "Account Bank No.",
-              type: "number",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "AccHolderNameML",
-              label: "Account Holder Name",
-              type: "text",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "ClaimsAmountML",
-              label: "Claims Amount(RM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "UploadML",
-              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
-              type: "file",
-              value: "",
-              required: true,
-              allowMultiple: true,
-              server: null,
-              maxFileSize: "5MB",
-              acceptedFileTypes: [
-                "image/png",
-                "image/jpeg",
-                "application/pdf",
-                "application/vnd.ms-excel",
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-              ],
-              gridClass: "sm:col-span-1",
-            },
-          ],
-        },
-      ],
-      entertainmentTabs: [
-        {
-          title: "Details",
-          gridLayout: "grid-cols-3",
-          fields: [
-            {
-              id: "dateE",
-              label: "Date",
-              type: "date",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "TypeofEntertainmentE",
-              label: "Type of Entertainment",
-              type: "select",
-              value: "",
-              required: true,
-              options: [
-                { label: "BREAKFAST", value: "BREAKFAST" },
-                { label: "LUNCH", value: "LUNCH" },
-                { label: "DINNER", value: "DINNER" },
-                { label: "TEA BREAK", value: "TEA BREAK" },
-                { label: "OTHERS", value: "OTHERS" },
-              ],
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "OtherTypeofEntertainmentE",
-              label: "Other Type of Entertainment",
-              type: "text",
-              value: "",
-              placeholder: "Specify other type",
-              isOtherOption: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "CompanyE",
-              label: "Company",
-              type: "text",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "VenueE",
-              label: "Venue",
-              type: "text",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "ReferenceE",
-              label: "Reference",
-              type: "select",
-              value: "",
-              required: true,
-              options: [
-                { label: "CLIENT(EXISTING)", value: "CLIENT(EXISTING)" },
-                {
-                  label: "CLIENT(NEW/POTENTIAL)",
-                  value: "CLIENT(NEW/POTENTIAL)",
-                },
-                { label: "NON TRADE", value: "NON TRADE" },
-              ],
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "AmountRME",
-              label: "Amount(RM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "UploadE",
-              label: "Upload File(s). (png, jpeg, pdf or xlsx)",
-              type: "file",
-              value: "",
-              required: true,
-              allowMultiple: true,
-              server: null,
-              maxFileSize: "5MB",
-              acceptedFileTypes: [
-                "image/png",
-                "image/jpeg",
-                "application/pdf",
-                "application/vnd.ms-excel",
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-              ],
-              gridClass: "sm:col-span-1",
-            },
-          ],
-        },
-        {
-          title: "Attendees",
-          attendees: [],
-          fields: [],
-        },
-      ],
+      user: JSON.parse(localStorage.getItem("userProfile")) || {},
+      defaultProfilePicture: require("@/assets/images/profile.png"),
+      showRequestOtpModal: false,
+      showOtpModal: false,
+      showSuccessNotification: false,
+      otp: "",
+      timer: 0,
+      timerInterval: null,
     };
-  },
-  created() {
-  this.fetchData();
-},
-  mounted() {
-   
-    // Populate the year range with the last 20 years
-    const currentYear = new Date().getFullYear();
-    for (let i = currentYear; i >= currentYear - 20; i--) {
-      this.yearRange.push(i);
-    }
-
-    this.fetchForeignCurrencyOptions();
   },
 
   methods: {
-    fetchData() {
-    fetch("https://hazman97.github.io/months-api/months.json", {
-    
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        // Iterate over each tab
-        this.tabs.forEach(tab => {
-          // Find the MonthHR field in the current tab
-          const field = tab.fields.find(field => field.id === 'MonthHR');
-
-          // Assign the fetched data to the options property of the MonthHR field
-          if (field) {
-            field.options = response.months
-            console.log("Months:", field.options);
-          }
-        });
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  },
-
-    handleAddFile(field) {
-      return (file) => {
-        field.value.push(file.file);
-        console.log("Selected Files:", field.value);
-      };
-    },
-
-    handleRemoveFile(field) {
-      return (file) => {
-        const index = field.value.findIndex((f) => f === file.file);
-        if (index !== -1) {
-          field.value.splice(index, 1);
-        }
-        console.log("Selected Files:", field.value);
-      };
-    },
-
-    addAttendee() {
-      const { name, staffId, companyName } = this.modalForm;
-      if (this.selectedAttendeeType === "pkt" && name && staffId) {
-        this.attendees.push({
-          name,
-          staffId,
-          companyName: this.selectedCompanyName,
-          status: "PKT Staff",
-        });
-      } else if (
-        this.selectedAttendeeType === "notStaff" &&
-        name &&
-        companyName
-      ) {
-        this.attendees.push({
-          name,
-          staffId: "",
-          companyName,
-          status: "Not a Staff",
-        });
+    onProfilePictureChange(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.profilePicture = e.target.result;
+        };
+        reader.readAsDataURL(file);
       }
-      this.showModal = false;
-      this.modalForm.name = "";
-      this.modalForm.staffId = "";
-      this.modalForm.companyName = "";
-    },
-    removeAttendee(index) {
-      this.attendees.splice(index, 1);
     },
 
-    calculateTotal(tab) {
-      let total = 0;
-      tab.fields.forEach((field) => {
-        if (
-          field.type === "number" &&
-          !isNaN(parseFloat(field.value)) &&
-          field.id !== "MileageKMLT" &&
-          field.id !== "LimitedAmountHR"
-        ) {
-          total += parseFloat(field.value);
-        }
-      });
-      return total.toFixed(2);
+    deleteProfilePicture() {
+      this.profilePicture = null;
     },
 
-    submitForm(tab) {
-      const formattedData = {};
-      tab.fields.forEach((field) => {
-        formattedData[field.id] = field.value;
-      });
+    sendOtp() {
+      this.showRequestOtpModal = false;
+      this.showOtpModal = true;
+      alert("OTP has been sent to your email.");
+      this.startTimer();
+    },
 
-      formattedData["tabTitle"] = tab.title;
-      this.$emit("formSubmitted", formattedData);
-
-      console.log("Formatted Form Data:", formattedData);
-
-      if (tab.title === "Attendees") {
-        const newAttendee = {};
-        tab.fields.forEach((field) => {
-          newAttendee[field.id] = field.value;
-          field.value = "";
-        });
-        tab.attendees.push(newAttendee);
+    verifyOtp() {
+      if (this.otp === "123456") {
+        clearInterval(this.timerInterval);
+        this.showOtpModal = false;
+        this.showSuccessNotification = true;
+        setTimeout(() => {
+          this.showSuccessNotification = false;
+          this.$router.push("/homepage");
+        }, 3000);
       } else {
-        console.log(`Form submitted for tab: ${tab.title}`, tab.fields);
+        alert("Invalid OTP. Please try again.");
       }
     },
 
-    async fetchForeignCurrencyOptions() {
-      try {
-        const response = await axios.get(
-          "https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_3ixmcwYkizJk2QzfkEmAvorMqlreeDrqtHEabUHs"
-        );
-        const exchangeRates = response.data.rates;
-        this.tabs[1].fields.find(
-          (field) => field.id === "ForeignCurrencyAccommodationOT"
-        ).options = Object.keys(exchangeRates).map((currency) => ({
-          label: currency,
-          value: currency,
-        }));
-        this.tabs[1].fields.find(
-          (field) => field.id === "ForeignCurrencyOthersOT"
-        ).options = Object.keys(exchangeRates).map((currency) => ({
-          label: currency,
-          value: currency,
-        }));
-      } catch (error) {
-        console.error("Error fetching foreign currency data:", error);
+    requestNewOtp() {
+      if (this.timer === 0) {
+        this.otp = "";
+        alert("A new OTP has been sent to your email.");
+        this.startTimer();
       }
+    },
+
+    startTimer() {
+      this.timer = 120;
+      clearInterval(this.timerInterval);
+      this.timerInterval = setInterval(() => {
+        if (this.timer > 0) {
+          this.timer--;
+        } else {
+          clearInterval(this.timerInterval);
+        }
+      }, 1000);
     },
   },
 };
 </script>
-
-<style scoped>
-</style>
