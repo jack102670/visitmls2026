@@ -6,7 +6,6 @@
       <div
         class="bg-[#f7fbff] dark:bg-gray-800 relative dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
-        <!-- Form -->
         <div
           class="relative overflow-hidden mt-1 max-w-4xl p-6 bg-white border-2 border-e-gray-200 rounded-md dark:bg-gray-800"
         >
@@ -16,7 +15,6 @@
             Activate Your Profile
           </h2>
 
-          <!--Note for Activation-->
           <section>
             <h1 class="mb-4 text-gray-500 text-md">
               Note: Please fill in all the mandatory fields to activate your
@@ -405,6 +403,7 @@ export default {
         this.showCropper = false;
       }
     },
+
     cancelCrop() {
       if (this.cropper) {
         this.cropper.destroy();
@@ -418,12 +417,9 @@ export default {
     },
 
     handleSubmit() {
-       try {
-        const userProfileString = JSON.stringify(this.userProfile);
-        localStorage.setItem('userProfile', userProfileString);
-      } catch (error) {
-        console.error('Failed to save user profile:', error);
-      }
+      this.user.profilePicture = this.profilePicture;
+      console.log("User data saved:", this.user);
+      localStorage.setItem("userProfile", JSON.stringify(this.user));
       this.$router.push("/profile");
     },
   },

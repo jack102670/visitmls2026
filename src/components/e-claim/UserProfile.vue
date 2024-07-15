@@ -168,16 +168,10 @@
             </div>
           </div>
 
-          <EditProfile
-            v-if="showEditProfileModal"
-            @close="closeEditProfileModal"
-            @update-profile-picture="updateProfilePicture"
-          />
-
           <div class="mt-5 sm:mt-6 sm:flex sm:flex-row-reverse">
             <button
               type="button"
-              @click="showRequestOtpModal = true"
+              @click="verifyAndSaveData"
               class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-700 text-base font-bold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
             >
               Verify
@@ -205,6 +199,29 @@
               <div
                 class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
               >
+                <button
+                  @click="closeRequestOtpModal"
+                  type="button"
+                  class="absolute top-0 right-0 mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+                >
+                  <span class="sr-only">Close</span>
+                  <svg
+                    class="h-6 w-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+
                 <div>
                   <h3 class="text-xl leading-6 font-medium text-gray-900">
                     Request OTP Code for Account Activation
@@ -307,16 +324,11 @@
 
 <script>
 import axios from "axios";
-import EditProfile from "./UserFirstTimeLogin.vue";
 
 export default {
-  components: {
-    EditProfile,
-  },
   data() {
     return {
-      user:{},
-      showEditProfileModal: false,
+      user: JSON.parse(localStorage.getItem("userProfile")) || {},
       defaultProfilePicture: require("@/assets/images/profile.png"),
       showRequestOtpModal: false,
       showOtpModal: false,
@@ -325,17 +337,6 @@ export default {
       timer: 0,
       timerInterval: null,
     };
-  },
-
-  created() {
-    try {
-      const userProfileString = localStorage.getItem("userProfile");
-      if (userProfileString) {
-        this.user = JSON.parse(userProfileString);
-      }
-    } catch (error) {
-      console.error("Failed to load user profile:", error);
-    }
   },
 
   methods: {
@@ -350,38 +351,57 @@ export default {
       }
     },
 
-    openEditProfileModal() {
-      this.showEditProfileModal = true;
-    },
-
-    closeEditProfileModal() {
-      this.showEditProfileModal = false;
-    },
-
-    updateProfilePicture(newProfilePicture) {
-      this.profilePicture = newProfilePicture;
-      this.showEditProfileModal = false;
-    },
-
     deleteProfilePicture() {
       this.profilePicture = null;
+    },
+
+    verifyAndSaveData() {
+      this.saveUserData();
+      this.saveProfilePicture();
+      this.showRequestOtpModal = true;
+    },
+
+    saveUserData() {
+      const updateUserUrl = "http://172.28.28.91:97/api/User/UpdateEmployee";
+      axios
+        .put(updateUserUrl, this.user)
+        .then((response) => {
+          console.log("User data saved successfully:", response.data);
+        })
+        .catch((error) => {
+          console.error("Error saving user data:", error);
+        });
+    },
+
+    saveProfilePicture() {
+      const updateImageUrl = "http://172.28.28.91:97/api/User/UpdateImage";
+      axios
+        .put(updateImageUrl, { profilePicture: this.profilePicture })
+        .then((response) => {
+          console.log("Profile picture saved successfully:", response.data);
+        })
+        .catch((error) => {
+          console.error("Error saving profile picture:", error);
+        });
     },
 
     async sendOtp() {
       try {
         const response = await axios.post(
           "http://172.28.28.91:97/api/User/GenerateOTP",
-          {
-            email: this.user.email_address,
-          }
+          { email: this.user.email_address }
         );
+
         if (response.data.success) {
           this.showRequestOtpModal = false;
           this.showOtpModal = true;
           alert("OTP has been sent to your email.");
           this.startTimer();
         } else {
-          alert("Failed to send OTP. Please try again.");
+          console.error("Backend error:", response.data);
+          alert(
+            response.data.message || "Failed to send OTP. Please try again."
+          );
         }
       } catch (error) {
         console.error("Error sending OTP:", error);
@@ -396,7 +416,6 @@ export default {
             }`
           );
         } else if (error.request) {
-          // Request was made but no response was received
           console.error("Request data:", error.request);
           alert(
             "No response from the server. Please check your network connection and try again."
@@ -441,7 +460,6 @@ export default {
             }`
           );
         } else if (error.request) {
-          // Request was made but no response was received
           console.error("Request data:", error.request);
           alert(
             "No response from the server. Please check your network connection and try again."
@@ -459,6 +477,10 @@ export default {
         alert("A new OTP has been sent to your email.");
         this.startTimer();
       }
+    },
+
+    closeRequestOtpModal() {
+      this.showRequestOtpModal = false;
     },
 
     startTimer() {
