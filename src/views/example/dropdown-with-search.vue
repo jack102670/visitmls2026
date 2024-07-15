@@ -89,9 +89,9 @@
           })
           .then(data => {
             // Store all fetched quotes in quotes array
-            console.log(data.result);
+            // console.log(data.result);
             this.quotes = data.result;
-  console.log(this.quotes);
+  // console.log(this.quotes);
             // Slice the array to show only a certain number of quotes (e.g., first 10 quotes)
           
           })
@@ -101,7 +101,7 @@
       },
       submitForm() {
         // Handle form submission here, e.g., send selectedItem to server
-        console.log('Form submitted. Selected item:', this.selectedItem);
+        // console.log('Form submitted. Selected item:', this.selectedItem);
       },toggleDropdown() {
         this.open = !this.open;
         if (this.open) {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Welcome to Testing.vue!</h1>
+    <h1 class="bg-red-500 text-red-700 text-center font-semibold font-4xl">Welcome to Testing.vue!</h1>
     <p>This is a basic Vue.js 3 component.</p>
     <select v-model="selectedEmail">
       <option disabled value="">Please select one</option>
@@ -27,7 +27,7 @@ export default {
       
       .then(data => {
         this.users = data;
-        console.log(data);
+        // console.log(data);
       })
       .catch(error => console.error('Error fetching users:', error));
   },

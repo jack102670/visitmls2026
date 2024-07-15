@@ -291,7 +291,7 @@ export default {
       requester.loading = true;
 
       try {
-        const response = await axios.put(
+       await axios.put(
           `http://172.28.28.91:8085/api/Admin/AdminApproveVendor`,
           {
             approvalInt: 1,
@@ -299,7 +299,7 @@ export default {
             userEmail: requester.userEmail,
           }
         );
-        console.log("Server response:", response.data);
+        // console.log("Server response:", response.data);
         this.fetchRequesters();
       } catch (error) {
         console.error("Error approving request:", error);
@@ -310,7 +310,7 @@ export default {
     async rejectRequest(requester) {
       requester.rejectLoading = true;
       try {
-        const response = await axios.put(
+        await axios.put(
           `http://172.28.28.91:8085/api/Admin/AdminApproveVendor`,
           {
             approvalInt: 0,
@@ -318,7 +318,7 @@ export default {
             userEmail: requester.userEmail,
           }
         );
-        console.log("Server response:", response.data);
+        // console.log("Server response:", response.data);
         this.fetchRequesters();
       } catch (error) {
         console.error("Error rejecting request:", error);

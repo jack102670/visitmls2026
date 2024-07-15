@@ -2,7 +2,8 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import axios from 'axios'; // Import Axios
 // import './assets/css/output.css';
-import './output.css';
+// import './output.css';
+import './input.css';
 import router from './router';
 
 // Create the Vue app instance

@@ -136,7 +136,7 @@ export default {
   methods: {
     Register() {
       // Post the 'form' object to API
-      console.log('Form Data:', this.form);
+      // console.log('Form Data:', this.form);
       const registerData = {
         userNameId: this.fetchOptions.filter(
           (item) =>
@@ -157,7 +157,7 @@ export default {
           registerData
         )
         .then((response) => {
-          console.log('Response:', response.data);
+          // console.log('Response:', response.data);
           // Handle success
         })
         .catch((error) => {
@@ -227,7 +227,7 @@ export default {
 
       this.filteredDepartments = uniqueDepartments;
 
-      console.log(this.filteredDepartments);
+      // console.log(this.filteredDepartments);
     },
 
     'form.department'(newDepartment) {
@@ -244,7 +244,7 @@ export default {
 
       this.filteredUsers = uniqueUsers;
 
-      console.log(this.filteredUsers);
+      // console.log(this.filteredUsers);
     },
   },
 };

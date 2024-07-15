@@ -1109,7 +1109,7 @@ export default {
             .toUpperCase();
           this.remark = this.claimDetails.approver_feedback;
 
-          console.log(this.statusApprover);
+          // console.log(this.statusApprover);
 
           if (this.statusApprover == 'APPROVED') {
             this.approve = true;
@@ -1276,8 +1276,8 @@ export default {
         }
       });
 
-      console.log(this.claimDatas);
-      console.log(this.claimDatasDetails);
+      // console.log(this.claimDatas);
+      // console.log(this.claimDatasDetails);
     },
 
     PrintSummary() {
@@ -1323,12 +1323,12 @@ export default {
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
         };
-        console.log(approveData);
+        // console.log(approveData);
         axios
           .put('http://172.28.28.91:86/api/Admin/Approve_Claim', approveData)
           .then((response) => {
             // Handle success response
-            console.log('API response', response.data);
+            // console.log('API response', response.data);
             localStorage.setItem('ApproveOrNot', 'approve');
 
             this.approveSuccess = true;
@@ -1358,7 +1358,7 @@ export default {
             // Handle success response
             this.loading = false;
 
-            console.log('API response', response.data);
+            // console.log('API response', response.data);
             localStorage.setItem('ApproveOrNot', 'reject');
           })
           .catch((error) => {
@@ -1383,7 +1383,7 @@ export default {
             // Handle success response
             this.loading = false;
 
-            console.log('API response', response.data);
+            // console.log('API response', response.data);
             localStorage.setItem('ApproveOrNot', 'resubmit');
           })
           .catch((error) => {
@@ -1408,7 +1408,7 @@ export default {
             // Handle success response
             this.loading = false;
 
-            console.log('API response', response.data);
+            // console.log('API response', response.data);
             localStorage.setItem('ApproveOrNot', 'reimbursed');
           })
           .catch((error) => {
