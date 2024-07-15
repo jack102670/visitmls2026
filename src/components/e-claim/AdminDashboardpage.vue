@@ -166,7 +166,7 @@ export default {
   },
   methods: {
     ViewClaim(rn) {
-      console.log(rn);
+      // console.log(rn);
       this.$router.push({
         name: 'AdminSummaryClaimpage',
         params: { rn: String(rn) },
@@ -183,7 +183,7 @@ export default {
         )
         .then((response) => {
           this.claimsData = response.data.result;
-          console.log(this.claimsData);
+          // console.log(this.claimsData);
 
           this.$nextTick(() => {
             this.initializeDataTable();

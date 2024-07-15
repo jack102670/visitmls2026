@@ -271,7 +271,7 @@ export default {
         .then(response => response.json())
         .then(data => {
           this.items = data.result;
-          console.log('api data',this.items);
+          // console.log('api data',this.items);
         })
         .catch(error => console.error(error));
     },

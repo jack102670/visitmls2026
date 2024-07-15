@@ -294,7 +294,7 @@ export default {
 
 
         this.uniqueCode = `CCTV${userIdFragment}${randomNumber}${timestamp}`;
-        console.log("Unique Code:", this.uniqueCode);
+        // console.log("Unique Code:", this.uniqueCode);
         return this.uniqueCode;
       } else {
         console.error("User ID is undefined.");
@@ -346,7 +346,7 @@ export default {
       };
 
 
-      console.log("Submitting form data:", formData);
+      // console.log("Submitting form data:", formData);
 
 
       axios.post("http://172.28.28.91:8085/api/Main/InsertCCTVRequest", formData)
@@ -354,7 +354,7 @@ export default {
           this.resetForm();
             this.closeModal();
             this.$router.push("/");
-          console.log("Server response:", response.data);
+          // console.log("Server response:", response.data);
         })
         .catch(error => {
 

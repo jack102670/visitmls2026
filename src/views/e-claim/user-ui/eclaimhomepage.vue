@@ -650,35 +650,35 @@ export default {
     //         switch (index) {
     //           case 0:
     //   this.localOutstation = data;
-    //   console.log("Local Outstation:", this.localOutstation);
+    //   // console.log("Local Outstation:", this.localOutstation);
     //   break;
     // case 1:
     //   this.overseasOutstation = data;
-    //   console.log("Overseas Outstation:", this.overseasOutstation);
+    //   // console.log("Overseas Outstation:", this.overseasOutstation);
     //   break;
     // case 2:
     //   this.refreshment = data;
-    //   console.log("Refreshment:", this.refreshment);
+    //   // console.log("Refreshment:", this.refreshment);
     //   break;
     // case 3:
     //   this.entertainment = data;
-    //   console.log("Entertainment:", this.entertainment);
+    //   // console.log("Entertainment:", this.entertainment);
     //   break;
     // case 4:
     //   this.handphone = data;
-    //   console.log("Handphone:", this.handphone);
+    //   // console.log("Handphone:", this.handphone);
     //   break;
     // case 5:
     //   this.medicalLeave = data;
-    //   console.log("Medical Leave:", this.medicalLeave);
+    //   // console.log("Medical Leave:", this.medicalLeave);
     //   break;
     // case 6:
     //   this.others = data;
-    //   console.log("Others:", this.others);
+    //   // console.log("Others:", this.others);
     //   break;
     // case 7:
     //   this.claimDetails = data.result;
-    //   console.log("Claim Details:", this.claimDetails);
+    //   // console.log("Claim Details:", this.claimDetails);
     //   break;
     //           // Add more cases as needed
     //         }
@@ -691,9 +691,9 @@ export default {
     //   }
     //     },
 
-    showYourModalWithData(data) {
+    showYourModalWithData() {
       // Logic to display the modal with the fetched data
-      console.log(data); // For demonstration
+      // console.log(data); // For demonstration
     },
     // closeClickModal() {
     //   this.isClickModal = false;
@@ -708,7 +708,7 @@ export default {
     },
     async fetchAllRequests() {
       const userId = store.getSession().userDetails.userId;
-      console.log("userId", userId);
+      // console.log("userId", userId);
       if (!userId) {
         console.error("UserId is not set.");
         return;
@@ -722,7 +722,7 @@ export default {
         }
         const data = await response.json();
         this.requests = data.result; // Update your data property with the fetched data
-        console.log("Fetched requests:", this.requests);
+        // console.log("Fetched requests:", this.requests);
       } catch (error) {
         console.error("Error fetching requests:", error);
       }

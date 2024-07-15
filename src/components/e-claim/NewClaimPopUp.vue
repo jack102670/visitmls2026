@@ -11,7 +11,7 @@
       </h1>
 
       <!-- Form -->
-      <form @submit.prevent="showModal" class="text-sm py-2">
+      <form @submit.prevent="submitForm(1)" class="text-sm py-2">
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
             <label
@@ -21,6 +21,7 @@
             >
             <input
               v-model="formData.reportName"
+              required
               id="ReportName"
               type="text"
               value="required"
@@ -37,6 +38,7 @@
               placeholder="e.g ALI BIN ABU"
               v-model="formData.claimantName"
               disabled
+              required
               id="claimantName"
               type="text"
               value="required"
@@ -53,6 +55,7 @@
             <div class="flex justify-between">
               <input
                 type="text"
+                required
                 placeholder="Company name.."
                 v-model="formData.companyName"
                 @click="toggleDropdown2"
@@ -104,6 +107,7 @@
                 type="text"
                 placeholder="Designation.."
                 v-model="formData.designation"
+                required
                 @click="toggleDropdown3"
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
@@ -155,6 +159,7 @@
                 type="text"
                 placeholder="Department.."
                 v-model="formData.department"
+                required
                 @click="toggleDropdown"
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
@@ -208,13 +213,14 @@
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="companyName"
-              >Cost Center</label
+              >Cost Center <span class="text-red-500">*</span></label
             >
 
             <div class="flex justify-between">
               <input
                 type="text"
                 placeholder="Company name.."
+                required
                 v-model="formData.costCenter"
                 @click="toggleDropdown4"
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -267,7 +273,6 @@
           <div>
             <label class="font-semibold text-gray-700 dark:text-gray-200">
               Claim Type <span class="text-red-500">*</span>
-              <span class="text-red-500">*</span>
             </label>
 
             <div
@@ -284,6 +289,7 @@
                   id="HR"
                   name="claimType"
                   value="HR"
+                  required
                   v-model="formData.reportType"
                   class="mr-2"
                 />
@@ -315,7 +321,8 @@
                   class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
                   v-show="showFinanceMessage"
                 >
-                  Local Travelling, Overseas Travelling With Accommodation, Entertainment, Staff Refreshment, and Others Form
+                  Local Travelling, Overseas Travelling With Accommodation,
+                  Entertainment, Staff Refreshment, and Others Form
                 </div>
               </div>
             </div>
@@ -372,54 +379,56 @@
             >
           </div>
         </div> -->
-      </form>
-      <h1 class="text-red-500 text-sm">
-        Note : Claims made in the first week of the month will be processed
-        within that same month. Claims made after the first week will be
-        processed in the following month.
-      </h1>
-      <h1 class="text-gray-500 text-sm">
-        <span class="text-red-500">*</span
-        ><span class="text-red-500">*</span> HR: Medical Bill and Handphone Bill
-        Reimbursement
-      </h1>
-      <h1 class="text-gray-500 text-sm">
-        <span class="text-red-500">*</span
-        ><span class="text-red-500">*</span> Finance: Local Travelling, Overseas
-        Travelling With Accommodation, Entertainment, Staff Refreshment, and Others Form
-      </h1>
 
-      <!-- button -->
-      <div class="gap-3 flex flex-row-reverse">
-        <div class="flex justify-center mt-10">
-          <button
-            type="submit"
-            @click.prevent="submitForm(1)"
-            class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
-          >
-            Next
-          </button>
+        <h1 class="text-red-500 text-sm">
+          Note : Claims made in the first week of the month will be processed
+          within that same month. Claims made after the first week will be
+          processed in the following month.
+        </h1>
+        <h1 class="text-gray-500 text-sm">
+          <span class="text-red-500">*</span
+          ><span class="text-red-500">*</span> HR: Medical Bill and Handphone
+          Bill Reimbursement
+        </h1>
+        <h1 class="text-gray-500 text-sm">
+          <span class="text-red-500">*</span
+          ><span class="text-red-500">*</span> Finance: Local Travelling,
+          Overseas Travelling With Accommodation, Entertainment, Staff
+          Refreshment, and Others Form
+        </h1>
+
+        <!-- button -->
+        <div class="gap-3 flex flex-row-reverse">
+          <div class="flex justify-center mt-10">
+            <button
+              type="submit"
+            
+              class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+            >
+              Next
+            </button>
+          </div>
+          <div class="flex justify-center mt-10">
+            <button
+              type="cancel"
+              @click.prevent="submitForm(-1)"
+              class="bg-[#f7fbff] px-8 py-2.5 leading-5 text-gray transition-colors duration-300 transform rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
-        <div class="flex justify-center mt-10">
-          <button
-            type="cancel"
-            @click.prevent="submitForm(-1)"
-            class="bg-[#f7fbff] px-8 py-2.5 leading-5 text-gray transition-colors duration-300 transform rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
+      </form>
     </div>
   </div>
 </template>
 <script>
-import moment from 'moment';
-import { formStore } from '../../views/store.js'; // Import your form store
-import { store } from '../../views/store.js';
+import moment from "moment";
+import { formStore } from "../../views/store.js"; // Import your form store
+import { store } from "../../views/store.js";
 // import axios from 'axios';
 export default {
-  emits: ['close'],
+  emits: ["close"],
   data() {
     return {
       showHRMessage: false,
@@ -427,7 +436,7 @@ export default {
       dropdownVisible: false,
       dropdownVisible2: false,
       dropdownVisible3: false,
-      search: '',
+      search: "",
       dropdownVisible4: false,
 
       departments: [],
@@ -436,31 +445,31 @@ export default {
       active: 0,
 
       formData: {
-        claimantName: 'Teowcheewen',
+        claimantName: "Teowcheewen",
         companyName: formStore.formData.companyName,
         department: formStore.formData.department,
         costCenter: formStore.formData.costCenter,
         designation: formStore.formData.designation,
         reportName: formStore.formData.reportName,
         internalOrder: formStore.formData.internalOrder,
-        reportType: 'Finance',
+        reportType: "Finance",
         reportDate: formStore.formData.reportDate,
         reportStartDate: formStore.formData.reportStartDate,
         reportEndDate: formStore.formData.reportEndDate,
         memo: formStore.formData.memo,
         uniqueCode: formStore.formData.uniqueCode,
       },
-      branch: '', // Add the missing branch property
+      branch: "", // Add the missing branch property
       userDetails: {},
     };
   },
   watch: {
-    'formData.reportName': function (newVal) {
+    "formData.reportName": function (newVal) {
       this.formData.reportName = this.capitalizeWords(newVal);
     },
 
     // this is for full capital
-    'formData.designation': function (newVal) {
+    "formData.designation": function (newVal) {
       this.formData.designation = newVal.toUpperCase();
     },
   },
@@ -502,16 +511,55 @@ export default {
       });
     },
   },
+
   mounted() {
     this.fetchDesignations();
     this.fetchCompany();
     this.fetchDepartments();
     // Get the branch from the store
     this.userDetails = store.getSession().userDetails;
-    this.formData.claimantName = this.userDetails.userName;
+    this.fetchusername();
   },
 
   methods: {
+    async fetchusername() {
+      try {
+        const response = await fetch(
+          "http://172.28.28.91:97/api/User/GetAllEmployees"
+        );
+        if (response.status !== 200) {
+          // Corrected status code check
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json(); // Correctly parsing the JSON response
+        if (data && data.result && data.result.length > 0) {
+          const selectedEmployee = data.result.find(
+            (emp) => emp.username_id === store.getSession().userDetails.userId
+          );
+          // console.log("Selected Employee:", selectedEmployee);
+          if (selectedEmployee) {
+            if ("username" in selectedEmployee) {
+              this.formData.claimantName = selectedEmployee.name;
+              // console.log("Employee username:", this.username);
+            } else {
+              console.error(
+                "Employee found but username is missing:",
+                selectedEmployee
+              );
+            }
+          } else {
+            console.error(
+              "Employee not found for id:",
+              store.getSession().userDetails.userId
+            );
+          }
+        } else {
+          console.error("No employees found in response");
+        }
+      } catch (error) {
+        console.error("Error fetching departments:", error);
+      }
+    },
     capitalizeWords(str) {
       return str.replace(/\b\w/g, (char) => char.toUpperCase());
     },
@@ -546,14 +594,14 @@ export default {
     async fetchDesignations() {
       try {
         const response = await fetch(
-          'http://172.28.28.91:97/api/User/GetDesignation'
+          "http://172.28.28.91:97/api/User/GetDesignation"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
         this.designations = data.result;
-        console.log(this.designations, 'designation');
+        // console.log(this.designations, "designation");
       } catch (error) {
         console.error(`Error fetching departments: ${error}`);
       }
@@ -561,14 +609,14 @@ export default {
     async fetchCompany() {
       try {
         const response = await fetch(
-          'http://172.28.28.91:97/api/User/GetCompany'
+          "http://172.28.28.91:97/api/User/GetCompany"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
         this.Companies = data.result;
-        console.log(this.Companies, 'company');
+        // console.log(this.Companies, "company");
       } catch (error) {
         console.error(`Error fetching departments: ${error}`);
       }
@@ -576,35 +624,34 @@ export default {
     async fetchDepartments() {
       try {
         const response = await fetch(
-          'http://172.28.28.91:97/api/User/GetDepartment'
+          "http://172.28.28.91:97/api/User/GetDepartment"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
         this.departments = data.result;
-        console.log(this.departments);
+        // console.log(this.departments);
       } catch (error) {
         console.error(`Error fetching departments: ${error}`);
       }
     },
     generateSerialNumber() {
-      let names = this.formData.reportName.split(' ');
+      let names = this.formData.reportName.split(" ");
       let shortform = [];
 
       for (let i = 0; i < names.length; i++) {
         shortform[i] = names[i][0];
       }
 
-      let datetime = moment(new Date()).format('YYYY-MM-mmss');
+      let datetime = moment(new Date()).format("YYYY-MM-mmss");
       let sn =
-        
-        shortform.join('').toString() +
-        '-' +
+        shortform.join("").toString() +
+        "-" +
         this.formData.reportType +
-        '-' +
+        "-" +
         datetime;
-      console.log(sn);
+      // console.log(sn);
       this.formData.uniqueCode = sn;
       return sn;
     },
@@ -618,10 +665,10 @@ export default {
         formStore.setFormData(this.formData);
 
         // Log the form data before navigation
-        console.log('Form submitted', formStore.getFormData());
+        // console.log("Form submitted", formStore.getFormData());
         // Log the form data before navigation
-        console.log('Form submitted', formStore.getFormData());
-        this.$router.push({ name: 'ClaimReport' });
+        // console.log("Form submitted", formStore.getFormData());
+        this.$router.push({ name: "ClaimReport" });
 
         // Send API request using axios
         // const apiData = {
@@ -639,7 +686,7 @@ export default {
         // axios.post('http://172.28.28.91:97/api/User/InsertClaimDetails', apiData)
         //   .then(response => {
         //     // Handle success response
-        //     console.log('API response', response.data);
+        //     // console.log('API response', response.data);
         //     this.$router.push({ name: 'ClaimReport' });
         //   })
         //   .catch(error => {
@@ -653,7 +700,7 @@ export default {
 
       if (this.active < 0) {
         // close the create new claim pop up
-        this.$emit('close');
+        this.$emit("close");
         this.active = 0;
         // close the create new claim pop up
       }
@@ -666,7 +713,7 @@ export default {
   max-height: 10rem; /* max-h-56 in Tailwind CSS */
 }
 .formStepCircle:not(:first-child)::before {
-  content: '';
+  content: "";
   background-color: rgb(209 213 219);
   width: 100%;
   height: 3px;

@@ -390,7 +390,7 @@ export default {
     this.userDetails = store.getSession().userDetails;
     this.token = store.data.token;
     this.role = store.getRole();
-    console.log(this.userDetails, 'user details');
+    // console.log(this.userDetails, 'user details');
     // Fetch data when the component is mounted
 
     //this.currentUser();
