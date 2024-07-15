@@ -691,10 +691,10 @@ export default {
     //   }
     //     },
 
-    showYourModalWithData() {
+    //showYourModalWithData() {
       // Logic to display the modal with the fetched data
-      console.log(data); // For demonstration
-    },
+     // console.log(data); // For demonstration
+    //},
     // closeClickModal() {
     //   this.isClickModal = false;
     // },
