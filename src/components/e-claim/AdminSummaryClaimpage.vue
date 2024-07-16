@@ -1389,6 +1389,16 @@ export default {
             'http://172.28.28.91:86/api/Admin/Approve_Comment_Overseas',
             data
           );
+        } else if (remark.Tab_Title == 'Staff Refreshment') {
+          axios.put(
+            'http://172.28.28.91:86/api/Admin/Approve_Comment_Refreshment',
+            data
+          );
+        } else if (remark.Tab_Title == 'Entertainment') {
+          axios.put(
+            'http://172.28.28.91:86/api/Admin/Approve_Comment_Entertainment',
+            data
+          );
         }
       });
       if (AoR == 'Approve') {
