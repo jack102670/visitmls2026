@@ -1,15 +1,20 @@
 <template>
   <main
     class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 dark:text-white p-4 sm:ml-64"
-    id="summaryPrint"
   >
-    <div class="container mx-auto text-xs lg:text-base" id="summaryPrint">
+    <div class="container mx-auto text-xs lg:text-base">
       <div
+        id="summaryPrint"
         class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
         <h1 class="text-gray-500 italic absolute top-4 right-4">
           SN: {{ referenceNumber }}
         </h1>
+        <div id="rn" class="relative w-screen hidden">
+          <h1 class="text-gray-500 italic absolute top-11 right-4">
+            SN: {{ referenceNumber }}
+          </h1>
+        </div>
         <!-- Head Title -->
         <button
           class="absolute top-1 lg:top-6 p-1 bg-blue-800 hover:bg-blue-900 rounded-[100%]"
@@ -45,7 +50,7 @@
           >
             {{ claimDetails.report_name }}
 
-            <span class="text-blue-900 dark:text-blue-600"
+            <span class="text-blue-900 dark:text-blue-600 text-3xl" id="title"
               >| RM{{ claimDetails.grand_total }}</span
             >
           </h1>
@@ -268,7 +273,7 @@
 
                 <!-- table information -->
                 <tr
-                  class="h-8 text-left align-top text-xs"
+                  class="h-8 text-left align-top text-xs hover:bg-gray-200"
                   v-for="(item, index) in detail"
                   :key="index"
                 >
@@ -1586,6 +1591,13 @@ td {
   }
   * {
     color: black;
+    font-size: 10px;
+  }
+  body {
+    margin: 0;
+  }
+  p {
+    font-size: 8px !important;
   }
   input {
     display: none;
@@ -1596,10 +1608,12 @@ td {
   #claimant-informations {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+  #claimant-informations div {
+    margin-bottom: 2px !important;
+  }
   .details h1 {
-    font-size: 20px;
-    margin-bottom: 6px;
-    margin-top: 6px;
+    font-size: 12px !important;
+    margin-bottom: 0 !important;
   }
   .print-div {
     box-shadow: none;
@@ -1610,9 +1624,14 @@ td {
   }
   .detail-table {
     page-break-inside: avoid;
+    margin-top: 4px !important;
+  }
+  .detail-table h1 {
+    margin-top: 4px !important;
   }
   table {
     page-break-inside: avoid;
+    margin-top: 4px !important;
   }
   * {
     box-shadow: 0;
@@ -1628,22 +1647,20 @@ td {
     margin-left: 0;
     width: 100vw !important;
     padding: 0;
-  }
-  #summaryPrint div {
-    visibility: visible !important;
-    width: 100% !important;
     box-shadow: 0;
+    position: absolute;
+    left: 0;
   }
   #summaryPrint button {
     display: none;
   }
+
+  #rn {
+    display: block !important;
+  }
   #total {
     position: absolute;
     right: 10px;
-  }
-  .tab-title {
-    font-size: 24px;
-    line-height: 30px;
   }
   #table-overflow {
     width: 100%;
@@ -1653,7 +1670,7 @@ td {
     width: 100%;
   }
   #table-overflow table tr {
-    height: 120%;
+    height: 110%;
     width: 100%;
   }
   #table-overflow table th {
