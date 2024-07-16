@@ -1295,7 +1295,7 @@ export default {
           let details = [];
           let amount = 0;
           for (let i in result) {
-            amount += result[i].total_fee;
+            amount += result[i].claim_amount;
             const editedDetail = {
               Remark: result[i].comment,
               reason: result[i].reason,
@@ -1303,7 +1303,7 @@ export default {
               clinicselection: result[i].clinic_name? result[i].clinic_name : result[i].clinic_selection,
               reason_other_clinic: result[i].reason_different,
               bank_name: result[i].bank_name,
-              bank_holder: result[i].bank_holder_name,
+              bank_holder: result[i].bank_holder,
               bank_account: result[i].bank_account,
               "Total_Fee(RM)": result[i].claim_amount,
        
@@ -1331,17 +1331,16 @@ export default {
           let details = [];
           let amount = 0;
           for (let i in result) {
-            amount += result[i].total_fee;
+            amount += result[i].claim_amount;
             const editedDetail = {
               Remark: result[i].comment,
-              Type: result[i].entertainment_type,
-              Date: result[i].date_event,
-              Venue: result[i].venue_name,
-              Company: result[i].company_name,
-              "Total_Fee(RM)": result[i].total_fee,
-              Participants: result[i].participants,
+             claim_month : result[i].claim_month,
               Attachments: result[i].files,
-              Comment: result[i].comment,
+              bank_name: result[i].bank_name,
+              bank_holder: result[i].bank_holder,
+              bank_account: result[i].bank_account,
+            
+        
               Tab_Title: "Handphone Bill",
             };
             details.push(editedDetail);

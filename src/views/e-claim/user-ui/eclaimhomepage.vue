@@ -740,12 +740,13 @@ export default {
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800",
         REJECTED:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800",
+          "VERIFIED. WAITING FOR APPROVAL.": "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800",
         PENDING:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800",
         REIMBURSE:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-white-100/60 dark:bg-gray-800",
       };
-      return colorMap[status] || "bg-gray-800"; // Default to a dark color if the status is not recognized
+      return colorMap[status] || "  bg-orange-100/ 60 dark:bg-gray-800"; // Default to a dark color if the status is not recognized
     },
     getStatusDotClass(status) {
       const colorMap = {
@@ -755,10 +756,11 @@ export default {
         COMPLETED: "h-1.5 w-1.5 rounded-full bg-blue-500",
         REJECTED: "h-1.5 w-1.5 rounded-full bg-red-500",
         PENDING: "h-1.5 w-1.5 rounded-full bg-orange-500",
+        "APPROVED. AWAITING PAYMENT." : "h-1.5 w-1.5 rounded-full bg-orange-500",
 
         REIMBURSE: "h-1.5 w-1.5 rounded-full bg-black",
       };
-      return colorMap[status] || "h-1.5 w-1.5 rounded-full bg-gray-700"; // Default to a dark color if the status is not recognized
+      return colorMap[status] || "bg-orange-500"; // Default to a dark color if the status is not recognized
     },
     getStatusTextClass(status) {
       const colorMap = {
@@ -769,8 +771,9 @@ export default {
         REJECTED: "text-sm font-normal text-red-500",
         PENDING: "text-sm font-normal text-orange-500",
         REIMBURSE: "text-sm font-normal text-black",
+        "VERIFIED. WAITING FOR APPROVAL." : "text-sm font-normal text-orange-500", 
       };
-      return colorMap[status] || "text-gray-500"; // Default to a dark color if the status is not recognized
+      return colorMap[status] || "text-orange-500"; // Default to a dark color if the status is not recognized
     },
     ChangePopUp() {
       if (this.popup == true) {

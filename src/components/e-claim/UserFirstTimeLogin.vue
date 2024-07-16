@@ -336,6 +336,12 @@
               >
                 Save
               </button>
+              <button @click="uploadimg()"
+                type="button"
+                class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+              >
+                upload
+              </button>
             </div>
           </form>
         </div>
@@ -349,6 +355,7 @@ import { bankOptions } from "@/javascript/eClaimOptions.js";
 import Cropper from "cropperjs";
 import "cropperjs/dist/cropper.css";
 import axios from 'axios';
+import {store} from '@/views/store.js';
 
 export default {
   data() {
@@ -369,9 +376,10 @@ export default {
 
   methods: {
     fetchHrData() {
-      axios.get('http://172.28.28.91:97/api/User/GetAllEmployees')
+      const username_id =  store.getSession().userDetails.userId;
+      axios.get(`http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`)
         .then(response => {
-          const data = response.data;
+          const data = response.data.result;
           if (data && data.length > 0) {
             const user = data[0];
             this.user.branch = user.branch;
@@ -386,6 +394,43 @@ export default {
         });
     },
 
+    uploadimg() {
+     
+
+      const formData = new FormData();
+      console.log('Uploading profile picture:', this.profile_picture);
+console.log('Employee ID:', this.user.emp_id);
+
+// Assuming this is within a method that handles form submission
+formData.append('profile_picture', this.profile_picture);
+formData.append('emp_id', this.user.emp_id);
+
+
+      axios.put('http://172.28.28.91:97/api/User/UpdateImage', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then(response => {
+        console.log('File uploaded successfully:', response.data);
+        // Handle response from server
+      })
+      .catch(error => {
+  if (error.response) {
+    // The request was made and the server responded with a status code
+    // that falls out of the range of 2xx
+    console.error('Error status:', error.response.status);
+    console.error('Error data:', error.response.data);
+  } else if (error.request) {
+    // The request was made but no response was received
+    console.error('No response received:', error.request);
+  } else {
+    // Something happened in setting up the request that triggered an Error
+    console.error('Error', error.message);
+  }
+  console.error('Error config:', error.config);
+});
+    },
 
     onProfilePictureChange(event) {
       const file = event.target.files[0];
