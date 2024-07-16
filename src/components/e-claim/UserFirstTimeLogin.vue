@@ -275,7 +275,7 @@
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
-              <div>
+          <!--<div>
                 <label
                   class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
                   for="phonenumber"
@@ -287,7 +287,7 @@
                   type="number"
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
-              </div>
+              </div> -->
             </div>
 
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
@@ -343,21 +343,25 @@
             </div>
 
             <div class="mt-6 flex justify-end">
+              <div class= "flex flex-row-reverse">
               <button
                 @click="verifyAndSaveData"
                 type="button"
                 class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
               >
-                Save
+                Verify
               </button>
               <button
                 @click="uploadimg()"
                 type="button"
-                class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+                class="mr-4 px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
               >
-                upload
+                Save Picture
               </button>
+              </div>
             </div>
+
+            <!-- OTP Modal -->
             <div v-if="showOtpModal" class="fixed z-10 inset-0 overflow-y-auto">
               <div
                 class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
@@ -424,6 +428,7 @@
                 </div>
               </div>
             </div>
+
             <!-- OTP Request Modal -->
             <div
               v-if="showRequestOtpModal"
@@ -545,6 +550,7 @@ export default {
     this.userDetails = store.getSession().userDetails;
     console.log(this.userDetails);
     this.fetchHrData();
+    this.addEventListeners();
   },
 
   methods: {
@@ -737,6 +743,19 @@ console.log("Employee Data:", employeeData);
         }
       }
     },
+
+    addEventListeners() {
+      window.addEventListener("beforeunload", this.beforeUnloadHandler);
+    },
+
+    beforeUnloadHandler(event) {
+      if (this.showOtpModal) {
+        const confirmationMessage = "You have not completed OTP verification. Are you sure you want to leave?";
+        event.returnValue = confirmationMessage; 
+        return confirmationMessage; 
+      }
+    },
+
     async verifyOtp() {
       try {
         const baseUrl = "http://172.28.28.91:97";
@@ -755,6 +774,7 @@ console.log("Employee Data:", employeeData);
             this.showSuccessNotification = false;
             this.$router.push("/homepage");
           }, 3000);
+           window.removeEventListener("beforeunload", this.beforeUnloadHandler);
         } else {
           alert("Invalid OTP. Please try again.");
         }
@@ -778,6 +798,7 @@ console.log("Employee Data:", employeeData);
         }
       }
     },
+    
     requestNewOtp() {
       if (this.timer === 0) {
         axios
@@ -840,6 +861,10 @@ console.log("Employee Data:", employeeData);
           clearInterval(this.timerInterval);
         }
       }, 1000);
+    },
+
+    beforeDestroy() {
+      window.removeEventListener("beforeunload", this.beforeUnloadHandler);
     },
   },
 };

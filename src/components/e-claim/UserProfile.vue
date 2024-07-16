@@ -167,155 +167,6 @@
               </div>
             </div>
           </div>
-
-          <div class="mt-5 sm:mt-6 sm:flex sm:flex-row-reverse">
-            <button
-              type="button"
-              @click="verifyAndSaveData"
-              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-700 text-base font-bold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
-            >
-              Verify
-            </button>
-          </div>
-
-          <!-- OTP Request Modal -->
-          <div
-            v-if="showRequestOtpModal"
-            class="fixed z-10 inset-0 overflow-y-auto"
-          >
-            <div
-              class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
-            >
-              <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-              </div>
-
-              <span
-                class="hidden sm:inline-block sm:align-middle sm:h-screen"
-                aria-hidden="true"
-                >&#8203;</span
-              >
-
-              <div
-                class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
-              >
-                <button
-                  @click="closeRequestOtpModal"
-                  type="button"
-                  class="absolute top-0 right-0 mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
-                >
-                  <span class="sr-only">Close</span>
-                  <svg
-                    class="h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-
-                <div>
-                  <h3 class="text-xl leading-6 font-medium text-gray-900">
-                    Request OTP Code for Account Activation
-                  </h3>
-                  <p class="mt-4 mb-8 text-md text-gray-500">
-                    To complete your profile activation, please request One-Time
-                    Password (OTP) and it will be sent to
-                    <strong>{{ user.email_address }}</strong
-                    >.
-                  </p>
-                </div>
-                <div class="mt-5 sm:mt-6 sm:flex sm:flex-row-reverse">
-                  <button
-                    type="button"
-                    @click="sendOtp"
-                    class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-700 text-base font-bold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
-                  >
-                    Request OTP
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- OTP Modal -->
-          <div v-if="showOtpModal" class="fixed z-10 inset-0 overflow-y-auto">
-            <div
-              class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
-            >
-              <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-              </div>
-
-              <span
-                class="hidden sm:inline-block sm:align-middle sm:h-screen"
-                aria-hidden="true"
-                >&#8203;</span
-              >
-
-              <div
-                class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
-              >
-                <div>
-                  <h3 class="text-xl leading-6 font-medium text-gray-900">
-                    Enter OTP Code
-                  </h3>
-                  <p class="mt-4 mb-4 text-md text-gray-500">
-                    We’ve sent a code to
-                    <strong>{{ user.email_address }}</strong
-                    >.
-                  </p>
-                  <div class="mt-2">
-                    <input
-                      type="text"
-                      v-model="otp"
-                      class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                      placeholder="Enter OTP"
-                    />
-                  </div>
-                  <p class="mt-2 text-sm text-gray-500">
-                    Didn't get a code?
-                    <span v-if="timer > 0">
-                      Wait <span class="underline">{{ timer }} seconds</span> to
-                      resend.
-                    </span>
-                    <a
-                      v-else
-                      href="#"
-                      @click.prevent="requestNewOtp"
-                      class="mb-8 text-blue-500 underline"
-                    >
-                      Click here to resend.
-                    </a>
-                  </p>
-                </div>
-                <div class="mt-5 sm:mt-6 sm:flex sm:flex-row-reverse">
-                  <button
-                    type="button"
-                    @click="verifyOtp"
-                    class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-700 text-base font-bold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
-                  >
-                    Verify
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            v-if="showSuccessNotification"
-            class="fixed top-4 right-4 p-4 bg-green-500 text-white rounded-lg shadow-lg"
-          >
-            Activation successful! Redirecting...
-          </div>
         </div>
       </div>
     </div>
@@ -324,19 +175,34 @@
 
 <script>
 import axios from "axios";
+import { store } from "@/views/store.js";
 
 export default {
   data() {
     return {
-      user: JSON.parse(localStorage.getItem("userProfile")) || {},
+      user: JSON.parse(localStorage.getItem("userProfile")) || {
+        name: "",
+        branch: "",
+        department: "",
+        emp_id: "",
+        reporting_to: "",
+        reporting_to_dept: "",
+        email_address: "",
+        phone_number: "",
+        bank_name: "",
+        bank_number: "",
+        spouse: "",
+        home_address: "",
+        profile_picture: null,
+      },
       defaultProfilePicture: require("@/assets/images/profile.png"),
-      showRequestOtpModal: false,
-      showOtpModal: false,
-      showSuccessNotification: false,
-      otp: "",
-      timer: 0,
-      timerInterval: null,
     };
+  },
+
+  created() {
+    this.userDetails = store.getSession().userDetails;
+    console.log(this.userDetails);
+    this.fetchHrData();
   },
 
   methods: {
@@ -351,191 +217,66 @@ export default {
       }
     },
 
-    deleteProfilePicture() {
-      this.profile_picture = null;
-    },
-
-    verifyAndSaveData() {
-      this.saveUserData();
-      this.saveProfilePicture();
-      this.showRequestOtpModal = true;
-    },
-
-    saveUserData() {
-      const updateUserUrl = "http://172.28.28.91:97/api/User/UpdateEmployee";
+    updateEmployeeData() {
+      const employeeData = {
+        emp_id: this.user.emp_id,
+        name: this.user.name,
+        bank_name: this.user.bank_name,
+        bank_number: String(this.user.bank_number),
+        email_address: this.user.email_address,
+        home_address: this.user.home_address,
+        spouse: this.user.spouse,
+        phone_number: this.user.phone_number,
+      };
+console.log("Employee Data:", employeeData);
       axios
-        .put(updateUserUrl, this.user)
+        .put("http://172.28.28.91:97/api/User/UpdateEmployee", employeeData)
         .then((response) => {
-          console.log("User data saved successfully:", response.data);
+          console.log("Response:", response);
+          if (response.data.status_code === "200") {
+            console.log("Successfully Updated:", response.data.message);
+            alert("Successfully Updated.");
+            // Additional logic here for successful update
+          } else {
+            console.error("Backend error:", response.data.message);
+            alert(response.data.message || "Failed to update. Please try again.");
+            // Additional error handling logic here
+          }
         })
         .catch((error) => {
-          console.error("Error saving user data:", error);
+          console.error("Error updating employee data:", error);
+          alert("An error occurred while updating employee data.");
+          // Additional error handling logic here
         });
     },
-
-    saveProfilePicture() {
-      const formData = new FormData();
-      formData.append("profile_picture", this.user.profile_picture);
-      formData.append("emp_id", this.user.emp_id);
-
-      const updateImageUrl = "http://172.28.28.91:97/api/User/UpdateImage";
+  
+    fetchHrData() {
+      const username_id = store.getSession().userDetails.userId;
       axios
-        .put(updateImageUrl, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
+        .get(`http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
-          console.log("Profile picture saved successfully:", response.data.result[0]);
+          const data = response.data.result;
+          if (data && data.length > 0) {
+            const user = data[0];
+            this.user.branch = user.branch;
+            this.user.department = user.department;
+            this.user.emp_id = user.emp_id;
+            this.user.reporting_to = user.reporting_to;
+            this.user.reporting_to_dept = user.reporting_to_dept;
+            this.profile_picture = user.profile_picture;
+            this.user.name = user.name;
+            this.user.branch = user.branch;
+            this.user.email_address = user.email_address;
+            this.user.phone_number = user.phone_number;
+            this.user.bank_name = user.bank_name;
+            this.user.bank_number = user.bank_number;
+            this.user.spouse = user.spouse;
+            this.user.home_address = user.home_address;
+          }
         })
         .catch((error) => {
-          console.error("Error saving profile picture:", error);
+          console.error("Error fetching HR data:", error);
         });
-    },
-
-    async sendOtp() {
-      try {
-        const response = await axios.post(
-          "http://172.28.28.91:97/api/User/GenerateOTP",
-          {
-            email: this.user.email_address,
-          }
-        );
-
-        if (response.data.success) {
-          this.showRequestOtpModal = false;
-          this.showOtpModal = true;
-          alert("OTP has been sent to your email.");
-          this.startTimer();
-        } else {
-          alert(
-            response.data.message || "Failed to send OTP. Please try again."
-          );
-        }
-      } catch (error) {
-        console.error("Error sending OTP:", error);
-        if (error.response) {
-          console.error("Response data:", error.response.data);
-          console.error("Response status:", error.response.status);
-          console.error("Response headers:", error.response.headers);
-          alert(
-            `An error occurred: ${
-              error.response.data.message ||
-              "Unable to send OTP. Please try again."
-            }`
-          );
-        } else if (error.request) {
-          console.error("Request data:", error.request);
-          alert(
-            "No response from the server. Please check your network connection and try again."
-          );
-        } else {
-          console.error("Error message:", error.message);
-          alert(`Error: ${error.message}`);
-        }
-      }
-    },
-
-    async verifyOtp() {
-      try {
-        const response = await axios.post(
-          "http://172.28.28.91:97/api/User/ValidateOTP",
-          {
-            email: this.user.email_address,
-            otp: this.otp,
-          }
-        );
-        if (response.data.success) {
-          clearInterval(this.timerInterval);
-          this.showOtpModal = false;
-          this.showSuccessNotification = true;
-          setTimeout(() => {
-            this.showSuccessNotification = false;
-            this.$router.push("/homepage");
-          }, 3000);
-        } else {
-          alert("Invalid OTP. Please try again.");
-        }
-      } catch (error) {
-        console.error("Error verifying OTP:", error);
-        if (error.response) {
-          console.error("Response data:", error.response.data);
-          console.error("Response status:", error.response.status);
-          console.error("Response headers:", error.response.headers);
-          alert(
-            `An error occurred: ${
-              error.response.data.message ||
-              "Unable to verify OTP. Please try again."
-            }`
-          );
-        } else if (error.request) {
-          console.error("Request data:", error.request);
-          alert(
-            "No response from the server. Please check your network connection and try again."
-          );
-        } else {
-          console.error("Error message:", error.message);
-          alert(`Error: ${error.message}`);
-        }
-      }
-    },
-
-    requestNewOtp() {
-      if (this.timer === 0) {
-        axios
-          .post("http://172.28.28.91:97/api/User/GenerateOTP", {
-            email: this.user.email_address,
-          })
-          .then((response) => {
-            if (response.data.success) {
-              this.otp = "";
-              alert("A new OTP has been sent to your email.");
-              this.startTimer();
-            } else {
-              alert(
-                response.data.message || "Failed to send OTP. Please try again."
-              );
-            }
-          })
-          .catch((error) => {
-            console.error("Error sending OTP:", error);
-            if (error.response) {
-              console.error("Response data:", error.response.data);
-              console.error("Response status:", error.response.status);
-              console.error("Response headers:", error.response.headers);
-              alert(
-                `An error occurred: ${
-                  error.response.data.message ||
-                  "Unable to send OTP. Please try again."
-                }`
-              );
-            } else if (error.request) {
-              console.error("Request data:", error.request);
-              alert(
-                "No response from the server. Please check your network connection and try again."
-              );
-            } else {
-              console.error("Error message:", error.message);
-              alert(`Error: ${error.message}`);
-            }
-          });
-      }
-    },
-
-    closeRequestOtpModal() {
-      this.showRequestOtpModal = false;
-    },
-
-    startTimer() {
-      this.timer = 120;
-      clearInterval(this.timerInterval);
-      this.timerInterval = setInterval(() => {
-        if (this.timer > 0) {
-          this.timer--;
-        } else {
-          clearInterval(this.timerInterval);
-        }
-      }, 1000);
     },
   },
 };

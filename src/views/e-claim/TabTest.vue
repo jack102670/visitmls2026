@@ -318,7 +318,32 @@ export default {
     };
   },
 
+   mounted() {
+    this.addEventListeners();
+  },
+
+  beforeUnmount() {
+    this.removeEventListeners();
+  },
+
   methods: {
+    addEventListeners() {
+      window.addEventListener("beforeunload", this.beforeUnloadHandler);
+    },
+
+    removeEventListeners() {
+      window.removeEventListener("beforeunload", this.beforeUnloadHandler);
+    },
+
+    beforeUnloadHandler(event) {
+      if (this.showOtpModal) {
+        const confirmationMessage = "You have not completed OTP verification. Are you sure you want to leave?";
+        event.preventDefault(); // For Safari
+        event.returnValue = confirmationMessage; // For other browsers
+        return confirmationMessage;
+      }
+    },
+
     onProfilePictureChange(event) {
       const file = event.target.files[0];
       if (file) {
@@ -350,9 +375,14 @@ export default {
           this.showSuccessNotification = false;
           this.$router.push("/homepage");
         }, 3000);
+         this.removeEventListeners();
       } else {
         alert("Invalid OTP. Please try again.");
       }
+    },
+
+    beforeDestroy() {
+      window.removeEventListener("beforeunload", this.beforeUnloadHandler);
     },
 
     requestNewOtp() {
