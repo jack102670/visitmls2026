@@ -275,6 +275,19 @@
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
+              <div>
+                <label
+                  class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
+                  for="phonenumber"
+                  >Spouse</label
+                >
+                <input
+                  v-model="user.phone_number"
+                  id="phone_number"
+                  type="number"
+                  class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                />
+              </div>
             </div>
 
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
@@ -535,6 +548,39 @@ export default {
   },
 
   methods: {
+    updateEmployeeData() {
+      const employeeData = {
+        emp_id: this.user.emp_id,
+        name: this.user.name,
+        bank_name: this.user.bank_name,
+        bank_number: String(this.user.bank_number),
+        email_address: this.user.email_address,
+        home_address: this.user.home_address,
+        spouse: this.user.spouse,
+        phone_number: this.user.phone_number,
+      };
+console.log("Employee Data:", employeeData);
+      axios
+        .put("http://172.28.28.91:97/api/User/UpdateEmployee", employeeData)
+        .then((response) => {
+          console.log("Response:", response);
+          if (response.data.status_code === "200") {
+            console.log("Successfully Updated:", response.data.message);
+            alert("Successfully Updated.");
+            // Additional logic here for successful update
+          } else {
+            console.error("Backend error:", response.data.message);
+            alert(response.data.message || "Failed to update. Please try again.");
+            // Additional error handling logic here
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating employee data:", error);
+          alert("An error occurred while updating employee data.");
+          // Additional error handling logic here
+        });
+    },
+  
     fetchHrData() {
       const username_id = store.getSession().userDetails.userId;
       axios
@@ -645,6 +691,7 @@ export default {
     },
     verifyAndSaveData() {
       // this.saveUserData();
+      this.updateEmployeeData();
       // this.saveProfilePicture();
       this.showRequestOtpModal = true;
     },
