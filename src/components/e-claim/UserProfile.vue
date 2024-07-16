@@ -481,9 +481,43 @@ export default {
 
     requestNewOtp() {
       if (this.timer === 0) {
-        this.otp = "";
-        alert("A new OTP has been sent to your email.");
-        this.startTimer();
+        axios
+          .post("http://172.28.28.91:97/api/User/GenerateOTP", {
+            email: this.user.email_address,
+          })
+          .then((response) => {
+            if (response.data.success) {
+              this.otp = "";
+              alert("A new OTP has been sent to your email.");
+              this.startTimer();
+            } else {
+              alert(
+                response.data.message || "Failed to send OTP. Please try again."
+              );
+            }
+          })
+          .catch((error) => {
+            console.error("Error sending OTP:", error);
+            if (error.response) {
+              console.error("Response data:", error.response.data);
+              console.error("Response status:", error.response.status);
+              console.error("Response headers:", error.response.headers);
+              alert(
+                `An error occurred: ${
+                  error.response.data.message ||
+                  "Unable to send OTP. Please try again."
+                }`
+              );
+            } else if (error.request) {
+              console.error("Request data:", error.request);
+              alert(
+                "No response from the server. Please check your network connection and try again."
+              );
+            } else {
+              console.error("Error message:", error.message);
+              alert(`Error: ${error.message}`);
+            }
+          });
       }
     },
 
