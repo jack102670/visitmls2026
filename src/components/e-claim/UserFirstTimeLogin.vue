@@ -498,12 +498,26 @@ import { store } from "@/views/store.js";
 export default {
   data() {
     return {
-      user: {},
+      user: {
+        name: "",
+        branch: "",
+        department: "",
+        emp_id: "",
+        reporting_to: "",
+        reporting_to_dept: "",
+        email_address: "",
+        phone_number: "",
+        bank_name: "",
+        bank_number: "",
+        spouse: "",
+        home_address: "",
+        profile_picture: null,
+      },
       bankOptions: bankOptions,
-      profile_picture: null,
       tempImageUrl: "",
       cropper: null,
       showCropper: false,
+      userDetails: "",
       defaultProfilePicture: require("@/assets/images/profile.png"),
       showRequestOtpModal: false,
       showOtpModal: false,
@@ -515,6 +529,8 @@ export default {
   },
 
   created() {
+    this.userDetails = store.getSession().userDetails;
+    console.log(this.userDetails);
     this.fetchHrData();
   },
 
