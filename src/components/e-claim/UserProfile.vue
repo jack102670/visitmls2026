@@ -386,7 +386,7 @@ export default {
           },
         })
         .then((response) => {
-          console.log("Profile picture saved successfully:", response.data);
+          console.log("Profile picture saved successfully:", response.data.result[0]);
         })
         .catch((error) => {
           console.error("Error saving profile picture:", error);
@@ -397,16 +397,17 @@ export default {
       try {
         const response = await axios.post(
           "http://172.28.28.91:97/api/User/GenerateOTP",
-          { email: this.user.email_address }
+          {
+            email: this.user.email_address,
+          }
         );
 
         if (response.data.success) {
           this.showRequestOtpModal = false;
-          alert("OTP has been sent to your email.");
           this.showOtpModal = true;
+          alert("OTP has been sent to your email.");
           this.startTimer();
         } else {
-          console.error("Backend error:", response.data);
           alert(
             response.data.message || "Failed to send OTP. Please try again."
           );

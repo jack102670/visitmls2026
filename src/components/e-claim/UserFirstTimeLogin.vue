@@ -348,64 +348,85 @@
 import { bankOptions } from "@/javascript/eClaimOptions.js";
 import Cropper from "cropperjs";
 import "cropperjs/dist/cropper.css";
-import axios from 'axios';
+import axios from "axios";
+import { store } from "../../views/store.js";
 
 export default {
   data() {
     return {
-      user: {},
+      user: {
+        name: "",
+        branch: "",
+        department: "",
+        emp_id: "",
+        reporting_to: "",
+        reporting_to_dept: "",
+        email_address: "",
+        phone_number: "",
+        bank_name: "",
+        bank_number: "",
+        spouse: "",
+        home_address: "",
+        profile_picture: null,
+      },
       bankOptions: bankOptions,
-      profile_picture: null,
       tempImageUrl: "",
       cropper: null,
       showCropper: false,
+      userDetails: "",
       defaultProfilePicture: require("@/assets/images/profile.png"),
     };
   },
 
   created() {
+    this.userDetails = store.getSession().userDetails;
+    console.log(this.userDetails);
     this.fetchHrData();
   },
 
   methods: {
-    fetchHrData() {
-      axios.get('http://172.28.28.91:97/api/User/GetAllEmployees')
-        .then(response => {
-          const data = response.data;
-          if (data && data.length > 0) {
-            const user = data[0];
-            this.user.branch = user.branch;
-            this.user.department = user.department;
-            this.user.emp_id = user.emp_id;
-            this.user.reporting_to = user.reporting_to;
-            this.user.reporting_to_dept = user.reporting_to_dept;
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching HR data:', error);
-        });
-    },
-
-
-    onProfilePictureChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.tempImageUrl = e.target.result;
-          this.showCropper = true;
-          this.$nextTick(() => {
-            const image = this.$refs.image;
-            this.cropper = new Cropper(image, {
-              aspectRatio: 1,
-              viewMode: 1,
-              autoCropArea: 1,
-            });
-          });
-        };
-        reader.readAsDataURL(file);
+    async fetchHrData() {
+      try {
+        const userId = this.userDetails.userId;
+        console.log(userId, "USER");
+        const response = await axios.get(
+          `http://172.28.28.91:97/api/User/GetEmployeeById/${userId}`
+        );
+        const userData = response.data.result[0];
+        console.log(userData, "userData");
+        this.user.emp_id = userData.emp_id;
+        this.user.branch = userData.branch;
+        this.user.department = userData.department;
+        this.user.reporting_to = userData.reporting_to;
+        this.user.reporting_to_dept = userData.reporting_to_dept;
+      } catch (error) {
+        console.error("Error fetching HR data:", error);
       }
     },
+
+    onProfilePictureChange(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.tempImageUrl = e.target.result;
+        this.showCropper = true;
+        this.$nextTick(() => {
+          const image = this.$refs.image;
+          this.cropper = new Cropper(image, {
+            aspectRatio: 1,
+            viewMode: 1,
+            autoCropArea: 1,
+          });
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  },
+
+  triggerFileInput() {
+    this.$refs.fileInput.click();
+  },
 
     cropImage() {
       if (this.cropper) {
