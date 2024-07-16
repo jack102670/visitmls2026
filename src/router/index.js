@@ -119,12 +119,13 @@ const routes = [
     props: true,
   },
   {
-    path: '/adminhrsummaryclaim',
+    path: '/adminhrsummaryclaim/:rn',
     name: 'AdminHRSummaryClaimpage',
     components: {
       default: AdminHRSummaryClaimpage,
       Sidebar: Newsidebar,
     },
+    props:true,
   },
   {
     path: '/admindashboard',
