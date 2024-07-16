@@ -45,7 +45,17 @@ import verified from '../views/e-claim/verifiedpage.vue';
 import AssignChecker from '../components/e-claim/AssignChecker.vue';
 import HRRegisterEmployee from '../components/e-claim/HRRegisterEmployee.vue';
 import SummaryClaimpage from '../views/e-claim/user-ui/SummaryClaimpage.vue';
+import VerifierSummaryClaimpage from '../views/e-claim/user-ui/VerifierSummaryClaimpage.vue';
 const routes = [
+  {
+    path: '/VerifierClaimpage/:rn',
+    name: 'VerifierSummaryClaimpage',
+    components: {
+      default: VerifierSummaryClaimpage,
+      Sidebar: Newsidebar,
+    },
+    props: true,
+  },
   {
     path: '/verified',
     name: 'verified',
