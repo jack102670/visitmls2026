@@ -407,20 +407,48 @@ const router = createRouter({
   routes,
 });
 
+// Step 1: Modify the checkUserStatusAndShowModal method
+function checkUserStatusAndShowModal() {
+  return new Promise((resolve, reject) => {
+    const username_id = store.getSession().userDetails.userId;
+    fetch(`http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`)
+      .then(response => response.json()) // Parse the response body to JSON
+      .then(data => {
+        const userStatus = data.result[0].account_status;
+        console.log("User status:", userStatus);
+        if (userStatus === '0') {
+          resolve(false); // User has not completed their profile
+        } else {
+          resolve(true); // User has completed their profile
+        }
+      })
+      .catch(error => {
+        console.error("There was an error fetching the user status:", error);
+        reject(error);
+      });
+  });
+}
+
+// Step 2: Modify the router.beforeEach guard
 router.beforeEach((to, from, next) => {
   const publicPages = ['Login', 'Loginstaff', 'Vendorsingup', 'testing']; // Add other public route names as necessary
-
-  // Check if the current route requires authentication
   const authRequired = !publicPages.includes(to.name);
-
-  // Check if the session exists
   const session = store.getSession();
 
   if (authRequired && !session) {
-    // Redirect to login page if no session and the route requires auth
     next({ name: 'Loginstaff' });
+  } else if (session) {
+    checkUserStatusAndShowModal().then(isProfileComplete => {
+      if (!isProfileComplete && to.path !== '/firsttimelogin') {
+        next('/firsttimelogin');
+      } else {
+        next();
+      }
+    }).catch(error => {
+      console.error("Error checking user status:", error);
+      next('/error');
+    });
   } else {
-    // Otherwise, proceed as normal
     next();
   }
 });

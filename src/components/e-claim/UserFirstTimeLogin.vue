@@ -551,6 +551,7 @@ export default {
     console.log(this.userDetails);
     this.fetchHrData();
     this.addEventListeners();
+    
   },
 
   methods: {
@@ -628,7 +629,7 @@ console.log("Employee Data:", employeeData);
         "profile_picture",
         this.dataURLtoBlob(this.profile_picture)
       );
-      formData.append("emp_id", store.getSession().userDetails.userId);
+      formData.append("emp_id", this.user.emp_id);
 
       axios
         .put("http://172.28.28.91:97/api/User/UpdateImage", formData, {
@@ -684,6 +685,7 @@ console.log("Employee Data:", employeeData);
     },
     cropImage() {
       this.profile_picture = this.cropper.getCroppedCanvas().toDataURL();
+
       this.showCropper = false;
       this.cropper.destroy();
     },
@@ -695,11 +697,36 @@ console.log("Employee Data:", employeeData);
     deleteProfilePicture() {
       this.profile_picture = null;
     },
+    checkUserStatusAndShowModal() {
+      const username_id = store.getSession().userDetails.userId;
+    axios.get(`http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`)
+      .then(response => {
+        // Assuming the API response structure has a status field
+        const userStatus = response.data.result[0].account_status;
+        console.log("User status:", userStatus);
+        if (userStatus === '0') {
+          // User has not completed their OTP, show the modal
+          this.showRequestOtpModal = true;
+        } else {
+          // User has completed their OTP, do not show the modal
+          this.showRequestOtpModal = false;
+        }
+      })
+      .catch(error => {
+        console.error("There was an error fetching the user status:", error);
+        // Handle error or set a default behavior if the API call fails
+      });
+  },
     verifyAndSaveData() {
       // this.saveUserData();
+      if(this.tempImageUrl ) {
+          this.uploadimg();
+      }
+
+
       this.updateEmployeeData();
       // this.saveProfilePicture();
-      this.showRequestOtpModal = true;
+     this.checkUserStatusAndShowModal();
     },
     async sendOtp() {
       try {

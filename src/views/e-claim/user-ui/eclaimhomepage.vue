@@ -733,8 +733,10 @@ export default {
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800",
         CLOSE:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800",
-        "": "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800",
+        "": "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-indigo-100/60 dark:bg-gray-800",
         APPROVED:
+          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800",
+          "APPROVED. AWAITING PAYMENT.":
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800",
         COMPLETED:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800",
@@ -745,18 +747,21 @@ export default {
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800",
         REIMBURSE:
           "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-white-100/60 dark:bg-gray-800",
+          "REJECTED. CHECK DETAILS." : "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800", 
       };
       return colorMap[status] || "  bg-orange-100/ 60 dark:bg-gray-800"; // Default to a dark color if the status is not recognized
     },
     getStatusDotClass(status) {
       const colorMap = {
         RESUBMISSION: "h-1.5 w-1.5 rounded-full bg-orange-500",
-        "": "h-1.5 w-1.5 rounded-full bg-red-500",
+        "": "h-1.5 w-1.5 rounded-full bg-indigo-500",
         APPROVED: "h-1.5 w-1.5 rounded-full bg-emerald-500",
         COMPLETED: "h-1.5 w-1.5 rounded-full bg-blue-500",
         REJECTED: "h-1.5 w-1.5 rounded-full bg-red-500",
         PENDING: "h-1.5 w-1.5 rounded-full bg-orange-500",
-        "APPROVED. AWAITING PAYMENT." : "h-1.5 w-1.5 rounded-full bg-orange-500",
+        "APPROVED. AWAITING PAYMENT." : "h-1.5 w-1.5 rounded-full bg-emerald-500",
+        "VERIFIED. WAITING FOR APPROVAL.":"h-1.5 w-1.5 rounded-full bg-orange-500",
+        "REJECTED. CHECK DETAILS." : "h-1.5 w-1.5 rounded-full bg-red-500", 
 
         REIMBURSE: "h-1.5 w-1.5 rounded-full bg-black",
       };
@@ -765,13 +770,15 @@ export default {
     getStatusTextClass(status) {
       const colorMap = {
         RESUBMISSION: "text-sm font-normal text-orange-500",
-        "": "text-sm font-normal text-red-500",
+        "": "text-sm font-normal text-indigo-500",
         APPROVED: "text-sm font-normal text-emerald-500",
         COMPLETED: "text-sm font-normal text-blue-500",
         REJECTED: "text-sm font-normal text-red-500",
         PENDING: "text-sm font-normal text-orange-500",
         REIMBURSE: "text-sm font-normal text-black",
-        "VERIFIED. WAITING FOR APPROVAL." : "text-sm font-normal text-orange-500", 
+        "VERIFIED. WAITING FOR APPROVAL.":"text-sm font-normal text-orange-500",
+        "APPROVED. AWAITING PAYMENT." : "text-sm font-normal text-emerald-500",
+        "REJECTED. CHECK DETAILS." : "text-sm font-normal text-red-500", 
       };
       return colorMap[status] || "text-orange-500"; // Default to a dark color if the status is not recognized
     },

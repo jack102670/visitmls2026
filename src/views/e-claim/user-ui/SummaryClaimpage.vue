@@ -356,29 +356,29 @@
 
         <!-- Status Table -->
         <div
-          class="text-xs lg:text-base border-2 mt-10 border-gray-400 dark:border-gray-600 rounded-2xl"
+          class="text-xs border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl"
           id="table-overflow"
         >
           <table class="w-full">
             <!-- title -->
-            <tr class="h-10 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
+            <tr class="h-8 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
               <th
                 class="rounded-tl-2xl w-[20%] text-center border-r-2 border-gray-400 dark:border-gray-600"
               >
                 STATUS
               </th>
-              <th class="w-[24%] pl-6">NAME</th>
-              <th class="w-[23%]">DESIGNATION</th>
-              <th class="w-[23%]">DEPARTMENT</th>
-              <th class="w-[10%]">DATE</th>
+              <th class=" pl-6">NAME</th>
+              <th class="">DESIGNATION</th>
+              <th class="">DEPARTMENT</th>
+              <th class="50%">DATE</th>
             </tr>
 
             <!-- table information -->
             <tr
-              class="h-10 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
+              class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
             >
               <th
-                class="text-xs lg:text-base text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
+                class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
               >
                 <!-- Status Bar -->
                 <div
@@ -400,16 +400,16 @@
                   <p>{{ statusVerifier }}</p>
                 </div>
               </th>
-              <td class="pl-6">{{ this.claimDetails.verifier_name }}</td>
-              <td class="">{{ this.claimDetails.verifier_designation }}</td>
-              <td>{{ this.claimDetails.verifier_department }}</td>
-              <td class="">{{ this.claimDetails.verified_date }}</td>
+              <td class="pl-6">{{ claimDetails.verifier_name }}</td>
+              <td class="">{{ claimDetails.verifier_designation }}</td>
+              <td>{{ claimDetails.verifier_department }}</td>
+              <td class="">{{ claimDetails.verified_date }}</td>
             </tr>
             <tr
-              class="h-10 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
+              class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
             >
               <th
-                class="text-xs lg:text-base text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
+                class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
               >
                 <!-- Status Bar -->
                 <div
@@ -431,14 +431,13 @@
                   <p>{{ statusApprover }}</p>
                 </div>
               </th>
-              <td class="pl-6">{{ this.claimDetails.approver_name }}</td>
-              <td class="">{{ this.claimDetails.approver_designation }}</td>
-              <td>{{ this.claimDetails.approver_department }}</td>
-              <td class="">{{ this.claimDetails.approved_date }}</td>
+              <td class="pl-6">{{ claimDetails.approver_name }}</td>
+              <td class="">{{ claimDetails.approver_designation }}</td>
+              <td>{{ claimDetails.approver_department }}</td>
+              <td class="">{{ claimDetails.approved_date }}</td>
             </tr>
           </table>
         </div>
-
         <!-- Resubmission table -->
 
         <!-- <div
