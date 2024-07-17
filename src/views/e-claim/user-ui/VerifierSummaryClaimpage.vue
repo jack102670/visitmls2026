@@ -987,7 +987,7 @@ export default {
         },
         {
           label: "Reject",
-          class: "bg-red-500 text-white hover:bg-gray-100",
+          class: "bg-red-500 text-white hover:bg-red-600",
           dropDownClass: "text-red-500 hover:text-gray-800",
         },
         {
@@ -1477,7 +1477,7 @@ export default {
 
         const approveData = {
           approver_status: "APPROVED",
-          approver_comment: this.remark,
+          approver_comment: this.remark? this.remark:"",
           user_email: "user_email",
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
@@ -1506,7 +1506,7 @@ export default {
 
         const approveData = {
           approver_status: "VERIFIED",
-          approver_comment: this.remark,
+          approver_comment: this.remark? this.remark:"",
           user_email: "user_email",
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
@@ -1532,7 +1532,7 @@ export default {
 
         const approveData = {
           approver_status: "REJECTED",
-          approver_comment: this.remark,
+          approver_comment: this.remark? this.remark:"",
           user_email: "user_email",
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
@@ -1558,7 +1558,7 @@ export default {
 
         const approveData = {
           approver_status: "RESUBMIT",
-          approver_comment: this.remark,
+          approver_comment: this.remark? this.remark:"",
           user_email: "user_email",
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
