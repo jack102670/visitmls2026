@@ -14,8 +14,7 @@ export const formStore = {
     memo: '',
     uniqueCode: '',
 
-    selectedOption:'Finance',
-
+    selectedOption: 'Finance',
   },
 
   setFormData(data) {
@@ -41,8 +40,7 @@ export const formStore = {
       reportEndDate: '',
       memo: '',
       uniqueCode: '',
-      selectedOption:'',
-
+      selectedOption: '',
     };
   },
 };

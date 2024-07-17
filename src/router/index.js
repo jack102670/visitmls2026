@@ -135,7 +135,7 @@ const routes = [
       default: AdminHRSummaryClaimpage,
       Sidebar: Newsidebar,
     },
-    props:true,
+    props: true,
   },
   {
     path: '/admindashboard',
@@ -412,18 +412,18 @@ function checkUserStatusAndShowModal() {
   return new Promise((resolve, reject) => {
     const username_id = store.getSession().userDetails.userId;
     fetch(`http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`)
-      .then(response => response.json()) // Parse the response body to JSON
-      .then(data => {
+      .then((response) => response.json()) // Parse the response body to JSON
+      .then((data) => {
         const userStatus = data.result[0].account_status;
-        console.log("User status:", userStatus);
+        console.log('User status:', userStatus);
         if (userStatus === '0') {
           resolve(false); // User has not completed their profile
         } else {
           resolve(true); // User has completed their profile
         }
       })
-      .catch(error => {
-        console.error("There was an error fetching the user status:", error);
+      .catch((error) => {
+        console.error('There was an error fetching the user status:', error);
         reject(error);
       });
   });
@@ -438,16 +438,18 @@ router.beforeEach((to, from, next) => {
   if (authRequired && !session) {
     next({ name: 'Loginstaff' });
   } else if (session) {
-    checkUserStatusAndShowModal().then(isProfileComplete => {
-      if (!isProfileComplete && to.path !== '/firsttimelogin') {
-        next('/firsttimelogin');
-      } else {
-        next();
-      }
-    }).catch(error => {
-      console.error("Error checking user status:", error);
-      next('/error');
-    });
+    checkUserStatusAndShowModal()
+      .then((isProfileComplete) => {
+        if (!isProfileComplete && to.path !== '/firsttimelogin') {
+          next('/firsttimelogin');
+        } else {
+          next();
+        }
+      })
+      .catch((error) => {
+        console.error('Error checking user status:', error);
+        next('/error');
+      });
   } else {
     next();
   }
