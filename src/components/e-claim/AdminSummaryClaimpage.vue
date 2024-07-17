@@ -452,10 +452,30 @@
                   <p>{{ statusApprover }}</p>
                 </div>
               </th>
-              <td class="pl-6">{{ claimDetails.approver_name }}</td>
-              <td class="">{{ claimDetails.approver_designation }}</td>
-              <td>{{ claimDetails.approver_department }}</td>
-              <td class="">{{ claimDetails.date_requested }}</td>
+              <td class="pl-6">
+                {{
+                  statusApprover == 'PENDING' ? '' : claimDetails.approver_name
+                }}
+              </td>
+              <td class="">
+                {{
+                  statusApprover == 'PENDING'
+                    ? ''
+                    : claimDetails.approver_designation
+                }}
+              </td>
+              <td>
+                {{
+                  statusApprover == 'PENDING'
+                    ? ''
+                    : claimDetails.approver_department
+                }}
+              </td>
+              <td class="">
+                {{
+                  statusApprover == 'PENDING' ? '' : claimDetails.date_requested
+                }}
+              </td>
             </tr>
           </table>
         </div>
