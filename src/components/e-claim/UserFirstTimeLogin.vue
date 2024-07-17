@@ -9,14 +9,19 @@
         <div
           class="relative overflow-hidden mt-1 max-w-4xl p-6 bg-white border-2 border-e-gray-200 rounded-md dark:bg-gray-800"
         >
-          <h2
+          <h2 v-if="status === '0'"
             class="text-3xl font-bold text-gray-700 capitalize dark:text-white"
           >
             Activate Your Profile
           </h2>
+          <h2 v-else
+            class="text-3xl font-bold text-gray-700 capitalize dark:text-white"
+          > 
+            Profile Page
+          </h2>
 
-          <section>
-            <h1 class="mb-4 text-gray-500 text-md">
+          <section >
+            <h1 v-if="status === '0'" class="mb-4 text-gray-500 text-md">
               Note: Please fill in all the mandatory fields to activate your
               profile.
             </h1>
@@ -42,6 +47,7 @@
                   />
                   <button
                     @click="deleteProfilePicture"
+                    type="button"
                     class="mt-2 text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
                   >
                     <svg
@@ -205,6 +211,7 @@
                 <input
                   v-model="user.email_address"
                   id="email_address"
+                  :disabled="this.status === '1'"
                   type="email"
                   required
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -278,7 +285,7 @@
                 <label
                   class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
                   for="phonenumber"
-                  >Spouse</label
+                  >Phone Number</label
                 >
                 <input
                   v-model="user.phone_number"
@@ -550,6 +557,7 @@ export default {
       otp: "",
       timer: 0,
       timerInterval: null,
+      status: "",
     };
   },
 
@@ -580,6 +588,11 @@ console.log("Employee Data:", employeeData);
           if (response.data.status_code === "200") {
             console.log("Successfully Updated:", response.data.message);
             alert("Successfully Updated.");
+            // Additional logic here for successful update
+          }
+          else if (response.data.status_code === "400") {
+            // console.log("Successfully Updated:", response.data.message);
+            alert(response.data.result || "Failed to update. Please try again.");
             // Additional logic here for successful update
           } else {
             console.error("Backend error:", response.data.message);
@@ -616,6 +629,7 @@ console.log("Employee Data:", employeeData);
             this.user.bank_number = user.bank_number;
             this.user.spouse = user.spouse;
             this.user.home_address = user.home_address;
+            this.status = user.account_status;
           }
         })
         .catch((error) => {
@@ -711,6 +725,7 @@ console.log("Employee Data:", employeeData);
         // Assuming the API response structure has a status field
         const userStatus = response.data.result[0].account_status;
         console.log("User status:", userStatus);
+     
         if (userStatus === '0') {
           // User has not completed their OTP, show the modal
           this.showRequestOtpModal = true;
@@ -875,12 +890,12 @@ console.log("Employee Data:", employeeData);
       }
     },
 
-    handleSubmit() {
-      this.user.profile_picture = this.profile_picture;
-      console.log("User data saved:", this.user);
-      localStorage.setItem("userProfile", JSON.stringify(this.user));
-      this.$router.push("/profile");
-    },
+    // handleSubmit() {
+    //   this.user.profile_picture = this.profile_picture;
+    //   console.log("User data saved:", this.user);
+    //   localStorage.setItem("userProfile", JSON.stringify(this.user));
+    //   this.$router.push("/profile");
+    // },
 
     closeRequestOtpModal() {
       this.showRequestOtpModal = false;

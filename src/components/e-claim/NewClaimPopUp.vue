@@ -158,12 +158,13 @@
               <input
                 type="text"
                 placeholder="Department.."
+                disabled
                 v-model="formData.department"
                 required
                 @click="toggleDropdown"
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
-              <div
+              <!-- <div
                 class="bg-slate-200 py-4 px-2 mt-2 rounded"
                 @click="toggleDropdown"
               >
@@ -181,7 +182,7 @@
                     d="M19 9l-7 7-7-7"
                   ></path>
                 </svg>
-              </div>
+              </div> -->
             </div>
             <div
               v-show="dropdownVisible"
@@ -472,6 +473,7 @@ export default {
     "formData.designation": function (newVal) {
       this.formData.designation = newVal.toUpperCase();
     },
+    
   },
   computed: {
     filteredDesignation() {
@@ -541,8 +543,9 @@ export default {
             if ("username" in selectedEmployee) {
               this.formData.claimantName = selectedEmployee.name;
               this.formData.designation = selectedEmployee.position_title;
-              this.fomData.department = selectedEmployee.department;
-              console.log("Employee username:", this.username);
+              this.formData.department = selectedEmployee.department;
+              this.formData.companyName = selectedEmployee.company_name? selectedEmployee.company_name : "";
+          
             } else {
               console.error(
                 "Employee found but username is missing:",
