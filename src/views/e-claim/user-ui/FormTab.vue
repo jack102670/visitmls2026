@@ -70,7 +70,9 @@
                       !isCompanyTransport ||
                       (field.id !== 'MileageKMLT' &&
                         field.id !== 'MileageRMLT' &&
-                        field.id !== 'TransportSpec')
+                        field.id !== 'TransportSpec' &&
+                        field.id !== 'PublicTransportSpec' &&
+                        field.id !== 'FareRMLT')
                     "
                   >
                     <template
@@ -80,117 +82,137 @@
                           field.id !== 'OtherClinicReasonML')
                       "
                     >
-                      <label
-                        :for="field.id"
-                        class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
+                      <template
+                        v-if="
+                          !isPublicTransport ||
+                          (field.id !== 'MileageKMLT' &&
+                            field.id !== 'MileageRMLT' &&
+                            field.id !== 'TransportSpec' &&
+                            field.id !== 'TollLT' &&
+                            field.id !== 'ParkingLT')
+                        "
                       >
-                        {{ field.label }}
-                        <span v-if="field.required" style="color: red">*</span>
-                      </label>
-
-                      <template v-if="field.type === 'select'">
-                        <select
-                          v-model="field.value"
-                          :required="field.required"
-                          :id="field.id"
-                          class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                        <template
+                          v-if="!isPersonalTransport || field.id !== 'FareRMLT'"
                         >
-                          <option
-                            v-for="(option, optionIndex) in field.options"
-                            :key="optionIndex"
-                            :value="option.value"
+                          <label
+                            :for="field.id"
+                            class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
                           >
-                            {{ option.label }}
-                          </option>
-                        </select>
-                      </template>
-
-                      <template v-else-if="field.type === 'year'">
-                        <select
-                          v-model="field.value"
-                         :required="field.required"
-                          :id="field.id"
-                          class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                        >
-                          <option
-                            v-for="year in yearRange"
-                            :key="year"
-                            :value="year"
-                          >
-                            {{ year }}
-                          </option>
-                        </select>
-                      </template>
-
-                      <template v-else-if="field.type === 'radio-group'">
-                        <div class="grid grid-cols-2">
-                          <div
-                            class="p-4 pt-2 pb-2 flex items-center"
-                            v-for="option in field.options"
-                            :key="option.value"
-                          >
-                            <input
-                              type="radio"
-                              :id="option.value"
-                              :name="field.id"
-                              :value="option.value"
-                              v-model="field.value"
-                                :required="field.required"
-                              class="mr-2"
-                            />
-                            <label
-                              :for="option.value"
-                              class="text-sm text-gray-700"
+                            {{ field.label }}
+                            <span v-if="field.required" style="color: red"
+                              >*</span
                             >
-                              {{ option.label }}
-                            </label>
-                          </div>
-                        </div>
-                      </template>
+                          </label>
 
-                      <template v-else-if="field.type === 'file'">
-                        <div class="pt-3">
-                          <file-pond
-                            :name="field.id"
-                            required="required"
-                            ref="pond"
-                            label-idle="Drop files here..."
-                            @addfile="
-                              (error, file) => handleAddFile(error, file, field)
-                            "
-                            @removefile="
-                              (error, file) =>
-                                handleRemoveFile(error, file, field)
-                            "
-                            :accepted-file-types="field.acceptedFileTypes"
-                            :max-file-size="field.maxFileSize"
-                            :allow-multiple="field.allowMultiple"
-                          />
-                        </div>
-                      </template>
+                          <template v-if="field.type === 'select'">
+                            <select
+                              v-model="field.value"
+                              :required="field.required"
+                              :id="field.id"
+                              class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                            >
+                              <option
+                                v-for="(option, optionIndex) in field.options"
+                                :key="optionIndex"
+                                :value="option.value"
+                              >
+                                {{ option.label }}
+                              </option>
+                            </select>
+                          </template>
 
-                      <template v-else-if="field.type === 'long-text'">
-                        <textarea
-                          v-model="field.value"
-                         :required="field.required"
-                          :id="field.id"
-                          :placeholder="field.placeholder"
-                          class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                          rows="4"
-                        ></textarea>
-                      </template>
+                          <template v-else-if="field.type === 'year'">
+                            <select
+                              v-model="field.value"
+                              :required="field.required"
+                              :id="field.id"
+                              class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                            >
+                              <option
+                                v-for="year in yearRange"
+                                :key="year"
+                                :value="year"
+                              >
+                                {{ year }}
+                              </option>
+                            </select>
+                          </template>
 
-                      <template v-else>
-                        <input
-                          v-model="field.value"
-                        :required="field.required"
-                         :disabled="field.disabled"
-                          :id="field.id"
-                          :type="field.type"
-                          :placeholder="field.placeholder"
-                          :step="field.type === 'number' ? '0.01' : undefined"
-                          class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                        />
+                          <template v-else-if="field.type === 'radio-group'">
+                            <div class="grid grid-cols-2">
+                              <div
+                                class="p-4 pt-2 pb-2 flex items-center"
+                                v-for="option in field.options"
+                                :key="option.value"
+                              >
+                                <input
+                                  type="radio"
+                                  :id="option.value"
+                                  :name="field.id"
+                                  :value="option.value"
+                                  v-model="field.value"
+                                  :required="field.required"
+                                  class="mr-2"
+                                />
+                                <label
+                                  :for="option.value"
+                                  class="text-sm text-gray-700"
+                                >
+                                  {{ option.label }}
+                                </label>
+                              </div>
+                            </div>
+                          </template>
+
+                          <template v-else-if="field.type === 'file'">
+                            <div class="pt-3">
+                              <file-pond
+                                :name="field.id"
+                                required="required"
+                                ref="pond"
+                                label-idle="Drop files here..."
+                                @addfile="
+                                  (error, file) =>
+                                    handleAddFile(error, file, field)
+                                "
+                                @removefile="
+                                  (error, file) =>
+                                    handleRemoveFile(error, file, field)
+                                "
+                                :accepted-file-types="field.acceptedFileTypes"
+                                :max-file-size="field.maxFileSize"
+                                :allow-multiple="field.allowMultiple"
+                              />
+                            </div>
+                          </template>
+
+                          <template v-else-if="field.type === 'long-text'">
+                            <textarea
+                              v-model="field.value"
+                              :required="field.required"
+                              :id="field.id"
+                              :placeholder="field.placeholder"
+                              class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                              rows="4"
+                            ></textarea>
+                          </template>
+
+                          <template v-else>
+                            <input
+                              v-model="field.value"
+                              :required="field.required"
+                              :disabled="field.disabled"
+                              :id="field.id"
+                              :type="field.type"
+                              :placeholder="field.placeholder"
+                              :step="
+                                field.type === 'number' ? '0.01' : undefined
+                              "
+                              class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                            />
+                          </template>
+                        </template>
                       </template>
                     </template>
                   </template>
@@ -298,6 +320,22 @@
                             required
                           />
                         </div>
+                        <div class="mb-4">
+                          <label
+                            class="block text-sm font-medium text-gray-700"
+                            for="expenseAmount"
+                            >Attachment(s). (png, jpeg, pdf or xlsx)</label
+                          >
+                          <input
+                            v-model="newExpense.attachment"
+                            id="expenseAttachment"
+                            type="text"
+                            placeholder=""
+                            step="0.01"
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                            required
+                          />
+                        </div>
                         <div class="flex justify-end">
                           <button
                             type="submit"
@@ -358,6 +396,16 @@
                             class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                           >
                             <div class="flex items-center gap-x-3">
+                              <span
+                                >Attachment(s). (png, jpeg, pdf or xlsx)</span
+                              >
+                            </div>
+                          </th>
+                          <th
+                            scope="col"
+                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                          >
+                            <div class="flex items-center gap-x-3">
                               <span>Action</span>
                             </div>
                           </th>
@@ -379,6 +427,11 @@
                             class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap"
                           >
                             {{ expense.description }}
+                          </td>
+                          <td
+                            class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                          >
+                            {{ expense.amount }}
                           </td>
                           <td
                             class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
@@ -512,8 +565,7 @@
                       <template v-if="field.type === 'select'">
                         <select
                           v-model="field.value"
-                           :required="field.required"
-                          
+                          :required="field.required"
                           :id="field.id"
                           class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                         >
@@ -531,7 +583,7 @@
                         <div class="pt-3">
                           <file-pond
                             :name="field.id"
-                             :required="field.required"
+                            :required="field.required"
                             ref="pond"
                             label-idle="Drop files here..."
                             @addfile="
@@ -583,7 +635,6 @@
                           type="radio"
                           value="pkt"
                           v-model="selectedAttendeeType"
-                           
                           class="form-radio"
                         />
                         <span
@@ -596,8 +647,6 @@
                           type="radio"
                           value="notStaff"
                           v-model="selectedAttendeeType"
-                           
-                          
                           class="form-radio"
                         />
                         <span
@@ -1225,7 +1274,7 @@ export default {
               options: [
                 { label: "Personal Transport", value: "Personal Transport" },
                 { label: "Company Transport", value: "Company Transport" },
-                { label: "Others", value: "Others" },
+                { label: "Public Transport", value: "Public Transport" },
               ],
               gridClass: "sm:col-span-1",
             },
@@ -1238,13 +1287,16 @@ export default {
               options: [
                 { label: "Motorcycle", value: "Motorcycle" },
                 { label: "Car", value: "Car" },
-                { label: "Van", value: "Van" },
-                { label: "Truck", value: "Truck" },
-                { label: "Bus", value: "Bus" },
-                { label: "Train", value: "Train" },
-                { label: "Ship", value: "Ship" },
-                { label: "Airplane", value: "Airplane" },
               ],
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "PublicTransportSpec",
+              label: "Transport Specification",
+              type: "text",
+              value: "",
+              required: true,
               hidden: false,
               gridClass: "sm:col-span-1",
             },
@@ -1289,6 +1341,14 @@ export default {
             {
               id: "MileageRMLT",
               label: "Total Mileage(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
+              hidden: false,
+            },
+            {
+              id: "FareRMLT",
+              label: "Fare(RM)",
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
@@ -1674,6 +1734,14 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
+              id: "ExpenseNameOthers",
+              label: "Expense Name",
+              type: "text",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-2",
+            },
+            {
               id: "AmountRMOthers",
               label: "Amount(RM)",
               type: "number",
@@ -1894,9 +1962,34 @@ export default {
       const tab = this.tabs.find((tab) => tab.title === "Local Travelling");
       if (!tab) return false;
       const transportField = tab.fields.find(
-        (field) => field.id === "TransportLT" && "TransportSpec"
+        (field) =>
+          field.id === "TransportLT" && "TransportSpec" && "PublicTransportSpec"
       );
       return transportField && transportField.value === "Company Transport";
+    },
+    isPublicTransport() {
+      const tab = this.tabs.find((tab) => tab.title === "Local Travelling");
+      if (!tab) return false;
+      const publicTransportField = tab.fields.find(
+        (field) =>
+          field.id === "TransportLT" && "TransportSpec" && "PublicTransportSpec"
+      );
+      return (
+        publicTransportField &&
+        publicTransportField.value === "Public Transport"
+      );
+    },
+    isPersonalTransport() {
+      const tab = this.tabs.find((tab) => tab.title === "Local Travelling");
+      if (!tab) return false;
+      const personalTransportField = tab.fields.find(
+        (field) =>
+          field.id === "TransportLT" && "TransportSpec" && "PublicTransportSpec"
+      );
+      return (
+        personalTransportField &&
+        personalTransportField.value === "Personal Transport"
+      );
     },
     isPanelClinic() {
       const tab = this.tabs.find(
@@ -1943,10 +2036,36 @@ export default {
         newTabs.forEach((tab) => {
           if (tab.title === "Local Travelling") {
             const transportField = tab.fields.find(
-              (field) => field.id === "TransportLT" && "TransportSpec"
+              (field) =>
+                field.id === "TransportLT" &&
+                "TransportSpec" &&
+                "PublicTransportSpec"
             );
             if (transportField) {
               this.updateFieldVisibility(transportField.value);
+            }
+          }
+          if (tab.title === "Local Travelling") {
+            const publicTransportField = tab.fields.find(
+              (field) =>
+                field.id === "TransportLT" &&
+                "TransportSpec" &&
+                "PublicTransportSpec"
+            );
+            if (publicTransportField) {
+              this.updateFieldVisibility5(publicTransportField.value);
+            }
+          }
+          if (tab.title === "Local Travelling") {
+            const personalTransportField = tab.fields.find(
+              (field) =>
+                field.id === "TransportLT" &&
+                "TransportSpec" &&
+                "PublicTransportSpec" &&
+                "FareRMLT"
+            );
+            if (personalTransportField) {
+              this.updateFieldVisibility6(personalTransportField.value);
             }
           }
           if (tab.title === "Medical Bill Reimbursement") {
@@ -2113,16 +2232,27 @@ export default {
       const TransportSpecField = localTravellingTab.fields.find(
         (field) => field.id === "TransportSpec"
       );
-      if (!mileageKMLTField || !mileageRMLTField || !TransportSpecField) return;
+      const PublicTransportSpecField = localTravellingTab.fields.find(
+        (field) => field.id === "PublicTransportSpec"
+      );
+      if (
+        !mileageKMLTField ||
+        !mileageRMLTField ||
+        !TransportSpecField ||
+        !PublicTransportSpecField
+      )
+        return;
 
       if (transportValue === "Company Transport") {
         mileageKMLTField.hidden = true;
         mileageRMLTField.hidden = true;
         TransportSpecField.hidden = true;
+        PublicTransportSpecField.hidden = true;
       } else {
         mileageKMLTField.hidden = false;
         mileageRMLTField.hidden = false;
         TransportSpecField.hidden = false;
+        PublicTransportSpecField.hidden = false;
       }
     },
 
@@ -2174,9 +2304,76 @@ export default {
       otherTypeField2.hidden = entertainmentValue !== "OTHERS";
     },
 
+    updateFieldVisibility5(publicTransportValue) {
+      const localTravellingTab = this.tabs.find(
+        (tab) => tab.title === "Local Travelling"
+      );
+      if (!localTravellingTab) return;
+      const mileageKMLTField = localTravellingTab.fields.find(
+        (field) => field.id === "MileageKMLT"
+      );
+      const mileageRMLTField = localTravellingTab.fields.find(
+        (field) => field.id === "MileageRMLT"
+      );
+      const TransportSpecField = localTravellingTab.fields.find(
+        (field) => field.id === "TransportSpec"
+      );
+      const TollLTField = localTravellingTab.fields.find(
+        (field) => field.id === "TollLT"
+      );
+      const ParkingLTField = localTravellingTab.fields.find(
+        (field) => field.id === "ParkingLT"
+      );
+      if (
+        !mileageKMLTField ||
+        !mileageRMLTField ||
+        !TransportSpecField ||
+        !TollLTField ||
+        !ParkingLTField
+      )
+        return;
+
+      if (publicTransportValue === "Public Transport") {
+        mileageKMLTField.hidden = true;
+        mileageRMLTField.hidden = true;
+        TransportSpecField.hidden = true;
+        TollLTField.hidden = false;
+        ParkingLTField.hidden = true;
+      } else {
+        mileageKMLTField.hidden = false;
+        mileageRMLTField.hidden = false;
+        TransportSpecField.hidden = false;
+        TollLTField.hidden = false;
+        ParkingLTField.hidden = false;
+      }
+    },
+
+    updateFieldVisibility6(personalTransportValue) {
+      const localTravellingTab = this.tabs.find(
+        (tab) => tab.title === "Local Travelling"
+      );
+      if (!localTravellingTab) return;
+      const fareRMLTField = localTravellingTab.fields.find(
+        (field) => field.id === "FareRMLT"
+      );
+      if (!fareRMLTField) return;
+      if (personalTransportValue === "Personal Transport") {
+        fareRMLTField.hidden = true;
+      } else {
+        fareRMLTField.hidden = false;
+      }
+    },
+
     handleTransportChange(value) {
-      this.showTransportSpec =
-        value === "Personal Transport" || value === "Others";
+      this.showTransportSpec = value === "Personal Transport";
+    },
+
+    handleTransportChange2(value) {
+      this.showPublicTransportSpec = value === "Public Transport";
+    },
+
+    handleTransportChange3(value) {
+      this.showPersonalTransportSpec = value === "Personal Transport";
     },
 
     addOtherExpense() {
@@ -2306,10 +2503,8 @@ export default {
     },
 
     nextTab() {
-       
-        // Switch to the next tab only if current tab's validation passes
-        this.activeSubTab += 1;
-  
+      // Switch to the next tab only if current tab's validation passes
+      this.activeSubTab += 1;
     },
     // validateCurrentTab() {
     //   // Example validation logic for the current tab

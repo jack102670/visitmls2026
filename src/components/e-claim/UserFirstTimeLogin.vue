@@ -724,6 +724,7 @@ console.log("Employee Data:", employeeData);
         // Handle error or set a default behavior if the API call fails
       });
   },
+
     verifyAndSaveData() {
       // this.saveUserData();
       if(this.tempImageUrl ) {
