@@ -558,7 +558,8 @@ export default {
     console.log(this.userDetails);
     this.fetchHrData();
     this.addEventListeners();
-    
+
+    this.checkOtpExpiration();
   },
 
   methods: {
@@ -732,9 +733,36 @@ console.log("Employee Data:", employeeData);
 
 
       this.updateEmployeeData();
+      const otpExpiration = localStorage.getItem("otpExpiration");
+      const currentTime = Date.now();
+
+      if (otpExpiration && currentTime < otpExpiration) {
+        const remainingTime = Math.ceil((otpExpiration - currentTime) / 1000);
+        this.timer = remainingTime;
+        this.showOtpModal = true;
+        this.startTimer();
+      } else {
+        this.showRequestOtpModal = true;
+      }
+
       // this.saveProfilePicture();
      this.checkUserStatusAndShowModal();
+
     },
+    
+    checkOtpExpiration() {
+      const otpExpiration = localStorage.getItem("otpExpiration");
+      if (otpExpiration) {
+        const currentTime = Date.now();
+        if (currentTime < otpExpiration) {
+          const remainingTime = Math.ceil((otpExpiration - currentTime) / 1000);
+          this.timer = remainingTime;
+          this.showOtpModal = true;
+          this.startTimer(); // Ensure timer is started if OTP validation is ongoing
+        }
+      }
+    },
+
     async sendOtp() {
       try {
         const response = await axios.post(
@@ -743,10 +771,13 @@ console.log("Employee Data:", employeeData);
         );
 
         if (response.data.status_code === "200") {
+          const otpExpiration = Date.now() + 120000; // 2 minutes from now
+          localStorage.setItem("otpExpiration", otpExpiration);
           console.log("OTP sent successfully:", response.data);
           this.showRequestOtpModal = false;
           alert("OTP has been sent to your email.");
           this.showOtpModal = true;
+          this.timer = 120;
           this.startTimer();
         } else {
           console.error("Backend error:", response.data);
@@ -800,7 +831,7 @@ console.log("Employee Data:", employeeData);
         const response = await axios.post(url, {});
 
         if (response.data.status_code === "200") {
-          clearInterval(this.timerInterval);
+          localStorage.removeItem("otpExpiration");
           alert(response.data.result || "OTP verified successfully.");
           this.showOtpModal = false;
           this.showSuccessNotification = true;
@@ -841,8 +872,11 @@ console.log("Employee Data:", employeeData);
           })
           .then((response) => {
             if (response.data.status_code === "200") {
+              const otpExpiration = Date.now() + 120000; // 2 minutes from now
+              localStorage.setItem("otpExpiration", otpExpiration);
               this.otp = "";
               alert("A new OTP has been sent to your email.");
+              this.timer = 120;
               this.startTimer();
             } else {
               alert(
@@ -886,13 +920,16 @@ console.log("Employee Data:", employeeData);
     },
 
     startTimer() {
-      this.timer = 120;
-      clearInterval(this.timerInterval);
+      if (this.timerInterval) {
+        clearInterval(this.timerInterval);
+      }
       this.timerInterval = setInterval(() => {
         if (this.timer > 0) {
           this.timer--;
         } else {
           clearInterval(this.timerInterval);
+          this.showOtpModal = false;
+          localStorage.removeItem("otpExpiration");
         }
       }, 1000);
     },

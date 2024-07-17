@@ -24,128 +24,7 @@
                   alt="Profile Picture"
                   class="w-24 h-24 rounded-full border-2 border-gray-200"
                 />
-              </div>
-
-              <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-                <p>
-                  <span
-                    class="font-semibold text-gray-600 dark:text-gray-200"
-                    >Full Name</span
-                  >
-                  <input
-                    type="text"
-                    disabled
-                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.fullName"
-                  />
-                </p>
-                <p>
-                  <span
-                    class="font-semibold text-gray-600 dark:text-gray-200"
-                    >Branch</span
-                  >
-                  <input
-                    type="text"
-                    disabled
-                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.branch"
-                  />
-                </p>
-                <p>
-                  <span
-                    class="font-semibold text-gray-600 dark:text-gray-200"
-                    >Department</span
-                  >
-                  <input
-                    type="text"
-                    disabled
-                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.department"
-                  />
-                </p>
-                <p>
-                  <span
-                    class="font-semibold text-gray-600 dark:text-gray-200"
-                    >Staff ID</span
-                  >
-                  <input
-                    type="text"
-                    disabled
-                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.staffId"
-                  />
-                </p>
-                <p>
-                  <span
-                    class="font-semibold text-gray-600 dark:text-gray-200"
-                    >Work Email</span
-                  >
-                  <input
-                    type="email"
-                    disabled
-                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.workEmail"
-                  />
-                </p>
-                <p>
-                  <span class="font-semibold text-gray-700 dark:text-gray-200"
-                    >Phone Number</span
-                  >
-                  <input
-                    type="text"
-                    disabled
-                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.phoneNumber"
-                  />
-                </p>
-                <p>
-                  <span class="font-semibold text-gray-700 dark:text-gray-200"
-                    >Bank Name</span
-                  >
-                  <input
-                    type="text"
-                    disabled
-                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.bankName"
-                  />
-                </p>
-                <p>
-                  <span class="font-semibold text-gray-700 dark:text-gray-200"
-                    >Bank Account Number</span
-                  >
-                  <input
-                    type="text"
-                    disabled
-                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.bankNumber"
-                  />
-                </p>
-                <p>
-                  <span class="font-semibold text-gray-700 dark:text-gray-200"
-                    >Spouse</span
-                  >
-                  <input
-                    type="text"
-                    disabled
-                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.spouse"
-                  />
-                </p>
-              </div>
-              <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
-                <p>
-                  <span class="font-semibold text-gray-700 dark:text-gray-200"
-                    >Home Address</span
-                  >
-                  <textarea
-                    type="text"
-                    row="4"
-                    disabled
-                    class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    v-model="user.homeAddress"
-                  />
-                </p>
-              </div>
+              </div> 
               <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                 <p>
                   <span class="font-semibold text-gray-700 dark:text-gray-200"
@@ -176,7 +55,7 @@
           <div class="mt-5 sm:mt-6 sm:flex sm:flex-row-reverse">
             <button
               type="button"
-              @click="showRequestOtpModal = true"
+              @click="handleVerifyClick"
               class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-700 text-base font-bold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
             >
               Verify
@@ -320,6 +199,7 @@ export default {
 
    mounted() {
     this.addEventListeners();
+    this.checkOtpExpiration();
   },
 
   beforeUnmount() {
@@ -360,14 +240,18 @@ export default {
     },
 
     sendOtp() {
+      const otpExpiration = Date.now() + 120000; // 2 minutes from now
+      localStorage.setItem("otpExpiration", otpExpiration);
       this.showRequestOtpModal = false;
       this.showOtpModal = true;
       alert("OTP has been sent to your email.");
+      this.timer = 120;
       this.startTimer();
     },
 
     verifyOtp() {
       if (this.otp === "123456") {
+        localStorage.removeItem("otpExpiration");
         clearInterval(this.timerInterval);
         this.showOtpModal = false;
         this.showSuccessNotification = true;
@@ -383,6 +267,20 @@ export default {
 
     beforeDestroy() {
       window.removeEventListener("beforeunload", this.beforeUnloadHandler);
+    },
+
+    handleVerifyClick() {
+      const otpExpiration = localStorage.getItem("otpExpiration");
+      const currentTime = Date.now();
+
+      if (otpExpiration && currentTime < otpExpiration) {
+        const remainingTime = Math.ceil((otpExpiration - currentTime) / 1000);
+        this.timer = remainingTime;
+        this.showOtpModal = true;
+        this.startTimer();
+      } else {
+        this.showRequestOtpModal = true;
+      }
     },
 
     requestNewOtp() {
@@ -403,6 +301,19 @@ export default {
           clearInterval(this.timerInterval);
         }
       }, 1000);
+    },
+
+    checkOtpExpiration() {
+      const otpExpiration = localStorage.getItem("otpExpiration");
+      if (otpExpiration) {
+        const currentTime = Date.now();
+        if (currentTime < otpExpiration) {
+          const remainingTime = Math.ceil((otpExpiration - currentTime) / 1000);
+          this.timer = remainingTime;
+          this.showOtpModal = true;
+          this.startTimer();
+        }
+      }
     },
   },
 };
