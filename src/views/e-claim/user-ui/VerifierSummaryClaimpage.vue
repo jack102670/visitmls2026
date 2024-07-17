@@ -127,7 +127,7 @@
         </div>
 
         <!-- status button after approved -->
-        <!-- <div v-if="approve" class="my-10" id="hidden">
+        <div class="my-10" id="hidden">
           <h1 class="text-3xl font-bold mb-2">Status</h1>
           <div class="relative inline-block text-left">
             <div>
@@ -172,7 +172,7 @@
                   @click="selectStatus(status)"
                   :class="
                     status.dropDownClass +
-                    'block px-4 py-2 text-sm  w-full text-left hover:bg-gray-200'
+                    'block px-4 py-2 text-sm  w-full text-left hover:bg-slate-200'
                   "
                   role="menuitem"
                 >
@@ -181,7 +181,7 @@
               </div>
             </div>
           </div>
-        </div> -->
+        </div>
 
         <!-- Summary -->
         <div class="summary" v-show="!seeMore">
@@ -356,29 +356,29 @@
 
         <!-- Status Table -->
         <div
-          class="text-xs border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl"
+          class="text-xs lg:text-base border-2 mt-10 border-gray-400 dark:border-gray-600 rounded-2xl"
           id="table-overflow"
         >
           <table class="w-full">
             <!-- title -->
-            <tr class="h-8 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
+            <tr class="h-10 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
               <th
                 class="rounded-tl-2xl w-[20%] text-center border-r-2 border-gray-400 dark:border-gray-600"
               >
                 STATUS
               </th>
-              <th class=" pl-6">NAME</th>
-              <th class="">DESIGNATION</th>
-              <th class="">DEPARTMENT</th>
-              <th class="50%">DATE</th>
+              <th class="w-[24%] pl-6">NAME</th>
+              <th class="w-[23%]">DESIGNATION</th>
+              <th class="w-[23%]">DEPARTMENT</th>
+              <th class="w-[10%]">DATE</th>
             </tr>
 
             <!-- table information -->
             <tr
-              class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
+              class="h-10 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
             >
               <th
-                class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
+                class="text-xs lg:text-base text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
               >
                 <!-- Status Bar -->
                 <div
@@ -400,16 +400,16 @@
                   <p>{{ statusVerifier }}</p>
                 </div>
               </th>
-              <td class="pl-6">{{ claimDetails.verifier_name }}</td>
-              <td class="">{{ claimDetails.verifier_designation }}</td>
-              <td>{{ claimDetails.verifier_department }}</td>
-              <td class="">{{ claimDetails.verified_date }}</td>
+              <td class="pl-6">{{ this.claimDetails.verifier_name }}</td>
+              <td class="">{{ this.claimDetails.verifier_designation }}</td>
+              <td>{{ this.claimDetails.verifier_department }}</td>
+              <td class="">{{ this.claimDetails.verified_date }}</td>
             </tr>
             <tr
-              class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
+              class="h-10 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
             >
               <th
-                class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
+                class="text-xs lg:text-base text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
               >
                 <!-- Status Bar -->
                 <div
@@ -431,13 +431,14 @@
                   <p>{{ statusApprover }}</p>
                 </div>
               </th>
-              <td class="pl-6">{{ claimDetails.approver_name }}</td>
-              <td class="">{{ claimDetails.approver_designation }}</td>
-              <td>{{ claimDetails.approver_department }}</td>
-              <td class="">{{ claimDetails.approved_date }}</td>
+              <td class="pl-6">{{ this.claimDetails.approver_name }}</td>
+              <td class="">{{ this.claimDetails.approver_designation }}</td>
+              <td>{{ this.claimDetails.approver_department }}</td>
+              <td class="">{{ this.claimDetails.approved_date }}</td>
             </tr>
           </table>
         </div>
+
         <!-- Resubmission table -->
 
         <!-- <div
@@ -490,12 +491,10 @@
         </div> -->
 
         <div
-          
           class="text-xs lg:text-base border-2 mt-10 border-gray-400 dark:border-gray-600 rounded-2xl"
           id="table-overflow"
         >
           <table class="w-full">
-        
             <tr class="h-10 bg-gray-300 dark:bg-gray-700 rounded-2xl">
               <th class="pl-6">Remark</th>
             </tr>
@@ -503,24 +502,20 @@
             <tr
               class="h-10 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
             >
-              <td class="text-center text-balance">{{ this.claimDetails.comment }}</td>
+              <td class="text-center text-balance">
+                {{ this.claimDetails.comment }}
+              </td>
             </tr>
           </table>
         </div>
 
         <!-- Button -->
-        <div
-          v-show="
-            approve != true &&
-            verified != true &&
-            rejectApprover != true &&
-            rejectVerifier != true &&
-            resubmit != true &&
-            reimbursed != true
+        <!-- <div
+          v-show="confirmReject
           "
           class=".detail-table w-full lg:flex-row flex flex-col justify-between h-24 items-center pt-6"
         >
-          <!-- <div class="flex w-full items-center">
+          <div class="flex w-full items-center">
             <label class="font-semibold mr-2 mb-4 lg:mb-0"
               >Overall Remark:
             </label>
@@ -530,19 +525,14 @@
               placeholder="Eg. Blurry Receipt Image"
               v-model="remark"
             />
-          </div> -->
-          <!-- <div class="flex">
+          </div> 
+           <div class="flex">
+           
             <button
-              @click="confirmApprove = true"
-              class="mr-2 lg:text-lg font-semibold py-3 w-16 sm:w-24 md:w-36 bg-blue-800 hover:bg-blue-900 rounded-lg text-white"
-            >
-              Approve
-            </button>
-            <button
-              @click="confirmResubmit = true"
+              @click="confirmReject = false"
               class="mr-2 lg:text-lg font-semibold py-3 w-16 sm:w-24 md:w-36 bg-yellow-500 hover:bg-yellow-600 rounded-lg text-white"
             >
-              Resubmit
+            Back
             </button>
             <button
               @click="confirmReject = true"
@@ -550,11 +540,11 @@
             >
               Reject
             </button>
-          </div> -->
-        </div>
+          </div>
+        </div> -->
 
         <!-- Approve Confirmation -->
-        <!-- <div
+        <div
           v-show="confirmApprove"
           class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
         >
@@ -577,10 +567,10 @@
               </button>
             </div>
           </div>
-        </div> -->
+        </div>
 
         <!-- Resubmit Confirmation -->
-        <!-- <div
+        <div
           v-show="confirmResubmit"
           class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
         >
@@ -610,10 +600,41 @@
               </button>
             </div>
           </div>
-        </div> -->
+        </div>
+        <div
+          v-show="confirmVerified"
+          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
+        >
+          <div
+            class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center px-1"
+          >
+            <h1 class="text-2xl font-bold text-center">
+              Please write the remark to return to claimant for Verified?
+            </h1>
+            <input
+              class="py-4 px-2 w-4/5 rounded-lg mt-4 outline-none border-gray-300 dark:border-gray-600 dark:bg-gray-500 border-2"
+              placeholder="Eg. Blurry Receipt Image"
+              v-model="remark"
+            />
+            <div class="flex mt-4">
+              <button
+                class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
+                @click="confirmVerified = false"
+              >
+                Back
+              </button>
+              <button
+                class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
+                @click="ConfirmVerified()"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
 
         <!-- Reimburse Confirmation -->
-        <!-- <div
+        <div
           v-show="confirmReimburse"
           class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
         >
@@ -638,10 +659,10 @@
               </button>
             </div>
           </div>
-        </div> -->
+        </div>
 
         <!-- Reject Confirmation -->
-        <!-- <div
+        <div
           v-show="confirmReject"
           class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
         >
@@ -669,7 +690,7 @@
               </button>
             </div>
           </div>
-        </div> -->
+        </div>
 
         <!-- Approve Success Notification -->
         <div
@@ -950,19 +971,29 @@ export default {
 
       dropdownOpen: false,
       selectedStatus: {
-        label: "Approved",
+        label: "Select Status",
         class: "bg-green-500 text-white hover:bg-green-600",
       },
       statuses: [
+        // {
+        //   label: "Approved",
+        //   class: "bg-green-500 text-white hover:bg-green-600",
+        //   dropDownClass: "text-green-500 hover:text-green-600",
+        // },
         {
-          label: "Approved",
-          class: "bg-green-500 text-white hover:bg-green-600",
-          dropDownClass: "text-green-500 hover:text-green-600",
+          label: "Resubmit",
+          class: "bg-yellow-500 text-white hover:bg-yellow-600",
+          dropDownClass: "text-yellow-500 hover:text-gray-800",
         },
         {
-          label: "Reimbursed",
-          class: "bg-white text-gray-700 hover:bg-gray-100",
-          dropDownClass: "text-gray-700 hover:text-gray-800",
+          label: "Reject",
+          class: "bg-red-500 text-white hover:bg-gray-100",
+          dropDownClass: "text-red-500 hover:text-gray-800",
+        },
+        {
+          label: "Verified",
+          class: "bg-green-500 text-white hover:bg-green-600",
+          dropDownClass: "text-green-500 hover:text-green-600",
         },
       ],
 
@@ -972,6 +1003,7 @@ export default {
       confirmReimburse: false,
       confirmResubmit: false,
       approveSuccess: false,
+      confirmVerified: false,
       loading: false,
       comment: "",
 
@@ -1100,6 +1132,12 @@ export default {
 
       if (status.label == "Reimbursed") {
         this.confirmReimburse = true;
+      } else if (status.label == "Resubmit") {
+        this.confirmResubmit = true;
+      } else if (status.label == "Reject") {
+        this.confirmReject = true;
+      } else if (status.label == "Verified") {
+        this.confirmVerified = true;
       }
     },
     async FetchClaimDetails() {
@@ -1299,15 +1337,17 @@ export default {
               Remark: result[i].comment,
               reason: result[i].reason,
               Date: result[i].date_leave_taken,
-              clinicselection: result[i].clinic_name? result[i].clinic_name : result[i].clinic_selection,
+              clinicselection: result[i].clinic_name
+                ? result[i].clinic_name
+                : result[i].clinic_selection,
               reason_other_clinic: result[i].reason_different,
               bank_name: result[i].bank_name,
               bank_holder: result[i].bank_holder,
               bank_account: result[i].bank_account,
               "Total_Fee(RM)": result[i].claim_amount,
-       
+
               Attachments: result[i].files,
-      
+
               Tab_Title: "Medical Leave",
             };
             details.push(editedDetail);
@@ -1333,13 +1373,12 @@ export default {
             amount += result[i].claim_amount;
             const editedDetail = {
               Remark: result[i].comment,
-             claim_month : result[i].claim_month,
+              claim_month: result[i].claim_month,
               Attachments: result[i].files,
               bank_name: result[i].bank_name,
               bank_holder: result[i].bank_holder,
               bank_account: result[i].bank_account,
-            
-        
+
               Tab_Title: "Handphone Bill",
             };
             details.push(editedDetail);
@@ -1410,6 +1449,10 @@ export default {
       this.confirmReject = false;
       this.ApproveOrReject("Reject");
     },
+    ConfirmVerified() {
+      this.confirmVerified = false;
+      this.ApproveOrReject("Verified");
+    },
 
     // click function after confirm the reimburse
     ConfirmReimburse() {
@@ -1456,6 +1499,32 @@ export default {
             // Handle error response
             console.error("API error", error);
           });
+      } else if (AoR == "Verified") {
+        this.rejectApprover = true;
+        this.dateApprover = moment(new Date()).format("D MMM YYYY");
+        this.loading = true;
+
+        const approveData = {
+          approver_status: "VERIFIED",
+          approver_comment: this.remark,
+          user_email: "user_email",
+          verifier_email: this.claimDetails.verifier_email,
+          reference_number: this.claimDetails.reference_number,
+        };
+        axios
+          .put("http://172.28.28.91:86/api/Admin/Approve_Claim", approveData)
+          .then((response) => {
+            // Handle success response
+            this.loading = false;
+
+            console.log("API response", response.data);
+            localStorage.setItem("ApproveOrNot", "reject");
+            this.$router.push({ name: "verified" });
+          })
+          .catch((error) => {
+            // Handle error response
+            console.error("API error", error);
+          });
       } else if (AoR == "Reject") {
         this.rejectApprover = true;
         this.dateApprover = moment(new Date()).format("D MMM YYYY");
@@ -1476,6 +1545,7 @@ export default {
 
             console.log("API response", response.data);
             localStorage.setItem("ApproveOrNot", "reject");
+            this.$router.push({ name: "verified" });
           })
           .catch((error) => {
             // Handle error response
@@ -1501,11 +1571,13 @@ export default {
 
             console.log("API response", response.data);
             localStorage.setItem("ApproveOrNot", "resubmit");
+            this.$router.push({ name: "verified" });
           })
           .catch((error) => {
             // Handle error response
             console.error("API error", error);
           });
+          
       } else if (AoR == "Reimbursed") {
         this.reimbursed = true;
         this.dateApprover = moment(new Date()).format("D MMM YYYY");

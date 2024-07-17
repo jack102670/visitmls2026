@@ -211,7 +211,7 @@
                           <div class="flex items-center gap-x-6">
                             <!-- buttons here -->
                             <button
-                      @click="ViewClaim()"
+                      @click="ViewClaim(item.reference_number)"
                               class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
                             >
                               <svg
@@ -271,8 +271,8 @@ export default {
     };
   },
   methods: {
-    ViewClaim() {
-      this.$router.push({ name: 'AdminSummaryClaimpage' });
+    ViewClaim(rn) {
+      this.$router.push({ name: 'VerifierSummaryClaimpage' , params: { rn } });
     },
     fetchData() {
       fetch(`http://172.28.28.91:86/api/ApproverVerifier/GetAllRequestVerifier/9d0da821-5de0-42e5-b268-b5e0bc40e8d1`)
