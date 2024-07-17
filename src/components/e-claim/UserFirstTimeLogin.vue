@@ -275,7 +275,7 @@
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
-          <!--<div>
+          <div>
                 <label
                   class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
                   for="phonenumber"
@@ -287,7 +287,7 @@
                   type="number"
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
-              </div> -->
+              </div>
             </div>
 
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
@@ -345,19 +345,19 @@
             <div class="mt-6 flex justify-end">
               <div class= "flex flex-row-reverse">
               <button
-                @click="verifyAndSaveData"
-                type="button"
+              
+                type="submit"
                 class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
               >
                 Verify
               </button>
-              <button
+              <!-- <button
                 @click="uploadimg()"
                 type="button"
                 class="mr-4 px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
               >
                 Save Picture
-              </button>
+              </button> -->
               </div>
             </div>
 
