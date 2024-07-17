@@ -730,7 +730,7 @@ console.log("Employee Data:", employeeData);
           this.uploadimg();
       }
       this.updateEmployeeData();
-      this.showRequestOtpModal = true;
+   
       // this.saveProfilePicture();
      this.checkUserStatusAndShowModal();
     },
