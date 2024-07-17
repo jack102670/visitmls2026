@@ -9,7 +9,7 @@
         <h1
           class="text-blue-800 dark:text-blue-600 text-xl md:text-2xl font-bold"
         >
-          DASHBOARD
+          FINANCE DASHBOARD
         </h1>
 
         <!-- Datatable -->

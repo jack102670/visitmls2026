@@ -70,7 +70,7 @@
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="w-10 h-10"
+                class="w-7 h-7"
               >
                 <path
                   stroke-linecap="round"
@@ -219,7 +219,7 @@
                     ')'
                   }}
                 </td>
-                <td class="font-normal">{{ claim.Amount }}</td>
+                <td class="font-normal">{{ claim.Amount.toFixed(2) }}</td>
               </tr>
 
               <!-- total -->
@@ -227,7 +227,7 @@
                 class="border-t-2 border-gray-400 dark:border-gray-600 h-8 text-base lg:text-lg font-semibold"
               >
                 <td colspan="2" class="px-6 text-right">TOTAL:</td>
-                <td>{{ totalAmount }}</td>
+                <td>{{ totalAmount.toFixed(2) }}</td>
               </tr>
             </table>
           </div>
@@ -286,11 +286,21 @@
                           item.Tab_Title
                         )
                       "
-                      v-if="!reimbursed"
+                      v-if="
+                        !reimbursed && !approve && !rejectApprover && !resubmit
+                      "
                       type="text"
                       class="p-1 text-xs w-full rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
                     />
-                    <h1 v-if="reimbursed">{{ item.comment }}</h1>
+                    <h1
+                      v-if="
+                        (reimbursed || approve || rejectApprover || resubmit) &&
+                        item.comment.trim() !== ''
+                      "
+                      class="m-1 px-2 py-1 bg-blue-900 text-white rounded-2xl"
+                    >
+                      {{ item.comment }}
+                    </h1>
                   </td>
                   <td
                     class="text-center font-normal px-3 align-middle"
@@ -386,7 +396,7 @@
 
             <!-- table information -->
             <tr
-              class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
+              class="text-wrap h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
             >
               <th
                 class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
@@ -414,10 +424,10 @@
               <td class="pl-6">{{ claimDetails.verifier_name }}</td>
               <td class="">{{ claimDetails.verifier_designation }}</td>
               <td>{{ claimDetails.department }}</td>
-              <td class="">{{ dateVerifier }}</td>
+              <td class="">{{ claimDetails.date_requested }}</td>
             </tr>
             <tr
-              class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
+              class="text-wrap h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
             >
               <th
                 class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
@@ -445,60 +455,7 @@
               <td class="pl-6">{{ claimDetails.approver_name }}</td>
               <td class="">{{ claimDetails.approver_designation }}</td>
               <td>{{ claimDetails.approver_department }}</td>
-              <td class="">{{ dateApprover }}</td>
-            </tr>
-          </table>
-        </div>
-
-        <!-- Resubmission table -->
-
-        <div
-          v-show="rejectApprover || resubmit"
-          class="text-xs border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl"
-          id="table-overflow"
-        >
-          <table class="w-full">
-            <!-- title -->
-            <tr class="h-8 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
-              <th
-                class="rounded-tl-2xl w-[20%] text-center border-r-2 border-gray-400 dark:border-gray-600"
-              >
-                STATUS
-              </th>
-              <th class="pl-6">Overall Remark</th>
-            </tr>
-
-            <!-- table information -->
-            <tr
-              v-if="resubmit == true"
-              class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
-            >
-              <th
-                class="text-x font-medium border-r-2 border-gray-400 dark:border-gray-600"
-              >
-                <div
-                  class="mx-auto bg-red-200 dark:bg-red-500 rounded-full py-2 text-center text-red-500 dark:text-red-100 lg:w-[90%] w-full"
-                >
-                  <p>RESUBMISSION</p>
-                </div>
-              </th>
-              <td class="pl-6">{{ remark }}</td>
-            </tr>
-
-            <tr
-              v-if="rejectApprover == true"
-              class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
-            >
-              <th
-                class="text-xs font-medium border-r-2 border-gray-400 dark:border-gray-600"
-              >
-                <div
-                  class="mx-auto bg-red-200 dark:bg-red-500 rounded-full py-2 text-center text-red-500 dark:text-red-100 lg:w-[90%] w-full"
-                >
-                  <p>REJECTED</p>
-                </div>
-              </th>
-              <td class="pl-6">{{ remark }}</td>
+              <td class="">{{ claimDetails.date_requested }}</td>
             </tr>
           </table>
         </div>
@@ -506,7 +463,9 @@
         <!-- Remark table -->
 
         <div
-          v-show="approve || verified"
+          v-show="
+            approve || verified || reimbursed || resubmit || rejectApprover
+          "
           class="text-xs border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl"
           id="table-overflow"
         >
@@ -535,7 +494,7 @@
             resubmit != true &&
             reimbursed != true
           "
-          class=".detail-table w-full lg:flex-row flex flex-col justify-between h-14 items-center pt-6"
+          class=".detail-table w-full lg:flex-row flex flex-col justify-between h-full items-center pt-6"
         >
           <div class="flex w-full items-center">
             <label class="font-semibold mr-2 mb-4 lg:mb-0"
@@ -551,7 +510,7 @@
           <div class="flex">
             <button
               @click="confirmApprove = true"
-              class="mr-2 text-sm font-semibold py-3 w-16 sm:w-24 md:w-36 bg-blue-800 hover:bg-blue-900 rounded-lg text-white"
+              class="mr-2 text-sm font-semibold py-3 w-16 sm:w-24 md:w-36 bg-green-500 hover:bg-green-600 rounded-lg text-white"
             >
               Approve
             </button>
@@ -908,8 +867,6 @@ export default {
       verified: false,
       reimbursed: false,
       resubmit: false,
-      dateApprover: '12 Jun 2024',
-      dateVerifier: '8 Jun 2024',
       remark: '',
       statusApprover: '',
 
@@ -973,7 +930,19 @@ export default {
           this.statusApprover = this.claimDetails.admin_status
             .split('.')[0]
             .toUpperCase();
-          this.remark = this.claimDetails.approver_feedback;
+          if (this.statusApprover == 'APPROVED') {
+            this.approve = true;
+            this.remark = this.claimDetails.comment;
+          } else if (this.statusApprover == 'REJECTED') {
+            this.rejectApprover = true;
+            this.remark = this.claimDetails.comment;
+          } else if (this.statusApprover == 'RESUBMIT') {
+            this.resubmit = true;
+            this.remark = this.claimDetails.comment;
+          } else if (this.statusApprover == 'REIMBURSED') {
+            this.reimbursed = true;
+            this.remark = this.claimDetails.comment;
+          }
 
           console.log(this.statusApprover);
 
@@ -1138,7 +1107,7 @@ export default {
         };
         if (remark.Tab_Title == 'Medical Bill') {
           axios.put(
-            'http://172.28.28.91:86/api/Admin/Approver_Comment_Handphone',
+            'http://172.28.28.91:86/api/Admin/Approve_Comment_Handphone',
             data
           );
         } else if (remark.Tab_Title == 'Handphone Bill') {
@@ -1156,7 +1125,7 @@ export default {
 
         const approveData = {
           approver_status: 'APPROVED',
-          approver_comment: this.remark,
+          approver_comment: this.remark ? this.remark : '',
           user_email: 'user_email',
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
@@ -1185,7 +1154,7 @@ export default {
 
         const approveData = {
           approver_status: 'REJECTED',
-          approver_comment: this.remark,
+          approver_comment: this.remark ? this.remark : '',
           user_email: 'user_email',
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
@@ -1210,7 +1179,7 @@ export default {
 
         const approveData = {
           approver_status: 'RESUBMIT',
-          approver_comment: this.remark,
+          approver_comment: this.remark ? this.remark : '',
           user_email: 'user_email',
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
@@ -1235,7 +1204,7 @@ export default {
 
         const approveData = {
           approver_status: 'REIMBURSED',
-          approver_comment: this.remark,
+          approver_comment: this.remark ? this.remark : '',
           user_email: 'user_email',
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
@@ -1254,6 +1223,7 @@ export default {
             console.error('API error', error);
           });
       }
+      this.FetchClaimDetails()
     },
 
     // Download the file
@@ -1318,10 +1288,6 @@ tr:last-child th:last-child {
 
 div:has(> table) {
   overflow-x: auto;
-}
-
-table {
-  min-width: max-content;
 }
 
 table th,
@@ -1417,13 +1383,13 @@ td {
     width: 100%;
   }
   #table-overflow table tr {
-    height: 110%;
+    height: max-content;
     width: 100%;
   }
   #table-overflow table th {
     padding: 0 auto;
     margin: 0 auto;
-    font-size: 6px;
+    font-size: 8px !important;
     height: 20px;
     width: 10px;
     overflow-wrap: break-word;
@@ -1433,7 +1399,7 @@ td {
   #summaryPrint #table-overflow table td {
     padding: 0 auto;
     margin: 0 auto;
-    font-size: 6px;
+    font-size: 8px !important;
     height: 20px;
     width: 10px;
     word-wrap: break-word;
