@@ -9,7 +9,7 @@
         <h1
           class="text-blue-800 dark:text-blue-600 text-xl md:text-2xl font-bold"
         >
-          DASHBOARD
+          HR DASHBOARD
         </h1>
 
         <!-- Datatable -->
@@ -28,32 +28,42 @@
                   <thead class="bg-gray-50 dark:bg-gray-800">
                     <tr>
                       <th
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
                         Report Name
                       </th>
                       <th
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        Requester Name
+                      </th>
+                      <th
+                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        Verifier Name
+                      </th>
+                      <th
+                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
                         Reference Number
                       </th>
                       <th
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
                         Amount
                       </th>
                       <th
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
                         Date requested
                       </th>
                       <th
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
                         Status
                       </th>
                       <th
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
                         View
                       </th>
@@ -64,22 +74,32 @@
                   >
                     <tr v-for="(claim, index) in claimsData" :key="index">
                       <td
-                        class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                        class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                       >
                         {{ claim.report_name }}
                       </td>
                       <td
-                        class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                        class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                      >
+                        {{ claim.requester_name }}
+                      </td>
+                      <td
+                        class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                      >
+                        {{ claim.verifier_name }}
+                      </td>
+                      <td
+                        class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                       >
                         {{ claim.reference_number }}
                       </td>
                       <td
-                        class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                        class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                       >
                         RM {{ claim.grand_total }}
                       </td>
                       <td
-                        class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                        class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                       >
                         {{ claim.date_requested }}
                       </td>
@@ -92,43 +112,29 @@
                             'bg-orange-200 dark:bg-orange-500':
                               claim.admin_status == '',
                             'bg-green-200 dark:bg-green-500':
-                              claim.admin_status ==
-                              'APPROVED. WAITING FOR PAYMENT.',
+                              claim.admin_status.split('.')[0] == 'APPROVED',
                             'bg-amber-200 dark:bg-amber-500':
-                              claim.admin_status ==
-                              'VERIFIED. WAITING FOR APPROVAL.',
+                              claim.admin_status.split('.')[0] == 'VERIFIED',
                             'bg-red-200 dark:bg-red-500':
-                              claim.admin_status == 'REJECTED',
+                              claim.admin_status.split('.')[0] == 'REJECTED',
                             'text-orange-500 dark:text-orange-100':
                               claim.admin_status == '',
                             'text-green-500 dark:text-green-100':
-                              claim.admin_status ==
-                              'APPROVED. WAITING FOR PAYMENT.',
+                              claim.admin_status.split('.')[0] == 'APPROVED',
                             'text-amber-500 dark:text-amber-100':
-                              claim.admin_status ==
-                              'VERIFIED. WAITING FOR APPROVAL.',
+                              claim.admin_status.split('.')[0] == 'VERIFIED',
                             'text-red-500 dark:text-red-100':
-                              claim.status == 'REJECTED',
+                              claim.admin_status.split('.')[0] == 'REJECTED',
                           }"
                         >
-                          {{
-                            claim.admin_status == ''
-                              ? 'PENDING'
-                              : claim.admin_status ==
-                                  'VERIFIED. WAITING FOR APPROVAL.'
-                                ? 'VERIFIED'
-                                : claim.admin_status ==
-                                    'APPROVED. WAITING FOR PAYMENT.'
-                                  ? 'APPROVED'
-                                  : 'REJECTED'
-                          }}
+                          {{ claim.admin_status.split('.')[0] }}
                         </h1>
                       </td>
                       <td
                         class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                       >
                         <button
-                          @click="ViewClaim()"
+                          @click="ViewClaim(claim.reference_number)"
                           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
                         >
                           <svg
@@ -179,17 +185,12 @@ export default {
     };
   },
   methods: {
-    ViewClaim() {
-      this.$router.push({ name: 'AdminHRSummaryClaimpage' });
-    },
-    ShowNotification() {
-      console.log(123);
-      this.approveSuccess = true;
-      console.log(this.approveSuccess);
-      setTimeout(() => {
-        this.approveSuccess = false;
-        console.log(this.approveSuccess);
-      }, 2000);
+    ViewClaim(rn) {
+      console.log(rn);
+      this.$router.push({
+        name: 'AdminSummaryClaimpage',
+        params: { rn: String(rn) },
+      });
     },
     initializeDataTable() {
       $(this.$refs.myTable).DataTable({});
