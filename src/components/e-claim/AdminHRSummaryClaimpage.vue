@@ -1141,7 +1141,7 @@ export default {
             this.approveSuccess = true;
             setTimeout(() => {
               this.$router.push({ name: 'AdminDashboardpage' });
-            }, 1500);
+            }, 2500);
           })
           .catch((error) => {
             // Handle error response
@@ -1223,7 +1223,7 @@ export default {
             console.error('API error', error);
           });
       }
-      this.FetchClaimDetails()
+      this.FetchClaimDetails();
     },
 
     // Download the file
