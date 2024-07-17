@@ -24,14 +24,31 @@
               :mandatory="true"
               @input="(payload) => (form.branch = payload)"
             />
+            <DropDown
+              inputId="companyInput"
+              label="Company"
+              :options="Company"
+              :mandatory="true"
+              class="mt-6 lg:mt-0 lg:ml-4"
+              @input="(payload) => (form.company = payload)"
+            />
+          </div>
 
+          <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
             <DropDown
               inputId="departmentInput"
               label="Department"
               :options="filteredDepartments"
               :mandatory="true"
-              class="mt-6 lg:mt-0 lg:ml-4"
               @input="(payload) => (form.department = payload)"
+            />
+            <DropDown
+              inputId="positionInput"
+              label="Position"
+              :options="AllPositions"
+              :mandatory="true"
+              class="mt-6 lg:mt-0 lg:ml-4"
+              @input="(payload) => (form.position = payload)"
             />
           </div>
 
@@ -58,24 +75,12 @@
 
           <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
             <DropDown
-              inputId="positionInput"
-              label="Position"
-              :options="AllPositions"
-              :mandatory="true"
-              @input="(payload) => (form.position = payload)"
-            />
-
-            <DropDown
               inputId="reportingDepartmentInput"
               label="Reporting to (Department)"
               :options="AllDepartments"
-              class="mt-6 lg:mt-0 lg:ml-4"
               @input="(payload) => (form.reportingDepartment = payload)"
             />
-          </div>
-
-          <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
-            <div>
+            <div class="mt-6 lg:mt-0 lg:ml-4">
               <label :for="inputId" class="font-semibold text-gray-600"
                 >Reporting To (Employee ID)<span class="text-red-500"
                   >*</span
@@ -86,6 +91,20 @@
                 v-model="form.reportingId"
                 class="border-2 border-gray-200 p-2 w-full rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 type="text"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
+            <div>
+              <label :for="inputId" class="font-semibold text-gray-600"
+                >Limit</label
+              >
+              <input
+                :id="inputId"
+                v-model="form.limit"
+                class="border-2 border-gray-200 p-2 w-full rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                type="number"
               />
             </div>
           </div>
@@ -116,17 +135,20 @@ export default {
     return {
       form: {
         branch: '',
-        userId: '', // Initialize with empty values
-        employeeId: '',
+        company: '',
         department: '',
         position: '',
+        userId: '',
+        employeeId: '',
         reportingDepartment: '',
         reportingId: '',
+        limit: '',
       },
 
       // option for dropdown
       fetchOptions: [],
       Branches: [],
+      Company: [],
       filteredDepartments: [],
       filteredUsers: [],
       AllDepartments: [],
@@ -173,6 +195,7 @@ export default {
           this.extractBranches();
           this.getAllDepartments();
           this.getAllPositions();
+          this.getAllCompanies();
         })
         .catch((error) => {
           this.error = error;
@@ -200,6 +223,13 @@ export default {
         .catch((error) => {
           this.error = error;
           console.error('There was an error!', error);
+        });
+    },
+    getAllCompanies() {
+      axios
+        .get('http://172.28.28.91:97/api/User/GetCompany')
+        .then((response) => {
+          this.Company = response.data.result.map((item) => item.company_name);
         });
     },
   },

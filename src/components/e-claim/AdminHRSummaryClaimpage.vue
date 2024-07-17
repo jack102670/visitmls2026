@@ -452,10 +452,30 @@
                   <p>{{ statusApprover }}</p>
                 </div>
               </th>
-              <td class="pl-6">{{ claimDetails.approver_name }}</td>
-              <td class="">{{ claimDetails.approver_designation }}</td>
-              <td>{{ claimDetails.approver_department }}</td>
-              <td class="">{{ claimDetails.date_requested }}</td>
+              <td class="pl-6">
+                {{
+                  statusApprover == 'PENDING' ? '' : claimDetails.approver_name
+                }}
+              </td>
+              <td class="">
+                {{
+                  statusApprover == 'PENDING'
+                    ? ''
+                    : claimDetails.approver_designation
+                }}
+              </td>
+              <td>
+                {{
+                  statusApprover == 'PENDING'
+                    ? ''
+                    : claimDetails.approver_department
+                }}
+              </td>
+              <td class="">
+                {{
+                  statusApprover == 'PENDING' ? '' : claimDetails.date_requested
+                }}
+              </td>
             </tr>
           </table>
         </div>
@@ -811,6 +831,8 @@
 import moment from 'moment';
 import fileSaver from 'file-saver';
 import axios from 'axios';
+import { store } from '@/views/store.js';
+
 export default {
   name: 'AdminSummaryClaimpage',
   props: {
@@ -829,6 +851,9 @@ export default {
 
       //remark for every single details in one tab
       singleColumnRemarks: [],
+
+      // user's data
+      userData: {},
 
       // File List
       files: [],
@@ -960,6 +985,9 @@ export default {
         });
     },
     async FetchClaimDatasDetails() {
+      this.claimDatasDetails = [];
+      this.claimDataTotalAmount = [];
+      this.claimDatas = [];
       await axios
         .get(
           'http://172.28.28.91:86/api/User/GetMedicalLeave/' +
@@ -1070,6 +1098,25 @@ export default {
       this.confirmResubmit = false;
       this.ApproveOrReject('Resubmit');
     },
+
+    // get the user data from store
+    async GetUserData() {
+      const username_id = store.getSession().userDetails.userId;
+      let userData;
+      await axios
+        .get(`http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`)
+        .then((response) => {
+          userData = {
+            userName: response.data.result[0].name,
+            department: response.data.result[0].department,
+            designation: response.data.result[0].position_title,
+          };
+
+          console.log(userData);
+        });
+      return userData;
+    },
+
     // If any single remark is change, save in the array
     UpdateSingleRemark(event, uc, tab) {
       let index = this.singleRemarks.findIndex(
@@ -1099,7 +1146,8 @@ export default {
 
     //approve or reject action
     // need to post to database
-    ApproveOrReject(AoR) {
+    async ApproveOrReject(AoR) {
+      const userData = await this.GetUserData();
       this.singleRemarks.forEach((remark) => {
         let data = {
           comment: remark.remark,
@@ -1107,12 +1155,12 @@ export default {
         };
         if (remark.Tab_Title == 'Medical Bill') {
           axios.put(
-            'http://172.28.28.91:86/api/Admin/Approve_Comment_Handphone',
+            'http://172.28.28.91:86/api/Admin/Approve_Comment_Medical',
             data
           );
         } else if (remark.Tab_Title == 'Handphone Bill') {
           axios.put(
-            'http://172.28.28.91:86/api/Admin/Approve_Comment_Medical',
+            'http://172.28.28.91:86/api/Admin/Approve_Comment_Handphone',
             data
           );
         }
@@ -1124,6 +1172,9 @@ export default {
         this.loading = true;
 
         const approveData = {
+          approver_name: userData.userName,
+          approver_designation: userData.designation,
+          approver_department: userData.department,
           approver_status: 'APPROVED',
           approver_comment: this.remark ? this.remark : '',
           user_email: 'user_email',
@@ -1131,7 +1182,7 @@ export default {
           reference_number: this.claimDetails.reference_number,
         };
         console.log(approveData);
-        axios
+        await axios
           .put('http://172.28.28.91:86/api/Admin/Approve_Claim', approveData)
           .then((response) => {
             // Handle success response
@@ -1153,13 +1204,16 @@ export default {
         this.loading = true;
 
         const approveData = {
+          approver_name: userData.userName,
+          approver_designation: userData.designation,
+          approver_department: userData.department,
           approver_status: 'REJECTED',
           approver_comment: this.remark ? this.remark : '',
           user_email: 'user_email',
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
         };
-        axios
+        await axios
           .put('http://172.28.28.91:86/api/Admin/Approve_Claim', approveData)
           .then((response) => {
             // Handle success response
@@ -1178,13 +1232,16 @@ export default {
         this.loading = true;
 
         const approveData = {
+          approver_name: userData.userName,
+          approver_designation: userData.designation,
+          approver_department: userData.department,
           approver_status: 'RESUBMIT',
           approver_comment: this.remark ? this.remark : '',
           user_email: 'user_email',
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
         };
-        axios
+        await axios
           .put('http://172.28.28.91:86/api/Admin/Approve_Claim', approveData)
           .then((response) => {
             // Handle success response
@@ -1203,13 +1260,16 @@ export default {
         this.loading = true;
 
         const approveData = {
+          approver_name: userData.userName,
+          approver_designation: userData.designation,
+          approver_department: userData.department,
           approver_status: 'REIMBURSED',
           approver_comment: this.remark ? this.remark : '',
           user_email: 'user_email',
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
         };
-        axios
+        await axios
           .put('http://172.28.28.91:86/api/Admin/Approve_Claim', approveData)
           .then((response) => {
             // Handle success response
@@ -1224,6 +1284,7 @@ export default {
           });
       }
       this.FetchClaimDetails();
+      this.FetchClaimDatasDetails();
     },
 
     // Download the file
