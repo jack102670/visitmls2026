@@ -142,7 +142,7 @@ export default {
         employeeId: '',
         reportingDepartment: '',
         reportingId: '',
-        limit: '',
+        limit: 0,
       },
 
       // option for dropdown
@@ -158,8 +158,9 @@ export default {
   methods: {
     Register() {
       // Post the 'form' object to API
-      console.log('Form Data:', this.form);
       const registerData = {
+        company_name: this.form.company,
+        limit_amount: this.form.limit,
         userNameId: this.fetchOptions.filter(
           (item) =>
             item.userName === this.form.userId &&
@@ -170,9 +171,12 @@ export default {
         userName: this.form.userId,
         employeeId: this.form.employeeId,
         department: this.form.department,
+        reportingToDept: this.form.reportingDepartment,
         reportingToId: this.form.reportingId,
         position: this.form.position,
       };
+      console.log('Form Data:', registerData);
+
       axios
         .post(
           'http://172.28.28.91:86/api/Admin/Register_UserProfile',
