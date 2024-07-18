@@ -1,104 +1,38 @@
 <template>
-  <div>
-    <input type="file" class="filepond" ref="filepond" accept="image/*">
-    <button @click="saveToFilePond">Save</button>
+  <div class="main-content overflow-auto h-screen">
+    <!-- Filling the main page with repeated content to enable scrolling -->
+    <div class="space-y-4">
+      <p v-for="n in 100" :key="n" class="text-gray-700">
+        This is some scrollable content on the main page. {{ n }}
+      </p>
+    </div>
+    <button @click="isModalOpen = true" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded fixed bottom-4 right-4">Open Modal</button>
+    <Modal v-if="isModalOpen" @close="isModalOpen = false" />
   </div>
 </template>
 
 <script>
-import { create, registerPlugin } from 'filepond';
-import axios from 'axios';
-
-import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-import FilePondPluginImageCrop from 'filepond-plugin-image-crop';
-import FilePondPluginImageResize from 'filepond-plugin-image-resize';
-import FilePondPluginImageTransform from 'filepond-plugin-image-transform';
-
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-import 'filepond/dist/filepond.min.css';
-
-registerPlugin(
-  FilePondPluginFileEncode,
-  FilePondPluginFileValidateType,
-  FilePondPluginImageExifOrientation,
-  FilePondPluginImagePreview,
-  FilePondPluginImageCrop,
-  FilePondPluginImageResize,
-  FilePondPluginImageTransform
-);
+import Modal from './ModalTest.vue';
 
 export default {
-  name: 'CircleFilePond',
+  name: 'TestingDemo',
+  components: {
+    Modal
+  },
   data() {
     return {
-      files: []
+      isModalOpen: false
     };
   },
-  mounted() {
-    this.$nextTick(() => {
-      this.initializeFilePond();
-    });
-  },
-  methods: {
-    initializeFilePond() {
-      if (this.$refs.filepond) {
-        const pond = create(this.$refs.filepond, {
-          labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
-          stylePanelLayout: 'compact circle',
-          imagePreviewHeight: 150,
-          imageCropAspectRatio: '1:1',
-          imageResizeTargetWidth: 150,
-          imageResizeTargetHeight: 150,
-          styleLoadIndicatorPosition: 'center bottom',
-          styleButtonRemoveItemPosition: 'center bottom'
-        });
-
-        pond.on('addfile', (error, file) => {
-          if (!error) {
-            console.log("Added file name:", file.file.name); // Access file name
-            this.files = [file.file]; // Replace files array with the new file
-          }
-        });
-
-        pond.on('removefile', () => {
-          this.files = []; // Clear files array when file is removed
-        });
-      } else {
-        console.error("FilePond element not found.");
-      }
-    },
-    saveToFilePond() {
-      if (this.files.length === 0) {
-        console.error("No files selected.");
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append('profile_picture', this.files[0]);
-      formData.append('emp_id', 'PKTM2582');
-
-
-      axios.put('http://172.28.28.91:97/api/User/UpdateImage', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-      .then(response => {
-        console.log('File uploaded successfully:', response.data);
-        // Handle response from server
-      })
-      .catch(error => {
-        console.error('Error uploading file:', error);
-        // Handle error
-      });
+  watch: {
+    isModalOpen(newValue) {
+      const body = document.querySelector('body');
+      body.style.overflow = newValue ? 'hidden' : 'auto';
     }
   }
 };
 </script>
 
-<style scoped>
-/* Your styles here */
+<style>
+/* Additional styles if needed */
 </style>

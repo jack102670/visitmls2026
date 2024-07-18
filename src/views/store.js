@@ -13,6 +13,8 @@ export const formStore = {
     reportEndDate: '',
     memo: '',
     uniqueCode: '',
+    uniqueCodeForFileUpload: '',
+    fileUpload: [],
 
     selectedOption: 'Finance',
   },

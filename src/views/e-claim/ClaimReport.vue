@@ -2747,10 +2747,16 @@ export default {
       return this.dataclaims.length > 0;
     },
     async senttheclaim() {
-      if (!this.isValidClaimData()) {
-        alert("Please add at least one claim data before submit");
-        return;
-      }
+      // if (!this.isValidClaimData()) {
+      //   alert("Please add at least one claim data before submit");
+      //   return;
+      // }
+
+      this.uploadFiles(
+        this.claims.fileupload,
+        this.userDetails.userId,
+        this.claims[0].uniqueCode
+      );
 
       const apiData = {
         name: this.claims[0].claimantName,
@@ -2764,12 +2770,13 @@ export default {
         grand_total: String(parseFloat(this.grandTotal).toFixed(2)), // Ensure grand_total is a string
         requester_id: this.userDetails.userId,
         cost_center: this.claims[0].costCenter,
+        unique_code: this.claims[0].uniqueCode,
       };
 
-      console.log("API data being sent:", apiData); // Log the API data
-      Object.keys(apiData).forEach((key) => {
-        console.log(`${key}: ${apiData[key]} (type: ${typeof apiData[key]})`);
-      });
+      // console.log("API data being sent:", apiData); // Log the API data
+      // Object.keys(apiData).forEach((key) => {
+      //   console.log(`${key}: ${apiData[key]} (type: ${typeof apiData[key]})`);
+      // });
 
       try {
         const response = await axios.post(
@@ -2898,7 +2905,7 @@ export default {
                         }))
                       : [],
                   };
-                 
+
                   const userId = this.userDetails.userId;
                   console.log("unik kod:", this.uniqueCode);
                   if (claim.UploadOT && claim.UploadOT.length > 0) {
@@ -2925,34 +2932,33 @@ export default {
                 for (const claim of claimsToSend) {
                   const uniqcodeE = this.generateUniqueCode(claim.tabTitle);
                   const thisisforentertainment = {
-                    
-                
-                      requester_id: this.userDetails.userId,
-                      date_event: claim.dateE,
-                      entertainment_type: claim.TypeofEntertainmentE,
-                      other_type_of_entertainment:
-                        claim.OtherTypeofEntertainmentE,
-                      company_name: claim.CompanyE,
-                      venue_name: claim.VenueE,
-                      description: claim.ReferenceE,
-                      total_fee: parseFloat(claim.AmountRME),
-                      reference_number: this.claims[0].uniqueCode,
-                      unique_code: uniqcodeE, // Ensure this is in the correct format and not null/undefined
-                      // Add the required 'ent' field with the appropriate value
+                    requester_id: this.userDetails.userId,
+                    date_event: claim.dateE,
+                    entertainment_type: claim.TypeofEntertainmentE,
+                    other_type_of_entertainment:
+                      claim.OtherTypeofEntertainmentE,
+                    company_name: claim.CompanyE,
+                    venue_name: claim.VenueE,
+                    description: claim.ReferenceE,
+                    total_fee: parseFloat(claim.AmountRME),
+                    reference_number: this.claims[0].uniqueCode,
+                    unique_code: uniqcodeE, // Ensure this is in the correct format and not null/undefined
+                    // Add the required 'ent' field with the appropriate value
 
-                      participants: claim.attendees
-                        ? claim.attendees.map((participant) => ({
-                            name: participant.name,
-                            emp_id: participant.staffId? participant.staffId : "",
-                            status: participant.status,
-                            company_name: participant.companyName
-                              ? participant.companyName
-                              : "",
-                          }))
-                        : [],
-                    
-                        };
-             
+                    participants: claim.attendees
+                      ? claim.attendees.map((participant) => ({
+                          name: participant.name,
+                          emp_id: participant.staffId
+                            ? participant.staffId
+                            : "",
+                          status: participant.status,
+                          company_name: participant.companyName
+                            ? participant.companyName
+                            : "",
+                        }))
+                      : [],
+                  };
+
                   const userId = this.userDetails.userId;
 
                   if (claim.UploadE && claim.UploadE.length > 0) {
@@ -3015,7 +3021,7 @@ export default {
                         }))
                       : [],
                   };
-                  
+
                   const userId = this.userDetails.userId;
                   // console.log("unik kod:", uniqueCode);
                   if (claim.UploadSR && claim.UploadSR.length > 0) {
@@ -3030,7 +3036,10 @@ export default {
                     baseURL:
                       "http://172.28.28.91:97/api/User/InsertStaffRefreshment",
                   });
-                 const response2 = await axiosInstance.post("/", thisisforstaffrefreshment);
+                  const response2 = await axiosInstance.post(
+                    "/",
+                    thisisforstaffrefreshment
+                  );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
@@ -3038,7 +3047,9 @@ export default {
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
-                  const uniqcodeothers = this.generateUniqueCode(claim.tabTitle);
+                  const uniqcodeothers = this.generateUniqueCode(
+                    claim.tabTitle
+                  );
                   const thisisforHandphoneBillReimbursement = {
                     expense_date: claim.dateOthers, // Example date
                     amount: parseFloat(claim.AmountRMOthers).toFixed(2),
@@ -3047,8 +3058,9 @@ export default {
                     total_fee: parseFloat(claim.totalRM).toFixed(2),
                     reference_number: this.claims[0].uniqueCode,
                     requester_id: this.userDetails.userId,
+                    expense_name: claim.ExpenseNameOthers,
                   };
-                  
+
                   const userId = this.userDetails.userId;
                   // console.log("unik kod:", uniqueCode);
                   if (claim.UploadOthers && claim.UploadOthers.length > 0) {
@@ -3060,7 +3072,11 @@ export default {
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
-                    this.uploadFiles(claim.UploadOthers, userId, uniqcodeothers);
+                    this.uploadFiles(
+                      claim.UploadOthers,
+                      userId,
+                      uniqcodeothers
+                    );
                   }
                   axiosInstance = axios.create({
                     baseURL: "http://172.28.28.91:97/api/User/InsertOthers",
@@ -3076,7 +3092,7 @@ export default {
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
-const uniqcodeHR = this.generateUniqueCode(claim.tabTitle);
+                  const uniqcodeHR = this.generateUniqueCode(claim.tabTitle);
                   const thisisforHandphoneBillReimbursement = {
                     date_claim: this.todayFormatted(), // Example date
                     claim_month: claim.MonthHR,
@@ -3091,7 +3107,7 @@ const uniqcodeHR = this.generateUniqueCode(claim.tabTitle);
                     handphone: "",
                     requester_id: this.userDetails.userId,
                   };
-                  
+
                   const userId = this.userDetails.userId;
                   // console.log("unik kod:", uniqueCode);
                   if (claim.UploadHR && claim.UploadHR.length > 0) {
@@ -3144,7 +3160,7 @@ const uniqcodeHR = this.generateUniqueCode(claim.tabTitle);
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
-             
+
                   const uniqcodeML = this.generateUniqueCode(claim.tabTitle);
                   const thisisforMedicalBillReimbursement = {
                     reference_number: this.claims[0].uniqueCode,
@@ -3160,12 +3176,11 @@ const uniqcodeHR = this.generateUniqueCode(claim.tabTitle);
                     clinic_selection: claim.ClinicSelectionML,
                     reason_different: claim.OtherClinicReasonML,
                     medical_category: claim.MedicalCategoryML,
-     requester_id: this.userDetails.userId,
-
+                    requester_id: this.userDetails.userId,
 
                     unique_code: uniqcodeML,
                   };
-                 
+
                   const userId = this.userDetails.userId;
                   // console.log("unik kod:", uniqueCode);
                   if (claim.UploadML && claim.UploadML.length > 0) {
@@ -3233,12 +3248,36 @@ const uniqcodeHR = this.generateUniqueCode(claim.tabTitle);
       });
 
       try {
-        await axios.post(uploadEndpoint, formData, {
+        const response = await axios.post(uploadEndpoint, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        // console.log("Files uploaded successfully:", response.data);
+        console.log("Files uploaded successfully:", response.data);
+      } catch (error) {
+        console.error("Error uploading files:", error);
+      }
+    },
+    async uploadFilesclaims(files, userId, uniqueCode) {
+      const uploadEndpoint = `http://172.28.28.91:93/api/Files/MultiUploadImage/${userId}/${uniqueCode}`;
+      const formData = new FormData();
+ // Check if files is defined and is an array
+ if (!Array.isArray(files)) {
+    console.error("uploadFiles was called without files or with a non-array argument");
+    return; // Exit the function to avoid further errors
+  }
+      // Iterate over the files array and append each file to formData
+      files.forEach((file) => {
+        formData.append("filecollection", file);
+      });
+
+      try {
+        const response = await axios.post(uploadEndpoint, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        console.log("Files uploaded successfully:", response.data);
       } catch (error) {
         console.error("Error uploading files:", error);
       }
