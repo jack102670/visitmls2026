@@ -1249,6 +1249,36 @@ export default {
           console.error(e);
         });
 
+      await axios
+        .get(
+          'http://172.28.28.91:97/api/User/GetOthers/' + this.referenceNumber
+        )
+        .then((response) => {
+          const result = response.data.result;
+          let details = [];
+          let amount = 0;
+          for (let i in result) {
+            amount += result[i].total_fee;
+            const editedDetail = {
+              Description: result[i].description,
+              Date: result[i].expense_date,
+              'Total_Fee(RM)': result[i].total_fee,
+              Attachments: result[i].files,
+              Tab_Title: 'Other',
+              unique_code: result[i].unique_code,
+              comment: result[i].comment,
+            };
+            details.push(editedDetail);
+          }
+          if (details.length > 0) {
+            this.claimDatasDetails.push(details);
+            this.claimDataTotalAmount.push(amount);
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+
       this.claimDatasDetails.forEach((details, index) => {
         if (details && details.length > 0) {
           const claimData = {

@@ -137,16 +137,15 @@
                 d="M6 18 18 6M6 6l12 12"
               />
             </svg>
-            <div class="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-              <div
-                class="row-span-2 row-start-1 col-start-1 sm:col-end-2 lg:col-end-1 m-3"
-              >
-                <img
-                  :src="employee.profile_picture"
-                  alt="profile picture"
-                  class="h-full object-cover rounded-xl"
-                />
-              </div>
+            <h1 class="text-2xl font-bold m-3 ml-7">Employee Details</h1>
+            <div class="m-3 ml-7 h-1/3">
+              <img
+                :src="employee.profile_picture"
+                alt="profile picture"
+                class="h-full object-cover rounded-xl"
+              />
+            </div>
+            <div class="p-4 grid grid-cols-1 sm:grid-cols-2">
               <div
                 v-for="(val, key, index) in employee"
                 :key="index"
