@@ -856,7 +856,9 @@
                     />
                   </svg>
 
-                  <h1 class="ml-2">{{ file }}</h1>
+                  <h1 class="ml-2">
+                    {{ file.split('/')[file.split('/').length - 1] }}
+                  </h1>
                 </th>
                 <th class="font-normal">
                   <svg
@@ -866,7 +868,12 @@
                     stroke-width="1.5"
                     stroke="currentColor"
                     class="w-5 h-5 mx-auto"
-                    @click="DownloadFile(file)"
+                    @click="
+                      DownloadFile(
+                        file,
+                        file.split('/')[file.split('/').length - 1]
+                      )
+                    "
                   >
                     <path
                       stroke-linecap="round"
@@ -1242,6 +1249,36 @@ export default {
           console.error(e);
         });
 
+      await axios
+        .get(
+          'http://172.28.28.91:97/api/User/GetOthers/' + this.referenceNumber
+        )
+        .then((response) => {
+          const result = response.data.result;
+          let details = [];
+          let amount = 0;
+          for (let i in result) {
+            amount += result[i].total_fee;
+            const editedDetail = {
+              Description: result[i].description,
+              Date: result[i].expense_date,
+              'Total_Fee(RM)': result[i].total_fee,
+              Attachments: result[i].files,
+              Tab_Title: 'Other',
+              unique_code: result[i].unique_code,
+              comment: result[i].comment,
+            };
+            details.push(editedDetail);
+          }
+          if (details.length > 0) {
+            this.claimDatasDetails.push(details);
+            this.claimDataTotalAmount.push(amount);
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+
       this.claimDatasDetails.forEach((details, index) => {
         if (details && details.length > 0) {
           const claimData = {
@@ -1487,8 +1524,8 @@ export default {
     },
 
     // Download the file
-    DownloadFile(url) {
-      fileSaver.saveAs(url, url);
+    DownloadFile(url, fileName) {
+      fileSaver.saveAs(url, fileName);
     },
     // click see more and show the list of staff involved
     showStaffInvolved(val) {
