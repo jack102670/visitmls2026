@@ -752,11 +752,13 @@ export default {
       this.formData.uniqueCode = sn;
       return sn;
     },
+ 
     submitForm(page) {
       this.active += page;
 
       if (this.active > 0) {
         // Update form data in the form store
+        formStore.getFormData().fileUpload = [];
         formStore.clearFormData();
         this.generateSerialNumber();
         this.generateUniqueCode();

@@ -483,8 +483,11 @@
                   </button>
 
                   <div>
-                    <h3 class="text-xl leading-6 font-medium text-gray-900">
+                    <h3 v-if="status === 0" class="text-xl leading-6 font-medium text-gray-900">
                       Request OTP Code for Account Activation
+                    </h3>
+                    <h3  v-else class="text-xl leading-6 font-medium text-gray-900">
+                      Request OTP Code for Email Verification
                     </h3>
                     <p class="mt-4 mb-8 text-md text-gray-500">
                       To complete your profile activation, please request
@@ -773,12 +776,19 @@ export default {
       };
       console.log("Employee Data:", employeeData);
       axios
-        .put("http://172.28.28.91:97/api/User/UpdateEmployee", employeeData)
+        .put("http://172.28.28.91:97/api/User/UpdateProfile", employeeData)
         .then((response) => {
           console.log("Response:", response);
-          if (response.data.status_code === "200") {
-            console.log("Successfully Updated:", response.data.message);
-            alert("Successfully Updated.");
+          if (response.data.message === "200") {
+            console.log(":", response.data.message);
+            alert(response.data.message);
+            // Additional logic here for successful update
+            this.showRequestOtpModal = true;
+          } else if (response.data.message.includes("OTP is sent to")) {
+            console.log(":otp is sent", response.data.message);
+            alert(response.data.message);
+            this.showRequestOtpModal = true;
+
             // Additional logic here for successful update
           } else if (response.data.status_code === "400") {
             // console.log("Successfully Updated:", response.data.message);
