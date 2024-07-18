@@ -2352,6 +2352,10 @@ export default {
       othersDetails: {},
       handphoneBillReimbursementDetails: {},
       cancel: true,
+      formData: {
+        ...formStore.getFormData(),
+        fileUpload: formStore.getFormData().fileUpload.slice() // Ensure we work with a copy
+      },
     };
   },
 
@@ -2752,8 +2756,8 @@ export default {
       //   return;
       // }
 
-      this.uploadFiles(
-        this.claims.fileupload,
+      this.sendFiles(
+        
         this.userDetails.userId,
         this.claims[0].uniqueCode
       );
@@ -2783,7 +2787,7 @@ export default {
           "http://172.28.28.91:97/api/User/InsertClaimDetails",
           apiData
         );
-        console.log("API response:", response.data);
+        // console.log("API response:", response.data);
 
         // Check if the response indicates success
         if (response.status === 200 || response.status === 201) {
@@ -3073,7 +3077,7 @@ export default {
                     // Assuming uploadFile has been adjusted to accept an array of files
 
                     this.uploadFiles(
-                      claim.UploadOthers,
+                      
                       userId,
                       uniqcodeothers
                     );
@@ -3258,18 +3262,37 @@ export default {
         console.error("Error uploading files:", error);
       }
     },
+
+    async sendFiles(X,Y) {
+      
+      const files = this.formData.fileUpload; // Ensure formData is correctly accessible
+
+      if (!files || !files.length) {
+        console.error("No files to upload.");
+        return;
+      }
+
+      
+      await this.uploadFilesclaims(files, X, Y);
+    },
     async uploadFilesclaims(files, userId, uniqueCode) {
+      console.log("Files parameter received:", files);
+      console.log("User ID:", userId);
+      console.log("Unique Code:", uniqueCode);
+      console.log("Files type:", typeof files);
+      console.log("Is Array:", Array.isArray(files));
+
+      if (!files || !Array.isArray(files)) {
+        console.error("The files parameter is not an array or is undefined.");
+        return;
+      }
+
       const uploadEndpoint = `http://172.28.28.91:93/api/Files/MultiUploadImage/${userId}/${uniqueCode}`;
       const formData = new FormData();
- // Check if files is defined and is an array
- if (!Array.isArray(files)) {
-    console.error("uploadFiles was called without files or with a non-array argument");
-    return; // Exit the function to avoid further errors
-  }
-      // Iterate over the files array and append each file to formData
-      files.forEach((file) => {
-        formData.append("filecollection", file);
-      });
+
+      for (let i = 0; i < files.length; i++) {
+        formData.append("filecollection", files[i]);
+      }
 
       try {
         const response = await axios.post(uploadEndpoint, formData, {
@@ -3282,6 +3305,7 @@ export default {
         console.error("Error uploading files:", error);
       }
     },
+  
 
     deleteForm() {
       if (this.index !== -1) {

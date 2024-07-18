@@ -514,7 +514,7 @@ export default {
         memo: formStore.formData.memo,
         uniqueCode: formStore.formData.uniqueCode,
         uniqueCodeForFileUpload: formStore.formData.uniqueCodeForFileUpload,
-        fileUpload: formStore.formData.fileUpload,
+        fileUpload: formStore.getFormData().fileUpload.slice()
       },
       branch: "", // Add the missing branch property
       userDetails: {},
@@ -582,7 +582,8 @@ export default {
     handleAddFile(error, fileItem) {
       if (!error) {
         console.log("Added file name:", fileItem.file.name);
-       this.formData.fileUpload.push(fileItem.file);
+        this.formData.fileUpload.push(fileItem.file);
+        console.log("Files after upload (plain array):", this.formData.fileUpload);
       }
     },
 
@@ -761,8 +762,7 @@ export default {
         this.generateUniqueCode();
         formStore.setFormData(this.formData);
 
-        // Log the form data before navigation
-        console.log("Form submitted", formStore.getFormData());
+   
         // Log the form data before navigation
         console.log("Form submitted", formStore.getFormData());
         this.$router.push({ name: "ClaimReport" });
