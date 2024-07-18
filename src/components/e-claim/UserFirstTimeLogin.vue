@@ -9,18 +9,20 @@
         <div
           class="relative overflow-hidden mt-1 max-w-4xl p-6 bg-white border-2 border-e-gray-200 rounded-md dark:bg-gray-800"
         >
-          <h2 v-if="status === '0'"
+          <h2
+            v-if="status === '0'"
             class="text-3xl font-bold text-gray-700 capitalize dark:text-white"
           >
             Activate Your Profile
           </h2>
-          <h2 v-else
+          <h2
+            v-else
             class="text-3xl font-bold text-gray-700 capitalize dark:text-white"
-          > 
+          >
             Profile Page
           </h2>
 
-          <section >
+          <section>
             <h1 v-if="status === '0'" class="mb-4 text-gray-500 text-md">
               Note: Please fill in all the mandatory fields to activate your
               profile.
@@ -211,7 +213,6 @@
                 <input
                   v-model="user.email_address"
                   id="email_address"
-                  :disabled="this.status === '1'"
                   type="email"
                   required
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -281,7 +282,7 @@
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
-          <div>
+              <div>
                 <label
                   class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
                   for="phonenumber"
@@ -349,15 +350,14 @@
             </div>
 
             <div class="mt-6 flex justify-end">
-              <div class= "flex flex-row-reverse">
-              <button
-              
-                type="submit"
-                class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
-              >
-                Verify
-              </button>
-              <!-- <button
+              <div class="flex flex-row-reverse">
+                <button
+                  type="submit"
+                  class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+                >
+                  Verify
+                </button>
+                <!-- <button
                 @click="uploadimg()"
                 type="button"
                 class="mr-4 px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
@@ -483,8 +483,11 @@
                   </button>
 
                   <div>
-                    <h3 class="text-xl leading-6 font-medium text-gray-900">
+                    <h3 v-if="status === 0" class="text-xl leading-6 font-medium text-gray-900">
                       Request OTP Code for Account Activation
+                    </h3>
+                    <h3  v-else class="text-xl leading-6 font-medium text-gray-900">
+                      Request OTP Code for Email Verification
                     </h3>
                     <p class="mt-4 mb-8 text-md text-gray-500">
                       To complete your profile activation, please request
@@ -507,12 +510,11 @@
             </div>
 
             <div
-            v-if="showSuccessNotification"
-            class="fixed top-4 right-4 p-4 bg-green-500 text-white rounded-lg shadow-lg"
-          >
-            Activation successful! Redirecting...
-          </div>
-          
+              v-if="showSuccessNotification"
+              class="fixed top-4 right-4 p-4 bg-green-500 text-white rounded-lg shadow-lg"
+            >
+              Activation successful! Redirecting...
+            </div>
           </form>
         </div>
       </div>
@@ -558,6 +560,7 @@ export default {
       timer: 0,
       timerInterval: null,
       status: "",
+      tempEmail: "",
     };
   },
 
@@ -580,7 +583,7 @@ export default {
         spouse: this.user.spouse,
         phone_number: this.user.phone_number,
       };
-console.log("Employee Data:", employeeData);
+      console.log("Employee Data:", employeeData);
       axios
         .put("http://172.28.28.91:97/api/User/UpdateEmployee", employeeData)
         .then((response) => {
@@ -589,14 +592,17 @@ console.log("Employee Data:", employeeData);
             console.log("Successfully Updated:", response.data.message);
             alert("Successfully Updated.");
             // Additional logic here for successful update
-          }
-          else if (response.data.status_code === "400") {
+          } else if (response.data.status_code === "400") {
             // console.log("Successfully Updated:", response.data.message);
-            alert(response.data.result || "Failed to update. Please try again.");
+            alert(
+              response.data.result || "Failed to update. Please try again."
+            );
             // Additional logic here for successful update
           } else {
             console.error("Backend error:", response.data.message);
-            alert(response.data.message || "Failed to update. Please try again.");
+            alert(
+              response.data.message || "Failed to update. Please try again."
+            );
             // Additional error handling logic here
           }
         })
@@ -606,7 +612,7 @@ console.log("Employee Data:", employeeData);
           // Additional error handling logic here
         });
     },
-  
+
     fetchHrData() {
       const username_id = store.getSession().userDetails.userId;
       axios
@@ -630,7 +636,9 @@ console.log("Employee Data:", employeeData);
             this.user.spouse = user.spouse;
             this.user.home_address = user.home_address;
             this.status = user.account_status;
+            this.tempEmail = user.email_address;
           }
+          console.log("HR data:", this.tempEmail);
         })
         .catch((error) => {
           console.error("Error fetching HR data:", error);
@@ -720,37 +728,89 @@ console.log("Employee Data:", employeeData);
 
     checkUserStatusAndShowModal() {
       const username_id = store.getSession().userDetails.userId;
-    axios.get(`http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`)
-      .then(response => {
-        // Assuming the API response structure has a status field
-        const userStatus = response.data.result[0].account_status;
-        console.log("User status:", userStatus);
-     
-        if (userStatus === '0') {
-          // User has not completed their OTP, show the modal
-          this.showRequestOtpModal = true;
-        } else {
-          // User has completed their OTP, do not show the modal
-          this.showRequestOtpModal = false;
-        }
-      })
-      .catch(error => {
-        console.error("There was an error fetching the user status:", error);
-        // Handle error or set a default behavior if the API call fails
-      });
-  },
+      axios
+        .get(`http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`)
+        .then((response) => {
+          // Assuming the API response structure has a status field
+          const userStatus = response.data.result[0].account_status;
+          console.log("User status:", userStatus);
+
+          if (userStatus === "0") {
+            // User has not completed their OTP, show the modal
+            this.showRequestOtpModal = true;
+          } else {
+            // User has completed their OTP, do not show the modal
+            this.showRequestOtpModal = false;
+          }
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the user status:", error);
+          // Handle error or set a default behavior if the API call fails
+        });
+    },
 
     verifyAndSaveData() {
       // this.saveUserData();
-      if(this.tempImageUrl ) {
-          this.uploadimg();
+      if (this.tempImageUrl) {
+        this.uploadimg();
+      } else if (this.status === "0") {
+        this.updateEmployeeData();
+      } else {
+        this.updateEmployeeDataNewEmail();
       }
-      this.updateEmployeeData();
-   
+
       // this.saveProfilePicture();
-     this.checkUserStatusAndShowModal();
+      this.checkUserStatusAndShowModal();
     },
-    
+    // update utk email baru dan lama / bila dia update emel then akan kena verify balik
+    updateEmployeeDataNewEmail() {
+      const employeeData = {
+        emp_id: this.user.emp_id,
+        name: this.user.name,
+        bank_name: this.user.bank_name,
+        bank_number: String(this.user.bank_number),
+        email_address: this.user.email_address,
+        home_address: this.user.home_address,
+        spouse: this.user.spouse,
+        phone_number: this.user.phone_number,
+      };
+      console.log("Employee Data:", employeeData);
+      axios
+        .put("http://172.28.28.91:97/api/User/UpdateProfile", employeeData)
+        .then((response) => {
+          console.log("Response:", response);
+          if (response.data.message === "200") {
+            console.log(":", response.data.message);
+            alert(response.data.message);
+            // Additional logic here for successful update
+            this.showRequestOtpModal = true;
+          } else if (response.data.message.includes("OTP is sent to")) {
+            console.log(":otp is sent", response.data.message);
+            alert(response.data.message);
+            this.showRequestOtpModal = true;
+
+            // Additional logic here for successful update
+          } else if (response.data.status_code === "400") {
+            // console.log("Successfully Updated:", response.data.message);
+            alert(
+              response.data.result || "Failed to update. Please try again."
+            );
+            // Additional logic here for successful update
+          } else {
+            console.error("Backend error:", response.data.message);
+            alert(
+              response.data.message || "Failed to update. Please try again."
+            );
+            // Additional error handling logic here
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating employee data:", error);
+          alert("An error occurred while updating employee data.");
+          // Additional error handling logic here
+        });
+    },
+
     async sendOtp() {
       try {
         const response = await axios.post(
@@ -800,9 +860,10 @@ console.log("Employee Data:", employeeData);
 
     beforeUnloadHandler(event) {
       if (this.showOtpModal) {
-        const confirmationMessage = "You have not completed OTP verification. Are you sure you want to leave?";
-        event.returnValue = confirmationMessage; 
-        return confirmationMessage; 
+        const confirmationMessage =
+          "You have not completed OTP verification. Are you sure you want to leave?";
+        event.returnValue = confirmationMessage;
+        return confirmationMessage;
       }
     },
 
@@ -824,7 +885,7 @@ console.log("Employee Data:", employeeData);
             this.showSuccessNotification = false;
             this.$router.push("/homepage");
           }, 3000);
-           window.removeEventListener("beforeunload", this.beforeUnloadHandler);
+          window.removeEventListener("beforeunload", this.beforeUnloadHandler);
         } else {
           alert("Invalid OTP. Please try again.");
         }
@@ -848,7 +909,7 @@ console.log("Employee Data:", employeeData);
         }
       }
     },
-    
+
     requestNewOtp() {
       if (this.timer === 0) {
         axios

@@ -13,6 +13,8 @@ export const formStore = {
     reportEndDate: '',
     memo: '',
     uniqueCode: '',
+    uniqueCodeForFileUpload: '',
+    fileUpload: [],
 
     selectedOption: 'Finance',
   },
@@ -24,24 +26,29 @@ export const formStore = {
   getFormData() {
     return this.formData;
   },
+  getFileUpload() {
+    return this.formData.fileUpload;
+  },
 
   clearFormData() {
-    this.formData = {
-      claimantName: '',
-      companyName: '',
-      department: '',
-      costCenter: '',
-      designation: '',
-      reportName: '',
-      internalOrder: '',
-      reportType: '',
-      reportDate: '',
-      reportStartDate: '',
-      reportEndDate: '',
-      memo: '',
-      uniqueCode: '',
-      selectedOption: '',
-    };
+    // Reset all fields to their default values
+    this.formData.claimantName = '';
+    this.formData.companyName = '';
+    this.formData.department = '';
+    this.formData.costCenter = '';
+    this.formData.designation = '';
+    this.formData.reportName = '';
+    this.formData.internalOrder = '';
+    this.formData.reportType = '';
+    this.formData.reportDate = '';
+    this.formData.reportStartDate = '';
+    this.formData.reportEndDate = '';
+    this.formData.memo = '';
+    this.formData.uniqueCode = '';
+    this.formData.uniqueCodeForFileUpload = '';
+    // Clear the fileUpload array without reassigning it
+    this.formData.fileUpload.length = 0;
+    this.formData.selectedOption = '';
   },
 };
 let refNumber = ''; // Variable to store refNumber

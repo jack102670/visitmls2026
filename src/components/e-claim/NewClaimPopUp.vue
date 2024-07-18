@@ -103,12 +103,12 @@
               Designation<span class="text-red-500">*</span>
             </label>
             <div class="flex justify-between">
-              <input disabled
+              <input
+                disabled
                 type="text"
                 placeholder="Designation.."
                 v-model="formData.designation"
                 required
-                
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
               <!-- <div
@@ -328,6 +328,7 @@
               </div>
             </div>
           </div>
+
           <!-- <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-3"> -->
           <!-- <div>
             <label
@@ -380,6 +381,41 @@
             >
           </div>
         </div> -->
+        <div class="pt-5">
+          <label
+            class="font-semibold text-gray-700 dark:text-gray-200"
+            for="username"
+            >Upload Attachment (png, jpeg, pdf or xlsx)<span
+              class="text-red-500"
+              >*</span
+            ></label
+          >
+
+          <!-- component -->
+
+          <div>
+            <Div class="pt-3">
+              <FilePond
+             
+                ref="pond"
+                name="file"
+                :server="null"
+                :allowMultiple="true"
+                :maxFileSize="'5MB'"
+                :acceptedFileTypes="[
+                  'image/png',
+                  'image/jpeg',
+                  'application/pdf',
+                  'application/vnd.ms-excel',
+                  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                ]"
+                @addfile="handleAddFile"
+                @removefile="handleRemoveFile"
+              />
+            </Div>
+            <!-- component -->
+          </div>
+        </div>
 
         <h1 class="text-red-500 text-sm">
           Note : Claims made in the first week of the month will be processed
@@ -403,7 +439,6 @@
           <div class="flex justify-center mt-10">
             <button
               type="submit"
-            
               class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
             >
               Next
@@ -424,11 +459,30 @@
   </div>
 </template>
 <script>
+import vueFilePond from "vue-filepond";
+import "filepond/dist/filepond.min.css";
+
+import FilePondPluginFilePoster from "filepond-plugin-file-poster";
+import FilePondPluginFileRename from "filepond-plugin-file-rename";
+import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
+
 import moment from "moment";
 import { formStore } from "../../views/store.js"; // Import your form store
 import { store } from "../../views/store.js";
+import { unique } from "jquery";
 // import axios from 'axios';
+
+const FilePond = vueFilePond(
+  FilePondPluginFilePoster,
+  FilePondPluginFileRename,
+  FilePondPluginFileValidateSize,
+  FilePondPluginFileValidateType
+);
 export default {
+  components: {
+    FilePond,
+  },
   emits: ["close"],
   data() {
     return {
@@ -459,6 +513,8 @@ export default {
         reportEndDate: formStore.formData.reportEndDate,
         memo: formStore.formData.memo,
         uniqueCode: formStore.formData.uniqueCode,
+        uniqueCodeForFileUpload: formStore.formData.uniqueCodeForFileUpload,
+        fileUpload: formStore.getFormData().fileUpload.slice()
       },
       branch: "", // Add the missing branch property
       userDetails: {},
@@ -473,7 +529,6 @@ export default {
     "formData.designation": function (newVal) {
       this.formData.designation = newVal.toUpperCase();
     },
-    
   },
   computed: {
     filteredDesignation() {
@@ -524,6 +579,42 @@ export default {
   },
 
   methods: {
+    handleAddFile(error, fileItem) {
+      if (!error) {
+        console.log("Added file name:", fileItem.file.name);
+        this.formData.fileUpload.push(fileItem.file);
+        console.log("Files after upload (plain array):", this.formData.fileUpload);
+      }
+    },
+
+    handleRemoveFile(error, fileItem) {
+      this.formData.fileUpload = this.formData.fileUpload.filter((file) => file !== fileItem.file);
+    },
+    generateUniqueCode() {
+      // Check if this.userId is defined
+      if (this.userDetails.userId) {
+        // Use part of the userId for uniqueness, e.g., 4 characters
+        const userIdFragment = this.userDetails.userId.substring(0, 4);
+
+        // Generate a random number and pad it to 2 characters
+        const randomNumber = Math.floor(Math.random() * 100)
+          .toString()
+          .padStart(2, "0");
+
+        // Create a timestamp and take the last 2 digits for uniqueness
+        const timestamp = Date.now().toString().slice(-2);
+
+        // Construct the uniqueCode
+        this.uniqueCode = `Claims${userIdFragment}${randomNumber}${timestamp}`;
+        console.log("Unique Code:", this.uniqueCode);
+        this.formData.uniqueCodeForFileUpload = this.uniqueCode;
+        return this.uniqueCode;
+      } else {
+        console.error("User ID is undefined.");
+        // You may want to handle this case differently based on your application logic.
+        return "";
+      }
+    },
     async fetchusername() {
       try {
         const response = await fetch(
@@ -544,8 +635,9 @@ export default {
               this.formData.claimantName = selectedEmployee.name;
               this.formData.designation = selectedEmployee.position_title;
               this.formData.department = selectedEmployee.department;
-              this.formData.companyName = selectedEmployee.company_name? selectedEmployee.company_name : "";
-          
+              this.formData.companyName = selectedEmployee.company_name
+                ? selectedEmployee.company_name
+                : "";
             } else {
               console.error(
                 "Employee found but username is missing:",
@@ -660,17 +752,19 @@ export default {
       this.formData.uniqueCode = sn;
       return sn;
     },
+ 
     submitForm(page) {
       this.active += page;
 
       if (this.active > 0) {
         // Update form data in the form store
+        formStore.getFormData().fileUpload = [];
         formStore.clearFormData();
         this.generateSerialNumber();
+        this.generateUniqueCode();
         formStore.setFormData(this.formData);
 
-        // Log the form data before navigation
-        console.log("Form submitted", formStore.getFormData());
+   
         // Log the form data before navigation
         console.log("Form submitted", formStore.getFormData());
         this.$router.push({ name: "ClaimReport" });
