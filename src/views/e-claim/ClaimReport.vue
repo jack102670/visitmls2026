@@ -342,7 +342,7 @@
                 />
               </div>
               <div
-                v-if="!isCompanyTransport"
+                v-if="!isCompanyTransport && !isPublicTransport"
                 class="flex justify-between items-center mb-4"
               >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
@@ -353,6 +353,21 @@
                   id="transportSpecify"
                   v-model="localTravellingDetails.TransportSpec"
                   :disabled="!isEditMode || nonEditableFields"
+                  class="border rounded-md px-16 py-2"
+                />
+              </div>
+              <div
+                v-if="!isCompanyTransport && !isPersonalTransport"
+                class="flex justify-between items-center mb-4"
+              >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Transport Specification:</label
+                >
+                <input
+                  type="text"
+                  id="publicTransportSpecify"
+                  v-model="localTravellingDetails.PublicTransportSpec"
+                  :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -394,7 +409,7 @@
               </div>
 
               <div
-                v-if="!isCompanyTransport"
+                v-if="!isCompanyTransport && !isPublicTransport"
                 class="flex justify-between items-center mb-4"
               >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
@@ -410,7 +425,7 @@
               </div>
 
               <div
-                v-if="!isCompanyTransport"
+                v-if="!isCompanyTransport && !isPublicTransport"
                 class="flex justify-between items-center mb-4"
               >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
@@ -425,7 +440,10 @@
                 />
               </div>
 
-              <div class="flex justify-between items-center mb-4">
+              <div
+                v-if="!isPublicTransport"
+                class="flex justify-between items-center mb-4"
+              >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Toll:</label
                 >
@@ -438,7 +456,10 @@
                 />
               </div>
 
-              <div class="flex justify-between items-center mb-4">
+              <div
+                v-if="!isPublicTransport"
+                class="flex justify-between items-center mb-4"
+              >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Parking:</label
                 >
@@ -446,6 +467,21 @@
                   type="text"
                   id="positioname"
                   v-model="localTravellingDetails.ParkingLT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2"
+                />
+              </div>
+              <div
+                v-if="!isCompanyTransport && !isPersonalTransport"
+                class="flex justify-between items-center mb-4"
+              >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Fare(RM):</label
+                >
+                <input
+                  type="text"
+                  id="farerm"
+                  v-model="localTravellingDetails.FareRMLT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2"
                 />
@@ -793,7 +829,15 @@
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
                         <div class="flex items-center gap-x-3">
-                          <span></span>
+                          <span>Attachment(s)</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Action</span>
                         </div>
                       </th>
                     </tr>
@@ -851,6 +895,18 @@
                           v-model="expense.amount"
                           class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1"
                         />
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
+                      >
+                        <div v-for="file in expense.files" :key="file.id">
+                          <a
+                            :href="file.url"
+                            :download="file.name"
+                            class="text-blue-500 hover:underline"
+                            >{{ file.name }}</a
+                          >
+                        </div>
                       </td>
                       <td
                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
@@ -1920,6 +1976,18 @@
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
+                <label for="expensename" class="text-gray-700 font-bold mr-2"
+                  >Expense Name:</label
+                >
+                <input
+                  type="text"
+                  id="expensename"
+                  v-model="othersDetails.ExpenseNameOthers"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
                 <label for="amount" class="text-gray-700 font-bold mr-2"
                   >Amount (RM):</label
                 >
@@ -2357,22 +2425,41 @@ export default {
 
   computed: {
     totallocalTravellingDetails() {
-      let total =
-        (this.localTravellingDetails.TransportLT === "Company Transport"
-          ? 0
-          : parseFloat(this.localTravellingDetails.MileageRMLT) || 0) +
-        (parseFloat(this.localTravellingDetails.ParkingLT) || 0) +
-        (parseFloat(this.localTravellingDetails.TollLT) || 0);
+      let total = 0;
+
+      if (this.localTravellingDetails.TransportLT === "Company Transport") {
+        total += parseFloat(this.localTravellingDetails.ParkingLT) || 0;
+        total += parseFloat(this.localTravellingDetails.TollLT) || 0;
+      } else if (
+        this.localTravellingDetails.TransportLT === "Personal Transport"
+      ) {
+        total += parseFloat(this.localTravellingDetails.MileageRMLT) || 0;
+        total += parseFloat(this.localTravellingDetails.ParkingLT) || 0;
+        total += parseFloat(this.localTravellingDetails.TollLT) || 0;
+      } else if (
+        this.localTravellingDetails.TransportLT === "Public Transport"
+      ) {
+        total += parseFloat(this.localTravellingDetails.FareRMLT) || 0;
+      }
 
       if (this.localTravellingDetails.tripwayLT === "Round Trip") {
         total *= 2;
       }
+
       this.totalplusmethod(total);
       return total;
     },
 
     isCompanyTransport() {
       return this.localTravellingDetails.TransportLT === "Company Transport";
+    },
+
+    isPublicTransport() {
+      return this.localTravellingDetails.TransportLT === "Public Transport";
+    },
+
+    isPersonalTransport() {
+      return this.localTravellingDetails.TransportLT === "Personal Transport";
     },
 
     isPanelClinic() {
@@ -2472,6 +2559,7 @@ export default {
         }, 0)
         .toFixed(2);
     },
+
     referenceNumber() {
       console.log("Current uniqueCode:", this.claims.uniqueCode);
       return this.claims.uniqueCode;
@@ -2848,6 +2936,7 @@ export default {
                     trip_mode: claim.tripwayLT,
                     total_mileage: claim.MileageRMLT || 0,
                     transport_specification: claim.TransportSpec,
+                    fare: claim.FareRMLT,
                   };
                   axiosInstance = axios.create({
                     baseURL:
@@ -2898,7 +2987,7 @@ export default {
                         }))
                       : [],
                   };
-                 
+
                   const userId = this.userDetails.userId;
                   console.log("unik kod:", this.uniqueCode);
                   if (claim.UploadOT && claim.UploadOT.length > 0) {
@@ -2925,34 +3014,33 @@ export default {
                 for (const claim of claimsToSend) {
                   const uniqcodeE = this.generateUniqueCode(claim.tabTitle);
                   const thisisforentertainment = {
-                    
-                
-                      requester_id: this.userDetails.userId,
-                      date_event: claim.dateE,
-                      entertainment_type: claim.TypeofEntertainmentE,
-                      other_type_of_entertainment:
-                        claim.OtherTypeofEntertainmentE,
-                      company_name: claim.CompanyE,
-                      venue_name: claim.VenueE,
-                      description: claim.ReferenceE,
-                      total_fee: parseFloat(claim.AmountRME),
-                      reference_number: this.claims[0].uniqueCode,
-                      unique_code: uniqcodeE, // Ensure this is in the correct format and not null/undefined
-                      // Add the required 'ent' field with the appropriate value
+                    requester_id: this.userDetails.userId,
+                    date_event: claim.dateE,
+                    entertainment_type: claim.TypeofEntertainmentE,
+                    other_type_of_entertainment:
+                      claim.OtherTypeofEntertainmentE,
+                    company_name: claim.CompanyE,
+                    venue_name: claim.VenueE,
+                    description: claim.ReferenceE,
+                    total_fee: parseFloat(claim.AmountRME),
+                    reference_number: this.claims[0].uniqueCode,
+                    unique_code: uniqcodeE, // Ensure this is in the correct format and not null/undefined
+                    // Add the required 'ent' field with the appropriate value
 
-                      participants: claim.attendees
-                        ? claim.attendees.map((participant) => ({
-                            name: participant.name,
-                            emp_id: participant.staffId? participant.staffId : "",
-                            status: participant.status,
-                            company_name: participant.companyName
-                              ? participant.companyName
-                              : "",
-                          }))
-                        : [],
-                    
-                        };
-             
+                    participants: claim.attendees
+                      ? claim.attendees.map((participant) => ({
+                          name: participant.name,
+                          emp_id: participant.staffId
+                            ? participant.staffId
+                            : "",
+                          status: participant.status,
+                          company_name: participant.companyName
+                            ? participant.companyName
+                            : "",
+                        }))
+                      : [],
+                  };
+
                   const userId = this.userDetails.userId;
 
                   if (claim.UploadE && claim.UploadE.length > 0) {
@@ -3015,7 +3103,7 @@ export default {
                         }))
                       : [],
                   };
-                  
+
                   const userId = this.userDetails.userId;
                   // console.log("unik kod:", uniqueCode);
                   if (claim.UploadSR && claim.UploadSR.length > 0) {
@@ -3030,7 +3118,10 @@ export default {
                     baseURL:
                       "http://172.28.28.91:97/api/User/InsertStaffRefreshment",
                   });
-                 const response2 = await axiosInstance.post("/", thisisforstaffrefreshment);
+                  const response2 = await axiosInstance.post(
+                    "/",
+                    thisisforstaffrefreshment
+                  );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
@@ -3038,17 +3129,20 @@ export default {
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
-                  const uniqcodeothers = this.generateUniqueCode(claim.tabTitle);
+                  const uniqcodeothers = this.generateUniqueCode(
+                    claim.tabTitle
+                  );
                   const thisisforHandphoneBillReimbursement = {
                     expense_date: claim.dateOthers, // Example date
                     amount: parseFloat(claim.AmountRMOthers).toFixed(2),
+                    expensename: claim.ExpenseNameOthers,
                     description: claim.DescriptionOthers,
                     unique_code: uniqcodeothers,
                     total_fee: parseFloat(claim.totalRM).toFixed(2),
                     reference_number: this.claims[0].uniqueCode,
                     requester_id: this.userDetails.userId,
                   };
-                  
+
                   const userId = this.userDetails.userId;
                   // console.log("unik kod:", uniqueCode);
                   if (claim.UploadOthers && claim.UploadOthers.length > 0) {
@@ -3060,7 +3154,11 @@ export default {
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
-                    this.uploadFiles(claim.UploadOthers, userId, uniqcodeothers);
+                    this.uploadFiles(
+                      claim.UploadOthers,
+                      userId,
+                      uniqcodeothers
+                    );
                   }
                   axiosInstance = axios.create({
                     baseURL: "http://172.28.28.91:97/api/User/InsertOthers",
@@ -3076,7 +3174,7 @@ export default {
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
-const uniqcodeHR = this.generateUniqueCode(claim.tabTitle);
+                  const uniqcodeHR = this.generateUniqueCode(claim.tabTitle);
                   const thisisforHandphoneBillReimbursement = {
                     date_claim: this.todayFormatted(), // Example date
                     claim_month: claim.MonthHR,
@@ -3091,7 +3189,7 @@ const uniqcodeHR = this.generateUniqueCode(claim.tabTitle);
                     handphone: "",
                     requester_id: this.userDetails.userId,
                   };
-                  
+
                   const userId = this.userDetails.userId;
                   // console.log("unik kod:", uniqueCode);
                   if (claim.UploadHR && claim.UploadHR.length > 0) {
@@ -3144,7 +3242,7 @@ const uniqcodeHR = this.generateUniqueCode(claim.tabTitle);
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
-             
+
                   const uniqcodeML = this.generateUniqueCode(claim.tabTitle);
                   const thisisforMedicalBillReimbursement = {
                     reference_number: this.claims[0].uniqueCode,
@@ -3160,12 +3258,11 @@ const uniqcodeHR = this.generateUniqueCode(claim.tabTitle);
                     clinic_selection: claim.ClinicSelectionML,
                     reason_different: claim.OtherClinicReasonML,
                     medical_category: claim.MedicalCategoryML,
-     requester_id: this.userDetails.userId,
-
+                    requester_id: this.userDetails.userId,
 
                     unique_code: uniqcodeML,
                   };
-                 
+
                   const userId = this.userDetails.userId;
                   // console.log("unik kod:", uniqueCode);
                   if (claim.UploadML && claim.UploadML.length > 0) {
