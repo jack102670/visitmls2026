@@ -856,7 +856,9 @@
                     />
                   </svg>
 
-                  <h1 class="ml-2">{{ file }}</h1>
+                  <h1 class="ml-2">
+                    {{ file.split('/')[file.split('/').length - 1] }}
+                  </h1>
                 </th>
                 <th class="font-normal">
                   <svg
@@ -866,7 +868,12 @@
                     stroke-width="1.5"
                     stroke="currentColor"
                     class="w-5 h-5 mx-auto"
-                    @click="DownloadFile(file)"
+                    @click="
+                      DownloadFile(
+                        file,
+                        file.split('/')[file.split('/').length - 1]
+                      )
+                    "
                   >
                     <path
                       stroke-linecap="round"
@@ -1487,8 +1494,8 @@ export default {
     },
 
     // Download the file
-    DownloadFile(url) {
-      fileSaver.saveAs(url, url);
+    DownloadFile(url, fileName) {
+      fileSaver.saveAs(url, fileName);
     },
     // click see more and show the list of staff involved
     showStaffInvolved(val) {
