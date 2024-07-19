@@ -206,7 +206,6 @@ export default {
             this.userId
         )
         .then((response) => {
-          this.claimsData = response.data.result;
           console.log(this.claimsData);
 
           this.$nextTick(() => {
