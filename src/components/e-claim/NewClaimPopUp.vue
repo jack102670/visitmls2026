@@ -802,7 +802,10 @@ export default {
    
         // Log the form data before navigation
         console.log("Form submitted", formStore.getFormData());
-        this.$router.push({ name: "ClaimReport" });
+        this.$emit("close");
+this.$nextTick(() => {
+    this.$router.push({ name: "ClaimReport" });
+});
 
         // Send API request using axios
         // const apiData = {

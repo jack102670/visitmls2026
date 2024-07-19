@@ -51,7 +51,7 @@
               </div>
             </button>
 
-            <button @click="sendToAPI()">sent to api</button>
+            <!-- <button @click="sendToAPI()">sent to api</button> -->
           </div>
         </div>
 
@@ -342,7 +342,7 @@
                 />
               </div>
               <div
-                v-if="!isCompanyTransport  && !isPublicTransport"
+                v-if="!isCompanyTransport && !isPublicTransport"
                 class="flex justify-between items-center mb-4"
               >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
@@ -356,7 +356,7 @@
                   class="border rounded-md px-16 py-2"
                 />
               </div>
-               <div
+              <div
                 v-if="!isCompanyTransport && !isPersonalTransport"
                 class="flex justify-between items-center mb-4"
               >
@@ -443,7 +443,8 @@
               <div
                 v-if="!isPublicTransport"
                 class="flex justify-between items-center mb-4"
-              > <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+              >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Toll:</label
                 >
                 <input
@@ -455,10 +456,11 @@
                 />
               </div>
 
-               <div
+              <div
                 v-if="!isPublicTransport"
                 class="flex justify-between items-center mb-4"
-              ><label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+              >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Parking:</label
                 >
                 <input
@@ -827,7 +829,7 @@
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
                         <div class="flex items-center gap-x-3">
-                           <span>Attachment(s)</span>
+                          <span>Attachment(s)</span>
                         </div>
                       </th>
                       <th
@@ -2383,6 +2385,41 @@
         </div>
       </div>
     </div>
+    <!-- Loading Animation -->
+    <div
+      class="w-screen h-screen fixed z-40 flex justify-center items-center top-0 left-0"
+      v-if="loading && !approveSuccess"
+    >
+      <div class="absolute w-screen h-screen bg-gray-900 opacity-10"></div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 200 200"
+        class="w-24 h-24 z-50"
+      >
+        <circle
+          transform="rotate(0)"
+          transform-origin="center"
+          fill="none"
+          stroke="blue"
+          stroke-width="10"
+          stroke-linecap="round"
+          stroke-dasharray="230 1000"
+          stroke-dashoffset="0"
+          cx="100"
+          cy="100"
+          r="70"
+        >
+          <animateTransform
+            attributeName="transform"
+            type="rotate"
+            from="0"
+            to="360"
+            dur="2"
+            repeatCount="indefinite"
+          ></animateTransform>
+        </circle>
+      </svg>
+    </div>
   </main>
 </template>
 
@@ -2421,8 +2458,9 @@ export default {
       cancel: true,
       formData: {
         ...formStore.getFormData(),
-        fileUpload: formStore.getFormData().fileUpload.slice() // Ensure we work with a copy
+        fileUpload: formStore.getFormData().fileUpload.slice(), // Ensure we work with a copy
       },
+      loading: false,
     };
   },
 
@@ -2574,6 +2612,8 @@ export default {
 
   mounted() {
     // Sidebar close or open
+    const body = document.querySelector('body');
+    body.style.overflow = 'auto';
 
     this.fetchEmployeeID();
 
@@ -2840,12 +2880,8 @@ export default {
       //   alert("Please add at least one claim data before submit");
       //   return;
       // }
-
-      this.sendFiles(
-        
-        this.userDetails.userId,
-        this.claims[0].uniqueCode
-      );
+      this.loading = true;
+      this.sendFiles(this.userDetails.userId, this.claims[0].uniqueCode);
 
       const apiData = {
         name: this.claims[0].claimantName,
@@ -2885,7 +2921,7 @@ export default {
         // this.resetClaimsAfterSubmit();
       } catch (error) {
         console.error("API error", error);
-
+        this.loading = false;
         // Extract the detailed server error message from the response
         let serverErrorMessage =
           error.response && error.response.data && error.response.data.message
@@ -2903,6 +2939,7 @@ export default {
           );
         }
       }
+      this.loading = false;
     },
     async sendToAPI() {
       // Group claims by tabTitle
@@ -3163,11 +3200,7 @@ export default {
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
-                    this.uploadFiles(
-                      
-                      userId,
-                      uniqcodeothers
-                    );
+                    this.uploadFiles(userId, uniqcodeothers);
                   }
                   axiosInstance = axios.create({
                     baseURL: "http://172.28.28.91:97/api/User/InsertOthers",
@@ -3350,8 +3383,7 @@ export default {
       }
     },
 
-    async sendFiles(X,Y) {
-      
+    async sendFiles(X, Y) {
       const files = this.formData.fileUpload; // Ensure formData is correctly accessible
 
       if (!files || !files.length) {
@@ -3359,7 +3391,6 @@ export default {
         return;
       }
 
-      
       await this.uploadFilesclaims(files, X, Y);
     },
     async uploadFilesclaims(files, userId, uniqueCode) {
@@ -3388,16 +3419,12 @@ export default {
           },
         });
         console.log("Files uploaded successfully:", response.data);
-       
-        formStore.clearFormData();
-   
 
+        formStore.clearFormData();
       } catch (error) {
         console.error("Error uploading files:", error);
       }
     },
-
-  
 
     deleteForm() {
       if (this.index !== -1) {
