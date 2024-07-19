@@ -1233,6 +1233,8 @@ import { bankOptions } from "@/javascript/eClaimOptions.js";
 import { monthOptions } from "@/javascript/eClaimOptions.js";
 import { refOptions } from "@/javascript/eClaimOptions.js";
 import { TypeOptions } from "@/javascript/eClaimOptions.js";
+import axios from "axios";
+import { store } from "@/views/store.js";
 
 // Create component
 const FilePond = vueFilePond(
@@ -1562,18 +1564,19 @@ export default {
             {
               id: "BankNameHR",
               label: "Bank Name",
-              type: "select",
-              value: "HONG LEONG BANK",
+              type: "text",
+              value: "",
               required: true,
-              options: bankOptions,
+              disabled: true,
               gridClass: "sm:col-span-2",
             },
             {
               id: "AccBankNumberHR",
               label: "Account Bank No.",
-              type: "number",
+              type: "text",
               value: "",
               required: true,
+              disabled: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1582,6 +1585,7 @@ export default {
               type: "text",
               value: "",
               required: true,
+              disabled: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1589,6 +1593,7 @@ export default {
               label: "Limited Amount(RM)",
               type: "number",
               value: "",
+              disabled: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -2206,9 +2211,43 @@ export default {
       this.yearRange.push(i);
     }
     this.fetchCompany();
+    this.fetchHrData();
   },
 
   methods: {
+    async fetchHrData() {
+      try {
+        const username_id = store.getSession().userDetails.userId;
+        const response = await axios.get(
+          `http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`
+        );
+        const data = response.data.result[0];
+        if (data) {
+          this.updateFields(data);
+        }
+        console.log("Bank Data:", data);
+      } catch (error) {
+        console.error("Error fetching Bank Data:", error);
+      }
+    },
+
+    updateFields(data) {
+      const fieldMap = {
+        BankNameHR: data.bank_name,
+        AccBankNumberHR: data.bank_number,
+        AccHolderNameHR: data.name,
+        LimitedAmountHR: data.limit_amount,
+      };
+
+      this.tabs.forEach((tab) => {
+        tab.fields.forEach((field) => {
+          if (fieldMap[field.id] !== undefined) {
+            field.value = fieldMap[field.id];
+          }
+        });
+      });
+    },
+
     formatDate(dateString) {
       const date = new Date(dateString);
       return `${date.getDate()} ${date.toLocaleString("default", {
