@@ -394,7 +394,7 @@
           <!-- component -->
 
           <div>
-            <Div class="pt-3">
+            <div class="pt-3">
               <FilePond
              
                 ref="pond"
@@ -412,7 +412,7 @@
                 @addfile="handleAddFile"
                 @removefile="handleRemoveFile"
               />
-            </Div>
+            </div>
             <!-- component -->
           </div>
         </div>
@@ -521,6 +521,7 @@ export default {
   emits: ["close"],
   data() {
     return {
+      loading: false,
       showHRMessage: false,
       showFinanceMessage: false,
       dropdownVisible: false,
