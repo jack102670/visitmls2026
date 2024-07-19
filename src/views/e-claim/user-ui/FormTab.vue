@@ -113,6 +113,7 @@
                             <select
                               v-model="field.value"
                               :required="field.required"
+                              :disabled="tab.title === 'Handphone Bill Reimbursement' && isFormDisabled || field.disabled"
                               :id="field.id"
                               class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                             >
@@ -130,6 +131,7 @@
                             <select
                               v-model="field.value"
                               :required="field.required"
+                              :disabled="tab.title === 'Handphone Bill Reimbursement' && isFormDisabled || field.disabled"
                               :id="field.id"
                               class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                             >
@@ -157,6 +159,7 @@
                                   :value="option.value"
                                   v-model="field.value"
                                   :required="field.required"
+                                  :disabled="tab.title === 'Handphone Bill Reimbursement' && isFormDisabled || field.disabled"
                                   class="mr-2"
                                 />
                                 <label
@@ -173,6 +176,7 @@
                             <div class="pt-3">
                               <file-pond
                                 :name="field.id"
+                                :disabled="tab.title === 'Handphone Bill Reimbursement' && isFormDisabled || field.disabled"
                                 required="required"
                                 ref="pond"
                                 label-idle="Drop files here..."
@@ -197,6 +201,7 @@
                               :required="field.required"
                               :id="field.id"
                               :placeholder="field.placeholder"
+                              :disabled="tab.title === 'Handphone Bill Reimbursement' && isFormDisabled || field.disabled"
                               class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                               rows="4"
                             ></textarea>
@@ -206,7 +211,7 @@
                             <input
                               v-model="field.value"
                               :required="field.required"
-                              :disabled="field.disabled"
+                              :disabled="tab.title === 'Handphone Bill Reimbursement' && isFormDisabled || field.disabled"
                               :id="field.id"
                               :type="field.type"
                               :placeholder="field.placeholder"
@@ -222,6 +227,7 @@
                   </template>
                 </div>
 
+                <!-- Medical Bill Reimbursement Note Section-->
                 <section>
                   <div
                     v-if="tab.title === 'Medical Bill Reimbursement'"
@@ -245,6 +251,7 @@
                     </h1>
                   </div>
                 </section>
+                <!-- Medical Bill Reimbursement Note Section-->
 
                 <!-- Add Other Expenses for Overseas Section-->
                 <section>
@@ -525,6 +532,7 @@
                   <div class="flex items-center justify-between">
                     <button
                       type="submit"
+                      :disabled="isFormDisabled"
                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     >
                       Save
@@ -1229,7 +1237,6 @@ import "filepond/dist/filepond.min.css";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-import { bankOptions } from "@/javascript/eClaimOptions.js";
 import { monthOptions } from "@/javascript/eClaimOptions.js";
 import { refOptions } from "@/javascript/eClaimOptions.js";
 import { TypeOptions } from "@/javascript/eClaimOptions.js";
@@ -1695,10 +1702,10 @@ export default {
             {
               id: "BankNameML",
               label: "Bank Name",
-              type: "select",
-              value: "HONG LEONG BANK",
+              type: "text",
+              value: "",
               required: true,
-              options: bankOptions,
+              disabled: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1707,6 +1714,7 @@ export default {
               type: "number",
               value: "",
               required: true,
+              disabled: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1715,6 +1723,7 @@ export default {
               type: "text",
               value: "",
               required: true,
+              disabled: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1993,6 +2002,18 @@ export default {
   },
 
   computed: {
+    isFormDisabled() {
+      const handphoneTab = this.tabs.find(
+        (tab) => tab.title === "Handphone Bill Reimbursement"
+      );
+      if (handphoneTab) {
+        const limitAmountField = handphoneTab.fields.find(
+          (field) => field.id === "LimitedAmountHR"
+        );
+        return limitAmountField && limitAmountField.value === 0;
+      }
+      return false;
+    },
     isCompanyTransport() {
       const tab = this.tabs.find((tab) => tab.title === "Local Travelling");
       if (!tab) return false;
@@ -2237,6 +2258,9 @@ export default {
         AccBankNumberHR: data.bank_number,
         AccHolderNameHR: data.name,
         LimitedAmountHR: data.limit_amount,
+        BankNameML: data.bank_name,
+        AccBankNumberML: data.bank_number,
+        AccHolderNameML: data.name,
       };
 
       this.tabs.forEach((tab) => {
