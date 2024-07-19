@@ -355,7 +355,7 @@
                   type="submit"
                   class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
                 >
-                  Verify
+                <h1 v-if="status===0">Verify</h1> <h1 v-else>Update</h1>
                 </button>
                 <!-- <button
                 @click="uploadimg()"
@@ -516,6 +516,41 @@
               Activation successful! Redirecting...
             </div>
           </form>
+           <!-- Loading Animation -->
+        <div
+          class="w-screen h-screen fixed z-40 flex justify-center items-center top-0 left-0"
+          v-if="loading && !approveSuccess"
+        >
+          <div class="absolute w-screen h-screen bg-gray-900 opacity-10"></div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 200 200"
+            class="w-24 h-24 z-50"
+          >
+            <circle
+              transform="rotate(0)"
+              transform-origin="center"
+              fill="none"
+              stroke="blue"
+              stroke-width="10"
+              stroke-linecap="round"
+              stroke-dasharray="230 1000"
+              stroke-dashoffset="0"
+              cx="100"
+              cy="100"
+              r="70"
+            >
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                from="0"
+                to="360"
+                dur="2"
+                repeatCount="indefinite"
+              ></animateTransform>
+            </circle>
+          </svg>
+        </div>
         </div>
       </div>
     </div>
@@ -547,6 +582,8 @@ export default {
         home_address: "",
         profile_picture: null,
       },
+      loading: false,
+      approveSuccess: false,
       profile_picture: null,
       bankOptions: bankOptions,
       tempImageUrl: "",
@@ -584,6 +621,7 @@ export default {
         spouse: this.user.spouse,
         phone_number: this.user.phone_number,
       };
+      
       console.log("Employee Data:", employeeData);
       axios
         .put("http://172.28.28.91:97/api/User/UpdateEmployee", employeeData)
@@ -591,24 +629,29 @@ export default {
           console.log("Response:", response);
           if (response.data.status_code === "200") {
             console.log("Successfully Updated:", response.data.message);
+    
             alert("Successfully Updated.");
             // Additional logic here for successful update
           } else if (response.data.status_code === "400") {
             // console.log("Successfully Updated:", response.data.message);
+        
             alert(
               response.data.result || "Failed to update. Please try again."
             );
             // Additional logic here for successful update
           } else {
             console.error("Backend error:", response.data.message);
+           
             alert(
               response.data.message || "Failed to update. Please try again."
             );
             // Additional error handling logic here
           }
+          this.loading = false;
         })
         .catch((error) => {
           console.error("Error updating employee data:", error);
+    
           alert("An error occurred while updating employee data.");
           // Additional error handling logic here
         });
@@ -667,9 +710,11 @@ export default {
           },
         })
         .then((response) => {
+          this.loading = false;
           console.log("File uploaded successfully:", response.data);
         })
         .catch((error) => {
+          this.loading = false;
           if (error.response) {
             console.error("Error status:", error.response.status);
             console.error("Error data:", error.response.data);
@@ -738,9 +783,11 @@ export default {
 
           if (userStatus === "0") {
             // User has not completed their OTP, show the modal
+            this.loading = false;
             this.showRequestOtpModal = true;
           } else {
             // User has completed their OTP, do not show the modal
+            this.loading = false;
             this.showRequestOtpModal = false;
           }
         })
@@ -752,6 +799,7 @@ export default {
 
     verifyAndSaveData() {
       // this.saveUserData();
+      this.loading = true;
       if (this.tempImageUrl) {
         this.uploadimg();
       } else if (this.status === "0") {
@@ -782,37 +830,45 @@ export default {
           console.log("Response:", response);
           if (response.data.message === "200") {
             console.log(":", response.data.message);
+          
             alert(response.data.message);
             // Additional logic here for successful update
-            this.showRequestOtpModal = true;
+         
           } else if (response.data.message.includes("OTP is sent to")) {
             console.log(":otp is sent", response.data.message);
             alert(response.data.message);
-            this.showRequestOtpModal = true;
+        
+            this.showOtpModal = true;
+            this.startTimer();
 
             // Additional logic here for successful update
           } else if (response.data.status_code === "400") {
             // console.log("Successfully Updated:", response.data.message);
+           
             alert(
               response.data.result || "Failed to update. Please try again."
             );
             // Additional logic here for successful update
           } else {
+         
             console.error("Backend error:", response.data.message);
             alert(
               response.data.message || "Failed to update. Please try again."
             );
             // Additional error handling logic here
           }
+          this.loading = false;
         })
         .catch((error) => {
           console.error("Error updating employee data:", error);
+          this.loading = false;
           alert("An error occurred while updating employee data.");
           // Additional error handling logic here
         });
     },
 
     async sendOtp() {
+      this.loading = true;
       try {
         const response = await axios.post(
           "http://172.28.28.91:97/api/User/GenerateOTP",
@@ -831,6 +887,7 @@ export default {
             response.data.message || "Failed to send OTP. Please try again."
           );
         }
+        this.loading = false;
       } catch (error) {
         console.error("Error sending OTP:", error);
         if (error.response) {
