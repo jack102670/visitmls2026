@@ -127,7 +127,11 @@
                               claim.admin_status.split('.')[0] == 'REJECTED',
                           }"
                         >
-                          {{ claim.admin_status.split('.')[0] }}
+                          {{
+                            claim.admin_status == ''
+                              ? 'PENDING'
+                              : claim.admin_status.split('.')[0]
+                          }}
                         </h1>
                       </td>
                       <td

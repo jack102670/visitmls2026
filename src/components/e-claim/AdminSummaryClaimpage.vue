@@ -1417,7 +1417,7 @@ export default {
           approver_name: userData.userName,
           approver_designation: userData.designation,
           approver_department: userData.department,
-          approver_status: 'APPROVED. WAITING FOR REIMBURSEMENT',
+          approver_status: 'APPROVED',
           approver_comment: this.remark ? this.remark : '',
           user_email: 'user_email',
           verifier_email: this.claimDetails.verifier_email,
