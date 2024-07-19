@@ -2627,15 +2627,25 @@ export default {
   },
 
   methods: {
-    adjustClaimsAmount() {
-      const limitedAmount =
-        this.handphoneBillReimbursementDetails.LimitedAmountHR;
-      let claimsAmount = this.handphoneBillReimbursementDetails.ClaimsAmountHR;
-
-      if (claimsAmount > limitedAmount) {
-        this.handphoneBillReimbursementDetails.ClaimsAmountHR = limitedAmount;
+    async fetchSerialNumber() {
+    let result = null;
+    try {
+      const response = await axios.get("http://172.28.28.91:86/api/User/GetRunningNumber");
+      if (response.status === 200) {
+        console.log("Serial Number:", response.data);
+        let serialNumber = this.claims[0].uniqueCode + response.data.result;
+        result = serialNumber;
+      } else {
+        console.error("Failed to fetch serial number:", response.status);
+        result = "Error: Failed to fetch serial number";
       }
-    },
+    } catch (error) {
+      console.error("Error fetching serial number:", error);
+      result = "Error: " + error.message;
+    }
+    console.log("Result:", result);
+    return result; // Return result outside the finally block
+  },
 
     formatDate(dateString) {
       const date = new Date(dateString);
@@ -2883,6 +2893,8 @@ export default {
       this.loading = true;
       this.sendFiles(this.userDetails.userId, this.claims[0].uniqueCode);
 
+      const referenceNumber = await this.fetchSerialNumber();
+
       const apiData = {
         name: this.claims[0].claimantName,
         company_name: this.claims[0].companyName,
@@ -2890,7 +2902,7 @@ export default {
         designation_title: this.claims[0].designation,
         employee_id: this.employeeID,
         requester_email: store.getSession().userDetails.email,
-        reference_number: this.claims[0].uniqueCode,
+        reference_number: referenceNumber,
         report_name: this.claims[0].reportName,
         grand_total: String(parseFloat(this.grandTotal).toFixed(2)), // Ensure grand_total is a string
         requester_id: this.userDetails.userId,

@@ -642,7 +642,7 @@ export default {
 
         // Construct the uniqueCode
         this.uniqueCode = `Claims${userIdFragment}${randomNumber}${timestamp}`;
-        console.log("Unique Code:", this.uniqueCode);
+        // console.log("Unique Code:", this.uniqueCode);
         this.formData.uniqueCodeForFileUpload = this.uniqueCode;
         return this.uniqueCode;
       } else {
@@ -665,7 +665,7 @@ export default {
           const selectedEmployee = data.result.find(
             (emp) => emp.username_id === store.getSession().userDetails.userId
           );
-          console.log("Selected Employee:", selectedEmployee);
+          // console.log("Selected Employee:", selectedEmployee);
           if (selectedEmployee) {
             if ("username" in selectedEmployee) {
               this.formData.claimantName = selectedEmployee.name;
@@ -734,7 +734,7 @@ export default {
         }
         const data = await response.json();
         this.designations = data.result;
-        console.log(this.designations, "designation");
+        // console.log(this.designations, "designation");
       } catch (error) {
         console.error(`Error fetching departments: ${error}`);
       }
@@ -749,7 +749,7 @@ export default {
         }
         const data = await response.json();
         this.Companies = data.result;
-        console.log(this.Companies, "company");
+        // console.log(this.Companies, "company");
       } catch (error) {
         console.error(`Error fetching departments: ${error}`);
       }
@@ -764,7 +764,7 @@ export default {
         }
         const data = await response.json();
         this.departments = data.result;
-        console.log(this.departments);
+        // console.log(this.departments);
       } catch (error) {
         console.error(`Error fetching departments: ${error}`);
       }
@@ -777,14 +777,14 @@ export default {
         shortform[i] = names[i][0];
       }
 
-      let datetime = moment(new Date()).format("YYYY-MM-mmss");
+      let datetime = moment(new Date()).format("YYYY-MM-");
       let sn =
         shortform.join("").toString() +
         "-" +
         this.formData.reportType +
         "-" +
         datetime;
-      console.log(sn);
+      // console.log(sn);
       this.formData.uniqueCode = sn;
       return sn;
     },
@@ -802,7 +802,7 @@ export default {
 
    
         // Log the form data before navigation
-        console.log("Form submitted", formStore.getFormData());
+        // console.log("Form submitted", formStore.getFormData());
         this.$emit("close");
 this.$nextTick(() => {
     this.$router.push({ name: "ClaimReport" });
