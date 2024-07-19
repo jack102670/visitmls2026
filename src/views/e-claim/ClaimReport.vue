@@ -2836,10 +2836,10 @@ export default {
       return this.dataclaims.length > 0;
     },
     async senttheclaim() {
-      if (!this.isValidClaimData()) {
-        alert("Please add at least one claim data before submit");
-        return;
-      }
+      // if (!this.isValidClaimData()) {
+      //   alert("Please add at least one claim data before submit");
+      //   return;
+      // }
 
       this.sendFiles(
         
@@ -3388,22 +3388,16 @@ export default {
           },
         });
         console.log("Files uploaded successfully:", response.data);
+       
+        formStore.clearFormData();
+   
+
       } catch (error) {
         console.error("Error uploading files:", error);
       }
     },
-    resetClaimsAfterSubmit() {
-  // Clear the claims array
+
   
-
-  // Optionally, clear or reset the claims data in local storage
-  localStorage.removeItem("claims"); // To completely remove the claims data
-  // OR
-  // localStorage.setItem("claims", JSON.stringify([])); // To reset it to an empty array
-
-  // Log the reset action
-  console.log("Claims have been reset after submission.");
-},
 
     deleteForm() {
       if (this.index !== -1) {

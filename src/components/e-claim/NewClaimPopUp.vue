@@ -549,7 +549,7 @@ export default {
         memo: formStore.formData.memo,
         uniqueCode: formStore.formData.uniqueCode,
         uniqueCodeForFileUpload: formStore.formData.uniqueCodeForFileUpload,
-        fileUpload: formStore.getFormData().fileUpload.slice()
+        fileUpload: formStore.formData.fileUpload.slice()
       },
       branch: "", // Add the missing branch property
       userDetails: {},
@@ -793,7 +793,7 @@ export default {
 
       if (this.active > 0) {
         // Update form data in the form store
-        formStore.getFormData().fileUpload = [];
+      
         formStore.clearFormData();
         this.generateSerialNumber();
         this.generateUniqueCode();
