@@ -616,16 +616,22 @@ export default {
 
   methods: {
     handleAddFile(error, fileItem) {
-      if (!error) {
-        console.log("Added file name:", fileItem.file.name);
-        this.formData.fileUpload.push(fileItem.file);
-        console.log("Files after upload (plain array):", this.formData.fileUpload);
-      }
-    },
+    if (!error) {
+      console.log("Added file name:", fileItem.file.name);
 
-    handleRemoveFile(error, fileItem) {
-      this.formData.fileUpload = this.formData.fileUpload.filter((file) => file !== fileItem.file);
-    },
+      // Rename the file
+      const newFileName = `ClaimsAttachment_${fileItem.file.name}`;
+      const renamedFile = new File([fileItem.file], newFileName, { type: fileItem.file.type });
+
+      this.formData.fileUpload.push(renamedFile);
+      console.log("Files after upload (plain array):", this.formData.fileUpload);
+    }
+  },
+
+  handleRemoveFile(error, fileItem) {
+    this.formData.fileUpload = this.formData.fileUpload.filter((file) => file !== fileItem.file);
+  },
+
     generateUniqueCode() {
       // Check if this.userId is defined
       if (this.userDetails.userId) {
