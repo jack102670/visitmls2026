@@ -190,30 +190,43 @@
                         <td
                           class="px-12 py-4 text-sm font-medium text-gray-700 text-wrap whitespace-nowrap"
                         >
-                        <span
-  :class="{
-    'inline-flex items-center px-3 py-1 rounded-full gap-x-2': true,
-    'bg-red-100/60 dark:bg-gray-800': item.admin_status === 'REJECT',
-    'bg-yellow-100/60 dark:bg-gray-800': item.admin_status === 'RESUBMIT',
-    'bg-green-100/60 dark:bg-gray-800': item.admin_status === 'APPROVED',
-    'bg-blue-100/60 dark:bg-gray-800': item.admin_status === 'VERIFIED' // Added for VERIFIED status
-  }"
->
-<span :class="{
-  'h-1.5 w-1.5 rounded-full': true,
-  'bg-red-500': item.admin_status === 'REJECT',
-  'bg-yellow-500': item.admin_status === 'RESUBMIT',
-  'bg-green-500': item.admin_status === 'APPROVED',
-  'bg-blue-500': item.admin_status === 'VERIFIED' // Added for VERIFIED status
-}"></span>
-<span :class="{
-  'text-sm font-normal': true,
-  'text-red-500': item.admin_status === 'REJECT',
-  'text-yellow-500': item.admin_status === 'RESUBMIT',
-  'text-green-500': item.admin_status === 'APPROVED',
-  'text-blue-500': item.admin_status === 'VERIFIED' // Added for VERIFIED status
-}">{{ item.admin_status }}</span>
-                            
+                          <span
+                            :class="{
+                              'inline-flex items-center px-3 py-1 rounded-full gap-x-2': true,
+                              'bg-red-100/60 dark:bg-gray-800':
+                                item.admin_status === 'REJECT',
+                              'bg-yellow-100/60 dark:bg-gray-800':
+                                item.admin_status === 'RESUBMIT',
+                              'bg-green-100/60 dark:bg-gray-800':
+                                item.admin_status === 'APPROVED',
+                              'bg-blue-100/60 dark:bg-gray-800':
+                                item.admin_status === 'VERIFIED', // Added for VERIFIED status
+                            }"
+                          >
+                            <span
+                              :class="{
+                                'h-1.5 w-1.5 rounded-full': true,
+                                'bg-red-500': item.admin_status === 'REJECT',
+                                'bg-yellow-500':
+                                  item.admin_status === 'RESUBMIT',
+                                'bg-green-500':
+                                  item.admin_status === 'APPROVED',
+                                'bg-blue-500': item.admin_status === 'VERIFIED', // Added for VERIFIED status
+                              }"
+                            ></span>
+                            <span
+                              :class="{
+                                'text-sm font-normal': true,
+                                'text-red-500': item.admin_status === 'REJECT',
+                                'text-yellow-500':
+                                  item.admin_status === 'RESUBMIT',
+                                'text-green-500':
+                                  item.admin_status === 'APPROVED',
+                                'text-blue-500':
+                                  item.admin_status === 'VERIFIED', // Added for VERIFIED status
+                              }"
+                              >{{ item.admin_status }}</span
+                            >
                           </span>
                         </td>
                         <td class="px-4 py-4 ml text-sm whitespace-nowrap">
@@ -262,13 +275,16 @@
 </template>
 
 <script>
-import { store } from "../store.js";
+import $ from 'jquery';
+import 'datatables.net-dt';
+import 'datatables.net-dt/css/jquery.dataTables.min.css';
+import { store } from '../store.js';
 
 export default {
   components: {
     // CreateNewClaimPopUp,
   },
-  name: "homepageeclaiMq",
+  name: 'homepageeclaiMq',
   data() {
     return {
       items: [
@@ -281,7 +297,10 @@ export default {
   },
   methods: {
     ViewClaim(rn) {
-      this.$router.push({ name: "VerifierSummaryClaimpage", params: { rn } });
+      this.$router.push({ name: 'VerifierSummaryClaimpage', params: { rn } });
+    },
+    initializeDataTable() {
+      $(this.$refs.myTable).DataTable({});
     },
     fetchData() {
       fetch(
@@ -290,7 +309,11 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           this.items = data.result;
-          console.log("api data", this.items);
+          console.log('api data', this.items);
+
+          this.$nextTick(() => {
+            this.initializeDataTable();
+          });
         })
         .catch((error) => console.error(error));
     },
@@ -311,13 +334,13 @@ export default {
     // Sidebar close or open
     this.userDetails = store.getSession().userDetails;
     this.fetchData();
-    store.setControlView("eclaim");
-    let openOrNot = localStorage.getItem("openOrNot");
-    const element = document.querySelector("main");
-    if (element && openOrNot == "false") {
-      element.classList.add("become-big");
-    } else if (element && openOrNot == "true") {
-      element.classList.remove("become-big");
+    store.setControlView('eclaim');
+    let openOrNot = localStorage.getItem('openOrNot');
+    const element = document.querySelector('main');
+    if (element && openOrNot == 'false') {
+      element.classList.add('become-big');
+    } else if (element && openOrNot == 'true') {
+      element.classList.remove('become-big');
     }
   },
 };
