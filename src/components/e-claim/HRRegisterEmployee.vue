@@ -80,42 +80,51 @@
               :options="AllDepartments"
               @input="(payload) => (form.reportingDepartment = payload)"
             />
-            <div class="mt-6 lg:mt-0 lg:ml-4">
-              <label :for="inputId" class="font-semibold text-gray-600"
-                >Reporting To (Employee ID)<span class="text-red-500"
-                  >*</span
-                ></label
-              >
-              <input
-                :id="inputId"
-                v-model="form.reportingId"
-                class="border-2 border-gray-200 p-2 w-full rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                type="text"
-              />
-            </div>
+            <DropDown
+              inputId="reportingStaffInput"
+              label="Reporting to (Employee ID)"
+              :options="filteredReportingEmployees"
+              :mandatory="true"
+              class="mt-6 lg:mt-0 lg:ml-4"
+              @input="(payload) => (form.reportingId = payload)"
+            />
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
             <div>
-              <label :for="inputId" class="font-semibold text-gray-600"
-                >Limit</label
-              >
-              <input
-                :id="inputId"
-                v-model="form.limit"
-                class="border-2 border-gray-200 p-2 w-full rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                type="number"
-              />
-            </div>
-          </div>
+              <label class="font-semibold text-gray-600">Limit</label>
+              <div class="mt-2">
+                <input type="radio" id="no" value="no" v-model="enableLimit" />
+                <label for="no">No</label>
 
-          <div class="w-full flex justify-end">
-            <button
-              class="py-2 px-6 mt-10 text-white bg-[#160959] hover:bg-blue-950 rounded-md"
-              @click="Register()"
-            >
-              Register
-            </button>
+                <input
+                  type="radio"
+                  id="yes"
+                  value="yes"
+                  class="ml-4"
+                  v-model="enableLimit"
+                />
+                <label for="yes">Yes</label>
+                <div v-if="enableLimit === 'yes'" class="mt-1">
+                  <input
+                    id="limitInput"
+                    v-model="form.limit"
+                    class="border-2 border-gray-200 p-2 w-full rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    type="number"
+                    min="1"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="w-full flex justify-end">
+              <button
+                class="py-2 px-6 mt-10 text-white bg-[#160959] hover:bg-blue-950 rounded-md"
+                @click="Register()"
+              >
+                Register
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -153,6 +162,9 @@ export default {
       filteredUsers: [],
       AllDepartments: [],
       AllPositions: [],
+      filteredReportingEmployees: [],
+
+      enableLimit: 'no',
     };
   },
   methods: {
@@ -265,7 +277,7 @@ export default {
     },
 
     'form.department'(newDepartment) {
-      // This will execute whenever branch value changes
+      // This will execute whenever department value changes
       let Users = this.fetchOptions
         .filter(
           (item) =>
@@ -279,6 +291,26 @@ export default {
       this.filteredUsers = uniqueUsers;
 
       console.log(this.filteredUsers);
+    },
+    'form.reportingDepartment'(newReportingDept) {
+      // This will execute whenever department value changes
+      console.log('123');
+      let Employees = this.fetchOptions
+        .filter((item) => item.department === newReportingDept)
+        .map((item) => item.userName + ' (' + item.userId + ')');
+
+      const uniqueEmployees = [...new Set(Employees)];
+
+      this.filteredReportingEmployees = uniqueEmployees;
+
+      console.log(this.filteredEmployees);
+    },
+    enableLimit(newVal) {
+      if (newVal === 'yes') {
+        this.form.limit = 1;
+      } else {
+        this.form.limit = 0;
+      }
     },
   },
 };

@@ -536,7 +536,7 @@
       </div>
     </div>
     <NewClaimPopUp
-      @open="handleScroll"
+  
       v-if="popup"
       @close="ChangePopUp()"
       :class="[animate ? 'PopUpAnimation' : 'BackAnimation']"

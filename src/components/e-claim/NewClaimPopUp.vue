@@ -394,7 +394,7 @@
           <!-- component -->
 
           <div>
-            <Div class="pt-3">
+            <div class="pt-3">
               <FilePond
              
                 ref="pond"
@@ -412,7 +412,7 @@
                 @addfile="handleAddFile"
                 @removefile="handleRemoveFile"
               />
-            </Div>
+            </div>
             <!-- component -->
           </div>
         </div>
@@ -521,6 +521,7 @@ export default {
   emits: ["close"],
   data() {
     return {
+      loading: false,
       showHRMessage: false,
       showFinanceMessage: false,
       dropdownVisible: false,
@@ -802,7 +803,10 @@ export default {
    
         // Log the form data before navigation
         console.log("Form submitted", formStore.getFormData());
-        this.$router.push({ name: "ClaimReport" });
+        this.$emit("close");
+this.$nextTick(() => {
+    this.$router.push({ name: "ClaimReport" });
+});
 
         // Send API request using axios
         // const apiData = {

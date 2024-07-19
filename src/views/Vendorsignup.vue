@@ -133,7 +133,7 @@
                 <!-- component -->
 
                 <div>
-                  <Div class="pt-3">
+                  <div class="pt-3">
                     <FilePond
                     required
                       ref="pond"
@@ -151,7 +151,7 @@
                       @addfile="handleAddFile"
                       @removefile="handleRemoveFile"
                     />
-                  </Div>
+                  </div>
                   <!-- component -->
                 </div>
               </div>
