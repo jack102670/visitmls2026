@@ -1,104 +1,77 @@
 <template>
   <div>
-    <input type="file" class="filepond" ref="filepond" accept="image/*">
-    <button @click="saveToFilePond">Save</button>
+    <!-- UI elements and form display -->
+    <button @click="senttheclaim">Submit Claim</button>
   </div>
 </template>
 
 <script>
-import { create, registerPlugin } from 'filepond';
 import axios from 'axios';
-
-import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-import FilePondPluginImageCrop from 'filepond-plugin-image-crop';
-import FilePondPluginImageResize from 'filepond-plugin-image-resize';
-import FilePondPluginImageTransform from 'filepond-plugin-image-transform';
-
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-import 'filepond/dist/filepond.min.css';
-
-registerPlugin(
-  FilePondPluginFileEncode,
-  FilePondPluginFileValidateType,
-  FilePondPluginImageExifOrientation,
-  FilePondPluginImagePreview,
-  FilePondPluginImageCrop,
-  FilePondPluginImageResize,
-  FilePondPluginImageTransform
-);
+import { formStore } from './store.js';
 
 export default {
-  name: 'CircleFilePond',
+  name: "TestinEg",
   data() {
     return {
-      files: []
+      formData: {
+        ...formStore.getFormData(),
+        fileUpload: formStore.getFormData().fileUpload.slice() // Ensure we work with a copy
+      },
+      userDetails: {
+        userId: '12345' // Example user ID
+      }
     };
   },
-  mounted() {
-    this.$nextTick(() => {
-      this.initializeFilePond();
-    });
-  },
+ 
   methods: {
-    initializeFilePond() {
-      if (this.$refs.filepond) {
-        const pond = create(this.$refs.filepond, {
-          labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
-          stylePanelLayout: 'compact circle',
-          imagePreviewHeight: 150,
-          imageCropAspectRatio: '1:1',
-          imageResizeTargetWidth: 150,
-          imageResizeTargetHeight: 150,
-          styleLoadIndicatorPosition: 'center bottom',
-          styleButtonRemoveItemPosition: 'center bottom'
-        });
+    fetchClaims() {
+      // Retrieve the current formData
+     
 
-        pond.on('addfile', (error, file) => {
-          if (!error) {
-            console.log("Added file name:", file.file.name); // Access file name
-            this.files = [file.file]; // Replace files array with the new file
-          }
-        });
+     
+        // If no formData, retrieve the claims array from local storage
+        const storedClaims = JSON.parse(localStorage.getItem("claims")) || [];
+        this.claims = storedClaims;
+      
 
-        pond.on('removefile', () => {
-          this.files = []; // Clear files array when file is removed
-        });
-      } else {
-        console.error("FilePond element not found.");
-      }
+      // Log the claims array to the console
+      console.log("Claims:", this.claims);
     },
-    saveToFilePond() {
-      if (this.files.length === 0) {
-        console.error("No files selected.");
+    async senttheclaim() {
+      
+      const files = this.formData.fileUpload; // Ensure formData is correctly accessible
+
+      if (!files || !files.length) {
+        console.error("No files to upload.");
         return;
       }
 
+      const uniqueCode = this.formData.uniqueCode || 'dnvsk9092385'; // Adjust as per your actual unique code handling
+      await this.uploadFilesclaims(files, "9d0da821-5de0-42e5-b268-b5e0bc40e8d1", "43209842kfjsd");
+    },
+    async uploadFilesclaims(files, userId, uniqueCode) {
+      console.log("Files to upload:", files);
+      console.log("User ID:", userId);
+      console.log("Unique Code:", uniqueCode);
+
+      const uploadEndpoint = `http://172.28.28.91:93/api/Files/MultiUploadImage/${userId}/${uniqueCode}`;
       const formData = new FormData();
-      formData.append('profile_picture', this.files[0]);
-      formData.append('emp_id', 'PKTM2582');
 
+      for (let i = 0; i < files.length; i++) {
+        formData.append("filecollection", files[i]);
+      }
 
-      axios.put('http://172.28.28.91:97/api/User/UpdateImage', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-      .then(response => {
-        console.log('File uploaded successfully:', response.data);
-        // Handle response from server
-      })
-      .catch(error => {
-        console.error('Error uploading file:', error);
-        // Handle error
-      });
+      try {
+        const response = await axios.post(uploadEndpoint, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        console.log("Files uploaded successfully:", response.data);
+      } catch (error) {
+        console.error("Error uploading files:", error);
+      }
     }
   }
 };
 </script>
-
-<style scoped>
-/* Your styles here */
-</style>

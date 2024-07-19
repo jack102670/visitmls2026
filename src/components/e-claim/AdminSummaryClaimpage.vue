@@ -293,6 +293,7 @@
                       class="p-1 text-xs w-full rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
                     />
                     <h1
+                      id="remarkText"
                       v-if="
                         (reimbursed || approve || rejectApprover || resubmit) &&
                         item.comment.trim() !== ''
@@ -303,7 +304,7 @@
                     </h1>
                   </td>
                   <td
-                    class="text-center font-normal px-3 align-middle"
+                    class="text-center font-normal px-3 py-1 align-middle"
                     v-for="(val, key, i) in item"
                     :key="i"
                   >
@@ -855,7 +856,9 @@
                     />
                   </svg>
 
-                  <h1 class="ml-2">{{ file }}</h1>
+                  <h1 class="ml-2">
+                    {{ file.split('/')[file.split('/').length - 1] }}
+                  </h1>
                 </th>
                 <th class="font-normal">
                   <svg
@@ -865,7 +868,12 @@
                     stroke-width="1.5"
                     stroke="currentColor"
                     class="w-5 h-5 mx-auto"
-                    @click="DownloadFile(file)"
+                    @click="
+                      DownloadFile(
+                        file,
+                        file.split('/')[file.split('/').length - 1]
+                      )
+                    "
                   >
                     <path
                       stroke-linecap="round"
@@ -1241,6 +1249,36 @@ export default {
           console.error(e);
         });
 
+      await axios
+        .get(
+          'http://172.28.28.91:97/api/User/GetOthers/' + this.referenceNumber
+        )
+        .then((response) => {
+          const result = response.data.result;
+          let details = [];
+          let amount = 0;
+          for (let i in result) {
+            amount += result[i].total_fee;
+            const editedDetail = {
+              Description: result[i].description,
+              Date: result[i].expense_date,
+              'Total_Fee(RM)': result[i].total_fee,
+              Attachments: result[i].files,
+              Tab_Title: 'Other',
+              unique_code: result[i].unique_code,
+              comment: result[i].comment,
+            };
+            details.push(editedDetail);
+          }
+          if (details.length > 0) {
+            this.claimDatasDetails.push(details);
+            this.claimDataTotalAmount.push(amount);
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+
       this.claimDatasDetails.forEach((details, index) => {
         if (details && details.length > 0) {
           const claimData = {
@@ -1486,8 +1524,8 @@ export default {
     },
 
     // Download the file
-    DownloadFile(url) {
-      fileSaver.saveAs(url, url);
+    DownloadFile(url, fileName) {
+      fileSaver.saveAs(url, fileName);
     },
     // click see more and show the list of staff involved
     showStaffInvolved(val) {
@@ -1573,13 +1611,13 @@ td {
   }
   * {
     color: black;
-    font-size: 10px;
+    font-size: 14px;
   }
   body {
     margin: 0;
   }
   p {
-    font-size: 8px !important;
+    font-size: 12px !important;
   }
   input {
     display: none;
@@ -1591,10 +1629,11 @@ td {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   #claimant-informations div {
-    margin-bottom: 2px !important;
+    margin-bottom: 6px !important;
+    font-size: 14px !important;
   }
   .details h1 {
-    font-size: 12px !important;
+    font-size: 16px !important;
     margin-bottom: 0 !important;
   }
   .print-div {
@@ -1606,10 +1645,10 @@ td {
   }
   .detail-table {
     page-break-inside: avoid;
-    margin-top: 4px !important;
+    margin-top: 6px !important;
   }
   .detail-table h1 {
-    margin-top: 4px !important;
+    margin-top: 6px !important;
   }
   table {
     page-break-inside: avoid;
@@ -1652,28 +1691,28 @@ td {
     width: 100%;
   }
   #table-overflow table tr {
-    height: 110%;
+    height: max-content;
     width: 100%;
   }
   #table-overflow table th {
-    padding: 0 auto;
+    padding: 1px auto;
     margin: 0 auto;
     font-size: 8px !important;
     height: 20px;
     width: 10px;
     overflow-wrap: break-word;
     word-wrap: break-word;
-    line-height: 8px;
+    line-height: 10px;
   }
   #summaryPrint #table-overflow table td {
-    padding: 0 auto;
+    padding: 1px auto;
     margin: 0 auto;
-    font-size: 8px !important;
+    font-size: 12px !important;
     height: 20px;
     width: 10px;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    line-height: 8px;
+    line-height: 18px !important;
   }
 
   #hidden {
@@ -1681,9 +1720,21 @@ td {
   }
 
   #staffDetails h1 {
-    font-size: 6px;
+    font-size: 8px;
     padding: 0;
     margin: 0;
+  }
+
+  #remarkText {
+    padding: 1 auto;
+    margin: 0 auto;
+    font-size: 12px !important;
+    height: 20px;
+    width: 10px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 18px !important;
+    color: black !important;
   }
 }
 </style>

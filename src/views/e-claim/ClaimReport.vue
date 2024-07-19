@@ -2420,6 +2420,10 @@ export default {
       othersDetails: {},
       handphoneBillReimbursementDetails: {},
       cancel: true,
+      formData: {
+        ...formStore.getFormData(),
+        fileUpload: formStore.getFormData().fileUpload.slice() // Ensure we work with a copy
+      },
     };
   },
 
@@ -2840,6 +2844,12 @@ export default {
         return;
       }
 
+      this.sendFiles(
+        
+        this.userDetails.userId,
+        this.claims[0].uniqueCode
+      );
+
       const apiData = {
         name: this.claims[0].claimantName,
         company_name: this.claims[0].companyName,
@@ -2852,19 +2862,20 @@ export default {
         grand_total: String(parseFloat(this.grandTotal).toFixed(2)), // Ensure grand_total is a string
         requester_id: this.userDetails.userId,
         cost_center: this.claims[0].costCenter,
+        unique_code: this.claims[0].uniqueCode,
       };
 
-      console.log("API data being sent:", apiData); // Log the API data
-      Object.keys(apiData).forEach((key) => {
-        console.log(`${key}: ${apiData[key]} (type: ${typeof apiData[key]})`);
-      });
+      // console.log("API data being sent:", apiData); // Log the API data
+      // Object.keys(apiData).forEach((key) => {
+      //   console.log(`${key}: ${apiData[key]} (type: ${typeof apiData[key]})`);
+      // });
 
       try {
         const response = await axios.post(
           "http://172.28.28.91:97/api/User/InsertClaimDetails",
           apiData
         );
-        console.log("API response:", response.data);
+        // console.log("API response:", response.data);
 
         // Check if the response indicates success
         if (response.status === 200 || response.status === 201) {
@@ -2874,6 +2885,7 @@ export default {
         }
 
         this.sendToAPI();
+        // this.resetClaimsAfterSubmit();
       } catch (error) {
         console.error("API error", error);
 
@@ -3141,6 +3153,7 @@ export default {
                     total_fee: parseFloat(claim.totalRM).toFixed(2),
                     reference_number: this.claims[0].uniqueCode,
                     requester_id: this.userDetails.userId,
+                    expense_name: claim.ExpenseNameOthers,
                   };
 
                   const userId = this.userDetails.userId;
@@ -3155,7 +3168,7 @@ export default {
                     // Assuming uploadFile has been adjusted to accept an array of files
 
                     this.uploadFiles(
-                      claim.UploadOthers,
+                      
                       userId,
                       uniqcodeothers
                     );
@@ -3175,6 +3188,7 @@ export default {
                   // Iterate over each claim
                   // Dummy data for a claim
                   const uniqcodeHR = this.generateUniqueCode(claim.tabTitle);
+                  const uniqcodeHR = this.generateUniqueCode(claim.tabTitle);
                   const thisisforHandphoneBillReimbursement = {
                     date_claim: this.todayFormatted(), // Example date
                     claim_month: claim.MonthHR,
@@ -3189,7 +3203,6 @@ export default {
                     handphone: "",
                     requester_id: this.userDetails.userId,
                   };
-
                   const userId = this.userDetails.userId;
                   // console.log("unik kod:", uniqueCode);
                   if (claim.UploadHR && claim.UploadHR.length > 0) {
@@ -3330,16 +3343,71 @@ export default {
       });
 
       try {
-        await axios.post(uploadEndpoint, formData, {
+        const response = await axios.post(uploadEndpoint, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        // console.log("Files uploaded successfully:", response.data);
+        console.log("Files uploaded successfully:", response.data);
       } catch (error) {
         console.error("Error uploading files:", error);
       }
     },
+
+    async sendFiles(X,Y) {
+      
+      const files = this.formData.fileUpload; // Ensure formData is correctly accessible
+
+      if (!files || !files.length) {
+        console.error("No files to upload.");
+        return;
+      }
+
+      
+      await this.uploadFilesclaims(files, X, Y);
+    },
+    async uploadFilesclaims(files, userId, uniqueCode) {
+      console.log("Files parameter received:", files);
+      console.log("User ID:", userId);
+      console.log("Unique Code:", uniqueCode);
+      console.log("Files type:", typeof files);
+      console.log("Is Array:", Array.isArray(files));
+
+      if (!files || !Array.isArray(files)) {
+        console.error("The files parameter is not an array or is undefined.");
+        return;
+      }
+
+      const uploadEndpoint = `http://172.28.28.91:93/api/Files/MultiUploadImage/${userId}/${uniqueCode}`;
+      const formData = new FormData();
+
+      for (let i = 0; i < files.length; i++) {
+        formData.append("filecollection", files[i]);
+      }
+
+      try {
+        const response = await axios.post(uploadEndpoint, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        console.log("Files uploaded successfully:", response.data);
+      } catch (error) {
+        console.error("Error uploading files:", error);
+      }
+    },
+    resetClaimsAfterSubmit() {
+  // Clear the claims array
+  
+
+  // Optionally, clear or reset the claims data in local storage
+  localStorage.removeItem("claims"); // To completely remove the claims data
+  // OR
+  // localStorage.setItem("claims", JSON.stringify([])); // To reset it to an empty array
+
+  // Log the reset action
+  console.log("Claims have been reset after submission.");
+},
 
     deleteForm() {
       if (this.index !== -1) {

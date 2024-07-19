@@ -46,6 +46,7 @@ import AssignChecker from '../components/e-claim/AssignChecker.vue';
 import HRRegisterEmployee from '../components/e-claim/HRRegisterEmployee.vue';
 import SummaryClaimpage from '../views/e-claim/user-ui/SummaryClaimpage.vue';
 import VerifierSummaryClaimpage from '../views/e-claim/user-ui/VerifierSummaryClaimpage.vue';
+import HRViewEmployee from '../components/e-claim/HRViewEmployee.vue';
 const routes = [
   {
     path: '/VerifierClaimpage/:rn',
@@ -158,6 +159,14 @@ const routes = [
     name: 'HrRegisteremployee',
     components: {
       default: HRRegisterEmployee,
+      Sidebar: Newsidebar,
+    },
+  },
+  {
+    path: '/viewemployee',
+    name: 'HrViewemployee',
+    components: {
+      default: HRViewEmployee,
       Sidebar: Newsidebar,
     },
   },

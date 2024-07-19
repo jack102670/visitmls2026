@@ -536,6 +536,7 @@
       </div>
     </div>
     <NewClaimPopUp
+      @open="handleScroll"
       v-if="popup"
       @close="ChangePopUp()"
       :class="[animate ? 'PopUpAnimation' : 'BackAnimation']"
@@ -620,8 +621,16 @@ export default {
         .length;
     },
   },
+  // this code to control the scroll bar when the modal is open
+  watch: {
+    popup(newValue) {
+      const body = document.querySelector('body');
+      body.style.overflow = newValue ? 'hidden' : 'auto';
+    }
+  },
 
   methods: {
+   
     showclaim(rn) {
       this.$router.push({ name: "SummaryClaimpage", params: { rn } });
     },

@@ -44,13 +44,13 @@
     }"
     class="sm:block fixed top-0 left-0 z-40 w-64 h-screen flex flex-col px-4 py-8 overflow-y-auto bg-[#160959] border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700"
   >
-  <router-link :to="{name:'UserHomepage'}" class="flex justify-center items-center">
-  <img
-    class="rounded w-auto h-19 sm:h-20"
-    src="@/assets/images/pkt-logo-white.jpg"
-    alt=""
-  />
-</router-link>
+  <a href="/" class="flex justify-center items-center">
+      <img
+        class="rounded w-auto h-19 sm:h-20"
+        src="@/assets/images/pkt-logo-white.jpg"
+        alt=""
+      />
+    </a>
     <div class="absolute top-0 right-0">
       <button
         id="theme-toggle"
