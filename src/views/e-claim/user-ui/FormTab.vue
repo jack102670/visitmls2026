@@ -93,7 +93,11 @@
                         "
                       >
                         <template
-                          v-if="!isPersonalTransport || field.id !== 'FareRMLT'"
+                          v-if="
+                            !isPersonalTransport ||
+                            (field.id !== 'FareRMLT' &&
+                              field.id !== 'PublicTransportSpec')
+                          "
                         >
                           <label
                             :for="field.id"
@@ -249,7 +253,7 @@
                     v-if="
                       tab.title === 'Overseas Travelling with Accommodation'
                     "
-                    class="mt-4"
+                    class="mt-4 max-h-96 overflow-y-auto"
                   >
                     <span
                       class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
@@ -270,7 +274,7 @@
                     class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
                   >
                     <div
-                      class="relative p-8 bg-white w-full max-w-md m-auto flex-col flex rounded-lg"
+                      class="relative p-8 bg-white w-full max-w-md h-3/4 overflow-y-auto m-auto flex-col flex rounded-lg"
                     >
                       <h3 class="text-lg font-medium mb-4">
                         Add Other Expense
@@ -317,26 +321,44 @@
                             placeholder="Amount (RM)"
                             step="0.01"
                             class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                            required
+                            required="required"
                           />
                         </div>
                         <div class="mb-4">
                           <label
                             class="block text-sm font-medium text-gray-700"
-                            for="expenseAmount"
-                            >Attachment(s). (png, jpeg, pdf or xlsx)</label
+                            for="expenseAttachment"
                           >
-                          <input
-                            v-model="newExpense.attachment"
-                            id="expenseAttachment"
-                            type="text"
-                            placeholder=""
-                            step="0.01"
-                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                            required
+                            Attachment(s) (png, jpeg, pdf, or xlsx)
+                          </label>
+                          <file-pond
+                            ref="pond"
+                            name="files"
+                            label-idle="Drop files here..."
+                            @addfile="
+                              (error, file) =>
+                                handleAddFileOT(error, file, newExpense.files)
+                            "
+                            @removefile="
+                              (error, file) =>
+                                handleRemoveFileOT(
+                                  error,
+                                  file,
+                                  newExpense.files
+                                )
+                            "
+                            :accepted-file-types="[
+                              'application/pdf',
+                              'image/png',
+                              'image/jpeg',
+                              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                            ]"
+                            :max-file-size="5000000"
+                            allow-multiple="true"
                           />
                         </div>
-                        <div class="flex justify-end">
+
+                        <div class="mt-8 flex justify-end">
                           <button
                             type="submit"
                             class="px-4 py-2 bg-blue-500 text-white rounded mr-2"
@@ -396,9 +418,7 @@
                             class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                           >
                             <div class="flex items-center gap-x-3">
-                              <span
-                                >Attachment(s). (png, jpeg, pdf or xlsx)</span
-                              >
+                              <span>Attachment(s)</span>
                             </div>
                           </th>
                           <th
@@ -436,7 +456,14 @@
                           <td
                             class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                           >
-                            {{ expense.amount }}
+                            <div v-for="file in expense.files" :key="file.id">
+                              <a
+                                :href="file.url"
+                                :download="file.name"
+                                class="text-blue-500 hover:underline"
+                                >{{ file.name }}</a
+                              >
+                            </div>
                           </td>
                           <td
                             class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
@@ -465,7 +492,7 @@
                         <tr class="bg-gray-50 dark:bg-gray-800">
                           <td
                             class="px-4 py-2 border text-sm font-normal text-right text-gray-500 dark:text-gray-400"
-                            colspan="3"
+                            colspan="4"
                           >
                             Total Amount
                           </td>
@@ -1237,6 +1264,8 @@ export default {
       newExpense: {
         name: "",
         amount: 0,
+        description: "",
+        files: [],
       },
       showModal: false,
       selectedAttendeeType: "pkt",
@@ -1353,6 +1382,7 @@ export default {
               value: "",
               gridClass: "sm:col-span-1",
               hidden: false,
+              required: true,
             },
             {
               id: "TollLT",
@@ -1360,6 +1390,7 @@ export default {
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
+              hidden: false,
             },
             {
               id: "ParkingLT",
@@ -1367,6 +1398,7 @@ export default {
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
+              hidden: false,
             },
             {
               id: "UploadLT",
@@ -2061,8 +2093,7 @@ export default {
               (field) =>
                 field.id === "TransportLT" &&
                 "TransportSpec" &&
-                "PublicTransportSpec" &&
-                "FareRMLT"
+                "PublicTransportSpec"
             );
             if (personalTransportField) {
               this.updateFieldVisibility6(personalTransportField.value);
@@ -2218,6 +2249,33 @@ export default {
       }
     },
 
+    handleAddFileOT(error, file, filesArray) {
+      if (error) {
+        console.error("Error adding file:", error.message);
+        return;
+      }
+      filesArray.push(file.file);
+      console.log("File added:", file.file);
+      console.log("Updated files:", filesArray);
+    },
+
+    handleRemoveFileOT(error, file, filesArray) {
+      if (error) {
+        console.error(
+          "An error occurred while removing the file:",
+          error.message
+        );
+        return;
+      }
+      const fileObject = file.file;
+      const index = filesArray.findIndex((f) => f.name === fileObject.name);
+      if (index !== -1) {
+        filesArray.splice(index, 1);
+        console.log("File removed:", fileObject.name, fileObject);
+        console.log("Updated files:", filesArray);
+      }
+    },
+
     updateFieldVisibility(transportValue) {
       const localTravellingTab = this.tabs.find(
         (tab) => tab.title === "Local Travelling"
@@ -2353,13 +2411,19 @@ export default {
         (tab) => tab.title === "Local Travelling"
       );
       if (!localTravellingTab) return;
+      const publicTransportField = localTravellingTab.fields.find(
+        (field) => field.id === "PublicTransportSpec"
+      );
       const fareRMLTField = localTravellingTab.fields.find(
         (field) => field.id === "FareRMLT"
       );
-      if (!fareRMLTField) return;
+      if (!publicTransportField || !fareRMLTField) return;
+
       if (personalTransportValue === "Personal Transport") {
+        publicTransportField.hidden = true;
         fareRMLTField.hidden = true;
       } else {
+        publicTransportField.hidden = false;
         fareRMLTField.hidden = false;
       }
     },
@@ -2372,16 +2436,15 @@ export default {
       this.showPublicTransportSpec = value === "Public Transport";
     },
 
-    handleTransportChange3(value) {
-      this.showPersonalTransportSpec = value === "Personal Transport";
-    },
-
     addOtherExpense() {
       this.otherExpenses.push({ ...this.newExpense });
-      this.newExpense.name = "";
-      this.newExpense.amount = 0;
+      this.newExpense = {
+        name: "",
+        description: "",
+        amount: "",
+        files: [],
+      };
       this.showOtherExpensesModal = false;
-      console.log("Other Expenses:", this.otherExpenses);
     },
 
     removeExpense(index) {
@@ -2471,6 +2534,19 @@ export default {
           field.value.includes("Company Transport")
       );
 
+      // Check if the transport mode is Public Transport
+      const isPublicTransport = tab.fields.some(
+        (field) =>
+          field.id === "TransportLT" && field.value.includes("Public Transport")
+      );
+
+      // Check if the transport mode is Personal Transport
+      const isPersonalTransport = tab.fields.some(
+        (field) =>
+          field.id === "TransportLT" &&
+          field.value.includes("Personal Transport")
+      );
+
       tab.fields.forEach((field) => {
         // Check if Round Trip is selected
         if (field.id === "tripwayLT" && field.value.includes("Round Trip")) {
@@ -2485,7 +2561,13 @@ export default {
           field.id !== "LimitedAmountHR" &&
           field.id !== "AccBankNumberHR" &&
           field.id !== "AccBankNumberML" &&
-          (!isCompanyTransport || field.id !== "MileageRMLT")
+          (!isCompanyTransport ||
+            (field.id !== "MileageRMLT" && field.id !== "FareRMLT")) &&
+          (!isPublicTransport ||
+            (field.id !== "MileageRMLT" &&
+              field.id !== "TollLT" &&
+              field.id !== "ParkingLT")) &&
+          (!isPersonalTransport || field.id !== "FareRMLT")
         ) {
           // If Round Trip is selected, double up the calculation
           total += isRoundTrip
@@ -2498,6 +2580,7 @@ export default {
       if (tab.title === "Overseas Travelling with Accommodation") {
         total += this.calculateOverseasTotal();
       }
+
       // Return the total
       return total.toFixed(2);
     },
