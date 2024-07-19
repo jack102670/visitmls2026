@@ -2891,9 +2891,10 @@ export default {
       //   return;
       // }
       this.loading = true;
-      this.sendFiles(this.userDetails.userId, this.claims[0].uniqueCode);
+   
 
       const referenceNumber = await this.fetchSerialNumber();
+      this.sendFiles(this.userDetails.userId, referenceNumber);
 
       const apiData = {
         name: this.claims[0].claimantName,
@@ -2925,6 +2926,7 @@ export default {
         // Check if the response indicates success
         if (response.status === 200 || response.status === 201) {
           console.log("Data successfully inserted:", response.data);
+          this.sendToAPI();
         } else {
           console.warn("Unexpected response status:", response.status);
         }
