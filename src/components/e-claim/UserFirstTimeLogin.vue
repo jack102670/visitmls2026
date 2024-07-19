@@ -547,6 +547,7 @@ export default {
         home_address: "",
         profile_picture: null,
       },
+      profile_picture: null,
       bankOptions: bankOptions,
       tempImageUrl: "",
       cropper: null,
