@@ -194,13 +194,13 @@
                             :class="{
                               'inline-flex items-center px-3 py-1 rounded-full gap-x-2': true,
                               'bg-red-100/60 dark:bg-gray-800':
-                                item.admin_status === 'REJECT',
+                                item.admin_status.split('.')[0] === 'REJECT',
                               'bg-yellow-100/60 dark:bg-gray-800':
-                                item.admin_status === 'RESUBMIT',
+                                item.admin_status.split('.')[0] === 'RESUBMIT',
                               'bg-green-100/60 dark:bg-gray-800':
-                                item.admin_status === 'APPROVED',
+                                item.admin_status.split('.')[0] === 'APPROVED',
                               'bg-blue-100/60 dark:bg-gray-800':
-                                item.admin_status === 'VERIFIED', // Added for VERIFIED status
+                                item.admin_status.split('.')[0] === 'VERIFIED', // Added for VERIFIED status
                             }"
                           >
                             <span

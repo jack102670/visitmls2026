@@ -286,18 +286,13 @@
                           item.Tab_Title
                         )
                       "
-                      v-if="
-                        !reimbursed && !approve && !rejectApprover && !resubmit
-                      "
+                      v-if="pending"
                       type="text"
                       class="p-1 text-xs w-full rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
                     />
                     <h1
                       id="remarkText"
-                      v-if="
-                        (reimbursed || approve || rejectApprover || resubmit) &&
-                        item.comment.trim() !== ''
-                      "
+                      v-if="!pending && item.comment.trim() !== ''"
                       class="m-1 px-2 py-1 bg-blue-900 text-white rounded-2xl"
                     >
                       {{ item.comment }}
@@ -406,26 +401,31 @@
                 <div
                   class="mx-auto rounded-full py-2 text-center lg:w-[90%] w-full"
                   :class="{
-                    'bg-orange-200 dark:bg-orange-500':
-                      statusVerifier == 'PENDING',
-                    'bg-amber-200 dark:bg-amber-500':
-                      statusVerifier == 'VERIFIED',
-                    'bg-red-200 dark:bg-red-500': statusVerifier == 'REJECTED',
-                    'text-orange-500 dark:text-orange-100':
-                      statusVerifier == 'PENDING',
-                    'text-amber-500 dark:text-amber-100':
-                      statusVerifier == 'VERIFIED',
-                    'text-red-500 dark:text-red-100':
-                      statusVerifier == 'REJECTED',
+                    'bg-amber-200 dark:bg-amber-500': verified,
+                    'bg-yellow-200 dark:bg-yellow-500': resubmitVerifier,
+                    'bg-red-200 dark:bg-red-500': rejectVerifier,
+                    'text-yellow-500 dark:text-yellow-100': resubmitVerifier,
+                    'text-amber-500 dark:text-amber-100': verified,
+                    'text-red-500 dark:text-red-100': rejectVerifier,
                   }"
                 >
-                  <p>{{ statusVerifier }}</p>
+                  <p>
+                    {{
+                      verified
+                        ? 'VERIFIED'
+                        : resubmitVerifier
+                          ? 'RESUBMIT'
+                          : rejectVerifier
+                            ? 'REJECTED'
+                            : 'PENDING'
+                    }}
+                  </p>
                 </div>
               </th>
               <td class="pl-6">{{ claimDetails.verifier_name }}</td>
               <td class="">{{ claimDetails.verifier_designation }}</td>
               <td>{{ claimDetails.department }}</td>
-              <td class="">{{ claimDetails.date_requested }}</td>
+              <td class="">{{ claimDetails.verified_date }}</td>
             </tr>
             <tr
               class="text-wrap h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
@@ -437,44 +437,54 @@
                 <div
                   class="mx-auto rounded-full py-2 text-center lg:w-[90%] w-full"
                   :class="{
-                    'bg-orange-200 dark:bg-orange-500':
-                      statusApprover == 'PENDING',
-                    'bg-green-200 dark:bg-green-500':
-                      statusApprover == 'APPROVED',
-                    'bg-red-200 dark:bg-red-500': statusApprover == 'REJECTED',
-                    'text-orange-500 dark:text-orange-100':
-                      statusApprover == 'PENDING',
-                    'text-green-500 dark:text-green-100':
-                      statusApprover == 'APPROVED',
-                    'text-red-500 dark:text-red-100':
-                      statusApprover == 'REJECTED',
+                    'bg-green-200 dark:bg-green-500': approved,
+                    'bg-yellow-200 dark:bg-yellow-500': resubmitApprover,
+                    'bg-red-200 dark:bg-red-500': rejectApprover,
+
+                    'text-green-500 dark:text-green-100': approved,
+                    'text-yellow-500 dark:text-yellow-100': resubmitApprover,
+
+                    'text-red-500 dark:text-red-100': rejectApprover,
                   }"
                 >
-                  <p>{{ statusApprover }}</p>
+                  <p>
+                    {{
+                      approved ||
+                      rejectApprover ||
+                      resubmitApprover ||
+                      reimbursed
+                        ? adminStatus
+                        : ''
+                    }}
+                  </p>
                 </div>
               </th>
               <td class="pl-6">
                 {{
-                  statusApprover == 'PENDING' ? '' : claimDetails.approver_name
+                  approved || rejectApprover || resubmitApprover || reimbursed
+                    ? claimDetails.approver_name
+                    : ''
                 }}
               </td>
               <td class="">
                 {{
-                  statusApprover == 'PENDING'
-                    ? ''
-                    : claimDetails.approver_designation
+                  approved || rejectApprover || resubmitApprover || reimbursed
+                    ? claimDetails.approver_designation
+                    : ''
                 }}
               </td>
               <td>
                 {{
-                  statusApprover == 'PENDING'
-                    ? ''
-                    : claimDetails.approver_department
+                  approved || rejectApprover || resubmitApprover || reimbursed
+                    ? claimDetails.approver_department
+                    : ''
                 }}
               </td>
               <td class="">
                 {{
-                  statusApprover == 'PENDING' ? '' : claimDetails.date_requested
+                  approved || rejectApprover || resubmitApprover || reimbursed
+                    ? claimDetails.approved_date
+                    : ''
                 }}
               </td>
             </tr>
@@ -484,9 +494,7 @@
         <!-- Remark table -->
 
         <div
-          v-show="
-            approve || verified || resubmit || reimbursed || rejectApprover
-          "
+          v-show="!pending"
           class="text-xs border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl"
           id="table-overflow"
         >
@@ -507,14 +515,7 @@
 
         <!-- Button -->
         <div
-          v-show="
-            approve != true &&
-            verified != true &&
-            rejectApprover != true &&
-            rejectVerifier != true &&
-            resubmit != true &&
-            reimbursed != true
-          "
+          v-show="pending"
           class=".detail-table w-full lg:flex-row flex flex-col justify-between h-14 items-center pt-6"
         >
           <div class="flex w-full items-center">
@@ -947,9 +948,6 @@ export default {
   },
   data() {
     return {
-      // need to get from API
-      role: 'approver',
-
       // remark for every single detail
       singleRemarks: [],
 
@@ -998,15 +996,16 @@ export default {
       loading: false,
 
       // need to fetch from or post to API
+      pending: false,
+      verified: false,
+      approved: false,
       rejectApprover: false,
       rejectVerifier: false,
-      approve: false,
-      verified: false,
+      resubmitApprover: false,
+      resubmitVerifier: false,
       reimbursed: false,
-      resubmit: false,
-      pending: false,
       remark: '',
-      statusApprover: '',
+      adminStatus: '',
 
       // fetch from backend
       claimDetails: [],
@@ -1027,22 +1026,6 @@ export default {
         num += this.claimDatas[i].Amount;
       }
       return num;
-    },
-    // status of verifier to change the status color and title in table
-    // need to post to database
-    statusVerifier() {
-      let status = 'PENDING';
-      if (this.rejectVerifier) {
-        status = 'REJECTED';
-      } else if (this.verified) {
-        status = 'VERIFIED';
-      } else {
-        status = 'VERIFIED';
-      }
-
-      status = 'VERIFIED';
-
-      return status;
     },
   },
   methods: {
@@ -1065,36 +1048,57 @@ export default {
         )
         .then((response) => {
           this.claimDetails = response.data.result;
-          this.statusApprover = this.claimDetails.admin_status
+          this.adminStatus = this.claimDetails.admin_status
             .split('.')[0]
             .toUpperCase();
-          if (this.statusApprover == 'APPROVED') {
-            this.approve = true;
-            this.remark = this.claimDetails.comment;
-          } else if (this.statusApprover == 'REJECTED') {
-            this.rejectApprover = true;
-            this.remark = this.claimDetails.comment;
-          } else if (this.statusApprover == 'RESUBMIT') {
-            this.resubmit = true;
-            this.remark = this.claimDetails.comment;
-          } else if (this.statusApprover == 'REIMBURSED') {
-            this.reimbursed = true;
-            this.remark = this.claimDetails.comment;
+          console.log(this.claimDetails.admin_status);
+          switch (this.adminStatus) {
+            case 'VERIFIED':
+              this.verified = true;
+              this.pending = true;
+              this.remark = this.claimDetails.comment;
+              break;
+
+            case 'APPROVED':
+              this.verified = true;
+              this.approved = true;
+              this.remark = this.claimDetails.comment;
+              break;
+
+            case 'REJECTED':
+              if (this.claimDetails.admin_status.includes('VERIFIER')) {
+                this.rejectVerifier = true;
+                console.log('yes');
+              } else if (this.claimDetails.admin_status.includes('APPROVER')) {
+                this.verified = true;
+                this.rejectApprover = true;
+                console.log('yes2');
+              }
+              console.log('no ' + this.claimDetails.admin_status);
+
+              this.remark = this.claimDetails.comment;
+              break;
+
+            case 'RESUBMIT':
+              if (this.claimDetails.admin_status.includes('VERIFIER')) {
+                this.resubmitVerifier = true;
+              } else if (this.claimDetails.admin_status.includes('APPROVER')) {
+                this.verified = true;
+
+                this.resubmitApprover = true;
+              }
+              this.remark = this.claimDetails.comment;
+              break;
+
+            case 'REIMBURSED':
+              this.verified = true;
+
+              this.reimbursed = true;
+              this.remark = this.claimDetails.comment;
+              break;
           }
 
-          console.log(this.statusApprover);
-
-          if (this.statusApprover == 'APPROVED') {
-            this.approve = true;
-          } else if (this.statusApprover == 'REJECTED') {
-            this.rejectApprover = true;
-          } else if (this.statusApprover == 'RESUBMIT') {
-            this.resubmit = true;
-          } else if (this.statusApprover == 'REIMBURSED') {
-            this.reimbursed = true;
-          } else {
-            this.statusApprover = 'PENDING';
-          }
+          console.log(this.adminStatus);
         });
     },
     async FetchClaimDatasDetails() {
@@ -1370,6 +1374,8 @@ export default {
     //approve or reject action
     // need to post to database
     async ApproveOrReject(AoR) {
+      this.pending = false;
+
       const userData = await this.GetUserData();
       console.log(userData);
       this.singleRemarks.forEach((remark) => {
@@ -1397,12 +1403,13 @@ export default {
             'http://172.28.28.91:86/api/Admin/Approve_Comment_Entertainment',
             data
           );
+        } else if (remark.Tab_Title == 'Other') {
+          axios.put('http://172.28.28.91:97/api/Verifier/VerifierOthers', data);
         }
       });
 
       if (AoR == 'Approve') {
         this.approve = true;
-        this.dateApprover = moment(new Date()).format('D MMM YYYY');
         // post the status and remark to API
         this.loading = true;
 
@@ -1422,7 +1429,6 @@ export default {
           .then((response) => {
             // Handle success response
             console.log('API response', response.data);
-            localStorage.setItem('ApproveOrNot', 'approve');
 
             this.approveSuccess = true;
             setTimeout(() => {
@@ -1435,14 +1441,13 @@ export default {
           });
       } else if (AoR == 'Reject') {
         this.rejectApprover = true;
-        this.dateApprover = moment(new Date()).format('D MMM YYYY');
         this.loading = true;
 
         const approveData = {
           approver_name: userData.userName,
           approver_designation: userData.designation,
           approver_department: userData.department,
-          approver_status: 'REJECTED',
+          approver_status: 'REJECTED. BY APPROVER',
           approver_comment: this.remark ? this.remark : '',
           user_email: 'user_email',
           verifier_email: this.claimDetails.verifier_email,
@@ -1455,22 +1460,20 @@ export default {
             this.loading = false;
 
             console.log('API response', response.data);
-            localStorage.setItem('ApproveOrNot', 'reject');
           })
           .catch((error) => {
             // Handle error response
             console.error('API error', error);
           });
       } else if (AoR == 'Resubmit') {
-        this.resubmit = true;
-        this.dateApprover = moment(new Date()).format('D MMM YYYY');
+        this.resubmitApprover = true;
         this.loading = true;
 
         const approveData = {
           approver_name: userData.userName,
           approver_designation: userData.designation,
           approver_department: userData.department,
-          approver_status: 'RESUBMIT',
+          approver_status: 'RESUBMIT. REQUESTED BY APPROVER',
           approver_comment: this.remark ? this.remark : '',
           user_email: 'user_email',
           verifier_email: this.claimDetails.verifier_email,
@@ -1483,7 +1486,6 @@ export default {
             this.loading = false;
 
             console.log('API response', response.data);
-            localStorage.setItem('ApproveOrNot', 'resubmit');
           })
           .catch((error) => {
             // Handle error response
@@ -1491,7 +1493,6 @@ export default {
           });
       } else if (AoR == 'Reimbursed') {
         this.reimbursed = true;
-        this.dateApprover = moment(new Date()).format('D MMM YYYY');
         this.loading = true;
 
         const approveData = {
@@ -1511,7 +1512,6 @@ export default {
             this.loading = false;
 
             console.log('API response', response.data);
-            localStorage.setItem('ApproveOrNot', 'reimbursed');
           })
           .catch((error) => {
             // Handle error response
