@@ -229,18 +229,13 @@
                           item.Tab_Title
                         )
                       "
-                      v-if="
-                        !reimbursed && !approve && !rejectApprover && !resubmit
-                      "
+                      v-if="pending"
                       type="text"
                       class="p-1 text-xs w-full rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
                     />
                     <h1
                       id="remarkText"
-                      v-if="
-                        (reimbursed || approve || rejectApprover || resubmit) &&
-                        item.comment.trim() !== ''
-                      "
+                      v-if="!pending && item.comment.trim() !== ''"
                       class="m-1 px-2 py-1 bg-blue-900 text-white rounded-2xl"
                     >
                       {{ item.comment }}
@@ -1283,28 +1278,31 @@ export default {
       console.log(userData);
       this.singleRemarks.forEach((remark) => {
         let data = {
-          comment: remark.remark,
+          verifier_comment: remark.remark,
           reference_number: remark.unique_code,
         };
         if (remark.Tab_Title == 'Local Outstation') {
-          axios.put('http://172.28.28.91:97/api/Verifier/VerifierLocal', data);
+          axios.post('http://172.28.28.91:97/api/Verifier/VerifierLocal', data);
         } else if (remark.Tab_Title == 'Overseas Outstation') {
-          axios.put(
+          axios.post(
             'http://172.28.28.91:97/api/Verifier/VerifierOverseas',
             data
           );
         } else if (remark.Tab_Title == 'Staff Refreshment') {
-          axios.put(
+          axios.post(
             'http://172.28.28.91:97/api/Verifier/VerifierRefreshment',
             data
           );
         } else if (remark.Tab_Title == 'Entertainment') {
-          axios.put(
+          axios.post(
             'http://172.28.28.91:97/api/Verifier/VerifierEntertainment',
             data
           );
         } else if (remark.Tab_Title == 'Other') {
-          axios.put('http://172.28.28.91:97/api/Verifier/VerifierOthers', data);
+          axios.post(
+            'http://172.28.28.91:97/api/Verifier/VerifierOthers',
+            data
+          );
         }
       });
 

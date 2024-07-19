@@ -286,18 +286,13 @@
                           item.Tab_Title
                         )
                       "
-                      v-if="
-                        !reimbursed && !approve && !rejectApprover && !resubmit
-                      "
+                      v-if="pending"
                       type="text"
                       class="p-1 text-xs w-full rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
                     />
                     <h1
                       id="remarkText"
-                      v-if="
-                        (reimbursed || approve || rejectApprover || resubmit) &&
-                        item.comment.trim() !== ''
-                      "
+                      v-if="!pending && item.comment.trim() !== ''"
                       class="m-1 px-2 py-1 bg-blue-900 text-white rounded-2xl"
                     >
                       {{ item.comment }}
