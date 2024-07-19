@@ -51,7 +51,7 @@
               </div>
             </button>
 
-            <button @click="sendToAPI()">sent to api</button>
+            <!-- <button @click="sendToAPI()">sent to api</button> -->
           </div>
         </div>
 
@@ -342,7 +342,7 @@
                 />
               </div>
               <div
-                v-if="!isCompanyTransport"
+                v-if="!isCompanyTransport && !isPublicTransport"
                 class="flex justify-between items-center mb-4"
               >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
@@ -353,6 +353,21 @@
                   id="transportSpecify"
                   v-model="localTravellingDetails.TransportSpec"
                   :disabled="!isEditMode || nonEditableFields"
+                  class="border rounded-md px-16 py-2"
+                />
+              </div>
+              <div
+                v-if="!isCompanyTransport && !isPersonalTransport"
+                class="flex justify-between items-center mb-4"
+              >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Transport Specification:</label
+                >
+                <input
+                  type="text"
+                  id="publicTransportSpecify"
+                  v-model="localTravellingDetails.PublicTransportSpec"
+                  :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -394,7 +409,7 @@
               </div>
 
               <div
-                v-if="!isCompanyTransport"
+                v-if="!isCompanyTransport && !isPublicTransport"
                 class="flex justify-between items-center mb-4"
               >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
@@ -410,7 +425,7 @@
               </div>
 
               <div
-                v-if="!isCompanyTransport"
+                v-if="!isCompanyTransport && !isPublicTransport"
                 class="flex justify-between items-center mb-4"
               >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
@@ -425,7 +440,10 @@
                 />
               </div>
 
-              <div class="flex justify-between items-center mb-4">
+              <div
+                v-if="!isPublicTransport"
+                class="flex justify-between items-center mb-4"
+              >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Toll:</label
                 >
@@ -438,7 +456,10 @@
                 />
               </div>
 
-              <div class="flex justify-between items-center mb-4">
+              <div
+                v-if="!isPublicTransport"
+                class="flex justify-between items-center mb-4"
+              >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Parking:</label
                 >
@@ -446,6 +467,21 @@
                   type="text"
                   id="positioname"
                   v-model="localTravellingDetails.ParkingLT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2"
+                />
+              </div>
+              <div
+                v-if="!isCompanyTransport && !isPersonalTransport"
+                class="flex justify-between items-center mb-4"
+              >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Fare(RM):</label
+                >
+                <input
+                  type="text"
+                  id="farerm"
+                  v-model="localTravellingDetails.FareRMLT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2"
                 />
@@ -793,7 +829,15 @@
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
                         <div class="flex items-center gap-x-3">
-                          <span></span>
+                          <span>Attachment(s)</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Action</span>
                         </div>
                       </th>
                     </tr>
@@ -851,6 +895,19 @@
                           v-model="expense.amount"
                           class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1"
                         />
+                      </td>
+
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
+                      >
+                        <div v-for="file in expense.files" :key="file.id">
+                          <a
+                            :href="file.url"
+                            :download="file.name"
+                            class="text-blue-500 hover:underline"
+                            >{{ file.name }}</a
+                          >
+                        </div>
                       </td>
                       <td
                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
@@ -1920,6 +1977,18 @@
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
+                <label for="expensename" class="text-gray-700 font-bold mr-2"
+                  >Expense Name:</label
+                >
+                <input
+                  type="text"
+                  id="expensename"
+                  v-model="othersDetails.ExpenseNameOthers"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
                 <label for="amount" class="text-gray-700 font-bold mr-2"
                   >Amount (RM):</label
                 >
@@ -2316,6 +2385,41 @@
         </div>
       </div>
     </div>
+    <!-- Loading Animation -->
+    <div
+      class="w-screen h-screen fixed z-40 flex justify-center items-center top-0 left-0"
+      v-if="loading && !approveSuccess"
+    >
+      <div class="absolute w-screen h-screen bg-gray-900 opacity-10"></div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 200 200"
+        class="w-24 h-24 z-50"
+      >
+        <circle
+          transform="rotate(0)"
+          transform-origin="center"
+          fill="none"
+          stroke="blue"
+          stroke-width="10"
+          stroke-linecap="round"
+          stroke-dasharray="230 1000"
+          stroke-dashoffset="0"
+          cx="100"
+          cy="100"
+          r="70"
+        >
+          <animateTransform
+            attributeName="transform"
+            type="rotate"
+            from="0"
+            to="360"
+            dur="2"
+            repeatCount="indefinite"
+          ></animateTransform>
+        </circle>
+      </svg>
+    </div>
   </main>
 </template>
 
@@ -2354,19 +2458,30 @@ export default {
       cancel: true,
       formData: {
         ...formStore.getFormData(),
-        fileUpload: formStore.getFormData().fileUpload.slice() // Ensure we work with a copy
+        fileUpload: formStore.getFormData().fileUpload.slice(), // Ensure we work with a copy
       },
+      loading: false,
     };
   },
 
   computed: {
     totallocalTravellingDetails() {
-      let total =
-        (this.localTravellingDetails.TransportLT === "Company Transport"
-          ? 0
-          : parseFloat(this.localTravellingDetails.MileageRMLT) || 0) +
-        (parseFloat(this.localTravellingDetails.ParkingLT) || 0) +
-        (parseFloat(this.localTravellingDetails.TollLT) || 0);
+      let total = 0;
+
+      if (this.localTravellingDetails.TransportLT === "Company Transport") {
+        total += parseFloat(this.localTravellingDetails.ParkingLT) || 0;
+        total += parseFloat(this.localTravellingDetails.TollLT) || 0;
+      } else if (
+        this.localTravellingDetails.TransportLT === "Personal Transport"
+      ) {
+        total += parseFloat(this.localTravellingDetails.MileageRMLT) || 0;
+        total += parseFloat(this.localTravellingDetails.ParkingLT) || 0;
+        total += parseFloat(this.localTravellingDetails.TollLT) || 0;
+      } else if (
+        this.localTravellingDetails.TransportLT === "Public Transport"
+      ) {
+        total += parseFloat(this.localTravellingDetails.FareRMLT) || 0;
+      }
 
       if (this.localTravellingDetails.tripwayLT === "Round Trip") {
         total *= 2;
@@ -2377,6 +2492,14 @@ export default {
 
     isCompanyTransport() {
       return this.localTravellingDetails.TransportLT === "Company Transport";
+    },
+
+    isPublicTransport() {
+      return this.localTravellingDetails.TransportLT === "Public Transport";
+    },
+
+    isPersonalTransport() {
+      return this.localTravellingDetails.TransportLT === "Personal Transport";
     },
 
     isPanelClinic() {
@@ -2489,6 +2612,8 @@ export default {
 
   mounted() {
     // Sidebar close or open
+    const body = document.querySelector('body');
+    body.style.overflow = 'auto';
 
     this.fetchEmployeeID();
 
@@ -2751,16 +2876,12 @@ export default {
       return this.dataclaims.length > 0;
     },
     async senttheclaim() {
-      if (!this.isValidClaimData()) {
-        alert("Please add at least one claim data before submit");
-        return;
-      }
-
-      this.sendFiles(
-        
-        this.userDetails.userId,
-        this.claims[0].uniqueCode
-      );
+      // if (!this.isValidClaimData()) {
+      //   alert("Please add at least one claim data before submit");
+      //   return;
+      // }
+      this.loading = true;
+      this.sendFiles(this.userDetails.userId, this.claims[0].uniqueCode);
 
       const apiData = {
         name: this.claims[0].claimantName,
@@ -2800,7 +2921,7 @@ export default {
         // this.resetClaimsAfterSubmit();
       } catch (error) {
         console.error("API error", error);
-
+        this.loading = false;
         // Extract the detailed server error message from the response
         let serverErrorMessage =
           error.response && error.response.data && error.response.data.message
@@ -2818,6 +2939,7 @@ export default {
           );
         }
       }
+      this.loading = false;
     },
     async sendToAPI() {
       // Group claims by tabTitle
@@ -2860,6 +2982,7 @@ export default {
                     trip_mode: claim.tripwayLT,
                     total_mileage: claim.MileageRMLT || 0,
                     transport_specification: claim.TransportSpec,
+                    fare: claim.FareRMLT,
                   };
                   axiosInstance = axios.create({
                     baseURL:
@@ -3077,11 +3200,7 @@ export default {
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
-                    this.uploadFiles(
-                      
-                      userId,
-                      uniqcodeothers
-                    );
+                    this.uploadFiles(userId, uniqcodeothers);
                   }
                   axiosInstance = axios.create({
                     baseURL: "http://172.28.28.91:97/api/User/InsertOthers",
@@ -3264,8 +3383,7 @@ export default {
       }
     },
 
-    async sendFiles(X,Y) {
-      
+    async sendFiles(X, Y) {
       const files = this.formData.fileUpload; // Ensure formData is correctly accessible
 
       if (!files || !files.length) {
@@ -3273,7 +3391,6 @@ export default {
         return;
       }
 
-      
       await this.uploadFilesclaims(files, X, Y);
     },
     async uploadFilesclaims(files, userId, uniqueCode) {
@@ -3302,22 +3419,12 @@ export default {
           },
         });
         console.log("Files uploaded successfully:", response.data);
+
+        formStore.clearFormData();
       } catch (error) {
         console.error("Error uploading files:", error);
       }
     },
-    resetClaimsAfterSubmit() {
-  // Clear the claims array
-  
-
-  // Optionally, clear or reset the claims data in local storage
-  localStorage.removeItem("claims"); // To completely remove the claims data
-  // OR
-  // localStorage.setItem("claims", JSON.stringify([])); // To reset it to an empty array
-
-  // Log the reset action
-  console.log("Claims have been reset after submission.");
-},
 
     deleteForm() {
       if (this.index !== -1) {
