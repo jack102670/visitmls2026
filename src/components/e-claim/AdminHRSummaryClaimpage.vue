@@ -396,37 +396,7 @@
             </tr>
 
             <!-- table information -->
-            <tr
-              class="text-wrap h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
-            >
-              <th
-                class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
-              >
-                <!-- Status Bar -->
-                <div
-                  class="mx-auto rounded-full py-2 text-center lg:w-[90%] w-full"
-                  :class="{
-                    'bg-orange-200 dark:bg-orange-500':
-                      statusVerifier == 'PENDING',
-                    'bg-amber-200 dark:bg-amber-500':
-                      statusVerifier == 'VERIFIED',
-                    'bg-red-200 dark:bg-red-500': statusVerifier == 'REJECTED',
-                    'text-orange-500 dark:text-orange-100':
-                      statusVerifier == 'PENDING',
-                    'text-amber-500 dark:text-amber-100':
-                      statusVerifier == 'VERIFIED',
-                    'text-red-500 dark:text-red-100':
-                      statusVerifier == 'REJECTED',
-                  }"
-                >
-                  <p>{{ statusVerifier }}</p>
-                </div>
-              </th>
-              <td class="pl-6">{{ claimDetails.verifier_name }}</td>
-              <td class="">{{ claimDetails.verifier_designation }}</td>
-              <td>{{ claimDetails.department }}</td>
-              <td class="">{{ claimDetails.date_requested }}</td>
-            </tr>
+
             <tr
               class="text-wrap h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
             >
@@ -474,7 +444,7 @@
               </td>
               <td class="">
                 {{
-                  statusApprover == 'PENDING' ? '' : claimDetails.date_requested
+                  statusApprover == 'PENDING' ? '' : claimDetails.approved_date
                 }}
               </td>
             </tr>
@@ -1199,7 +1169,7 @@ export default {
 
             this.approveSuccess = true;
             setTimeout(() => {
-              this.$router.push({ name: 'AdminDashboardpage' });
+              this.$router.push({ name: 'AdminHRDashboardpage' });
             }, 2500);
           })
           .catch((error) => {
