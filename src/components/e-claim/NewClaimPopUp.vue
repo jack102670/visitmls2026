@@ -455,6 +455,41 @@
           </div>
         </div>
       </form>
+       <!-- Loading Animation -->
+       <div
+          class="w-screen h-screen fixed z-40 flex justify-center items-center top-0 left-0"
+          v-if="loading && !approveSuccess"
+        >
+          <div class="absolute w-screen h-screen bg-gray-900 opacity-10"></div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 200 200"
+            class="w-24 h-24 z-50"
+          >
+            <circle
+              transform="rotate(0)"
+              transform-origin="center"
+              fill="none"
+              stroke="blue"
+              stroke-width="10"
+              stroke-linecap="round"
+              stroke-dasharray="230 1000"
+              stroke-dashoffset="0"
+              cx="100"
+              cy="100"
+              r="70"
+            >
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                from="0"
+                to="360"
+                dur="2"
+                repeatCount="indefinite"
+              ></animateTransform>
+            </circle>
+          </svg>
+        </div>
     </div>
   </div>
 </template>
@@ -514,7 +549,7 @@ export default {
         memo: formStore.formData.memo,
         uniqueCode: formStore.formData.uniqueCode,
         uniqueCodeForFileUpload: formStore.formData.uniqueCodeForFileUpload,
-        fileUpload: formStore.getFormData().fileUpload.slice()
+        fileUpload: formStore.formData.fileUpload.slice()
       },
       branch: "", // Add the missing branch property
       userDetails: {},
@@ -758,7 +793,7 @@ export default {
 
       if (this.active > 0) {
         // Update form data in the form store
-        formStore.getFormData().fileUpload = [];
+      
         formStore.clearFormData();
         this.generateSerialNumber();
         this.generateUniqueCode();

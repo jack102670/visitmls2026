@@ -104,7 +104,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .popup {
   /* Style for the popup */
   position: fixed;
