@@ -188,7 +188,7 @@ export default {
     ViewClaim(rn) {
       console.log(rn);
       this.$router.push({
-        name: 'AdminSummaryClaimpage',
+        name: 'AdminHRSummaryClaimpage',
         params: { rn: String(rn) },
       });
     },
