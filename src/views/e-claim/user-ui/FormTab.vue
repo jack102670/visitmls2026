@@ -1405,7 +1405,6 @@ export default {
               label: "Attachment(s). (png, jpeg, pdf or xlsx)",
               type: "file",
               value: [],
-              required: true,
               allowMultiple: true,
               server: null,
               maxFileSize: "5MB",
@@ -1508,7 +1507,6 @@ export default {
               label: "Attachment(s). (png, jpeg, pdf or xlsx)",
               type: "file",
               value: [],
-              required: true,
               allowMultiple: true,
               server: null,
               maxFileSize: "5MB",
@@ -2217,7 +2215,6 @@ export default {
         month: "long",
       })} ${date.getFullYear()}`;
     },
-    // other methods...
 
     handleAddFile(error, file, field) {
       if (error) {
