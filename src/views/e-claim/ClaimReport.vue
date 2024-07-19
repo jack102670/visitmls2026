@@ -342,7 +342,7 @@
                 />
               </div>
               <div
-                v-if="!isCompanyTransport && !isPublicTransport"
+                v-if="!isCompanyTransport  && !isPublicTransport"
                 class="flex justify-between items-center mb-4"
               >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
@@ -356,7 +356,7 @@
                   class="border rounded-md px-16 py-2"
                 />
               </div>
-              <div
+               <div
                 v-if="!isCompanyTransport && !isPersonalTransport"
                 class="flex justify-between items-center mb-4"
               >
@@ -443,8 +443,7 @@
               <div
                 v-if="!isPublicTransport"
                 class="flex justify-between items-center mb-4"
-              >
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+              > <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Toll:</label
                 >
                 <input
@@ -456,11 +455,10 @@
                 />
               </div>
 
-              <div
+               <div
                 v-if="!isPublicTransport"
                 class="flex justify-between items-center mb-4"
-              >
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+              ><label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Parking:</label
                 >
                 <input
@@ -829,7 +827,7 @@
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
                         <div class="flex items-center gap-x-3">
-                          <span>Attachment(s)</span>
+                           <span>Attachment(s)</span>
                         </div>
                       </th>
                       <th
@@ -896,6 +894,7 @@
                           class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1"
                         />
                       </td>
+
                       <td
                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
                       >
@@ -2449,7 +2448,6 @@ export default {
       if (this.localTravellingDetails.tripwayLT === "Round Trip") {
         total *= 2;
       }
-
       this.totalplusmethod(total);
       return total;
     },
@@ -2563,7 +2561,6 @@ export default {
         }, 0)
         .toFixed(2);
     },
-
     referenceNumber() {
       console.log("Current uniqueCode:", this.claims.uniqueCode);
       return this.claims.uniqueCode;
@@ -3147,7 +3144,6 @@ export default {
                   const thisisforHandphoneBillReimbursement = {
                     expense_date: claim.dateOthers, // Example date
                     amount: parseFloat(claim.AmountRMOthers).toFixed(2),
-                    expensename: claim.ExpenseNameOthers,
                     description: claim.DescriptionOthers,
                     unique_code: uniqcodeothers,
                     total_fee: parseFloat(claim.totalRM).toFixed(2),
@@ -3188,7 +3184,6 @@ export default {
                   // Iterate over each claim
                   // Dummy data for a claim
                   const uniqcodeHR = this.generateUniqueCode(claim.tabTitle);
-                  const uniqcodeHR = this.generateUniqueCode(claim.tabTitle);
                   const thisisforHandphoneBillReimbursement = {
                     date_claim: this.todayFormatted(), // Example date
                     claim_month: claim.MonthHR,
@@ -3203,6 +3198,7 @@ export default {
                     handphone: "",
                     requester_id: this.userDetails.userId,
                   };
+
                   const userId = this.userDetails.userId;
                   // console.log("unik kod:", uniqueCode);
                   if (claim.UploadHR && claim.UploadHR.length > 0) {
