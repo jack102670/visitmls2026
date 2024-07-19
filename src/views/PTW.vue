@@ -833,7 +833,7 @@
           <form>
             <div class="grid grid-cols-2 gap-6 pt-5">
               <div>
-                <Div class="pt-3">
+                <div class="pt-3">
                   <FilePond
                     ref="pond1"
                     name="file"
@@ -851,7 +851,7 @@
                     @addfile="handleAddFile1"
                     @removefile="handleRemoveFile1"
                   />
-                </Div>
+                </div>
                 <!-- component -->
               </div>
             </div>
@@ -2604,7 +2604,7 @@
                 <!-- component -->
 
                 <div>
-                  <Div class="pt-3">
+                  <div class="pt-3">
                     <FilePond
                       ref="pond2"
                       name="file"
@@ -2620,7 +2620,7 @@
                       @addfile="handleAddFile2"
                       @removefile="handleRemoveFile2"
                     />
-                  </Div>
+                  </div>
                   <!-- component -->
                 </div>
               </div>

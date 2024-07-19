@@ -1,15 +1,15 @@
 <template>
-  <main class="flex-1 text overflow-y-auto bg-[#CED1DA] p-4 sm:ml-64">
+  <main class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64">
     <div class="container mx-auto">
       <div
-        class="relative overflow-hidden bg-[#f7fbff] border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
+        class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-800 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
         <div class="flex justify-between">
           <div class="flex justify-start flex-col ml-5">
-            <h2 class="text-3xl font-bold text-blue-900">
+            <h2 class="text-3xl font-bold text-blue-900 dark:text-white">
               PKT GROUP OF COMPANIES
             </h2>
-            <h3 class="text-xl font-bold text-blue-800">
+            <h3 class="text-xl font-bold text-blue-800 dark:text-white">
               Claim for Reimbursement of All Expenses
             </h3>
           </div>
@@ -21,7 +21,7 @@
         </div>
         <div class="pt-4 ml-4"><button
               @click="ChangePopUp()"
-              class="flex items-center justify-center text-center rounded-full bg-[#160959] text-slate-200 py-2 px-4 text-sm hover:bg-[#190a70] hover:text=white"
+              class="flex items-center justify-center text-center rounded-full bg-[#160959] dark:bg-[#111827] text-slate-200 py-2 px-4 text-sm hover:bg-[#190a70] hover:text=white"
             >
               <svg
                 class="mr-1"
@@ -67,33 +67,33 @@
         <!-- Box Info Section-->
         <section>
           <div
-            class="p-5 mt-1 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5"
+            class="p-5 mt-1 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 "
           >
             <div
-              class="relative overflow-hidden hover:bg-fuchsia-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 rounded-lg border-fuchsia-300"
+              class="relative overflow-hidden hover:bg-fuchsia-100 bg-white max-h-[1000px] dark:bg-[#111827] shadow-xl border-x-2 border-y-2 rounded-lg border-fuchsia-300 dark:border-fuchsia-200 dark:hover:bg-gray-800"
             >
               <div class="card m-2" @click="filterTable('Pending')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold">{{
+                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
                     requests.filter((request) => request.status === "Approved")
                       .length
                   }}</span>
-                  <span class="block text-sm text-gray-500 font-semibold"
+                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
                     >Resubmission</span
                   >
                 </div>
               </div>
             </div>
             <div
-              class="relative overflow-hidden hover:bg-blue-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-blue-300 rounded-lg"
+              class="relative overflow-hidden dark:bg-[#111827] dark:border-blue-200 dark:hover:bg-gray-800 hover:bg-blue-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-blue-300 rounded-lg"
             >
-              <div class="card m-2" @click="filterTable('Approved')">
+              <div class="card m-2 " @click="filterTable('Approved')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold">{{
+                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
                     requests.filter((request) => request.status === "Approved")
                       .length
                   }}</span>
-                  <span class="block text-sm text-gray-500 font-semibold"
+                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
                     >Approved</span
                   >
                 </div>
@@ -101,47 +101,47 @@
             </div>
 
             <div
-              class="relative overflow-hidden bg-white max-h-[1000px] hover:bg-red-100 shadow-xl border-x-2 border-y-2 rounded-lg border-red-300"
+              class="relative overflow-hidden dark:bg-[#111827] dark:border-red-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] hover:bg-red-100 shadow-xl border-x-2 border-y-2 rounded-lg border-red-300"
             >
               <div class="card m-2" @click="filterTable('rejected')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold">{{
+                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
                     requests.filter((request) => request.status === "rejected")
                       .length
                   }}</span>
-                  <span class="block text-sm text-gray-500 font-semibold"
+                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
                     >Rejected</span
                   >
                 </div>
               </div>
             </div>
             <div
-              class="relative overflow-hidden bg-white max-h-[1000px] shadow-xl hover:bg-yellow-100 border-x-2 border-y-2 rounded-lg border-yellow-300"
+              class="relative overflow-hidden dark:bg-[#111827] dark:border-yellow-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] shadow-xl hover:bg-yellow-100 border-x-2 border-y-2 rounded-lg border-yellow-300"
             >
               <div class="card m-2" @click="filterTable('reimburse')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold">
+                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
                     {{
                       requests.filter(
                         (request) => request.status === "Approved"
                       ).length
                     }}</span
                   >
-                  <span class="block text-sm text-gray-500 font-semibold"
+                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
                     >Reimburse</span
                   >
                 </div>
               </div>
             </div>
             <div
-              class="relative overflow-hidden bg-white max-h-[1000px] hover:bg-teal-100 shadow-xl border-x-2 border-y-2 rounded-lg border-teal-300"
+              class="relative overflow-hidden dark:bg-[#111827] dark:border-teal-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] hover:bg-teal-100 shadow-xl border-x-2 border-y-2 rounded-lg border-teal-300"
             >
               <div class="card m-2" @click="filterTable('')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold">{{
+                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
                     this.requests.length
                   }}</span>
-                  <span class="block text-sm text-gray-500 font-semibold"
+                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
                     >All Claims</span
                   >
                 </div>
@@ -176,7 +176,7 @@
                 >
                   <table
                     ref="myTable"
-                    class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe"
+                    class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe "
                   >
                     <thead class="bg-gray-50 dark:bg-gray-800">
                       <tr>
@@ -536,7 +536,7 @@
       </div>
     </div>
     <NewClaimPopUp
-      @open="handleScroll"
+  
       v-if="popup"
       @close="ChangePopUp()"
       :class="[animate ? 'PopUpAnimation' : 'BackAnimation']"
@@ -717,7 +717,7 @@ export default {
     },
     async fetchAllRequests() {
       const userId = store.getSession().userDetails.userId;
-      console.log("userId", userId);
+      // console.log("userId", userId);
       if (!userId) {
         console.error("UserId is not set.");
         return;
@@ -731,7 +731,7 @@ export default {
         }
         const data = await response.json();
         this.requests = data.result; // Update your data property with the fetched data
-        console.log("Fetched requests:", this.requests);
+        // console.log("Fetched requests:", this.requests);
       } catch (error) {
         console.error("Error fetching requests:", error);
       }
@@ -825,7 +825,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
 .PopUpAnimation .popup {
   animation: PopUpKeyframes 0.45s ease;
 }

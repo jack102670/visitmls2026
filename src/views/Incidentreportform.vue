@@ -89,7 +89,7 @@
                 <!-- component -->
 
                 <div>
-                  <Div class="pt-3">
+                  <div class="pt-3">
                     <FilePond ref="pond" name="file" :server="null" :allowMultiple="true" :maxFileSize="'5MB'"
                       :acceptedFileTypes="[
                         'image/png',
@@ -98,7 +98,7 @@
                         'application/vnd.ms-excel',
                         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                       ]" @addfile="handleAddFile" @removefile="handleRemoveFile" />
-                  </Div>
+                  </div>
                   <!-- component -->
                 </div>
               </div>
