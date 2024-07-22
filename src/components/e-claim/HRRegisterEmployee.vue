@@ -333,6 +333,8 @@ export default {
         ...new Map(users.map((user) => [user.userId, user])).values(),
       ];
 
+      console.log('unique users: ', uniqueUsers);
+
       // Update filteredUsers with unique users initially
       this.filteredUsers = uniqueUsers.map((user) => user.userName);
 
