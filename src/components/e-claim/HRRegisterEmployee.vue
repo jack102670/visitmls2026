@@ -295,6 +295,17 @@ export default {
         this.form.employeeId = this.form.employeeId.substring(0, 10);
       }
     },
+    async getEmpId(id) {
+      try {
+        const response = await axios.get(
+          `http://172.28.28.91:97/api/User/GetEmployeeById/${id}`
+        );
+        return response.data.result[0].emp_id;
+      } catch (error) {
+        console.error('Error fetching employee ID:', error);
+        return null;
+      }
+    },
   },
 
   async mounted() {
@@ -365,19 +376,55 @@ export default {
         });
     },
 
-    'form.reportingDepartment'(newReportingDept) {
+    async 'form.reportingDepartment'(newReportingDept) {
       // This will execute whenever department value changes
       console.log('123');
       let Employees = this.fetchOptions
         .filter((item) => item.department === newReportingDept)
-        .map((item) => item.userName + ' (' + item.userId + ')');
+        .map((item) => ({
+          userName: item.userName,
+          userId: item.userId,
+        }));
 
-      const uniqueEmployees = [...new Set(Employees)];
+      const uniqueEmployees = [
+        ...new Map(
+          Employees.map((employee) => [employee.userId, employee])
+        ).values(),
+      ];
 
-      this.filteredReportingEmployees = uniqueEmployees;
+      try {
+        // Fetch additional data from the API
+        const response = await axios.get(
+          'http://172.28.28.91:97/api/User/GetAllEmployees'
+        );
+        const existUserIds = response.data.result.map(
+          (user) => user.username_id
+        );
+        console.log('Existing User IDs from API:', existUserIds);
 
-      console.log(this.filteredEmployees);
+        // Fetch empIds asynchronously and wait for all to complete
+        const employeesWithEmpId = await Promise.all(
+          uniqueEmployees
+            .filter((employee) => existUserIds.includes(employee.userId))
+            .map(async (employee) => {
+              const empId = await this.getEmpId(employee.userId);
+              return {
+                userName: employee.userName,
+                empId,
+              };
+            })
+        );
+
+        this.filteredReportingEmployees = employeesWithEmpId.map(
+          (employee) => employee.userName + ' (' + employee.empId + ')'
+        );
+
+        console.log(this.filteredReportingEmployees);
+      } catch (error) {
+        console.error('Error fetching data from API:', error);
+      }
     },
+
     enableLimit(newVal) {
       if (newVal === 'yes') {
         this.form.limit = 1;
