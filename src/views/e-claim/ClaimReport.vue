@@ -798,7 +798,7 @@
                   class="border rounded-md px-16 py-2"
                 />
               </div>
-            <!--  <div class="flex justify-between items-center mb-4">
+              <div class="flex justify-between items-center mb-4">
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Attachment(s). :</label
                 >
@@ -819,7 +819,7 @@
                     </div>
                   </div>
                 </div>
-              </div> -->
+              </div> 
 
               <div class="mb-4">
                 <h2 class="text-xl font-bold">Other Expenses</h2>

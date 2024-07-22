@@ -534,11 +534,25 @@
             </div>
 
             <div
-              v-if="showSuccessNotification"
+              v-if="none"
               class="fixed top-4 right-4 p-4 bg-green-500 text-white rounded-lg shadow-lg"
             >
               Activation successful! Redirecting...
             </div>
+            <transition name="fade">
+    <div v-if="showSuccessNotification"
+      class="fixed top-5 right-5 flex max-w-sm bg-white shadow-lg rounded-lg overflow-hidden"
+    >
+      <div class="w-2 bg-gray-800"></div>
+      <div class="flex items-center px-2 py-3">
+        <!-- <img class="w-12 h-12 object-cover rounded-full" src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"> -->
+        <div class="mx-3">
+          <!-- <h2 class="text-xl font-semibold text-gray-800">Notification</h2> -->
+          <p class="text-gray-600">{{message}}</p>
+        </div>
+      </div>
+    </div>
+    </transition>
           </form>
            <!-- Loading Animation -->
         <div
@@ -621,6 +635,8 @@ export default {
       showRequestOtpModal: false,
       showOtpModal: false,
       showSuccessNotification: false,
+      message: "",
+      none: false,
       otp: "",
       timer: 0,
       timerInterval: null,
@@ -671,7 +687,12 @@ this.checkUserStatus();
           if (response.data.status_code === "200") {
             console.log("Successfully Updated:", response.data.message);
     
-            alert("Successfully Updated.");
+            this.message = "Successfully Updated";
+          this.showSuccessNotification = true;
+          setTimeout(() => {
+            this.showSuccessNotification = false;
+         
+          }, 3000); 
             // Additional logic here for successful update
           } else if (response.data.status_code === "400") {
             // console.log("Successfully Updated:", response.data.message);
@@ -751,11 +772,14 @@ this.checkUserStatus();
           },
         })
         .then((response) => {
-          this.loading = false;
+          this.loadingButton = false;
           console.log("File uploaded successfully:", response.data);
+          this.message = "Profile picture uploaded successfully.";
+          this.showSuccessNotification = true;
+          setTimeout(() => this.showSuccessNotification = false, 3000); // Auto-hide after 3 seconds
         })
         .catch((error) => {
-          this.loading = false;
+          this.loadingButton = false;
           if (error.response) {
             console.error("Error status:", error.response.status);
             console.error("Error data:", error.response.data);
@@ -897,7 +921,7 @@ this.checkUserStatus();
     email_address: this.user.email_address,
     home_address: this.user.home_address,
     spouse: this.user.spouse,
-    phone_number: this.user.phone_number,
+    phone_number: this.user.phone_number.toString(),
   };
   console.log("Employee Data:", employeeData);
 
@@ -909,24 +933,31 @@ this.checkUserStatus();
 
       setTimeout(() => {
         this.loadingButton = false; // Stop loading after ensuring min 2 seconds
-        if (response.data.message === "200") {
-          console.log(":", response.data.message);
-          alert(response.data.message);
+        if (response.data.status_code === "200") {
+          console.log(":", response.data.status_code);
+          this.message = "Successfully Updated";
+          this.showSuccessNotification = true;
+          setTimeout(() => {
+            this.showSuccessNotification = false;
+         
+          }, 3000); 
+          // alert(response.data.message);
           // Additional logic here for successful update
         } else if (response.data.message.includes("Successfully Updated. Verify Your Email.")) {
           console.log(":otp is sent", response.data.message);
-          alert(response.data.message);
+          this.message = "Successfully Updated. Verify Your Email.";
+          this.showSuccessNotification = true;
+          setTimeout(() => {
+            this.showSuccessNotification = false;
+         
+          }, 3000); 
           this.showRequestOtpModal = true;
           this.startTimer();
           // Additional logic here for OTP sent
         } else if (response.data.status_code === "400") {
           alert(response.data.result || "Failed to update. Please try again.");
           // Additional logic here for status code 400
-        } else {
-          console.error("Backend error:", response.data.message);
-          alert(response.data.message || "Failed to update. Please try again.");
-          // Additional error handling logic here
-        }
+        } 
       }, remainingTime);
     })
     .catch((error) => {
@@ -1020,6 +1051,7 @@ this.checkUserStatus();
         clearInterval(this.timerInterval);
         alert(response.data.result || "OTP verified successfully.");
         this.showOtpModal = false;
+        this.message = "Activation successful! Redirecting....";
         this.showSuccessNotification = true;
         setTimeout(() => {
           this.showSuccessNotification = false;
@@ -1131,3 +1163,14 @@ this.checkUserStatus();
   },
 };
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

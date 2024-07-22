@@ -201,7 +201,7 @@
                                     isFormDisabled) ||
                                   field.disabled
                                 "
-                                required="required"
+                                :required="field.required"
                                 ref="pond"
                                 label-idle="Drop files here..."
                                 @addfile="
@@ -284,11 +284,29 @@
                                 </svg>
                               </button>
                               <template v-if="field.showFileInput">
-                                <input
+                                <file-pond
                                   type="file"
-                                  :id="field.id + '-file'"
-                                  @change="handleFileChange($event, field)"
-                                  class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                                  :id="`${field.id}-file`"
+                                  ref="pond"
+                                  label-idle="Drop files here..."
+                                  @addfile="
+                                    (error, file) =>
+                                      handleAddFile(error, file, field)
+                                  "
+                                  @removefile="
+                                    (error, file) =>
+                                      handleRemoveFile(error, file, field)
+                                  "
+                                  :allow-multiple="true"
+                                  :max-file-size="'5MB'"
+                                  :accepted-file-types="[
+                                    'image/png',
+                                    'image/jpeg',
+                                    'application/pdf',
+                                    'application/vnd.ms-excel',
+                                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                                  ]"
+                                  class="m-52 block w-full px-4 py-2 mt-1 mb-2 text-gray-700 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                                 />
                               </template>
                             </template>
@@ -1495,6 +1513,7 @@ export default {
               value: [],
               allowMultiple: true,
               server: null,
+              required: false,
               maxFileSize: "5MB",
               acceptedFileTypes: [
                 "image/png",
@@ -1591,23 +1610,24 @@ export default {
               gridClass: "sm:col-span-2",
               showFileInput: false,
             },
-            //  {
-            //    id: "UploadOT",
-            //    label: "Attachment(s). (png, jpeg, pdf or xlsx)",
-            //    type: "file",
-            //    value: [],
-            //    allowMultiple: true,
-            //    server: null,
-            //    maxFileSize: "5MB",
-            //    acceptedFileTypes: [
-            //      "image/png",
-            //      "image/jpeg",
-            //     "application/pdf",
-            //      "application/vnd.ms-excel",
-            //      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            //    ],
-            //    gridClass: "sm:col-span-1",
-            //  },
+            {
+              id: "UploadOT",
+              label: "Attachment(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
+              value: [],
+              allowMultiple: true,
+              required: false,
+              server: null,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
+            },
           ],
         },
         {
