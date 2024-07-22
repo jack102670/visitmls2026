@@ -14,9 +14,8 @@
           </div>
         </div>
       </div>
-    </main>
-    <main class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64">
-      <div class="">
+      <main class=" ">
+      <div class="text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] py-4">
         <div
           class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-800 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl "
         >
@@ -59,6 +58,8 @@
         </div>
       </div>
     </main>
+    </main>
+
   </template>
   
   <script>
@@ -95,6 +96,14 @@
     },
     mounted() {
     store.setControlView(null);
+
+    let openOrNot = localStorage.getItem("openOrNot");
+    const element = document.querySelector("main");
+    if (element && openOrNot == "false") {
+      element.classList.add("become-big");
+    } else if (element && openOrNot == "true") {
+      element.classList.remove("become-big");
+    }
   },
   };
   </script>
