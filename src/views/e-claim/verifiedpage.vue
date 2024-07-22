@@ -303,8 +303,9 @@ export default {
       $(this.$refs.myTable).DataTable({});
     },
     fetchData() {
+       const userid = this.userDetails.userId;
       fetch(
-        `http://172.28.28.91:86/api/ApproverVerifier/GetAllRequestVerifier/9d0da821-5de0-42e5-b268-b5e0bc40e8d1`
+        `http://172.28.28.91:86/api/ApproverVerifier/GetAllRequestVerifier/${userid}`
       )
         .then((response) => response.json())
         .then((data) => {

@@ -1,7 +1,7 @@
 <!-- Box Info for Admin View-->
 <template>
     <main class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64">
-      <div class="container mx-auto">
+      <div class="">
         <div
           class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-800 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
         >
