@@ -296,7 +296,7 @@
         @click.self="closeClickModal"
       >
         <div
-          class="modal-content bg-white rounded-lg p-8 w-full sm:w-3/4 lg:max-w-2xl"
+          class="modal-content bg-white rounded-lg p-8 w-full sm:w-3/4 lg:max-w-3xl"
           style="max-height: calc(100vh - 20px); overflow-y: auto"
         >
           <!-- Modal header -->
