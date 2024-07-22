@@ -51,7 +51,13 @@
             tab.title !== 'Entertainment' && tab.title !== 'Staff Refreshment'
           "
         >
-          <form @submit.prevent="submitForm(tab)">
+          <form
+            @submit.prevent="submitForm(tab)"
+            :class="{
+              blur:
+                tab.title === 'Handphone Bill Reimbursement' && isFormDisabled,
+            }"
+          >
             <div class="pt-4">
               <hr class="" />
               <div class="m-2">
@@ -598,7 +604,6 @@
                   <div class="flex items-center justify-between">
                     <button
                       type="submit"
-                      :disabled="isFormDisabled"
                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     >
                       Save
@@ -1499,7 +1504,6 @@ export default {
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
               gridClass: "sm:col-span-1",
-              showFileInput: false,
             },
           ],
         },
@@ -1587,23 +1591,23 @@ export default {
               gridClass: "sm:col-span-2",
               showFileInput: false,
             },
-            {
-              id: "UploadOT",
-              label: "Attachment(s). (png, jpeg, pdf or xlsx)",
-              type: "file",
-              value: [],
-              allowMultiple: true,
-              server: null,
-              maxFileSize: "5MB",
-              acceptedFileTypes: [
-                "image/png",
-                "image/jpeg",
-                "application/pdf",
-                "application/vnd.ms-excel",
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-              ],
-              gridClass: "sm:col-span-1",
-            },
+            //  {
+            //    id: "UploadOT",
+            //    label: "Attachment(s). (png, jpeg, pdf or xlsx)",
+            //    type: "file",
+            //    value: [],
+            //    allowMultiple: true,
+            //    server: null,
+            //    maxFileSize: "5MB",
+            //    acceptedFileTypes: [
+            //      "image/png",
+            //      "image/jpeg",
+            //     "application/pdf",
+            //      "application/vnd.ms-excel",
+            //      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            //    ],
+            //    gridClass: "sm:col-span-1",
+            //  },
           ],
         },
         {
@@ -1684,6 +1688,7 @@ export default {
               label: "Claims Amount(RM)",
               type: "number",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1810,15 +1815,14 @@ export default {
               required: true,
               gridClass: "sm:col-span-2",
             },
-            {
-              id: "LimitedAmountML",
-              label: "Amount Limit(RM)",
-              type: "number",
-              value: "",
-              required: true,
-              disabled: true,
-              gridClass: "sm:col-span-2",
-            },
+            //{
+            //  id: "LimitedAmountML",
+            //  label: "Limited Amount(RM)",
+            //  type: "number",
+            //  value: "",
+            //  required: true,
+            //  gridClass: "sm:col-span-2",
+            //},
             {
               id: "UploadML",
               label: "Attachment(s). (png, jpeg, pdf or xlsx)",
@@ -2086,7 +2090,7 @@ export default {
         const limitAmountField = handphoneTab.fields.find(
           (field) => field.id === "LimitedAmountHR"
         );
-        return limitAmountField && limitAmountField.value === 0;
+        return limitAmountField && parseFloat(limitAmountField.value) <= 0;
       }
       return false;
     },
@@ -2170,66 +2174,41 @@ export default {
             const transportField = tab.fields.find(
               (field) =>
                 field.id === "TransportLT" &&
-                "TransportSpec" &&
-                "PublicTransportSpec"
+                Object.prototype.hasOwnProperty.call(field, "TransportSpec") &&
+                Object.prototype.hasOwnProperty.call(
+                  field,
+                  "PublicTransportSpec"
+                )
             );
             if (transportField) {
               this.updateFieldVisibility(transportField.value);
+              this.updateFieldVisibility5(transportField.value);
+              this.updateFieldVisibility6(transportField.value);
             }
           }
-          if (tab.title === "Local Travelling") {
-            const publicTransportField = tab.fields.find(
-              (field) =>
-                field.id === "TransportLT" &&
-                "TransportSpec" &&
-                "PublicTransportSpec"
-            );
-            if (publicTransportField) {
-              this.updateFieldVisibility5(publicTransportField.value);
-            }
-          }
-          if (tab.title === "Local Travelling") {
-            const personalTransportField = tab.fields.find(
-              (field) =>
-                field.id === "TransportLT" &&
-                "TransportSpec" &&
-                "PublicTransportSpec"
-            );
-            if (personalTransportField) {
-              this.updateFieldVisibility6(personalTransportField.value);
-            }
-          }
+
           if (tab.title === "Medical Bill Reimbursement") {
             const clinicField = tab.fields.find(
               (field) =>
                 field.id === "ClinicSelectionML" &&
-                "OtherClinicSpecML" &&
-                "OtherCliniReasonML"
+                Object.prototype.hasOwnProperty.call(
+                  field,
+                  "OtherClinicSpecML"
+                ) &&
+                Object.prototype.hasOwnProperty.call(
+                  field,
+                  "OtherCliniReasonML"
+                )
             );
             if (clinicField) {
               this.updateFieldVisibility2(clinicField.value);
             }
-          }
-          if (tab.title === "Details") {
-            const typeOfEntertainmentField = tab.fields.find(
-              (field) => field.id === "TypeofEntertainmentE"
-            );
-            if (typeOfEntertainmentField) {
-              this.updateFieldVisibility4(typeOfEntertainmentField.value);
-            }
-            const TypeofRefreshmentField = tab.fields.find(
-              (field) => field.id === "TypeofRefreshmentSR"
-            );
-            if (TypeofRefreshmentField) {
-              this.updateFieldVisibility3(TypeofRefreshmentField.value);
-            }
-          }
-          if (tab.title === "Medical Bill Reimbursement") {
+
             const medicalCategoryField = tab.fields.find(
               (field) => field.id === "MedicalCategoryML"
             );
             const claimsAmountField = tab.fields.find(
-              (field) => field.id === "LimitedAmountML"
+              (field) => field.id === "ClaimsAmountML"
             );
 
             if (medicalCategoryField && claimsAmountField) {
@@ -2264,6 +2243,23 @@ export default {
               );
             }
           }
+
+          if (tab.title === "Details") {
+            const typeOfEntertainmentField = tab.fields.find(
+              (field) => field.id === "TypeofEntertainmentE"
+            );
+            if (typeOfEntertainmentField) {
+              this.updateFieldVisibility4(typeOfEntertainmentField.value);
+            }
+
+            const typeOfRefreshmentField = tab.fields.find(
+              (field) => field.id === "TypeofRefreshmentSR"
+            );
+            if (typeOfRefreshmentField) {
+              this.updateFieldVisibility3(typeOfRefreshmentField.value);
+            }
+          }
+
           if (tab.title === "Handphone Bill Reimbursement") {
             const limitedAmountField = tab.fields.find(
               (field) => field.id === "LimitedAmountHR"
@@ -2283,6 +2279,7 @@ export default {
                   }
                 }
               );
+
               this.$watch(
                 () => claimsAmountField.value,
                 (newValue) => {

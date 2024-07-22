@@ -1328,7 +1328,7 @@ export default {
 
             this.approveSuccess = true;
             setTimeout(() => {
-              this.$router.push({ name: 'AdminDashboardpage' });
+              this.$router.push({ name: 'verified' });
             }, 2500);
           })
           .catch((error) => {
