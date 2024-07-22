@@ -67,7 +67,7 @@
         <!-- Box Info Section-->
         <section>
           <div
-            class="p-5 mt-1 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 "
+            class="p-5 mt-1 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 "
           >
             <div
               class="relative overflow-hidden hover:bg-fuchsia-100 bg-white max-h-[1000px] dark:bg-[#111827] shadow-xl border-x-2 border-y-2 rounded-lg border-fuchsia-300 dark:border-fuchsia-200 dark:hover:bg-gray-800"
@@ -85,7 +85,7 @@
               </div>
             </div>
             <div
-              class="relative overflow-hidden dark:bg-[#111827] dark:border-blue-200 dark:hover:bg-gray-800 hover:bg-blue-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-blue-300 rounded-lg"
+              class="relative overflow-hidden dark:bg-[#111827] dark:border-green-200 dark:hover:bg-gray-800 hover:bg-green-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-green-300 rounded-lg"
             >
               <div class="card m-2 " @click="filterTable('Approved')">
                 <div class="ml-5">
@@ -95,6 +95,21 @@
                   }}</span>
                   <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
                     >Approved</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              class="relative overflow-hidden dark:bg-[#111827] dark:border-blue-200 dark:hover:bg-gray-800 hover:bg-amber-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-amber-300 rounded-lg"
+            >
+              <div class="card m-2 " @click="filterTable('Verified')">
+                <div class="ml-5">
+                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
+                    requests.filter((request) => request.status === "Verified")
+                      .length
+                  }}</span>
+                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
+                    >Verified</span
                   >
                 </div>
               </div>
