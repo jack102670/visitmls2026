@@ -417,6 +417,7 @@ const router = createRouter({
 });
 
 // Step 1: Modify the checkUserStatusAndShowModal method
+// Step 1: Modify the checkUserStatusAndShowModal method
 function checkUserStatusAndShowModal() {
   return new Promise((resolve, reject) => {
     const username_id = store.getSession().userDetails.userId;
@@ -438,7 +439,10 @@ function checkUserStatusAndShowModal() {
   });
 }
 
-// Step 2: Modify the router.beforeEach guard
+// Step 2: Define routes that require profile completion checks
+const routesRequiringProfileCheck = ['eclaimhomepages',]; // Add route names that require profile completion
+
+// Step 3: Modify the router.beforeEach guard
 router.beforeEach((to, from, next) => {
   const publicPages = ['Login', 'Loginstaff', 'Vendorsingup', 'testing']; // Add other public route names as necessary
   const authRequired = !publicPages.includes(to.name);
@@ -447,21 +451,27 @@ router.beforeEach((to, from, next) => {
   if (authRequired && !session) {
     next({ name: 'Loginstaff' });
   } else if (session) {
-    checkUserStatusAndShowModal()
-      .then((isProfileComplete) => {
-        if (!isProfileComplete && to.path !== '/firsttimelogin') {
-          next('/firsttimelogin');
-        } else {
-          next();
-        }
-      })
-      .catch((error) => {
-        console.error('Error checking user status:', error);
-        next('/error');
-      });
+    // Check if the route requires profile completion
+    if (routesRequiringProfileCheck.includes(to.name)) {
+      checkUserStatusAndShowModal()
+        .then((isProfileComplete) => {
+          if (!isProfileComplete && to.path !== '/firsttimelogin') {
+            next('/firsttimelogin');
+          } else {
+            next();
+          }
+        })
+        .catch((error) => {
+          console.error('Error checking user status:', error);
+          next('/error');
+        });
+    } else {
+      next(); // Allow navigation for routes that don't require profile completion
+    }
   } else {
     next();
   }
 });
+
 
 export default router;
