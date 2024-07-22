@@ -71,12 +71,12 @@
                       <td
                         class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                       >
-                        {{ employee.position_title }}
+                        {{ employee.department }}
                       </td>
                       <td
                         class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
                       >
-                        {{ employee.department }}
+                        {{ employee.position_title }}
                       </td>
                       <td
                         class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
