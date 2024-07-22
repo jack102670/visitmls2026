@@ -509,6 +509,43 @@
                 </div>
               </div>
 
+              <!-- Fare Attachment table -->
+              <div class="mb-4">
+                <h2 class="text-xl font-bold">Fare Attachment</h2>
+                <table
+                  class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                >
+                  <thead class="bg-gray-50 dark:bg-gray-800">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>No</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Type of Fare</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Attachment(s)</span>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                </table>
+              </div>
+
               <hr />
               <div class="flex justify-end items-center mb-4 mt-4">
                 <label
@@ -761,7 +798,7 @@
                   class="border rounded-md px-16 py-2"
                 />
               </div>
-              <div class="flex justify-between items-center mb-4">
+            <!--  <div class="flex justify-between items-center mb-4">
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Attachment(s). :</label
                 >
@@ -782,9 +819,8 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
-              <!-- Other Expenses table -->
               <div class="mb-4">
                 <h2 class="text-xl font-bold">Other Expenses</h2>
                 <table
@@ -2612,8 +2648,8 @@ export default {
 
   mounted() {
     // Sidebar close or open
-    const body = document.querySelector('body');
-    body.style.overflow = 'auto';
+    const body = document.querySelector("body");
+    body.style.overflow = "auto";
 
     this.fetchEmployeeID();
 
@@ -2628,24 +2664,26 @@ export default {
 
   methods: {
     async fetchSerialNumber() {
-    let result = null;
-    try {
-      const response = await axios.get("http://172.28.28.91:86/api/User/GetRunningNumber");
-      if (response.status === 200) {
-        console.log("Serial Number:", response.data);
-        let serialNumber = this.claims[0].uniqueCode + response.data.result;
-        result = serialNumber;
-      } else {
-        console.error("Failed to fetch serial number:", response.status);
-        result = "Error: Failed to fetch serial number";
+      let result = null;
+      try {
+        const response = await axios.get(
+          "http://172.28.28.91:86/api/User/GetRunningNumber"
+        );
+        if (response.status === 200) {
+          console.log("Serial Number:", response.data);
+          let serialNumber = this.claims[0].uniqueCode + response.data.result;
+          result = serialNumber;
+        } else {
+          console.error("Failed to fetch serial number:", response.status);
+          result = "Error: Failed to fetch serial number";
+        }
+      } catch (error) {
+        console.error("Error fetching serial number:", error);
+        result = "Error: " + error.message;
       }
-    } catch (error) {
-      console.error("Error fetching serial number:", error);
-      result = "Error: " + error.message;
-    }
-    console.log("Result:", result);
-    return result; // Return result outside the finally block
-  },
+      console.log("Result:", result);
+      return result; // Return result outside the finally block
+    },
 
     formatDate(dateString) {
       const date = new Date(dateString);
@@ -2891,7 +2929,6 @@ export default {
       //   return;
       // }
       this.loading = true;
-   
 
       const referenceNumber = await this.fetchSerialNumber();
       this.sendFiles(this.userDetails.userId, referenceNumber);
@@ -3044,6 +3081,7 @@ export default {
                           name: expense.name,
                           amount: expense.amount,
                           description: expense.description,
+                          files: [],
                         }))
                       : [],
                   };

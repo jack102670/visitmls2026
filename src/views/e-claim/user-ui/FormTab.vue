@@ -598,7 +598,6 @@
                   <div class="flex items-center justify-between">
                     <button
                       type="submit"
-                      :disabled="isFormDisabled"
                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     >
                       Save
@@ -1499,7 +1498,6 @@ export default {
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
               gridClass: "sm:col-span-1",
-              showFileInput: false,
             },
           ],
         },
@@ -1587,23 +1585,23 @@ export default {
               gridClass: "sm:col-span-2",
               showFileInput: false,
             },
-            {
-              id: "UploadOT",
-              label: "Attachment(s). (png, jpeg, pdf or xlsx)",
-              type: "file",
-              value: [],
-              allowMultiple: true,
-              server: null,
-              maxFileSize: "5MB",
-              acceptedFileTypes: [
-                "image/png",
-                "image/jpeg",
-                "application/pdf",
-                "application/vnd.ms-excel",
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-              ],
-              gridClass: "sm:col-span-1",
-            },
+          //  {
+          //    id: "UploadOT",
+          //    label: "Attachment(s). (png, jpeg, pdf or xlsx)",
+          //    type: "file",
+          //    value: [],
+          //    allowMultiple: true,
+          //    server: null,
+          //    maxFileSize: "5MB",
+          //    acceptedFileTypes: [
+          //      "image/png",
+          //      "image/jpeg",
+          //     "application/pdf",
+          //      "application/vnd.ms-excel",
+          //      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          //    ],
+          //    gridClass: "sm:col-span-1",
+          //  },
           ],
         },
         {
@@ -1684,6 +1682,7 @@ export default {
               label: "Claims Amount(RM)",
               type: "number",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1810,15 +1809,14 @@ export default {
               required: true,
               gridClass: "sm:col-span-2",
             },
-            {
-              id: "LimitedAmountML",
-              label: "Amount Limit(RM)",
-              type: "number",
-              value: "",
-              required: true,
-              disabled: true,
-              gridClass: "sm:col-span-2",
-            },
+            //{
+            //  id: "LimitedAmountML",
+            //  label: "Limited Amount(RM)",
+            //  type: "number",
+            //  value: "",
+            //  required: true,
+            //  gridClass: "sm:col-span-2",
+            //},
             {
               id: "UploadML",
               label: "Attachment(s). (png, jpeg, pdf or xlsx)",
@@ -2229,7 +2227,7 @@ export default {
               (field) => field.id === "MedicalCategoryML"
             );
             const claimsAmountField = tab.fields.find(
-              (field) => field.id === "LimitedAmountML"
+              (field) => field.id === "ClaimsAmountML"
             );
 
             if (medicalCategoryField && claimsAmountField) {
