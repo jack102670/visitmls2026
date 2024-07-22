@@ -598,7 +598,6 @@
                   <div class="flex items-center justify-between">
                     <button
                       type="submit"
-                      :disabled="isFormDisabled"
                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     >
                       Save
@@ -1499,7 +1498,6 @@ export default {
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
               gridClass: "sm:col-span-1",
-              showFileInput: false,
             },
           ],
         },
@@ -1587,23 +1585,23 @@ export default {
               gridClass: "sm:col-span-2",
               showFileInput: false,
             },
-            {
-              id: "UploadOT",
-              label: "Attachment(s). (png, jpeg, pdf or xlsx)",
-              type: "file",
-              value: [],
-              allowMultiple: true,
-              server: null,
-              maxFileSize: "5MB",
-              acceptedFileTypes: [
-                "image/png",
-                "image/jpeg",
-                "application/pdf",
-                "application/vnd.ms-excel",
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-              ],
-              gridClass: "sm:col-span-1",
-            },
+          //  {
+          //    id: "UploadOT",
+          //    label: "Attachment(s). (png, jpeg, pdf or xlsx)",
+          //    type: "file",
+          //    value: [],
+          //    allowMultiple: true,
+          //    server: null,
+          //    maxFileSize: "5MB",
+          //    acceptedFileTypes: [
+          //      "image/png",
+          //      "image/jpeg",
+          //     "application/pdf",
+          //      "application/vnd.ms-excel",
+          //      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          //    ],
+          //    gridClass: "sm:col-span-1",
+          //  },
           ],
         },
         {
@@ -1684,6 +1682,7 @@ export default {
               label: "Claims Amount(RM)",
               type: "number",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1810,15 +1809,14 @@ export default {
               required: true,
               gridClass: "sm:col-span-2",
             },
-            {
-              id: "LimitedAmountML",
-              label: "Amount Limit(RM)",
-              type: "number",
-              value: "",
-              required: true,
-              disabled: true,
-              gridClass: "sm:col-span-2",
-            },
+            //{
+            //  id: "LimitedAmountML",
+            //  label: "Limited Amount(RM)",
+            //  type: "number",
+            //  value: "",
+            //  required: true,
+            //  gridClass: "sm:col-span-2",
+            //},
             {
               id: "UploadML",
               label: "Attachment(s). (png, jpeg, pdf or xlsx)",
@@ -2163,143 +2161,123 @@ export default {
   },
 
   watch: {
-    tabs: {
-      handler(newTabs) {
-        newTabs.forEach((tab) => {
-          if (tab.title === "Local Travelling") {
-            const transportField = tab.fields.find(
-              (field) =>
-                field.id === "TransportLT" &&
-                "TransportSpec" &&
-                "PublicTransportSpec"
-            );
-            if (transportField) {
-              this.updateFieldVisibility(transportField.value);
-            }
+  tabs: {
+    handler(newTabs) {
+      newTabs.forEach((tab) => {
+        if (tab.title === "Local Travelling") {
+          const transportField = tab.fields.find(
+            (field) =>
+              field.id === "TransportLT" &&
+              Object.prototype.hasOwnProperty.call(field, 'TransportSpec') &&
+              Object.prototype.hasOwnProperty.call(field, 'PublicTransportSpec')
+          );
+          if (transportField) {
+            this.updateFieldVisibility(transportField.value);
+            this.updateFieldVisibility5(transportField.value);
+            this.updateFieldVisibility6(transportField.value);
           }
-          if (tab.title === "Local Travelling") {
-            const publicTransportField = tab.fields.find(
-              (field) =>
-                field.id === "TransportLT" &&
-                "TransportSpec" &&
-                "PublicTransportSpec"
-            );
-            if (publicTransportField) {
-              this.updateFieldVisibility5(publicTransportField.value);
-            }
+        }
+
+        if (tab.title === "Medical Bill Reimbursement") {
+          const clinicField = tab.fields.find(
+            (field) =>
+              field.id === "ClinicSelectionML" &&
+              Object.prototype.hasOwnProperty.call(field, 'OtherClinicSpecML') &&
+              Object.prototype.hasOwnProperty.call(field, 'OtherCliniReasonML')
+          );
+          if (clinicField) {
+            this.updateFieldVisibility2(clinicField.value);
           }
-          if (tab.title === "Local Travelling") {
-            const personalTransportField = tab.fields.find(
-              (field) =>
-                field.id === "TransportLT" &&
-                "TransportSpec" &&
-                "PublicTransportSpec"
-            );
-            if (personalTransportField) {
-              this.updateFieldVisibility6(personalTransportField.value);
-            }
-          }
-          if (tab.title === "Medical Bill Reimbursement") {
-            const clinicField = tab.fields.find(
-              (field) =>
-                field.id === "ClinicSelectionML" &&
-                "OtherClinicSpecML" &&
-                "OtherCliniReasonML"
-            );
-            if (clinicField) {
-              this.updateFieldVisibility2(clinicField.value);
-            }
-          }
-          if (tab.title === "Details") {
-            const typeOfEntertainmentField = tab.fields.find(
-              (field) => field.id === "TypeofEntertainmentE"
-            );
-            if (typeOfEntertainmentField) {
-              this.updateFieldVisibility4(typeOfEntertainmentField.value);
-            }
-            const TypeofRefreshmentField = tab.fields.find(
-              (field) => field.id === "TypeofRefreshmentSR"
-            );
-            if (TypeofRefreshmentField) {
-              this.updateFieldVisibility3(TypeofRefreshmentField.value);
-            }
-          }
-          if (tab.title === "Medical Bill Reimbursement") {
-            const medicalCategoryField = tab.fields.find(
-              (field) => field.id === "MedicalCategoryML"
-            );
-            const claimsAmountField = tab.fields.find(
-              (field) => field.id === "LimitedAmountML"
+
+          const medicalCategoryField = tab.fields.find(
+            (field) => field.id === "MedicalCategoryML"
+          );
+          const claimsAmountField = tab.fields.find(
+            (field) => field.id === "ClaimsAmountML"
+          );
+
+          if (medicalCategoryField && claimsAmountField) {
+            // Watch for changes in MedicalCategoryML
+            this.$watch(
+              () => medicalCategoryField.value,
+              (newValue) => {
+                if (newValue === "Medical Check-Up") {
+                  claimsAmountField.value = this.LIMIT_MEDICAL_CHECKUP;
+                } else if (newValue === "Dental") {
+                  claimsAmountField.value = this.LIMIT_DENTAL;
+                }
+              }
             );
 
-            if (medicalCategoryField && claimsAmountField) {
-              // Watch for changes in MedicalCategoryML
-              this.$watch(
-                () => medicalCategoryField.value,
-                (newValue) => {
-                  if (newValue === "Medical Check-Up") {
-                    claimsAmountField.value = this.LIMIT_MEDICAL_CHECKUP;
-                  } else if (newValue === "Dental") {
-                    claimsAmountField.value = this.LIMIT_DENTAL;
-                  }
+            // Watch for changes in ClaimsAmountML
+            this.$watch(
+              () => claimsAmountField.value,
+              (newValue) => {
+                if (
+                  medicalCategoryField.value === "Medical Check-Up" &&
+                  parseFloat(newValue) > this.LIMIT_MEDICAL_CHECKUP
+                ) {
+                  claimsAmountField.value = this.LIMIT_MEDICAL_CHECKUP;
+                } else if (
+                  medicalCategoryField.value === "Dental" &&
+                  parseFloat(newValue) > this.LIMIT_DENTAL
+                ) {
+                  claimsAmountField.value = this.LIMIT_DENTAL;
                 }
-              );
-
-              // Watch for changes in ClaimsAmountML
-              this.$watch(
-                () => claimsAmountField.value,
-                (newValue) => {
-                  if (
-                    medicalCategoryField.value === "Medical Check-Up" &&
-                    parseFloat(newValue) > this.LIMIT_MEDICAL_CHECKUP
-                  ) {
-                    claimsAmountField.value = this.LIMIT_MEDICAL_CHECKUP;
-                  } else if (
-                    medicalCategoryField.value === "Dental" &&
-                    parseFloat(newValue) > this.LIMIT_DENTAL
-                  ) {
-                    claimsAmountField.value = this.LIMIT_DENTAL;
-                  }
-                }
-              );
-            }
-          }
-          if (tab.title === "Handphone Bill Reimbursement") {
-            const limitedAmountField = tab.fields.find(
-              (field) => field.id === "LimitedAmountHR"
+              }
             );
-            const claimsAmountField = tab.fields.find(
-              (field) => field.id === "ClaimsAmountHR"
+          }
+        }
+
+        if (tab.title === "Details") {
+          const typeOfEntertainmentField = tab.fields.find(
+            (field) => field.id === "TypeofEntertainmentE"
+          );
+          if (typeOfEntertainmentField) {
+            this.updateFieldVisibility4(typeOfEntertainmentField.value);
+          }
+
+          const typeOfRefreshmentField = tab.fields.find(
+            (field) => field.id === "TypeofRefreshmentSR"
+          );
+          if (typeOfRefreshmentField) {
+            this.updateFieldVisibility3(typeOfRefreshmentField.value);
+          }
+        }
+
+        if (tab.title === "Handphone Bill Reimbursement") {
+          const limitedAmountField = tab.fields.find(
+            (field) => field.id === "LimitedAmountHR"
+          );
+          const claimsAmountField = tab.fields.find(
+            (field) => field.id === "ClaimsAmountHR"
+          );
+
+          if (limitedAmountField && claimsAmountField) {
+            this.$watch(
+              () => limitedAmountField.value,
+              (newValue) => {
+                if (parseFloat(claimsAmountField.value) > parseFloat(newValue)) {
+                  claimsAmountField.value = newValue;
+                }
+              }
             );
 
-            if (limitedAmountField && claimsAmountField) {
-              this.$watch(
-                () => limitedAmountField.value,
-                (newValue) => {
-                  if (
-                    parseFloat(claimsAmountField.value) > parseFloat(newValue)
-                  ) {
-                    claimsAmountField.value = newValue;
-                  }
+            this.$watch(
+              () => claimsAmountField.value,
+              (newValue) => {
+                if (parseFloat(newValue) > parseFloat(limitedAmountField.value)) {
+                  claimsAmountField.value = limitedAmountField.value;
                 }
-              );
-              this.$watch(
-                () => claimsAmountField.value,
-                (newValue) => {
-                  if (
-                    parseFloat(newValue) > parseFloat(limitedAmountField.value)
-                  ) {
-                    claimsAmountField.value = limitedAmountField.value;
-                  }
-                }
-              );
-            }
+              }
+            );
           }
-        });
-      },
-      deep: true,
+        }
+      });
     },
+    deep: true,
   },
+},
 
   mounted() {
     // Populate the year range with the last 20 years
