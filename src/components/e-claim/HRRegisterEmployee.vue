@@ -67,6 +67,7 @@
               <input
                 :id="inputId"
                 v-model="form.employeeId"
+                @input="limitChar()"
                 class="border-2 border-gray-200 p-2 w-full rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 type="text"
               />
@@ -287,6 +288,12 @@ export default {
         .then((response) => {
           this.Company = response.data.result.map((item) => item.company_name);
         });
+    },
+    // limit the employee id to be 10 characters
+    limitChar() {
+      if (this.form.employeeId.length >= 10) {
+        this.form.employeeId = this.form.employeeId.substring(0, 10);
+      }
     },
   },
 

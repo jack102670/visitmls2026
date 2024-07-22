@@ -137,25 +137,27 @@
                 d="M6 18 18 6M6 6l12 12"
               />
             </svg>
-            <h1 class="text-2xl font-bold m-3 ml-7">Employee Details</h1>
-            <div class="m-3 ml-7 h-1/3">
+            <h1 class="text-xl font-bold m-3 ml-7">Employee Details</h1>
+            <div class="m-3 ml-7 h-1/5">
               <img
                 :src="employee.profile_picture"
                 alt="profile picture"
                 class="h-full object-cover rounded-xl"
               />
             </div>
-            <div class="p-4 grid grid-cols-1 sm:grid-cols-2">
+            <div class="pl-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               <div
                 v-for="(val, key, index) in employee"
                 :key="index"
-                :class="key === 'profile_picture' ? 'hidden' : 'm-3 min-h-20'"
+                :class="
+                  key === 'profile_picture' ? 'hidden' : 'ml-3 mt-1 min-h-16'
+                "
               >
                 <div v-if="key !== 'profile_picture'">
-                  <h1 class="text-lg font-semibold text-gray-900">
+                  <h1 class="text-base font-semibold text-gray-900">
                     {{ key + ':' }}
                   </h1>
-                  <h1 class="font-thin text-gray-700 break-words">
+                  <h1 class="font-thin text-sm text-gray-700 break-words">
                     {{ val ? val : '-' }}
                   </h1>
                 </div>
