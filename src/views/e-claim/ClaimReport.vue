@@ -3395,7 +3395,7 @@ export default {
                     other_foreign_currency: claim.ForeignCurrencyOthersOT,
                     other_exchange_rate: claim.ExchangeRateOthersOT,
                     other_foreign_total: claim.RMforOthersOT,
-                    reference_number: this.claims[0].uniqueCode,
+                    reference_number: this.serialnumber,
                     unique_code: uniqcodeOT,
                     transportation_mode: String(claim.AirportLimoTeksiOT),
                     oem: claim.otherExpenses
@@ -3443,7 +3443,7 @@ export default {
                     venue_name: claim.VenueE,
                     description: claim.ReferenceE,
                     total_fee: parseFloat(claim.AmountRME),
-                    reference_number: this.claims[0].uniqueCode,
+                    reference_number: this.serialnumber,
                     unique_code: uniqcodeE, // Ensure this is in the correct format and not null/undefined
                     // Add the required 'ent' field with the appropriate value
 
@@ -3512,7 +3512,7 @@ export default {
                     venue_name: claim.VenueSR,
                     reference_type: claim.ReferenceSR,
                     total_fee: claim.AmountRMSR,
-                    reference_number: this.claims[0].uniqueCode,
+                    reference_number: this.serialnumber,
                     unique_code: uniqcodeSR,
                     requester_id: this.userDetails.userId,
                     sim: claim.staffInvolved
@@ -3558,7 +3558,7 @@ export default {
                     description: claim.DescriptionOthers,
                     unique_code: uniqcodeothers,
                     total_fee: parseFloat(claim.totalRM).toFixed(2),
-                    reference_number: this.claims[0].uniqueCode,
+                    reference_number: this.serialnumber,
                     requester_id: this.userDetails.userId,
                     expense_name: claim.ExpenseNameOthers,
                   };
@@ -3601,7 +3601,7 @@ export default {
                     limited_amount: claim.LimitedAmountHR,
                     claim_amount: claim.totalRM,
                     unique_code: uniqcodeHR,
-                    reference_number: this.claims[0].uniqueCode,
+                    reference_number: this.serialnumber,
                     handphone: "",
                     requester_id: this.userDetails.userId,
                   };
@@ -3661,7 +3661,7 @@ export default {
 
                   const uniqcodeML = this.generateUniqueCode(claim.tabTitle);
                   const thisisforMedicalBillReimbursement = {
-                    reference_number: this.claims[0].uniqueCode,
+                    reference_number: this.serialnumber,
                     date_leave_taken: claim.dateML, // Example date
                     reason: claim.ReasonML,
                     bank_name: claim.BankNameML,
