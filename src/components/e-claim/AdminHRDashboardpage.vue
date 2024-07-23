@@ -104,35 +104,43 @@
                         {{ claim.date_requested }}
                       </td>
                       <td
-                        class="text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                        class="px-12 py-4 text-sm font-medium text-gray-700 text-wrap whitespace-nowrap"
                       >
-                        <h1
-                          class="rounded-xl text-center py-1 w-full h-8"
+                        <span
                           :class="{
-                            'bg-orange-200 dark:bg-orange-500':
-                              claim.admin_status == '',
-                            'bg-green-200 dark:bg-green-500':
-                              claim.admin_status.split('.')[0] == 'APPROVED',
-                            'bg-amber-200 dark:bg-amber-500':
-                              claim.admin_status.split('.')[0] == 'VERIFIED',
-                            'bg-red-200 dark:bg-red-500':
-                              claim.admin_status.split('.')[0] == 'REJECTED',
-                            'text-orange-500 dark:text-orange-100':
-                              claim.admin_status == '',
-                            'text-green-500 dark:text-green-100':
-                              claim.admin_status.split('.')[0] == 'APPROVED',
-                            'text-amber-500 dark:text-amber-100':
-                              claim.admin_status.split('.')[0] == 'VERIFIED',
-                            'text-red-500 dark:text-red-100':
-                              claim.admin_status.split('.')[0] == 'REJECTED',
+                            'inline-flex items-center px-3 py-1 rounded-full gap-x-2': true,
+                            'bg-red-100/60 dark:bg-gray-800':
+                              claim.admin_status.split('.')[0] === 'REJECT',
+                            'bg-green-100/60 dark:bg-gray-800':
+                              claim.admin_status.split('.')[0] === 'APPROVED',
+                            'bg-amber-100/60 dark:bg-gray-800':
+                              claim.admin_status.split('.')[0] === 'VERIFIED', // Added for VERIFIED status
                           }"
                         >
-                          {{
-                            claim.admin_status == ''
-                              ? 'PENDING'
-                              : claim.admin_status.split('.')[0]
-                          }}
-                        </h1>
+                          <span
+                            :class="{
+                              'h-1.5 w-1.5 rounded-full': true,
+                              'bg-red-500':
+                                claim.admin_status.split('.')[0] === 'REJECT',
+                              'bg-green-500':
+                                claim.admin_status.split('.')[0] === 'APPROVED',
+                              'bg-amber-500':
+                                claim.admin_status.split('.')[0] === 'VERIFIED', // Added for VERIFIED status
+                            }"
+                          ></span>
+                          <span
+                            :class="{
+                              'text-sm font-normal': true,
+                              'text-red-500':
+                                claim.admin_status.split('.')[0] === 'REJECT',
+                              'text-green-500':
+                                claim.admin_status.split('.')[0] === 'APPROVED',
+                              'text-amber-500':
+                                claim.admin_status.split('.')[0] === 'VERIFIED', // Added for VERIFIED status
+                            }"
+                            >{{ claim.admin_status.split('.')[0] }}</span
+                          >
+                        </span>
                       </td>
                       <td
                         class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"

@@ -132,7 +132,7 @@
         </div>
 
         <!-- status button after approved -->
-        <div v-if="approve" class="my-3" id="hidden">
+        <div v-if="approved" class="my-3" id="hidden">
           <h1 class="text-lg font-semibold">Status</h1>
           <div class="relative inline-block text-left">
             <div>
@@ -1492,6 +1492,7 @@ export default {
             console.error('API error', error);
           });
       } else if (AoR == 'Reimbursed') {
+        this.approved = false;
         this.reimbursed = true;
         this.loading = true;
 
