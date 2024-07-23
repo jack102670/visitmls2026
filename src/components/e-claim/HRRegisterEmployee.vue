@@ -121,8 +121,9 @@
 
             <div class="w-full flex justify-end">
               <button
-                class="py-2 px-6 mt-10 text-white bg-[#160959] hover:bg-blue-950 rounded-md"
+                class="py-2 px-6 mt-10 text-white bg-[#160959] hover:bg-blue-950 rounded-md disabled:bg-gray-500 disabled:hover:bg-gray-500 disabled:cursor-not-allowed"
                 @click="Register()"
+                :disabled="!enableBtn"
               >
                 Register
               </button>
@@ -204,18 +205,21 @@ export default {
 
       enableLimit: 'no',
 
+      enableBtn: false,
+
       loading: true,
     };
   },
   methods: {
     Register() {
+      this.loading = true;
       // Post the 'form' object to API
       const registerData = {
         company_name: this.form.company,
         limit_amount: this.form.limit,
         userNameId: this.fetchOptions.filter(
           (item) =>
-            item.userName === this.form.userId &&
+            item.displayName === this.form.userId &&
             item.department == this.form.department &&
             item.branch == this.form.branch
         )[0].userId,
@@ -224,7 +228,7 @@ export default {
         employeeId: this.form.employeeId,
         department: this.form.department,
         reportingToDept: this.form.reportingDepartment,
-        reportingToId: this.form.reportingId,
+        reportingToId: this.form.reportingId.split('(')[1].split(')')[0],
         position: this.form.position,
       };
       console.log('Form Data:', registerData);
@@ -236,6 +240,7 @@ export default {
         )
         .then((response) => {
           console.log('Response:', response.data);
+          this.loading = false;
           // Handle success
         })
         .catch((error) => {
@@ -322,6 +327,23 @@ export default {
     this.fetchData();
   },
   watch: {
+    form: {
+      handler(newVal) {
+        let count = 0;
+        console.log(newVal);
+        for (let item in newVal) {
+          if (item != 'limit') {
+            if (this.form[item].length > 0) {
+              count++;
+            }
+          }
+        }
+        if (count == Object.keys(this.form).length - 1) {
+          this.enableBtn = true;
+        }
+      },
+      deep: true,
+    },
     'form.branch'(newBranch) {
       // This will execute whenever branch value changes
       let Departments = this.fetchOptions
@@ -344,7 +366,7 @@ export default {
             item.branch === this.form.branch
         )
         .map((item) => ({
-          userName: item.userName,
+          userName: item.displayName,
           userId: item.userId,
         }));
 
@@ -379,11 +401,10 @@ export default {
 
     async 'form.reportingDepartment'(newReportingDept) {
       // This will execute whenever department value changes
-      console.log('123');
       let Employees = this.fetchOptions
         .filter((item) => item.department === newReportingDept)
         .map((item) => ({
-          userName: item.userName,
+          userName: item.displayName,
           userId: item.userId,
         }));
 
@@ -393,6 +414,7 @@ export default {
         ).values(),
       ];
 
+      console.log(uniqueEmployees);
       try {
         // Fetch additional data from the API
         const response = await axios.get(
