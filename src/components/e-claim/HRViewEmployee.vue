@@ -507,7 +507,7 @@ export default {
         employeeId: this.form.employeeId,
         department: this.form.department,
         reportingToDept: this.form.reportingDepartment,
-        reportingToId: this.form.reportingId,
+        reportingToId: this.form.reportingId.split('(')[1].split(')')[0],
         position: this.form.position,
       };
       console.log('Form Data:', registerData);
