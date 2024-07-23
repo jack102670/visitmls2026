@@ -2788,7 +2788,6 @@ export default {
         Mileage: this.localTravellingDetails.UploadMileageRMLT,
         Parking: this.localTravellingDetails.UploadParkingLT,
         "Toll/Touch n'Go" : this.localTravellingDetails.UploadTollLT,
-        "Airport Limo/Teksi": this.overseasTravellingDetails.UploadAirportLimoTeksiOT,
       };
 
       return Object.entries(groups).filter(([type, files]) => files.length > 0);
@@ -2796,7 +2795,7 @@ export default {
 
     fileGroupsOT() {
       const groups = {
-        AirportLimoTeksi: this.overseasTravellingDetails.UploadAirportLimoTeksiOT,
+        "Airport Limo/Teksi": this.overseasTravellingDetails.UploadAirportLimoTeksiOT,
       };
 
       return Object.entries(groups).filter(([type, files]) => files.length > 0);

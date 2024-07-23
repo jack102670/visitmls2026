@@ -198,7 +198,7 @@
                           </template>
 
                           <template v-else-if="field.type === 'file'">
-                            <div class="pt-3">
+                            <div>
                               <file-pond
                                 v-if="
                                   field.id === 'UploadMileageRMLT' &&
@@ -379,9 +379,8 @@
                             ></textarea>
                           </template>
 
-                          <template v-else>
+                          <template v-else-if="field.id === 'MileageRMLT'">
                             <input
-                              v-if="field.id === 'MileageRMLT'"
                               v-model="field.value"
                               type="number"
                               :required="field.required"
@@ -398,7 +397,6 @@
                               class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                             />
                             <button
-                              v-if="field.id === 'MileageRMLT'"
                               type="button"
                               @click="toggleUploadField('MileageRMLT')"
                               class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
@@ -418,9 +416,10 @@
                                 />
                               </svg>
                             </button>
+                          </template>
 
+                          <template v-else-if="field.id === 'FareRMLT'">
                             <input
-                              v-if="field.id === 'FareRMLT'"
                               v-model="field.value"
                               type="number"
                               :required="field.required"
@@ -437,7 +436,6 @@
                               class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                             />
                             <button
-                               v-if="field.id === 'FareRMLT'"
                               type="button"
                               @click="toggleUploadField('FareRMLT')"
                               class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
@@ -457,9 +455,10 @@
                                 />
                               </svg>
                             </button>
+                          </template>
 
+                          <template v-else-if="field.id === 'TollLT'">
                             <input
-                              v-if="field.id === 'TollLT'"
                               v-model="field.value"
                               type="number"
                               :required="field.required"
@@ -476,7 +475,6 @@
                               class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                             />
                             <button
-                              v-if="field.id === 'TollLT'"
                               type="button"
                               @click="toggleUploadField('TollLT')"
                               class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
@@ -495,10 +493,11 @@
                                   d="M7 8l5-5m0 0l5 5m-5-5v12"
                                 />
                               </svg>
-                            </button>
+                            </button> 
+                          </template>
 
+                          <template v-else-if="field.id === 'ParkingLT'">
                             <input
-                              v-if="field.id === 'ParkingLT'"
                               v-model="field.value"
                               type="number"
                               :required="field.required"
@@ -515,7 +514,6 @@
                               class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                             />
                             <button
-                              v-if="field.id === 'ParkingLT'"
                               type="button"
                               @click="toggleUploadField('ParkingLT')"
                               class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
@@ -535,9 +533,10 @@
                                 />
                               </svg>
                             </button>
+                          </template>
 
+                          <template v-else-if="field.id === 'AirportLimoTeksiOT'">
                             <input
-                              v-if="field.id === 'AirportLimoTeksiOT'"
                               v-model="field.value"
                               type="number"
                               :required="field.required"
@@ -573,10 +572,11 @@
                                   d="M7 8l5-5m0 0l5 5m-5-5v12"
                                 />
                               </svg>
-                            </button>
+                            </button> 
+                          </template>
 
+                          <template v-else>
                             <input
-                              v-else
                               v-model="field.value"
                               :required="field.required"
                               :disabled="
@@ -1777,6 +1777,7 @@ export default {
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
               gridClass: "sm:col-span-1",
+              hidden: false,
             },
             {
               id: "FareRMLT",
@@ -1804,6 +1805,7 @@ export default {
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
               gridClass: "sm:col-span-1",
+              hidden: false,
             },
             {
               id: "TollLT",
@@ -1830,6 +1832,7 @@ export default {
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
               gridClass: "sm:col-span-1",
+              hidden: false,
             },
             {
               id: "ParkingLT",
@@ -1856,6 +1859,7 @@ export default {
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
               gridClass: "sm:col-span-1",
+              hidden: false,
             },
             {
               id: "UploadLT",
