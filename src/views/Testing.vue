@@ -50,10 +50,7 @@ export default {
   },
   methods: {
     showPopup() {
-      this.visible = true;
-      setTimeout(() => {
-        this.visible = false;
-      }, 3000);
+     
     },
   },
 };
