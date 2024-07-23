@@ -351,21 +351,28 @@
 
             <div class="mt-6 flex justify-end">
               <div class="flex flex-row-reverse">
-                <button v-if="loadingButton"   type="button" class=" px-7 py-3 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600 hover:cursor-not-allowed duration-[500ms,800ms]" disabled>
-        <div class="flex items-center justify-center "> 
-            <div class="h-5 w-5 border-t-transparent border-solid animate-spin rounded-full border-white border-4"></div>
-            <div  v-if="status===0" class="ml-2">    Verify</div>
-            <div v-else class="ml-2">    Update</div>
-        </div>
-    
-    </button>
-    
-             
-                <button v-else
+                <button
+                  v-if="loadingButton"
+                  type="button"
+                  class="px-7 py-3 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600 hover:cursor-not-allowed duration-[500ms,800ms]"
+                  disabled
+                >
+                  <div class="flex items-center justify-center">
+                    <div
+                      class="h-5 w-5 border-t-transparent border-solid animate-spin rounded-full border-white border-4"
+                    ></div>
+                    <div v-if="status === 0" class="ml-2">Verify</div>
+                    <div v-else class="ml-2">Update</div>
+                  </div>
+                </button>
+
+                <button
+                  v-else
                   type="submit"
                   class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
                 >
-                <h1 v-if="status===0">Verify</h1> <h1 v-else>Update</h1>
+                  <h1 v-if="status === 0">Verify</h1>
+                  <h1 v-else>Update</h1>
                 </button>
                 <!-- <button
                 @click="uploadimg()"
@@ -433,14 +440,21 @@
                     </p>
                   </div>
                   <div class="mt-5 sm:mt-6 sm:flex sm:flex-row-reverse">
-                    <button v-if="loadingverifyOtpButton"   type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-700 text-base font-bold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm hover:cursor-not-allowed duration-[500ms,800ms]" disabled>
-        <div class="flex items-center justify-center "> 
-            <div class="h-5 w-5 border-t-transparent border-solid animate-spin rounded-full border-white border-4"></div>
-            <div class="ml-2">    Verify</div>
-        </div>
-    
-    </button>
-                    <button v-else
+                    <button
+                      v-if="loadingverifyOtpButton"
+                      type="button"
+                      class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-700 text-base font-bold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm hover:cursor-not-allowed duration-[500ms,800ms]"
+                      disabled
+                    >
+                      <div class="flex items-center justify-center">
+                        <div
+                          class="h-5 w-5 border-t-transparent border-solid animate-spin rounded-full border-white border-4"
+                        ></div>
+                        <div class="ml-2">Verify</div>
+                      </div>
+                    </button>
+                    <button
+                      v-else
                       type="button"
                       @click="verifyOtp"
                       class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-700 text-base font-bold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
@@ -500,10 +514,16 @@
                   </button>
 
                   <div>
-                    <h3 v-if="status === 0" class="text-xl leading-6 font-medium text-gray-900">
+                    <h3
+                      v-if="status === 0"
+                      class="text-xl leading-6 font-medium text-gray-900"
+                    >
                       Request OTP Code for Account Activation
                     </h3>
-                    <h3  v-else class="text-xl leading-6 font-medium text-gray-900">
+                    <h3
+                      v-else
+                      class="text-xl leading-6 font-medium text-gray-900"
+                    >
                       Request OTP Code for Email Verification
                     </h3>
                     <p class="mt-4 mb-8 text-md text-gray-500">
@@ -514,14 +534,21 @@
                     </p>
                   </div>
                   <div class="mt-5 sm:mt-6 sm:flex sm:flex-row-reverse">
-                    <button v-if="loadingsendOtpButton"   type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-700 text-base font-bold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm hover:cursor-not-allowed duration-[500ms,800ms]" disabled>
-        <div class="flex items-center justify-center "> 
-            <div class="h-5 w-5 border-t-transparent border-solid animate-spin rounded-full border-white border-4"></div>
-            <div class="ml-2">    Request OTP</div>
-        </div>
-    
-    </button>
-                    <button v-else
+                    <button
+                      v-if="loadingsendOtpButton"
+                      type="button"
+                      class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-700 text-base font-bold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm hover:cursor-not-allowed duration-[500ms,800ms]"
+                      disabled
+                    >
+                      <div class="flex items-center justify-center">
+                        <div
+                          class="h-5 w-5 border-t-transparent border-solid animate-spin rounded-full border-white border-4"
+                        ></div>
+                        <div class="ml-2">Request OTP</div>
+                      </div>
+                    </button>
+                    <button
+                      v-else
                       type="button"
                       @click="sendOtp"
                       class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-700 text-base font-bold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
@@ -539,56 +566,59 @@
             >
               Activation successful! Redirecting...
             </div>
-            <transition name="fade">
-    <div v-if="showSuccessNotification"
-      class="fixed top-5 right-5 flex max-w-sm bg-white shadow-lg rounded-lg overflow-hidden"
-    >
-      <div class="w-2 bg-gray-800"></div>
-      <div class="flex items-center px-2 py-3">
-        <!-- <img class="w-12 h-12 object-cover rounded-full" src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"> -->
-        <div class="mx-3">
-          <!-- <h2 class="text-xl font-semibold text-gray-800">Notification</h2> -->
-          <p class="text-gray-600">{{message}}</p>
-        </div>
-      </div>
-    </div>
-    </transition>
+            <transition  name="fade">
+              <div
+                v-if="showSuccessNotification"
+                class="fixed top-5 right-5 flex max-w-sm bg-white shadow-lg rounded-lg overflow-hidden z-40"
+              >
+                <div class="w-2 bg-gray-800"></div>
+                <div class="flex items-center px-2 py-3">
+                  <!-- <img class="w-12 h-12 object-cover rounded-full" src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"> -->
+                  <div class="mx-3">
+                    <!-- <h2 class="text-xl font-semibold text-gray-800">Notification</h2> -->
+                    <p class="text-gray-600">{{ message }}</p>
+                  </div>
+                </div>
+              </div>
+            </transition>
           </form>
-           <!-- Loading Animation -->
-        <div
-          class="w-screen h-screen fixed z-40 flex justify-center items-center top-0 left-0"
-          v-if="loading && !approveSuccess"
-        >
-          <div class="absolute w-screen h-screen bg-gray-900 opacity-10"></div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 200 200"
-            class="w-24 h-24 z-50"
+          <!-- Loading Animation -->
+          <div
+            class="w-screen h-screen fixed z-40 flex justify-center items-center top-0 left-0"
+            v-if="loading && !approveSuccess"
           >
-            <circle
-              transform="rotate(0)"
-              transform-origin="center"
-              fill="none"
-              stroke="blue"
-              stroke-width="10"
-              stroke-linecap="round"
-              stroke-dasharray="230 1000"
-              stroke-dashoffset="0"
-              cx="100"
-              cy="100"
-              r="70"
+            <div
+              class="absolute w-screen h-screen bg-gray-900 opacity-10"
+            ></div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 200 200"
+              class="w-24 h-24 z-50"
             >
-              <animateTransform
-                attributeName="transform"
-                type="rotate"
-                from="0"
-                to="360"
-                dur="2"
-                repeatCount="indefinite"
-              ></animateTransform>
-            </circle>
-          </svg>
-        </div>
+              <circle
+                transform="rotate(0)"
+                transform-origin="center"
+                fill="none"
+                stroke="blue"
+                stroke-width="10"
+                stroke-linecap="round"
+                stroke-dasharray="230 1000"
+                stroke-dashoffset="0"
+                cx="100"
+                cy="100"
+                r="70"
+              >
+                <animateTransform
+                  attributeName="transform"
+                  type="rotate"
+                  from="0"
+                  to="360"
+                  dur="2"
+                  repeatCount="indefinite"
+                ></animateTransform>
+              </circle>
+            </svg>
+          </div>
         </div>
       </div>
     </div>
@@ -621,7 +651,7 @@ export default {
         profile_picture: null,
       },
       loadingverifyOtpButton: false,
-      loadingsendOtpButton: false,  
+      loadingsendOtpButton: false,
       loadingButton: false,
       loading: false,
       approveSuccess: false,
@@ -650,12 +680,10 @@ export default {
     console.log(this.userDetails);
     this.fetchHrData();
     this.addEventListeners();
-
-    
   },
 
   mounted() {
-this.checkUserStatus(); 
+    this.checkUserStatus();
 
     let openOrNot = localStorage.getItem("openOrNot");
     const element = document.querySelector("main");
@@ -678,7 +706,7 @@ this.checkUserStatus();
         spouse: this.user.spouse,
         phone_number: this.user.phone_number,
       };
-      
+
       console.log("Employee Data:", employeeData);
       axios
         .put("http://172.28.28.91:97/api/User/UpdateEmployee", employeeData)
@@ -686,24 +714,23 @@ this.checkUserStatus();
           console.log("Response:", response);
           if (response.data.status_code === "200") {
             console.log("Successfully Updated:", response.data.message);
-    
+
             this.message = "Successfully Updated";
-          this.showSuccessNotification = true;
-          setTimeout(() => {
-            this.showSuccessNotification = false;
-         
-          }, 3000); 
+            this.showSuccessNotification = true;
+            setTimeout(() => {
+              this.showSuccessNotification = false;
+            }, 3000);
             // Additional logic here for successful update
           } else if (response.data.status_code === "400") {
             // console.log("Successfully Updated:", response.data.message);
-        
+
             alert(
               response.data.result || "Failed to update. Please try again."
             );
             // Additional logic here for successful update
           } else {
             console.error("Backend error:", response.data.message);
-           
+
             alert(
               response.data.message || "Failed to update. Please try again."
             );
@@ -776,7 +803,7 @@ this.checkUserStatus();
           console.log("File uploaded successfully:", response.data);
           this.message = "Profile picture uploaded successfully.";
           this.showSuccessNotification = true;
-          setTimeout(() => this.showSuccessNotification = false, 3000); // Auto-hide after 3 seconds
+          setTimeout(() => (this.showSuccessNotification = false), 3000); // Auto-hide after 3 seconds
         })
         .catch((error) => {
           this.loadingButton = false;
@@ -849,11 +876,11 @@ this.checkUserStatus();
 
           if (userStatus === "0" && email !== "") {
             // User has not completed their OTP, show the modal
-         
+
             this.showRequestOtpModal = true;
           } else {
             // User has completed their OTP, do not show the modal
-      
+
             this.showRequestOtpModal = false;
           }
         })
@@ -861,23 +888,24 @@ this.checkUserStatus();
           console.error("There was an error fetching the user status:", error);
           // Handle error or set a default behavior if the API call fails
         });
-    }, checkUserStatusAndShowModal() {
+    },
+    checkUserStatusAndShowModal() {
       const username_id = store.getSession().userDetails.userId;
       axios
         .get(`http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           // Assuming the API response structure has a status field
           const userStatus = response.data.result[0].account_status;
-        
+
           console.log("User status:", userStatus);
 
-          if (userStatus === "0" ) {
+          if (userStatus === "0") {
             // User has not completed their OTP, show the modal
-         
+
             this.showRequestOtpModal = true;
           } else {
             // User has completed their OTP, do not show the modal
-      
+
             this.showRequestOtpModal = false;
           }
         })
@@ -895,83 +923,82 @@ this.checkUserStatus();
         this.uploadimg();
       } else if (this.status === "0") {
         this.updateEmployeeData();
-
       } else {
         this.updateEmployeeDataNewEmail();
       }
-
-
-
-
-
 
       // this.saveProfilePicture();
       this.checkUserStatusAndShowModal();
     },
     // update utk email baru dan lama / bila dia update emel then akan kena verify balik
     updateEmployeeDataNewEmail() {
-   // Start loading
-  const startTime = Date.now(); // Record start time
+      // Start loading
+      const startTime = Date.now(); // Record start time
 
-  const employeeData = {
-    emp_id: this.user.emp_id,
-    name: this.user.name,
-    bank_name: this.user.bank_name,
-    bank_number: String(this.user.bank_number),
-    email_address: this.user.email_address,
-    home_address: this.user.home_address,
-    spouse: this.user.spouse,
-    phone_number: this.user.phone_number.toString(),
-  };
-  console.log("Employee Data:", employeeData);
+      const employeeData = {
+        emp_id: this.user.emp_id,
+        name: this.user.name,
+        bank_name: this.user.bank_name,
+        bank_number: String(this.user.bank_number),
+        email_address: this.user.email_address,
+        home_address: this.user.home_address,
+        spouse: this.user.spouse,
+        phone_number: this.user.phone_number.toString(),
+      };
+      console.log("Employee Data:", employeeData);
 
-  axios.put("http://172.28.28.91:97/api/User/UpdateProfile", employeeData)
-    .then((response) => {
-      console.log("Response:", response);
-      const elapsedTime = Date.now() - startTime; // Calculate elapsed time
-      const remainingTime = Math.max(2000 - elapsedTime, 0); // Ensure min 2 seconds loading time
+      axios
+        .put("http://172.28.28.91:97/api/User/UpdateProfile", employeeData)
+        .then((response) => {
+          console.log("Response:", response);
+          const elapsedTime = Date.now() - startTime; // Calculate elapsed time
+          const remainingTime = Math.max(2000 - elapsedTime, 0); // Ensure min 2 seconds loading time
 
-      setTimeout(() => {
-        this.loadingButton = false; // Stop loading after ensuring min 2 seconds
-        if (response.data.status_code === "200") {
-          console.log(":", response.data.status_code);
-          this.message = "Successfully Updated";
-          this.showSuccessNotification = true;
           setTimeout(() => {
-            this.showSuccessNotification = false;
-         
-          }, 3000); 
-          // alert(response.data.message);
-          // Additional logic here for successful update
-        } else if (response.data.message.includes("Successfully Updated. Verify Your Email.")) {
-          console.log(":otp is sent", response.data.message);
-          this.message = "Successfully Updated. Verify Your Email.";
-          this.showSuccessNotification = true;
-          setTimeout(() => {
-            this.showSuccessNotification = false;
-         
-          }, 3000); 
-          this.showRequestOtpModal = true;
-          this.startTimer();
-          // Additional logic here for OTP sent
-        } else if (response.data.status_code === "400") {
-          alert(response.data.result || "Failed to update. Please try again.");
-          // Additional logic here for status code 400
-        } 
-      }, remainingTime);
-    })
-    .catch((error) => {
-      console.error("Error updating employee data:", error);
-      const elapsedTime = Date.now() - startTime;
-      const remainingTime = Math.max(2000 - elapsedTime, 0);
+            this.loadingButton = false; // Stop loading after ensuring min 2 seconds
+            if (response.data.status_code === "200") {
+              console.log(":", response.data.status_code);
+              this.message = "Successfully Updated";
+              this.showSuccessNotification = true;
+              setTimeout(() => {
+                this.showSuccessNotification = false;
+              }, 3000);
+              // alert(response.data.message);
+              // Additional logic here for successful update
+            } else if (
+              response.data.message.includes(
+                "Successfully Updated. Verify Your Email."
+              )
+            ) {
+              console.log(":otp is sent", response.data.message);
+              this.message = "Successfully Updated. Verify Your Email.";
+              this.showSuccessNotification = true;
+              setTimeout(() => {
+                this.showSuccessNotification = false;
+              }, 3000);
+              this.showRequestOtpModal = true;
+              this.startTimer();
+              // Additional logic here for OTP sent
+            } else if (response.data.status_code === "400") {
+              alert(
+                response.data.result || "Failed to update. Please try again."
+              );
+              // Additional logic here for status code 400
+            }
+          }, remainingTime);
+        })
+        .catch((error) => {
+          console.error("Error updating employee data:", error);
+          const elapsedTime = Date.now() - startTime;
+          const remainingTime = Math.max(2000 - elapsedTime, 0);
 
-      setTimeout(() => {
-        this.loadingButton = false; // Ensure loading is stopped after min 2 seconds
-        alert("An error occurred while updating employee data.");
-        // Additional error handling logic here
-      }, remainingTime);
-    });
-},
+          setTimeout(() => {
+            this.loadingButton = false; // Ensure loading is stopped after min 2 seconds
+            alert("An error occurred while updating employee data.");
+            // Additional error handling logic here
+          }, remainingTime);
+        });
+    },
 
     async sendOtp() {
       this.loadingsendOtpButton = true;
@@ -984,7 +1011,12 @@ this.checkUserStatus();
         if (response.data.status_code === "200") {
           console.log("OTP sent successfully:", response.data);
           this.showRequestOtpModal = false;
-          alert("OTP has been sent to your email.");
+          // alert("OTP has been sent to your email.");
+          this.message = "OTP has been sent to your email.";
+          this.showSuccessNotification = true;
+          setTimeout(() => {
+            this.showSuccessNotification = false;
+          }, 3000);
           this.showOtpModal = true;
           this.startTimer();
         } else {
@@ -1033,63 +1065,66 @@ this.checkUserStatus();
     },
 
     async verifyOtp() {
-  this.loadingverifyOtpButton = true;
-  const startTime = Date.now(); 
-  try {
-    const baseUrl = "http://172.28.28.91:97";
-    const email = encodeURIComponent(this.user.email_address);
-    const otp = encodeURIComponent(this.otp);
-    const url = `${baseUrl}/api/User/ValidateOTP?email=${email}&otp=${otp}`;
+      this.loadingverifyOtpButton = true;
+      const startTime = Date.now();
+      try {
+        const baseUrl = "http://172.28.28.91:97";
+        const email = encodeURIComponent(this.user.email_address);
+        const otp = encodeURIComponent(this.otp);
+        const url = `${baseUrl}/api/User/ValidateOTP?email=${email}&otp=${otp}`;
 
-    const response = await axios.post(url, {});
+        const response = await axios.post(url, {});
 
-    const elapsedTime = Date.now() - startTime;
-    const remainingTime = Math.max(2000 - elapsedTime, 0);
+        const elapsedTime = Date.now() - startTime;
+        const remainingTime = Math.max(2000 - elapsedTime, 0);
 
-    setTimeout(async () => {
-      if (response.data.status_code === "200") {
-        clearInterval(this.timerInterval);
-        alert(response.data.result || "OTP verified successfully.");
-        this.showOtpModal = false;
-        this.message = "Activation successful! Redirecting....";
-        this.showSuccessNotification = true;
+        setTimeout(async () => {
+          if (response.data.status_code === "200") {
+            clearInterval(this.timerInterval);
+            alert(response.data.result || "OTP verified successfully.");
+            this.showOtpModal = false;
+            this.message = "Activation successful! Redirecting....";
+            this.showSuccessNotification = true;
+            setTimeout(() => {
+              this.showSuccessNotification = false;
+              this.$router.push("/homepage");
+            }, 3000);
+            window.removeEventListener(
+              "beforeunload",
+              this.beforeUnloadHandler
+            );
+          } else {
+            alert("Invalid OTP. Please try again.");
+          }
+          this.loadingverifyOtpButton = false;
+        }, remainingTime);
+      } catch (error) {
+        console.error("Error verifying OTP:", error);
+        if (error.response) {
+          console.error("Response data:", error.response.data);
+          console.error("Response status:", error.response.status);
+          console.error("Response headers:", error.response.headers);
+          alert(
+            `An error occurred: ${
+              error.response.data.message ||
+              "Unable to verify OTP. Please try again."
+            }`
+          );
+        } else if (error.request) {
+          console.error("Request data:", error.request);
+        } else {
+          console.error("Error message:", error.message);
+          alert(`Error: ${error.message}`);
+        }
+
+        const elapsedTime = Date.now() - startTime;
+        const remainingTime = Math.max(2000 - elapsedTime, 0);
+
         setTimeout(() => {
-          this.showSuccessNotification = false;
-          this.$router.push("/homepage");
-        }, 3000);
-        window.removeEventListener("beforeunload", this.beforeUnloadHandler);
-      } else {
-        alert("Invalid OTP. Please try again.");
+          this.loadingverifyOtpButton = false;
+        }, remainingTime);
       }
-      this.loadingverifyOtpButton = false;
-    }, remainingTime);
-  } catch (error) {
-    console.error("Error verifying OTP:", error);
-    if (error.response) {
-      console.error("Response data:", error.response.data);
-      console.error("Response status:", error.response.status);
-      console.error("Response headers:", error.response.headers);
-      alert(
-        `An error occurred: ${
-          error.response.data.message ||
-          "Unable to verify OTP. Please try again."
-        }`
-      );
-    } else if (error.request) {
-      console.error("Request data:", error.request);
-    } else {
-      console.error("Error message:", error.message);
-      alert(`Error: ${error.message}`);
-    }
-
-    const elapsedTime = Date.now() - startTime;
-    const remainingTime = Math.max(2000 - elapsedTime, 0);
-
-    setTimeout(() => {
-      this.loadingverifyOtpButton = false;
-    }, remainingTime);
-  }
-},
+    },
 
     requestNewOtp() {
       if (this.timer === 0) {

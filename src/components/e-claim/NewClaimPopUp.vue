@@ -61,7 +61,7 @@
                 @click="toggleDropdown2"
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
-              <div
+              <!-- <div
                 class="bg-slate-200 py-4 px-2 mt-2 rounded"
                 @click="toggleDropdown2"
               >
@@ -79,9 +79,9 @@
                     d="M19 9l-7 7-7-7"
                   ></path>
                 </svg>
-              </div>
+              </div> -->
             </div>
-            <div
+            <!-- <div
               v-show="dropdownVisible2"
               class="dropdown-content absolute left-0 bg-gray-100 w-full max-h-56 overflow-y-auto border border-gray-300 z-10 mt-2 rounded shadow-lg"
             >
@@ -93,7 +93,7 @@
               >
                 {{ Company.company_name }}
               </a>
-            </div>
+            </div> -->
           </div>
           <div class="relative">
             <label
@@ -131,7 +131,7 @@
                 </svg>
               </div> -->
             </div>
-            <div
+            <!-- <div
               v-show="dropdownVisible3"
               class="dropdown-content absolute left-0 bg-gray-100 w-full max-h-56 overflow-y-auto border border-gray-300 z-10 mt-2 rounded shadow-lg"
             >
@@ -143,7 +143,7 @@
               >
                 {{ designation.designation }}
               </a>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-3">
@@ -220,7 +220,7 @@
             <div class="flex justify-between">
               <input
                 type="text"
-                placeholder="Company name.."
+                placeholder="Cost Center.."
                 required
                 v-model="formData.costCenter"
                 @click="toggleDropdown4"

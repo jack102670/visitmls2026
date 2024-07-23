@@ -79,6 +79,7 @@
               inputId="reportingDepartmentInput"
               label="Reporting to (Department)"
               :options="AllDepartments"
+              :mandatory="true"
               @input="(payload) => (form.reportingDepartment = payload)"
             />
             <DropDown

@@ -114,11 +114,11 @@ export default {
           if (!hasCompletedProfile) {
             alert("Please complete your profile before using the E-claim system.");
           } else {
-            this.$router.push(card.link);
+            window.location.href = card.link;
           }
         });
       } else {
-        this.$router.push(card.link);
+        window.location.href = card.link;
       }
     }
   },

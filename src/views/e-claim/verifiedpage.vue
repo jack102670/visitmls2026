@@ -194,38 +194,41 @@
                             :class="{
                               'inline-flex items-center px-3 py-1 rounded-full gap-x-2': true,
                               'bg-red-100/60 dark:bg-gray-800':
-                                item.admin_status.split('.')[0] === 'REJECT',
-                              'bg-yellow-100/60 dark:bg-gray-800':
-                                item.admin_status.split('.')[0] === 'RESUBMIT',
+                                item.admin_status.split('.')[0] === 'REJECTED',
                               'bg-green-100/60 dark:bg-gray-800':
                                 item.admin_status.split('.')[0] === 'APPROVED',
-                              'bg-blue-100/60 dark:bg-gray-800':
+                              'bg-amber-100/60 dark:bg-gray-800':
                                 item.admin_status.split('.')[0] === 'VERIFIED', // Added for VERIFIED status
                             }"
                           >
                             <span
                               :class="{
                                 'h-1.5 w-1.5 rounded-full': true,
-                                'bg-red-500': item.admin_status === 'REJECT',
-                                'bg-yellow-500':
-                                  item.admin_status === 'RESUBMIT',
+                                'bg-red-500':
+                                  item.admin_status.split('.')[0] ===
+                                  'REJECTED',
                                 'bg-green-500':
-                                  item.admin_status === 'APPROVED',
-                                'bg-blue-500': item.admin_status === 'VERIFIED', // Added for VERIFIED status
+                                  item.admin_status.split('.')[0] ===
+                                  'APPROVED',
+                                'bg-amber-500':
+                                  item.admin_status.split('.')[0] ===
+                                  'VERIFIED', // Added for VERIFIED status
                               }"
                             ></span>
                             <span
                               :class="{
                                 'text-sm font-normal': true,
-                                'text-red-500': item.admin_status === 'REJECT',
-                                'text-yellow-500':
-                                  item.admin_status === 'RESUBMIT',
+                                'text-red-500':
+                                  item.admin_status.split('.')[0] ===
+                                  'REJECTED',
                                 'text-green-500':
-                                  item.admin_status === 'APPROVED',
-                                'text-blue-500':
-                                  item.admin_status === 'VERIFIED', // Added for VERIFIED status
+                                  item.admin_status.split('.')[0] ===
+                                  'APPROVED',
+                                'text-amber-500':
+                                  item.admin_status.split('.')[0] ===
+                                  'VERIFIED', // Added for VERIFIED status
                               }"
-                              >{{ item.admin_status }}</span
+                              >{{ item.admin_status.split('.')[0] }}</span
                             >
                           </span>
                         </td>
@@ -303,7 +306,7 @@ export default {
       $(this.$refs.myTable).DataTable({});
     },
     fetchData() {
-       const userid = this.userDetails.userId;
+      const userid = this.userDetails.userId;
       fetch(
         `http://172.28.28.91:86/api/ApproverVerifier/GetAllRequestVerifier/${userid}`
       )

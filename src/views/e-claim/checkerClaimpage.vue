@@ -110,9 +110,9 @@
             </p>
           </div>
           <!-- <div class="mt-5 h-12">
-            <h2 class="font-semibold">Report Type :</h2>
-            <p class="text-gray-600 dark:text-gray-400">Finance</p>
-          </div> -->
+              <h2 class="font-semibold">Report Type :</h2>
+              <p class="text-gray-600 dark:text-gray-400">Finance</p>
+            </div> -->
           <div class="mt-2 h-10">
             <h2 class="font-semibold">Cost Center :</h2>
             <p class="text-gray-600 dark:text-gray-400">
@@ -126,66 +126,9 @@
             </p>
           </div>
           <!-- <div class="mt-5 h-12">
-            <h2 class="font-semibold">Claim for the Month Ended :</h2>
-            <p class="text-gray-600 dark:text-gray-400">31 MAY 2024</p>
-          </div> -->
-        </div>
-
-        <!-- status button after approved -->
-        <div v-if="approved" class="my-3" id="hidden">
-          <h1 class="text-lg font-semibold">Status</h1>
-          <div class="relative inline-block text-left">
-            <div>
-              <button
-                @click="toggleDropdown"
-                type="button"
-                :class="
-                  selectedStatus.class +
-                  ' inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-3 py-1 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-                "
-              >
-                {{ selectedStatus.label }}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="-mr-1 ml-2 mt-1 h-5 w-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div
-              v-if="dropdownOpen"
-              class="origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
-            >
-              <div
-                class="py-1"
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="options-menu"
-              >
-                <button
-                  v-for="(status, i) in statuses"
-                  :key="i"
-                  @click="selectStatus(status)"
-                  :class="
-                    status.dropDownClass +
-                    'block px-4 py-2 text-sm  w-full text-left hover:bg-gray-200'
-                  "
-                  role="menuitem"
-                >
-                  {{ status.label }}
-                </button>
-              </div>
-            </div>
-          </div>
+              <h2 class="font-semibold">Claim for the Month Ended :</h2>
+              <p class="text-gray-600 dark:text-gray-400">31 MAY 2024</p>
+            </div> -->
         </div>
 
         <!-- Summary -->
@@ -411,13 +354,13 @@
                 >
                   <p>
                     {{
-                      verified
-                        ? 'VERIFIED'
-                        : resubmitVerifier
-                          ? 'RESUBMIT'
-                          : rejectVerifier
-                            ? 'REJECTED'
-                            : 'PENDING'
+                      pending
+                        ? 'PENDING'
+                        : verified
+                          ? 'VERIFIED'
+                          : resubmitVerifier
+                            ? 'RESUBMIT'
+                            : 'REJECTED'
                     }}
                   </p>
                 </div>
@@ -426,6 +369,37 @@
               <td class="">{{ claimDetails.verifier_designation }}</td>
               <td>{{ claimDetails.department }}</td>
               <td class="">{{ claimDetails.verified_date }}</td>
+            </tr>
+            <tr
+              class="text-wrap h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
+            >
+              <th
+                class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
+              >
+                <!-- Status Bar -->
+                <div
+                  class="mx-auto rounded-full py-2 text-center lg:w-[90%] w-full"
+                  :class="{
+                    'bg-blue-200 dark:bg-blue-500': checked,
+                    'bg-yellow-200 dark:bg-yellow-500': resubmitChecker,
+                    'bg-red-200 dark:bg-red-500': rejectChecker,
+
+                    'text-blue-500 dark:text-blue-100': checked,
+                    'text-yellow-500 dark:text-yellow-100': resubmitChecker,
+
+                    'text-red-500 dark:text-red-100': rejectChecker,
+                  }"
+                >
+                  <p>
+                    {{
+                      checked || rejectChecker || resubmitChecker || reimbursed
+                        ? adminStatus
+                        : ''
+                    }}
+                  </p>
+                </div>
+              </th>
+              <td class="pl-6">Checker</td>
             </tr>
             <tr
               class="text-wrap h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
@@ -463,7 +437,7 @@
                 {{
                   approved || rejectApprover || resubmitApprover || reimbursed
                     ? claimDetails.approver_name
-                    : ''
+                    : 'Approver'
                 }}
               </td>
               <td class="">
@@ -534,7 +508,7 @@
               @click="confirmApprove = true"
               class="mr-2 text-sm font-semibold py-3 w-16 sm:w-24 md:w-36 bg-green-500 hover:bg-green-600 rounded-lg text-white"
             >
-              Approve
+              Check
             </button>
             <button
               @click="confirmResubmit = true"
@@ -559,7 +533,7 @@
           <div
             class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center"
           >
-            <h1 class="text-2xl font-bold">Do you confirm to approve?</h1>
+            <h1 class="text-2xl font-bold">Do you confirm to check?</h1>
             <div class="flex mt-4">
               <button
                 class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
@@ -603,34 +577,6 @@
               <button
                 class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
                 @click="ConfirmResubmit()"
-              >
-                Confirm
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Reimburse Confirmation -->
-        <div
-          v-show="confirmReimburse"
-          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
-        >
-          <div
-            class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center"
-          >
-            <h1 class="text-2xl font-bold">Do you confirm to reimburse?</h1>
-            <div class="flex mt-4">
-              <button
-                class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
-                @click="
-                  (confirmReimburse = false), (selectedStatus = statuses[0])
-                "
-              >
-                Back
-              </button>
-              <button
-                class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
-                @click="ConfirmReimburse()"
               >
                 Confirm
               </button>
@@ -970,27 +916,10 @@ export default {
       showFileList: false,
 
       dropdownOpen: false,
-      selectedStatus: {
-        label: 'Approved',
-        class: 'bg-green-500 text-white hover:bg-green-600',
-      },
-      statuses: [
-        {
-          label: 'Approved',
-          class: 'bg-green-500 text-white hover:bg-green-600',
-          dropDownClass: 'text-green-500 hover:text-green-600',
-        },
-        {
-          label: 'Reimbursed',
-          class: 'bg-white text-gray-700 hover:bg-gray-100',
-          dropDownClass: 'text-gray-700 hover:text-gray-800',
-        },
-      ],
 
       seeMore: false,
       confirmReject: false,
       confirmApprove: false,
-      confirmReimburse: false,
       confirmResubmit: false,
       approveSuccess: false,
       loading: false,
@@ -998,11 +927,14 @@ export default {
       // need to fetch from or post to API
       pending: false,
       verified: false,
+      checked: false,
       approved: false,
       rejectApprover: false,
       rejectVerifier: false,
+      rejectChecker: false,
       resubmitApprover: false,
       resubmitVerifier: false,
+      resubmitChecker: false,
       reimbursed: false,
       remark: '',
       adminStatus: '',
@@ -1032,14 +964,6 @@ export default {
     toggleDropdown() {
       this.dropdownOpen = !this.dropdownOpen;
     },
-    selectStatus(status) {
-      this.selectedStatus = status;
-      this.dropdownOpen = false;
-
-      if (status.label == 'Reimbursed') {
-        this.confirmReimburse = true;
-      }
-    },
     async FetchClaimDetails() {
       await axios
         .get(
@@ -1051,7 +975,7 @@ export default {
           this.adminStatus = this.claimDetails.admin_status
             .split('.')[0]
             .toUpperCase();
-          console.log(this.claimDetails.admin_status);
+
           switch (this.adminStatus) {
             case 'VERIFIED':
               this.verified = true;
@@ -1059,8 +983,15 @@ export default {
               this.remark = this.claimDetails.comment;
               break;
 
+            case 'CHECKED':
+              this.verified = true;
+              this.checked = true;
+              this.remark = this.claimDetails.comment;
+              break;
+
             case 'APPROVED':
               this.verified = true;
+              this.checked = true;
               this.approved = true;
               this.remark = this.claimDetails.comment;
               break;
@@ -1069,8 +1000,13 @@ export default {
               if (this.claimDetails.admin_status.includes('VERIFIER')) {
                 this.rejectVerifier = true;
                 console.log('yes');
+              } else if (this.claimDetails.admin_status.includes('CHECKER')) {
+                this.verified = true;
+                this.rejectChecker = true;
+                console.log('yes2');
               } else if (this.claimDetails.admin_status.includes('APPROVER')) {
                 this.verified = true;
+                this.checked = true;
                 this.rejectApprover = true;
                 console.log('yes2');
               }
@@ -1082,9 +1018,12 @@ export default {
             case 'RESUBMIT':
               if (this.claimDetails.admin_status.includes('VERIFIER')) {
                 this.resubmitVerifier = true;
+              } else if (this.claimDetails.admin_status.includes('CHECKER')) {
+                this.verified = true;
+                this.resubmitChecker = true;
               } else if (this.claimDetails.admin_status.includes('APPROVER')) {
                 this.verified = true;
-
+                this.checked = true;
                 this.resubmitApprover = true;
               }
               this.remark = this.claimDetails.comment;
@@ -1092,9 +1031,13 @@ export default {
 
             case 'REIMBURSED':
               this.verified = true;
-
+              this.checked = true;
               this.reimbursed = true;
               this.remark = this.claimDetails.comment;
+              break;
+
+            default:
+              this.pending = true;
               break;
           }
 
@@ -1313,12 +1256,6 @@ export default {
       this.ApproveOrReject('Reject');
     },
 
-    // click function after confirm the reimburse
-    ConfirmReimburse() {
-      this.confirmReimburse = false;
-      this.ApproveOrReject('Reimbursed');
-    },
-
     // click function after confirm the resubmit
     ConfirmResubmit() {
       this.confirmResubmit = false;
@@ -1375,36 +1312,35 @@ export default {
     // need to post to database
     async ApproveOrReject(AoR) {
       this.pending = false;
-
       const userData = await this.GetUserData();
       console.log(userData);
       this.singleRemarks.forEach((remark) => {
         let data = {
-          comment: remark.remark,
-          unique_code: remark.unique_code,
+          verifier_comment: remark.remark,
+          reference_number: remark.unique_code,
         };
         if (remark.Tab_Title == 'Local Outstation') {
-          axios.put(
-            'http://172.28.28.91:86/api/Admin/Approver_Comment_Local',
-            data
-          );
+          axios.post('http://172.28.28.91:97/api/Verifier/VerifierLocal', data);
         } else if (remark.Tab_Title == 'Overseas Outstation') {
-          axios.put(
-            'http://172.28.28.91:86/api/Admin/Approve_Comment_Overseas',
+          axios.post(
+            'http://172.28.28.91:97/api/Verifier/VerifierOverseas',
             data
           );
         } else if (remark.Tab_Title == 'Staff Refreshment') {
-          axios.put(
-            'http://172.28.28.91:86/api/Admin/Approve_Comment_Refreshment',
+          axios.post(
+            'http://172.28.28.91:97/api/Verifier/VerifierRefreshment',
             data
           );
         } else if (remark.Tab_Title == 'Entertainment') {
-          axios.put(
-            'http://172.28.28.91:86/api/Admin/Approve_Comment_Entertainment',
+          axios.post(
+            'http://172.28.28.91:97/api/Verifier/VerifierEntertainment',
             data
           );
         } else if (remark.Tab_Title == 'Other') {
-          axios.put('http://172.28.28.91:97/api/Verifier/VerifierOthers', data);
+          axios.post(
+            'http://172.28.28.91:97/api/Verifier/VerifierOthers',
+            data
+          );
         }
       });
 
@@ -1414,25 +1350,22 @@ export default {
         this.loading = true;
 
         const approveData = {
-          approver_name: userData.userName,
-          approver_designation: userData.designation,
-          approver_department: userData.department,
-          approver_status: 'APPROVED',
-          approver_comment: this.remark ? this.remark : '',
-          user_email: 'user_email',
+          status: 'CHECKED. WAITING FOR APPROVAL',
+          comment: this.remark ? this.remark : '',
+          requester_email: 'EMAIL',
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
         };
         console.log(approveData);
         await axios
-          .put('http://172.28.28.91:86/api/Admin/Approve_Claim', approveData)
+          .put('http://172.28.28.91:86/api/Admin/Check_Claim', approveData)
           .then((response) => {
             // Handle success response
             console.log('API response', response.data);
 
             this.approveSuccess = true;
             setTimeout(() => {
-              this.$router.push({ name: 'AdminDashboardpage' });
+              this.$router.push({ name: 'checkerDashboardPage' });
             }, 2500);
           })
           .catch((error) => {
@@ -1440,21 +1373,18 @@ export default {
             console.error('API error', error);
           });
       } else if (AoR == 'Reject') {
-        this.rejectApprover = true;
+        this.rejectVerifier = true;
         this.loading = true;
 
         const approveData = {
-          approver_name: userData.userName,
-          approver_designation: userData.designation,
-          approver_department: userData.department,
-          approver_status: 'REJECTED. BY APPROVER',
-          approver_comment: this.remark ? this.remark : '',
-          user_email: 'user_email',
+          status: 'REJECTED. BY CHECKER',
+          comment: this.remark ? this.remark : '',
+          requester_email: 'EMAIL',
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
         };
         await axios
-          .put('http://172.28.28.91:86/api/Admin/Approve_Claim', approveData)
+          .put('http://172.28.28.91:86/api/Admin/Check_Claim', approveData)
           .then((response) => {
             // Handle success response
             this.loading = false;
@@ -1466,48 +1396,18 @@ export default {
             console.error('API error', error);
           });
       } else if (AoR == 'Resubmit') {
-        this.resubmitApprover = true;
+        this.resubmitVerifier = true;
         this.loading = true;
 
         const approveData = {
-          approver_name: userData.userName,
-          approver_designation: userData.designation,
-          approver_department: userData.department,
-          approver_status: 'RESUBMIT. REQUESTED BY APPROVER',
-          approver_comment: this.remark ? this.remark : '',
-          user_email: 'user_email',
+          status: 'RESUBMIT. REQUESTED BY CHECKER',
+          comment: this.remark ? this.remark : '',
+          requester_email: 'EMAIL',
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
         };
         await axios
-          .put('http://172.28.28.91:86/api/Admin/Approve_Claim', approveData)
-          .then((response) => {
-            // Handle success response
-            this.loading = false;
-
-            console.log('API response', response.data);
-          })
-          .catch((error) => {
-            // Handle error response
-            console.error('API error', error);
-          });
-      } else if (AoR == 'Reimbursed') {
-        this.approved = false;
-        this.reimbursed = true;
-        this.loading = true;
-
-        const approveData = {
-          approver_name: userData.userName,
-          approver_designation: userData.designation,
-          approver_department: userData.department,
-          approver_status: 'REIMBURSED',
-          approver_comment: this.remark ? this.remark : '',
-          user_email: 'user_email',
-          verifier_email: this.claimDetails.verifier_email,
-          reference_number: this.claimDetails.reference_number,
-        };
-        await axios
-          .put('http://172.28.28.91:86/api/Admin/Approve_Claim', approveData)
+          .put('http://172.28.28.91:86/api/Admin/Check_Claim', approveData)
           .then((response) => {
             // Handle success response
             this.loading = false;
