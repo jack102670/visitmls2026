@@ -302,13 +302,36 @@
           <!-- Modal header -->
           <div v-if="selectedClaimType === 'LocalTravelling'">
             <div class="flex justify-end">
-              <button
+              <!-- <button
                 v-show="!isEditMode"
                 @click="isClickModal = false"
                 class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
               >
                 X
-              </button>
+              </button> -->
+              <button
+                   v-show="!isEditMode"
+                @click="isClickModal = false"
+                    type="button"
+                    class=" mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+                  >
+                    <span class="sr-only">Close</span>
+                    <svg
+                      class="h-6 w-6"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
             </div>
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
@@ -651,12 +674,28 @@
           >
             <div class="flex justify-end">
               <button
-                v-show="!isEditMode"
+                   v-show="!isEditMode"
                 @click="isClickModal = false"
-                class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
-              >
-                X
-              </button>
+                    type="button"
+                    class=" mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+                  >
+                    <span class="sr-only">Close</span>
+                    <svg
+                      class="h-6 w-6"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
             </div>
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
@@ -1078,11 +1117,28 @@
               <!-- Modal content -->
               <div class="flex justify-end">
                 <button
-                  @click="isClickModal = false"
-                  class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
-                >
-                  X
-                </button>
+                   v-show="!isEditMode"
+                @click="isClickModal = false"
+                    type="button"
+                    class=" mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+                  >
+                    <span class="sr-only">Close</span>
+                    <svg
+                      class="h-6 w-6"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
               </div>
               <h1 class="text-3xl font-bold text-blue-900">
                 Medical Bill Reimbursement Form
@@ -1360,11 +1416,28 @@
               <!-- Modal content -->
               <div class="flex justify-end">
                 <button
-                  @click="isClickModal = false"
-                  class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
-                >
-                  X
-                </button>
+                   v-show="!isEditMode"
+                @click="isClickModal = false"
+                    type="button"
+                    class=" mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+                  >
+                    <span class="sr-only">Close</span>
+                    <svg
+                      class="h-6 w-6"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
               </div>
               <h1 class="text-3xl font-bold text-blue-900">
                 Entertainment Claim Form
@@ -1681,11 +1754,28 @@
               <!-- Modal content -->
               <div class="flex justify-end">
                 <button
-                  @click="isClickModal = false"
-                  class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
-                >
-                  X
-                </button>
+                   v-show="!isEditMode"
+                @click="isClickModal = false"
+                    type="button"
+                    class=" mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+                  >
+                    <span class="sr-only">Close</span>
+                    <svg
+                      class="h-6 w-6"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
               </div>
               <h1 class="text-3xl font-bold text-blue-900">
                 Staff Refreshment Claim Form
@@ -1990,12 +2080,28 @@
               <!-- Modal content -->
               <div class="flex justify-end">
                 <button
-                  v-show="!isEditMode"
-                  @click="isClickModal = false"
-                  class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
-                >
-                  X
-                </button>
+                   v-show="!isEditMode"
+                @click="isClickModal = false"
+                    type="button"
+                    class=" mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+                  >
+                    <span class="sr-only">Close</span>
+                    <svg
+                      class="h-6 w-6"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
               </div>
               <h1 class="text-3xl font-bold text-blue-900">Others Form</h1>
               <hr class="mt-2 mb-4" />
@@ -2181,12 +2287,28 @@
               <!-- Modal content -->
               <div class="flex justify-end">
                 <button
-                  v-show="!isEditMode"
-                  @click="isClickModal = false"
-                  class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
-                >
-                  X
-                </button>
+                   v-show="!isEditMode"
+                @click="isClickModal = false"
+                    type="button"
+                    class=" mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+                  >
+                    <span class="sr-only">Close</span>
+                    <svg
+                      class="h-6 w-6"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
               </div>
               <h1 class="text-3xl font-bold text-blue-900">
                 Handphone Bill Reimbursement Form
