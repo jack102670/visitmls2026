@@ -48,6 +48,7 @@ import SummaryClaimpage from '../views/e-claim/user-ui/SummaryClaimpage.vue';
 import VerifierSummaryClaimpage from '../views/e-claim/user-ui/VerifierSummaryClaimpage.vue';
 import HRViewEmployee from '../components/e-claim/HRViewEmployee.vue';
 import checkerDashboardpage from '../views/e-claim/checkerDashboardpage.vue';
+import checkerClaimpage from '../views/e-claim/checkerClaimpage.vue';
 const routes = [
   {
     path: '/VerifierClaimpage/:rn',
@@ -65,6 +66,15 @@ const routes = [
       default: verified,
       Sidebar: Newsidebar,
     },
+  },
+  {
+    path: '/checkerclaimpage/:rn',
+    name: 'checkerClaimpage',
+    components: {
+      default: checkerClaimpage,
+      Sidebar: Newsidebar,
+    },
+    props: true,
   },
   {
     path: '/checker',

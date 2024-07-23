@@ -72,10 +72,13 @@ export default {
     mandatory: {
       type: Boolean,
     },
+    defaultvalue: {
+      type: String,
+    },
   },
   data() {
     return {
-      inputValue: '',
+      inputValue: this.defaultvalue ? this.defaultvalue : '',
       showDropdown: false,
       filteredOptions: [],
       highlightedIndex: -1,

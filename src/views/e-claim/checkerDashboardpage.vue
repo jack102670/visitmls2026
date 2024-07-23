@@ -297,7 +297,7 @@ export default {
   },
   methods: {
     ViewClaim(rn) {
-      this.$router.push({ name: 'VerifierSummaryClaimpage', params: { rn } });
+      this.$router.push({ name: 'checkerClaimpage', params: { rn } });
     },
     initializeDataTable() {
       $(this.$refs.myTable).DataTable({});
