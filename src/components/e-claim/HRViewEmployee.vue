@@ -492,10 +492,7 @@ export default {
         )
         .then((response) => {
           console.log('Response:', response.data);
-          this.FetchEmployeesData();
-          this.$nextTick(() => {
-            this.initializeDataTable();
-          });
+
           // Handle success
         })
         .catch((error) => {
