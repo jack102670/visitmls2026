@@ -310,28 +310,28 @@
                 X
               </button> -->
               <button
-                   v-show="!isEditMode"
+                v-show="!isEditMode"
                 @click="isClickModal = false"
-                    type="button"
-                    class=" mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
-                  >
-                    <span class="sr-only">Close</span>
-                    <svg
-                      class="h-6 w-6"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
+                type="button"
+                class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+              >
+                <span class="sr-only">Close</span>
+                <svg
+                  class="h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
             </div>
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
@@ -699,28 +699,28 @@
           >
             <div class="flex justify-end">
               <button
-                   v-show="!isEditMode"
+                v-show="!isEditMode"
                 @click="isClickModal = false"
-                    type="button"
-                    class=" mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
-                  >
-                    <span class="sr-only">Close</span>
-                    <svg
-                      class="h-6 w-6"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
+                type="button"
+                class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+              >
+                <span class="sr-only">Close</span>
+                <svg
+                  class="h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
             </div>
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
@@ -909,7 +909,7 @@
                           <span>Attachment(s)</span>
                         </div>
                       </th>
-                   <!--   <th
+                      <!--   <th
                         scope="col"
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
@@ -950,7 +950,7 @@
                           </div>
                         </div>
                       </td>
-                  <!--    <td
+                      <!--    <td
                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
                       >
                         <button
@@ -1236,28 +1236,28 @@
               <!-- Modal content -->
               <div class="flex justify-end">
                 <button
-                   v-show="!isEditMode"
-                @click="isClickModal = false"
-                    type="button"
-                    class=" mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+                  v-show="!isEditMode"
+                  @click="isClickModal = false"
+                  type="button"
+                  class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+                >
+                  <span class="sr-only">Close</span>
+                  <svg
+                    class="h-6 w-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
                   >
-                    <span class="sr-only">Close</span>
-                    <svg
-                      class="h-6 w-6"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
               </div>
               <h1 class="text-3xl font-bold text-blue-900">
                 Medical Bill Reimbursement Form
@@ -1535,28 +1535,28 @@
               <!-- Modal content -->
               <div class="flex justify-end">
                 <button
-                   v-show="!isEditMode"
-                @click="isClickModal = false"
-                    type="button"
-                    class=" mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+                  v-show="!isEditMode"
+                  @click="isClickModal = false"
+                  type="button"
+                  class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+                >
+                  <span class="sr-only">Close</span>
+                  <svg
+                    class="h-6 w-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
                   >
-                    <span class="sr-only">Close</span>
-                    <svg
-                      class="h-6 w-6"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
               </div>
               <h1 class="text-3xl font-bold text-blue-900">
                 Entertainment Claim Form
@@ -1873,28 +1873,28 @@
               <!-- Modal content -->
               <div class="flex justify-end">
                 <button
-                   v-show="!isEditMode"
-                @click="isClickModal = false"
-                    type="button"
-                    class=" mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+                  v-show="!isEditMode"
+                  @click="isClickModal = false"
+                  type="button"
+                  class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+                >
+                  <span class="sr-only">Close</span>
+                  <svg
+                    class="h-6 w-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
                   >
-                    <span class="sr-only">Close</span>
-                    <svg
-                      class="h-6 w-6"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
               </div>
               <h1 class="text-3xl font-bold text-blue-900">
                 Staff Refreshment Claim Form
@@ -2199,28 +2199,28 @@
               <!-- Modal content -->
               <div class="flex justify-end">
                 <button
-                   v-show="!isEditMode"
-                @click="isClickModal = false"
-                    type="button"
-                    class=" mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+                  v-show="!isEditMode"
+                  @click="isClickModal = false"
+                  type="button"
+                  class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+                >
+                  <span class="sr-only">Close</span>
+                  <svg
+                    class="h-6 w-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
                   >
-                    <span class="sr-only">Close</span>
-                    <svg
-                      class="h-6 w-6"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
               </div>
               <h1 class="text-3xl font-bold text-blue-900">Others Form</h1>
               <hr class="mt-2 mb-4" />
@@ -2406,28 +2406,28 @@
               <!-- Modal content -->
               <div class="flex justify-end">
                 <button
-                   v-show="!isEditMode"
-                @click="isClickModal = false"
-                    type="button"
-                    class=" mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+                  v-show="!isEditMode"
+                  @click="isClickModal = false"
+                  type="button"
+                  class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
+                >
+                  <span class="sr-only">Close</span>
+                  <svg
+                    class="h-6 w-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
                   >
-                    <span class="sr-only">Close</span>
-                    <svg
-                      class="h-6 w-6"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
               </div>
               <h1 class="text-3xl font-bold text-blue-900">
                 Handphone Bill Reimbursement Form
@@ -2756,7 +2756,7 @@ export default {
         Fare: this.localTravellingDetails.UploadFareRMLT,
         Mileage: this.localTravellingDetails.UploadMileageRMLT,
         Parking: this.localTravellingDetails.UploadParkingLT,
-        "Toll/Touch n'Go" : this.localTravellingDetails.UploadTollLT,
+        "Toll/Touch n'Go": this.localTravellingDetails.UploadTollLT,
       };
 
       return Object.entries(groups).filter(([type, files]) => files.length > 0);
@@ -2764,7 +2764,8 @@ export default {
 
     fileGroupsOT() {
       const groups = {
-        "Airport Limo/Teksi": this.overseasTravellingDetails.UploadAirportLimoTeksiOT,
+        "Airport Limo/Teksi":
+          this.overseasTravellingDetails.UploadAirportLimoTeksiOT,
       };
 
       return Object.entries(groups).filter(([type, files]) => files.length > 0);
@@ -3317,21 +3318,51 @@ export default {
 
                     this.uploadFiles(claim.UploadLT, userId, uniqueCodeLT);
                   }
-                  if (claim.UploadParkingLT && claim.UploadParkingLT.length > 0) {
-                    console.log("Preparing to upload files:", claim.UploadParkingLT);
-                    this.uploadFiles(claim.UploadParkingLT, userId, uniqueCodeLT);
+                  if (
+                    claim.UploadParkingLT &&
+                    claim.UploadParkingLT.length > 0
+                  ) {
+                    console.log(
+                      "Preparing to upload files:",
+                      claim.UploadParkingLT
+                    );
+                    this.uploadFiles(
+                      claim.UploadParkingLT,
+                      userId,
+                      uniqueCodeLT
+                    );
                   }
                   if (claim.UploadTollLT && claim.UploadTollLT.length > 0) {
-                    console.log("Preparing to upload files:", claim.UploadTollLT);
+                    console.log(
+                      "Preparing to upload files:",
+                      claim.UploadTollLT
+                    );
                     this.uploadFiles(claim.UploadTollLT, userId, uniqueCodeLT);
                   }
                   if (claim.UploadFareRMLT && claim.UploadFareRMLT.length > 0) {
-                    console.log("Preparing to upload files:", claim.UploadFareRMLT);
-                    this.uploadFiles(claim.UploadFareRMLT, userId, uniqueCodeLT);
+                    console.log(
+                      "Preparing to upload files:",
+                      claim.UploadFareRMLT
+                    );
+                    this.uploadFiles(
+                      claim.UploadFareRMLT,
+                      userId,
+                      uniqueCodeLT
+                    );
                   }
-                  if (claim.UploadMileageRMLT && claim.UploadMileageRMLT.length > 0) {
-                    console.log("Preparing to upload files:", claim.UploadMileageRMLT);
-                    this.uploadFiles(claim.UploadMileageRMLT, userId, uniqueCodeLT);
+                  if (
+                    claim.UploadMileageRMLT &&
+                    claim.UploadMileageRMLT.length > 0
+                  ) {
+                    console.log(
+                      "Preparing to upload files:",
+                      claim.UploadMileageRMLT
+                    );
+                    this.uploadFiles(
+                      claim.UploadMileageRMLT,
+                      userId,
+                      uniqueCodeLT
+                    );
                   }
                   const response = await axiosInstance.post(
                     "/",
@@ -3367,7 +3398,7 @@ export default {
                           name: expense.name,
                           amount: expense.amount,
                           description: expense.description,
-                          files: [],
+                          files: expense.files || [],
                         }))
                       : [],
                   };
@@ -3382,9 +3413,29 @@ export default {
 
                     this.uploadFiles(claim.UploadOT, userId, uniqcodeOT);
                   }
-                  if (claim.UploadAirportLimoTeksiOT && claim.UploadAirportLimoTeksiOT.length > 0) {
-                    console.log("Preparing to upload files:", claim.UploadAirportLimoTeksiOT);
-                    this.uploadFiles(claim.UploadAirportLimoTeksiOT, userId, uniqcodeOT);
+                  if (
+                    claim.UploadAirportLimoTeksiOT &&
+                    claim.UploadAirportLimoTeksiOT.length > 0
+                  ) {
+                    console.log(
+                      "Preparing to upload files:",
+                      claim.UploadAirportLimoTeksiOT
+                    );
+                    this.uploadFiles(
+                      claim.UploadAirportLimoTeksiOT,
+                      userId,
+                      uniqcodeOT
+                    );
+                  }
+
+                  if (claim.otherExpenses && claim.otherExpenses.length > 0) {
+                    const filesToUpload = claim.otherExpenses.flatMap(
+                      (expense) => expense.files || []
+                    );
+                    if (filesToUpload.length > 0) {
+                      console.log("Preparing to upload files:", filesToUpload);
+                      await this.uploadFiles(filesToUpload, userId, uniqcodeOT);
+                    }
                   }
 
                   axiosInstance = axios.create({
