@@ -556,14 +556,6 @@
                           <span>Attachment(s)</span>
                         </div>
                       </th>
-                    <!--  <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        <div class="flex items-center gap-x-3">
-                          <span>Actions</span>
-                        </div>
-                      </th> -->
                     </tr>
                   </thead>
                   <tbody
@@ -597,29 +589,6 @@
                           </div>
                         </div>
                       </td>
-                    <!--  <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
-                      >
-                        <button
-                          class="text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
-                          @click="deleteFileGroup(index, 'local')"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-5 h-5"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                            />
-                          </svg>
-                        </button>
-                      </td> -->
                     </tr>
                   </tbody>
                 </table>
@@ -3037,26 +3006,6 @@ export default {
     createObjectURL(file) {
       return URL.createObjectURL(file);
     },
-    deleteFileGroup(index, source) {
-    let details = {};
-
-    if (source === 'local') {
-      details = this.localTravellingDetails;
-    } else if (source === 'overseas') {
-      details = this.overseasTravellingDetails;
-    }
-
-    // Convert object to array of keys
-    const keys = Object.keys(details);
-
-    if (index < keys.length) {
-      const keyToRemove = keys[index];
-      if (keyToRemove) {
-        // Remove the key from the object
-        this.$delete(details, keyToRemove);
-      }
-    }
-  },
     toggleEditMode() {
       if (this.isEditMode) {
         this.savenode();
@@ -3368,6 +3317,22 @@ export default {
 
                     this.uploadFiles(claim.UploadLT, userId, uniqueCodeLT);
                   }
+                  if (claim.UploadParkingLT && claim.UploadParkingLT.length > 0) {
+                    console.log("Preparing to upload files:", claim.UploadParkingLT);
+                    this.uploadFiles(claim.UploadParkingLT, userId, uniqueCodeLT);
+                  }
+                  if (claim.UploadTollLT && claim.UploadTollLT.length > 0) {
+                    console.log("Preparing to upload files:", claim.UploadTollLT);
+                    this.uploadFiles(claim.UploadTollLT, userId, uniqueCodeLT);
+                  }
+                  if (claim.UploadFareRMLT && claim.UploadFareRMLT.length > 0) {
+                    console.log("Preparing to upload files:", claim.UploadFareRMLT);
+                    this.uploadFiles(claim.UploadFareRMLT, userId, uniqueCodeLT);
+                  }
+                  if (claim.UploadMileageRMLT && claim.UploadMileageRMLT.length > 0) {
+                    console.log("Preparing to upload files:", claim.UploadMileageRMLT);
+                    this.uploadFiles(claim.UploadMileageRMLT, userId, uniqueCodeLT);
+                  }
                   const response = await axiosInstance.post(
                     "/",
                     thisisforlocal1
@@ -3416,6 +3381,10 @@ export default {
                     // Assuming uploadFile has been adjusted to accept an array of files
 
                     this.uploadFiles(claim.UploadOT, userId, uniqcodeOT);
+                  }
+                  if (claim.UploadAirportLimoTeksiOT && claim.UploadAirportLimoTeksiOT.length > 0) {
+                    console.log("Preparing to upload files:", claim.UploadAirportLimoTeksiOT);
+                    this.uploadFiles(claim.UploadAirportLimoTeksiOT, userId, uniqcodeOT);
                   }
 
                   axiosInstance = axios.create({
