@@ -251,10 +251,11 @@
                                 field.type === 'number' ? '0.01' : undefined
                               "
                               class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                            />
-                            <template
-                              v-if="
-                                field.id === 'MileageRMLT' ||
+                            /> 
+                          </template>
+
+                          <template
+                              v-if="field.id === 'MileageRMLT' ||
                                 field.id === 'FareRMLT' ||
                                 field.id === 'TollLT' ||
                                 field.id === 'ParkingLT' ||
@@ -263,9 +264,6 @@
                             >
                               <button
                                 type="button"
-                                @click="
-                                  field.showFileInput = !field.showFileInput
-                                "
                                 class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
                               >
                                 <svg
@@ -283,34 +281,8 @@
                                   />
                                 </svg>
                               </button>
-                              <template v-if="field.showFileInput">
-                                <file-pond
-                                  type="file"
-                                  :id="`${field.id}-file`"
-                                  ref="pond"
-                                  label-idle="Drop files here..."
-                                  @addfile="
-                                    (error, file) =>
-                                      handleAddFile(error, file, field)
-                                  "
-                                  @removefile="
-                                    (error, file) =>
-                                      handleRemoveFile(error, file, field)
-                                  "
-                                  :allow-multiple="true"
-                                  :max-file-size="'5MB'"
-                                  :accepted-file-types="[
-                                    'image/png',
-                                    'image/jpeg',
-                                    'application/pdf',
-                                    'application/vnd.ms-excel',
-                                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                                  ]"
-                                  class="m-52 block w-full px-4 py-2 mt-1 mb-2 text-gray-700 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                                />
-                              </template>
-                            </template>
                           </template>
+
                         </template>
                       </template>
                     </template>
@@ -1472,8 +1444,25 @@ export default {
               value: "",
               gridClass: "sm:col-span-1",
               hidden: false,
-              showFileInput: false,
-              files: [],
+            },
+            {
+              id: "UploadMileageRMLT",
+              label: "Mileage Attachment(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
+              value: [],
+              allowMultiple: true,
+              server: null,
+              required: false,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
+              hidden: false,
             },
             {
               id: "FareRMLT",
@@ -1483,8 +1472,25 @@ export default {
               gridClass: "sm:col-span-1",
               hidden: false,
               required: true,
-              showFileInput: false,
-              files: [],
+            },
+            {
+              id: "UploadFareRMLT",
+              label: "Fare Attachment(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
+              value: [],
+              allowMultiple: true,
+              server: null,
+              required: false,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
+              hidden: false,
             },
             {
               id: "TollLT",
@@ -1493,8 +1499,25 @@ export default {
               value: "",
               gridClass: "sm:col-span-1",
               hidden: false,
-              showFileInput: false,
-              files: [],
+            },
+            {
+              id: "UploadTollLT",
+              label: "Toll Attachment(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
+              value: [],
+              allowMultiple: true,
+              server: null,
+              required: false,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
+              hidden: false,
             },
             {
               id: "ParkingLT",
@@ -1503,12 +1526,29 @@ export default {
               value: "",
               gridClass: "sm:col-span-1",
               hidden: false,
-              showFileInput: false,
-              files: [],
+            },
+            {
+              id: "UploadParkingLT",
+              label: "Parking Attachment(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
+              value: [],
+              allowMultiple: true,
+              server: null,
+              required: false,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
+              hidden: false,
             },
             {
               id: "UploadLT",
-              label: "Attachment(s). (png, jpeg, pdf or xlsx)",
+              label: "Additional Supporting Document(s). (png, jpeg, pdf or xlsx) (Optional)",
               type: "file",
               value: [],
               allowMultiple: true,
@@ -1608,11 +1648,29 @@ export default {
               type: "number",
               value: "",
               gridClass: "sm:col-span-2",
-              showFileInput: false,
+            },
+            {
+              id: "UploadAirportLimoTeksiOT",
+              label: "Airport Limo/Teksi Attachment(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
+              value: [],
+              allowMultiple: true,
+              server: null,
+              required: false,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
+              hidden: false,
             },
             {
               id: "UploadOT",
-              label: "Attachment(s). (png, jpeg, pdf or xlsx)",
+              label: "Additional Supporting Document(s). (png, jpeg, pdf or xlsx)",
               type: "file",
               value: [],
               allowMultiple: true,
@@ -2372,53 +2430,14 @@ export default {
       })} ${date.getFullYear()}`;
     },
 
-    handleFileChange(event, field) {
-      const files = Array.from(event.target.files);
-
-      // Rename files based on the field ID
-      const renamedFiles = files.map((file) => {
-        const prefixMap = {
-          MileageRMLT: "MILEAGE_",
-          FareRMLT: "FARE_",
-          TollLT: "TNG_",
-          ParkingLT: "PARKING_",
-          AirportLimoTeksiOT: "AIRPORTLIMO_",
-        };
-
-        const prefix = prefixMap[field.id] || "";
-        const newFileName = `${prefix}${file.name}`;
-        const renamedFile = new File([file], newFileName, { type: file.type });
-
-        return renamedFile;
-      });
-
-      field.files = renamedFiles;
-      console.log(`Renamed files for ${field.id}:`, field.files);
-    },
-
     handleAddFile(error, file, field) {
       if (error) {
         console.error("Error adding file:", error.message);
         return;
       }
-
-      // Rename file before adding to field
-      const prefixMap = {
-        MileageRMLT: "MILEAGE_",
-        FareRMLT: "FARE_",
-        TollLT: "TNG_",
-        ParkingLT: "PARKING_",
-        AirportLimoTeksiOT: "AIRPORTLIMO_",
-      };
-
-      const prefix = prefixMap[field.id] || "";
-      const newFileName = `${prefix}${file.file.name}`;
-      const renamedFile = new File([file.file], newFileName, {
-        type: file.file.type,
-      });
-
-      field.value = [...field.value, renamedFile];
-      console.log("File added:", renamedFile);
+      
+      field.value = [...field.value, file.file];
+      console.log("File added:", file.file);
       console.log("Updated files:", field.value);
     },
 
