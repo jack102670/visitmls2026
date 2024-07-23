@@ -488,7 +488,7 @@
               </div>
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Attachment(s). :</label
+                  >Additional Supporting Document(s). :</label
                 >
                 <div class="flex flex-wrap">
                   <div
@@ -522,14 +522,6 @@
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
                         <div class="flex items-center gap-x-3">
-                          <span>No</span>
-                        </div>
-                      </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        <div class="flex items-center gap-x-3">
                           <span>Type of Fare</span>
                         </div>
                       </th>
@@ -541,8 +533,72 @@
                           <span>Attachment(s)</span>
                         </div>
                       </th>
+                    <!--  <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Actions</span>
+                        </div>
+                      </th> -->
                     </tr>
                   </thead>
+                  <tbody
+                    class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
+                  >
+                    <tr
+                      v-for="([type, fileGroup], index) in fileGroups"
+                      :key="index"
+                    >
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-32"
+                      >
+                        {{ type }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
+                      >
+                        <div
+                          v-for="(file, fileIndex) in fileGroup"
+                          :key="fileIndex"
+                          class="m-2"
+                        >
+                          <div
+                            class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
+                          >
+                            <img
+                              :src="createObjectURL(file)"
+                              :alt="file.name"
+                              class="w-full h-full object-cover"
+                            />
+                          </div>
+                        </div>
+                      </td>
+                    <!--  <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
+                      >
+                        <button
+                          class="text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
+                          @click="deleteFileGroup(index, 'local')"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                            />
+                          </svg>
+                        </button>
+                      </td> -->
+                    </tr>
+                  </tbody>
                 </table>
               </div>
 
@@ -800,7 +856,7 @@
               </div>
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Attachment(s). :</label
+                  >Additional Supporting Document(s). :</label
                 >
                 <div class="flex flex-wrap">
                   <div
@@ -819,8 +875,102 @@
                     </div>
                   </div>
                 </div>
-              </div> 
+              </div>
 
+              <!-- Fare Attachment table -->
+              <div class="mb-4">
+                <h2 class="text-xl font-bold">Fare Attachment</h2>
+                <table
+                  class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                >
+                  <thead class="bg-gray-50 dark:bg-gray-800">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Type of Fare</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Attachment(s)</span>
+                        </div>
+                      </th>
+                   <!--   <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Actions</span>
+                        </div>
+                      </th> -->
+                    </tr>
+                  </thead>
+                  <tbody
+                    class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
+                  >
+                    <tr
+                      v-for="([type, fileGroup], index) in fileGroupsOT"
+                      :key="index"
+                    >
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-32"
+                      >
+                        {{ type }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
+                      >
+                        <div
+                          v-for="(file, fileIndex) in fileGroup"
+                          :key="fileIndex"
+                          class="m-2"
+                        >
+                          <div
+                            class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
+                          >
+                            <img
+                              :src="createObjectURL(file)"
+                              :alt="file.name"
+                              class="w-full h-full object-cover"
+                            />
+                          </div>
+                        </div>
+                      </td>
+                  <!--    <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
+                      >
+                        <button
+                          class="text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
+                          @click="deleteFileGroup(index, 'overseas')"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                            />
+                          </svg>
+                        </button>
+                      </td> -->
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Other Expenses Table-->
               <div class="mb-4">
                 <h2 class="text-xl font-bold">Other Expenses</h2>
                 <table
@@ -2473,6 +2623,7 @@ export default {
   data() {
     return {
       storefiles: [],
+      serialnumber: "",
       employeeID: null,
       totalplus: 0,
       index: null,
@@ -2484,8 +2635,16 @@ export default {
       isEditMode: false,
       nonEditableFields: false,
       selectedClaimDetails: {},
-      localTravellingDetails: {},
-      overseasTravellingDetails: { otherExpenses: [] },
+      localTravellingDetails: {
+        UploadFareRMLT: [],
+        UploadMileageRMLT: [],
+        UploadParkingLT: [],
+        UploadTollLT: [],
+      },
+      overseasTravellingDetails: {
+        UploadAirportLimoTeksiOT: [],
+        otherExpenses: [],
+      },
       medicalBillReimbursementDetails: {},
       entertainmentDetails: {},
       staffRefreshmentDetails: {},
@@ -2501,6 +2660,26 @@ export default {
   },
 
   computed: {
+    fileGroups() {
+      const groups = {
+        Fare: this.localTravellingDetails.UploadFareRMLT,
+        Mileage: this.localTravellingDetails.UploadMileageRMLT,
+        Parking: this.localTravellingDetails.UploadParkingLT,
+        "Toll/Touch n'Go" : this.localTravellingDetails.UploadTollLT,
+        "Airport Limo/Teksi": this.overseasTravellingDetails.UploadAirportLimoTeksiOT,
+      };
+
+      return Object.entries(groups).filter(([type, files]) => files.length > 0);
+    },
+
+    fileGroupsOT() {
+      const groups = {
+        AirportLimoTeksi: this.overseasTravellingDetails.UploadAirportLimoTeksiOT,
+      };
+
+      return Object.entries(groups).filter(([type, files]) => files.length > 0);
+    },
+
     totallocalTravellingDetails() {
       let total = 0;
 
@@ -2737,6 +2916,26 @@ export default {
     createObjectURL(file) {
       return URL.createObjectURL(file);
     },
+    deleteFileGroup(index, source) {
+    let details = {};
+
+    if (source === 'local') {
+      details = this.localTravellingDetails;
+    } else if (source === 'overseas') {
+      details = this.overseasTravellingDetails;
+    }
+
+    // Convert object to array of keys
+    const keys = Object.keys(details);
+
+    if (index < keys.length) {
+      const keyToRemove = keys[index];
+      if (keyToRemove) {
+        // Remove the key from the object
+        this.$delete(details, keyToRemove);
+      }
+    }
+  },
     toggleEditMode() {
       if (this.isEditMode) {
         this.savenode();
@@ -2931,6 +3130,7 @@ export default {
       this.loading = true;
 
       const referenceNumber = await this.fetchSerialNumber();
+      this.serialnumber = referenceNumber;
       this.sendFiles(this.userDetails.userId, referenceNumber);
 
       const apiData = {
@@ -3024,16 +3224,16 @@ export default {
                     starting_point: claim.LocationStart,
                     end_point: claim.LocationEnd,
                     date_event: claim.dateLT, // Example date
-                    park_fee: claim.ParkingLT,
-                    toll_fee: claim.TollLT,
+                    park_fee: claim.ParkingLT || 0,
+                    toll_fee: claim.TollLT || 0,
                     total_fee: claim.totalRM,
                     unique_code: uniqueCodeLT,
-                    reference_number: this.claims[0].uniqueCode,
+                    reference_number: this.serialnumber,
                     transport_mode: claim.TransportLT,
                     trip_mode: claim.tripwayLT,
                     total_mileage: claim.MileageRMLT || 0,
                     transport_specification: claim.TransportSpec,
-                    fare: claim.FareRMLT,
+                    fare: claim.FareRMLT || 0,
                   };
                   axiosInstance = axios.create({
                     baseURL:
