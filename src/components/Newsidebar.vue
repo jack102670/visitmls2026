@@ -336,6 +336,22 @@
 
           <span class="mx-4 font-medium">Approve Claims</span>
         </router-link>
+        <router-link
+          v-if="controlView === 'eclaim' && userData.department === ('HR')"
+          class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
+          :to="{ name: 'HrViewemployee' }"
+        >
+      
+<svg width="24" height="24" viewBox="0 0 48 48"      stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 11.9143L24 19L44 11.9143L24 5L4 11.9143Z" fill="transparent" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+<path d="M4 20L24 27L44 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M4 28L24 35L44 28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M4 36L24 43L44 36" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
+
+
+          <span class="mx-4 font-medium">Employee</span>
+        </router-link>
         <!-- <router-link
           v-if="controlView === 'eclaim' && userData.department === ('CB')"
           class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
