@@ -51,7 +51,7 @@
               </div>
             </button>
 
-            <!-- <button @click="sendToAPI()">sent to api</button> -->
+       
           </div>
         </div>
 
@@ -3239,7 +3239,7 @@ export default {
           console.warn("Unexpected response status:", response.status);
         }
 
-        this.sendToAPI();
+        // this.sendToAPI();
         // this.resetClaimsAfterSubmit();
       } catch (error) {
         console.error("API error", error);
@@ -3598,7 +3598,7 @@ export default {
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
-                    this.uploadFiles(userId, uniqcodeothers);
+                    this.uploadFiles(claim.UploadOthers,userId, uniqcodeothers);
                   }
                   axiosInstance = axios.create({
                     baseURL: "http://172.28.28.91:97/api/User/InsertOthers",
