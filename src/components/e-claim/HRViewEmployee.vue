@@ -161,7 +161,14 @@
             </div>
             <div class="m-3 mt-2 ml-7 h-1/5">
               <img
+                v-if="employee.profile_picture"
                 :src="employee.profile_picture"
+                alt="profile picture"
+                class="h-full object-cover rounded-xl"
+              />
+              <img
+                v-else
+                src="https://happytravel.viajes/wp-content/uploads/2020/04/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"
                 alt="profile picture"
                 class="h-full object-cover rounded-xl"
               />
@@ -439,7 +446,25 @@ export default {
   },
   methods: {
     ViewEmployee(data) {
-      this.employee = data;
+      this.employee = {
+        profile_picture: data.profile_picture,
+        Username: data.username,
+        Name: data.name,
+        'Employee ID': data.emp_id,
+        Branch: data.branch,
+        Company: data.company_name,
+        Department: data.department,
+        Position: data.position_title,
+        'Reporting ID': data.reporting_to,
+        'Reporting Department': data.reporting_to_dept,
+        Email: data.email_address,
+        Phone: data.phone_number,
+        Address: data.home_address,
+        Spouse: data.spouse,
+        Bank: data.bank_name,
+        'Bank Number': data.bank_number,
+        'Limit Amount': data.limit_amount,
+      };
       this.view = true;
       this.form = {
         branch: data.branch,
@@ -471,6 +496,7 @@ export default {
     },
     Register() {
       console.log('form ', this.form);
+      this.loading = true;
       // Post the 'form' object to API
       const registerData = {
         company_name: this.form.company,
@@ -481,7 +507,7 @@ export default {
         employeeId: this.form.employeeId,
         department: this.form.department,
         reportingToDept: this.form.reportingDepartment,
-        reportingToId: this.form.reportingId,
+        reportingToId: this.form.reportingId.split('(')[1].split(')')[0],
         position: this.form.position,
       };
       console.log('Form Data:', registerData);
@@ -493,6 +519,7 @@ export default {
         )
         .then((response) => {
           console.log('Response:', response.data);
+          this.loading = false;
 
           // Handle success
         })
