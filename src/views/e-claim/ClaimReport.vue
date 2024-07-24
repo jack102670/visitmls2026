@@ -3289,6 +3289,11 @@ export default {
                   const uniqueCodeLT = this.generateUniqueCode(claim.tabTitle);
                   const userId = this.userDetails.userId;
                   console.log("unik kod:", uniqueCodeLT);
+
+                   const transportSpec = claim.TransportLT.toLowerCase() === 'personal transport'
+                  ? claim.TransportSpec
+                  : claim.PublicTransportSpec;
+
                   const thisisforlocal1 = {
                     requester_id: this.userDetails.userId,
                     mileage_km: claim.MileageKMLT || 0,
@@ -3303,7 +3308,7 @@ export default {
                     transport_mode: claim.TransportLT,
                     trip_mode: claim.tripwayLT,
                     total_mileage: claim.MileageRMLT || 0,
-                    transport_specification: claim.TransportSpec,
+                    transport_specification: transportSpec,
                     fare: claim.FareRMLT || 0,
                   };
                   axiosInstance = axios.create({
