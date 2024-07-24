@@ -228,7 +228,10 @@ export default {
         employeeId: this.form.employeeId,
         department: this.form.department,
         reportingToDept: this.form.reportingDepartment,
-        reportingToId: this.form.reportingId.split('(')[1].split(')')[0],
+        reportingToId: this.form.reportingId.split('(')[
+          // eslint-disable-next-line no-unexpected-multiline
+          this.form.reportingId.split('(').length - 1
+        ].split(')')[0],
         position: this.form.position,
       };
       console.log('Form Data:', registerData);
