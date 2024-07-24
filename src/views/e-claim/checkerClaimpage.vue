@@ -392,9 +392,14 @@
                 >
                   <p>
                     {{
-                      checked || rejectChecker || resubmitChecker || reimbursed
-                        ? adminStatus
-                        : ''
+                      approved ||
+                      rejectApprover ||
+                      resubmitApprover ||
+                      reimbursed
+                        ? 'CHECKED'
+                        : checked || rejectChecker || resubmitChecker
+                          ? adminStatus
+                          : ''
                     }}
                   </p>
                 </div>
