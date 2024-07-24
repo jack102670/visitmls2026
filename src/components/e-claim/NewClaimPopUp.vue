@@ -53,7 +53,7 @@
             >
 
             <div class="flex justify-between">
-              <input
+              <input disabled
                 type="text"
                 required
                 placeholder="Company name.."

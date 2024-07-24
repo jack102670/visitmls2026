@@ -3608,6 +3608,7 @@ export default {
                     thisisforHandphoneBillReimbursement
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
+                 
                 }
                 break;
               case "handphone bill reimbursement":
@@ -3653,6 +3654,7 @@ export default {
                       `Data successfully submitted for handphone bill reimbursement:`,
                       response.data
                     );
+                    
                     // Handle success here, e.g., update UI or notify user
                   } catch (error) {
                     if (error.response) {
@@ -3730,6 +3732,7 @@ export default {
                 console.error(`No endpoint found for ${title}`);
                 continue; // Skip to the next iteration
             }
+            this.$router.push({ name: 'eclaimhomepages' }); 
           } catch (error) {
             if (error.response) {
               // The request was made and the server responded with a status code
