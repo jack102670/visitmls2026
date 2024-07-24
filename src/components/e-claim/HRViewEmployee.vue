@@ -445,7 +445,7 @@ export default {
     };
   },
   methods: {
-    ViewEmployee(data) {
+    async ViewEmployee(data) {
       this.employee = {
         profile_picture: data.profile_picture,
         Username: data.username,
@@ -465,23 +465,9 @@ export default {
         'Bank Number': data.bank_number,
         'Limit Amount': data.limit_amount,
       };
+
       this.view = true;
-      this.form = {
-        branch: data.branch,
-        company: data.company_name,
-        department: data.department,
-        position: data.position_title,
-        userId: data.name,
-        employeeId: data.emp_id,
-        reportingDepartment: data.reporting_to_dept,
-        reportingId:
-          (data.name ? data.name : data.username) +
-          ' (' +
-          data.reporting_to +
-          ')',
-        limit: data.limit_amount,
-        userNameId: data.username_id,
-      };
+      await this.getFormData(data, data.reporting_to);
     },
     initializeDataTable() {
       $(this.$refs.myTable).DataTable({});
@@ -496,6 +482,28 @@ export default {
           this.$nextTick(() => {
             this.initializeDataTable();
           });
+        });
+    },
+    async getFormData(data, id) {
+      await axios
+        .get('http://172.28.28.91:97/api/User/GetAllEmployees')
+        .then((response) => {
+          const reportingName = response.data.result.filter(
+            (item) => item.emp_id == id
+          )[0].name;
+
+          this.form = {
+            branch: data.branch,
+            company: data.company_name,
+            department: data.department,
+            position: data.position_title,
+            userId: data.name,
+            employeeId: data.emp_id,
+            reportingDepartment: data.reporting_to_dept,
+            reportingId: reportingName + ' (' + data.reporting_to + ')',
+            limit: data.limit_amount,
+            userNameId: data.username_id,
+          };
         });
     },
     Register() {
