@@ -92,13 +92,20 @@ export default {
         fetch(`http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`)
           .then((response) => response.json())
           .then((data) => {
-            const userStatus = data.result[0].account_status;
-            console.log('User status:', userStatus);
-            if (userStatus === '0') {
-              resolve(false);
+            if(data.result.length > 0) {
+              const userStatus = data.result[0].account_status;
+              if (userStatus === '0') {
+              resolve(0);
             } else {
-              resolve(true);
+              resolve(1);
             }
+            }
+            else{
+              resolve(2);
+            }
+            
+           // console.log('User status:', userStatus);
+            
           })
           .catch((error) => {
             console.error('There was an error fetching the user status:', error);
@@ -111,10 +118,13 @@ export default {
 
       if (card.title === "E-claim System") {
         this.checkUserStatusAndShowModal().then((hasCompletedProfile) => {
-          if (!hasCompletedProfile) {
+          if (hasCompletedProfile === 0) {
             alert("Please complete your profile before using the E-claim system.");
-          } else {
+          } else if(hasCompletedProfile === 1) {
             window.location.href = card.link;
+          }
+          else if(hasCompletedProfile === 2){
+            alert("You don't have user profile yet. Please contact the HR administrator.");
           }
         });
       } else {
