@@ -2703,7 +2703,7 @@ export default {
     },
 
     generateNewFileName(originalName, fieldId) {
-      let prefix = "";
+      let prefix = '';
       switch (fieldId) {
         case "UploadMileageRMLT":
           prefix = "MILEAGE_";
@@ -2765,6 +2765,7 @@ export default {
         console.error("Error adding file:", error.message);
         return;
       }
+
       // Generate new filename based on the expense name and original filename
       const expenseName = this.newExpense.name || "UNKNOWN";
       const newFileName = `${expenseName}_${file.file.name}`;
@@ -2776,7 +2777,6 @@ export default {
       filesArray.push(renamedFile);
       console.log('File added:', renamedFile);
       console.log('Updated files:', filesArray);
-   
     },
 
     handleRemoveFileOT(error, file, filesArray) {
@@ -2796,7 +2796,7 @@ export default {
       }
       if (error) {
         console.error(
-          "An error occurred while removing the file:",
+          'An error occurred while removing the file:',
           error.message
         );
         return;

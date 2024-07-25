@@ -246,115 +246,127 @@
                   </h2>
                   <div class="space-y-4">
                     <div class="mt-4">
-              <label class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
-                >Profile Picture</label
-              >
-              <div class="flex items-center mt-2">
-                <img
-                  :src="profile_picture || defaultProfilePicture"
-                  alt="Profile Picture"
-                  class="w-24 h-24 rounded-full border-2 border-gray-200"
-                />
-                <div class="ml-4">
-                  <input
-                    type="file"
-                    @change="onProfilePictureChange"
-                    class="block w-full text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                  />
-                  <button
-                    @click="deleteProfilePicture"
-                    class="mt-2 text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="w-5 h-5"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Image Crop Modal -->
-            <div v-if="showCropper" class="fixed z-50 inset-0 overflow-y-auto">
-              <div
-                class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
-              >
-                <div
-                  class="fixed inset-0 transition-opacity"
-                  aria-hidden="true"
-                >
-                  <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-                </div>
-                <span
-                  class="hidden sm:inline-block sm:align-middle sm:h-screen"
-                  aria-hidden="true"
-                ></span>
-
-                <div
-                  class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-                >
-                  <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-start">
-                      <div
-                        class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10"
+                      <label
+                        class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
+                        >Profile Picture</label
                       >
-                        <svg
-                          class="h-6 w-6 text-blue-600"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M4 6H20M4 10H20M4 14H20M4 18H20"
-                          ></path>
-                        </svg>
-                      </div>
-                      <div
-                        class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left"
-                      >
-                        <h3 class="text-lg leading-6 font-medium text-gray-900">
-                          Crop Image
-                        </h3>
-                        <div class="mt-2">
-                          <img ref="image" :src="tempImageUrl" class="w-full" />
+                      <div class="flex items-center mt-2">
+                        <img
+                          :src="profile_picture || defaultProfilePicture"
+                          alt="Profile Picture"
+                          class="w-24 h-24 rounded-full border-2 border-gray-200"
+                        />
+                        <div class="ml-4">
+                          <input
+                            type="file"
+                            @change="onProfilePictureChange"
+                            class="block w-full text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                          />
+                          <button
+                            @click="deleteProfilePicture"
+                            class="mt-2 text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.5"
+                              stroke="currentColor"
+                              class="w-5 h-5"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                              />
+                            </svg>
+                          </button>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div
-                    class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
-                  >
-                    <button
-                      @click="cropImage"
-                      type="button"
-                      class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+
+                    <!-- Image Crop Modal -->
+                    <div
+                      v-if="showCropper"
+                      class="fixed z-50 inset-0 overflow-y-auto"
                     >
-                      Proceed
-                    </button>
-                    <button
-                      @click="cancelCrop"
-                      type="button"
-                      class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+                      <div
+                        class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+                      >
+                        <div
+                          class="fixed inset-0 transition-opacity"
+                          aria-hidden="true"
+                        >
+                          <div
+                            class="absolute inset-0 bg-gray-500 opacity-75"
+                          ></div>
+                        </div>
+                        <span
+                          class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                          aria-hidden="true"
+                        ></span>
+
+                        <div
+                          class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                        >
+                          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <div class="sm:flex sm:items-start">
+                              <div
+                                class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10"
+                              >
+                                <svg
+                                  class="h-6 w-6 text-blue-600"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M4 6H20M4 10H20M4 14H20M4 18H20"
+                                  ></path>
+                                </svg>
+                              </div>
+                              <div
+                                class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left"
+                              >
+                                <h3
+                                  class="text-lg leading-6 font-medium text-gray-900"
+                                >
+                                  Crop Image
+                                </h3>
+                                <div class="mt-2">
+                                  <img
+                                    ref="image"
+                                    :src="tempImageUrl"
+                                    class="w-full"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
+                          >
+                            <button
+                              @click="cropImage"
+                              type="button"
+                              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                            >
+                              Proceed
+                            </button>
+                            <button
+                              @click="cancelCrop"
+                              type="button"
+                              class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <div>
                       <label
                         class="block text-sm font-semibold text-gray-600 dark:text-gray-200"
@@ -447,6 +459,47 @@
               </div>-->
             </div>
           </div>
+
+          <!-- Loading Animation -->
+          <div
+            class="w-screen h-screen fixed z-40 flex justify-center items-center top-0 left-0"
+            v-if="loading"
+          >
+            <div
+              class="absolute w-screen h-screen bg-gray-900 opacity-30"
+            ></div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 200 200"
+              class="w-16 h-16 z-50"
+            >
+              <circle
+                transform="rotate(0)"
+                transform-origin="center"
+                fill="none"
+                stroke="blue"
+                stroke-width="10"
+                stroke-linecap="round"
+                stroke-dasharray="230 1000"
+                stroke-dashoffset="0"
+                cx="100"
+                cy="100"
+                r="70"
+              >
+                <animateTransform
+                  attributeName="transform"
+                  type="rotate"
+                  from="0"
+                  to="360"
+                  dur="2"
+                  repeatCount="indefinite"
+                ></animateTransform>
+              </circle>
+            </svg>
+            <h1 class="text-gray-50 font-semibold z-50 ml-2 text-lg">
+              {{ loadingText }} Data...
+            </h1>
+          </div>
         </div>
       </div>
     </div>
@@ -454,33 +507,36 @@
 </template>
 
 <script>
-import { bankOptions } from "@/javascript/eClaimOptions.js";
-import Cropper from "cropperjs";
-import "cropperjs/dist/cropper.css";
-import axios from "axios";
-import { store } from "@/views/store.js";
+import { bankOptions } from '@/javascript/eClaimOptions.js';
+import Cropper from 'cropperjs';
+import 'cropperjs/dist/cropper.css';
+import axios from 'axios';
+import { store } from '@/views/store.js';
 
 export default {
   data() {
     return {
       user: {
-        name: "",
-        branch: "",
-        department: "",
-        emp_id: "",
-        reporting_to: "",
-        reporting_to_dept: "",
-        email_address: "",
-        phone_number: "",
-        bank_name: "",
-        bank_number: "",
-        spouse: "",
-        home_address: "",
+        name: '',
+        branch: '',
+        department: '',
+        emp_id: '',
+        reporting_to: '',
+        reporting_to_dept: '',
+        email_address: '',
+        phone_number: '',
+        bank_name: '',
+        bank_number: '',
+        spouse: '',
+        home_address: '',
         profile_picture: null,
       },
-      defaultProfilePicture: require("@/assets/images/profile.png"),
+      defaultProfilePicture: require('@/assets/images/profile.png'),
       showUpdateModal: false,
       bankOptions: bankOptions,
+
+      loading: false,
+      loadingText: '',
     };
   },
   created() {
@@ -490,6 +546,8 @@ export default {
   },
   methods: {
     updateEmployeeData() {
+      this.loadingText = 'Uploading';
+      this.loading = true;
       const employeeData = {
         emp_id: this.user.emp_id,
         name: this.user.name,
@@ -500,29 +558,32 @@ export default {
         spouse: this.user.spouse,
         phone_number: this.user.phone_number,
       };
-      console.log("Employee Data:", employeeData);
+      console.log('Employee Data:', employeeData);
       axios
-        .put("http://172.28.28.91:97/api/User/UpdateEmployee", employeeData)
+        .put('http://172.28.28.91:97/api/User/UpdateEmployee', employeeData)
         .then((response) => {
-          console.log("Response:", response);
-          if (response.data.status_code === "200") {
-            console.log("Successfully Updated:", response.data.message);
-            alert("Successfully Updated.");
+          console.log('Response:', response);
+          if (response.data.status_code === '200') {
+            console.log('Successfully Updated:', response.data.message);
+            alert('Successfully Updated.');
             this.showUpdateModal = false;
           } else {
-            console.error("Backend error:", response.data.message);
+            console.error('Backend error:', response.data.message);
             alert(
-              response.data.message || "Failed to update. Please try again."
+              response.data.message || 'Failed to update. Please try again.'
             );
           }
+          this.loading = false;
         })
         .catch((error) => {
-          console.error("Error updating employee data:", error);
-          alert("An error occurred while updating employee data.");
+          console.error('Error updating employee data:', error);
+          alert('An error occurred while updating employee data.');
         });
     },
 
     fetchHrData() {
+      this.loadingText = 'Fetching';
+      this.loading = true;
       const username_id = store.getSession().userDetails.userId;
       axios
         .get(`http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`)
@@ -545,45 +606,49 @@ export default {
             this.user.spouse = user.spouse;
             this.user.home_address = user.home_address;
           }
+          this.loading = false;
         })
         .catch((error) => {
-          console.error("Error fetching HR data:", error);
+          console.error('Error fetching HR data:', error);
         });
     },
 
     uploadimg() {
-      console.log("Profile picture value:", this.profile_picture);
+      console.log('Profile picture value:', this.profile_picture);
+      this.loadingText = 'Uploading';
+      this.loading = true;
       if (!this.profile_picture) {
         return;
       }
       const formData = new FormData();
       formData.append(
-        "profile_picture",
+        'profile_picture',
         this.dataURLtoBlob(this.profile_picture)
       );
-      formData.append("emp_id", store.getSession().userDetails.userId);
+      formData.append('emp_id', store.getSession().userDetails.userId);
       axios
-        .put("http://172.28.28.91:97/api/User/UpdateImage", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
+        .put('http://172.28.28.91:97/api/User/UpdateImage', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
         })
         .then((response) => {
-          console.log("File uploaded successfully:", response.data);
+          console.log('File uploaded successfully:', response.data);
+          this.loading = true;
         })
         .catch((error) => {
           if (error.response) {
-            console.error("Error status:", error.response.status);
-            console.error("Error data:", error.response.data);
+            console.error('Error status:', error.response.status);
+            console.error('Error data:', error.response.data);
           } else if (error.request) {
-            console.error("No response received:", error.request);
+            console.error('No response received:', error.request);
           } else {
-            console.error("Error", error.message);
+            console.error('Error', error.message);
           }
-          console.error("Error config:", error.config);
+          console.error('Error config:', error.config);
         });
     },
 
     dataURLtoBlob(dataurl) {
-      const arr = dataurl.split(",");
+      const arr = dataurl.split(',');
       const mime = arr[0].match(/:(.*?);/)[1];
       const bstr = atob(arr[1]);
       let n = bstr.length;

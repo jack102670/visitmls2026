@@ -2638,39 +2638,42 @@
     </div>
     <!-- Loading Animation -->
     <div
-      class="w-screen h-screen fixed z-40 flex justify-center items-center top-0 left-0"
-      v-if="loading && !approveSuccess"
+    class="w-screen h-screen fixed z-40 flex justify-center items-center top-0 left-0"
+    v-if="loading"
+  >
+    <div class="absolute w-screen h-screen bg-gray-900 opacity-30"></div>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 200 200"
+      class="w-16 h-16 z-50"
     >
-      <div class="absolute w-screen h-screen bg-gray-900 opacity-10"></div>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 200 200"
-        class="w-24 h-24 z-50"
+      <circle
+        transform="rotate(0)"
+        transform-origin="center"
+        fill="none"
+        stroke="blue"
+        stroke-width="10"
+        stroke-linecap="round"
+        stroke-dasharray="230 1000"
+        stroke-dashoffset="0"
+        cx="100"
+        cy="100"
+        r="70"
       >
-        <circle
-          transform="rotate(0)"
-          transform-origin="center"
-          fill="none"
-          stroke="blue"
-          stroke-width="10"
-          stroke-linecap="round"
-          stroke-dasharray="230 1000"
-          stroke-dashoffset="0"
-          cx="100"
-          cy="100"
-          r="70"
-        >
-          <animateTransform
-            attributeName="transform"
-            type="rotate"
-            from="0"
-            to="360"
-            dur="2"
-            repeatCount="indefinite"
-          ></animateTransform>
-        </circle>
-      </svg>
-    </div>
+        <animateTransform
+          attributeName="transform"
+          type="rotate"
+          from="0"
+          to="360"
+          dur="2"
+          repeatCount="indefinite"
+        ></animateTransform>
+      </circle>
+    </svg>
+    <h1 class="text-gray-50 font-semibold z-50 ml-2 text-lg">
+      {{ loadingText }} Data...
+    </h1>
+  </div>
   </main>
 </template>
 
@@ -2721,6 +2724,7 @@ export default {
         fileUpload: formStore.getFormData().fileUpload.slice(), // Ensure we work with a copy
       },
       loading: false,
+      loadingText: '',
     };
   },
 
@@ -3172,6 +3176,7 @@ export default {
       //   alert("Please add at least one claim data before submit");
       //   return;
       // }
+      this.loadingText = 'Uploading';
       this.loading = true;
 
       const referenceNumber = await this.fetchSerialNumber();
