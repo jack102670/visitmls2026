@@ -79,7 +79,7 @@
                         field.id !== 'UploadMileageRMLT' &&
                         field.id !== 'TransportSpec' &&
                         field.id !== 'PublicTransportSpec' &&
-                        field.id !== 'FareRMLT'  &&
+                        field.id !== 'FareRMLT' &&
                         field.id !== 'UploadFareRMLT')
                     "
                   >
@@ -107,7 +107,7 @@
                           v-if="
                             !isPersonalTransport ||
                             (field.id !== 'FareRMLT' &&
-                            field.id !== 'UploadFareRMLT' &&
+                              field.id !== 'UploadFareRMLT' &&
                               field.id !== 'PublicTransportSpec')
                           "
                         >
@@ -336,7 +336,11 @@
                               />
                               <file-pond
                                 v-if="
-                                  field.id === 'UploadLT' || field.id === 'UploadOT' || field.id === 'UploadOthers' || field.id === 'UploadHR' || field.id === 'UploadML' 
+                                  field.id === 'UploadLT' ||
+                                  field.id === 'UploadOT' ||
+                                  field.id === 'UploadOthers' ||
+                                  field.id === 'UploadHR' ||
+                                  field.id === 'UploadML'
                                 "
                                 :name="field.id"
                                 :disabled="
@@ -493,7 +497,7 @@
                                   d="M7 8l5-5m0 0l5 5m-5-5v12"
                                 />
                               </svg>
-                            </button> 
+                            </button>
                           </template>
 
                           <template v-else-if="field.id === 'ParkingLT'">
@@ -535,7 +539,9 @@
                             </button>
                           </template>
 
-                          <template v-else-if="field.id === 'AirportLimoTeksiOT'">
+                          <template
+                            v-else-if="field.id === 'AirportLimoTeksiOT'"
+                          >
                             <input
                               v-model="field.value"
                               type="number"
@@ -572,7 +578,7 @@
                                   d="M7 8l5-5m0 0l5 5m-5-5v12"
                                 />
                               </svg>
-                            </button> 
+                            </button>
                           </template>
 
                           <template v-else>
@@ -591,7 +597,7 @@
                                 field.type === 'number' ? '0.01' : undefined
                               "
                               class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                            /> 
+                            />
                           </template>
                         </template>
                       </template>
@@ -1035,54 +1041,6 @@
                   </div>
 
                   <div v-if="subTab.title === 'Attendees'" class="mt-4">
-                    <div class="mb-4">
-                      <label class="inline-flex items-center mr-4">
-                        <input
-                          type="radio"
-                          value="pkt"
-                          v-model="selectedAttendeeType"
-                          class="form-radio"
-                        />
-                        <span
-                          class="ml-2 block text-sm font-medium text-gray-700"
-                          >PKT Staff</span
-                        >
-                      </label>
-                      <label class="inline-flex items-center">
-                        <input
-                          type="radio"
-                          value="notStaff"
-                          v-model="selectedAttendeeType"
-                          class="form-radio"
-                        />
-                        <span
-                          class="ml-2 block text-sm font-medium text-gray-700"
-                          >Not a Staff</span
-                        >
-                      </label>
-                    </div>
-
-                    <div v-if="selectedAttendeeType === 'pkt'" class="mb-4">
-                      <label
-                        for="companyName"
-                        class="block text-sm font-medium text-gray-700"
-                        >Company Name</label
-                      >
-                      <select
-                        v-model="selectedCompanyName"
-                        required
-                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                      >
-                        <option
-                          v-for="company in pktCompanies"
-                          :key="company"
-                          :value="company"
-                        >
-                          {{ company }}
-                        </option>
-                      </select>
-                    </div>
-
                     <button
                       @click="showModal = true"
                       class="px-4 py-2 bg-blue-500 text-white rounded"
@@ -1110,23 +1068,7 @@
                             class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                           />
                         </div>
-                        <div v-if="selectedAttendeeType === 'pkt'" class="mb-4">
-                          <label
-                            for="staffId"
-                            class="block text-sm font-medium text-gray-700"
-                            >Staff ID</label
-                          >
-                          <input
-                            type="text"
-                            v-model="modalForm.staffId"
-                            required
-                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                          />
-                        </div>
-                        <div
-                          v-if="selectedAttendeeType === 'notStaff'"
-                          class="mb-4"
-                        >
+                        <div class="mb-4">
                           <label
                             for="companyName"
                             class="block text-sm font-medium text-gray-700"
@@ -1176,23 +1118,7 @@
                               class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                             >
                               <div class="flex items-center gap-x-3">
-                                <span>Staff ID</span>
-                              </div>
-                            </th>
-                            <th
-                              scope="col"
-                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                            >
-                              <div class="flex items-center gap-x-3">
                                 <span>Company Name</span>
-                              </div>
-                            </th>
-                            <th
-                              scope="col"
-                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                            >
-                              <div class="flex items-center gap-x-3">
-                                <span>Status</span>
                               </div>
                             </th>
                             <th
@@ -1220,17 +1146,7 @@
                             <td
                               class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                             >
-                              {{ attendee.staffId || "-" }}
-                            </td>
-                            <td
-                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                            >
                               {{ attendee.companyName }}
-                            </td>
-                            <td
-                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                            >
-                              {{ attendee.status }}
                             </td>
                             <td
                               class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
@@ -2767,7 +2683,7 @@ export default {
       }
     },
 
-     generateNewFileName(originalName, fieldId) {
+    generateNewFileName(originalName, fieldId) {
       let prefix = "";
       switch (fieldId) {
         case "UploadMileageRMLT":
@@ -2788,7 +2704,7 @@ export default {
         default:
           prefix = "SUPPORTING_DOC_";
       }
-      return `${prefix}${originalName}`; 
+      return `${prefix}${originalName}`;
     },
 
     handleAddFile(error, file, field) {
@@ -2826,33 +2742,38 @@ export default {
     },
 
     handleAddFileOT(error, file, filesArray) {
-    if (error) {
-      console.error("Error adding file:", error.message);
-      return;
-    }
-    // Generate new filename based on the expense name and original filename
-    const expenseName = this.newExpense.name || 'UNKNOWN';
-    const newFileName = `${expenseName}_${file.file.name}`;
-    const renamedFile = new File([file.file], newFileName, { type: file.file.type });
-    
-    // Add renamed file to the files array
-    filesArray.push(renamedFile);
-    console.log("File added:", renamedFile);
-    console.log("Updated files:", filesArray);
-    },
-  
-    handleRemoveFileOT(error, file, filesArray) {
-    if (error) {
-      console.error("An error occurred while removing the file:", error.message);
-      return;
-    }
-    const fileObject = file.file;
-    const index = filesArray.findIndex((f) => f.name === fileObject.name);
-    if (index !== -1) {
-      filesArray.splice(index, 1);
-      console.log("File removed:", fileObject.name, fileObject);
+      if (error) {
+        console.error("Error adding file:", error.message);
+        return;
+      }
+      // Generate new filename based on the expense name and original filename
+      const expenseName = this.newExpense.name || "UNKNOWN";
+      const newFileName = `${expenseName}_${file.file.name}`;
+      const renamedFile = new File([file.file], newFileName, {
+        type: file.file.type,
+      });
+
+      // Add renamed file to the files array
+      filesArray.push(renamedFile);
+      console.log("File added:", renamedFile);
       console.log("Updated files:", filesArray);
-    }
+    },
+
+    handleRemoveFileOT(error, file, filesArray) {
+      if (error) {
+        console.error(
+          "An error occurred while removing the file:",
+          error.message
+        );
+        return;
+      }
+      const fileObject = file.file;
+      const index = filesArray.findIndex((f) => f.name === fileObject.name);
+      if (index !== -1) {
+        filesArray.splice(index, 1);
+        console.log("File removed:", fileObject.name, fileObject);
+        console.log("Updated files:", filesArray);
+      }
     },
 
     updateFieldVisibility(transportValue) {
@@ -3024,7 +2945,8 @@ export default {
       const uploadfareRMLTField = localTravellingTab.fields.find(
         (field) => field.id === "UploadFareRMLT"
       );
-      if (!publicTransportField || !fareRMLTField || !uploadfareRMLTField) return;
+      if (!publicTransportField || !fareRMLTField || !uploadfareRMLTField)
+        return;
 
       if (personalTransportValue === "Personal Transport") {
         publicTransportField.hidden = true;
@@ -3084,30 +3006,13 @@ export default {
     },
 
     addAttendee() {
-      const { name, staffId, companyName } = this.modalForm;
-      if (this.selectedAttendeeType === "pkt" && name && staffId) {
-        this.attendees.push({
-          name,
-          staffId,
-          companyName: this.selectedCompanyName,
-          status: "PKT Staff",
-        });
-      } else if (
-        this.selectedAttendeeType === "notStaff" &&
-        name &&
-        companyName
-      ) {
-        this.attendees.push({
-          name,
-          staffId: "",
-          companyName,
-          status: "Not a Staff",
-        });
-      }
+       this.attendees.push({
+        name: this.modalForm.name,
+        companyName: this.modalForm.companyName,
+      });
+      this.modalForm.name = '';
+      this.modalForm.companyName = '';
       this.showModal = false;
-      this.modalForm.name = "";
-      this.modalForm.staffId = "";
-      this.modalForm.companyName = "";
     },
 
     removeAttendee(index) {
