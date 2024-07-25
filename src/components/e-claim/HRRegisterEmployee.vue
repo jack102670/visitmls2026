@@ -131,16 +131,16 @@
           </div>
         </div>
 
-        <!-- Loading animation -->
+        <!-- Loading Animation -->
         <div
           class="w-screen h-screen fixed z-40 flex justify-center items-center top-0 left-0"
           v-if="loading"
         >
-          <div class="absolute w-screen h-screen bg-gray-900 opacity-10"></div>
+          <div class="absolute w-screen h-screen bg-gray-900 opacity-30"></div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 200 200"
-            class="w-24 h-24 z-50"
+            class="w-16 h-16 z-50"
           >
             <circle
               transform="rotate(0)"
@@ -165,6 +165,9 @@
               ></animateTransform>
             </circle>
           </svg>
+          <h1 class="text-gray-50 font-semibold z-50 ml-2 text-lg">
+            {{ loadingText }} Data...
+          </h1>
         </div>
       </div>
     </div>
@@ -208,10 +211,12 @@ export default {
       enableBtn: false,
 
       loading: true,
+      loadingText: '',
     };
   },
   methods: {
     Register() {
+      this.loadingText = 'Uploading';
       this.loading = true;
       // Post the 'form' object to API
       const registerData = {
@@ -252,6 +257,7 @@ export default {
         });
     },
     async fetchData() {
+      this.loadingText = 'Fetching';
       this.loading = true;
       await axios
         .get('http://172.28.28.91:89/api/Security/getusersAD')

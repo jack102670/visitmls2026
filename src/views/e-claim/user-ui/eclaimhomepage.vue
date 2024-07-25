@@ -1,5 +1,7 @@
 <template>
-  <main class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64">
+  <main
+    class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64"
+  >
     <div class="">
       <div
         class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-800 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
@@ -13,72 +15,77 @@
               Claim for Reimbursement of All Expenses
             </h3>
           </div>
-          <div class="flex mt-5">
-            
-          </div>
+          <div class="flex mt-5"></div>
 
           <hr class="h-mx-auto bg-gray-100 border-0 rounded" />
         </div>
-        <div class="pt-4 ml-4"><button
-              @click="ChangePopUp()"
-              class="flex items-center justify-center text-center rounded-full bg-[#160959] dark:bg-[#111827] text-slate-200 py-2 px-4 text-sm hover:bg-[#190a70] hover:text=white"
+        <div class="pt-4 ml-4">
+          <button
+            @click="ChangePopUp()"
+            class="flex items-center justify-center text-center rounded-full bg-[#160959] dark:bg-[#111827] text-slate-200 py-2 px-4 text-sm hover:bg-[#190a70] hover:text=white"
+          >
+            <svg
+              class="mr-1"
+              width="20"
+              height="20"
+              viewBox="0 0 48 48"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
-                class="mr-1"
-                width="20"
-                height="20"
-                viewBox="0 0 48 48"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M40 23V14L31 4H10C8.89543 4 8 4.89543 8 6V42C8 43.1046 8.89543 44 10 44H22"
-                  stroke="white"
-                  stroke-width="4"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M33 29V43"
-                  stroke="white"
-                  stroke-width="4"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M26 36H33H40"
-                  stroke="white"
-                  stroke-width="4"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M30 4V14H40"
-                  stroke="white"
-                  stroke-width="4"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
+              <path
+                d="M40 23V14L31 4H10C8.89543 4 8 4.89543 8 6V42C8 43.1046 8.89543 44 10 44H22"
+                stroke="white"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M33 29V43"
+                stroke="white"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M26 36H33H40"
+                stroke="white"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M30 4V14H40"
+                stroke="white"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
 
-              New Claim
-            </button></div>
+            New Claim
+          </button>
+        </div>
 
         <!-- Box Info Section-->
         <section>
           <div
-            class="p-5 mt-1 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 "
+            class="p-5 mt-1 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6"
           >
             <div
               class="relative overflow-hidden hover:bg-fuchsia-100 bg-white max-h-[1000px] dark:bg-[#111827] shadow-xl border-x-2 border-y-2 rounded-lg border-fuchsia-300 dark:border-fuchsia-200 dark:hover:bg-gray-800"
             >
               <div class="card m-2" @click="filterTable('Pending')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
-                    requests.filter((request) => request.status === "Approved")
-                      .length
-                  }}</span>
-                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
+                  <span
+                    class="text-gray-800 text-2xl font-bold dark:text-slate-200"
+                    >{{
+                      requests.filter(
+                        (request) => request.status === 'Approved'
+                      ).length
+                    }}</span
+                  >
+                  <span
+                    class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
                     >Resubmission</span
                   >
                 </div>
@@ -87,13 +94,18 @@
             <div
               class="relative overflow-hidden dark:bg-[#111827] dark:border-green-200 dark:hover:bg-gray-800 hover:bg-green-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-green-300 rounded-lg"
             >
-              <div class="card m-2 " @click="filterTable('Approved')">
+              <div class="card m-2" @click="filterTable('Approved')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
-                    requests.filter((request) => request.status === "Approved")
-                      .length
-                  }}</span>
-                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
+                  <span
+                    class="text-gray-800 text-2xl font-bold dark:text-slate-200"
+                    >{{
+                      requests.filter(
+                        (request) => request.status === 'Approved'
+                      ).length
+                    }}</span
+                  >
+                  <span
+                    class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
                     >Approved</span
                   >
                 </div>
@@ -102,13 +114,18 @@
             <div
               class="relative overflow-hidden dark:bg-[#111827] dark:border-blue-200 dark:hover:bg-gray-800 hover:bg-amber-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-amber-300 rounded-lg"
             >
-              <div class="card m-2 " @click="filterTable('Verified')">
+              <div class="card m-2" @click="filterTable('Verified')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
-                    requests.filter((request) => request.status === "Verified")
-                      .length
-                  }}</span>
-                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
+                  <span
+                    class="text-gray-800 text-2xl font-bold dark:text-slate-200"
+                    >{{
+                      requests.filter(
+                        (request) => request.status === 'Verified'
+                      ).length
+                    }}</span
+                  >
+                  <span
+                    class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
                     >Verified</span
                   >
                 </div>
@@ -120,11 +137,16 @@
             >
               <div class="card m-2" @click="filterTable('rejected')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
-                    requests.filter((request) => request.status === "rejected")
-                      .length
-                  }}</span>
-                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
+                  <span
+                    class="text-gray-800 text-2xl font-bold dark:text-slate-200"
+                    >{{
+                      requests.filter(
+                        (request) => request.status === 'rejected'
+                      ).length
+                    }}</span
+                  >
+                  <span
+                    class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
                     >Rejected</span
                   >
                 </div>
@@ -135,14 +157,17 @@
             >
               <div class="card m-2" @click="filterTable('reimburse')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
+                  <span
+                    class="text-gray-800 text-2xl font-bold dark:text-slate-200"
+                  >
                     {{
                       requests.filter(
-                        (request) => request.status === "Approved"
+                        (request) => request.status === 'Approved'
                       ).length
                     }}</span
                   >
-                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
+                  <span
+                    class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
                     >Reimburse</span
                   >
                 </div>
@@ -153,10 +178,12 @@
             >
               <div class="card m-2" @click="filterTable('')">
                 <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
-                    this.requests.length
-                  }}</span>
-                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
+                  <span
+                    class="text-gray-800 text-2xl font-bold dark:text-slate-200"
+                    >{{ this.requests.length }}</span
+                  >
+                  <span
+                    class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
                     >All Claims</span
                   >
                 </div>
@@ -191,7 +218,7 @@
                 >
                   <table
                     ref="myTable"
-                    class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe "
+                    class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe"
                   >
                     <thead class="bg-gray-50 dark:bg-gray-800">
                       <tr>
@@ -321,8 +348,8 @@
                             ></span>
                             <h2 :class="getStatusTextClass(data.admin_status)">
                               {{
-                                data.admin_status === ""
-                                  ? "OPEN"
+                                data.admin_status === ''
+                                  ? 'OPEN'
                                   : data.admin_status
                               }}
                             </h2>
@@ -545,13 +572,51 @@
           </div>
         </section>
 
+        <!-- Loading Animation -->
+        <div
+          class="w-screen h-screen fixed z-40 flex justify-center items-center top-0 left-0"
+          v-if="loading"
+        >
+          <div class="absolute w-screen h-screen bg-gray-900 opacity-30"></div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 200 200"
+            class="w-16 h-16 z-50"
+          >
+            <circle
+              transform="rotate(0)"
+              transform-origin="center"
+              fill="none"
+              stroke="blue"
+              stroke-width="10"
+              stroke-linecap="round"
+              stroke-dasharray="230 1000"
+              stroke-dashoffset="0"
+              cx="100"
+              cy="100"
+              r="70"
+            >
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                from="0"
+                to="360"
+                dur="2"
+                repeatCount="indefinite"
+              ></animateTransform>
+            </circle>
+          </svg>
+          <h1 class="text-gray-50 font-semibold z-50 ml-2 text-lg">
+            {{ loadingText }} Data...
+          </h1>
+        </div>
+
         <div
           class="mt-5 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4"
         ></div>
       </div>
     </div>
     <NewClaimPopUp
-  
       v-if="popup"
       @close="ChangePopUp()"
       :class="[animate ? 'PopUpAnimation' : 'BackAnimation']"
@@ -560,19 +625,19 @@
 </template>
 
 <script>
-import { store } from "../../store.js";
+import { store } from '../../store.js';
 // import CreateNewClaimPopUp from '@/components/e-claim/CreateNewClaimPopUp.vue';
-import NewClaimPopUp from "@/components/e-claim/NewClaimPopUp.vue";
-import $ from "jquery";
-import "datatables.net-dt";
-import "datatables.net-dt/css/jquery.dataTables.min.css";
+import NewClaimPopUp from '@/components/e-claim/NewClaimPopUp.vue';
+import $ from 'jquery';
+import 'datatables.net-dt';
+import 'datatables.net-dt/css/jquery.dataTables.min.css';
 // import axios from "axios";
 export default {
   components: {
     // CreateNewClaimPopUp,
     NewClaimPopUp,
   },
-  name: "homepageeclaiM",
+  name: 'homepageeclaiM',
   data() {
     return {
       isClickModal: false,
@@ -580,41 +645,41 @@ export default {
       requests: [],
       dummyData: [
         {
-          location: "HQ",
-          typeOfRequest: "Badge Request",
-          activity: "Entertainment",
-          name: "MR MAN",
-          id: "ET2584232",
-          startDate: "20 July 2024",
-          endDate: "20 July 2024",
-          adminStatus: "APPROVED",
+          location: 'HQ',
+          typeOfRequest: 'Badge Request',
+          activity: 'Entertainment',
+          name: 'MR MAN',
+          id: 'ET2584232',
+          startDate: '20 July 2024',
+          endDate: '20 July 2024',
+          adminStatus: 'APPROVED',
         },
         {
-          location: "HQ",
-          typeOfRequest: "",
-          activity: "Entertainment",
-          name: "MS WOMAN",
-          id: "ET2584233",
-          startDate: "21 July 2024",
-          endDate: "21 July 2024",
-          adminStatus: "PENDING",
+          location: 'HQ',
+          typeOfRequest: '',
+          activity: 'Entertainment',
+          name: 'MS WOMAN',
+          id: 'ET2584233',
+          startDate: '21 July 2024',
+          endDate: '21 July 2024',
+          adminStatus: 'PENDING',
         },
         {
-          location: "HQ",
-          typeOfRequest: "",
-          activity: "Entertainment",
-          name: "MS WOMAN",
-          id: "ET2584233",
-          startDate: "21 July 2024",
-          endDate: "21 July 2024",
-          adminStatus: "REIMBURSE",
+          location: 'HQ',
+          typeOfRequest: '',
+          activity: 'Entertainment',
+          name: 'MS WOMAN',
+          id: 'ET2584233',
+          startDate: '21 July 2024',
+          endDate: '21 July 2024',
+          adminStatus: 'REIMBURSE',
         },
       ],
       datatable: [
         {
-          name: "HQ",
-          status: "APPROVED",
-          date_requested: "20 July 2024",
+          name: 'HQ',
+          status: 'APPROVED',
+          date_requested: '20 July 2024',
         },
       ],
 
@@ -628,11 +693,14 @@ export default {
       // medicalLeave: [],
       // others: [],
       // claimDetails: {},
+
+      loading: false,
+      loadingText: '',
     };
   },
   computed: {
     reimburseCount() {
-      return this.requests.filter((request) => request.status === "reimburse")
+      return this.requests.filter((request) => request.status === 'reimburse')
         .length;
     },
   },
@@ -641,13 +709,12 @@ export default {
     popup(newValue) {
       const body = document.querySelector('body');
       body.style.overflow = newValue ? 'hidden' : 'auto';
-    }
+    },
   },
 
   methods: {
-   
     showclaim(rn) {
-      this.$router.push({ name: "SummaryClaimpage", params: { rn } });
+      this.$router.push({ name: 'SummaryClaimpage', params: { rn } });
     },
     //     async showModal(referenceNumber) {
     //       this.isClickModal = true;
@@ -716,8 +783,8 @@ export default {
     //     },
 
     //showYourModalWithData() {
-      // Logic to display the modal with the fetched data
-     // console.log(data); // For demonstration
+    // Logic to display the modal with the fetched data
+    // console.log(data); // For demonstration
     //},
     // closeClickModal() {
     //   this.isClickModal = false;
@@ -731,10 +798,12 @@ export default {
       dataTable.search(status).draw();
     },
     async fetchAllRequests() {
+      this.loadingText = 'Fetching';
+      this.loading = true;
       const userId = store.getSession().userDetails.userId;
       // console.log("userId", userId);
       if (!userId) {
-        console.error("UserId is not set.");
+        console.error('UserId is not set.');
         return;
       }
       try {
@@ -742,69 +811,75 @@ export default {
           `http://172.28.28.91:86/api/User/GetAllRequests/${userId}`
         );
         if (!response.ok) {
-          throw new Error("Failed to fetch requests");
+          throw new Error('Failed to fetch requests');
         }
         const data = await response.json();
         this.requests = data.result; // Update your data property with the fetched data
+        this.loading = false;
         // console.log("Fetched requests:", this.requests);
       } catch (error) {
-        console.error("Error fetching requests:", error);
+        console.error('Error fetching requests:', error);
       }
     },
     getStatusContainerClass(status) {
       const colorMap = {
         RESUBMISSION:
-          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800",
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
         CLOSE:
-          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800",
-        "": "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-indigo-100/60 dark:bg-gray-800",
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800',
+        '': 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-indigo-100/60 dark:bg-gray-800',
         APPROVED:
-          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800",
-          "APPROVED. AWAITING PAYMENT.":
-          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800",
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
+        'APPROVED. AWAITING PAYMENT.':
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
         COMPLETED:
-          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800",
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800',
         REJECTED:
-          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800",
-          "VERIFIED. WAITING FOR APPROVAL.": "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800",
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800',
+        'VERIFIED. WAITING FOR APPROVAL.':
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
         PENDING:
-          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800",
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
         REIMBURSE:
-          "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-white-100/60 dark:bg-gray-800",
-          "REJECTED. CHECK DETAILS." : "inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800", 
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-white-100/60 dark:bg-gray-800',
+        'REJECTED. CHECK DETAILS.':
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800',
       };
-      return colorMap[status] || "  bg-orange-100/ 60 dark:bg-gray-800"; // Default to a dark color if the status is not recognized
+      return colorMap[status] || '  bg-orange-100/ 60 dark:bg-gray-800'; // Default to a dark color if the status is not recognized
     },
     getStatusDotClass(status) {
       const colorMap = {
-        RESUBMISSION: "h-1.5 w-1.5 rounded-full bg-orange-500",
-        "": "h-1.5 w-1.5 rounded-full bg-indigo-500",
-        APPROVED: "h-1.5 w-1.5 rounded-full bg-emerald-500",
-        COMPLETED: "h-1.5 w-1.5 rounded-full bg-blue-500",
-        REJECTED: "h-1.5 w-1.5 rounded-full bg-red-500",
-        PENDING: "h-1.5 w-1.5 rounded-full bg-orange-500",
-        "APPROVED. AWAITING PAYMENT." : "h-1.5 w-1.5 rounded-full bg-emerald-500",
-        "VERIFIED. WAITING FOR APPROVAL.":"h-1.5 w-1.5 rounded-full bg-orange-500",
-        "REJECTED. CHECK DETAILS." : "h-1.5 w-1.5 rounded-full bg-red-500", 
+        RESUBMISSION: 'h-1.5 w-1.5 rounded-full bg-orange-500',
+        '': 'h-1.5 w-1.5 rounded-full bg-indigo-500',
+        APPROVED: 'h-1.5 w-1.5 rounded-full bg-emerald-500',
+        COMPLETED: 'h-1.5 w-1.5 rounded-full bg-blue-500',
+        REJECTED: 'h-1.5 w-1.5 rounded-full bg-red-500',
+        PENDING: 'h-1.5 w-1.5 rounded-full bg-orange-500',
+        'APPROVED. AWAITING PAYMENT.':
+          'h-1.5 w-1.5 rounded-full bg-emerald-500',
+        'VERIFIED. WAITING FOR APPROVAL.':
+          'h-1.5 w-1.5 rounded-full bg-orange-500',
+        'REJECTED. CHECK DETAILS.': 'h-1.5 w-1.5 rounded-full bg-red-500',
 
-        REIMBURSE: "h-1.5 w-1.5 rounded-full bg-black",
+        REIMBURSE: 'h-1.5 w-1.5 rounded-full bg-black',
       };
-      return colorMap[status] || "bg-orange-500"; // Default to a dark color if the status is not recognized
+      return colorMap[status] || 'bg-orange-500'; // Default to a dark color if the status is not recognized
     },
     getStatusTextClass(status) {
       const colorMap = {
-        RESUBMISSION: "text-sm font-normal text-orange-500",
-        "": "text-sm font-normal text-indigo-500",
-        APPROVED: "text-sm font-normal text-emerald-500",
-        COMPLETED: "text-sm font-normal text-blue-500",
-        REJECTED: "text-sm font-normal text-red-500",
-        PENDING: "text-sm font-normal text-orange-500",
-        REIMBURSE: "text-sm font-normal text-black",
-        "VERIFIED. WAITING FOR APPROVAL.":"text-sm font-normal text-orange-500",
-        "APPROVED. AWAITING PAYMENT." : "text-sm font-normal text-emerald-500",
-        "REJECTED. CHECK DETAILS." : "text-sm font-normal text-red-500", 
+        RESUBMISSION: 'text-sm font-normal text-orange-500',
+        '': 'text-sm font-normal text-indigo-500',
+        APPROVED: 'text-sm font-normal text-emerald-500',
+        COMPLETED: 'text-sm font-normal text-blue-500',
+        REJECTED: 'text-sm font-normal text-red-500',
+        PENDING: 'text-sm font-normal text-orange-500',
+        REIMBURSE: 'text-sm font-normal text-black',
+        'VERIFIED. WAITING FOR APPROVAL.':
+          'text-sm font-normal text-orange-500',
+        'APPROVED. AWAITING PAYMENT.': 'text-sm font-normal text-emerald-500',
+        'REJECTED. CHECK DETAILS.': 'text-sm font-normal text-red-500',
       };
-      return colorMap[status] || "text-orange-500"; // Default to a dark color if the status is not recognized
+      return colorMap[status] || 'text-orange-500'; // Default to a dark color if the status is not recognized
     },
     ChangePopUp() {
       if (this.popup == true) {
@@ -827,21 +902,20 @@ export default {
         this.initializeDataTable();
       });
     });
-    store.setControlView("eclaim");
+    store.setControlView('eclaim');
 
-    let openOrNot = localStorage.getItem("openOrNot");
-    const element = document.querySelector("main");
-    if (element && openOrNot == "false") {
-      element.classList.add("become-big");
-    } else if (element && openOrNot == "true") {
-      element.classList.remove("become-big");
+    let openOrNot = localStorage.getItem('openOrNot');
+    const element = document.querySelector('main');
+    if (element && openOrNot == 'false') {
+      element.classList.add('become-big');
+    } else if (element && openOrNot == 'true') {
+      element.classList.remove('become-big');
     }
   },
 };
 </script>
 
 <style scoped>
-
 .PopUpAnimation .popup {
   animation: PopUpKeyframes 0.45s ease;
 }
