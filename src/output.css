@@ -692,10 +692,6 @@ video {
   top: 1rem;
 }
 
-.top-40 {
-  top: 10rem;
-}
-
 .top-5 {
   top: 1.25rem;
 }
@@ -845,6 +841,10 @@ video {
 
 .mb-1 {
   margin-bottom: 0.25rem;
+}
+
+.mb-12 {
+  margin-bottom: 3rem;
 }
 
 .mb-2 {
@@ -2865,6 +2865,10 @@ video {
 
 .duration-300 {
   transition-duration: 300ms;
+}
+
+.duration-500 {
+  transition-duration: 500ms;
 }
 
 .duration-\[500ms\2c 800ms\] {
