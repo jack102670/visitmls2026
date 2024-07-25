@@ -87,51 +87,63 @@ export default {
   },
   methods: {
     checkUserStatusAndShowModal() {
-      return new Promise((resolve, reject) => {
-        const username_id = store.getSession().userDetails.userId;
-        fetch(`http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`)
-          .then((response) => response.json())
-          .then((data) => {
-            if(data.result.length > 0) {
-              const userStatus = data.result[0].account_status;
-              if (userStatus === '0') {
-              resolve(0);
-            } else {
-              resolve(1);
-            }
-            }
-            else{
-              resolve(2);
-            }
-            
-           // console.log('User status:', userStatus);
-            
-          })
-          .catch((error) => {
-            console.error('There was an error fetching the user status:', error);
-            
-            reject(error);
-          });
-      });
-    },
-    handleCardClick(card, event) {
-      event.preventDefault(); // Prevent the default action of the link
-
-      if (card.title === "E-claim System") {
-        this.checkUserStatusAndShowModal().then((hasCompletedProfile) => {
-          if (hasCompletedProfile === 0) {
-            alert("Please complete your profile before using the E-claim system.");
-          } else if(hasCompletedProfile === 1) {
-            window.location.href = card.link;
-          }
-          else if(hasCompletedProfile === 2){
-            alert("You don't have user profile yet. Please contact the HR administrator.");
-          }
-        });
-      } else {
-        window.location.href = card.link;
-      }
+  return new Promise((resolve, reject) => {
+    const session = store.getSession();
+    if (!session || !session.userDetails || !session.userDetails.userId) {
+      alert("User session not found. Please log in again.");
+      return reject(new Error("User session not found."));
     }
+
+    const username_id = session.userDetails.userId;
+    fetch(`http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.result && data.result.length > 0) {
+          const userStatus = data.result[0].account_status;
+          if (userStatus === '0') {
+            resolve(0); // Incomplete profile
+          } else {
+            resolve(1); // Completed profile
+          }
+        } else {
+          resolve(2); // No user profile found
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching user status:', error);
+        alert("There was an error fetching your user status. Please try again later.");
+        reject(error);
+      });
+  });
+}
+,
+    handleCardClick(card, event) {
+  event.preventDefault(); // Prevent the default action of the link
+
+  if (card.title === "E-claim System") {
+    this.checkUserStatusAndShowModal()
+      .then((hasCompletedProfile) => {
+        if (hasCompletedProfile === 0) {
+          alert("Please complete your profile before using the E-claim system.");
+        } else if (hasCompletedProfile === 1) {
+          window.location.href = card.link;
+        } else if (hasCompletedProfile === 2) {
+          alert("You don't have a user profile yet. Please contact the HR administrator.");
+        }
+      })
+      .catch((error) => {
+        alert("There was an error checking your user status. Please try again later.");
+      });
+  } else {
+    window.location.href = card.link;
+  }
+}
+
   },
   mounted() {
     store.setControlView(null);
