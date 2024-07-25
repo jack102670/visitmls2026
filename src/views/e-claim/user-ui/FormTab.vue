@@ -2774,12 +2774,9 @@ export default {
 
       // Add renamed file to the files array
       filesArray.push(renamedFile);
-      console.log("File added:", renamedFile);
-      console.log("Updated files:", filesArray);
-      if (error) {
-        console.error("Error adding file:", error.message);
-        return;
-      }
+      console.log('File added:', renamedFile);
+      console.log('Updated files:', filesArray);
+   
     },
 
     handleRemoveFileOT(error, file, filesArray) {
