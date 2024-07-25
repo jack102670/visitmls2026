@@ -261,7 +261,7 @@
             </div>
           </div>
         </div>
-        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
           <!-- <div>
             <label class="font-semibold text-gray-700 dark:text-gray-200"
               >Internal Order</label
@@ -294,13 +294,13 @@
                   v-model="formData.reportType"
                   class="mr-2"
                 />
-                <label for="HR">HR</label>
-                <div
+                <label for="HR">Medical Bill & Handphone Bill Reimbursement</label>
+                <!-- <div
                   class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
                   v-show="showHRMessage"
                 >
                   Medical Bill and Handphone Bill Reimbursement
-                </div>
+                </div> -->
               </div>
 
               <!-- Finance Group -->
@@ -317,14 +317,14 @@
                   v-model="formData.reportType"
                   class="mr-2"
                 />
-                <label for="Finance">Finance</label>
-                <div
+                <label for="Finance">Local Travelling, Overseas Travelling & Others</label>
+                <!-- <div
                   class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
                   v-show="showFinanceMessage"
                 >
                   Local Travelling, Overseas Travelling With Accommodation,
                   Entertainment, Staff Refreshment, and Others Form
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
