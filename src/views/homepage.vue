@@ -109,6 +109,7 @@ export default {
           })
           .catch((error) => {
             console.error('There was an error fetching the user status:', error);
+            
             reject(error);
           });
       });
