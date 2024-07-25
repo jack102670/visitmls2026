@@ -350,7 +350,7 @@
                               {{
                                 data.admin_status === ''
                                   ? 'OPEN'
-                                  : data.admin_status
+                                  : data.admin_status.split('.')[0]
                               }}
                             </h2>
                           </div>
