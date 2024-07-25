@@ -35,7 +35,7 @@
           {{ tab.title }} Form
         </h2>
 
-          <!-- Note for Handphone Bill Reimbursement -->
+        <!-- Note for Handphone Bill Reimbursement -->
         <div
           v-if="
             tab.title === 'Handphone Bill Reimbursement' &&
@@ -593,6 +593,34 @@
                                 />
                               </svg>
                             </button>
+                          </template>
+
+                          <template
+                            v-else-if="
+                              field.id === 'BankNameHR' ||
+                              field.id === 'BankNameML' ||
+                              field.id === 'AccBankNumberHR' ||
+                              field.id === 'AccBankNumberML' ||
+                              field.id === 'AccHolderNameHR' ||
+                              field.id === 'AccHolderNameML'
+                            "
+                          >
+                            <input
+                              v-model="field.value"
+                              :required="field.required"
+                              :disabled="
+                                (tab.title === 'Handphone Bill Reimbursement' &&
+                                  isFormDisabled) ||
+                                field.disabled
+                              "
+                              :id="field.id"
+                              :type="field.type"
+                              :placeholder="field.placeholder"
+                              :step="
+                                field.type === 'number' ? '0.01' : undefined
+                              "
+                              class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                            />
                           </template>
 
                           <template v-else>
@@ -1983,7 +2011,6 @@ export default {
               label: "Bank Name",
               type: "text",
               value: "",
-              required: true,
               disabled: true,
               gridClass: "sm:col-span-2",
             },
@@ -1992,7 +2019,6 @@ export default {
               label: "Account Bank No.",
               type: "text",
               value: "",
-              required: true,
               disabled: true,
               gridClass: "sm:col-span-2",
             },
@@ -2001,7 +2027,6 @@ export default {
               label: "Account Holder Name",
               type: "text",
               value: "",
-              required: true,
               disabled: true,
               gridClass: "sm:col-span-2",
             },
@@ -2115,7 +2140,6 @@ export default {
               label: "Bank Name",
               type: "text",
               value: "",
-              required: true,
               disabled: true,
               gridClass: "sm:col-span-2",
             },
@@ -2124,7 +2148,6 @@ export default {
               label: "Account Bank No.",
               type: "number",
               value: "",
-              required: true,
               disabled: true,
               gridClass: "sm:col-span-2",
             },
@@ -2133,7 +2156,6 @@ export default {
               label: "Account Holder Name",
               type: "text",
               value: "",
-              required: true,
               disabled: true,
               gridClass: "sm:col-span-2",
             },
@@ -2703,7 +2725,7 @@ export default {
     },
 
     generateNewFileName(originalName, fieldId) {
-      let prefix = '';
+      let prefix = "";
       switch (fieldId) {
         case "UploadMileageRMLT":
           prefix = "MILEAGE_";
@@ -2775,8 +2797,8 @@ export default {
 
       // Add renamed file to the files array
       filesArray.push(renamedFile);
-      console.log('File added:', renamedFile);
-      console.log('Updated files:', filesArray);
+      console.log("File added:", renamedFile);
+      console.log("Updated files:", filesArray);
     },
 
     handleRemoveFileOT(error, file, filesArray) {
@@ -2796,7 +2818,7 @@ export default {
       }
       if (error) {
         console.error(
-          'An error occurred while removing the file:',
+          "An error occurred while removing the file:",
           error.message
         );
         return;
