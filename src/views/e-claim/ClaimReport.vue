@@ -1711,23 +1711,7 @@
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
                         <div class="flex items-center gap-x-3">
-                          <span>Staff ID</span>
-                        </div>
-                      </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        <div class="flex items-center gap-x-3">
                           <span>Company Name</span>
-                        </div>
-                      </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        <div class="flex items-center gap-x-3">
-                          <span>Status</span>
                         </div>
                       </th>
                     </tr>
@@ -1754,17 +1738,7 @@
                       <td
                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                       >
-                        {{ attendee.staffId }}
-                      </td>
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                      >
                         {{ attendee.companyName }}
-                      </td>
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                      >
-                        {{ attendee.status }}
                       </td>
                     </tr>
                   </tbody>
@@ -3474,10 +3448,6 @@ export default {
                     participants: claim.attendees
                       ? claim.attendees.map((participant) => ({
                           name: participant.name,
-                          emp_id: participant.staffId
-                            ? participant.staffId
-                            : "",
-                          status: participant.status,
                           company_name: participant.companyName
                             ? participant.companyName
                             : "",

@@ -1041,54 +1041,6 @@
                   </div>
 
                   <div v-if="subTab.title === 'Attendees'" class="mt-4">
-                    <div class="mb-4">
-                      <label class="inline-flex items-center mr-4">
-                        <input
-                          type="radio"
-                          value="pkt"
-                          v-model="selectedAttendeeType"
-                          class="form-radio"
-                        />
-                        <span
-                          class="ml-2 block text-sm font-medium text-gray-700"
-                          >PKT Staff</span
-                        >
-                      </label>
-                      <label class="inline-flex items-center">
-                        <input
-                          type="radio"
-                          value="notStaff"
-                          v-model="selectedAttendeeType"
-                          class="form-radio"
-                        />
-                        <span
-                          class="ml-2 block text-sm font-medium text-gray-700"
-                          >Not a Staff</span
-                        >
-                      </label>
-                    </div>
-
-                    <div v-if="selectedAttendeeType === 'pkt'" class="mb-4">
-                      <label
-                        for="companyName"
-                        class="block text-sm font-medium text-gray-700"
-                        >Company Name</label
-                      >
-                      <select
-                        v-model="selectedCompanyName"
-                        required
-                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                      >
-                        <option
-                          v-for="company in pktCompanies"
-                          :key="company"
-                          :value="company"
-                        >
-                          {{ company }}
-                        </option>
-                      </select>
-                    </div>
-
                     <button
                       @click="showModal = true"
                       class="px-4 py-2 bg-blue-500 text-white rounded"
@@ -1116,23 +1068,7 @@
                             class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                           />
                         </div>
-                        <div v-if="selectedAttendeeType === 'pkt'" class="mb-4">
-                          <label
-                            for="staffId"
-                            class="block text-sm font-medium text-gray-700"
-                            >Staff ID</label
-                          >
-                          <input
-                            type="text"
-                            v-model="modalForm.staffId"
-                            required
-                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                          />
-                        </div>
-                        <div
-                          v-if="selectedAttendeeType === 'notStaff'"
-                          class="mb-4"
-                        >
+                        <div class="mb-4">
                           <label
                             for="companyName"
                             class="block text-sm font-medium text-gray-700"
@@ -1182,23 +1118,7 @@
                               class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                             >
                               <div class="flex items-center gap-x-3">
-                                <span>Staff ID</span>
-                              </div>
-                            </th>
-                            <th
-                              scope="col"
-                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                            >
-                              <div class="flex items-center gap-x-3">
                                 <span>Company Name</span>
-                              </div>
-                            </th>
-                            <th
-                              scope="col"
-                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                            >
-                              <div class="flex items-center gap-x-3">
-                                <span>Status</span>
                               </div>
                             </th>
                             <th
@@ -1232,11 +1152,6 @@
                               class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                             >
                               {{ attendee.companyName }}
-                            </td>
-                            <td
-                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                            >
-                              {{ attendee.status }}
                             </td>
                             <td
                               class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
@@ -2775,6 +2690,8 @@ export default {
 
     generateNewFileName(originalName, fieldId) {
       let prefix = '';
+    generateNewFileName(originalName, fieldId) {
+      let prefix = "";
       switch (fieldId) {
         case 'UploadMileageRMLT':
           prefix = 'MILEAGE_';
@@ -2847,6 +2764,21 @@ export default {
       filesArray.push(renamedFile);
       console.log('File added:', renamedFile);
       console.log('Updated files:', filesArray);
+      if (error) {
+        console.error("Error adding file:", error.message);
+        return;
+      }
+      // Generate new filename based on the expense name and original filename
+      const expenseName = this.newExpense.name || "UNKNOWN";
+      const newFileName = `${expenseName}_${file.file.name}`;
+      const renamedFile = new File([file.file], newFileName, {
+        type: file.file.type,
+      });
+
+      // Add renamed file to the files array
+      filesArray.push(renamedFile);
+      console.log("File added:", renamedFile);
+      console.log("Updated files:", filesArray);
     },
 
     handleRemoveFileOT(error, file, filesArray) {
@@ -2863,6 +2795,20 @@ export default {
         filesArray.splice(index, 1);
         console.log('File removed:', fileObject.name, fileObject);
         console.log('Updated files:', filesArray);
+      }
+      if (error) {
+        console.error(
+          "An error occurred while removing the file:",
+          error.message
+        );
+        return;
+      }
+      const fileObject = file.file;
+      const index = filesArray.findIndex((f) => f.name === fileObject.name);
+      if (index !== -1) {
+        filesArray.splice(index, 1);
+        console.log("File removed:", fileObject.name, fileObject);
+        console.log("Updated files:", filesArray);
       }
     },
 
@@ -3116,6 +3062,12 @@ export default {
           status: 'Not a Staff',
         });
       }
+       this.attendees.push({
+        name: this.modalForm.name,
+        companyName: this.modalForm.companyName,
+      });
+      this.modalForm.name = '';
+      this.modalForm.companyName = '';
       this.showModal = false;
       this.modalForm.name = '';
       this.modalForm.staffId = '';
