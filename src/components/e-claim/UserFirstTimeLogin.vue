@@ -269,28 +269,31 @@
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
+
               <div>
                 <label
                   class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
-                  for="spouse"
-                  >Spouse</label
+                  for="phone_number"
+                  >Phone Number<span class="text-red-500">*</span></label
                 >
                 <input
-                  v-model="user.spouse"
-                  id="spouse"
-                  type="text"
+                  v-model="user.phone_number"
+                  id="phone_number"
+                  required
+                  type="number"
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
               <div>
                 <label
                   class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
-                  for="phonenumber"
-                  >Phone Number</label
+                  for="ic_number"
+                  >IC Number<span class="text-red-500">*</span></label
                 >
                 <input
-                  v-model="user.phone_number"
-                  id="phone_number"
+                  v-model="user.ic_number"
+                  id="ic_number"
+                  required
                   type="number"
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
@@ -342,6 +345,38 @@
                 <input
                   v-model="user.reporting_to_dept"
                   id="reporting_to_dept"
+                  type="text"
+                  disabled
+                  class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                />
+              </div>
+
+              <div>
+                <label
+                  class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
+                  for="limit_outpatient"
+                >
+                  Limit Amount (outpatient)
+                </label>
+                <input
+                  v-model="user.limit_outpatient"
+                  id="limit_outpatient"
+                  type="text"
+                  disabled
+                  class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                />
+              </div>
+
+              <div>
+                <label
+                  class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
+                  for="limit_medical_dental"
+                >
+                  Limit Amount (medical/dental)
+                </label>
+                <input
+                  v-model="user.limit_medical_dental"
+                  id="limit_medical_dental"
                   type="text"
                   disabled
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -566,7 +601,7 @@
             >
               Activation successful! Redirecting...
             </div>
-            <transition  name="fade">
+            <transition name="fade">
               <div
                 v-if="showSuccessNotification"
                 class="fixed top-5 right-5 flex max-w-sm bg-white shadow-lg rounded-lg overflow-hidden z-40"
@@ -626,28 +661,30 @@
 </template>
 
 <script>
-import { bankOptions } from "@/javascript/eClaimOptions.js";
-import Cropper from "cropperjs";
-import "cropperjs/dist/cropper.css";
-import axios from "axios";
-import { store } from "@/views/store.js";
+import { bankOptions } from '@/javascript/eClaimOptions.js';
+import Cropper from 'cropperjs';
+import 'cropperjs/dist/cropper.css';
+import axios from 'axios';
+import { store } from '@/views/store.js';
 
 export default {
   data() {
     return {
       user: {
-        name: "",
-        branch: "",
-        department: "",
-        emp_id: "",
-        reporting_to: "",
-        reporting_to_dept: "",
-        email_address: "",
-        phone_number: "",
-        bank_name: "",
-        bank_number: "",
-        spouse: "",
-        home_address: "",
+        name: '',
+        branch: '',
+        department: '',
+        emp_id: '',
+        reporting_to: '',
+        reporting_to_dept: '',
+        limit_outpatient: '',
+        limit_medical_dental: '',
+        email_address: '',
+        phone_number: '',
+        bank_name: '',
+        bank_number: '',
+        ic_number: '',
+        home_address: '',
         profile_picture: null,
       },
       loadingverifyOtpButton: false,
@@ -657,21 +694,21 @@ export default {
       approveSuccess: false,
       profile_picture: null,
       bankOptions: bankOptions,
-      tempImageUrl: "",
+      tempImageUrl: '',
       cropper: null,
       showCropper: false,
-      userDetails: "",
-      defaultProfilePicture: require("@/assets/images/profile.png"),
+      userDetails: '',
+      defaultProfilePicture: require('@/assets/images/profile.png'),
       showRequestOtpModal: false,
       showOtpModal: false,
       showSuccessNotification: false,
-      message: "",
+      message: '',
       none: false,
-      otp: "",
+      otp: '',
       timer: 0,
       timerInterval: null,
-      status: "",
-      tempEmail: "",
+      status: '',
+      tempEmail: '',
     };
   },
 
@@ -685,12 +722,12 @@ export default {
   mounted() {
     this.checkUserStatus();
 
-    let openOrNot = localStorage.getItem("openOrNot");
-    const element = document.querySelector("main");
-    if (element && openOrNot == "false") {
-      element.classList.add("become-big");
-    } else if (element && openOrNot == "true") {
-      element.classList.remove("become-big");
+    let openOrNot = localStorage.getItem('openOrNot');
+    const element = document.querySelector('main');
+    if (element && openOrNot == 'false') {
+      element.classList.add('become-big');
+    } else if (element && openOrNot == 'true') {
+      element.classList.remove('become-big');
     }
   },
 
@@ -707,41 +744,41 @@ export default {
         phone_number: this.user.phone_number,
       };
 
-      console.log("Employee Data:", employeeData);
+      console.log('Employee Data:', employeeData);
       axios
-        .put("http://172.28.28.91:97/api/User/UpdateEmployee", employeeData)
+        .put('http://172.28.28.91:97/api/User/UpdateEmployee', employeeData)
         .then((response) => {
-          console.log("Response:", response);
-          if (response.data.status_code === "200") {
-            console.log("Successfully Updated:", response.data.message);
+          console.log('Response:', response);
+          if (response.data.status_code === '200') {
+            console.log('Successfully Updated:', response.data.message);
 
-            this.message = "Successfully Updated";
+            this.message = 'Successfully Updated';
             this.showSuccessNotification = true;
             setTimeout(() => {
               this.showSuccessNotification = false;
             }, 3000);
             // Additional logic here for successful update
-          } else if (response.data.status_code === "400") {
+          } else if (response.data.status_code === '400') {
             // console.log("Successfully Updated:", response.data.message);
 
             alert(
-              response.data.result || "Failed to update. Please try again."
+              response.data.result || 'Failed to update. Please try again.'
             );
             // Additional logic here for successful update
           } else {
-            console.error("Backend error:", response.data.message);
+            console.error('Backend error:', response.data.message);
 
             alert(
-              response.data.message || "Failed to update. Please try again."
+              response.data.message || 'Failed to update. Please try again.'
             );
             // Additional error handling logic here
           }
           this.loadingButton = false;
         })
         .catch((error) => {
-          console.error("Error updating employee data:", error);
+          console.error('Error updating employee data:', error);
           this.loadingButton = false;
-          alert("An error occurred while updating employee data.");
+          alert('An error occurred while updating employee data.');
           // Additional error handling logic here
         });
     },
@@ -766,20 +803,22 @@ export default {
             this.user.phone_number = user.phone_number;
             this.user.bank_name = user.bank_name;
             this.user.bank_number = user.bank_number;
-            this.user.spouse = user.spouse;
+            // this.user.ic_number = user.ic_number;
+            // this.user.limit_outpatient = user.limit_outpatient;
+            // this.user.limit_medical_dental = user.limit_medical_dental;
             this.user.home_address = user.home_address;
             this.status = user.account_status;
             this.tempEmail = user.email_address;
           }
-          console.log("HR data:", this.tempEmail);
+          console.log('HR data:', this.tempEmail);
         })
         .catch((error) => {
-          console.error("Error fetching HR data:", error);
+          console.error('Error fetching HR data:', error);
         });
     },
 
     uploadimg() {
-      console.log("Profile picture value:", this.profile_picture); // Debugging line
+      console.log('Profile picture value:', this.profile_picture); // Debugging line
       if (!this.profile_picture) {
         // alert("Please select a profile picture.");
         return;
@@ -787,39 +826,39 @@ export default {
 
       const formData = new FormData();
       formData.append(
-        "profile_picture",
+        'profile_picture',
         this.dataURLtoBlob(this.profile_picture)
       );
-      formData.append("emp_id", this.user.emp_id);
+      formData.append('emp_id', this.user.emp_id);
 
       axios
-        .put("http://172.28.28.91:97/api/User/UpdateImage", formData, {
+        .put('http://172.28.28.91:97/api/User/UpdateImage', formData, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
           },
         })
         .then((response) => {
           this.loadingButton = false;
-          console.log("File uploaded successfully:", response.data);
-          this.message = "Profile picture uploaded successfully.";
+          console.log('File uploaded successfully:', response.data);
+          this.message = 'Profile picture uploaded successfully.';
           this.showSuccessNotification = true;
           setTimeout(() => (this.showSuccessNotification = false), 3000); // Auto-hide after 3 seconds
         })
         .catch((error) => {
           this.loadingButton = false;
           if (error.response) {
-            console.error("Error status:", error.response.status);
-            console.error("Error data:", error.response.data);
+            console.error('Error status:', error.response.status);
+            console.error('Error data:', error.response.data);
           } else if (error.request) {
-            console.error("No response received:", error.request);
+            console.error('No response received:', error.request);
           } else {
-            console.error("Error", error.message);
+            console.error('Error', error.message);
           }
-          console.error("Error config:", error.config);
+          console.error('Error config:', error.config);
         });
     },
     dataURLtoBlob(dataurl) {
-      const arr = dataurl.split(",");
+      const arr = dataurl.split(',');
       const mime = arr[0].match(/:(.*?);/)[1];
       const bstr = atob(arr[1]);
       let n = bstr.length;
@@ -872,9 +911,9 @@ export default {
           // Assuming the API response structure has a status field
           const userStatus = response.data.result[0].account_status;
           const email = response.data.result[0].email_address;
-          console.log("User status:", userStatus);
+          console.log('User status:', userStatus);
 
-          if (userStatus === "0" && email !== "") {
+          if (userStatus === '0' && email !== '') {
             // User has not completed their OTP, show the modal
 
             this.showRequestOtpModal = true;
@@ -885,7 +924,7 @@ export default {
           }
         })
         .catch((error) => {
-          console.error("There was an error fetching the user status:", error);
+          console.error('There was an error fetching the user status:', error);
           // Handle error or set a default behavior if the API call fails
         });
     },
@@ -897,9 +936,9 @@ export default {
           // Assuming the API response structure has a status field
           const userStatus = response.data.result[0].account_status;
 
-          console.log("User status:", userStatus);
+          console.log('User status:', userStatus);
 
-          if (userStatus === "0") {
+          if (userStatus === '0') {
             // User has not completed their OTP, show the modal
 
             this.showRequestOtpModal = true;
@@ -910,7 +949,7 @@ export default {
           }
         })
         .catch((error) => {
-          console.error("There was an error fetching the user status:", error);
+          console.error('There was an error fetching the user status:', error);
           // Handle error or set a default behavior if the API call fails
         });
     },
@@ -921,7 +960,7 @@ export default {
       this.loadingButton = true;
       if (this.tempImageUrl) {
         this.uploadimg();
-      } else if (this.status === "0") {
+      } else if (this.status === '0') {
         this.updateEmployeeData();
       } else {
         this.updateEmployeeDataNewEmail();
@@ -945,20 +984,20 @@ export default {
         spouse: this.user.spouse,
         phone_number: this.user.phone_number.toString(),
       };
-      console.log("Employee Data:", employeeData);
+      console.log('Employee Data:', employeeData);
 
       axios
-        .put("http://172.28.28.91:97/api/User/UpdateProfile", employeeData)
+        .put('http://172.28.28.91:97/api/User/UpdateProfile', employeeData)
         .then((response) => {
-          console.log("Response:", response);
+          console.log('Response:', response);
           const elapsedTime = Date.now() - startTime; // Calculate elapsed time
           const remainingTime = Math.max(2000 - elapsedTime, 0); // Ensure min 2 seconds loading time
 
           setTimeout(() => {
             this.loadingButton = false; // Stop loading after ensuring min 2 seconds
-            if (response.data.status_code === "200") {
-              console.log(":", response.data.status_code);
-              this.message = "Successfully Updated";
+            if (response.data.status_code === '200') {
+              console.log(':', response.data.status_code);
+              this.message = 'Successfully Updated';
               this.showSuccessNotification = true;
               setTimeout(() => {
                 this.showSuccessNotification = false;
@@ -967,11 +1006,11 @@ export default {
               // Additional logic here for successful update
             } else if (
               response.data.message.includes(
-                "Successfully Updated. Verify Your Email."
+                'Successfully Updated. Verify Your Email.'
               )
             ) {
-              console.log(":otp is sent", response.data.message);
-              this.message = "Successfully Updated. Verify Your Email.";
+              console.log(':otp is sent', response.data.message);
+              this.message = 'Successfully Updated. Verify Your Email.';
               this.showSuccessNotification = true;
               setTimeout(() => {
                 this.showSuccessNotification = false;
@@ -979,22 +1018,22 @@ export default {
               this.showRequestOtpModal = true;
               this.startTimer();
               // Additional logic here for OTP sent
-            } else if (response.data.status_code === "400") {
+            } else if (response.data.status_code === '400') {
               alert(
-                response.data.result || "Failed to update. Please try again."
+                response.data.result || 'Failed to update. Please try again.'
               );
               // Additional logic here for status code 400
             }
           }, remainingTime);
         })
         .catch((error) => {
-          console.error("Error updating employee data:", error);
+          console.error('Error updating employee data:', error);
           const elapsedTime = Date.now() - startTime;
           const remainingTime = Math.max(2000 - elapsedTime, 0);
 
           setTimeout(() => {
             this.loadingButton = false; // Ensure loading is stopped after min 2 seconds
-            alert("An error occurred while updating employee data.");
+            alert('An error occurred while updating employee data.');
             // Additional error handling logic here
           }, remainingTime);
         });
@@ -1004,15 +1043,15 @@ export default {
       this.loadingsendOtpButton = true;
       try {
         const response = await axios.post(
-          "http://172.28.28.91:97/api/User/GenerateOTP",
+          'http://172.28.28.91:97/api/User/GenerateOTP',
           { email: this.user.email_address }
         );
 
-        if (response.data.status_code === "200") {
-          console.log("OTP sent successfully:", response.data);
+        if (response.data.status_code === '200') {
+          console.log('OTP sent successfully:', response.data);
           this.showRequestOtpModal = false;
           // alert("OTP has been sent to your email.");
-          this.message = "OTP has been sent to your email.";
+          this.message = 'OTP has been sent to your email.';
           this.showSuccessNotification = true;
           setTimeout(() => {
             this.showSuccessNotification = false;
@@ -1020,31 +1059,31 @@ export default {
           this.showOtpModal = true;
           this.startTimer();
         } else {
-          console.error("Backend error:", response.data);
+          console.error('Backend error:', response.data);
           alert(
-            response.data.message || "Failed to send OTP. Please try again."
+            response.data.message || 'Failed to send OTP. Please try again.'
           );
         }
         this.loadingsendOtpButton = false;
       } catch (error) {
-        console.error("Error sending OTP:", error);
+        console.error('Error sending OTP:', error);
         if (error.response) {
-          console.error("Response data:", error.response.data);
-          console.error("Response status:", error.response.status);
-          console.error("Response headers:", error.response.headers);
+          console.error('Response data:', error.response.data);
+          console.error('Response status:', error.response.status);
+          console.error('Response headers:', error.response.headers);
           alert(
             `An error occurred: ${
               error.response.data.message ||
-              "Unable to send OTP. Please try again."
+              'Unable to send OTP. Please try again.'
             }`
           );
         } else if (error.request) {
-          console.error("Request data:", error.request);
+          console.error('Request data:', error.request);
           alert(
-            "No response from the server. Please check your network connection and try again."
+            'No response from the server. Please check your network connection and try again.'
           );
         } else {
-          console.error("Error message:", error.message);
+          console.error('Error message:', error.message);
           alert(`Error: ${error.message}`);
         }
         this.loadingsendOtpButton = false;
@@ -1052,13 +1091,13 @@ export default {
     },
 
     addEventListeners() {
-      window.addEventListener("beforeunload", this.beforeUnloadHandler);
+      window.addEventListener('beforeunload', this.beforeUnloadHandler);
     },
 
     beforeUnloadHandler(event) {
       if (this.showOtpModal) {
         const confirmationMessage =
-          "You have not completed OTP verification. Are you sure you want to leave?";
+          'You have not completed OTP verification. Are you sure you want to leave?';
         event.returnValue = confirmationMessage;
         return confirmationMessage;
       }
@@ -1068,7 +1107,7 @@ export default {
       this.loadingverifyOtpButton = true;
       const startTime = Date.now();
       try {
-        const baseUrl = "http://172.28.28.91:97";
+        const baseUrl = 'http://172.28.28.91:97';
         const email = encodeURIComponent(this.user.email_address);
         const otp = encodeURIComponent(this.otp);
         const url = `${baseUrl}/api/User/ValidateOTP?email=${email}&otp=${otp}`;
@@ -1079,41 +1118,41 @@ export default {
         const remainingTime = Math.max(2000 - elapsedTime, 0);
 
         setTimeout(async () => {
-          if (response.data.status_code === "200") {
+          if (response.data.status_code === '200') {
             clearInterval(this.timerInterval);
-            alert(response.data.result || "OTP verified successfully.");
+            alert(response.data.result || 'OTP verified successfully.');
             this.showOtpModal = false;
-            this.message = "Activation successful! Redirecting....";
+            this.message = 'Activation successful! Redirecting....';
             this.showSuccessNotification = true;
             setTimeout(() => {
               this.showSuccessNotification = false;
-              this.$router.push("/homepage");
+              this.$router.push('/homepage');
             }, 3000);
             window.removeEventListener(
-              "beforeunload",
+              'beforeunload',
               this.beforeUnloadHandler
             );
           } else {
-            alert("Invalid OTP. Please try again.");
+            alert('Invalid OTP. Please try again.');
           }
           this.loadingverifyOtpButton = false;
         }, remainingTime);
       } catch (error) {
-        console.error("Error verifying OTP:", error);
+        console.error('Error verifying OTP:', error);
         if (error.response) {
-          console.error("Response data:", error.response.data);
-          console.error("Response status:", error.response.status);
-          console.error("Response headers:", error.response.headers);
+          console.error('Response data:', error.response.data);
+          console.error('Response status:', error.response.status);
+          console.error('Response headers:', error.response.headers);
           alert(
             `An error occurred: ${
               error.response.data.message ||
-              "Unable to verify OTP. Please try again."
+              'Unable to verify OTP. Please try again.'
             }`
           );
         } else if (error.request) {
-          console.error("Request data:", error.request);
+          console.error('Request data:', error.request);
         } else {
-          console.error("Error message:", error.message);
+          console.error('Error message:', error.message);
           alert(`Error: ${error.message}`);
         }
 
@@ -1129,39 +1168,39 @@ export default {
     requestNewOtp() {
       if (this.timer === 0) {
         axios
-          .post("http://172.28.28.91:97/api/User/GenerateOTP", {
+          .post('http://172.28.28.91:97/api/User/GenerateOTP', {
             email: this.user.email_address,
           })
           .then((response) => {
-            if (response.data.status_code === "200") {
-              this.otp = "";
-              alert("A new OTP has been sent to your email.");
+            if (response.data.status_code === '200') {
+              this.otp = '';
+              alert('A new OTP has been sent to your email.');
               this.startTimer();
             } else {
               alert(
-                response.data.message || "Failed to send OTP. Please try again."
+                response.data.message || 'Failed to send OTP. Please try again.'
               );
             }
           })
           .catch((error) => {
-            console.error("Error sending OTP:", error);
+            console.error('Error sending OTP:', error);
             if (error.response) {
-              console.error("Response data:", error.response.data);
-              console.error("Response status:", error.response.status);
-              console.error("Response headers:", error.response.headers);
+              console.error('Response data:', error.response.data);
+              console.error('Response status:', error.response.status);
+              console.error('Response headers:', error.response.headers);
               alert(
                 `An error occurred: ${
                   error.response.data.message ||
-                  "Unable to send OTP. Please try again."
+                  'Unable to send OTP. Please try again.'
                 }`
               );
             } else if (error.request) {
-              console.error("Request data:", error.request);
+              console.error('Request data:', error.request);
               alert(
-                "No response from the server. Please check your network connection and try again."
+                'No response from the server. Please check your network connection and try again.'
               );
             } else {
-              console.error("Error message:", error.message);
+              console.error('Error message:', error.message);
               alert(`Error: ${error.message}`);
             }
           });
@@ -1193,7 +1232,7 @@ export default {
     },
 
     beforeDestroy() {
-      window.removeEventListener("beforeunload", this.beforeUnloadHandler);
+      window.removeEventListener('beforeunload', this.beforeUnloadHandler);
     },
   },
 };
