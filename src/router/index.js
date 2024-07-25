@@ -49,7 +49,9 @@ import VerifierSummaryClaimpage from '../views/e-claim/user-ui/VerifierSummaryCl
 import HRViewEmployee from '../components/e-claim/HRViewEmployee.vue';
 import checkerDashboardpage from '../views/e-claim/checkerDashboardpage.vue';
 import checkerClaimpage from '../views/e-claim/checkerClaimpage.vue';
+import NotFound from '../views/pagenotfound.vue'; 
 const routes = [
+ 
   {
     path: '/VerifierClaimpage/:rn',
     name: 'VerifierSummaryClaimpage',
@@ -427,6 +429,11 @@ const routes = [
     path: '/Registervendor',
     name: 'Vendorsingup',
     component: Vendorsignup,
+  },
+  {
+    path: '/:pathMatch(.*)*', // This regex matches any route
+    name: 'NotFound',
+    component: NotFound,
   },
 ];
 

@@ -422,7 +422,7 @@
           within that same month. Claims made after the first week will be
           processed in the following month.
         </h1>
-        <h1 class="text-gray-500 text-sm">
+        <!-- <h1 class="text-gray-500 text-sm">
           <span class="text-red-500">*</span
           ><span class="text-red-500">*</span> HR: Medical Bill and Handphone
           Bill Reimbursement
@@ -432,7 +432,7 @@
           ><span class="text-red-500">*</span> Finance: Local Travelling,
           Overseas Travelling With Accommodation, Entertainment, Staff
           Refreshment, and Others Form
-        </h1>
+        </h1> -->
 
         <!-- button -->
         <div class="gap-3 flex flex-row-reverse">
