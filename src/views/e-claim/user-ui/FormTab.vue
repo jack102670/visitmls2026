@@ -1205,7 +1205,6 @@
             </div>
           </div>
         </div>
-        <!-- End of Entertainment tab-->
 
         <!-- Staff Refreshment tab -->
         <div v-if="tab.title === 'Staff Refreshment'">
