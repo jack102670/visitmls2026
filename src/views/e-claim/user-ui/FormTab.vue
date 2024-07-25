@@ -1205,7 +1205,6 @@
             </div>
           </div>
         </div>
-        <!-- End of Entertainment tab-->
 
         <!-- Staff Refreshment tab -->
         <div v-if="tab.title === 'Staff Refreshment'">
@@ -2689,8 +2688,6 @@ export default {
     },
 
     generateNewFileName(originalName, fieldId) {
-      let prefix = '';
-    generateNewFileName(originalName, fieldId) {
       let prefix = "";
       switch (fieldId) {
         case 'UploadMileageRMLT':
@@ -2768,17 +2765,6 @@ export default {
         console.error("Error adding file:", error.message);
         return;
       }
-      // Generate new filename based on the expense name and original filename
-      const expenseName = this.newExpense.name || "UNKNOWN";
-      const newFileName = `${expenseName}_${file.file.name}`;
-      const renamedFile = new File([file.file], newFileName, {
-        type: file.file.type,
-      });
-
-      // Add renamed file to the files array
-      filesArray.push(renamedFile);
-      console.log("File added:", renamedFile);
-      console.log("Updated files:", filesArray);
     },
 
     handleRemoveFileOT(error, file, filesArray) {
@@ -2802,13 +2788,6 @@ export default {
           error.message
         );
         return;
-      }
-      const fileObject = file.file;
-      const index = filesArray.findIndex((f) => f.name === fileObject.name);
-      if (index !== -1) {
-        filesArray.splice(index, 1);
-        console.log("File removed:", fileObject.name, fileObject);
-        console.log("Updated files:", filesArray);
       }
     },
 
