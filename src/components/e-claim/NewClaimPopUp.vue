@@ -294,7 +294,7 @@
                   v-model="formData.reportType"
                   class="mr-2"
                 />
-                <label for="HR">Medical Bill & Handphone Bill Reimbursement</label>
+                <label for="HR">Medical & Handphone Reimbursement</label>
                 <!-- <div
                   class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
                   v-show="showHRMessage"
@@ -317,7 +317,7 @@
                   v-model="formData.reportType"
                   class="mr-2"
                 />
-                <label for="Finance">Local Travelling, Overseas Travelling & Others</label>
+                <label for="Finance">Travelling, Entertainment & Others</label>
                 <!-- <div
                   class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
                   v-show="showFinanceMessage"
