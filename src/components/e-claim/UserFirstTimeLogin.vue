@@ -311,25 +311,57 @@
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
-            </div>
-
-            <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
               <div>
                 <label
                   class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
-                  for="home_address"
+                  for="limit_outpatient"
                 >
-                  Home Address
+                  Limit Amount (Handphone)
                 </label>
-                <textarea
-                  v-model="user.home_address"
-                  id="home_address"
+                <input
+                  v-model="user.limit_amount"
+                  id="limit_outpatient"
                   type="text"
-                  class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                  row="4"
-                ></textarea>
+                  disabled
+                  class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                />
+              </div>
+
+              <div>
+                <label
+                  class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
+                  for="limit_outpatient"
+                >
+                  Limit Amount (Outpatient)
+                </label>
+                <input
+                  v-model="user.limit_outpatient"
+                  id="limit_outpatient"
+                  type="text"
+                  disabled
+                  class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                />
+              </div>
+
+              <div>
+                <label
+                  class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
+                  for="limit_medical_dental"
+                >
+                  Limit Amount (Medical-Check Up/Dental)
+                </label>
+                <input
+                  v-model="user.limit_medical_dental"
+                  id="limit_medical_dental"
+                  type="text"
+                  disabled
+                  class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                />
               </div>
             </div>
+            
+
+           
 
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
               <div>
@@ -353,7 +385,7 @@
                   class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
                   for="reporting_to_dept"
                 >
-                  Reporting Manager(Department)
+                  Reporting Manager(Dept.)
                 </label>
                 <input
                   v-model="user.reporting_to_dept"
@@ -363,37 +395,24 @@
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
-
+              
+              
+            </div>
+            <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
               <div>
                 <label
                   class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
-                  for="limit_outpatient"
+                  for="home_address"
                 >
-                  Limit Amount (outpatient)
+                  Home Address
                 </label>
-                <input
-                  v-model="user.limit_outpatient"
-                  id="limit_outpatient"
+                <textarea
+                  v-model="user.home_address"
+                  id="home_address"
                   type="text"
-                  disabled
-                  class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
-              </div>
-
-              <div>
-                <label
-                  class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
-                  for="limit_medical_dental"
-                >
-                  Limit Amount (medical/dental)
-                </label>
-                <input
-                  v-model="user.limit_medical_dental"
-                  id="limit_medical_dental"
-                  type="text"
-                  disabled
-                  class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                />
+                  class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                  row="4"
+                ></textarea>
               </div>
             </div>
 
@@ -695,6 +714,7 @@ export default {
         reporting_to_dept: '',
         limit_outpatient: '',
         limit_medical_dental: '',
+        limit_amount:'',
         email_address: '',
         phone_number: '',
         bank_name: '',
@@ -821,9 +841,10 @@ export default {
             this.user.phone_number = user.phone_number;
             this.user.bank_name = user.bank_name;
             this.user.bank_number = user.bank_number;
-            // this.user.ic_number = user.ic_number;
-            // this.user.limit_outpatient = user.limit_outpatient;
-            // this.user.limit_medical_dental = user.limit_medical_dental;
+            this.user.ic_number = user.ic_number;
+             this.user.limit_outpatient = user.limit_outpatient;
+             this.user.limit_amount = user.limit_amount;
+           this.user.limit_medical_dental = user.limit_medicaldental;
             this.user.home_address = user.home_address;
             this.status = user.account_status;
             this.tempEmail = user.email_address;

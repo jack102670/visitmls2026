@@ -94,7 +94,7 @@
 
           <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
             <div>
-              <label class="font-semibold text-gray-600">Limit</label>
+              <label class="font-semibold text-gray-600">Handphone Claim Limit</label>
               <div class="mt-2">
                 <input type="radio" id="no" value="no" v-model="enableLimit" />
                 <label for="no">No</label>
