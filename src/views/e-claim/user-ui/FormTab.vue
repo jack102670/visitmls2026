@@ -653,11 +653,7 @@
                     v-if="tab.title === 'Medical Bill Reimbursement'"
                     class="mt-4"
                   >
-                    <h1 class="text-red-500 text-sm">
-                      Note : Claims must be submitted by the 15th of each month.
-                      Submissions made after this date will be processed in the
-                      following month.
-                    </h1>
+                    
                     <h1 class="text-gray-500 text-sm">
                       <span class="text-red-500">*</span
                       ><span class="text-red-500">*</span> Medical Check-Up: The

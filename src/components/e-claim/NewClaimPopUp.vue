@@ -418,10 +418,10 @@
         </div>
 
         <h1 class="text-red-500 text-sm">
-          Note : Claims made in the first week of the month will be processed
-          within that same month. Claims made after the first week will be
-          processed in the following month.
-        </h1>
+                      Note : Claims must be submitted by the 15th of each month.
+                      Submissions made after this date will be processed in the
+                      following month.
+                    </h1>
         <!-- <h1 class="text-gray-500 text-sm">
           <span class="text-red-500">*</span
           ><span class="text-red-500">*</span> HR: Medical Bill and Handphone
