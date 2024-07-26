@@ -36,26 +36,28 @@
         </h2>
 
         <!-- Note for Handphone Bill Reimbursement -->
-        <div
-          v-if="
-            tab.title === 'Handphone Bill Reimbursement' &&
-            LimitedAmountHR === 0
-          "
-          class="relative flex items-center justify-center mt-4 p-4 bg-yellow-200 border border-yellow-400 text-yellow-800 rounded-md"
-          style="width: 100%; max-width: 600px; margin: 0 auto"
-        >
-          <h1 class="text-sm font-bold text-center">
-            Note : You are not applicable to claim the Handphone Bill.
-          </h1>
-        </div>
+        <section>
+          <div
+            v-if="
+              tab.title === 'Handphone Bill Reimbursement' &&
+              LimitedAmountHR === 0
+            "
+            class="relative flex items-center justify-center mt-4 p-4 bg-yellow-200 border border-yellow-400 text-yellow-800 rounded-md"
+            style="width: 100%; max-width: 600px; margin: 0 auto"
+          >
+            <h1 class="text-sm font-bold text-center">
+              Note : You are not applicable to claim the Handphone Bill.
+            </h1>
+          </div>
+        </section>
 
         <!--Note for Others Form-->
         <section>
           <div v-if="tab.title === 'Others'" class="mt-4">
             <h1 class="text-gray-500 text-sm">
               Note: This form is intended for claiming expenses that do not fall
-              under the Local Travelling, Overseas Travelling with
-              Accommodation, Entertainment, and Staff Refreshment.
+              under the Local Travelling, Overseas Travelling, Entertainment,
+              and Staff Refreshment.
             </h1>
           </div>
         </section>
@@ -125,72 +127,35 @@
                               field.id !== 'PublicTransportSpec')
                           "
                         >
-                          <label
-                            :for="field.id"
-                            class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
+                          <template
+                            v-if="
+                              !isOneWay ||
+                              (field.id !== 'ReturndateLT' &&
+                                field.id !== 'AccommodationLT' &&
+                                field.id !== 'MealAllowanceLT')
+                            "
                           >
-                            {{ field.label }}
-                            <span v-if="field.required" style="color: red"
-                              >*</span
-                            >
-                          </label>
-
-                          <template v-if="field.type === 'select'">
-                            <select
-                              v-model="field.value"
-                              :required="field.required"
-                              :disabled="
-                                (tab.title === 'Handphone Bill Reimbursement' &&
-                                  isFormDisabled) ||
-                                field.disabled
+                            <template
+                              v-if="
+                                !isOtherThanOutpatient ||
+                                (field.id !== 'ReasonML' &&
+                                  field.id !== 'ClinicSelectionML' &&
+                                  field.id !== 'OtherClinicSpecML' &&
+                                  field.id !== 'OtherClinicReasonML')
                               "
-                              :id="field.id"
-                              class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                             >
-                              <option
-                                v-for="(option, optionIndex) in field.options"
-                                :key="optionIndex"
-                                :value="option.value"
+                              <label
+                                :for="field.id"
+                                class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
                               >
-                                {{ option.label }}
-                              </option>
-                            </select>
-                          </template>
+                                {{ field.label }}
+                                <span v-if="field.required" style="color: red"
+                                  >*</span
+                                >
+                              </label>
 
-                          <template v-else-if="field.type === 'year'">
-                            <select
-                              v-model="field.value"
-                              :required="field.required"
-                              :disabled="
-                                (tab.title === 'Handphone Bill Reimbursement' &&
-                                  isFormDisabled) ||
-                                field.disabled
-                              "
-                              :id="field.id"
-                              class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                            >
-                              <option
-                                v-for="year in yearRange"
-                                :key="year"
-                                :value="year"
-                              >
-                                {{ year }}
-                              </option>
-                            </select>
-                          </template>
-
-                          <template v-else-if="field.type === 'radio-group'">
-                            <div class="grid grid-cols-2">
-                              <div
-                                class="p-4 pt-2 pb-2 flex items-center"
-                                v-for="option in field.options"
-                                :key="option.value"
-                              >
-                                <input
-                                  type="radio"
-                                  :id="option.value"
-                                  :name="field.id"
-                                  :value="option.value"
+                              <template v-if="field.type === 'select'">
+                                <select
                                   v-model="field.value"
                                   :required="field.required"
                                   :disabled="
@@ -199,447 +164,573 @@
                                       isFormDisabled) ||
                                     field.disabled
                                   "
-                                  class="mr-2"
-                                />
-                                <label
-                                  :for="option.value"
-                                  class="text-sm text-gray-700"
+                                  :id="field.id"
+                                  class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                                 >
-                                  {{ option.label }}
-                                </label>
-                              </div>
-                            </div>
-                          </template>
+                                  <option
+                                    v-for="(
+                                      option, optionIndex
+                                    ) in field.options"
+                                    :key="optionIndex"
+                                    :value="option.value"
+                                  >
+                                    {{ option.label }}
+                                  </option>
+                                </select>
+                              </template>
 
-                          <template v-else-if="field.type === 'file'">
-                            <div>
-                              <file-pond
-                                v-if="
-                                  field.id === 'UploadMileageRMLT' &&
-                                  showMileageUpload
-                                "
-                                :name="field.id"
-                                :disabled="
-                                  (tab.title ===
-                                    'Handphone Bill Reimbursement' &&
-                                    isFormDisabled) ||
-                                  field.disabled
-                                "
-                                :required="field.required"
-                                ref="pond"
-                                label-idle="Drop files here..."
-                                @addfile="
-                                  (error, file) =>
-                                    handleAddFile(error, file, field)
-                                "
-                                @removefile="
-                                  (error, file) =>
-                                    handleRemoveFile(error, file, field)
-                                "
-                                :accepted-file-types="field.acceptedFileTypes"
-                                :max-file-size="field.maxFileSize"
-                                :allow-multiple="field.allowMultiple"
-                              />
-                              <file-pond
-                                v-if="
-                                  field.id === 'UploadFareRMLT' &&
-                                  showFareUpload
-                                "
-                                :name="field.id"
-                                :disabled="
-                                  (tab.title ===
-                                    'Handphone Bill Reimbursement' &&
-                                    isFormDisabled) ||
-                                  field.disabled
-                                "
-                                :required="field.required"
-                                ref="pond"
-                                label-idle="Drop files here..."
-                                @addfile="
-                                  (error, file) =>
-                                    handleAddFile(error, file, field)
-                                "
-                                @removefile="
-                                  (error, file) =>
-                                    handleRemoveFile(error, file, field)
-                                "
-                                :accepted-file-types="field.acceptedFileTypes"
-                                :max-file-size="field.maxFileSize"
-                                :allow-multiple="field.allowMultiple"
-                              />
-                              <file-pond
-                                v-if="
-                                  field.id === 'UploadTollLT' && showTollUpload
-                                "
-                                :name="field.id"
-                                :label="field.label"
-                                :disabled="
-                                  (tab.title ===
-                                    'Handphone Bill Reimbursement' &&
-                                    isFormDisabled) ||
-                                  field.disabled
-                                "
-                                :required="field.required"
-                                ref="pond"
-                                label-idle="Drop files here..."
-                                @addfile="
-                                  (error, file) =>
-                                    handleAddFile(error, file, field)
-                                "
-                                @removefile="
-                                  (error, file) =>
-                                    handleRemoveFile(error, file, field)
-                                "
-                                :accepted-file-types="field.acceptedFileTypes"
-                                :max-file-size="field.maxFileSize"
-                                :allow-multiple="field.allowMultiple"
-                              />
-                              <file-pond
-                                v-if="
-                                  field.id === 'UploadParkingLT' &&
-                                  showParkingUpload
-                                "
-                                :name="field.id"
-                                :disabled="
-                                  (tab.title ===
-                                    'Handphone Bill Reimbursement' &&
-                                    isFormDisabled) ||
-                                  field.disabled
-                                "
-                                :required="field.required"
-                                ref="pond"
-                                label-idle="Drop files here..."
-                                @addfile="
-                                  (error, file) =>
-                                    handleAddFile(error, file, field)
-                                "
-                                @removefile="
-                                  (error, file) =>
-                                    handleRemoveFile(error, file, field)
-                                "
-                                :accepted-file-types="field.acceptedFileTypes"
-                                :max-file-size="field.maxFileSize"
-                                :allow-multiple="field.allowMultiple"
-                              />
-                              <file-pond
-                                v-if="
-                                  field.id === 'UploadAirportLimoTeksiOT' &&
-                                  showAirportLimoUpload
-                                "
-                                :name="field.id"
-                                :disabled="
-                                  (tab.title ===
-                                    'Handphone Bill Reimbursement' &&
-                                    isFormDisabled) ||
-                                  field.disabled
-                                "
-                                :required="field.required"
-                                ref="pond"
-                                label-idle="Drop files here..."
-                                @addfile="
-                                  (error, file) =>
-                                    handleAddFile(error, file, field)
-                                "
-                                @removefile="
-                                  (error, file) =>
-                                    handleRemoveFile(error, file, field)
-                                "
-                                :accepted-file-types="field.acceptedFileTypes"
-                                :max-file-size="field.maxFileSize"
-                                :allow-multiple="field.allowMultiple"
-                              />
-                              <file-pond
-                                v-if="
-                                  field.id === 'UploadLT' ||
-                                  field.id === 'UploadOT' ||
-                                  field.id === 'UploadOthers' ||
-                                  field.id === 'UploadHR' ||
-                                  field.id === 'UploadML'
-                                "
-                                :name="field.id"
-                                :disabled="
-                                  (tab.title ===
-                                    'Handphone Bill Reimbursement' &&
-                                    isFormDisabled) ||
-                                  field.disabled
-                                "
-                                :required="field.required"
-                                ref="pond"
-                                label-idle="Drop files here..."
-                                @addfile="
-                                  (error, file) =>
-                                    handleAddFile(error, file, field)
-                                "
-                                @removefile="
-                                  (error, file) =>
-                                    handleRemoveFile(error, file, field)
-                                "
-                                :accepted-file-types="field.acceptedFileTypes"
-                                :max-file-size="field.maxFileSize"
-                                :allow-multiple="field.allowMultiple"
-                              />
-                            </div>
-                          </template>
+                              <template v-else-if="field.type === 'year'">
+                                <select
+                                  v-model="field.value"
+                                  :required="field.required"
+                                  :disabled="
+                                    (tab.title ===
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
+                                    field.disabled
+                                  "
+                                  :id="field.id"
+                                  class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                                >
+                                  <option
+                                    v-for="year in yearRange"
+                                    :key="year"
+                                    :value="year"
+                                  >
+                                    {{ year }}
+                                  </option>
+                                </select>
+                              </template>
 
-                          <template v-else-if="field.type === 'long-text'">
-                            <textarea
-                              v-model="field.value"
-                              :required="field.required"
-                              :id="field.id"
-                              :placeholder="field.placeholder"
-                              :disabled="
-                                (tab.title === 'Handphone Bill Reimbursement' &&
-                                  isFormDisabled) ||
-                                field.disabled
-                              "
-                              class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                              rows="4"
-                            ></textarea>
-                          </template>
-
-                          <template v-else-if="field.id === 'MileageRMLT'">
-                            <input
-                              v-model="field.value"
-                              type="number"
-                              :required="field.required"
-                              :id="field.id"
-                              :placeholder="field.placeholder"
-                              :step="
-                                field.type === 'number' ? '0.01' : undefined
-                              "
-                              :disabled="
-                                (tab.title === 'Handphone Bill Reimbursement' &&
-                                  isFormDisabled) ||
-                                field.disabled
-                              "
-                              class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                            />
-                            <button
-                              type="button"
-                              @click="toggleUploadField('MileageRMLT')"
-                              class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="w-5 h-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
+                              <template
+                                v-else-if="field.type === 'radio-group'"
                               >
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                  d="M7 8l5-5m0 0l5 5m-5-5v12"
-                                />
-                              </svg>
-                            </button>
-                          </template>
+                                <div class="grid grid-cols-2">
+                                  <div
+                                    class="p-4 pt-2 pb-2 flex items-center"
+                                    v-for="option in field.options"
+                                    :key="option.value"
+                                  >
+                                    <input
+                                      type="radio"
+                                      :id="option.value"
+                                      :name="field.id"
+                                      :value="option.value"
+                                      v-model="field.value"
+                                      :required="field.required"
+                                      :disabled="
+                                        (tab.title ===
+                                          'Handphone Bill Reimbursement' &&
+                                          isFormDisabled) ||
+                                        field.disabled
+                                      "
+                                      class="mr-2"
+                                    />
+                                    <label
+                                      :for="option.value"
+                                      class="text-sm text-gray-700"
+                                    >
+                                      {{ option.label }}
+                                    </label>
+                                  </div>
+                                </div>
+                              </template>
 
-                          <template v-else-if="field.id === 'FareRMLT'">
-                            <input
-                              v-model="field.value"
-                              type="number"
-                              :required="field.required"
-                              :id="field.id"
-                              :placeholder="field.placeholder"
-                              :step="
-                                field.type === 'number' ? '0.01' : undefined
-                              "
-                              :disabled="
-                                (tab.title === 'Handphone Bill Reimbursement' &&
-                                  isFormDisabled) ||
-                                field.disabled
-                              "
-                              class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                            />
-                            <button
-                              type="button"
-                              @click="toggleUploadField('FareRMLT')"
-                              class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="w-5 h-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
+                              <template v-else-if="field.type === 'file'">
+                                <div>
+                                  <file-pond
+                                    v-if="
+                                      field.id === 'UploadMileageRMLT' &&
+                                      showMileageUpload
+                                    "
+                                    :name="field.id"
+                                    :disabled="
+                                      (tab.title ===
+                                        'Handphone Bill Reimbursement' &&
+                                        isFormDisabled) ||
+                                      field.disabled
+                                    "
+                                    :required="field.required"
+                                    ref="pond"
+                                    label-idle="Drop files here..."
+                                    @addfile="
+                                      (error, file) =>
+                                        handleAddFile(error, file, field)
+                                    "
+                                    @removefile="
+                                      (error, file) =>
+                                        handleRemoveFile(error, file, field)
+                                    "
+                                    :accepted-file-types="
+                                      field.acceptedFileTypes
+                                    "
+                                    :max-file-size="field.maxFileSize"
+                                    :allow-multiple="field.allowMultiple"
+                                  />
+                                  <file-pond
+                                    v-if="
+                                      field.id === 'UploadFareRMLT' &&
+                                      showFareUpload
+                                    "
+                                    :name="field.id"
+                                    :disabled="
+                                      (tab.title ===
+                                        'Handphone Bill Reimbursement' &&
+                                        isFormDisabled) ||
+                                      field.disabled
+                                    "
+                                    :required="field.required"
+                                    ref="pond"
+                                    label-idle="Drop files here..."
+                                    @addfile="
+                                      (error, file) =>
+                                        handleAddFile(error, file, field)
+                                    "
+                                    @removefile="
+                                      (error, file) =>
+                                        handleRemoveFile(error, file, field)
+                                    "
+                                    :accepted-file-types="
+                                      field.acceptedFileTypes
+                                    "
+                                    :max-file-size="field.maxFileSize"
+                                    :allow-multiple="field.allowMultiple"
+                                  />
+                                  <file-pond
+                                    v-if="
+                                      field.id === 'UploadTollLT' &&
+                                      showTollUpload
+                                    "
+                                    :name="field.id"
+                                    :label="field.label"
+                                    :disabled="
+                                      (tab.title ===
+                                        'Handphone Bill Reimbursement' &&
+                                        isFormDisabled) ||
+                                      field.disabled
+                                    "
+                                    :required="field.required"
+                                    ref="pond"
+                                    label-idle="Drop files here..."
+                                    @addfile="
+                                      (error, file) =>
+                                        handleAddFile(error, file, field)
+                                    "
+                                    @removefile="
+                                      (error, file) =>
+                                        handleRemoveFile(error, file, field)
+                                    "
+                                    :accepted-file-types="
+                                      field.acceptedFileTypes
+                                    "
+                                    :max-file-size="field.maxFileSize"
+                                    :allow-multiple="field.allowMultiple"
+                                  />
+                                  <file-pond
+                                    v-if="
+                                      field.id === 'UploadParkingLT' &&
+                                      showParkingUpload
+                                    "
+                                    :name="field.id"
+                                    :disabled="
+                                      (tab.title ===
+                                        'Handphone Bill Reimbursement' &&
+                                        isFormDisabled) ||
+                                      field.disabled
+                                    "
+                                    :required="field.required"
+                                    ref="pond"
+                                    label-idle="Drop files here..."
+                                    @addfile="
+                                      (error, file) =>
+                                        handleAddFile(error, file, field)
+                                    "
+                                    @removefile="
+                                      (error, file) =>
+                                        handleRemoveFile(error, file, field)
+                                    "
+                                    :accepted-file-types="
+                                      field.acceptedFileTypes
+                                    "
+                                    :max-file-size="field.maxFileSize"
+                                    :allow-multiple="field.allowMultiple"
+                                  />
+                                  <file-pond
+                                    v-if="
+                                      field.id === 'UploadAirportLimoTeksiOT' &&
+                                      showAirportLimoUpload
+                                    "
+                                    :name="field.id"
+                                    :disabled="
+                                      (tab.title ===
+                                        'Handphone Bill Reimbursement' &&
+                                        isFormDisabled) ||
+                                      field.disabled
+                                    "
+                                    :required="field.required"
+                                    ref="pond"
+                                    label-idle="Drop files here..."
+                                    @addfile="
+                                      (error, file) =>
+                                        handleAddFile(error, file, field)
+                                    "
+                                    @removefile="
+                                      (error, file) =>
+                                        handleRemoveFile(error, file, field)
+                                    "
+                                    :accepted-file-types="
+                                      field.acceptedFileTypes
+                                    "
+                                    :max-file-size="field.maxFileSize"
+                                    :allow-multiple="field.allowMultiple"
+                                  />
+                                  <file-pond
+                                    v-if="
+                                      field.id === 'UploadLT' ||
+                                      field.id === 'UploadOT' ||
+                                      field.id === 'UploadOthers' ||
+                                      field.id === 'UploadHR' ||
+                                      field.id === 'UploadML'
+                                    "
+                                    :name="field.id"
+                                    :disabled="
+                                      (tab.title ===
+                                        'Handphone Bill Reimbursement' &&
+                                        isFormDisabled) ||
+                                      field.disabled
+                                    "
+                                    :required="field.required"
+                                    ref="pond"
+                                    label-idle="Drop files here..."
+                                    @addfile="
+                                      (error, file) =>
+                                        handleAddFile(error, file, field)
+                                    "
+                                    @removefile="
+                                      (error, file) =>
+                                        handleRemoveFile(error, file, field)
+                                    "
+                                    :accepted-file-types="
+                                      field.acceptedFileTypes
+                                    "
+                                    :max-file-size="field.maxFileSize"
+                                    :allow-multiple="field.allowMultiple"
+                                  />
+                                </div>
+                              </template>
+
+                              <template v-else-if="field.type === 'long-text'">
+                                <textarea
+                                  v-model="field.value"
+                                  :required="field.required"
+                                  :id="field.id"
+                                  :placeholder="field.placeholder"
+                                  :disabled="
+                                    (tab.title ===
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
+                                    field.disabled
+                                  "
+                                  class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                                  rows="4"
+                                ></textarea>
+                              </template>
+
+                              <template v-else-if="field.id === 'MileageRMLT'">
+                                <input
+                                  v-model="field.value"
+                                  type="number"
+                                  :required="field.required"
+                                  :id="field.id"
+                                  :placeholder="field.placeholder"
+                                  :step="
+                                    field.type === 'number' ? '0.01' : undefined
+                                  "
+                                  :disabled="
+                                    (tab.title ===
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
+                                    field.disabled
+                                  "
+                                  class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                                />
+                                <button
+                                  type="button"
+                                  @click="toggleUploadField('MileageRMLT')"
+                                  class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="w-5 h-5"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                  >
+                                    <path
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      stroke-width="2"
+                                      d="M7 8l5-5m0 0l5 5m-5-5v12"
+                                    />
+                                  </svg>
+                                </button>
+                              </template>
+
+                              <template v-else-if="field.id === 'FareRMLT'">
+                                <input
+                                  v-model="field.value"
+                                  type="number"
+                                  :required="field.required"
+                                  :id="field.id"
+                                  :placeholder="field.placeholder"
+                                  :step="
+                                    field.type === 'number' ? '0.01' : undefined
+                                  "
+                                  :disabled="
+                                    (tab.title ===
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
+                                    field.disabled
+                                  "
+                                  class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                                />
+                                <button
+                                  type="button"
+                                  @click="toggleUploadField('FareRMLT')"
+                                  class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="w-5 h-5"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                  >
+                                    <path
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      stroke-width="2"
+                                      d="M7 8l5-5m0 0l5 5m-5-5v12"
+                                    />
+                                  </svg>
+                                </button>
+                              </template>
+
+                              <template v-else-if="field.id === 'TollLT'">
+                                <input
+                                  v-model="field.value"
+                                  type="number"
+                                  :required="field.required"
+                                  :id="field.id"
+                                  :placeholder="field.placeholder"
+                                  :step="
+                                    field.type === 'number' ? '0.01' : undefined
+                                  "
+                                  :disabled="
+                                    (tab.title ===
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
+                                    field.disabled
+                                  "
+                                  class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                                />
+                                <button
+                                  type="button"
+                                  @click="toggleUploadField('TollLT')"
+                                  class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="w-5 h-5"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                  >
+                                    <path
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      stroke-width="2"
+                                      d="M7 8l5-5m0 0l5 5m-5-5v12"
+                                    />
+                                  </svg>
+                                </button>
+                              </template>
+
+                              <template v-else-if="field.id === 'ParkingLT'">
+                                <input
+                                  v-model="field.value"
+                                  type="number"
+                                  :required="field.required"
+                                  :id="field.id"
+                                  :placeholder="field.placeholder"
+                                  :step="
+                                    field.type === 'number' ? '0.01' : undefined
+                                  "
+                                  :disabled="
+                                    (tab.title ===
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
+                                    field.disabled
+                                  "
+                                  class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                                />
+                                <button
+                                  type="button"
+                                  @click="toggleUploadField('ParkingLT')"
+                                  class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="w-5 h-5"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                  >
+                                    <path
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      stroke-width="2"
+                                      d="M7 8l5-5m0 0l5 5m-5-5v12"
+                                    />
+                                  </svg>
+                                </button>
+                              </template>
+
+                              <template
+                                v-else-if="
+                                  field.id === 'AmountforAccommodationOT'
+                                "
                               >
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                  d="M7 8l5-5m0 0l5 5m-5-5v12"
+                                <input
+                                  v-model="field.value"
+                                  type="number"
+                                  :required="field.required"
+                                  :id="field.id"
+                                  :placeholder="field.placeholder"
+                                  :step="
+                                    field.type === 'number' ? '0.01' : undefined
+                                  "
+                                  :disabled="
+                                    (tab.title ===
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
+                                    field.disabled
+                                  "
+                                  class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                                 />
-                              </svg>
-                            </button>
-                          </template>
+                                <div class="relative group ml-1">
+                                  <button
+                                    type="button"
+                                    class="mt-4 text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
+                                  >
+                                    <span
+                                      class="inline-flex items-center justify-center w-5 h-5 bg-gray-200 rounded-full text-gray-700 font-semibold"
+                                      >i</span
+                                    >
+                                  </button>
+                                  <div
+                                    class="absolute left-1.5/2 top-1/2 transform -translate-y-1/2 hidden group-hover:block w-64 p-2 bg-white border border-gray-300 rounded shadow-lg text-gray-700 text-sm"
+                                  >
+                                    Note: This field is intended for amounts
+                                    spent in foreign currency.
+                                  </div>
+                                </div>
+                              </template>
 
-                          <template v-else-if="field.id === 'TollLT'">
-                            <input
-                              v-model="field.value"
-                              type="number"
-                              :required="field.required"
-                              :id="field.id"
-                              :placeholder="field.placeholder"
-                              :step="
-                                field.type === 'number' ? '0.01' : undefined
-                              "
-                              :disabled="
-                                (tab.title === 'Handphone Bill Reimbursement' &&
-                                  isFormDisabled) ||
-                                field.disabled
-                              "
-                              class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                            />
-                            <button
-                              type="button"
-                              @click="toggleUploadField('TollLT')"
-                              class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="w-5 h-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
+                              <template
+                                v-else-if="field.id === 'AirportLimoTeksiOT'"
                               >
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                  d="M7 8l5-5m0 0l5 5m-5-5v12"
+                                <input
+                                  v-model="field.value"
+                                  type="number"
+                                  :required="field.required"
+                                  :id="field.id"
+                                  :placeholder="field.placeholder"
+                                  :step="
+                                    field.type === 'number' ? '0.01' : undefined
+                                  "
+                                  :disabled="
+                                    (tab.title ===
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
+                                    field.disabled
+                                  "
+                                  class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                                 />
-                              </svg>
-                            </button>
-                          </template>
+                                <button
+                                  v-if="field.id === 'AirportLimoTeksiOT'"
+                                  type="button"
+                                  @click="
+                                    toggleUploadField('AirportLimoTeksiOT')
+                                  "
+                                  class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="w-5 h-5"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                  >
+                                    <path
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      stroke-width="2"
+                                      d="M7 8l5-5m0 0l5 5m-5-5v12"
+                                    />
+                                  </svg>
+                                </button>
+                              </template>
 
-                          <template v-else-if="field.id === 'ParkingLT'">
-                            <input
-                              v-model="field.value"
-                              type="number"
-                              :required="field.required"
-                              :id="field.id"
-                              :placeholder="field.placeholder"
-                              :step="
-                                field.type === 'number' ? '0.01' : undefined
-                              "
-                              :disabled="
-                                (tab.title === 'Handphone Bill Reimbursement' &&
-                                  isFormDisabled) ||
-                                field.disabled
-                              "
-                              class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                            />
-                            <button
-                              type="button"
-                              @click="toggleUploadField('ParkingLT')"
-                              class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="w-5 h-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
+                              <template
+                                v-else-if="
+                                  field.id === 'BankNameHR' ||
+                                  field.id === 'BankNameML' ||
+                                  field.id === 'AccBankNumberHR' ||
+                                  field.id === 'AccBankNumberML' ||
+                                  field.id === 'AccHolderNameHR' ||
+                                  field.id === 'AccHolderNameML'
+                                "
                               >
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                  d="M7 8l5-5m0 0l5 5m-5-5v12"
+                                <input
+                                  v-model="field.value"
+                                  :required="field.required"
+                                  :disabled="
+                                    (tab.title ===
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
+                                    field.disabled
+                                  "
+                                  :id="field.id"
+                                  :type="field.type"
+                                  :placeholder="field.placeholder"
+                                  :step="
+                                    field.type === 'number' ? '0.01' : undefined
+                                  "
+                                  class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                                 />
-                              </svg>
-                            </button>
-                          </template>
+                              </template>
 
-                          <template
-                            v-else-if="field.id === 'AirportLimoTeksiOT'"
-                          >
-                            <input
-                              v-model="field.value"
-                              type="number"
-                              :required="field.required"
-                              :id="field.id"
-                              :placeholder="field.placeholder"
-                              :step="
-                                field.type === 'number' ? '0.01' : undefined
-                              "
-                              :disabled="
-                                (tab.title === 'Handphone Bill Reimbursement' &&
-                                  isFormDisabled) ||
-                                field.disabled
-                              "
-                              class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                            />
-                            <button
-                              v-if="field.id === 'AirportLimoTeksiOT'"
-                              type="button"
-                              @click="toggleUploadField('AirportLimoTeksiOT')"
-                              class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="w-5 h-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                              >
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                  d="M7 8l5-5m0 0l5 5m-5-5v12"
+                              <template v-else>
+                                <input
+                                  v-model="field.value"
+                                  :required="field.required"
+                                  :disabled="
+                                    (tab.title ===
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
+                                    field.disabled
+                                  "
+                                  :id="field.id"
+                                  :type="field.type"
+                                  :placeholder="field.placeholder"
+                                  :step="
+                                    field.type === 'number' ? '0.01' : undefined
+                                  "
+                                  class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                                 />
-                              </svg>
-                            </button>
-                          </template>
-
-                          <template
-                            v-else-if="
-                              field.id === 'BankNameHR' ||
-                              field.id === 'BankNameML' ||
-                              field.id === 'AccBankNumberHR' ||
-                              field.id === 'AccBankNumberML' ||
-                              field.id === 'AccHolderNameHR' ||
-                              field.id === 'AccHolderNameML'
-                            "
-                          >
-                            <input
-                              v-model="field.value"
-                              :required="field.required"
-                              :disabled="
-                                (tab.title === 'Handphone Bill Reimbursement' &&
-                                  isFormDisabled) ||
-                                field.disabled
-                              "
-                              :id="field.id"
-                              :type="field.type"
-                              :placeholder="field.placeholder"
-                              :step="
-                                field.type === 'number' ? '0.01' : undefined
-                              "
-                              class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                            />
-                          </template>
-
-                          <template v-else>
-                            <input
-                              v-model="field.value"
-                              :required="field.required"
-                              :disabled="
-                                (tab.title === 'Handphone Bill Reimbursement' &&
-                                  isFormDisabled) ||
-                                field.disabled
-                              "
-                              :id="field.id"
-                              :type="field.type"
-                              :placeholder="field.placeholder"
-                              :step="
-                                field.type === 'number' ? '0.01' : undefined
-                              "
-                              class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                            />
+                              </template>
+                            </template>
                           </template>
                         </template>
                       </template>
@@ -653,21 +744,21 @@
                     v-if="tab.title === 'Medical Bill Reimbursement'"
                     class="mt-4"
                   >
-                    <h1 class="text-red-500 text-sm">
+                    <h1 class="text-gray-500 text-sm">
                       Note : Claims must be submitted by the 15th of each month.
                       Submissions made after this date will be processed in the
                       following month.
                     </h1>
                     <h1 class="text-gray-500 text-sm">
-                      <span class="text-red-500">*</span
-                      ><span class="text-red-500">*</span> Medical Check-Up: The
-                      limited amount for Medical Check Up is RM70 per visit and
-                      RM700 per year.
+                      <span class="text-gray-500">*</span
+                      ><span class="text-gray-500">*</span> Outpatient: The
+                      limited amount for Outpatient is RM70 per visit and RM700
+                      per year.
                     </h1>
                     <h1 class="text-gray-500 text-sm">
-                      <span class="text-red-500">*</span
-                      ><span class="text-red-500">*</span> Dental: The limited
-                      amount for Dental is RM200 per year.
+                      <span class="text-gray-500">*</span
+                      ><span class="text-gray-500">*</span> Medical Check-Up &
+                      Dental: The limited amount is RM200 per year.
                     </h1>
                   </div>
                 </section>
@@ -677,9 +768,7 @@
                 <section>
                   <!-- Add Other Expenses Button-->
                   <div
-                    v-if="
-                      tab.title === 'Overseas Travelling with Accommodation'
-                    "
+                    v-if="tab.title === 'Overseas Travelling'"
                     class="mt-4 max-h-96 overflow-y-auto"
                   >
                     <span
@@ -806,7 +895,7 @@
                   <!-- Other Expenses Table -->
                   <div
                     v-if="
-                      tab.title === 'Overseas Travelling with Accommodation' &&
+                      tab.title === 'Overseas Travelling' &&
                       otherExpenses.length > 0
                     "
                     class="mt-4"
@@ -1188,11 +1277,6 @@
                             <td
                               class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                             >
-                              {{ attendee.staffId || "-" }}
-                            </td>
-                            <td
-                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                            >
                               {{ attendee.companyName }}
                             </td>
                             <td
@@ -1414,16 +1498,23 @@
                         </div>
                         <div class="mb-4">
                           <label
-                            for="staffId"
+                            for="department"
                             class="block text-sm font-medium text-gray-700"
-                            >Staff ID</label
+                            >Department</label
                           >
-                          <input
-                            type="text"
-                            v-model="modalForm.staffId"
+                          <select
+                            v-model="selecteddepartment"
                             required
                             class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                          />
+                          >
+                            <option
+                              v-for="department in pktDepartments"
+                              :key="department"
+                              :value="department"
+                            >
+                              {{ department }}
+                            </option>
+                          </select>
                         </div>
                         <div class="flex justify-end">
                           <button
@@ -1462,7 +1553,7 @@
                               class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                             >
                               <div class="flex items-center gap-x-3">
-                                <span>Staff ID</span>
+                                <span>Department</span>
                               </div>
                             </th>
                             <th
@@ -1498,7 +1589,7 @@
                             <td
                               class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                             >
-                              {{ staff.staffId || "-" }}
+                              {{ staff.department }}
                             </td>
                             <td
                               class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
@@ -1604,7 +1695,8 @@ export default {
       showParkingUpload: false,
       showAirportLimoUpload: false,
       LimitedAmountHR: 0,
-      LIMIT_MEDICAL_CHECKUP: 70,
+      LIMIT_OUTPATIENT: 70,
+      LIMIT_MEDICAL_CHECKUP: 200,
       LIMIT_DENTAL: 200,
       uploadedFiles: [],
       otherExpenses: [],
@@ -1616,12 +1708,13 @@ export default {
         files: [],
       },
       showModal: false,
-      selectedAttendeeType: "pkt",
+      selecteddepartment: "",
+      pktDepartments: [],
       selectedCompanyName: "",
       pktCompanies: [],
       modalForm: {
         name: "",
-        staffId: "",
+        department: "",
         companyName: "",
       },
       attendees: [],
@@ -1706,6 +1799,32 @@ export default {
                 { label: "One Way", value: "One Way" },
               ],
               gridClass: "sm:col-span-1",
+            },
+            {
+              id: "ReturndateLT",
+              label: "Return Date",
+              type: "date",
+              value: "",
+              required: true,
+              hidden: false,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "AccommodationLT",
+              label: "Accommodation",
+              type: "text",
+              placeholder: "Hotel Name",
+              value: "",
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "MealAllowanceLT",
+              label: "Meal Allowance(RM)",
+              type: "number",
+              value: "",
+              hidden: false,
+              gridClass: "sm:col-span-2",
             },
             {
               id: "MileageKMLT",
@@ -1847,7 +1966,7 @@ export default {
         },
         {
           form: "HR",
-          title: "Overseas Travelling with Accommodation",
+          title: "Overseas Travelling",
           tabType: "Finance",
           gridLayout: "grid-cols-3", //
           fields: [
@@ -1885,8 +2004,8 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "RMforAccommodationOT",
-              label: "RM",
+              id: "AmountforAccommodationOT",
+              label: "Amount",
               type: "number",
               value: "",
               required: true,
@@ -1908,9 +2027,24 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
-              id: "RMforOthersOT",
-              label: "RM",
+              id: "AmountforOthersOT",
+              label: "Amount",
               type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "ReturendateOT",
+              label: "Return Date",
+              type: "date",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "AccommodationOT",
+              label: "Accommodation",
+              type: "text",
+              placeholder: "Hotel Name",
               value: "",
               gridClass: "sm:col-span-2",
             },
@@ -2087,6 +2221,7 @@ export default {
               value: [],
               required: true,
               options: [
+                { label: "Outpatient", value: "Outpatient" },
                 { label: "Medical Check-Up", value: "Medical Check-Up" },
                 { label: "Dental", value: "Dental" },
               ],
@@ -2097,6 +2232,7 @@ export default {
               label: "Reason for Medical",
               type: "text",
               value: "",
+              hidden: false,
               required: true,
               gridClass: "sm:col-span-2",
             },
@@ -2105,6 +2241,7 @@ export default {
               label: "Clinic Selection",
               type: "radio-group",
               value: [],
+              hidden: false,
               required: true,
               options: [
                 {
@@ -2479,6 +2616,37 @@ export default {
         personalTransportField.value === "Personal Transport"
       );
     },
+    isOneWay() {
+      const tab = this.tabs.find((tab) => tab.title === "Local Travelling");
+      if (!tab) return false;
+      const tripField = tab.fields.find(
+        (field) =>
+          field.id === "tripwayLT" &&
+          "ReturndateLT" &&
+          "AccommodationLT" &&
+          "MealAllowanceLT"
+      );
+      return tripField && tripField.value === "One Way";
+    },
+    isOtherThanOutpatient() {
+      const tab = this.tabs.find(
+        (tab) => tab.title === "Medical Bill Reimbursement"
+      );
+      if (!tab) return false;
+      const medCategoryField = tab.fields.find(
+        (field) =>
+          field.id === "MedicalCategoryML" &&
+          "ReasonML" &&
+          "ClinicSelectionML" &&
+          "OtherClinicSpecML" &&
+          "OtherClinicReasonML"
+      );
+      return (
+        medCategoryField &&
+        (medCategoryField.value === "Medical Check-Up" ||
+          medCategoryField.value === "Dental")
+      );
+    },
     isPanelClinic() {
       const tab = this.tabs.find(
         (tab) => tab.title === "Medical Bill Reimbursement"
@@ -2537,6 +2705,20 @@ export default {
               this.updateFieldVisibility5(transportField.value);
               this.updateFieldVisibility6(transportField.value);
             }
+
+            const tripField = tab.fields.find(
+              (field) =>
+                field.id === "tripwayLT" &&
+                Object.prototype.hasOwnProperty.call(field, "ReturndateLT") &&
+                Object.prototype.hasOwnProperty.call(
+                  field,
+                  "AccommodationLT"
+                ) &&
+                Object.prototype.hasOwnProperty.call(field, "MealAllowanceLT")
+            );
+            if (tripField) {
+              this.updateFieldVisibility7(tripField.value);
+            }
           }
 
           if (tab.title === "Medical Bill Reimbursement") {
@@ -2556,6 +2738,24 @@ export default {
               this.updateFieldVisibility2(clinicField.value);
             }
 
+            const medCategoryField = tab.fields.find(
+              (field) =>
+                field.id === "MedicalCategoryML" &&
+                Object.prototype.hasOwnProperty.call(field, "ReasonML") &&
+                Object.prototype.hasOwnProperty.call(
+                  field,
+                  "ClinicSelectionML"
+                ) &&
+                Object.prototype.hasOwnProperty.call(
+                  field,
+                  "OtherClinicReasonML"
+                ) &&
+                Object.prototype.hasOwnProperty.call(field, "OtherClinicSpecML")
+            );
+            if (medCategoryField) {
+              this.updateFieldVisibility8(medCategoryField.value);
+            }
+
             const medicalCategoryField = tab.fields.find(
               (field) => field.id === "MedicalCategoryML"
             );
@@ -2564,32 +2764,36 @@ export default {
             );
 
             if (medicalCategoryField && claimsAmountField) {
-              // Watch for changes in MedicalCategoryML
               this.$watch(
                 () => medicalCategoryField.value,
                 (newValue) => {
-                  if (newValue === "Medical Check-Up") {
-                    claimsAmountField.value = this.LIMIT_MEDICAL_CHECKUP;
-                  } else if (newValue === "Dental") {
-                    claimsAmountField.value = this.LIMIT_DENTAL;
+                  switch (newValue) {
+                    case "Outpatient":
+                      claimsAmountField.value = this.LIMIT_OUTPATIENT;
+                      break;
+                    case "Dental":
+                      claimsAmountField.value = this.LIMIT_DENTAL;
+                      break;
+                    case "Medical Check-Up":
+                      claimsAmountField.value = this.LIMIT_MEDICAL_CHECKUP;
+                      break;
+                    default:
+                      claimsAmountField.value = 0; 
                   }
                 }
               );
 
-              // Watch for changes in ClaimsAmountML
               this.$watch(
                 () => claimsAmountField.value,
                 (newValue) => {
-                  if (
-                    medicalCategoryField.value === "Medical Check-Up" &&
-                    parseFloat(newValue) > this.LIMIT_MEDICAL_CHECKUP
-                  ) {
-                    claimsAmountField.value = this.LIMIT_MEDICAL_CHECKUP;
-                  } else if (
-                    medicalCategoryField.value === "Dental" &&
-                    parseFloat(newValue) > this.LIMIT_DENTAL
-                  ) {
-                    claimsAmountField.value = this.LIMIT_DENTAL;
+                  const limit = {
+                    Outpatient: this.LIMIT_OUTPATIENT,
+                    Dental: this.LIMIT_DENTAL,
+                    "Medical Check-Up": this.LIMIT_MEDICAL_CHECKUP,
+                  }[medicalCategoryField.value];
+
+                  if (limit && parseFloat(newValue) > limit) {
+                    claimsAmountField.value = limit;
                   }
                 }
               );
@@ -2657,10 +2861,43 @@ export default {
       this.yearRange.push(i);
     }
     this.fetchCompany();
+    this.fetchDepartment();
     this.fetchHrData();
   },
 
   methods: {
+    async fetchDepartment() {
+      try {
+        const response = await fetch(
+          "http://172.28.28.91:97/api/User/GetDepartment"
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        this.pktDepartments = data.result.map(
+          (department) => department.department
+        );
+      } catch (error) {
+        console.error(`Error fetching department: ${error}`);
+      }
+    },
+
+    async fetchCompany() {
+      try {
+        const response = await fetch(
+          "http://172.28.28.91:97/api/User/GetCompany"
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        this.pktCompanies = data.result.map((company) => company.company_name);
+      } catch (error) {
+        console.error(`Error fetching company names: ${error}`);
+      }
+    },
+
     async fetchHrData() {
       try {
         const username_id = store.getSession().userDetails.userId;
@@ -3008,6 +3245,72 @@ export default {
       }
     },
 
+    updateFieldVisibility7(tripValue) {
+      const localTravellingTab = this.tabs.find(
+        (tab) => tab.title === "Local Travelling"
+      );
+      if (!localTravellingTab) return;
+      const ReturndateLTField = localTravellingTab.fields.find(
+        (field) => field.id === "ReturndateLT"
+      );
+      const AccommodationLTField = localTravellingTab.fields.find(
+        (field) => field.id === "AccommodationLT"
+      );
+      const MealAllowanceLTField = localTravellingTab.fields.find(
+        (field) => field.id === "MealAllowanceLT"
+      );
+      if (!ReturndateLTField || !AccommodationLTField || !MealAllowanceLTField)
+        return;
+
+      if (tripValue === "One Way") {
+        ReturndateLTField.hidden = true;
+        AccommodationLTField.hidden = true;
+        MealAllowanceLTField.hidden = true;
+      } else {
+        ReturndateLTField.hidden = false;
+        AccommodationLTField.hidden = false;
+        MealAllowanceLTField.hidden = false;
+      }
+    },
+
+    updateFieldVisibility8(medCategoryValue) {
+      const medicalBillReimbursementTab = this.tabs.find(
+        (tab) => tab.title === "Medical Bill Reimbursement"
+      );
+      if (!medicalBillReimbursementTab) return;
+      const ReasonMLField = medicalBillReimbursementTab.fields.find(
+        (field) => field.id === "ReasonML"
+      );
+      const ClinicSelectionMLField = medicalBillReimbursementTab.fields.find(
+        (field) => field.id === "ClinicSelectionML"
+      );
+      const OtherClinicReasonMLField = medicalBillReimbursementTab.fields.find(
+        (field) => field.id === "OtherClinicReasonML"
+      );
+      const OtherClinicSpecMLField = medicalBillReimbursementTab.fields.find(
+        (field) => field.id === "OtherClinicSpecML"
+      );
+      if (
+        !ReasonMLField ||
+        !ClinicSelectionMLField ||
+        !OtherClinicReasonMLField ||
+        !OtherClinicSpecMLField
+      )
+        return;
+
+      if (medCategoryValue === "Outpatient") {
+        ReasonMLField.hidden = false;
+        ClinicSelectionMLField.hidden = false;
+        OtherClinicReasonMLField.hidden = false;
+        OtherClinicSpecMLField.hidden = false;
+      } else {
+        ReasonMLField.hidden = true;
+        ClinicSelectionMLField.hidden = true;
+        OtherClinicReasonMLField.hidden = true;
+        OtherClinicSpecMLField.hidden = true;
+      }
+    },
+
     handleTransportChange(value) {
       this.showTransportSpec = value === "Personal Transport";
     },
@@ -3039,51 +3342,20 @@ export default {
       return total;
     },
 
-    async fetchCompany() {
-      try {
-        const response = await fetch(
-          "http://172.28.28.91:97/api/User/GetCompany"
-        );
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        this.pktCompanies = data.result.map((company) => company.company_name);
-      } catch (error) {
-        console.error(`Error fetching company names: ${error}`);
-      }
-    },
-
     addAttendee() {
-      const { name, staffId, companyName } = this.modalForm;
-      if (this.selectedAttendeeType === "pkt" && name && staffId) {
+      const { name } = this.modalForm;
+      if (this.modalForm.name && this.selectedCompanyName) {
         this.attendees.push({
           name,
-          staffId,
           companyName: this.selectedCompanyName,
-          status: "PKT Staff",
-        });
-      } else if (
-        this.selectedAttendeeType === "notStaff" &&
-        name &&
-        companyName
-      ) {
-        this.attendees.push({
-          name,
-          staffId: "",
-          companyName,
-          status: "Not a Staff",
         });
       }
       this.attendees.push({
         name: this.modalForm.name,
         companyName: this.modalForm.companyName,
       });
-      this.modalForm.name = "";
-      this.modalForm.companyName = "";
       this.showModal = false;
       this.modalForm.name = "";
-      this.modalForm.staffId = "";
       this.modalForm.companyName = "";
     },
 
@@ -3092,17 +3364,17 @@ export default {
     },
 
     addStaff() {
-      const { name, staffId } = this.modalForm;
-      if (this.modalForm.name && this.modalForm.staffId) {
+      const { name } = this.modalForm;
+      if (this.modalForm.name && this.selecteddepartment) {
         this.staffInvolved.push({
           name,
-          staffId,
+          department: this.selecteddepartment,
           companyName: this.selectedCompanyName,
         });
       }
       this.showModal = false;
       this.modalForm.name = "";
-      this.modalForm.staffId = "";
+      this.modalForm.department = "";
     },
 
     removeStaff(index) {
@@ -3111,7 +3383,6 @@ export default {
 
     calculateTotal(tab) {
       let total = 0;
-      let isRoundTrip = false;
 
       // Check if the transport mode is Company Transport
       const isCompanyTransport = tab.fields.some(
@@ -3134,11 +3405,6 @@ export default {
       );
 
       tab.fields.forEach((field) => {
-        // Check if Round Trip is selected
-        if (field.id === "tripwayLT" && field.value.includes("Round Trip")) {
-          isRoundTrip = true;
-        }
-
         // Calculate the total based on the field value
         if (
           field.type === "number" &&
@@ -3155,15 +3421,12 @@ export default {
               field.id !== "ParkingLT")) &&
           (!isPersonalTransport || field.id !== "FareRMLT")
         ) {
-          // If Round Trip is selected, double up the calculation
-          total += isRoundTrip
-            ? parseFloat(field.value) * 2
-            : parseFloat(field.value);
+          total += parseFloat(field.value);
         }
       });
 
-      // If the tab title is "Overseas Travelling with Accommodation", add the total of other expenses
-      if (tab.title === "Overseas Travelling with Accommodation") {
+      // If the tab title is "Overseas Travelling", add the total of other expenses
+      if (tab.title === "Overseas Travelling") {
         total += this.calculateOverseasTotal();
       }
 
@@ -3202,7 +3465,7 @@ export default {
       formattedData["totalRM"] = this.calculateTotal(tab);
 
       if (
-        tab.title === "Overseas Travelling with Accommodation" &&
+        tab.title === "Overseas Travelling" &&
         this.otherExpenses.length > 0
       ) {
         // Add otherExpenses to formattedData
@@ -3254,4 +3517,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+/* Tooltip styling */
+.group-hover\\:block {
+  display: block;
+}
+</style>
