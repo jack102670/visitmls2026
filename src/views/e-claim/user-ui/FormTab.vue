@@ -35,6 +35,20 @@
           {{ tab.title }} Form
         </h2>
 
+        <!-- Note for Handphone Bill Reimbursement -->
+        <div
+          v-if="
+            tab.title === 'Handphone Bill Reimbursement' &&
+            LimitedAmountHR === 0
+          "
+          class="relative flex items-center justify-center mt-4 p-4 bg-yellow-200 border border-yellow-400 text-yellow-800 rounded-md"
+          style="width: 100%; max-width: 600px; margin: 0 auto"
+        >
+          <h1 class="text-sm font-bold text-center">
+            Note : You are not applicable to claim the Handphone Bill.
+          </h1>
+        </div>
+
         <!--Note for Others Form-->
         <section>
           <div v-if="tab.title === 'Others'" class="mt-4">
@@ -579,6 +593,34 @@
                                 />
                               </svg>
                             </button>
+                          </template>
+
+                          <template
+                            v-else-if="
+                              field.id === 'BankNameHR' ||
+                              field.id === 'BankNameML' ||
+                              field.id === 'AccBankNumberHR' ||
+                              field.id === 'AccBankNumberML' ||
+                              field.id === 'AccHolderNameHR' ||
+                              field.id === 'AccHolderNameML'
+                            "
+                          >
+                            <input
+                              v-model="field.value"
+                              :required="field.required"
+                              :disabled="
+                                (tab.title === 'Handphone Bill Reimbursement' &&
+                                  isFormDisabled) ||
+                                field.disabled
+                              "
+                              :id="field.id"
+                              :type="field.type"
+                              :placeholder="field.placeholder"
+                              :step="
+                                field.type === 'number' ? '0.01' : undefined
+                              "
+                              class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                            />
                           </template>
 
                           <template v-else>
@@ -1146,7 +1188,7 @@
                             <td
                               class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                             >
-                              {{ attendee.staffId || '-' }}
+                              {{ attendee.staffId || "-" }}
                             </td>
                             <td
                               class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
@@ -1456,7 +1498,7 @@
                             <td
                               class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                             >
-                              {{ staff.staffId || '-' }}
+                              {{ staff.staffId || "-" }}
                             </td>
                             <td
                               class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
@@ -1523,16 +1565,16 @@
 </template>
 
 <script>
-import vueFilePond from 'vue-filepond';
-import 'filepond/dist/filepond.min.css';
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-import { monthOptions } from '@/javascript/eClaimOptions.js';
-import { refOptions } from '@/javascript/eClaimOptions.js';
-import { TypeOptions } from '@/javascript/eClaimOptions.js';
-import axios from 'axios';
-import { store } from '@/views/store.js';
+import vueFilePond from "vue-filepond";
+import "filepond/dist/filepond.min.css";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
+import { monthOptions } from "@/javascript/eClaimOptions.js";
+import { refOptions } from "@/javascript/eClaimOptions.js";
+import { TypeOptions } from "@/javascript/eClaimOptions.js";
+import axios from "axios";
+import { store } from "@/views/store.js";
 
 // Create component
 const FilePond = vueFilePond(
@@ -1552,583 +1594,578 @@ export default {
   data() {
     return {
       chooseform: true,
-      activeTab: this.type == 'Finance' ? 0 : 4,
+      activeTab: this.type == "Finance" ? 0 : 4,
       activeSubTab: 0,
-      date: '',
+      date: "",
       yearRange: [],
       showMileageUpload: false,
       showFareUpload: false,
       showTollUpload: false,
       showParkingUpload: false,
       showAirportLimoUpload: false,
+      LimitedAmountHR: 0,
       LIMIT_MEDICAL_CHECKUP: 70,
       LIMIT_DENTAL: 200,
       uploadedFiles: [],
       otherExpenses: [],
       showOtherExpensesModal: false,
       newExpense: {
-        name: '',
+        name: "",
         amount: 0,
-        description: '',
+        description: "",
         files: [],
       },
       showModal: false,
-      selectedAttendeeType: 'pkt',
-      selectedCompanyName: '',
+      selectedAttendeeType: "pkt",
+      selectedCompanyName: "",
       pktCompanies: [],
       modalForm: {
-        name: '',
-        staffId: '',
-        companyName: '',
+        name: "",
+        staffId: "",
+        companyName: "",
       },
       attendees: [],
       staffInvolved: [],
       tabs: [
         {
-          form: 'HR',
-          title: 'Local Travelling',
-          tabType: 'Finance',
+          form: "HR",
+          title: "Local Travelling",
+          tabType: "Finance",
 
-          gridLayout: 'grid-cols-3',
+          gridLayout: "grid-cols-3",
           fields: [
             {
-              id: 'dateLT',
-              label: 'Date',
-              type: 'date',
-              value: '',
+              id: "dateLT",
+              label: "Date",
+              type: "date",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'TransportLT',
-              label: 'Travelling Mode By',
-              type: 'radio-group',
+              id: "TransportLT",
+              label: "Travelling Mode By",
+              type: "radio-group",
               value: [],
               required: true,
               options: [
-                { label: 'Personal Transport', value: 'Personal Transport' },
-                { label: 'Company Transport', value: 'Company Transport' },
-                { label: 'Public Transport', value: 'Public Transport' },
+                { label: "Personal Transport", value: "Personal Transport" },
+                { label: "Company Transport", value: "Company Transport" },
+                { label: "Public Transport", value: "Public Transport" },
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
             {
-              id: 'TransportSpec',
-              label: 'Transport Specification',
-              type: 'select',
-              value: '',
+              id: "TransportSpec",
+              label: "Transport Specification",
+              type: "select",
+              value: "",
               required: true,
               options: [
-                { label: 'Motorcycle', value: 'Motorcycle' },
-                { label: 'Car', value: 'Car' },
+                { label: "Motorcycle", value: "Motorcycle" },
+                { label: "Car", value: "Car" },
               ],
               hidden: false,
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
             {
-              id: 'PublicTransportSpec',
-              label: 'Transport Specification',
-              type: 'text',
-              value: '',
+              id: "PublicTransportSpec",
+              label: "Transport Specification",
+              type: "text",
+              value: "",
               required: true,
               hidden: false,
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
             {
-              id: 'LocationStart',
-              label: 'Starting Point Location',
-              type: 'text',
-              placeholder: 'From Where',
-              value: '',
+              id: "LocationStart",
+              label: "Starting Point Location",
+              type: "text",
+              placeholder: "From Where",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
             {
-              id: 'LocationEnd',
-              label: 'End Point Location',
-              type: 'text',
-              placeholder: 'To Where',
-              value: '',
+              id: "LocationEnd",
+              label: "End Point Location",
+              type: "text",
+              placeholder: "To Where",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
             {
-              id: 'tripwayLT',
-              label: 'Trip',
-              type: 'radio-group',
+              id: "tripwayLT",
+              label: "Trip",
+              type: "radio-group",
               value: [],
               required: true,
               options: [
-                { label: 'Round Trip', value: 'Round Trip' },
-                { label: 'One Way', value: 'One Way' },
+                { label: "Round Trip", value: "Round Trip" },
+                { label: "One Way", value: "One Way" },
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
             {
-              id: 'MileageKMLT',
-              label: 'Mileage/Kilometer(KM)',
-              type: 'number',
-              value: '',
-              gridClass: 'sm:col-span-1',
+              id: "MileageKMLT",
+              label: "Mileage/Kilometer(KM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
               hidden: false,
             },
             {
-              id: 'MileageRMLT',
-              label: 'Total Mileage(RM)',
-              type: 'number',
-              value: '',
-              gridClass: 'sm:col-span-1',
+              id: "MileageRMLT",
+              label: "Total Mileage(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
               hidden: false,
             },
             {
-              id: 'UploadMileageRMLT',
-              label: '',
-              type: 'file',
+              id: "UploadMileageRMLT",
+              label: "",
+              type: "file",
               value: [],
               allowMultiple: true,
               server: null,
               required: false,
-              maxFileSize: '5MB',
+              maxFileSize: "5MB",
               acceptedFileTypes: [
-                'image/png',
-                'image/jpeg',
-                'application/pdf',
-                'application/vnd.ms-excel',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
               hidden: false,
             },
             {
-              id: 'FareRMLT',
-              label: 'Fare(RM)',
-              type: 'number',
-              value: '',
-              gridClass: 'sm:col-span-1',
+              id: "FareRMLT",
+              label: "Fare(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
               required: true,
               hidden: false,
             },
             {
-              id: 'UploadFareRMLT',
-              label: '',
-              type: 'file',
+              id: "UploadFareRMLT",
+              label: "",
+              type: "file",
               value: [],
               allowMultiple: true,
               server: null,
               required: false,
-              maxFileSize: '5MB',
+              maxFileSize: "5MB",
               acceptedFileTypes: [
-                'image/png',
-                'image/jpeg',
-                'application/pdf',
-                'application/vnd.ms-excel',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
               hidden: false,
             },
             {
-              id: 'TollLT',
+              id: "TollLT",
               label: "Toll/Touch' n Go(RM)",
-              type: 'number',
-              value: '',
-              gridClass: 'sm:col-span-1',
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
               hidden: false,
             },
             {
-              id: 'UploadTollLT',
-              label: '',
-              type: 'file',
+              id: "UploadTollLT",
+              label: "",
+              type: "file",
               value: [],
               allowMultiple: true,
               server: null,
               required: false,
-              maxFileSize: '5MB',
+              maxFileSize: "5MB",
               acceptedFileTypes: [
-                'image/png',
-                'image/jpeg',
-                'application/pdf',
-                'application/vnd.ms-excel',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
               hidden: false,
             },
             {
-              id: 'ParkingLT',
-              label: 'Parking(RM)',
-              type: 'number',
-              value: '',
-              gridClass: 'sm:col-span-1',
+              id: "ParkingLT",
+              label: "Parking(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
               hidden: false,
             },
             {
-              id: 'UploadParkingLT',
-              label: '',
-              type: 'file',
+              id: "UploadParkingLT",
+              label: "",
+              type: "file",
               value: [],
               allowMultiple: true,
               server: null,
               required: false,
-              maxFileSize: '5MB',
+              maxFileSize: "5MB",
               acceptedFileTypes: [
-                'image/png',
-                'image/jpeg',
-                'application/pdf',
-                'application/vnd.ms-excel',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
               hidden: false,
             },
             {
-              id: 'UploadLT',
+              id: "UploadLT",
               label:
-                'Additional Supporting Document(s). (png, jpeg, pdf or xlsx) (Optional)',
-              type: 'file',
+                "Additional Supporting Document(s). (png, jpeg, pdf or xlsx) (Optional)",
+              type: "file",
               value: [],
               allowMultiple: true,
               server: null,
               required: false,
-              maxFileSize: '5MB',
+              maxFileSize: "5MB",
               acceptedFileTypes: [
-                'image/png',
-                'image/jpeg',
-                'application/pdf',
-                'application/vnd.ms-excel',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
           ],
         },
         {
-          form: 'HR',
-          title: 'Overseas Travelling with Accommodation',
-          tabType: 'Finance',
-          gridLayout: 'grid-cols-3', //
+          form: "HR",
+          title: "Overseas Travelling with Accommodation",
+          tabType: "Finance",
+          gridLayout: "grid-cols-3", //
           fields: [
             {
-              id: 'dateOT',
-              label: 'Date',
-              type: 'date',
-              value: '',
+              id: "dateOT",
+              label: "Date",
+              type: "date",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'PurposeOT',
-              label: 'Purpose',
-              type: 'text',
-              value: '',
+              id: "PurposeOT",
+              label: "Purpose",
+              type: "text",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'ForeignCurrencyAccommodationOT',
-              label: 'Foreign Currency',
-              type: 'text',
-              placeholder: 'Accommodation',
-              value: '',
+              id: "ForeignCurrencyAccommodationOT",
+              label: "Foreign Currency",
+              type: "text",
+              placeholder: "Accommodation",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'ExchangeRateAccommodationOT',
-              label: 'Exchange Rate',
-              type: 'text',
-              value: '',
+              id: "ExchangeRateAccommodationOT",
+              label: "Exchange Rate",
+              type: "text",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'RMforAccommodationOT',
-              label: 'RM',
-              type: 'number',
-              value: '',
+              id: "RMforAccommodationOT",
+              label: "RM",
+              type: "number",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'ForeignCurrencyOthersOT',
-              label: 'Foreign Currency',
-              type: 'text',
-              placeholder: 'Others',
-              value: '',
-              gridClass: 'sm:col-span-2',
+              id: "ForeignCurrencyOthersOT",
+              label: "Foreign Currency",
+              type: "text",
+              placeholder: "Others",
+              value: "",
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'ExchangeRateOthersOT',
-              label: 'Exchange Rate',
-              type: 'text',
-              value: '',
-              gridClass: 'sm:col-span-2',
+              id: "ExchangeRateOthersOT",
+              label: "Exchange Rate",
+              type: "text",
+              value: "",
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'RMforOthersOT',
-              label: 'RM',
-              type: 'number',
-              value: '',
-              gridClass: 'sm:col-span-2',
+              id: "RMforOthersOT",
+              label: "RM",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'MealAllowanceOT',
-              label: 'Meal Allowance(RM)',
-              type: 'number',
-              value: '',
-              gridClass: 'sm:col-span-2',
+              id: "MealAllowanceOT",
+              label: "Meal Allowance(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'AirportLimoTeksiOT',
-              label: 'Airport Limo / Teksi(RM)',
-              type: 'number',
-              value: '',
-              gridClass: 'sm:col-span-2',
+              id: "AirportLimoTeksiOT",
+              label: "Airport Limo / Teksi(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'UploadAirportLimoTeksiOT',
-              label: '',
-              type: 'file',
+              id: "UploadAirportLimoTeksiOT",
+              label: "",
+              type: "file",
               value: [],
               allowMultiple: true,
               server: null,
               required: false,
-              maxFileSize: '5MB',
+              maxFileSize: "5MB",
               acceptedFileTypes: [
-                'image/png',
-                'image/jpeg',
-                'application/pdf',
-                'application/vnd.ms-excel',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
               hidden: false,
             },
             {
-              id: 'UploadOT',
+              id: "UploadOT",
               label:
-                'Additional Supporting Document(s). (png, jpeg, pdf or xlsx)',
-              type: 'file',
+                "Additional Supporting Document(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
               value: [],
               allowMultiple: true,
               required: false,
               server: null,
-              maxFileSize: '5MB',
+              maxFileSize: "5MB",
               acceptedFileTypes: [
-                'image/png',
-                'image/jpeg',
-                'application/pdf',
-                'application/vnd.ms-excel',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
           ],
         },
         {
-          title: 'Entertainment',
-          tabType: 'Finance',
+          title: "Entertainment",
+          tabType: "Finance",
 
-          gridLayout: 'grid-cols-3',
+          gridLayout: "grid-cols-3",
           fields: [],
         },
         {
-          title: 'Staff Refreshment',
-          tabType: 'Finance',
+          title: "Staff Refreshment",
+          tabType: "Finance",
 
-          gridLayout: 'grid-cols-3',
+          gridLayout: "grid-cols-3",
           fields: [],
         },
         {
-          title: 'Handphone Bill Reimbursement',
-          tabType: 'HR',
+          title: "Handphone Bill Reimbursement",
+          tabType: "HR",
 
-          gridLayout: 'grid-cols-3',
+          gridLayout: "grid-cols-3",
           fields: [
             {
-              id: 'MonthHR',
-              label: 'Month',
-              type: 'select',
-              value: '',
+              id: "MonthHR",
+              label: "Month",
+              type: "select",
+              value: "",
               required: true,
               options: monthOptions,
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
             {
-              id: 'YearHR',
-              label: 'Year',
-              type: 'year',
-              value: '',
+              id: "YearHR",
+              label: "Year",
+              type: "year",
+              value: "",
               required: true,
               options: this.years,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'BankNameHR',
-              label: 'Bank Name',
-              type: 'text',
-              value: '',
-              required: true,
+              id: "BankNameHR",
+              label: "Bank Name",
+              type: "text",
+              value: "",
               disabled: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'AccBankNumberHR',
-              label: 'Account Bank No.',
-              type: 'text',
-              value: '',
-              required: true,
+              id: "AccBankNumberHR",
+              label: "Account Bank No.",
+              type: "text",
+              value: "",
               disabled: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'AccHolderNameHR',
-              label: 'Account Holder Name',
-              type: 'text',
-              value: '',
-              required: true,
+              id: "AccHolderNameHR",
+              label: "Account Holder Name",
+              type: "text",
+              value: "",
               disabled: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'LimitedAmountHR',
-              label: 'Limited Amount(RM)',
-              type: 'number',
-              value: '',
+              id: "LimitedAmountHR",
+              label: "Limited Amount(RM)",
+              type: "number",
+              value: "",
               disabled: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'ClaimsAmountHR',
-              label: 'Claims Amount(RM)',
-              type: 'number',
-              value: '',
+              id: "ClaimsAmountHR",
+              label: "Claims Amount(RM)",
+              type: "number",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'UploadHR',
-              label: 'Attachment(s). (png, jpeg, pdf or xlsx)',
-              type: 'file',
-              value: '',
+              id: "UploadHR",
+              label: "Attachment(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
+              value: "",
               required: true,
               allowMultiple: true,
               server: null,
-              maxFileSize: '5MB',
+              maxFileSize: "5MB",
               acceptedFileTypes: [
-                'image/png',
-                'image/jpeg',
-                'application/pdf',
-                'application/vnd.ms-excel',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
           ],
         },
         {
-          title: 'Medical Bill Reimbursement',
-          tabType: 'HR',
+          title: "Medical Bill Reimbursement",
+          tabType: "HR",
 
-          gridLayout: 'grid-cols-3',
+          gridLayout: "grid-cols-3",
           fields: [
             {
-              id: 'dateML',
-              label: 'Date of Medical Bill',
-              type: 'date',
-              value: '',
+              id: "dateML",
+              label: "Date of Medical Bill",
+              type: "date",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'MedicalCategoryML',
-              label: 'Medical Category',
-              type: 'select',
+              id: "MedicalCategoryML",
+              label: "Medical Category",
+              type: "select",
               value: [],
               required: true,
               options: [
-                { label: 'Medical Check-Up', value: 'Medical Check-Up' },
-                { label: 'Dental', value: 'Dental' },
+                { label: "Medical Check-Up", value: "Medical Check-Up" },
+                { label: "Dental", value: "Dental" },
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
             {
-              id: 'ReasonML',
-              label: 'Reason for Medical',
-              type: 'text',
-              value: '',
+              id: "ReasonML",
+              label: "Reason for Medical",
+              type: "text",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'ClinicSelectionML',
-              label: 'Clinic Selection',
-              type: 'radio-group',
+              id: "ClinicSelectionML",
+              label: "Clinic Selection",
+              type: "radio-group",
               value: [],
               required: true,
               options: [
                 {
-                  label: 'Mediviron Clinic - Panel',
-                  value: 'Mediviron Clinic - Panel',
+                  label: "Mediviron Clinic - Panel",
+                  value: "Mediviron Clinic - Panel",
                 },
-                { label: 'Other Clinic', value: 'Other Clinic' },
+                { label: "Other Clinic", value: "Other Clinic" },
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
             {
-              id: 'OtherClinicSpecML',
-              label: 'Specify Clinic Name',
-              type: 'text',
-              value: '',
+              id: "OtherClinicSpecML",
+              label: "Specify Clinic Name",
+              type: "text",
+              value: "",
               required: true,
-              placeholder: 'Please Enter Clinic Name',
+              placeholder: "Please Enter Clinic Name",
               hidden: false,
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
             {
-              id: 'OtherClinicReasonML',
-              label: 'Reason not Going to Panel Clinic',
-              type: 'text',
-              value: '',
+              id: "OtherClinicReasonML",
+              label: "Reason not Going to Panel Clinic",
+              type: "text",
+              value: "",
               required: true,
-              placeholder: 'Please Enter the Reason',
+              placeholder: "Please Enter the Reason",
               hidden: false,
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
             {
-              id: 'BankNameML',
-              label: 'Bank Name',
-              type: 'text',
-              value: '',
-              required: true,
+              id: "BankNameML",
+              label: "Bank Name",
+              type: "text",
+              value: "",
               disabled: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'AccBankNumberML',
-              label: 'Account Bank No.',
-              type: 'number',
-              value: '',
-              required: true,
+              id: "AccBankNumberML",
+              label: "Account Bank No.",
+              type: "number",
+              value: "",
               disabled: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'AccHolderNameML',
-              label: 'Account Holder Name',
-              type: 'text',
-              value: '',
-              required: true,
+              id: "AccHolderNameML",
+              label: "Account Holder Name",
+              type: "text",
+              value: "",
               disabled: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'ClaimsAmountML',
-              label: 'Claims Amount(RM)',
-              type: 'number',
-              value: '',
+              id: "ClaimsAmountML",
+              label: "Claims Amount(RM)",
+              type: "number",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             //{
             //  id: "LimitedAmountML",
@@ -2139,257 +2176,257 @@ export default {
             //  gridClass: "sm:col-span-2",
             //},
             {
-              id: 'UploadML',
-              label: 'Attachment(s). (png, jpeg, pdf or xlsx)',
-              type: 'file',
+              id: "UploadML",
+              label: "Attachment(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
               value: [],
               required: true,
               allowMultiple: true,
               server: null,
-              maxFileSize: '5MB',
+              maxFileSize: "5MB",
               acceptedFileTypes: [
-                'image/png',
-                'image/jpeg',
-                'application/pdf',
-                'application/vnd.ms-excel',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
           ],
         },
         {
-          title: 'Others',
-          tabType: 'Finance',
+          title: "Others",
+          tabType: "Finance",
 
-          gridLayout: 'grid-cols-3',
+          gridLayout: "grid-cols-3",
           fields: [
             {
-              id: 'dateOthers',
-              label: 'Expense Date',
-              type: 'date',
-              value: '',
+              id: "dateOthers",
+              label: "Expense Date",
+              type: "date",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'ExpenseNameOthers',
-              label: 'Expense Name',
-              type: 'text',
-              value: '',
+              id: "ExpenseNameOthers",
+              label: "Expense Name",
+              type: "text",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'AmountRMOthers',
-              label: 'Amount(RM)',
-              type: 'number',
-              value: '',
+              id: "AmountRMOthers",
+              label: "Amount(RM)",
+              type: "number",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'DescriptionOthers',
-              label: 'Description of Claim',
-              type: 'long-text',
-              value: '',
+              id: "DescriptionOthers",
+              label: "Description of Claim",
+              type: "long-text",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'UploadOthers',
-              label: 'Attachment(s). (png, jpeg, pdf or xlsx)',
-              type: 'file',
+              id: "UploadOthers",
+              label: "Attachment(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
               value: [],
               allowMultiple: true,
               server: null,
-              maxFileSize: '5MB',
+              maxFileSize: "5MB",
               acceptedFileTypes: [
-                'image/png',
-                'image/jpeg',
-                'application/pdf',
-                'application/vnd.ms-excel',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
               required: true,
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
           ],
         },
       ],
       entertainmentTabs: [
         {
-          title: 'Details',
-          gridLayout: 'grid-cols-3',
+          title: "Details",
+          gridLayout: "grid-cols-3",
           fields: [
             {
-              id: 'dateE',
-              label: 'Date',
-              type: 'date',
-              value: '',
+              id: "dateE",
+              label: "Date",
+              type: "date",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'TypeofEntertainmentE',
-              label: 'Type of Entertainment',
-              type: 'select',
-              value: '',
+              id: "TypeofEntertainmentE",
+              label: "Type of Entertainment",
+              type: "select",
+              value: "",
               required: true,
               options: TypeOptions,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'OtherTypeofEntertainmentE',
-              label: 'Other Type of Entertainment',
-              type: 'text',
-              value: '',
-              placeholder: 'Specify other type',
-              gridClass: 'sm:col-span-2',
+              id: "OtherTypeofEntertainmentE",
+              label: "Other Type of Entertainment",
+              type: "text",
+              value: "",
+              placeholder: "Specify other type",
+              gridClass: "sm:col-span-2",
               hidden: true,
             },
             {
-              id: 'CompanyE',
-              label: 'Company',
-              type: 'text',
-              value: '',
+              id: "CompanyE",
+              label: "Company",
+              type: "text",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'VenueE',
-              label: 'Venue',
-              type: 'text',
-              value: '',
+              id: "VenueE",
+              label: "Venue",
+              type: "text",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'ReferenceE',
-              label: 'Reference',
-              type: 'select',
-              value: '',
+              id: "ReferenceE",
+              label: "Reference",
+              type: "select",
+              value: "",
               required: true,
               options: refOptions,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'AmountRME',
-              label: 'Amount(RM)',
-              type: 'number',
-              value: '',
-              gridClass: 'sm:col-span-2',
+              id: "AmountRME",
+              label: "Amount(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'UploadE',
-              label: 'Attachment(s). (png, jpeg, pdf or xlsx)',
-              type: 'file',
+              id: "UploadE",
+              label: "Attachment(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
               value: [],
               required: true,
               allowMultiple: true,
               server: null,
-              maxFileSize: '5MB',
+              maxFileSize: "5MB",
               acceptedFileTypes: [
-                'image/png',
-                'image/jpeg',
-                'application/pdf',
-                'application/vnd.ms-excel',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
           ],
         },
         {
-          title: 'Attendees',
+          title: "Attendees",
           fields: [],
         },
       ],
       staffRefreshmentTabs: [
         {
-          title: 'Details',
-          gridLayout: 'grid-cols-3',
+          title: "Details",
+          gridLayout: "grid-cols-3",
           fields: [
             {
-              id: 'dateSR',
-              label: 'Date',
-              type: 'date',
-              value: '',
+              id: "dateSR",
+              label: "Date",
+              type: "date",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'TypeofRefreshmentSR',
-              label: 'Type of Refreshment',
-              type: 'select',
-              value: '',
+              id: "TypeofRefreshmentSR",
+              label: "Type of Refreshment",
+              type: "select",
+              value: "",
               required: true,
               options: TypeOptions,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'OtherTypeofStaffRefreshmentSR',
-              label: 'Other Type of Staff Refreshment',
-              type: 'text',
-              value: '',
-              placeholder: 'Specify other type',
-              gridClass: 'sm:col-span-2',
+              id: "OtherTypeofStaffRefreshmentSR",
+              label: "Other Type of Staff Refreshment",
+              type: "text",
+              value: "",
+              placeholder: "Specify other type",
+              gridClass: "sm:col-span-2",
               hidden: true,
             },
             {
-              id: 'CompanySR',
-              label: 'Company',
-              type: 'text',
-              value: '',
+              id: "CompanySR",
+              label: "Company",
+              type: "text",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'VenueSR',
-              label: 'Venue',
-              type: 'text',
-              value: '',
+              id: "VenueSR",
+              label: "Venue",
+              type: "text",
+              value: "",
               required: true,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'ReferenceSR',
-              label: 'Reference',
-              type: 'select',
-              value: '',
+              id: "ReferenceSR",
+              label: "Reference",
+              type: "select",
+              value: "",
               required: true,
               options: refOptions,
-              gridClass: 'sm:col-span-2',
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'AmountRMSR',
-              label: 'Amount(RM)',
-              type: 'number',
-              value: '',
-              gridClass: 'sm:col-span-2',
+              id: "AmountRMSR",
+              label: "Amount(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
             },
             {
-              id: 'UploadSR',
-              label: 'Attachment(s). (png, jpeg, pdf or xlsx)',
-              type: 'file',
+              id: "UploadSR",
+              label: "Attachment(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
               value: [],
               required: true,
               allowMultiple: true,
               server: null,
-              maxFileSize: '5MB',
+              maxFileSize: "5MB",
               acceptedFileTypes: [
-                'image/png',
-                'image/jpeg',
-                'application/pdf',
-                'application/vnd.ms-excel',
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
-              gridClass: 'sm:col-span-1',
+              gridClass: "sm:col-span-1",
             },
           ],
         },
         {
-          title: 'Staff Involved',
+          title: "Staff Involved",
           fields: [],
         },
       ],
@@ -2399,84 +2436,84 @@ export default {
   computed: {
     isFormDisabled() {
       const handphoneTab = this.tabs.find(
-        (tab) => tab.title === 'Handphone Bill Reimbursement'
+        (tab) => tab.title === "Handphone Bill Reimbursement"
       );
       if (handphoneTab) {
         const limitAmountField = handphoneTab.fields.find(
-          (field) => field.id === 'LimitedAmountHR'
+          (field) => field.id === "LimitedAmountHR"
         );
         return limitAmountField && parseFloat(limitAmountField.value) <= 0;
       }
       return false;
     },
     isCompanyTransport() {
-      const tab = this.tabs.find((tab) => tab.title === 'Local Travelling');
+      const tab = this.tabs.find((tab) => tab.title === "Local Travelling");
       if (!tab) return false;
       const transportField = tab.fields.find(
         (field) =>
-          field.id === 'TransportLT' && 'TransportSpec' && 'PublicTransportSpec'
+          field.id === "TransportLT" && "TransportSpec" && "PublicTransportSpec"
       );
-      return transportField && transportField.value === 'Company Transport';
+      return transportField && transportField.value === "Company Transport";
     },
     isPublicTransport() {
-      const tab = this.tabs.find((tab) => tab.title === 'Local Travelling');
+      const tab = this.tabs.find((tab) => tab.title === "Local Travelling");
       if (!tab) return false;
       const publicTransportField = tab.fields.find(
         (field) =>
-          field.id === 'TransportLT' && 'TransportSpec' && 'PublicTransportSpec'
+          field.id === "TransportLT" && "TransportSpec" && "PublicTransportSpec"
       );
       return (
         publicTransportField &&
-        publicTransportField.value === 'Public Transport'
+        publicTransportField.value === "Public Transport"
       );
     },
     isPersonalTransport() {
-      const tab = this.tabs.find((tab) => tab.title === 'Local Travelling');
+      const tab = this.tabs.find((tab) => tab.title === "Local Travelling");
       if (!tab) return false;
       const personalTransportField = tab.fields.find(
         (field) =>
-          field.id === 'TransportLT' && 'TransportSpec' && 'PublicTransportSpec'
+          field.id === "TransportLT" && "TransportSpec" && "PublicTransportSpec"
       );
       return (
         personalTransportField &&
-        personalTransportField.value === 'Personal Transport'
+        personalTransportField.value === "Personal Transport"
       );
     },
     isPanelClinic() {
       const tab = this.tabs.find(
-        (tab) => tab.title === 'Medical Bill Reimbursement'
+        (tab) => tab.title === "Medical Bill Reimbursement"
       );
       if (!tab) return false;
       const clinicField = tab.fields.find(
         (field) =>
-          field.id === 'ClinicSelectionML' &&
-          'OtherClinicSpecML' &&
-          'OtherCliniReasonML'
+          field.id === "ClinicSelectionML" &&
+          "OtherClinicSpecML" &&
+          "OtherCliniReasonML"
       );
-      return clinicField && clinicField.value === 'Mediviron Clinic - Panel';
+      return clinicField && clinicField.value === "Mediviron Clinic - Panel";
     },
     isOtherEntertainment() {
       const entertainmentTab = this.entertainmentTabs.find(
-        (tab) => tab.title === 'Details'
+        (tab) => tab.title === "Details"
       );
       if (!entertainmentTab) return false;
       const typeOfEntertainmentField = entertainmentTab.fields.find(
-        (field) => field.id === 'TypeofEntertainmentE'
+        (field) => field.id === "TypeofEntertainmentE"
       );
       return (
-        typeOfEntertainmentField && typeOfEntertainmentField.value === 'OTHERS'
+        typeOfEntertainmentField && typeOfEntertainmentField.value === "OTHERS"
       );
     },
     isOtherStaffRefreshment() {
       const staffRefreshmentTab = this.staffRefreshmentTabs.find(
-        (tab) => tab.title === 'Details'
+        (tab) => tab.title === "Details"
       );
       if (!staffRefreshmentTab) return false;
       const TypeofRefreshmentField = staffRefreshmentTab.fields.find(
-        (field) => field.id === 'TypeofRefreshmentSR'
+        (field) => field.id === "TypeofRefreshmentSR"
       );
       return (
-        TypeofRefreshmentField && TypeofRefreshmentField.value === 'OTHERS'
+        TypeofRefreshmentField && TypeofRefreshmentField.value === "OTHERS"
       );
     },
   },
@@ -2485,14 +2522,14 @@ export default {
     tabs: {
       handler(newTabs) {
         newTabs.forEach((tab) => {
-          if (tab.title === 'Local Travelling') {
+          if (tab.title === "Local Travelling") {
             const transportField = tab.fields.find(
               (field) =>
-                field.id === 'TransportLT' &&
-                Object.prototype.hasOwnProperty.call(field, 'TransportSpec') &&
+                field.id === "TransportLT" &&
+                Object.prototype.hasOwnProperty.call(field, "TransportSpec") &&
                 Object.prototype.hasOwnProperty.call(
                   field,
-                  'PublicTransportSpec'
+                  "PublicTransportSpec"
                 )
             );
             if (transportField) {
@@ -2502,17 +2539,17 @@ export default {
             }
           }
 
-          if (tab.title === 'Medical Bill Reimbursement') {
+          if (tab.title === "Medical Bill Reimbursement") {
             const clinicField = tab.fields.find(
               (field) =>
-                field.id === 'ClinicSelectionML' &&
+                field.id === "ClinicSelectionML" &&
                 Object.prototype.hasOwnProperty.call(
                   field,
-                  'OtherClinicSpecML'
+                  "OtherClinicSpecML"
                 ) &&
                 Object.prototype.hasOwnProperty.call(
                   field,
-                  'OtherCliniReasonML'
+                  "OtherCliniReasonML"
                 )
             );
             if (clinicField) {
@@ -2520,10 +2557,10 @@ export default {
             }
 
             const medicalCategoryField = tab.fields.find(
-              (field) => field.id === 'MedicalCategoryML'
+              (field) => field.id === "MedicalCategoryML"
             );
             const claimsAmountField = tab.fields.find(
-              (field) => field.id === 'ClaimsAmountML'
+              (field) => field.id === "ClaimsAmountML"
             );
 
             if (medicalCategoryField && claimsAmountField) {
@@ -2531,9 +2568,9 @@ export default {
               this.$watch(
                 () => medicalCategoryField.value,
                 (newValue) => {
-                  if (newValue === 'Medical Check-Up') {
+                  if (newValue === "Medical Check-Up") {
                     claimsAmountField.value = this.LIMIT_MEDICAL_CHECKUP;
-                  } else if (newValue === 'Dental') {
+                  } else if (newValue === "Dental") {
                     claimsAmountField.value = this.LIMIT_DENTAL;
                   }
                 }
@@ -2544,12 +2581,12 @@ export default {
                 () => claimsAmountField.value,
                 (newValue) => {
                   if (
-                    medicalCategoryField.value === 'Medical Check-Up' &&
+                    medicalCategoryField.value === "Medical Check-Up" &&
                     parseFloat(newValue) > this.LIMIT_MEDICAL_CHECKUP
                   ) {
                     claimsAmountField.value = this.LIMIT_MEDICAL_CHECKUP;
                   } else if (
-                    medicalCategoryField.value === 'Dental' &&
+                    medicalCategoryField.value === "Dental" &&
                     parseFloat(newValue) > this.LIMIT_DENTAL
                   ) {
                     claimsAmountField.value = this.LIMIT_DENTAL;
@@ -2559,28 +2596,28 @@ export default {
             }
           }
 
-          if (tab.title === 'Details') {
+          if (tab.title === "Details") {
             const typeOfEntertainmentField = tab.fields.find(
-              (field) => field.id === 'TypeofEntertainmentE'
+              (field) => field.id === "TypeofEntertainmentE"
             );
             if (typeOfEntertainmentField) {
               this.updateFieldVisibility4(typeOfEntertainmentField.value);
             }
 
             const typeOfRefreshmentField = tab.fields.find(
-              (field) => field.id === 'TypeofRefreshmentSR'
+              (field) => field.id === "TypeofRefreshmentSR"
             );
             if (typeOfRefreshmentField) {
               this.updateFieldVisibility3(typeOfRefreshmentField.value);
             }
           }
 
-          if (tab.title === 'Handphone Bill Reimbursement') {
+          if (tab.title === "Handphone Bill Reimbursement") {
             const limitedAmountField = tab.fields.find(
-              (field) => field.id === 'LimitedAmountHR'
+              (field) => field.id === "LimitedAmountHR"
             );
             const claimsAmountField = tab.fields.find(
-              (field) => field.id === 'ClaimsAmountHR'
+              (field) => field.id === "ClaimsAmountHR"
             );
 
             if (limitedAmountField && claimsAmountField) {
@@ -2634,9 +2671,9 @@ export default {
         if (data) {
           this.updateFields(data);
         }
-        console.log('Bank Data:', data);
+        console.log("Bank Data:", data);
       } catch (error) {
-        console.error('Error fetching Bank Data:', error);
+        console.error("Error fetching Bank Data:", error);
       }
     },
 
@@ -2662,26 +2699,26 @@ export default {
 
     formatDate(dateString) {
       const date = new Date(dateString);
-      return `${date.getDate()} ${date.toLocaleString('default', {
-        month: 'long',
+      return `${date.getDate()} ${date.toLocaleString("default", {
+        month: "long",
       })} ${date.getFullYear()}`;
     },
 
     toggleUploadField(field) {
       switch (field) {
-        case 'MileageRMLT':
+        case "MileageRMLT":
           this.showMileageUpload = !this.showMileageUpload;
           break;
-        case 'FareRMLT':
+        case "FareRMLT":
           this.showFareUpload = !this.showFareUpload;
           break;
-        case 'TollLT':
+        case "TollLT":
           this.showTollUpload = !this.showTollUpload;
           break;
-        case 'ParkingLT':
+        case "ParkingLT":
           this.showParkingUpload = !this.showParkingUpload;
           break;
-        case 'AirportLimoTeksiOT':
+        case "AirportLimoTeksiOT":
           this.showAirportLimoUpload = !this.showAirportLimoUpload;
           break;
       }
@@ -2690,30 +2727,30 @@ export default {
     generateNewFileName(originalName, fieldId) {
       let prefix = "";
       switch (fieldId) {
-        case 'UploadMileageRMLT':
-          prefix = 'MILEAGE_';
+        case "UploadMileageRMLT":
+          prefix = "MILEAGE_";
           break;
-        case 'UploadFareRMLT':
-          prefix = 'FARE_';
+        case "UploadFareRMLT":
+          prefix = "FARE_";
           break;
-        case 'UploadTollLT':
-          prefix = 'TOLL_';
+        case "UploadTollLT":
+          prefix = "TOLL_";
           break;
-        case 'UploadParkingLT':
-          prefix = 'PARKING_';
+        case "UploadParkingLT":
+          prefix = "PARKING_";
           break;
-        case 'UploadAirportLimoTeksiOT':
-          prefix = 'AIRPORTLIMOTEKSI_';
+        case "UploadAirportLimoTeksiOT":
+          prefix = "AIRPORTLIMOTEKSI_";
           break;
         default:
-          prefix = 'SUPPORTING_DOC_';
+          prefix = "SUPPORTING_DOC_";
       }
       return `${prefix}${originalName}`;
     },
 
     handleAddFile(error, file, field) {
       if (error) {
-        console.error('Error adding file:', error.message);
+        console.error("Error adding file:", error.message);
         return;
       }
       const newFileName = this.generateNewFileName(file.file.name, field.id);
@@ -2721,14 +2758,14 @@ export default {
         type: file.file.type,
       });
       field.value = [...field.value, renamedFile];
-      console.log('File added:', renamedFile);
-      console.log('Updated files:', field.value);
+      console.log("File added:", renamedFile);
+      console.log("Updated files:", field.value);
     },
 
     handleRemoveFile(error, file, field) {
       if (error) {
         console.error(
-          'An error occurred while removing the file:',
+          "An error occurred while removing the file:",
           error.message
         );
         return;
@@ -2740,18 +2777,19 @@ export default {
           ...field.value.slice(0, index),
           ...field.value.slice(index + 1),
         ];
-        console.log('File removed:', fileObject.name, fileObject);
-        console.log('Updated field value:', field);
+        console.log("File removed:", fileObject.name, fileObject);
+        console.log("Updated field value:", field);
       }
     },
 
     handleAddFileOT(error, file, filesArray) {
       if (error) {
-        console.error('Error adding file:', error.message);
+        console.error("Error adding file:", error.message);
         return;
       }
+
       // Generate new filename based on the expense name and original filename
-      const expenseName = this.newExpense.name || 'UNKNOWN';
+      const expenseName = this.newExpense.name || "UNKNOWN";
       const newFileName = `${expenseName}_${file.file.name}`;
       const renamedFile = new File([file.file], newFileName, {
         type: file.file.type,
@@ -2759,15 +2797,14 @@ export default {
 
       // Add renamed file to the files array
       filesArray.push(renamedFile);
-      console.log('File added:', renamedFile);
-      console.log('Updated files:', filesArray);
-   
+      console.log("File added:", renamedFile);
+      console.log("Updated files:", filesArray);
     },
 
     handleRemoveFileOT(error, file, filesArray) {
       if (error) {
         console.error(
-          'An error occurred while removing the file:',
+          "An error occurred while removing the file:",
           error.message
         );
         return;
@@ -2776,8 +2813,8 @@ export default {
       const index = filesArray.findIndex((f) => f.name === fileObject.name);
       if (index !== -1) {
         filesArray.splice(index, 1);
-        console.log('File removed:', fileObject.name, fileObject);
-        console.log('Updated files:', filesArray);
+        console.log("File removed:", fileObject.name, fileObject);
+        console.log("Updated files:", filesArray);
       }
       if (error) {
         console.error(
@@ -2790,23 +2827,23 @@ export default {
 
     updateFieldVisibility(transportValue) {
       const localTravellingTab = this.tabs.find(
-        (tab) => tab.title === 'Local Travelling'
+        (tab) => tab.title === "Local Travelling"
       );
       if (!localTravellingTab) return;
       const mileageKMLTField = localTravellingTab.fields.find(
-        (field) => field.id === 'MileageKMLT'
+        (field) => field.id === "MileageKMLT"
       );
       const mileageRMLTField = localTravellingTab.fields.find(
-        (field) => field.id === 'MileageRMLT'
+        (field) => field.id === "MileageRMLT"
       );
       const uploadmileageRMLTField = localTravellingTab.fields.find(
-        (field) => field.id === 'UploadMileageRMLT'
+        (field) => field.id === "UploadMileageRMLT"
       );
       const TransportSpecField = localTravellingTab.fields.find(
-        (field) => field.id === 'TransportSpec'
+        (field) => field.id === "TransportSpec"
       );
       const PublicTransportSpecField = localTravellingTab.fields.find(
-        (field) => field.id === 'PublicTransportSpec'
+        (field) => field.id === "PublicTransportSpec"
       );
       if (
         !mileageKMLTField ||
@@ -2817,7 +2854,7 @@ export default {
       )
         return;
 
-      if (transportValue === 'Company Transport') {
+      if (transportValue === "Company Transport") {
         mileageKMLTField.hidden = true;
         mileageRMLTField.hidden = true;
         uploadmileageRMLTField.hidden = true;
@@ -2834,18 +2871,18 @@ export default {
 
     updateFieldVisibility2(ClinicValue) {
       const medicalBillReimbursementTab = this.tabs.find(
-        (tab) => tab.title === 'Medical Bill Reimbursement'
+        (tab) => tab.title === "Medical Bill Reimbursement"
       );
       if (!medicalBillReimbursementTab) return;
       const OtherClinicSpecMLField = medicalBillReimbursementTab.fields.find(
-        (field) => field.id === 'OtherClinicSpecML'
+        (field) => field.id === "OtherClinicSpecML"
       );
       const OtherClinicReasonMLField = medicalBillReimbursementTab.fields.find(
-        (field) => field.id === 'OtherClinicReasonML'
+        (field) => field.id === "OtherClinicReasonML"
       );
       if (!OtherClinicSpecMLField || !OtherClinicReasonMLField) return;
 
-      if (ClinicValue === 'Mediviron Clinic - Panel') {
+      if (ClinicValue === "Mediviron Clinic - Panel") {
         OtherClinicSpecMLField.hidden = true;
         OtherClinicReasonMLField.hidden = true;
       } else {
@@ -2856,59 +2893,59 @@ export default {
 
     updateFieldVisibility3(staffRefreshmentValue) {
       const staffRefreshmentTab = this.staffRefreshmentTabs.find(
-        (tab) => tab.title === 'Details'
+        (tab) => tab.title === "Details"
       );
       if (!staffRefreshmentTab) return;
       const otherTypeField2 = staffRefreshmentTab.fields.find(
-        (field) => field.id === 'OtherTypeofStaffRefreshmentSR'
+        (field) => field.id === "OtherTypeofStaffRefreshmentSR"
       );
       if (!otherTypeField2) return;
 
-      otherTypeField2.hidden = staffRefreshmentValue !== 'OTHERS';
+      otherTypeField2.hidden = staffRefreshmentValue !== "OTHERS";
     },
 
     updateFieldVisibility4(entertainmentValue) {
       const entertainmentTab = this.entertainmentTabs.find(
-        (tab) => tab.title === 'Details'
+        (tab) => tab.title === "Details"
       );
       if (!entertainmentTab) return;
       const otherTypeField2 = entertainmentTab.fields.find(
-        (field) => field.id === 'OtherTypeofEntertainmentE'
+        (field) => field.id === "OtherTypeofEntertainmentE"
       );
       if (!otherTypeField2) return;
 
-      otherTypeField2.hidden = entertainmentValue !== 'OTHERS';
+      otherTypeField2.hidden = entertainmentValue !== "OTHERS";
     },
 
     updateFieldVisibility5(publicTransportValue) {
       const localTravellingTab = this.tabs.find(
-        (tab) => tab.title === 'Local Travelling'
+        (tab) => tab.title === "Local Travelling"
       );
       if (!localTravellingTab) return;
       const mileageKMLTField = localTravellingTab.fields.find(
-        (field) => field.id === 'MileageKMLT'
+        (field) => field.id === "MileageKMLT"
       );
       const mileageRMLTField = localTravellingTab.fields.find(
-        (field) => field.id === 'MileageRMLT'
+        (field) => field.id === "MileageRMLT"
       );
 
       const uploadmileageRMLTField = localTravellingTab.fields.find(
-        (field) => field.id === 'UploadMileageRMLT'
+        (field) => field.id === "UploadMileageRMLT"
       );
       const TransportSpecField = localTravellingTab.fields.find(
-        (field) => field.id === 'TransportSpec'
+        (field) => field.id === "TransportSpec"
       );
       const TollLTField = localTravellingTab.fields.find(
-        (field) => field.id === 'TollLT'
+        (field) => field.id === "TollLT"
       );
       const uploadTollLTField = localTravellingTab.fields.find(
-        (field) => field.id === 'UploadTollLT'
+        (field) => field.id === "UploadTollLT"
       );
       const ParkingLTField = localTravellingTab.fields.find(
-        (field) => field.id === 'ParkingLT'
+        (field) => field.id === "ParkingLT"
       );
       const uploadParkingLTField = localTravellingTab.fields.find(
-        (field) => field.id === 'UploadParkingLT'
+        (field) => field.id === "UploadParkingLT"
       );
       if (
         !mileageKMLTField ||
@@ -2922,7 +2959,7 @@ export default {
       )
         return;
 
-      if (publicTransportValue === 'Public Transport') {
+      if (publicTransportValue === "Public Transport") {
         mileageKMLTField.hidden = true;
         mileageRMLTField.hidden = true;
         uploadmileageRMLTField.hidden = true;
@@ -2945,22 +2982,22 @@ export default {
 
     updateFieldVisibility6(personalTransportValue) {
       const localTravellingTab = this.tabs.find(
-        (tab) => tab.title === 'Local Travelling'
+        (tab) => tab.title === "Local Travelling"
       );
       if (!localTravellingTab) return;
       const publicTransportField = localTravellingTab.fields.find(
-        (field) => field.id === 'PublicTransportSpec'
+        (field) => field.id === "PublicTransportSpec"
       );
       const fareRMLTField = localTravellingTab.fields.find(
-        (field) => field.id === 'FareRMLT'
+        (field) => field.id === "FareRMLT"
       );
       const uploadfareRMLTField = localTravellingTab.fields.find(
-        (field) => field.id === 'UploadFareRMLT'
+        (field) => field.id === "UploadFareRMLT"
       );
       if (!publicTransportField || !fareRMLTField || !uploadfareRMLTField)
         return;
 
-      if (personalTransportValue === 'Personal Transport') {
+      if (personalTransportValue === "Personal Transport") {
         publicTransportField.hidden = true;
         fareRMLTField.hidden = true;
         uploadfareRMLTField.hidden = true;
@@ -2972,19 +3009,19 @@ export default {
     },
 
     handleTransportChange(value) {
-      this.showTransportSpec = value === 'Personal Transport';
+      this.showTransportSpec = value === "Personal Transport";
     },
 
     handleTransportChange2(value) {
-      this.showPublicTransportSpec = value === 'Public Transport';
+      this.showPublicTransportSpec = value === "Public Transport";
     },
 
     addOtherExpense() {
       this.otherExpenses.push({ ...this.newExpense });
       this.newExpense = {
-        name: '',
-        description: '',
-        amount: '',
+        name: "",
+        description: "",
+        amount: "",
         files: [],
       };
       this.showOtherExpensesModal = false;
@@ -3005,7 +3042,7 @@ export default {
     async fetchCompany() {
       try {
         const response = await fetch(
-          'http://172.28.28.91:97/api/User/GetCompany'
+          "http://172.28.28.91:97/api/User/GetCompany"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -3019,35 +3056,35 @@ export default {
 
     addAttendee() {
       const { name, staffId, companyName } = this.modalForm;
-      if (this.selectedAttendeeType === 'pkt' && name && staffId) {
+      if (this.selectedAttendeeType === "pkt" && name && staffId) {
         this.attendees.push({
           name,
           staffId,
           companyName: this.selectedCompanyName,
-          status: 'PKT Staff',
+          status: "PKT Staff",
         });
       } else if (
-        this.selectedAttendeeType === 'notStaff' &&
+        this.selectedAttendeeType === "notStaff" &&
         name &&
         companyName
       ) {
         this.attendees.push({
           name,
-          staffId: '',
+          staffId: "",
           companyName,
-          status: 'Not a Staff',
+          status: "Not a Staff",
         });
       }
-       this.attendees.push({
+      this.attendees.push({
         name: this.modalForm.name,
         companyName: this.modalForm.companyName,
       });
-      this.modalForm.name = '';
-      this.modalForm.companyName = '';
+      this.modalForm.name = "";
+      this.modalForm.companyName = "";
       this.showModal = false;
-      this.modalForm.name = '';
-      this.modalForm.staffId = '';
-      this.modalForm.companyName = '';
+      this.modalForm.name = "";
+      this.modalForm.staffId = "";
+      this.modalForm.companyName = "";
     },
 
     removeAttendee(index) {
@@ -3064,8 +3101,8 @@ export default {
         });
       }
       this.showModal = false;
-      this.modalForm.name = '';
-      this.modalForm.staffId = '';
+      this.modalForm.name = "";
+      this.modalForm.staffId = "";
     },
 
     removeStaff(index) {
@@ -3079,44 +3116,44 @@ export default {
       // Check if the transport mode is Company Transport
       const isCompanyTransport = tab.fields.some(
         (field) =>
-          field.id === 'TransportLT' &&
-          field.value.includes('Company Transport')
+          field.id === "TransportLT" &&
+          field.value.includes("Company Transport")
       );
 
       // Check if the transport mode is Public Transport
       const isPublicTransport = tab.fields.some(
         (field) =>
-          field.id === 'TransportLT' && field.value.includes('Public Transport')
+          field.id === "TransportLT" && field.value.includes("Public Transport")
       );
 
       // Check if the transport mode is Personal Transport
       const isPersonalTransport = tab.fields.some(
         (field) =>
-          field.id === 'TransportLT' &&
-          field.value.includes('Personal Transport')
+          field.id === "TransportLT" &&
+          field.value.includes("Personal Transport")
       );
 
       tab.fields.forEach((field) => {
         // Check if Round Trip is selected
-        if (field.id === 'tripwayLT' && field.value.includes('Round Trip')) {
+        if (field.id === "tripwayLT" && field.value.includes("Round Trip")) {
           isRoundTrip = true;
         }
 
         // Calculate the total based on the field value
         if (
-          field.type === 'number' &&
+          field.type === "number" &&
           !isNaN(parseFloat(field.value)) &&
-          field.id !== 'MileageKMLT' &&
-          field.id !== 'LimitedAmountHR' &&
-          field.id !== 'AccBankNumberHR' &&
-          field.id !== 'AccBankNumberML' &&
+          field.id !== "MileageKMLT" &&
+          field.id !== "LimitedAmountHR" &&
+          field.id !== "AccBankNumberHR" &&
+          field.id !== "AccBankNumberML" &&
           (!isCompanyTransport ||
-            (field.id !== 'MileageRMLT' && field.id !== 'FareRMLT')) &&
+            (field.id !== "MileageRMLT" && field.id !== "FareRMLT")) &&
           (!isPublicTransport ||
-            (field.id !== 'MileageRMLT' &&
-              field.id !== 'TollLT' &&
-              field.id !== 'ParkingLT')) &&
-          (!isPersonalTransport || field.id !== 'FareRMLT')
+            (field.id !== "MileageRMLT" &&
+              field.id !== "TollLT" &&
+              field.id !== "ParkingLT")) &&
+          (!isPersonalTransport || field.id !== "FareRMLT")
         ) {
           // If Round Trip is selected, double up the calculation
           total += isRoundTrip
@@ -3126,7 +3163,7 @@ export default {
       });
 
       // If the tab title is "Overseas Travelling with Accommodation", add the total of other expenses
-      if (tab.title === 'Overseas Travelling with Accommodation') {
+      if (tab.title === "Overseas Travelling with Accommodation") {
         total += this.calculateOverseasTotal();
       }
 
@@ -3155,32 +3192,32 @@ export default {
     submitForm(tab) {
       const formattedData = {};
       tab.fields.forEach((field) => {
-        if (field.type === 'date' && field.value) {
+        if (field.type === "date" && field.value) {
           formattedData[field.id] = this.formatDate(field.value);
         } else {
           formattedData[field.id] = field.value;
         }
       });
-      formattedData['tabTitle'] = tab.title;
-      formattedData['totalRM'] = this.calculateTotal(tab);
+      formattedData["tabTitle"] = tab.title;
+      formattedData["totalRM"] = this.calculateTotal(tab);
 
       if (
-        tab.title === 'Overseas Travelling with Accommodation' &&
+        tab.title === "Overseas Travelling with Accommodation" &&
         this.otherExpenses.length > 0
       ) {
         // Add otherExpenses to formattedData
-        formattedData['otherExpenses'] = [...this.otherExpenses];
+        formattedData["otherExpenses"] = [...this.otherExpenses];
       }
 
-      this.$emit('formSubmitted', formattedData);
-      console.log('Formatted Form Data:', formattedData);
+      this.$emit("formSubmitted", formattedData);
+      console.log("Formatted Form Data:", formattedData);
     },
 
     submitForm2() {
       const formattedData = {};
       this.entertainmentTabs.forEach((tab) => {
         tab.fields.forEach((field) => {
-          if (field.id === 'dateE') {
+          if (field.id === "dateE") {
             formattedData[field.id] = this.formatDate(field.value);
           } else {
             formattedData[field.id] = field.value;
@@ -3188,18 +3225,18 @@ export default {
         });
 
         tab.attendees = [...this.attendees];
-        formattedData['attendees'] = [...tab.attendees];
+        formattedData["attendees"] = [...tab.attendees];
       });
-      formattedData['tabTitle'] = 'Entertainment';
-      this.$emit('formSubmitted', formattedData);
-      console.log('Formatted Form Data:', formattedData);
+      formattedData["tabTitle"] = "Entertainment";
+      this.$emit("formSubmitted", formattedData);
+      console.log("Formatted Form Data:", formattedData);
     },
 
     submitForm3() {
       const formattedData = {};
       this.staffRefreshmentTabs.forEach((tab) => {
         tab.fields.forEach((field) => {
-          if (field.id === 'dateSR') {
+          if (field.id === "dateSR") {
             formattedData[field.id] = this.formatDate(field.value);
           } else {
             formattedData[field.id] = field.value;
@@ -3207,11 +3244,11 @@ export default {
         });
 
         tab.staffInvolved = [...this.staffInvolved];
-        formattedData['staffInvolved'] = [...tab.staffInvolved];
+        formattedData["staffInvolved"] = [...tab.staffInvolved];
       });
-      formattedData['tabTitle'] = 'Staff Refreshment';
-      this.$emit('formSubmitted', formattedData);
-      console.log('Formatted Form Data:', formattedData);
+      formattedData["tabTitle"] = "Staff Refreshment";
+      this.$emit("formSubmitted", formattedData);
+      console.log("Formatted Form Data:", formattedData);
     },
   },
 };

@@ -768,13 +768,13 @@
         <!-- Loading Animation -->
         <div
           class="w-screen h-screen fixed z-40 flex justify-center items-center top-0 left-0"
-          v-if="loading && !approveSuccess"
+          v-if="loading"
         >
-          <div class="absolute w-screen h-screen bg-gray-900 opacity-10"></div>
+          <div class="absolute w-screen h-screen bg-gray-900 opacity-30"></div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 200 200"
-            class="w-24 h-24 z-50"
+            class="w-16 h-16 z-50"
           >
             <circle
               transform="rotate(0)"
@@ -799,6 +799,9 @@
               ></animateTransform>
             </circle>
           </svg>
+          <h1 class="text-gray-50 font-semibold z-50 ml-2 text-lg">
+            {{ loadingText }} Data...
+          </h1>
         </div>
       </div>
     </div>
@@ -862,6 +865,7 @@ export default {
       confirmResubmit: false,
       approveSuccess: false,
       loading: false,
+      loadingText: '',
 
       // need to fetch from or post to API
       rejectApprover: false,
@@ -923,12 +927,15 @@ export default {
       }
     },
     async FetchClaimDetails() {
+      this.loadingText = 'Fetching';
+      this.loading = true;
       await axios
         .get(
           'http://172.28.28.91:86/api/User/GetClaimDetails/' +
             this.referenceNumber
         )
         .then((response) => {
+          this.loading = false;
           this.claimDetails = response.data.result;
           this.statusApprover = this.claimDetails.admin_status
             .split('.')[0]
@@ -1147,6 +1154,7 @@ export default {
         this.approve = true;
         this.dateApprover = moment(new Date()).format('D MMM YYYY');
         // post the status and remark to API
+        this.loadingText = 'Uploading';
         this.loading = true;
 
         const approveData = {
@@ -1168,6 +1176,7 @@ export default {
             localStorage.setItem('ApproveOrNot', 'approve');
 
             this.approveSuccess = true;
+            this.loading = false;
             setTimeout(() => {
               this.$router.push({ name: 'AdminHRDashboardpage' });
             }, 2500);
@@ -1179,6 +1188,7 @@ export default {
       } else if (AoR == 'Reject') {
         this.rejectApprover = true;
         this.dateApprover = moment(new Date()).format('D MMM YYYY');
+        this.loadingText = 'Uploading';
         this.loading = true;
 
         const approveData = {
@@ -1207,6 +1217,7 @@ export default {
       } else if (AoR == 'Resubmit') {
         this.resubmit = true;
         this.dateApprover = moment(new Date()).format('D MMM YYYY');
+        this.loadingText = 'Uploading';
         this.loading = true;
 
         const approveData = {
@@ -1235,6 +1246,7 @@ export default {
       } else if (AoR == 'Reimbursed') {
         this.reimbursed = true;
         this.dateApprover = moment(new Date()).format('D MMM YYYY');
+        this.loadingText = 'Uploading';
         this.loading = true;
 
         const approveData = {

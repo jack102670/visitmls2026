@@ -283,7 +283,20 @@
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
               </div>
-           
+              <div>
+                <label
+                  class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
+                  for="phone_number"
+                  >Phone Number<span class="text-red-500">*</span></label
+                >
+                <input
+                  v-model="user.phone_number"
+                  id="phone_number"
+                  required
+                  type="number"
+                  class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                />
+              </div>
               <div>
                 <label
                   class="ml-2 font-semibold text-gray-600 dark:text-gray-200"
@@ -620,15 +633,15 @@
           <!-- Loading Animation -->
           <div
             class="w-screen h-screen fixed z-40 flex justify-center items-center top-0 left-0"
-            v-if="loading && !approveSuccess"
+            v-if="loading"
           >
             <div
-              class="absolute w-screen h-screen bg-gray-900 opacity-10"
+              class="absolute w-screen h-screen bg-gray-900 opacity-30"
             ></div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 200 200"
-              class="w-24 h-24 z-50"
+              class="w-16 h-16 z-50"
             >
               <circle
                 transform="rotate(0)"
@@ -653,6 +666,9 @@
                 ></animateTransform>
               </circle>
             </svg>
+            <h1 class="text-gray-50 font-semibold z-50 ml-2 text-lg">
+              {{ loadingText }} Data...
+            </h1>
           </div>
         </div>
       </div>
@@ -691,7 +707,7 @@ export default {
       loadingsendOtpButton: false,
       loadingButton: false,
       loading: false,
-      approveSuccess: false,
+      loadingText: '',
       profile_picture: null,
       bankOptions: bankOptions,
       tempImageUrl: '',
@@ -785,6 +801,8 @@ export default {
 
     fetchHrData() {
       const username_id = store.getSession().userDetails.userId;
+      this.loadingText = 'Fetching';
+      this.loading = true;
       axios
         .get(`http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
@@ -811,6 +829,7 @@ export default {
             this.tempEmail = user.email_address;
           }
           console.log('HR data:', this.tempEmail);
+          this.loading = false;
         })
         .catch((error) => {
           console.error('Error fetching HR data:', error);
