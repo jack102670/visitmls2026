@@ -430,7 +430,48 @@
                   class="border rounded-md px-16 py-2"
                 />
               </div>
-
+              <div
+                v-if="!isOneWay"
+                class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Return Date:</label
+                >
+                <input
+                  type="text"
+                  id="returndate"
+                  v-model="localTravellingDetails.ReturndateLT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2"
+                />
+              </div>
+              <div 
+                v-if="!isOneWay"
+                class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Accommodation:</label
+                >
+                <input
+                  type="text"
+                  id="accommodationlt"
+                  v-model="localTravellingDetails.AccommodationLT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2"
+                />
+              </div>
+              <div 
+                v-if="!isOneWay"
+                class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Meal Allowance(RM):</label
+                >
+                <input
+                  type="text"
+                  id="mealallowancelt"
+                  v-model="localTravellingDetails.MealAllowanceLT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2"
+                />
+              </div>
               <div
                 v-if="!isCompanyTransport && !isPublicTransport"
                 class="flex justify-between items-center mb-4"
@@ -695,7 +736,7 @@
           </div>
 
           <div
-            v-if="selectedClaimType === 'OverseasTravellingwithAccommodation'"
+            v-if="selectedClaimType === 'OverseasTravelling'"
           >
             <div class="flex justify-end">
               <button
@@ -793,7 +834,7 @@
                 <input
                   type="text"
                   id="rmAccommodation"
-                  v-model="overseasTravellingDetails.RMforAccommodationOT"
+                  v-model="overseasTravellingDetails.AmountforAccommodationOT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2 overflow-x-auto"
                 />
@@ -833,7 +874,7 @@
                 <input
                   type="text"
                   id="rmOthers"
-                  v-model="overseasTravellingDetails.RMforOthersOT"
+                  v-model="overseasTravellingDetails.AmountforOthersOT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2"
                 />
@@ -1290,7 +1331,9 @@
                 />
               </div>
 
-              <div class="flex justify-between items-center mb-4">
+              <div 
+                v-if="!isOtherThanOutpatient"
+                class="flex justify-between items-center mb-4">
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Reason for Medical:</label
                 >
@@ -1303,7 +1346,9 @@
                 />
               </div>
 
-              <div class="flex justify-between items-center mb-4">
+              <div 
+                v-if="!isOtherThanOutpatient"
+                class="flex justify-between items-center mb-4">
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Clinic Selection:</label
                 >
@@ -1317,7 +1362,7 @@
               </div>
 
               <div
-                v-if="!isPanelClinic"
+                v-if="!isPanelClinic && !isOtherThanOutpatient"
                 class="flex justify-between items-center mb-4"
               >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
@@ -1333,7 +1378,7 @@
               </div>
 
               <div
-                v-if="!isPanelClinic"
+                v-if="!isPanelClinic && !isOtherThanOutpatient"
                 class="flex justify-between items-center mb-4"
               >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
@@ -2766,10 +2811,6 @@ export default {
       ) {
         total += parseFloat(this.localTravellingDetails.FareRMLT) || 0;
       }
-
-      if (this.localTravellingDetails.tripwayLT === "Round Trip") {
-        total *= 2;
-      }
       this.totalplusmethod(total);
       return total;
     },
@@ -2786,11 +2827,19 @@ export default {
       return this.localTravellingDetails.TransportLT === "Personal Transport";
     },
 
+    isOneWay() {
+      return this.localTravellingDetails.tripwayLT === "One Way";
+    },
+
     isPanelClinic() {
       return (
         this.medicalBillReimbursementDetails.ClinicSelectionML ===
         "Mediviron Clinic - Panel"
       );
+    },
+
+    isOtherThanOutpatient() {
+      return this.medicalBillReimbursementDetails.MedicalCategoryML !== "Outpatient";
     },
 
     isOtherEntertainment() {
@@ -2818,8 +2867,8 @@ export default {
       }
 
       let total =
-        (parseFloat(this.overseasTravellingDetails.RMforAccommodationOT) || 0) +
-        (parseFloat(this.overseasTravellingDetails.RMforOthersOT) || 0) +
+        (parseFloat(this.overseasTravellingDetails.AmountforAccommodationOT) || 0) +
+        (parseFloat(this.overseasTravellingDetails.AmountforOthersOT) || 0) +
         (parseFloat(this.overseasTravellingDetails.MealAllowanceOT) || 0) +
         (parseFloat(this.overseasTravellingDetails.AirportLimoTeksiOT) || 0) +
         otherExpensesTotal;
@@ -2839,17 +2888,20 @@ export default {
       const category = this.medicalBillReimbursementDetails.MedicalCategoryML;
       const amount =
         parseFloat(this.medicalBillReimbursementDetails.ClaimsAmountML) || 0;
-      if (category === "Medical Check-Up" && amount > 70) return true;
+      if (category === "Outpatient" && amount > 70) return true;
+      if (category === "Medical Check-Up" && amount > 200) return true;
       if (category === "Dental" && amount > 200) return true;
       return false;
     },
 
     claimsAmountErrorMessage() {
       const category = this.medicalBillReimbursementDetails.MedicalCategoryML;
+      if (category === "Outpatient")
+        return "The maximum claim amount for Outpatient is RM 70.";
       if (category === "Medical Check-Up")
-        return "The maximum claim amount for Medical Check-Up is RM 70.";
+        return "The maximum claim amount for Medical Check-Up & Dental is RM 200.";
       if (category === "Dental")
-        return "The maximum claim amount for Dental is RM 200.";
+        return "The maximum claim amount for Medical Check-Up & Dental is RM 200.";
       return "";
     },
 
@@ -3016,7 +3068,7 @@ export default {
           console.log("Local Travelling Details:", this.localTravellingDetails);
           console.log("upload", this.localTravellingDetails.UploadLT);
           break;
-        case "OverseasTravellingwithAccommodation":
+        case "OverseasTravelling":
           this.overseasTravellingDetails = claim;
           console.log(
             "Overseas Travelling Details:",
@@ -3076,7 +3128,7 @@ export default {
           case "Local Travelling":
             prefix = "LT";
             break;
-          case "Overseas Travelling with Accommodation":
+          case "Overseas Travelling":
             prefix = "OV";
             break;
           case "Entertainment":
@@ -3130,7 +3182,7 @@ export default {
           case "Local Travelling":
             prefix = "LT";
             break;
-          case "Overseas Travelling with Accommodation":
+          case "Overseas Travelling":
             prefix = "OV";
             break;
           case "Entertainment":
@@ -3367,13 +3419,13 @@ export default {
                     transport_fee: claim.AirportLimoTeksiOT,
                     // other_expenses: claim.otherExpenses,
                     total_fee: claim.totalRM,
-                    accom_foreign_total: claim.RMforAccommodationOT,
+                    accom_foreign_total: claim.AmountforAccommodationOT,
                     accom_foreign_currency:
                       claim.ForeignCurrencyAccommodationOT,
                     accom_exchange_rate: claim.ExchangeRateAccommodationOT,
                     other_foreign_currency: claim.ForeignCurrencyOthersOT,
                     other_exchange_rate: claim.ExchangeRateOthersOT,
-                    other_foreign_total: claim.RMforOthersOT,
+                    other_foreign_total: claim.AmountforOthersOT,
                     reference_number: this.serialnumber,
                     unique_code: uniqcodeOT,
                     transportation_mode: String(claim.AirportLimoTeksiOT),
@@ -3518,7 +3570,7 @@ export default {
                       ? claim.staffInvolved.map((participant) => ({
                           company_name: participant.companyName,
                           name: participant.name,
-                          emp_id: participant.staffId,
+                          department: participant.department,
                         }))
                       : [],
                   };
