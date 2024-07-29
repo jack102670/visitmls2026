@@ -46,7 +46,7 @@
             style="width: 100%; max-width: 600px; margin: 0 auto"
           >
             <h1 class="text-sm font-bold text-center">
-              Note : You are not applicable to claim the Handphone Bill.
+              Note : You are not eligible to claim the Handphone Bill.
             </h1>
           </div>
         </section>
@@ -621,7 +621,7 @@
                                 <div class="relative group ml-1">
                                   <button
                                     type="button"
-                                    class="mt-4 text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
+                                    class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
                                   >
                                     <span
                                       class="inline-flex items-center justify-center w-5 h-5 bg-gray-200 rounded-full text-gray-700 font-semibold"
@@ -634,6 +634,57 @@
                                     Note: This field is intended for amounts
                                     spent in foreign currency.
                                   </div>
+                                  <div class="ml-2">
+                                  <h1 class="text-gray-500 text-sm">
+                                    In Malaysian Ringgit = RM{{ totalAccommodation || 0 }}
+                                  </h1>
+                                </div>
+                                </div>
+                              </template>
+
+                              <template
+                                v-else-if="
+                                  field.id === 'AmountforOthersOT'
+                                "
+                              >
+                                <input
+                                  v-model="field.value"
+                                  type="number"
+                                  :required="field.required"
+                                  :id="field.id"
+                                  :placeholder="field.placeholder"
+                                  :step="
+                                    field.type === 'number' ? '0.01' : undefined
+                                  "
+                                  :disabled="
+                                    (tab.title ===
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
+                                    field.disabled
+                                  "
+                                  class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                                />
+                                <div class="relative group ml-1">
+                                  <button
+                                    type="button"
+                                    class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
+                                  >
+                                    <span
+                                      class="inline-flex items-center justify-center w-5 h-5 bg-gray-200 rounded-full text-gray-700 font-semibold"
+                                      >i</span
+                                    >
+                                  </button>
+                                  <div
+                                    class="absolute left-1.5/2 top-1/2 transform -translate-y-1/2 hidden group-hover:block w-64 p-2 bg-white border border-gray-300 rounded shadow-lg text-gray-700 text-sm"
+                                  >
+                                    Note: This field is intended for amounts
+                                    spent in foreign currency.
+                                  </div>
+                                  <div class="ml-2">
+                                  <h1 class="text-gray-500 text-sm">
+                                    In Malaysian Ringgit = RM{{ totalOthers || 0 }}
+                                  </h1>
+                                </div>
                                 </div>
                               </template>
 
@@ -744,7 +795,6 @@
                     v-if="tab.title === 'Medical Bill Reimbursement'"
                     class="mt-4"
                   >
-                    
                     <h1 class="text-gray-500 text-sm">
                       <span class="text-gray-500">*</span
                       ><span class="text-gray-500">*</span> Outpatient: The
@@ -1690,6 +1740,8 @@ export default {
       showTollUpload: false,
       showParkingUpload: false,
       showAirportLimoUpload: false,
+      totalAccommodation: 0,
+      totalOthers: 0,
       LimitedAmountHR: 0,
       LIMIT_OUTPATIENT: 70,
       LIMIT_MEDICAL_CHECKUP: 200,
@@ -1724,11 +1776,32 @@ export default {
           gridLayout: "grid-cols-3",
           fields: [
             {
+              id: "tripwayLT",
+              label: "Trip",
+              type: "radio-group",
+              value: [],
+              required: true,
+              options: [
+                { label: "Round Trip", value: "Round Trip" },
+                { label: "One Way", value: "One Way" },
+              ],
+              gridClass: "sm:col-span-1",
+            },
+            {
               id: "dateLT",
-              label: "Date",
+              label: "Departure Date",
               type: "date",
               value: "",
               required: true,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "ReturndateLT",
+              label: "Return Date",
+              type: "date",
+              value: "",
+              required: true,
+              hidden: false,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1783,27 +1856,6 @@ export default {
               value: "",
               required: true,
               gridClass: "sm:col-span-1",
-            },
-            {
-              id: "tripwayLT",
-              label: "Trip",
-              type: "radio-group",
-              value: [],
-              required: true,
-              options: [
-                { label: "Round Trip", value: "Round Trip" },
-                { label: "One Way", value: "One Way" },
-              ],
-              gridClass: "sm:col-span-1",
-            },
-            {
-              id: "ReturndateLT",
-              label: "Return Date",
-              type: "date",
-              value: "",
-              required: true,
-              hidden: false,
-              gridClass: "sm:col-span-2",
             },
             {
               id: "AccommodationLT",
@@ -1968,10 +2020,17 @@ export default {
           fields: [
             {
               id: "dateOT",
-              label: "Date",
+              label: "Departure Date",
               type: "date",
               value: "",
               required: true,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "ReturendateOT",
+              label: "Return Date",
+              type: "date",
+              value: "",
               gridClass: "sm:col-span-2",
             },
             {
@@ -2026,13 +2085,6 @@ export default {
               id: "AmountforOthersOT",
               label: "Amount",
               type: "number",
-              value: "",
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "ReturendateOT",
-              label: "Return Date",
-              type: "date",
               value: "",
               gridClass: "sm:col-span-2",
             },
@@ -2774,7 +2826,7 @@ export default {
                       claimsAmountField.value = this.LIMIT_MEDICAL_CHECKUP;
                       break;
                     default:
-                      claimsAmountField.value = 0; 
+                      claimsAmountField.value = 0;
                   }
                 }
               );
@@ -3409,6 +3461,10 @@ export default {
           field.id !== "LimitedAmountHR" &&
           field.id !== "AccBankNumberHR" &&
           field.id !== "AccBankNumberML" &&
+          field.id !== "ExchangeRateAccommodationOT" &&
+          field.id !== "AmountforAccommodationOT" &&
+          field.id !== "ExchangeRateOthersOT" &&
+          field.id !== "AmountforOthersOT" &&
           (!isCompanyTransport ||
             (field.id !== "MileageRMLT" && field.id !== "FareRMLT")) &&
           (!isPublicTransport ||
@@ -3423,7 +3479,25 @@ export default {
 
       // If the tab title is "Overseas Travelling", add the total of other expenses
       if (tab.title === "Overseas Travelling") {
-        total += this.calculateOverseasTotal();
+      const amountField = tab.fields.find((field) => field.id === "AmountforAccommodationOT");
+      const exchangeRateField = tab.fields.find((field) => field.id === "ExchangeRateAccommodationOT");
+
+      const amount = parseFloat(amountField.value) || 0;
+      const exchangeRate = parseFloat(exchangeRateField.value) || 1; // Avoid division by zero
+
+      const totalAccommodation = amount / exchangeRate;
+      this.totalAccommodation = totalAccommodation.toFixed(2);
+
+      const amount2Field = tab.fields.find((field) => field.id === "AmountforOthersOT");
+      const exchangeRate2Field = tab.fields.find((field) => field.id === "ExchangeRateOthersOT");
+
+      const amount2 = parseFloat(amount2Field.value) || 0;
+      const exchangeRate2 = parseFloat(exchangeRate2Field.value) || 1; // Avoid division by zero
+
+      const totalOthers = amount2 / exchangeRate2;
+      this.totalOthers = totalOthers.toFixed(2);
+        
+        total += totalOthers + totalAccommodation + this.calculateOverseasTotal();
       }
 
       // Return the total

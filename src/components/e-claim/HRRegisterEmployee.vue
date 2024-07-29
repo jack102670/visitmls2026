@@ -229,7 +229,13 @@ export default {
             item.branch == this.form.branch
         )[0].userId,
         branch: this.form.branch,
-        userName: this.form.userId,
+        displayName: this.form.userId,
+        userName: this.fetchOptions.filter(
+          (item) =>
+            item.displayName === this.form.userId &&
+            item.department == this.form.department &&
+            item.branch == this.form.branch
+        )[0].userName,
         employeeId: this.form.employeeId,
         department: this.form.department,
         reportingToDept: this.form.reportingDepartment,
@@ -249,6 +255,18 @@ export default {
         .then((response) => {
           console.log('Response:', response.data);
           this.loading = false;
+
+          this.form = {
+            branch: '',
+            company: '',
+            department: '',
+            position: '',
+            userId: '',
+            employeeId: '',
+            reportingDepartment: '',
+            reportingId: '',
+            limit: 0,
+          };
           // Handle success
         })
         .catch((error) => {
@@ -454,6 +472,12 @@ export default {
         console.log(this.filteredReportingEmployees);
       } catch (error) {
         console.error('Error fetching data from API:', error);
+      }
+    },
+
+    'form.limit'(newLimit) {
+      if (newLimit <= 0 && this.enableLimit == 'yes') {
+        this.form.limit = 1;
       }
     },
 

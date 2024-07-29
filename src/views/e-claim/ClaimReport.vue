@@ -736,7 +736,7 @@
           </div>
 
           <div
-            v-if="selectedClaimType === 'OverseasTravellingwithAccommodation'"
+            v-if="selectedClaimType === 'OverseasTravelling'"
           >
             <div class="flex justify-end">
               <button
@@ -3068,7 +3068,7 @@ export default {
           console.log("Local Travelling Details:", this.localTravellingDetails);
           console.log("upload", this.localTravellingDetails.UploadLT);
           break;
-        case "OverseasTravellingwithAccommodation":
+        case "OverseasTravelling":
           this.overseasTravellingDetails = claim;
           console.log(
             "Overseas Travelling Details:",

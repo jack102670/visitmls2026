@@ -17,7 +17,7 @@
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="claimantName"
-              >Report Name<span class="text-red-500">*</span></label
+              >Report Name <span class="text-red-500">*</span></label
             >
             <input
               v-model="formData.reportName"
@@ -32,7 +32,7 @@
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="claimantName"
-              >Claimant Name <span class="text-red-500">*</span></label
+              >Claimant Name</label
             >
             <input
               placeholder="e.g ALI BIN ABU"
@@ -42,14 +42,14 @@
               id="claimantName"
               type="text"
               value="required"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+              class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             />
           </div>
           <div class="relative">
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="companyName"
-              >Company Name<span class="text-red-500">*</span></label
+              >Company Name</label
             >
 
             <div class="flex justify-between">
@@ -59,7 +59,7 @@
                 placeholder="Company name.."
                 v-model="formData.companyName"
                 @click="toggleDropdown2"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
               <!-- <div
                 class="bg-slate-200 py-4 px-2 mt-2 rounded"
@@ -100,7 +100,7 @@
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="designation"
             >
-              Designation<span class="text-red-500">*</span>
+              Designation
             </label>
             <div class="flex justify-between">
               <input
@@ -109,7 +109,7 @@
                 placeholder="Designation.."
                 v-model="formData.designation"
                 required
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
               <!-- <div
                 class="bg-slate-200 py-4 px-2 mt-2 rounded"
@@ -152,7 +152,7 @@
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="department"
             >
-              Department<span class="text-red-500">*</span>
+              Department
             </label>
             <div class="flex justify-between">
               <input
@@ -162,7 +162,7 @@
                 v-model="formData.department"
                 required
                 @click="toggleDropdown"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
               <!-- <div
                 class="bg-slate-200 py-4 px-2 mt-2 rounded"
@@ -214,14 +214,14 @@
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="companyName"
-              >Cost Center <span class="text-red-500">*</span></label
+              >Cost Center </label
             >
 
             <div class="flex justify-between">
               <input
                 type="text"
                 placeholder="Cost Center.."
-                required
+                
                 v-model="formData.costCenter"
                 @click="toggleDropdown4"
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -385,10 +385,7 @@
           <label
             class="font-semibold text-gray-700 dark:text-gray-200"
             for="username"
-            >Upload Attachment (png, jpeg, pdf or xlsx)<span
-              class="text-red-500"
-              >*</span
-            ></label
+            >Upload Attachment (png, jpeg, pdf or xlsx)</label
           >
 
           <!-- component -->
