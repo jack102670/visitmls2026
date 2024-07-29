@@ -148,7 +148,13 @@
                                 :for="field.id"
                                 class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
                               >
-                                {{ field.label }}
+                                {{
+                                  field.id === "AmountforAccommodationOT"
+                                    ? amountLabels.amountAccommodation
+                                    : field.id === "AmountforOthersOT"
+                                    ? amountLabels.amountOthers
+                                    : field.label
+                                }}
                                 <span v-if="field.required" style="color: red"
                                   >*</span
                                 >
@@ -621,7 +627,7 @@
                                 <div class="relative group ml-1">
                                   <button
                                     type="button"
-                                    class="mt-4 text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
+                                    class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
                                   >
                                     <span
                                       class="inline-flex items-center justify-center w-5 h-5 bg-gray-200 rounded-full text-gray-700 font-semibold"
@@ -633,6 +639,59 @@
                                   >
                                     Note: This field is intended for amounts
                                     spent in foreign currency.
+                                  </div>
+                                  <div class="ml-2">
+                                    <h1 class="text-gray-500 text-sm">
+                                      In Malaysian Ringgit = RM{{
+                                        totalAccommodation || 0
+                                      }}
+                                    </h1>
+                                  </div>
+                                </div>
+                              </template>
+
+                              <template
+                                v-else-if="field.id === 'AmountforOthersOT'"
+                              >
+                                <input
+                                  v-model="field.value"
+                                  type="number"
+                                  :required="field.required"
+                                  :id="field.id"
+                                  :placeholder="field.placeholder"
+                                  :step="
+                                    field.type === 'number' ? '0.01' : undefined
+                                  "
+                                  :disabled="
+                                    (tab.title ===
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
+                                    field.disabled
+                                  "
+                                  class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                                />
+                                <div class="relative group ml-1">
+                                  <button
+                                    type="button"
+                                    class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
+                                  >
+                                    <span
+                                      class="inline-flex items-center justify-center w-5 h-5 bg-gray-200 rounded-full text-gray-700 font-semibold"
+                                      >i</span
+                                    >
+                                  </button>
+                                  <div
+                                    class="absolute left-1.5/2 top-1/2 transform -translate-y-1/2 hidden group-hover:block w-64 p-2 bg-white border border-gray-300 rounded shadow-lg text-gray-700 text-sm"
+                                  >
+                                    Note: This field is intended for amounts
+                                    spent in foreign currency.
+                                  </div>
+                                  <div class="ml-2">
+                                    <h1 class="text-gray-500 text-sm">
+                                      In Malaysian Ringgit = RM{{
+                                        totalOthers || 0
+                                      }}
+                                    </h1>
                                   </div>
                                 </div>
                               </template>
@@ -744,7 +803,6 @@
                     v-if="tab.title === 'Medical Bill Reimbursement'"
                     class="mt-4"
                   >
-                    
                     <h1 class="text-gray-500 text-sm">
                       <span class="text-gray-500">*</span
                       ><span class="text-gray-500">*</span> Outpatient: The
@@ -1038,6 +1096,10 @@
                     <button
                       type="submit"
                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      :disabled="
+                        tab.title === 'Handphone Bill Reimbursement' &&
+                        isFormDisabled
+                      "
                     >
                       Save
                     </button>
@@ -1197,13 +1259,13 @@
                         </div>
                         <div class="mb-4">
                           <label
-                            for="companyName"
+                            for="company_Name"
                             class="block text-sm font-medium text-gray-700"
                             >Company Name</label
                           >
                           <input
                             type="text"
-                            v-model="modalForm.companyName"
+                            v-model="modalForm.company_Name"
                             required
                             class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                           />
@@ -1273,7 +1335,7 @@
                             <td
                               class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                             >
-                              {{ attendee.companyName }}
+                              {{ attendee.company_Name }}
                             </td>
                             <td
                               class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
@@ -1610,7 +1672,7 @@
                                   <path
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
-                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M4 7h16"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                                   />
                                 </svg>
                               </button>
@@ -1680,6 +1742,7 @@ export default {
 
   data() {
     return {
+      currencies: [],
       chooseform: true,
       activeTab: this.type == "Finance" ? 0 : 4,
       activeSubTab: 0,
@@ -1690,6 +1753,8 @@ export default {
       showTollUpload: false,
       showParkingUpload: false,
       showAirportLimoUpload: false,
+      totalAccommodation: 0,
+      totalOthers: 0,
       LimitedAmountHR: 0,
       LIMIT_OUTPATIENT: 70,
       LIMIT_MEDICAL_CHECKUP: 200,
@@ -1712,6 +1777,7 @@ export default {
         name: "",
         department: "",
         companyName: "",
+        company_Name: "",
       },
       attendees: [],
       staffInvolved: [],
@@ -1724,11 +1790,32 @@ export default {
           gridLayout: "grid-cols-3",
           fields: [
             {
+              id: "tripwayLT",
+              label: "Trip",
+              type: "radio-group",
+              value: [],
+              required: true,
+              options: [
+                { label: "Round Trip", value: "Round Trip" },
+                { label: "One Way", value: "One Way" },
+              ],
+              gridClass: "sm:col-span-1",
+            },
+            {
               id: "dateLT",
-              label: "Date",
+              label: "Departure Date",
               type: "date",
               value: "",
               required: true,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "ReturndateLT",
+              label: "Return Date",
+              type: "date",
+              value: "",
+              required: true,
+              hidden: false,
               gridClass: "sm:col-span-2",
             },
             {
@@ -1783,27 +1870,6 @@ export default {
               value: "",
               required: true,
               gridClass: "sm:col-span-1",
-            },
-            {
-              id: "tripwayLT",
-              label: "Trip",
-              type: "radio-group",
-              value: [],
-              required: true,
-              options: [
-                { label: "Round Trip", value: "Round Trip" },
-                { label: "One Way", value: "One Way" },
-              ],
-              gridClass: "sm:col-span-1",
-            },
-            {
-              id: "ReturndateLT",
-              label: "Return Date",
-              type: "date",
-              value: "",
-              required: true,
-              hidden: false,
-              gridClass: "sm:col-span-2",
             },
             {
               id: "AccommodationLT",
@@ -1968,10 +2034,17 @@ export default {
           fields: [
             {
               id: "dateOT",
-              label: "Date",
+              label: "Departure Date",
               type: "date",
               value: "",
               required: true,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "ReturendateOT",
+              label: "Return Date",
+              type: "date",
+              value: "",
               gridClass: "sm:col-span-2",
             },
             {
@@ -1985,9 +2058,10 @@ export default {
             {
               id: "ForeignCurrencyAccommodationOT",
               label: "Foreign Currency",
-              type: "text",
+              type: "select",
               placeholder: "Accommodation",
               value: "",
+              options: [],
               required: true,
               gridClass: "sm:col-span-2",
             },
@@ -2010,9 +2084,10 @@ export default {
             {
               id: "ForeignCurrencyOthersOT",
               label: "Foreign Currency",
-              type: "text",
+              type: "select",
               placeholder: "Others",
               value: "",
+              options: [],
               gridClass: "sm:col-span-2",
             },
             {
@@ -2026,13 +2101,6 @@ export default {
               id: "AmountforOthersOT",
               label: "Amount",
               type: "number",
-              value: "",
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "ReturendateOT",
-              label: "Return Date",
-              type: "date",
               value: "",
               gridClass: "sm:col-span-2",
             },
@@ -2567,6 +2635,21 @@ export default {
   },
 
   computed: {
+    amountLabels() {
+      const getCurrencySymbol = (fieldId) => {
+        const currencyCode = this.tabs
+          .find((tab) => tab.title === "Overseas Travelling")
+          ?.fields.find((field) => field.id === fieldId)?.value || '';
+
+        const currency = this.currencies.find((cur) => cur.code === currencyCode);
+        return currency ? `Amount(${currency.symbol_native})` : 'Amount';
+      };
+
+      return {
+        amountAccommodation: getCurrencySymbol("ForeignCurrencyAccommodationOT"),
+        amountOthers: getCurrencySymbol("ForeignCurrencyOthersOT"),
+      };
+    },
     isFormDisabled() {
       const handphoneTab = this.tabs.find(
         (tab) => tab.title === "Handphone Bill Reimbursement"
@@ -2774,7 +2857,7 @@ export default {
                       claimsAmountField.value = this.LIMIT_MEDICAL_CHECKUP;
                       break;
                     default:
-                      claimsAmountField.value = 0; 
+                      claimsAmountField.value = 0;
                   }
                 }
               );
@@ -2859,9 +2942,48 @@ export default {
     this.fetchCompany();
     this.fetchDepartment();
     this.fetchHrData();
+    this.fetchCurrencies();
   },
 
   methods: {
+    async fetchCurrencies() {
+      try {
+        const response = await fetch(
+          "https://gist.githubusercontent.com/ksafranski/2973986/raw/5fda5e87189b066e11c1bf80bbfbecb556cf2cc1/Common-Currency.json"
+        );
+        const data = await response.json();
+        this.currencies = Object.values(data); // Store the currency objects
+        // console.log("Currencies:", this.currencies);
+
+        // console.log("Tabs field:", this.tabs.fields);
+
+        this.tabs
+          .find((field) => field.title === "Overseas Travelling")
+          .fields.find(
+            (field) => field.id === "ForeignCurrencyAccommodationOT"
+          ).options = this.currencies.map((currency) => ({
+          value: currency.code, // Assuming each currency has a 'code' field
+          label: currency.code + " (" + currency.symbol_native + ")", // Assuming each currency has a 'name' field
+        }));
+
+        this.tabs
+          .find((field) => field.title === "Overseas Travelling")
+          .fields.find(
+            (field) => field.id === "ForeignCurrencyOthersOT"
+          ).options = this.currencies.map((currency) => ({
+          value: currency.code, // Assuming each currency has a 'code' field
+          label: currency.code + " (" + currency.symbol_native + ")", // Assuming each currency has a 'name' field
+        }));
+
+        // this.foreignCurrencySelect.options = this.currencies.map(currency => ({
+        //   value: currency.code, // Assuming each currency has a 'code' field
+        //   label: currency.name + currency.code  // Assuming each currency has a 'name' field
+        // }));
+      } catch (error) {
+        console.error("Error fetching currencies:", error);
+      }
+    },
+
     async fetchDepartment() {
       try {
         const response = await fetch(
@@ -3339,20 +3461,16 @@ export default {
     },
 
     addAttendee() {
-      const { name } = this.modalForm;
-      if (this.modalForm.name && this.selectedCompanyName) {
+      const { name, company_Name } = this.modalForm;
+      if (name && company_Name) {
         this.attendees.push({
           name,
-          companyName: this.selectedCompanyName,
+          company_Name,
         });
+        this.showModal = false;
+        this.modalForm.name = "";
+        this.modalForm.company_Name = "";
       }
-      this.attendees.push({
-        name: this.modalForm.name,
-        companyName: this.modalForm.companyName,
-      });
-      this.showModal = false;
-      this.modalForm.name = "";
-      this.modalForm.companyName = "";
     },
 
     removeAttendee(index) {
@@ -3409,6 +3527,10 @@ export default {
           field.id !== "LimitedAmountHR" &&
           field.id !== "AccBankNumberHR" &&
           field.id !== "AccBankNumberML" &&
+          field.id !== "ExchangeRateAccommodationOT" &&
+          field.id !== "AmountforAccommodationOT" &&
+          field.id !== "ExchangeRateOthersOT" &&
+          field.id !== "AmountforOthersOT" &&
           (!isCompanyTransport ||
             (field.id !== "MileageRMLT" && field.id !== "FareRMLT")) &&
           (!isPublicTransport ||
@@ -3421,9 +3543,35 @@ export default {
         }
       });
 
-      // If the tab title is "Overseas Travelling", add the total of other expenses
       if (tab.title === "Overseas Travelling") {
-        total += this.calculateOverseasTotal();
+        const amountField = tab.fields.find(
+          (field) => field.id === "AmountforAccommodationOT"
+        );
+        const exchangeRateField = tab.fields.find(
+          (field) => field.id === "ExchangeRateAccommodationOT"
+        );
+
+        const amount = parseFloat(amountField.value) || 0;
+        const exchangeRate = parseFloat(exchangeRateField.value) || 1;
+
+        const totalAccommodation = amount * exchangeRate;
+        this.totalAccommodation = totalAccommodation.toFixed(2);
+
+        const amount2Field = tab.fields.find(
+          (field) => field.id === "AmountforOthersOT"
+        );
+        const exchangeRate2Field = tab.fields.find(
+          (field) => field.id === "ExchangeRateOthersOT"
+        );
+
+        const amount2 = parseFloat(amount2Field.value) || 0;
+        const exchangeRate2 = parseFloat(exchangeRate2Field.value) || 1;
+
+        const totalOthers = amount2 * exchangeRate2;
+        this.totalOthers = totalOthers.toFixed(2);
+
+        total +=
+          totalOthers + totalAccommodation + this.calculateOverseasTotal();
       }
 
       // Return the total

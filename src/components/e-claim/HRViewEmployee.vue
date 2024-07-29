@@ -6,11 +6,15 @@
       <div
         class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 dark:text-white border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
-        <h1
+
+      <div class="flex justify-between">
+        <div>  <h1
           class="text-blue-800 dark:text-blue-600 text-xl md:text-2xl font-bold"
         >
           VIEW EMPLOYEES
-        </h1>
+        </h1></div> <div> <router-link :to="{name:'HrRegisteremployee'}"><button class="bg-[#160959] rounded-full py-2 px-4 text-slate-200 capitalize font-semibold " >reqister employee</button></router-link></div>
+      </div>
+      
 
         <!-- Datatable -->
         <div class="flex flex-col mt-6">

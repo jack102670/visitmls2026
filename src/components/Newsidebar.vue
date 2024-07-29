@@ -88,7 +88,7 @@
     </div>
 
     <div class="flex flex-col items-center justify-center mt-1">
-      <h4 class="text-slate-200 dark:text-gray-200 font-medium text-center">
+      <h4 class="text-slate-200 dark:text-gray-400 font-medium text-center">
         Welcome,
       </h4>
       <p
