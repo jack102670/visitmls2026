@@ -1096,9 +1096,10 @@
                     <button
                       type="submit"
                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                       :disabled="
-        tab.title === 'Handphone Bill Reimbursement' && isFormDisabled
-      "
+                      :disabled="
+                        tab.title === 'Handphone Bill Reimbursement' &&
+                        isFormDisabled
+                      "
                     >
                       Save
                     </button>
@@ -1258,13 +1259,13 @@
                         </div>
                         <div class="mb-4">
                           <label
-                            for="companyName"
+                            for="company_Name"
                             class="block text-sm font-medium text-gray-700"
                             >Company Name</label
                           >
                           <input
                             type="text"
-                            v-model="modalForm.companyName"
+                            v-model="modalForm.company_Name"
                             required
                             class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                           />
@@ -1334,7 +1335,7 @@
                             <td
                               class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                             >
-                              {{ attendee.companyName }}
+                              {{ attendee.company_Name }}
                             </td>
                             <td
                               class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
@@ -1671,7 +1672,7 @@
                                   <path
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
-                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M4 7h16"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                                   />
                                 </svg>
                               </button>
@@ -1775,6 +1776,7 @@ export default {
         name: "",
         department: "",
         companyName: "",
+        company_Name: "",
       },
       attendees: [],
       staffInvolved: [],
@@ -3423,20 +3425,16 @@ export default {
     },
 
     addAttendee() {
-      const { name } = this.modalForm;
-      if (this.modalForm.name && this.selectedCompanyName) {
+      const { name, company_Name } = this.modalForm;
+      if (name && company_Name) {
         this.attendees.push({
           name,
-          companyName: this.selectedCompanyName,
+          company_Name,
         });
+        this.showModal = false;
+        this.modalForm.name = "";
+        this.modalForm.company_Name = "";
       }
-      this.attendees.push({
-        name: this.modalForm.name,
-        companyName: this.modalForm.companyName,
-      });
-      this.showModal = false;
-      this.modalForm.name = "";
-      this.modalForm.companyName = "";
     },
 
     removeAttendee(index) {
