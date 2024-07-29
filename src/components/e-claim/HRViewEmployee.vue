@@ -335,12 +335,7 @@
                 <div class="flex justify-center">
                   <button
                     class="rounded-lg p-2 bg-[#160959] hover:bg-blue-950 text-white"
-                    @click="
-                      Register(),
-                        (confirm = false),
-                        (edit = false),
-                        (view = false)
-                    "
+                    @click="Register()"
                   >
                     Confirm
                   </button>
@@ -356,7 +351,7 @@
 
             <!-- Loading Animation -->
             <div
-              class="w-screen h-screen fixed z-40 flex justify-center items-center top-0 left-0"
+              class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0"
               v-if="loading"
             >
               <div
@@ -430,7 +425,7 @@ export default {
         employeeId: '',
         reportingDepartment: '',
         reportingId: '',
-        limit: 0,
+        limit: null,
       },
       // option for dropdown
       fetchOptions: [],
@@ -470,6 +465,8 @@ export default {
         'Limit Amount': data.limit_amount,
       };
 
+      console.log('employee', this.employee);
+
       this.view = true;
       await this.getFormData(data, data.reporting_to);
     },
@@ -492,6 +489,7 @@ export default {
       await axios
         .get('http://172.28.28.91:97/api/User/GetAllEmployees')
         .then((response) => {
+          console.log(response.data.result.filter((item) => item.emp_id == id));
           const reportingName = response.data.result.filter(
             (item) => item.emp_id == id
           )[0].name;
@@ -508,19 +506,29 @@ export default {
             limit: data.limit_amount,
             userNameId: data.username_id,
           };
+
+          console.log('limit amount ', this.form);
+
+          if (data.limit_amount > 0) {
+            this.enableLimit = 'yes';
+            this.form.limit = data.limit_amount;
+          } else {
+            this.enableLimit = 'no';
+            this.form.limit = 0;
+          }
         });
     },
     Register() {
       console.log('form ', this.form);
-      this.loadingText = 'Uploading'
+      this.loadingText = 'Uploading';
       this.loading = true;
       // Post the 'form' object to API
       const registerData = {
         company_name: this.form.company,
         limit_amount: this.form.limit,
-        userNameId: this.form.userNameId,
+        //userNameId: this.form.userNameId,
         branch: this.form.branch,
-        userName: this.form.userId,
+        //userName: this.form.userId,
         employeeId: this.form.employeeId,
         department: this.form.department,
         reportingToDept: this.form.reportingDepartment,
@@ -534,12 +542,17 @@ export default {
 
       axios
         .put(
-          'http://172.28.28.91:86/api/Admin/Register_UserProfile',
+          'http://172.28.28.91:86/api/Admin/Update_UserProfile',
           registerData
         )
         .then((response) => {
           console.log('Response:', response.data);
           this.loading = false;
+          this.confirm = false;
+          this.edit = false;
+          this.view = false;
+
+          window.location.reload();
 
           // Handle success
         })
@@ -549,7 +562,7 @@ export default {
         });
     },
     async fetchData() {
-      this.loadingText = 'Fetching'
+      this.loadingText = 'Fetching';
       this.loading = true;
       await axios
         .get('http://172.28.28.91:89/api/Security/getusersAD')
@@ -560,6 +573,14 @@ export default {
           this.getAllDepartments();
           this.getAllPositions();
           this.getAllCompanies();
+
+          if (this.form.branch) {
+            this.changeDepartment(this.form.branch);
+          }
+
+          if (this.form.reportingDepartment) {
+            this.changeEmployee(this.form.reportingDepartment);
+          }
         })
         .catch((error) => {
           this.error = error;
@@ -613,23 +634,9 @@ export default {
         return null;
       }
     },
-  },
-  mounted() {
-    // Sidebar close or open
-    let openOrNot = localStorage.getItem('openOrNot');
-    const element = document.querySelector('main');
-    if (element && openOrNot == 'false') {
-      element.classList.add('become-big');
-    } else if (element && openOrNot == 'true') {
-      element.classList.remove('become-big');
-    }
 
-    // fetch claims data from api
-    this.FetchEmployeesData();
-  },
-  watch: {
-    'form.branch'(newBranch) {
-      // This will execute whenever branch value changes
+    // function for watcher
+    changeDepartment(newBranch) {
       let Departments = this.fetchOptions
         .filter((item) => item.branch === newBranch)
         .map((item) => item.department);
@@ -640,14 +647,11 @@ export default {
 
       console.log(this.filteredDepartments);
     },
-
-    async 'form.reportingDepartment'(newReportingDept) {
-      // This will execute whenever department value changes
-      console.log('123');
+    async changeEmployee(newReportingDept) {
       let Employees = this.fetchOptions
         .filter((item) => item.department === newReportingDept)
         .map((item) => ({
-          userName: item.userName,
+          userName: item.displayName,
           userId: item.userId,
         }));
 
@@ -689,13 +693,47 @@ export default {
         console.error('Error fetching data from API:', error);
       }
     },
+  },
+  mounted() {
+    // Sidebar close or open
+    let openOrNot = localStorage.getItem('openOrNot');
+    const element = document.querySelector('main');
+    if (element && openOrNot == 'false') {
+      element.classList.add('become-big');
+    } else if (element && openOrNot == 'true') {
+      element.classList.remove('become-big');
+    }
+
+    // fetch claims data from api
+    this.FetchEmployeesData();
+  },
+  watch: {
+    'form.branch'(newBranch) {
+      // This will execute whenever branch value changes
+      this.changeDepartment(newBranch);
+    },
+
+    async 'form.reportingDepartment'(newReportingDept) {
+      // This will execute whenever department value changes
+      console.log('123');
+      this.changeEmployee(newReportingDept);
+    },
+
+    'form.limit'(newLimit) {
+      if (newLimit <= 0 && this.enableLimit == 'yes') {
+        this.form.limit = 1;
+      }
+    },
 
     enableLimit(newVal) {
       if (newVal === 'yes') {
-        this.form.limit = 1;
-      } else {
+        if (this.form.limit == 0) {
+          this.form.limit = 1;
+        }
+      } else if (newVal == 'no') {
         this.form.limit = 0;
       }
+      console.log(this.form.limit);
     },
   },
 };
