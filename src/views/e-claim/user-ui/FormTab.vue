@@ -148,7 +148,7 @@
                                 :for="field.id"
                                 class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
                               >
-                                {{ field.label }}
+                                  {{ field.id === 'AmountforAccommodationOT' ? amountLabels.amountAccommodation : (field.id === 'AmountforOthersOT' ? amountLabels.amountOthers : field.label) }}
                                 <span v-if="field.required" style="color: red"
                                   >*</span
                                 >
@@ -2619,6 +2619,21 @@ export default {
   },
 
   computed: {
+      amountLabels() {
+      const getForeignCurrency = (fieldId) => {
+        return this.tabs.find(tab => tab.title === 'Overseas Travelling')
+          ?.fields.find(field => field.id === fieldId)
+          ?.value || '';
+      };
+
+      const amountAccommodation = `Amount(${getForeignCurrency('ForeignCurrencyAccommodationOT')})`;
+      const amountOthers = `Amount(${getForeignCurrency('ForeignCurrencyOthersOT')})`;
+
+      return {
+        amountAccommodation,
+        amountOthers
+      };
+    },
     isFormDisabled() {
       const handphoneTab = this.tabs.find(
         (tab) => tab.title === "Handphone Bill Reimbursement"
