@@ -3477,24 +3477,23 @@ export default {
         }
       });
 
-      // If the tab title is "Overseas Travelling", add the total of other expenses
       if (tab.title === "Overseas Travelling") {
       const amountField = tab.fields.find((field) => field.id === "AmountforAccommodationOT");
       const exchangeRateField = tab.fields.find((field) => field.id === "ExchangeRateAccommodationOT");
 
       const amount = parseFloat(amountField.value) || 0;
-      const exchangeRate = parseFloat(exchangeRateField.value) || 1; // Avoid division by zero
+      const exchangeRate = parseFloat(exchangeRateField.value) || 1; 
 
-      const totalAccommodation = amount / exchangeRate;
+      const totalAccommodation = amount * exchangeRate;
       this.totalAccommodation = totalAccommodation.toFixed(2);
 
       const amount2Field = tab.fields.find((field) => field.id === "AmountforOthersOT");
       const exchangeRate2Field = tab.fields.find((field) => field.id === "ExchangeRateOthersOT");
 
       const amount2 = parseFloat(amount2Field.value) || 0;
-      const exchangeRate2 = parseFloat(exchangeRate2Field.value) || 1; // Avoid division by zero
+      const exchangeRate2 = parseFloat(exchangeRate2Field.value) || 1; 
 
-      const totalOthers = amount2 / exchangeRate2;
+      const totalOthers = amount2 * exchangeRate2;
       this.totalOthers = totalOthers.toFixed(2);
         
         total += totalOthers + totalAccommodation + this.calculateOverseasTotal();
