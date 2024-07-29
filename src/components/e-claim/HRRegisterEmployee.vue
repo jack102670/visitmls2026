@@ -94,7 +94,9 @@
 
           <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
             <div>
-              <label class="font-semibold text-gray-600">Handphone Claim Limit</label>
+              <label class="font-semibold text-gray-600"
+                >Handphone Claim Limit</label
+              >
               <div class="mt-2">
                 <input type="radio" id="no" value="no" v-model="enableLimit" />
                 <label for="no">No</label>
@@ -256,17 +258,7 @@ export default {
           console.log('Response:', response.data);
           this.loading = false;
 
-          this.form = {
-            branch: '',
-            company: '',
-            department: '',
-            position: '',
-            userId: '',
-            employeeId: '',
-            reportingDepartment: '',
-            reportingId: '',
-            limit: 0,
-          };
+          window.location.reload();
           // Handle success
         })
         .catch((error) => {

@@ -505,12 +505,12 @@
             >
               Approve
             </button>
-            <button
+            <!-- <button
               @click="confirmResubmit = true"
               class="mr-2 text-sm font-semibold py-3 w-16 sm:w-24 md:w-36 bg-yellow-500 hover:bg-yellow-600 rounded-lg text-white"
             >
               Resubmit
-            </button>
+            </button> -->
             <button
               @click="confirmReject = true"
               class="text-sm font-semibold py-3 w-16 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white"

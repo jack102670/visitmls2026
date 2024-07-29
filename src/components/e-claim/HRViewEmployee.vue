@@ -459,10 +459,11 @@ export default {
         Email: data.email_address,
         Phone: data.phone_number,
         Address: data.home_address,
-        Spouse: data.spouse,
         Bank: data.bank_name,
         'Bank Number': data.bank_number,
-        'Limit Amount': data.limit_amount,
+        'Limit Handphone': data.limit_amount,
+        'Limit Outpatient': data.limit_outpatient,
+        'Limit Medical Dental': data.limit_medicaldental,
       };
 
       console.log('employee', this.employee);
