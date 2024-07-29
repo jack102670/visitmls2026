@@ -829,7 +829,7 @@
                 <label
                   for="rmAccommodation"
                   class="text-gray-700 font-bold mr-2"
-                  >RM:</label
+                  >Amount:</label
                 >
                 <input
                   type="text"
@@ -869,7 +869,7 @@
               </div>
               <div class="flex justify-between items-center mb-4">
                 <label for="rmOthers" class="text-gray-700 font-bold mr-2"
-                  >RM:</label
+                  >Amount:</label
                 >
                 <input
                   type="text"
