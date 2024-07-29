@@ -46,7 +46,7 @@
             style="width: 100%; max-width: 600px; margin: 0 auto"
           >
             <h1 class="text-sm font-bold text-center">
-              Note : You are not applicable to claim the Handphone Bill.
+              Note : You are not eligible to claim the Handphone Bill.
             </h1>
           </div>
         </section>
