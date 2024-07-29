@@ -148,7 +148,13 @@
                                 :for="field.id"
                                 class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
                               >
-                                  {{ field.id === 'AmountforAccommodationOT' ? amountLabels.amountAccommodation : (field.id === 'AmountforOthersOT' ? amountLabels.amountOthers : field.label) }}
+                                {{
+                                  field.id === "AmountforAccommodationOT"
+                                    ? amountLabels.amountAccommodation
+                                    : field.id === "AmountforOthersOT"
+                                    ? amountLabels.amountOthers
+                                    : field.label
+                                }}
                                 <span v-if="field.required" style="color: red"
                                   >*</span
                                 >
@@ -635,17 +641,17 @@
                                     spent in foreign currency.
                                   </div>
                                   <div class="ml-2">
-                                  <h1 class="text-gray-500 text-sm">
-                                    In Malaysian Ringgit = RM{{ totalAccommodation || 0 }}
-                                  </h1>
-                                </div>
+                                    <h1 class="text-gray-500 text-sm">
+                                      In Malaysian Ringgit = RM{{
+                                        totalAccommodation || 0
+                                      }}
+                                    </h1>
+                                  </div>
                                 </div>
                               </template>
 
                               <template
-                                v-else-if="
-                                  field.id === 'AmountforOthersOT'
-                                "
+                                v-else-if="field.id === 'AmountforOthersOT'"
                               >
                                 <input
                                   v-model="field.value"
@@ -681,10 +687,12 @@
                                     spent in foreign currency.
                                   </div>
                                   <div class="ml-2">
-                                  <h1 class="text-gray-500 text-sm">
-                                    In Malaysian Ringgit = RM{{ totalOthers || 0 }}
-                                  </h1>
-                                </div>
+                                    <h1 class="text-gray-500 text-sm">
+                                      In Malaysian Ringgit = RM{{
+                                        totalOthers || 0
+                                      }}
+                                    </h1>
+                                  </div>
                                 </div>
                               </template>
 
@@ -1088,6 +1096,9 @@
                     <button
                       type="submit"
                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                       :disabled="
+        tab.title === 'Handphone Bill Reimbursement' && isFormDisabled
+      "
                     >
                       Save
                     </button>
@@ -2619,19 +2630,25 @@ export default {
   },
 
   computed: {
-      amountLabels() {
+    amountLabels() {
       const getForeignCurrency = (fieldId) => {
-        return this.tabs.find(tab => tab.title === 'Overseas Travelling')
-          ?.fields.find(field => field.id === fieldId)
-          ?.value || '';
+        return (
+          this.tabs
+            .find((tab) => tab.title === "Overseas Travelling")
+            ?.fields.find((field) => field.id === fieldId)?.value || ""
+        );
       };
 
-      const amountAccommodation = `Amount(${getForeignCurrency('ForeignCurrencyAccommodationOT')})`;
-      const amountOthers = `Amount(${getForeignCurrency('ForeignCurrencyOthersOT')})`;
+      const amountAccommodation = `Amount(${getForeignCurrency(
+        "ForeignCurrencyAccommodationOT"
+      )})`;
+      const amountOthers = `Amount(${getForeignCurrency(
+        "ForeignCurrencyOthersOT"
+      )})`;
 
       return {
         amountAccommodation,
-        amountOthers
+        amountOthers,
       };
     },
     isFormDisabled() {
@@ -3493,25 +3510,34 @@ export default {
       });
 
       if (tab.title === "Overseas Travelling") {
-      const amountField = tab.fields.find((field) => field.id === "AmountforAccommodationOT");
-      const exchangeRateField = tab.fields.find((field) => field.id === "ExchangeRateAccommodationOT");
+        const amountField = tab.fields.find(
+          (field) => field.id === "AmountforAccommodationOT"
+        );
+        const exchangeRateField = tab.fields.find(
+          (field) => field.id === "ExchangeRateAccommodationOT"
+        );
 
-      const amount = parseFloat(amountField.value) || 0;
-      const exchangeRate = parseFloat(exchangeRateField.value) || 1; 
+        const amount = parseFloat(amountField.value) || 0;
+        const exchangeRate = parseFloat(exchangeRateField.value) || 1;
 
-      const totalAccommodation = amount * exchangeRate;
-      this.totalAccommodation = totalAccommodation.toFixed(2);
+        const totalAccommodation = amount * exchangeRate;
+        this.totalAccommodation = totalAccommodation.toFixed(2);
 
-      const amount2Field = tab.fields.find((field) => field.id === "AmountforOthersOT");
-      const exchangeRate2Field = tab.fields.find((field) => field.id === "ExchangeRateOthersOT");
+        const amount2Field = tab.fields.find(
+          (field) => field.id === "AmountforOthersOT"
+        );
+        const exchangeRate2Field = tab.fields.find(
+          (field) => field.id === "ExchangeRateOthersOT"
+        );
 
-      const amount2 = parseFloat(amount2Field.value) || 0;
-      const exchangeRate2 = parseFloat(exchangeRate2Field.value) || 1; 
+        const amount2 = parseFloat(amount2Field.value) || 0;
+        const exchangeRate2 = parseFloat(exchangeRate2Field.value) || 1;
 
-      const totalOthers = amount2 * exchangeRate2;
-      this.totalOthers = totalOthers.toFixed(2);
-        
-        total += totalOthers + totalAccommodation + this.calculateOverseasTotal();
+        const totalOthers = amount2 * exchangeRate2;
+        this.totalOthers = totalOthers.toFixed(2);
+
+        total +=
+          totalOthers + totalAccommodation + this.calculateOverseasTotal();
       }
 
       // Return the total
