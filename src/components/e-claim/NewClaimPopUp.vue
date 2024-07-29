@@ -17,7 +17,7 @@
             <label
               class="font-semibold text-gray-700 dark:text-gray-200"
               for="claimantName"
-              >Report Name<span class="text-red-500">*</span></label
+              >Report Name <span class="text-red-500">*</span></label
             >
             <input
               v-model="formData.reportName"
@@ -385,10 +385,7 @@
           <label
             class="font-semibold text-gray-700 dark:text-gray-200"
             for="username"
-            >Upload Attachment (png, jpeg, pdf or xlsx)<span
-              class="text-red-500"
-              >*</span
-            ></label
+            >Upload Attachment (png, jpeg, pdf or xlsx)</label
           >
 
           <!-- component -->
