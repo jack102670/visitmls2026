@@ -2953,9 +2953,9 @@ export default {
         );
         const data = await response.json();
         this.currencies = Object.values(data); // Store the currency objects
-        console.log("Currencies:", this.currencies);
+        // console.log("Currencies:", this.currencies);
 
-        console.log("Tabs field:", this.tabs.fields);
+        // console.log("Tabs field:", this.tabs.fields);
 
         this.tabs
           .find((field) => field.title === "Overseas Travelling")
