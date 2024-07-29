@@ -2061,9 +2061,7 @@ export default {
               type: "select",
               placeholder: "Accommodation",
               value: "",
-              options: [
-               
-              ],
+              options: [],
               required: true,
               gridClass: "sm:col-span-2",
             },
@@ -2089,7 +2087,7 @@ export default {
               type: "select",
               placeholder: "Others",
               value: "",
-              options:[],
+              options: [],
               gridClass: "sm:col-span-2",
             },
             {
@@ -2638,24 +2636,18 @@ export default {
 
   computed: {
     amountLabels() {
-      const getForeignCurrency = (fieldId) => {
-        return (
-          this.tabs
-            .find((tab) => tab.title === "Overseas Travelling")
-            ?.fields.find((field) => field.id === fieldId)?.value || ""
-        );
+      const getCurrencySymbol = (fieldId) => {
+        const currencyCode = this.tabs
+          .find((tab) => tab.title === "Overseas Travelling")
+          ?.fields.find((field) => field.id === fieldId)?.value || '';
+
+        const currency = this.currencies.find((cur) => cur.code === currencyCode);
+        return currency ? `Amount(${currency.symbol_native})` : 'Amount';
       };
 
-      const amountAccommodation = `Amount(${getForeignCurrency(
-        "ForeignCurrencyAccommodationOT"
-      )})`;
-      const amountOthers = `Amount(${getForeignCurrency(
-        "ForeignCurrencyOthersOT"
-      )})`;
-
       return {
-        amountAccommodation,
-        amountOthers,
+        amountAccommodation: getCurrencySymbol("ForeignCurrencyAccommodationOT"),
+        amountOthers: getCurrencySymbol("ForeignCurrencyOthersOT"),
       };
     },
     isFormDisabled() {
@@ -2956,21 +2948,31 @@ export default {
   methods: {
     async fetchCurrencies() {
       try {
-        const response = await fetch('https://gist.githubusercontent.com/ksafranski/2973986/raw/5fda5e87189b066e11c1bf80bbfbecb556cf2cc1/Common-Currency.json');
+        const response = await fetch(
+          "https://gist.githubusercontent.com/ksafranski/2973986/raw/5fda5e87189b066e11c1bf80bbfbecb556cf2cc1/Common-Currency.json"
+        );
         const data = await response.json();
         this.currencies = Object.values(data); // Store the currency objects
-        console.log('Currencies:', this.currencies);
+        console.log("Currencies:", this.currencies);
 
-        console.log('Tabs field:', this.tabs.fields);
+        console.log("Tabs field:", this.tabs.fields);
 
-        this.tabs.find(field => field.title === ("Overseas Travelling")).fields.find(field => field.id==="ForeignCurrencyAccommodationOT").options = this.currencies.map(currency => ({
+        this.tabs
+          .find((field) => field.title === "Overseas Travelling")
+          .fields.find(
+            (field) => field.id === "ForeignCurrencyAccommodationOT"
+          ).options = this.currencies.map((currency) => ({
           value: currency.code, // Assuming each currency has a 'code' field
-          label: currency.code + " ("+ currency.symbol_native +")"  // Assuming each currency has a 'name' field
+          label: currency.code + " (" + currency.symbol_native + ")", // Assuming each currency has a 'name' field
         }));
 
-        this.tabs.find(field => field.title === ("Overseas Travelling")).fields.find(field => field.id==="ForeignCurrencyOthersOT").options = this.currencies.map(currency => ({
+        this.tabs
+          .find((field) => field.title === "Overseas Travelling")
+          .fields.find(
+            (field) => field.id === "ForeignCurrencyOthersOT"
+          ).options = this.currencies.map((currency) => ({
           value: currency.code, // Assuming each currency has a 'code' field
-          label: currency.code + " ("+ currency.symbol_native +")"  // Assuming each currency has a 'name' field
+          label: currency.code + " (" + currency.symbol_native + ")", // Assuming each currency has a 'name' field
         }));
 
         // this.foreignCurrencySelect.options = this.currencies.map(currency => ({
@@ -2978,10 +2980,10 @@ export default {
         //   label: currency.name + currency.code  // Assuming each currency has a 'name' field
         // }));
       } catch (error) {
-        console.error('Error fetching currencies:', error);
+        console.error("Error fetching currencies:", error);
       }
     },
-    
+
     async fetchDepartment() {
       try {
         const response = await fetch(
