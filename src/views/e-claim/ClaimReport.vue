@@ -1783,7 +1783,7 @@
                       <td
                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                       >
-                        {{ attendee.companyName }}
+                        {{ attendee.company_Name }}
                       </td>
                     </tr>
                   </tbody>
@@ -2070,7 +2070,7 @@
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
                         <div class="flex items-center gap-x-3">
-                          <span>Staff ID</span>
+                          <span>Department</span>
                         </div>
                       </th>
                       <th
@@ -2105,7 +2105,7 @@
                       <td
                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                       >
-                        {{ staff.staffId }}
+                        {{ staff.department}}
                       </td>
                       <td
                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
@@ -3505,8 +3505,8 @@ export default {
                     participants: claim.attendees
                       ? claim.attendees.map((participant) => ({
                           name: participant.name,
-                          company_name: participant.companyName
-                            ? participant.companyName
+                          company_name: participant.company_Name
+                            ? participant.company_Name
                             : "",
                         }))
                       : [],
