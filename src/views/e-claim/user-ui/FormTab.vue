@@ -40,7 +40,7 @@
           <div
             v-if="
               tab.title === 'Handphone Bill Reimbursement' &&
-              LimitedAmountHR === 0
+              isFormDisabled
             "
             class="relative flex items-center justify-center mt-4 p-4 bg-yellow-200 border border-yellow-400 text-yellow-800 rounded-md"
             style="width: 100%; max-width: 600px; margin: 0 auto"
