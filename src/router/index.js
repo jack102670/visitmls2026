@@ -267,6 +267,7 @@ const routes = [
     name: 'tabtesting',
     components: {
       default: TabTest,
+      Sidebar: Newsidebar,
     },
   },
 
