@@ -3225,7 +3225,7 @@ export default {
     },
     async senttheclaim() {
       if (!this.isValidClaimData()) {
-        alert("Please add at least one claim data before submit");
+        alert("Please add at least 1 claim before submitting");
         return;
       }
       this.loadingText = 'Uploading';
