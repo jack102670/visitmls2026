@@ -3586,16 +3586,18 @@ export default {
                     venue_name: claim.VenueE,
                     description: claim.ReferenceE,
                     total_fee: parseFloat(claim.AmountRME),
-                    reference_number: this.serialnumber,
+                    reference_number:  this.serialnumber,
                     unique_code: uniqcodeE, // Ensure this is in the correct format and not null/undefined
                     // Add the required 'ent' field with the appropriate value
 
                     participants: claim.attendees
                       ? claim.attendees.map((participant) => ({
                           name: participant.name,
-                          company_name: participant.company_Name
+                          company_Name: participant.company_Name
                             ? participant.company_Name
                             : '',
+                            emp_id:"-",
+                            status: "-",
                         }))
                       : [],
                   };
