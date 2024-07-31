@@ -163,6 +163,7 @@
                               <template v-if="field.type === 'select'">
                                 <select
                                   v-model="field.value"
+                                  @change="onMedicalCategoryChange"
                                   :required="field.required"
                                   :disabled="
                                     (tab.title ===
@@ -1756,9 +1757,8 @@ export default {
       totalAccommodation: 0,
       totalOthers: 0,
       LimitedAmountHR: 0,
-      LIMIT_OUTPATIENT: 70,
-      LIMIT_MEDICAL_CHECKUP: 200,
-      LIMIT_DENTAL: 200,
+      limit_medicaldental: 0,
+      limit_outpatient: 0,
       uploadedFiles: [],
       otherExpenses: [],
       showOtherExpensesModal: false,
@@ -2361,6 +2361,14 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
+              id: "LimitedAmountML",
+              label: "Limited Amount(RM)",
+              type: "number",
+              value: "",
+              disabled: true,
+              gridClass: "sm:col-span-2",
+            },
+            {
               id: "ClaimsAmountML",
               label: "Claims Amount(RM)",
               type: "number",
@@ -2368,14 +2376,6 @@ export default {
               required: true,
               gridClass: "sm:col-span-2",
             },
-            //{
-            //  id: "LimitedAmountML",
-            //  label: "Limited Amount(RM)",
-            //  type: "number",
-            //  value: "",
-            //  required: true,
-            //  gridClass: "sm:col-span-2",
-            //},
             {
               id: "UploadML",
               label: "Attachment(s). (png, jpeg, pdf or xlsx)",
@@ -2835,44 +2835,32 @@ export default {
               this.updateFieldVisibility8(medCategoryField.value);
             }
 
-            const medicalCategoryField = tab.fields.find(
-              (field) => field.id === "MedicalCategoryML"
+            const limitedAmountMLField = tab.fields.find(
+              (field) => field.id === "LimitedAmountML"
             );
-            const claimsAmountField = tab.fields.find(
+            const claimsAmountMLField = tab.fields.find(
               (field) => field.id === "ClaimsAmountML"
             );
 
-            if (medicalCategoryField && claimsAmountField) {
+            if (limitedAmountMLField && claimsAmountMLField) {
               this.$watch(
-                () => medicalCategoryField.value,
+                () => limitedAmountMLField.value,
                 (newValue) => {
-                  switch (newValue) {
-                    case "Outpatient":
-                      claimsAmountField.value = this.LIMIT_OUTPATIENT;
-                      break;
-                    case "Dental":
-                      claimsAmountField.value = this.LIMIT_DENTAL;
-                      break;
-                    case "Medical Check-Up":
-                      claimsAmountField.value = this.LIMIT_MEDICAL_CHECKUP;
-                      break;
-                    default:
-                      claimsAmountField.value = 0;
+                  if (
+                    parseFloat(claimsAmountMLField.value) > parseFloat(newValue)
+                  ) {
+                    claimsAmountMLField.value = newValue;
                   }
                 }
               );
 
               this.$watch(
-                () => claimsAmountField.value,
+                () => claimsAmountMLField.value,
                 (newValue) => {
-                  const limit = {
-                    Outpatient: this.LIMIT_OUTPATIENT,
-                    Dental: this.LIMIT_DENTAL,
-                    "Medical Check-Up": this.LIMIT_MEDICAL_CHECKUP,
-                  }[medicalCategoryField.value];
-
-                  if (limit && parseFloat(newValue) > limit) {
-                    claimsAmountField.value = limit;
+                  if (
+                    parseFloat(newValue) > parseFloat(limitedAmountMLField.value)
+                  ) {
+                    claimsAmountMLField.value = limitedAmountMLField.value;
                   }
                 }
               );
@@ -3026,6 +3014,10 @@ export default {
         if (data) {
           this.updateFields(data);
         }
+        if (data && data.length > 0) {
+          this.limit_medicaldental = data[0].limit_medicaldental || 0;
+          this.limit_outpatient = data[0].limit_outpatient || 0;
+        }
         console.log("Bank Data:", data);
       } catch (error) {
         console.error("Error fetching Bank Data:", error);
@@ -3033,6 +3025,9 @@ export default {
     },
 
     updateFields(data) {
+      this.limit_medicaldental = data.limit_medicaldental;
+      this.limit_outpatient = data.limit_outpatient;
+
       const fieldMap = {
         BankNameHR: data.bank_name,
         AccBankNumberHR: data.bank_number,
@@ -3050,6 +3045,21 @@ export default {
           }
         });
       });
+    },
+
+    onMedicalCategoryChange(event) {
+      const selectedCategory = event.target.value;
+      const limitedAmountField = this.tabs
+        .find((tab) => tab.title === "Medical Bill Reimbursement")
+        .fields.find((field) => field.id === "LimitedAmountML");
+
+      if (selectedCategory === "Dental" || selectedCategory === "Medical Check-Up") {
+        limitedAmountField.value = this.limit_medicaldental;
+      } else if (selectedCategory === "Outpatient") {
+        limitedAmountField.value = this.limit_outpatient;
+      } else {
+        limitedAmountField.value = "";
+      }
     },
 
     formatDate(dateString) {
@@ -3525,6 +3535,7 @@ export default {
           !isNaN(parseFloat(field.value)) &&
           field.id !== "MileageKMLT" &&
           field.id !== "LimitedAmountHR" &&
+          field.id !== "LimitedAmountML" &&
           field.id !== "AccBankNumberHR" &&
           field.id !== "AccBankNumberML" &&
           field.id !== "ExchangeRateAccommodationOT" &&
