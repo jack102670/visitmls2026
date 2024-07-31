@@ -50,10 +50,10 @@
                 >
               </div>
             </button>
-            <button
+            <!-- <button
               @click="sendToAPI"
               class="w-36 h-12 p-1 font-semibold rounded-lg items-center text-sm dark:bg-gray-900 dark:border-gray-700 bg-blue-700 border text-white"
-            ></button>
+            ></button> -->
           </div>
         </div>
 
