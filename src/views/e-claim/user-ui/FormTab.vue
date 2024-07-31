@@ -749,7 +749,9 @@
                                   field.id === 'AccBankNumberHR' ||
                                   field.id === 'AccBankNumberML' ||
                                   field.id === 'AccHolderNameHR' ||
-                                  field.id === 'AccHolderNameML'
+                                  field.id === 'AccHolderNameML' ||
+                                  field.id === 'LimitedAmountHR' ||
+                                  field.id === 'LimitedAmountML' 
                                 "
                               >
                                 <input
