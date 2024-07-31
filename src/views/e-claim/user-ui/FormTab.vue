@@ -3145,11 +3145,15 @@ export default {
   }
   return `${prefix}${originalName}`;
 },
-
 handleAddFile(error, file, field) {
   if (error) {
     console.error("Error adding file:", error.message);
     return;
+  }
+
+  if (!Array.isArray(field.value)) {
+    console.error("field.value is not an array. Initializing as an empty array.");
+    field.value = [];
   }
 
   const newFileName = this.generateNewFileName(file.file.name, field.id);
@@ -3169,27 +3173,33 @@ handleAddFile(error, file, field) {
 },
 
 handleRemoveFile(error, file, field) {
-    if (error) {
-      console.error("An error occurred while removing the file:", error.message);
-      return;
-    }
+  if (error) {
+    console.error("An error occurred while removing the file:", error.message);
+    return;
+  }
 
-    const fileObject = file.file;
-    console.log("Removing file:", fileObject);
+  if (!Array.isArray(field.value)) {
+    console.error("field.value is not an array. Cannot proceed with removal.");
+    return;
+  }
 
-    // Generate the expected file name with prefix
-    const expectedFileName = this.generateNewFileName(fileObject.name, field.id);
+  const fileObject = file.file;
+  console.log("Removing file:", fileObject);
 
-    // Create a new array excluding the file to be removed
-    const newFileList = field.value.filter(f => !(f.name === expectedFileName && f.lastModified === fileObject.lastModified));
+  // Generate the expected file name with prefix
+  const expectedFileName = this.generateNewFileName(fileObject.name, field.id);
 
-    // Use a new array instance to trigger Vue's reactivity
-    if (newFileList.length !== field.value.length) {
-      field.value = [...newFileList];
-    }
+  // Create a new array excluding the file to be removed
+  const newFileList = field.value.filter(f => !(f.name === expectedFileName && f.lastModified === fileObject.lastModified));
 
-    console.log("Files after removal:", field.value);
-  },
+  // Use a new array instance to trigger Vue's reactivity
+  if (newFileList.length !== field.value.length) {
+    field.value = [...newFileList];
+  }
+
+  console.log("Files after removal:", field.value);
+},
+
   handleAddFileOT(error, file, filesArray) {
   if (error) {
     console.error("Error adding file:", error.message);
