@@ -3718,7 +3718,7 @@ export default {
 
                   const uniqcodeML = this.generateUniqueCode(claim.tabTitle);
                   const thisisforMedicalBillReimbursement = {
-                    reference_number: this.serialnumber || '',
+                    reference_number: this.serialnumber || '-',
 date_leave_taken: claim.dateML, // Example date
 reason: claim.ReasonML || '-',
 bank_name: claim.BankNameML ,
@@ -3727,8 +3727,8 @@ bank_account: String(claim.AccBankNumberML ),
 claim_amount: String(claim.ClaimsAmountML ),
 clinic_name: String(claim.OtherClinicSpecML
                       ? claim.OtherClinicSpecML
-                      : claim.ClinicSelectionML || ''),
-clinic_selection: String(claim.ClinicSelectionML || ''),
+                      : claim.ClinicSelectionML || '-'),
+clinic_selection: String(claim.ClinicSelectionML || '-'),
 reason_different: claim.OtherClinicReasonML || '-',
 medical_category: claim.MedicalCategoryML ,
 requester_id: this.userDetails.userId ,
