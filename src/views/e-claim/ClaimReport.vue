@@ -3783,26 +3783,24 @@ export default {
 
                   const uniqcodeML = this.generateUniqueCode(claim.tabTitle);
                   const thisisforMedicalBillReimbursement = {
-                    reference_number: this.serialnumber,
-                    date_leave_taken: claim.dateML, // Example date
-                    reason: claim.ReasonML,
-                    bank_name: claim.BankNameML,
-                    bank_holder: claim.AccHolderNameML,
-                    bank_account: String(claim.AccBankNumberML),
-                    claim_amount: String(claim.ClaimsAmountML),
-                    clinic_name: claim.OtherClinicSpecML
+                    reference_number: this.serialnumber || '',
+date_leave_taken: claim.dateML, // Example date
+reason: claim.ReasonML || '-',
+bank_name: claim.BankNameML ,
+bank_holder: claim.AccHolderNameML ,
+bank_account: String(claim.AccBankNumberML ),
+claim_amount: String(claim.ClaimsAmountML ),
+clinic_name: String(claim.OtherClinicSpecML
                       ? claim.OtherClinicSpecML
-                      : claim.ClinicSelectionML,
-                    clinic_selection: claim.ClinicSelectionML,
-                    reason_different: claim.OtherClinicReasonML,
-                    medical_category: claim.MedicalCategoryML,
-                    requester_id: this.userDetails.userId,
-                   
-  "limit_outpatient": "<double>",
-  "limit_medic_dental": "<double>",
-  "ic_number": "<string>",
-
-                    unique_code: uniqcodeML,
+                      : claim.ClinicSelectionML || ''),
+clinic_selection: String(claim.ClinicSelectionML || ''),
+reason_different: claim.OtherClinicReasonML || '-',
+medical_category: claim.MedicalCategoryML ,
+requester_id: this.userDetails.userId ,
+limit_outpatient: claim.limit_outpatient ,
+limit_medic_dental: claim.limit_medic_dental,
+ic_number: claim.icNumber ,
+unique_code: uniqcodeML ,
                   };
 
                   const userId = this.userDetails.userId;

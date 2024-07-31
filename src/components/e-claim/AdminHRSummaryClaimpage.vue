@@ -980,6 +980,7 @@ export default {
         )
         .then((response) => {
           const result = response.data.result;
+          console.log(result);
           let details = [];
           let amount = 0;
           for (let i in result) {
@@ -987,6 +988,10 @@ export default {
             const editedDetail = {
               Date_Leave: result[i].date_leave_taken,
               Reason: result[i].reason,
+              Medical_Categoroy: result[i].medical_categoroy,
+              Clinic_Selection: result[i].clinic_selection,
+              Clinic: result[i].clinic_name,
+              Reason_Different: result[i].reason_different,
               Bank: result[i].bank_name,
               Bank_Holder: result[i].bank_holder,
               Bank_Account: result[i].bank_account,
@@ -1013,6 +1018,7 @@ export default {
         )
         .then((response) => {
           const result = response.data.result;
+          console.log(result);
 
           let details = [];
           let amount = 0;

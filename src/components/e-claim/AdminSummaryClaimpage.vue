@@ -310,7 +310,9 @@
                           ? ''
                           : key == 'Participants'
                             ? ''
-                            : val
+                            : key == 'Other_Expenses'
+                              ? ''
+                              : val
                     }}
 
                     <!-- See More button for show list of staff involved -->
@@ -327,6 +329,16 @@
                     <div v-show="key == 'Participants'" id="staffDetails">
                       <h1
                         @click="showParticipants(val)"
+                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white p-1 rounded-lg"
+                      >
+                        See More
+                      </h1>
+                    </div>
+
+                    <!-- See More button for show list of other expenses -->
+                    <div v-show="key == 'Other_Expenses'" id="staffDetails">
+                      <h1
+                        @click="showOtherExpenses(val)"
                         class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white p-1 rounded-lg"
                       >
                         See More
@@ -727,7 +739,7 @@
                 <th>No.</th>
                 <th>Company</th>
                 <th>Name</th>
-                <th>Employee ID</th>
+                <th>Department</th>
               </tr>
               <tr
                 v-for="(staff, i) in sim"
@@ -737,7 +749,7 @@
                 <th class="font-normal">{{ i + 1 }}</th>
                 <th class="font-normal">{{ staff.company_name }}</th>
                 <th class="font-normal">{{ staff.name }}</th>
-                <th class="font-normal">{{ staff.emp_id }}</th>
+                <th class="font-normal">{{ staff.department }}</th>
               </tr>
             </table>
           </div>
@@ -787,6 +799,53 @@
                 <th class="font-normal">{{ staff.status }}</th>
                 <th class="font-normal">{{ staff.company_name }}</th>
                 <th class="font-normal">{{ staff.emp_id }}</th>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Other Expenses List -->
+        <div
+          v-show="showOEsList"
+          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center"
+        >
+          <div
+            class="bg-white w-full sm:w-4/5 lg:w-2/5 rounded-xl flex flex-col items-center relative"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="absolute right-3 top-3 size-6"
+              @click="showOEsList = false"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18 18 6M6 6l12 12"
+              />
+            </svg>
+            <div class="relative flex w-4/5 mx-auto">
+              <h1 class="text-xl font-semibold mt-4">Other Expenses</h1>
+            </div>
+            <table class="w-4/5 text-center mt-1 mb-8">
+              <tr class="bg-gray-300 text-center h-12">
+                <th>No.</th>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Description</th>
+              </tr>
+              <tr
+                v-for="(expense, i) in oe"
+                :key="i"
+                class="bg-white text-black text-center h-12"
+              >
+                <th class="font-normal">{{ i + 1 }}</th>
+                <th class="font-normal">{{ expense.name }}</th>
+                <th class="font-normal">{{ expense.amount }}</th>
+                <th class="font-normal">{{ expense.description }}</th>
               </tr>
             </table>
           </div>
@@ -968,6 +1027,10 @@ export default {
       participants: [],
       showParticipantsList: false,
 
+      // Other Expenses List
+      oe: [],
+      showOEsList: false,
+
       // File List
       files: [],
       showFileList: false,
@@ -997,7 +1060,7 @@ export default {
       confirmResubmit: false,
       approveSuccess: false,
       loading: false,
-      loadingText: "",
+      loadingText: '',
 
       // need to fetch from or post to API
       pending: false,
@@ -1119,17 +1182,22 @@ export default {
         )
         .then((response) => {
           const result = response.data.result;
+          console.log(result);
           let details = [];
           let amount = 0;
           for (let i in result) {
             amount += result[i].total_fee;
             const editedDetail = {
               Date_Event: result[i].date_event,
+              Return_Date: result[i].return_date,
               Starting_Point: result[i].starting_point,
               End_Point: result[i].end_point,
+              Accommodation: result[i].accommodation,
               'Mileage(KM)': result[i].mileage_km,
               'Park_Fee(RM)': result[i].park_fee,
               'Toll_Fee(RM)': result[i].toll_fee,
+              Fare: result[i].fare,
+              Meal_Allowance: result[i].meal_allowance,
               Transport_Specification: result[i].transport_specification,
               Transport_Mode: result[i].transport_mode,
               Trip_Mode: result[i].trip_mode,
@@ -1158,6 +1226,7 @@ export default {
         )
         .then((response) => {
           const result = response.data.result;
+          console.log(result);
           let details = [];
           let amount = 0;
           for (let i in result) {
@@ -1167,6 +1236,7 @@ export default {
               Date: result[i].date_event,
               'Meal_Allowance_(RM)': result[i].meal_allowance,
               'Transport_Fee(RM)': result[i].transport_fee,
+              Accommodation: result[i].accommodation,
               Accom_Foreign_Currency: result[i].accom_foreign_currency,
               Accom_Exchange_Rate: result[i].accom_exchange_rate,
               Accom_Foreign_Total: result[i].accom_foreign_total,
@@ -1174,6 +1244,7 @@ export default {
               Other_Exchange_Rate: result[i].other_exchange_rate,
               Other_Foreign_Total: result[i].other_foreign_total,
               Transportation_Mode: result[i].transportation_mode,
+              Other_Expenses: result[i].oem,
               'Total_Fee(RM)': result[i].total_fee,
               Attachments: result[i].files,
               Tab_Title: 'Overseas Outstation',
@@ -1198,6 +1269,7 @@ export default {
         )
         .then((response) => {
           const result = response.data.result;
+          console.log(result);
           let details = [];
           let amount = 0;
           for (let i in result) {
@@ -1233,6 +1305,7 @@ export default {
         )
         .then((response) => {
           const result = response.data.result;
+          console.log(result);
           let details = [];
           let amount = 0;
           for (let i in result) {
@@ -1240,6 +1313,7 @@ export default {
             const editedDetail = {
               Type: result[i].entertainment_type,
               Date: result[i].date_event,
+              Description: result[i].description,
               Venue: result[i].venue_name,
               Company: result[i].company_name,
               Participants: result[i].participants,
@@ -1266,11 +1340,13 @@ export default {
         )
         .then((response) => {
           const result = response.data.result;
+          console.log(result);
           let details = [];
           let amount = 0;
           for (let i in result) {
             amount += result[i].total_fee;
             const editedDetail = {
+              Name: result[i].expense_name,
               Description: result[i].description,
               Date: result[i].expense_date,
               'Total_Fee(RM)': result[i].total_fee,
@@ -1419,7 +1495,7 @@ export default {
         this.approve = true;
         // post the status and remark to API
         this.loadingText = 'Uploading';
-      this.loading = true;
+        this.loading = true;
 
         const approveData = {
           approver_name: userData.userName,
@@ -1451,7 +1527,7 @@ export default {
       } else if (AoR == 'Reject') {
         this.rejectApprover = true;
         this.loadingText = 'Uploading';
-      this.loading = true;
+        this.loading = true;
 
         const approveData = {
           approver_name: userData.userName,
@@ -1478,7 +1554,7 @@ export default {
       } else if (AoR == 'Resubmit') {
         this.resubmitApprover = true;
         this.loadingText = 'Uploading';
-      this.loading = true;
+        this.loading = true;
 
         const approveData = {
           approver_name: userData.userName,
@@ -1506,7 +1582,7 @@ export default {
         this.approved = false;
         this.reimbursed = true;
         this.loadingText = 'Uploading';
-      this.loading = true;
+        this.loading = true;
 
         const approveData = {
           approver_name: userData.userName,
@@ -1549,6 +1625,10 @@ export default {
     showParticipants(val) {
       this.participants = val;
       this.showParticipantsList = true;
+    },
+    showOtherExpenses(val) {
+      this.oe = val;
+      this.showOEsList = true;
     },
     ShowFile(val) {
       this.files = val;
@@ -1624,13 +1704,13 @@ td {
   }
   * {
     color: black;
-    font-size: 14px;
+    font-size: 12px;
   }
   body {
     margin: 0;
   }
   p {
-    font-size: 12px !important;
+    font-size: 10px !important;
   }
   input {
     display: none;
@@ -1643,7 +1723,7 @@ td {
   }
   #claimant-informations div {
     margin-bottom: 6px !important;
-    font-size: 14px !important;
+    font-size: 12px !important;
   }
   .details h1 {
     font-size: 16px !important;
@@ -1710,7 +1790,7 @@ td {
   #table-overflow table th {
     padding: 1px auto;
     margin: 0 auto;
-    font-size: 8px !important;
+    font-size: 6px !important;
     height: 20px;
     width: 10px;
     overflow-wrap: break-word;
@@ -1720,7 +1800,7 @@ td {
   #summaryPrint #table-overflow table td {
     padding: 1px auto;
     margin: 0 auto;
-    font-size: 12px !important;
+    font-size: 6px !important;
     height: 20px;
     width: 10px;
     word-wrap: break-word;
