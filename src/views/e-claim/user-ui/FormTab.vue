@@ -3153,34 +3153,38 @@ export default {
     },
 
     generateNewFileName(originalName, fieldId) {
-      let prefix = "";
-      switch (fieldId) {
-        case "UploadMileageRMLT":
-          prefix = "MILEAGE_";
-          break;
-        case "UploadFareRMLT":
-          prefix = "FARE_";
-          break;
-        case "UploadTollLT":
-          prefix = "TOLL_";
-          break;
-        case "UploadParkingLT":
-          prefix = "PARKING_";
-          break;
-        case "UploadAirportLimoTeksiOT":
-          prefix = "AIRPORTLIMOTEKSI_";
-          break;
-        default:
-          prefix = "SUPPORTING_DOC_";
-      }
-      return `${prefix}${originalName}`;
-    },
+  let prefix = "";
+  switch (fieldId) {
+    case "UploadMileageRMLT":
+      prefix = "MILEAGE_";
+      break;
+    case "UploadFareRMLT":
+      prefix = "FARE_";
+      break;
+    case "UploadTollLT":
+      prefix = "TOLL_";
+      break;
+    case "UploadParkingLT":
+      prefix = "PARKING_";
+      break;
+    case "UploadAirportLimoTeksiOT":
+      prefix = "AIRPORTLIMOTEKSI_";
+      break;
+    default:
+      prefix = "SUPPORTING_DOC_";
+  }
+  return `${prefix}${originalName}`;
+},
+handleAddFile(error, file, field) {
+  if (error) {
+    console.error("Error adding file:", error.message);
+    return;
+  }
 
-    handleAddFile(error, file, field) {
-      if (error) {
-        console.error("Error adding file:", error.message);
-        return;
-      }
+  if (!Array.isArray(field.value)) {
+    console.error("field.value is not an array. Initializing as an empty array.");
+    field.value = [];
+  }
 
       const newFileName = this.generateNewFileName(file.file.name, field.id);
       const renamedFile = new File([file.file], newFileName, {
@@ -3204,46 +3208,39 @@ export default {
       console.log("Updated files:", field.value);
     },
 
-    handleRemoveFile(error, file, field) {
-      if (error) {
-        console.error(
-          "An error occurred while removing the file:",
-          error.message
-        );
-        return;
-      }
+handleRemoveFile(error, file, field) {
+  if (error) {
+    console.error("An error occurred while removing the file:", error.message);
+    return;
+  }
 
-      const fileObject = file.file;
-      console.log("Removing file:", fileObject);
+  if (!Array.isArray(field.value)) {
+    console.error("field.value is not an array. Cannot proceed with removal.");
+    return;
+  }
 
-      // Generate the expected file name with prefix
-      const expectedFileName = this.generateNewFileName(
-        fileObject.name,
-        field.id
-      );
+  const fileObject = file.file;
+  console.log("Removing file:", fileObject);
 
-      // Create a new array excluding the file to be removed
-      const newFileList = field.value.filter(
-        (f) =>
-          !(
-            f.name === expectedFileName &&
-            f.lastModified === fileObject.lastModified
-          )
-      );
+  // Generate the expected file name with prefix
+  const expectedFileName = this.generateNewFileName(fileObject.name, field.id);
 
-      // Use a new array instance to trigger Vue's reactivity
-      if (newFileList.length !== field.value.length) {
-        field.value = [...newFileList];
-      }
+  // Create a new array excluding the file to be removed
+  const newFileList = field.value.filter(f => !(f.name === expectedFileName && f.lastModified === fileObject.lastModified));
 
-      console.log("Files after removal:", field.value);
-    },
+  // Use a new array instance to trigger Vue's reactivity
+  if (newFileList.length !== field.value.length) {
+    field.value = [...newFileList];
+  }
 
-    handleAddFileOT(error, file, filesArray) {
-      if (error) {
-        console.error("Error adding file:", error.message);
-        return;
-      }
+  console.log("Files after removal:", field.value);
+},
+
+  handleAddFileOT(error, file, filesArray) {
+  if (error) {
+    console.error("Error adding file:", error.message);
+    return;
+  }
 
       // Generate new filename based on the expense name and original filename
       const expenseName = this.newExpense.name || "UNKNOWN";
