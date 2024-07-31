@@ -50,6 +50,11 @@
                 >
               </div>
             </button>
+            <button
+              @click="sendToAPI"
+              class="w-36 h-12 p-1 font-semibold rounded-lg items-center text-sm dark:bg-gray-900 dark:border-gray-700 bg-blue-700 border text-white"
+></button>
+       
           </div>
         </div>
 
@@ -3718,6 +3723,7 @@ export default {
                     unique_code: uniqcodeHR,
                     reference_number: this.serialnumber,
                     handphone: "",
+                    
                     requester_id: this.userDetails.userId,
                   };
 
@@ -3791,6 +3797,10 @@ export default {
                     reason_different: claim.OtherClinicReasonML,
                     medical_category: claim.MedicalCategoryML,
                     requester_id: this.userDetails.userId,
+                   
+  "limit_outpatient": "<double>",
+  "limit_medic_dental": "<double>",
+  "ic_number": "<string>",
 
                     unique_code: uniqcodeML,
                   };

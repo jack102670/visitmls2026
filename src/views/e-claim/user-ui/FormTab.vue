@@ -79,7 +79,7 @@
               <div class="m-2">
                 <div
                   v-for="(field, fieldIndex) in tab.fields"
-                  :key="fieldIndex"
+                  :key="fieldIndex" 
                   :class="[
                     'grid',
                     'grid-cols-1',
@@ -87,7 +87,8 @@
                     field.gridClass,
                   ]"
                 >
-                  <template
+                <template v-if="!field.hidden">
+                  <template 
                     v-if="
                       !isCompanyTransport ||
                       (field.id !== 'MileageKMLT' &&
@@ -797,6 +798,7 @@
                         </template>
                       </template>
                     </template>
+                  </template>
                   </template>
                 </div>
 
@@ -1745,6 +1747,7 @@ export default {
 
   data() {
     return {
+      IcNumber: "",
       currencies: [],
       chooseform: true,
       activeTab: this.type == "Finance" ? 0 : 4,
@@ -2377,6 +2380,14 @@ export default {
               value: "",
               required: true,
               gridClass: "sm:col-span-2",
+            },
+            {
+              id: "icNumber",
+             // label: "ic number",
+              type: "text",
+              value: "",
+              gridClass: "sm:col-span-2",
+              hidden: true,
             },
             {
               id: "UploadML",
@@ -3027,6 +3038,7 @@ export default {
     },
 
     updateFields(data) {
+      
       this.limit_medicaldental = data.limit_medicaldental;
       this.limit_outpatient = data.limit_outpatient;
 
@@ -3038,6 +3050,7 @@ export default {
         BankNameML: data.bank_name,
         AccBankNumberML: data.bank_number,
         AccHolderNameML: data.name,
+        icNumber: data.ic_number,
       };
 
       this.tabs.forEach((tab) => {
