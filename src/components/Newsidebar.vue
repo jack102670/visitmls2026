@@ -6,18 +6,18 @@
     @click.stop="toggleSidebar"
   >
     <svg
-      class="w-6 h-6"
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="w-6 h-6"
     >
       <path
         stroke-linecap="round"
         stroke-linejoin="round"
-        stroke-width="2"
-        d="M19 12H5M12 19l-7-7 7-7"
-      ></path>
+        d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5"
+      />
     </svg>
   </button>
   <aside
@@ -44,7 +44,7 @@
     }"
     class="sm:block fixed top-0 left-0 z-40 w-64 h-screen flex flex-col px-4 py-8 overflow-y-auto bg-[#160959] border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700"
   >
-  <a href="/homepage" class="flex justify-center items-center">
+    <a href="/homepage" class="flex justify-center items-center">
       <img
         class="rounded w-auto h-19 sm:h-20"
         src="@/assets/images/pkt-logo-white.jpg"
@@ -101,16 +101,42 @@
     <div class="flex flex-col justify-between flex-1 mt-6">
       <nav>
         <router-link
-        :to="{name:'UserFirstTimeLogin'}"
+          :to="{ name: 'UserFirstTimeLogin' }"
           class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
         >
-
-<svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="24" cy="11" r="7" fill="transparent" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-<path d="M4 41C4 32.1634 12.0589 25 22 25" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-<path d="M31 42L41 32L37 28L27 38V42H31Z" fill="transparent" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-</svg>
-
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 48 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="24"
+              cy="11"
+              r="7"
+              fill="transparent"
+              stroke="currentColor"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M4 41C4 32.1634 12.0589 25 22 25"
+              stroke="currentColor"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M31 42L41 32L37 28L27 38V42H31Z"
+              fill="transparent"
+              stroke="currentColor"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
 
           <span class="mx-4 font-medium">Profile</span>
         </router-link>
@@ -315,7 +341,7 @@
           <span class="mx-4 font-medium">Verify Claims</span>
         </router-link>
         <router-link
-          v-if="controlView === 'eclaim' && userData.department === ('HR')"
+          v-if="controlView === 'eclaim' && userData.department === 'HR'"
           class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
           :to="{ name: 'AdminHRDashboardpage' }"
         >
@@ -337,18 +363,47 @@
           <span class="mx-4 font-medium">Approve Claims</span>
         </router-link>
         <router-link
-          v-if="controlView === 'eclaim' && userData.department === ('HR')"
+          v-if="controlView === 'eclaim' && userData.department === 'HR'"
           class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
           :to="{ name: 'HrViewemployee' }"
         >
-      
-<svg width="24" height="24" viewBox="0 0 48 48"      stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M4 11.9143L24 19L44 11.9143L24 5L4 11.9143Z" fill="transparent" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-<path d="M4 20L24 27L44 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-<path d="M4 28L24 35L44 28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-<path d="M4 36L24 43L44 36" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-</svg>
-
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 48 48"
+            stroke="currentColor"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4 11.9143L24 19L44 11.9143L24 5L4 11.9143Z"
+              fill="transparent"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M4 20L24 27L44 20"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M4 28L24 35L44 28"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M4 36L24 43L44 36"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
 
           <span class="mx-4 font-medium">Employee</span>
         </router-link>
@@ -379,13 +434,35 @@
           class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
           href="#"
         >
-        
-        <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M23.9917 6H6V42H24" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-<path d="M33 33L42 24L33 15" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-<path d="M16 23.9917H42" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-</svg>
-
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 48 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M23.9917 6H6V42H24"
+              stroke="currentColor"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M33 33L42 24L33 15"
+              stroke="currentColor"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M16 23.9917H42"
+              stroke="currentColor"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
 
           <span
             @click="logout"
@@ -429,7 +506,7 @@ export default {
       open: localStorage.getItem('openOrNot') == 'false' ? false : true,
       isLightTheme: true,
       userDetails: [],
-      userData:[],
+      userData: [],
       role: null,
       showLogOutButton: true,
       showLoadingButton: false,
@@ -463,7 +540,7 @@ export default {
       // Code to execute when controlView changes
       console.log(`controlView changed from ${oldVal} to ${newVal}`);
       // Perform any additional actions here
-    }
+    },
   },
   beforeCreate() {
     if (!localStorage.getItem('reloaded')) {
@@ -475,20 +552,20 @@ export default {
     }
   },
   methods: {
-  checkuser() {
-    const username_id = this.userDetails.userId; // Assuming `store` is accessible through `this.$store`
-    fetch(`http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`)
-      .then(response => response.json()) // Convert the response to JSON
-      .then(data => {
-        // Assuming the API response structure has a status field in `data.result[0]`
-        this.userData = data.result[0];
-        console.log("User status:", this.userData);
-      })
-      .catch(error => {
-        console.error("There was an error fetching the user status:", error);
-        // Handle error or set a default behavior if the API call fails
-      });
-  },
+    checkuser() {
+      const username_id = this.userDetails.userId; // Assuming `store` is accessible through `this.$store`
+      fetch(`http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`)
+        .then((response) => response.json()) // Convert the response to JSON
+        .then((data) => {
+          // Assuming the API response structure has a status field in `data.result[0]`
+          this.userData = data.result[0];
+          console.log('User status:', this.userData);
+        })
+        .catch((error) => {
+          console.error('There was an error fetching the user status:', error);
+          // Handle error or set a default behavior if the API call fails
+        });
+    },
 
     logout() {
       this.showLogOutButton = false;

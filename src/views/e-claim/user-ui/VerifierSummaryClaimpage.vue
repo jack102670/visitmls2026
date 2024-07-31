@@ -811,7 +811,7 @@
 
         <!-- Loading Animation -->
         <div
-          class="w-screen h-screen fixed z-40 flex justify-center items-center top-0 left-0"
+          class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
           v-if="loading"
         >
           <div class="absolute w-screen h-screen bg-gray-900 opacity-30"></div>
@@ -1033,7 +1033,7 @@ export default {
               Return_Date: result[i].return_date,
               Starting_Point: result[i].starting_point,
               End_Point: result[i].end_point,
-              Accommodation: result[i].accommodation,
+              'Accom.': result[i].accommodation,
               'Mileage(KM)': result[i].mileage_km,
               'Park_Fee(RM)': result[i].park_fee,
               'Toll_Fee(RM)': result[i].toll_fee,
@@ -1076,7 +1076,7 @@ export default {
               Date: result[i].date_event,
               'Meal_Allowance_(RM)': result[i].meal_allowance,
               'Transport_Fee(RM)': result[i].transport_fee,
-              Accommodation: result[i].accommodation,
+              'Accom.': result[i].accommodation,
               Accom_Foreign_Currency: result[i].accom_foreign_currency,
               Accom_Exchange_Rate: result[i].accom_exchange_rate,
               Accom_Foreign_Total: result[i].accom_foreign_total,
@@ -1487,7 +1487,7 @@ td {
   padding-left: 4px;
 }
 </style>
-
+<!-- 
 <style>
 @media print {
   @page {
@@ -1621,4 +1621,4 @@ td {
     color: black !important;
   }
 }
-</style>
+</style> -->
