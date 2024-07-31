@@ -79,7 +79,7 @@
               <div class="m-2">
                 <div
                   v-for="(field, fieldIndex) in tab.fields"
-                  :key="fieldIndex"
+                  :key="fieldIndex" 
                   :class="[
                     'grid',
                     'grid-cols-1',
@@ -87,7 +87,8 @@
                     field.gridClass,
                   ]"
                 >
-                  <template
+                <template v-if="!field.hidden">
+                  <template 
                     v-if="
                       !isCompanyTransport ||
                       (field.id !== 'MileageKMLT' &&
@@ -163,6 +164,7 @@
                               <template v-if="field.type === 'select'">
                                 <select
                                   v-model="field.value"
+                                  @change="onMedicalCategoryChange"
                                   :required="field.required"
                                   :disabled="
                                     (tab.title ===
@@ -748,7 +750,9 @@
                                   field.id === 'AccBankNumberHR' ||
                                   field.id === 'AccBankNumberML' ||
                                   field.id === 'AccHolderNameHR' ||
-                                  field.id === 'AccHolderNameML'
+                                  field.id === 'AccHolderNameML' ||
+                                  field.id === 'LimitedAmountHR' ||
+                                  field.id === 'LimitedAmountML' 
                                 "
                               >
                                 <input
@@ -794,6 +798,7 @@
                         </template>
                       </template>
                     </template>
+                  </template>
                   </template>
                 </div>
 
@@ -1742,6 +1747,7 @@ export default {
 
   data() {
     return {
+      IcNumber: "",
       currencies: [],
       chooseform: true,
       activeTab: this.type == "Finance" ? 0 : 4,
@@ -1756,9 +1762,8 @@ export default {
       totalAccommodation: 0,
       totalOthers: 0,
       LimitedAmountHR: 0,
-      LIMIT_OUTPATIENT: 70,
-      LIMIT_MEDICAL_CHECKUP: 200,
-      LIMIT_DENTAL: 200,
+      limit_medicaldental: 0,
+      limit_outpatient: 0,
       uploadedFiles: [],
       otherExpenses: [],
       showOtherExpensesModal: false,
@@ -2361,6 +2366,14 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
+              id: "LimitedAmountML",
+              label: "Limited Amount(RM)",
+              type: "number",
+              value: "",
+              disabled: true,
+              gridClass: "sm:col-span-2",
+            },
+            {
               id: "ClaimsAmountML",
               label: "Claims Amount(RM)",
               type: "number",
@@ -2368,14 +2381,30 @@ export default {
               required: true,
               gridClass: "sm:col-span-2",
             },
-            //{
-            //  id: "LimitedAmountML",
-            //  label: "Limited Amount(RM)",
-            //  type: "number",
-            //  value: "",
-            //  required: true,
-            //  gridClass: "sm:col-span-2",
-            //},
+            {
+              id: "icNumber",
+             // label: "ic number",
+              type: "text",
+              value: "",
+              gridClass: "sm:col-span-2",
+              hidden: true,
+            },
+            {
+              id: "limit_medic_dental",
+             // label: "ic number",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
+              hidden: true,
+            },
+            {
+              id: "limit_outpatient",
+             // label: "ic number",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
+              hidden: true,
+            },
             {
               id: "UploadML",
               label: "Attachment(s). (png, jpeg, pdf or xlsx)",
@@ -2835,44 +2864,32 @@ export default {
               this.updateFieldVisibility8(medCategoryField.value);
             }
 
-            const medicalCategoryField = tab.fields.find(
-              (field) => field.id === "MedicalCategoryML"
+            const limitedAmountMLField = tab.fields.find(
+              (field) => field.id === "LimitedAmountML"
             );
-            const claimsAmountField = tab.fields.find(
+            const claimsAmountMLField = tab.fields.find(
               (field) => field.id === "ClaimsAmountML"
             );
 
-            if (medicalCategoryField && claimsAmountField) {
+            if (limitedAmountMLField && claimsAmountMLField) {
               this.$watch(
-                () => medicalCategoryField.value,
+                () => limitedAmountMLField.value,
                 (newValue) => {
-                  switch (newValue) {
-                    case "Outpatient":
-                      claimsAmountField.value = this.LIMIT_OUTPATIENT;
-                      break;
-                    case "Dental":
-                      claimsAmountField.value = this.LIMIT_DENTAL;
-                      break;
-                    case "Medical Check-Up":
-                      claimsAmountField.value = this.LIMIT_MEDICAL_CHECKUP;
-                      break;
-                    default:
-                      claimsAmountField.value = 0;
+                  if (
+                    parseFloat(claimsAmountMLField.value) > parseFloat(newValue)
+                  ) {
+                    claimsAmountMLField.value = newValue;
                   }
                 }
               );
 
               this.$watch(
-                () => claimsAmountField.value,
+                () => claimsAmountMLField.value,
                 (newValue) => {
-                  const limit = {
-                    Outpatient: this.LIMIT_OUTPATIENT,
-                    Dental: this.LIMIT_DENTAL,
-                    "Medical Check-Up": this.LIMIT_MEDICAL_CHECKUP,
-                  }[medicalCategoryField.value];
-
-                  if (limit && parseFloat(newValue) > limit) {
-                    claimsAmountField.value = limit;
+                  if (
+                    parseFloat(newValue) > parseFloat(limitedAmountMLField.value)
+                  ) {
+                    claimsAmountMLField.value = limitedAmountMLField.value;
                   }
                 }
               );
@@ -3026,6 +3043,10 @@ export default {
         if (data) {
           this.updateFields(data);
         }
+        if (data && data.length > 0) {
+          this.limit_medicaldental = data[0].limit_medicaldental || 0;
+          this.limit_outpatient = data[0].limit_outpatient || 0;
+        }
         console.log("Bank Data:", data);
       } catch (error) {
         console.error("Error fetching Bank Data:", error);
@@ -3033,6 +3054,10 @@ export default {
     },
 
     updateFields(data) {
+      
+      this.limit_medicaldental = data.limit_medicaldental;
+      this.limit_outpatient = data.limit_outpatient;
+
       const fieldMap = {
         BankNameHR: data.bank_name,
         AccBankNumberHR: data.bank_number,
@@ -3041,6 +3066,9 @@ export default {
         BankNameML: data.bank_name,
         AccBankNumberML: data.bank_number,
         AccHolderNameML: data.name,
+        icNumber: data.ic_number,
+        limit_medic_dental: data.limit_medicaldental,
+        limit_outpatient: data.limit_outpatient,
       };
 
       this.tabs.forEach((tab) => {
@@ -3050,6 +3078,21 @@ export default {
           }
         });
       });
+    },
+
+    onMedicalCategoryChange(event) {
+      const selectedCategory = event.target.value;
+      const limitedAmountField = this.tabs
+        .find((tab) => tab.title === "Medical Bill Reimbursement")
+        .fields.find((field) => field.id === "LimitedAmountML");
+
+      if (selectedCategory === "Dental" || selectedCategory === "Medical Check-Up") {
+        limitedAmountField.value = this.limit_medicaldental;
+      } else if (selectedCategory === "Outpatient") {
+        limitedAmountField.value = this.limit_outpatient;
+      } else {
+        limitedAmountField.value = "";
+      }
     },
 
     formatDate(dateString) {
@@ -3080,105 +3123,114 @@ export default {
     },
 
     generateNewFileName(originalName, fieldId) {
-      let prefix = "";
-      switch (fieldId) {
-        case "UploadMileageRMLT":
-          prefix = "MILEAGE_";
-          break;
-        case "UploadFareRMLT":
-          prefix = "FARE_";
-          break;
-        case "UploadTollLT":
-          prefix = "TOLL_";
-          break;
-        case "UploadParkingLT":
-          prefix = "PARKING_";
-          break;
-        case "UploadAirportLimoTeksiOT":
-          prefix = "AIRPORTLIMOTEKSI_";
-          break;
-        default:
-          prefix = "SUPPORTING_DOC_";
-      }
-      return `${prefix}${originalName}`;
-    },
+  let prefix = "";
+  switch (fieldId) {
+    case "UploadMileageRMLT":
+      prefix = "MILEAGE_";
+      break;
+    case "UploadFareRMLT":
+      prefix = "FARE_";
+      break;
+    case "UploadTollLT":
+      prefix = "TOLL_";
+      break;
+    case "UploadParkingLT":
+      prefix = "PARKING_";
+      break;
+    case "UploadAirportLimoTeksiOT":
+      prefix = "AIRPORTLIMOTEKSI_";
+      break;
+    default:
+      prefix = "SUPPORTING_DOC_";
+  }
+  return `${prefix}${originalName}`;
+},
 
-    handleAddFile(error, file, field) {
-      if (error) {
-        console.error("Error adding file:", error.message);
-        return;
-      }
-      const newFileName = this.generateNewFileName(file.file.name, field.id);
-      const renamedFile = new File([file.file], newFileName, {
-        type: file.file.type,
-      });
-      field.value = [...field.value, renamedFile];
-      console.log("File added:", renamedFile);
-      console.log("Updated files:", field.value);
-    },
+handleAddFile(error, file, field) {
+  if (error) {
+    console.error("Error adding file:", error.message);
+    return;
+  }
 
-    handleRemoveFile(error, file, field) {
-      if (error) {
-        console.error(
-          "An error occurred while removing the file:",
-          error.message
-        );
-        return;
-      }
-      const fileObject = file.file;
-      const index = field.value.findIndex((f) => f.name === fileObject.name);
-      if (index !== -1) {
-        field.value = [
-          ...field.value.slice(0, index),
-          ...field.value.slice(index + 1),
-        ];
-        console.log("File removed:", fileObject.name, fileObject);
-        console.log("Updated field value:", field);
-      }
-    },
+  const newFileName = this.generateNewFileName(file.file.name, field.id);
+  const renamedFile = new File([file.file], newFileName, {
+    type: file.file.type,
+    lastModified: file.file.lastModified
+  });
 
-    handleAddFileOT(error, file, filesArray) {
-      if (error) {
-        console.error("Error adding file:", error.message);
-        return;
-      }
+  // Check if file is already in the list
+  if (!field.value.some(f => f.name === renamedFile.name && f.lastModified === renamedFile.lastModified)) {
+    // Use a new array instance to trigger Vue's reactivity
+    field.value = [...field.value, renamedFile];
+  }
 
-      // Generate new filename based on the expense name and original filename
-      const expenseName = this.newExpense.name || "UNKNOWN";
-      const newFileName = `${expenseName}_${file.file.name}`;
-      const renamedFile = new File([file.file], newFileName, {
-        type: file.file.type,
-      });
+  console.log("File added:", renamedFile);
+  console.log("Updated files:", field.value);
+},
 
-      // Add renamed file to the files array
-      filesArray.push(renamedFile);
-      console.log("File added:", renamedFile);
-      console.log("Updated files:", filesArray);
-    },
+handleRemoveFile(error, file, field) {
+    if (error) {
+      console.error("An error occurred while removing the file:", error.message);
+      return;
+    }
 
-    handleRemoveFileOT(error, file, filesArray) {
-      if (error) {
-        console.error(
-          "An error occurred while removing the file:",
-          error.message
-        );
-        return;
-      }
-      const fileObject = file.file;
-      const index = filesArray.findIndex((f) => f.name === fileObject.name);
-      if (index !== -1) {
-        filesArray.splice(index, 1);
-        console.log("File removed:", fileObject.name, fileObject);
-        console.log("Updated files:", filesArray);
-      }
-      if (error) {
-        console.error(
-          "An error occurred while removing the file:",
-          error.message
-        );
-        return;
-      }
-    },
+    const fileObject = file.file;
+    console.log("Removing file:", fileObject);
+
+    // Generate the expected file name with prefix
+    const expectedFileName = this.generateNewFileName(fileObject.name, field.id);
+
+    // Create a new array excluding the file to be removed
+    const newFileList = field.value.filter(f => !(f.name === expectedFileName && f.lastModified === fileObject.lastModified));
+
+    // Use a new array instance to trigger Vue's reactivity
+    if (newFileList.length !== field.value.length) {
+      field.value = [...newFileList];
+    }
+
+    console.log("Files after removal:", field.value);
+  },
+  handleAddFileOT(error, file, filesArray) {
+  if (error) {
+    console.error("Error adding file:", error.message);
+    return;
+  }
+
+  // Generate new filename based on the expense name and original filename
+  const expenseName = this.newExpense.name || "UNKNOWN";
+  const newFileName = `${expenseName}_${file.file.name}`;
+  const renamedFile = new File([file.file], newFileName, {
+    type: file.file.type,
+    lastModified: file.file.lastModified // Optional: retain lastModified if needed
+  });
+
+  // Add renamed file to the files array
+  filesArray = [...filesArray, renamedFile]; // Create a new array instance to ensure reactivity
+
+  console.log("File added:", renamedFile);
+  console.log("Updated files:", filesArray);
+},
+
+handleRemoveFileOT(error, file, filesArray) {
+  if (error) {
+    console.error("An error occurred while removing the file:", error.message);
+    return;
+  }
+
+  const fileObject = file.file;
+  // Find the index of the file to be removed
+  const index = filesArray.findIndex(f => f.name === fileObject.name && f.lastModified === fileObject.lastModified);
+
+  if (index !== -1) {
+    // Remove the file by creating a new array excluding the file to be removed
+    filesArray = filesArray.filter((_, i) => i !== index);
+
+    console.log("File removed:", fileObject.name, fileObject);
+    console.log("Updated files:", filesArray);
+  } else {
+    console.warn("File to remove not found:", fileObject.name);
+  }
+},
 
     updateFieldVisibility(transportValue) {
       const localTravellingTab = this.tabs.find(
@@ -3525,6 +3577,7 @@ export default {
           !isNaN(parseFloat(field.value)) &&
           field.id !== "MileageKMLT" &&
           field.id !== "LimitedAmountHR" &&
+          field.id !== "LimitedAmountML" &&
           field.id !== "AccBankNumberHR" &&
           field.id !== "AccBankNumberML" &&
           field.id !== "ExchangeRateAccommodationOT" &&
