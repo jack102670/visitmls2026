@@ -1125,7 +1125,7 @@
                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                       :disabled="
                         tab.title === 'Handphone Bill Reimbursement' &&
-                        isFormDisabled
+                        isFormDisabled || tab.title === 'Medical Bill Reimbursement' && isSaveButtonDisabled
                       "
                     >
                       Save
@@ -2718,6 +2718,28 @@ export default {
       }
       return false;
     },
+     isSaveButtonDisabled() {
+      const tab = this.tabs.find(tab => tab.title === "Medical Bill Reimbursement");
+      if (!tab) return true;
+
+      const medCategoryField = tab.fields.find(field => field.id === "MedicalCategoryML");
+      const limitedAmountField = tab.fields.find(field => field.id === "LimitedAmountML");
+
+      if (!medCategoryField || !limitedAmountField) return true;
+
+      const medCategory = medCategoryField.value;
+      const limitedAmount = parseFloat(limitedAmountField.value) || 0;
+
+      if (medCategory === "Outpatient" && limitedAmount === 0) {
+        return true;
+      }
+      
+      if ((medCategory === "Medical Check-Up" || medCategory === "Dental") && limitedAmount === 0) {
+        return true;
+      }
+
+      return false;
+    },
     isCompanyTransport() {
       const tab = this.tabs.find((tab) => tab.title === "Local Travelling");
       if (!tab) return false;
@@ -2891,37 +2913,75 @@ export default {
               this.updateFieldVisibility8(medCategoryField.value);
             }
 
-            const limitedAmountMLField = tab.fields.find(
-              (field) => field.id === "LimitedAmountML"
-            );
-            const claimsAmountMLField = tab.fields.find(
-              (field) => field.id === "ClaimsAmountML"
-            );
+             const medicalCategoryMLField = tab.fields.find(
+            (field) => field.id === "MedicalCategoryML"
+          );
+          const limitedAmountMLField = tab.fields.find(
+            (field) => field.id === "LimitedAmountML"
+          );
+          const claimsAmountMLField = tab.fields.find(
+            (field) => field.id === "ClaimsAmountML"
+          );
 
-            if (limitedAmountMLField && claimsAmountMLField) {
-              this.$watch(
-                () => limitedAmountMLField.value,
-                (newValue) => {
-                  if (
-                    parseFloat(claimsAmountMLField.value) > parseFloat(newValue)
-                  ) {
-                    claimsAmountMLField.value = newValue;
-                  }
-                }
-              );
-
-              this.$watch(
-                () => claimsAmountMLField.value,
-                (newValue) => {
-                  if (
-                    parseFloat(newValue) >
-                    parseFloat(limitedAmountMLField.value)
-                  ) {
+          if (medicalCategoryMLField && limitedAmountMLField && claimsAmountMLField) {
+            this.$watch(
+              () => medicalCategoryMLField.value,
+              (newValue) => {
+                if (newValue === "Medical Check-Up" || newValue === "Dental") {
+                  if (parseFloat(claimsAmountMLField.value) > parseFloat(limitedAmountMLField.value)) {
                     claimsAmountMLField.value = limitedAmountMLField.value;
                   }
+
+                  this.$watch(
+                    () => claimsAmountMLField.value,
+                    (newClaimValue) => {
+                      if (parseFloat(newClaimValue) > parseFloat(limitedAmountMLField.value)) {
+                        claimsAmountMLField.value = limitedAmountMLField.value;
+                      }
+                    }
+                  );
+                } else if (newValue === "Outpatient") {
+                  const limitOutpatient = 70;
+
+                  if (parseFloat(limitedAmountMLField.value) >= limitOutpatient) {
+                    claimsAmountMLField.value = limitOutpatient;
+                  } else {
+                    claimsAmountMLField.value = limitedAmountMLField.value;
+                  }
+
+                  this.$watch(
+                    () => claimsAmountMLField.value,
+                    (newClaimValue) => {
+                      if (parseFloat(newClaimValue) > limitOutpatient) {
+                        claimsAmountMLField.value = limitOutpatient;
+                      } else if (parseFloat(newClaimValue) > parseFloat(limitedAmountMLField.value)) {
+                        claimsAmountMLField.value = limitedAmountMLField.value;
+                      }
+                    }
+                  );
                 }
-              );
-            }
+              }
+            );
+
+            this.$watch(
+              () => limitedAmountMLField.value,
+              (newLimitedValue) => {
+                if (medicalCategoryMLField.value === "Medical Check-Up" || medicalCategoryMLField.value === "Dental") {
+                  if (parseFloat(claimsAmountMLField.value) > parseFloat(newLimitedValue)) {
+                    claimsAmountMLField.value = newLimitedValue;
+                  }
+                } else if (medicalCategoryMLField.value === "Outpatient") {
+                  const limitOutpatient = 70;
+
+                  if (parseFloat(newLimitedValue) >= limitOutpatient) {
+                    claimsAmountMLField.value = limitOutpatient;
+                  } else {
+                    claimsAmountMLField.value = newLimitedValue;
+                  }
+                }
+              }
+            );
+          }
           }
 
           if (tab.title === "Details") {
@@ -3629,6 +3689,8 @@ handleRemoveFile(error, file, field) {
           field.type === "number" &&
           !isNaN(parseFloat(field.value)) &&
           field.id !== "MileageKMLT" &&
+          field.id !== "limit_outpatient" &&
+          field.id !== "limit_medic_dental" &&
           field.id !== "LimitedAmountHR" &&
           field.id !== "LimitedAmountML" &&
           field.id !== "AccBankNumberHR" &&
