@@ -3408,23 +3408,27 @@ export default {
                       ? claim.TransportSpec
                       : claim.PublicTransportSpec;
 
-                  const thisisforlocal1 = {
-                    requester_id: this.userDetails.userId,
-                    mileage_km: claim.MileageKMLT || 0,
-                    starting_point: claim.LocationStart,
-                    end_point: claim.LocationEnd,
-                    date_event: claim.dateLT, // Example date
-                    park_fee: claim.ParkingLT || 0,
-                    toll_fee: claim.TollLT || 0,
-                    total_fee: claim.totalRM,
-                    unique_code: uniqueCodeLT,
-                    reference_number: this.serialnumber,
-                    transport_mode: claim.TransportLT,
-                    trip_mode: claim.tripwayLT,
-                    total_mileage: claim.MileageRMLT || 0,
-                    transport_specification: transportSpec,
-                    fare: claim.FareRMLT || 0,
-                  };
+                      const thisisforlocal1 = {
+    requester_id: this.userDetails.userId,
+    mileage_km: claim.MileageKMLT || 0,
+    starting_point: claim.LocationStart || "-",
+    end_point: claim.LocationEnd || "-",
+    date_event: claim.dateLT || "-", // Default to empty string if not provided
+    park_fee: claim.ParkingLT || 0,
+    toll_fee: claim.TollLT || 0,
+    total_fee: claim.totalRM || 0,
+    unique_code: uniqueCodeLT || "-",
+    reference_number:  this.serialnumber || "-",
+    transport_mode: claim.TransportLT || "-",
+    trip_mode: claim.tripwayLT || "-",
+    total_mileage: claim.MileageRMLT || 0,
+    transport_specification: transportSpec || "-",
+    fare: claim.FareRMLT || 0,
+    return_date: claim.ReturnDateLT || "-",
+    meal_allowance: String(claim.MealAllowanceLT || "-"),
+    accommodation: claim.AccommodationLT || "-",
+};
+
                   axiosInstance = axios.create({
                     baseURL:
                       'http://172.28.28.91:97/api/User/InsertLocalOutstation',
@@ -3491,36 +3495,37 @@ export default {
                 }
                 break;
               }
-              case 'overseas travelling with accommodation':
+              case 'overseas travelling':
                 for (const claim of claimsToSend) {
                   const uniqcodeOT = this.generateUniqueCode(claim.tabTitle);
                   const thisisforoversea = {
-                    requester_id: this.userDetails.userId,
-                    description: claim.PurposeOT,
-                    meal_allowance: String(claim.MealAllowanceOT),
-                    date_event: claim.dateOT,
-                    transport_fee: claim.AirportLimoTeksiOT,
-                    // other_expenses: claim.otherExpenses,
-                    total_fee: claim.totalRM,
-                    accom_foreign_total: claim.AmountforAccommodationOT,
-                    accom_foreign_currency:
-                      claim.ForeignCurrencyAccommodationOT,
-                    accom_exchange_rate: claim.ExchangeRateAccommodationOT,
-                    other_foreign_currency: claim.ForeignCurrencyOthersOT,
-                    other_exchange_rate: claim.ExchangeRateOthersOT,
-                    other_foreign_total: claim.AmountforOthersOT,
-                    reference_number: this.serialnumber,
-                    unique_code: uniqcodeOT,
-                    transportation_mode: String(claim.AirportLimoTeksiOT),
-                    oem: claim.otherExpenses
-                      ? claim.otherExpenses.map((expense) => ({
-                          name: expense.name,
-                          amount: expense.amount,
-                          description: expense.description,
-                          files: expense.files || [],
-                        }))
-                      : [],
-                  };
+    requester_id: this.userDetails.userId || "-",
+    description: claim.PurposeOT || "-",
+    meal_allowance: String(claim.MealAllowanceOT || 0),
+    date_event: claim.dateOT || "-",
+    transport_fee: claim.AirportLimoTeksiOT || 0,
+    total_fee: claim.totalRM || 0,
+    accom_foreign_total: claim.AmountforAccommodationOT || 0,
+    accom_foreign_currency: claim.ForeignCurrencyAccommodationOT || "-",
+    accom_exchange_rate: claim.ExchangeRateAccommodationOT || 0,
+    other_foreign_currency: claim.ForeignCurrencyOthersOT || "-",
+    other_exchange_rate: claim.ExchangeRateOthersOT || 0,
+    other_foreign_total: claim.AmountforOthersOT || 0,
+    reference_number:  this.serialnumber|| "-",
+    unique_code: uniqcodeOT || "-",
+    transportation_mode: String(claim.AirportLimoTeksiOT || "-"),
+    return_date: claim.ReturendateOT || "-",
+    accommodation: claim.AccommodationOT || "-",
+    oem: claim.otherExpenses
+        ? claim.otherExpenses.map((expense) => ({
+            name: expense.name || "-",
+            amount: expense.amount || 0,
+            description: expense.description || "-",
+        }))
+        : [],
+};
+
+
 
                   const userId = this.userDetails.userId;
                   console.log('unik kod:', this.uniqueCode);
