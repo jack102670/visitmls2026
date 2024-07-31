@@ -2390,6 +2390,22 @@ export default {
               hidden: true,
             },
             {
+              id: "limit_medic_dental",
+             // label: "ic number",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
+              hidden: true,
+            },
+            {
+              id: "limit_outpatient",
+             // label: "ic number",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
+              hidden: true,
+            },
+            {
               id: "UploadML",
               label: "Attachment(s). (png, jpeg, pdf or xlsx)",
               type: "file",
@@ -3051,6 +3067,8 @@ export default {
         AccBankNumberML: data.bank_number,
         AccHolderNameML: data.name,
         icNumber: data.ic_number,
+        limit_medic_dental: data.limit_medicaldental,
+        limit_outpatient: data.limit_outpatient,
       };
 
       this.tabs.forEach((tab) => {
