@@ -767,7 +767,7 @@
 
         <!-- Loading Animation -->
         <div
-          class="w-screen h-screen fixed z-40 flex justify-center items-center top-0 left-0"
+          class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
           v-if="loading"
         >
           <div class="absolute w-screen h-screen bg-gray-900 opacity-30"></div>
@@ -990,8 +990,8 @@ export default {
               Reason: result[i].reason,
               Medical_Categoroy: result[i].medical_categoroy,
               Clinic_Selection: result[i].clinic_selection,
-              Clinic: result[i].clinic_name,
-              Reason_Different: result[i].reason_different,
+              Clinic_Name: result[i].clinic_name,
+              Reason_Different_Clinic: result[i].reason_different,
               Bank: result[i].bank_name,
               Bank_Holder: result[i].bank_holder,
               Bank_Account: result[i].bank_account,
@@ -1353,7 +1353,7 @@ td {
   padding-left: 4px;
 }
 </style>
-
+<!-- 
 <style>
 @media print {
   @page {
@@ -1487,4 +1487,4 @@ td {
     color: black !important;
   }
 }
-</style>
+</style> -->

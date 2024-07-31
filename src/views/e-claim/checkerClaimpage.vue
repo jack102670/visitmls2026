@@ -845,7 +845,7 @@
 
         <!-- Loading Animation -->
         <div
-          class="w-screen h-screen fixed z-40 flex justify-center items-center top-0 left-0"
+          class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
           v-if="loading && !approveSuccess"
         >
           <div class="absolute w-screen h-screen bg-gray-900 opacity-10"></div>

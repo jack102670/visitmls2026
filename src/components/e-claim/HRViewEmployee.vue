@@ -355,7 +355,7 @@
 
             <!-- Loading Animation -->
             <div
-              class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0"
+              class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
               v-if="loading"
             >
               <div

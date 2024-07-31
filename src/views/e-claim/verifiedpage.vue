@@ -6,14 +6,12 @@
         class="relative overflow-hidden bg-[#f7fbff] border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
         <div class="flex justify-between">
-         
-            <h1
-          class="text-blue-800 dark:text-blue-600 text-xl md:text-2xl font-bold"
-        >
-          VERIFIER DASHBOARD
-        </h1>
-        
-        
+          <h1
+            class="text-blue-800 dark:text-blue-600 text-xl md:text-2xl font-bold"
+          >
+            VERIFIER DASHBOARD
+          </h1>
+
           <!-- <div class="flex ml-14 mt-5">
               <button @click="ChangePopUp()" class="p-2 flex items-center">
                 Add claim
@@ -38,8 +36,8 @@
 
           <hr class="h-mx-auto bg-gray-100 border-0 rounded" />
         </div>
-  
-          <!-- <div class="flex justify-between items-center">
+
+        <!-- <div class="flex justify-between items-center">
             <div>
               <h2
                 class="text-lg font-medium text-gray-800 dark:text-white ml-1 capitalize"
@@ -53,229 +51,223 @@
             </div>
           </div> -->
 
-          <div class="flex flex-col mt-6">
-            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="flex flex-col mt-6">
+          <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div
+              class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
+            >
               <div
-                class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
+                class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg"
               >
-                <div
-                  class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg"
+                <table
+                  ref="myTable"
+                  class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe"
                 >
-                  <table
-                    ref="myTable"
-                    class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe"
+                  <thead class="bg-gray-50 dark:bg-gray-800">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Branch</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div
+                          class="flex items-center gap-x-3 whitespace-nowrap"
+                        >
+                          <span>Reference Number</span>
+                        </div>
+                      </th>
+
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div
+                          class="flex items-center gap-x-3 whitespace-nowrap"
+                        >
+                          <span>Report Name</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div
+                          class="flex items-center gap-x-3 whitespace-nowrap"
+                        >
+                          <span>Date Requested</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div
+                          class="flex items-center gap-x-3 whitespace-nowrap"
+                        >
+                          <span>Requester Name</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div
+                          class="flex items-center gap-x-3 whitespace-nowrap"
+                        >
+                          <span>Amount</span>
+                        </div>
+                      </th>
+
+                      <th
+                        scope="col"
+                        class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Status</span>
+                        </div>
+                      </th>
+
+                      <th scope="col" class="relative py-3.5 px-4">
+                        <span class="sr-only">Edit</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
                   >
-                    <thead class="bg-gray-50 dark:bg-gray-800">
-                      <tr>
-                        <th
-                          scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                        >
-                          <div class="flex items-center gap-x-3">
-                            <span>Branch</span>
-                          </div>
-                        </th>
-                        <th
-                          scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                        >
-                          <div
-                            class="flex items-center gap-x-3 whitespace-nowrap"
-                          >
-                            <span>Reference Number</span>
-                          </div>
-                        </th>
-
-                        <th
-                          scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                        >
-                          <div
-                            class="flex items-center gap-x-3 whitespace-nowrap"
-                          >
-                            <span>Report Name</span>
-                          </div>
-                        </th>
-                        <th
-                          scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                        >
-                          <div
-                            class="flex items-center gap-x-3 whitespace-nowrap"
-                          >
-                            <span>Date Requested</span>
-                          </div>
-                        </th>
-                        <th
-                          scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                        >
-                          <div
-                            class="flex items-center gap-x-3 whitespace-nowrap"
-                          >
-                            <span>Requester Name</span>
-                          </div>
-                        </th>
-                        <th
-                          scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                        >
-                          <div
-                            class="flex items-center gap-x-3 whitespace-nowrap"
-                          >
-                            <span>Amount</span>
-                          </div>
-                        </th>
-
-                        <th
-                          scope="col"
-                          class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                        >
-                          <div class="flex items-center gap-x-3">
-                            <span>Status</span>
-                          </div>
-                        </th>
-
-                        <th scope="col" class="relative py-3.5 px-4">
-                          <span class="sr-only">Edit</span>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody
-                      class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
-                    >
-                      <tr v-for="(item, index) in items" :key="index">
-                        <td
-                          class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                        >
-                          <div class="inline-flex items-center gap-x-3">
-                            <div class="flex items-center gap-x-2">
-                              <div>
-                                <h2
-                                  class="font-medium text-gray-500 dark:text-gray-300"
-                                >
-                                  HQ
-                                </h2>
-                              </div>
+                    <tr v-for="(item, index) in items" :key="index">
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                      >
+                        <div class="inline-flex items-center gap-x-3">
+                          <div class="flex items-center gap-x-2">
+                            <div>
+                              <h2
+                                class="font-medium text-gray-500 dark:text-gray-300"
+                              >
+                                HQ
+                              </h2>
                             </div>
                           </div>
-                        </td>
-                        <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-balance"
-                        >
-                          {{ item.reference_number }}
-                        </td>
-                        <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-balance"
-                        >
-                          {{ item.report_name }}
-                        </td>
+                        </div>
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-balance"
+                      >
+                        {{ item.reference_number }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-balance"
+                      >
+                        {{ item.report_name }}
+                      </td>
 
-                        <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-balance"
-                        >
-                          {{ item.date_requested }}
-                        </td>
-                        <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-wrap"
-                        >
-                          {{ item.requester_name }}
-                        </td>
-                        <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        >
-                          RM {{ item.grand_total }}
-                        </td>
+                      <td
+                        class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-balance"
+                      >
+                        {{ item.date_requested }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-wrap"
+                      >
+                        {{ item.requester_name }}
+                      </td>
+                      <td
+                        class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                      >
+                        RM {{ item.grand_total }}
+                      </td>
 
-                        <td
-                          class="px-12 py-4 text-sm font-medium text-gray-700 text-wrap whitespace-nowrap"
+                      <td
+                        class="px-12 py-4 text-sm font-medium text-gray-700 text-wrap whitespace-nowrap"
+                      >
+                        <span
+                          :class="{
+                            'inline-flex items-center px-3 py-1 rounded-full gap-x-2': true,
+                            'bg-red-100/60 dark:bg-gray-800':
+                              item.admin_status.split('.')[0] === 'REJECTED',
+                            'bg-green-100/60 dark:bg-gray-800':
+                              item.admin_status.split('.')[0] === 'APPROVED',
+                            'bg-amber-100/60 dark:bg-gray-800':
+                              item.admin_status.split('.')[0] === 'VERIFIED', // Added for VERIFIED status
+                          }"
                         >
                           <span
                             :class="{
-                              'inline-flex items-center px-3 py-1 rounded-full gap-x-2': true,
-                              'bg-red-100/60 dark:bg-gray-800':
+                              'h-1.5 w-1.5 rounded-full': true,
+                              'bg-red-500':
                                 item.admin_status.split('.')[0] === 'REJECTED',
-                              'bg-green-100/60 dark:bg-gray-800':
+                              'bg-green-500':
                                 item.admin_status.split('.')[0] === 'APPROVED',
-                              'bg-amber-100/60 dark:bg-gray-800':
+                              'bg-amber-500':
                                 item.admin_status.split('.')[0] === 'VERIFIED', // Added for VERIFIED status
                             }"
+                          ></span>
+                          <span
+                            :class="{
+                              'text-sm font-normal': true,
+                              'text-red-500':
+                                item.admin_status.split('.')[0] === 'REJECTED',
+                              'text-green-500':
+                                item.admin_status.split('.')[0] === 'APPROVED',
+                              'text-amber-500':
+                                item.admin_status.split('.')[0] === 'VERIFIED', // Added for VERIFIED status
+                            }"
+                            >{{ item.admin_status.split('.')[0] }}</span
                           >
-                            <span
-                              :class="{
-                                'h-1.5 w-1.5 rounded-full': true,
-                                'bg-red-500':
-                                  item.admin_status.split('.')[0] ===
-                                  'REJECTED',
-                                'bg-green-500':
-                                  item.admin_status.split('.')[0] ===
-                                  'APPROVED',
-                                'bg-amber-500':
-                                  item.admin_status.split('.')[0] ===
-                                  'VERIFIED', // Added for VERIFIED status
-                              }"
-                            ></span>
-                            <span
-                              :class="{
-                                'text-sm font-normal': true,
-                                'text-red-500':
-                                  item.admin_status.split('.')[0] ===
-                                  'REJECTED',
-                                'text-green-500':
-                                  item.admin_status.split('.')[0] ===
-                                  'APPROVED',
-                                'text-amber-500':
-                                  item.admin_status.split('.')[0] ===
-                                  'VERIFIED', // Added for VERIFIED status
-                              }"
-                              >{{ item.admin_status.split('.')[0] }}</span
+                        </span>
+                      </td>
+                      <td class="px-4 py-4 ml text-sm whitespace-nowrap">
+                        <div class="flex items-center gap-x-6">
+                          <!-- buttons here -->
+                          <button
+                            @click="ViewClaim(item.reference_number)"
+                            class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.5"
+                              stroke="currentColor"
+                              class="w-5 h-5"
                             >
-                          </span>
-                        </td>
-                        <td class="px-4 py-4 ml text-sm whitespace-nowrap">
-                          <div class="flex items-center gap-x-6">
-                            <!-- buttons here -->
-                            <button
-                              @click="ViewClaim(item.reference_number)"
-                              class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                class="w-5 h-5"
-                              >
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                                />
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                />
-                              </svg>
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                              />
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
-      
+        </div>
+
         <div
           class="mt-5 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4"
         ></div>
 
         <!-- Loading Animation -->
         <div
-          class="w-screen h-screen fixed z-40 flex justify-center items-center top-0 left-0"
+          class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
           v-if="loading"
         >
           <div class="absolute w-screen h-screen bg-gray-900 opacity-30"></div>
