@@ -278,7 +278,7 @@
                 <input
                   v-model="user.bank_number"
                   id="bank_number"
-                  type="number"
+                  type="text"
                   required
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                 />
@@ -778,6 +778,7 @@ export default {
         home_address: this.user.home_address,
         spouse: this.user.spouse,
         phone_number: this.user.phone_number,
+        ic_number: this.user.ic_number,
       };
 
       console.log('Employee Data:', employeeData);
@@ -812,7 +813,7 @@ export default {
           this.loadingButton = false;
         })
         .catch((error) => {
-          console.error('Error updating employee data:', error);
+          console.error('Error updating employee data man:', error);
           this.loadingButton = false;
           alert('An error occurred while updating employee data.');
           // Additional error handling logic here
@@ -827,6 +828,7 @@ export default {
         .get(`http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           const data = response.data.result;
+          console.log('HR data:', data);
           if (data && data.length > 0) {
             const user = data[0];
             this.user.branch = user.branch;
@@ -848,6 +850,7 @@ export default {
             this.user.home_address = user.home_address;
             this.status = user.account_status;
             this.tempEmail = user.email_address;
+            
           }
           console.log('HR data:', this.tempEmail);
           this.loading = false;
@@ -1023,6 +1026,7 @@ export default {
         home_address: this.user.home_address,
         spouse: this.user.spouse,
         phone_number: this.user.phone_number.toString(),
+        ic_number: this.user.ic_number,
       };
       console.log('Employee Data:', employeeData);
 
