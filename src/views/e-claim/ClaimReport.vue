@@ -50,8 +50,6 @@
                 >
               </div>
             </button>
-
-       
           </div>
         </div>
 
@@ -432,7 +430,8 @@
               </div>
               <div
                 v-if="!isOneWay"
-                class="flex justify-between items-center mb-4">
+                class="flex justify-between items-center mb-4"
+              >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Return Date:</label
                 >
@@ -444,9 +443,10 @@
                   class="border rounded-md px-16 py-2"
                 />
               </div>
-              <div 
+              <div
                 v-if="!isOneWay"
-                class="flex justify-between items-center mb-4">
+                class="flex justify-between items-center mb-4"
+              >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Accommodation:</label
                 >
@@ -458,9 +458,10 @@
                   class="border rounded-md px-16 py-2"
                 />
               </div>
-              <div 
+              <div
                 v-if="!isOneWay"
-                class="flex justify-between items-center mb-4">
+                class="flex justify-between items-center mb-4"
+              >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Meal Allowance(RM):</label
                 >
@@ -735,9 +736,7 @@
             </div>
           </div>
 
-          <div
-            v-if="selectedClaimType === 'OverseasTravelling'"
-          >
+          <div v-if="selectedClaimType === 'OverseasTravelling'">
             <div class="flex justify-end">
               <button
                 v-show="!isEditMode"
@@ -1331,9 +1330,10 @@
                 />
               </div>
 
-              <div 
+              <div
                 v-if="!isOtherThanOutpatient"
-                class="flex justify-between items-center mb-4">
+                class="flex justify-between items-center mb-4"
+              >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Reason for Medical:</label
                 >
@@ -1346,9 +1346,10 @@
                 />
               </div>
 
-              <div 
+              <div
                 v-if="!isOtherThanOutpatient"
-                class="flex justify-between items-center mb-4">
+                class="flex justify-between items-center mb-4"
+              >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Clinic Selection:</label
                 >
@@ -1413,7 +1414,7 @@
                   type="text"
                   id="accBankNumber"
                   v-model="medicalBillReimbursementDetails.AccBankNumberML"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -1425,8 +1426,20 @@
                   type="text"
                   id="accHolderName"
                   v-model="medicalBillReimbursementDetails.AccHolderNameML"
-                  :disabled="!isEditMode"
+                  :disabled="!isEditMode || nonEditableFields"
                   class="border rounded-md px-16 py-2 overflow-x-auto"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="limitAmount" class="text-gray-700 font-bold mr-2"
+                  >Limited Amount (RM):</label
+                >
+                <input
+                  type="text"
+                  id="limitsAmount"
+                  v-model="medicalBillReimbursementDetails.LimitedAmountML"
+                  :disabled="!isEditMode || nonEditableFields"
+                  class="border rounded-md px-16 py-2"
                 />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1482,6 +1495,7 @@
             <div class="flex justify-end">
               <button
                 @click="toggleEditMode"
+                :disabled="isSaveDisabled"
                 class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800"
               >
                 <!-- Edit Icon -->
@@ -2105,7 +2119,7 @@
                       <td
                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                       >
-                        {{ staff.department}}
+                        {{ staff.department }}
                       </td>
                       <td
                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
@@ -2500,7 +2514,7 @@
                     type="text"
                     id="accBankNumber"
                     v-model="handphoneBillReimbursementDetails.AccBankNumberHR"
-                    :disabled="!isEditMode"
+                    :disabled="!isEditMode || nonEditableFields"
                     class="border rounded-md px-16 py-2"
                   />
                 </div>
@@ -2514,7 +2528,7 @@
                     type="text"
                     id="accHolderName"
                     v-model="handphoneBillReimbursementDetails.AccHolderNameHR"
-                    :disabled="!isEditMode"
+                    :disabled="!isEditMode || nonEditableFields"
                     class="border rounded-md px-16 py-2"
                   />
                 </div>
@@ -2542,7 +2556,6 @@
                     v-model="handphoneBillReimbursementDetails.ClaimsAmountHR"
                     :disabled="!isEditMode"
                     class="border rounded-md px-16 py-2"
-                    @input="adjustClaimsAmount"
                   />
                 </div>
                 <div class="flex justify-between items-center mb-4">
@@ -2571,6 +2584,13 @@
                 </div>
               </div>
 
+              <div
+                v-if="claimsAmountExceedsLimitHR"
+                class="text-red-500 text-sm mb-4"
+              >
+                {{ claimsAmountErrorMessageHR }}
+              </div>
+
               <hr />
               <div class="flex justify-end items-center mb-4 mt-4">
                 <label
@@ -2583,6 +2603,7 @@
               <div class="flex justify-end">
                 <button
                   @click="toggleEditMode"
+                  :disabled="isSaveDisabledHR"
                   class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800"
                 >
                   <!-- Edit Icon -->
@@ -2683,42 +2704,42 @@
     </div>
     <!-- Loading Animation -->
     <div
-    class="w-screen h-screen fixed z-40 flex justify-center items-center top-0 left-0"
-    v-if="loading"
-  >
-    <div class="absolute w-screen h-screen bg-gray-900 opacity-30"></div>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 200 200"
-      class="w-16 h-16 z-50"
+      class="w-screen h-screen fixed z-40 flex justify-center items-center top-0 left-0"
+      v-if="loading"
     >
-      <circle
-        transform="rotate(0)"
-        transform-origin="center"
-        fill="none"
-        stroke="blue"
-        stroke-width="10"
-        stroke-linecap="round"
-        stroke-dasharray="230 1000"
-        stroke-dashoffset="0"
-        cx="100"
-        cy="100"
-        r="70"
+      <div class="absolute w-screen h-screen bg-gray-900 opacity-30"></div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 200 200"
+        class="w-16 h-16 z-50"
       >
-        <animateTransform
-          attributeName="transform"
-          type="rotate"
-          from="0"
-          to="360"
-          dur="2"
-          repeatCount="indefinite"
-        ></animateTransform>
-      </circle>
-    </svg>
-    <h1 class="text-gray-50 font-semibold z-50 ml-2 text-lg">
-      {{ loadingText }} Data...
-    </h1>
-  </div>
+        <circle
+          transform="rotate(0)"
+          transform-origin="center"
+          fill="none"
+          stroke="blue"
+          stroke-width="10"
+          stroke-linecap="round"
+          stroke-dasharray="230 1000"
+          stroke-dashoffset="0"
+          cx="100"
+          cy="100"
+          r="70"
+        >
+          <animateTransform
+            attributeName="transform"
+            type="rotate"
+            from="0"
+            to="360"
+            dur="2"
+            repeatCount="indefinite"
+          ></animateTransform>
+        </circle>
+      </svg>
+      <h1 class="text-gray-50 font-semibold z-50 ml-2 text-lg">
+        {{ loadingText }} Data...
+      </h1>
+    </div>
   </main>
 </template>
 
@@ -2769,7 +2790,7 @@ export default {
         fileUpload: formStore.getFormData().fileUpload.slice(), // Ensure we work with a copy
       },
       loading: false,
-      loadingText: '',
+      loadingText: "",
     };
   },
 
@@ -2839,7 +2860,9 @@ export default {
     },
 
     isOtherThanOutpatient() {
-      return this.medicalBillReimbursementDetails.MedicalCategoryML !== "Outpatient";
+      return (
+        this.medicalBillReimbursementDetails.MedicalCategoryML !== "Outpatient"
+      );
     },
 
     isOtherEntertainment() {
@@ -2867,7 +2890,8 @@ export default {
       }
 
       let total =
-        (parseFloat(this.overseasTravellingDetails.AmountforAccommodationOT) || 0) +
+        (parseFloat(this.overseasTravellingDetails.AmountforAccommodationOT) ||
+          0) +
         (parseFloat(this.overseasTravellingDetails.AmountforOthersOT) || 0) +
         (parseFloat(this.overseasTravellingDetails.MealAllowanceOT) || 0) +
         (parseFloat(this.overseasTravellingDetails.AirportLimoTeksiOT) || 0) +
@@ -2888,21 +2912,56 @@ export default {
       const category = this.medicalBillReimbursementDetails.MedicalCategoryML;
       const amount =
         parseFloat(this.medicalBillReimbursementDetails.ClaimsAmountML) || 0;
-      if (category === "Outpatient" && amount > 70) return true;
-      if (category === "Medical Check-Up" && amount > 200) return true;
-      if (category === "Dental" && amount > 200) return true;
+      if (
+        category === "Outpatient" &&
+        amount > this.medicalBillReimbursementDetails.LimitedAmountML
+      )
+        return true;
+      if (
+        category === "Medical Check-Up" &&
+        amount > this.medicalBillReimbursementDetails.LimitedAmountML
+      )
+        return true;
+      if (
+        category === "Dental" &&
+        amount > this.medicalBillReimbursementDetails.LimitedAmountML
+      )
+        return true;
       return false;
     },
 
     claimsAmountErrorMessage() {
       const category = this.medicalBillReimbursementDetails.MedicalCategoryML;
+      const limit = this.medicalBillReimbursementDetails.LimitedAmountML;
+
       if (category === "Outpatient")
-        return "The maximum claim amount for Outpatient is RM 70.";
-      if (category === "Medical Check-Up")
-        return "The maximum claim amount for Medical Check-Up & Dental is RM 200.";
-      if (category === "Dental")
-        return "The maximum claim amount for Medical Check-Up & Dental is RM 200.";
+        return `The maximum claim amount for Outpatient is RM ${limit}.`;
+      if (category === "Medical Check-Up" || category === "Dental")
+        return `The maximum claim amount for Medical Check-Up & Dental is RM ${limit}.`;
+
       return "";
+    },
+
+    isSaveDisabled() {
+      return (
+        parseFloat(this.medicalBillReimbursementDetails.ClaimsAmountML) >
+        parseFloat(this.medicalBillReimbursementDetails.LimitedAmountML)
+      );
+    },
+
+    claimsAmountExceedsLimitHR() {
+      return (
+        parseFloat(this.handphoneBillReimbursementDetails.ClaimsAmountHR) >
+        parseFloat(this.handphoneBillReimbursementDetails.LimitedAmountHR)
+      );
+    },
+
+    claimsAmountErrorMessageHR() {
+      return `The claim amount exceeds the limit of RM ${this.handphoneBillReimbursementDetails.LimitedAmountHR}`;
+    },
+
+    isSaveDisabledHR() {
+      return this.claimsAmountExceedsLimitHR;
     },
 
     totalStaffRefreshmentDetails() {
@@ -3228,7 +3287,7 @@ export default {
         alert("Please add at least 1 claim before submitting");
         return;
       }
-      this.loadingText = 'Uploading';
+      this.loadingText = "Uploading";
       this.loading = true;
 
       const referenceNumber = await this.fetchSerialNumber();
@@ -3321,9 +3380,10 @@ export default {
                   const userId = this.userDetails.userId;
                   console.log("unik kod:", uniqueCodeLT);
 
-                   const transportSpec = claim.TransportLT.toLowerCase() === 'personal transport'
-                  ? claim.TransportSpec
-                  : claim.PublicTransportSpec;
+                  const transportSpec =
+                    claim.TransportLT.toLowerCase() === "personal transport"
+                      ? claim.TransportSpec
+                      : claim.PublicTransportSpec;
 
                   const thisisforlocal1 = {
                     requester_id: this.userDetails.userId,
@@ -3625,7 +3685,11 @@ export default {
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
-                    this.uploadFiles(claim.UploadOthers,userId, uniqcodeothers);
+                    this.uploadFiles(
+                      claim.UploadOthers,
+                      userId,
+                      uniqcodeothers
+                    );
                   }
                   axiosInstance = axios.create({
                     baseURL: "http://172.28.28.91:97/api/User/InsertOthers",
@@ -3635,7 +3699,6 @@ export default {
                     thisisforHandphoneBillReimbursement
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
-                 
                 }
                 break;
               case "handphone bill reimbursement":
@@ -3681,7 +3744,7 @@ export default {
                       `Data successfully submitted for handphone bill reimbursement:`,
                       response.data
                     );
-                    
+
                     // Handle success here, e.g., update UI or notify user
                   } catch (error) {
                     if (error.response) {
@@ -3759,7 +3822,7 @@ export default {
                 console.error(`No endpoint found for ${title}`);
                 continue; // Skip to the next iteration
             }
-            this.$router.push({ name: 'eclaimhomepages' }); 
+            this.$router.push({ name: "eclaimhomepages" });
           } catch (error) {
             if (error.response) {
               // The request was made and the server responded with a status code
