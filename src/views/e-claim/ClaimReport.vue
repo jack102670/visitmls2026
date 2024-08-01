@@ -50,10 +50,10 @@
                 >
               </div>
             </button>
-            <button
+            <!-- <button
               @click="sendToAPI"
               class="w-36 h-12 p-1 font-semibold rounded-lg items-center text-sm dark:bg-gray-900 dark:border-gray-700 bg-blue-700 border text-white"
-            ></button>
+            ></button> -->
           </div>
         </div>
 
@@ -1454,7 +1454,10 @@
                   type="text"
                   id="claimsAmount"
                   v-model="medicalBillReimbursementDetails.ClaimsAmountML"
-                  :disabled="!isEditMode"
+                  :disabled="
+                    !isEditMode || (isOutpatient && claimsAmountExceedsLimit)
+                  "
+                  @input="handleClaimsAmountInput"
                   class="border rounded-md px-16 py-2"
                 />
               </div>
@@ -2916,21 +2919,56 @@ export default {
       const category = this.medicalBillReimbursementDetails.MedicalCategoryML;
       const amount =
         parseFloat(this.medicalBillReimbursementDetails.ClaimsAmountML) || 0;
-      if (category === 'Outpatient' && amount > 70) return true;
-      if (category === 'Medical Check-Up' && amount > 200) return true;
-      if (category === 'Dental' && amount > 200) return true;
+      if (
+        category === "Outpatient" &&
+        amount > this.medicalBillReimbursementDetails.LimitedAmountML
+      )
+        return true;
+      if (
+        category === "Medical Check-Up" &&
+        amount > this.medicalBillReimbursementDetails.LimitedAmountML
+      )
+        return true;
+      if (
+        category === "Dental" &&
+        amount > this.medicalBillReimbursementDetails.LimitedAmountML
+      )
+        return true;
       return false;
     },
 
     claimsAmountErrorMessage() {
       const category = this.medicalBillReimbursementDetails.MedicalCategoryML;
-      if (category === 'Outpatient')
-        return 'The maximum claim amount for Outpatient is RM 70.';
-      if (category === 'Medical Check-Up')
-        return 'The maximum claim amount for Medical Check-Up & Dental is RM 200.';
-      if (category === 'Dental')
-        return 'The maximum claim amount for Medical Check-Up & Dental is RM 200.';
-      return '';
+      const limit = this.medicalBillReimbursementDetails.LimitedAmountML;
+
+      if (category === "Outpatient")
+        return `The maximum claim amount for Outpatient is RM ${limit}.`;
+      if (category === "Medical Check-Up" || category === "Dental")
+        return `The maximum claim amount for Medical Check-Up & Dental is RM ${limit}.`;
+
+      return "";
+    },
+
+    isSaveDisabled() {
+      return (
+        parseFloat(this.medicalBillReimbursementDetails.ClaimsAmountML) >
+        parseFloat(this.medicalBillReimbursementDetails.LimitedAmountML)
+      );
+    },
+
+    claimsAmountExceedsLimitHR() {
+      return (
+        parseFloat(this.handphoneBillReimbursementDetails.ClaimsAmountHR) >
+        parseFloat(this.handphoneBillReimbursementDetails.LimitedAmountHR)
+      );
+    },
+
+    claimsAmountErrorMessageHR() {
+      return `The claim amount exceeds the limit of RM ${this.handphoneBillReimbursementDetails.LimitedAmountHR}`;
+    },
+
+    isSaveDisabledHR() {
+      return this.claimsAmountExceedsLimitHR;
     },
 
     totalStaffRefreshmentDetails() {
@@ -2991,6 +3029,22 @@ export default {
   },
 
   methods: {
+    handleClaimsAmountInput() {
+      if (this.isOutpatient) {
+        const limit = parseFloat(
+          this.medicalBillReimbursementDetails.LimitedAmountML
+        );
+        const amount = parseFloat(
+          this.medicalBillReimbursementDetails.ClaimsAmountML
+        );
+        this.medicalBillReimbursementDetails.ClaimsAmountML = Math.min(
+          amount,
+          70,
+          limit
+        );
+      }
+    },
+
     async fetchSerialNumber() {
       let result = null;
       try {
@@ -3354,23 +3408,27 @@ export default {
                       ? claim.TransportSpec
                       : claim.PublicTransportSpec;
 
-                  const thisisforlocal1 = {
-                    requester_id: this.userDetails.userId,
-                    mileage_km: claim.MileageKMLT || 0,
-                    starting_point: claim.LocationStart,
-                    end_point: claim.LocationEnd,
-                    date_event: claim.dateLT, // Example date
-                    park_fee: claim.ParkingLT || 0,
-                    toll_fee: claim.TollLT || 0,
-                    total_fee: claim.totalRM,
-                    unique_code: uniqueCodeLT,
-                    reference_number: this.serialnumber,
-                    transport_mode: claim.TransportLT,
-                    trip_mode: claim.tripwayLT,
-                    total_mileage: claim.MileageRMLT || 0,
-                    transport_specification: transportSpec,
-                    fare: claim.FareRMLT || 0,
-                  };
+                      const thisisforlocal1 = {
+    requester_id: this.userDetails.userId,
+    mileage_km: claim.MileageKMLT || 0,
+    starting_point: claim.LocationStart || "-",
+    end_point: claim.LocationEnd || "-",
+    date_event: claim.dateLT || "-", // Default to empty string if not provided
+    park_fee: claim.ParkingLT || 0,
+    toll_fee: claim.TollLT || 0,
+    total_fee: claim.totalRM || 0,
+    unique_code: uniqueCodeLT || "-",
+    reference_number:  this.serialnumber || "-",
+    transport_mode: claim.TransportLT || "-",
+    trip_mode: claim.tripwayLT || "-",
+    total_mileage: claim.MileageRMLT || 0,
+    transport_specification: transportSpec || "-",
+    fare: claim.FareRMLT || 0,
+    return_date: claim.ReturnDateLT || "-",
+    meal_allowance: String(claim.MealAllowanceLT || "-"),
+    accommodation: claim.AccommodationLT || "-",
+};
+
                   axiosInstance = axios.create({
                     baseURL:
                       'http://172.28.28.91:97/api/User/InsertLocalOutstation',
@@ -3437,36 +3495,37 @@ export default {
                 }
                 break;
               }
-              case 'overseas travelling with accommodation':
+              case 'overseas travelling':
                 for (const claim of claimsToSend) {
                   const uniqcodeOT = this.generateUniqueCode(claim.tabTitle);
                   const thisisforoversea = {
-                    requester_id: this.userDetails.userId,
-                    description: claim.PurposeOT,
-                    meal_allowance: String(claim.MealAllowanceOT),
-                    date_event: claim.dateOT,
-                    transport_fee: claim.AirportLimoTeksiOT,
-                    // other_expenses: claim.otherExpenses,
-                    total_fee: claim.totalRM,
-                    accom_foreign_total: claim.AmountforAccommodationOT,
-                    accom_foreign_currency:
-                      claim.ForeignCurrencyAccommodationOT,
-                    accom_exchange_rate: claim.ExchangeRateAccommodationOT,
-                    other_foreign_currency: claim.ForeignCurrencyOthersOT,
-                    other_exchange_rate: claim.ExchangeRateOthersOT,
-                    other_foreign_total: claim.AmountforOthersOT,
-                    reference_number: this.serialnumber,
-                    unique_code: uniqcodeOT,
-                    transportation_mode: String(claim.AirportLimoTeksiOT),
-                    oem: claim.otherExpenses
-                      ? claim.otherExpenses.map((expense) => ({
-                          name: expense.name,
-                          amount: expense.amount,
-                          description: expense.description,
-                          files: expense.files || [],
-                        }))
-                      : [],
-                  };
+    requester_id: this.userDetails.userId || "-",
+    description: claim.PurposeOT || "-",
+    meal_allowance: String(claim.MealAllowanceOT || 0),
+    date_event: claim.dateOT || "-",
+    transport_fee: claim.AirportLimoTeksiOT || 0,
+    total_fee: claim.totalRM || 0,
+    accom_foreign_total: claim.AmountforAccommodationOT || 0,
+    accom_foreign_currency: claim.ForeignCurrencyAccommodationOT || "-",
+    accom_exchange_rate: claim.ExchangeRateAccommodationOT || 0,
+    other_foreign_currency: claim.ForeignCurrencyOthersOT || "-",
+    other_exchange_rate: claim.ExchangeRateOthersOT || 0,
+    other_foreign_total: claim.AmountforOthersOT || 0,
+    reference_number:  this.serialnumber|| "-",
+    unique_code: uniqcodeOT || "-",
+    transportation_mode: String(claim.AirportLimoTeksiOT || "-"),
+    return_date: claim.ReturendateOT || "-",
+    accommodation: claim.AccommodationOT || "-",
+    oem: claim.otherExpenses
+        ? claim.otherExpenses.map((expense) => ({
+            name: expense.name || "-",
+            amount: expense.amount || 0,
+            description: expense.description || "-",
+        }))
+        : [],
+};
+
+
 
                   const userId = this.userDetails.userId;
                   console.log('unik kod:', this.uniqueCode);
@@ -3527,16 +3586,18 @@ export default {
                     venue_name: claim.VenueE,
                     description: claim.ReferenceE,
                     total_fee: parseFloat(claim.AmountRME),
-                    reference_number: this.serialnumber,
+                    reference_number:  this.serialnumber,
                     unique_code: uniqcodeE, // Ensure this is in the correct format and not null/undefined
                     // Add the required 'ent' field with the appropriate value
 
                     participants: claim.attendees
                       ? claim.attendees.map((participant) => ({
                           name: participant.name,
-                          company_name: participant.company_Name
+                          company_Name: participant.company_Name
                             ? participant.company_Name
                             : '',
+                            emp_id:"-",
+                            status: "-",
                         }))
                       : [],
                   };
@@ -3686,8 +3747,8 @@ export default {
                     claim_amount: claim.totalRM,
                     unique_code: uniqcodeHR,
                     reference_number: this.serialnumber,
-                    handphone: '',
-
+                    handphone: "",
+                    
                     requester_id: this.userDetails.userId,
                   };
 
@@ -3747,26 +3808,24 @@ export default {
 
                   const uniqcodeML = this.generateUniqueCode(claim.tabTitle);
                   const thisisforMedicalBillReimbursement = {
-                    reference_number: this.serialnumber || '',
-                    date_leave_taken: claim.dateML, // Example date
-                    reason: claim.ReasonML || '-',
-                    bank_name: claim.BankNameML,
-                    bank_holder: claim.AccHolderNameML,
-                    bank_account: String(claim.AccBankNumberML),
-                    claim_amount: String(claim.ClaimsAmountML),
-                    clinic_name: String(
-                      claim.OtherClinicSpecML
-                        ? claim.OtherClinicSpecML
-                        : claim.ClinicSelectionML || ''
-                    ),
-                    clinic_selection: String(claim.ClinicSelectionML || ''),
-                    reason_different: claim.OtherClinicReasonML || '-',
-                    medical_category: claim.MedicalCategoryML,
-                    requester_id: this.userDetails.userId,
-                    limit_outpatient: claim.limit_outpatient,
-                    limit_medic_dental: claim.limit_medic_dental,
-                    ic_number: claim.icNumber,
-                    unique_code: uniqcodeML,
+                    reference_number: this.serialnumber || '-',
+date_leave_taken: claim.dateML, // Example date
+reason: claim.ReasonML || '-',
+bank_name: claim.BankNameML ,
+bank_holder: claim.AccHolderNameML ,
+bank_account: String(claim.AccBankNumberML ),
+claim_amount: String(claim.ClaimsAmountML ),
+clinic_name: String(claim.OtherClinicSpecML
+                      ? claim.OtherClinicSpecML
+                      : claim.ClinicSelectionML || '-'),
+clinic_selection: String(claim.ClinicSelectionML || '-'),
+reason_different: claim.OtherClinicReasonML || '-',
+medical_category: claim.MedicalCategoryML ,
+requester_id: this.userDetails.userId ,
+limit_outpatient: claim.limit_outpatient ,
+limit_medic_dental: claim.limit_medic_dental,
+ic_number: claim.icNumber ,
+unique_code: uniqcodeML ,
                   };
 
                   const userId = this.userDetails.userId;
