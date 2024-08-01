@@ -344,7 +344,20 @@
 
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeId" class="text-gray-700 font-bold mr-2"
-                  >Date:</label
+                  >Trip:</label
+                >
+                <input
+                  type="text"
+                  id="triplt"
+                  v-model="localTravellingDetails.tripwayLT"
+                  :disabled="!isEditMode || nonEditableFields"
+                  class="border rounded-md px-16 py-2"
+                />
+              </div>
+
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeName" class="text-gray-700 font-bold mr-2"
+                  >Departure Date:</label
                 >
                 <input
                   type="text"
@@ -354,8 +367,23 @@
                   class="border rounded-md px-16 py-2"
                 />
               </div>
+              <div
+                v-if="!isOneWay"
+                class="flex justify-between items-center mb-4"
+              >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Return Date:</label
+                >
+                <input
+                  type="text"
+                  id="returndate"
+                  v-model="localTravellingDetails.ReturndateLT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2"
+                />
+              </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeName" class="text-gray-700 font-bold mr-2"
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Travelling Mode By:</label
                 >
                 <input
@@ -416,33 +444,6 @@
                   type="text"
                   id="locationend"
                   v-model="localTravellingDetails.LocationEnd"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
-              </div>
-              <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Trip:</label
-                >
-                <input
-                  type="text"
-                  id="triplt"
-                  v-model="localTravellingDetails.tripwayLT"
-                  :disabled="!isEditMode || nonEditableFields"
-                  class="border rounded-md px-16 py-2"
-                />
-              </div>
-              <div
-                v-if="!isOneWay"
-                class="flex justify-between items-center mb-4"
-              >
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Return Date:</label
-                >
-                <input
-                  type="text"
-                  id="returndate"
-                  v-model="localTravellingDetails.ReturndateLT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2"
                 />
@@ -775,12 +776,24 @@
 
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeId" class="text-gray-700 font-bold mr-2"
-                  >Date:</label
+                  >Departure Date:</label
                 >
                 <input
                   type="text"
                   id="nodeId"
                   v-model="overseasTravellingDetails.dateOT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeId" class="text-gray-700 font-bold mr-2"
+                  >Return Date:</label
+                >
+                <input
+                  type="text"
+                  id="nodeId"
+                  v-model="overseasTravellingDetails.ReturendateOT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2"
                 />
@@ -878,6 +891,18 @@
                   type="text"
                   id="rmOthers"
                   v-model="overseasTravellingDetails.AmountforOthersOT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2"
+                />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="accommodationOT" class="text-gray-700 font-bold mr-2"
+                  >Accommodation:</label
+                >
+                <input
+                  type="text"
+                  id="accommodationOT"
+                  v-model="overseasTravellingDetails.AccommodationOT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2"
                 />

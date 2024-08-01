@@ -1124,8 +1124,10 @@
                       type="submit"
                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                       :disabled="
-                        tab.title === 'Handphone Bill Reimbursement' &&
-                        isFormDisabled || tab.title === 'Medical Bill Reimbursement' && isSaveButtonDisabled
+                        (tab.title === 'Handphone Bill Reimbursement' &&
+                          isFormDisabled) ||
+                        (tab.title === 'Medical Bill Reimbursement' &&
+                          isSaveButtonDisabled)
                       "
                     >
                       Save
@@ -2718,12 +2720,18 @@ export default {
       }
       return false;
     },
-     isSaveButtonDisabled() {
-      const tab = this.tabs.find(tab => tab.title === "Medical Bill Reimbursement");
+    isSaveButtonDisabled() {
+      const tab = this.tabs.find(
+        (tab) => tab.title === "Medical Bill Reimbursement"
+      );
       if (!tab) return true;
 
-      const medCategoryField = tab.fields.find(field => field.id === "MedicalCategoryML");
-      const limitedAmountField = tab.fields.find(field => field.id === "LimitedAmountML");
+      const medCategoryField = tab.fields.find(
+        (field) => field.id === "MedicalCategoryML"
+      );
+      const limitedAmountField = tab.fields.find(
+        (field) => field.id === "LimitedAmountML"
+      );
 
       if (!medCategoryField || !limitedAmountField) return true;
 
@@ -2733,8 +2741,11 @@ export default {
       if (medCategory === "Outpatient" && limitedAmount === 0) {
         return true;
       }
-      
-      if ((medCategory === "Medical Check-Up" || medCategory === "Dental") && limitedAmount === 0) {
+
+      if (
+        (medCategory === "Medical Check-Up" || medCategory === "Dental") &&
+        limitedAmount === 0
+      ) {
         return true;
       }
 
@@ -2913,75 +2924,101 @@ export default {
               this.updateFieldVisibility8(medCategoryField.value);
             }
 
-             const medicalCategoryMLField = tab.fields.find(
-            (field) => field.id === "MedicalCategoryML"
-          );
-          const limitedAmountMLField = tab.fields.find(
-            (field) => field.id === "LimitedAmountML"
-          );
-          const claimsAmountMLField = tab.fields.find(
-            (field) => field.id === "ClaimsAmountML"
-          );
-
-          if (medicalCategoryMLField && limitedAmountMLField && claimsAmountMLField) {
-            this.$watch(
-              () => medicalCategoryMLField.value,
-              (newValue) => {
-                if (newValue === "Medical Check-Up" || newValue === "Dental") {
-                  if (parseFloat(claimsAmountMLField.value) > parseFloat(limitedAmountMLField.value)) {
-                    claimsAmountMLField.value = limitedAmountMLField.value;
-                  }
-
-                  this.$watch(
-                    () => claimsAmountMLField.value,
-                    (newClaimValue) => {
-                      if (parseFloat(newClaimValue) > parseFloat(limitedAmountMLField.value)) {
-                        claimsAmountMLField.value = limitedAmountMLField.value;
-                      }
-                    }
-                  );
-                } else if (newValue === "Outpatient") {
-                  const limitOutpatient = 70;
-
-                  if (parseFloat(limitedAmountMLField.value) >= limitOutpatient) {
-                    claimsAmountMLField.value = limitOutpatient;
-                  } else {
-                    claimsAmountMLField.value = limitedAmountMLField.value;
-                  }
-
-                  this.$watch(
-                    () => claimsAmountMLField.value,
-                    (newClaimValue) => {
-                      if (parseFloat(newClaimValue) > limitOutpatient) {
-                        claimsAmountMLField.value = limitOutpatient;
-                      } else if (parseFloat(newClaimValue) > parseFloat(limitedAmountMLField.value)) {
-                        claimsAmountMLField.value = limitedAmountMLField.value;
-                      }
-                    }
-                  );
-                }
-              }
+            const medicalCategoryMLField = tab.fields.find(
+              (field) => field.id === "MedicalCategoryML"
+            );
+            const limitedAmountMLField = tab.fields.find(
+              (field) => field.id === "LimitedAmountML"
+            );
+            const claimsAmountMLField = tab.fields.find(
+              (field) => field.id === "ClaimsAmountML"
             );
 
-            this.$watch(
-              () => limitedAmountMLField.value,
-              (newLimitedValue) => {
-                if (medicalCategoryMLField.value === "Medical Check-Up" || medicalCategoryMLField.value === "Dental") {
-                  if (parseFloat(claimsAmountMLField.value) > parseFloat(newLimitedValue)) {
-                    claimsAmountMLField.value = newLimitedValue;
-                  }
-                } else if (medicalCategoryMLField.value === "Outpatient") {
-                  const limitOutpatient = 70;
+            if (
+              medicalCategoryMLField &&
+              limitedAmountMLField &&
+              claimsAmountMLField
+            ) {
+              this.$watch(
+                () => medicalCategoryMLField.value,
+                (newValue) => {
+                  if (
+                    newValue === "Medical Check-Up" ||
+                    newValue === "Dental"
+                  ) {
+                    if (
+                      parseFloat(claimsAmountMLField.value) >
+                      parseFloat(limitedAmountMLField.value)
+                    ) {
+                      claimsAmountMLField.value = limitedAmountMLField.value;
+                    }
 
-                  if (parseFloat(newLimitedValue) >= limitOutpatient) {
-                    claimsAmountMLField.value = limitOutpatient;
-                  } else {
-                    claimsAmountMLField.value = newLimitedValue;
+                    this.$watch(
+                      () => claimsAmountMLField.value,
+                      (newClaimValue) => {
+                        if (
+                          parseFloat(newClaimValue) >
+                          parseFloat(limitedAmountMLField.value)
+                        ) {
+                          claimsAmountMLField.value =
+                            limitedAmountMLField.value;
+                        }
+                      }
+                    );
+                  } else if (newValue === "Outpatient") {
+                    const limitOutpatient = 70;
+
+                    if (
+                      parseFloat(limitedAmountMLField.value) >= limitOutpatient
+                    ) {
+                      claimsAmountMLField.value = limitOutpatient;
+                    } else {
+                      claimsAmountMLField.value = limitedAmountMLField.value;
+                    }
+
+                    this.$watch(
+                      () => claimsAmountMLField.value,
+                      (newClaimValue) => {
+                        if (parseFloat(newClaimValue) > limitOutpatient) {
+                          claimsAmountMLField.value = limitOutpatient;
+                        } else if (
+                          parseFloat(newClaimValue) >
+                          parseFloat(limitedAmountMLField.value)
+                        ) {
+                          claimsAmountMLField.value =
+                            limitedAmountMLField.value;
+                        }
+                      }
+                    );
                   }
                 }
-              }
-            );
-          }
+              );
+
+              this.$watch(
+                () => limitedAmountMLField.value,
+                (newLimitedValue) => {
+                  if (
+                    medicalCategoryMLField.value === "Medical Check-Up" ||
+                    medicalCategoryMLField.value === "Dental"
+                  ) {
+                    if (
+                      parseFloat(claimsAmountMLField.value) >
+                      parseFloat(newLimitedValue)
+                    ) {
+                      claimsAmountMLField.value = newLimitedValue;
+                    }
+                  } else if (medicalCategoryMLField.value === "Outpatient") {
+                    const limitOutpatient = 70;
+
+                    if (parseFloat(newLimitedValue) >= limitOutpatient) {
+                      claimsAmountMLField.value = limitOutpatient;
+                    } else {
+                      claimsAmountMLField.value = newLimitedValue;
+                    }
+                  }
+                }
+              );
+            }
           }
 
           if (tab.title === "Details") {
@@ -3213,38 +3250,40 @@ export default {
     },
 
     generateNewFileName(originalName, fieldId) {
-  let prefix = "";
-  switch (fieldId) {
-    case "UploadMileageRMLT":
-      prefix = "MILEAGE_";
-      break;
-    case "UploadFareRMLT":
-      prefix = "FARE_";
-      break;
-    case "UploadTollLT":
-      prefix = "TOLL_";
-      break;
-    case "UploadParkingLT":
-      prefix = "PARKING_";
-      break;
-    case "UploadAirportLimoTeksiOT":
-      prefix = "AIRPORTLIMOTEKSI_";
-      break;
-    default:
-      prefix = "SUPPORTING_DOC_";
-  }
-  return `${prefix}${originalName}`;
-},
-handleAddFile(error, file, field) {
-  if (error) {
-    console.error("Error adding file:", error.message);
-    return;
-  }
+      let prefix = "";
+      switch (fieldId) {
+        case "UploadMileageRMLT":
+          prefix = "MILEAGE_";
+          break;
+        case "UploadFareRMLT":
+          prefix = "FARE_";
+          break;
+        case "UploadTollLT":
+          prefix = "TOLL_";
+          break;
+        case "UploadParkingLT":
+          prefix = "PARKING_";
+          break;
+        case "UploadAirportLimoTeksiOT":
+          prefix = "AIRPORTLIMOTEKSI_";
+          break;
+        default:
+          prefix = "SUPPORTING_DOC_";
+      }
+      return `${prefix}${originalName}`;
+    },
+    handleAddFile(error, file, field) {
+      if (error) {
+        console.error("Error adding file:", error.message);
+        return;
+      }
 
-  if (!Array.isArray(field.value)) {
-    console.error("field.value is not an array. Initializing as an empty array.");
-    field.value = [];
-  }
+      if (!Array.isArray(field.value)) {
+        console.error(
+          "field.value is not an array. Initializing as an empty array."
+        );
+        field.value = [];
+      }
 
       const newFileName = this.generateNewFileName(file.file.name, field.id);
       const renamedFile = new File([file.file], newFileName, {
@@ -3268,39 +3307,53 @@ handleAddFile(error, file, field) {
       console.log("Updated files:", field.value);
     },
 
-handleRemoveFile(error, file, field) {
-  if (error) {
-    console.error("An error occurred while removing the file:", error.message);
-    return;
-  }
+    handleRemoveFile(error, file, field) {
+      if (error) {
+        console.error(
+          "An error occurred while removing the file:",
+          error.message
+        );
+        return;
+      }
 
-  if (!Array.isArray(field.value)) {
-    console.error("field.value is not an array. Cannot proceed with removal.");
-    return;
-  }
+      if (!Array.isArray(field.value)) {
+        console.error(
+          "field.value is not an array. Cannot proceed with removal."
+        );
+        return;
+      }
 
-  const fileObject = file.file;
-  console.log("Removing file:", fileObject);
+      const fileObject = file.file;
+      console.log("Removing file:", fileObject);
 
-  // Generate the expected file name with prefix
-  const expectedFileName = this.generateNewFileName(fileObject.name, field.id);
+      // Generate the expected file name with prefix
+      const expectedFileName = this.generateNewFileName(
+        fileObject.name,
+        field.id
+      );
 
-  // Create a new array excluding the file to be removed
-  const newFileList = field.value.filter(f => !(f.name === expectedFileName && f.lastModified === fileObject.lastModified));
+      // Create a new array excluding the file to be removed
+      const newFileList = field.value.filter(
+        (f) =>
+          !(
+            f.name === expectedFileName &&
+            f.lastModified === fileObject.lastModified
+          )
+      );
 
-  // Use a new array instance to trigger Vue's reactivity
-  if (newFileList.length !== field.value.length) {
-    field.value = [...newFileList];
-  }
+      // Use a new array instance to trigger Vue's reactivity
+      if (newFileList.length !== field.value.length) {
+        field.value = [...newFileList];
+      }
 
-  console.log("Files after removal:", field.value);
-},
+      console.log("Files after removal:", field.value);
+    },
 
-  handleAddFileOT(error, file, filesArray) {
-  if (error) {
-    console.error("Error adding file:", error.message);
-    return;
-  }
+    handleAddFileOT(error, file, filesArray) {
+      if (error) {
+        console.error("Error adding file:", error.message);
+        return;
+      }
 
       // Generate new filename based on the expense name and original filename
       const expenseName = this.newExpense.name || "UNKNOWN";
