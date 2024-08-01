@@ -104,6 +104,7 @@
                           !isPanelClinic ||
                           (field.id !== 'OtherClinicSpecML' &&
                             field.id !== 'OtherClinicReasonML')
+                           
                         "
                       >
                         <template
@@ -2803,17 +2804,18 @@ export default {
       if (!tab) return false;
       const medCategoryField = tab.fields.find(
         (field) =>
-          field.id === "MedicalCategoryML" &&
-          "ReasonML" &&
-          "ClinicSelectionML" &&
-          "OtherClinicSpecML" &&
-          "OtherClinicReasonML"
+          field.id === "MedicalCategoryML"
       );
+
+    
+
+     this.updateFieldVisibility8(medCategoryField.value);
       return (
-        medCategoryField &&
+ 
         (medCategoryField.value === "Medical Check-Up" ||
           medCategoryField.value === "Dental")
       );
+      
     },
     isPanelClinic() {
       const tab = this.tabs.find(
@@ -2822,11 +2824,35 @@ export default {
       if (!tab) return false;
       const clinicField = tab.fields.find(
         (field) =>
-          field.id === "ClinicSelectionML" &&
-          "OtherClinicSpecML" &&
-          "OtherCliniReasonML"
+          field.id === "ClinicSelectionML"
       );
-      return clinicField && clinicField.value === "Mediviron Clinic - Panel";
+      const clinicselect = tab.fields.find(
+        (field) =>
+          field.id === 
+          "OtherClinicSpecML" &&
+          "OtherClinicReasonML"
+
+          
+      );
+      const clinicspecify = tab.fields.find(
+        (field) =>
+          field.id === 
+          "OtherClinicReasonML"
+
+          
+      );
+      // const clinicspecify = tab.fields.find(
+      //   (field) =>
+      //     field.id === 
+      //     "OtherCliniReasonML"
+      // );
+
+      this.updateFieldVisibility2(clinicField.value, clinicselect.value, clinicspecify.value);
+
+      console.log("test clinic select" + clinicselect.value);
+      console.log("test clinic specify" + clinicspecify.value);
+     
+      return clinicField.value === "Mediviron Clinic - Panel";
     },
     isOtherEntertainment() {
       const entertainmentTab = this.entertainmentTabs.find(
@@ -2903,7 +2929,8 @@ export default {
                 )
             );
             if (clinicField) {
-              this.updateFieldVisibility2(clinicField.value);
+              console.log("test 123" + clinicField.value);
+              //this.updateFieldVisibility2(clinicField.value);
             }
 
             const medCategoryField = tab.fields.find(
@@ -2921,7 +2948,8 @@ export default {
                 Object.prototype.hasOwnProperty.call(field, "OtherClinicSpecML")
             );
             if (medCategoryField) {
-              this.updateFieldVisibility8(medCategoryField.value);
+              console.log("test hazman" + medCategoryField.value);
+             // this.updateFieldVisibility8(medCategoryField.value);
             }
 
             const medicalCategoryMLField = tab.fields.find(
@@ -3442,7 +3470,8 @@ export default {
       }
     },
 
-    updateFieldVisibility2(ClinicValue) {
+    updateFieldVisibility2(Clinicfield, clinicselectvalue, clinicspecifyvalue) {
+    
       const medicalBillReimbursementTab = this.tabs.find(
         (tab) => tab.title === "Medical Bill Reimbursement"
       );
@@ -3455,13 +3484,18 @@ export default {
       );
       if (!OtherClinicSpecMLField || !OtherClinicReasonMLField) return;
 
-      if (ClinicValue === "Mediviron Clinic - Panel") {
-        OtherClinicSpecMLField.hidden = true;
-        OtherClinicReasonMLField.hidden = true;
-      } else {
-        OtherClinicSpecMLField.hidden = false;
-        OtherClinicReasonMLField.hidden = false;
-      }
+      if (Clinicfield === "Mediviron Clinic - Panel") {
+    OtherClinicSpecMLField.hidden = true;
+    OtherClinicReasonMLField.hidden = true;
+    console.log("test clinic hidden value: "+ Clinicfield);
+    OtherClinicSpecMLField.value = ""; // Reset value
+    OtherClinicReasonMLField.value ="";
+  } else {
+    console.log("test clinic hidden value: "+ Clinicfield);
+    OtherClinicSpecMLField.hidden = false;
+    OtherClinicReasonMLField.hidden = false;
+    // Reset value
+  }
     },
 
     updateFieldVisibility3(staffRefreshmentValue) {
@@ -3644,6 +3678,12 @@ export default {
         ClinicSelectionMLField.hidden = true;
         OtherClinicReasonMLField.hidden = true;
         OtherClinicSpecMLField.hidden = true;
+        console.log("test hidden value: "+ OtherClinicSpecMLField.value);
+        OtherClinicSpecMLField.value = "";
+        OtherClinicReasonMLField.value = "";
+        ReasonMLField.value = "";
+        ClinicSelectionMLField.value = "" ;
+
       }
     },
 
