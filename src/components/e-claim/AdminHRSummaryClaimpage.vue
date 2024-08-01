@@ -1353,21 +1353,58 @@ td {
   padding-left: 4px;
 }
 </style>
-<!-- 
-<style>
+
+<style scoped>
+tr:first-child th:first-child {
+  border-top-left-radius: 16px;
+}
+tr:first-child th:last-child {
+  border-top-right-radius: 16px;
+}
+tr:last-child th:first-child {
+  border-bottom-left-radius: 16px;
+}
+tr:last-child th:last-child {
+  border-bottom-right-radius: 16px;
+}
+
+.details tr td:last-child {
+  display: none;
+}
+.details tr th:last-child {
+  display: none;
+}
+.details tr td:nth-last-child(2) {
+  display: none;
+}
+.details tr th:nth-last-child(2) {
+  display: none;
+}
+.details tr td:nth-last-child(3) {
+  display: none;
+}
+.details tr th:nth-last-child(3) {
+  display: none;
+}
+
+div:has(> table) {
+  overflow-x: auto;
+}
+
+table th,
+td {
+  padding-right: 4px;
+  padding-left: 4px;
+}
+</style>
+
+<style scoped>
 @media print {
   @page {
     size: A4 portrait;
   }
   * {
     color: black;
-    font-size: 14px;
-  }
-  body {
-    margin: 0;
-  }
-  p {
-    font-size: 12px !important;
   }
   input {
     display: none;
@@ -1378,13 +1415,10 @@ td {
   #claimant-informations {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  #claimant-informations div {
-    margin-bottom: 6px !important;
-    font-size: 14px !important;
-  }
   .details h1 {
-    font-size: 16px !important;
-    margin-bottom: 0 !important;
+    font-size: 12px;
+    margin-bottom: 6px;
+    margin-top: 6px;
   }
   .print-div {
     box-shadow: none;
@@ -1395,14 +1429,9 @@ td {
   }
   .detail-table {
     page-break-inside: avoid;
-    margin-top: 6px !important;
-  }
-  .detail-table h1 {
-    margin-top: 6px !important;
   }
   table {
     page-break-inside: avoid;
-    margin-top: 4px !important;
   }
   * {
     box-shadow: 0;
@@ -1418,51 +1447,57 @@ td {
     margin-left: 0;
     width: 100vw !important;
     padding: 0;
+  }
+  #summaryPrint div {
+    visibility: visible !important;
+    width: 100% !important;
     box-shadow: 0;
-    position: absolute;
-    left: 0;
   }
   #summaryPrint button {
     display: none;
-  }
-
-  #rn {
-    display: block !important;
   }
   #total {
     position: absolute;
     right: 10px;
   }
+  .tab-title {
+    font-size: 12px;
+    line-height: 30px;
+  }
   #table-overflow {
     width: 100%;
     overflow: hidden;
+    margin-bottom: 15px !important;
   }
   #table-overflow table {
     width: 100%;
   }
   #table-overflow table tr {
-    height: max-content;
+    height: 120%;
     width: 100%;
+    font-size: 8px !important;
   }
   #table-overflow table th {
-    padding: 1px auto;
+    padding: 0 auto;
     margin: 0 auto;
-    font-size: 8px !important;
-    height: 20px;
+    font-size: 6px !important;
+    height: 10px;
     width: 10px;
     overflow-wrap: break-word;
     word-wrap: break-word;
-    line-height: 10px;
+    line-height: 10px !important;
+    vertical-align: middle !important;
   }
   #summaryPrint #table-overflow table td {
-    padding: 1px auto;
+    padding: 0 auto;
     margin: 0 auto;
-    font-size: 12px !important;
-    height: 20px;
+    font-size: 8px !important;
+    height: 10px;
     width: 10px;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    line-height: 18px !important;
+    line-height: 10px !important;
+    vertical-align: middle !important;
   }
 
   #hidden {
@@ -1470,21 +1505,19 @@ td {
   }
 
   #staffDetails h1 {
-    font-size: 8px;
+    font-size: 8px !important;
+    line-height: 8px;
     padding: 0;
     margin: 0;
+    vertical-align: middle !important;
   }
 
   #remarkText {
-    padding: 1 auto;
-    margin: 0 auto;
-    font-size: 12px !important;
-    height: 20px;
-    width: 10px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    line-height: 18px !important;
-    color: black !important;
+    font-size: 8px !important;
+    line-height: 8px;
+    padding: 0;
+    margin: 0;
+    vertical-align: middle !important;
   }
 }
-</style> -->
+</style>

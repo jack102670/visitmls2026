@@ -210,9 +210,9 @@
                 <td class="font-normal">
                   {{
                     claim.Type +
-                    " (x" +
+                    ' (x' +
                     claimDatasDetails[claim.No - 1].length +
-                    ")"
+                    ')'
                   }}
                 </td>
                 <td class="font-normal">{{ claim.Amount }}</td>
@@ -260,9 +260,9 @@
                   >
                     {{
                       key
-                        .split("_")
+                        .split('_')
 
-                        .join(" ")
+                        .join(' ')
                     }}
                   </th>
                 </tr>
@@ -287,12 +287,12 @@
                     :key="i"
                   >
                     {{
-                      key == "Attachments"
-                        ? ""
-                        : key == "Staff_Involved"
-                          ? ""
-                          : key == "Participants"
-                            ? ""
+                      key == 'Attachments'
+                        ? ''
+                        : key == 'Staff_Involved'
+                          ? ''
+                          : key == 'Participants'
+                            ? ''
                             : val
                     }}
 
@@ -367,7 +367,7 @@
               >
                 STATUS
               </th>
-              <th class=" pl-6">NAME</th>
+              <th class="pl-6">NAME</th>
               <th class="">DESIGNATION</th>
               <th class="">DEPARTMENT</th>
               <th class="50%">DATE</th>
@@ -490,12 +490,10 @@
         </div> -->
 
         <div
-          
           class="text-xs lg:text-base border-2 mt-10 border-gray-400 dark:border-gray-600 rounded-2xl"
           id="table-overflow"
         >
           <table class="w-full">
-        
             <tr class="h-10 bg-gray-300 dark:bg-gray-700 rounded-2xl">
               <th class="pl-6">Remark</th>
             </tr>
@@ -503,7 +501,9 @@
             <tr
               class="h-10 text-left text-xs lg:text-base border-t-2 border-gray-400 dark:border-gray-600"
             >
-              <td class="text-center text-balance">{{ this.claimDetails.comment }}</td>
+              <td class="text-center text-balance">
+                {{ this.claimDetails.comment }}
+              </td>
             </tr>
           </table>
         </div>
@@ -917,11 +917,11 @@
 </template>
 
 <script>
-import moment from "moment";
-import fileSaver from "file-saver";
-import axios from "axios";
+import moment from 'moment';
+import fileSaver from 'file-saver';
+import axios from 'axios';
 export default {
-  name: "AdminSummaryClaimpage",
+  name: 'AdminSummaryClaimpage',
   props: {
     rn: {
       type: String,
@@ -931,7 +931,7 @@ export default {
   data() {
     return {
       // need to get from API
-      role: "approver",
+      role: 'approver',
 
       // remark for every single detail
       singleRemarks: [],
@@ -953,19 +953,19 @@ export default {
 
       dropdownOpen: false,
       selectedStatus: {
-        label: "Approved",
-        class: "bg-green-500 text-white hover:bg-green-600",
+        label: 'Approved',
+        class: 'bg-green-500 text-white hover:bg-green-600',
       },
       statuses: [
         {
-          label: "Approved",
-          class: "bg-green-500 text-white hover:bg-green-600",
-          dropDownClass: "text-green-500 hover:text-green-600",
+          label: 'Approved',
+          class: 'bg-green-500 text-white hover:bg-green-600',
+          dropDownClass: 'text-green-500 hover:text-green-600',
         },
         {
-          label: "Reimbursed",
-          class: "bg-white text-gray-700 hover:bg-gray-100",
-          dropDownClass: "text-gray-700 hover:text-gray-800",
+          label: 'Reimbursed',
+          class: 'bg-white text-gray-700 hover:bg-gray-100',
+          dropDownClass: 'text-gray-700 hover:text-gray-800',
         },
       ],
 
@@ -977,7 +977,7 @@ export default {
       approveSuccess: false,
       loading: false,
       loadingText: '',
-      comment: "",
+      comment: '',
 
       // need to fetch from or post to API
       rejectApprover: false,
@@ -986,10 +986,10 @@ export default {
       verified: false,
       reimbursed: false,
       resubmit: false,
-      dateApprover: "12 Jun 2024",
-      dateVerifier: "8 Jun 2024",
-      remark: "",
-      statusApprover: "",
+      dateApprover: '12 Jun 2024',
+      dateVerifier: '8 Jun 2024',
+      remark: '',
+      statusApprover: '',
 
       // fetch from backend
       claimDetails: [],
@@ -998,65 +998,65 @@ export default {
       claimDataTotalAmount: [],
 
       // referenceNumber: 'TMTM-Finance-2024-07-0451',
-      referenceNumber: "pktm2222",
+      referenceNumber: 'pktm2222',
 
       // need to fetch from API
       claimData: [
         {
           no: 1,
-          type: "Local/Outstation Travelling Expenses",
-          particulars: "as attached travelling voucher",
+          type: 'Local/Outstation Travelling Expenses',
+          particulars: 'as attached travelling voucher',
           amount: 150.0,
         },
         {
           no: 2,
-          type: "Outstation/Overseas Travelling Expenses",
-          particulars: "as attached travelling voucher",
+          type: 'Outstation/Overseas Travelling Expenses',
+          particulars: 'as attached travelling voucher',
           amount: 279.3,
         },
         {
           no: 3,
-          type: "Entertainment",
-          particulars: "as attached travelling voucher",
+          type: 'Entertainment',
+          particulars: 'as attached travelling voucher',
           amount: 300,
         },
       ],
       details: [
         {
           No: 1,
-          Date: "2024-05-16",
-          DestinationPurpose: "LABEL 1",
+          Date: '2024-05-16',
+          DestinationPurpose: 'LABEL 1',
           MileageKM: 40,
           MileageRM: 80,
           Parking: 10,
           Toll: 20,
-          Receipts: "",
+          Receipts: '',
           Total: 150,
-          tabTitle: "Local Travelling",
+          tabTitle: 'Local Travelling',
         },
         {
           No: 1,
-          Date: "2024-05-16",
-          DestinationPurpose: "Thailand",
+          Date: '2024-05-16',
+          DestinationPurpose: 'Thailand',
           ForeignCurrency: 100,
           MealAllowance: 30.3,
           Airport: 100,
           Teksi: 49,
-          Receipts: "",
+          Receipts: '',
           Total: 279.3,
-          tabTitle: "Oversea Travelling",
+          tabTitle: 'Oversea Travelling',
         },
         {
           No: 1,
-          Date: "2024-05-16",
-          Type: "BREAKFAST",
-          Company: "PKT",
-          Venue: "Lighthouse level 7",
-          reference: "client",
+          Date: '2024-05-16',
+          Type: 'BREAKFAST',
+          Company: 'PKT',
+          Venue: 'Lighthouse level 7',
+          reference: 'client',
           amount: 300,
-          Receipts: "",
+          Receipts: '',
           Total: 300,
-          tabTitle: "Entertainment",
+          tabTitle: 'Entertainment',
         },
       ],
     };
@@ -1073,22 +1073,22 @@ export default {
     // need to post to database
     statusVerifier() {
       // Default status
-      let status = "PENDING";
+      let status = 'PENDING';
 
       // Extract the admin status and convert it to uppercase
       const adminStatus =
-        this.claimDetails?.admin_status?.split(".")[0].toUpperCase() || "";
+        this.claimDetails?.admin_status?.split('.')[0].toUpperCase() || '';
 
       // Determine the status based on adminStatus value
-      if (adminStatus === "") {
-        status = "PENDING";
-      } else if (adminStatus === "VERIFIED") {
-        status = "VERIFIED";
-      } else if (adminStatus === "RESUBMIT") {
-        status = "RESUBMIT";
+      if (adminStatus === '') {
+        status = 'PENDING';
+      } else if (adminStatus === 'VERIFIED') {
+        status = 'VERIFIED';
+      } else if (adminStatus === 'RESUBMIT') {
+        status = 'RESUBMIT';
       } else {
         // Default to VERIFIED if none of the above conditions are met
-        status = "VERIFIED";
+        status = 'VERIFIED';
       }
 
       return status;
@@ -1102,16 +1102,16 @@ export default {
       this.selectedStatus = status;
       this.dropdownOpen = false;
 
-      if (status.label == "Reimbursed") {
+      if (status.label == 'Reimbursed') {
         this.confirmReimburse = true;
       }
     },
     async FetchClaimDetails() {
-      this.loadingText = "Fetching"
+      this.loadingText = 'Fetching';
       this.loading = true;
       await axios
         .get(
-          "http://172.28.28.91:86/api/User/GetClaimDetails/" +
+          'http://172.28.28.91:86/api/User/GetClaimDetails/' +
             this.referenceNumber
         )
         .then((response) => {
@@ -1119,37 +1119,37 @@ export default {
           this.claimDetails = response.data?.result;
           console.log(this.claimDetails);
           this.statusVerifier = this.claimDetails?.admin_status
-            .split(".")[0]
+            .split('.')[0]
             .toUpperCase();
           this.statusApprover = this.claimDetails?.admin_status
-            .split(".")[0]
+            .split('.')[0]
             .toUpperCase();
           this.remark = this.claimDetails?.approver_feedback;
-          console.log(this.statusVerifier, "statusVerifier");
+          console.log(this.statusVerifier, 'statusVerifier');
           console.log(this.statusApprover);
 
-          if (this.statusApprover == "APPROVED") {
+          if (this.statusApprover == 'APPROVED') {
             this.approve = true;
-          } else if (this.statusApprover == "REJECTED") {
+          } else if (this.statusApprover == 'REJECTED') {
             this.rejectApprover = true;
-          } else if (this.statusApprover == "RESUBMIT") {
+          } else if (this.statusApprover == 'RESUBMIT') {
             this.resubmit = true;
-          } else if (this.statusApprover == "REIMBURSED") {
+          } else if (this.statusApprover == 'REIMBURSED') {
             this.reimbursed = true;
           } else {
-            this.statusApprover = "PENDING";
+            this.statusApprover = 'PENDING';
           }
         });
     },
     async FetchClaimDatasDetails() {
       await axios
         .get(
-          "http://172.28.28.91:97/api/User/GetLocalOutstation/" +
+          'http://172.28.28.91:97/api/User/GetLocalOutstation/' +
             this.referenceNumber
         )
         .then((response) => {
           const result = response.data.result;
-          console.log(result, "local outstation");
+          console.log(result, 'local outstation');
           let details = [];
           let amount = 0;
           // this.comment = result.comment;
@@ -1162,15 +1162,15 @@ export default {
               Starting_Point: result[i].starting_point,
               End_Point: result[i].end_point,
               Date_Event: result[i].date_event,
-              "Park_Fee(RM)": result[i].park_fee,
-              "Toll_Fee(RM)": result[i].toll_fee,
-              "Total_Fee(RM)": result[i].total_fee,
+              'Park_Fee(RM)': result[i].park_fee,
+              'Toll_Fee(RM)': result[i].toll_fee,
+              'Total_Fee(RM)': result[i].total_fee,
               Transport_Specification: result[i].transport_specification,
               Transport_Mode: result[i].transport_mode,
               Trip_Mode: result[i].trip_mode,
               Total_Mileage: result[i].total_mileage,
               Attachments: result[i].files,
-              Tab_Title: "Local Outstation",
+              Tab_Title: 'Local Outstation',
             };
             details.push(editedDetail);
           }
@@ -1185,7 +1185,7 @@ export default {
 
       await axios
         .get(
-          "http://172.28.28.91:97/api/User/GetOverseasOutstation/" +
+          'http://172.28.28.91:97/api/User/GetOverseasOutstation/' +
             this.referenceNumber
         )
         .then((response) => {
@@ -1198,7 +1198,7 @@ export default {
               Remark: result[i].comment,
               Description: result[i].description,
               Meal_Allowance: result[i].meal_allowance,
-              "Transport_Fee(RM)": result[i].transport_fee,
+              'Transport_Fee(RM)': result[i].transport_fee,
               Accom_Foreign_Currency: result[i].accom_foreign_currency,
               Accom_Exchange_Rate: result[i].accom_exchange_rate,
               Accom_Foreign_Total: result[i].accom_foreign_total,
@@ -1209,9 +1209,9 @@ export default {
               Attachments: result[i].files,
               Date: result[i].date_event,
 
-              "Total_Fee(RM)": result[i].total_fee,
+              'Total_Fee(RM)': result[i].total_fee,
 
-              Tab_Title: "Overseas Outstation",
+              Tab_Title: 'Overseas Outstation',
             };
             details.push(editedDetail);
           }
@@ -1226,7 +1226,7 @@ export default {
 
       await axios
         .get(
-          "http://172.28.28.91:97/api/User/GetRefreshment/" +
+          'http://172.28.28.91:97/api/User/GetRefreshment/' +
             this.referenceNumber
         )
         .then((response) => {
@@ -1242,10 +1242,10 @@ export default {
               Reference_Type: result[i].reference_type,
               Venue: result[i].venue_name,
               Company: result[i].company_name,
-              "Total_Fee(RM)": result[i].total_fee,
+              'Total_Fee(RM)': result[i].total_fee,
               Staff_Involved: result[i].sim,
               Attachments: result[i].files,
-              Tab_Title: "Staff Refreshment",
+              Tab_Title: 'Staff Refreshment',
             };
             details.push(editedDetail);
           }
@@ -1260,7 +1260,7 @@ export default {
 
       await axios
         .get(
-          "http://172.28.28.91:86/api/User/GetEntertainment/" +
+          'http://172.28.28.91:86/api/User/GetEntertainment/' +
             this.referenceNumber
         )
         .then((response) => {
@@ -1275,11 +1275,11 @@ export default {
               Date: result[i].date_event,
               Venue: result[i].venue_name,
               Company: result[i].company_name,
-              "Total_Fee(RM)": result[i].total_fee,
+              'Total_Fee(RM)': result[i].total_fee,
               Participants: result[i].participants,
               Attachments: result[i].files,
               Comment: result[i].comment,
-              Tab_Title: "Entertainment",
+              Tab_Title: 'Entertainment',
             };
             details.push(editedDetail);
           }
@@ -1293,7 +1293,7 @@ export default {
         });
       await axios
         .get(
-          "http://172.28.28.91:86/api/User/GetMedicalLeave/" +
+          'http://172.28.28.91:86/api/User/GetMedicalLeave/' +
             this.referenceNumber
         )
         .then((response) => {
@@ -1306,16 +1306,18 @@ export default {
               Remark: result[i].comment,
               reason: result[i].reason,
               Date: result[i].date_leave_taken,
-              clinicselection: result[i].clinic_name? result[i].clinic_name : result[i].clinic_selection,
+              clinicselection: result[i].clinic_name
+                ? result[i].clinic_name
+                : result[i].clinic_selection,
               reason_other_clinic: result[i].reason_different,
               bank_name: result[i].bank_name,
               bank_holder: result[i].bank_holder,
               bank_account: result[i].bank_account,
-              "Total_Fee(RM)": result[i].claim_amount,
-       
+              'Total_Fee(RM)': result[i].claim_amount,
+
               Attachments: result[i].files,
-      
-              Tab_Title: "Medical Leave",
+
+              Tab_Title: 'Medical Leave',
             };
             details.push(editedDetail);
           }
@@ -1330,7 +1332,7 @@ export default {
 
       await axios
         .get(
-          "http://172.28.28.91:86/api/User/GetHandphone/" + this.referenceNumber
+          'http://172.28.28.91:86/api/User/GetHandphone/' + this.referenceNumber
         )
         .then((response) => {
           const result = response.data.result;
@@ -1340,14 +1342,13 @@ export default {
             amount += result[i].claim_amount;
             const editedDetail = {
               Remark: result[i].comment,
-             claim_month : result[i].claim_month,
+              claim_month: result[i].claim_month,
               Attachments: result[i].files,
               bank_name: result[i].bank_name,
               bank_holder: result[i].bank_holder,
               bank_account: result[i].bank_account,
-            
-        
-              Tab_Title: "Handphone Bill",
+
+              Tab_Title: 'Handphone Bill',
             };
             details.push(editedDetail);
           }
@@ -1361,7 +1362,7 @@ export default {
         });
       await axios
         .get(
-          "http://172.28.28.91:97/api/User/GetOthers/" + this.referenceNumber
+          'http://172.28.28.91:97/api/User/GetOthers/' + this.referenceNumber
         )
         .then((response) => {
           const result = response.data.result;
@@ -1373,10 +1374,10 @@ export default {
               Remark: result[i].comment,
               Description: result[i].description,
               Date: result[i].expense_date,
-              "Total_Fee(RM)": result[i].total_fee,
+              'Total_Fee(RM)': result[i].total_fee,
               Attachments: result[i].files,
 
-              Tab_Title: "Other",
+              Tab_Title: 'Other',
             };
             details.push(editedDetail);
           }
@@ -1399,7 +1400,7 @@ export default {
         }
       });
 
-      console.log(this.claimDatas, "claimDatas");
+      console.log(this.claimDatas, 'claimDatas');
       console.log(this.claimDatasDetails);
     },
 
@@ -1409,134 +1410,134 @@ export default {
     // click function after confirm the approve
     ConfirmApprove() {
       this.confirmApprove = false;
-      this.ApproveOrReject("Approve");
+      this.ApproveOrReject('Approve');
     },
 
     // click function after confirm the reject
     ConfirmReject() {
       this.confirmReject = false;
-      this.ApproveOrReject("Reject");
+      this.ApproveOrReject('Reject');
     },
 
     // click function after confirm the reimburse
     ConfirmReimburse() {
       this.confirmReimburse = false;
-      this.ApproveOrReject("Reimbursed");
+      this.ApproveOrReject('Reimbursed');
     },
 
     // click function after confirm the resubmit
     ConfirmResubmit() {
       this.confirmResubmit = false;
-      this.ApproveOrReject("Resubmit");
+      this.ApproveOrReject('Resubmit');
     },
 
     //approve or reject action
     // need to post to database
     ApproveOrReject(AoR) {
-      if (AoR == "Approve") {
+      if (AoR == 'Approve') {
         this.approve = true;
-        this.dateApprover = moment(new Date()).format("D MMM YYYY");
+        this.dateApprover = moment(new Date()).format('D MMM YYYY');
         // post the status and remark to API
         this.loading = true;
 
         const approveData = {
-          approver_status: "APPROVED",
+          approver_status: 'APPROVED',
           approver_comment: this.remark,
-          user_email: "user_email",
+          user_email: 'user_email',
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
         };
         console.log(approveData);
         axios
-          .put("http://172.28.28.91:86/api/Admin/Approve_Claim", approveData)
+          .put('http://172.28.28.91:86/api/Admin/Approve_Claim', approveData)
           .then((response) => {
             // Handle success response
-            console.log("API response", response.data);
-            localStorage.setItem("ApproveOrNot", "approve");
+            console.log('API response', response.data);
+            localStorage.setItem('ApproveOrNot', 'approve');
 
             this.approveSuccess = true;
             setTimeout(() => {
-              this.$router.push({ name: "AdminDashboardpage" });
+              this.$router.push({ name: 'AdminDashboardpage' });
             }, 1500);
           })
           .catch((error) => {
             // Handle error response
-            console.error("API error", error);
+            console.error('API error', error);
           });
-      } else if (AoR == "Reject") {
+      } else if (AoR == 'Reject') {
         this.rejectApprover = true;
-        this.dateApprover = moment(new Date()).format("D MMM YYYY");
+        this.dateApprover = moment(new Date()).format('D MMM YYYY');
         this.loading = true;
 
         const approveData = {
-          approver_status: "REJECTED",
+          approver_status: 'REJECTED',
           approver_comment: this.remark,
-          user_email: "user_email",
+          user_email: 'user_email',
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
         };
         axios
-          .put("http://172.28.28.91:86/api/Admin/Approve_Claim", approveData)
+          .put('http://172.28.28.91:86/api/Admin/Approve_Claim', approveData)
           .then((response) => {
             // Handle success response
             this.loading = false;
 
-            console.log("API response", response.data);
-            localStorage.setItem("ApproveOrNot", "reject");
+            console.log('API response', response.data);
+            localStorage.setItem('ApproveOrNot', 'reject');
           })
           .catch((error) => {
             // Handle error response
-            console.error("API error", error);
+            console.error('API error', error);
           });
-      } else if (AoR == "Resubmit") {
+      } else if (AoR == 'Resubmit') {
         this.resubmit = true;
-        this.dateApprover = moment(new Date()).format("D MMM YYYY");
+        this.dateApprover = moment(new Date()).format('D MMM YYYY');
         this.loading = true;
 
         const approveData = {
-          approver_status: "RESUBMIT",
+          approver_status: 'RESUBMIT',
           approver_comment: this.remark,
-          user_email: "user_email",
+          user_email: 'user_email',
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
         };
         axios
-          .put("http://172.28.28.91:86/api/Admin/Approve_Claim", approveData)
+          .put('http://172.28.28.91:86/api/Admin/Approve_Claim', approveData)
           .then((response) => {
             // Handle success response
             this.loading = false;
 
-            console.log("API response", response.data);
-            localStorage.setItem("ApproveOrNot", "resubmit");
+            console.log('API response', response.data);
+            localStorage.setItem('ApproveOrNot', 'resubmit');
           })
           .catch((error) => {
             // Handle error response
-            console.error("API error", error);
+            console.error('API error', error);
           });
-      } else if (AoR == "Reimbursed") {
+      } else if (AoR == 'Reimbursed') {
         this.reimbursed = true;
-        this.dateApprover = moment(new Date()).format("D MMM YYYY");
+        this.dateApprover = moment(new Date()).format('D MMM YYYY');
         this.loading = true;
 
         const approveData = {
-          approver_status: "REIMBURSED",
+          approver_status: 'REIMBURSED',
           approver_comment: this.remark,
-          user_email: "user_email",
+          user_email: 'user_email',
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
         };
         axios
-          .put("http://172.28.28.91:86/api/Admin/Approve_Claim", approveData)
+          .put('http://172.28.28.91:86/api/Admin/Approve_Claim', approveData)
           .then((response) => {
             // Handle success response
             this.loading = false;
 
-            console.log("API response", response.data);
-            localStorage.setItem("ApproveOrNot", "reimbursed");
+            console.log('API response', response.data);
+            localStorage.setItem('ApproveOrNot', 'reimbursed');
           })
           .catch((error) => {
             // Handle error response
-            console.error("API error", error);
+            console.error('API error', error);
           });
       }
     },
@@ -1562,12 +1563,12 @@ export default {
   },
   mounted() {
     // Sidebar close or open
-    let openOrNot = localStorage.getItem("openOrNot");
-    const element = document.querySelector("main");
-    if (element && openOrNot == "false") {
-      element.classList.add("become-big");
-    } else if (element && openOrNot == "true") {
-      element.classList.remove("become-big");
+    let openOrNot = localStorage.getItem('openOrNot');
+    const element = document.querySelector('main');
+    if (element && openOrNot == 'false') {
+      element.classList.add('become-big');
+    } else if (element && openOrNot == 'true') {
+      element.classList.remove('become-big');
     }
 
     this.referenceNumber = this.rn;
@@ -1614,7 +1615,51 @@ td {
 }
 </style>
 
-<style>
+<style scoped>
+tr:first-child th:first-child {
+  border-top-left-radius: 16px;
+}
+tr:first-child th:last-child {
+  border-top-right-radius: 16px;
+}
+tr:last-child th:first-child {
+  border-bottom-left-radius: 16px;
+}
+tr:last-child th:last-child {
+  border-bottom-right-radius: 16px;
+}
+
+.details tr td:last-child {
+  display: none;
+}
+.details tr th:last-child {
+  display: none;
+}
+.details tr td:nth-last-child(2) {
+  display: none;
+}
+.details tr th:nth-last-child(2) {
+  display: none;
+}
+.details tr td:nth-last-child(3) {
+  display: none;
+}
+.details tr th:nth-last-child(3) {
+  display: none;
+}
+
+div:has(> table) {
+  overflow-x: auto;
+}
+
+table th,
+td {
+  padding-right: 4px;
+  padding-left: 4px;
+}
+</style>
+
+<style scoped>
 @media print {
   @page {
     size: A4 portrait;
@@ -1632,7 +1677,7 @@ td {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   .details h1 {
-    font-size: 20px;
+    font-size: 12px;
     margin-bottom: 6px;
     margin-top: 6px;
   }
@@ -1677,12 +1722,13 @@ td {
     right: 10px;
   }
   .tab-title {
-    font-size: 24px;
+    font-size: 12px;
     line-height: 30px;
   }
   #table-overflow {
     width: 100%;
     overflow: hidden;
+    margin-bottom: 15px !important;
   }
   #table-overflow table {
     width: 100%;
@@ -1690,26 +1736,29 @@ td {
   #table-overflow table tr {
     height: 120%;
     width: 100%;
+    font-size: 8px !important;
   }
   #table-overflow table th {
     padding: 0 auto;
     margin: 0 auto;
-    font-size: 6px;
-    height: 20px;
+    font-size: 6px !important;
+    height: 10px;
     width: 10px;
     overflow-wrap: break-word;
     word-wrap: break-word;
-    line-height: 8px;
+    line-height: 10px !important;
+    vertical-align: middle !important;
   }
   #summaryPrint #table-overflow table td {
     padding: 0 auto;
     margin: 0 auto;
-    font-size: 6px;
-    height: 20px;
+    font-size: 8px !important;
+    height: 10px;
     width: 10px;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    line-height: 8px;
+    line-height: 10px !important;
+    vertical-align: middle !important;
   }
 
   #hidden {
@@ -1717,9 +1766,19 @@ td {
   }
 
   #staffDetails h1 {
-    font-size: 6px;
+    font-size: 8px !important;
+    line-height: 8px;
     padding: 0;
     margin: 0;
+    vertical-align: middle !important;
+  }
+
+  #remarkText {
+    font-size: 8px !important;
+    line-height: 8px;
+    padding: 0;
+    margin: 0;
+    vertical-align: middle !important;
   }
 }
 </style>
