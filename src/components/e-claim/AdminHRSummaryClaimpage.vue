@@ -298,7 +298,7 @@
                         (reimbursed || approve || rejectApprover || resubmit) &&
                         item.comment.trim() !== ''
                       "
-                      class="m-1 px-2 py-1 bg-blue-900 text-white rounded-2xl"
+                      class="m-1 px-2 py-1 bg-sky-100 rounded-2xl"
                     >
                       {{ item.comment }}
                     </h1>
