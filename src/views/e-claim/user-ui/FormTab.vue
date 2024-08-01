@@ -2758,7 +2758,7 @@ export default {
       const transportField = tab.fields.find(
         (field) =>
           field.id === "TransportLT" && "TransportSpec" && "PublicTransportSpec"
-      );
+      );this.updateFieldVisibility10(transportField.value);
       return transportField && transportField.value === "Company Transport";
     },
     isPublicTransport() {
@@ -2767,7 +2767,7 @@ export default {
       const publicTransportField = tab.fields.find(
         (field) =>
           field.id === "TransportLT" && "TransportSpec" && "PublicTransportSpec"
-      );
+      );this.updateFieldVisibility10(publicTransportField.value);
       return (
         publicTransportField &&
         publicTransportField.value === "Public Transport"
@@ -2780,6 +2780,7 @@ export default {
         (field) =>
           field.id === "TransportLT" && "TransportSpec" && "PublicTransportSpec"
       );
+      this.updateFieldVisibility10(personalTransportField.value);
       return (
         personalTransportField &&
         personalTransportField.value === "Personal Transport"
@@ -2795,6 +2796,8 @@ export default {
           "AccommodationLT" &&
           "MealAllowanceLT"
       );
+      this.updateFieldVisibility10(tripField.value);
+      
       return tripField && tripField.value === "One Way";
     },
     isOtherThanOutpatient() {
@@ -3469,6 +3472,68 @@ export default {
         PublicTransportSpecField.hidden = false;
       }
     },
+    updateFieldVisibility10(param,) {
+      console.log("test console log : "+ param);
+    const localTravellingTab = this.tabs.find(
+      (tab) => tab.title === "Local Travelling"
+    );
+    if (!localTravellingTab) return;
+ 
+    const ReturndateLTField = localTravellingTab.fields.find(
+      (field) => field.id === "ReturndateLT"
+    );
+    const PublicTransportSpec = localTravellingTab.fields.find(
+      (field) => field.id === "PublicTransportSpec"
+    );
+    const FareRMLT = localTravellingTab.fields.find(
+      (field) => field.id === "FareRMLT"
+    );
+    const TransportSpec = localTravellingTab.fields.find(
+      (field) => field.id === "TransportSpec"
+    );
+    const MileageRMLT = localTravellingTab.fields.find(
+      (field) => field.id === "MileageRMLT"
+    );
+    const MileageKMLT = localTravellingTab.fields.find(
+      (field) => field.id === "MileageKMLT"
+    );
+    const ParkingLT = localTravellingTab.fields.find(
+      (field) => field.id === "ParkingLT"
+    );
+    const TollLT = localTravellingTab.fields.find(
+      (field) => field.id === "TollLT"
+    );
+    if (!ReturndateLTField || !ReturndateLTField) return;
+
+    if (param === "Round Trip") {
+
+  ReturndateLTField.value = ""; // Reset value
+
+} else if (param === "Personal Transport") {
+  PublicTransportSpec.value = ""; // Reset value
+  FareRMLT.value = ""; // Reset value
+  
+
+  // Reset value
+}
+else if (param === "Company Transport") {
+  PublicTransportSpec.value = ""; // Reset value
+  FareRMLT.value = ""; // Reset value
+  TransportSpec.value = ""; // Reset value
+  MileageRMLT.value = ""; // Reset value
+  MileageKMLT.value = "";
+
+  
+
+  // Reset value
+} else{ 
+  TransportSpec.value = ""; // Reset value
+  MileageRMLT.value = ""; // Reset value
+  MileageKMLT.value = "";
+  ParkingLT.value = "";
+  TollLT.value = "";
+ }
+  },
 
     updateFieldVisibility2(Clinicfield, clinicselectvalue, clinicspecifyvalue) {
     
