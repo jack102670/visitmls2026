@@ -236,7 +236,7 @@
                     <h1
                       id="remarkText"
                       v-if="!pending && item.comment.trim() !== ''"
-                      class="m-1 px-2 py-1 bg-sky-300 rounded-2xl"
+                      class="m-1 px-2 py-1 bg-sky-100 rounded-2xl"
                     >
                       {{ item.comment }}
                     </h1>
