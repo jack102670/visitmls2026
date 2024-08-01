@@ -69,9 +69,9 @@
         <!-- Box Info Section-->
         <section>
           <div
-            class="p-5 mt-1 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6"
+            class="p-5 mt-1 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5"
           >
-            <div
+            <!-- <div
               class="relative overflow-hidden hover:bg-fuchsia-100 bg-white max-h-[1000px] dark:bg-[#111827] shadow-xl border-x-2 border-y-2 rounded-lg border-fuchsia-300 dark:border-fuchsia-200 dark:hover:bg-gray-800"
             >
               <div class="card m-2" @click="filterTable('Pending')">
@@ -90,7 +90,7 @@
                   >
                 </div>
               </div>
-            </div>
+            </div> -->
             <div
               class="relative overflow-hidden dark:bg-[#111827] dark:border-green-200 dark:hover:bg-gray-800 hover:bg-green-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-green-300 rounded-lg"
             >
