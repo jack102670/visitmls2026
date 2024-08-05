@@ -3532,9 +3532,9 @@ export default {
     total_fee: claim.totalRM || 0,
     accom_foreign_total: claim.AmountforAccommodationOT || 0,
     accom_foreign_currency: claim.ForeignCurrencyAccommodationOT || "-",
-    accom_exchange_rate: claim.ExchangeRateAccommodationOT || 0,
+    accom_exchange_rate: parseFloat(claim.ExchangeRateAccommodationOT || 0).toFixed(2),
     other_foreign_currency: claim.ForeignCurrencyOthersOT || "-",
-    other_exchange_rate: claim.ExchangeRateOthersOT || 0,
+    other_exchange_rate: parseFloat(claim.ExchangeRateOthersOT || 0).toFixed(2),
     other_foreign_total: claim.AmountforOthersOT || 0,
     reference_number:  this.serialnumber|| "-",
     unique_code: uniqcodeOT || "-",
@@ -3773,7 +3773,7 @@ export default {
                     unique_code: uniqcodeHR,
                     reference_number: this.serialnumber,
                     handphone: "",
-                    
+                    ic_number: claim.icNumber ,
                     requester_id: this.userDetails.userId,
                   };
 
