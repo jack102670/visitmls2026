@@ -43,7 +43,7 @@
             class="text-blue-900 dark:text-blue-600 font-bold text-4xl"
             id="title"
           >
-            Webinars
+           {{claimDetails.report_name}}
 
             <span class="text-blue-900 dark:text-blue-600"
               >| RM{{ claimDetails.grand_total }}</span
@@ -215,7 +215,7 @@
                     ')'
                   }}
                 </td>
-                <td class="font-normal">{{ claim.Amount }}</td>
+                <td class="font-normal">{{ claim.Amount.toFixed(2) }}</td>
               </tr>
 
               <!-- total -->
@@ -223,7 +223,7 @@
                 class="border-t-2 border-gray-400 dark:border-gray-600 h-10 text-base lg:text-lg font-semibold"
               >
                 <td colspan="2" class="px-6 text-right">TOTAL:</td>
-                <td>{{ totalAmount }}</td>
+                <td>{{ totalAmount.toFixed(2) }}</td>
               </tr>
             </table>
           </div>
@@ -386,9 +386,9 @@
             </tr>
 
             <!-- table information -->
-            <tr
+            <tr v-if="claimDetails.reference_number.includes('Finance')"
               class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
-            >
+            > 
               <th
                 class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
               >
@@ -1055,7 +1055,9 @@ export default {
       statusApprover: '',
 
       // fetch from backend
-      claimDetails: [],
+      claimDetails: {
+        reference_number: '' // Initialize with an empty string or appropriate default value
+      },
       claimDatas: [],
       claimDatasDetails: [],
       claimDataTotalAmount: [],

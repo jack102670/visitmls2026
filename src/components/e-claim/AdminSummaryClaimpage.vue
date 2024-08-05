@@ -273,7 +273,7 @@
 
                 <!-- table information -->
                 <tr
-                  class="h-8 text-left align-top text-xs hover:bg-gray-200"
+                  class="h-8 text-left align-top text-xs hover:bg-gray-200 dark:hover:bg-gray-800"
                   v-for="(item, index) in detail"
                   :key="index"
                 >
@@ -293,7 +293,7 @@
                     <h1
                       id="remarkText"
                       v-if="!pending && item.comment.trim() !== ''"
-                      class="m-1 px-2 py-1 bg-sky-100 rounded-2xl"
+                      class="m-1 px-2 py-1 bg-sky-100 rounded-2xl dark:bg-sky-950"
                     >
                       {{ item.comment }}
                     </h1>
