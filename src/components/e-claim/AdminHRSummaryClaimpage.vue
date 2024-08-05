@@ -986,13 +986,14 @@ export default {
           for (let i in result) {
             amount += result[i].claim_amount;
             const editedDetail = {
+              IC_Number: result[i].ic_number,
               Date_Leave: result[i].date_leave_taken,
               Reason: result[i].reason,
               Medical_Categoroy: result[i].medical_categoroy,
               Clinic_Selection: result[i].clinic_selection,
               Clinic_Name: result[i].clinic_name,
               Reason_Different_Clinic: result[i].reason_different,
-              IC_Number: result[i].ic_number,
+              
               Bank: result[i].bank_name,
               Bank_Holder: result[i].bank_holder,
               Bank_Account: result[i].bank_account,
@@ -1026,11 +1027,12 @@ export default {
           for (let i in result) {
             amount += result[i].claim_amount;
             const editedDetail = {
+              IC_Number: result[i].ic_number,
               Claim_Month: result[i].claim_month,
               Claim_Year: result[i].claim_year,
-              Date: result[i].date_event,
+            
               Bank: result[i].bank_name,
-              IC_Number: result[i].ic_number,
+             
               Bank_Holder: result[i].bank_holder,
               Bank_Account: result[i].bank_account,
               'Claim_Amount(RM)': result[i].claim_amount,

@@ -3768,11 +3768,11 @@ export default {
                     bank_name: claim.BankNameHR,
                     bank_account: String(claim.AccBankNumberHR),
                     bank_holder: claim.AccHolderNameHR,
-                    limited_amount: claim.LimitedAmountHR,
+                  
                     claim_amount: claim.totalRM,
                     unique_code: uniqcodeHR,
                     reference_number: this.serialnumber,
-                    handphone: "",
+                    phone_limit: claim.LimitedAmountHR,
                     ic_number: claim.icNumber ,
                     requester_id: this.userDetails.userId,
                   };
