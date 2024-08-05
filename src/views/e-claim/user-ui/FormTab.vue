@@ -3944,11 +3944,21 @@ export default {
           field.id !== "AccBankNumberHR" &&
           field.id !== "AccBankNumberML" &&
           field.id !== "AccHolderNameHR" &&
-          field.id !== "AccHolderNameML"
+          field.id !== "AccHolderNameML" &&
+          field.id !== "icNumber"
         ) {
           field.value = null;
         }
+
+        if (field.type === "file" && this.$refs.pond) {
+          this.$refs.pond.forEach((pond) => {
+            if (pond && typeof pond.removeFiles === "function") {
+              pond.removeFiles();
+            }
+          });
+        }
       });
+
       this.otherExpenses = [];
       this.newExpense = {
         name: "",

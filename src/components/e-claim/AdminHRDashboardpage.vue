@@ -253,7 +253,6 @@ export default {
       axios
         .get(
           'http://172.28.28.91:86/api/ApproverVerifier/GetAllRequestApproverHR/'
-          
         )
         .then((response) => {
           this.claimsData = response.data.result;

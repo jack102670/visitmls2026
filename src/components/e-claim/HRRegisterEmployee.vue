@@ -7,11 +7,11 @@
       <div
         class="print-div relative overflow-auto bg-[#f7fbff] dark:bg-gray-900 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
-        <div class="bg-white xl:w-2/3 md:w-4/5 w-full p-6">
-          <h1 class="text-3xl font-bold text-gray-800">
+        <div class="bg-white dark:bg-gray-900 xl:w-2/3 md:w-4/5 w-full p-6">
+          <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-100">
             Registration for Employee User Profile
           </h1>
-          <p class="mt-2 text-gray-600 text-justify">
+          <p class="mt-2 text-gray-600 dark:text-gray-300 text-justify">
             Note: Please fill in all the mandatory fields to register for an
             employee
           </p>
@@ -61,7 +61,9 @@
               @input="(payload) => (form.userId = payload)"
             />
             <div class="mt-6 lg:mt-0 lg:ml-4">
-              <label :for="inputId" class="font-semibold text-gray-600"
+              <label
+                :for="inputId"
+                class="font-semibold text-gray-600 dark:text-gray-300"
                 >Employee ID<span class="text-red-500">*</span></label
               >
               <input
@@ -94,7 +96,7 @@
 
           <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
             <div>
-              <label class="font-semibold text-gray-600"
+              <label class="font-semibold text-gray-600 dark:text-gray-300"
                 >Handphone Claim Limit</label
               >
               <div class="mt-2">

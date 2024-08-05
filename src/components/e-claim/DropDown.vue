@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col relative">
-    <label :for="inputId" class="font-semibold text-gray-600"
+    <label :for="inputId" class="font-semibold text-gray-600 dark:text-gray-300"
       >{{ label }}<span v-if="mandatory" class="text-red-500">*</span></label
     >
     <div class="relative">
