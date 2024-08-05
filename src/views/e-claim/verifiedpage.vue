@@ -1,9 +1,11 @@
 <!-- Box Info for User View-->
 <template>
-  <main class="flex-1 text overflow-y-auto bg-[#CED1DA] p-4 sm:ml-64">
+  <main
+    class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 p-4 sm:ml-64"
+  >
     <div class="container mx-auto">
       <div
-        class="relative overflow-hidden bg-[#f7fbff] border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
+        class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 dark:text-white border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
         <div class="flex justify-between">
           <h1
