@@ -215,7 +215,7 @@
                     ')'
                   }}
                 </td>
-                <td class="font-normal">{{ claim.Amount }}</td>
+                <td class="font-normal">{{ claim.Amount.toFixed(2) }}</td>
               </tr>
 
               <!-- total -->
@@ -223,7 +223,7 @@
                 class="border-t-2 border-gray-400 dark:border-gray-600 h-10 text-base lg:text-lg font-semibold"
               >
                 <td colspan="2" class="px-6 text-right">TOTAL:</td>
-                <td>{{ totalAmount }}</td>
+                <td>{{ totalAmount.toFixed(2) }}</td>
               </tr>
             </table>
           </div>

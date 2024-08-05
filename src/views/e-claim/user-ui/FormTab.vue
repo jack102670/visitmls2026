@@ -104,7 +104,6 @@
                           !isPanelClinic ||
                           (field.id !== 'OtherClinicSpecML' &&
                             field.id !== 'OtherClinicReasonML')
-                           
                         "
                       >
                         <template
@@ -2766,7 +2765,8 @@ export default {
       const transportField = tab.fields.find(
         (field) =>
           field.id === "TransportLT" && "TransportSpec" && "PublicTransportSpec"
-      );this.updateFieldVisibility10(transportField.value);
+      );
+      this.updateFieldVisibility10(transportField.value);
       return transportField && transportField.value === "Company Transport";
     },
     isPublicTransport() {
@@ -2775,7 +2775,8 @@ export default {
       const publicTransportField = tab.fields.find(
         (field) =>
           field.id === "TransportLT" && "TransportSpec" && "PublicTransportSpec"
-      );this.updateFieldVisibility10(publicTransportField.value);
+      );
+      this.updateFieldVisibility10(publicTransportField.value);
       return (
         publicTransportField &&
         publicTransportField.value === "Public Transport"
@@ -2805,7 +2806,7 @@ export default {
           "MealAllowanceLT"
       );
       this.updateFieldVisibility10(tripField.value);
-      
+
       return tripField && tripField.value === "One Way";
     },
     isOtherThanOutpatient() {
@@ -2814,19 +2815,14 @@ export default {
       );
       if (!tab) return false;
       const medCategoryField = tab.fields.find(
-        (field) =>
-          field.id === "MedicalCategoryML"
+        (field) => field.id === "MedicalCategoryML"
       );
 
-    
-
-     this.updateFieldVisibility8(medCategoryField.value);
+      this.updateFieldVisibility8(medCategoryField.value);
       return (
- 
-        (medCategoryField.value === "Medical Check-Up" ||
-          medCategoryField.value === "Dental")
+        medCategoryField.value === "Medical Check-Up" ||
+        medCategoryField.value === "Dental"
       );
-      
     },
     isPanelClinic() {
       const tab = this.tabs.find(
@@ -2834,35 +2830,29 @@ export default {
       );
       if (!tab) return false;
       const clinicField = tab.fields.find(
-        (field) =>
-          field.id === "ClinicSelectionML"
+        (field) => field.id === "ClinicSelectionML"
       );
       const clinicselect = tab.fields.find(
-        (field) =>
-          field.id === 
-          "OtherClinicSpecML" &&
-          "OtherClinicReasonML"
-
-          
+        (field) => field.id === "OtherClinicSpecML" && "OtherClinicReasonML"
       );
       const clinicspecify = tab.fields.find(
-        (field) =>
-          field.id === 
-          "OtherClinicReasonML"
-
-          
+        (field) => field.id === "OtherClinicReasonML"
       );
       // const clinicspecify = tab.fields.find(
       //   (field) =>
-      //     field.id === 
+      //     field.id ===
       //     "OtherCliniReasonML"
       // );
 
-      this.updateFieldVisibility2(clinicField.value, clinicselect.value, clinicspecify.value);
+      this.updateFieldVisibility2(
+        clinicField.value,
+        clinicselect.value,
+        clinicspecify.value
+      );
 
       console.log("test clinic select" + clinicselect.value);
       console.log("test clinic specify" + clinicspecify.value);
-     
+
       return clinicField.value === "Mediviron Clinic - Panel";
     },
     isOtherEntertainment() {
@@ -2960,7 +2950,7 @@ export default {
             );
             if (medCategoryField) {
               console.log("test hazman" + medCategoryField.value);
-             // this.updateFieldVisibility8(medCategoryField.value);
+              // this.updateFieldVisibility8(medCategoryField.value);
             }
 
             const medicalCategoryMLField = tab.fields.find(
@@ -3480,71 +3470,64 @@ export default {
         PublicTransportSpecField.hidden = false;
       }
     },
-    updateFieldVisibility10(param,) {
-      console.log("test console log : "+ param);
-    const localTravellingTab = this.tabs.find(
-      (tab) => tab.title === "Local Travelling"
-    );
-    if (!localTravellingTab) return;
- 
-    const ReturndateLTField = localTravellingTab.fields.find(
-      (field) => field.id === "ReturndateLT"
-    );
-    const PublicTransportSpec = localTravellingTab.fields.find(
-      (field) => field.id === "PublicTransportSpec"
-    );
-    const FareRMLT = localTravellingTab.fields.find(
-      (field) => field.id === "FareRMLT"
-    );
-    const TransportSpec = localTravellingTab.fields.find(
-      (field) => field.id === "TransportSpec"
-    );
-    const MileageRMLT = localTravellingTab.fields.find(
-      (field) => field.id === "MileageRMLT"
-    );
-    const MileageKMLT = localTravellingTab.fields.find(
-      (field) => field.id === "MileageKMLT"
-    );
-    const ParkingLT = localTravellingTab.fields.find(
-      (field) => field.id === "ParkingLT"
-    );
-    const TollLT = localTravellingTab.fields.find(
-      (field) => field.id === "TollLT"
-    );
-    if (!ReturndateLTField || !ReturndateLTField) return;
+    updateFieldVisibility10(param) {
+      console.log("test console log : " + param);
+      const localTravellingTab = this.tabs.find(
+        (tab) => tab.title === "Local Travelling"
+      );
+      if (!localTravellingTab) return;
 
-    if (param === "Round Trip") {
+      const ReturndateLTField = localTravellingTab.fields.find(
+        (field) => field.id === "ReturndateLT"
+      );
+      const PublicTransportSpec = localTravellingTab.fields.find(
+        (field) => field.id === "PublicTransportSpec"
+      );
+      const FareRMLT = localTravellingTab.fields.find(
+        (field) => field.id === "FareRMLT"
+      );
+      const TransportSpec = localTravellingTab.fields.find(
+        (field) => field.id === "TransportSpec"
+      );
+      const MileageRMLT = localTravellingTab.fields.find(
+        (field) => field.id === "MileageRMLT"
+      );
+      const MileageKMLT = localTravellingTab.fields.find(
+        (field) => field.id === "MileageKMLT"
+      );
+      const ParkingLT = localTravellingTab.fields.find(
+        (field) => field.id === "ParkingLT"
+      );
+      const TollLT = localTravellingTab.fields.find(
+        (field) => field.id === "TollLT"
+      );
+      if (!ReturndateLTField || !ReturndateLTField) return;
 
-  ReturndateLTField.value = ""; // Reset value
+      if (param === "Round Trip") {
+        ReturndateLTField.value = ""; // Reset value
+      } else if (param === "Personal Transport") {
+        PublicTransportSpec.value = ""; // Reset value
+        FareRMLT.value = ""; // Reset value
 
-} else if (param === "Personal Transport") {
-  PublicTransportSpec.value = ""; // Reset value
-  FareRMLT.value = ""; // Reset value
-  
+        // Reset value
+      } else if (param === "Company Transport") {
+        PublicTransportSpec.value = ""; // Reset value
+        FareRMLT.value = ""; // Reset value
+        TransportSpec.value = ""; // Reset value
+        MileageRMLT.value = ""; // Reset value
+        MileageKMLT.value = "";
 
-  // Reset value
-}
-else if (param === "Company Transport") {
-  PublicTransportSpec.value = ""; // Reset value
-  FareRMLT.value = ""; // Reset value
-  TransportSpec.value = ""; // Reset value
-  MileageRMLT.value = ""; // Reset value
-  MileageKMLT.value = "";
-
-  
-
-  // Reset value
-} else{ 
-  TransportSpec.value = ""; // Reset value
-  MileageRMLT.value = ""; // Reset value
-  MileageKMLT.value = "";
-  ParkingLT.value = "";
-  TollLT.value = "";
- }
-  },
+        // Reset value
+      } else {
+        TransportSpec.value = ""; // Reset value
+        MileageRMLT.value = ""; // Reset value
+        MileageKMLT.value = "";
+        ParkingLT.value = "";
+        TollLT.value = "";
+      }
+    },
 
     updateFieldVisibility2(Clinicfield, clinicselectvalue, clinicspecifyvalue) {
-    
       const medicalBillReimbursementTab = this.tabs.find(
         (tab) => tab.title === "Medical Bill Reimbursement"
       );
@@ -3558,17 +3541,17 @@ else if (param === "Company Transport") {
       if (!OtherClinicSpecMLField || !OtherClinicReasonMLField) return;
 
       if (Clinicfield === "Mediviron Clinic - Panel") {
-    OtherClinicSpecMLField.hidden = true;
-    OtherClinicReasonMLField.hidden = true;
-    console.log("test clinic hidden value: "+ Clinicfield);
-    OtherClinicSpecMLField.value = ""; // Reset value
-    OtherClinicReasonMLField.value ="";
-  } else {
-    console.log("test clinic hidden value: "+ Clinicfield);
-    OtherClinicSpecMLField.hidden = false;
-    OtherClinicReasonMLField.hidden = false;
-    // Reset value
-  }
+        OtherClinicSpecMLField.hidden = true;
+        OtherClinicReasonMLField.hidden = true;
+        console.log("test clinic hidden value: " + Clinicfield);
+        OtherClinicSpecMLField.value = ""; // Reset value
+        OtherClinicReasonMLField.value = "";
+      } else {
+        console.log("test clinic hidden value: " + Clinicfield);
+        OtherClinicSpecMLField.hidden = false;
+        OtherClinicReasonMLField.hidden = false;
+        // Reset value
+      }
     },
 
     updateFieldVisibility3(staffRefreshmentValue) {
@@ -3751,12 +3734,11 @@ else if (param === "Company Transport") {
         ClinicSelectionMLField.hidden = true;
         OtherClinicReasonMLField.hidden = true;
         OtherClinicSpecMLField.hidden = true;
-        console.log("test hidden value: "+ OtherClinicSpecMLField.value);
+        console.log("test hidden value: " + OtherClinicSpecMLField.value);
         OtherClinicSpecMLField.value = "";
         OtherClinicReasonMLField.value = "";
         ReasonMLField.value = "";
-        ClinicSelectionMLField.value = "" ;
-
+        ClinicSelectionMLField.value = "";
       }
     },
 
@@ -3952,6 +3934,27 @@ else if (param === "Company Transport") {
 
       this.$emit("formSubmitted", formattedData);
       console.log("Formatted Form Data:", formattedData);
+
+      tab.fields.forEach((field) => {
+        if (
+          field.id !== "LimitedAmountHR" &&
+          field.id !== "LimitedAmountML" &&
+          field.id !== "BankNameHR" &&
+          field.id !== "BankNameML" &&
+          field.id !== "AccBankNumberHR" &&
+          field.id !== "AccBankNumberML" &&
+          field.id !== "AccHolderNameHR" &&
+          field.id !== "AccHolderNameML"
+        ) {
+          field.value = null;
+        }
+      });
+      this.otherExpenses = [];
+      this.newExpense = {
+        name: "",
+        amount: "",
+        files: [],
+      };
     },
 
     submitForm2() {
@@ -3971,6 +3974,13 @@ else if (param === "Company Transport") {
       formattedData["tabTitle"] = "Entertainment";
       this.$emit("formSubmitted", formattedData);
       console.log("Formatted Form Data:", formattedData);
+
+      this.entertainmentTabs.forEach((tab) => {
+        tab.fields.forEach((field) => {
+          field.value = null;
+        });
+      });
+      this.attendees = [];
     },
 
     submitForm3() {
@@ -3990,6 +4000,13 @@ else if (param === "Company Transport") {
       formattedData["tabTitle"] = "Staff Refreshment";
       this.$emit("formSubmitted", formattedData);
       console.log("Formatted Form Data:", formattedData);
+
+      this.staffRefreshmentTabs.forEach((tab) => {
+        tab.fields.forEach((field) => {
+          field.value = null;
+        });
+      });
+      this.staffInvolved = [];
     },
   },
 };
