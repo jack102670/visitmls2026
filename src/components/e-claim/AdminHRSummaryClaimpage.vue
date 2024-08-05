@@ -989,7 +989,7 @@ export default {
               IC_Number: result[i].ic_number,
               Date_Leave: result[i].date_leave_taken,
               Reason: result[i].reason,
-              Medical_Categoroy: result[i].medical_categoroy,
+              Medical_Category: result[i].medical_category,
               Clinic_Selection: result[i].clinic_selection,
               Clinic_Name: result[i].clinic_name,
               Reason_Different_Clinic: result[i].reason_different,

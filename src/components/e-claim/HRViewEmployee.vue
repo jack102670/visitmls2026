@@ -6,15 +6,24 @@
       <div
         class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 dark:text-white border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
-
-      <div class="flex justify-between">
-        <div>  <h1
-          class="text-blue-800 dark:text-blue-600 text-xl md:text-2xl font-bold"
-        >
-          VIEW EMPLOYEES
-        </h1></div> <div> <router-link :to="{name:'HrRegisteremployee'}"><button class="bg-[#160959] rounded-full py-2 px-4 text-slate-200 capitalize font-semibold " >reqister employee</button></router-link></div>
-      </div>
-      
+        <div class="flex justify-between">
+          <div>
+            <h1
+              class="text-blue-800 dark:text-blue-600 text-xl md:text-2xl font-bold"
+            >
+              VIEW EMPLOYEES
+            </h1>
+          </div>
+          <div>
+            <router-link :to="{ name: 'HrRegisteremployee' }"
+              ><button
+                class="bg-[#160959] rounded-full py-2 px-4 text-slate-200 capitalize font-semibold"
+              >
+                reqister employee
+              </button></router-link
+            >
+          </div>
+        </div>
 
         <!-- Datatable -->
         <div class="flex flex-col mt-6">
@@ -124,7 +133,7 @@
           class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center"
         >
           <div
-            class="bg-white w-full sm:w-4/5 lg:w-3/5 rounded-xl relative h-5/6 overflow-auto"
+            class="bg-white dark:bg-gray-900 w-full sm:w-4/5 lg:w-3/5 rounded-xl relative h-5/6 overflow-auto"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -191,10 +200,14 @@
                 "
               >
                 <div v-if="key !== 'profile_picture'">
-                  <h1 class="text-base font-semibold text-gray-900">
+                  <h1
+                    class="text-base font-semibold text-gray-900 dark:text-gray-100"
+                  >
                     {{ key + ':' }}
                   </h1>
-                  <h1 class="font-thin text-sm text-gray-700 break-words">
+                  <h1
+                    class="font-thin text-sm text-gray-700 dark:text-gray-300 break-words"
+                  >
                     {{ val ? val : '-' }}
                   </h1>
                 </div>
@@ -265,7 +278,9 @@
 
               <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
                 <div>
-                  <label class="font-semibold text-gray-600">Limit</label>
+                  <label class="font-semibold text-gray-600 dark:text-gray-300"
+                    >Limit</label
+                  >
                   <div class="mt-2">
                     <input
                       type="radio"
@@ -295,7 +310,9 @@
                   </div>
                 </div>
                 <div class="mt-6 lg:mt-0 lg:ml-4">
-                  <label :for="inputId" class="font-semibold text-gray-600"
+                  <label
+                    :for="inputId"
+                    class="font-semibold text-gray-600 dark:text-gray-300"
                     >Employee ID<span class="text-red-500">*</span></label
                   >
                   <input
