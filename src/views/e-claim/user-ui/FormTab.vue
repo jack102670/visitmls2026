@@ -2275,6 +2275,14 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
+              id: "icNumber",
+              // label: "ic number",
+              type: "text",
+              value: "",
+              gridClass: "sm:col-span-2",
+              hidden: true,
+            },
+            {
               id: "UploadHR",
               label: "Attachment(s). (png, jpeg, pdf or xlsx)",
               type: "file",

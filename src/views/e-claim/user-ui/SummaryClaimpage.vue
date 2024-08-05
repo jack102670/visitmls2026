@@ -43,7 +43,7 @@
             class="text-blue-900 dark:text-blue-600 font-bold text-4xl"
             id="title"
           >
-            Webinars
+           {{claimDetails.report_name}}
 
             <span class="text-blue-900 dark:text-blue-600"
               >| RM{{ claimDetails.grand_total }}</span
