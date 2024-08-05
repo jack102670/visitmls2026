@@ -3441,6 +3441,11 @@ video {
   background-color: rgb(234 179 8 / var(--tw-bg-opacity));
 }
 
+.dark\:bg-sky-950:is([data-mode="dark"] *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(8 47 73 / var(--tw-bg-opacity));
+}
+
 .dark\:bg-opacity-30:is([data-mode="dark"] *) {
   --tw-bg-opacity: 0.3;
 }
@@ -3975,10 +3980,6 @@ video {
 
   .lg\:grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .lg\:grid-cols-5 {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .lg\:grid-cols-5 {
