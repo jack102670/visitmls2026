@@ -1028,7 +1028,7 @@ export default {
             const editedDetail = {
               Claim_Month: result[i].claim_month,
               Claim_Year: result[i].claim_year,
-              Date: result[i].date_event,
+            
               Bank: result[i].bank_name,
               IC_Number: result[i].ic_number,
               Bank_Holder: result[i].bank_holder,
