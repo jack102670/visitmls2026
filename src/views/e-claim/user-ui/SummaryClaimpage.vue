@@ -386,9 +386,9 @@
             </tr>
 
             <!-- table information -->
-            <tr
+            <tr v-if="claimDetails.reference_number.includes('Finance')"
               class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
-            >
+            > 
               <th
                 class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
               >
@@ -1055,7 +1055,9 @@ export default {
       statusApprover: '',
 
       // fetch from backend
-      claimDetails: [],
+      claimDetails: {
+        reference_number: '' // Initialize with an empty string or appropriate default value
+      },
       claimDatas: [],
       claimDatasDetails: [],
       claimDataTotalAmount: [],
