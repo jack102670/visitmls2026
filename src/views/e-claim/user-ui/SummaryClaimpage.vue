@@ -131,62 +131,7 @@
           </div> -->
         </div>
 
-        <!-- status button after approved -->
-        <div v-if="approve" class="my-3" id="hidden">
-          <h1 class="text-lg font-semibold">Status</h1>
-          <div class="relative inline-block text-left">
-            <div>
-              <button
-                @click="toggleDropdown"
-                type="button"
-                :class="
-                  selectedStatus.class +
-                  ' inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-3 py-1 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-                "
-              >
-                {{ selectedStatus.label }}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="-mr-1 ml-2 mt-1 h-5 w-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div
-              v-if="dropdownOpen"
-              class="origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
-            >
-              <div
-                class="py-1"
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="options-menu"
-              >
-                <button
-                  v-for="(status, i) in statuses"
-                  :key="i"
-                  @click="selectStatus(status)"
-                  :class="
-                    status.dropDownClass +
-                    'block px-4 py-2 text-sm  w-full text-left hover:bg-gray-200'
-                  "
-                  role="menuitem"
-                >
-                  {{ status.label }}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+       
 
         <!-- Summary -->
         <div class="summary" v-show="!seeMore">
@@ -278,29 +223,13 @@
                   :key="index"
                 >
                   <td>
-                    <p
-                      @input="
-                        UpdateSingleRemark(
-                          $event,
-                          item.unique_code,
-                          item.Tab_Title
-                        )
-                      "
-                      v-if="
-                        !reimbursed && !approve && !rejectApprover && !resubmit
-                      "
-                      type="text"
-                      class="p-3 text-xs w-full rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
-                    ></p>
+                    
                     <h1
                       id="remarkText"
-                      v-if="
-                        (reimbursed || approve || rejectApprover || resubmit) &&
-                        item.comment.trim() !== ''
-                      "
+                      v-if="item.Remark"
                       class="m-1 px-2 py-1 bg-sky-100 rounded-2xl dark:bg-sky-950"
                     >
-                      {{ item.comment }}
+                      {{ item.Remark }}
                     </h1>
                   </td>
                   <td
@@ -1158,7 +1087,7 @@ export default {
             amount += result[i].total_fee;
 
             const editedDetail = {
-              Remark: result[i].comment,
+
               Mileage_Km: result[i].mileage_km,
               Starting_Point: result[i].starting_point,
               End_Point: result[i].end_point,
@@ -1170,8 +1099,11 @@ export default {
               Transport_Mode: result[i].transport_mode,
               Trip_Mode: result[i].trip_mode,
               Total_Mileage: result[i].total_mileage,
-              Attachments: result[i].files,
+              Attachments: result[i].files,              Remark: result[i].comment,
               Tab_Title: 'Local Outstation',
+              unique_code: result[i].unique_code,
+
+              
             };
             details.push(editedDetail);
           }
@@ -1196,7 +1128,7 @@ export default {
           for (let i in result) {
             amount += result[i].total_fee;
             const editedDetail = {
-              Remark: result[i].comment,
+            
               Description: result[i].description,
               Meal_Allowance: result[i].meal_allowance,
               'Transport_Fee(RM)': result[i].transport_fee,
@@ -1207,12 +1139,13 @@ export default {
               Other_Exchange_Rate: result[i].other_exchange_rate,
               Other_Foreign_Total: result[i].other_foreign_total,
               Transportation_Mode: result[i].transportation_mode,
-              Attachments: result[i].files,
               Date: result[i].date_event,
-
+              
               'Total_Fee(RM)': result[i].total_fee,
-
-              Tab_Title: 'Overseas Outstation',
+              
+              Attachments: result[i].files, 
+              Tab_Title: 'Overseas Outstation', Remark: result[i].comment,
+              unique_code: result[i].unique_code,
             };
             details.push(editedDetail);
           }
@@ -1237,7 +1170,7 @@ export default {
           for (let i in result) {
             amount += result[i].total_fee;
             const editedDetail = {
-              Remark: result[i].comment,
+             
               Type: result[i].refreshment_type,
               Date: result[i].date_event,
               Reference_Type: result[i].reference_type,
@@ -1245,8 +1178,9 @@ export default {
               Company: result[i].company_name,
               'Total_Fee(RM)': result[i].total_fee,
               Staff_Involved: result[i].sim,
-              Attachments: result[i].files,
+              Attachments: result[i].files, Remark: result[i].comment,
               Tab_Title: 'Staff Refreshment',
+              unique_code: result[i].unique_code,
             };
             details.push(editedDetail);
           }
@@ -1271,7 +1205,7 @@ export default {
           for (let i in result) {
             amount += result[i].total_fee;
             const editedDetail = {
-              Remark: result[i].comment,
+             
               Type: result[i].entertainment_type,
               Date: result[i].date_event,
               Venue: result[i].venue_name,
@@ -1279,8 +1213,9 @@ export default {
               'Total_Fee(RM)': result[i].total_fee,
               Participants: result[i].participants,
               Attachments: result[i].files,
-              Comment: result[i].comment,
+             Remark: result[i].comment,
               Tab_Title: 'Entertainment',
+              unique_code: result[i].unique_code,
             };
             details.push(editedDetail);
           }
@@ -1304,7 +1239,7 @@ export default {
           for (let i in result) {
             amount += result[i].claim_amount;
             const editedDetail = {
-              Remark: result[i].comment,
+            
               reason: result[i].reason,
               Date: result[i].date_leave_taken,
               clinicselection: result[i].clinic_name
@@ -1318,7 +1253,8 @@ export default {
 
               Attachments: result[i].files,
 
-              Tab_Title: 'Medical Leave',
+              Tab_Title: 'Medical Leave',  Remark: result[i].comment,
+              unique_code: result[i].unique_code,
             };
             details.push(editedDetail);
           }
@@ -1342,7 +1278,7 @@ export default {
           for (let i in result) {
             amount += result[i].claim_amount;
             const editedDetail = {
-              Remark: result[i].comment,
+         
               Claim_Month: result[i].claim_month,
               Claim_Year: result[i].claim_year,
               Date: result[i].date_event,
@@ -1352,7 +1288,7 @@ export default {
               Bank_Account: result[i].bank_account,
               'Claim_Amount(RM)': result[i].claim_amount,
               Attachments: result[i].files,
-              Tab_Title: 'Handphone Bill',
+              Tab_Title: 'Handphone Bill',     Remark: result[i].comment,
               unique_code: result[i].unique_code,
             };
             details.push(editedDetail);
@@ -1376,13 +1312,14 @@ export default {
           for (let i in result) {
             amount += result[i].total_fee;
             const editedDetail = {
-              Remark: result[i].comment,
+             
               Description: result[i].description,
               Date: result[i].expense_date,
               'Total_Fee(RM)': result[i].total_fee,
               Attachments: result[i].files,
 
-              Tab_Title: 'Other',
+              Tab_Title: 'Other', Remark: result[i].comment,
+              unique_code: result[i].unique_code,
             };
             details.push(editedDetail);
           }
