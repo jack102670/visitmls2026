@@ -228,7 +228,7 @@
                                 'text-blue-500':
                                 item.admin_status.split('.')[0] === 'OPEN', // Added for VERIFIED status
                             }"
-                            >{{ item.admin_status.split('.')[0] }}</span
+                            >{{ item.admin_status }}</span
                           >
                         </span>
                       </td>
