@@ -712,10 +712,10 @@
         <!-- Staff Involved List -->
         <div
           v-show="showSimList"
-          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center"
+          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center dark:bg-gray-800/50"
         >
           <div
-            class="bg-white w-full sm:w-4/5 lg:w-2/5 rounded-xl flex flex-col items-center relative"
+            class="bg-white w-full sm:w-4/5 lg:w-2/5 rounded-xl flex flex-col items-center relative dark:bg-gray-800"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -736,7 +736,7 @@
               <h1 class="text-xl font-semibold mt-4">Staff Involved</h1>
             </div>
             <table class="w-4/5 text-center mt-1 mb-8">
-              <tr class="bg-gray-300 text-center h-12">
+              <tr class="bg-gray-300 text-center h-12 dark:bg-gray-600">
                 <th>No.</th>
                 <th>Company</th>
                 <th>Name</th>
@@ -745,7 +745,7 @@
               <tr
                 v-for="(staff, i) in sim"
                 :key="i"
-                class="bg-white text-black text-center h-12"
+                class="bg-white text-black text-center h-12 dark:bg-gray-500 dark:text-white"
               >
                 <th class="font-normal">{{ i + 1 }}</th>
                 <th class="font-normal">{{ staff.company_name }}</th>
@@ -759,10 +759,10 @@
         <!-- Participants List -->
         <div
           v-show="showParticipantsList"
-          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center"
+          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center dark:bg-gray-800/50"
         >
           <div
-            class="bg-white w-full sm:w-4/5 lg:w-2/5 rounded-xl flex flex-col items-center relative"
+            class="bg-white w-full sm:w-4/5 lg:w-2/5 rounded-xl flex flex-col items-center relative dark:bg-gray-800"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -783,7 +783,7 @@
               <h1 class="text-xl font-semibold mt-4">Participants</h1>
             </div>
             <table class="w-4/5 text-center mt-1 mb-8">
-              <tr class="bg-gray-300 text-center h-12">
+              <tr class="bg-gray-300 text-center h-12 dark:bg-gray-600">
                 <th>No.</th>
                 <th>Name</th>
                 <th>Company</th>
@@ -791,7 +791,7 @@
               <tr
                 v-for="(staff, i) in participants"
                 :key="i"
-                class="bg-white text-black text-center h-12"
+                class="bg-white text-black text-center h-12 dark:bg-gray-500 dark:text-white"
               >
                 <th class="font-normal">{{ i + 1 }}</th>
                 <th class="font-normal">{{ staff.name }}</th>
@@ -804,10 +804,10 @@
         <!-- Other Expenses List -->
         <div
           v-show="showOEsList"
-          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center"
+          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center dark:bg-gray-800/50"
         >
           <div
-            class="bg-white w-full sm:w-4/5 lg:w-2/5 rounded-xl flex flex-col items-center relative"
+            class="bg-white w-full sm:w-4/5 lg:w-2/5 rounded-xl flex flex-col items-center relative dark:bg-gray-800"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -828,7 +828,7 @@
               <h1 class="text-xl font-semibold mt-4">Other Expenses</h1>
             </div>
             <table class="w-4/5 text-center mt-1 mb-8">
-              <tr class="bg-gray-300 text-center h-12">
+              <tr class="bg-gray-300 text-center h-12 dark:bg-gray-600">
                 <th>No.</th>
                 <th>Name</th>
                 <th>Amount</th>
@@ -837,7 +837,7 @@
               <tr
                 v-for="(expense, i) in oe"
                 :key="i"
-                class="bg-white text-black text-center h-12"
+                class="bg-white text-black text-center h-12 dark:bg-gray-500 dark:text-white"
               >
                 <th class="font-normal">{{ i + 1 }}</th>
                 <th class="font-normal">{{ expense.name }}</th>
@@ -851,10 +851,10 @@
         <!-- File List -->
         <div
           v-show="showFileList"
-          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center"
+          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center dark:bg-gray-800/50"
         >
           <div
-            class="bg-white w-full sm:w-4/5 rounded-xl flex flex-col items-center relative pb-6"
+            class="bg-white w-full sm:w-4/5 rounded-xl flex flex-col items-center relative pb-6 dark:bg-gray-800"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -875,7 +875,7 @@
               <h1 class="text-xl font-semibold my-4">Attachments</h1>
             </div>
             <table v-if="files.length > 0" class="w-4/5 text-center mt-1 mb-8">
-              <tr class="bg-gray-300 text-center h-12">
+              <tr class="bg-gray-300 text-center h-12 dark:bg-gray-600">
                 <th>No.</th>
                 <th>File</th>
                 <th>Action</th>
@@ -883,7 +883,7 @@
               <tr
                 v-for="(file, i) in files"
                 :key="i"
-                class="bg-white text-black text-center h-12 mt-2"
+                class="bg-white text-black text-center h-12 mt-2 dark:bg-gray-500 dark:text-white"
               >
                 <th class="font-normal">{{ i + 1 }}</th>
                 <th class="font-normal flex">
