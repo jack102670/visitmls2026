@@ -1121,11 +1121,16 @@
                 <div class="mt-4 mr-6 flex flex-row-reverse">
                   <div class="flex items-center justify-between">
                     <button
+                    :class="{
+    'bg-blue-500 hover:bg-blue-700': !isSaveButtonDisabled,
+    'bg-gray-500 cursor-not-allowed': isSaveButtonDisabled || isFormDisabled,
+    'text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline': true
+  }"
                       type="submit"
                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                       :disabled="
                         (tab.title === 'Handphone Bill Reimbursement' &&
-                          isFormDisabled) ||
+                          isFormDisabled ) ||
                         (tab.title === 'Medical Bill Reimbursement' &&
                           isSaveButtonDisabled)
                       "
@@ -2728,10 +2733,13 @@ export default {
       }
       return false;
     },
+  
     isSaveButtonDisabled() {
       const tab = this.tabs.find(
         (tab) => tab.title === "Medical Bill Reimbursement"
       );
+
+      if(tab === "Medical Bill Reimbursement")
       if (!tab) return true;
 
       const medCategoryField = tab.fields.find(
