@@ -114,7 +114,9 @@
                             'bg-green-100/60 dark:bg-gray-800':
                               claim.admin_status.split('.')[0] === 'APPROVED',
                             'bg-amber-100/60 dark:bg-gray-800':
-                              claim.admin_status.split('.')[0] === 'VERIFIED', // Added for VERIFIED status
+                              claim.admin_status.split('.')[0] === 'VERIFIED',
+                              'bg-blue-100/60 dark:bg-gray-800':
+                              claim.admin_status.split('.')[0] === 'OPEN', // Added for VERIFIED status
                           }"
                         >
                           <span
@@ -125,7 +127,9 @@
                               'bg-green-500':
                                 claim.admin_status.split('.')[0] === 'APPROVED',
                               'bg-amber-500':
-                                claim.admin_status.split('.')[0] === 'VERIFIED', // Added for VERIFIED status
+                                claim.admin_status.split('.')[0] === 'VERIFIED',
+                                'bg-blue-500':
+                                claim.admin_status.split('.')[0] === 'OPEN', // Added for VERIFIED status
                             }"
                           ></span>
                           <span
@@ -136,9 +140,11 @@
                               'text-green-500':
                                 claim.admin_status.split('.')[0] === 'APPROVED',
                               'text-amber-500':
-                                claim.admin_status.split('.')[0] === 'VERIFIED', // Added for VERIFIED status
+                                claim.admin_status.split('.')[0] === 'VERIFIED',
+                                'text-blue-500':
+                                claim.admin_status.split('.')[0] === 'OPEN', // Added for VERIFIED status
                             }"
-                            >{{ claim.admin_status.split('.')[0] }}</span
+                            >{{ claim.admin_status}}</span
                           >
                         </span>
                       </td>

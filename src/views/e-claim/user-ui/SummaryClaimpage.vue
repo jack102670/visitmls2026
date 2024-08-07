@@ -131,6 +131,7 @@
           </div> -->
         </div>
 
+<<<<<<< HEAD
         <!-- status button after approved -->
         <div v-if="approve" class="my-3" id="hidden">
           <h1 class="text-lg font-semibold">Status</h1>
@@ -187,6 +188,9 @@
             </div>
           </div>
         </div>
+=======
+       
+>>>>>>> 1f4961afad37e43077a5673eb56e5fb8dc750dbe
 
         <!-- Summary -->
         <div class="summary" v-show="!seeMore">
@@ -278,6 +282,7 @@
                   :key="index"
                 >
                   <td>
+<<<<<<< HEAD
                     <p
                       @input="
                         UpdateSingleRemark(
@@ -301,6 +306,15 @@
                       class="m-1 px-2 py-1 bg-sky-100 rounded-2xl dark:bg-sky-950"
                     >
                       {{ item.comment }}
+=======
+                    
+                    <h1
+                      id="remarkText"
+                      v-if="item.Remark"
+                      class="m-1 px-2 py-1 bg-sky-100 rounded-2xl dark:bg-sky-950"
+                    >
+                      {{ item.Remark }}
+>>>>>>> 1f4961afad37e43077a5673eb56e5fb8dc750dbe
                     </h1>
                   </td>
                   <td
@@ -1158,7 +1172,7 @@ export default {
             amount += result[i].total_fee;
 
             const editedDetail = {
-              Remark: result[i].comment,
+
               Mileage_Km: result[i].mileage_km,
               Starting_Point: result[i].starting_point,
               End_Point: result[i].end_point,
@@ -1170,8 +1184,11 @@ export default {
               Transport_Mode: result[i].transport_mode,
               Trip_Mode: result[i].trip_mode,
               Total_Mileage: result[i].total_mileage,
-              Attachments: result[i].files,
+              Attachments: result[i].files,              Remark: result[i].comment,
               Tab_Title: 'Local Outstation',
+              unique_code: result[i].unique_code,
+
+              
             };
             details.push(editedDetail);
           }
@@ -1196,7 +1213,7 @@ export default {
           for (let i in result) {
             amount += result[i].total_fee;
             const editedDetail = {
-              Remark: result[i].comment,
+            
               Description: result[i].description,
               Meal_Allowance: result[i].meal_allowance,
               'Transport_Fee(RM)': result[i].transport_fee,
@@ -1207,12 +1224,13 @@ export default {
               Other_Exchange_Rate: result[i].other_exchange_rate,
               Other_Foreign_Total: result[i].other_foreign_total,
               Transportation_Mode: result[i].transportation_mode,
-              Attachments: result[i].files,
               Date: result[i].date_event,
-
+              
               'Total_Fee(RM)': result[i].total_fee,
-
-              Tab_Title: 'Overseas Outstation',
+              
+              Attachments: result[i].files, 
+              Tab_Title: 'Overseas Outstation', Remark: result[i].comment,
+              unique_code: result[i].unique_code,
             };
             details.push(editedDetail);
           }
@@ -1237,7 +1255,7 @@ export default {
           for (let i in result) {
             amount += result[i].total_fee;
             const editedDetail = {
-              Remark: result[i].comment,
+             
               Type: result[i].refreshment_type,
               Date: result[i].date_event,
               Reference_Type: result[i].reference_type,
@@ -1245,8 +1263,9 @@ export default {
               Company: result[i].company_name,
               'Total_Fee(RM)': result[i].total_fee,
               Staff_Involved: result[i].sim,
-              Attachments: result[i].files,
+              Attachments: result[i].files, Remark: result[i].comment,
               Tab_Title: 'Staff Refreshment',
+              unique_code: result[i].unique_code,
             };
             details.push(editedDetail);
           }
@@ -1271,7 +1290,7 @@ export default {
           for (let i in result) {
             amount += result[i].total_fee;
             const editedDetail = {
-              Remark: result[i].comment,
+             
               Type: result[i].entertainment_type,
               Date: result[i].date_event,
               Venue: result[i].venue_name,
@@ -1279,8 +1298,9 @@ export default {
               'Total_Fee(RM)': result[i].total_fee,
               Participants: result[i].participants,
               Attachments: result[i].files,
-              Comment: result[i].comment,
+             Remark: result[i].comment,
               Tab_Title: 'Entertainment',
+              unique_code: result[i].unique_code,
             };
             details.push(editedDetail);
           }
@@ -1304,7 +1324,7 @@ export default {
           for (let i in result) {
             amount += result[i].claim_amount;
             const editedDetail = {
-              Remark: result[i].comment,
+            
               reason: result[i].reason,
               Date: result[i].date_leave_taken,
               clinicselection: result[i].clinic_name
@@ -1318,7 +1338,8 @@ export default {
 
               Attachments: result[i].files,
 
-              Tab_Title: 'Medical Leave',
+              Tab_Title: 'Medical Leave',  Remark: result[i].comment,
+              unique_code: result[i].unique_code,
             };
             details.push(editedDetail);
           }
@@ -1342,17 +1363,30 @@ export default {
           for (let i in result) {
             amount += result[i].claim_amount;
             const editedDetail = {
+<<<<<<< HEAD
               Remark: result[i].comment,
               Claim_Month: result[i].claim_month,
               Claim_Year: result[i].claim_year,
               Date: result[i].date_event,
               Bank: result[i].bank_name,
               IC_Number: result[i].ic_number,
+=======
+         
+              Claim_Month: result[i].claim_month,
+              Claim_Year: result[i].claim_year,
+
+              Bank: result[i].bank_name,
+          
+>>>>>>> 1f4961afad37e43077a5673eb56e5fb8dc750dbe
               Bank_Holder: result[i].bank_holder,
               Bank_Account: result[i].bank_account,
               'Claim_Amount(RM)': result[i].claim_amount,
               Attachments: result[i].files,
+<<<<<<< HEAD
               Tab_Title: 'Handphone Bill',
+=======
+              Tab_Title: 'Handphone Bill',     Remark: result[i].comment,
+>>>>>>> 1f4961afad37e43077a5673eb56e5fb8dc750dbe
               unique_code: result[i].unique_code,
             };
             details.push(editedDetail);
@@ -1376,13 +1410,14 @@ export default {
           for (let i in result) {
             amount += result[i].total_fee;
             const editedDetail = {
-              Remark: result[i].comment,
+             
               Description: result[i].description,
               Date: result[i].expense_date,
               'Total_Fee(RM)': result[i].total_fee,
               Attachments: result[i].files,
 
-              Tab_Title: 'Other',
+              Tab_Title: 'Other', Remark: result[i].comment,
+              unique_code: result[i].unique_code,
             };
             details.push(editedDetail);
           }

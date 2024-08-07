@@ -3530,6 +3530,11 @@ video {
   color: rgb(254 249 195 / var(--tw-text-opacity));
 }
 
+.dark\:text-gray-100:is([data-mode="dark"] *) {
+  --tw-text-opacity: 1;
+  color: rgb(243 244 246 / var(--tw-text-opacity));
+}
+
 .dark\:ring-offset-gray-900:is([data-mode="dark"] *) {
   --tw-ring-offset-color: #111827;
 }
