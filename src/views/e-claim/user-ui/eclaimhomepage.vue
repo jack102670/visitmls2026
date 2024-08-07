@@ -362,11 +362,8 @@
                               "
                             >
                               {{
-                                data.admin_status === ''
-                                  ? 'OPEN'
-                                  : data.admin_status
-                                      .split('.')[0]
-                                      .split(' ')[0]
+                                data.admin_status
+                                 
                               }}
                             </h2>
                           </div>
@@ -843,7 +840,7 @@ export default {
           'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
         CLOSE:
           'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800',
-        '': 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-indigo-100/60 dark:bg-gray-800',
+        OPEN: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-indigo-100/60 dark:bg-gray-800',
         APPROVED:
           'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
         'APPROVED. AWAITING PAYMENT.':
@@ -864,7 +861,7 @@ export default {
     getStatusDotClass(status) {
       const colorMap = {
         RESUBMIT: 'h-1.5 w-1.5 rounded-full bg-orange-500',
-        '': 'h-1.5 w-1.5 rounded-full bg-indigo-500',
+        OPEN: 'h-1.5 w-1.5 rounded-full bg-indigo-500',
         APPROVED: 'h-1.5 w-1.5 rounded-full bg-emerald-500',
         COMPLETED: 'h-1.5 w-1.5 rounded-full bg-blue-500',
         REJECTED: 'h-1.5 w-1.5 rounded-full bg-red-500',
@@ -878,7 +875,7 @@ export default {
     getStatusTextClass(status) {
       const colorMap = {
         RESUBMIT: 'text-sm font-normal text-orange-500',
-        '': 'text-sm font-normal text-indigo-500',
+        OPEN: 'text-sm font-normal text-indigo-500',
         APPROVED: 'text-sm font-normal text-emerald-500',
         COMPLETED: 'text-sm font-normal text-blue-500',
         REJECTED: 'text-sm font-normal text-red-500',

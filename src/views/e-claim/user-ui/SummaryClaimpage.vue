@@ -131,7 +131,66 @@
           </div> -->
         </div>
 
+<<<<<<< HEAD
+        <!-- status button after approved -->
+        <div v-if="approve" class="my-3" id="hidden">
+          <h1 class="text-lg font-semibold">Status</h1>
+          <div class="relative inline-block text-left">
+            <div>
+              <button
+                @click="toggleDropdown"
+                type="button"
+                :class="
+                  selectedStatus.class +
+                  ' inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-3 py-1 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                "
+              >
+                {{ selectedStatus.label }}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="-mr-1 ml-2 mt-1 h-5 w-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div
+              v-if="dropdownOpen"
+              class="origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+            >
+              <div
+                class="py-1"
+                role="menu"
+                aria-orientation="vertical"
+                aria-labelledby="options-menu"
+              >
+                <button
+                  v-for="(status, i) in statuses"
+                  :key="i"
+                  @click="selectStatus(status)"
+                  :class="
+                    status.dropDownClass +
+                    'block px-4 py-2 text-sm  w-full text-left hover:bg-gray-200'
+                  "
+                  role="menuitem"
+                >
+                  {{ status.label }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+=======
        
+>>>>>>> 1f4961afad37e43077a5673eb56e5fb8dc750dbe
 
         <!-- Summary -->
         <div class="summary" v-show="!seeMore">
@@ -223,6 +282,31 @@
                   :key="index"
                 >
                   <td>
+<<<<<<< HEAD
+                    <p
+                      @input="
+                        UpdateSingleRemark(
+                          $event,
+                          item.unique_code,
+                          item.Tab_Title
+                        )
+                      "
+                      v-if="
+                        !reimbursed && !approve && !rejectApprover && !resubmit
+                      "
+                      type="text"
+                      class="p-3 text-xs w-full rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
+                    ></p>
+                    <h1
+                      id="remarkText"
+                      v-if="
+                        (reimbursed || approve || rejectApprover || resubmit) &&
+                        item.comment.trim() !== ''
+                      "
+                      class="m-1 px-2 py-1 bg-sky-100 rounded-2xl dark:bg-sky-950"
+                    >
+                      {{ item.comment }}
+=======
                     
                     <h1
                       id="remarkText"
@@ -230,6 +314,7 @@
                       class="m-1 px-2 py-1 bg-sky-100 rounded-2xl dark:bg-sky-950"
                     >
                       {{ item.Remark }}
+>>>>>>> 1f4961afad37e43077a5673eb56e5fb8dc750dbe
                     </h1>
                   </td>
                   <td
@@ -1278,17 +1363,30 @@ export default {
           for (let i in result) {
             amount += result[i].claim_amount;
             const editedDetail = {
-         
+<<<<<<< HEAD
+              Remark: result[i].comment,
               Claim_Month: result[i].claim_month,
               Claim_Year: result[i].claim_year,
               Date: result[i].date_event,
               Bank: result[i].bank_name,
               IC_Number: result[i].ic_number,
+=======
+         
+              Claim_Month: result[i].claim_month,
+              Claim_Year: result[i].claim_year,
+
+              Bank: result[i].bank_name,
+          
+>>>>>>> 1f4961afad37e43077a5673eb56e5fb8dc750dbe
               Bank_Holder: result[i].bank_holder,
               Bank_Account: result[i].bank_account,
               'Claim_Amount(RM)': result[i].claim_amount,
               Attachments: result[i].files,
+<<<<<<< HEAD
+              Tab_Title: 'Handphone Bill',
+=======
               Tab_Title: 'Handphone Bill',     Remark: result[i].comment,
+>>>>>>> 1f4961afad37e43077a5673eb56e5fb8dc750dbe
               unique_code: result[i].unique_code,
             };
             details.push(editedDetail);
