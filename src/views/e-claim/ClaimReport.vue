@@ -511,6 +511,22 @@
               </div>
 
               <div
+                v-if="!isCompanyTransport && !isPersonalTransport"
+                class="flex justify-between items-center mb-4"
+              >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Fare(RM):</label
+                >
+                <input
+                  type="text"
+                  id="farerm"
+                  v-model="localTravellingDetails.FareRMLT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2"
+                />
+              </div>
+
+              <div
                 v-if="!isPublicTransport"
                 class="flex justify-between items-center mb-4"
               >
@@ -527,7 +543,6 @@
               </div>
 
               <div
-                v-if="!isPublicTransport"
                 class="flex justify-between items-center mb-4"
               >
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
@@ -537,21 +552,6 @@
                   type="text"
                   id="positioname"
                   v-model="localTravellingDetails.ParkingLT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
-              </div>
-              <div
-                v-if="!isCompanyTransport && !isPersonalTransport"
-                class="flex justify-between items-center mb-4"
-              >
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Fare(RM):</label
-                >
-                <input
-                  type="text"
-                  id="farerm"
-                  v-model="localTravellingDetails.FareRMLT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2"
                 />
@@ -2863,6 +2863,7 @@ export default {
         this.localTravellingDetails.TransportLT === 'Public Transport'
       ) {
         total += parseFloat(this.localTravellingDetails.FareRMLT) || 0;
+        total += parseFloat(this.localTravellingDetails.ParkingLT) || 0;
       }
       this.totalplusmethod(total);
       return total;

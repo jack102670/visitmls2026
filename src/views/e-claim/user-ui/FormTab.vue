@@ -114,9 +114,7 @@
                               field.id !== 'UploadMileageRMLT' &&
                               field.id !== 'TransportSpec' &&
                               field.id !== 'TollLT' &&
-                              field.id !== 'UploadTollLT' &&
-                              field.id !== 'ParkingLT' &&
-                              field.id !== 'UploadParkingLT')
+                              field.id !== 'UploadTollLT')
                           "
                         >
                           <template
@@ -1121,16 +1119,17 @@
                 <div class="mt-4 mr-6 flex flex-row-reverse">
                   <div class="flex items-center justify-between">
                     <button
-                    :class="{
-    'bg-blue-500 hover:bg-blue-700': !isSaveButtonDisabled,
-    'bg-gray-500 cursor-not-allowed': isSaveButtonDisabled || isFormDisabled,
-    'text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline': true
-  }"
+                      :class="{
+                        'bg-blue-500 hover:bg-blue-700': !isSaveButtonDisabled,
+                        'bg-gray-500 cursor-not-allowed':
+                          isSaveButtonDisabled || isFormDisabled,
+                        'text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline': true,
+                      }"
                       type="submit"
                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                       :disabled="
                         (tab.title === 'Handphone Bill Reimbursement' &&
-                          isFormDisabled ) ||
+                          isFormDisabled) ||
                         (tab.title === 'Medical Bill Reimbursement' &&
                           isSaveButtonDisabled)
                       "
@@ -2733,14 +2732,13 @@ export default {
       }
       return false;
     },
-  
+
     isSaveButtonDisabled() {
       const tab = this.tabs.find(
         (tab) => tab.title === "Medical Bill Reimbursement"
       );
 
-      if(tab === "Medical Bill Reimbursement")
-      if (!tab) return true;
+      if (tab === "Medical Bill Reimbursement") if (!tab) return true;
 
       const medCategoryField = tab.fields.find(
         (field) => field.id === "MedicalCategoryML"
@@ -3612,21 +3610,13 @@ export default {
       const uploadTollLTField = localTravellingTab.fields.find(
         (field) => field.id === "UploadTollLT"
       );
-      const ParkingLTField = localTravellingTab.fields.find(
-        (field) => field.id === "ParkingLT"
-      );
-      const uploadParkingLTField = localTravellingTab.fields.find(
-        (field) => field.id === "UploadParkingLT"
-      );
       if (
         !mileageKMLTField ||
         !mileageRMLTField ||
         !uploadmileageRMLTField ||
         !TransportSpecField ||
         !TollLTField ||
-        !uploadTollLTField ||
-        !ParkingLTField ||
-        !uploadParkingLTField
+        !uploadTollLTField
       )
         return;
 
@@ -3637,8 +3627,6 @@ export default {
         TransportSpecField.hidden = true;
         TollLTField.hidden = true;
         uploadTollLTField.hidden = true;
-        ParkingLTField.hidden = true;
-        uploadParkingLTField.hidden = true;
       } else {
         mileageKMLTField.hidden = false;
         mileageRMLTField.hidden = false;
@@ -3646,8 +3634,6 @@ export default {
         TransportSpecField.hidden = false;
         TollLTField.hidden = false;
         uploadTollLTField.hidden = false;
-        ParkingLTField.hidden = false;
-        uploadParkingLTField.hidden = false;
       }
     },
 
@@ -3823,20 +3809,20 @@ export default {
       const isCompanyTransport = tab.fields.some(
         (field) =>
           field.id === "TransportLT" &&
-          field.value.includes("Company Transport")
+          field.value?.includes("Company Transport")
       );
 
       // Check if the transport mode is Public Transport
       const isPublicTransport = tab.fields.some(
         (field) =>
-          field.id === "TransportLT" && field.value.includes("Public Transport")
+          field.id === "TransportLT" && field.value?.includes("Public Transport")
       );
 
       // Check if the transport mode is Personal Transport
       const isPersonalTransport = tab.fields.some(
         (field) =>
           field.id === "TransportLT" &&
-          field.value.includes("Personal Transport")
+          field.value?.includes("Personal Transport")
       );
 
       tab.fields.forEach((field) => {
@@ -3859,9 +3845,8 @@ export default {
             (field.id !== "MileageRMLT" && field.id !== "FareRMLT")) &&
           (!isPublicTransport ||
             (field.id !== "MileageRMLT" &&
-              field.id !== "TollLT" &&
-              field.id !== "ParkingLT")) &&
-          (!isPersonalTransport || field.id !== "FareRMLT")
+              field.id !== "TollLT")) &&
+          (!isPersonalTransport || field.id !== "FareRMLT" && field.id !== "ParkingLT")
         ) {
           total += parseFloat(field.value);
         }
