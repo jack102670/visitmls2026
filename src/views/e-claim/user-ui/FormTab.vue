@@ -587,8 +587,7 @@
                                     field.id === 'AccBankNumberML' ||
                                     field.id === 'AccHolderNameHR' ||
                                     field.id === 'AccHolderNameML' ||
-                                    field.id === 'LimitedAmountHR' ||
-                                    field.id === 'LimitedAmountML'
+                                    field.id === 'LimitedAmountHR'
                                   "
                                 >
                                   <input
@@ -610,6 +609,46 @@
                                     "
                                     class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                                   />
+                                </template>
+
+                                <template
+                                  v-else-if="field.id === 'LimitedAmountML'"
+                                >
+                                  <input
+                                    v-model="field.value"
+                                    type="number"
+                                    :required="field.required"
+                                    :id="field.id"
+                                    :placeholder="field.placeholder"
+                                    :step="
+                                      field.type === 'number'
+                                        ? '0.01'
+                                        : undefined
+                                    "
+                                    :disabled="
+                                      (tab.title ===
+                                        'Handphone Bill Reimbursement' &&
+                                        isFormDisabled) ||
+                                      field.disabled
+                                    "
+                                    class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                                  />
+                                  <div class="relative group ml-1">
+                                    <button
+                                      type="button"
+                                      class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
+                                    >
+                                      <span
+                                        class="inline-flex items-center justify-center w-5 h-5 bg-gray-200 rounded-full text-gray-700 font-semibold"
+                                        >i</span
+                                      >
+                                    </button>
+                                    <div
+                                      class="absolute left-1.5/2 top-1/2 transform -translate-y-1/2 hidden group-hover:block w-64 p-2 bg-white border border-gray-300 rounded shadow-lg text-gray-700 text-sm"
+                                    >
+                                      Please note: The reimbursement limit is not yet updated and may not reflect the latest changes.
+                                    </div>
+                                  </div>
                                 </template>
 
                                 <template v-else>
