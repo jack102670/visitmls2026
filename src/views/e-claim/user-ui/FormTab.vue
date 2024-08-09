@@ -20,22 +20,24 @@
         :key="index"
         @click="activeTab = index"
         :class="[
-          'flex-1 px-4 py-1 text-md mr-2 rounded-3xl focus:outline-none border border-gray-300',
-          {
-            'bg-[#160959] text-white': activeTab === index,
-            'hover:bg-gray-200': activeTab !== index,
-            'px-8 py-4 mr-4':
-              tab.title === 'Handphone Bill Reimbursement' ||
-              tab.title === 'Medical Bill Reimbursement',
-          },
-        ]"
-      >
-        {{ tab.title }}
-      </button>
+        'flex-1 px-4 py-1 text-md mr-2 rounded-3xl focus:outline-none border border-gray-300',
+        {
+          'bg-[#160959] text-white': activeTab === index,
+          'hover:bg-gray-200': activeTab !== index,
+          'px-8 py-4 mr-4':
+            tab.title === 'Handphone Bill Reimbursement' ||
+            tab.title === 'Medical Bill Reimbursement',
+        },
+        // Large screens
+        'max-w-xs'
+      ]"
+    >
+      {{ tab.title }}
+    </button>
     </div>
 
     <div
-      class="relative overflow-hidden mt-5 max-w-4xl p-6 bg-white border-2 border-e-gray-200 rounded-md dark:bg-gray-800"
+      class="relative overflow-hidden mt-5  max-w-4xl p-6 bg-white border-2 border-e-gray-200 rounded-md dark:bg-gray-800"
     >
       <div
         v-for="(tab, index) in tabs"
@@ -2041,7 +2043,7 @@ export default {
       profilestatus: "",
       IcNumber: "",
       chooseform: true,
-      activeTab: this.type == null ,
+      activeTab: this.type == "Finance" ? 6 : 5,
       activeSubTab: 0,
       date: "",
       yearRange: [],
