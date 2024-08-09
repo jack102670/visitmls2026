@@ -49,9 +49,10 @@ import VerifierSummaryClaimpage from '../views/e-claim/user-ui/VerifierSummaryCl
 import HRViewEmployee from '../components/e-claim/HRViewEmployee.vue';
 import checkerDashboardpage from '../views/e-claim/checkerDashboardpage.vue';
 import checkerClaimpage from '../views/e-claim/checkerClaimpage.vue';
-import NotFound from '../views/pagenotfound.vue'; 
+import NotFound from '../views/pagenotfound.vue';
+import AdminHODpage from '@/components/e-claim/AdminHODpage.vue';
+import AdminHODClaimpage from '@/components/e-claim/AdminHODClaimpage.vue';
 const routes = [
- 
   {
     path: '/VerifierClaimpage/:rn',
     name: 'VerifierSummaryClaimpage',
@@ -166,6 +167,23 @@ const routes = [
       default: AdminDashboardpage,
       Sidebar: Newsidebar,
     },
+  },
+  {
+    path: '/adminhoddashboard',
+    name: 'AdminHODpage',
+    components: {
+      default: AdminHODpage,
+      Sidebar: Newsidebar,
+    },
+  },
+  {
+    path: '/adminhodclaim/:rn',
+    name: 'AdminHODClaimpage',
+    components: {
+      default: AdminHODClaimpage,
+      Sidebar: Newsidebar,
+    },
+    props: true,
   },
   {
     path: '/adminhrdashboard',
@@ -467,7 +485,7 @@ function checkUserStatusAndShowModal() {
 }
 
 // Step 2: Define routes that require profile completion checks
-const routesRequiringProfileCheck = ['eclaimhomepages',]; // Add route names that require profile completion
+const routesRequiringProfileCheck = ['eclaimhomepages']; // Add route names that require profile completion
 
 // Step 3: Modify the router.beforeEach guard
 router.beforeEach((to, from, next) => {
@@ -499,6 +517,5 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
-
 
 export default router;

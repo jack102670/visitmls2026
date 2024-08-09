@@ -798,11 +798,7 @@
                       :for="field.id"
                       class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
                     >
-                      {{
-                        field.id === "AmountforAccommodationOT"
-                          ? amountLabels.amountAccommodation
-                          : field.label
-                      }}
+                      {{ field.label }}
                       <span v-if="field.required" style="color: red">*</span>
                     </label>
 
@@ -1016,6 +1012,23 @@
                               <span v-if="selectedCurrencySymbol"
                                 >({{ selectedCurrencySymbol }})</span
                               >
+                              <div class="relative group ml-1">
+                                <button
+                                  type="button"
+                                  class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
+                                >
+                                  <span
+                                    class="inline-flex items-center justify-center w-5 h-5 bg-gray-200 rounded-full text-gray-700 font-semibold"
+                                    >i</span
+                                  >
+                                </button>
+                                <div
+                                  class="absolute left-1.5/2 top-1/2 transform -translate-y-1/2 hidden group-hover:block w-64 p-2 bg-white border border-gray-300 rounded shadow-lg text-gray-700 text-sm"
+                                >
+                                  Note: This field is intended for amounts spent
+                                  in foreign currency.
+                                </div>
+                              </div>
                             </label>
                             <input
                               v-model="newExpense.AmountforAccommodationOT"
@@ -1027,11 +1040,12 @@
                               required
                               @input="calculateTotalAccommodation"
                             />
-                            <div class="text-sm text-gray-500 mt-2">
-                              Note: This field is intended for amounts spent in
-                              foreign currency. In Malaysian Ringgit = RM{{
-                                totalAccommodation || 0
-                              }}
+                            <div class="ml-2">
+                              <h1 class="text-gray-500 text-sm">
+                                In Malaysian Ringgit = RM{{
+                                  totalAccommodation || 0
+                                }}
+                              </h1>
                             </div>
                           </div>
                           <div class="mb-4">
@@ -2675,6 +2689,7 @@ export default {
               label: "Return Date",
               type: "date",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {

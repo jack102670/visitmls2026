@@ -94,6 +94,81 @@
             />
           </div>
 
+          <div class="grid grid-cols-1 mt-6 w-full">
+            <div>
+              <label class="font-semibold text-gray-600 dark:text-gray-300"
+                >Form Access</label
+              >
+              <div
+                class="mt-2 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 w-full text-xs md:text-sm"
+              >
+                <div>
+                  <input
+                    type="checkbox"
+                    name="local"
+                    id="local"
+                    v-model="formAccess.local"
+                  />
+                  <label class="ml-1" for="local">Local Travelling</label>
+                </div>
+                <div>
+                  <input
+                    type="checkbox"
+                    name="oversea"
+                    id="oversea"
+                    v-model="formAccess.overseas"
+                  />
+                  <label class="ml-1" for="oversea">Overseas Travelling</label>
+                </div>
+                <div>
+                  <input
+                    type="checkbox"
+                    name="ent"
+                    id="ent"
+                    v-model="formAccess.entertainment"
+                  />
+                  <label class="ml-1" for="ent">Entertainment</label>
+                </div>
+                <div>
+                  <input
+                    type="checkbox"
+                    name="sr"
+                    id="sr"
+                    v-model="formAccess.refreshment"
+                  />
+                  <label class="ml-1" for="sr">Staff Refreshment</label>
+                </div>
+                <div>
+                  <input
+                    type="checkbox"
+                    name="others"
+                    id="others"
+                    v-model="formAccess.others"
+                  />
+                  <label class="ml-1" for="others">Others</label>
+                </div>
+                <div>
+                  <input
+                    type="checkbox"
+                    name="ml"
+                    id="ml"
+                    v-model="formAccess.medical"
+                  />
+                  <label class="ml-1" for="ml">Medical Leaves</label>
+                </div>
+                <div>
+                  <input
+                    type="checkbox"
+                    name="hp"
+                    id="hp"
+                    v-model="formAccess.handphone"
+                  />
+                  <label class="ml-1" for="hp">Handphone</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
             <div>
               <label class="font-semibold text-gray-600 dark:text-gray-300"
@@ -210,6 +285,16 @@ export default {
       AllPositions: [],
       filteredReportingEmployees: [],
 
+      formAccess: {
+        local: false,
+        overseas: false,
+        entertainment: false,
+        refreshment: false,
+        others: false,
+        medical: false,
+        handphone: false,
+      },
+
       enableLimit: 'no',
 
       enableBtn: false,
@@ -222,6 +307,7 @@ export default {
     Register() {
       this.loadingText = 'Uploading';
       this.loading = true;
+      const accessData = this.convertValues();
       // Post the 'form' object to API
       const registerData = {
         company_name: this.form.company,
@@ -248,6 +334,13 @@ export default {
           this.form.reportingId.split('(').length - 1
         ].split(')')[0],
         position: this.form.position,
+        local_access: accessData.local,
+        overseas_access: accessData.overseas,
+        md_access: accessData.medical,
+        phone_access: accessData.handphone,
+        staff_access: accessData.refreshment,
+        ent_access: accessData.entertainment,
+        others_access: accessData.others,
       };
       console.log('Form Data:', registerData);
 
@@ -267,6 +360,17 @@ export default {
           console.error('Error:', error);
           // Handle error
         });
+      console.log(this.convertValues());
+    },
+    convertValues() {
+      let convertedValues = Object.keys(this.formAccess).reduce(
+        (result, key) => {
+          result[key] = this.formAccess[key] ? 1 : 0;
+          return result;
+        },
+        {}
+      );
+      return convertedValues;
     },
     async fetchData() {
       this.loadingText = 'Fetching';
@@ -361,6 +465,8 @@ export default {
         }
         if (count == Object.keys(this.form).length - 1) {
           this.enableBtn = true;
+        } else {
+          this.enableBtn = false;
         }
       },
       deep: true,

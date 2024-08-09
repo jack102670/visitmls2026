@@ -278,6 +278,21 @@
 
               <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
                 <div>
+                  <label
+                    :for="inputId"
+                    class="font-semibold text-gray-600 dark:text-gray-300"
+                    >Employee ID<span class="text-red-500">*</span></label
+                  >
+                  <input
+                    :id="inputId"
+                    v-model="form.employeeId"
+                    @input="limitChar()"
+                    :defaultvalue="form.employeeId"
+                    class="border-2 border-gray-200 p-2 w-full rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    type="text"
+                  />
+                </div>
+                <div class="mt-6 lg:mt-0 lg:ml-4">
                   <label class="font-semibold text-gray-600 dark:text-gray-300"
                     >Limit</label
                   >
@@ -309,20 +324,115 @@
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
+                <div>
+                  <label
+                    :for="inputId"
+                    class="font-semibold text-gray-600 dark:text-gray-300"
+                    >Limit Outpatient<span class="text-red-500">*</span></label
+                  >
+                  <input
+                    :id="inputId"
+                    v-model="form.limitOutpatient"
+                    :defaultvalue="form.limitOutpatient"
+                    class="border-2 border-gray-200 p-2 w-full rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                    type="number"
+                  />
+                </div>
                 <div class="mt-6 lg:mt-0 lg:ml-4">
                   <label
                     :for="inputId"
                     class="font-semibold text-gray-600 dark:text-gray-300"
-                    >Employee ID<span class="text-red-500">*</span></label
+                    >Limit Medical Dental<span class="text-red-500"
+                      >*</span
+                    ></label
                   >
                   <input
                     :id="inputId"
-                    v-model="form.employeeId"
-                    @input="limitChar()"
-                    :defaultvalue="form.employeeId"
+                    v-model="form.limitMedicaldental"
+                    :defaultvalue="form.limitMedicaldental"
                     class="border-2 border-gray-200 p-2 w-full rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    type="text"
+                    type="number"
                   />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 mt-6 w-full">
+                <div>
+                  <label class="font-semibold text-gray-600 dark:text-gray-300"
+                    >Form Access</label
+                  >
+                  <div
+                    class="mt-2 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 w-full text-xs md:text-sm"
+                  >
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="local"
+                        id="local"
+                        v-model="formAccess.local"
+                      />
+                      <label class="ml-1" for="local">Local Travelling</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="oversea"
+                        id="oversea"
+                        v-model="formAccess.overseas"
+                      />
+                      <label class="ml-1" for="oversea"
+                        >Overseas Travelling</label
+                      >
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="ent"
+                        id="ent"
+                        v-model="formAccess.entertainment"
+                      />
+                      <label class="ml-1" for="ent">Entertainment</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="sr"
+                        id="sr"
+                        v-model="formAccess.refreshment"
+                      />
+                      <label class="ml-1" for="sr">Staff Refreshment</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="others"
+                        id="others"
+                        v-model="formAccess.others"
+                      />
+                      <label class="ml-1" for="others">Others</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="ml"
+                        id="ml"
+                        v-model="formAccess.medical"
+                      />
+                      <label class="ml-1" for="ml">Medical Leaves</label>
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        name="hp"
+                        id="hp"
+                        v-model="formAccess.handphone"
+                      />
+                      <label class="ml-1" for="hp">Handphone</label>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -347,9 +457,9 @@
             <!-- Confirmation -->
             <div
               v-show="confirm"
-              class="fixed w-screen h-screen overflow-hidden top-0 left-0 z-50 bg-gray-600/50 flex justify-center items-center"
+              class="fixed w-screen h-screen overflow-hidden top-0 left-0 z-50 bg-gray-600/50 dark:bg-gray-800/50 flex justify-center items-center"
             >
-              <div class="bg-white rounded-2xl px-4 py-6">
+              <div class="bg-white dark:bg-gray-700 rounded-2xl px-4 py-6">
                 <h1 class="text-lg mb-2 font-semibold">
                   Confirm to Save the edit?
                 </h1>
@@ -447,6 +557,8 @@ export default {
         reportingDepartment: '',
         reportingId: '',
         limit: null,
+        limitOutpatient: '',
+        limitMedicaldental: '',
       },
       // option for dropdown
       fetchOptions: [],
@@ -457,6 +569,16 @@ export default {
       AllDepartments: [],
       AllPositions: [],
       filteredReportingEmployees: [],
+
+      formAccess: {
+        local: false,
+        overseas: false,
+        entertainment: false,
+        refreshment: false,
+        others: false,
+        medical: false,
+        handphone: false,
+      },
 
       enableLimit: 'no',
 
@@ -526,10 +648,10 @@ export default {
             reportingDepartment: data.reporting_to_dept,
             reportingId: reportingName + ' (' + data.reporting_to + ')',
             limit: data.limit_amount,
+            limitOutpatient: data.limit_outpatient,
+            limitMedicaldental: data.limit_medicaldental,
             userNameId: data.username_id,
           };
-
-          console.log('limit amount ', this.form);
 
           if (data.limit_amount > 0) {
             this.enableLimit = 'yes';
@@ -544,6 +666,8 @@ export default {
       console.log('form ', this.form);
       this.loadingText = 'Uploading';
       this.loading = true;
+      const accessData = this.convertValues();
+
       // Post the 'form' object to API
       const registerData = {
         company_name: this.form.company,
@@ -559,6 +683,15 @@ export default {
           this.form.reportingId.split('(').length - 1
         ].split(')')[0],
         position: this.form.position,
+        local_access: accessData.local,
+        overseas_access: accessData.overseas,
+        md_access: accessData.medical,
+        phone_access: accessData.handphone,
+        staff_access: accessData.refreshment,
+        ent_access: accessData.entertainment,
+        others_access: accessData.others,
+        limit_md_dental: this.form.limitMedicaldental,
+        limit_outpatient: this.form.limitOutpatient,
       };
       console.log('Form Data:', registerData);
 
@@ -595,6 +728,7 @@ export default {
           this.getAllDepartments();
           this.getAllPositions();
           this.getAllCompanies();
+          this.getFormAccess();
 
           if (this.form.branch) {
             this.changeDepartment(this.form.branch);
@@ -618,6 +752,26 @@ export default {
       const departments = this.fetchOptions.map((item) => item.department);
       const uniqueDepartments = [...new Set(departments)];
       this.AllDepartments = uniqueDepartments;
+    },
+    getFormAccess() {
+      axios
+        .get(
+          'http://172.28.28.91:97/api/User/GetEmployeeById/' +
+            this.form.userNameId
+        )
+        .then((response) => {
+          console.log('result', response.data.result);
+          const result = response.data.result;
+          this.formAccess = {
+            local: result[0].local_access == 0 ? false : true,
+            overseas: result[0].overseas_access == 0 ? false : true,
+            entertainment: result[0].ent_access == 0 ? false : true,
+            refreshment: result[0].staff_access == 0 ? false : true,
+            others: result[0].others_access == 0 ? false : true,
+            medical: result[0].md_access == 0 ? false : true,
+            handphone: result[0].phone_access == 0 ? false : true,
+          };
+        });
     },
     getAllPositions() {
       axios
@@ -644,6 +798,16 @@ export default {
       if (this.form.employeeId.length >= 10) {
         this.form.employeeId = this.form.employeeId.substring(0, 10);
       }
+    },
+    convertValues() {
+      let convertedValues = Object.keys(this.formAccess).reduce(
+        (result, key) => {
+          result[key] = this.formAccess[key] ? 1 : 0;
+          return result;
+        },
+        {}
+      );
+      return convertedValues;
     },
     async getEmpId(id) {
       try {
