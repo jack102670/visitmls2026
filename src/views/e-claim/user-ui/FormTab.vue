@@ -2,10 +2,21 @@
   <div
     class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
   >
-    <div class="sm:flex justify-start flex-wrap">
+    <div  class="sm:flex justify-start flex-wrap">
       <button
         v-for="(tab, index) in tabs"
-        v-show="tab.tabType == type"
+        v-show="
+    tab.tabType == type &&
+    (
+      (tab.title === 'Local Travelling' && profilestatus.local_access === '1') ||
+      (tab.title === 'Others' && profilestatus.others_access === '1') ||
+      (tab.title === 'Handphone Bill Reimbursement' && profilestatus.phone_access === '1') ||
+      (tab.title === 'Medical Bill Reimbursement' && profilestatus.md_access === '1') ||
+      (tab.title === 'Staff Refreshment' && profilestatus.staff_access === '1') ||
+      (tab.title === 'Overseas Travelling' && profilestatus.overseas_access === '1') ||
+      (tab.title === 'Entertainment' && profilestatus.ent_access === '1')
+    )
+  "
         :key="index"
         @click="activeTab = index"
         :class="[
@@ -39,7 +50,7 @@
         <section>
           <div
             v-if="
-              tab.title === 'Handphone Bill Reimbursement' && isFormDisabled
+              tab.title === 'Handphone Bill Reimbursement' && isFormDisabled 
             "
             class="relative flex items-center justify-center mt-4 p-4 bg-yellow-200 border border-yellow-400 text-yellow-800 rounded-md"
             style="width: 100%; max-width: 600px; margin: 0 auto"
@@ -63,10 +74,12 @@
 
         <div
           v-if="
-            tab.title !== 'Entertainment' && tab.title !== 'Staff Refreshment'
+            tab.title !== 'Entertainment' &&
+            tab.title !== 'Staff Refreshment' &&
+            tab.title !== 'Overseas Travelling'
           "
         >
-          <form
+          <form 
             @submit.prevent="submitForm(tab)"
             :class="{
               blur:
@@ -114,9 +127,7 @@
                               field.id !== 'UploadMileageRMLT' &&
                               field.id !== 'TransportSpec' &&
                               field.id !== 'TollLT' &&
-                              field.id !== 'UploadTollLT' &&
-                              field.id !== 'ParkingLT' &&
-                              field.id !== 'UploadParkingLT')
+                              field.id !== 'UploadTollLT')
                           "
                         >
                           <template
@@ -148,13 +159,7 @@
                                   :for="field.id"
                                   class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
                                 >
-                                  {{
-                                    field.id === "AmountforAccommodationOT"
-                                      ? amountLabels.amountAccommodation
-                                      : field.id === "AmountforOthersOT"
-                                      ? amountLabels.amountOthers
-                                      : field.label
-                                  }}
+                                  {{ field.label }}
                                   <span v-if="field.required" style="color: red"
                                     >*</span
                                   >
@@ -364,38 +369,7 @@
                                     />
                                     <file-pond
                                       v-if="
-                                        field.id ===
-                                          'UploadAirportLimoTeksiOT' &&
-                                        showAirportLimoUpload
-                                      "
-                                      :name="field.id"
-                                      :disabled="
-                                        (tab.title ===
-                                          'Handphone Bill Reimbursement' &&
-                                          isFormDisabled) ||
-                                        field.disabled
-                                      "
-                                      :required="field.required"
-                                      ref="pond"
-                                      label-idle="Drop files here..."
-                                      @addfile="
-                                        (error, file) =>
-                                          handleAddFile(error, file, field)
-                                      "
-                                      @removefile="
-                                        (error, file) =>
-                                          handleRemoveFile(error, file, field)
-                                      "
-                                      :accepted-file-types="
-                                        field.acceptedFileTypes
-                                      "
-                                      :max-file-size="field.maxFileSize"
-                                      :allow-multiple="field.allowMultiple"
-                                    />
-                                    <file-pond
-                                      v-if="
                                         field.id === 'UploadLT' ||
-                                        field.id === 'UploadOT' ||
                                         field.id === 'UploadOthers' ||
                                         field.id === 'UploadHR' ||
                                         field.id === 'UploadML'
@@ -618,159 +592,13 @@
 
                                 <template
                                   v-else-if="
-                                    field.id === 'AmountforAccommodationOT'
-                                  "
-                                >
-                                  <input
-                                    v-model="field.value"
-                                    type="number"
-                                    :required="field.required"
-                                    :id="field.id"
-                                    :placeholder="field.placeholder"
-                                    :step="
-                                      field.type === 'number'
-                                        ? '0.01'
-                                        : undefined
-                                    "
-                                    :disabled="
-                                      (tab.title ===
-                                        'Handphone Bill Reimbursement' &&
-                                        isFormDisabled) ||
-                                      field.disabled
-                                    "
-                                    class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                                  />
-                                  <div class="relative group ml-1">
-                                    <button
-                                      type="button"
-                                      class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
-                                    >
-                                      <span
-                                        class="inline-flex items-center justify-center w-5 h-5 bg-gray-200 rounded-full text-gray-700 font-semibold"
-                                        >i</span
-                                      >
-                                    </button>
-                                    <div
-                                      class="absolute left-1.5/2 top-1/2 transform -translate-y-1/2 hidden group-hover:block w-64 p-2 bg-white border border-gray-300 rounded shadow-lg text-gray-700 text-sm"
-                                    >
-                                      Note: This field is intended for amounts
-                                      spent in foreign currency.
-                                    </div>
-                                    <div class="ml-2">
-                                      <h1 class="text-gray-500 text-sm">
-                                        In Malaysian Ringgit = RM{{
-                                          totalAccommodation || 0
-                                        }}
-                                      </h1>
-                                    </div>
-                                  </div>
-                                </template>
-
-                                <template
-                                  v-else-if="field.id === 'AmountforOthersOT'"
-                                >
-                                  <input
-                                    v-model="field.value"
-                                    type="number"
-                                    :required="field.required"
-                                    :id="field.id"
-                                    :placeholder="field.placeholder"
-                                    :step="
-                                      field.type === 'number'
-                                        ? '0.01'
-                                        : undefined
-                                    "
-                                    :disabled="
-                                      (tab.title ===
-                                        'Handphone Bill Reimbursement' &&
-                                        isFormDisabled) ||
-                                      field.disabled
-                                    "
-                                    class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                                  />
-                                  <div class="relative group ml-1">
-                                    <button
-                                      type="button"
-                                      class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
-                                    >
-                                      <span
-                                        class="inline-flex items-center justify-center w-5 h-5 bg-gray-200 rounded-full text-gray-700 font-semibold"
-                                        >i</span
-                                      >
-                                    </button>
-                                    <div
-                                      class="absolute left-1.5/2 top-1/2 transform -translate-y-1/2 hidden group-hover:block w-64 p-2 bg-white border border-gray-300 rounded shadow-lg text-gray-700 text-sm"
-                                    >
-                                      Note: This field is intended for amounts
-                                      spent in foreign currency.
-                                    </div>
-                                    <div class="ml-2">
-                                      <h1 class="text-gray-500 text-sm">
-                                        In Malaysian Ringgit = RM{{
-                                          totalOthers || 0
-                                        }}
-                                      </h1>
-                                    </div>
-                                  </div>
-                                </template>
-
-                                <template
-                                  v-else-if="field.id === 'AirportLimoTeksiOT'"
-                                >
-                                  <input
-                                    v-model="field.value"
-                                    type="number"
-                                    :required="field.required"
-                                    :id="field.id"
-                                    :placeholder="field.placeholder"
-                                    :step="
-                                      field.type === 'number'
-                                        ? '0.01'
-                                        : undefined
-                                    "
-                                    :disabled="
-                                      (tab.title ===
-                                        'Handphone Bill Reimbursement' &&
-                                        isFormDisabled) ||
-                                      field.disabled
-                                    "
-                                    class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                                  />
-                                  <button
-                                    v-if="field.id === 'AirportLimoTeksiOT'"
-                                    type="button"
-                                    @click="
-                                      toggleUploadField('AirportLimoTeksiOT')
-                                    "
-                                    class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
-                                  >
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      class="w-5 h-5"
-                                      fill="none"
-                                      viewBox="0 0 24 24"
-                                      stroke="currentColor"
-                                    >
-                                      <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M7 8l5-5m0 0l5 5m-5-5v12"
-                                      />
-                                    </svg>
-                                  </button>
-                                </template>
-
-                                <template
-                                  v-else-if="
                                     field.id === 'BankNameHR' ||
                                     field.id === 'BankNameML' ||
                                     field.id === 'AccBankNumberHR' ||
                                     field.id === 'AccBankNumberML' ||
                                     field.id === 'AccHolderNameHR' ||
                                     field.id === 'AccHolderNameML' ||
-                                    field.id === 'LimitedAmountHR' ||
-                                    field.id === 'LimitedAmountML'
+                                    field.id === 'LimitedAmountHR'
                                   "
                                 >
                                   <input
@@ -792,6 +620,48 @@
                                     "
                                     class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                                   />
+                                </template>
+
+                                <template
+                                  v-else-if="field.id === 'LimitedAmountML'"
+                                >
+                                  <input
+                                    v-model="field.value"
+                                    type="number"
+                                    :required="field.required"
+                                    :id="field.id"
+                                    :placeholder="field.placeholder"
+                                    :step="
+                                      field.type === 'number'
+                                        ? '0.01'
+                                        : undefined
+                                    "
+                                    :disabled="
+                                      (tab.title ===
+                                        'Handphone Bill Reimbursement' &&
+                                        isFormDisabled) ||
+                                      field.disabled
+                                    "
+                                    class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                                  />
+                                  <div class="relative group ml-1">
+                                    <button
+                                      type="button"
+                                      class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
+                                    >
+                                      <span
+                                        class="inline-flex items-center justify-center w-5 h-5 bg-gray-200 rounded-full text-gray-700 font-semibold"
+                                        >i</span
+                                      >
+                                    </button>
+                                    <div
+                                      class="absolute left-1.5/2 top-1/2 transform -translate-y-1/2 hidden group-hover:block w-64 p-2 bg-white border border-gray-300 rounded shadow-lg text-gray-700 text-sm"
+                                    >
+                                      Please note: The reimbursement limit is
+                                      not yet updated and may not reflect the
+                                      latest changes.
+                                    </div>
+                                  </div>
                                 </template>
 
                                 <template v-else>
@@ -845,266 +715,6 @@
                 </section>
                 <!-- Medical Bill Reimbursement Note Section-->
 
-                <!-- Add Other Expenses for Overseas Section-->
-                <section>
-                  <!-- Add Other Expenses Button-->
-                  <div
-                    v-if="tab.title === 'Overseas Travelling'"
-                    class="mt-4 max-h-96 overflow-y-auto"
-                  >
-                    <span
-                      class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
-                      >Other Expenses (If any)
-                    </span>
-                    <button
-                      type="button"
-                      class="px-4 py-2 ml-3 bg-blue-500 text-white rounded"
-                      @click="showOtherExpensesModal = true"
-                    >
-                      Add Expenses
-                    </button>
-                  </div>
-
-                  <!-- Modal Form for Other Expenses -->
-                  <div
-                    v-if="showOtherExpensesModal"
-                    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-                  >
-                    <div
-                      class="relative p-8 bg-white w-full max-w-md h-3/4 overflow-y-auto m-auto flex-col flex rounded-lg"
-                    >
-                      <h3 class="text-lg font-medium mb-4">
-                        Add Other Expense
-                      </h3>
-                      <form @submit.prevent="addOtherExpense">
-                        <div class="mb-4">
-                          <label
-                            class="block text-sm font-medium text-gray-700"
-                            for="expenseName"
-                            >Expense Name</label
-                          >
-                          <input
-                            v-model="newExpense.name"
-                            id="expenseName"
-                            type="text"
-                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                            required
-                          />
-                        </div>
-                        <div class="mb-4">
-                          <label
-                            class="block text-sm font-medium text-gray-700"
-                            for="expenseAmount"
-                            >Description</label
-                          >
-                          <textarea
-                            v-model="newExpense.description"
-                            id="expenseDescription"
-                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                            rows="4"
-                            required
-                          ></textarea>
-                        </div>
-                        <div class="mb-4">
-                          <label
-                            class="block text-sm font-medium text-gray-700"
-                            for="expenseAmount"
-                            >Amount (RM)</label
-                          >
-                          <input
-                            v-model="newExpense.amount"
-                            id="expenseAmount"
-                            type="number"
-                            placeholder="Amount (RM)"
-                            step="0.01"
-                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                            required="required"
-                          />
-                        </div>
-                        <div class="mb-4">
-                          <label
-                            class="block text-sm font-medium text-gray-700"
-                            for="expenseAttachment"
-                          >
-                            Attachment(s) (png, jpeg, pdf, or xlsx)
-                          </label>
-                          <file-pond
-                            ref="pond"
-                            name="files"
-                            label-idle="Drop files here..."
-                            @addfile="
-                              (error, file) =>
-                                handleAddFileOT(error, file, newExpense.files)
-                            "
-                            @removefile="
-                              (error, file) =>
-                                handleRemoveFileOT(
-                                  error,
-                                  file,
-                                  newExpense.files
-                                )
-                            "
-                            :accepted-file-types="[
-                              'application/pdf',
-                              'image/png',
-                              'image/jpeg',
-                              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                            ]"
-                            :max-file-size="5000000"
-                            allow-multiple="true"
-                          />
-                        </div>
-
-                        <div class="mt-8 flex justify-end">
-                          <button
-                            type="submit"
-                            class="px-4 py-2 bg-blue-500 text-white rounded mr-2"
-                          >
-                            Submit
-                          </button>
-                          <button
-                            @click="showOtherExpensesModal = false"
-                            class="px-4 py-2 bg-gray-300 text-black rounded"
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-
-                  <!-- Other Expenses Table -->
-                  <div
-                    v-if="
-                      tab.title === 'Overseas Travelling' &&
-                      otherExpenses.length > 0
-                    "
-                    class="mt-4"
-                  >
-                    <table
-                      class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
-                    >
-                      <thead class="bg-gray-50 dark:bg-gray-800">
-                        <tr>
-                          <th
-                            scope="col"
-                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                          >
-                            <div class="flex items-center gap-x-3">
-                              <span>Expense</span>
-                            </div>
-                          </th>
-                          <th
-                            scope="col"
-                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                          >
-                            <div class="flex items-center gap-x-3">
-                              <span>Description</span>
-                            </div>
-                          </th>
-                          <th
-                            scope="col"
-                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                          >
-                            <div class="flex items-center gap-x-3">
-                              <span>Amount(RM)</span>
-                            </div>
-                          </th>
-                          <th
-                            scope="col"
-                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                          >
-                            <div class="flex items-center gap-x-3">
-                              <span>Attachment(s)</span>
-                            </div>
-                          </th>
-                          <th
-                            scope="col"
-                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                          >
-                            <div class="flex items-center gap-x-3">
-                              <span>Action</span>
-                            </div>
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody
-                        class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
-                      >
-                        <tr
-                          v-for="(expense, index) in otherExpenses"
-                          :key="index"
-                        >
-                          <td
-                            class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap"
-                          >
-                            {{ expense.name }}
-                          </td>
-                          <td
-                            class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap"
-                          >
-                            {{ expense.description }}
-                          </td>
-                          <td
-                            class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                          >
-                            {{ expense.amount }}
-                          </td>
-                          <td
-                            class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                          >
-                            <div v-for="file in expense.files" :key="file.id">
-                              <a
-                                :href="file.url"
-                                :download="file.name"
-                                class="text-blue-500 hover:underline"
-                                >{{ file.name }}</a
-                              >
-                            </div>
-                          </td>
-                          <td
-                            class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                          >
-                            <button
-                              class="text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
-                              @click="removeExpense(index)"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                class="w-5 h-5"
-                              >
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                />
-                              </svg>
-                            </button>
-                          </td>
-                        </tr>
-                        <tr class="bg-gray-50 dark:bg-gray-800">
-                          <td
-                            class="px-4 py-2 border text-sm font-normal text-right text-gray-500 dark:text-gray-400"
-                            colspan="4"
-                          >
-                            Total Amount
-                          </td>
-                          <td
-                            class="px-4 py-2 border text-sm font-medium text-gray-700 whitespace-nowrap"
-                          >
-                            RM {{ calculateOverseasTotal() }}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </section>
-                <!-- End of Add Other Expenses for Overseas Section -->
-
                 <div class="pt-4">
                   <hr class="" />
                   <div class="mt-4">
@@ -1121,16 +731,17 @@
                 <div class="mt-4 mr-6 flex flex-row-reverse">
                   <div class="flex items-center justify-between">
                     <button
-                    :class="{
-    'bg-blue-500 hover:bg-blue-700': !isSaveButtonDisabled,
-    'bg-gray-500 cursor-not-allowed': isSaveButtonDisabled || isFormDisabled,
-    'text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline': true
-  }"
+                      :class="{
+                        'bg-blue-500 hover:bg-blue-700': !isSaveButtonDisabled,
+                        'bg-gray-500 cursor-not-allowed':
+                          isSaveButtonDisabled || isFormDisabled,
+                        'text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline': true,
+                      }"
                       type="submit"
                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                       :disabled="
                         (tab.title === 'Handphone Bill Reimbursement' &&
-                          isFormDisabled ) ||
+                          isFormDisabled) ||
                         (tab.title === 'Medical Bill Reimbursement' &&
                           isSaveButtonDisabled)
                       "
@@ -1143,6 +754,656 @@
             </div>
           </form>
         </div>
+
+        <!-- Overseas Travelling tab -->
+        <div v-if="tab.title == 'Overseas Travelling'">
+          <div class="tabs">
+            <button
+              v-for="(subTab, subIndex) in overseasTabs"
+              :key="subIndex"
+              @click="activeSubTab = subIndex"
+              :class="{
+                'bg-gray-300': activeSubTab === subIndex,
+                'hover:bg-gray-200': activeSubTab !== subIndex,
+              }"
+              class="px-4 py-2 mr-2 rounded-sm focus:outline-none border border-gray-300"
+            >
+              {{ subTab.title }}
+              <span v-if="subTab.title === 'Other Expenses'"></span>
+            </button>
+          </div>
+
+          <div
+            v-for="(subTab, subIndex) in overseasTabs"
+            :key="subIndex"
+            v-show="activeSubTab === subIndex"
+          >
+            <div class="pt-4">
+              <hr />
+              <div class="m-2">
+                <form @submit.prevent="submitForm4(subTab)">
+                  <div
+                    v-for="(field, fieldIndex) in subTab.fields"
+                    :key="fieldIndex"
+                    :class="[
+                      'grid',
+                      'grid-cols-1',
+                      subTab.gridLayout || 'sm:grid-cols-2',
+                      field.gridClass,
+                    ]"
+                  >
+                    <label
+                      :for="field.id"
+                      class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
+                    >
+                      {{
+                        field.id === "AmountforAccommodationOT"
+                          ? amountLabels.amountAccommodation
+                          : field.label
+                      }}
+                      <span v-if="field.required" style="color: red">*</span>
+                    </label>
+
+                    <template v-if="field.type === 'select'">
+                      <select
+                        v-model="field.value"
+                        :required="field.required"
+                        :id="field.id"
+                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                      >
+                        <option
+                          v-for="(option, optionIndex) in field.options"
+                          :key="optionIndex"
+                          :value="option.value"
+                        >
+                          {{ option.label }}
+                        </option>
+                      </select>
+                    </template>
+
+                    <template v-else-if="field.type === 'radio-group'">
+                      <div class="grid grid-cols-2">
+                        <div
+                          class="p-4 pt-2 pb-2 flex items-center"
+                          v-for="option in field.options"
+                          :key="option.value"
+                        >
+                          <input
+                            type="radio"
+                            :id="option.value"
+                            :name="field.id"
+                            :value="option.value"
+                            v-model="field.value"
+                            :required="field.required"
+                            :disabled="
+                              (tab.title === 'Handphone Bill Reimbursement' &&
+                                isFormDisabled) ||
+                              field.disabled
+                            "
+                            class="mr-2"
+                          />
+                          <label
+                            :for="option.value"
+                            class="text-sm text-gray-700"
+                          >
+                            {{ option.label }}
+                          </label>
+                        </div>
+                      </div>
+                    </template>
+
+                    <template v-else-if="field.type === 'file'">
+                      <div class="pt-3">
+                        <file-pond
+                          :name="field.id"
+                          :required="field.required"
+                          ref="pond"
+                          label-idle="Drop files here..."
+                          @addfile="
+                            (error, file) => handleAddFile(error, file, field)
+                          "
+                          @removefile="
+                            (error, file) =>
+                              handleRemoveFile(error, file, field)
+                          "
+                          :accepted-file-types="field.acceptedFileTypes"
+                          :max-file-size="field.maxFileSize"
+                          :allow-multiple="field.allowMultiple"
+                        />
+                      </div>
+                    </template>
+
+                    <template v-else>
+                      <input
+                        v-model="field.value"
+                        :required="field.required"
+                        :id="field.id"
+                        :type="field.type"
+                        :placeholder="field.placeholder"
+                        :step="field.type === 'number' ? '0.01' : undefined"
+                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                      />
+                    </template>
+                  </div>
+
+                  <div v-if="subTab.title === 'Other Expenses'" class="mt-4">
+                    <span class="m-3 block text-gray-700 text-md font-bold mb-2"
+                      >Please select the currency type for your expenses:</span
+                    >
+
+                    <!-- Radio Buttons for Currency Selection -->
+                    <div class="mb-4 ml-6">
+                      <label class="inline-flex items-center">
+                        <input
+                          type="radio"
+                          v-model="currencyType"
+                          value="foreign"
+                          class="form-radio"
+                        />
+                        <span class="ml-2">Foreign Currency</span>
+                      </label>
+                      <label class="inline-flex items-center ml-6">
+                        <input
+                          type="radio"
+                          v-model="currencyType"
+                          value="rm"
+                          class="form-radio"
+                        />
+                        <span class="ml-2">Malaysian Ringgit</span>
+                      </label>
+                    </div>
+
+                    <button
+                      type="button"
+                      class="px-4 py-2 ml-3 mb-3 bg-blue-500 text-white rounded"
+                      @click="showOtherExpensesModal = true"
+                    >
+                      Add Expenses
+                    </button>
+
+                    <!-- Modal Form for Foreign Currency Expenses -->
+                    <div
+                      v-if="
+                        showOtherExpensesModal && currencyType === 'foreign'
+                      "
+                      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+                    >
+                      <div
+                        class="relative p-8 bg-white w-full max-w-md h-3/4 overflow-y-auto m-auto flex-col flex rounded-lg"
+                      >
+                        <h3 class="text-lg font-medium mb-4">
+                          Add Foreign Currency Expense
+                        </h3>
+                        <hr class="" />
+                        <form @submit.prevent="addOtherExpense">
+                          <div class="mb-4 mt-4">
+                            <label
+                              class="block text-sm font-medium text-gray-700"
+                              for="expenseName"
+                              >Expense Name</label
+                            >
+                            <input
+                              v-model="newExpense.name"
+                              id="expenseName"
+                              type="text"
+                              class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                              required
+                            />
+                          </div>
+                          <div class="mb-4">
+                            <label
+                              class="block text-sm font-medium text-gray-700"
+                              for="expenseDescription"
+                              >Description</label
+                            >
+                            <textarea
+                              v-model="newExpense.description"
+                              id="expenseDescription"
+                              class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                              rows="4"
+                              required
+                            ></textarea>
+                          </div>
+                          <div class="mb-4" v-if="currencyType === 'foreign'">
+                            <label
+                              class="block text-sm font-medium text-gray-700"
+                              for="ForeignCurrencyAccommodationOT"
+                              >Foreign Currency</label
+                            >
+                            <select
+                              v-model="
+                                newExpense.ForeignCurrencyAccommodationOT
+                              "
+                              id="ForeignCurrencyAccommodationOT"
+                              class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                              required
+                            >
+                              <option disabled value="">
+                                Select a currency
+                              </option>
+                              <option
+                                v-for="currency in currencyOptions"
+                                :key="currency.value"
+                                :value="currency.value"
+                              >
+                                {{ currency.label }}
+                              </option>
+                            </select>
+                          </div>
+                          <div class="mb-4">
+                            <label
+                              class="block text-sm font-medium text-gray-700"
+                              for="ExchangeRateAccommodationOT"
+                              >Exchange Rate</label
+                            >
+                            <input
+                              v-model="newExpense.ExchangeRateAccommodationOT"
+                              id="ExchangeRateAccommodationOT"
+                              type="number"
+                              step="0.01"
+                              class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                              required
+                            />
+                          </div>
+                          <div class="mb-4">
+                            <label
+                              class="block text-sm font-medium text-gray-700"
+                              for="AmountforAccommodationOT"
+                            >
+                              Amount
+                              <span v-if="selectedCurrencySymbol"
+                                >({{ selectedCurrencySymbol }})</span
+                              >
+                            </label>
+                            <input
+                              v-model="newExpense.AmountforAccommodationOT"
+                              id="AmountforAccommodationOT"
+                              type="number"
+                              placeholder=""
+                              step="0.01"
+                              class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                              required
+                              @input="calculateTotalAccommodation"
+                            />
+                            <div class="text-sm text-gray-500 mt-2">
+                              Note: This field is intended for amounts spent in
+                              foreign currency. In Malaysian Ringgit = RM{{
+                                totalAccommodation || 0
+                              }}
+                            </div>
+                          </div>
+                          <div class="mb-4">
+                            <label
+                              class="block text-sm font-medium text-gray-700"
+                              for="expenseAttachment"
+                              >Attachment(s) (png, jpeg, pdf, or xlsx)</label
+                            >
+                            <file-pond
+                              ref="pond"
+                              name="files"
+                              label-idle="Drop files here..."
+                              @addfile="
+                                (error, file) =>
+                                  handleAddFileOT(error, file, newExpense.files)
+                              "
+                              @removefile="
+                                (error, file) =>
+                                  handleRemoveFileOT(
+                                    error,
+                                    file,
+                                    newExpense.files
+                                  )
+                              "
+                              :accepted-file-types="[
+                                'application/pdf',
+                                'image/png',
+                                'image/jpeg',
+                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                              ]"
+                              :max-file-size="5000000"
+                              allow-multiple="true"
+                            />
+                          </div>
+                          <div class="mt-8 flex justify-end">
+                            <button
+                              type="submit"
+                              class="px-4 py-2 bg-blue-500 text-white rounded mr-2"
+                            >
+                              Submit
+                            </button>
+                            <button
+                              @click="showOtherExpensesModal = false"
+                              class="px-4 py-2 bg-gray-300 text-black rounded"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+
+                    <!-- Modal Form for Malaysian Ringgit Expenses -->
+                    <div
+                      v-if="showOtherExpensesModal && currencyType === 'rm'"
+                      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+                    >
+                      <div
+                        class="relative p-8 bg-white w-full max-w-md h-3/4 overflow-y-auto m-auto flex-col flex rounded-lg"
+                      >
+                        <h3 class="text-lg font-medium mb-4">
+                          Add Malaysian Ringgit Expense
+                        </h3>
+                        <hr class="" />
+                        <form @submit.prevent="addOtherExpense">
+                          <div class="mb-4 mt-4">
+                            <label
+                              class="block text-sm font-medium text-gray-700"
+                              for="expenseName"
+                              >Expense Name</label
+                            >
+                            <input
+                              v-model="newExpense.name"
+                              id="expenseName"
+                              type="text"
+                              class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                              required
+                            />
+                          </div>
+                          <div class="mb-4">
+                            <label
+                              class="block text-sm font-medium text-gray-700"
+                              for="expenseDescription"
+                              >Description</label
+                            >
+                            <textarea
+                              v-model="newExpense.description"
+                              id="expenseDescription"
+                              class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                              rows="4"
+                              required
+                            ></textarea>
+                          </div>
+                          <div class="mb-4">
+                            <label
+                              class="block text-sm font-medium text-gray-700"
+                              for="expenseAmount"
+                              >Amount (RM)</label
+                            >
+                            <input
+                              v-model="newExpense.amount"
+                              id="expenseAmount"
+                              type="number"
+                              placeholder="Amount (RM)"
+                              step="0.01"
+                              class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                              required
+                            />
+                          </div>
+                          <div class="mb-4">
+                            <label
+                              class="block text-sm font-medium text-gray-700"
+                              for="expenseAttachment"
+                              >Attachment(s) (png, jpeg, pdf, or xlsx)</label
+                            >
+                            <file-pond
+                              ref="pond"
+                              name="files"
+                              label-idle="Drop files here..."
+                              @addfile="
+                                (error, file) =>
+                                  handleAddFileOT(error, file, newExpense.files)
+                              "
+                              @removefile="
+                                (error, file) =>
+                                  handleRemoveFileOT(
+                                    error,
+                                    file,
+                                    newExpense.files
+                                  )
+                              "
+                              :accepted-file-types="[
+                                'application/pdf',
+                                'image/png',
+                                'image/jpeg',
+                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                              ]"
+                              :max-file-size="5000000"
+                              allow-multiple="true"
+                            />
+                          </div>
+                          <div class="mt-8 flex justify-end">
+                            <button
+                              type="submit"
+                              class="px-4 py-2 bg-blue-500 text-white rounded mr-2"
+                            >
+                              Submit
+                            </button>
+                            <button
+                              @click="showOtherExpensesModal = false"
+                              class="px-4 py-2 bg-gray-300 text-black rounded"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+
+                    <!-- Other Expenses Table -->
+                    <div
+                      v-if="tab.title === 'Overseas Travelling'"
+                      class="mt-4"
+                    >
+                      <table
+                        class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                      >
+                        <thead class="bg-gray-50 dark:bg-gray-800">
+                          <tr>
+                            <th
+                              scope="col"
+                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            >
+                              <div class="flex items-center gap-x-3">
+                                <span>Expense Name</span>
+                              </div>
+                            </th>
+                            <th
+                              scope="col"
+                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            >
+                              <div class="flex items-center gap-x-3">
+                                <span>Description</span>
+                              </div>
+                            </th>
+                            <th
+                              scope="col"
+                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            >
+                              <div class="flex items-center gap-x-3">
+                                <span>Foreign Currency</span>
+                              </div>
+                            </th>
+                            <th
+                              scope="col"
+                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            >
+                              <div class="flex items-center gap-x-3">
+                                <span>Exchange Rate</span>
+                              </div>
+                            </th>
+                            <th
+                              scope="col"
+                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            >
+                              <div class="flex items-center gap-x-3">
+                                <span>Amount(Foreign Currency)</span>
+                              </div>
+                            </th>
+                            <th
+                              scope="col"
+                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            >
+                              <div class="flex items-center gap-x-3">
+                                <span>Amount(RM)</span>
+                              </div>
+                            </th>
+                            <th
+                              scope="col"
+                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            >
+                              <div class="flex items-center gap-x-3">
+                                <span>Attachment(s)</span>
+                              </div>
+                            </th>
+                            <th
+                              scope="col"
+                              class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            >
+                              <div class="flex items-center gap-x-3">
+                                <span>Action</span>
+                              </div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody
+                          class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
+                        >
+                          <tr
+                            v-for="(expense, index) in otherExpenses"
+                            :key="index"
+                          >
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap"
+                            >
+                              {{ expense.name }}
+                            </td>
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap"
+                            >
+                              {{ expense.description }}
+                            </td>
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
+                              {{
+                                expense.ForeignCurrencyAccommodationOT || "-"
+                              }}
+                            </td>
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
+                              {{ expense.ExchangeRateAccommodationOT || "-" }}
+                            </td>
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
+                              {{ expense.AmountforAccommodationOT || "-" }}
+                            </td>
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
+                              <span v-if="currencyType === 'foreign'">
+                                {{ expense.totalAccommodation }}
+                              </span>
+                              <span v-if="currencyType === 'rm'">
+                                {{ expense.amount }}
+                              </span>
+                            </td>
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
+                              <div v-for="file in expense.files" :key="file.id">
+                                <a
+                                  :href="file.url"
+                                  :download="file.name"
+                                  class="text-blue-500 hover:underline"
+                                  >{{ file.name }}</a
+                                >
+                              </div>
+                            </td>
+                            <td
+                              class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                            >
+                              <button
+                                class="text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
+                                @click="removeExpense(index)"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke-width="1.5"
+                                  stroke="currentColor"
+                                  class="w-5 h-5"
+                                >
+                                  <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                  />
+                                </svg>
+                              </button>
+                            </td>
+                          </tr>
+                          <tr class="bg-gray-50 dark:bg-gray-800">
+                            <td
+                              class="px-4 py-2 border text-sm font-normal text-right text-gray-500 dark:text-gray-400"
+                              colspan="5"
+                            >
+                              Total Amount
+                            </td>
+                            <td
+                              class="px-4 py-2 border text-sm font-medium text-gray-700 whitespace-nowrap"
+                              colspan="3"
+                            >
+                              RM {{ calculateOverseasTotal() }}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div v-if="subTab.title !== 'Other Expenses'" class="pt-4">
+                    <hr />
+                    <div class="mt-4">
+                      <div class="grid grid-cols-1 sm:grid-cols-2">
+                        <label
+                          class="block text-gray-700 text-xl font-bold mb-2"
+                          >Total :</label
+                        >
+                        <div class="block text-gray-700 text-xl font-bold mb-2">
+                          RM {{ calculateTotal(subTab) }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mt-4 mr-6 flex flex-row-reverse">
+                    <div class="flex items-center justify-between">
+                      <button
+                        v-if="subTab.title === 'Details'"
+                        type="button"
+                        @click="nextTab"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      >
+                        Next
+                      </button>
+                      <button
+                        v-else-if="subTab.title === 'Other Expenses'"
+                        type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End of Overseas Travelling tab -->
 
         <!-- Entertainment tab -->
         <div v-if="tab.title == 'Entertainment'">
@@ -1423,6 +1684,7 @@
             </div>
           </div>
         </div>
+        <!-- End of Entertainment tab -->
 
         <!-- Staff Refreshment tab -->
         <div v-if="tab.title === 'Staff Refreshment'">
@@ -1776,10 +2038,10 @@ export default {
 
   data() {
     return {
+      profilestatus: "",
       IcNumber: "",
-      currencies: [],
       chooseform: true,
-      activeTab: this.type == "Finance" ? 0 : 4,
+      activeTab: this.type == null ,
       activeSubTab: 0,
       date: "",
       yearRange: [],
@@ -1787,19 +2049,24 @@ export default {
       showFareUpload: false,
       showTollUpload: false,
       showParkingUpload: false,
-      showAirportLimoUpload: false,
-      totalAccommodation: 0,
-      totalOthers: 0,
       LimitedAmountHR: 0,
       limit_medicaldental: 0,
       limit_outpatient: 0,
       uploadedFiles: [],
+      currencies: [],
+      currencyOptions: [],
+      currencyType: "foreign",
+      selectedCurrencySymbol: "",
+      totalAccommodation: 0,
       otherExpenses: [],
       showOtherExpensesModal: false,
       newExpense: {
         name: "",
         amount: 0,
         description: "",
+        ForeignCurrencyAccommodationOT: "",
+        ExchangeRateAccommodationOT: "",
+        AmountforAccommodationOT: "",
         files: [],
       },
       showModal: false,
@@ -2065,140 +2332,7 @@ export default {
           title: "Overseas Travelling",
           tabType: "Finance",
           gridLayout: "grid-cols-3", //
-          fields: [
-            {
-              id: "dateOT",
-              label: "Departure Date",
-              type: "date",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "ReturendateOT",
-              label: "Return Date",
-              type: "date",
-              value: "",
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "PurposeOT",
-              label: "Purpose",
-              type: "text",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "ForeignCurrencyAccommodationOT",
-              label: "Foreign Currency",
-              type: "select",
-              placeholder: "Accommodation",
-              value: "",
-              options: [],
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "ExchangeRateAccommodationOT",
-              label: "Exchange Rate",
-              type: "text",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "AmountforAccommodationOT",
-              label: "Amount",
-              type: "number",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "ForeignCurrencyOthersOT",
-              label: "Foreign Currency",
-              type: "select",
-              placeholder: "Others",
-              value: "",
-              options: [],
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "ExchangeRateOthersOT",
-              label: "Exchange Rate",
-              type: "text",
-              value: "",
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "AmountforOthersOT",
-              label: "Amount",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "AccommodationOT",
-              label: "Accommodation",
-              type: "text",
-              placeholder: "Hotel Name",
-              value: "",
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "MealAllowanceOT",
-              label: "Meal Allowance(RM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "AirportLimoTeksiOT",
-              label: "Airport Limo / Teksi(RM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "UploadAirportLimoTeksiOT",
-              label: "",
-              type: "file",
-              value: [],
-              allowMultiple: true,
-              server: null,
-              required: false,
-              maxFileSize: "5MB",
-              acceptedFileTypes: [
-                "image/png",
-                "image/jpeg",
-                "application/pdf",
-                "application/vnd.ms-excel",
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-              ],
-              gridClass: "sm:col-span-1",
-              hidden: false,
-            },
-            {
-              id: "UploadOT",
-              label:
-                "Additional Supporting Document(s). (png, jpeg, pdf or xlsx)",
-              type: "file",
-              value: [],
-              allowMultiple: true,
-              required: false,
-              server: null,
-              maxFileSize: "5MB",
-              acceptedFileTypes: [
-                "image/png",
-                "image/jpeg",
-                "application/pdf",
-                "application/vnd.ms-excel",
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-              ],
-              gridClass: "sm:col-span-1",
-            },
-          ],
+          fields: [],
         },
         {
           title: "Entertainment",
@@ -2521,6 +2655,67 @@ export default {
           ],
         },
       ],
+      overseasTabs: [
+        {
+          title: "Details",
+          gridLayout: "grid-cols-3",
+          fields: [
+            {
+              id: "dateOT",
+              label: "Departure Date",
+              type: "date",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "ReturendateOT",
+              label: "Return Date",
+              type: "date",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "PurposeOT",
+              label: "Purpose",
+              type: "text",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "MealAllowanceOT",
+              label: "Meal Allowance(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "UploadOT",
+              label:
+                "Additional Supporting Document(s). (png, jpeg, pdf or xlsx)",
+              type: "file",
+              value: [],
+              allowMultiple: true,
+              required: false,
+              server: null,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
+            },
+          ],
+        },
+        {
+          title: "Other Expenses",
+          fields: [],
+        },
+      ],
       entertainmentTabs: [
         {
           title: "Details",
@@ -2701,25 +2896,34 @@ export default {
   },
 
   computed: {
-    amountLabels() {
-      const getCurrencySymbol = (fieldId) => {
-        const currencyCode =
-          this.tabs
-            .find((tab) => tab.title === "Overseas Travelling")
-            ?.fields.find((field) => field.id === fieldId)?.value || "";
-
-        const currency = this.currencies.find(
-          (cur) => cur.code === currencyCode
-        );
-        return currency ? `Amount(${currency.symbol_native})` : "Amount";
-      };
-
-      return {
-        amountAccommodation: getCurrencySymbol(
-          "ForeignCurrencyAccommodationOT"
-        ),
-        amountOthers: getCurrencySymbol("ForeignCurrencyOthersOT"),
-      };
+    // Add new computed properties for each form
+  hasLocalAccess() {
+    return this.profilestatus.local_access ;
+  },
+  hasMdAccess() {
+    return this.profilestatus.md_access;
+  },
+  hasEntAccess() {
+    return this.profilestatus.ent_access;
+  },
+  hasStaffAccess() {
+    return this.profilestatus.staff_access;
+  },
+  hasOverseasAccess() {
+    return this.profilestatus.overseas_access;
+  },
+  hasOthersAccess() {
+    return this.profilestatus.others_access;
+  },
+  hasPhoneAccess() {
+    return this.profilestatus.phone_access;
+  },
+    
+    selectedCurrency() {
+      return this.currencyOptions.find(
+        (currency) =>
+          currency.value === this.newExpense.ForeignCurrencyAccommodationOT
+      );
     },
     isFormDisabled() {
       const handphoneTab = this.tabs.find(
@@ -2733,14 +2937,12 @@ export default {
       }
       return false;
     },
-  
     isSaveButtonDisabled() {
       const tab = this.tabs.find(
         (tab) => tab.title === "Medical Bill Reimbursement"
       );
 
-      if(tab === "Medical Bill Reimbursement")
-      if (!tab) return true;
+      if (tab === "Medical Bill Reimbursement") if (!tab) return true;
 
       const medCategoryField = tab.fields.find(
         (field) => field.id === "MedicalCategoryML"
@@ -2890,6 +3092,12 @@ export default {
   },
 
   watch: {
+    selectedCurrency(newCurrency) {
+      // Update the currency symbol based on the selected currency
+      this.selectedCurrencySymbol = newCurrency
+        ? newCurrency.label.match(/\((.*)\)/)[1]
+        : "";
+    },
     tabs: {
       handler(newTabs) {
         newTabs.forEach((tab) => {
@@ -3122,9 +3330,26 @@ export default {
     this.fetchDepartment();
     this.fetchHrData();
     this.fetchCurrencies();
+    this.checkstatus();
   },
 
   methods: {
+    async checkstatus() {
+      try {
+        const username_id = store.getSession().userDetails.userId;
+        const response = await fetch(
+          `http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        this.profilestatus = data.result[0];
+        console.log("Profile Status:", this.profilestatus);
+      } catch (error) {
+        console.error(`Error fetching checkstatus: ${error}`);
+      }
+    },
     async fetchCurrencies() {
       try {
         const response = await fetch(
@@ -3132,32 +3357,12 @@ export default {
         );
         const data = await response.json();
         this.currencies = Object.values(data); // Store the currency objects
-        // console.log("Currencies:", this.currencies);
 
-        // console.log("Tabs field:", this.tabs.fields);
-
-        this.tabs
-          .find((field) => field.title === "Overseas Travelling")
-          .fields.find(
-            (field) => field.id === "ForeignCurrencyAccommodationOT"
-          ).options = this.currencies.map((currency) => ({
-          value: currency.code, // Assuming each currency has a 'code' field
-          label: currency.code + " (" + currency.symbol_native + ")", // Assuming each currency has a 'name' field
+        // Map the currencies to the format required for the dropdown
+        this.currencyOptions = this.currencies.map((currency) => ({
+          value: `${currency.code} (${currency.symbol_native})`, // Assuming each currency has a 'code' field
+          label: `${currency.code} (${currency.symbol_native})`, // Use native symbol for display
         }));
-
-        this.tabs
-          .find((field) => field.title === "Overseas Travelling")
-          .fields.find(
-            (field) => field.id === "ForeignCurrencyOthersOT"
-          ).options = this.currencies.map((currency) => ({
-          value: currency.code, // Assuming each currency has a 'code' field
-          label: currency.code + " (" + currency.symbol_native + ")", // Assuming each currency has a 'name' field
-        }));
-
-        // this.foreignCurrencySelect.options = this.currencies.map(currency => ({
-        //   value: currency.code, // Assuming each currency has a 'code' field
-        //   label: currency.name + currency.code  // Assuming each currency has a 'name' field
-        // }));
       } catch (error) {
         console.error("Error fetching currencies:", error);
       }
@@ -3280,9 +3485,6 @@ export default {
         case "ParkingLT":
           this.showParkingUpload = !this.showParkingUpload;
           break;
-        case "AirportLimoTeksiOT":
-          this.showAirportLimoUpload = !this.showAirportLimoUpload;
-          break;
       }
     },
 
@@ -3301,14 +3503,12 @@ export default {
         case "UploadParkingLT":
           prefix = "PARKING_";
           break;
-        case "UploadAirportLimoTeksiOT":
-          prefix = "AIRPORTLIMOTEKSI_";
-          break;
         default:
           prefix = "SUPPORTING_DOC_";
       }
       return `${prefix}${originalName}`;
     },
+
     handleAddFile(error, file, field) {
       if (error) {
         console.error("Error adding file:", error.message);
@@ -3478,6 +3678,7 @@ export default {
         PublicTransportSpecField.hidden = false;
       }
     },
+
     updateFieldVisibility10(param) {
       console.log("test console log : " + param);
       const localTravellingTab = this.tabs.find(
@@ -3612,21 +3813,13 @@ export default {
       const uploadTollLTField = localTravellingTab.fields.find(
         (field) => field.id === "UploadTollLT"
       );
-      const ParkingLTField = localTravellingTab.fields.find(
-        (field) => field.id === "ParkingLT"
-      );
-      const uploadParkingLTField = localTravellingTab.fields.find(
-        (field) => field.id === "UploadParkingLT"
-      );
       if (
         !mileageKMLTField ||
         !mileageRMLTField ||
         !uploadmileageRMLTField ||
         !TransportSpecField ||
         !TollLTField ||
-        !uploadTollLTField ||
-        !ParkingLTField ||
-        !uploadParkingLTField
+        !uploadTollLTField
       )
         return;
 
@@ -3637,8 +3830,6 @@ export default {
         TransportSpecField.hidden = true;
         TollLTField.hidden = true;
         uploadTollLTField.hidden = true;
-        ParkingLTField.hidden = true;
-        uploadParkingLTField.hidden = true;
       } else {
         mileageKMLTField.hidden = false;
         mileageRMLTField.hidden = false;
@@ -3646,8 +3837,6 @@ export default {
         TransportSpecField.hidden = false;
         TollLTField.hidden = false;
         uploadTollLTField.hidden = false;
-        ParkingLTField.hidden = false;
-        uploadParkingLTField.hidden = false;
       }
     },
 
@@ -3759,11 +3948,20 @@ export default {
     },
 
     addOtherExpense() {
+      if (this.currencyType === "foreign") {
+        this.newExpense.amount = this.newExpense.totalAccommodation;
+      } else {
+        this.newExpense.amount;
+      }
       this.otherExpenses.push({ ...this.newExpense });
+
       this.newExpense = {
         name: "",
         description: "",
-        amount: "",
+        ForeignCurrencyAccommodationOT: "",
+        ExchangeRateAccommodationOT: "",
+        AmountforAccommodationOT: 0,
+        amount: 0,
         files: [],
       };
       this.showOtherExpensesModal = false;
@@ -3771,6 +3969,24 @@ export default {
 
     removeExpense(index) {
       this.otherExpenses.splice(index, 1);
+    },
+
+    calculateTotalAccommodation() {
+      if (
+        this.currencyType === "foreign" &&
+        this.newExpense.ExchangeRateAccommodationOT &&
+        this.newExpense.AmountforAccommodationOT
+      ) {
+        // Calculate totalAccommodation in RM
+        this.newExpense.totalAccommodation =
+          this.newExpense.AmountforAccommodationOT *
+          this.newExpense.ExchangeRateAccommodationOT;
+      }
+
+      const amount = parseFloat(this.newExpense.AmountforAccommodationOT) || 0;
+      const exchangeRate =
+        parseFloat(this.newExpense.ExchangeRateAccommodationOT) || 1;
+      this.totalAccommodation = (amount * exchangeRate).toFixed(2);
     },
 
     calculateOverseasTotal() {
@@ -3823,20 +4039,21 @@ export default {
       const isCompanyTransport = tab.fields.some(
         (field) =>
           field.id === "TransportLT" &&
-          field.value.includes("Company Transport")
+          field.value?.includes("Company Transport")
       );
 
       // Check if the transport mode is Public Transport
       const isPublicTransport = tab.fields.some(
         (field) =>
-          field.id === "TransportLT" && field.value.includes("Public Transport")
+          field.id === "TransportLT" &&
+          field.value?.includes("Public Transport")
       );
 
       // Check if the transport mode is Personal Transport
       const isPersonalTransport = tab.fields.some(
         (field) =>
           field.id === "TransportLT" &&
-          field.value.includes("Personal Transport")
+          field.value?.includes("Personal Transport")
       );
 
       tab.fields.forEach((field) => {
@@ -3853,50 +4070,18 @@ export default {
           field.id !== "AccBankNumberML" &&
           field.id !== "ExchangeRateAccommodationOT" &&
           field.id !== "AmountforAccommodationOT" &&
-          field.id !== "ExchangeRateOthersOT" &&
-          field.id !== "AmountforOthersOT" &&
           (!isCompanyTransport ||
             (field.id !== "MileageRMLT" && field.id !== "FareRMLT")) &&
           (!isPublicTransport ||
-            (field.id !== "MileageRMLT" &&
-              field.id !== "TollLT" &&
-              field.id !== "ParkingLT")) &&
-          (!isPersonalTransport || field.id !== "FareRMLT")
+            (field.id !== "MileageRMLT" && field.id !== "TollLT")) &&
+          (!isPersonalTransport ||
+            (field.id !== "FareRMLT" && field.id !== "ParkingLT"))
         ) {
           total += parseFloat(field.value);
         }
       });
 
-      if (tab.title === "Overseas Travelling") {
-        const amountField = tab.fields.find(
-          (field) => field.id === "AmountforAccommodationOT"
-        );
-        const exchangeRateField = tab.fields.find(
-          (field) => field.id === "ExchangeRateAccommodationOT"
-        );
-
-        const amount = parseFloat(amountField.value) || 0;
-        const exchangeRate = parseFloat(exchangeRateField.value) || 1;
-
-        const totalAccommodation = amount * exchangeRate;
-        this.totalAccommodation = totalAccommodation.toFixed(2);
-
-        const amount2Field = tab.fields.find(
-          (field) => field.id === "AmountforOthersOT"
-        );
-        const exchangeRate2Field = tab.fields.find(
-          (field) => field.id === "ExchangeRateOthersOT"
-        );
-
-        const amount2 = parseFloat(amount2Field.value) || 0;
-        const exchangeRate2 = parseFloat(exchangeRate2Field.value) || 1;
-
-        const totalOthers = amount2 * exchangeRate2;
-        this.totalOthers = totalOthers.toFixed(2);
-
-        total +=
-          totalOthers + totalAccommodation + this.calculateOverseasTotal();
-      }
+      total += this.calculateOverseasTotal();
 
       // Return the total
       return total.toFixed(2);
@@ -3966,13 +4151,6 @@ export default {
           });
         }
       });
-
-      this.otherExpenses = [];
-      this.newExpense = {
-        name: "",
-        amount: "",
-        files: [],
-      };
     },
 
     submitForm2() {
@@ -3996,6 +4174,12 @@ export default {
       this.entertainmentTabs.forEach((tab) => {
         tab.fields.forEach((field) => {
           field.value = null;
+          if (field.type === "file") {
+            const pond = this.$refs[field.id];
+            if (pond) {
+              pond.removeFiles();
+            }
+          }
         });
       });
       this.attendees = [];
@@ -4022,9 +4206,54 @@ export default {
       this.staffRefreshmentTabs.forEach((tab) => {
         tab.fields.forEach((field) => {
           field.value = null;
+          if (field.type === "file") {
+            const pond = this.$refs[field.id];
+            if (pond) {
+              pond.removeFiles();
+            }
+          }
         });
       });
       this.staffInvolved = [];
+    },
+
+    submitForm4() {
+      const formattedData = {};
+      this.overseasTabs.forEach((tab) => {
+        tab.fields.forEach((field) => {
+          if (field.id === "dateOT") {
+            formattedData[field.id] = this.formatDate(field.value);
+          } else {
+            formattedData[field.id] = field.value;
+          }
+        });
+        formattedData["otherExpenses"] = [...this.otherExpenses];
+      });
+      formattedData["tabTitle"] = "Overseas Travelling";
+      this.$emit("formSubmitted", formattedData);
+      console.log("Formatted Form Data:", formattedData);
+
+      this.overseasTabs.forEach((tab) => {
+        tab.fields.forEach((field) => {
+          field.value = null;
+          if (field.type === "file") {
+            const pond = this.$refs[field.id];
+            if (pond) {
+              pond.removeFiles();
+            }
+          }
+        });
+      });
+      this.otherExpenses = [];
+      this.newExpense = {
+        name: "",
+        amount: "",
+        description: "",
+        ForeignCurrencyAccommodationOT: "",
+        ExchangeRateAccommodationOT: "",
+        AmountforAccommodationOT: "",
+        files: [],
+      };
     },
   },
 };

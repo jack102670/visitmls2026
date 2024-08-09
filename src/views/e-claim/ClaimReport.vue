@@ -511,6 +511,22 @@
               </div>
 
               <div
+                v-if="!isCompanyTransport && !isPersonalTransport"
+                class="flex justify-between items-center mb-4"
+              >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
+                  >Fare(RM):</label
+                >
+                <input
+                  type="text"
+                  id="farerm"
+                  v-model="localTravellingDetails.FareRMLT"
+                  :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2"
+                />
+              </div>
+
+              <div
                 v-if="!isPublicTransport"
                 class="flex justify-between items-center mb-4"
               >
@@ -526,10 +542,7 @@
                 />
               </div>
 
-              <div
-                v-if="!isPublicTransport"
-                class="flex justify-between items-center mb-4"
-              >
+              <div class="flex justify-between items-center mb-4">
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
                   >Parking:</label
                 >
@@ -537,21 +550,6 @@
                   type="text"
                   id="positioname"
                   v-model="localTravellingDetails.ParkingLT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
-              </div>
-              <div
-                v-if="!isCompanyTransport && !isPersonalTransport"
-                class="flex justify-between items-center mb-4"
-              >
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Fare(RM):</label
-                >
-                <input
-                  type="text"
-                  id="farerm"
-                  v-model="localTravellingDetails.FareRMLT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2"
                 />
@@ -810,103 +808,6 @@
                   class="border rounded-md px-16 py-2"
                 />
               </div>
-
-              <div class="flex justify-between items-center mb-4">
-                <label
-                  for="foreignCurrency"
-                  class="text-gray-700 font-bold mr-2"
-                  >Foreign Currency:</label
-                >
-                <input
-                  type="text"
-                  id="foreignCurrency"
-                  v-model="
-                    overseasTravellingDetails.ForeignCurrencyAccommodationOT
-                  "
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
-              </div>
-              <div class="flex justify-between items-center mb-4">
-                <label for="exchangeRate" class="text-gray-700 font-bold mr-2"
-                  >Exchange Rate:</label
-                >
-                <input
-                  type="text"
-                  id="exchangeRate"
-                  v-model="
-                    overseasTravellingDetails.ExchangeRateAccommodationOT
-                  "
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
-              </div>
-              <div class="flex justify-between items-center mb-4">
-                <label
-                  for="rmAccommodation"
-                  class="text-gray-700 font-bold mr-2"
-                  >Amount:</label
-                >
-                <input
-                  type="text"
-                  id="rmAccommodation"
-                  v-model="overseasTravellingDetails.AmountforAccommodationOT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2 overflow-x-auto"
-                />
-              </div>
-              <div class="flex justify-between items-center mb-4">
-                <label
-                  for="foreignCurrencyOthers"
-                  class="text-gray-700 font-bold mr-2"
-                  >Foreign Currency:</label
-                >
-                <input
-                  type="text"
-                  id="foreignCurrencyOthers"
-                  v-model="overseasTravellingDetails.ForeignCurrencyOthersOT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
-              </div>
-              <div class="flex justify-between items-center mb-4">
-                <label
-                  for="exchangeRateOthers"
-                  class="text-gray-700 font-bold mr-2"
-                  >Exchange Rate:</label
-                >
-                <input
-                  type="text"
-                  id="exchangeRateOthers"
-                  v-model="overseasTravellingDetails.ExchangeRateOthersOT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
-              </div>
-              <div class="flex justify-between items-center mb-4">
-                <label for="rmOthers" class="text-gray-700 font-bold mr-2"
-                  >Amount:</label
-                >
-                <input
-                  type="text"
-                  id="rmOthers"
-                  v-model="overseasTravellingDetails.AmountforOthersOT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
-              </div>
-              <div class="flex justify-between items-center mb-4">
-                <label for="accommodationOT" class="text-gray-700 font-bold mr-2"
-                  >Accommodation:</label
-                >
-                <input
-                  type="text"
-                  id="accommodationOT"
-                  v-model="overseasTravellingDetails.AccommodationOT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
-              </div>
               <div class="flex justify-between items-center mb-4">
                 <label for="mealAllowance" class="text-gray-700 font-bold mr-2"
                   >Meal Allowance(RM):</label
@@ -915,18 +816,6 @@
                   type="text"
                   id="mealAllowance"
                   v-model="overseasTravellingDetails.MealAllowanceOT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
-              </div>
-              <div class="flex justify-between items-center mb-4">
-                <label for="airportLimo" class="text-gray-700 font-bold mr-2"
-                  >Airport Limo / Teksi(RM):</label
-                >
-                <input
-                  type="text"
-                  id="airportLimo"
-                  v-model="overseasTravellingDetails.AirportLimoTeksiOT"
                   :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2"
                 />
@@ -952,99 +841,6 @@
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <!-- Fare Attachment table -->
-              <div class="mb-4">
-                <h2 class="text-xl font-bold">Fare Attachment</h2>
-                <table
-                  class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
-                >
-                  <thead class="bg-gray-50 dark:bg-gray-800">
-                    <tr>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        <div class="flex items-center gap-x-3">
-                          <span>Type of Fare</span>
-                        </div>
-                      </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        <div class="flex items-center gap-x-3">
-                          <span>Attachment(s)</span>
-                        </div>
-                      </th>
-                      <!--   <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        <div class="flex items-center gap-x-3">
-                          <span>Actions</span>
-                        </div>
-                      </th> -->
-                    </tr>
-                  </thead>
-                  <tbody
-                    class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
-                  >
-                    <tr
-                      v-for="([type, fileGroup], index) in fileGroupsOT"
-                      :key="index"
-                    >
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-32"
-                      >
-                        {{ type }}
-                      </td>
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
-                      >
-                        <div
-                          v-for="(file, fileIndex) in fileGroup"
-                          :key="fileIndex"
-                          class="m-2"
-                        >
-                          <div
-                            class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
-                          >
-                            <img
-                              :src="createObjectURL(file)"
-                              :alt="file.name"
-                              class="w-full h-full object-cover"
-                            />
-                          </div>
-                        </div>
-                      </td>
-                      <!--    <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
-                      >
-                        <button
-                          class="text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
-                          @click="deleteFileGroup(index, 'overseas')"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-5 h-5"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                            />
-                          </svg>
-                        </button>
-                      </td> -->
-                    </tr>
-                  </tbody>
-                </table>
               </div>
 
               <!-- Other Expenses Table-->
@@ -1077,6 +873,30 @@
                       >
                         <div class="flex items-center gap-x-3">
                           <span>Description</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Foreign Currency</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Exchange Rate</span>
+                        </div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Amount(Foreign Currency)</span>
                         </div>
                       </th>
                       <th
@@ -1145,6 +965,48 @@
                           class="form-textarea mt-1 block w-full border border-gray-400 p-1"
                           rows="2"
                         ></textarea>
+                      </td>
+
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
+                      >
+                        <span v-if="!isEditMode || nonEditableFields">{{
+                          expense.ForeignCurrencyAccommodationOT || "-"
+                        }}</span>
+                        <input
+                          v-else
+                          type="text"
+                          v-model="expense.ForeignCurrencyAccommodationOT"
+                          class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1"
+                        />
+                      </td>
+
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
+                      >
+                        <span v-if="!isEditMode">{{
+                          expense.ExchangeRateAccommodationOT || "-"
+                        }}</span>
+                        <input
+                          v-else
+                          type="number"
+                          v-model="expense.ExchangeRateAccommodationOT"
+                          class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1"
+                        />
+                      </td>
+
+                      <td
+                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
+                      >
+                        <span v-if="!isEditMode">{{
+                          expense.AmountforAccommodationOT || "-"
+                        }}</span>
+                        <input
+                          v-else
+                          type="number"
+                          v-model="expense.AmountforAccommodationOT"
+                          class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1"
+                        />
                       </td>
 
                       <!-- Amount Field -->
@@ -2776,20 +2638,20 @@
 </template>
 
 <script>
-import tab from './user-ui/FormTab.vue';
-import axios from 'axios';
-import { formStore } from '../store.js';
-import { store } from '../store.js';
+import tab from "./user-ui/FormTab.vue";
+import axios from "axios";
+import { formStore } from "../store.js";
+import { store } from "../store.js";
 
 export default {
-  name: 'TEtstS',
+  name: "TEtstS",
   components: {
     tab,
   },
   data() {
     return {
       storefiles: [],
-      serialnumber: '',
+      serialnumber: "",
       employeeID: null,
       totalplus: 0,
       index: null,
@@ -2808,7 +2670,6 @@ export default {
         UploadTollLT: [],
       },
       overseasTravellingDetails: {
-        UploadAirportLimoTeksiOT: [],
         otherExpenses: [],
       },
       medicalBillReimbursementDetails: {},
@@ -2822,7 +2683,7 @@ export default {
         fileUpload: formStore.getFormData().fileUpload.slice(), // Ensure we work with a copy
       },
       loading: false,
-      loadingText: '',
+      loadingText: "",
     };
   },
 
@@ -2838,74 +2699,66 @@ export default {
       return Object.entries(groups).filter(([type, files]) => files.length > 0);
     },
 
-    fileGroupsOT() {
-      const groups = {
-        'Airport Limo/Teksi':
-          this.overseasTravellingDetails.UploadAirportLimoTeksiOT,
-      };
-
-      return Object.entries(groups).filter(([type, files]) => files.length > 0);
-    },
-
     totallocalTravellingDetails() {
       let total = 0;
 
-      if (this.localTravellingDetails.TransportLT === 'Company Transport') {
+      if (this.localTravellingDetails.TransportLT === "Company Transport") {
         total += parseFloat(this.localTravellingDetails.ParkingLT) || 0;
         total += parseFloat(this.localTravellingDetails.TollLT) || 0;
       } else if (
-        this.localTravellingDetails.TransportLT === 'Personal Transport'
+        this.localTravellingDetails.TransportLT === "Personal Transport"
       ) {
         total += parseFloat(this.localTravellingDetails.MileageRMLT) || 0;
         total += parseFloat(this.localTravellingDetails.ParkingLT) || 0;
         total += parseFloat(this.localTravellingDetails.TollLT) || 0;
       } else if (
-        this.localTravellingDetails.TransportLT === 'Public Transport'
+        this.localTravellingDetails.TransportLT === "Public Transport"
       ) {
         total += parseFloat(this.localTravellingDetails.FareRMLT) || 0;
+        total += parseFloat(this.localTravellingDetails.ParkingLT) || 0;
       }
       this.totalplusmethod(total);
       return total;
     },
 
     isCompanyTransport() {
-      return this.localTravellingDetails.TransportLT === 'Company Transport';
+      return this.localTravellingDetails.TransportLT === "Company Transport";
     },
 
     isPublicTransport() {
-      return this.localTravellingDetails.TransportLT === 'Public Transport';
+      return this.localTravellingDetails.TransportLT === "Public Transport";
     },
 
     isPersonalTransport() {
-      return this.localTravellingDetails.TransportLT === 'Personal Transport';
+      return this.localTravellingDetails.TransportLT === "Personal Transport";
     },
 
     isOneWay() {
-      return this.localTravellingDetails.tripwayLT === 'One Way';
+      return this.localTravellingDetails.tripwayLT === "One Way";
     },
 
     isPanelClinic() {
       return (
         this.medicalBillReimbursementDetails.ClinicSelectionML ===
-        'Mediviron Clinic - Panel'
+        "Mediviron Clinic - Panel"
       );
     },
 
     isOtherThanOutpatient() {
       return (
-        this.medicalBillReimbursementDetails.MedicalCategoryML !== 'Outpatient'
+        this.medicalBillReimbursementDetails.MedicalCategoryML !== "Outpatient"
       );
     },
 
     isOtherEntertainment() {
-      const validTypes = ['BREAKFAST', 'LUNCH', 'DINNER', 'TEA BREAK'];
+      const validTypes = ["BREAKFAST", "LUNCH", "DINNER", "TEA BREAK"];
       return validTypes.includes(
         this.entertainmentDetails.TypeofEntertainmentE
       );
     },
 
     isOtherStaffRefreshment() {
-      return this.staffRefreshmentDetails.TypeofRefreshmentSR !== 'OTHERS';
+      return this.staffRefreshmentDetails.TypeofRefreshmentSR !== "OTHERS";
     },
 
     totalOverseasTravellingAmount() {
@@ -2922,11 +2775,7 @@ export default {
       }
 
       let total =
-        (parseFloat(this.overseasTravellingDetails.AmountforAccommodationOT) ||
-          0) +
-        (parseFloat(this.overseasTravellingDetails.AmountforOthersOT) || 0) +
         (parseFloat(this.overseasTravellingDetails.MealAllowanceOT) || 0) +
-        (parseFloat(this.overseasTravellingDetails.AirportLimoTeksiOT) || 0) +
         otherExpensesTotal;
 
       this.totalplusmethod(total);
@@ -3027,7 +2876,7 @@ export default {
         .toFixed(2);
     },
     referenceNumber() {
-      console.log('Current uniqueCode:', this.claims.uniqueCode);
+      console.log("Current uniqueCode:", this.claims.uniqueCode);
       return this.claims.uniqueCode;
     },
   },
@@ -3039,17 +2888,17 @@ export default {
 
   mounted() {
     // Sidebar close or open
-    const body = document.querySelector('body');
-    body.style.overflow = 'auto';
+    const body = document.querySelector("body");
+    body.style.overflow = "auto";
 
     this.fetchEmployeeID();
 
-    let openOrNot = localStorage.getItem('openOrNot');
-    const element = document.querySelector('main');
-    if (element && openOrNot == 'false') {
-      element.classList.add('become-big');
-    } else if (element && openOrNot == 'true') {
-      element.classList.remove('become-big');
+    let openOrNot = localStorage.getItem("openOrNot");
+    const element = document.querySelector("main");
+    if (element && openOrNot == "false") {
+      element.classList.add("become-big");
+    } else if (element && openOrNot == "true") {
+      element.classList.remove("become-big");
     }
   },
 
@@ -3074,62 +2923,62 @@ export default {
       let result = null;
       try {
         const response = await axios.get(
-          'http://172.28.28.91:86/api/User/GetRunningNumber'
+          "http://172.28.28.91:86/api/User/GetRunningNumber"
         );
         if (response.status === 200) {
-          console.log('Serial Number:', response.data);
+          console.log("Serial Number:", response.data);
           let serialNumber = this.claims[0].uniqueCode + response.data.result;
           result = serialNumber;
         } else {
-          console.error('Failed to fetch serial number:', response.status);
-          result = 'Error: Failed to fetch serial number';
+          console.error("Failed to fetch serial number:", response.status);
+          result = "Error: Failed to fetch serial number";
         }
       } catch (error) {
-        console.error('Error fetching serial number:', error);
-        result = 'Error: ' + error.message;
+        console.error("Error fetching serial number:", error);
+        result = "Error: " + error.message;
       }
-      console.log('Result:', result);
+      console.log("Result:", result);
       return result; // Return result outside the finally block
     },
 
     formatDate(dateString) {
       const date = new Date(dateString);
-      return `${date.getDate()} ${date.toLocaleString('default', {
-        month: 'long',
+      return `${date.getDate()} ${date.toLocaleString("default", {
+        month: "long",
       })} ${date.getFullYear()}`;
     },
     async fetchEmployeeID() {
       try {
         const response = await axios.get(
-          'http://172.28.28.91:97/api/User/GetAllEmployees'
+          "http://172.28.28.91:97/api/User/GetAllEmployees"
         );
 
         if (response.data.result && response.data.result.length > 0) {
           const selectedEmployee = response.data.result.find(
             (emp) => emp.username_id === store.getSession().userDetails.userId
           );
-          console.log('Selected Employee:', selectedEmployee);
+          console.log("Selected Employee:", selectedEmployee);
           if (selectedEmployee) {
-            if ('emp_id' in selectedEmployee) {
+            if ("emp_id" in selectedEmployee) {
               this.employeeID = selectedEmployee.emp_id;
-              console.log('Employee ID:', this.employeeID);
+              console.log("Employee ID:", this.employeeID);
             } else {
               console.error(
-                'Employee found but employee_id is missing:',
+                "Employee found but employee_id is missing:",
                 selectedEmployee
               );
             }
           } else {
             console.error(
-              'Employee not found for email:',
+              "Employee not found for email:",
               store.getSession().userDetails.email
             );
           }
         } else {
-          console.error('No employees found in response');
+          console.error("No employees found in response");
         }
       } catch (error) {
-        console.error('Failed to fetch employee ID:', error);
+        console.error("Failed to fetch employee ID:", error);
         // Handle error appropriately
       }
     },
@@ -3139,7 +2988,7 @@ export default {
     },
     totalplusmethod(total) {
       this.totalplus = total;
-      console.log('totalplus', this.totalplus);
+      console.log("totalplus", this.totalplus);
     },
     createObjectURL(file) {
       return URL.createObjectURL(file);
@@ -3164,50 +3013,50 @@ export default {
 
     showDetails(claim, index) {
       this.index = index;
-      console.log('Current index', this.index);
+      console.log("Current index", this.index);
       // Update selectedClaimType based on the type of claim
-      this.selectedClaimType = claim.tabTitle.replace(/\s+/g, ''); // Remove spaces from claim type
+      this.selectedClaimType = claim.tabTitle.replace(/\s+/g, ""); // Remove spaces from claim type
       this.formToDelete = index;
       // Update corresponding details object based on claim type
       switch (this.selectedClaimType) {
-        case 'LocalTravelling':
+        case "LocalTravelling":
           this.localTravellingDetails = claim;
-          console.log('Local Travelling Details:', this.localTravellingDetails);
-          console.log('upload', this.localTravellingDetails.UploadLT);
+          console.log("Local Travelling Details:", this.localTravellingDetails);
+          console.log("upload", this.localTravellingDetails.UploadLT);
           break;
-        case 'OverseasTravelling':
+        case "OverseasTravelling":
           this.overseasTravellingDetails = claim;
           console.log(
-            'Overseas Travelling Details:',
+            "Overseas Travelling Details:",
             this.overseasTravellingDetails
           );
           break;
-        case 'Entertainment':
+        case "Entertainment":
           this.entertainmentDetails = claim;
-          console.log('Entertainment Details:', this.entertainmentDetails);
+          console.log("Entertainment Details:", this.entertainmentDetails);
           break;
-        case 'StaffRefreshment':
+        case "StaffRefreshment":
           this.staffRefreshmentDetails = claim;
           console.log(
-            'Staff Refreshment Details:',
+            "Staff Refreshment Details:",
             this.staffRefreshmentDetails
           );
           break;
-        case 'Others':
+        case "Others":
           this.othersDetails = claim;
-          console.log('Others Details:', this.othersDetails);
+          console.log("Others Details:", this.othersDetails);
           break;
-        case 'HandphoneBillReimbursement':
+        case "HandphoneBillReimbursement":
           this.handphoneBillReimbursementDetails = claim;
           console.log(
-            'Handphone Bill Reimbursement Details:',
+            "Handphone Bill Reimbursement Details:",
             this.handphoneBillReimbursementDetails
           );
           break;
-        case 'MedicalBillReimbursement':
+        case "MedicalBillReimbursement":
           this.medicalBillReimbursementDetails = claim;
           console.log(
-            'Medical Bill Reimbursement Details:',
+            "Medical Bill Reimbursement Details:",
             this.medicalBillReimbursementDetails
           );
           break;
@@ -3224,49 +3073,49 @@ export default {
         // Generate a random number and pad it to 2 characters
         const randomNumber = Math.floor(Math.random() * 100)
           .toString()
-          .padStart(2, '0');
+          .padStart(2, "0");
 
         // Create a timestamp and take the last 2 digits for uniqueness
         const timestamp = Date.now().toString().slice(-2);
 
         // Determine the prefix based on the location
-        let prefix = '';
+        let prefix = "";
         switch (tabTitle) {
-          case 'Local Travelling':
-            prefix = 'LT';
+          case "Local Travelling":
+            prefix = "LT";
             break;
-          case 'Overseas Travelling':
-            prefix = 'OV';
+          case "Overseas Travelling":
+            prefix = "OV";
             break;
-          case 'Entertainment':
-            prefix = 'ENT';
+          case "Entertainment":
+            prefix = "ENT";
             break;
-          case 'Staff Refreshment':
-            prefix = 'SR';
+          case "Staff Refreshment":
+            prefix = "SR";
             break;
-          case 'Others':
-            prefix = 'OTHERS';
+          case "Others":
+            prefix = "OTHERS";
             break;
-          case 'Handphone Bill Reimbursement':
-            prefix = 'HR';
+          case "Handphone Bill Reimbursement":
+            prefix = "HR";
             break;
-          case 'Medical Bill Reimbursement':
-            prefix = 'MLR';
+          case "Medical Bill Reimbursement":
+            prefix = "MLR";
             break;
           default:
-            console.error('Invalid location provided:', tabTitle);
-            prefix = 'CODE';
+            console.error("Invalid location provided:", tabTitle);
+            prefix = "CODE";
             break;
         }
 
         // Construct the uniqueCode
         const uniqueCode = `${prefix}${userIdFragment}${randomNumber}${timestamp}`;
-        console.log('Unique Code:', uniqueCode);
+        console.log("Unique Code:", uniqueCode);
         return uniqueCode;
       } else {
-        console.error('User ID is undefined.');
+        console.error("User ID is undefined.");
         // You may want to handle this case differently based on your application logic.
-        return '';
+        return "";
       }
     },
     generateUniqueCodeSN(tabTitle) {
@@ -3278,48 +3127,48 @@ export default {
         // Generate a random number and pad it to 2 characters
         const randomNumber = Math.floor(Math.random() * 100)
           .toString()
-          .padStart(2, '0');
+          .padStart(2, "0");
 
         // Create a timestamp and take the last 2 digits for uniqueness
         const timestamp = Date.now().toString().slice(-2);
 
         // Determine the prefix based on the location
-        let prefix = '';
+        let prefix = "";
         switch (tabTitle) {
-          case 'Local Travelling':
-            prefix = 'LT';
+          case "Local Travelling":
+            prefix = "LT";
             break;
-          case 'Overseas Travelling':
-            prefix = 'OV';
+          case "Overseas Travelling":
+            prefix = "OV";
             break;
-          case 'Entertainment':
-            prefix = 'ENT';
+          case "Entertainment":
+            prefix = "ENT";
             break;
-          case 'Staff Refreshment':
-            prefix = 'SR';
+          case "Staff Refreshment":
+            prefix = "SR";
             break;
-          case 'Others':
-            prefix = 'OTHERS';
+          case "Others":
+            prefix = "OTHERS";
             break;
-          case 'Handphone Bill Reimbursement':
-            prefix = 'HR';
+          case "Handphone Bill Reimbursement":
+            prefix = "HR";
             break;
-          case 'Medical Bill Reimbursement':
-            prefix = 'MLR';
+          case "Medical Bill Reimbursement":
+            prefix = "MLR";
             break;
           default:
-            console.error('Invalid location provided:', tabTitle);
-            return '';
+            console.error("Invalid location provided:", tabTitle);
+            return "";
         }
 
         // Construct the uniqueCode
         const uniqueCode = `SN${prefix}${userIdFragment}${randomNumber}${timestamp}`;
-        console.log('Unique Code:', uniqueCode);
+        console.log("Unique Code:", uniqueCode);
         return uniqueCode;
       } else {
-        console.error('User ID is undefined.');
+        console.error("User ID is undefined.");
         // You may want to handle this case differently based on your application logic.
-        return '';
+        return "";
       }
     },
     someMethod() {
@@ -3332,10 +3181,10 @@ export default {
     },
     async senttheclaim() {
       if (!this.isValidClaimData()) {
-        alert('Please add at least 1 claim before submitting');
+        alert("Please add at least 1 claim before submitting");
         return;
       }
-      this.loadingText = 'Uploading';
+      this.loadingText = "Uploading";
       this.loading = true;
 
       const referenceNumber = await this.fetchSerialNumber();
@@ -3364,38 +3213,38 @@ export default {
 
       try {
         const response = await axios.post(
-          'http://172.28.28.91:97/api/User/InsertClaimDetails',
+          "http://172.28.28.91:97/api/User/InsertClaimDetails",
           apiData
         );
         // console.log("API response:", response.data);
 
         // Check if the response indicates success
         if (response.status === 200 || response.status === 201) {
-          console.log('Data successfully inserted:', response.data);
+          console.log("Data successfully inserted:", response.data);
           this.sendToAPI();
         } else {
-          console.warn('Unexpected response status:', response.status);
+          console.warn("Unexpected response status:", response.status);
         }
 
         // this.sendToAPI();
         // this.resetClaimsAfterSubmit();
       } catch (error) {
-        console.error('API error', error);
+        console.error("API error", error);
         this.loading = false;
         // Extract the detailed server error message from the response
         let serverErrorMessage =
           error.response && error.response.data && error.response.data.message
             ? error.response.data.message
-            : '';
+            : "";
 
         // Check if the server error message contains the specific UNIQUE KEY constraint violation message
-        if (serverErrorMessage.includes('Violation of UNIQUE KEY constraint')) {
+        if (serverErrorMessage.includes("Violation of UNIQUE KEY constraint")) {
           console.error(
-            'Duplicate entry detected for reference number. Not calling sendToAPI.'
+            "Duplicate entry detected for reference number. Not calling sendToAPI."
           );
         } else {
           console.error(
-            'An error occurred that is not a duplicate entry issue. Review error details for appropriate action.'
+            "An error occurred that is not a duplicate entry issue. Review error details for appropriate action."
           );
         }
       }
@@ -3421,46 +3270,46 @@ export default {
           try {
             let axiosInstance;
             switch (title.toLowerCase()) {
-              case 'local travelling': {
+              case "local travelling": {
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   const uniqueCodeLT = this.generateUniqueCode(claim.tabTitle);
                   const userId = this.userDetails.userId;
-                  console.log('unik kod:', uniqueCodeLT);
+                  console.log("unik kod:", uniqueCodeLT);
 
                   const transportSpec =
-                    claim.TransportLT.toLowerCase() === 'personal transport'
+                    claim.TransportLT.toLowerCase() === "personal transport"
                       ? claim.TransportSpec
                       : claim.PublicTransportSpec;
 
-                      const thisisforlocal1 = {
-    requester_id: this.userDetails.userId,
-    mileage_km: claim.MileageKMLT || 0,
-    starting_point: claim.LocationStart || "-",
-    end_point: claim.LocationEnd || "-",
-    date_event: claim.dateLT || "-", // Default to empty string if not provided
-    park_fee: claim.ParkingLT || 0,
-    toll_fee: claim.TollLT || 0,
-    total_fee: claim.totalRM || 0,
-    unique_code: uniqueCodeLT || "-",
-    reference_number:  this.serialnumber || "-",
-    transport_mode: claim.TransportLT || "-",
-    trip_mode: claim.tripwayLT || "-",
-    total_mileage: claim.MileageRMLT || 0,
-    transport_specification: transportSpec || "-",
-    fare: claim.FareRMLT || 0,
-    return_date: claim.ReturnDateLT || "-",
-    meal_allowance: String(claim.MealAllowanceLT || "-"),
-    accommodation: claim.AccommodationLT || "-",
-};
+                  const thisisforlocal1 = {
+                    requester_id: this.userDetails.userId,
+                    mileage_km: claim.MileageKMLT || 0,
+                    starting_point: claim.LocationStart || "-",
+                    end_point: claim.LocationEnd || "-",
+                    date_event: claim.dateLT || "-", // Default to empty string if not provided
+                    park_fee: claim.ParkingLT || 0,
+                    toll_fee: claim.TollLT || 0,
+                    total_fee: claim.totalRM || 0,
+                    unique_code: uniqueCodeLT || "-",
+                    reference_number: this.serialnumber || "-",
+                    transport_mode: claim.TransportLT || "-",
+                    trip_mode: claim.tripwayLT || "-",
+                    total_mileage: claim.MileageRMLT || 0,
+                    transport_specification: transportSpec || "-",
+                    fare: claim.FareRMLT || 0,
+                    return_date: claim.ReturnDateLT || "-",
+                    meal_allowance: String(claim.MealAllowanceLT || "-"),
+                    accommodation: claim.AccommodationLT || "-",
+                  };
 
                   axiosInstance = axios.create({
                     baseURL:
-                      'http://172.28.28.91:97/api/User/InsertLocalOutstation',
+                      "http://172.28.28.91:97/api/User/InsertLocalOutstation",
                   });
                   if (claim.UploadLT && claim.UploadLT.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
-                    console.log('Preparing to upload files:', claim.UploadLT);
+                    console.log("Preparing to upload files:", claim.UploadLT);
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
@@ -3471,7 +3320,7 @@ export default {
                     claim.UploadParkingLT.length > 0
                   ) {
                     console.log(
-                      'Preparing to upload files:',
+                      "Preparing to upload files:",
                       claim.UploadParkingLT
                     );
                     this.uploadFiles(
@@ -3482,14 +3331,14 @@ export default {
                   }
                   if (claim.UploadTollLT && claim.UploadTollLT.length > 0) {
                     console.log(
-                      'Preparing to upload files:',
+                      "Preparing to upload files:",
                       claim.UploadTollLT
                     );
                     this.uploadFiles(claim.UploadTollLT, userId, uniqueCodeLT);
                   }
                   if (claim.UploadFareRMLT && claim.UploadFareRMLT.length > 0) {
                     console.log(
-                      'Preparing to upload files:',
+                      "Preparing to upload files:",
                       claim.UploadFareRMLT
                     );
                     this.uploadFiles(
@@ -3503,7 +3352,7 @@ export default {
                     claim.UploadMileageRMLT.length > 0
                   ) {
                     console.log(
-                      'Preparing to upload files:',
+                      "Preparing to upload files:",
                       claim.UploadMileageRMLT
                     );
                     this.uploadFiles(
@@ -3513,50 +3362,56 @@ export default {
                     );
                   }
                   const response = await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforlocal1
                   );
                   console.log(`Data sent for ${title} 1:`, response.data);
                 }
                 break;
               }
-              case 'overseas travelling':
+              case "overseas travelling":
                 for (const claim of claimsToSend) {
                   const uniqcodeOT = this.generateUniqueCode(claim.tabTitle);
                   const thisisforoversea = {
-    requester_id: this.userDetails.userId || "-",
-    description: claim.PurposeOT || "-",
-    meal_allowance: String(claim.MealAllowanceOT || 0),
-    date_event: claim.dateOT || "-",
-    transport_fee: claim.AirportLimoTeksiOT || 0,
-    total_fee: claim.totalRM || 0,
-    accom_foreign_total: claim.AmountforAccommodationOT || 0,
-    accom_foreign_currency: claim.ForeignCurrencyAccommodationOT || "-",
-    accom_exchange_rate: parseFloat(claim.ExchangeRateAccommodationOT || 0).toFixed(2),
-    other_foreign_currency: claim.ForeignCurrencyOthersOT || "-",
-    other_exchange_rate: parseFloat(claim.ExchangeRateOthersOT || 0).toFixed(2),
-    other_foreign_total: claim.AmountforOthersOT || 0,
-    reference_number:  this.serialnumber|| "-",
-    unique_code: uniqcodeOT || "-",
-    transportation_mode: String(claim.AirportLimoTeksiOT || "-"),
-    return_date: claim.ReturendateOT || "-",
-    accommodation: claim.AccommodationOT || "-",
-    oem: claim.otherExpenses
-        ? claim.otherExpenses.map((expense) => ({
-            name: expense.name || "-",
-            amount: expense.amount || 0,
-            description: expense.description || "-",
-        }))
-        : [],
-};
-
-
+                    requester_id: this.userDetails.userId || "-",
+                    description: claim.PurposeOT || "-",
+                    meal_allowance: String(claim.MealAllowanceOT || 0),
+                    date_event: claim.dateOT || "-",
+                    transport_fee: claim.AirportLimoTeksiOT || 0,
+                    total_fee: claim.totalRM || 0,
+                    accom_foreign_total: claim.AmountforAccommodationOT || 0,
+                    accom_foreign_currency:
+                      claim.ForeignCurrencyAccommodationOT || "-",
+                    accom_exchange_rate: parseFloat(
+                      claim.ExchangeRateAccommodationOT || 0
+                    ).toFixed(2),
+                    other_foreign_currency:
+                      claim.ForeignCurrencyOthersOT || "-",
+                    other_exchange_rate: parseFloat(
+                      claim.ExchangeRateOthersOT || 0
+                    ).toFixed(2),
+                    other_foreign_total: claim.AmountforOthersOT || 0,
+                    reference_number: this.serialnumber || "-",
+                    unique_code: uniqcodeOT || "-",
+                    transportation_mode: String(
+                      claim.AirportLimoTeksiOT || "-"
+                    ),
+                    return_date: claim.ReturendateOT || "-",
+                    accommodation: claim.AccommodationOT || "-",
+                    oem: claim.otherExpenses
+                      ? claim.otherExpenses.map((expense) => ({
+                          name: expense.name || "-",
+                          amount: expense.amount || 0,
+                          description: expense.description || "-",
+                        }))
+                      : [],
+                  };
 
                   const userId = this.userDetails.userId;
-                  console.log('unik kod:', this.uniqueCode);
+                  console.log("unik kod:", this.uniqueCode);
                   if (claim.UploadOT && claim.UploadOT.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
-                    console.log('Preparing to upload files:', claim.UploadOT);
+                    console.log("Preparing to upload files:", claim.UploadOT);
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
@@ -3567,7 +3422,7 @@ export default {
                     claim.UploadAirportLimoTeksiOT.length > 0
                   ) {
                     console.log(
-                      'Preparing to upload files:',
+                      "Preparing to upload files:",
                       claim.UploadAirportLimoTeksiOT
                     );
                     this.uploadFiles(
@@ -3582,23 +3437,23 @@ export default {
                       (expense) => expense.files || []
                     );
                     if (filesToUpload.length > 0) {
-                      console.log('Preparing to upload files:', filesToUpload);
+                      console.log("Preparing to upload files:", filesToUpload);
                       await this.uploadFiles(filesToUpload, userId, uniqcodeOT);
                     }
                   }
 
                   axiosInstance = axios.create({
                     baseURL:
-                      'http://172.28.28.91:97/api/User/InsertOverseasOutstation',
+                      "http://172.28.28.91:97/api/User/InsertOverseasOutstation",
                   });
                   const response = await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforoversea
                   );
                   console.log(`Data sent for ${title} 2:`, response.data);
                 }
                 break;
-              case 'entertainment':
+              case "entertainment":
                 for (const claim of claimsToSend) {
                   const uniqcodeE = this.generateUniqueCode(claim.tabTitle);
                   const thisisforentertainment = {
@@ -3611,7 +3466,7 @@ export default {
                     venue_name: claim.VenueE,
                     description: claim.ReferenceE,
                     total_fee: parseFloat(claim.AmountRME),
-                    reference_number:  this.serialnumber,
+                    reference_number: this.serialnumber,
                     unique_code: uniqcodeE, // Ensure this is in the correct format and not null/undefined
                     // Add the required 'ent' field with the appropriate value
 
@@ -3620,9 +3475,9 @@ export default {
                           name: participant.name,
                           company_Name: participant.company_Name
                             ? participant.company_Name
-                            : '',
-                            emp_id:"-",
-                            status: "-",
+                            : "",
+                          emp_id: "-",
+                          status: "-",
                         }))
                       : [],
                   };
@@ -3631,7 +3486,7 @@ export default {
 
                   if (claim.UploadE && claim.UploadE.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
-                    console.log('Preparing to upload files:', claim.UploadE);
+                    console.log("Preparing to upload files:", claim.UploadE);
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
@@ -3641,20 +3496,20 @@ export default {
                   // Create axios instance
                   axiosInstance = axios.create({
                     baseURL:
-                      'http://172.28.28.91:86/api/User/InsertEntertainment',
+                      "http://172.28.28.91:86/api/User/InsertEntertainment",
                   });
 
                   // Send the request
                   try {
                     const response = await axiosInstance.post(
-                      '/',
+                      "/",
                       thisisforentertainment
                     );
                     console.log(`Data sent for ${title} 3:`, response.data);
                     this.fileupload(); // Assuming this function handles subsequent actions after successful submission
                   } catch (error) {
                     console.error(
-                      'Error sending data for Entertainment:',
+                      "Error sending data for Entertainment:",
                       error.response.data
                     );
                     // Handle error appropriately, e.g., display error message to user
@@ -3663,7 +3518,7 @@ export default {
 
                 break;
 
-              case 'staff refreshment':
+              case "staff refreshment":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -3694,7 +3549,7 @@ export default {
                   // console.log("unik kod:", uniqueCode);
                   if (claim.UploadSR && claim.UploadSR.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
-                    console.log('Preparing to upload files:', claim.UploadSR);
+                    console.log("Preparing to upload files:", claim.UploadSR);
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
@@ -3702,16 +3557,16 @@ export default {
                   }
                   axiosInstance = axios.create({
                     baseURL:
-                      'http://172.28.28.91:97/api/User/InsertStaffRefreshment',
+                      "http://172.28.28.91:97/api/User/InsertStaffRefreshment",
                   });
                   const response2 = await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforstaffrefreshment
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case 'others':
+              case "others":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -3734,7 +3589,7 @@ export default {
                   if (claim.UploadOthers && claim.UploadOthers.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
                     console.log(
-                      'Preparing to upload files:',
+                      "Preparing to upload files:",
                       claim.UploadOthers
                     );
 
@@ -3747,16 +3602,16 @@ export default {
                     );
                   }
                   axiosInstance = axios.create({
-                    baseURL: 'http://172.28.28.91:97/api/User/InsertOthers',
+                    baseURL: "http://172.28.28.91:97/api/User/InsertOthers",
                   });
                   const response2 = await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforHandphoneBillReimbursement
                   );
                   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
-              case 'handphone bill reimbursement':
+              case "handphone bill reimbursement":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
@@ -3768,12 +3623,12 @@ export default {
                     bank_name: claim.BankNameHR,
                     bank_account: String(claim.AccBankNumberHR),
                     bank_holder: claim.AccHolderNameHR,
-                  
+
                     claim_amount: claim.totalRM,
                     unique_code: uniqcodeHR,
                     reference_number: this.serialnumber,
                     phone_limit: claim.LimitedAmountHR,
-                    ic_number: claim.icNumber ,
+                    ic_number: claim.icNumber,
                     requester_id: this.userDetails.userId,
                   };
 
@@ -3781,19 +3636,19 @@ export default {
                   // console.log("unik kod:", uniqueCode);
                   if (claim.UploadHR && claim.UploadHR.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
-                    console.log('Preparing to upload files:', claim.UploadLT);
+                    console.log("Preparing to upload files:", claim.UploadLT);
 
                     // Assuming uploadFile has been adjusted to accept an array of files
                     this.uploadFiles(claim.UploadHR, userId, uniqcodeHR);
                   }
                   const axiosInstance = axios.create({
                     baseURL:
-                      'http://172.28.28.91:86/api/User/InsertHandphoneReimburse',
+                      "http://172.28.28.91:86/api/User/InsertHandphoneReimburse",
                   });
 
                   try {
                     const response = await axiosInstance.post(
-                      '/',
+                      "/",
                       thisisforHandphoneBillReimbursement
                     );
                     console.log(
@@ -3807,18 +3662,18 @@ export default {
                       // The request was made and the server responded with a status code
                       // that falls out of the range of 2xx
                       console.error(
-                        'Error submitting handphone bill reimbursement:',
+                        "Error submitting handphone bill reimbursement:",
                         error.response.data
                       );
                     } else if (error.request) {
                       // The request was made but no response was received
                       console.error(
-                        'Error submitting handphone bill reimbursement: No response received'
+                        "Error submitting handphone bill reimbursement: No response received"
                       );
                     } else {
                       // Something happened in setting up the request that triggered an error
                       console.error(
-                        'Error submitting handphone bill reimbursement:',
+                        "Error submitting handphone bill reimbursement:",
                         error.message
                       );
                     }
@@ -3826,38 +3681,40 @@ export default {
                   }
                 }
                 break;
-              case 'medical bill reimbursement':
+              case "medical bill reimbursement":
                 for (const claim of claimsToSend) {
                   // Iterate over each claim
                   // Dummy data for a claim
 
                   const uniqcodeML = this.generateUniqueCode(claim.tabTitle);
                   const thisisforMedicalBillReimbursement = {
-                    reference_number: this.serialnumber || '-',
-date_leave_taken: claim.dateML, // Example date
-reason: claim.ReasonML || '-',
-bank_name: claim.BankNameML ,
-bank_holder: claim.AccHolderNameML ,
-bank_account: String(claim.AccBankNumberML ),
-claim_amount: String(claim.ClaimsAmountML ),
-clinic_name: String(claim.OtherClinicSpecML
-                      ? claim.OtherClinicSpecML
-                      : claim.ClinicSelectionML || '-'),
-clinic_selection: String(claim.ClinicSelectionML || '-'),
-reason_different: claim.OtherClinicReasonML || '-',
-medical_category: claim.MedicalCategoryML ,
-requester_id: this.userDetails.userId ,
-limit_outpatient: claim.limit_outpatient ,
-limit_medic_dental: claim.limit_medic_dental,
-ic_number: claim.icNumber ,
-unique_code: uniqcodeML ,
+                    reference_number: this.serialnumber || "-",
+                    date_leave_taken: claim.dateML, // Example date
+                    reason: claim.ReasonML || "-",
+                    bank_name: claim.BankNameML,
+                    bank_holder: claim.AccHolderNameML,
+                    bank_account: String(claim.AccBankNumberML),
+                    claim_amount: String(claim.ClaimsAmountML),
+                    clinic_name: String(
+                      claim.OtherClinicSpecML
+                        ? claim.OtherClinicSpecML
+                        : claim.ClinicSelectionML || "-"
+                    ),
+                    clinic_selection: String(claim.ClinicSelectionML || "-"),
+                    reason_different: claim.OtherClinicReasonML || "-",
+                    medical_category: claim.MedicalCategoryML,
+                    requester_id: this.userDetails.userId,
+                    limit_outpatient: claim.limit_outpatient,
+                    limit_medic_dental: claim.limit_medic_dental,
+                    ic_number: claim.icNumber,
+                    unique_code: uniqcodeML,
                   };
 
                   const userId = this.userDetails.userId;
                   // console.log("unik kod:", uniqueCode);
                   if (claim.UploadML && claim.UploadML.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
-                    console.log('Preparing to upload files:', claim.UploadML);
+                    console.log("Preparing to upload files:", claim.UploadML);
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
@@ -3865,14 +3722,14 @@ unique_code: uniqcodeML ,
                   }
                   axiosInstance = axios.create({
                     baseURL:
-                      'http://172.28.28.91:86/api/User/InsertMedicalLeave',
+                      "http://172.28.28.91:86/api/User/InsertMedicalLeave",
                   });
                   await axiosInstance.post(
-                    '/',
+                    "/",
                     thisisforMedicalBillReimbursement
                   );
                   // console.log(`Data sent for ${title} 2:`, response2.data);
-                  console.log('Data sent for Medical Bill Reimbursement');
+                  console.log("Data sent for Medical Bill Reimbursement");
                 }
                 break;
               // Add cases for other tab titles here
@@ -3880,7 +3737,7 @@ unique_code: uniqcodeML ,
                 console.error(`No endpoint found for ${title}`);
                 continue; // Skip to the next iteration
             }
-            this.$router.push({ name: 'eclaimhomepages' });
+            this.$router.push({ name: "eclaimhomepages" });
           } catch (error) {
             if (error.response) {
               // The request was made and the server responded with a status code
@@ -3904,11 +3761,11 @@ unique_code: uniqcodeML ,
     },
     todayFormatted() {
       const options = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
+        year: "numeric",
+        month: "long",
+        day: "numeric",
       };
-      return new Date().toLocaleDateString('en-US', options);
+      return new Date().toLocaleDateString("en-US", options);
     },
 
     async uploadFiles(files, userId, uniqueCode) {
@@ -3917,18 +3774,18 @@ unique_code: uniqcodeML ,
 
       // Iterate over the files array and append each file to formData
       files.forEach((file) => {
-        formData.append('filecollection', file);
+        formData.append("filecollection", file);
       });
 
       try {
         const response = await axios.post(uploadEndpoint, formData, {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           },
         });
-        console.log('Files uploaded successfully:', response.data);
+        console.log("Files uploaded successfully:", response.data);
       } catch (error) {
-        console.error('Error uploading files:', error);
+        console.error("Error uploading files:", error);
       }
     },
 
@@ -3936,21 +3793,21 @@ unique_code: uniqcodeML ,
       const files = this.formData.fileUpload; // Ensure formData is correctly accessible
 
       if (!files || !files.length) {
-        console.error('No files to upload.');
+        console.error("No files to upload.");
         return;
       }
 
       await this.uploadFilesclaims(files, X, Y);
     },
     async uploadFilesclaims(files, userId, uniqueCode) {
-      console.log('Files parameter received:', files);
-      console.log('User ID:', userId);
-      console.log('Unique Code:', uniqueCode);
-      console.log('Files type:', typeof files);
-      console.log('Is Array:', Array.isArray(files));
+      console.log("Files parameter received:", files);
+      console.log("User ID:", userId);
+      console.log("Unique Code:", uniqueCode);
+      console.log("Files type:", typeof files);
+      console.log("Is Array:", Array.isArray(files));
 
       if (!files || !Array.isArray(files)) {
-        console.error('The files parameter is not an array or is undefined.');
+        console.error("The files parameter is not an array or is undefined.");
         return;
       }
 
@@ -3958,20 +3815,20 @@ unique_code: uniqcodeML ,
       const formData = new FormData();
 
       for (let i = 0; i < files.length; i++) {
-        formData.append('filecollection', files[i]);
+        formData.append("filecollection", files[i]);
       }
 
       try {
         const response = await axios.post(uploadEndpoint, formData, {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           },
         });
-        console.log('Files uploaded successfully:', response.data);
+        console.log("Files uploaded successfully:", response.data);
 
         formStore.clearFormData();
       } catch (error) {
-        console.error('Error uploading files:', error);
+        console.error("Error uploading files:", error);
       }
     },
 
@@ -3986,20 +3843,20 @@ unique_code: uniqcodeML ,
       // Retrieve the current formData
       const formData = formStore.getFormData();
 
-      if (formData.claimantName !== '') {
+      if (formData.claimantName !== "") {
         // Set the claims array to contain only the new formData
         this.claims = [formData];
 
         // Update the local storage with the new claims array
-        localStorage.setItem('claims', JSON.stringify(this.claims));
+        localStorage.setItem("claims", JSON.stringify(this.claims));
       } else {
         // If no formData, retrieve the claims array from local storage
-        const storedClaims = JSON.parse(localStorage.getItem('claims')) || [];
+        const storedClaims = JSON.parse(localStorage.getItem("claims")) || [];
         this.claims = storedClaims;
       }
 
       // Log the claims array to the console
-      console.log('Claims:', this.claims);
+      console.log("Claims:", this.claims);
     },
 
     addClaim(formData) {
