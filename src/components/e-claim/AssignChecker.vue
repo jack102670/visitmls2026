@@ -17,19 +17,28 @@
           <!-- left -->
           <div class="flex flex-1 flex-col py-8">
             <div class="flex flex-col w-52 mb-8">
-              <h1 class="text-lg font-semibold w-screen">
+              <h1 class="text-lg font-semibold w-screen mb-6">
                 Choose the checker and select the duration
               </h1>
-              <input
-                v-model="checkerName"
-                placeholder="Enter name..."
-                class="w-64 p-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                type="text"
+              <DropDown
+                inputId="departmentInput"
+                label="Department"
+                :options="AllDepartments"
+                :mandatory="true"
+                @input="(payload) => (chosenDepartment = payload)"
+              />
+              <DropDown
+                inputId="nameInput"
+                label="Employee Name"
+                :options="FilteredEmployees.map((item) => item.name)"
+                :mandatory="true"
+                @input="(payload) => (checkerName = payload)"
+                class="mt-4"
               />
             </div>
 
             <!-- calendar -->
-            <div class="w-80 mb-8 bg-white p-4 rounded-lg">
+            <div class="w-80 mb-8 bg-white dark:bg-gray-700 p-4 rounded-lg">
               <!-- calendar header -->
               <div class="flex w-full justify-between pb-4">
                 <button @click="prevMonth">⬅️</button>
@@ -64,10 +73,12 @@
                   :key="day"
                   class="text-center p-2 cursor-pointer"
                   :class="[
-                    isPastDate(day) ? 'bg-gray-300 text-gray-400' : '',
+                    isPastDate(day)
+                      ? 'bg-gray-300 text-gray-400 dark:text-gray-400'
+                      : '',
                     isSelectedDate(day)
                       ? 'bg-blue-800 text-white'
-                      : 'bg-gray-100 hover:bg-gray-200',
+                      : 'bg-gray-100 hover:bg-gray-200 dark:text-black',
                   ]"
                   @click="selectDate(day)"
                 >
@@ -96,7 +107,11 @@
               <div
                 class="text-3xl mb-4 font-bold flex justify-between items-center"
               >
-                <h1>{{ checker.checkerName }}</h1>
+                <h1>
+                  {{
+                    checker.checkerName + ' (' + checker.chosenDepartment + ')'
+                  }}
+                </h1>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -133,14 +148,25 @@
 </template>
 
 <script>
+import DropDown from './DropDown.vue';
 import moment from 'moment';
+import axios from 'axios';
+import { store } from '@/views/store.js';
+
 export default {
+  components: {
+    DropDown,
+  },
   data() {
     return {
       checkerName: '',
       startDate: null,
       endDate: null,
       Checkers: [],
+      AllDepartments: [],
+      AllEmployees: [],
+      chosenDepartment: '',
+      FilteredEmployees: [],
 
       // Calendar
       currentDate: new Date(),
@@ -170,20 +196,64 @@ export default {
     },
   },
   methods: {
-    AddCheckers() {
+    async GetAllDepartments() {
+      await axios
+        .get('http://172.28.28.91:97/api/User/GetDepartment')
+        .then((response) => {
+          this.AllDepartments = response.data.result.map(
+            (item) => item.department
+          );
+          this.GetAllEmployees();
+        });
+    },
+    async GetAllEmployees() {
+      await axios
+        .get('http://172.28.28.91:97/api/User/GetAllEmployees')
+        .then((response) => {
+          this.AllEmployees = response.data.result;
+          console.log(response);
+        });
+    },
+    async AddCheckers() {
       if (this.startDate && !this.endDate) {
         this.endDate = this.startDate;
       }
-      if (this.checkerName && this.startDate && this.endDate) {
+      if (
+        this.checkerName &&
+        this.startDate &&
+        this.endDate &&
+        this.chosenDepartment
+      ) {
         const newChecker = {
           checkerName: this.checkerName,
           startDate: moment(this.startDate).format('DD MMMM YYYY'),
           endDate: moment(this.endDate).format('DD MMMM YYYY'),
+          chosenDepartment: this.chosenDepartment,
         };
-        this.Checkers.push(newChecker);
-        this.checkerName = '';
-        this.startDate = null;
-        this.endDate = null;
+
+        const username_id = store.getSession().userDetails.userId;
+        const result = this.FilteredEmployees.find(
+          (person) => person.name === this.checkerName
+        );
+        const data = {
+          checker_userId: result.id,
+          start_date: moment(this.startDate).format('DD MMMM YYYY'),
+          end_date: moment(this.endDate).format('DD MMMM YYYY'),
+        };
+
+        await axios
+          .put(
+            'http://172.28.28.91:86/api/Admin/AssignChecker/' + username_id,
+            data
+          )
+          .then((response) => {
+            console.log(response);
+            this.Checkers.push(newChecker);
+            this.checkerName = '';
+            this.startDate = null;
+            this.endDate = null;
+            this.chosenDepartment = '';
+          });
       } else {
         alert('Please fill in all details');
       }
@@ -252,6 +322,16 @@ export default {
     } else if (element && openOrNot == 'true') {
       element.classList.remove('become-big');
     }
+
+    this.GetAllDepartments();
+  },
+  watch: {
+    chosenDepartment(newDepartment) {
+      console.log(this.AllEmployees);
+      this.FilteredEmployees = this.AllEmployees.filter(
+        (item) => item.department == newDepartment
+      ).map((item) => ({ name: item.name, id: item.username_id }));
+    },
   },
 };
 </script>
