@@ -2,10 +2,21 @@
   <div
     class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
   >
-    <div class="sm:flex justify-start flex-wrap">
+    <div  class="sm:flex justify-start flex-wrap">
       <button
         v-for="(tab, index) in tabs"
-        v-show="tab.tabType == type"
+        v-show="
+    tab.tabType == type &&
+    (
+      (tab.title === 'Local Travelling' && profilestatus.local_access === '1') ||
+      (tab.title === 'Others' && profilestatus.others_access === '1') ||
+      (tab.title === 'Handphone Bill Reimbursement' && profilestatus.phone_access === '1') ||
+      (tab.title === 'Medical Bill Reimbursement' && profilestatus.md_access === '1') ||
+      (tab.title === 'Staff Refreshment' && profilestatus.staff_access === '1') ||
+      (tab.title === 'Overseas Travelling' && profilestatus.overseas_access === '1') ||
+      (tab.title === 'Entertainment' && profilestatus.ent_access === '1')
+    )
+  "
         :key="index"
         @click="activeTab = index"
         :class="[
@@ -39,7 +50,7 @@
         <section>
           <div
             v-if="
-              tab.title === 'Handphone Bill Reimbursement' && isFormDisabled
+              tab.title === 'Handphone Bill Reimbursement' && isFormDisabled 
             "
             class="relative flex items-center justify-center mt-4 p-4 bg-yellow-200 border border-yellow-400 text-yellow-800 rounded-md"
             style="width: 100%; max-width: 600px; margin: 0 auto"
@@ -68,7 +79,7 @@
             tab.title !== 'Overseas Travelling'
           "
         >
-          <form
+          <form 
             @submit.prevent="submitForm(tab)"
             :class="{
               blur:
@@ -646,7 +657,9 @@
                                     <div
                                       class="absolute left-1.5/2 top-1/2 transform -translate-y-1/2 hidden group-hover:block w-64 p-2 bg-white border border-gray-300 rounded shadow-lg text-gray-700 text-sm"
                                     >
-                                      Please note: The reimbursement limit is not yet updated and may not reflect the latest changes.
+                                      Please note: The reimbursement limit is
+                                      not yet updated and may not reflect the
+                                      latest changes.
                                     </div>
                                   </div>
                                 </template>
@@ -2025,9 +2038,10 @@ export default {
 
   data() {
     return {
+      profilestatus: "",
       IcNumber: "",
       chooseform: true,
-      activeTab: this.type == "Finance" ? 0 : 4,
+      activeTab: this.type == null ,
       activeSubTab: 0,
       date: "",
       yearRange: [],
@@ -2882,6 +2896,29 @@ export default {
   },
 
   computed: {
+    // Add new computed properties for each form
+  hasLocalAccess() {
+    return this.profilestatus.local_access ;
+  },
+  hasMdAccess() {
+    return this.profilestatus.md_access;
+  },
+  hasEntAccess() {
+    return this.profilestatus.ent_access;
+  },
+  hasStaffAccess() {
+    return this.profilestatus.staff_access;
+  },
+  hasOverseasAccess() {
+    return this.profilestatus.overseas_access;
+  },
+  hasOthersAccess() {
+    return this.profilestatus.others_access;
+  },
+  hasPhoneAccess() {
+    return this.profilestatus.phone_access;
+  },
+    
     selectedCurrency() {
       return this.currencyOptions.find(
         (currency) =>
@@ -3293,9 +3330,26 @@ export default {
     this.fetchDepartment();
     this.fetchHrData();
     this.fetchCurrencies();
+    this.checkstatus();
   },
 
   methods: {
+    async checkstatus() {
+      try {
+        const username_id = store.getSession().userDetails.userId;
+        const response = await fetch(
+          `http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        this.profilestatus = data.result[0];
+        console.log("Profile Status:", this.profilestatus);
+      } catch (error) {
+        console.error(`Error fetching checkstatus: ${error}`);
+      }
+    },
     async fetchCurrencies() {
       try {
         const response = await fetch(
@@ -4027,7 +4081,7 @@ export default {
         }
       });
 
-      total +=  this.calculateOverseasTotal();
+      total += this.calculateOverseasTotal();
 
       // Return the total
       return total.toFixed(2);
