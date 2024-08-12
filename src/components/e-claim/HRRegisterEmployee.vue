@@ -210,6 +210,32 @@
           </div>
         </div>
 
+        <div
+          class="fixed left-0 top-0 flex justify-center items-center z-50 w-screen h-screen"
+          v-if="registerSuccess"
+        >
+          <div
+            class="bg-gray-100 dark:bg-gray-500 px-10 py-3 rounded-full z-50 flex justify-center items-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="green"
+              class="w-8 h-8"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
+              />
+            </svg>
+
+            <h1>REGISTERED SUCCESSFULLY</h1>
+          </div>
+        </div>
+
         <!-- Loading Animation -->
         <div
           class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
@@ -301,6 +327,8 @@ export default {
 
       loading: true,
       loadingText: '',
+
+      registerSuccess: false,
     };
   },
   methods: {
@@ -352,8 +380,9 @@ export default {
         .then((response) => {
           console.log('Response:', response.data);
           this.loading = false;
+          this.registerSuccess = true;
 
-          window.location.reload();
+          setTimeout(window.location.reload(), 2500);
           // Handle success
         })
         .catch((error) => {
