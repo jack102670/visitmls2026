@@ -20,22 +20,24 @@
         :key="index"
         @click="activeTab = index"
         :class="[
-          'flex-1 px-4 py-1 text-md mr-2 rounded-3xl focus:outline-none border border-gray-300',
-          {
-            'bg-[#160959] text-white': activeTab === index,
-            'hover:bg-gray-200': activeTab !== index,
-            'px-8 py-4 mr-4':
-              tab.title === 'Handphone Bill Reimbursement' ||
-              tab.title === 'Medical Bill Reimbursement',
-          },
-        ]"
-      >
-        {{ tab.title }}
-      </button>
+        'flex-1 px-4 py-1 text-md mr-2 rounded-3xl focus:outline-none border border-gray-300',
+        {
+          'bg-[#160959] text-white': activeTab === index,
+          'hover:bg-gray-200': activeTab !== index,
+          'px-8 py-4 mr-4':
+            tab.title === 'Handphone Bill Reimbursement' ||
+            tab.title === 'Medical Bill Reimbursement',
+        },
+        // Large screens
+        'max-w-xs'
+      ]"
+    >
+      {{ tab.title }}
+    </button>
     </div>
 
     <div
-      class="relative overflow-hidden mt-5 max-w-4xl p-6 bg-white border-2 border-e-gray-200 rounded-md dark:bg-gray-800"
+      class="relative overflow-hidden mt-5  max-w-4xl p-6 bg-white border-2 border-e-gray-200 rounded-md dark:bg-gray-800"
     >
       <div
         v-for="(tab, index) in tabs"
@@ -796,11 +798,7 @@
                       :for="field.id"
                       class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2"
                     >
-                      {{
-                        field.id === "AmountforAccommodationOT"
-                          ? amountLabels.amountAccommodation
-                          : field.label
-                      }}
+                      {{ field.label }}
                       <span v-if="field.required" style="color: red">*</span>
                     </label>
 
@@ -1014,6 +1012,23 @@
                               <span v-if="selectedCurrencySymbol"
                                 >({{ selectedCurrencySymbol }})</span
                               >
+                              <div class="relative group ml-1">
+                                <button
+                                  type="button"
+                                  class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
+                                >
+                                  <span
+                                    class="inline-flex items-center justify-center w-5 h-5 bg-gray-200 rounded-full text-gray-700 font-semibold"
+                                    >i</span
+                                  >
+                                </button>
+                                <div
+                                  class="absolute left-1.5/2 top-1/2 transform -translate-y-1/2 hidden group-hover:block w-64 p-2 bg-white border border-gray-300 rounded shadow-lg text-gray-700 text-sm"
+                                >
+                                  Note: This field is intended for amounts spent
+                                  in foreign currency.
+                                </div>
+                              </div>
                             </label>
                             <input
                               v-model="newExpense.AmountforAccommodationOT"
@@ -1025,11 +1040,12 @@
                               required
                               @input="calculateTotalAccommodation"
                             />
-                            <div class="text-sm text-gray-500 mt-2">
-                              Note: This field is intended for amounts spent in
-                              foreign currency. In Malaysian Ringgit = RM{{
-                                totalAccommodation || 0
-                              }}
+                            <div class="ml-2">
+                              <h1 class="text-gray-500 text-sm">
+                                In Malaysian Ringgit = RM{{
+                                  totalAccommodation || 0
+                                }}
+                              </h1>
                             </div>
                           </div>
                           <div class="mb-4">
@@ -2041,7 +2057,7 @@ export default {
       profilestatus: "",
       IcNumber: "",
       chooseform: true,
-      activeTab: this.type == null ,
+      activeTab: this.type == "Finance" ? 6 : 5,
       activeSubTab: 0,
       date: "",
       yearRange: [],
@@ -2673,6 +2689,7 @@ export default {
               label: "Return Date",
               type: "date",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {

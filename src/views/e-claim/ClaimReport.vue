@@ -246,6 +246,11 @@
                           <span v-if="claim.totalRM"
                             >RM {{ claim.totalRM }}</span
                           >
+                          <span
+                            v-if="claim.combinedTotal" 
+                            >RM {{ claim.combinedTotal }}
+                          </span
+                          >
                           <span v-if="claim.AmountRME"
                             >RM {{ claim.AmountRME }}</span
                           >
@@ -2690,10 +2695,10 @@ export default {
   computed: {
     fileGroups() {
       const groups = {
-        Fare: this.localTravellingDetails.UploadFareRMLT,
-        Mileage: this.localTravellingDetails.UploadMileageRMLT,
-        Parking: this.localTravellingDetails.UploadParkingLT,
-        "Toll/Touch n'Go": this.localTravellingDetails.UploadTollLT,
+        Fare: this.localTravellingDetails?.UploadFareRMLT || [],
+        Mileage: this.localTravellingDetails?.UploadMileageRMLT || [],
+        Parking: this.localTravellingDetails?.UploadParkingLT || [],
+        "Toll/Touch n'Go": this.localTravellingDetails?.UploadTollLT || [],
       };
 
       return Object.entries(groups).filter(([type, files]) => files.length > 0);
@@ -2871,6 +2876,7 @@ export default {
           if (claim.AmountRME) amount += parseFloat(claim.AmountRME);
           if (claim.totalRM) amount += parseFloat(claim.totalRM);
           if (claim.AmountRMSR) amount += parseFloat(claim.AmountRMSR);
+          if (claim.combinedTotal) amount += parseFloat(claim.combinedTotal);
           return total + amount;
         }, 0)
         .toFixed(2);
@@ -3378,7 +3384,7 @@ export default {
                     meal_allowance: String(claim.MealAllowanceOT || 0),
                     date_event: claim.dateOT || "-",
                     transport_fee: claim.AirportLimoTeksiOT || 0,
-                    total_fee: claim.totalRM || 0,
+                    total_fee: claim.combinedTotal || 0,
                     accom_foreign_total: claim.AmountforAccommodationOT || 0,
                     accom_foreign_currency:
                       claim.ForeignCurrencyAccommodationOT || "-",
