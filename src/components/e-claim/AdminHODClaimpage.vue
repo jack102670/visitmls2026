@@ -1161,6 +1161,7 @@ export default {
           this.claimDetails = response.data.result;
           this.adminStatus = this.claimDetails.admin_status
             .split(' ')[0]
+            .split('.')[0]
             .toUpperCase();
           console.log(this.claimDetails.admin_status);
           switch (this.adminStatus) {
