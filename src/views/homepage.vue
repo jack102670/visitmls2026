@@ -95,7 +95,7 @@ export default {
     }
 
     const username_id = session.userDetails.userId;
-    fetch(`http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`)
+    fetch(`http://172.28.28.91:99/api/User/GetEmployeeById/${username_id}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);

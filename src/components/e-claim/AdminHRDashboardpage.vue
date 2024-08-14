@@ -106,41 +106,36 @@
                       <td
                         class="px-12 py-4 text-sm font-medium text-gray-700 text-wrap whitespace-nowrap"
                       >
-                        <span
-                          :class="{
-                            'inline-flex items-center px-3 py-1 rounded-full gap-x-2': true,
-                            'bg-red-100/60 dark:bg-gray-800':
-                              claim.admin_status.split('.')[0] === 'REJECT',
-                            'bg-green-100/60 dark:bg-gray-800':
-                              claim.admin_status.split('.')[0] === 'APPROVED',
-                            'bg-amber-100/60 dark:bg-gray-800':
-                              claim.admin_status.split('.')[0] === 'VERIFIED', // Added for VERIFIED status
-                          }"
-                        >
-                          <span
-                            :class="{
-                              'h-1.5 w-1.5 rounded-full': true,
-                              'bg-red-500':
-                                claim.admin_status.split('.')[0] === 'REJECT',
-                              'bg-green-500':
-                                claim.admin_status.split('.')[0] === 'APPROVED',
-                              'bg-amber-500':
-                                claim.admin_status.split('.')[0] === 'VERIFIED', // Added for VERIFIED status
-                            }"
-                          ></span>
-                          <span
-                            :class="{
-                              'text-sm font-normal': true,
-                              'text-red-500':
-                                claim.admin_status.split('.')[0] === 'REJECT',
-                              'text-green-500':
-                                claim.admin_status.split('.')[0] === 'APPROVED',
-                              'text-amber-500':
-                                claim.admin_status.split('.')[0] === 'VERIFIED', // Added for VERIFIED status
-                            }"
-                            >{{ claim.admin_status.split('.')[0] }}</span
-                          >
-                        </span>
+                      <span
+  :class="{
+    'inline-flex items-center px-3 py-1 rounded-full gap-x-2': true,
+    'bg-red-100/60 dark:bg-gray-800': claim.admin_status.split('.')[0] === 'REJECT',
+    'bg-green-100/60 dark:bg-gray-800': claim.admin_status.split('.')[0] === 'APPROVED',
+    'bg-amber-100/60 dark:bg-gray-800': claim.admin_status.split('.')[0] === 'VERIFIED',
+    'bg-blue-100/60 dark:bg-gray-800': claim.admin_status.split('.')[0] === 'OPEN', // Added for empty status
+  }"
+>
+  <span
+    :class="{
+      'h-1.5 w-1.5 rounded-full': true,
+      'bg-red-500': claim.admin_status.split('.')[0] === 'REJECT',
+      'bg-green-500': claim.admin_status.split('.')[0] === 'APPROVED',
+      'bg-amber-500': claim.admin_status.split('.')[0] === 'VERIFIED',
+      'bg-blue-500': claim.admin_status.split('.')[0] === 'OPEN', // Added for empty status
+    }"
+  ></span>
+  <span
+    :class="{
+      'text-sm font-normal': true,
+      'text-red-500': claim.admin_status.split('.')[0] === 'REJECT',
+      'text-green-500': claim.admin_status.split('.')[0] === 'APPROVED',
+      'text-amber-500': claim.admin_status.split('.')[0] === 'VERIFIED',
+      'text-blue-500': claim.admin_status.split('.')[0] === 'OPEN', // Added for empty status
+    }"
+  >
+    {{ claim.admin_status.split('.')[0] }}
+  </span>
+</span>
                       </td>
                       <td
                         class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
@@ -252,7 +247,7 @@ export default {
       this.loading = true;
       axios
         .get(
-          'http://172.28.28.91:86/api/ApproverVerifier/GetAllRequestApproverHR/'
+          'http://172.28.28.91:91/api/ApproverVerifier/GetAllRequestApproverHR/'
         )
         .then((response) => {
           this.claimsData = response.data.result;

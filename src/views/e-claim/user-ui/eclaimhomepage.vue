@@ -732,14 +732,14 @@ export default {
     //     async showModal(referenceNumber) {
     //       this.isClickModal = true;
     //   const urls = [
-    //     `http://172.28.28.91:97/api/User/GetLocalOutstation/${referenceNumber}`,
-    //     `http://172.28.28.91:97/api/User/GetOverseasOutstation/${referenceNumber}`,
-    //     `http://172.28.28.91:86/api/User/GetRefreshment/${referenceNumber}`,
-    //     `http://172.28.28.91:86/api/User/GetEntertainment/${referenceNumber}`,
-    //     `http://172.28.28.91:86/api/User/GetHandphone/${referenceNumber}`,
-    //     `http://172.28.28.91:86/api/User/GetMedicalLeave/${referenceNumber}`,
-    //     `http://172.28.28.91:97/api/User/GetOthers/${referenceNumber}`,
-    //     `http://172.28.28.91:86/api/User/GetClaimDetails/${referenceNumber}`
+    //     `http://172.28.28.91:99/api/User/GetLocalOutstation/${referenceNumber}`,
+    //     `http://172.28.28.91:99/api/User/GetOverseasOutstation/${referenceNumber}`,
+    //     `http://172.28.28.91:91/api/User/GetRefreshment/${referenceNumber}`,
+    //     `http://172.28.28.91:91/api/User/GetEntertainment/${referenceNumber}`,
+    //     `http://172.28.28.91:91/api/User/GetHandphone/${referenceNumber}`,
+    //     `http://172.28.28.91:91/api/User/GetMedicalLeave/${referenceNumber}`,
+    //     `http://172.28.28.91:99/api/User/GetOthers/${referenceNumber}`,
+    //     `http://172.28.28.91:91/api/User/GetClaimDetails/${referenceNumber}`
     //   ];
 
     //   // Mapping URLs to modal display functions
@@ -821,7 +821,7 @@ export default {
       }
       try {
         const response = await fetch(
-          `http://172.28.28.91:86/api/User/GetAllRequests/${userId}`
+          `http://172.28.28.91:91/api/User/GetAllRequests/${userId}`
         );
         if (!response.ok) {
           throw new Error('Failed to fetch requests');

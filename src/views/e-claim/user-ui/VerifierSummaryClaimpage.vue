@@ -1111,7 +1111,7 @@ export default {
       this.loading = true;
       await axios
         .get(
-          'http://172.28.28.91:86/api/User/GetClaimDetails/' +
+          'http://172.28.28.91:91/api/User/GetClaimDetails/' +
             this.referenceNumber
         )
         .then((response) => {
@@ -1227,7 +1227,7 @@ export default {
       this.claimDatas = [];
       await axios
         .get(
-          'http://172.28.28.91:97/api/User/GetLocalOutstation/' +
+          'http://172.28.28.91:99/api/User/GetLocalOutstation/' +
             this.referenceNumber
         )
         .then((response) => {
@@ -1270,7 +1270,7 @@ export default {
 
       await axios
         .get(
-          'http://172.28.28.91:97/api/User/GetOverseasOutstation/' +
+          'http://172.28.28.91:99/api/User/GetOverseasOutstation/' +
             this.referenceNumber
         )
         .then((response) => {
@@ -1312,7 +1312,7 @@ export default {
 
       await axios
         .get(
-          'http://172.28.28.91:97/api/User/GetRefreshment/' +
+          'http://172.28.28.91:99/api/User/GetRefreshment/' +
             this.referenceNumber
         )
         .then((response) => {
@@ -1347,7 +1347,7 @@ export default {
 
       await axios
         .get(
-          'http://172.28.28.91:86/api/User/GetEntertainment/' +
+          'http://172.28.28.91:91/api/User/GetEntertainment/' +
             this.referenceNumber
         )
         .then((response) => {
@@ -1382,7 +1382,7 @@ export default {
 
       await axios
         .get(
-          'http://172.28.28.91:97/api/User/GetOthers/' + this.referenceNumber
+          'http://172.28.28.91:99/api/User/GetOthers/' + this.referenceNumber
         )
         .then((response) => {
           const result = response.data.result;
@@ -1451,7 +1451,7 @@ export default {
       const username_id = store.getSession().userDetails.userId;
       let userData;
       await axios
-        .get(`http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`)
+        .get(`http://172.28.28.91:99/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           userData = {
             userName: response.data.result[0].name,
@@ -1504,25 +1504,25 @@ export default {
           reference_number: remark.unique_code,
         };
         if (remark.Tab_Title == 'Local Outstation') {
-          axios.post('http://172.28.28.91:97/api/Verifier/VerifierLocal', data);
+          axios.post('http://172.28.28.91:99/api/Verifier/VerifierLocal', data);
         } else if (remark.Tab_Title == 'Overseas Outstation') {
           axios.post(
-            'http://172.28.28.91:97/api/Verifier/VerifierOverseas',
+            'http://172.28.28.91:99/api/Verifier/VerifierOverseas',
             data
           );
         } else if (remark.Tab_Title == 'Staff Refreshment') {
           axios.post(
-            'http://172.28.28.91:97/api/Verifier/VerifierRefreshment',
+            'http://172.28.28.91:99/api/Verifier/VerifierRefreshment',
             data
           );
         } else if (remark.Tab_Title == 'Entertainment') {
           axios.post(
-            'http://172.28.28.91:97/api/Verifier/VerifierEntertainment',
+            'http://172.28.28.91:99/api/Verifier/VerifierEntertainment',
             data
           );
         } else if (remark.Tab_Title == 'Other') {
           axios.post(
-            'http://172.28.28.91:97/api/Verifier/VerifierOthers',
+            'http://172.28.28.91:99/api/Verifier/VerifierOthers',
             data
           );
         }
@@ -1542,7 +1542,7 @@ export default {
         console.log(approveData);
         await axios
           .post(
-            'http://172.28.28.91:97/api/Verifier/VerifierFeedback',
+            'http://172.28.28.91:99/api/Verifier/VerifierFeedback',
             approveData
           )
           .then((response) => {
@@ -1571,7 +1571,7 @@ export default {
         };
         await axios
           .post(
-            'http://172.28.28.91:97/api/Verifier/VerifierFeedback',
+            'http://172.28.28.91:99/api/Verifier/VerifierFeedback',
             approveData
           )
           .then((response) => {
@@ -1596,7 +1596,7 @@ export default {
         };
         await axios
           .post(
-            'http://172.28.28.91:97/api/Verifier/VerifierFeedback',
+            'http://172.28.28.91:99/api/Verifier/VerifierFeedback',
             approveData
           )
           .then((response) => {

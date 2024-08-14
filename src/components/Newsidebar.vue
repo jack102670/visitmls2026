@@ -341,7 +341,7 @@
           <span class="mx-4 font-medium">Verify Claims</span>
         </router-link>
         <router-link
-          v-if="controlView === 'eclaim' && userData.department === 'HR'"
+          v-if="controlView === 'eclaim' && userData.department === 'HR & ADMIN'"
           class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
           :to="{ name: 'AdminHRDashboardpage' }"
         >
@@ -363,7 +363,7 @@
           <span class="mx-4 font-medium">Approve Claims</span>
         </router-link>
         <router-link
-          v-if="controlView === 'eclaim' && userData.department === 'HR'"
+          v-if="controlView === 'eclaim' && userData.department === 'HR & ADMIN'"
           class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
           :to="{ name: 'HrViewemployee' }"
         >
@@ -554,7 +554,7 @@ export default {
   methods: {
     checkuser() {
       const username_id = this.userDetails.userId; // Assuming `store` is accessible through `this.$store`
-      fetch(`http://172.28.28.91:97/api/User/GetEmployeeById/${username_id}`)
+      fetch(`http://172.28.28.91:99/api/User/GetEmployeeById/${username_id}`)
         .then((response) => response.json()) // Convert the response to JSON
         .then((data) => {
           // Assuming the API response structure has a status field in `data.result[0]`

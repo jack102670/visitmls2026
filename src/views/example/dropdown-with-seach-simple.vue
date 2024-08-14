@@ -45,7 +45,7 @@
       },
       async fetchDepartments() {
         try {
-          const response = await axios.get('http://172.28.28.91:97/api/User/GetDepartment');
+          const response = await axios.get('http://172.28.28.91:99/api/User/GetDepartment');
           this.departments = response.data.result;
           console.log(this.departments);
         } catch (error) {
