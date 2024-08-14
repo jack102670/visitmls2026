@@ -110,35 +110,37 @@
                           :class="{
                             'inline-flex items-center px-3 py-1 rounded-full gap-x-2': true,
                             'bg-red-100/60 dark:bg-gray-800':
-                              claim.admin_status.split('.')[0] === 'REJECT',
+                              claim.admin_status.split('.')[0].split(' ')[0] === 'REJECT',
                             'bg-green-100/60 dark:bg-gray-800':
-                              claim.admin_status.split('.')[0] === 'APPROVED',
+                              claim.admin_status.split('.')[0].split(' ')[0] === 'APPROVED',
                             'bg-amber-100/60 dark:bg-gray-800':
-                              claim.admin_status.split('.')[0] === 'VERIFIED', // Added for VERIFIED status
+                              claim.admin_status.split('.')[0].split(' ')[0] === 'VERIFIED', // Added for VERIFIED status
                           }"
                         >
                           <span
                             :class="{
                               'h-1.5 w-1.5 rounded-full': true,
                               'bg-red-500':
-                                claim.admin_status.split('.')[0] === 'REJECT',
+                                claim.admin_status.split('.')[0].split(' ')[0] === 'REJECT',
                               'bg-green-500':
-                                claim.admin_status.split('.')[0] === 'APPROVED',
+                                claim.admin_status.split('.')[0].split(' ')[0] === 'APPROVED',
                               'bg-amber-500':
-                                claim.admin_status.split('.')[0] === 'VERIFIED', // Added for VERIFIED status
+                                claim.admin_status.split('.')[0].split(' ')[0] === 'VERIFIED', // Added for VERIFIED status
                             }"
                           ></span>
                           <span
                             :class="{
                               'text-sm font-normal': true,
                               'text-red-500':
-                                claim.admin_status.split('.')[0] === 'REJECT',
+                                claim.admin_status.split('.')[0].split(' ')[0] === 'REJECT',
                               'text-green-500':
-                                claim.admin_status.split('.')[0] === 'APPROVED',
+                                claim.admin_status.split('.')[0].split(' ')[0] === 'APPROVED',
                               'text-amber-500':
-                                claim.admin_status.split('.')[0] === 'VERIFIED', // Added for VERIFIED status
+                                claim.admin_status.split('.')[0].split(' ')[0] === 'VERIFIED', // Added for VERIFIED status
                             }"
-                            >{{ claim.admin_status.split('.')[0] }}</span
+                            >{{
+                              claim.admin_status.split('.')[0].split(' ')[0]
+                            }}</span
                           >
                         </span>
                       </td>
