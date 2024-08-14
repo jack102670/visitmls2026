@@ -1,9 +1,11 @@
 <!-- Box Info for User View-->
 <template>
-  <main class="flex-1 text overflow-y-auto bg-[#CED1DA] p-4 sm:ml-64">
+  <main
+    class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 p-4 sm:ml-64"
+  >
     <div class="container mx-auto">
       <div
-        class="relative overflow-hidden bg-[#f7fbff] border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
+        class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 dark:text-white border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
         <div class="flex justify-between">
           <div class="flex justify-start flex-col ml-5">
@@ -194,39 +196,55 @@
                             :class="{
                               'inline-flex items-center px-3 py-1 rounded-full gap-x-2': true,
                               'bg-red-100/60 dark:bg-gray-800':
-                                item.admin_status.split('.')[0] === 'REJECT',
+                                item.admin_status
+                                  .split('.')[0]
+                                  .split(' ')[0] === 'REJECT',
                               'bg-green-100/60 dark:bg-gray-800':
-                                item.admin_status.split('.')[0] === 'APPROVED',
+                                item.admin_status
+                                  .split('.')[0]
+                                  .split(' ')[0] === 'APPROVED',
                               'bg-amber-100/60 dark:bg-gray-800':
-                                item.admin_status.split('.')[0] === 'VERIFIED', // Added for VERIFIED status
+                                item.admin_status
+                                  .split('.')[0]
+                                  .split(' ')[0] === 'VERIFIED', // Added for VERIFIED status
                             }"
                           >
                             <span
                               :class="{
                                 'h-1.5 w-1.5 rounded-full': true,
                                 'bg-red-500':
-                                  item.admin_status.split('.')[0] === 'REJECT',
+                                  item.admin_status
+                                    .split('.')[0]
+                                    .split(' ')[0] === 'REJECT',
                                 'bg-green-500':
-                                  item.admin_status.split('.')[0] ===
-                                  'APPROVED',
+                                  item.admin_status
+                                    .split('.')[0]
+                                    .split(' ')[0] === 'APPROVED',
                                 'bg-amber-500':
-                                  item.admin_status.split('.')[0] ===
-                                  'VERIFIED', // Added for VERIFIED status
+                                  item.admin_status
+                                    .split('.')[0]
+                                    .split(' ')[0] === 'VERIFIED', // Added for VERIFIED status
                               }"
                             ></span>
                             <span
                               :class="{
                                 'text-sm font-normal': true,
                                 'text-red-500':
-                                  item.admin_status.split('.')[0] === 'REJECT',
+                                  item.admin_status
+                                    .split('.')[0]
+                                    .split(' ')[0] === 'REJECT',
                                 'text-green-500':
-                                  item.admin_status.split('.')[0] ===
-                                  'APPROVED',
+                                  item.admin_status
+                                    .split('.')[0]
+                                    .split(' ')[0] === 'APPROVED',
                                 'text-amber-500':
-                                  item.admin_status.split('.')[0] ===
-                                  'VERIFIED', // Added for VERIFIED status
+                                  item.admin_status
+                                    .split('.')[0]
+                                    .split(' ')[0] === 'VERIFIED', // Added for VERIFIED status
                               }"
-                              >{{ item.admin_status.split('.')[0] }}</span
+                              >{{
+                                item.admin_status.split('.')[0].split(' ')[0]
+                              }}</span
                             >
                           </span>
                         </td>
