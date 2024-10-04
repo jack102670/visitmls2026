@@ -52,6 +52,13 @@ import checkerClaimpage from '../views/e-claim/checkerClaimpage.vue';
 import NotFound from '../views/pagenotfound.vue';
 import AdminHODpage from '@/components/e-claim/AdminHODpage.vue';
 import AdminHODClaimpage from '@/components/e-claim/AdminHODClaimpage.vue';
+
+// e-forms
+
+import EformDashboard from "../views/e-forms/Edashboard/EformDashboard.vue"
+
+
+
 const routes = [
   {
     path: '/VerifierClaimpage/:rn',
@@ -454,6 +461,14 @@ const routes = [
     name: 'NotFound',
     component: NotFound,
   },
+
+  // e-forms section
+  {
+    path: '/e-dashboard',
+    name: 'e-dashboard',
+    component: EformDashboard,
+  }
+
 ];
 
 const router = createRouter({

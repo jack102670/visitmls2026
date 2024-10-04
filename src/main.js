@@ -6,8 +6,10 @@ import axios from 'axios'; // Import Axios
 import './input.css';
 import router from './router';
 
+import { FontAwesomeIcon } from '../src/icons/fontawesome';
+
 // Create the Vue app instance
-const app = createApp(App);
+const app = createApp(App).component('font-awesome-icon', FontAwesomeIcon);
 
 // Make Axios available globally in the Vue app
 app.config.globalProperties.$axios = axios;
