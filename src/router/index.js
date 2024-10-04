@@ -466,7 +466,12 @@ const routes = [
   {
     path: '/e-dashboard',
     name: 'e-dashboard',
-    component: EFormDashboard,
+    components: {
+      default: EFormDashboard,
+
+    },
+    props: true,
+
   }
 
 ];

@@ -494,13 +494,25 @@
       </nav>
     </div>
   </aside>
+
+  <!-- <div v-if="controlView === 'eform'">
+    <EformSidbarFComponent  />
+  </div> -->
+
+
+
+
+
 </template>
 
 <script>
 import { store } from '../views/store.js';
+// import EformSidbarFComponent from "../components/E-form-component/eNavbar/EFormNavbar.vue"
 
 export default {
   name: 'NewsidebarComponent',
+
+
   data() {
     return {
       open: localStorage.getItem('openOrNot') == 'false' ? false : true,

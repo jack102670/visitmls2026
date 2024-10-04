@@ -1,25 +1,44 @@
 <template>
+
   <div id="app">
-    <router-view name="Sidebar" />
+
+
+    <div >
+      <router-view name=" Sidebar" />
     <!-- <Content/> -->
+  </div>
+  <div>
     <RouterView />
+  </div>
+
   </div>
 </template>
 
 <script>
-import { RouterView } from 'vue-router';
+  // import EformNavbarnew from "./components/E-form-component/eNavbar/EFormNavbar.vue";
+  import {store} from "./views/store.js";
+  import {
+    RouterView
+  } from 'vue-router';
+  export default {
+    name: 'App',
+    components: {
+      RouterView,
+      // EformNavbarnew
+    },
 
-
-// import Content from './components/content.vue';
-
-
-
-
-export default {
-  name: 'App',
-  components: { RouterView }
-};
-
+    data() {
+      return {
+        controlView: store.getControlView(),
+      };
+    },
+  mounted() {
+    this.$watch(
+      () => store.getControlView(),
+      (newVal) => {
+        this.controlView = newVal;
+      }
+    );
+  },
+  };
 </script>
-
-

@@ -5,6 +5,9 @@ import axios from 'axios'; // Import Axios
 // import './output.css';
 import './input.css';
 import router from './router';
+import 'flowbite/dist/flowbite.min.css';
+import 'flowbite';
+
 
 import { FontAwesomeIcon } from '../src/icons/fontawesome';
 

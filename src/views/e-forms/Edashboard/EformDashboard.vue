@@ -1,26 +1,42 @@
 <template>
-            <Header />
-    <section>
-        <container>
-            <div>
-            <h1>Dashboard</h1>
+    <section class="flex">
+        <div class="w-full">
+            <div class="grid grid-cols-12 pt-4 px-4 gap-2">
+                <!-- First div (takes up 6 columns) -->
+                <div class="col-span-6 text-center bg-white rounded-md">
+                    test test1
+                </div>
+
+                <!-- Second div (takes up 6 columns) -->
+                <div class="col-span-6 text-center bg-white rounded-md">
+                    test test2
+                </div>
+            </div>
+            <div class="grid grid-cols-12 px-4 pt-2 gap-2">
+                <div class="col-span-12 text-center bg-white h-screen rounded-md p-4">
+                    <TableRequest />
+
+
+                </div>
+
+            </div>
         </div>
-        </container>
     </section>
 </template>
+
 <script>
-
-import Header from "../../../components/E-form-component/eNavbar/EFormNavbar.vue"
-
+import TableRequest from "../../../components/E-form-component/DashboardTable/EFormTable.vue"
 export default {
 
     components: {
-        Header,
+        TableRequest,
     },
+
+
 
     data() {
         return {
-
+            loading: false,
         }
     }
 }

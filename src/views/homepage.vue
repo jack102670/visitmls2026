@@ -131,7 +131,9 @@ export default {
 }
 ,
     handleCardClick(card, event) {
-  event.preventDefault(); // Prevent the default action of the link
+  event.preventDefault();
+  
+
 
   if (card.title === "E-claim System") {
     this.checkUserStatusAndShowModal()
@@ -147,7 +149,14 @@ export default {
       .catch((error) => {
         alert("There was an error checking your user status. Please try again later.");
       });
-  } else {
+  } 
+  // else if (card.title === "Others") {
+
+  //   store.setControlView('eform'); 
+  //   this.$router.push(card.link);
+
+  // }
+   else {
     window.location.href = card.link;
   }
 }
