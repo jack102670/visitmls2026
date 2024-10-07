@@ -3,7 +3,7 @@
         <div class="w-full h-full flex">
       <EFormSidebar :dataOpenSideBar="openSidebar" />
       <div class="w-full h-full flex-grow">
-        <headerTop :dataOpenSideBar="openSidebar" :clickHambuger="toggleSidebar" />
+        <EFormTopbar :dataOpenSideBar="openSidebar" :clickHambuger="toggleSidebar" />
         <div class="">
           <router-view></router-view>
         </div>
@@ -14,12 +14,14 @@
   </template>
   
   <script>
-  import headerTop from './EformTopbar.vue'
+  import EFormTopbar from './EFormTopbar.vue'
   import EFormSidebar from "./EFormSidebar.vue";
   
   
   export default {
-    components: { headerTop, EFormSidebar },
+    components: { EFormTopbar, EFormSidebar },
+
+
     data() {
       return {
         openSidebar: true
