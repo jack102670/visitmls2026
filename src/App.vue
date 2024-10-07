@@ -1,22 +1,22 @@
 <template>
-
+  <!-- <ESidebar /> -->
   <div id="app">
-
-
-    <div >
-      <router-view name=" Sidebar" />
-    <!-- <Content/> -->
-  </div>
-  <div>
-    <RouterView />
+    <div>
+      <!-- <router-view name=" Sidebar" /> -->
+    </div>
+    <div>
+      <RouterView />
+    </div>
   </div>
 
-  </div>
 </template>
 
 <script>
   // import EformNavbarnew from "./components/E-form-component/eNavbar/EFormNavbar.vue";
-  import {store} from "./views/store.js";
+  // import ESidebar from "./components/EFormComponent/eNavbar/EFormNavbar.vue"
+  import {
+    store
+  } from "./views/store.js";
   import {
     RouterView
   } from 'vue-router';
@@ -24,21 +24,20 @@
     name: 'App',
     components: {
       RouterView,
-      // EformNavbarnew
+      // ESidebar
     },
-
     data() {
       return {
         controlView: store.getControlView(),
       };
     },
-  mounted() {
-    this.$watch(
-      () => store.getControlView(),
-      (newVal) => {
-        this.controlView = newVal;
-      }
-    );
-  },
+    mounted() {
+      this.$watch(
+        () => store.getControlView(),
+        (newVal) => {
+          this.controlView = newVal;
+        }
+      );
+    },
   };
 </script>

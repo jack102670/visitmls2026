@@ -1,27 +1,24 @@
 <template>
-  <aside>
-        <div class="w-full h-full flex">
-      <EFormSidebar :dataOpenSideBar="openSidebar" />
-      <div class="w-full h-full flex-grow">
-        <EFormTopbar :dataOpenSideBar="openSidebar" :clickHambuger="toggleSidebar" />
-        <div class="">
-          <router-view></router-view>
-        </div>
+  <div class="w-full h-full flex">
+    <EFormSidebar :dataOpenSideBar="openSidebar" />
+    <div class="w-full h-full flex-grow">
+      <EFormTopbar :dataOpenSideBar="openSidebar" :clickHambuger="toggleSidebar" />
+      <div class="">
+        <router-view></router-view>
       </div>
     </div>
-  </aside>
+  </div>
 
-  </template>
-  
-  <script>
+</template>
+
+<script>
   import EFormTopbar from './EFormTopbar.vue'
   import EFormSidebar from "./EFormSidebar.vue";
-  
-  
   export default {
-    components: { EFormTopbar, EFormSidebar },
-
-
+    components: {
+      EFormTopbar,
+      EFormSidebar
+    },
     data() {
       return {
         openSidebar: true
@@ -32,8 +29,7 @@
         this.openSidebar = !this.openSidebar
       }
     }
-  
   }
-  </script>
-  
-  <style></style>
+</script>
+
+<style></style>

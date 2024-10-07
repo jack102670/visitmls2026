@@ -56,7 +56,7 @@ import AdminHODClaimpage from '@/components/e-claim/AdminHODClaimpage.vue';
 // e-forms
 
 import EFormDashboard from "../views/e-forms/EDashboard/EFormDashboard.vue"
-// import EFormNavbar from "../components/EFormComponent/eNavbar/EFormNavbar.vue"
+import EFormNavbar from "../components/EFormComponent/eNavbar/EFormNavbar.vue"
 
 
 
@@ -467,11 +467,13 @@ const routes = [
   {
     path: '/e-dashboard',
     name: 'e-dashboard',
-    components: {
-      default: EFormDashboard,
-      // Sidebar: EFormNavbar,
-
-    },
+    component: EFormNavbar,
+    children : [
+      {
+        path: '',
+        component: EFormDashboard
+      }
+    ],
     props: true,
 
   }
