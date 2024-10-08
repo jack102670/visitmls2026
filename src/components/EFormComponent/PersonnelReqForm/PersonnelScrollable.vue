@@ -22,7 +22,7 @@
 </ul>
 
 <!-- render component kat sini -->
-<component :is="currentComponent"></component>
+<component :is="currentComponent" @change-section="changeSection"></component>
 </div>
 
 </template>

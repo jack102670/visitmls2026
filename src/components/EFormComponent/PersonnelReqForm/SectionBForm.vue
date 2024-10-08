@@ -143,7 +143,9 @@
         </div>
         <div class="grid grid-cols-8 space-x-2 mt-4">
             <div class="col-span-8 flex justify-end">
-                <button class="bg-transparent text-pending px-10 py-2 rounded-md border-[2px] border-pending mr-4">
+                <button
+                @click="backToPrevious"
+                class="bg-transparent text-pending px-10 py-2 rounded-md border-[2px] border-pending mr-4">
                     Back
                 </button>
                 <button class="bg-primary text-white px-10 py-2 rounded-md">
@@ -154,4 +156,12 @@
     </div>
 </template>
 <script>
+
+export default {
+        methods: {
+            backToPrevious() {
+                this.$emit('change-section', 'A');
+            }
+        }
+    }
 </script>

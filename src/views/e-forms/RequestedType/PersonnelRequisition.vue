@@ -11,12 +11,8 @@
           <breadcrumbs :breadcrumbs="breadcrumbs" />
         </div>
         <div class="space-y-2">
-
-          <div class="space-y-4 border-[1px] rounded-md p-2">
-            test test test
-          </div>
+          <UserProfileData />
           <div class="">
-
             <form class="">
               <PersonnelScrollable />
             </form>
@@ -29,10 +25,12 @@
 <script>
   import breadcrumbs from '../../../components/EFormComponent/OtherComponent/BreadCumbs.vue'
   import PersonnelScrollable from '@/components/EFormComponent/PersonnelReqForm/PersonnelScrollable.vue';
+  import UserProfileData from "../../../components/EFormComponent/PersonnelReqForm/UserData.vue"
   export default {
     components: {
       breadcrumbs,
-      PersonnelScrollable
+      PersonnelScrollable,
+      UserProfileData
     },
     data() {
       return {

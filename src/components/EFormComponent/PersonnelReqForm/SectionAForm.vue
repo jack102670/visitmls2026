@@ -41,7 +41,7 @@
                     </div>
                     <input id="datepicker-autohide" datepicker datepicker-autohide type="text"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Select date">
+                        placeholder="Select date" required>
                 </div>
 
             </div>
@@ -52,7 +52,7 @@
             <div class="col-span-3">
                 <input type="text" id="department"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Company Name" required />
+                    placeholder="Department name" required />
             </div>
         </div>
         <div class="grid grid-cols-8 gap-2">
@@ -62,9 +62,9 @@
                     Required: <span class="text-red-500">*</span></label>
             </div>
             <div class="col-span-3">
-                <input type="text" id="noofpersonnel"
+                <input type="number" id="noofpersonnel"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Date required" required />
+                    placeholder="No of personnel required" required />
             </div>
             <div class="col-span-1">
                 <label for="location" class="block mb-2 text-sm font-medium text-primary dark:text-white">Location:
@@ -73,7 +73,7 @@
             <div class="col-span-3">
                 <input type="text" id="location"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Department" required />
+                    placeholder="Location" required />
             </div>
         </div>
         <div class="grid grid-cols-8 gap-2">
@@ -85,7 +85,7 @@
             <div class="col-span-3">
                 <input type="text" id="basicSalary"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Date required" required />
+                    placeholder="Basic salary" required />
             </div>
         </div>
         <hr class="w-full border-b border-b-[1px]" />
@@ -96,17 +96,19 @@
             </div>
             <div class="col-span-3">
                 <div class="flex space-x-4 items-center mb-4">
-                    <input id="default-checkbox" type="checkbox" value=""
+                    <input id="new-recruitment" type="radio" name="requisition" value="new-recruitment"
                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="default-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">New
+                    <label for="new-recruitment" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">New
                         Recruitment</label>
-                    <input id="default-checkbox" type="checkbox" value=""
+
+                    <input id="temporary" type="radio" name="requisition" value="temporary"
                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="default-checkbox"
+                    <label for="temporary"
                         class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Temporary</label>
-                    <input id="default-checkbox" type="checkbox" value=""
+
+                    <input id="replacement" type="radio" name="requisition" value="replacement"
                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="default-checkbox"
+                    <label for="replacement"
                         class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Replacement</label>
                 </div>
             </div>
@@ -116,13 +118,14 @@
             </div>
             <div class="col-span-3">
                 <div class="flex space-x-4 items-center mb-4">
-                    <input id="default-checkbox" type="checkbox" value=""
+                    <input id="budgeted" type="radio" name="budget" value="budgeted"
                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="default-checkbox"
+                    <label for="budgeted"
                         class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Budgeted</label>
-                    <input id="default-checkbox" type="checkbox" value=""
+
+                    <input id="unbudgeted" type="radio" name="budget" value="unbudgeted"
                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="default-checkbox"
+                    <label for="unbudgeted"
                         class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">UnBudgeted</label>
                 </div>
             </div>
@@ -150,9 +153,9 @@
         </div>
         <div class="grid grid-cols-8 gap-2 mt-4">
             <div class="col-span-1">
-                <label for="position" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">Kindly
-                    Attach Job
-                    Description and : </label>
+                <label for="position" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
+                    Kindly Attach Job Description & Organization Chart:
+                </label>
             </div>
             <div class="col-span-7">
                 <div class="flex items-center justify-center w-full">
@@ -166,20 +169,20 @@
                                     d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                             </svg>
                             <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click
-                                    to
-                                    upload</span> or drag and drop</p>
+                                    to upload</span> or drag and drop</p>
                         </div>
-                        <input id="dropzone-file" type="file" class="hidden" />
+                        <input id="dropzone-file" type="file" @change="handleFileUpload" class="hidden"
+                            accept=".doc,.docx,.pdf,.png,.jpg,.jpeg,.gif" />
                     </label>
                 </div>
                 <div class="text-right py-1">
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Attachement(s) WORDS, PDF, SVG, PNG, JPG or GIF
-                        (MAX.
-                        800x400px)</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Attachment(s): WORDS, PDF, SVG, PNG, or JPG
+                        (MAX. 800x400px)</p>
+                    <p v-if="fileName" class="text-sm font-medium text-gray-800 dark:text-gray-300">
+                        Uploaded File: {{ fileName }}
+                    </p>
                 </div>
-
             </div>
-
         </div>
         <hr class="w-full border-b border-b-[1px]" />
         <div class="grid grid-cols-8 gap-2 mt-4">
@@ -196,9 +199,8 @@
         </div>
         <div class="grid grid-cols-8 space-x-2 mt-4">
             <div class="col-span-8 flex justify-end">
-                <button
-                @click.prevent="backToDashboard"
-                class="bg-transparent text-rejected px-10 py-2 rounded-md border-[2px] border-rejected mr-4">
+                <button @click.prevent="confirmExit"
+                    class="bg-transparent text-rejected px-10 py-2 rounded-md border-[2px] border-rejected mr-4">
                     Exit
                 </button>
                 <button class="bg-primary text-white px-10 py-2 rounded-md">
@@ -209,12 +211,37 @@
     </div>
 </template>
 <script>
+    import Swal from 'sweetalert2';
+    export default {
+        data() {
+            return {
+                fileName: '',
+            }
+        },
+        methods: {
+            confirmExit() {
+                Swal.fire({
+                    title: 'Are you sure you want to exit?',
+                    text: 'Any unsaved changes will be lost!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, exit',
+                    cancelButtonText: 'No, stay'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.$router.push('/e-dashboard');
+                    }
+                });
 
-export default {
-    methods: {
-        backToDashboard() {
-            this.$router.push({ name: 'e-dashboard' })
+            },
+            handleFileUpload(event) {
+                    const file = event.target.files[0].name;
+                    if (file) {
+                        this.fileName = file.name;
+                    }
+                },
         }
     }
-}
 </script>

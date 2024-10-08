@@ -50,7 +50,7 @@
                 <button
                 @click="backToPrevious"
                  class="bg-transparent text-pending px-10 py-2 rounded-md border-[2px] border-pending mr-4">
-                    Exit
+                    Back
                 </button>
                 <button class="bg-primary text-white px-10 py-2 rounded-md">
                     Next
@@ -64,7 +64,7 @@
     export default {
         methods: {
             backToPrevious() {
-                this.$router.go(-1)
+                this.$emit('change-section', 'B');
             }
         }
     }
