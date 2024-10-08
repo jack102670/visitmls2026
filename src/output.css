@@ -1189,6 +1189,10 @@ video {
   min-height: 100px;
 }
 
+.min-h-\[76vh\] {
+  min-height: 76vh;
+}
+
 .min-h-screen {
   min-height: 100vh;
 }

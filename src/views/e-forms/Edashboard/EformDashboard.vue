@@ -12,7 +12,9 @@
                   <p class="text-sm text-primary font-semibold">Other employee E-Forms</p>
                 </div>
   
-                <button class="bg-primary text-white font-bold p-3 border-[2px] rounded-md hover:bg-transparent hover:border-primary hover:text-primary hover:border-[2px]">
+                <button 
+                @click="showModal = true"
+                class="bg-primary text-white font-bold p-3 border-[2px] rounded-md hover:bg-transparent hover:border-primary hover:text-primary hover:border-[2px]">
                   <font-awesome-icon :icon="['fas', 'plus']" />
                   <span> New Request</span>
                 </button>
@@ -51,19 +53,23 @@
           </div>
         </div>
       </section>
+      <NewReqModal v-if="showModal" @close="showModal = false" />
     </div>
   </template>
   
   <script>
-  import TableRequest from "../../../components/EFormComponent/DashboardTable/EFormTable.vue";
+  import TableRequest from "../../../components/EFormComponent/DashboardComponent/EFormTable.vue";
+  import NewReqModal from "../../../components/EFormComponent/DashboardComponent/NewReqModal.vue"
   
   export default {
     components: {
       TableRequest,
+      NewReqModal,
     },
     data() {
       return {
         loading: false,
+        showModal: false
       };
     },
   };

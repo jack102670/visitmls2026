@@ -4,7 +4,7 @@
     <div class="w-full h-full flex-grow">
       <EFormTopbar :dataOpenSideBar="openSidebar" :clickHambuger="toggleSidebar" />
       <div class="">
-        <router-view></router-view>
+        <router-view :key="$route.fullPath" ></router-view>
       </div>
     </div>
   </div>

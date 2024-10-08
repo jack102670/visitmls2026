@@ -5,23 +5,12 @@
         v-show="dataOpenSideBar">Dashboard</div>
       <!-- <img src="https://pagedone.io/asset/uploads/1701235464.png" v-show="!dataOpenSideBar" class="p-1 w-8 h-8 rounded-full ring-2 ring-gray-100 dark:ring-gray-500 " alt="Avatar" /> -->
     </div>
-    <div class="flex flex-col justify-between h-[calc(100vh-3rem)] bg-primary ">
+    <div class="flex flex-col justify-between min-h-full bg-primary ">
       <div :class="dataOpenSideBar ? 'py-4 px-4 pt-8' : ' '" class="">
-        <!-- <div class="w-full " v-if="dataOpenSideBar">
-          <div class="w-full items-center flex">
-            <div class="w-full justify-between items-center inline-flex">
-              <div class="items-center flex">
-                <div class="flex-col inline-flex">
-                  <img :src="PKTLogoWhite" class="w-auto h-auto rounded-md ring-2 ring-gray-100" alt="Avatar" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
 
         <div :class="dataOpenSideBar ? 'py-3 px-2' : 'py-3 justify-center items-center text-center'"
           class="rounded-sm cursor-pointer text-white hover:text-dark">
-          <router-link to="/dashboard" class="px-2 flex justify-between items-center">
+          <router-link to="/firsttimelogin" class="px-2 flex justify-between items-center">
             <div :class="dataOpenSideBar ? 'flex space-x-2 items-center' : 'flex justify-center items-center w-full'">
               <font-awesome-icon :icon="['fas', 'user']" v-tooltip.right="'Dashboard'"
                 :style="{ color: '#ffffff', fontSize: '22px' }" />
@@ -34,7 +23,7 @@
 
         <div :class="dataOpenSideBar ? 'py-3 px-2' : 'py-3 justify-center items-center text-center'"
           class="rounded-md cursor-pointer text-white hover:text-dark">
-          <router-link to="/custorder" class="px-2 flex justify-between items-center">
+          <router-link to="/e-dashboard" class="px-2 flex justify-between items-center">
             <div
               :class="dataOpenSideBar ? 'flex space-x-2 justify-between items-center' : 'flex justify-center items-center w-full'">
                <font-awesome-icon :icon="['fas', 'grip-horizontal']" v-tooltip.right="'Dashboard'"

@@ -57,6 +57,13 @@ import AdminHODClaimpage from '@/components/e-claim/AdminHODClaimpage.vue';
 
 import EFormDashboard from "../views/e-forms/EDashboard/EFormDashboard.vue"
 import EFormNavbar from "../components/EFormComponent/eNavbar/EFormNavbar.vue"
+import PersonnelRequisition from "../views/e-forms/RequestedType/PersonnelRequisition.vue"
+import OnJobTraining from "../views/e-forms/RequestedType/OnJobTraining.vue"
+import EmployeeTransfer from "../views/e-forms/RequestedType/EmployeeTransfer.vue"
+import JobDescription from "../views/e-forms/RequestedType/JobDescription.vue"
+import OrientationChecklist from "../views/e-forms/RequestedType/OrientationChecklist.vue"
+import TrainingEvaluation from "../views/e-forms/RequestedType/TrainingEvaluation.vue"
+
 
 
 
@@ -462,7 +469,6 @@ const routes = [
     name: 'NotFound',
     component: NotFound,
   },
-
   // e-forms section
   {
     path: '/e-dashboard',
@@ -476,7 +482,86 @@ const routes = [
     ],
     props: true,
 
+  },
+  {
+    path: '/personnel-requisition',
+    name: 'personnel-requisition',
+    component: EFormNavbar,
+    children : [
+      {
+        path: '',
+        component: PersonnelRequisition
+      }
+    ],
+    props: true,
+
+  },
+  {
+    path: '/on-job-training',
+    name: 'on-job-training',
+    component: EFormNavbar,
+    children : [
+      {
+        path: '',
+        component: OnJobTraining
+      }
+    ],
+    props: true,
+
+  },
+  {
+    path: '/employee-transfer',
+    name: 'emolpyee-transfer',
+    component: EFormNavbar,
+    children : [
+      {
+        path: '',
+        component: EmployeeTransfer
+      }
+    ],
+    props: true,
+
+  },
+  {
+    path: '/job-description',
+    name: 'job-description',
+    component: EFormNavbar,
+    children : [
+      {
+        path: '',
+        component: JobDescription
+      }
+    ],
+    props: true,
+
+  },
+  {
+    path: '/orientation-checklist',
+    name: 'orientation-checklist',
+    component: EFormNavbar,
+    children : [
+      {
+        path: '',
+        component: OrientationChecklist
+      }
+    ],
+    props: true,
+
+  },
+  {
+    path: '/training-evaluation',
+    name: 'training-evaluation',
+    component: EFormNavbar,
+    children : [
+      {
+        path: '',
+        component: TrainingEvaluation
+      }
+    ],
+    props: true,
+
   }
+
 
 ];
 
