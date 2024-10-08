@@ -26,13 +26,43 @@
           <router-link to="/e-dashboard" class="px-2 flex justify-between items-center">
             <div
               :class="dataOpenSideBar ? 'flex space-x-2 justify-between items-center' : 'flex justify-center items-center w-full'">
-               <font-awesome-icon :icon="['fas', 'grip-horizontal']" v-tooltip.right="'Dashboard'"
+              <font-awesome-icon :icon="['fas', 'grip-horizontal']" v-tooltip.right="'Dashboard'"
                 :style="{ color: '#ffffff', fontSize: '20px' }" />
               <span v-show="dataOpenSideBar">Dashboard</span>
             </div>
             <font-awesome-icon v-show="dataOpenSideBar" :icon="['fas', 'angle-right']"
               :style="{ color: '#ffffff', fontSize: '20px' }" />
           </router-link>
+        </div>
+
+        <div :class="[
+          dataOpenSideBar ? 'py-3 px-2' : 'py-3 justify-center items-center text-center',
+          dropdownOpen ? 'bg-[#2d2169] border-2 border-white' : '',
+        ]" class="rounded-md cursor-pointer text-white hover:text-dark">
+          <div class="px-2 flex justify-between items-center" @click="toggleRequestDropdown">
+            <div
+              :class="dataOpenSideBar ? 'flex space-x-2 justify-between items-center' : 'flex justify-center items-center w-full'">
+              <font-awesome-icon :icon="['fas', 'grip-horizontal']" v-tooltip.right="'Request Form'"
+                :style="{ color: '#ffffff', fontSize: '20px' }" />
+              <span v-show="dataOpenSideBar">Request Form</span>
+            </div>
+            <font-awesome-icon v-show="dataOpenSideBar"
+              :icon="dropdownOpen ? ['fas', 'chevron-down'] : ['fas', 'angle-right']"
+              :style="{ color: '#ffffff', fontSize: '20px' }" />
+          </div>
+          <transition>
+            <div v-show="dropdownOpen" class="pl-6 mt-2 text-white">
+              <div @click="navigateTo('/personnel-requisition')" class="block py-1 hover:text-dark">Personnel Requisiton
+              </div>
+              <div @click="navigateTo('/employee-transfer')" class="block py-1 hover:text-dark">Employee Transfer</div>
+              <div @click="navigateTo('/on-job-training')" class="block py-1 hover:text-dark">On Job Training</div>
+              <div @click="navigateTo('/training-evaluation')" class="block py-1 hover:text-dark">Training Evaluation
+              </div>
+              <div @click="navigateTo('/orientation-checklist')" class="block py-1 hover:text-dark">Orientation
+                Checklist</div>
+              <div @click="navigateTo('/job-description')" class="block py-1 hover:text-dark">Job Description</div>
+            </div>
+          </transition>
         </div>
 
         <div :class="dataOpenSideBar ? 'py-3 px-2' : 'py-3 justify-center items-center text-center'"
@@ -48,11 +78,6 @@
           </a>
         </div>
       </div>
-
-
-      <!-- <div class="menu-man text-left px-2 whitespace-nowrap ">
-    
-          </div> -->
       <div class="menu-man text-left px-2 justify-self-end whitespace-nowrap">
 
       </div>
@@ -62,40 +87,31 @@
 </template>
 
 <script>
-//   import { library } from '@fortawesome/fontawesome-svg-core';
-import Swal from 'sweetalert2';
-//   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-//   import { faShoppingCart, faSignOutAlt, faChartLine } from '@fortawesome/free-solid-svg-icons';
-
-//   library.add( faShoppingCart, faSignOutAlt, faChartLine);
 import PKTLogoWhite from "../../../assets/images/pkt-logo-white.jpg";
-
 export default {
-
-  components: {
-    //   FontAwesomeIcon, 
-  },
+  components: {},
   data() {
     return {
       PKTLogoWhite: PKTLogoWhite,
-      // email: '',
-      // isLoggedIn: false,
-      // isAdminLoggedIn: false,
+      dropdownOpen: false,
     }
-
   },
   props: {
     dataOpenSideBar: Boolean,
   },
-
   methods: {
-
+    toggleRequestDropdown() {
+      this.dropdownOpen = !this.dropdownOpen;
+    },
+    navigateTo(route) {
+      this.dropdownOpen = false;
+      this.$router.push(route);
+    },
   }
-
 }
 </script>
 
-<style>
+<style scoped>
 .p-tooltip-text {
   font-size: 10px !important;
 }
@@ -106,10 +122,31 @@ export default {
 }
 
 .side-bar-visible {
-  width: 310px !important;
+  width: 360px !important;
 }
 
 .side-bar-close {
   width: 50px !important;
+}
+
+/* Add the transition animations */
+.dropdown-enter-active,
+.dropdown-leave-active {
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.dropdown-enter,
+.dropdown-leave-to
+
+/* .dropdown-leave-active in <2.1.8 */
+  {
+  max-height: 0;
+  opacity: 0;
+}
+
+.dropdown-enter-to {
+  max-height: 500px;
+  /* Adjust according to the content size */
+  opacity: 1;
 }
 </style>

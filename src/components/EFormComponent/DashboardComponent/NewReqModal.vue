@@ -36,6 +36,7 @@
                                 <option value="on-job-training">On Job Training</option>
                                 <option value="training-evaluation">Training Evaluation</option>
                                 <option value="orientation-checklist">Orientation Checklist</option>
+                                <option value="job-description">Job Description</option>
                             </select>
                         </div>
                     </div>
@@ -76,7 +77,10 @@
                     this.$router.push('/training-evaluation');
                 } else if (this.selectedRequestType === 'orientation-checklist'){
                     this.$router.push('/orientation-checklist');
+                }else if (this.selectedRequestType === 'job-description'){
+                    this.$router.push('/job-description');
                 }
+                
             }
         }
     };
