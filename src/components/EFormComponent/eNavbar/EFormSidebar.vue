@@ -5,7 +5,7 @@
         v-show="dataOpenSideBar">Dashboard</div>
       <!-- <img src="https://pagedone.io/asset/uploads/1701235464.png" v-show="!dataOpenSideBar" class="p-1 w-8 h-8 rounded-full ring-2 ring-gray-100 dark:ring-gray-500 " alt="Avatar" /> -->
     </div>
-    <div class="flex flex-col justify-between min-h-full bg-primary ">
+    <div class="flex flex-col justify-between h-screen bg-primary ">
       <div :class="dataOpenSideBar ? 'py-4 px-4 pt-8' : ' '" class="">
 
         <div :class="dataOpenSideBar ? 'py-3 px-2' : 'py-3 justify-center items-center text-center'"

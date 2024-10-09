@@ -59,7 +59,7 @@
                                         d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                 </svg>
                             </div>
-                            <input ref="datepickerStart" type="text"
+                            <input ref="Start" type="text"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Select date start" />
                         </div>
@@ -72,7 +72,7 @@
                                         d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                 </svg>
                             </div>
-                            <input ref="datepickerEnd" type="text"
+                            <input ref="End" type="text"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Select date end" />
                         </div>
@@ -87,7 +87,7 @@
                 <div class="col-span-3">
                     <textarea type="text" id="position"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Input Name" required ></textarea>
+                        placeholder="Describe On Job training" required ></textarea>
                 </div>
                 <div class="col-span-4 flex space-x-6">
                     <div class="col-span-1">
@@ -135,6 +135,12 @@ import "flatpickr/dist/flatpickr.css";
                 dateFormat: "Y-m-d",
             });
             flatpickr(this.$refs.datepickerEnd, {
+                dateFormat: "Y-m-d",
+            });
+            flatpickr(this.$refs.Start, {
+                dateFormat: "Y-m-d",
+            });
+            flatpickr(this.$refs.End, {
                 dateFormat: "Y-m-d",
             });
         },
