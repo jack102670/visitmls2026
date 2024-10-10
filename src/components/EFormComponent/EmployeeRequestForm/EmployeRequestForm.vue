@@ -45,7 +45,7 @@
         <div class="grid grid-cols-8 gap-2">
             <div class="col-span-1">
                 <label for="personnel" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
-                    Highest Qualification</label>
+                    Highest Qualification: <span class="text-red-500">*</span></label>
             </div>
             <div class="col-span-3">
                 <input id="highest_qualification" rows="4"

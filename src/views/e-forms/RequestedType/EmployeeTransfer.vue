@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-8 px-4 pb-4 pt-2 gap-2">
+  <div class="grid grid-cols-8 px-4 pb-4 py-4 gap-2">
     <div class="col-span-8 bg-white min-h-[76vh] rounded-md p-4">
       <div>
         <h1 class="font-bold text-2xl text-primary"> Employee Transfer Form</h1>
@@ -17,7 +17,7 @@
 </template>
 <script>
 import breadcrumbs from '../../../components/EFormComponent/OtherComponent/BreadCumbs.vue'
-import UserProfileData from "../../../components/EFormComponent/PersonnelReqForm/UserData.vue"
+import UserProfileData from "../../../components/EFormComponent/OtherComponent/UserData.vue"
 import EmployeeTransferForm from "../../../components/EFormComponent/EmployeeRequestForm/EmployeRequestForm.vue"
 
 export default {

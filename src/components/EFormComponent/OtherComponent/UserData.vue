@@ -1,23 +1,42 @@
-<template>
-    <div class="space-y-4 border-[1px] rounded-md py-4 px-6">
-        <h1 class="font-bold text-md text-primary">Employee Details </h1>
-        <div class="grid grid-cols-8 gap-2">
 
+<template>
+    <div class="space-y-4 border-[1px] rounded-md py-4 px-4">
+        <h1 class="font-bold text-md text-primary">Employee Details</h1>
+
+        <!-- Grid for desktop mode -->
+        <div class="hidden sm:grid sm:grid-cols-8 gap-2">
             <div class="col-span-1">
-                <label for="position" class="block text-sm font-medium text-primary dark:text-white">Name:</label>
+                <label class="block text-sm font-medium text-primary dark:text-white">Name:</label>
             </div>
             <div class="col-span-3">
-                <label for="position" class="block text-sm font-medium text-primary dark:text-white">{{ user.name }}</label>
+                <label class="block text-sm font-medium text-primary dark:text-white">{{ user.name }}</label>
             </div>
             <div class="col-span-1">
-                <label for="position" class="block text-sm font-medium text-primary dark:text-white">Email address:</label>
+                <label class="block text-sm font-medium text-primary dark:text-white">Email address:</label>
             </div>
             <div class="col-span-3">
-                <label for="position" class="block text-sm font-medium text-primary dark:text-white">{{ user.email_address }}</label>
+                <label class="block text-sm font-medium text-primary dark:text-white">{{ user.email_address }}</label>
             </div>
         </div>
-        <div class="grid grid-cols-8 gap-2">
 
+        <!-- Stack layout for mobile mode -->
+        <div class="block sm:hidden grid grid-cols-1 gap-2">
+            <div class="col-span-1">
+                <label class="block text-xs font-medium text-primary dark:text-white">Name:</label>
+            </div>
+            <div class="col-span-1">
+                <label class="block text-xs font-medium text-primary dark:text-white">{{ user.name }}</label>
+            </div>
+            <div class="col-span-1">
+                <label class="block text-xs font-medium text-primary dark:text-white">Email address:</label>
+            </div>
+            <div class="col-span-1">
+                <label class="block text-xs font-medium text-primary dark:text-white">{{ user.email_address }}</label>
+            </div>
+        </div>
+
+        <!-- Grid for desktop mode -->
+        <div class="hidden sm:grid sm:grid-cols-8 gap-2">
             <div class="col-span-1">
                 <label for="position" class="block text-sm font-medium text-primary dark:text-white">Department
                     Name:</label>
@@ -32,8 +51,25 @@
                 <label for="position" class="block text-sm font-medium text-primary dark:text-white">{{ user.branch }}</label>
             </div>
         </div>
-        <div class="grid grid-cols-8 gap-2">
 
+        <!-- Stack layout for mobile mode -->
+        <div class="block sm:hidden grid grid-cols-1 gap-2">
+            <div class="col-span-1">
+                <label for="position" class="block text-xs font-medium text-primary dark:text-white">Department
+                    Name:</label>
+            </div>
+            <div class="col-span-1">
+                <label for="position" class="block text-xs font-medium text-primary dark:text-white">{{ user.department }}</label>
+            </div>
+            <div class="col-span-1">
+                <label for="position" class="block text-xs font-medium text-primary dark:text-white">Branch:</label>
+            </div>
+            <div class="col-span-1">
+                <label for="position" class="block text-xs font-medium text-primary dark:text-white">{{ user.branch }}</label>
+            </div>
+        </div>
+                <!-- Grid for desktop mode -->
+                <div class="hidden sm:grid sm:grid-cols-8 gap-2">
             <div class="col-span-1">
                 <label for="position"
                     class="block text-sm font-medium text-primary dark:text-white">Employee ID:</label>
@@ -43,6 +79,16 @@
             </div>
         </div>
 
+        <!-- Stack layout for mobile mode -->
+        <div class="block sm:hidden grid grid-cols-1 gap-2">
+            <div class="col-span-1">
+                <label for="position"
+                    class="block text-xs font-medium text-primary dark:text-white">Employee ID:</label>
+            </div>
+            <div class="col-span-1">
+                <label for="position" class="block text-xs font-medium text-primary dark:text-white">{{ user.emp_id }}</label>
+            </div>
+        </div>
     </div>
 </template>
 <script>

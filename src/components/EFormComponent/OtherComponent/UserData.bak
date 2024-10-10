@@ -1,0 +1,23 @@
+            <div class="col-span-4 gap-2 ">
+                <div class="row flex justify-between">
+                                    <div class="col-span-1">
+                    <label for="position" class="block text-sm font-medium text-primary dark:text-white">Name:</label>
+                </div>
+                <div class="col-span-3">
+                    <label for="position"
+                        class="block text-sm font-medium text-primary dark:text-white">{{ user.name }}</label>
+                </div>
+                </div>
+
+                <div class="row flex justify-between">
+                <div class="col-span-1">
+                    <label for="position" class="block text-sm font-medium text-primary dark:text-white">Email
+                        address:</label>
+                </div>
+                <div class="col-span-3">
+                    <label for="position"
+                        class="block text-sm font-medium text-primary dark:text-white">{{ user.email_address }}</label>
+                </div>
+                </div>
+
+            </div>

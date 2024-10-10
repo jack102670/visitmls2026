@@ -136,7 +136,6 @@
                     company: '',
                     position: '',
                     department: '',
-                    position: '',
                     reportTo: '',
                     responsibilities: '',
                     duties: '',

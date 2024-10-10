@@ -1,5 +1,5 @@
 <template>
-    <div class="py-4">
+    <div class="border border-[1px] rounded-md mt-2 p-4 space-y-2">
                 <div>
                     <p for="position" class="block text-md font-bold text-primary dark:text-white">
                         Training Effectiveness

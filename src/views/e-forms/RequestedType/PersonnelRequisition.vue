@@ -25,7 +25,7 @@
 <script>
   import breadcrumbs from '../../../components/EFormComponent/OtherComponent/BreadCumbs.vue'
   import PersonnelScrollable from '@/components/EFormComponent/PersonnelReqForm/PersonnelScrollable.vue';
-  import UserProfileData from "../../../components/EFormComponent/PersonnelReqForm/UserData.vue"
+  import UserProfileData from "../../../components/EFormComponent/OtherComponent/UserData.vue"
   export default {
     components: {
       breadcrumbs,
