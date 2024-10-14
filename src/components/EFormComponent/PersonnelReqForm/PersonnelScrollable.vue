@@ -1,41 +1,29 @@
 <template>
-
     <div class="py-2">
-
         <ul
-            class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400 ">
-            <li class="me-2">
-                <a href="#" @click.prevent="changeSection('A')" aria-current="page"
-                    :class="['inline-block p-4 rounded-t-lg', currentSection === 'A' ? 'text-blue-600 bg-gray-100 dark:bg-gray-800 dark:text-blue-500' : 'hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300']">Section
-                    A</a>
-            </li>
-            <li class="me-2">
-                <a href="#" @click.prevent="changeSection('B')"
-                    :class="['inline-block p-4 rounded-t-lg', currentSection === 'B' ? 'text-blue-600 bg-gray-100 dark:bg-gray-800 dark:text-blue-500' : 'hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300']">Section
-                    B</a>
-            </li>
-            <li class="me-2">
-                <a href="#" @click.prevent="changeSection('C')"
-                    :class="['inline-block p-4 rounded-t-lg', currentSection === 'C' ? 'text-blue-600 bg-gray-100 dark:bg-gray-800 dark:text-blue-500' : 'hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300']">Section
-                    C</a>
+            class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
+            <li class="me-2" v-for="section in ['A', 'B', 'C']" :key="section">
+                <a href="#" @click.prevent="changeSection(section)"
+                    :class="['inline-block p-4 rounded-t-lg', currentSection === section ? 'text-blue-600 bg-gray-100 dark:bg-gray-800 dark:text-blue-500' : 'hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300']">
+                    Section {{ section }}
+                </a>
             </li>
         </ul>
 
         <!-- render component kat sini -->
-        <!-- <component :is="currentComponent" @change-section="changeSection" @form-submitted="saveDataToLocalStorage"></component> -->
-        <component :is="currentComponent" :formData="formData" @next-section="handleNext" @submit-form="submitForm">
-        </component>
+        <component :is="currentComponent" :formData="formData" @update-form="updateFormData" @next-section="handleNext"
+            @previous-section="handlePrevious" @submit-form="submitForm"></component>
     </div>
-
 </template>
+
 <script>
-    import SectionAForm from "../../EFormComponent/PersonnelReqForm/SectionAForm.vue";
-    import SectionBFrom from "../../EFormComponent/PersonnelReqForm/SectionBForm.vue";
-    import SectionCForm from "../../EFormComponent/PersonnelReqForm/SectionCForm.vue"
+    import SectionAForm from "./SectionAForm.vue";
+    import SectionBForm from "./SectionBForm.vue";
+    import SectionCForm from "./SectionCForm.vue";
     export default {
         components: {
             SectionAForm,
-            SectionBFrom,
+            SectionBForm,
             SectionCForm
         },
         data() {
@@ -50,30 +38,38 @@
         },
         computed: {
             currentComponent() {
-                switch (this.currentSection) {
-                    case 'A':
-                        return SectionAForm;
-                    case 'B':
-                        return SectionBFrom;
-                    case 'C':
-                        return SectionCForm;
-                    default:
-                        return SectionAForm;
-                }
+                const components = {
+                    'A': SectionAForm,
+                    'B': SectionBForm,
+                    'C': SectionCForm
+                };
+                return components[this.currentSection];
             }
         },
         methods: {
             changeSection(section) {
                 this.currentSection = section;
             },
-            handleNext(data, nextSection) {
-                this.formData[`section${this.currentSection}`] = data; // Save current section data
-                console.log(`Data from Section ${this.currentSection}:`, data);
-                this.changeSection(nextSection); // Go to the next section
+            updateFormData(sectionData, section) {
+                this.formData[`section${section}`] = sectionData;
             },
-            submitForm() {
-                console.log('Submitted Data:', this.formData); // Log the full form data
-                alert('Form submitted! Check the console for details.');
+            handleNext(data) {
+                const currentIndex = ['A', 'B', 'C'].indexOf(this.currentSection);
+                if (currentIndex < 2) {
+                    this.updateFormData(data, this.currentSection);
+                    this.changeSection(['A', 'B', 'C'][currentIndex + 1]);
+                }
+            },
+            handlePrevious() {
+                const currentIndex = ['A', 'B', 'C'].indexOf(this.currentSection);
+                if (currentIndex > 0) {
+                    this.changeSection(['A', 'B', 'C'][currentIndex - 1]);
+                }
+            },
+            submitForm(data) {
+                this.updateFormData(data, this.currentSection);
+                console.log('Form submitted with data:', this.formData.sectionA, this.formData.sectionB, this.formData.sectionC);
+                
             }
         }
     }

@@ -22,7 +22,7 @@
                 <input type="text" id="company" v-model="form.company"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Company Name" required />
-                <span v-if="validationErrors.company" class="text-red-500 text-sm">Please fill in this field"</span>
+                <span v-if="validationErrors.company" class="text-red-500 text-sm">Please fill in this field</span>
             </div>
         </div>
 
@@ -214,21 +214,34 @@
         data() {
             return {
                 fileName: '',
-                form: {
-                    justificationOrReason: this.formData.sectionA.justificationOrReason || '',
-                    position: this.formData.sectionA.position || '',
-                    company: this.formData.sectionA.company || '',
-                    dateRequired: this.formData.sectionA.dateRequired || '',
-                    department: this.formData.sectionA.department || '',
-                    noofpersonnel: this.formData.sectionA.noofpersonnel || '',
-                    location: this.formData.sectionA.location || '',
-                    basicSalary: this.formData.sectionA.basicSalary || '',
-                    requisitionIfFor: this.formData.sectionA.requisitionIfFor || '',
-                    manPowerRequestIs: this.formData.sectionA.manPowerRequestIs || '',
-                    personReplacement: this.formData.sectionA.personReplacement || '',
-                    reasonForUnbudgeted: this.formData.sectionA.reasonForUnbudgeted || '',
+                // form: {
+                //     justificationOrReason: this.formData.sectionA.justificationOrReason || '',
+                //     position: this.formData.sectionA.position || '',
+                //     company: this.formData.sectionA.company || '',
+                //     dateRequired: this.formData.sectionA.dateRequired || '',
+                //     department: this.formData.sectionA.department || '',
+                //     noofpersonnel: this.formData.sectionA.noofpersonnel || '',
+                //     location: this.formData.sectionA.location || '',
+                //     basicSalary: this.formData.sectionA.basicSalary || '',
+                //     requisitionIfFor: this.formData.sectionA.requisitionIfFor || '',
+                //     manPowerRequestIs: this.formData.sectionA.manPowerRequestIs || '',
+                //     personReplacement: this.formData.sectionA.personReplacement || '',
+                //     reasonForUnbudgeted: this.formData.sectionA.reasonForUnbudgeted || '',
+                // },
+                form: this.formData.sectionA || {
+                    justificationOrReason: '',
+                    position: '',
+                    company: '',
+                    dateRequired: '',
+                    department: '',
+                    noofpersonnel: '',
+                    location: '',
+                    basicSalary: '',
+                    requisitionIfFor: '',
+                    manPowerRequestIs: '',
+                    personReplacement: '',
+                    reasonForUnbudgeted: '',
                 },
-                
                 validationErrors: {},
             }
         },
@@ -273,39 +286,19 @@
             },
             handleNext() {
                 if (this.validateForm()) {
-                    console.log('Form data belum success:', this.form);
                     Swal.fire({
-                        title: 'Are you sure you want to submit?',
-                        icon: 'warning',
+                        title: 'Are you sure you want to proceed to the next section?',
+                        icon: 'question',
                         showCancelButton: true,
+                        confirmButtonText: 'Yes, proceed',
+                        cancelButtonText: 'No, stay here',
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, Submit!'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             console.log('Form data saved:', this.form);
-                            this.form = {
-                                justificationOrReason: '',
-                                position: '',
-                                company: '',
-                                dateRequired: '',
-                                department: '',
-                                noofpersonnel: '',
-                                location: '',
-                                basicSalary: '',
-                                requisitionIfFor: '',
-                                manPowerRequestIs: '',
-                                personReplacement: '',
-                                reasonForUnbudgeted: '',
-                            };
- 
-                            Swal.fire({
-                                title: 'Saved!',
-                                text: 'Your data has been saved.',
-                                confirmButtonColor: '#3085d6',
-                                icon: 'success',
-                                confirmButtonText: 'OK'
-                            });
+                            this.$emit('update-form', this.form, 'A');
+                            this.$emit('next-section', this.form);
                         }
                     });
                 } else {
@@ -313,11 +306,11 @@
                         title: 'Error!',
                         text: 'Please fill in all required fields.',
                         icon: 'error',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'OK'
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#3085d6',
                     });
                 }
             },
-        }
+        },
     }
 </script>
