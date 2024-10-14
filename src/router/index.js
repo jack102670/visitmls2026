@@ -63,6 +63,7 @@ import EmployeeTransfer from "../views/e-forms/RequestedType/EmployeeTransfer.vu
 import JobDescription from "../views/e-forms/RequestedType/JobDescription.vue"
 import OrientationChecklist from "../views/e-forms/RequestedType/OrientationChecklist.vue"
 import TrainingEvaluation from "../views/e-forms/RequestedType/TrainingEvaluation.vue"
+import verifyRequest from '@/views/e-forms/VerifyRequest/verifyRequest.vue';
 
 
 
@@ -484,6 +485,19 @@ const routes = [
 
   },
   {
+    path: '/verify-request',
+    name: 'verify-request',
+    component: EFormNavbar,
+    children : [
+      {
+        path: '',
+        component: verifyRequest
+      }
+    ],
+    props: true,
+
+  },
+  {
     path: '/personnel-requisition',
     name: 'personnel-requisition',
     component: EFormNavbar,
@@ -511,7 +525,7 @@ const routes = [
   },
   {
     path: '/employee-transfer',
-    name: 'emolpyee-transfer',
+    name: 'employee-transfer',
     component: EFormNavbar,
     children : [
       {

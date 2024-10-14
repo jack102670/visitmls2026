@@ -1,7 +1,7 @@
 <template>
   <div class="relative overflow-x-auto sm:rounded-lg">
     <div class="pb-4 bg-white dark:bg-gray-900 flex justify-between items-end">
-      <div class="px-2">
+      <div class="">
         <h4 class="font-bold text-primary text-md">
           All Requested
         </h4>
@@ -21,8 +21,8 @@
       </div>
     </div>
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-md">
-      <thead class="text-xs text-gray-700 uppercase bg-[#e7e6ee] dark:bg-gray-700 dark:text-gray-400 rounded-t-md">
-        <tr class="text-white font-bold">
+      <thead class="text-xs text-gray-700 uppercase bg-[#443a7a] dark:bg-gray-700 dark:text-gray-400 !rounded-t-md">
+        <tr class="text-white font-bold ">
           <th scope="col" class="p-4"></th>
           <th scope="col" class="px-6 py-3">No</th>
           <th scope="col" class="px-6 py-3">Reference Number</th>
