@@ -1,5 +1,5 @@
 <template>
-    <div class="space-y-4  px-4 py-2">
+    <div class="space-y-4 mt-2 border-[1px] px-4 py-2">
         <h1 class="font-bold text-md py-2">C. Verification / Approval</h1>
 
         <div class="grid grid-cols-8 gap-2">

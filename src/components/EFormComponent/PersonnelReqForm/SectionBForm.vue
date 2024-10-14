@@ -1,10 +1,11 @@
 <template>
-    <div class="space-y-4  px-4 py-2">
+    <div class="space-y-4 mt-2 border-[1px] rounded-md  px-4 py-2">
         <h1 class="font-bold text-md py-2">B. Person Specification</h1>
         <div class="grid grid-cols-8 gap-2 mt-4">
 
             <div class="col-span-1">
-                <label for="position" class="block mb-2 text-sm font-medium text-primary dark:text-white">Age Limit: <span class="text-red-500">*</span></label>
+                <label for="position" class="block mb-2 text-sm font-medium text-primary dark:text-white">Age Limit:
+                    <span class="text-red-500">*</span></label>
             </div>
             <div class="col-span-3">
                 <input type="number" id="age"
@@ -85,7 +86,9 @@
         </div>
         <div class="grid grid-cols-8 gap-2">
             <div class="col-span-1">
-                <label for="basicSalary" class="block mb-2 text-sm font-medium text-primary dark:text-white">Qualification Required?: <span class="text-red-500">*</span></label>
+                <label for="basicSalary"
+                    class="block mb-2 text-sm font-medium text-primary dark:text-white">Qualification Required?: <span
+                        class="text-red-500">*</span></label>
             </div>
             <div class="col-span-3">
                 <div class="flex space-x-4 items-center mb-4">
@@ -133,7 +136,7 @@
         <div class="grid grid-cols-8 gap-2">
             <div class="col-span-1">
                 <label for="personnel" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
-                   Others (Please specify)</label>
+                    Others (Please specify)</label>
             </div>
             <div class="col-span-7">
                 <textarea id="message" rows="4"
@@ -143,12 +146,11 @@
         </div>
         <div class="grid grid-cols-8 space-x-2 mt-4">
             <div class="col-span-8 flex justify-end">
-                <button
-                @click="backToPrevious"
-                class="bg-transparent text-pending px-10 py-2 rounded-md border-[2px] border-pending mr-4">
+                <button @click="backToPrevious"
+                    class="bg-transparent text-pending px-10 py-2 rounded-md border-[2px] border-pending mr-4">
                     Back
                 </button>
-                <button class="bg-primary text-white px-10 py-2 rounded-md">
+                <button @click="handleNext" class="bg-primary text-white px-10 py-2 rounded-md">
                     Next
                 </button>
             </div>
@@ -156,8 +158,11 @@
     </div>
 </template>
 <script>
-
-export default {
+    export default {
+        props: ['formData'],
+        data() {
+            return {}
+        },
         methods: {
             backToPrevious() {
                 this.$emit('change-section', 'A');

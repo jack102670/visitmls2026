@@ -33,7 +33,8 @@
                 <label for="requisition" class="block mb-2 text-sm font-medium text-primary dark:text-white">Requisiton
                     from HOD: </label>
             </div>
-            <div class="col-span-3 mb-2 space-x-2">
+            <div class="col-span-3 mb-2 ">
+                <div class="space-x-2">
                 <input id="email" type="checkbox" name="email" value="email" v-model="EmployeeForm.email"
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                 <label for="email" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email</label>
@@ -52,12 +53,14 @@
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                 <label for="otherRequisition"
                     class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Others</label>
-                <div v-if="showOtherInput" class="mt-2">
+                </div>
+                    <div v-if="showOtherInput" class="mt-2">
                     <input type="text" v-model="EmployeeForm.otherRequisition"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Please specify" />
                 </div>
             </div>
+
             <div class="col-span-1">
                 <label for="company" class="block mb-2 text-sm font-medium text-primary dark:text-white">Date Joined:
                     <span class="text-red-500">*</span></label>
@@ -157,8 +160,8 @@
                         confirmButtonText: 'Yes, Submit!'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            console.log('Form data saved:', this.EmployeeForm.dateJoined);
-                            this.form = {
+                            console.log('Form data saved:', this.EmployeeForm);
+                            this.EmployeeForm = {
                                 company: '',
                                 position: '',
                                 department: '',
