@@ -1,6 +1,6 @@
 <template>
   <div class="relative overflow-x-auto sm:rounded-lg">
-    <div class="pb-4 bg-white dark:bg-gray-900 flex justify-between items-end">
+    <div class="pb-4 bg-white  dark:bg-gray-900 flex justify-between items-end">
       <div class="">
         <h4 class="font-bold text-primary text-md">
           All Requested

@@ -1,16 +1,15 @@
 <template>
-  <div class="w-full h-full">
-    <section class="flex">
-      <div class="w-full">
-        <div class="grid grid-cols-8 pt-4 px-4 gap-2">
-          <div class="col-span-3 bg-white rounded-md">
-            <div class="p-4 gap-2 space-y-2 ">
-              <div>
-                <h1 class="font-bold text-2xl text-primary">
-                  PKT GROUP COMPANIES
-                </h1>
-                <p class="text-sm text-primary font-semibold">Other employee E-Forms</p>
-              </div>
+  <section class="flex">
+    <div class="w-full">
+      <div class="grid grid-cols-8 pt-4 px-4 gap-2">
+        <div class="col-span-2 bg-white border-[1px] justify-center items-center rounded-md">
+          <div class="flex flex-col justify-center items-start p-4 gap-2 space-y-2">
+            <div>
+              <h1 class="font-bold text-2xl text-primary">
+                PKT GROUP COMPANIES
+              </h1>
+              <p class="text-sm text-primary font-semibold">Other employee E-Forms</p>
+            </div>
 
               <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-8 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -60,26 +59,26 @@
               </div>
             </div>
           </div>
-          <div class="col-span-5 bg-white rounded-md justify-center items-center p-4 space-y-2">
+          <div class="col-span-6 bg-white border-[1px] rounded-md justify-center items-center p-2 space-y-2">
             <h4 class="text-md font-bold text-primary">Request Status</h4>
             <div class="flex grid grid-cols-5 gap-2 text-center">
-              <div class="bg-transparent rounded-md border-[2px] border-pending p-4 ">
+              <div class="bg-transparent rounded-md border-[2px] border-pending p-2 ">
                 <p class="text-4xl text-primary font-semibold">0</p>
                 <p class="text-sm text-primary font-semibold">Pending</p>
               </div>
-              <div class="bg-transparent rounded-md border-[2px] border-rejected p-4">
+              <div class="bg-transparent rounded-md border-[2px] border-rejected p-2">
                 <p class="text-4xl text-primary font-semibold">0</p>
                 <p class="text-sm text-primary font-semibold">Rejected</p>
               </div>
-              <div class="bg-transparent rounded-md border-[2px] border-inProgress p-4">
+              <div class="bg-transparent rounded-md border-[2px] border-inProgress p-2">
                 <p class="text-4xl text-primary font-semibold">0</p>
                 <p class="text-sm text-primary font-semibold">In Progress</p>
               </div>
-              <div class="bg-transparent rounded-md border-[2px] border-verified p-4">
+              <div class="bg-transparent rounded-md border-[2px] border-verified p-2">
                 <p class="text-4xl text-primary font-semibold">0</p>
                 <p class="text-sm text-primary font-semibold">Verified</p>
               </div>
-              <div class="bg-transparent rounded-md border-[2px] border-primary p-4">
+              <div class="bg-transparent rounded-md border-[2px] border-primary p-2">
                 <p class="text-4xl text-primary font-semibold">0</p>
                 <p class="text-sm text-primary font-semibold">Completed</p>
               </div>
@@ -87,14 +86,13 @@
           </div>
         </div>
         <div class="grid grid-cols-8 px-4 pb-4 pt-2 gap-2">
-          <div class="col-span-8 text-center bg-white min-h-full rounded-md p-4">
+          <div class="col-span-8 text-center bg-white min-h-full border-[1px] rounded-md p-4">
             <TableRequest />
           </div>
         </div>
       </div>
     </section>
-    <NewReqModal v-if="showModal" @close="showModal = false" />
-  </div>
+    <NewReqModal v-if="showModal" @close="showModal = false"  />
 </template>
 
 <script>
@@ -116,5 +114,13 @@
         this.$router.push({ name: routeName });
       },
     },
+    mounted() {
+      console.log('Mounted hook triggered'); // Debugging
+      document.body.style.backgroundColor = '#F8FBFB'; // Apply page-specific background color
+    },
+    beforeUnmount() { // Vue 3 lifecycle hook for cleanup
+      console.log('Unmount hook triggered'); // Debugging
+      document.body.style.backgroundColor = '#CED1DA'; // Reset to default background color
+    }
   };
 </script>

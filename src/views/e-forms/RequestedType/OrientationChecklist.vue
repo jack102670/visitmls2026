@@ -38,6 +38,15 @@ export default {
     OrientationChecklistForm,
     OrientationCheckListFormForCompletion
 
-  }
+  },
+  mounted() {
+      console.log('Mounted hook triggered'); // Debugging
+      document.body.style.backgroundColor = '#F8FBFB'; // Apply page-specific background color
+    },
+    beforeUnmount() { // Vue 3 lifecycle hook for cleanup
+      console.log('Unmount hook triggered'); // Debugging
+      document.body.style.backgroundColor = '#CED1DA'; // Reset to default background color
+    }
+  
 }
 </script>

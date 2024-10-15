@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="grid grid-cols-8 px-4 pb-4 py-4 gap-2">
-      <div class="col-span-8 bg-white min-h-[76vh] rounded-md p-4">
+      <div class="col-span-8 bg-white border-[1px] min-h-[76vh] rounded-md p-4">
 
         <div>
           <h1 class="font-bold text-2xl text-primary"> Personnel Requisition Form</h1>
@@ -39,6 +39,14 @@
           replace: true
         }],
       }
+    },
+    mounted() {
+      console.log('Mounted hook triggered'); // Debugging
+      document.body.style.backgroundColor = '#F8FBFB'; // Apply page-specific background color
+    },
+    beforeUnmount() { // Vue 3 lifecycle hook for cleanup
+      console.log('Unmount hook triggered'); // Debugging
+      document.body.style.backgroundColor = '#CED1DA'; // Reset to default background color
     }
   }
 </script>
