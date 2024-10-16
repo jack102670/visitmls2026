@@ -1,16 +1,18 @@
 <template>
   <!-- logo and title -->
-  <div class="h-screen " id="side-bar" :class="dataOpenSideBar ? 'side-bar-visible' : 'side-bar-close'">
-    <div class="bg-primary h-[60px] flex justify-between items-center px-2 "
-      >
-      <div class="text-md text-white flex justify-between items-center h-full space-x-2 px-5 py-2"
+  <div class="h-screen" id="side-bar" :class="dataOpenSideBar ? 'side-bar-visible' : 'side-bar-close'">
+    <div class="bg-primary h-[60px] flex justify-between items-center px-2">
+      <div class="text-md text-white flex justify-between items-center h-full space-x-2 px-5 py-4"
         v-show="dataOpenSideBar">
         <img src="../../../../public/pkt-blue-log-crop.jpg" class="p-1 w-10 h-10" alt="Avatar" />
         <p class="font-bold text-lg">Service Portal</p>
       </div>
-      <img src="../../../../public/pkt-blue-log-crop.jpg" v-show="!dataOpenSideBar"
-        :class="dataOpenSideBar ? 'transition-transform duration-300 ease-in-out transform scale-75' : 'transition-transform duration-300 ease-in-out'"
-        class="p-2 w-10 h-10 rounded-full ring-2 ring-gray-100 dark:ring-gray-500" alt="PKT logo" />
+      <img src="../../../../public/pkt-blue-log-crop.jpg"
+        :class="[
+          'transition-all duration-300 ease-in-out p-2 w-10 h-10 rounded-full ring-2 ring-gray-100 dark:ring-gray-500',
+          dataOpenSideBar ? 'opacity-0 scale-0' : 'opacity-100 scale-100 rotate-360'
+        ]"
+        alt="PKT logo" />
     </div>
     <!-- description -->
     <div class="flex flex-col justify-between h-screen bg-primary overflow-y-auto  ">
@@ -56,11 +58,11 @@
             </div>
             <font-awesome-icon v-show="dataOpenSideBar"
               :icon="dropdownOpen ? ['fas', 'chevron-down'] : ['fas', 'angle-right']"
-              :style="{ color: '#ffffff', fontSize: '20px' }" />
+              :class="{'rotate-icon': dropdownOpen}" :style="{ color: '#ffffff', fontSize: '20px' }" />
           </div>
-          <transition name="dropdown">
-            <div v-show="dropdownOpen" class="pl-6 mt-2 space-y-4 text-white dropdown-content">
-              <div @click="navigateTo('/personnel-requisition')" class="block py-1 hover:text-dark">
+          <transition name="slide-fade">
+            <div v-show="dropdownOpen" class="pl-6 space-y-4 text-white dropdown-content">
+              <div @click="navigateTo('/personnel-requisition')" class="block pb-1 pt-2 hover:text-dark">
                 Personnel Requisition
               </div>
               <div @click="navigateTo('/employee-transfer')" class="block py-1 hover:text-dark">
@@ -148,6 +150,41 @@
 </script>
 
 <style scoped>
+  .slide-fade-enter-active,
+  .slide-fade-leave-active {
+    transition: all 0.3s ease;
+  }
+
+  .slide-fade-enter-from,
+  .slide-fade-leave-to {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+
+  /* Rotate icon animation */
+  .rotate-icon {
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+  }
+
+  /* Optional: Add some padding and a subtle background to the dropdown content */
+  .dropdown-content {
+    background-color: rgba(45, 33, 105, 0.5);
+    border-radius: 0 0 8px 8px;
+    padding: 0.5rem 0;
+    margin-top: 0.5rem;
+  }
+
+  /* Animate dropdown items */
+  .dropdown-content>div {
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+
+  .dropdown-content>div:hover {
+    transform: translateX(5px);
+  }
+
+
   #side-bar {
     overflow: hidden;
     transition: 300ms;
