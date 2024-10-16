@@ -11,6 +11,10 @@
       <div class="space-y-2">
         <UserProfileData />
           <EmployeeTransferForm />
+          <HODRequestForm />
+          <HRDRequestForm />
+          <HODAccusitionDecision />
+          <HRDFinalRequest />
       </div>
     </div>
   </div>
@@ -19,12 +23,21 @@
 import breadcrumbs from '../../../components/EFormComponent/OtherComponent/BreadCumbs.vue'
 import UserProfileData from "../../../components/EFormComponent/OtherComponent/UserData.vue"
 import EmployeeTransferForm from "../../../components/EFormComponent/EmployeeRequestForm/EmployeRequestForm.vue"
+import HODRequestForm from '@/components/EFormComponent/EmployeeRequestForm/HODRequestForm.vue';
+import HRDRequestForm from '@/components/EFormComponent/EmployeeRequestForm/HRDRequestForm.vue';
+import HODAccusitionDecision from '@/components/EFormComponent/EmployeeRequestForm/HODAccusitionDecision.vue';
+import HRDFinalRequest from '@/components/EFormComponent/EmployeeRequestForm/HRDFinalRequest.vue';
 
 export default {
   components: {
     breadcrumbs,
     UserProfileData,
-    EmployeeTransferForm
+    EmployeeTransferForm,
+    HODRequestForm,
+    HRDRequestForm,
+    HODAccusitionDecision,
+    HRDFinalRequest
+
   },
   data() {
     return {
