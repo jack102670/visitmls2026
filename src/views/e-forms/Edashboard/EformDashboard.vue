@@ -1,11 +1,11 @@
 <template>
-  <section class="flex">
-    <div class="w-full">
+  <section >
+    <div class="w-full ">
       <!-- Main grid -->
       <div className="grid md:grid-cols-8 xl:gap-8 px-4 pt-4 gap-2 ">
         <!-- 1st box -->
-        <div class="bg-white border-[1px] justify-center items-center rounded-md sm:col-span-2 w-full flex">
-          <div class="flex flex-col justify-center items-start p-4 gap-2 space-y-2">
+        <div class="bg-white border-[1px] justify-between items-center rounded-md sm:col-span-2 w-full flex">
+          <div class="flex flex-col justify-between items-start p-4 gap-2 space-y-2">
             <div>
               <h1 class="font-bold text-2xl text-primary">
                 PKT GROUP COMPANIES
@@ -13,7 +13,7 @@
               <p class="text-sm text-primary font-semibold">Other employee E-Forms</p>
             </div>
             <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" style="background-color: #160959;"
-              class="text-white bg-primary hover:bg-blue-800 focus:ring-4 max-h-[40px] focus:outline-none font-medium rounded-md text-sm px-8 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              class="text-white bg-primary hover:bg-blue-800 max-h-[40px] focus:outline-none font-medium rounded-md text-sm px-8 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               type="button">
               Request Type
               <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"

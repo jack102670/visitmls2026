@@ -5,11 +5,11 @@
 
   <transition name="slide-in">
     <div class="mobile-sidebar" :style="{ transform: dataOpenSideBar ? 'translateX(0)' : 'translateX(-100%)' }">
-      <div @click="clickHambuger" class="close-icon cursor-pointer">
-        <font-awesome-icon :icon="['fas', 'xmark']" />
-      </div>
+        <div @click="clickHambuger" class="close-icon cursor-pointer px-2">
+          <font-awesome-icon :icon="['fas', 'xmark']" />
+        </div>
       <div class="bg-primary h-[60px] flex justify-between items-center px-2">
-        <div class="text-md text-white flex items-center h-full space-x-2 px-5 py-4">
+        <div class="text-md text-white flex items-center h-full space-x-2 px-5 py-5">
           <img src="../../../../public/pkt-blue-log-crop.jpg" class="p-1 w-10 h-10" alt="Avatar" />
           <p class="font-bold text-lg">Service Portal</p>
         </div>

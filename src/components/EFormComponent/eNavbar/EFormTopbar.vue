@@ -12,9 +12,8 @@
         </div>
 
       </div>
-      <div class="flex space-x-4 items-center justify-center px-3">
+      <div class="flex space-x-4 items-center justify-center px-4">
         <font-awesome-icon :icon="['fas', 'circle-half-stroke']" :style="{ color: '#160959', fontSize: '20px' }" />
-        <!-- <font-awesome-icon :icon="['fas', 'moon']" :style="{ color: '#160959', fontSize: '20px' }" /> -->
         <font-awesome-icon icon="sign-out-alt" class="" :style="{ color: '#160959', fontSize:'20px' }" />
       </div>
     </div>
