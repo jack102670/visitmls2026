@@ -1,6 +1,6 @@
 <template>
   <!-- logo and title -->
-  <div class="h-screen" id="side-bar" :class="dataOpenSideBar ? 'side-bar-visible' : 'side-bar-close'">
+  <div class="h-screen" id="side-bar" :class="dataOpenSideBar ? 'side-bar-visible ' : 'side-bar-close'">
     <div class="bg-primary h-[60px] flex justify-between items-center px-2">
       <div class="text-md text-white flex justify-between items-center h-full space-x-2 px-5 py-4"
         v-show="dataOpenSideBar">
@@ -18,7 +18,7 @@
     <div class="flex flex-col justify-between h-screen bg-primary overflow-y-auto  ">
       <div :class="dataOpenSideBar ? 'py-4 px-4 pt-8' : ' '" class="space-y-2">
         <div
-          :class="['py-3 px-2 border-2 border-primary hover:bg-[#2d2169] hover:border-2 hover:border-white', dataOpenSideBar ? '' : 'justify-center items-center text-center']"
+          :class="['py-3 px-2 border-2 border-primary hover:bg-[#2d2169] hover:border-2 ', dataOpenSideBar ? '' : 'justify-center items-center text-center']"
           class="rounded-md cursor-pointer text-white hover:text-dark">
           <router-link to="/firsttimelogin" class="px-2 flex justify-between items-center">
             <div :class="dataOpenSideBar ? 'flex space-x-2 items-center' : 'flex justify-center items-center w-full'">
@@ -32,7 +32,7 @@
         </div>
 
         <div
-          :class="['py-3 px-2 border-2 border-primary hover:bg-[#2d2169] hover:border-2 hover:border-white', dataOpenSideBar ? '' : 'justify-center items-center text-center']"
+          :class="['py-3 px-2 border-2 border-primary hover:bg-[#2d2169] hover:border-2 cursor-pointer', dataOpenSideBar ? '' : 'justify-center items-center text-center']"
           class="rounded-md cursor-pointer text-white hover:text-dark">
           <router-link to="/e-dashboard" class="px-2 flex justify-between items-center">
             <div
@@ -47,7 +47,7 @@
         </div>
 
         <div
-          :class="['py-3 px-2 border-2 border-primary hover:bg-[#2d2169] hover:border-2 hover:border-white', dataOpenSideBar ? '' : 'justify-center items-center text-center', dropdownOpen ? 'bg-[#2d2169] border-2 border-white' : '']"
+          :class="['py-3 px-2 border-2 border-primary hover:bg-[#2d2169] hover:border-2 ', dataOpenSideBar ? '' : 'justify-center items-center text-center', dropdownOpen ? 'bg-[#2d2169] border-2 ' : '']"
           class="rounded-md cursor-pointer text-white hover:text-dark">
           <div class="px-2 flex justify-between items-center" @click="toggleRequestDropdown">
             <div
@@ -61,7 +61,7 @@
               :class="{'rotate-icon': dropdownOpen}" :style="{ color: '#ffffff', fontSize: '20px' }" />
           </div>
           <transition name="slide-fade">
-            <div v-show="dropdownOpen" class="pl-6 space-y-4 text-white dropdown-content">
+            <div v-show="dropdownOpen" class="pl-6 space-y-4 text-white ">
               <div @click="navigateTo('/personnel-requisition')" class="block pb-1 pt-2 hover:text-dark">
                 Personnel Requisition
               </div>
@@ -85,7 +85,7 @@
         </div>
 
         <div
-          :class="['py-3 px-2 border-2 border-primary hover:bg-[#2d2169] hover:border-2 hover:border-white', dataOpenSideBar ? '' : 'justify-center items-center text-center']"
+          :class="['py-3 px-2 border-2 border-primary hover:bg-[#2d2169] hover:border-2 ', dataOpenSideBar ? '' : 'justify-center items-center text-center']"
           class="rounded-md cursor-pointer text-white hover:text-dark">
           <router-link to="/verify-request" class="px-2 flex justify-between items-center">
             <div
@@ -99,18 +99,31 @@
           </router-link>
         </div>
 
+
+        <!-- <div class="py-3 px-2 border-2 border-primary hover:bg-[#2d2169] hover:border-white">
+          <router-link to="/verify-request" class="px-2 flex ">
+            <div class="flex space-x-4 w-full">
+              <font-awesome-icon :icon="['fas', 'list-check']" v-tooltip.right="'Verify Request'"
+                :style="{ color: '#ffffff', fontSize: '20px' }" />
+              <span class="text-white">Verify Request</span>
+            </div>
+            <font-awesome-icon v-show="dataOpenSideBar" :icon="['fas', 'angle-right']"
+              :style="{ color: '#ffffff', fontSize: '20px' }" />
+          </router-link>
+        </div> -->
+
         <div
           :class="['py-3 px-2 border-2 border-primary hover:bg-[#2d2169] hover:border-2 hover:border-white', dataOpenSideBar ? '' : 'justify-center items-center text-center']"
-          class="rounded-md cursor-pointer text-white hover:text-dark">
-          <a href="/" class="px-2 flex space-x-2 justify-between items-center" @click="logout">
-            <div :class="dataOpenSideBar ? 'flex space-x-2 items-center' : 'flex justify-center items-center w-full'">
+          class="rounded-md cursor-pointer text-white hover:text-dark dropdown-transition">
+          <router-link to="/" class="px-2 flex space-x-2 justify-between items-center " @click="logout">
+            <div :class="dataOpenSideBar ? 'flex space-x-2 items-center ' : 'flex justify-center items-center w-full dropdown-transition  '">
               <font-awesome-icon icon="sign-out-alt" v-tooltip.right="'Logout'"
                 :style="{ color: '#ffffff', fontSize: '20px' }" />
               <span v-show="dataOpenSideBar">Logout</span>
             </div>
             <font-awesome-icon v-show="dataOpenSideBar" :icon="['fas', 'angle-right']"
               :style="{ color: '#ffffff', fontSize: '20px' }" />
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
@@ -185,13 +198,13 @@
   }
 
 
+
   #side-bar {
-    overflow: hidden;
     transition: 300ms;
   }
 
   .side-bar-visible {
-    width: 320px !important;
+    width: 340px !important;
   }
 
   .side-bar-close {
@@ -212,11 +225,10 @@
   .dropdown-leave-to {
     max-height: 0;
     opacity: 0;
-    overflow: hidden;
   }
 
   .dropdown-enter-to {
-    max-height: 300px;
+    min-height: 300px;
     /* Adjust based on content */
     opacity: 1;
   }
@@ -227,7 +239,6 @@
 
   /* Optional: Add some padding to the dropdown content */
   .dropdown-content {
-    overflow: hidden;
     padding-left: 1rem;
   }
 </style>

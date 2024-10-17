@@ -1,0 +1,169 @@
+<template>
+  <transition name="fade">
+    <div class="overlay" @click="clickHambuger"></div>
+  </transition>
+
+  <transition name="slide-in">
+    <div class="mobile-sidebar" :style="{ transform: dropdownOpen ? 'translateX(0)' : 'translateX(-100%)' }">
+      <div @click="clickHambuger" class="close-icon cursor-pointer">
+        <font-awesome-icon :icon="['fas', 'xmark']" />
+      </div>
+      <div class="bg-primary h-[60px] flex justify-between items-center px-2">
+        <div class="text-md text-white flex items-center h-full space-x-2 px-5 py-4">
+          <img src="../../../../public/pkt-blue-log-crop.jpg" class="p-1 w-10 h-10" alt="Avatar" />
+          <p class="font-bold text-lg">Service Portal</p>
+        </div>
+      </div>
+      <div class="flex flex-col justify-start bg-primary overflow-y-auto py-8 px-4">
+        <div class="py-3 px-2 border-2 border-primary hover:bg-[#2d2169] hover:border-white">
+          <router-link to="/firsttimelogin" class="px-2 flex">
+            <div class="flex space-x-4 w-full">
+              <font-awesome-icon :icon="['fas', 'user']" v-tooltip.right="'Profile'"
+                :style="{ color: '#ffffff', fontSize: '22px' }" />
+              <span class="text-white">Profile</span>
+            </div>
+            <font-awesome-icon :icon="['fas', 'angle-right']" :style="{ color: '#ffffff', fontSize: '20px' }" />
+          </router-link>
+        </div>
+
+        <div
+          class="py-3 px-2 border-2 border-primary hover:bg-[#2d2169] hover:border-white justify-center items-center text-center rounded-md cursor-pointer text-white hover:text-dark">
+          <div class="px-2 flex justify-between items-center" @click="toggleRequestDropdown">
+            <div class="flex justify-center items-center w-full space-x-2">
+              <font-awesome-icon :icon="['fas', 'grip-horizontal']" v-tooltip.right="'Request Form'"
+                :style="{ color: '#ffffff', fontSize: '20px' }" />
+              <span>Request Form</span>
+            </div>
+            <font-awesome-icon :icon="dropdownOpen ? ['fas', 'chevron-down'] : ['fas', 'angle-right']"
+              :class="{'rotate-icon': dropdownOpen}" :style="{ color: '#ffffff', fontSize: '20px' }" />
+          </div>
+
+          <transition name="slide-fade">
+            <div v-show="dropdownOpen" class="pl-6 space-y-4 text-white dropdown-content">
+              <div @click="navigateTo('/personnel-requisition')" class="block pb-1 pt-2 hover:text-dark">
+                Personnel Requisition
+              </div>
+              <div @click="navigateTo('/employee-transfer')" class="block py-1 hover:text-dark">
+                Employee Transfer
+              </div>
+              <div @click="navigateTo('/on-job-training')" class="block py-1 hover:text-dark">
+                On Job Training
+              </div>
+              <div @click="navigateTo('/training-evaluation')" class="block py-1 hover:text-dark">
+                Training Evaluation
+              </div>
+              <div @click="navigateTo('/orientation-checklist')" class="block py-1 hover:text-dark">
+                Orientation Checklist
+              </div>
+              <div @click="navigateTo('/job-description')" class="block py-1 hover:text-dark">
+                Job Description
+              </div>
+            </div>
+          </transition>
+        </div>
+
+        <div class="py-3 px-2 border-2 border-primary hover:bg-[#2d2169] hover:border-white">
+          <router-link to="/e-dashboard" class="px-2 flex ">
+            <div class="flex space-x-4 w-full">
+              <font-awesome-icon :icon="['fa-solid', 'fa-square-poll-horizontal']" v-tooltip.right="'Dashboard'"
+                :style="{ color: '#ffffff', fontSize: '20px' }" />
+              <span class="text-white">Dashboard</span>
+            </div>
+            <font-awesome-icon :icon="['fas', 'angle-right']" :style="{ color: '#ffffff', fontSize: '20px' }" />
+          </router-link>
+        </div>
+
+        <div class="py-3 px-2 border-2 border-primary hover:bg-[#2d2169] hover:border-white mt-4">
+          <a href="/" class="px-2 flex space-x-2 " @click="logout">
+            <div class="flex space-x-4 w-full">
+              <font-awesome-icon icon="sign-out-alt" v-tooltip.right="'Logout'"
+                :style="{ color: '#ffffff', fontSize: '20px' }" />
+              <span class="text-white">Logout</span>
+            </div>
+            <font-awesome-icon :icon="['fas', 'angle-right']" :style="{ color: '#ffffff', fontSize: '20px' }" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </transition>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        dropdownOpen: false,
+      }
+    },
+    props: {
+      dataOpenSideBar: Boolean,
+      clickHambuger: Function,
+    },
+    methods: {
+      toggleRequestDropdown() {
+        this.dropdownOpen = !this.dropdownOpen;
+      },
+      navigateTo(route) {
+        this.dropdownOpen = false;
+        this.$router.push(route);
+      },
+    }
+  };
+</script>
+
+<style scoped>
+  /* Overlay for dark transparent background */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+
+  /* Full-width Sidebar styles for mobile */
+  .mobile-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #160959;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .slide-in-enter-active,
+  .slide-in-leave-active {
+    transition: transform 0.3s ease;
+  }
+
+  .slide-in-enter,
+  .slide-in-leave-to {
+    transform: translateX(0);
+  }
+
+  /* Close button inside the sidebar */
+  .close-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+  }
+
+  /* Fade transition for the overlay */
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.3s ease;
+  }
+
+  .fade-enter,
+  .fade-leave-to {
+    opacity: 0;
+  }
+</style>

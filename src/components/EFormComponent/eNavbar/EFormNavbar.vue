@@ -48,7 +48,7 @@ export default {
     this.checkScreenSize();
     window.addEventListener("resize", this.checkScreenSize);
   },
-  beforeDestroy() {
+  beforeUnmount() {
     window.removeEventListener("resize", this.checkScreenSize);
   },
   methods: {
@@ -70,13 +70,14 @@ export default {
 .layout-container {
   display: flex;
   height: 100vh; /* Full height of the viewport */
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .content-container {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  width: 340px !important;
 }
 
 .content {
