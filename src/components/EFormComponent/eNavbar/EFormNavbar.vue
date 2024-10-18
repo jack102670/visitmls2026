@@ -13,8 +13,8 @@
               <p class="font-bold text-lg">Service Portal</p>
             </div>
           </div>
-          <div class="mobile-topbar">
-            <button @click="toggleMobileSidebar" class="hamburger">
+          <div class="mobile-topbar mx-4 border-[1px] px-4 rounded-md">
+            <button @click="toggleMobileSidebar" class="hamburger  ">
           <font-awesome-icon icon="bars" />
         </button>
           </div>
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  import EFormTopbar from './EFormTopbar.vue'
+  import EFormTopbar from './EFormTopbar.vue' 
   import EFormSidebar from './EFormSidebar.vue'
   import EFormMobileSidebar from './EFormMobileSidebar.vue'
   export default {
@@ -91,10 +91,9 @@
 
   .mobile-topbar {
     /* Styles for mobile topbar */
-    background-color: #fff;
-    padding-top: 20px;
+    /* padding-top: 20px;
     padding-bottom: 10px;
-    padding-right: 24px;
+    padding-right: 24px; */
     display: flex;
     justify-content: space-between;
   }

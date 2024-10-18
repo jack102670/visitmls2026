@@ -24,9 +24,6 @@
                     placeholder="Company Name" required />
                 <span v-if="validationErrors.company" class="text-red-500 text-sm">Please fill in this field</span>
             </div>
-        </div>
-
-        <div class="grid grid-cols-8 gap-2">
             <div class="col-span-1">
                 <label for="date" class="block mb-2 text-sm font-medium text-primary dark:text-white">Date Required:
                     <span class="text-red-500">*</span></label>
