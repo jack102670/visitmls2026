@@ -1,10 +1,10 @@
 <template>
-  <section >
+  <section>
     <div class="w-full ">
       <!-- Main grid -->
       <div className="grid md:grid-cols-8 xl:gap-8 px-4 pt-4 gap-2 ">
         <!-- 1st box -->
-        <div class="bg-white border-[1px] justify-between items-center rounded-md sm:col-span-2 w-full flex">
+        <div class="bg-white border-[1px] justify-between items-center rounded-md sm:col-span-2 w-full flex relative">
           <div class="flex flex-col justify-between items-start p-4 gap-2 space-y-2">
             <div>
               <h1 class="font-bold text-2xl text-primary">
@@ -12,9 +12,9 @@
               </h1>
               <p class="text-sm text-primary font-semibold">Other employee E-Forms</p>
             </div>
-            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" style="background-color: #160959;"
+            <button id="dropdownDefaultButton" style="background-color: #160959;"
               class="text-white bg-primary hover:bg-blue-800 max-h-[40px] focus:outline-none font-medium rounded-md text-sm px-8 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              type="button">
+              type="button" @click="toggleDropdown()">
               Request Type
               <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                 viewBox="0 0 10 6">
@@ -24,7 +24,7 @@
             </button>
             <!-- Dropdown menu -->
             <div id="dropdown"
-              class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+              class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 absolute top-full">
               <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                 <li>
                   <a href="#" @click="redirectTo('personnel-requisition')"
@@ -64,6 +64,7 @@
                 </li>
               </ul>
             </div>
+
           </div>
         </div>
         <!-- 2nd box -->
@@ -118,7 +119,8 @@
     data() {
       return {
         loading: false,
-        showModal: false
+        showModal: false,
+        isDropdownOpen: false,
       };
     },
     methods: {
@@ -127,12 +129,26 @@
           name: routeName
         });
       },
+      toggleDropdown() {
+        const dropdown = document.getElementById('dropdown');
+        dropdown.classList.toggle('hidden');
+        this.isDropdownOpen = !this.isDropdownOpen;
+      },
+      closeDropdown(event) {
+        const dropdown = document.getElementById('dropdown');
+        if (this.isDropdownOpen && !dropdown.contains(event.target) && !event.target.closest("#dropdownDefaultButton")) {
+          dropdown.classList.add('hidden');
+          this.isDropdownOpen = false;
+        }
+      }
     },
     mounted() {
       document.body.style.backgroundColor = "#F8FBFB";
+      document.addEventListener('click', this.closeDropdown);
     },
     beforeUnmount() {
       document.body.style.backgroundColor = "#CED1DA";
+      document.removeEventListener('click', this.closeDropdown);
     },
   };
 </script>
