@@ -91,7 +91,12 @@
 
 <script>
   export default {
-    isDisabled: true,
+    data (){
+      return {
+        isDisabled: true,
+      };
+    },
+
   }
 </script>
 

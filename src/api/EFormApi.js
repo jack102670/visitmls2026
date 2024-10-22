@@ -22,7 +22,7 @@ export const fetchHrData = async (username_id) => {
 export const PostSectionATrainingEvaluation = async (evaluationData) => {
     try {
         const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
-        console.log("API Base URL:", base_URL); 
+        // console.log("API Base URL:", base_URL); 
         const response = await axios.post(`${base_URL}/TrainingEvaluation`, evaluationData, {
             headers: {
                 'Content-Type': 'application/json',
@@ -34,6 +34,23 @@ export const PostSectionATrainingEvaluation = async (evaluationData) => {
         throw error;
     }
 };
+
+
+export const PostHODSectionAOrientationCheckList = async (checkListData) => {
+    try {
+        const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
+        // console.log("API Base URL:", base_URL);
+        const response = await axios.post(`${base_URL}/OrientationList`, checkListData, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error submitting the check list data:", error);
+        throw error;
+    }
+}
 
 
 // export const GetVerifierId = async () => { 

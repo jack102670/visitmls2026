@@ -7,6 +7,9 @@ import './input.css';
 import router from './router';
 import 'flowbite/dist/flowbite.min.css';
 import 'flowbite';
+import VTooltip from 'v-tooltip';
+import 'intl-tel-input/build/css/intlTelInput.css';
+
 
 
 import { FontAwesomeIcon } from '../src/icons/fontawesome';
@@ -19,6 +22,7 @@ app.config.globalProperties.$axios = axios;
 
 // Use the router
 app.use(router);
+app.use(VTooltip);
 
 // Mount the app to the DOM
 app.mount('#app');

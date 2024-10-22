@@ -132,7 +132,7 @@
                     this.emp_id = data.emp_id;
 
                 }
-                console.log("HR data:", this.user);
+                // console.log("HR data:", this.user);
                 }
                 catch (error) {
                 console.error('Error fetching HR data:', error);

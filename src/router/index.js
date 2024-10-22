@@ -1,77 +1,74 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory } from "vue-router";
 
-import Dashboard from '../views/Dashboard.vue';
+import Dashboard from "../views/Dashboard.vue";
 
-import Login from '../views/Login.vue';
-import editptw from '../views/Ptwedit.vue';
-import Newsidebar from '../components/Newsidebar.vue';
-import Managerequest from '../views/Managerequest.vue';
-import ManagerequestSafety from '../views/ManagerequestSafety.vue';
-import PTW from '../views/PTW.vue';
-import Loginstaff from '../views/Loginstaff.vue';
-import Vendorsignup from '../views/Vendorsignup.vue';
-import Myrequest2 from '../views/Myrequest2.vue';
-import PTWView from '../views/PTWview.vue';
-import cctvform from '../views/cctvform.vue';
-import badgeform from '../views/badgeform.vue';
-import Maskform from '../views/Maskform.vue';
-import Teskitform from '../views/Teskitform.vue';
-import visitorescorttour from '../views/visitor-escort-tour.vue';
-import Incidentreportform from '../views/Incidentreportform.vue';
-import manageVendor from '../views/AccApproval.vue';
-import testing from '../views/Testing.vue';
-import Dashboardvendor from '../views/Dashboardvendor.vue';
-import Incidentreportsafety from '../views/Incidentreportsafety.vue';
-import UserHomepage from '../components/e-claim/UserHomepage.vue';
-import AdminHomepage from '../components/e-claim/AdminHomepage.vue';
-import SummaryReport from '../views/e-claim/SummaryReport';
-import organizationchart from '../views/organizationchart.vue';
-import CreateNewClaim from '../views/e-claim/CreateNewClaim.vue';
-import ClaimReport from '../views/e-claim/ClaimReport.vue';
-import TabTest from '../views/e-claim/TabTest.vue';
-import { store } from '../views/store.js';
-import Eclaimhomepage from '../views/e-claim/user-ui/eclaimhomepage.vue';
-import FormTab from '../views/e-claim/user-ui/FormTab.vue';
-import testing2 from '../views/Testing2.vue';
-import organizationchartdemo from '../views/organizationchartdemo.vue';
-import AdminSummaryClaimpage from '../components/e-claim/AdminSummaryClaimpage.vue';
-import AdminHRSummaryClaimpage from '../components/e-claim/AdminHRSummaryClaimpage.vue';
-import AdminDashboardpage from '../components/e-claim/AdminDashboardpage.vue';
-import AdminHRDashboardpage from '../components/e-claim/AdminHRDashboardpage.vue';
-import UserFirstTimeLogin from '../components/e-claim/UserFirstTimeLogin.vue';
-import UserProfile from '../components/e-claim/UserProfile.vue';
-import Homepage from '../views/homepage.vue';
-import verified from '../views/e-claim/verifiedpage.vue';
-import AssignChecker from '../components/e-claim/AssignChecker.vue';
-import HRRegisterEmployee from '../components/e-claim/HRRegisterEmployee.vue';
-import SummaryClaimpage from '../views/e-claim/user-ui/SummaryClaimpage.vue';
-import VerifierSummaryClaimpage from '../views/e-claim/user-ui/VerifierSummaryClaimpage.vue';
-import HRViewEmployee from '../components/e-claim/HRViewEmployee.vue';
-import checkerDashboardpage from '../views/e-claim/checkerDashboardpage.vue';
-import checkerClaimpage from '../views/e-claim/checkerClaimpage.vue';
-import NotFound from '../views/pagenotfound.vue';
-import AdminHODpage from '@/components/e-claim/AdminHODpage.vue';
-import AdminHODClaimpage from '@/components/e-claim/AdminHODClaimpage.vue';
+import Login from "../views/Login.vue";
+import editptw from "../views/Ptwedit.vue";
+import Newsidebar from "../components/Newsidebar.vue";
+import Managerequest from "../views/Managerequest.vue";
+import ManagerequestSafety from "../views/ManagerequestSafety.vue";
+import PTW from "../views/PTW.vue";
+import Loginstaff from "../views/Loginstaff.vue";
+import Vendorsignup from "../views/Vendorsignup.vue";
+import Myrequest2 from "../views/Myrequest2.vue";
+import PTWView from "../views/PTWview.vue";
+import cctvform from "../views/cctvform.vue";
+import badgeform from "../views/badgeform.vue";
+import Maskform from "../views/Maskform.vue";
+import Teskitform from "../views/Teskitform.vue";
+import visitorescorttour from "../views/visitor-escort-tour.vue";
+import Incidentreportform from "../views/Incidentreportform.vue";
+import manageVendor from "../views/AccApproval.vue";
+import testing from "../views/Testing.vue";
+import Dashboardvendor from "../views/Dashboardvendor.vue";
+import Incidentreportsafety from "../views/Incidentreportsafety.vue";
+import UserHomepage from "../components/e-claim/UserHomepage.vue";
+import AdminHomepage from "../components/e-claim/AdminHomepage.vue";
+import SummaryReport from "../views/e-claim/SummaryReport";
+import organizationchart from "../views/organizationchart.vue";
+import CreateNewClaim from "../views/e-claim/CreateNewClaim.vue";
+import ClaimReport from "../views/e-claim/ClaimReport.vue";
+import TabTest from "../views/e-claim/TabTest.vue";
+import { store } from "../views/store.js";
+import Eclaimhomepage from "../views/e-claim/user-ui/eclaimhomepage.vue";
+import FormTab from "../views/e-claim/user-ui/FormTab.vue";
+import testing2 from "../views/Testing2.vue";
+import organizationchartdemo from "../views/organizationchartdemo.vue";
+import AdminSummaryClaimpage from "../components/e-claim/AdminSummaryClaimpage.vue";
+import AdminHRSummaryClaimpage from "../components/e-claim/AdminHRSummaryClaimpage.vue";
+import AdminDashboardpage from "../components/e-claim/AdminDashboardpage.vue";
+import AdminHRDashboardpage from "../components/e-claim/AdminHRDashboardpage.vue";
+import UserFirstTimeLogin from "../components/e-claim/UserFirstTimeLogin.vue";
+import UserProfile from "../components/e-claim/UserProfile.vue";
+import Homepage from "../views/homepage.vue";
+import verified from "../views/e-claim/verifiedpage.vue";
+import AssignChecker from "../components/e-claim/AssignChecker.vue";
+import HRRegisterEmployee from "../components/e-claim/HRRegisterEmployee.vue";
+import SummaryClaimpage from "../views/e-claim/user-ui/SummaryClaimpage.vue";
+import VerifierSummaryClaimpage from "../views/e-claim/user-ui/VerifierSummaryClaimpage.vue";
+import HRViewEmployee from "../components/e-claim/HRViewEmployee.vue";
+import checkerDashboardpage from "../views/e-claim/checkerDashboardpage.vue";
+import checkerClaimpage from "../views/e-claim/checkerClaimpage.vue";
+import NotFound from "../views/pagenotfound.vue";
+import AdminHODpage from "@/components/e-claim/AdminHODpage.vue";
+import AdminHODClaimpage from "@/components/e-claim/AdminHODClaimpage.vue";
 
 // e-forms
 
-import EFormDashboard from "../views/e-forms/EDashboard/EFormDashboard.vue"
-import EFormNavbar from "../components/EFormComponent/eNavbar/EFormNavbar.vue"
-import PersonnelRequisition from "../views/e-forms/RequestedType/PersonnelRequisition.vue"
-import OnJobTraining from "../views/e-forms/RequestedType/OnJobTraining.vue"
-import EmployeeTransfer from "../views/e-forms/RequestedType/EmployeeTransfer.vue"
-import JobDescription from "../views/e-forms/RequestedType/JobDescription.vue"
-import OrientationChecklist from "../views/e-forms/RequestedType/OrientationChecklist.vue"
-import TrainingEvaluation from "../views/e-forms/RequestedType/TrainingEvaluation.vue"
-import verifyRequest from '@/views/e-forms/VerifyRequest/verifyRequest.vue';
-
-
-
+import EFormDashboard from "../views/e-forms/EDashboard/EFormDashboard.vue";
+import EFormNavbar from "../components/EFormComponent/eNavbar/EFormNavbar.vue";
+import PersonnelRequisition from "../views/e-forms/RequestedType/PersonnelRequisition.vue";
+import OnJobTraining from "../views/e-forms/RequestedType/OnJobTraining.vue";
+import EmployeeTransfer from "../views/e-forms/RequestedType/EmployeeTransfer.vue";
+import JobDescription from "../views/e-forms/RequestedType/JobDescription.vue";
+import OrientationChecklist from "../views/e-forms/RequestedType/OrientationChecklist.vue";
+import TrainingEvaluation from "../views/e-forms/RequestedType/TrainingEvaluation.vue";
+import verifyRequest from "@/views/e-forms/VerifyRequest/verifyRequest.vue";
 
 const routes = [
   {
-    path: '/VerifierClaimpage/:rn',
-    name: 'VerifierSummaryClaimpage',
+    path: "/VerifierClaimpage/:rn",
+    name: "VerifierSummaryClaimpage",
     components: {
       default: VerifierSummaryClaimpage,
       Sidebar: Newsidebar,
@@ -79,16 +76,16 @@ const routes = [
     props: true,
   },
   {
-    path: '/verified',
-    name: 'verified',
+    path: "/verified",
+    name: "verified",
     components: {
       default: verified,
       Sidebar: Newsidebar,
     },
   },
   {
-    path: '/checkerclaimpage/:rn',
-    name: 'checkerClaimpage',
+    path: "/checkerclaimpage/:rn",
+    name: "checkerClaimpage",
     components: {
       default: checkerClaimpage,
       Sidebar: Newsidebar,
@@ -96,62 +93,62 @@ const routes = [
     props: true,
   },
   {
-    path: '/checker',
-    name: 'checkerDashboardPage',
+    path: "/checker",
+    name: "checkerDashboardPage",
     components: {
       default: checkerDashboardpage,
       Sidebar: Newsidebar,
     },
   },
   {
-    path: '/homepage',
-    name: 'UserHomepage',
+    path: "/homepage",
+    name: "UserHomepage",
     components: {
       default: Homepage,
       Sidebar: Newsidebar,
     },
   },
   {
-    path: '/test2',
-    name: 'testing2',
+    path: "/test2",
+    name: "testing2",
     components: {
       default: testing2,
     },
   },
   {
-    path: '/eclaimhomepage',
-    name: 'eclaimhomepages',
+    path: "/eclaimhomepage",
+    name: "eclaimhomepages",
     components: {
       default: Eclaimhomepage,
       Sidebar: Newsidebar,
     },
   },
   {
-    path: '/organizationchart/demo',
-    name: 'organizationchartdemo',
+    path: "/organizationchart/demo",
+    name: "organizationchartdemo",
     components: {
       default: organizationchartdemo,
     },
   },
   {
-    path: '/organizationchart',
-    name: 'organizationchart',
+    path: "/organizationchart",
+    name: "organizationchart",
     components: {
       default: organizationchart,
     },
   },
 
   {
-    path: '/eclaimadmin',
-    name: 'AdminHomepage',
+    path: "/eclaimadmin",
+    name: "AdminHomepage",
     components: {
       default: AdminHomepage,
       Sidebar: Newsidebar,
     },
   },
   {
-    path: '/adminsummaryclaim/:rn',
-    name: 'AdminSummaryClaimpage',
+    path: "/adminsummaryclaim/:rn",
+    name: "AdminSummaryClaimpage",
     components: {
       default: AdminSummaryClaimpage,
       Sidebar: Newsidebar,
@@ -159,8 +156,8 @@ const routes = [
     props: true,
   },
   {
-    path: '/summaryclaim/:rn',
-    name: 'SummaryClaimpage',
+    path: "/summaryclaim/:rn",
+    name: "SummaryClaimpage",
     components: {
       default: SummaryClaimpage,
       Sidebar: Newsidebar,
@@ -168,8 +165,8 @@ const routes = [
     props: true,
   },
   {
-    path: '/adminhrsummaryclaim/:rn',
-    name: 'AdminHRSummaryClaimpage',
+    path: "/adminhrsummaryclaim/:rn",
+    name: "AdminHRSummaryClaimpage",
     components: {
       default: AdminHRSummaryClaimpage,
       Sidebar: Newsidebar,
@@ -177,24 +174,24 @@ const routes = [
     props: true,
   },
   {
-    path: '/admindashboard',
-    name: 'AdminDashboardpage',
+    path: "/admindashboard",
+    name: "AdminDashboardpage",
     components: {
       default: AdminDashboardpage,
       Sidebar: Newsidebar,
     },
   },
   {
-    path: '/adminhoddashboard',
-    name: 'AdminHODpage',
+    path: "/adminhoddashboard",
+    name: "AdminHODpage",
     components: {
       default: AdminHODpage,
       Sidebar: Newsidebar,
     },
   },
   {
-    path: '/adminhodclaim/:rn',
-    name: 'AdminHODClaimpage',
+    path: "/adminhodclaim/:rn",
+    name: "AdminHODClaimpage",
     components: {
       default: AdminHODClaimpage,
       Sidebar: Newsidebar,
@@ -202,32 +199,32 @@ const routes = [
     props: true,
   },
   {
-    path: '/adminhrdashboard',
-    name: 'AdminHRDashboardpage',
+    path: "/adminhrdashboard",
+    name: "AdminHRDashboardpage",
     components: {
       default: AdminHRDashboardpage,
       Sidebar: Newsidebar,
     },
   },
   {
-    path: '/registeremployee',
-    name: 'HrRegisteremployee',
+    path: "/registeremployee",
+    name: "HrRegisteremployee",
     components: {
       default: HRRegisterEmployee,
       Sidebar: Newsidebar,
     },
   },
   {
-    path: '/viewemployee',
-    name: 'HrViewemployee',
+    path: "/viewemployee",
+    name: "HrViewemployee",
     components: {
       default: HRViewEmployee,
       Sidebar: Newsidebar,
     },
   },
   {
-    path: '/assignchecker',
-    name: 'AssignChecker',
+    path: "/assignchecker",
+    name: "AssignChecker",
     components: {
       default: AssignChecker,
       Sidebar: Newsidebar,
@@ -235,8 +232,8 @@ const routes = [
   },
 
   {
-    path: '/eclaim/',
-    name: 'eclaimuser',
+    path: "/eclaim/",
+    name: "eclaimuser",
     components: {
       default: UserHomepage,
       Sidebar: Newsidebar,
@@ -244,8 +241,8 @@ const routes = [
   },
 
   {
-    path: '/firsttimelogin',
-    name: 'UserFirstTimeLogin',
+    path: "/firsttimelogin",
+    name: "UserFirstTimeLogin",
     components: {
       default: UserFirstTimeLogin,
       Sidebar: Newsidebar,
@@ -253,8 +250,8 @@ const routes = [
   },
 
   {
-    path: '/profile',
-    name: 'UserProfile',
+    path: "/profile",
+    name: "UserProfile",
     components: {
       default: UserProfile,
       Sidebar: Newsidebar,
@@ -262,8 +259,8 @@ const routes = [
   },
 
   {
-    path: '/newclaim',
-    name: 'CreateNewClaim',
+    path: "/newclaim",
+    name: "CreateNewClaim",
     components: {
       default: CreateNewClaim,
       Sidebar: Newsidebar,
@@ -271,8 +268,8 @@ const routes = [
   },
 
   {
-    path: '/claimreport',
-    name: 'ClaimReport',
+    path: "/claimreport",
+    name: "ClaimReport",
     components: {
       default: ClaimReport,
       Sidebar: Newsidebar,
@@ -280,16 +277,16 @@ const routes = [
   },
 
   {
-    path: '/tab',
-    name: 'FormTab',
+    path: "/tab",
+    name: "FormTab",
     components: {
       default: FormTab,
     },
   },
 
   {
-    path: '/summary',
-    name: 'SummaryReport',
+    path: "/summary",
+    name: "SummaryReport",
     components: {
       default: SummaryReport,
       Sidebar: Newsidebar,
@@ -297,8 +294,8 @@ const routes = [
   },
 
   {
-    path: '/tabtest',
-    name: 'tabtesting',
+    path: "/tabtest",
+    name: "tabtesting",
     components: {
       default: TabTest,
       Sidebar: Newsidebar,
@@ -306,144 +303,144 @@ const routes = [
   },
 
   {
-    path: '/test',
-    name: 'testing',
+    path: "/test",
+    name: "testing",
     components: {
       default: testing,
     },
   },
 
   {
-    path: '/Dashboard/',
-    name: 'Dashboard',
+    path: "/Dashboard/",
+    name: "Dashboard",
     components: {
       default: Dashboard,
       Sidebar: Newsidebar,
     },
     children: [
       {
-        path: '',
-        name: 'NewrequestDefault',
+        path: "",
+        name: "NewrequestDefault",
         component: Myrequest2,
       },
 
       {
-        path: 'cctvform',
-        name: 'cctvform',
+        path: "cctvform",
+        name: "cctvform",
         component: cctvform,
       },
       {
-        path: 'mask',
-        name: 'Maskform',
+        path: "mask",
+        name: "Maskform",
         component: Maskform,
       },
       {
-        path: 'badge',
-        name: 'badgeform',
+        path: "badge",
+        name: "badgeform",
         component: badgeform,
       },
       {
-        path: 'Teskit',
-        name: 'Teskitform',
+        path: "Teskit",
+        name: "Teskitform",
         component: Teskitform,
       },
       {
-        path: 'visitorescorttour',
-        name: 'visitorescorttour',
+        path: "visitorescorttour",
+        name: "visitorescorttour",
         component: visitorescorttour,
       },
       {
-        path: 'Incidentreport',
-        name: 'Incidentreportform',
+        path: "Incidentreport",
+        name: "Incidentreportform",
         component: Incidentreportform,
       },
       {
-        path: 'Incidentreportsafety',
-        name: 'Incidentreportsafety',
+        path: "Incidentreportsafety",
+        name: "Incidentreportsafety",
         component: Incidentreportsafety,
       },
       {
-        path: 'PTW',
-        name: 'PTWdjasdh',
+        path: "PTW",
+        name: "PTWdjasdh",
         component: PTW,
       },
     ],
   },
   {
-    path: '/Dashboardvendor/',
-    name: 'Dashboardvendor',
+    path: "/Dashboardvendor/",
+    name: "Dashboardvendor",
     components: {
       default: Dashboardvendor,
       Sidebar: Newsidebar,
     },
     children: [
       {
-        path: '',
-        name: 'NewrequestDefault2',
+        path: "",
+        name: "NewrequestDefault2",
         component: Myrequest2,
       },
 
       {
-        path: 'ptw',
-        name: 'DashboardvendorPTW',
+        path: "ptw",
+        name: "DashboardvendorPTW",
         component: PTW,
       },
       {
-        path: '/PTWview2/:refNumber',
-        name: 'PTWview2',
+        path: "/PTWview2/:refNumber",
+        name: "PTWview2",
         component: PTWView,
       },
       {
-        path: 'ptwedit',
-        name: 'ptwedit',
+        path: "ptwedit",
+        name: "ptwedit",
         component: editptw,
       },
     ],
   },
 
   {
-    path: '/PTWView/:refNumber',
-    name: 'PTWView',
+    path: "/PTWView/:refNumber",
+    name: "PTWView",
     components: {
       default: PTWView,
       Sidebar: Newsidebar,
     },
   },
   {
-    path: '/Myrequest2',
-    name: 'Myrequest2',
+    path: "/Myrequest2",
+    name: "Myrequest2",
     components: {
       default: Myrequest2,
       Sidebar: Newsidebar,
     },
   },
   {
-    path: '/manageVendor',
-    name: 'manageVendor',
+    path: "/manageVendor",
+    name: "manageVendor",
     components: {
       default: manageVendor,
       Sidebar: Newsidebar,
     },
   },
   {
-    path: '/PTW',
-    name: 'PTW',
+    path: "/PTW",
+    name: "PTW",
     components: {
       default: PTW,
       Sidebar: Newsidebar,
     },
   },
   {
-    path: '/ManagerequestSafety',
-    name: 'ManagerequestSafety',
+    path: "/ManagerequestSafety",
+    name: "ManagerequestSafety",
     components: {
       default: ManagerequestSafety,
       Sidebar: Newsidebar,
     },
   },
   {
-    path: '/Managerequest',
-    name: 'Managerequest',
+    path: "/Managerequest",
+    name: "Managerequest",
     components: {
       default: Managerequest,
       Sidebar: Newsidebar,
@@ -451,132 +448,129 @@ const routes = [
   },
 
   {
-    path: '/Vendorlogin',
-    name: 'Login',
+    path: "/Vendorlogin",
+    name: "Login",
     component: Login,
   },
   {
-    path: '/',
-    name: 'Loginstaff',
+    path: "/",
+    name: "Loginstaff",
     component: Loginstaff,
   },
   {
-    path: '/Registervendor',
-    name: 'Vendorsingup',
+    path: "/Registervendor",
+    name: "Vendorsingup",
     component: Vendorsignup,
   },
   {
-    path: '/:pathMatch(.*)*', // This regex matches any route
-    name: 'NotFound',
+    path: "/:pathMatch(.*)*", // This regex matches any route
+    name: "NotFound",
     component: NotFound,
   },
   // e-forms section
   {
-    path: '/e-dashboard',
-    name: 'e-dashboard',
+    path: "/e-dashboard",
     component: EFormNavbar,
-    children : [
+    children: [
       {
-        path: '',
-        component: EFormDashboard
-      }
+        path: "",
+        name: "e-dashboard",
+        component: EFormDashboard,
+      },
     ],
     props: true,
-
   },
   {
-    path: '/verify-request',
-    name: 'verify-request',
+    path: "/verify-request",
+    
     component: EFormNavbar,
-    children : [
+    children: [
       {
-        path: '',
-        component: verifyRequest
-      }
+        path: "",
+        name: "verify-request",
+        component: verifyRequest,
+      },
     ],
     props: true,
-
   },
   {
-    path: '/personnel-requisition',
-    name: 'personnel-requisition',
+    path: "/personnel-requisition",
+   
     component: EFormNavbar,
-    children : [
+    children: [
       {
-        path: '',
-        component: PersonnelRequisition
-      }
+        path: "",
+        name: "personnel-requisition",
+        component: PersonnelRequisition,
+      },
     ],
     props: true,
-
   },
   {
-    path: '/on-job-training',
-    name: 'on-job-training',
+    path: "/on-job-training",
+    
     component: EFormNavbar,
-    children : [
+    children: [
       {
-        path: '',
-        component: OnJobTraining
-      }
+        path: "",
+        name: "on-job-training",
+        component: OnJobTraining,
+      },
     ],
     props: true,
-
   },
   {
-    path: '/employee-transfer',
-    name: 'employee-transfer',
+    path: "/employee-transfer",
+   
     component: EFormNavbar,
-    children : [
+    children: [
       {
-        path: '',
-        component: EmployeeTransfer
-      }
+        path: "",
+        name: "employee-transfer",
+        component: EmployeeTransfer,
+      },
     ],
     props: true,
-
   },
   {
-    path: '/job-description',
-    name: 'job-description',
+    path: "/job-description",
+    
     component: EFormNavbar,
-    children : [
+    children: [
       {
-        path: '',
-        component: JobDescription
-      }
+        path: "",
+        name: "job-description",
+        component: JobDescription,
+      },
     ],
     props: true,
-
   },
   {
-    path: '/orientation-checklist',
-    name: 'orientation-checklist',
+    path: "/orientation-checklist",
+    
     component: EFormNavbar,
-    children : [
+    children: [
       {
-        path: '',
-        component: OrientationChecklist
-      }
+        path: "",
+        name: "orientation-checklist",
+        component: OrientationChecklist,
+      },
     ],
     props: true,
-
   },
   {
-    path: '/training-evaluation',
-    name: 'training-evaluation',
+    path: "/training-evaluation",
+   
     component: EFormNavbar,
-    children : [
+    children: [
       {
-        path: '',
-        component: TrainingEvaluation
-      }
+        path: "",
+        name: "training-evaluation",
+        component: TrainingEvaluation,
+      },
     ],
     props: true,
-
-  }
-
-
+  },
 ];
 
 const router = createRouter({
@@ -593,45 +587,45 @@ function checkUserStatusAndShowModal() {
       .then((response) => response.json()) // Parse the response body to JSON
       .then((data) => {
         const userStatus = data.result[0].account_status;
-        console.log('User status:', userStatus);
-        if (userStatus === '0') {
+        console.log("User status:", userStatus);
+        if (userStatus === "0") {
           resolve(false); // User has not completed their profile
         } else {
           resolve(true); // User has completed their profile
         }
       })
       .catch((error) => {
-        console.error('There was an error fetching the user status:', error);
+        console.error("There was an error fetching the user status:", error);
         reject(error);
       });
   });
 }
 
 // Step 2: Define routes that require profile completion checks
-const routesRequiringProfileCheck = ['eclaimhomepages']; // Add route names that require profile completion
+const routesRequiringProfileCheck = ["eclaimhomepages"]; // Add route names that require profile completion
 
 // Step 3: Modify the router.beforeEach guard
 router.beforeEach((to, from, next) => {
-  const publicPages = ['Login', 'Loginstaff', 'Vendorsingup', 'testing']; // Add other public route names as necessary
+  const publicPages = ["Login", "Loginstaff", "Vendorsingup", "testing"]; // Add other public route names as necessary
   const authRequired = !publicPages.includes(to.name);
   const session = store.getSession();
 
   if (authRequired && !session) {
-    next({ name: 'Loginstaff' });
+    next({ name: "Loginstaff" });
   } else if (session) {
     // Check if the route requires profile completion
     if (routesRequiringProfileCheck.includes(to.name)) {
       checkUserStatusAndShowModal()
         .then((isProfileComplete) => {
-          if (!isProfileComplete && to.path !== '/firsttimelogin') {
-            next('/firsttimelogin');
+          if (!isProfileComplete && to.path !== "/firsttimelogin") {
+            next("/firsttimelogin");
           } else {
             next();
           }
         })
         .catch((error) => {
-          console.error('Error checking user status:', error);
-          next('/error');
+          console.error("Error checking user status:", error);
+          next("/error");
         });
     } else {
       next(); // Allow navigation for routes that don't require profile completion
