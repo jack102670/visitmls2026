@@ -55,7 +55,7 @@ import AdminHODClaimpage from "@/components/e-claim/AdminHODClaimpage.vue";
 
 // e-forms
 
-import EFormDashboard from "../views/e-forms/EDashboard/EFormDashboard.vue";
+import EFormDashboard from "../views/e-forms/Edashboard/EformDashboard.vue";
 import EFormNavbar from "../components/EFormComponent/eNavbar/EFormNavbar.vue";
 import PersonnelRequisition from "../views/e-forms/RequestedType/PersonnelRequisition.vue";
 import OnJobTraining from "../views/e-forms/RequestedType/OnJobTraining.vue";
