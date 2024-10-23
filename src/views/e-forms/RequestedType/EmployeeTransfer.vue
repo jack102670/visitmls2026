@@ -11,10 +11,10 @@
       <div class="space-y-2">
         <UserProfileData />
           <EmployeeTransferForm />
-          <HODRequestForm />
+          <!-- <HODRequestForm />
           <HRDRequestForm />
           <HODAccusitionDecision />
-          <HRDFinalRequest />
+          <HRDFinalRequest /> -->
       </div>
     </div>
   </div>
@@ -33,10 +33,10 @@ export default {
     breadcrumbs,
     UserProfileData,
     EmployeeTransferForm,
-    HODRequestForm,
-    HRDRequestForm,
-    HODAccusitionDecision,
-    HRDFinalRequest
+    // HODRequestForm,
+    // HRDRequestForm,
+    // HODAccusitionDecision,
+    // HRDFinalRequest
 
   },
   data() {
