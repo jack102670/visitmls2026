@@ -1,112 +1,101 @@
 <template>
     <div class="space-y-4 border border-[1px] rounded-md px-4 py-2">
         <h1 class="font-bold text-md py-2">A. Employee Particulars</h1>
-        <div class="grid grid-cols-8 gap-2 mt-4">
-
-            <div class="col-span-1">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
                 <label for="employee_name" class="block mb-2 text-sm font-medium text-primary dark:text-white">Name of
                     Employee: <span class="text-red-500">*</span></label>
-            </div>
-            <div class="col-span-3">
                 <input type="text" id="employee_name" v-model="EmployeeTransfer.employee_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Input Name" required />
-                    <span v-if="validationErrors.employee_name" class="text-red-500 text-sm">Please fill in this
-                        field.</span>
+                <span v-if="validationErrors.employee_name" class="text-red-500 text-sm">Please fill in this
+                    field.</span>
             </div>
-            <div class="col-span-1">
-                <label for="current_designation" class="block mb-2 text-sm font-medium text-primary dark:text-white">Current
+
+            <div>
+                <label for="current_designation"
+                    class="block mb-2 text-sm font-medium text-primary dark:text-white">Current
                     Designation: <span class="text-red-500">*</span></label>
-            </div>
-            <div class="col-span-3">
                 <input type="text" id="current_designation" v-model="EmployeeTransfer.current_designation"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Input Current Designation" required />
-                    <span v-if="validationErrors.current_designation" class="text-red-500 text-sm">Please fill in this
-                        field.</span>
-
+                <span v-if="validationErrors.current_designation" class="text-red-500 text-sm">Please fill in this
+                    field.</span>
             </div>
-        </div>
-        <div class="grid grid-cols-8 gap-2 mt-4">
 
-            <div class="col-span-1">
+            <div>
                 <label for="company_name" class="block mb-2 text-sm font-medium text-primary dark:text-white">Name of
                     Company: <span class="text-red-500">*</span></label>
-            </div>
-            <div class="col-span-3">
                 <input type="text" id="company_name" v-model="EmployeeTransfer.company_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Input Name of Company" required />
-                    <span v-if="validationErrors.company_name" class="text-red-500 text-sm">Please fill in this
-                        field.</span>
+                <span v-if="validationErrors.company_name" class="text-red-500 text-sm">Please fill in this
+                    field.</span>
             </div>
-            <div class="col-span-1">
-                <label for="department" class="block mb-2 text-sm font-medium text-primary dark:text-white">Department: <span class="text-red-500">*</span></label>
-            </div>
-            <div class="col-span-3">
+
+            <div>
+                <label for="department" class="block mb-2 text-sm font-medium text-primary dark:text-white">Department:
+                    <span class="text-red-500">*</span></label>
                 <input type="text" id="department" v-model="EmployeeTransfer.department"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Input Department" required />
-                    <span v-if="validationErrors.department" class="text-red-500 text-sm">Please fill in this
-                        field.</span>
+                <span v-if="validationErrors.department" class="text-red-500 text-sm">Please fill in this
+                    field.</span>
             </div>
-        </div>
-        <div class="grid grid-cols-8 gap-2">
-            <div class="col-span-1">
-                <label for="highest_qualification" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
+
+            <div>
+                <label for="highest_qualification"
+                    class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
                     Highest Qualification: <span class="text-red-500">*</span></label>
-            </div>
-            <div class="col-span-3">
                 <input id="highest_qualification" rows="4" v-model="EmployeeTransfer.highest_qualification"
                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Write the highest qualification here" />
-                    <span v-if="validationErrors.highest_qualification" class="text-red-500 text-sm">Please fill in this field.</span>
+                <span v-if="validationErrors.highest_qualification" class="text-red-500 text-sm">Please fill in this
+                    field.</span>
             </div>
+
         </div>
         <hr class="border border-b-[1px]" />
         <h1 class="font-bold text-md py-2">B. Requisition for Transfer</h1>
-        <div class="grid grid-cols-8 gap-2">
-            <div class="col-span-1">
-                <label for="position_interested" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <label for="position_interested"
+                    class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
                     Position Interested <span class="text-red-500">*</span></label>
-            </div>
-            <div class="col-span-3">
                 <input id="position_interested" rows="4" v-model="EmployeeTransfer.position_interested"
                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Position Interested" required />
-                    <span v-if="validationErrors.position_interested" class="text-red-500 text-sm">Please fill in this field.</span>
+                <span v-if="validationErrors.position_interested" class="text-red-500 text-sm">Please fill in this
+                    field.</span>
             </div>
-            <div class="col-span-1">
-                <label for="department_interested" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
+            <div>
+                <label for="department_interested"
+                    class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
                     Department <span class="text-red-500">*</span></label>
-            </div>
-            <div class="col-span-3">
                 <input id="department_interested" rows="4" v-model="EmployeeTransfer.department_interested"
                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Department interested" required />
-                    <span v-if="validationErrors.department_interested" class="text-red-500 text-sm">Please fill in this field.</span>
+                <span v-if="validationErrors.department_interested" class="text-red-500 text-sm">Please fill in this
+                    field.</span>
             </div>
         </div>
-        <div class="grid grid-cols-8 gap-2">
-            <div class="col-span-1">
-                <label for="RelatedWorkExperience" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
-                    Do you have any work experience related to the position applied for?  If yes, kindly elaborate:</label>
-            </div>
-            <div class="col-span-7">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <label for="RelatedWorkExperience"
+                    class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
+                    Do you have any work experience related to the position applied for? If yes, kindly
+                    elaborate:</label>
                 <textarea id="RelatedWorkExperience" rows="4" v-model="EmployeeTransfer.RelatedWorkExperience"
                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Write related work experience to the position applied" ></textarea>
+                    placeholder="Write related work experience to the position applied"></textarea>
             </div>
-        </div>
-        <div class="grid grid-cols-8 gap-2">
-            <div class="col-span-1">
-                <label for="reasonFortransfer" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
+            <div>
+                <label for="reasonFortransfer"
+                    class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
                     Reason for transfer Request</label>
-            </div>
-            <div class="col-span-7">
                 <textarea id="reasonFortransfer" rows="4" v-model="EmployeeTransfer.reasonFortransfer"
                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Write reason for transfer request" ></textarea>
+                    placeholder="Write reason for transfer request"></textarea>
             </div>
         </div>
         <div class="grid grid-cols-8 space-x-2 mt-4">
@@ -123,10 +112,9 @@
     </div>
 </template>
 <script>
-
-import Swal from 'sweetalert2';
+    import Swal from 'sweetalert2';
     export default {
-        data(){
+        data() {
             return {
                 EmployeeTransfer: {
                     position_interested: '',
@@ -143,18 +131,16 @@ import Swal from 'sweetalert2';
             }
         },
         methods: {
-            validateForm(){
+            validateForm() {
                 this.validationErrors = {};
-                if(!this.EmployeeTransfer.position_interested) this.validationErrors.position_interested = true;
-                if(!this.EmployeeTransfer.department_interested) this.validationErrors.department_interested = true;
-                if(!this.EmployeeTransfer.highest_qualification) this.validationErrors.highest_qualification = true;
-                if(!this.EmployeeTransfer.employee_name) this.validationErrors.employee_name = true;
-                if(!this.EmployeeTransfer.current_designation) this.validationErrors.current_designation = true;
-                if(!this.EmployeeTransfer.company_name) this.validationErrors.company_name = true;
-                if(!this.EmployeeTransfer.department) this.validationErrors.department = true;
+                if (!this.EmployeeTransfer.position_interested) this.validationErrors.position_interested = true;
+                if (!this.EmployeeTransfer.department_interested) this.validationErrors.department_interested = true;
+                if (!this.EmployeeTransfer.highest_qualification) this.validationErrors.highest_qualification = true;
+                if (!this.EmployeeTransfer.employee_name) this.validationErrors.employee_name = true;
+                if (!this.EmployeeTransfer.current_designation) this.validationErrors.current_designation = true;
+                if (!this.EmployeeTransfer.company_name) this.validationErrors.company_name = true;
+                if (!this.EmployeeTransfer.department) this.validationErrors.department = true;
                 return Object.keys(this.validationErrors).length === 0;
-
-
             },
             confirmExit() {
                 Swal.fire({
@@ -171,7 +157,6 @@ import Swal from 'sweetalert2';
                         this.$router.push('/e-dashboard');
                     }
                 });
-
             },
             submitForm() {
                 if (this.validateForm()) {
@@ -187,14 +172,14 @@ import Swal from 'sweetalert2';
                             console.log('Form data saved:', this.EmployeeTransfer);
                             this.EmployeeTransfer = {
                                 position_interested: '',
-                    department_interested: '',
-                    highest_qualification: '',
-                    employee_name: '',
-                    current_designation: '',
-                    company_name: '',
-                    department: '',
-                    reasonFortransfer: '',
-                    RelatedWorkExperience: '',
+                                department_interested: '',
+                                highest_qualification: '',
+                                employee_name: '',
+                                current_designation: '',
+                                company_name: '',
+                                department: '',
+                                reasonFortransfer: '',
+                                RelatedWorkExperience: '',
                             };
                             Swal.fire({
                                 title: 'Saved!',

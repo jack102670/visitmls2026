@@ -185,7 +185,7 @@
         </div>
       </div>
     </div>
-    <div class="mt-6 flex flex-col sm:flex-row justify-end gap-y-1 space-y-2 sm:space-y-0 sm:space-x-4">
+    <div class=" py-2 flex flex-col sm:flex-row justify-end gap-y-1 space-y-2 sm:space-y-0 sm:space-x-4">
       <button @click.prevent="confirmExit"
         class="bg-transparent text-rejected px-10 py-2 rounded-md border-2 border-rejected font-bold order-2 sm:order-1">
         Back
