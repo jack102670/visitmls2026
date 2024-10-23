@@ -22,7 +22,7 @@
 
 <script>
 import Swal from 'sweetalert2';
-import store from '../../../views/store.js';
+import {store } from '../../../views/store.js';
   export default {
     props: {
       dataOpenSideBar: Boolean,
@@ -38,36 +38,35 @@ import store from '../../../views/store.js';
     },
     methods: {
       async logout() {
-      const result = await Swal.fire({
-        title: 'Are you sure you want to logout?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Logout!',
-      });
-
-      if (result.isConfirmed) {
-        try {
-          store.clearSession();
-          this.$router.push('/');
-
-          Swal.fire({
-            icon: 'success',
-            title: 'You have been logged out.',
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        } catch (error) {
-          console.error('Error during logout:', error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-          });
+        const result = await Swal.fire({
+          title: 'Are you sure you want to logout?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, Logout!',
+        });
+        if (result.isConfirmed) {
+          try {
+            store.clearSession();
+            this.$router.push('/');
+            Swal.fire({
+              icon: 'success',
+              title: 'You have been logged out.',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          } catch (error) {
+            console.error('Error during logout:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+              confirmButtonColor: '#3085d6',
+            });
+          }
         }
       }
-    }
     }
   }
 </script>

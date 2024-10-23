@@ -42,9 +42,9 @@
     },
     data() {
       return {
-        openSidebar: false, // Start with sidebar closed
+        openSidebar: true,
         openMobileSidebar: false,
-        isMobile: false, // For mobile detection
+        isMobile: false, 
       };
     },
     mounted() {
@@ -56,13 +56,13 @@
     },
     methods: {
       toggleSidebar() {
-        this.openSidebar = !this.openSidebar; // Toggle the sidebar open state
+        this.openSidebar = !this.openSidebar; 
       },
       toggleMobileSidebar() {
-        this.openMobileSidebar = !this.openMobileSidebar; // Toggle the sidebar open state
+        this.openMobileSidebar = !this.openMobileSidebar;
       },
       checkScreenSize() {
-        this.isMobile = window.innerWidth <= 768; // Adjust breakpoint as necessary
+        this.isMobile = window.innerWidth <= 768;
       }
     },
   };
@@ -74,7 +74,7 @@
     display: flex;
     height: 100vh;
     /* Full height of the viewport */
-    /* overflow: hidden; */
+    overflow: hidden;
   }
 
   .content-container {
