@@ -15,6 +15,9 @@
     <!-- description -->
     <div class="flex flex-col justify-between h-screen bg-primary overflow-y-auto  ">
       <div :class="dataOpenSideBar ? 'py-4 px-4 pt-8' : ' '" class="space-y-2">
+        <div>
+
+
         <div
           :class="['py-3 px-2 border-2 border-primary hover:bg-[#2d2169] hover:border-2 ', dataOpenSideBar ? '' : 'justify-center items-center text-center']"
           class="rounded-md cursor-pointer text-white hover:text-dark">
@@ -28,6 +31,8 @@
               :style="{ color: '#ffffff', fontSize: '20px' }" />
           </router-link>
         </div>
+      </div>
+        <div>
         <router-link to="/e-dashboard">
           <div
             :class="['py-3 px-2 border-2 border-primary hover:bg-[#2d2169] hover:border-2 cursor-pointer', dataOpenSideBar ? '' : 'justify-center items-center text-center']"
@@ -44,6 +49,7 @@
             </div>
           </div>
         </router-link>
+      </div>
         <div
           :class="['py-3 px-2 border-2 border-primary hover:bg-[#2d2169] hover:border-2 ', dataOpenSideBar ? '' : 'justify-center items-center text-center', dropdownOpen ? 'bg-[#2d2169] border-2 ' : '']"
           class="rounded-md cursor-pointer text-white hover:text-dark">
@@ -81,7 +87,7 @@
             </div>
           </transition>
         </div>
-
+        <div>
         <router-link to="/verify-request">
           <div
             :class="['py-3 px-2 border-2 border-primary hover:bg-[#2d2169] hover:border-2 ', dataOpenSideBar ? '' : 'justify-center items-center text-center']"
@@ -98,11 +104,12 @@
             </div>
           </div>
         </router-link>
-
-        <div
-          :class="[' px-2 border-2 border-primary hover:bg-[#2d2169] hover:border-2 ', dataOpenSideBar ? '' : 'justify-center items-center text-center']"
+      </div>
+        <div @click="logout">
+        <div 
+          :class="['py-3 px-2 border-2 border-primary hover:bg-[#2d2169] hover:border-2 ', dataOpenSideBar ? '' : 'justify-center items-center text-center']"
           class="rounded-md cursor-pointer text-white hover:text-dark ">
-          <div class="px-2 flex space-x-2 justify-between items-center " @click="logout">
+          <div class="px-2 flex space-x-2 justify-between items-center " >
             <div
               :class="dataOpenSideBar ? 'flex space-x-2 items-center ' : 'flex justify-center items-center w-full  '">
               <font-awesome-icon icon="sign-out-alt" v-tooltip.right="'Logout'"
@@ -113,6 +120,7 @@
               :style="{ color: '#ffffff', fontSize: '20px' }" />
           </div>
         </div>
+      </div>
       </div>
     </div>
   </div>

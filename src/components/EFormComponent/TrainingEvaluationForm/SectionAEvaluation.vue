@@ -42,7 +42,7 @@
                     </label>
                     <input type="text" id="traineeName" v-model="form.name"
                         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Trainee Name" required />
+                        placeholder="Trainee Name" required readonly />
                     <span v-if="validationErrors.name" class="text-red-500 text-xs">Please fill in this field</span>
                 </div>
                 <div class="space-y-2">
@@ -325,13 +325,42 @@
                     trainingBenefit: '',
                     generalComment: '',
                     requesterId: '',
-                    verifierId: '9D0DA821-5DE0-42E5-B268-B5E0BC40E8D1',
+                    verifierEmpId: '9D0DA821-5DE0-42E5-B268-B5E0BC40E8D1',
                 },
                 validationErrors: {},
                 isSubmittedForm: false,
+                user: {
+                    name: '',
+                    email_address: '',
+                    department: '',
+                    branch: '',
+                    emp_id: '',
+                },
             }
         },
         methods: {
+            async fetchHrData() {
+            const username_id = store.getSession().userDetails.userId;
+            this.loadingText = 'Fetching';
+            this.loading = true;
+            try {
+                // fetch user and input user data here
+                const data = await fetchHrData(username_id);
+                if (data) {
+                    
+                    this.user = data;
+                    this.form.name = data.name; 
+                    this.form.verifierEmpId = data.reporting_to;
+                }
+                console.log("Employee Data:", this.user);
+            } catch (error) {
+                console.error('Error fetching Employee data:', error);
+                throw new Error('Failed to fetch Employee data. Please try again.');
+            } finally {
+                this.loading = false;
+            }
+        },
+
             selectTrainingNature(trainingNature) {
                 const index = this.form.trainingNature.indexOf(trainingNature);
                 if (index > -1) {
@@ -397,9 +426,9 @@
                                     ...this.form,
                                     trainingNature: this.form.trainingNature.join(', '),
                                 };
-                                // console.log("Data to be submitted:", evaluationData);
+                                console.log("Data to be submitted:", evaluationData);
                                 const response = await PostSectionATrainingEvaluation(evaluationData);
-                                // console.log("Form submitted successfully:", response);
+                                console.log("Form submitted successfully:", response);
 
 
                                 Swal.close();
@@ -464,6 +493,7 @@
             },
         },
         mounted() {
+            this.fetchHrData(); 
             flatpickr(this.$refs.datepicker, {
                 dateFormat: "Y-m-d",
             });

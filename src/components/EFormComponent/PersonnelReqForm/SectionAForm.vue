@@ -187,20 +187,6 @@
         data() {
             return {
                 fileName: '',
-                // form: {
-                //     justificationOrReason: this.formData.sectionA.justificationOrReason || '',
-                //     position: this.formData.sectionA.position || '',
-                //     company: this.formData.sectionA.company || '',
-                //     dateRequired: this.formData.sectionA.dateRequired || '',
-                //     department: this.formData.sectionA.department || '',
-                //     noofpersonnel: this.formData.sectionA.noofpersonnel || '',
-                //     location: this.formData.sectionA.location || '',
-                //     basicSalary: this.formData.sectionA.basicSalary || '',
-                //     requisitionIfFor: this.formData.sectionA.requisitionIfFor || '',
-                //     manPowerRequestIs: this.formData.sectionA.manPowerRequestIs || '',
-                //     personReplacement: this.formData.sectionA.personReplacement || '',
-                //     reasonForUnbudgeted: this.formData.sectionA.reasonForUnbudgeted || '',
-                // },
                 form: this.formData.sectionA || {
                     justificationOrReason: '',
                     position: '',
