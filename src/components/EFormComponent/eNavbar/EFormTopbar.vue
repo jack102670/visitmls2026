@@ -13,14 +13,16 @@
 
       </div>
       <div class="flex space-x-4 items-center justify-center px-4">
-        <font-awesome-icon :icon="['fas', 'circle-half-stroke']" :style="{ color: '#160959', fontSize: '20px' }" />
-        <font-awesome-icon icon="sign-out-alt" class="" :style="{ color: '#160959', fontSize:'20px' }" />
+        <font-awesome-icon :icon="['fas', 'circle-half-stroke']" class="cursor-pointer" :style="{ color: '#160959', fontSize: '20px' }" />
+        <font-awesome-icon @click="logout" icon="sign-out-alt" class="cursor-pointer" :style="{ color: '#160959', fontSize:'20px' }" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Swal from 'sweetalert2';
+import store from '../../../views/store.js';
   export default {
     props: {
       dataOpenSideBar: Boolean,
@@ -34,7 +36,39 @@
         isAdminLoggedIn: false,
       }
     },
-    methods: {}
+    methods: {
+      async logout() {
+      const result = await Swal.fire({
+        title: 'Are you sure you want to logout?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Logout!',
+      });
+
+      if (result.isConfirmed) {
+        try {
+          store.clearSession();
+          this.$router.push('/');
+
+          Swal.fire({
+            icon: 'success',
+            title: 'You have been logged out.',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } catch (error) {
+          console.error('Error during logout:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          });
+        }
+      }
+    }
+    }
   }
 </script>
 
