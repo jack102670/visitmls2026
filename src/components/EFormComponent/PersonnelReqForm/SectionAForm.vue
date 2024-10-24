@@ -141,9 +141,6 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Reason for unbudgeted" />
             </div>
-
-        </div>
-        <div class="grid grid-cols-1">
             <div>
                 <label for="position" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
                     Kindly Attach Job Description & Organization Chart:
@@ -153,10 +150,10 @@
                     aria-describedby="file_input_help" id="file_input" type="file">
                 <p class="mt-1 text-xs  text-right" id="file_input_help">Attachment(s):
                     WORDS, PDF, SVG, PNG, or JPG
-                    (MAX. 800x400px)</p>
-
+                    (MAX. 5MB)</p>
             </div>
-
+        </div>
+        <div class="grid grid-cols-1">
         <hr class="w-full border-b border-b-[1px] my-4" />
             <div >
                 <label for="justificationOrReason"

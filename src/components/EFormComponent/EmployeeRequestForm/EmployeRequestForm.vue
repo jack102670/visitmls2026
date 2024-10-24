@@ -43,20 +43,22 @@
             </div>
 
             <div>
-    <label for="highestQualification" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
-        Highest Qualification: <span class="text-red-500">*</span></label>
-    <select id="highestQualification" v-model="EmployeeTransfer.highestQualification"
-        class="bg-gray-50 dark:border-gray-600 dark:placeholder-gray-400 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-        <option value="" class="text-gray-400" disabled selected>Select Your Highest Qualification</option>
-        <option value="SPM">SPM</option>
-        <option value="STPM">STPM</option>
-        <option value="Diploma">Diploma</option>
-        <option value="Barchelors Degree">Bachelor's Degree</option> <!-- fixed typo -->
-        <option value="Masters Degree">Master's Degree</option>
-        <option value="PhD">PhD</option>
-    </select>
-    <span v-if="validationErrors.highestQualification" class="text-red-500 text-sm">Please fill in this field.</span>
-</div>
+                <label for="highestQualification"
+                    class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
+                    Highest Qualification: <span class="text-red-500">*</span></label>
+                <select id="highestQualification" v-model="EmployeeTransfer.highestQualification"
+                    class="bg-gray-50 dark:border-gray-600 dark:placeholder-gray-400 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value="" class="text-gray-400" disabled selected>Select Your Highest Qualification</option>
+                    <option value="SPM">SPM</option>
+                    <option value="STPM">STPM</option>
+                    <option value="Diploma">Diploma</option>
+                    <option value="Barchelors Degree">Bachelor's Degree</option> 
+                    <option value="Masters Degree">Master's Degree</option>
+                    <option value="PhD">PhD</option>
+                </select>
+                <span v-if="validationErrors.highestQualification" class="text-red-500 text-sm">Please fill in this
+                    field.</span>
+            </div>
             <div class="space-y-2">
                 <label for="date" class="block text-sm font-medium text-primary dark:text-white">
                     Commencement Date: <span class="text-red-500">*</span>
@@ -133,190 +135,183 @@
     </div>
 </template>
 <script>
-import Swal from 'sweetalert2';
-import { fetchHrData, PostSectionAEmployeeRequest } from '@/api/EFormApi.js';
-import {
-    store
-} from '@/views/store.js';
-import flatpickr from 'flatpickr';
-export default {
-    data() {
-        return {
-            EmployeeTransfer: {
-                name: '',
-                designation: '',
-                company: '',
-                commencementDate: '',
-                positionInterested: '',
-                transferDept: '',
-                department: '',
-                highestQualification: '',
-                transferReason: '',
-                workExp: '',
-                requesterId: '',
-                verifierEmpId: '',
-
-            },
-            validationErrors: {},
-            isSubmittedForm: false,
-
-        }
-    },
-    mounted() {
-        this.fetchHrData();
-        // flatpickr(this.$refs.datepicker, {
-        // dateFormat: "Y-m-d",
-        // });
-        this.$nextTick(() => {
-            if (this.$refs.datepicker) {
-                flatpickr(this.$refs.datepicker, {
-                    dateFormat: 'Y-m-d',
-                    onChange: (selectedDates) => {
-                        this.EmployeeTransfer.commencementDate = selectedDates[0];
-                    },
-                });
+    import Swal from 'sweetalert2';
+    import {
+        fetchHrData,
+        PostSectionAEmployeeRequest
+    } from '@/api/EFormApi.js';
+    import {
+        store
+    } from '@/views/store.js';
+    import flatpickr from 'flatpickr';
+    export default {
+        data() {
+            return {
+                EmployeeTransfer: {
+                    name: '',
+                    designation: '',
+                    company: '',
+                    commencementDate: '',
+                    positionInterested: '',
+                    transferDept: '',
+                    department: '',
+                    highestQualification: '',
+                    transferReason: '',
+                    workExp: '',
+                    requesterId: '',
+                    verifierEmpId: '',
+                },
+                validationErrors: {},
+                isSubmittedForm: false,
             }
-        });
-    },
-    methods: {
-        async fetchHrData() {
-            const username_id = store.getSession().userDetails.userId;
-            this.loadingText = 'Fetching';
-            this.loading = true;
-
-            try {
-                const data = await fetchHrData(username_id);
-                if (data) {
-                    this.user = data;
-                    this.EmployeeTransfer.name = data.name;
-                    this.EmployeeTransfer.designation = data.position_title;
-                    this.EmployeeTransfer.verifierEmpId = data.reporting_to;
-                    this.EmployeeTransfer.company = data.company_name;
-                    this.EmployeeTransfer.department = data.department;
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                throw new Error('Failed to fetch data. Please try again.');
-            } finally {
-                this.loading = false;
-            }
-
         },
-
-        validateForm() {
-            this.validationErrors = {};
-            if (!this.EmployeeTransfer.positionInterested) this.validationErrors.positionInterested = true;
-            if (!this.EmployeeTransfer.department) this.validationErrors.department = true;
-            if (!this.EmployeeTransfer.highestQualification) this.validationErrors.highestQualification = true;
-            if (!this.EmployeeTransfer.name) this.validationErrors.name = true;
-            if (!this.EmployeeTransfer.designation) this.validationErrors.designation = true;
-            if (!this.EmployeeTransfer.company) this.validationErrors.company = true;
-            if (!this.EmployeeTransfer.commencementDate) this.validationErrors.commencementDate = true;
-            if (!this.EmployeeTransfer.transferDept) this.validationErrors.transferDept = true;
-            return Object.keys(this.validationErrors).length === 0;
-        },
-        confirmExit() {
-            Swal.fire({
-                title: 'Are you sure you want to exit?',
-                text: 'Any unsaved changes will be lost!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, exit',
-                cancelButtonText: 'No, stay'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    this.$router.push('/e-dashboard');
+        mounted() {
+            this.fetchHrData();
+            // flatpickr(this.$refs.datepicker, {
+            // dateFormat: "Y-m-d",
+            // });
+            this.$nextTick(() => {
+                if (this.$refs.datepicker) {
+                    flatpickr(this.$refs.datepicker, {
+                        dateFormat: 'Y-m-d',
+                        onChange: (selectedDates) => {
+                            this.EmployeeTransfer.commencementDate = selectedDates[0];
+                        },
+                    });
                 }
             });
         },
-        submitForm() {
-            const username_id = store.getSession().userDetails.userId;
-            this.EmployeeTransfer.requesterId = username_id;
-            if (this.validateForm()) {
+        methods: {
+            async fetchHrData() {
+                const username_id = store.getSession().userDetails.userId;
+                this.loadingText = 'Fetching';
+                this.loading = true;
+                try {
+                    const data = await fetchHrData(username_id);
+                    if (data) {
+                        this.user = data;
+                        this.EmployeeTransfer.name = data.name;
+                        this.EmployeeTransfer.designation = data.position_title;
+                        this.EmployeeTransfer.verifierEmpId = data.reporting_to;
+                        this.EmployeeTransfer.company = data.company_name;
+                        this.EmployeeTransfer.department = data.department;
+                    }
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                    throw new Error('Failed to fetch data. Please try again.');
+                } finally {
+                    this.loading = false;
+                }
+            },
+            validateForm() {
+                this.validationErrors = {};
+                if (!this.EmployeeTransfer.positionInterested) this.validationErrors.positionInterested = true;
+                if (!this.EmployeeTransfer.department) this.validationErrors.department = true;
+                if (!this.EmployeeTransfer.highestQualification) this.validationErrors.highestQualification = true;
+                if (!this.EmployeeTransfer.name) this.validationErrors.name = true;
+                if (!this.EmployeeTransfer.designation) this.validationErrors.designation = true;
+                if (!this.EmployeeTransfer.company) this.validationErrors.company = true;
+                if (!this.EmployeeTransfer.commencementDate) this.validationErrors.commencementDate = true;
+                if (!this.EmployeeTransfer.transferDept) this.validationErrors.transferDept = true;
+                return Object.keys(this.validationErrors).length === 0;
+            },
+            confirmExit() {
                 Swal.fire({
-                    title: 'Are you sure you want to submit?',
+                    title: 'Are you sure you want to exit?',
+                    text: 'Any unsaved changes will be lost!',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, Submit!'
-                }).then(async (result) => {
+                    confirmButtonText: 'Yes, exit',
+                    cancelButtonText: 'No, stay'
+                }).then((result) => {
                     if (result.isConfirmed) {
-                        console.log('Form data saved:', this.EmployeeTransfer);
-                        try {
-                            Swal.fire({
-                                title: 'Submitting...',
-                                text: 'Please wait while we submit your data.',
-                                allowOutsideClick: false,
-                                didOpen: () => {
-                                    Swal.showLoading();
-                                }
-                            })
-                            const EmployeeTransferData = {
-                                ...this.EmployeeTransfer,
-
-                            };
-                            console.log("Data to be submitted:", EmployeeTransferData);
-                            const response = await PostSectionAEmployeeRequest(EmployeeTransferData);
-                            console.log("Form Submitted Successfully", response);
-
-                            Swal.close();
-
-                            Swal.fire({
-                                title: 'Saved!',
-                                text: 'Your data has been saved.',
-                                confirmButtonColor: '#3085d6',
-                                icon: 'success',
-                                confirmButtonText: 'OK'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    this.$router.push('/e-dashboard');
-                                }
-                            });
-
-                            this.isSubmittedForm = true;
-                            this.resetForm();
-                        } catch (error) {
-                            Swal.close();
-
-                            console.error('Submission failed:', error.response ? error.response.data : error.message);
-                            Swal.fire({
-                                title: 'Error!',
-                                text: error.response ? error.response.data.message ||
-                                    'Submission failed. Please try again later.' :
-                                    'Submission failed. Please try again later.',
-                                icon: 'error',
-                                confirmButtonColor: '#3085d6',
-                                confirmButtonText: 'OK'
-                            });
-                        }
+                        this.$router.push('/e-dashboard');
                     }
                 });
-            } else {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Please fill in all required fields.',
-                    icon: 'error',
-                    confirmButtonColor: '#3085d6',
-                    confirmButtonText: 'OK'
-                });
+            },
+            submitForm() {
+                const username_id = store.getSession().userDetails.userId;
+                this.EmployeeTransfer.requesterId = username_id;
+                if (this.validateForm()) {
+                    Swal.fire({
+                        title: 'Are you sure you want to submit?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, Submit!'
+                    }).then(async (result) => {
+                        if (result.isConfirmed) {
+                            console.log('Form data saved:', this.EmployeeTransfer);
+                            try {
+                                Swal.fire({
+                                    title: 'Submitting...',
+                                    text: 'Please wait while we submit your data.',
+                                    allowOutsideClick: false,
+                                    didOpen: () => {
+                                        Swal.showLoading();
+                                    }
+                                })
+                                const EmployeeTransferData = {
+                                    ...this.EmployeeTransfer,
+                                };
+                                console.log("Data to be submitted:", EmployeeTransferData);
+                                const response = await PostSectionAEmployeeRequest(EmployeeTransferData);
+                                console.log("Form Submitted Successfully", response);
+                                Swal.close();
+                                Swal.fire({
+                                    title: 'Saved!',
+                                    text: 'Your data has been saved.',
+                                    confirmButtonColor: '#3085d6',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        this.$router.push('/e-dashboard');
+                                    }
+                                });
+                                this.isSubmittedForm = true;
+                                this.resetForm();
+                            } catch (error) {
+                                Swal.close();
+                                console.error('Submission failed:', error.response ? error.response.data :
+                                    error.message);
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: error.response ? error.response.data.message ||
+                                        'Submission failed. Please try again later.' :
+                                        'Submission failed. Please try again later.',
+                                    icon: 'error',
+                                    confirmButtonColor: '#3085d6',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Please fill in all required fields.',
+                        icon: 'error',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            },
+            resetForm() {
+                this.EmployeeTransfer = {
+                    commencementDate: '',
+                    positionInterested: '',
+                    transferDept: '',
+                    highestQualification: '',
+                    transferReason: '',
+                    workExp: '',
+                    requesterId: '',
+                    verifierEmpId: '',
+                };
             }
         },
-        resetForm() {
-            this.EmployeeTransfer = {
-                commencementDate: '',
-                positionInterested: '',
-                transferDept: '',
-                highestQualification: '',
-                transferReason: '',
-                workExp: '',
-                requesterId: '',
-                verifierEmpId: '',
-            };
-        }
-    },
-
-}
+    }
 </script>

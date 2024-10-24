@@ -78,20 +78,35 @@ export const PostSectionAEmployeeRequest = async (EmployeeTransferData) => {
   }
 };
 
-// export const GetVerifierId = async () => {
-//     try {
-//         const base_URL = process.env.VUE_APP_API_BASE_URL;
-//         console.log("API Base URL:", base_URL);
-//         const response = await axios.get(`${base_URL}/User/GetEmployeeById/${username_id}`, {
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//         });
-//         return response.data;
-//     } catch (error) {
-//         console.error("Error fetching verifier ID:", error);
-//         throw error;
-//     }
-//  };
+export const getCompanyName = async () => {
+  try {
+    const base_URL = process.env.VUE_APP_API_BASE_URL_HUD;
+    const response = await axios.get(`${base_URL}/User/GetCompany`);
 
-// .get(`http://172.28.28.91:99/api/User/GetEmployeeById/${username_id}`)
+    if (response.data.result) {
+      // console.log("Company name:", response.data.result);
+    } else {
+      // console.log("Company name not found");
+    }
+    return response.data.result;
+  } catch (error) {
+    console.error("Error fetching company name:", error);
+    throw error;
+  }
+};
+
+export const getDepartment = async () => {
+  try {
+    const base_URL = process.env.VUE_APP_API_BASE_URL_HUD;
+    const response = await axios.get(`${base_URL}/User/GetDepartment`);
+    if (response.data.result) {
+      // console.log("Department name:", response.data.result);
+    } else {
+      // console.log("Department name not found");
+    }
+    return response.data.result;
+  }catch (error) {
+    console.error("Error fetching department name:", error);
+    throw error;
+  }
+};

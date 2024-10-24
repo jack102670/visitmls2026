@@ -16,18 +16,34 @@
           <label for="company" class="block mb-1 text-sm font-medium text-primary dark:text-white">
             Company: <span class="text-red-500">*</span>
           </label>
-          <input type="text" id="company" v-model="EmployeeForm.company"
-            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Company" required />
+          <select id="company" v-model="EmployeeForm.company"
+            class="bg-gray-50 dark:border-gray-600 dark:placeholder-gray-400 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value="" class="text-gray-400" disabled>Select Company</option>
+            <option v-for="company in Companies" :key="company.company_code" :value="company.company_name"
+              class="text-gray-900 text-sm">
+              {{ company.company_name }} 
+            </option>
+            <option v-if="Companies.length === 0" disabled>No companies available</option>
+          </select>
           <span v-if="validationErrors.company" class="text-red-500 text-sm">Please fill in this field.</span>
         </div>
+
         <div>
           <label for="department" class="block mb-1 text-sm font-medium text-primary dark:text-white">
             Department: <span class="text-red-500">*</span>
           </label>
-          <input type="text" id="department" v-model="EmployeeForm.department"
+          <!-- <input type="text" id="department" v-model="EmployeeForm.department"
             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Department" required />
+            placeholder="Department" required /> -->
+            <select id="department" v-model="EmployeeForm.department"
+            class="bg-gray-50 dark:border-gray-600 dark:placeholder-gray-400 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value="" class="text-gray-400" disabled>Select Department</option>
+            <option v-for="department in Departments" :key="department.department" :value="department.department"
+              class="text-gray-900 text-sm">
+              {{ department.department }} 
+            </option>
+            <option v-if="Departments.length === 0" disabled>No deparments available</option>
+          </select>
           <span v-if="validationErrors.department" class="text-red-500 text-sm">Please fill in this field.</span>
         </div>
         <div>
@@ -202,7 +218,9 @@ import Swal from 'sweetalert2';
 import flatpickr from 'flatpickr';
 import 'intl-tel-input/build/css/intlTelInput.css';
 import {
-  PostHODSectionAOrientationCheckList
+  PostHODSectionAOrientationCheckList,
+  getCompanyName,
+  getDepartment
 } from '@/api/EFormApi.js'
 export default {
   data() {
@@ -232,27 +250,51 @@ export default {
       },
       validationErrors: {},
       showOtherInput: false,
+      Companies: [],
+      Departments: [],
     }
   },
+  async created() {
+    await this.getListCompanyName();
+    await this.getListOfDepartments();
+  },
   methods: {
-    //   initPhoneInput() {
-    //   const phoneInput = this.$refs.phoneInput;
-    //   this.phoneInstance = intlTelInput(phoneInput, {
-    //     initialCountry: 'auto',
-    //     geoIpLookup: this.getCountryCode,
-    //     utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@17/build/js/utils.js',
-    //   });
-    //   phoneInput.addEventListener('countrychange', this.handleCountryChange);
-    // },
-    // getCountryCode(callback) {
-    //   fetch('https://ipinfo.io/json?token=<YOUR_IPINFO_TOKEN>')
-    //     .then((response) => response.json())
-    //     .then((data) => callback(data.country))
-    //     .catch(() => callback('us'));
-    // },
-    // handleCountryChange() {
-    //   this.EmployeeForm.phone = this.phoneInstance.getNumber();
-    // },
+    async getListCompanyName() {
+      try {
+        const data = await getCompanyName();
+        if (Array.isArray(data)) {
+          this.Companies = data;
+          // console.log('This is the list of Companies:');
+          // this.Companies.forEach(company => {
+          //   console.log(company.company_name);
+          // });
+        } else {
+          console.error('Unexpected response format:', data);
+          throw new Error('Unexpected. Failed to fetch companies.');
+        }
+      } catch (error) {
+        console.error('Error fetching companies:', error);
+        throw new Error('Failed to fetch companies.');
+      }
+    },
+    async getListOfDepartments() {
+      try {
+        const data = await getDepartment();
+        if (Array.isArray(data)) {
+          this.Departments = data;
+          // console.log('This is the list of Companies:');
+          // this.Departments.forEach(department => {
+          //   console.log(department.department);
+          // });
+        } else {
+          console.error('Unexpected response format:', data);
+          throw new Error('Failed to fetch departments.');
+        } 
+      }catch (error) {
+          console.error('Error fetching departments:', error);
+          throw new Error('Failed to fetch departments.');
+        }
+    },
     updateCheckboxValue(field, event) {
       this.EmployeeForm[field] = event.target.checked ? '1' : '0';
     },
@@ -375,19 +417,9 @@ export default {
       };
       this.showOtherInput = false;
     },
-    // initializePhoneInput() {
-    //   const phoneInput = this.$refs.phoneInput;
-    //   if (phoneInput) {
-    //     this.phoneInputInstance = intlTelInput(phoneInput, {
-    //       initialCountry: 'myr',
-    //       utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js', 
-    //     });
-    //   } else {
-    //     console.warn('Phone input not found!');
-    //   }
-    // }
   },
   mounted() {
+    // this.getListCompanyName();
     flatpickr(this.$refs.datepicker, {
       dateFormat: "Y-m-d",
     });
