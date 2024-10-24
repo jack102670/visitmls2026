@@ -51,7 +51,7 @@
                     </label>
                     <input type="text" id="traineeDesignation" v-model="form.designation"
                         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Trainee Designation" required />
+                        placeholder="Trainee Designation" required readonly />
                     <span v-if="validationErrors.designation" class="text-red-500 text-xs">Please fill in this
                         field</span>
                 </div>
@@ -92,7 +92,7 @@
                     </label>
                     <input type="text" id="TrainingInstitution" v-model="form.trainingInstitution"
                         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Training Institution" required />
+                        placeholder="Training Institution" required readonly />
                     <span v-if="validationErrors.trainingInstitution" class="text-red-500 text-xs">
                         Please fill in this field.
                     </span>
@@ -300,7 +300,7 @@
     import flatpickr from 'flatpickr';
     import {
         PostSectionATrainingEvaluation,
-        fetchHrData
+        fetchHrData 
     } from '@/api/EFormApi';
     import {
         store
@@ -325,7 +325,7 @@
                     trainingBenefit: '',
                     generalComment: '',
                     requesterId: '',
-                    verifierEmpId: '9D0DA821-5DE0-42E5-B268-B5E0BC40E8D1',
+                    verifierEmpId: '',
                 },
                 validationErrors: {},
                 isSubmittedForm: false,
@@ -341,6 +341,7 @@
         methods: {
             async fetchHrData() {
             const username_id = store.getSession().userDetails.userId;
+            // console.log("This is the current usernameid", username_id);
             this.loadingText = 'Fetching';
             this.loading = true;
             try {
@@ -351,6 +352,8 @@
                     this.user = data;
                     this.form.name = data.name; 
                     this.form.verifierEmpId = data.reporting_to;
+                    this.form.designation = data.position_title;
+                    this.form.trainingInstitution = data.company_name;
                 }
                 console.log("Employee Data:", this.user);
             } catch (error) {
