@@ -55,7 +55,7 @@
                 <span class="text-red-500 text-sm" v-if="validationErrors.noofpersonnel">Please fill in this
                     field</span>
             </div>
-            <div >
+            <div>
                 <label for="location" class="block mb-2 text-sm font-medium text-primary dark:text-white">Location:
                     <span class="text-red-500">*</span></label>
                 <input type="text" id="location" v-model="form.location"
@@ -154,8 +154,8 @@
             </div>
         </div>
         <div class="grid grid-cols-1">
-        <hr class="w-full border-b border-b-[1px] my-4" />
-            <div >
+            <hr class="w-full border-b border-b-[1px] my-4" />
+            <div>
                 <label for="justificationOrReason"
                     class="block mb-2 text-sm font-medium text-primary dark:text-white italic">Justification / Reason
                     for request : </label>
@@ -163,7 +163,7 @@
                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Write your comments here"></textarea>
             </div>
-    </div>
+        </div>
         <div class="grid grid-cols-8 space-x-2 mt-4">
             <div class="col-span-8 flex justify-end">
                 <button @click.prevent="confirmExit"
@@ -178,95 +178,115 @@
     </div>
 </template>
 <script>
-    import Swal from 'sweetalert2';
-    export default {
-        props: ['formData'],
-        data() {
-            return {
-                fileName: '',
-                form: this.formData.sectionA || {
-                    justificationOrReason: '',
-                    position: '',
-                    company: '',
-                    dateRequired: '',
-                    department: '',
-                    noofpersonnel: '',
-                    location: '',
-                    basicSalary: '',
-                    requisitionIfFor: '',
-                    manPowerRequestIs: '',
-                    personReplacement: '',
-                    reasonForUnbudgeted: '',
-                },
-                validationErrors: {},
+import Swal from 'sweetalert2';
+// import { fetchHrData } from '@/api/EFormApi';
+
+export default {
+    props: ['formData'],
+    data() {
+        return {
+            fileName: '',
+            form: this.formData.sectionA || {
+                justificationOrReason: '',
+                position: '',
+                company: '',
+                dateRequired: '',
+                department: '',
+                noofpersonnel: '',
+                location: '',
+                basicSalary: '',
+                requisitionIfFor: '',
+                manPowerRequestIs: '',
+                personReplacement: '',
+                reasonForUnbudgeted: '',
+            },
+            validationErrors: {},
+        }
+    },
+    methods: {
+        // async fetchHrData() {
+        //     const username_id = store.getSession().userDetails.userId;
+        //         this.loadingText = 'Fetching';
+        //         this.loading = true;
+        //     try {
+        //         const data = await fetchHrData(username_id);
+        //         if (data) {
+        //             this.user = data;
+        //             this.form.position = data.position_title;
+        //             this.form.company = data.company_name;
+        //             this.form.department = data.department;
+
+        //         }
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        // },
+
+    confirmExit() {
+        Swal.fire({
+            title: 'Are you sure you want to exit?',
+            text: 'Any unsaved changes will be lost!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, exit',
+            cancelButtonText: 'No, stay'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.$router.push('/e-dashboard');
             }
-        },
-        methods: {
-            confirmExit() {
-                Swal.fire({
-                    title: 'Are you sure you want to exit?',
-                    text: 'Any unsaved changes will be lost!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, exit',
-                    cancelButtonText: 'No, stay'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        this.$router.push('/e-dashboard');
-                    }
-                });
-            },
-            validateForm() {
-                this.validationErrors = {};
-                if (!this.form.position) this.validationErrors.position = true;
-                if (!this.form.company) this.validationErrors.company = true;
-                if (!this.form.dateRequired) this.validationErrors.dateRequired = true;
-                if (!this.form.department) this.validationErrors.department = true;
-                if (!this.form.noofpersonnel) this.validationErrors.noofpersonnel = true;
-                if (!this.form.location) this.validationErrors.location = true;
-                if (!this.form.basicSalary) this.validationErrors.basicSalary = true;
-                if (!this.form.requisitionIfFor) this.validationErrors.requisitionIfFor = true;
-                if (!this.form.manPowerRequestIs) this.validationErrors.manPowerRequestIs = true;
-                return Object.keys(this.validationErrors).length === 0;
-            },
-            handleFileUpload(event) {
-                const file = event.target.files[0].name;
-                if (file) {
-                    this.form.file = file;
-                    this.fileError = '';
-                } else {
-                    this.fileError = 'Please select a file';
+        });
+    },
+    validateForm() {
+        this.validationErrors = {};
+        if (!this.form.position) this.validationErrors.position = true;
+        if (!this.form.company) this.validationErrors.company = true;
+        if (!this.form.dateRequired) this.validationErrors.dateRequired = true;
+        if (!this.form.department) this.validationErrors.department = true;
+        if (!this.form.noofpersonnel) this.validationErrors.noofpersonnel = true;
+        if (!this.form.location) this.validationErrors.location = true;
+        if (!this.form.basicSalary) this.validationErrors.basicSalary = true;
+        if (!this.form.requisitionIfFor) this.validationErrors.requisitionIfFor = true;
+        if (!this.form.manPowerRequestIs) this.validationErrors.manPowerRequestIs = true;
+        return Object.keys(this.validationErrors).length === 0;
+    },
+    handleFileUpload(event) {
+        const file = event.target.files[0].name;
+        if (file) {
+            this.form.file = file;
+            this.fileError = '';
+        } else {
+            this.fileError = 'Please select a file';
+        }
+    },
+    handleNext() {
+        if (this.validateForm()) {
+            Swal.fire({
+                title: 'Are you sure you want to proceed to the next section?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, proceed',
+                cancelButtonText: 'No, stay here',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log('Form data saved:', this.form);
+                    this.$emit('update-form', this.form, 'A');
+                    this.$emit('next-section', this.form);
                 }
-            },
-            handleNext() {
-                if (this.validateForm()) {
-                    Swal.fire({
-                        title: 'Are you sure you want to proceed to the next section?',
-                        icon: 'question',
-                        showCancelButton: true,
-                        confirmButtonText: 'Yes, proceed',
-                        cancelButtonText: 'No, stay here',
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            console.log('Form data saved:', this.form);
-                            this.$emit('update-form', this.form, 'A');
-                            this.$emit('next-section', this.form);
-                        }
-                    });
-                } else {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'Please fill in all required fields.',
-                        icon: 'error',
-                        confirmButtonText: 'OK',
-                        confirmButtonColor: '#3085d6',
-                    });
-                }
-            },
-        },
+            });
+        } else {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Please fill in all required fields.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#3085d6',
+            });
+        }
+    },
+},
     }
 </script>

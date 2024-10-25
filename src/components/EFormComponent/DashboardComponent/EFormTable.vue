@@ -1,5 +1,4 @@
 <template>
-
   <div class="pb-4 bg-white dark:bg-gray-900 flex flex-col md:flex-row justify-between items-start md:items-end">
     <div class="mb-2 md:mb-0">
       <h4 class="font-bold text-primary text-md">
@@ -14,46 +13,64 @@
             d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
         </svg>
       </div>
-      <input type="text" id="table-search"
+      <input type="text" id="table-search" v-model="searchQuery"
         class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full md:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        placeholder="Search for items" />
+        placeholder="Search for applications" />
     </div>
   </div>
   <div class="relative overflow-x-auto sm:rounded-md">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-md">
-      <thead class="text-xs text-gray-700 uppercase bg-[#443a7a] dark:bg-gray-700 dark:text-gray-400 !rounded-t-md">
+      <thead class="text-md text-gray-700  bg-[#443a7a] dark:bg-gray-700 dark:text-gray-400 !rounded-t-md">
         <tr class="text-white font-bold ">
           <th scope="col" class="p-4"></th>
           <th scope="col" class="px-6 py-3">No</th>
           <th scope="col" class="px-6 py-3">Reference Number</th>
-          <th scope="col" class="px-6 py-3">Requested Date</th>
-          <th scope="col" class="px-6 py-3">Approved Date</th>
+          <th scope="col" class="px-6 py-3 cursor-pointer" @click="toggleSort('dateRequested')">
+            <div class="flex items-center">
+              Requested Date
+              <span class="ml-1">
+                <template v-if="sortField === 'dateRequested'">
+                  {{ sortDirection === 'desc' ? '↓' : '↑' }}
+                </template>
+                <template v-else>
+                  <span class="text-gray-300">↕</span>
+                </template>
+              </span>
+            </div>
+          </th>
+          <th scope="col" class="px-6 py-3">Request type</th>
+          <th scope="col" class="px-6 py-3">Requester Name</th>
+          <th scope="col" class="px-6 py-3">Requester Dept</th>
           <th scope="col" class="px-6 py-3">Status</th>
           <th scope="col" class="px-6 py-3">Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+        <tr v-for="(application, index) in paginatedApplications" :key="application.refNo"
+          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
           <td class="w-4 p-4"></td>
-          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-            1
-          </th>
-          <td class="px-6 py-4">123356778</td>
-          <td class="px-6 py-4">Wednesday, August 14, 2024 11:54 AM</td>
-          <td class="px-6 py-4">Wednesday, August 14, 2024 11:54 AM</td>
-          <td class="px-6 py-4">
-            Pending
+          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            {{ index + 1 }}
           </td>
-          <td class="px-6 py-2 flex flex-wrap sm:space-x-2 space-y-2 sm:space-y-0">
-            <button
-              class="w-full sm:w-auto flex-1 bg-transparent text-verified border-verified font-bold p-2 border-[2px] rounded-md hover:bg-verified hover:border-verified hover:text-white hover:border-[2px] text-sm sm:text-base">
-              View
-            </button>
-            <button
-              class="w-full sm:w-auto flex-1 bg-verified text-white font-bold p-2 border-[2px] border-verified rounded-md hover:bg-transparent hover:border-verified hover:text-verified hover:border-[2px] text-sm sm:text-base disabled"
-              :disabled="isDisabled">
-              <span> Download</span>
-            </button>
+          <td class="px-6 py-4">{{ application.refNo }}</td>
+          <td class="px-6 py-4">{{ application.dateRequested }}</td>
+          <td class="px-6 py-4">{{ application.requestType || 'N/A' }}</td>
+          <td class="px-6 py-4">{{ application.requesterName || 'N/A' }}</td>
+          <td class="px-6 py-4">{{ application.requesterDept || 'N/A' }}</td>
+          <td class="px-6 py-4">{{ application.status }}</td>
+          <td class="px-6 py-2">
+            <div class="flex flex-col sm:flex-row gap-2">
+              <button
+                class="flex-1 bg-transparent text-verified border-verified font-regular  px-2 py-1 border-[1px] rounded-md hover:bg-verified hover:border-verified hover:text-white hover:border-[1px] text-xs sm:text-xs">
+                View
+              </button>
+
+              <button
+                class="flex-1 bg-verified text-white font-regular  px-2 py-1 border-[1px] border-verified rounded-md hover:bg-transparent hover:border-verified hover:text-verified hover:border-[1px] text-xs sm:text-xs"
+                :disabled="isDisabled">
+                <span>Download</span>
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>
@@ -62,27 +79,46 @@
   <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between items-center pt-4"
     aria-label="Table navigation">
     <div>
-      <span
-        class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">Showing
-        <span class="font-semibold text-gray-900 dark:text-white">1-1</span> of <span
-          class="font-semibold text-gray-900 dark:text-white">1</span></span>
+      <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+      Showing <span class="font-semibold text-gray-900 dark:text-white">
+        {{ (currentPage - 1) * itemsPerPage + 1 }}-{{ Math.min(currentPage * itemsPerPage, filteredQueryApplications.length) }}
+      </span> 
+      of <span class="font-semibold text-gray-900 dark:text-white">{{ filteredQueryApplications.length }}</span>
+    </span>
     </div>
 
     <div>
-      <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-        <li>
-          <a href="#"
-            class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
-        </li>
-        <li>
-          <a href="#"
-            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-        </li>
-        <li>
-          <a href="#"
-            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-        </li>
-      </ul>
+      <ul class="inline-flex -space-x-px text-sm h-8">
+    <li>
+      <a href="#" 
+         @click="previousPage" 
+         :class="{ 'cursor-not-allowed opacity-50': currentPage === 1 }"
+         class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
+        Previous
+      </a>
+    </li>
+
+    <li v-for="page in totalPages" :key="page">
+      <a href="#" 
+         @click="goToPage(page)" 
+         :class="{
+           'bg-blue-500 text-dark': page === currentPage,
+           'text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-white': page !== currentPage
+         }"
+         class="flex items-center justify-center px-3 h-8 leading-tight bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700">
+        {{ page }}
+      </a>
+    </li>
+
+    <li>
+      <a href="#" 
+         @click="nextPage" 
+         :class="{ 'cursor-not-allowed opacity-50': currentPage >= totalPages }"
+         class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
+        Next
+      </a>
+    </li>
+  </ul>
     </div>
 
   </nav>
@@ -90,15 +126,106 @@
 </template>
 
 <script>
-  export default {
-    data (){
-      return {
-        isDisabled: true,
-      };
-    },
+import {
+  getAllApplication
+} from '@/api/EFormApi';
+import {
+  store
+} from '@/views/store.js';
 
+export default {
+  data() {
+    return {
+      loading: false,
+      errorMessage: "",
+      userApplications: [],
+      sortField: 'dateRequested',
+      sortDirection: 'desc',
+      searchQuery: '',
+
+      currentPage: 1,
+      itemsPerPage: 10,
+      isDisabled: true,
+
+    };
+  },
+  computed: {
+
+    filteredQueryApplications() {
+      const query = this.searchQuery.toLowerCase();
+      return this.sortedApplications.filter((application) =>
+        application.refNo.toLowerCase().includes(query) ||
+        application.status.toLowerCase().includes(query) ||
+        application.requestType.toLowerCase().includes(query) ||
+        application.requesterName.toLowerCase().includes(query) ||
+        application.requesterDept.toLowerCase().includes(query)
+      );
+    },
+    sortedApplications() {
+      return [...this.userApplications].sort((a, b) => {
+        const dateA = new Date(a[this.sortField]).getTime();
+        const dateB = new Date(b[this.sortField]).getTime();
+        return this.sortDirection === 'desc' ? dateB - dateA : dateA - dateB;
+      });
+    },
+    paginatedApplications() {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+      return this.filteredQueryApplications.slice(start, end);
+    },
+    totalPages(){
+      return Math.ceil(this.filteredQueryApplications.length / this.itemsPerPage);
+    },
+  
+  },
+
+  methods: {
+    nextPage() {
+      if (this.currentPage < this.totalPages){
+        this.currentPage++;
+      }
+    },
+    previousPage(){
+      if (this.currentPage > 1){
+        this.currentPage--;
+      }
+    },
+    goToPage(page) {
+    this.currentPage = page;
+  },
+    toggleSort(field) {
+      if (this.sortField === field) {
+        this.sortDirection = this.sortDirection === 'desc' ? 'asc' : 'desc';
+      } else {
+        this.sortField = field;
+        this.sortDirection = 'desc';
+      }
+    },
+    async getAllApplication() {
+      const id = store.getSession()?.userDetails?.userId;
+      if (!id) {
+        console.error("User ID is missing");
+        return;
+      }
+      this.loading = true;
+      try {
+        const data = await getAllApplication(id);
+        if (data) {
+          this.userApplications = data;
+          console.log("User application in table", data);
+        }
+      } catch (error) {
+        console.error("Error fetching user application:", error.response || error);
+        this.errorMessage = "Failed to fetch user application";
+      } finally {
+        this.loading = false;
+      }
+    },
+  },
+  mounted() {
+    this.getAllApplication();
   }
+}
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

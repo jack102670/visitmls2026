@@ -92,14 +92,15 @@
             <h1 class="font-bold text-md py-4">B. Date / Duration</h1>
             <div class="grid grid-cols-8 gap-2 py-4">
                 <div class="col-span-1">
-                    <label for="position" class="block text-sm font-medium text-primary dark:text-white">On Job
-                        Training
-                        (Kindly Describe):</label>
+                    <label for="position" class="block text-sm font-medium text-primary dark:text-white">
+                        On Job Training (Kindly Describe):
+                    </label>
                 </div>
                 <div class="col-span-7">
-                    <textarea type="text" id="position"
+                    <textarea id="position" v-model="bulletPoints"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Describe On Job training" required></textarea>
+                        @click="addInitialBullet" @keydown="handleBulletPoints" placeholder="Describe On Job Training"
+                        required></textarea>
                 </div>
             </div>
             <div class="grid grid-cols-8 gap-2 mt-4 ">
@@ -175,76 +176,96 @@
 </template>
 
 <script>
-import {
-    fetchHrData
-} from '@/api/EFormApi';
-import {
-    store
-} from '@/views/store.js';
-import Swal from "sweetalert2";
-import flatpickr from "flatpickr";
-import "flatpickr/dist/flatpickr.css";
-export default {
-    data() {
-        return {
-            user: {
-                name: '',
-                department: '',
-                familiarisationCheckbox: false,
-                onJobTrainingCheckbox: false,
-            },
-        }
-    },
-    mounted() {
-        flatpickr(this.$refs.datepickerStart, {
-            dateFormat: "Y-m-d",
-        });
-        flatpickr(this.$refs.datepickerEnd, {
-            dateFormat: "Y-m-d",
-        });
-        flatpickr(this.$refs.Start, {
-            dateFormat: "Y-m-d",
-        });
-        flatpickr(this.$refs.End, {
-            dateFormat: "Y-m-d",
-        });
-        this.fetchHrData();
-    },
-    methods: {
-        confirmExit() {
-            Swal.fire({
-                title: 'Are you sure you want to exit?',
-                text: 'Any unsaved changes will be lost!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, exit',
-                cancelButtonText: 'No, stay'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    this.$router.push('/e-dashboard');
-                }
-            });
-        },
-        async fetchHrData() {
-            const username_id = store.getSession().userDetails.userId;
-            this.loadingText = 'Fetching';
-            this.loading = true;
-            try {
-                const data = await fetchHrData(username_id);
-                if (data) {
-                    this.user = data;
-                    this.name = data.name;
-                }
-                console.log("Employee Data:", this.user);
-            } catch (error) {
-                console.error('Error fetching Employee data:', error);
-                throw new Error('Failed to fetch Employee data. Please try again.');
-            } finally {
-                this.loading = false;
+    import {
+        fetchHrData
+    } from '@/api/EFormApi';
+    import {
+        store
+    } from '@/views/store.js';
+    import Swal from "sweetalert2";
+    import flatpickr from "flatpickr";
+    import "flatpickr/dist/flatpickr.css";
+    export default {
+        data() {
+            return {
+                user: {
+                    name: '',
+                    department: '',
+                    familiarisationCheckbox: false,
+                    onJobTrainingCheckbox: false,
+                },
+                inputText: '',
+                bulletPoints: ''
             }
-        }
-    },
-}
+        },
+        mounted() {
+            flatpickr(this.$refs.datepickerStart, {
+                dateFormat: "Y-m-d",
+            });
+            flatpickr(this.$refs.datepickerEnd, {
+                dateFormat: "Y-m-d",
+            });
+            flatpickr(this.$refs.Start, {
+                dateFormat: "Y-m-d",
+            });
+            flatpickr(this.$refs.End, {
+                dateFormat: "Y-m-d",
+            });
+            this.fetchHrData();
+        },
+        methods: {
+            addInitialBullet() {
+                if (!this.bulletPoints) {
+                    this.bulletPoints = '• ';
+                }
+            },
+            handleBulletPoints(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); 
+                    const cursorPosition = event.target.selectionStart;
+                    const beforeCursor = this.bulletPoints.slice(0, cursorPosition);
+                    const afterCursor = this.bulletPoints.slice(cursorPosition);
+                    this.bulletPoints = `${beforeCursor}\n• ${afterCursor}`;
+                    this.$nextTick(() => {
+                        event.target.selectionStart = event.target.selectionEnd = cursorPosition +
+                        3; 
+                    });
+                }
+            },
+            confirmExit() {
+                Swal.fire({
+                    title: 'Are you sure you want to exit?',
+                    text: 'Any unsaved changes will be lost!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, exit',
+                    cancelButtonText: 'No, stay'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.$router.push('/e-dashboard');
+                    }
+                });
+            },
+            async fetchHrData() {
+                const username_id = store.getSession().userDetails.userId;
+                this.loadingText = 'Fetching';
+                this.loading = true;
+                try {
+                    const data = await fetchHrData(username_id);
+                    if (data) {
+                        this.user = data;
+                        this.name = data.name;
+                    }
+                    console.log("Employee Data:", this.user);
+                } catch (error) {
+                    console.error('Error fetching Employee data:', error);
+                    throw new Error('Failed to fetch Employee data. Please try again.');
+                } finally {
+                    this.loading = false;
+                }
+            }
+        },
+    }
 </script>

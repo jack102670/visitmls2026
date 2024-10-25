@@ -118,6 +118,7 @@
                 const username_id = store.getSession().userDetails.userId;
                 this.loadingText = 'Fetching';
                 this.loading = true;
+                console.log("HR data:",username_id);
 
                 try {
                     const data = await fetchHrData(username_id);
@@ -132,7 +133,7 @@
                     this.emp_id = data.emp_id;
 
                 }
-                // console.log("HR data:", this.user);
+
                 }
                 catch (error) {
                 console.error('Error fetching HR data:', error);

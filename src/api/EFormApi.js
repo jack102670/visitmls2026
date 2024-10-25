@@ -110,3 +110,27 @@ export const getDepartment = async () => {
     throw error;
   }
 };
+
+export const getAllApplication = async (id) => {
+  try {
+    const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
+    const response = await axios.get(`${base_URL}/General/${id}`,
+      {
+        params: {
+          userId: id,
+
+        },
+      }
+    );
+    if (response.data.result){
+      // console.log("List of applications:", response.data.result);
+      return response.data.result; 
+    }else{
+      // console.log("Applications not found");
+      return [];
+    }
+  }catch(error){
+    console.error("Error fetching application data:", error);
+    throw error;
+  }
+}

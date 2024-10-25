@@ -21,7 +21,7 @@
             <option value="" class="text-gray-400" disabled>Select Company</option>
             <option v-for="company in Companies" :key="company.company_code" :value="company.company_name"
               class="text-gray-900 text-sm">
-              {{ company.company_name }} 
+              {{ company.company_name }}
             </option>
             <option v-if="Companies.length === 0" disabled>No companies available</option>
           </select>
@@ -35,12 +35,12 @@
           <!-- <input type="text" id="department" v-model="EmployeeForm.department"
             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Department" required /> -->
-            <select id="department" v-model="EmployeeForm.department"
+          <select id="department" v-model="EmployeeForm.department"
             class="bg-gray-50 dark:border-gray-600 dark:placeholder-gray-400 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <option value="" class="text-gray-400" disabled>Select Department</option>
             <option v-for="department in Departments" :key="department.department" :value="department.department"
               class="text-gray-900 text-sm">
-              {{ department.department }} 
+              {{ department.department }}
             </option>
             <option v-if="Departments.length === 0" disabled>No deparments available</option>
           </select>
@@ -222,6 +222,12 @@ import {
   getCompanyName,
   getDepartment
 } from '@/api/EFormApi.js'
+
+import {
+  store
+} from '@/views/store.js';
+
+
 export default {
   data() {
     return {
@@ -243,7 +249,7 @@ export default {
         hoD_Emp_Desktop: '0',
         hoD_Emp_Laptop: '0',
         hoD_Emp_Other: '',
-        requesterId: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
+        requesterId: '',
         requesterName: 'Hod Name',
         requesterDesignation: 'Hod',
         requesterDept: 'ICT',
@@ -289,11 +295,11 @@ export default {
         } else {
           console.error('Unexpected response format:', data);
           throw new Error('Failed to fetch departments.');
-        } 
-      }catch (error) {
-          console.error('Error fetching departments:', error);
-          throw new Error('Failed to fetch departments.');
         }
+      } catch (error) {
+        console.error('Error fetching departments:', error);
+        throw new Error('Failed to fetch departments.');
+      }
     },
     updateCheckboxValue(field, event) {
       this.EmployeeForm[field] = event.target.checked ? '1' : '0';
@@ -324,6 +330,9 @@ export default {
       })
     },
     submitForm() {
+      const username_id = store.getSession().userDetails.userId;
+      this.EmployeeForm.requesterId = username_id;
+
       if (this.validateForm()) {
         Swal.fire({
           title: 'Are you sure you want to submit?',
@@ -362,6 +371,10 @@ export default {
                 confirmButtonColor: '#3085d6',
                 icon: 'success',
                 confirmButtonText: 'OK'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.$router.push('/e-dashboard');
+                }
               });
               this.isSubmitted = true;
               this.resetForm();

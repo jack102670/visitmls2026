@@ -12,6 +12,7 @@ import 'intl-tel-input/build/css/intlTelInput.css';
 
 
 
+
 import { FontAwesomeIcon } from '../src/icons/fontawesome';
 
 // Create the Vue app instance
