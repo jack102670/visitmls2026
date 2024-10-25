@@ -67,7 +67,7 @@ export default {
         // SecCHR,
         // SecCDiv
     },
-    props: ["formData"],
+    props: ["formData", "uniqueKey"],
     data() {
         return {
             form: this.formData.sectionC || {
@@ -75,7 +75,7 @@ export default {
             },
             validationErrors: {},
             selectedOption: "",
-            isDownloaded: false, // Track whether the Download button was clicked
+            isDownloaded: false, 
         };
     },
     methods: {
@@ -112,8 +112,10 @@ export default {
                             confirmButtonColor: "#3085d6",
                             icon: "success",
                             confirmButtonText: "OK",
-                        }).then(() => {
-                            this.$router.push("/e-dashboard");
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                this.$emit("next-section", this.form);
+                            }
                         });
                     }
                 });

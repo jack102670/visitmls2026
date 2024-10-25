@@ -239,6 +239,7 @@ export default {
                     text: "Please fill in all required fields.",
                     icon: "error",
                     confirmButtonText: "OK",
+                    confirmButtonColor: '#3085d6',
                 });
             }
         },
