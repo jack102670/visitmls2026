@@ -50,7 +50,7 @@
           class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
           <td class="w-4 p-4"></td>
           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-            {{ index + 1 }}
+            {{ (currentPage - 1) * itemsPerPage + index + 1 }}
           </td>
           <td class="px-6 py-4">{{ application.refNo }}</td>
           <td class="px-6 py-4">{{ application.dateRequested }}</td>
@@ -80,46 +80,52 @@
     aria-label="Table navigation">
     <div>
       <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
-      Showing <span class="font-semibold text-gray-900 dark:text-white">
-        {{ (currentPage - 1) * itemsPerPage + 1 }}-{{ Math.min(currentPage * itemsPerPage, filteredQueryApplications.length) }}
-      </span> 
-      of <span class="font-semibold text-gray-900 dark:text-white">{{ filteredQueryApplications.length }}</span>
-    </span>
+        Showing <span class="font-semibold text-gray-900 dark:text-white">
+          {{ (currentPage - 1) * itemsPerPage + 1 }}-{{ Math.min(currentPage * itemsPerPage,
+            filteredQueryApplications.length) }}
+        </span>
+        of <span class="font-semibold text-gray-900 dark:text-white">{{ filteredQueryApplications.length }}</span>
+      </span>
     </div>
-
     <div>
-      <ul class="inline-flex -space-x-px text-sm h-8">
+  <ul class="inline-flex -space-x-px text-sm h-8">
     <li>
-      <a href="#" 
-         @click="previousPage" 
+      <a href="#" @click.prevent="previousPage" 
          :class="{ 'cursor-not-allowed opacity-50': currentPage === 1 }"
-         class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
+         class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
         Previous
       </a>
     </li>
 
-    <li v-for="page in totalPages" :key="page">
-      <a href="#" 
-         @click="goToPage(page)" 
-         :class="{
-           'bg-blue-500 text-dark': page === currentPage,
-           'text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-white': page !== currentPage
-         }"
-         class="flex items-center justify-center px-3 h-8 leading-tight bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700">
-        {{ page }}
-      </a>
+    <li v-for="page in visiblePages" :key="page">
+      <template v-if="page === '...'">
+        <span 
+          class="flex items-center justify-center px-3 h-8 leading-tight border border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700">
+          {{ page }}
+        </span>
+      </template>
+      <template v-else>
+        <a href="#" @click.prevent="goToPage(page)" 
+           :class="{
+             'bg-blue-500 text-dark': page === currentPage,
+             'text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700': page !== currentPage
+           }"
+           class="flex items-center justify-center px-3 h-8 leading-tight bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700">
+          {{ page }}
+        </a>
+      </template>
     </li>
 
     <li>
-      <a href="#" 
-         @click="nextPage" 
+      <a href="#" @click.prevent="nextPage" 
          :class="{ 'cursor-not-allowed opacity-50': currentPage >= totalPages }"
          class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
         Next
       </a>
     </li>
   </ul>
-    </div>
+</div>
+
 
   </nav>
 
@@ -132,7 +138,6 @@ import {
 import {
   store
 } from '@/views/store.js';
-
 export default {
   data() {
     return {
@@ -142,15 +147,12 @@ export default {
       sortField: 'dateRequested',
       sortDirection: 'desc',
       searchQuery: '',
-
       currentPage: 1,
       itemsPerPage: 10,
       isDisabled: true,
-
     };
   },
   computed: {
-
     filteredQueryApplications() {
       const query = this.searchQuery.toLowerCase();
       return this.sortedApplications.filter((application) =>
@@ -173,26 +175,56 @@ export default {
       const end = start + this.itemsPerPage;
       return this.filteredQueryApplications.slice(start, end);
     },
-    totalPages(){
+    totalPages() {
       return Math.ceil(this.filteredQueryApplications.length / this.itemsPerPage);
     },
-  
-  },
+    visiblePages() {
+    const total = this.totalPages;
+    const current = this.currentPage;
+    const maxVisiblePages = 2; 
 
+    let pages = [];
+
+    if (total <= maxVisiblePages) {
+      pages = Array.from({ length: total }, (_, i) => i + 1);
+    } else {
+      // First page (1, 2, 3, ..., total)
+      if (current === 1) {
+        pages = [1, 2, 3, '...', total];
+      }
+      // Last page (1, ..., last-2, last-1, last)
+      else if (current === total) {
+        pages = [1, '...', total - 2, total - 1, total];
+      }
+      // Second-to-last page should be handled as well
+      else if (current === total - 1) {
+        pages = [1, '...', total - 2, total - 1, total];
+      }
+      // Intermediate pages (1, ..., current-1, current, current+1, ..., total)
+      else {
+        pages = [1, '...', current - 1, current, current + 1, '...', total];
+      }
+    }
+
+    return pages;
+  },
+  },
   methods: {
     nextPage() {
-      if (this.currentPage < this.totalPages){
+      if (this.currentPage < this.totalPages) {
         this.currentPage++;
       }
     },
-    previousPage(){
-      if (this.currentPage > 1){
+    previousPage() {
+      if (this.currentPage > 1) {
         this.currentPage--;
       }
     },
     goToPage(page) {
-    this.currentPage = page;
-  },
+      if (typeof page === 'number') {
+        this.currentPage = page;
+      }
+    },
     toggleSort(field) {
       if (this.sortField === field) {
         this.sortDirection = this.sortDirection === 'desc' ? 'asc' : 'desc';
