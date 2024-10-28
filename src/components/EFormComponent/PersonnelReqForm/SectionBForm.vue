@@ -103,7 +103,6 @@
                         class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">No</label>
                 </div>
                 <span v-if="validationErrors.ownTransport" class="text-red-500 text-sm">Please fill in this field</span>
-
             </div>
             <div>
                 <label for="basicSalary"
@@ -126,12 +125,40 @@
             </div>
             <div>
                 <label for="personnel" class="block mb-2 text-sm font-medium text-primary dark:text-white">
-                    List of functional / technical job required:</label>
-                <input type="text" id="functionalTechnicalJobRequired" v-model="form.functionalTechnicalJobRequired"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Eg: Selling/Accounting/Debtors Control/IT/Management etc..." />
-            </div>
+                    List of functional / technical job required:
+                </label>
 
+                <div class="space-y-2">
+                    <div class="flex flex-wrap gap-2 mb-2">
+                        <div v-for="(field, index) in form.functionalTechnicalJobRequired" :key="index"
+                            class="flex items-center">
+                            <span
+                                class="block bg-gray-100 text-gray-800 px-4 rounded-lg py-2 text-sm dark:bg-gray-700 dark:text-white">
+                                <div class="flex justify-between items-center space-x-2">
+                                    {{ field }}
+                                    <span @click="removeField(index)" class="ml-2">
+                                        <font-awesome-icon :icon="['fas', 'xmark']" />
+                                    </span>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div v-if="showInputField" class="mb-2 flex items-center space-x-2">
+                        <input type="text" v-model="newField"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Eg: Selling/Accounting/Debtors Control/IT/Management etc..." />
+                        <button @click="addField" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                            Add
+                        </button>
+                    </div>
+                    <button v-if="!showInputField" @click="showInputField = true"
+                        class="bg-transparent text-sm hover:border-primary hover:border-[1px] border-[1px] border-transparent p-2.5 rounded-2xl">
+                        Add More <span>
+                            <font-awesome-icon icon="fa-solid fa-plus" /></span>
+                    </button>
+                </div>
+            </div>
 
             <div>
                 <label for="personnel" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
@@ -143,10 +170,36 @@
             <div>
                 <label for="personnel" class="block mb-2 text-sm font-medium text-primary dark:text-white">
                     List of Personnal Competencies required:</label>
-                <input type="text" id="ListofPersonnelCompetenciesrequired"
-                    v-model="form.ListofPersonnelCompetenciesrequired"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Eg: Leadership, Perserverance/Customer/ Driven/Interpersonal Skills etc..." />
+                <div class="space-y-2">
+                    <div class="flex flex-wrap gap-2 mb-2">
+                        <div v-for="(field, index) in form.ListofPersonnelCompetenciesrequired" :key="index"
+                            class="flex items-center">
+                            <span
+                                class="block bg-gray-100 text-gray-800 px-4 rounded-lg py-2 text-sm dark:bg-gray-700 dark:text-white flex justify-between items-center w-full">
+                                <span class="flex-1">{{ field }}</span>
+                                <span @click="removePersonnelField(index)" class="ml-2 cursor-pointer">
+                                    <font-awesome-icon :icon="['fas', 'xmark']" />
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div v-if="showInputPersonnelField" class="mb-2 flex items-center gap-2">
+                        <input type="text" v-model="newPersonnelField"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Eg: Leadership, Perserverance/Customer/ Driven/Interpersonal Skills etc..." />
+                        <button @click="addPersonnelField"
+                            class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                            Add
+                        </button>
+                    </div>
+                    <button v-if="!showInputPersonnelField" @click="showInputPersonnelField = true"
+                        class="bg-transparent text-sm hover:border-primary hover:border-[1px] border-[1px] border-transparent p-2.5 rounded-2xl">
+                        Add More <span>
+                            <font-awesome-icon icon="fa-solid fa-plus" /></span>
+                    </button>
+
+                </div>
             </div>
         </div>
         <div class="grid grid-cols-1">
@@ -172,11 +225,14 @@
 </template>
 <script>
 import Swal from "sweetalert2";
+import {
+    reactive
+} from 'vue';
 export default {
     props: ["formData"],
     data() {
         return {
-            form: this.formData.sectionB || {
+            form: reactive({
                 ageLimit: "",
                 computerLiteracy: "",
                 experienceRequired: "",
@@ -184,15 +240,26 @@ export default {
                 specifyYears: "",
                 ownTransport: "",
                 qualificationRequired: "",
-                functionalTechnicalJobRequired: "",
+                functionalTechnicalJobRequired: [],
                 discipline: "",
-                ListofPersonnelCompetenciesrequired: "",
+                ListofPersonnelCompetenciesrequired: [],
                 specifyOthers: "",
-            },
+            }),
+            minAge: "",
+            maxAge: "",
             validationErrors: {},
-            minAge: this.formData.sectionB?.ageLimit?.[0] || "",
-            maxAge: this.formData.sectionB?.ageLimit?.[1] || "",
+            newField: "",
+            showInputField: false,
+            newPersonnelField: "",
+            showInputPersonnelField: false,
         };
+    },
+    created() {
+        if (this.formData.sectionB) {
+            Object.assign(this.form, this.formData.sectionB);
+        }
+        this.minAge = this.formData.sectionB?.ageLimit?.[0] || "";
+        this.maxAge = this.formData.sectionB?.ageLimit?.[1] || "";
     },
     computed: {
         ageLimit() {
@@ -200,6 +267,36 @@ export default {
         },
     },
     methods: {
+        // for List of Personnal Competencies required
+        openPersonnelInputForm() {
+            this.newPersonnelField = "";
+            this.showInputPersonnelField = true;
+        },
+        addPersonnelField() {
+            if (this.newPersonnelField.trim()) {
+                this.form.ListofPersonnelCompetenciesrequired.push(this.newPersonnelField.trim());
+                this.newPersonnelField = "";
+                this.showInputPersonnelField = false;
+            }
+        },
+        removePersonnelField(index) {
+            this.form.ListofPersonnelCompetenciesrequired.splice(index, 1);
+        },
+        // for List of functional / technical job required:
+        openInputForm() {
+            this.newField = "";
+            this.showInputField = true;
+        },
+        addField() {
+            if (this.newField.trim()) {
+                this.form.functionalTechnicalJobRequired.push(this.newField.trim());
+                this.newField = "";
+                this.showInputField = false;
+            }
+        },
+        removeField(index) {
+            this.form.functionalTechnicalJobRequired.splice(index, 1);
+        },
         validateForm() {
             this.validationErrors = {};
             if (!this.minAge || !this.maxAge) this.validationErrors.ageLimit = true;
@@ -239,11 +336,10 @@ export default {
                     text: "Please fill in all required fields.",
                     icon: "error",
                     confirmButtonText: "OK",
-                    confirmButtonColor: '#3085d6',
+                    confirmButtonColor: "#3085d6",
                 });
             }
         },
     },
 };
 </script>
-

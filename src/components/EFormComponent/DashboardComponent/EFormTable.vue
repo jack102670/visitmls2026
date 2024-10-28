@@ -193,7 +193,7 @@ export default {
       else if (current === total) {
         pages = [1, '...', total - 2, total - 1, total];
       }
-      // Second-to-last page should be handled as well
+      // handle second to last page
       else if (current === total - 1) {
         pages = [1, '...', total - 2, total - 1, total];
       }
