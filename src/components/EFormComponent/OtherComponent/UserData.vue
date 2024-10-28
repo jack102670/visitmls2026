@@ -118,7 +118,7 @@
                 const username_id = store.getSession().userDetails.userId;
                 this.loadingText = 'Fetching';
                 this.loading = true;
-                console.log("HR data:",username_id);
+                // console.log("HR data:",username_id);
 
                 try {
                     const data = await fetchHrData(username_id);

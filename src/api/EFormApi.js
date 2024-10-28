@@ -133,4 +133,22 @@ export const getAllApplication = async (id) => {
     console.error("Error fetching application data:", error);
     throw error;
   }
-}
+};
+export const PostPersonnelRequsitionForm = async (finalPersonnelData) => {
+  try {
+    const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
+    const response = await axios.post(
+      `${base_URL}/PersonnelRequisition`,
+      finalPersonnelData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  }catch (error) {
+    console.error("Error submitting the personnel data:", error);
+    throw error;
+  }
+};

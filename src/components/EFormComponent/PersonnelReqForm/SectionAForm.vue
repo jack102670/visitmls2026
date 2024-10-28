@@ -20,7 +20,7 @@
                 <span v-if="validationErrors.company" class="text-red-500 text-sm">Please fill in this field</span>
             </div>
             <div class="">
-                <label for="date" class="block mb-2 text-sm font-medium text-primary dark:text-white">Date Required:
+                <label for="dateRequred" class="block mb-2 text-sm font-medium text-primary dark:text-white">Date Required:
                     <span class="text-red-500">*</span></label>
                 <div class="relative max-w-full">
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -30,11 +30,11 @@
                                 d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                         </svg>
                     </div>
-                    <input id="datepicker-autohide" type="date" v-model="form.dateRequired"
+                    <input id="datepicker-autohide" type="date" v-model="form.dateRequred"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required />
                 </div>
-                <span v-if="validationErrors.dateRequired" class="text-red-500 text-sm">Please fill in this
+                <span v-if="validationErrors.dateRequred" class="text-red-500 text-sm">Please fill in this
                     field.</span>
             </div>
             <div>
@@ -46,13 +46,13 @@
                 <span class="text-red-500 text-sm" v-if="validationErrors.department"></span>
             </div>
             <div>
-                <label for="personnel" class="block mb-2 text-sm font-medium text-primary dark:text-white">No of
+                <label for="numberPersonnel" class="block mb-2 text-sm font-medium text-primary dark:text-white">No of
                     Personnel
                     Required: <span class="text-red-500">*</span></label>
-                <input type="number" id="noofpersonnel" v-model="form.noofpersonnel"
+                <input type="number" id="numberPersonnel" v-model="form.numberPersonnel"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="No of personnel required" required />
-                <span class="text-red-500 text-sm" v-if="validationErrors.noofpersonnel">Please fill in this
+                <span class="text-red-500 text-sm" v-if="validationErrors.numberPersonnel">Please fill in this
                     field</span>
             </div>
             <div>
@@ -76,27 +76,27 @@
         <hr class="w-full border-b border-b-[1px]" />
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-                <label for="basicSalary" class="block mb-2 text-sm font-medium text-primary dark:text-white">
+                <label for="requisitionPurpose" class="block mb-2 text-sm font-medium text-primary dark:text-white">
                     Requisition if for: <span class="text-red-500">*</span></label>
                 <div class="flex flex-wrap gap-4 ">
                     <div class="flex items-center">
-                        <input id="newReqruitment-requisitionIfFor" type="radio" name="requisitionIfFor"
-                            value="newRecruitment" v-model="form.requisitionIfFor"
+                        <input id="newReqruitment-requisitionPurpose" type="radio" name="requisitionPurpose"
+                            value="newRecruitment" v-model="form.requisitionPurpose"
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                         <label for="new-recruitment"
                             class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">New
                             Recruitment</label>
                     </div>
                     <div class="flex items-center">
-                        <input id="temporary-requisitionIfFor" type="radio" name="requisitionIfFor" value="temporary"
-                            v-model="form.requisitionIfFor"
+                        <input id="temporary-requisitionPurpose" type="radio" name="requisitionPurpose" value="temporary"
+                            v-model="form.requisitionPurpose"
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                         <label for="temporary"
                             class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Temporary</label>
                     </div>
                     <div class="flex items-center">
-                        <input id="replacement-requisitionIfFor" type="radio" name="requisitionIfFor"
-                            value="replacement" v-model="form.requisitionIfFor"
+                        <input id="replacement-requisitionPurpose" type="radio" name="requisitionPurpose"
+                            value="replacement" v-model="form.requisitionPurpose"
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                         <label for="replacement"
                             class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Replacement</label>
@@ -108,15 +108,15 @@
                     Manpower request is: <span class="text-red-500">*</span></label>
                 <div class="flex flex-wrap gap-4">
                     <div class="flex items-center">
-                        <input id="budgeted-manPowerRequestIs" type="radio" name="manPowerRequestIs" value="budgeted"
-                            v-model="form.manPowerRequestIs"
+                        <input id="budgeted-manpowerBudget" type="radio" name="manpowerBudget" value="budgeted"
+                            v-model="form.manpowerBudget"
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                         <label for="budgeted"
                             class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Budgeted</label>
                     </div>
                     <div class="flex items-center">
-                        <input id="unbudgeted-manPowerRequestIs" type="radio" name="manPowerRequestIs"
-                            value="unbudgeted" v-model="form.manPowerRequestIs"
+                        <input id="unbudgeted-manpowerBudget" type="radio" name="manpowerBudget"
+                            value="unbudgeted" v-model="form.manpowerBudget"
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                         <label for="unbudgeted"
                             class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">UnBudgeted</label>
@@ -125,19 +125,19 @@
                 </div>
             </div>
             <div>
-                <label for="personReplacement"
+                <label for="name"
                     class="block mb-2 text-sm font-medium text-primary dark:text-white italic">Name
                     of Person to be replaced: </label>
-                <input type="text" id="personReplacement" v-model="form.personReplacement"
+                <input type="text" id="name" v-model="form.name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Input Name" />
             </div>
             <div>
-                <label for="reasonForUnbudgeted"
+                <label for="reasonUnbudget"
                     class="block mb-2 text-sm font-medium text-primary dark:text-white italic">Reason
                     for UnBudgeted:
                 </label>
-                <input type="text" id="reasonForUnbudgeted" v-model="form.reasonForUnbudgeted"
+                <input type="text" id="reasonUnbudget" v-model="form.reasonUnbudget"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Reason for unbudgeted" />
             </div>
@@ -156,10 +156,10 @@
         <div class="grid grid-cols-1">
             <hr class="w-full border-b border-b-[1px] my-4" />
             <div>
-                <label for="justificationOrReason"
+                <label for="requestReason"
                     class="block mb-2 text-sm font-medium text-primary dark:text-white italic">Justification / Reason
                     for request : </label>
-                <textarea id="justificationOrReason" rows="4" v-model="form.justificationOrReason"
+                <textarea id="requestReason" rows="4" v-model="form.requestReason"
                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Write your comments here"></textarea>
             </div>
@@ -187,18 +187,19 @@ export default {
         return {
             fileName: '',
             form: this.formData.sectionA || {
-                justificationOrReason: '',
                 position: '',
                 company: '',
-                dateRequired: '',
+                status: '',
                 department: '',
-                noofpersonnel: '',
                 location: '',
-                basicSalary: '',
-                requisitionIfFor: '',
-                manPowerRequestIs: '',
-                personReplacement: '',
-                reasonForUnbudgeted: '',
+                numberPersonnel: '',
+                basicSalary: '', 
+                requisitionPurpose: '',
+                manpowerBudget: '',
+                dateRequred: '',
+                name: '',
+                reasonUnbudget: '',
+                requestReason: '',  
             },
             validationErrors: {},
         }
@@ -242,13 +243,13 @@ export default {
         this.validationErrors = {};
         if (!this.form.position) this.validationErrors.position = true;
         if (!this.form.company) this.validationErrors.company = true;
-        if (!this.form.dateRequired) this.validationErrors.dateRequired = true;
+        if (!this.form.dateRequred) this.validationErrors.dateRequred = true;
         if (!this.form.department) this.validationErrors.department = true;
-        if (!this.form.noofpersonnel) this.validationErrors.noofpersonnel = true;
+        if (!this.form.numberPersonnel) this.validationErrors.numberPersonnel = true;
         if (!this.form.location) this.validationErrors.location = true;
         if (!this.form.basicSalary) this.validationErrors.basicSalary = true;
-        if (!this.form.requisitionIfFor) this.validationErrors.requisitionIfFor = true;
-        if (!this.form.manPowerRequestIs) this.validationErrors.manPowerRequestIs = true;
+        if (!this.form.requisitionPurpose) this.validationErrors.requisitionPurpose = true;
+        if (!this.form.manpowerBudget) this.validationErrors.manpowerBudget = true;
         return Object.keys(this.validationErrors).length === 0;
     },
     handleFileUpload(event) {

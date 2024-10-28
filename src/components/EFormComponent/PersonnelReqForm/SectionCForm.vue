@@ -59,6 +59,8 @@
 <script>
 import Swal from "sweetalert2";
 import SecCHOD from "./SectionCFormOtherRole/SecCHOD.vue";
+import { fetchHrData } from "@/api/EFormApi";
+import { store } from '@/views/store.js';
 // import SecCHR from "./SectionCFormOtherRole/SecCHR.vue";
 // import SecCDiv from "./SectionCFormOtherRole/SecCDiv.vue";
 export default {
@@ -72,13 +74,52 @@ export default {
         return {
             form: this.formData.sectionC || {
                 employeeConfirmation: "",
+                requesterId: "",
+                requesterName: "",
+                requesterDept: "",
+                requesterDesignation: "",
+                verifierEmpId: "",
             },
             validationErrors: {},
             selectedOption: "",
-            isDownloaded: false, 
+            isDownloaded: false,
         };
     },
     methods: {
+        async fetchHrData() {
+            const currentUser = store.getSession().userDetails; 
+            if (!currentUser || !currentUser.userId) {
+                    console.error("Error: currentUser or userId is missing");
+                    return;
+                }
+            const username_id = currentUser.userId;
+
+            this.form.requesterId = username_id;
+            //  console.log("Requester ID (Employee ID):", this.form.requesterId);
+
+            this.loadingText = 'Fetching';
+            this.loading = true;
+     
+            try {
+                const data = await fetchHrData(username_id);
+                if (data) {
+                    this.user = data;
+                    
+                    this.form.requesterName = data.name;
+                    this.form.requesterDept = data.department;
+                    this.form.requesterDesignation = data.position_title;
+                    this.form.verifierEmpId = data.reporting_to;
+                }
+                console.log("Employee Data:", this.user );
+            } catch (error) {
+                console.error("Error fetching HR data:", error);
+                throw new Error("Failed to fetch HR data. Please try again.");
+
+            } finally {
+                this.loading = false;
+
+            }
+        },
         handleDownloadAndSave() {
             this.isDownloaded = true;
         },
@@ -106,17 +147,6 @@ export default {
                         console.log("Form data saved:", this.form);
                         this.$emit("update-form", this.form, "C");
                         this.$emit("submit-form", this.form);
-                        Swal.fire({
-                            title: "Submitted!",
-                            text: "Your application has been submitted.",
-                            confirmButtonColor: "#3085d6",
-                            icon: "success",
-                            confirmButtonText: "OK",
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                this.$emit("next-section", this.form);
-                            }
-                        });
                     }
                 });
             } else {
@@ -127,9 +157,37 @@ export default {
                     confirmButtonText: "OK",
                     confirmButtonColor: "#3085d6",
                 });
+
+            }
+
+        },
+        handleFormSubmissionResult({ success, error }) {
+            if (success) {
+                Swal.fire({
+                    title: "Submitted!",
+                    text: "Your application has been submitted.",
+                    confirmButtonColor: "#3085d6",
+                    icon: "success",
+                    confirmButtonText: "OK",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.$emit("next-section", this.form);
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: "Submission Failed",
+                    text: `Error: ${error || "Unknown error occurred."}`,
+                    icon: "error",
+                    confirmButtonColor: "#d33",
+                    confirmButtonText: "Retry",
+                });
             }
         },
     },
+    mounted() {
+        this.fetchHrData();
+    }
 };
 </script>
 
