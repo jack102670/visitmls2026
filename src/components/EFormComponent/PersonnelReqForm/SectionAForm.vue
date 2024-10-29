@@ -273,7 +273,7 @@ export default {
                 cancelButtonColor: '#d33',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    console.log('Form data saved:', this.form);
+                    console.log('Form data saved:', this.form.requestReason, this.form.requisitionPurpose, this.form.manpowerBudget);
                     this.$emit('update-form', this.form, 'A');
                     this.$emit('next-section', this.form);
                 }

@@ -45,7 +45,9 @@ export default {
                 uniqueKey: null,
             },
             sectionDEnabled: false,
-        };
+
+
+        }
     },
     computed: {
         currentComponent() {

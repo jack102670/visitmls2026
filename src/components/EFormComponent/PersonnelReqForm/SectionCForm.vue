@@ -48,7 +48,7 @@
                 Back
             </button>
             <button @click.prevent="handleSubmit" class="bg-primary text-white px-10 py-2 rounded-md">
-                Submit
+                Next
             </button>
         </div>
     </div>
@@ -95,7 +95,7 @@ export default {
             const username_id = currentUser.userId;
 
             this.form.requesterId = username_id;
-            //  console.log("Requester ID (Employee ID):", this.form.requesterId);
+             console.log("Requester ID (Employee ID):", this.form.requesterId);
 
             this.loadingText = 'Fetching';
             this.loading = true;
