@@ -32,6 +32,11 @@ export const PostSectionATrainingEvaluation = async (evaluationData) => {
         },
       }
     );
+    if (response.data.result) {
+      console.log("Get Training Evaluation data:", response.data.result);
+    } else {
+      console.log("Training Evaluation data not found");
+    }
     return response.data;
   } catch (error) {
     console.error("Error submitting the training data:", error);
@@ -150,5 +155,36 @@ export const PostPersonnelRequsitionForm = async (finalPersonnelData) => {
   }catch (error) {
     console.error("Error submitting the personnel data:", error);
     throw error;
+  }
+};
+
+export const GetViewTrainingEvaluation = async (refNo)=> {
+  try {
+    const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
+    const response = await axios.get(`${base_URL}/TrainingEvaluation/${refNo}`);
+    if (response.data.result) {
+      console.log("Training Evaluation data:", response.data.result);
+    } else {
+      console.log("Training Evaluation data not found");
+    }
+    return response.data.result;
+
+  } catch (error){
+    throw error ("Error fetching training evaluation data:", error);
+  }
+};
+
+export const GetEmployeeRequestTransfer = async (refNo) => {
+  try {
+    const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
+    const response = await axios.get(`${base_URL}/EmployeeTransfer/${refNo}`);
+    if (response.data.result) {
+      console.log("Employee Transfer data:", response.data.result);
+    } else {
+      console.log("Employee Transfer data not found");
+    }
+    return response.data.result;
+  } catch(error){
+    throw error ("Error fetching employee transfer data:", error);
   }
 };

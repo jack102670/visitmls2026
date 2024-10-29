@@ -10,8 +10,8 @@
                     <div class="flex flex-col md:flex-row gap-2">
                         <button
                             class="w-full md:w-auto px-4 py-2 rounded-md text-sm transition-colors duration-200 ease-in-out"
-                            :class="{ 'bg-primary text-white border': form.trainingNature.includes('skills1'), 'bg-transparent border border-gray-300 hover:bg-gray-100': !form.trainingNature.includes('skills1') }"
-                            @click="selectTrainingNature('skills1')">
+                            :class="{ 'bg-primary text-white border': form.trainingNature.includes('skills'), 'bg-transparent border border-gray-300 hover:bg-gray-100': !form.trainingNature.includes('skills') }"
+                            @click="selectTrainingNature('skills')">
                             Skills
                         </button>
                         <button
@@ -427,9 +427,11 @@
                                 })
                                 const evaluationData = {
                                     ...this.form,
-                                    trainingNature: this.form.trainingNature.join(', '),
+                                    trainingNature: this.form.trainingNature.join(", "),
                                 };
+                                // const evaluationData = { ...this.form };
                                 console.log("Data to be submitted:", evaluationData);
+
                                 const response = await PostSectionATrainingEvaluation(evaluationData);
                                 console.log("Form submitted successfully:", response);
 

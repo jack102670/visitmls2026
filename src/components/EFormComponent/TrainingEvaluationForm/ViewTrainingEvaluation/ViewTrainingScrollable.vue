@@ -21,8 +21,8 @@
     </template>
     <script>
     
-import SectionAEvaluation from './SectionAEvaluation.vue';
-import SectionBEvaluation from './SectionBEvaluation.vue';
+import SectionAEvaluation from './ViewSectionAEvaluation.vue';
+import SectionBEvaluation from './ViewSectionBEvaluation.vue';
 
     
     export default {

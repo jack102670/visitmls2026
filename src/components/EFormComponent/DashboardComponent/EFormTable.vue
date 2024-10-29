@@ -18,11 +18,6 @@
         placeholder="Search for applications" />
     </div>
   </div>
-    <!-- Loader -->
-    <div v-if="loading" class="flex justify-center items-center h-32">
-    <div class="loader"></div>
-  </div>
-
   <div class="relative overflow-x-auto sm:rounded-md">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-md">
       <thead class="text-md text-gray-700  bg-[#443a7a] dark:bg-gray-700 dark:text-gray-400 !rounded-t-md">
@@ -51,6 +46,12 @@
         </tr>
       </thead>
       <tbody>
+        <!-- Loader -->
+        <tr v-if="loading">
+          <td colspan="9" class="flex justify-center items-center h-32">
+            <div class="loader"></div>
+          </td>
+        </tr>
         <tr v-for="(application, index) in paginatedApplications" :key="application.refNo"
           class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
           <td class="w-4 p-4"></td>
@@ -65,7 +66,7 @@
           <td class="px-6 py-4">{{ application.status }}</td>
           <td class="px-6 py-2">
             <div class="flex flex-col sm:flex-row gap-2">
-              <button
+              <button @click="viewApplication(application)"
                 class="flex-1 bg-transparent text-verified border-verified font-regular  px-2 py-1 border-[1px] rounded-md hover:bg-verified hover:border-verified hover:text-white hover:border-[1px] text-xs sm:text-xs">
                 View
               </button>
@@ -81,54 +82,53 @@
       </tbody>
     </table>
   </div>
-  <nav class="flex items-center flex-col flex-wrap md:flex-row justify-between items-center pt-4" aria-label="Table navigation">
-  <div>
-    <span class="text-xs md:text-xs font-normal text-gray-500 dark:text-gray-400">
-      Showing <span class="font-semibold text-gray-900 dark:text-white">
-        {{ (currentPage - 1) * itemsPerPage + 1 }}-{{ Math.min(currentPage * itemsPerPage, filteredQueryApplications.length) }}
+  <nav class="flex items-center flex-col flex-wrap md:flex-row justify-between items-center pt-4"
+    aria-label="Table navigation">
+    <div>
+      <span class="text-xs md:text-xs font-normal text-gray-500 dark:text-gray-400">
+        Showing <span class="font-semibold text-gray-900 dark:text-white">
+          {{ (currentPage - 1) * itemsPerPage + 1 }}-{{ Math.min(currentPage * itemsPerPage,
+            filteredQueryApplications.length) }}
+        </span>
+        of <span class="font-semibold text-gray-900 dark:text-white">{{ filteredQueryApplications.length }}</span>
       </span>
-      of <span class="font-semibold text-gray-900 dark:text-white">{{ filteredQueryApplications.length }}</span>
-    </span>
-  </div>
-  <div>
-    <ul class="inline-flex -space-x-px text-xs md:text-sm h-6 md:h-8">
-      <li>
-        <a href="#" @click.prevent="previousPage" 
-           :class="{ 'cursor-not-allowed opacity-50': currentPage === 1 }"
-           class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
-          Previous
-        </a>
-      </li>
-
-      <li v-for="page in visiblePages" :key="page">
-        <template v-if="page === '...'">
-          <span 
-            class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight border border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700">
-            {{ page }}
-          </span>
-        </template>
-        <template v-else>
-          <a href="#" @click.prevent="goToPage(page)" 
-             :class="{
-               'bg-blue-500 text-dark': page === currentPage,
-               'text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700': page !== currentPage
-             }"
-             class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700">
-            {{ page }}
+    </div>
+    <div>
+      <ul class="inline-flex -space-x-px text-xs md:text-sm h-6 md:h-8">
+        <li>
+          <a href="#" @click.prevent="previousPage" :class="{ 'cursor-not-allowed opacity-50': currentPage === 1 }"
+            class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
+            Previous
           </a>
-        </template>
-      </li>
+        </li>
 
-      <li>
-        <a href="#" @click.prevent="nextPage" 
-           :class="{ 'cursor-not-allowed opacity-50': currentPage >= totalPages }"
-           class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
-          Next
-        </a>
-      </li>
-    </ul>
-  </div>
-</nav>
+        <li v-for="page in visiblePages" :key="page">
+          <template v-if="page === '...'">
+            <span
+              class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight border border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700">
+              {{ page }}
+            </span>
+          </template>
+          <template v-else>
+            <a href="#" @click.prevent="goToPage(page)" :class="{
+              'bg-blue-500 text-dark': page === currentPage,
+              'text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700': page !== currentPage
+            }"
+              class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700">
+              {{ page }}
+            </a>
+          </template>
+        </li>
+
+        <li>
+          <a href="#" @click.prevent="nextPage" :class="{ 'cursor-not-allowed opacity-50': currentPage >= totalPages }"
+            class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
+            Next
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
 
 </template>
@@ -181,35 +181,35 @@ export default {
       return Math.ceil(this.filteredQueryApplications.length / this.itemsPerPage);
     },
     visiblePages() {
-    const total = this.totalPages;
-    const current = this.currentPage;
-    const maxVisiblePages = 2; 
+      const total = this.totalPages;
+      const current = this.currentPage;
+      const maxVisiblePages = 2;
 
-    let pages = [];
+      let pages = [];
 
-    if (total <= maxVisiblePages) {
-      pages = Array.from({ length: total }, (_, i) => i + 1);
-    } else {
-      // First page (1, 2, 3, ..., total)
-      if (current === 1) {
-        pages = [1, 2, 3, '...', total];
+      if (total <= maxVisiblePages) {
+        pages = Array.from({ length: total }, (_, i) => i + 1);
+      } else {
+        // First page (1, 2, 3, ..., total)
+        if (current === 1) {
+          pages = [1, 2, 3, '...', total];
+        }
+        // Last page (1, ..., last-2, last-1, last)
+        else if (current === total) {
+          pages = [1, '...', total - 2, total - 1, total];
+        }
+        // handle second to last page
+        else if (current === total - 1) {
+          pages = [1, '...', total - 2, total - 1, total];
+        }
+        // Intermediate pages (1, ..., current-1, current, current+1, ..., total)
+        else {
+          pages = [1, '...', current - 1, current, current + 1, '...', total];
+        }
       }
-      // Last page (1, ..., last-2, last-1, last)
-      else if (current === total) {
-        pages = [1, '...', total - 2, total - 1, total];
-      }
-      // handle second to last page
-      else if (current === total - 1) {
-        pages = [1, '...', total - 2, total - 1, total];
-      }
-      // Intermediate pages (1, ..., current-1, current, current+1, ..., total)
-      else {
-        pages = [1, '...', current - 1, current, current + 1, '...', total];
-      }
-    }
 
-    return pages;
-  },
+      return pages;
+    },
   },
   methods: {
     nextPage() {
@@ -255,6 +255,19 @@ export default {
         this.loading = false;
       }
     },
+    viewApplication(application) {
+      if (application.requestType === 'Training Evaluation Form') {
+        this.$router.push({ name: 'view-training-evaluation', params: { refNo: application.refNo } });
+      } else if (application.requestType === 'Employee Transfer Form') {
+        this.$router.push({ name: 'view-employee-transfer', params: { refNo: application.refNo } });
+
+      }
+
+      else {
+        console.error("Error: Invalid request type");
+      }
+
+    },
   },
   mounted() {
     this.getAllApplication();
@@ -273,7 +286,12 @@ export default {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

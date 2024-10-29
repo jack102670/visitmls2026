@@ -64,6 +64,8 @@ import JobDescription from "../views/e-forms/RequestedType/JobDescription.vue";
 import OrientationChecklist from "../views/e-forms/RequestedType/OrientationChecklist.vue";
 import TrainingEvaluation from "../views/e-forms/RequestedType/TrainingEvaluation.vue";
 import verifyRequest from "@/views/e-forms/VerifyRequest/verifyRequest.vue";
+import ViewTrainingEvaluation from "../views/e-forms/ViewRequest/ViewTrainingEvaluation.vue";
+import ViewEmployeeTransfer from "../views/e-forms/ViewRequest/ViewEmployeeTransfer.vue";
 
 const routes = [
   {
@@ -571,6 +573,28 @@ const routes = [
     ],
     props: true,
   },
+  {
+    path: "/view-training-evaluation/:refNo",
+    component: EFormNavbar,
+    children: [
+      {
+        path: "",
+        name: "view-training-evaluation",
+        component: ViewTrainingEvaluation,
+      }
+    ]
+  },
+  {
+    path: "/view-employee-transfer/:refNo",
+    component: EFormNavbar,
+    children: [
+      {
+        path: "",
+        name: "view-employee-transfer",
+        component: ViewEmployeeTransfer
+      }
+    ]
+  }
 ];
 
 const router = createRouter({

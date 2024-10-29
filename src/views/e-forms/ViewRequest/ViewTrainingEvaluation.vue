@@ -15,7 +15,7 @@
     </div>
   </template>
   <script>
-    import TrainingScrollable from '@/components/EFormComponent/TrainingEvaluationForm/TrainingScrollable.vue';
+    import TrainingScrollable from '@/components/EFormComponent/TrainingEvaluationForm/ViewTrainingEvaluation/ViewTrainingScrollable.vue';
     import breadcrumbs from '../../../components/EFormComponent/OtherComponent/BreadCumbs.vue'
     import UserProfileData from "../../../components/EFormComponent/OtherComponent/UserData.vue"
     export default {
