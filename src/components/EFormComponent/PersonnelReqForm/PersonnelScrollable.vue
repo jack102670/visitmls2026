@@ -1,5 +1,23 @@
 <template>
     <div class="py-2">
+        <!-- <ul
+            class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
+            <li class="me-2" v-for="section in ['A', 'B', 'C', 'D']" :key="section">
+                <a
+                    href="#"
+                    @click.prevent="changeSection(section)"
+                    :class="[
+                        'inline-block p-4 rounded-t-lg',
+                        currentSection === section
+                            ? 'text-blue-600 bg-gray-100 dark:bg-gray-800 dark:text-blue-500'
+                            : 'hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300',
+                        !isSectionEnabled(section) ? 'text-gray-300 pointer-events-none' : ''
+                    ]"
+                >
+                    Section {{ section }}
+                </a>
+            </li>
+        </ul> -->
         <ul
             class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
             <li class="me-2" v-for="section in ['A', 'B', 'C', 'D']" :key="section">
@@ -45,6 +63,7 @@ export default {
                 uniqueKey: null,
             },
             sectionDEnabled: false,
+            // enabledSections: ['A'],
 
 
         }
@@ -70,6 +89,13 @@ export default {
             if (section === 'D' && !this.sectionDEnabled) return;
             this.currentSection = section;
         },
+        // isSectionEnabled(section) {
+        //     return this.enabledSections.includes(section);
+        // },
+        // changeSection(section) {
+        //     if (!this.isSectionEnabled(section)) return;
+        //     this.currentSection = section;
+        // },
         updateFormData(sectionData, section) {
             this.formData[`section${section}`] = sectionData;
         },
@@ -86,6 +112,29 @@ export default {
                 this.changeSection(['A', 'B', 'C', 'D'][currentIndex - 1]);
             }
         },
+        // handleNext(data) {
+        //     const sections = ['A', 'B', 'C', 'D'];
+        //     const currentIndex = sections.indexOf(this.currentSection);
+
+        //     if (currentIndex < sections.length - 1) {
+        //         this.updateFormData(data, this.currentSection);
+        //         const nextSection = sections[currentIndex + 1];
+
+        //         if (!this.enabledSections.includes(nextSection)) {
+        //             this.enabledSections.push(nextSection);
+        //         }
+        //         this.changeSection(nextSection);
+        //     }
+        // },
+        // handlePrevious() {
+        //     const sections = ['A', 'B', 'C', 'D'];
+        //     const currentIndex = sections.indexOf(this.currentSection);
+
+        //     if (currentIndex > 0) {
+        //         const previousSection = sections[currentIndex - 1];
+        //         this.changeSection(previousSection);
+        //     }
+        // },
         submitForm(data) {
             if (!this.formData.uniqueKey) {
                 this.formData.uniqueKey = this.generateUniqueKey();
@@ -104,12 +153,15 @@ export default {
             if (this.currentSection === 'C') {
                 this.sectionDEnabled = true;
             }
+            // if (this.currentSection === 'C') {
+            //     this.enabledSections.push('D');
+            // }
 
             console.log('Form submitted with data:', this.formData.sectionA, this.formData.sectionB, this.formData.sectionC, 'Unique Key:', this.formData.uniqueKey);
 
             try {
                 const response = PostPersonnelRequsitionForm(finalPersonnelData);
-                onsole.log("API", response);
+                console.log("API", response);
                 this.$emit("form-submission-result", { success: true });
 
             } catch(error){
