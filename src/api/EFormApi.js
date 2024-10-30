@@ -144,7 +144,7 @@ export const PostPersonnelRequsitionForm = async (finalPersonnelData) => {
     const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
     const response = await axios.post(
       `${base_URL}/PersonnelRequisition`,
-      finalPersonnelData,
+      JSON.stringify(finalPersonnelData),
       {
         headers: {
           "Content-Type": "application/json",
@@ -154,6 +154,8 @@ export const PostPersonnelRequsitionForm = async (finalPersonnelData) => {
     return response.data;
   }catch (error) {
     console.error("Error submitting the personnel data:", error);
+    console.error("Request payload:", finalPersonnelData);
+    console.error("Response data:", error.response.data); 
     throw error;
   }
 };
@@ -163,9 +165,9 @@ export const GetViewTrainingEvaluation = async (refNo)=> {
     const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
     const response = await axios.get(`${base_URL}/TrainingEvaluation/${refNo}`);
     if (response.data.result) {
-      console.log("Training Evaluation data:", response.data.result);
+      // console.log("Training Evaluation data:", response.data.result);
     } else {
-      console.log("Training Evaluation data not found");
+      // console.log("Training Evaluation data not found");
     }
     return response.data.result;
 
@@ -179,9 +181,9 @@ export const GetEmployeeRequestTransfer = async (refNo) => {
     const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
     const response = await axios.get(`${base_URL}/EmployeeTransfer/${refNo}`);
     if (response.data.result) {
-      console.log("Employee Transfer data:", response.data.result);
+      // console.log("Employee Transfer data:", response.data.result);
     } else {
-      console.log("Employee Transfer data not found");
+      // console.log("Employee Transfer data not found");
     }
     return response.data.result;
   } catch(error){

@@ -110,7 +110,7 @@ export default {
                     this.form.requesterDesignation = data.position_title;
                     this.form.verifierEmpId = data.reporting_to;
                 }
-                console.log("Employee Data:", this.user );
+                // console.log("Employee Data:", this.user );
             } catch (error) {
                 console.error("Error fetching HR data:", error);
                 throw new Error("Failed to fetch HR data. Please try again.");
@@ -161,30 +161,9 @@ export default {
             }
 
         },
-        handleFormSubmissionResult({ success, error }) {
-            if (success) {
-                Swal.fire({
-                    title: "Submitted!",
-                    text: "Your application has been submitted.",
-                    confirmButtonColor: "#3085d6",
-                    icon: "success",
-                    confirmButtonText: "OK",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        this.$emit("next-section", this.form);
-                    }
-                });
-            } else {
-                Swal.fire({
-                    title: "Submission Failed",
-                    text: `Error: ${error || "Unknown error occurred."}`,
-                    icon: "error",
-                    confirmButtonColor: "#d33",
-                    confirmButtonText: "Retry",
-                });
-            }
-        },
     },
+
+
     mounted() {
         this.fetchHrData();
     }

@@ -127,15 +127,13 @@
                     field</span>
             </div>
             <div>
-                <label for="functionalTechnicalJobRequired"
-                    class="block mb-2 text-sm font-medium text-primary dark:text-white">
+                <label for="jobCompetency" class="block mb-2 text-sm font-medium text-primary dark:text-white">
                     List of functional / technical job required:
                 </label>
 
                 <div class="space-y-2">
                     <div class="flex flex-wrap gap-2 mb-2">
-                        <div v-for="(field, index) in form.functionalTechnicalJobRequired" :key="index"
-                            class="flex items-center">
+                        <div v-for="(field, index) in form.jobCompetency" :key="index" class="flex items-center">
                             <span
                                 class="block bg-gray-100 text-gray-800 px-4 rounded-lg py-2 text-sm dark:bg-gray-700 dark:text-white">
                                 <div class="flex justify-between items-center space-x-2">
@@ -173,13 +171,11 @@
                     placeholder="Specify discipline" />
             </div>
             <div>
-                <label for="ListofPersonnelCompetenciesrequired"
-                    class="block mb-2 text-sm font-medium text-primary dark:text-white">
+                <label for="personalCompetency" class="block mb-2 text-sm font-medium text-primary dark:text-white">
                     List of Personnal Competencies required:</label>
                 <div class="space-y-2">
                     <div class="flex flex-wrap gap-2 mb-2">
-                        <div v-for="(field, index) in form.ListofPersonnelCompetenciesrequired" :key="index"
-                            class="flex items-center">
+                        <div v-for="(field, index) in form.personalCompetency" :key="index" class="flex items-center">
                             <span
                                 class="block bg-gray-100 text-gray-800 px-4 rounded-lg py-2 text-sm dark:bg-gray-700 dark:text-white flex justify-between items-center w-full">
                                 <span class="flex-1">{{ field }}</span>
@@ -209,9 +205,9 @@
             </div>
         </div>
         <div class="grid grid-cols-1">
-            <label for="personnel" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
+            <label for="others" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
                 Others (Please specify)</label>
-            <textarea id="specifyOthers" rows="4" v-model="form.specifyOthers"
+            <textarea id="others" rows="4" v-model="form.others"
                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Write your comments here"></textarea>
         </div>
@@ -242,23 +238,34 @@ export default {
                 ageLimit: [null, null], //minAge and MaxAge
                 computerLiteracyRequired: "",
                 expRequired: "",
-                yearsRequired: "",
+                yearsRequired: 0,
                 qualificationRequired: "",
                 computerSpecification: "",
                 ownTransportRequired: "",
-                functionalTechnicalJobRequired: [],
+                jobCompetency: [],
                 disciplineSpecification: "",
-                ListofPersonnelCompetenciesrequired: [],
-                specifyOthers: "",
+                personalCompetency: [],
+                others: "",
             }),
             minAge: "",
             maxAge: "",
-            validationErrors: {},
+            validationErrors: {
+                yearsRequired: false,
+            },
             newField: "",
             showInputField: false,
             newPersonnelField: "",
             showInputPersonnelField: false,
         };
+    },
+    watch: {
+        'form.expRequired': function (newValue) {
+            if (newValue === 'no') {
+                this.form.yearsRequired = 0;
+            } else {
+                this.form.yearsRequired = null;
+            }
+        }
     },
     created() {
         if (this.formData.sectionB) {
@@ -277,6 +284,11 @@ export default {
         'ageLimit[1]': 'validateAgeLimit'
     },
     methods: {
+        handleYearsRequiredInput() {
+            if (!this.form.yearsRequired && this.form.expRequired === 'yes') {
+                this.form.yearsRequired = null;
+            }
+        },
         validateAgeLimit() {
             if (this.minAge === null || this.maxAge === null) {
                 this.validationErrors.ageLimit = "Both age fields are required";
@@ -291,39 +303,55 @@ export default {
             this.newPersonnelField = "";
             this.showInputPersonnelField = true;
         },
+        // addPersonnelField() {
+        //     if (this.newPersonnelField.trim()) {
+        //         this.form.personalCompetency.push(this.newPersonnelField.trim());
+        //         this.newPersonnelField = "";
+        //         this.showInputPersonnelField = false;
+        //     }
+        // },
         addPersonnelField() {
             if (this.newPersonnelField.trim()) {
-                this.form.ListofPersonnelCompetenciesrequired.push(this.newPersonnelField.trim());
+                this.form.personalCompetency.push(this.newPersonnelField.trim());
                 this.newPersonnelField = "";
                 this.showInputPersonnelField = false;
             }
         },
+
         removePersonnelField(index) {
-            this.form.ListofPersonnelCompetenciesrequired.splice(index, 1);
+            this.form.personalCompetency.splice(index, 1);
         },
         // for List of functional / technical job required:
         openInputForm() {
             this.newField = "";
             this.showInputField = true;
         },
+        // addField() {
+        //     if (this.newField.trim()) {
+        //         this.form.jobCompetency.push(this.newField.trim());
+        //         this.newField = "";
+        //         this.showInputField = false;
+        //     }
+        // },
         addField() {
             if (this.newField.trim()) {
-                this.form.functionalTechnicalJobRequired.push(this.newField.trim());
+                this.form.jobCompetency.push(this.newField.trim());
                 this.newField = "";
                 this.showInputField = false;
             }
         },
         removeField(index) {
-            this.form.functionalTechnicalJobRequired.splice(index, 1);
+            this.form.jobCompetency.splice(index, 1);
         },
         validateForm() {
             this.validationErrors = {};
             if (!this.minAge || !this.maxAge) this.validationErrors.ageLimit = true;
             if (!this.form.computerLiteracyRequired)
                 this.validationErrors.computerLiteracyRequired = true;
-            if (!this.form.expRequired)
-                this.validationErrors.expRequired = true;
+            // if (this.form.expRequired === 'yes' && !this.form.yearsRequired) this.validationErrors.yearsRequired = 'Please specify years of experience';
+            // if (!this.form.expRequired) this.validationErrors.expRequired = true;
             if (!this.form.ownTransportRequired) this.validationErrors.ownTransportRequired = true;
+
             if (!this.form.qualificationRequired)
                 this.validationErrors.qualificationRequired = true;
             return Object.keys(this.validationErrors).length === 0;
@@ -332,12 +360,12 @@ export default {
             this.$emit("previous-section");
         },
         handleNext() {
-            if (this.validateForm()) {
-                if (!this.validateAgeLimit()) return;
-                const ageLimit = [this.minAge, this.maxAge];
-                this.form.ageLimit = ageLimit;
-                console.log(this.form.functionalTechnicalJobRequired, this.form.ListofPersonnelCompetenciesrequired);
-                this.validateAgeLimit();
+            if (this.validateForm() && this.validateAgeLimit()) {
+                // Ensure `ageLimit`, `jobCompetency`, and `personalCompetency` are formatted as expected
+                this.form.ageLimit = this.ageLimit.join('-');
+
+                console.log('Form data section B:', this.form, this.form.ageLimit);
+                // Prepare data and confirm with the user
                 Swal.fire({
                     title: "Are you sure you want to proceed to the next section?",
                     icon: "question",
@@ -348,7 +376,7 @@ export default {
                     cancelButtonColor: "#d33",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        console.log("Form data saved:", this.form);
+                        console.log('Form data section B saved:', this.form);
                         this.$emit("update-form", this.form, "B");
                         this.$emit("next-section", this.form);
                     }

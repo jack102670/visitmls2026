@@ -44,7 +44,8 @@ import SectionAForm from "./SectionAForm.vue";
 import SectionBForm from "./SectionBForm.vue";
 import SectionCForm from "./SectionCForm.vue";
 import JobDescriptionForm from "../JobDescriptionForm/JobDescriptionForm.vue";
-import {PostPersonnelRequsitionForm} from "@/api/EFormApi";
+import { PostPersonnelRequsitionForm } from "@/api/EFormApi";
+import Swal from "sweetalert2";
 
 export default {
     components: {
@@ -135,7 +136,7 @@ export default {
         //         this.changeSection(previousSection);
         //     }
         // },
-        submitForm(data) {
+        async submitForm(data) {
             if (!this.formData.uniqueKey) {
                 this.formData.uniqueKey = this.generateUniqueKey();
                 localStorage.setItem('uniqueKey', this.formData.uniqueKey);
@@ -147,30 +148,69 @@ export default {
                 ...this.formData.sectionA,
                 ...this.formData.sectionB,
                 ...this.formData.sectionC,
-                // uniqueKey: this.formData.uniqueKey,
             };
 
             if (this.currentSection === 'C') {
                 this.sectionDEnabled = true;
             }
-            // if (this.currentSection === 'C') {
-            //     this.enabledSections.push('D');
-            // }
 
-            console.log('Form submitted with data:', this.formData.sectionA, this.formData.sectionB, this.formData.sectionC, 'Unique Key:', this.formData.uniqueKey);
+            console.log('Final Personnel Data:', finalPersonnelData);
 
             try {
-                const response = PostPersonnelRequsitionForm(finalPersonnelData);
-                console.log("API", response);
-                this.$emit("form-submission-result", { success: true });
+                if (!finalPersonnelData) {
+                    throw new Error('No personnel data found in the form.');
+                }
 
-            } catch(error){
-                this.$emit("form-submission-result", { success: false, error: error.message });
+                // Await API call for submission
+                const response = await PostPersonnelRequsitionForm(finalPersonnelData);
+
+                // Log full response for debugging purposes
+                console.log("Form submission result:", response);
+
+                if (response?.status_code === 200) {
+                    Swal.fire({
+                        title: "Submitted!",
+                        text: "Your application has been submitted.",
+                        icon: "success",
+                        confirmButtonColor: "#3085d6",
+                        confirmButtonText: "OK",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // this.$emit("next-section", this.form);
+                            this.currentSection = 'D';
+                        }
+                    });
+                } else {
+                    throw new Error(`Submission failed: ${response?.statusText || 'Unknown error.'}`);
+                }
+            } catch (error) {
+                console.error('Error submitting the personnel data:', error.message);
+                Swal.fire({
+                    title: "Submission Failed",
+                    text: `Error: ${error.response?.data?.message || error.message || 'Unknown error'}`,
+                    icon: "error",
+                    confirmButtonColor: "#d33",
+                    confirmButtonText: "Retry",
+                });
+
+                if (error.response && error.response.data && error.response.data.errors) {
+                    console.error('Validation errors:', error.response.data.errors);
+                }
+
+
+                // Display a more informative error message if available
+                Swal.fire({
+                    title: "Submission Failed",
+                    text: `Error: ${error.response?.data?.message || error.message}`,
+                    icon: "error",
+                    confirmButtonColor: "#d33",
+                    confirmButtonText: "Retry",
+                });
             }
-
-
-
         }
+
+
     }
+
 }
 </script>
