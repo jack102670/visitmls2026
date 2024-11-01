@@ -82,8 +82,8 @@ export default {
     },
     methods: {
         generateUniqueKey() {
-            // return `key-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
-            return crypto.randomUUID();
+            return `key-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+            // return crypto.randomUUID();
 
         },
         changeSection(section) {
@@ -113,29 +113,6 @@ export default {
                 this.changeSection(['A', 'B', 'C', 'D'][currentIndex - 1]);
             }
         },
-        // handleNext(data) {
-        //     const sections = ['A', 'B', 'C', 'D'];
-        //     const currentIndex = sections.indexOf(this.currentSection);
-
-        //     if (currentIndex < sections.length - 1) {
-        //         this.updateFormData(data, this.currentSection);
-        //         const nextSection = sections[currentIndex + 1];
-
-        //         if (!this.enabledSections.includes(nextSection)) {
-        //             this.enabledSections.push(nextSection);
-        //         }
-        //         this.changeSection(nextSection);
-        //     }
-        // },
-        // handlePrevious() {
-        //     const sections = ['A', 'B', 'C', 'D'];
-        //     const currentIndex = sections.indexOf(this.currentSection);
-
-        //     if (currentIndex > 0) {
-        //         const previousSection = sections[currentIndex - 1];
-        //         this.changeSection(previousSection);
-        //     }
-        // },
         async submitForm(data) {
             if (!this.formData.uniqueKey) {
                 this.formData.uniqueKey = this.generateUniqueKey();
@@ -148,6 +125,7 @@ export default {
                 ...this.formData.sectionA,
                 ...this.formData.sectionB,
                 ...this.formData.sectionC,
+                uniqueKey: this.formData.uniqueKey
             };
 
             if (this.currentSection === 'C') {

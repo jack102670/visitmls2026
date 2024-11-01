@@ -10,7 +10,7 @@
           </label>
           <input type="text" id="company" v-model="form.company"
             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Input company" required readonly />
+            placeholder="Input company" required />
           <span v-if="validationErrors.company" class="text-red-500 text-sm">Please fill in this field.</span>
         </div>
         <div>
@@ -19,20 +19,20 @@
           </label>
           <input type="text" id="department" v-model="form.department"
             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Department Name" required readonly />
+            placeholder="Department Name" required />
           <span v-if="validationErrors.department" class="text-red-500 text-sm">Please fill in this field.</span>
         </div>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label for="position" class="block mb-1 text-sm font-medium text-primary dark:text-white">
+          <label for="designation" class="block mb-1 text-sm font-medium text-primary dark:text-white">
             Position: <span class="text-red-500">*</span>
           </label>
-          <input type="text" id="position" v-model="form.position"
+          <input type="text" id="position" v-model="form.designation"
             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Input position" required readonly />
-          <span v-if="validationErrors.position" class="text-red-500 text-sm">Please fill in this field.</span>
+            placeholder="Input position" required />
+          <span v-if="validationErrors.designation" class="text-red-500 text-sm">Please fill in this field.</span>
         </div>
         <div>
           <label for="report-to" class="block mb-1 text-sm font-medium text-primary dark:text-white">
@@ -40,7 +40,7 @@
           </label>
           <input type="text" id="report-to" v-model="form.reportTo"
             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Report to" required readonly />
+            placeholder="Report to" required />
           <span v-if="validationErrors.reportTo" class="text-red-500 text-sm">Please fill in this field.</span>
         </div>
       </div>
@@ -50,27 +50,47 @@
 
     <h2 class="font-bold text-lg">Responsibilities</h2>
     <div class="">
-      <label for="responsibilities" class="block mb-1 text-sm font-medium text-primary dark:text-white italic">
+      <label for="responsibility" class="block mb-1 text-sm font-medium text-primary dark:text-white italic">
         Responsibilities: <span class="text-red-500">*</span>
       </label>
-      <textarea id="responsibilities" rows="4" v-model="form.responsibilities"
+      <!-- <textarea id="responsibility" rows="4" v-model="form.responsibility"
         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         placeholder="Write the responsibilities here" required></textarea>
-      <span v-if="validationErrors.responsibilities" class="text-red-500 text-sm">Please fill in this field.</span>
+      <span v-if="validationErrors.responsibility" class="text-red-500 text-sm">Please fill in this field.</span> -->
+
+      <textarea
+    id="responsibility"
+    rows="4"
+    v-model="bulletPoints"
+    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+    @click="addInitialBullet"
+    @input="updateBulletPointArray"
+    @keydown="handleBulletPoints"
+    placeholder="Describe responsibilities"
+    required
+  ></textarea>
+      <span v-if="validationErrors.responsibility" class="text-red-500 text-sm">Please fill in this field.</span>
+
     </div>
 
-    <div class="border-b my-4"></div>
 
-    <h2 class="font-bold text-lg">Duties</h2>
-    <div class="">
-      <label for="duties" class="block mb-1 text-sm font-medium text-primary dark:text-white italic">
-        Duties: <span class="text-red-500">*</span>
-      </label>
-      <textarea id="duties" rows="4" v-model="form.duties"
-        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        placeholder="Write the duties here" required></textarea>
-      <span v-if="validationErrors.duties" class="text-red-500 text-sm">Please fill in this field.</span>
-    </div>
+    <div>
+  <label for="duty" class="block mb-1 text-sm font-medium text-primary dark:text-white italic">
+    Duties: <span class="text-red-500">*</span>
+  </label>
+  <textarea
+    id="duty"
+    rows="4"
+    v-model="dutyBulletPoints"
+    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+    @click="addInitialDutyBullet"
+    @input="updateDutyBulletPointArray"
+    @keydown="handleDutyBulletPoints"
+    placeholder="Describe duties"
+    required
+  ></textarea>
+  <span v-if="validationErrors.duty" class="text-red-500 text-sm">Please fill in this field.</span>
+</div>
 
     <div class="border-b my-6"></div>
 
@@ -119,24 +139,35 @@
 </template>
 <script>
 import Swal from "sweetalert2";
-import { fetchHrData } from "@/api/EFormApi";
+import { fetchHrData, PostJobDescription } from "@/api/EFormApi";
 import { store } from "@/views/store.js";
 export default {
   data() {
     return {
       form: {
+        status: "Pending",
         company: "",
-        position: "",
         department: "",
+        designation: "",
         reportTo: "",
-        responsibilities: "",
-        duties: "",
-        education: "",
+        responsibility: "",
+        duty: "",
         experience: "",
+        education: "",
         skills: "",
+        requesterId: "",
+        requesterName: "",
+        requesterDesignation: "",
+        verfierEmpId: "",
+        pr_uniqueKey: null,
+
       },
       validationErrors: {},
-      uniqueKey: localStorage.getItem("uniqueKey"),
+      bulletPoints: '',
+      bulletPointArray: [], 
+      dutyBulletPoints: '',
+      dutyBulletPointArray: [],
+
 
       props: {
         formData: Object,
@@ -145,8 +176,51 @@ export default {
   },
   created() {
     console.log("Unique Key passed to JobDescription:", this.uniqueKey);
+
+    this.form.pr_uniqueKey = localStorage.getItem("uniqueKey");
+    console.log("Unique Key from Local Storage:", this.form.pr_uniqueKey);
   },
   methods: {
+    addInitialBullet() {
+      if (!this.bulletPoints) {
+        this.bulletPoints = '• ';
+      }
+    },
+    handleBulletPoints(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        const cursorPosition = event.target.selectionStart;
+        const beforeCursor = this.bulletPoints.slice(0, cursorPosition);
+        const afterCursor = this.bulletPoints.slice(cursorPosition);
+        this.bulletPoints = `${beforeCursor}\n• ${afterCursor}`;
+        this.$nextTick(() => {
+          event.target.selectionStart = event.target.selectionEnd = cursorPosition + 3;
+        });
+      }
+    },
+    updateBulletPointArray() {
+      this.bulletPointArray = this.bulletPoints.split('\n').filter(point => point.trim() !== '');
+    },
+    addInitialDutyBullet() {
+    if (!this.dutyBulletPoints) {
+      this.dutyBulletPoints = '• ';
+    }
+  },
+  handleDutyBulletPoints(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const cursorPosition = event.target.selectionStart;
+      const beforeCursor = this.dutyBulletPoints.slice(0, cursorPosition);
+      const afterCursor = this.dutyBulletPoints.slice(cursorPosition);
+      this.dutyBulletPoints = `${beforeCursor}\n• ${afterCursor}`;
+      this.$nextTick(() => {
+        event.target.selectionStart = event.target.selectionEnd = cursorPosition + 3;
+      });
+    }
+  },
+  updateDutyBulletPointArray() {
+    this.dutyBulletPointArray = this.dutyBulletPoints.split('\n').filter(point => point.trim() !== '');
+  },
     async fetchHrData() {
       const username_id = store.getSession().userDetails.userId;
       this.loadingText = "Fetching";
@@ -156,9 +230,12 @@ export default {
         if (data) {
           this.user = data;
           this.form.company = data.company_name;
-          this.form.position = data.position_title;
+          this.form.designation = data.position_title;
           this.form.department = data.department;
           this.form.reportTo = data.reporting_to;
+          this.form.requesterName = data.name;
+          this.form.requesterDesignation = data.position_title;
+          this.form.verfierEmpId = data.reporting_to;
         }
         console.log("Employee Data:", this.user);
       } catch (error) {
@@ -171,13 +248,12 @@ export default {
     validateForm() {
       this.validationErrors = {};
       if (!this.form.company) this.validationErrors.company = true;
-      if (!this.form.position) this.validationErrors.position = true;
+      if (!this.form.designation) this.validationErrors.designation = true;
       if (!this.form.department) this.validationErrors.department = true;
-      if (!this.form.position) this.validationErrors.position = true;
       if (!this.form.reportTo) this.validationErrors.reportTo = true;
-      if (!this.form.responsibilities)
-        this.validationErrors.responsibilities = true;
-      if (!this.form.duties) this.validationErrors.duties = true;
+      if (!this.form.responsibility)
+        this.validationErrors.responsibility = true;
+      if (!this.form.duty) this.validationErrors.duty = true;
       if (!this.form.education) this.validationErrors.education = true;
       if (!this.form.experience) this.validationErrors.experience = true;
       if (!this.form.skills) this.validationErrors.skills = true;
@@ -199,6 +275,9 @@ export default {
     },
     submitForm() {
       if (this.validateForm()) {
+        const username_id = store.getSession().userDetails.userId;
+        this.form.requesterId = username_id;
+
         Swal.fire({
           title: "Are you sure you want to submit?",
           icon: "warning",
@@ -206,26 +285,61 @@ export default {
           confirmButtonColor: "#3085d6",
           cancelButtonColor: "#d33",
           confirmButtonText: "Yes, Submit!",
-        }).then((result) => {
+        }).then(async (result) => {
           if (result.isConfirmed) {
-            console.log("Form data saved:", this.form);
-            const JDData = {
-              ...this.form,
-              uniqueKey: this.uniqueKey,
-            };
-            localStorage.removeItem("uniqueKey");
-            Swal.fire({
-              title: "Saved!",
-              text: "Your data has been saved.",
-              confirmButtonColor: "#3085d6",
-              icon: "success",
-              confirmButtonText: "OK",
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.$router.push("/e-dashboard");
-              }
-            });
+            console.log("Form data for JD saved:", this.form);
+            try {
+              Swal.fire({
+                title: 'Submitting...',
+                text: 'Please wait while we submit your data.',
+                allowOutsideClick: false,
+                didOpen: () => {
+                  Swal.showLoading();
+                }
+              })
+
+              const JobDescriptionData = {
+                ...this.form,
+                uniqueKey: this.uniqueKey,
+              };
+              console.log("Data to be submitted:", JobDescriptionData);
+              const response = await PostJobDescription(JobDescriptionData);
+              console.log("Job Description Response:", response);
+              localStorage.removeItem("uniqueKey");
+              Swal.close();
+
+              Swal.fire({
+                title: "Saved!",
+                text: "Your data has been saved.",
+                confirmButtonColor: "#3085d6",
+                icon: "success",
+                confirmButtonText: "OK",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.$router.push("/e-dashboard");
+                }
+              });
+              this.isSubmittedForm = true;
+
+              this.resetForm();
+
+            } catch (error) {
+              Swal.close();
+              console.error('Submission failed:', error.response ? error.response.data :
+                error.message);
+              Swal.fire({
+                title: 'Error!',
+                text: error.response ? error.response.data.message ||
+                  'Submission failed. Please try again later.' :
+                  'Submission failed. Please try again later.',
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+              });
+
+            }
           }
+
         });
       } else {
         Swal.fire({

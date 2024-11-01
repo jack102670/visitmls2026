@@ -66,6 +66,7 @@ import TrainingEvaluation from "../views/e-forms/RequestedType/TrainingEvaluatio
 import verifyRequest from "@/views/e-forms/VerifyRequest/verifyRequest.vue";
 import ViewTrainingEvaluation from "../views/e-forms/ViewRequest/ViewTrainingEvaluation.vue";
 import ViewEmployeeTransfer from "../views/e-forms/ViewRequest/ViewEmployeeTransfer.vue";
+import ViewPersonnelRequisiton from "@/views/e-forms/ViewRequest/ViewPersonnelRequisiton.vue";
 
 const routes = [
   {
@@ -592,6 +593,17 @@ const routes = [
         path: "",
         name: "view-employee-transfer",
         component: ViewEmployeeTransfer
+      }
+    ]
+  },
+  {
+    path:"/view-personnel-requisition/:refNo",
+    component: EFormNavbar,
+    children: [
+      {
+        path: "",
+        name: "view-personnel-requisition",
+        component: ViewPersonnelRequisiton
       }
     ]
   }

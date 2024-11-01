@@ -9,19 +9,18 @@
                     <div>
                         <label for="minAge" class="block mb-2 text-sm font-medium text-primary dark:text-white">Min
                             Age:</label>
-                        <input type="number" id="minAge" v-model="minAge"
+                        <input type="number" id="minAge" v-model="minAge" readonly
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Input Min Age" required />
                     </div>
                     <div>
                         <label for="maxAge" class="block mb-2 text-sm font-medium text-primary dark:text-white">Max
                             Age:</label>
-                        <input type="number" id="maxAge" v-model="maxAge"
+                        <input type="number" id="maxAge" v-model="maxAge" readonly
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Input Max Age" required />
                     </div>
                 </div>
-                <span v-if="validationErrors.ageLimit" class="text-red-500 text-sm">Please fill in this field</span>
             </div>
             <div class="flex flex-col sm:flex-row sm:items-start sm:space-x-4 w-full">
                 <div class="flex-1">
@@ -32,29 +31,26 @@
                     <div class="flex space-x-4 items-center mt-2">
                         <div class="flex items-center space-x-2">
                             <input id="yes-computerLiteracyRequired" type="radio" value="yes"
-                                v-model="form.computerLiteracyRequired"
+                                v-model="form.computerLiteracyRequired" readonly
                                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                             <label for="yes-computerLiteracyRequired"
                                 class="text-sm font-medium text-gray-900 dark:text-gray-300">Yes</label>
                         </div>
                         <div class="flex items-center space-x-2">
                             <input id="no-computerLiteracyRequired" type="radio" value="no"
-                                v-model="form.computerLiteracyRequired"
+                                v-model="form.computerLiteracyRequired" readonly
                                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                             <label for="no-computerLiteracyRequired"
                                 class="text-sm font-medium text-gray-900 dark:text-gray-300">No</label>
                         </div>
                     </div>
-                    <span v-if="validationErrors.computerLiteracyRequired" class="text-red-500 text-sm mt-1 block">
-                        Please fill in this field
-                    </span>
                 </div>
                 <div class="flex-1" v-if="form.computerLiteracyRequired === 'yes'">
                     <label for="computerSpecification"
                         class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
                         If Yes, Please specify
                     </label>
-                    <input type="text" id="computerSpecification" v-model="form.computerSpecification"
+                    <input type="text" id="computerSpecification" v-model="form.computerSpecification" readonly
                         class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Specify Requirement" />
                 </div>
@@ -66,20 +62,18 @@
                     </label>
                     <div class="flex space-x-4 items-center mt-2">
                         <div class="flex items-center space-x-2">
-                            <input id="yes-expRequired" type="radio" value="yes" v-model="form.expRequired"
+                            <input id="yes-expRequired" type="radio" value="yes" v-model="form.expRequired" readonly
                                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                             <label for="yes-expRequired"
                                 class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Yes</label>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <input id="no-expRequired" type="radio" value="no" v-model="form.expRequired"
+                            <input id="no-expRequired" type="radio" value="no" v-model="form.expRequired" readonly
                                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                             <label for="no-expRequired"
                                 class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">No</label>
                         </div>
                     </div>
-                    <span v-if="validationErrors.expRequired" class="text-red-500 text-sm">Please fill in this
-                        field</span>
                 </div>
                 <div class="flex-1 flex-col space-x-[1px]" v-if="form.expRequired === 'yes'">
                     <label for="yearsRequired"
@@ -94,18 +88,16 @@
                 <label for="ownTransportRequired" class="block mb-2 text-sm font-medium text-primary dark:text-white">
                     Posses Own Transport?: <span class="text-red-500">*</span></label>
                 <div class="flex space-x-4 items-center mb-4">
-                    <input id="yes-ownTransportRequired" type="radio" value="yes" v-model="form.ownTransportRequired"
+                    <input id="yes-ownTransportRequired" type="radio" value="yes" v-model="form.ownTransportRequired" readonly
                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                     <label for="yes-ownTransportRequired"
                         class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Yes</label>
 
-                    <input id="no-ownTransportRequired" type="radio" value="no" v-model="form.ownTransportRequired"
+                    <input id="no-ownTransportRequired" type="radio" value="no" v-model="form.ownTransportRequired" readonly
                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                     <label for="no-ownTransportRequired"
                         class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">No</label>
                 </div>
-                <span v-if="validationErrors.ownTransportRequired" class="text-red-500 text-sm">Please fill in this
-                    field</span>
             </div>
             <div>
                 <label for="qualificationRequired"
@@ -123,8 +115,6 @@
                     <label for="diploma-qualificationRequired"
                         class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">DIPLOMA/DEGREE</label>
                 </div>
-                <span v-if="validationErrors.qualificationRequired" class="text-red-500 text-sm">Please fill in this
-                    field</span>
             </div>
             <div>
                 <label for="jobCompetency" class="block mb-2 text-sm font-medium text-primary dark:text-white">
@@ -168,7 +158,7 @@
                     Please specify discipline</label>
                 <input type="text" id="disciplineSpecification" v-model="form.disciplineSpecification"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Specify discipline" />
+                    placeholder="Specify discipline" readonly />
             </div>
             <div>
                 <label for="personalCompetency" class="block mb-2 text-sm font-medium text-primary dark:text-white">
@@ -185,7 +175,6 @@
                             </span>
                         </div>
                     </div>
-
                     <div v-if="showInputPersonnelField" class="mb-2 flex items-center gap-2">
                         <input type="text" v-model="newPersonnelField"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -209,24 +198,11 @@
                 Others (Please specify)</label>
             <textarea id="others" rows="4" v-model="form.others"
                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Write your comments here"></textarea>
-        </div>
-
-        <div class="grid grid-cols-1 space-x-2 mt-4">
-            <div class="col-span-8 flex justify-end">
-                <button @click="handlePrevious"
-                    class="bg-transparent text-pending px-10 py-2 rounded-md border-[2px] border-pending mr-4">
-                    Back
-                </button>
-                <button @click.prevent="handleNext" class="bg-primary text-white px-10 py-2 rounded-md">
-                    Next
-                </button>
-            </div>
+                placeholder="Write your comments here" readonly></textarea>
         </div>
     </div>
 </template>
 <script>
-import Swal from "sweetalert2";
 import {
     reactive
 } from 'vue';
@@ -257,139 +233,6 @@ export default {
             newPersonnelField: "",
             showInputPersonnelField: false,
         };
-    },
-    watch: {
-        'form.expRequired': function (newValue) {
-            if (newValue === 'no') {
-                this.form.yearsRequired = 0;
-            } else {
-                this.form.yearsRequired = null;
-            }
-        },
-        'ageLimit[0]': 'validateAgeLimit',
-        'ageLimit[1]': 'validateAgeLimit'
-    },
-    created() {
-        if (this.formData.sectionB) {
-            Object.assign(this.form, this.formData.sectionB);
-        }
-        this.minAge = this.formData.sectionB?.ageLimit?.[0] || "";
-        this.maxAge = this.formData.sectionB?.ageLimit?.[1] || "";
-    },
-    computed: {
-        ageLimit() {
-            return [parseInt(this.minAge), parseInt(this.maxAge)];
-        },
-    },
-
-    methods: {
-        handleYearsRequiredInput() {
-            if (!this.form.yearsRequired && this.form.expRequired === 'yes') {
-                this.form.yearsRequired = null;
-            }
-        },
-        validateAgeLimit() {
-            if (this.minAge === null || this.maxAge === null) {
-                this.validationErrors.ageLimit = "Both age fields are required";
-                return false;
-            }
-            this.validationErrors.ageLimit = "";
-            return true;
-        },
-
-        // for List of Personnal Competencies required
-        openPersonnelInputForm() {
-            this.newPersonnelField = "";
-            this.showInputPersonnelField = true;
-        },
-        // addPersonnelField() {
-        //     if (this.newPersonnelField.trim()) {
-        //         this.form.personalCompetency.push(this.newPersonnelField.trim());
-        //         this.newPersonnelField = "";
-        //         this.showInputPersonnelField = false;
-        //     }
-        // },
-        addPersonnelField() {
-            if (this.newPersonnelField.trim()) {
-                this.form.personalCompetency.push(this.newPersonnelField.trim());
-                this.newPersonnelField = "";
-                this.showInputPersonnelField = false;
-            }
-        },
-
-        removePersonnelField(index) {
-            this.form.personalCompetency.splice(index, 1);
-        },
-        // for List of functional / technical job required:
-        openInputForm() {
-            this.newField = "";
-            this.showInputField = true;
-        },
-        // addField() {
-        //     if (this.newField.trim()) {
-        //         this.form.jobCompetency.push(this.newField.trim());
-        //         this.newField = "";
-        //         this.showInputField = false;
-        //     }
-        // },
-        addField() {
-            if (this.newField.trim()) {
-                this.form.jobCompetency.push(this.newField.trim());
-                this.newField = "";
-                this.showInputField = false;
-            }
-        },
-        removeField(index) {
-            this.form.jobCompetency.splice(index, 1);
-        },
-        validateForm() {
-            this.validationErrors = {};
-            if (!this.minAge || !this.maxAge) this.validationErrors.ageLimit = true;
-            if (!this.form.computerLiteracyRequired)
-                this.validationErrors.computerLiteracyRequired = true;
-            // if (this.form.expRequired === 'yes' && !this.form.yearsRequired) this.validationErrors.yearsRequired = 'Please specify years of experience';
-            // if (!this.form.expRequired) this.validationErrors.expRequired = true;
-            if (!this.form.ownTransportRequired) this.validationErrors.ownTransportRequired = true;
-
-            if (!this.form.qualificationRequired)
-                this.validationErrors.qualificationRequired = true;
-            return Object.keys(this.validationErrors).length === 0;
-        },
-        handlePrevious() {
-            this.$emit("previous-section");
-        },
-        handleNext() {
-            if (this.validateForm() && this.validateAgeLimit()) {
-                // Ensure `ageLimit`, `jobCompetency`, and `personalCompetency` are formatted as expected
-                this.form.ageLimit = this.ageLimit.join('-');
-
-                console.log('Form data section B:', this.form, this.form.ageLimit);
-                // Prepare data and confirm with the user
-                Swal.fire({
-                    title: "Are you sure you want to proceed to the next section?",
-                    icon: "question",
-                    showCancelButton: true,
-                    confirmButtonText: "Yes, proceed",
-                    cancelButtonText: "No, stay here",
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        console.log('Form data section B saved:', this.form);
-                        this.$emit("update-form", this.form, "B");
-                        this.$emit("next-section", this.form);
-                    }
-                });
-            } else {
-                Swal.fire({
-                    title: "Error!",
-                    text: "Please fill in all required fields.",
-                    icon: "error",
-                    confirmButtonText: "OK",
-                    confirmButtonColor: "#3085d6",
-                });
-            }
-        },
     },
 };
 </script>

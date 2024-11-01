@@ -8,16 +8,14 @@
                     filled: <span class="text-red-500">*</span></label>
                 <input type="text" id="position" v-model="form.position"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Input position" required />
-                <span v-if="validationErrors.position" class="text-red-500 text-sm">Please fill in this field</span>
+                    placeholder="Input position" required readonly />
             </div>
             <div>
                 <label for="company" class="block mb-2 text-sm font-medium text-primary dark:text-white">Company Name:
                     <span class="text-red-500">*</span></label>
                 <input type="text" id="company" v-model="form.company"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Company Name" required />
-                <span v-if="validationErrors.company" class="text-red-500 text-sm">Please fill in this field</span>
+                    placeholder="Company Name" required readonly />
             </div>
             <div class="">
                 <label for="dateRequired" class="block mb-2 text-sm font-medium text-primary dark:text-white">Date Required:
@@ -32,18 +30,15 @@
                     </div>
                     <input id="datepicker-autohide" type="date" v-model="form.dateRequired"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        required />
+                        required readonly />
                 </div>
-                <span v-if="validationErrors.dateRequired" class="text-red-500 text-sm">Please fill in this
-                    field.</span>
             </div>
             <div>
                 <label for="department" class="block mb-2 text-sm font-medium text-primary dark:text-white">Department:
                     <span class="text-red-500">*</span></label>
                 <input type="text" id="department" v-model="form.department"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Department name" required />
-                <span class="text-red-500 text-sm" v-if="validationErrors.department"></span>
+                    placeholder="Department name" required readonly />
             </div>
             <div>
                 <label for="numberPersonnel" class="block mb-2 text-sm font-medium text-primary dark:text-white">No of
@@ -51,17 +46,14 @@
                     Required: <span class="text-red-500">*</span></label>
                 <input type="number" id="numberPersonnel" v-model="form.numberPersonnel"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="No of personnel required" required />
-                <span class="text-red-500 text-sm" v-if="validationErrors.numberPersonnel">Please fill in this
-                    field</span>
+                    placeholder="No of personnel required" required readonly />
             </div>
             <div>
                 <label for="location" class="block mb-2 text-sm font-medium text-primary dark:text-white">Location:
                     <span class="text-red-500">*</span></label>
                 <input type="text" id="location" v-model="form.location"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Location" required />
-                <span class="text-red-500 text-sm" v-if="validationErrors.location">Please fill in this field</span>
+                    placeholder="Location" required readonly />
             </div>
             <div>
                 <label for="basicSalary" class="block mb-2 text-sm font-medium text-primary dark:text-white">Basic
@@ -69,8 +61,7 @@
                     Propose: <span class="text-red-500">*</span></label>
                 <input type="number" id="basicSalary" v-model="form.basicSalary"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Basic salary" required />
-                <span class="text-red-500 text-sm" v-if="validationErrors.basicSalary">Please fill in this field</span>
+                    placeholder="Basic salary" required readonly />
             </div>
         </div>
         <hr class="w-full border-b border-b-[1px]" />
@@ -81,7 +72,7 @@
                 <div class="flex flex-wrap gap-4 ">
                     <div class="flex items-center">
                         <input id="newReqruitment-requisitionPurpose" type="radio" name="requisitionPurpose"
-                            value="newRecruitment" v-model="form.requisitionPurpose"
+                            value="newRecruitment" v-model="form.requisitionPurpose" readonly @click.prevent
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                         <label for="new-recruitment"
                             class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">New
@@ -89,14 +80,14 @@
                     </div>
                     <div class="flex items-center">
                         <input id="temporary-requisitionPurpose" type="radio" name="requisitionPurpose" value="temporary"
-                            v-model="form.requisitionPurpose"
+                            v-model="form.requisitionPurpose" readonly @click.prevent
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                         <label for="temporary"
                             class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Temporary</label>
                     </div>
                     <div class="flex items-center">
                         <input id="replacement-requisitionPurpose" type="radio" name="requisitionPurpose"
-                            value="replacement" v-model="form.requisitionPurpose"
+                            value="replacement" v-model="form.requisitionPurpose" readonly @click.prevent
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                         <label for="replacement"
                             class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Replacement</label>
@@ -109,14 +100,14 @@
                 <div class="flex flex-wrap gap-4">
                     <div class="flex items-center">
                         <input id="budgeted-manpowerBudget" type="radio" name="manpowerBudget" value="budgeted"
-                            v-model="form.manpowerBudget"
+                            v-model="form.manpowerBudget" readonly @click.prevent
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                         <label for="budgeted"
                             class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Budgeted</label>
                     </div>
                     <div class="flex items-center">
                         <input id="unbudgeted-manpowerBudget" type="radio" name="manpowerBudget"
-                            value="unbudgeted" v-model="form.manpowerBudget"
+                            value="unbudgeted" v-model="form.manpowerBudget" readonly @click.prevent
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                         <label for="unbudgeted"
                             class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">UnBudgeted</label>
@@ -130,8 +121,7 @@
                     of Person to be replaced: <span class="text-red-500">*</span></label>
                 <input type="text" id="name" v-model="form.name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Input Name" required />
-                    <span class="text-red-500 text-sm" v-if="validationErrors.name">Please fill in this field</span>
+                    placeholder="Input Name" required readonly />
             </div>
             <div>
                 <label for="reasonUnbudget"
@@ -140,8 +130,7 @@
                 </label>
                 <input type="text" id="reasonUnbudget" v-model="form.reasonUnbudget"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Reason for unbudgeted" required />
-                    <span class="text-red-500 text-sm" v-if="validationErrors.reasonUnbudget">Please fill in this field</span>
+                    placeholder="Reason for unbudgeted" required readonly />
             </div>
             <div>
                 <label for="position" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
@@ -163,26 +152,14 @@
                     for request : </label>
                 <textarea id="requestReason" rows="4" v-model="form.requestReason"
                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Write your comments here"></textarea>
-                    <span class="text-red-500 text-sm" v-if="validationErrors.requestReason">Please fill in this field</span>
-            </div>
-        </div>
-        <div class="grid grid-cols-8 space-x-2 mt-4">
-            <div class="col-span-8 flex justify-end">
-                <button @click.prevent="confirmExit"
-                    class="bg-transparent text-rejected px-10 py-2 rounded-md border-[2px] border-rejected mr-4">
-                    Exit
-                </button>
-                <button @click.prevent="handleNext" class="bg-primary text-white px-10 py-2 rounded-md">
-                    Next
-                </button>
+                    placeholder="Write your comments here" readonly></textarea>
             </div>
         </div>
     </div>
 </template>
 <script>
 import Swal from 'sweetalert2';
-// import { fetchHrData } from '@/api/EFormApi';
+import { getPersonnelRequisitonForm } from '@/api/EFormApi';
 
 export default {
     props: ['formData'],
@@ -192,7 +169,7 @@ export default {
             form: this.formData.sectionA || {
                 position: '',
                 company: '',
-                status: 'Pending',
+                status: '',
                 department: '',
                 location: '',
                 numberPersonnel: '',
@@ -207,94 +184,26 @@ export default {
             validationErrors: {},
         }
     },
+    mounted(){
+        const refNo = this.$route.params.refNo;
+        this.getPersonnelRequisitonForm(refNo);
+    },
     methods: {
-        // async fetchHrData() {
-        //     const username_id = store.getSession().userDetails.userId;
-        //         this.loadingText = 'Fetching';
-        //         this.loading = true;
-        //     try {
-        //         const data = await fetchHrData(username_id);
-        //         if (data) {
-        //             this.user = data;
-        //             this.form.position = data.position_title;
-        //             this.form.company = data.company_name;
-        //             this.form.department = data.department;
-
-        //         }
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // },
-
-    confirmExit() {
-        Swal.fire({
-            title: 'Are you sure you want to exit?',
-            text: 'Any unsaved changes will be lost!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, exit',
-            cancelButtonText: 'No, stay'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                this.$router.push('/e-dashboard');
-            }
-        });
-    },
-    validateForm() {
-        this.validationErrors = {};
-        if (!this.form.position) this.validationErrors.position = true;
-        if (!this.form.company) this.validationErrors.company = true;
-        if (!this.form.dateRequired) this.validationErrors.dateRequired = true;
-        if (!this.form.department) this.validationErrors.department = true;
-        if (!this.form.numberPersonnel) this.validationErrors.numberPersonnel = true;
-        if (!this.form.location) this.validationErrors.location = true;
-        if (!this.form.basicSalary) this.validationErrors.basicSalary = true;
-        if (!this.form.requisitionPurpose) this.validationErrors.requisitionPurpose = true;
-        if (!this.form.manpowerBudget) this.validationErrors.manpowerBudget = true;
-        if (!this.form.name) this.validationErrors.name = true;
-        if (!this.form.reasonUnbudget) this.validationErrors.reasonUnbudget = true;
-        if (!this.form.requestReason) this.validationErrors.requestReason = true;
-        
-        return Object.keys(this.validationErrors).length === 0;
-    },
-    handleFileUpload(event) {
-        const file = event.target.files[0].name;
-        if (file) {
-            this.form.file = file;
-            this.fileError = '';
-        } else {
-            this.fileError = 'Please select a file';
-        }
-    },
-    handleNext() {
-        if (this.validateForm()) {
-            Swal.fire({
-                title: 'Are you sure you want to proceed to the next section?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, proceed',
-                cancelButtonText: 'No, stay here',
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    console.log('Form data section A saved:', this.form);
-                    this.$emit('update-form', this.form, 'A');
-                    this.$emit('next-section', this.form);
+        async getPersonnelRequisitonForm(refNo) {
+            try {
+                const data = await getPersonnelRequisitonForm(refNo);
+                if (data) {
+                    this.form = {
+                        ...data.form,
+                        ...data,
+                    };
                 }
-            });
-        } else {
-            Swal.fire({
-                title: 'Error!',
-                text: 'Please fill in all required fields.',
-                icon: 'error',
-                confirmButtonText: 'OK',
-                confirmButtonColor: '#3085d6',
-            });
+            }catch (error){
+                console.error("Error loading training evaluation:", error);
+                throw error;
+            }
         }
     },
-},
-    }
+
+    };
 </script>

@@ -48,8 +48,10 @@
       <tbody>
         <!-- Loader -->
         <tr v-if="loading">
-          <td colspan="9" class="flex justify-center items-center h-32">
-            <div class="loader"></div>
+          <td colspan="9" class="h-32">
+            <div class="w-full h-full flex justify-center items-center">
+              <div class="loader"></div>
+            </div>
           </td>
         </tr>
         <tr v-for="(application, index) in paginatedApplications" :key="application.refNo"
@@ -261,8 +263,9 @@ export default {
       } else if (application.requestType === 'Employee Transfer Form') {
         this.$router.push({ name: 'view-employee-transfer', params: { refNo: application.refNo } });
 
+      } else if (application.requestType === 'Personnel Requisition Form') {
+        this.$router.push({ name: 'view-personnel-requisition', params: { refNo: application.refNo } });
       }
-
       else {
         console.error("Error: Invalid request type");
       }
