@@ -235,7 +235,7 @@ export default {
     data() {
         return {
             form: reactive({
-                ageLimit: [null, null], //minAge and MaxAge
+                ageLimit: 0, //minAge and MaxAge
                 computerLiteracyRequired: "",
                 expRequired: "",
                 yearsRequired: 0,
