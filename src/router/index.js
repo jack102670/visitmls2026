@@ -53,18 +53,6 @@ import NotFound from "../views/pagenotfound.vue";
 import AdminHODpage from "@/components/e-claim/AdminHODpage.vue";
 import AdminHODClaimpage from "@/components/e-claim/AdminHODClaimpage.vue";
 
-// e-forms
-
-import EFormDashboard from "../views/e-forms/Edashboard/EformDashboard.vue";
-import EFormNavbar from "../components/EFormComponent/eNavbar/EFormNavbar.vue";
-import PersonnelRequisition from "../views/e-forms/RequestedType/PersonnelRequisition.vue";
-import OnJobTraining from "../views/e-forms/RequestedType/OnJobTraining.vue";
-import EmployeeTransfer from "../views/e-forms/RequestedType/EmployeeTransfer.vue";
-import JobDescription from "../views/e-forms/RequestedType/JobDescription.vue";
-import OrientationChecklist from "../views/e-forms/RequestedType/OrientationChecklist.vue";
-import TrainingEvaluation from "../views/e-forms/RequestedType/TrainingEvaluation.vue";
-import verifyRequest from "@/views/e-forms/VerifyRequest/verifyRequest.vue";
-
 const routes = [
   {
     path: "/VerifierClaimpage/:rn",
@@ -466,110 +454,6 @@ const routes = [
     path: "/:pathMatch(.*)*", // This regex matches any route
     name: "NotFound",
     component: NotFound,
-  },
-  // e-forms section
-  {
-    path: "/e-dashboard",
-    component: EFormNavbar,
-    children: [
-      {
-        path: "",
-        name: "e-dashboard",
-        component: EFormDashboard,
-      },
-    ],
-    props: true,
-  },
-  {
-    path: "/verify-request",
-    
-    component: EFormNavbar,
-    children: [
-      {
-        path: "",
-        name: "verify-request",
-        component: verifyRequest,
-      },
-    ],
-    props: true,
-  },
-  {
-    path: "/personnel-requisition",
-   
-    component: EFormNavbar,
-    children: [
-      {
-        path: "",
-        name: "personnel-requisition",
-        component: PersonnelRequisition,
-      },
-    ],
-    props: true,
-  },
-  {
-    path: "/on-job-training",
-    
-    component: EFormNavbar,
-    children: [
-      {
-        path: "",
-        name: "on-job-training",
-        component: OnJobTraining,
-      },
-    ],
-    props: true,
-  },
-  {
-    path: "/employee-transfer",
-   
-    component: EFormNavbar,
-    children: [
-      {
-        path: "",
-        name: "employee-transfer",
-        component: EmployeeTransfer,
-      },
-    ],
-    props: true,
-  },
-  {
-    path: "/job-description",
-    
-    component: EFormNavbar,
-    children: [
-      {
-        path: "",
-        name: "job-description",
-        component: JobDescription,
-      },
-    ],
-    props: true,
-  },
-  {
-    path: "/orientation-checklist",
-    
-    component: EFormNavbar,
-    children: [
-      {
-        path: "",
-        name: "orientation-checklist",
-        component: OrientationChecklist,
-      },
-    ],
-    props: true,
-  },
-  {
-    path: "/training-evaluation",
-   
-    component: EFormNavbar,
-    children: [
-      {
-        path: "",
-        name: "training-evaluation",
-        component: TrainingEvaluation,
-      },
-    ],
-    props: true,
   },
 ];
 
