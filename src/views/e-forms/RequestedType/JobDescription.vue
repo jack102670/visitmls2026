@@ -9,7 +9,8 @@
           <breadcrumbs :breadcrumbs="breadcrumbs" />
         </div>
         <div class="space-y-2">
-          <UserProfileData />
+            <UserProfileData />
+
           <JobDescriptionForm />
         </div>
       </div>

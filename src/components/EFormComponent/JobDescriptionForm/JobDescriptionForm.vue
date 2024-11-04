@@ -1,5 +1,8 @@
 <template>
-  <div class="border border-[1px] rounded-md px-4 py-6 sm:px-6">
+
+
+
+  <div class="border border-[1px]  rounded-md px-4 py-6 sm:px-6">
     <h1 class="font-bold text-xl">Job Description</h1>
 
     <div class="space-y-4">
@@ -58,39 +61,58 @@
         placeholder="Write the responsibilities here" required></textarea>
       <span v-if="validationErrors.responsibility" class="text-red-500 text-sm">Please fill in this field.</span> -->
 
-      <textarea
-    id="responsibility"
-    rows="4"
-    v-model="bulletPoints"
-    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-    @click="addInitialBullet"
-    @input="updateBulletPointArray"
-    @keydown="handleBulletPoints"
-    placeholder="Describe responsibilities"
-    required
-  ></textarea>
+      <textarea id="responsibility" rows="4" v-model="bulletPoints"
+        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        @click="addInitialBullet" @input="updateBulletPointArray" @keydown="handleBulletPoints"
+        placeholder="Describe responsibilities" required></textarea>
       <span v-if="validationErrors.responsibility" class="text-red-500 text-sm">Please fill in this field.</span>
 
     </div>
 
 
+    <!-- <div>
+      <label for="duty" class="block mb-1 text-sm font-medium text-primary dark:text-white italic">
+        Duties: <span class="text-red-500">*</span>
+      </label>
+      <textarea id="duty" rows="4" v-model="dutyBulletPoints"
+        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        @click="addInitialDutyBullet" @input="updateDutyBulletPointArray" @keydown="handleDutyBulletPoints"
+        placeholder="Describe duties" required></textarea>
+      <span v-if="validationErrors.duty" class="text-red-500 text-sm">Please fill in this field.</span>
+    </div> -->
     <div>
-  <label for="duty" class="block mb-1 text-sm font-medium text-primary dark:text-white italic">
-    Duties: <span class="text-red-500">*</span>
-  </label>
-  <textarea
-    id="duty"
-    rows="4"
-    v-model="dutyBulletPoints"
-    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-    @click="addInitialDutyBullet"
-    @input="updateDutyBulletPointArray"
-    @keydown="handleDutyBulletPoints"
-    placeholder="Describe duties"
-    required
-  ></textarea>
-  <span v-if="validationErrors.duty" class="text-red-500 text-sm">Please fill in this field.</span>
-</div>
+      <label for="duty" class="block mb-1 text-sm font-medium text-primary dark:text-white italic">
+        Duties: <span class="text-red-500">*</span>
+      </label>
+      <div class="space-y-2">
+        <div class="flex flex-wrap gap-2 mb-2">
+          <div v-for="(field, index) in form.duty" :key="index" class="flex items-center">
+            <span
+              class="block bg-gray-100 text-gray-800 px-4 rounded-lg py-2 text-sm dark:bg-gray-700 dark:text-white flex justify-between items-center w-full">
+              <span class="flex-1">{{ field }}</span>
+              <span @click="removeField(index)" class="ml-2 cursor-pointer">
+                <font-awesome-icon :icon="['fas', 'xmark']" />
+              </span>
+            </span>
+          </div>
+        </div>
+        <div v-if="showInputField" class="mb-2 flex items-center space-x-2">
+          <input id="duty" rows="4" v-model="newField"
+            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Describe duties" required />
+          <button @click="addField" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+            Add
+          </button>
+        </div>
+        <button v-if="!showInputField" @click="showInputField = true"
+          class="bg-transparent text-sm hover:border-primary hover:border-[1px] border-[1px] border-transparent p-2.5 rounded-2xl">
+          Add More <span>
+            <font-awesome-icon icon="fa-solid fa-plus" /></span>
+        </button>
+
+      </div>
+
+    </div>
 
     <div class="border-b my-6"></div>
 
@@ -164,9 +186,13 @@ export default {
       },
       validationErrors: {},
       bulletPoints: '',
-      bulletPointArray: [], 
+      bulletPointArray: [],
       dutyBulletPoints: '',
       dutyBulletPointArray: [],
+
+      // multiple fields
+      showInputField: false,
+      newField: "",
 
 
       props: {
@@ -181,6 +207,24 @@ export default {
     console.log("Unique Key from Local Storage:", this.form.pr_uniqueKey);
   },
   methods: {
+
+    // 
+    openInputForm() {
+            this.newField = "";
+            this.showInputField = true;
+        },
+
+        addField() {
+            if (this.newField.trim()) {
+                this.form.duty.push(this.newField.trim());
+                this.newField = "";
+                this.showInputField = false;
+            }
+        },
+        removeField(index) {
+            this.form.jobCompetency.splice(index, 1);
+        },
+
     addInitialBullet() {
       if (!this.bulletPoints) {
         this.bulletPoints = '• ';
@@ -202,25 +246,25 @@ export default {
       this.bulletPointArray = this.bulletPoints.split('\n').filter(point => point.trim() !== '');
     },
     addInitialDutyBullet() {
-    if (!this.dutyBulletPoints) {
-      this.dutyBulletPoints = '• ';
-    }
-  },
-  handleDutyBulletPoints(event) {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      const cursorPosition = event.target.selectionStart;
-      const beforeCursor = this.dutyBulletPoints.slice(0, cursorPosition);
-      const afterCursor = this.dutyBulletPoints.slice(cursorPosition);
-      this.dutyBulletPoints = `${beforeCursor}\n• ${afterCursor}`;
-      this.$nextTick(() => {
-        event.target.selectionStart = event.target.selectionEnd = cursorPosition + 3;
-      });
-    }
-  },
-  updateDutyBulletPointArray() {
-    this.dutyBulletPointArray = this.dutyBulletPoints.split('\n').filter(point => point.trim() !== '');
-  },
+      if (!this.dutyBulletPoints) {
+        this.dutyBulletPoints = '• ';
+      }
+    },
+    handleDutyBulletPoints(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        const cursorPosition = event.target.selectionStart;
+        const beforeCursor = this.dutyBulletPoints.slice(0, cursorPosition);
+        const afterCursor = this.dutyBulletPoints.slice(cursorPosition);
+        this.dutyBulletPoints = `${beforeCursor}\n• ${afterCursor}`;
+        this.$nextTick(() => {
+          event.target.selectionStart = event.target.selectionEnd = cursorPosition + 3;
+        });
+      }
+    },
+    updateDutyBulletPointArray() {
+      this.dutyBulletPointArray = this.dutyBulletPoints.split('\n').filter(point => point.trim() !== '');
+    },
     async fetchHrData() {
       const username_id = store.getSession().userDetails.userId;
       this.loadingText = "Fetching";

@@ -1,6 +1,6 @@
 
 <template>
-    <div class="space-y-4 border-[1px] rounded-md py-4 px-4">
+    <div class="space-y-4 border-[1px] rounded-md py-4 px-4 ">
         <h1 class="font-bold text-md text-primary">Employee Details</h1>
 
         <!-- Grid for desktop mode -->
