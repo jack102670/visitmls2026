@@ -3736,6 +3736,12 @@ export default {
       const LocationEndLT = localTravellingTab.fields.find(
         (field) => field.id === "LocationEnd"
       );
+      const AccommodationLT = localTravellingTab.fields.find(
+        (field) => field.id === "AccommodationLT"
+      );
+      const MealAllowaceLT = localTravellingTab.fields.find(
+        (field) => field.id === "MealAllowanceLT"
+      );
       if (!ReturndateLTField || !ReturndateLTField) return;
 
       if (param === "Round Trip") {
@@ -3762,6 +3768,8 @@ export default {
         dateLt.value = "";
         LocationStartLT.value = "";
         LocationEndLT.value = "";
+        AccommodationLT.value = "";
+        MealAllowaceLT.value= "";
       }
     },
 
