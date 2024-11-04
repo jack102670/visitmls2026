@@ -81,9 +81,9 @@
                     <span v-if="validationErrors.expRequired" class="text-red-500 text-sm">Please fill in this
                         field</span>
                 </div>
-                <div class="flex-1 flex-col space-x-[1px]" v-if="form.expRequired === 'yes'">
+                <div class="flex-1 flex-col space-y-2 space-x-[1px]" v-if="form.expRequired === 'yes'">
                     <label for="yearsRequired"
-                        class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
+                        class="block text-sm font-medium text-primary dark:text-white italic">
                         If Yes, No Of Years</label>
                     <input type="text" id="yearsRequired" v-model="form.yearsRequired"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -127,12 +127,12 @@
                     field</span>
             </div>
             <div>
-                <label for="jobCompetency" class="block mb-2 text-sm font-medium text-primary dark:text-white">
+                <label for="jobCompetency" class="block  text-sm font-medium text-primary dark:text-white">
                     List of functional / technical job required:
                 </label>
 
                 <div class="space-y-2">
-                    <div class="flex flex-wrap gap-2 mb-2">
+                    <div class="flex flex-wrap gap-2 ">
                         <div v-for="(field, index) in form.jobCompetency" :key="index" class="flex items-center">
                             <span
                                 class="block bg-gray-100 text-gray-800 px-4 rounded-lg py-2 text-sm dark:bg-gray-700 dark:text-white">
@@ -146,7 +146,7 @@
                         </div>
                     </div>
 
-                    <div v-if="showInputField" class="mb-2 flex items-center space-x-2">
+                    <div v-if="showInputField" class=" flex items-center space-x-2">
                         <input type="text" v-model="newField"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Eg: Selling/Accounting/Debtors Control/IT/Management etc..." />
@@ -171,10 +171,10 @@
                     placeholder="Specify discipline" />
             </div>
             <div>
-                <label for="personalCompetency" class="block mb-2 text-sm font-medium text-primary dark:text-white">
+                <label for="personalCompetency" class="block  text-sm font-medium text-primary dark:text-white">
                     List of Personnal Competencies required:</label>
                 <div class="space-y-2">
-                    <div class="flex flex-wrap gap-2 mb-2">
+                    <div class="flex flex-wrap gap-2 ">
                         <div v-for="(field, index) in form.personalCompetency" :key="index" class="flex items-center">
                             <span
                                 class="block bg-gray-100 text-gray-800 px-4 rounded-lg py-2 text-sm dark:bg-gray-700 dark:text-white flex justify-between items-center w-full">
@@ -186,7 +186,7 @@
                         </div>
                     </div>
 
-                    <div v-if="showInputPersonnelField" class="mb-2 flex items-center gap-2">
+                    <div v-if="showInputPersonnelField" class=" flex items-center gap-2">
                         <input type="text" v-model="newPersonnelField"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Eg: Leadership, Perserverance/Customer/ Driven/Interpersonal Skills etc..." />

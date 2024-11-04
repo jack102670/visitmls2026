@@ -1,11 +1,10 @@
 <template>
   <section>
-    <div class="grid grid-cols-8 px-4 pb-4 py-4 gap-2">
-      <div class="col-span-8 bg-white border-[1px] rounded-md p-4">
-
-        <div>
-          <h1 class="font-bold text-2xl text-primary"> Personnel Requisition Form</h1>
-          <p class="text-sm text-primary font-semibold">New Request</p>
+    <div class="grid grid-cols-8 px-4 pb-4 py-4 gap-2 ">
+      <div class="col-span-8 bg-white border-[1px] rounded-md p-4 md:mx-8">
+        <div class=" text-dark space-y-2">
+          <h1 class="font-bold text-2xl ">Personnel Requisition Form</h1>
+          <p class="text-sm  font-regular">New Request</p>
         </div>
         <div class="py-2 pb-2 pt-8">
           <breadcrumbs :breadcrumbs="breadcrumbs" />

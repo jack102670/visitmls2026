@@ -23,6 +23,7 @@ import SectionAForm from "../ViewPersonnelRequisition/ViewSectionAForm.vue";
 import SectionBForm from "../ViewPersonnelRequisition/ViewSectionBForm.vue";
 import SectionCForm from "../ViewPersonnelRequisition/ViewSectionCForm.vue";
 import JobDescriptionForm from "../ViewPersonnelRequisition/ViewJobDescription.vue";
+import { update } from "lodash";
 
 export default {
     components: {
@@ -58,6 +59,28 @@ export default {
             return components[this.currentSection];
         }
     },
+    methods: {
+        changeSection(section){
+            this.currentSection = section;
+        },
+        updateFormData(data) {
+            this.formData = { ...this.formData, ...data };
+        },
+        handleNext(data){
+            const sections = ['A', 'B', 'C', 'D'];
+            const currentIndex = sections.indexOf(this.currentSection);
+            if (currentIndex < sections.length - 1) {
+                this.currentSection = sections[currentIndex + 1];
+            }
+        },
+        handlePrevious(){
+            const sections = ['A', 'B', 'C', 'D'];
+            const currentIndex = sections.indexOf(this.currentSection);
+            if (currentIndex > 0) {
+                this.currentSection = sections[currentIndex - 1];
+            }
+        }
+    }
 
 
 }
