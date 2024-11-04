@@ -10,7 +10,7 @@
           </label>
           <input type="text" id="company" v-model="form.company"
             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Input company" required />
+            placeholder="Input company" required readonly/>
           <span v-if="validationErrors.company" class="text-red-500 text-sm">Please fill in this field.</span>
         </div>
         <div>
@@ -19,7 +19,7 @@
           </label>
           <input type="text" id="department" v-model="form.department"
             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Department Name" required />
+            placeholder="Department Name" required readonly />
           <span v-if="validationErrors.department" class="text-red-500 text-sm">Please fill in this field.</span>
         </div>
       </div>
@@ -31,7 +31,7 @@
           </label>
           <input type="text" id="position" v-model="form.designation"
             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Input position" required />
+            placeholder="Input position" required readonly />
           <span v-if="validationErrors.designation" class="text-red-500 text-sm">Please fill in this field.</span>
         </div>
         <div>
@@ -40,7 +40,7 @@
           </label>
           <input type="text" id="report-to" v-model="form.reportTo"
             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Report to" required />
+            placeholder="Report to" required readonly />
           <span v-if="validationErrors.reportTo" class="text-red-500 text-sm">Please fill in this field.</span>
         </div>
       </div>

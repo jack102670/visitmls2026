@@ -16,11 +16,12 @@
                     <span class="text-red-500">*</span></label>
                 <input type="text" id="company" v-model="form.company"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Company Name" required />
+                    placeholder="Company Name" required readonly />
                 <span v-if="validationErrors.company" class="text-red-500 text-sm">Please fill in this field</span>
             </div>
             <div class="">
-                <label for="dateRequired" class="block mb-2 text-sm font-medium text-primary dark:text-white">Date Required:
+                <label for="dateRequired" class="block mb-2 text-sm font-medium text-primary dark:text-white">Date
+                    Required:
                     <span class="text-red-500">*</span></label>
                 <div class="relative max-w-full">
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -42,7 +43,7 @@
                     <span class="text-red-500">*</span></label>
                 <input type="text" id="department" v-model="form.department"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Department name" required />
+                    placeholder="Department name" required readonly />
                 <span class="text-red-500 text-sm" v-if="validationErrors.department"></span>
             </div>
             <div>
@@ -88,8 +89,8 @@
                             Recruitment</label>
                     </div>
                     <div class="flex items-center">
-                        <input id="temporary-requisitionPurpose" type="radio" name="requisitionPurpose" value="temporary"
-                            v-model="form.requisitionPurpose"
+                        <input id="temporary-requisitionPurpose" type="radio" name="requisitionPurpose"
+                            value="temporary" v-model="form.requisitionPurpose"
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                         <label for="temporary"
                             class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Temporary</label>
@@ -115,8 +116,8 @@
                             class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Budgeted</label>
                     </div>
                     <div class="flex items-center">
-                        <input id="unbudgeted-manpowerBudget" type="radio" name="manpowerBudget"
-                            value="unbudgeted" v-model="form.manpowerBudget"
+                        <input id="unbudgeted-manpowerBudget" type="radio" name="manpowerBudget" value="unbudgeted"
+                            v-model="form.manpowerBudget"
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                         <label for="unbudgeted"
                             class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">UnBudgeted</label>
@@ -125,13 +126,12 @@
                 </div>
             </div>
             <div>
-                <label for="name"
-                    class="block mb-2 text-sm font-medium text-primary dark:text-white italic">Name
+                <label for="name" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">Name
                     of Person to be replaced: <span class="text-red-500">*</span></label>
                 <input type="text" id="name" v-model="form.name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Input Name" required />
-                    <span class="text-red-500 text-sm" v-if="validationErrors.name">Please fill in this field</span>
+                <span class="text-red-500 text-sm" v-if="validationErrors.name">Please fill in this field</span>
             </div>
             <div>
                 <label for="reasonUnbudget"
@@ -141,7 +141,8 @@
                 <input type="text" id="reasonUnbudget" v-model="form.reasonUnbudget"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Reason for unbudgeted" required />
-                    <span class="text-red-500 text-sm" v-if="validationErrors.reasonUnbudget">Please fill in this field</span>
+                <span class="text-red-500 text-sm" v-if="validationErrors.reasonUnbudget">Please fill in this
+                    field</span>
             </div>
             <div>
                 <label for="position" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
@@ -164,7 +165,8 @@
                 <textarea id="requestReason" rows="4" v-model="form.requestReason"
                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Write your comments here"></textarea>
-                    <span class="text-red-500 text-sm" v-if="validationErrors.requestReason">Please fill in this field</span>
+                <span class="text-red-500 text-sm" v-if="validationErrors.requestReason">Please fill in this
+                    field</span>
             </div>
         </div>
         <div class="grid grid-cols-8 space-x-2 mt-4">
@@ -182,7 +184,8 @@
 </template>
 <script>
 import Swal from 'sweetalert2';
-// import { fetchHrData } from '@/api/EFormApi';
+import { fetchHrData } from '@/api/EFormApi';
+import { store } from "@/views/store.js";
 
 export default {
     props: ['formData'],
@@ -196,105 +199,110 @@ export default {
                 department: '',
                 location: '',
                 numberPersonnel: '',
-                basicSalary: '', 
+                basicSalary: '',
                 requisitionPurpose: '',
                 manpowerBudget: '',
                 dateRequired: '',
                 name: '',
                 reasonUnbudget: '',
-                requestReason: '',  
+                requestReason: '',
             },
             validationErrors: {},
         }
     },
     methods: {
-        // async fetchHrData() {
-        //     const username_id = store.getSession().userDetails.userId;
-        //         this.loadingText = 'Fetching';
-        //         this.loading = true;
-        //     try {
-        //         const data = await fetchHrData(username_id);
-        //         if (data) {
-        //             this.user = data;
-        //             this.form.position = data.position_title;
-        //             this.form.company = data.company_name;
-        //             this.form.department = data.department;
-
-        //         }
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // },
-
-    confirmExit() {
-        Swal.fire({
-            title: 'Are you sure you want to exit?',
-            text: 'Any unsaved changes will be lost!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, exit',
-            cancelButtonText: 'No, stay'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                this.$router.push('/e-dashboard');
+        async fetchHrData() {
+            const username_id = store.getSession().userDetails.userId;
+            this.loadingText = 'Fetching';
+            this.loading = true;
+            try {
+                const data = await fetchHrData(username_id);
+                if (data) {
+                    this.user = data;
+                    // this.form.position = data.position_title;
+                    this.form.company = data.company_name;
+                    this.form.department = data.department;
+                }
+                console.log("Employee Data:", this.user);
+            } catch (error) {
+                throw new Error("Failed to fetch Employee data. Please try again.");
+            } finally {
+                this.loading = false;
             }
-        });
-    },
-    validateForm() {
-        this.validationErrors = {};
-        if (!this.form.position) this.validationErrors.position = true;
-        if (!this.form.company) this.validationErrors.company = true;
-        if (!this.form.dateRequired) this.validationErrors.dateRequired = true;
-        if (!this.form.department) this.validationErrors.department = true;
-        if (!this.form.numberPersonnel) this.validationErrors.numberPersonnel = true;
-        if (!this.form.location) this.validationErrors.location = true;
-        if (!this.form.basicSalary) this.validationErrors.basicSalary = true;
-        if (!this.form.requisitionPurpose) this.validationErrors.requisitionPurpose = true;
-        if (!this.form.manpowerBudget) this.validationErrors.manpowerBudget = true;
-        if (!this.form.name) this.validationErrors.name = true;
-        if (!this.form.reasonUnbudget) this.validationErrors.reasonUnbudget = true;
-        if (!this.form.requestReason) this.validationErrors.requestReason = true;
-        
-        return Object.keys(this.validationErrors).length === 0;
-    },
-    handleFileUpload(event) {
-        const file = event.target.files[0].name;
-        if (file) {
-            this.form.file = file;
-            this.fileError = '';
-        } else {
-            this.fileError = 'Please select a file';
-        }
-    },
-    handleNext() {
-        if (this.validateForm()) {
+        },
+
+        confirmExit() {
             Swal.fire({
-                title: 'Are you sure you want to proceed to the next section?',
-                icon: 'question',
+                title: 'Are you sure you want to exit?',
+                text: 'Any unsaved changes will be lost!',
+                icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, proceed',
-                cancelButtonText: 'No, stay here',
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, exit',
+                cancelButtonText: 'No, stay'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    console.log('Form data section A saved:', this.form);
-                    this.$emit('update-form', this.form, 'A');
-                    this.$emit('next-section', this.form);
+                    this.$router.push('/e-dashboard');
                 }
             });
-        } else {
-            Swal.fire({
-                title: 'Error!',
-                text: 'Please fill in all required fields.',
-                icon: 'error',
-                confirmButtonText: 'OK',
-                confirmButtonColor: '#3085d6',
-            });
-        }
+        },
+        validateForm() {
+            this.validationErrors = {};
+            if (!this.form.position) this.validationErrors.position = true;
+            if (!this.form.company) this.validationErrors.company = true;
+            if (!this.form.dateRequired) this.validationErrors.dateRequired = true;
+            if (!this.form.department) this.validationErrors.department = true;
+            if (!this.form.numberPersonnel) this.validationErrors.numberPersonnel = true;
+            if (!this.form.location) this.validationErrors.location = true;
+            if (!this.form.basicSalary) this.validationErrors.basicSalary = true;
+            if (!this.form.requisitionPurpose) this.validationErrors.requisitionPurpose = true;
+            if (!this.form.manpowerBudget) this.validationErrors.manpowerBudget = true;
+            if (!this.form.name) this.validationErrors.name = true;
+            if (!this.form.reasonUnbudget) this.validationErrors.reasonUnbudget = true;
+            if (!this.form.requestReason) this.validationErrors.requestReason = true;
+
+            return Object.keys(this.validationErrors).length === 0;
+        },
+        handleFileUpload(event) {
+            const file = event.target.files[0].name;
+            if (file) {
+                this.form.file = file;
+                this.fileError = '';
+            } else {
+                this.fileError = 'Please select a file';
+            }
+        },
+        handleNext() {
+            if (this.validateForm()) {
+                Swal.fire({
+                    title: 'Are you sure you want to proceed to the next section?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, proceed',
+                    cancelButtonText: 'No, stay here',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        console.log('Form data section A saved:', this.form);
+                        this.$emit('update-form', this.form, 'A');
+                        this.$emit('next-section', this.form);
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Please fill in all required fields.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#3085d6',
+                });
+            }
+        },
     },
-},
-    }
+    mounted(){
+        this.fetchHrData();
+    },
+}
 </script>

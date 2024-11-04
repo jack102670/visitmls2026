@@ -81,9 +81,9 @@
               <div @click="navigateTo('/orientation-checklist')" class="block py-1 hover:text-dark">
                 Orientation Checklist
               </div>
-              <!-- <div @click="navigateTo('/job-description')" class="block py-1 hover:text-dark">
+              <div @click="navigateTo('/job-description')" class="block py-1 hover:text-dark">
                 Job Description
-              </div> -->
+              </div>
             </div>
           </transition>
         </div>
