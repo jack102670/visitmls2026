@@ -3727,6 +3727,15 @@ export default {
       const TollLT = localTravellingTab.fields.find(
         (field) => field.id === "TollLT"
       );
+      const dateLt = localTravellingTab.fields.find(
+        (field) => field.id === "dateLT"
+      );
+      const LocationStartLT = localTravellingTab.fields.find(
+        (field) => field.id === "LocationStart"
+      );
+      const LocationEndLT = localTravellingTab.fields.find(
+        (field) => field.id === "LocationEnd"
+      );
       if (!ReturndateLTField || !ReturndateLTField) return;
 
       if (param === "Round Trip") {
@@ -3750,6 +3759,9 @@ export default {
         MileageKMLT.value = "";
         ParkingLT.value = "";
         TollLT.value = "";
+        dateLt.value = "";
+        LocationStartLT.value = "";
+        LocationEndLT.value = "";
       }
     },
 
