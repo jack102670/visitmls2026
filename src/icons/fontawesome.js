@@ -7,3 +7,4 @@ import { faBars, faUser, faShoppingCart, faSignOutAlt, faChartLine, faGripHorizo
 library.add(faBars, faUser, faSignOutAlt, faShoppingCart, faSignOutAlt, faChartLine, faGripHorizontal, faChevronRight, faSun, faAngleRight, faPlus, faChevronDown, faListCheck, faSquarePollHorizontal, faCircleHalfStroke, faMoon, faFileExport, faXmark);
 
 export { FontAwesomeIcon };
+

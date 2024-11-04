@@ -12,10 +12,8 @@ import 'intl-tel-input/build/css/intlTelInput.css';
 
 
 
-import { FontAwesomeIcon } from '../src/icons/fontawesome';
-
 // Create the Vue app instance
-const app = createApp(App).component('font-awesome-icon', FontAwesomeIcon);
+const app = createApp(App);
 
 // Make Axios available globally in the Vue app
 app.config.globalProperties.$axios = axios;
