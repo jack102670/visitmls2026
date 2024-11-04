@@ -8,7 +8,7 @@
             <label for="company" class="block mb-1 text-sm font-medium text-primary dark:text-white">
               Company: <span class="text-red-500">*</span>
             </label>
-            <input type="text" id="company" v-model="form.company"
+            <input type="text" id="company" v-model="form.company" 
               class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Input company" required readonly />
           </div>
@@ -51,7 +51,7 @@
         </label>
         <textarea id="responsibilities" rows="4" v-model="form.responsibilities"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Write the responsibilities here" required></textarea>
+          placeholder="Write the responsibilities here" required readonly></textarea>
       </div>
   
       <div class="border-b my-4"></div>
@@ -63,7 +63,7 @@
         </label>
         <textarea id="duties" rows="4" v-model="form.duties"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Write the duties here" required></textarea>
+          placeholder="Write the duties here" required readonly></textarea>
       </div>
   
       <div class="border-b my-6"></div>
@@ -76,7 +76,7 @@
           </label>
           <input type="text" id="education" v-model="form.education"
             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Input Education" required />
+            placeholder="Input Education" required readonly />
         </div>
         <div>
           <label for="experience" class="block mb-1 text-sm font-medium text-primary dark:text-white">
@@ -84,7 +84,7 @@
           </label>
           <input type="text" id="experience" v-model="form.experience"
             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Input experience" required />
+            placeholder="Input experience" required readonly />
         </div>
         <div>
           <label for="skills" class="block mb-1 text-sm font-medium text-primary dark:text-white">
@@ -92,7 +92,7 @@
           </label>
           <input type="text" id="skills" v-model="form.skills"
             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Input skills" required />
+            placeholder="Input skills" required readonly />
         </div>
       </div>
   

@@ -7,21 +7,21 @@
                 <div class="flex flex-wrap items-center space-x-4">
                     <label class="text-sm font-medium text-primary dark:text-white mr-1">
                         Name:</label>
-                    <p class="text-sm">MOHAMAD AMIR</p>
+                    <p class="text-sm">{{ form.requesterName }}</p>
                 </div>
             </div>
             <div>
                 <div class="flex flex-wrap items-center space-x-4">
                     <label class="text-sm font-medium text-primary dark:text-white mr-1">
                         Designation:</label>
-                    <p class="text-sm">Front end developer</p>
+                    <p class="text-sm">{{ form.requesterDesignation }}</p>
                 </div>
             </div>
             <div>
                 <div class="flex flex-wrap items-center space-x-4">
                     <label class="text-sm font-medium text-primary dark:text-white mr-1">
                         Department:</label>
-                    <p class="text-sm">ICT</p>
+                    <p class="text-sm">{{ form.requesterDept }}</p>
                 </div>
             </div>
             <div>
@@ -87,24 +87,24 @@ export default {
     },
     methods: {
         async fetchHrData() {
-            const currentUser = store.getSession().userDetails; 
+            const currentUser = store.getSession().userDetails;
             if (!currentUser || !currentUser.userId) {
-                    console.error("Error: currentUser or userId is missing");
-                    return;
-                }
+                console.error("Error: currentUser or userId is missing");
+                return;
+            }
             const username_id = currentUser.userId;
 
             this.form.requesterId = username_id;
-             console.log("Requester ID (Employee ID):", this.form.requesterId);
+            console.log("Requester ID (Employee ID):", this.form.requesterId);
 
             this.loadingText = 'Fetching';
             this.loading = true;
-     
+
             try {
                 const data = await fetchHrData(username_id);
                 if (data) {
                     this.user = data;
-                    
+
                     this.form.requesterName = data.name;
                     this.form.requesterDept = data.department;
                     this.form.requesterDesignation = data.position_title;
@@ -133,6 +133,17 @@ export default {
             this.$emit("previous-section");
         },
         handleSubmit() {
+            if (this.form.employeeConfirmation === "no") {
+                Swal.fire({
+                    title: "Agreement Required",
+                    text: "You must confirm that the information is correct to proceed.",
+                    icon: "warning",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#3085d6",
+                });
+                return;
+            }
+
             if (this.validateForm()) {
                 Swal.fire({
                     title: "Are you sure you want to submit the application?",
