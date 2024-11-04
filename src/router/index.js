@@ -53,18 +53,6 @@ import NotFound from "../views/pagenotfound.vue";
 import AdminHODpage from "@/components/e-claim/AdminHODpage.vue";
 import AdminHODClaimpage from "@/components/e-claim/AdminHODClaimpage.vue";
 
-// e-forms
-
-import EFormDashboard from "../views/e-forms/Edashboard/EformDashboard.vue";
-import EFormNavbar from "../components/EFormComponent/eNavbar/EFormNavbar.vue";
-import PersonnelRequisition from "../views/e-forms/RequestedType/PersonnelRequisition.vue";
-import OnJobTraining from "../views/e-forms/RequestedType/OnJobTraining.vue";
-import EmployeeTransfer from "../views/e-forms/RequestedType/EmployeeTransfer.vue";
-import JobDescription from "../views/e-forms/RequestedType/JobDescription.vue";
-import OrientationChecklist from "../views/e-forms/RequestedType/OrientationChecklist.vue";
-import TrainingEvaluation from "../views/e-forms/RequestedType/TrainingEvaluation.vue";
-import verifyRequest from "@/views/e-forms/VerifyRequest/verifyRequest.vue";
-
 const routes = [
   {
     path: "/VerifierClaimpage/:rn",
