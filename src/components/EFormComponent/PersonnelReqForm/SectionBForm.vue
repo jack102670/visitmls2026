@@ -85,9 +85,9 @@
                     <label for="yearsRequired"
                         class="block text-sm font-medium text-primary dark:text-white italic">
                         If Yes, No Of Years</label>
-                    <input type="text" id="yearsRequired" v-model="form.yearsRequired"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Specify Years" />
+                        <input type="number" id="yearsRequired" v-model="form.yearsRequired"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="No of years required" required />
                 </div>
             </div>
             <div>

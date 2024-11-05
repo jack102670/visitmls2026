@@ -1,64 +1,89 @@
 <template>
     <div class="space-y-4 mt-2 border-[1px] rounded-md px-4 py-2">
         <h1 class="font-bold text-md py-2">C. Verification / Approval</h1>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 py-2">
             <div>
-                <div class="flex flex-wrap items-center space-x-4">
-                    <label class="text-sm font-medium text-primary dark:text-white mr-1">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
+                    <label class="text-sm font-medium text-primary dark:text-white sm:mr-1">
                         Name:</label>
-                    <p class="text-sm">MOHAMAD AMIR</p>
+                    <p class="text-sm">{{ form.requesterName }}</p>
                 </div>
             </div>
             <div>
-                <div class="flex flex-wrap items-center space-x-4">
-                    <label class="text-sm font-medium text-primary dark:text-white mr-1">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
+                    <label class="text-sm font-medium text-primary dark:text-white sm:mr-1">
                         Designation:</label>
-                    <p class="text-sm">Front end developer</p>
+                    <p class="text-sm">{{ form.requesterDesignation }}</p>
                 </div>
             </div>
             <div>
-                <div class="flex flex-wrap items-center space-x-4">
-                    <label class="text-sm font-medium text-primary dark:text-white mr-1">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
+                    <label class="text-sm font-medium text-primary dark:text-white sm:mr-1">
                         Department:</label>
-                    <p class="text-sm">ICT</p>
+                    <p class="text-sm">{{ form.requesterDept }}</p>
                 </div>
             </div>
             <div>
-                <label class="block mb-2 text-sm font-medium text-primary dark:text-white">
-                    I have read and agree that this informations are correct and cannot be changed: <span
-                        class="text-red-500">*</span></label>
-                <div class="flex space-x-4 items-center mb-4">
-                    <input id="yes-employeeConfirmation" type="radio" value="yes" v-model="form.employeeConfirmation"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="yes-employeeConfirmation"
-                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Yes</label>
-                    <input id="no-employeeConfirmation" type="radio" value="no" v-model="form.employeeConfirmation"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="no-employeeConfirmation"
-                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">No</label>
+                <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
+                    <label class="text-sm font-medium text-primary dark:text-white sm:mr-1">
+                        Date Requested:</label>
+                    <p class="text-sm">{{ formattedDateRequested }}</p>
                 </div>
             </div>
         </div>
+        <hr class="border-[1px]" />
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+        </div>
     </div>
 </template>
+
 <script>
+import { getPersonnelRequisitonForm } from '@/api/EFormApi';
 export default {
+    props: ["formData"],
 
     data() {
         return {
             form: this.formData.sectionC || {
-                employeeConfirmation: "",
-                requesterId: "",
                 requesterName: "",
                 requesterDept: "",
                 requesterDesignation: "",
-                verifierEmpId: "",
+                dateRequested: "",
             },
-            validationErrors: {},
-            selectedOption: "",
-            isDownloaded: false,
         };
     },
+    computed: {
+        formattedDateRequested(){
+            if (!this.form.dateRequested) return "";
+            const date = new Date(this.form.dateRequested);
+            const day = String (date.getDate()).padStart(2, '0');
+            const month = String (date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+
+    },
+    mounted(){
+        const refNo = this.$route.params.refNo;
+        this.getPersonnelRequisitonForm(refNo);
+    },
+    methods: {
+        async getPersonnelRequisitonForm(refNo){
+            try {
+                const data = await getPersonnelRequisitonForm(refNo);
+                if (data){
+                    this.form = {
+                        ...data.form,
+                        ...data,
+                    };
+                }
+            }catch (error){
+                    console.error("Error loading training evaluation:", error);
+                    throw error;
+                }
+        }
+    }
 
 }
 </script>

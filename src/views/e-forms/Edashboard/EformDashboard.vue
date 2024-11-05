@@ -1,8 +1,10 @@
 <template>
   <section>
     <div class="w-full ">
-      <!-- Main grid -->
-      <div className="grid md:grid-cols-8 xl:gap-8 px-4 pt-4 gap-2 ">
+      <!-- <div class="bg-white border-[1px] rounded-md justify-center items-center my-4 md:mx-8 gap-2"> -->
+
+
+      <div className="grid md:grid-cols-8 xl:gap-8 px-4 pt-4 gap-2 md:mx-8 ">
         <!-- 1st box -->
         <div class="bg-white border-[1px] justify-between items-center rounded-md sm:col-span-2 w-full flex relative">
           <div class="flex flex-col justify-between items-start p-4 gap-2 space-y-2">
@@ -98,12 +100,13 @@
       </div>
 
       <!-- 3rd box -->
-      <div class="grid grid-cols-1 px-4 pb-4 pt-2 gap-2">
+      <div class="grid grid-cols-1 px-4 pb-4 pt-2 gap-2 md:mx-8">
         <div class="text-center bg-white min-h-full border-[1px] rounded-md p-4">
           <TableRequest />
         </div>
       </div>
     </div>
+    <!-- </div> -->
   </section>
   <NewReqModal v-if="showModal" @close="showModal = false" />
 </template>

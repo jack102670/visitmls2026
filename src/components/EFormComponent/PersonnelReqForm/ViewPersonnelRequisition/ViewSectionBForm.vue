@@ -81,7 +81,7 @@
                     <label for="yearsRequired"
                         class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
                         If Yes, No Of Years</label>
-                    <input type="text" id="yearsRequired" v-model="form.yearsRequired"
+                    <input type="number" id="yearsRequired" v-model="form.yearsRequired"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Specify Years" />
                 </div>
@@ -112,13 +112,13 @@
                         readonly @click.prevent
                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                     <label for="spm-qualificationRequired"
-                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">SPM/SPVM/STPM</label>
+                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">SPM / SPVM / STPM</label>
 
                     <input id="diploma-qualificationRequired" type="radio" value="diploma" readonly @click.prevent
                         v-model="form.qualificationRequired"
                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                     <label for="diploma-qualificationRequired"
-                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">DIPLOMA/DEGREE</label>
+                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">DIPLOMA / DEGREE</label>
                 </div>
             </div>
             <div>
@@ -214,14 +214,6 @@ export default {
             try {
                 const data = await getPersonnelRequisitonForm(refNo);
                 if (data) {
-                    // console.log("Raw data from API:", data);
-                    // console.log("Section B form data:", data.form);
-                //     console.log("Complete data structure:", {
-                //         ...data.form,
-                //         ...data,
-                //     }
-                // );
-
                     this.form = {
                         ...data.form,
                         ...data,
@@ -231,7 +223,6 @@ export default {
                         this.minAge = min;
                         this.maxAge = max;
                     }
-
                     console.log("Min Age:", this.minAge);
                     console.log("Max Age:", this.maxAge);
                 }
