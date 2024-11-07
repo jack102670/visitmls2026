@@ -91,7 +91,7 @@ export const getCompanyName = async () => {
     if (response.data.result) {
       // console.log("Company name:", response.data.result);
     } else {
-      // console.log("Company name not found");
+      console.log("Company name not found");
     }
     return response.data.result;
   } catch (error) {
@@ -107,7 +107,7 @@ export const getDepartment = async () => {
     if (response.data.result) {
       // console.log("Department name:", response.data.result);
     } else {
-      // console.log("Department name not found");
+      console.log("Department name not found");
     }
     return response.data.result;
   } catch (error) {
@@ -128,7 +128,7 @@ export const getAllApplication = async (id) => {
       // console.log("List of applications:", response.data.result);
       return response.data.result;
     } else {
-      // console.log("Applications not found");
+      console.log("Applications not found");
       return [];
     }
   } catch (error) {
@@ -185,7 +185,7 @@ export const getPersonnelRequisitonForm = async (refNo) => {
     if (response.data.result) {
       // console.log("Personnel requisition data:", response.data.result);
     } else {
-      // console.log("Personnel requisition data not found");
+      console.log("Personnel requisition data not found");
     }
     return response.data.result;
   } catch (error) {
@@ -200,7 +200,7 @@ export const GetViewTrainingEvaluation = async (refNo) => {
     if (response.data.result) {
       // console.log("Training Evaluation data:", response.data.result);
     } else {
-      // console.log("Training Evaluation data not found");
+      console.log("Training Evaluation data not found");
     }
     return response.data.result;
   } catch (error) {
@@ -215,7 +215,7 @@ export const GetEmployeeRequestTransfer = async (refNo) => {
     if (response.data.result) {
       // console.log("Employee Transfer data:", response.data.result);
     } else {
-      // console.log("Employee Transfer data not found");
+      console.log("Employee Transfer data not found");
     }
     return response.data.result;
   } catch (error) {
@@ -230,10 +230,10 @@ export const getJobDescription = async (uniqueKey) => {
     if (response.data.result) {
       // console.log("Job Description data:", response.data.result);
     } else {
-      // console.log("Job Description data not found");
+      console.log("Job Description data not found");
     }
     return response.data.result;
-  }catch (error){
+  } catch (error) {
     throw error("Error fetching job description data:", error);
   }
 };
@@ -241,18 +241,30 @@ export const getJobDescription = async (uniqueKey) => {
 export const postOnJobTraining = async (onJobTrainingData) => {
   try {
     const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
-    const response = await axios.post(
-      `${base_URL}/OJT`,
-      onJobTrainingData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axios.post(`${base_URL}/OJT`, onJobTrainingData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
-  }catch (error){
+  } catch (error) {
     console.error("Error submitting the on-job training data:", error);
+    throw error;
+  }
+};
+
+export const getOnJobTraining = async (refNo) => {
+  try {
+    const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
+    const response = await axios.get(`${base_URL}/OJT/${refNo}`);
+    if (response.data.result) {
+      console.log("On Job Training data:", response.data.result);
+    } else {
+      console.log("On Job Training data not found");
+    }
+    return response.data.result;
+  } catch (error) {
+    console.error("Error fetching on-job training data:", error);
     throw error;
   }
 };

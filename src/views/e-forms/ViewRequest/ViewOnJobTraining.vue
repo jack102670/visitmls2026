@@ -10,12 +10,8 @@
         </div>
         <div class="space-y-2">
           <div class="">
-            <OnJobTrainingForm />
+            <ViewOnJobTraining />
           </div>
-          <!-- <div>
-            <OnJobTrainingHOD />
-          </div> -->
-  
         </div>
   
       </div>
@@ -23,10 +19,12 @@
   </template>
   <script>
     import breadcrumbs from '../../../components/EFormComponent/OtherComponent/BreadCumbs.vue'
+    import ViewOnJobTraining from '@/components/EFormComponent/OnJobTrainingForm/ViewOnJobTrainingForm/ViewOnJobTrainingForm.vue';
 
     export default {
       components: {
         breadcrumbs,
+        ViewOnJobTraining
       },
       data() {
         return {

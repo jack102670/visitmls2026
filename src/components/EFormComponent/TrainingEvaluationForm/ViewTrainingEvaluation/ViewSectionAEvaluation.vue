@@ -283,26 +283,6 @@ export default {
             },
         };
     },
-    // async created() {
-    //     const refNo = this.$route.params.refNo;
-    //     try {
-    //         const data = await GetViewTrainingEvaluation(refNo);
-    //         if (data) {
-    //             this.form.name = data.name;
-    //             this.form.designation = data.designation;
-    //             this.form.trainingDate = data.trainingDate;
-    //             this.form.courseTitle = data.courseTitle;
-    //             this.form.trainingInstitution = data.trainingInstitution;
-    //             this.form.trainerName = data.trainerName;
-    //             this.form.trainingVenue = data.trainingVenue;
-    //             this.form.programObjective = data.programObjective;
-    //             this.form.programSupport = data.programSupport;
-    //             this.form.trainingNature = data.trainingNature;
-    //         }
-    //     } catch (error) {
-    //         console.error("Error loading training evaluation:", error);
-    //     }
-    // }
     mounted() {
         const refNo = this.$route.params.refNo;
         this.GetViewTrainingEvaluation(refNo);
