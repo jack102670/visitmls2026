@@ -262,9 +262,10 @@ export default {
         this.$router.push({ name: 'view-training-evaluation', params: { refNo: application.refNo } });
       } else if (application.requestType === 'Employee Transfer Form') {
         this.$router.push({ name: 'view-employee-transfer', params: { refNo: application.refNo } });
-
       } else if (application.requestType === 'Personnel Requisition Form') {
         this.$router.push({ name: 'view-personnel-requisition', params: { refNo: application.refNo } });
+      } else if (application.requestType === 'On Job Training/familiarisation Programme Form') {
+        this.$router.push({ name: 'view-on-job-training', params: { refNo: application.refNo } });
       }
       else {
         console.error("Error: Invalid request type");

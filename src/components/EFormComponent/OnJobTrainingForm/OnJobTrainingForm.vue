@@ -3,23 +3,33 @@
         <div class="space-y-6 border-[1px] rounded-md py-4 px-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                    <label for="staffName" class="block mb-2 text-sm font-medium text-primary dark:text-white">Name of staff:
+                    <label for="staffName" class="block mb-2 text-sm font-medium text-primary dark:text-white">Name of
+                        staff:
                         <span class="text-red-500">*</span></label>
-                    <input type="text" for="staffName" v-model="form.staffName"
+                    <input type="text" for="staffName" v-model="form.staffName" readonly
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                     <span v-if="validationErrors.staffName" class="text-red-500 text-sm">Please fill in this
                         field.</span>
                 </div>
                 <div>
-                    <label for="department" class="block mb-2 text-sm font-medium text-primary dark:text-white">Company:
+                    <label for="company" class="block mb-2 text-sm font-medium text-primary dark:text-white">Company:
                         <span class="text-red-500">*</span></label>
-                    <input type="text" for="department" v-model="form.company"
+                    <input type="text" for="company" v-model="form.company" readonly
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                     <span v-if="validationErrors.company_name" class="text-red-500 text-sm">Please fill in this
                         field.</span>
                 </div>
                 <div>
-                    <label for="department" class="block mb-2 text-sm font-medium text-primary dark:text-white">Date
+                    <label for="department"
+                        class="block mb-2 text-sm font-medium text-primary dark:text-white">Department:
+                        <span class="text-red-500">*</span></label>
+                    <input type="text" for="department" v-model="form.department" readonly
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                    <span v-if="validationErrors.department" class="text-red-500 text-sm">Please fill in this
+                        field.</span>
+                </div>
+                <div>
+                    <label for="dateJoined" class="block mb-2 text-sm font-medium text-primary dark:text-white">Date
                         Joined: <span class="text-red-500">*</span></label>
                     <div class="relative max-w-full">
                         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -33,7 +43,7 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             required />
                     </div>
-                    <span v-if="validationErrors.dateRequired" class="text-red-500 text-sm">Please fill in this
+                    <span v-if="validationErrors.dateJoined" class="text-red-500 text-sm">Please fill in this
                         field.</span>
                 </div>
                 <div>
@@ -55,11 +65,11 @@
                         field.</span>
                 </div>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+            <hr class="w-full border-b border-b-[1px] my-4" />
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
                 <div class="space-y-2">
-                    <!-- <h1 class="font-bold text-md ">A. Date / Duration</h1> -->
                     <div class="">
-                        <label class="block text-sm font-medium text-primary dark:text-white">Date: <span
+                        <label class="block text-sm font-medium text-primary dark:text-white">Date / Duration: <span
                                 class="text-red-500">*</span></label>
                     </div>
                     <div class="flex items-center">
@@ -73,7 +83,7 @@
                             </div>
                             <input ref="datepickerStart" type="text" v-model="hrDateStart"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Select date start" required />
+                                placeholder="Select start date" required />
                         </div>
                         <span class="mx-4 text-gray-500">to</span>
                         <div class="relative">
@@ -86,15 +96,14 @@
                             </div>
                             <input ref="datepickerEnd" type="text" v-model="hrDateEnd"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Select date end" required />
+                                placeholder="Select end date" required />
                         </div>
-
                     </div>
-                                            <span v-if="validationErrors.hrDateFinish" class="text-red-500 text-sm">Please fill in this
-                            field.</span>
+                    <span v-if="validationErrors.hrDateFinish" class="text-red-500 text-sm">Please fill in this
+                        field.</span>
                 </div>
-                <div>
-                    <h2 class="font-bold text-md">Description</h2>
+                <div class="space-y-2">
+                    <h2 class="block text-sm font-medium text-primary dark:text-white">Description</h2>
                     <div class="text-sm font-regular">
                         <p class="">Introduction to the company</p>
                         <p>ISO Induction & Policies (QMS, EMS)</p>
@@ -102,21 +111,38 @@
                         <p>Health, Safety & Environmental Policy Briefing</p>
                     </div>
                 </div>
+                <div class="space-y-2">
+                    <label for="requesterVerification"
+                        class="block text-sm font-medium text-primary dark:text-white">Trainee
+                        Acknowledgement:</label>
+                    <label for="requesterVerification"
+                        class="block text-sm font-regular text-primary dark:text-white italic">I acknowledge that my
+                        trainer introduced me to the familiarization program.
+                        <span class="text-red-500">*</span></label>
+                    <div class="flex items-center">
+                        <input id="requesterVerification" type="checkbox" v-model="form.requesterVerification"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <span class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">acknowledge</span>
+                    </div>
+                    <span v-if="validationErrors.requesterVerification" class="text-red-500 text-sm">Please fill in this
+                        field.</span>
+                </div>
+                <div>
+                    <label for="requesterVerification"
+                        class="block text-sm font-medium text-primary dark:text-white">Trainer
+                        Acknowledgement:</label>
+                    <label for="requesterVerification"
+                        class="block text-sm font-regular text-primary dark:text-white italic">This section are for HR
+                        verification
+                        <span class="text-red-500">*</span></label>
+                    <!-- <input id="requesterVerification" type="radio"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"> -->
+                </div>
             </div>
             <hr class="w-full border-b border-b-[1px] my-4" />
-            <h1 class="font-bold text-md">B. Date / Duration</h1>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
                 <div class="space-y-2">
-                    <label for="position" class="block text-sm font-medium text-primary dark:text-white">
-                        On Job Training (Kindly Describe): <span class="text-red-500">*</span>
-                    </label>
-                    <textarea id="position" v-model="bulletPoints"
-                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        @click="addInitialBullet" @keydown="handleBulletPoints" placeholder="Describe On Job Training"
-                        required></textarea>
-                </div>
-                <div class="space-y-2">
-                    <label class="block text-sm font-medium text-primary dark:text-white">Date:</label>
+                    <label class="block text-sm font-medium text-primary dark:text-white">Date / Duration:</label>
                     <div class="flex items-center">
                         <div class="relative">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -126,9 +152,9 @@
                                         d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                 </svg>
                             </div>
-                            <input ref="Start" type="text"
+                            <input ref="Start" type="text" v-model="staffDateStart"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Select date start" />
+                                placeholder="Select start date" />
                         </div>
                         <span class="mx-4 text-gray-500">to</span>
                         <div class="relative">
@@ -139,24 +165,51 @@
                                         d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                 </svg>
                             </div>
-                            <input ref="End" type="text"
+                            <input ref="End" type="text" v-model="staffDateEnd"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Select date end" />
+                                placeholder="Select end date" />
                         </div>
-                        <span v-if="validationErrors.name" class="text-red-500 text-sm">Please fill in this
+                        <span v-if="validationErrors.staffDateFinish" class="text-red-500 text-sm">Please fill in this
                             field.</span>
                     </div>
                 </div>
-                <div>
+                <div class="space-y-2">
+                    <label for="position" class="block text-sm font-medium text-primary dark:text-white">
+                        On Job Training (Kindly Describe): <span class="text-red-500">*</span>
+                    </label>
+                    <textarea id="position" v-model="bulletPoints"
+                        class="block p-2.5 w-full text-sm min-h-[100px] text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        @click="addInitialBullet" @keydown="handleBulletPoints" placeholder="Describe On Job Training"
+                        required></textarea>
+                    <span v-if="validationErrors.descriptions" class="text-red-500 text-sm">Please fill in this
+                        field.</span>
+                </div>
+                <div class="space-y-2">
                     <label for="requesterVerification"
                         class="block text-sm font-medium text-primary dark:text-white">Trainee
                         Acknowledgement:</label>
                     <label for="requesterVerification"
-                        class="block text-sm font-regular text-primary dark:text-white italic">I hereby
-                        acknowledge that i was introduced to the familiarisation programme by my trainer
+                        class="block text-sm font-regular text-primary dark:text-white italic">I acknowledge that my
+                        trainer introduced me to the familiarization program.
                         <span class="text-red-500">*</span></label>
-                    <input id="requesterVerification" type="radio" v-model="form.requesterVerification"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <div class="flex items-center">
+                        <input id="requesterVerification" type="checkbox" v-model="form.requesterVerification"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <span class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">acknowledge</span>
+                    </div>
+                    <span v-if="validationErrors.requesterVerification" class="text-red-500 text-sm">Please fill in this
+                        field.</span>
+                </div>
+                <div>
+                    <label for="requesterVerification"
+                        class="block text-sm font-medium text-primary dark:text-white">Trainer
+                        Acknowledgement:</label>
+                    <label for="requesterVerification"
+                        class="block text-sm font-regular text-primary dark:text-white italic">This section are for HOD
+                        verification
+                        <span class="text-red-500">*</span></label>
+                    <!-- <input id="requesterVerification" type="radio" v-model="form.requesterVerification"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"> -->
                 </div>
             </div>
             <div class="space-y-4 px-4 py-2">
@@ -166,7 +219,8 @@
                             class="bg-transparent font-bold text-dark px-10 py-2 rounded-md border-[2px] border-rejected mr-4">
                             Exit
                         </button>
-                        <button class="bg-verified font-bold text-white px-10 py-2 rounded-md">
+                        <button @click.prevent="submitForm"
+                            class="bg-verified font-bold text-white px-10 py-2 rounded-md">
                             Submit
                         </button>
                     </div>
@@ -192,11 +246,11 @@ export default {
     data() {
         return {
             form: {
-                name: '',
+                staffName: '',
                 department: '',
                 company: '',
                 formType: '',
-                requesterId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                requesterId: '',
                 requesterDesignation: '',
                 verifierEmpId: '',
                 descriptions: [],
@@ -207,8 +261,6 @@ export default {
             },
             hrDateStart: '',
             hrDateEnd: '',
-            DescriptionEndDate: '',
-            inputText: '',
             bulletPoints: '',
             validationErrors: {},
         }
@@ -226,9 +278,13 @@ export default {
         flatpickr(this.$refs.End, {
             dateFormat: "Y-m-d",
         });
-        // this.fetchHrData();
+        this.fetchHrData();
     },
     methods: {
+        processBulletPoints() {
+            const points = this.bulletPoints.split('\n').map(point => point.trim()).filter(point => point !== '•').map(point => point.startsWith('•') ? point.substring(1).trim() : point);
+            return points;
+        },
         addInitialBullet() {
             if (!this.bulletPoints) {
                 this.bulletPoints = '• ';
@@ -247,6 +303,14 @@ export default {
                 });
             }
         },
+        checkDescriptions() {
+            console.log(this.bulletPoints);
+            if (Array.isArray(this.bulletPoints)) {
+                console.log("Descriptions are saved in an array:", this.bulletPoints);
+            } else {
+                console.log("Descriptions are not saved in an array.");
+            }
+        },
         confirmExit() {
             Swal.fire({
                 title: 'Are you sure you want to exit?',
@@ -263,39 +327,57 @@ export default {
                 }
             });
         },
-        // async fetchHrData() {
-        //     const username_id = store.getSession().userDetails.userId;
-        //     this.loadingText = 'Fetching';
-        //     this.loading = true;
-        //     try {
-        //         const data = await fetchHrData(username_id);
-        //         if (data) {
-        //             this.form = data;
-        //             this.name = data.name;
-        //             this.department = data.department;
-        //             this.company = data.company_name;
-        //         }
-        //         console.log("Employee Data:", this.form);
-        //     } catch (error) {
-        //         console.error('Error fetching Employee data:', error);
-        //         throw new Error('Failed to fetch Employee data. Please try again.');
-        //     } finally {
-        //         this.loading = false;
-        //     }
-        // }
         validateForm() {
             this.validationErrors = {};
             if (!this.form.staffName) this.validationErrors.staffName = true;
             if (!this.form.department) this.validationErrors.department = true;
             if (!this.form.company) this.validationErrors.company = true;
+            if (!this.form.dateJoined) this.validationErrors.dateJoined = true;
             if (!this.form.formType) this.validationErrors.formType = true;
+            if (!this.form.hrDateFinish) this.validationErrors.hrDateFinish = true;
+            if (!this.form.staffDateFinish) this.validationErrors.staffDateFinish = true;
+
 
             return Object.keys(this.validationErrors).length === 0;
         },
-        submitForm() {
+        async fetchHrData() {
             const username_id = store.getSession().userDetails.userId;
             this.form.requesterId = username_id;
-            if (!this.validateForm()) {
+
+            this.loadingText = 'Fetching';
+            this.loading = true;
+
+            try {
+                const data = await fetchHrData(username_id);
+                if (data) {
+                    this.user = data;
+                    this.form.staffName = data.name;
+                    this.form.verifierEmpId = data.reporting_to;
+                    this.form.department = data.department;
+                    this.form.requesterDesignation = data.position_title;
+                    this.form.company = data.company_name;
+                }
+                console.log("Employee Data from fetchHrData:", this.user);
+            } catch (error) {
+                console.error('Error fetching Employee data:', error);
+                throw error;
+            } finally {
+                this.loading = false;
+            }
+        },
+        submitForm() {
+            this.form.hrDateFinish = `${this.hrDateStart} - ${this.hrDateEnd}`;
+            this.form.staffDateFinish = `${this.staffDateStart} - ${this.staffDateEnd}`;
+
+            this.form.descriptions = this.processBulletPoints().slice();
+            this.form.requesterVerification = this.form.requesterVerification ? "True" : "False";
+
+            console.log('hrDateFinish and staffDateFinish:', this.form.hrDateFinish, this.form.staffDateFinish);
+            console.log('descriptions:', this.form.descriptions);
+
+            const username_id = store.getSession().userDetails.userId;
+            this.form.requesterId = username_id;
+            if (this.validateForm()) {
                 Swal.fire({
                     title: 'Are you sure you want to submit?',
                     icon: 'warning',
@@ -358,10 +440,13 @@ export default {
                 name: '',
                 department: '',
                 company: '',
-                requesterId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                requesterId: "",
                 requesterDesignation: "",
                 verifierEmpId: "",
             }
+            this.hrDateStart = '';
+            this.hrDateEnd = '';
+            this.bulletPoints = '';
         }
     },
 }
