@@ -32,9 +32,6 @@
           <label for="department" class="block mb-1 text-sm font-medium text-primary dark:text-white">
             Department: <span class="text-red-500">*</span>
           </label>
-          <!-- <input type="text" id="department" v-model="EmployeeForm.department"
-            class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Department" required /> -->
           <select id="department" v-model="EmployeeForm.department"
             class="bg-gray-50 dark:border-gray-600 dark:placeholder-gray-400 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <option value="" class="text-gray-400" disabled>Select Department</option>
@@ -264,6 +261,7 @@ export default {
     await this.getListCompanyName();
     await this.getListOfDepartments();
   },
+  
   methods: {
     async getListCompanyName() {
       try {

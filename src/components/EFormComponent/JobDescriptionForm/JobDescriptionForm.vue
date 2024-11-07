@@ -116,7 +116,7 @@
     </div>
 
 
-    <div class="border-b my-6"></div>
+    <div class="border-b my-4"></div>
 
     <h2 class="font-bold text-lg mb-4">Competence</h2>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">

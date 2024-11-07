@@ -12,9 +12,7 @@
             </li>
         </ul>
         <component :is="currentComponent" :formData="formData" @update-form="updateFormData" @next-section="handleNext"
-            @previous-section="handlePrevious" @submit-form="submitForm"
-            @form-submission-result="handleFormSubmissionResult"
-            :uniqueKey="currentSection === 'D' ? formData.uniqueKey : null"></component>
+            @previous-section="handlePrevious"></component>
     </div>
 </template>
 

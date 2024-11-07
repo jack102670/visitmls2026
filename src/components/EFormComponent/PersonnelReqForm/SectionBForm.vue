@@ -82,12 +82,11 @@
                         field</span>
                 </div>
                 <div class="flex-1 flex-col space-y-2 space-x-[1px]" v-if="form.expRequired === 'yes'">
-                    <label for="yearsRequired"
-                        class="block text-sm font-medium text-primary dark:text-white italic">
+                    <label for="yearsRequired" class="block text-sm font-medium text-primary dark:text-white italic">
                         If Yes, No Of Years</label>
-                        <input type="number" id="yearsRequired" v-model="form.yearsRequired"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="No of years required" required />
+                    <input type="number" id="yearsRequired" v-model="form.yearsRequired"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="No of years required" required />
                 </div>
             </div>
             <div>
@@ -162,13 +161,44 @@
                 </div>
             </div>
 
-            <div>
-                <label for="disciplineSpecification"
+            <div class="relative">
+                <label for="disciplineSearch"
                     class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
-                    Please specify discipline</label>
-                <input type="text" id="disciplineSpecification" v-model="form.disciplineSpecification"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Specify discipline" />
+                    Please specify discipline
+                </label>
+                <div class="space-y-2">
+                    <div class="flex flex-wrap gap-2">
+                        <div v-for="(field, index) in form.disciplineSpecification" :key="index"
+                            class="flex items-center">
+                            <span
+                                class="block bg-gray-100 text-gray-800 px-4 rounded-lg py-2 text-sm dark:bg-gray-700 dark:text-white">
+                                <div class="flex justify-between items-center space-x-2">
+                                    {{ field }}
+                                    <span @click="removeDiscipline(index)" class="cursor-pointer ml-2">
+                                        <font-awesome-icon :icon="['fas', 'xmark']" />
+                                    </span>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="relative">
+                        <input type="text" v-model="disciplineSearch" placeholder="Search for discipline..."
+                            @input="handleSearchInput" @focus="showDropdown = true"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                        <div v-if="showDropdown && filteredDisciplines.length > 0"
+                            class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto dark:bg-gray-700 dark:border-gray-600">
+                            <div v-for="discipline in filteredDisciplines" :key="discipline.name"
+                                @click="selectDiscipline(discipline)"
+                                class="p-2 hover:bg-gray-100 cursor-pointer text-sm dark:hover:bg-gray-600 dark:text-white">
+                                {{ discipline.name }}
+                            </div>
+                        </div>
+                        <div v-if="form.disciplineSpecification.length > 5">
+                            <span class="text-red-500 text-sm">Limit to 5 disciplines only</span>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div>
                 <label for="personalCompetency" class="block  text-sm font-medium text-primary dark:text-white">
@@ -230,12 +260,13 @@ import Swal from "sweetalert2";
 import {
     reactive
 } from 'vue';
+import DisciplineJson from '@/assets/json/discipline.json';
 export default {
     props: ["formData"],
     data() {
         return {
             form: reactive({
-                ageLimit: 0, //minAge and MaxAge
+                ageLimit: [], //minAge and MaxAge
                 computerLiteracyRequired: "",
                 expRequired: "",
                 yearsRequired: 0,
@@ -243,7 +274,7 @@ export default {
                 computerSpecification: "",
                 ownTransportRequired: "",
                 jobCompetency: [],
-                disciplineSpecification: "",
+                disciplineSpecification: [],
                 personalCompetency: [],
                 others: "",
             }),
@@ -256,6 +287,11 @@ export default {
             showInputField: false,
             newPersonnelField: "",
             showInputPersonnelField: false,
+            disciplineSearch: '',
+            disciplines: [...new Set(DisciplineJson.disciplines.map(d => d.name))].map(name => ({ name }))
+                .sort((a, b) => a.name.localeCompare(b.name)),
+            showDropdown: false,
+
         };
     },
     watch: {
@@ -266,49 +302,99 @@ export default {
                 this.form.yearsRequired = null;
             }
         },
-        'ageLimit[0]': 'validateAgeLimit',
-        'ageLimit[1]': 'validateAgeLimit'
+        minAge(newMinAge) {
+        this.form.ageLimit[0] = newMinAge; // Update the first element of the array
+    },
+    maxAge(newMaxAge) {
+        this.form.ageLimit[1] = newMaxAge; // Update the second element of the array
+    }
     },
     created() {
-        if (this.formData.sectionB) {
-            Object.assign(this.form, this.formData.sectionB);
-        }
-        this.minAge = this.formData.sectionB?.ageLimit?.[0] || "";
-        this.maxAge = this.formData.sectionB?.ageLimit?.[1] || "";
-    },
+    if (this.formData.sectionB) {
+      Object.assign(this.form, this.formData.sectionB);
+    }
+    if (this.formData.sectionB?.ageLimit?.length === 2) {
+      this.form.ageLimit = [...this.formData.sectionB.ageLimit];
+    }
+  },
     computed: {
         ageLimit() {
-            return [parseInt(this.minAge), parseInt(this.maxAge)];
+        const min = parseInt(this.minAge) || 0;
+        const max = parseInt(this.maxAge) || 0;
+        return [min, max];
+    },
+
+
+        filteredDisciplines() {
+            if (!this.disciplineSearch) return this.disciplines;
+
+            const searchTerm = this.disciplineSearch.toLowerCase().trim();
+            return this.disciplines.filter(discipline =>
+                discipline.name && discipline.name.toLowerCase().includes(searchTerm)
+            );
         },
     },
 
     methods: {
+        handleSearchInput() {
+            this.showDropdown = true;
+            if (!this.disciplineSearch) {
+                this.form.disciplineSpecification = "";
+            }
+        },
+        // selectDiscipline(discipline) {
+        //     if (!this.form.disciplineSpecification.includes(discipline.name)) {
+        //         this.form.disciplineSpecification.push(discipline.name);
+        //     }
+        //     this.disciplineSearch = '';
+        //     this.showDropdown = false;
+        // },
+        selectDiscipline(discipline) {
+            if (!Array.isArray(this.form.disciplineSpecification)) {
+                this.form.disciplineSpecification = [];
+            }
+
+            if (this.form.disciplineSpecification.length >= 5) {
+                Swal.fire({
+                    title: "Limit reached",
+                    text: "You can select up to 5 disciplines only.",
+                    icon: "warning",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#3085d6",
+                });
+            } else if (!this.form.disciplineSpecification.includes(discipline.name)) {
+                this.form.disciplineSpecification.push(discipline.name);
+            }
+            this.disciplineSearch = '';
+            this.showDropdown = false;
+        },
+        removeDiscipline(index) {
+            this.form.disciplineSpecification.splice(index, 1);
+        },
+        handleClickOutside(event) {
+            if (!event.target.closest('.relative')) {
+                this.showDropdown = false;
+            }
+        },
         handleYearsRequiredInput() {
             if (!this.form.yearsRequired && this.form.expRequired === 'yes') {
                 this.form.yearsRequired = null;
             }
         },
         validateAgeLimit() {
-            if (this.minAge === null || this.maxAge === null) {
-                this.validationErrors.ageLimit = "Both age fields are required";
-                return false;
-            }
-            this.validationErrors.ageLimit = "";
-            return true;
-        },
+      if (this.form.ageLimit.length !== 2 || this.form.ageLimit[0] === null || this.form.ageLimit[1] === null) {
+        this.validationErrors.ageLimit = "Both age fields are required";
+        return false;
+      }
+      this.validationErrors.ageLimit = "";
+      return true;
+    },
 
         // for List of Personnal Competencies required
         openPersonnelInputForm() {
             this.newPersonnelField = "";
             this.showInputPersonnelField = true;
         },
-        // addPersonnelField() {
-        //     if (this.newPersonnelField.trim()) {
-        //         this.form.personalCompetency.push(this.newPersonnelField.trim());
-        //         this.newPersonnelField = "";
-        //         this.showInputPersonnelField = false;
-        //     }
-        // },
         addPersonnelField() {
             if (this.newPersonnelField.trim()) {
                 this.form.personalCompetency.push(this.newPersonnelField.trim());
@@ -325,13 +411,6 @@ export default {
             this.newField = "";
             this.showInputField = true;
         },
-        // addField() {
-        //     if (this.newField.trim()) {
-        //         this.form.jobCompetency.push(this.newField.trim());
-        //         this.newField = "";
-        //         this.showInputField = false;
-        //     }
-        // },
         addField() {
             if (this.newField.trim()) {
                 this.form.jobCompetency.push(this.newField.trim());
@@ -360,11 +439,8 @@ export default {
         },
         handleNext() {
             if (this.validateForm() && this.validateAgeLimit()) {
-                // Ensure `ageLimit`, `jobCompetency`, and `personalCompetency` are formatted as expected
-                this.form.ageLimit = this.ageLimit.join('-');
-
                 console.log('Form data section B:', this.form, this.form.ageLimit);
-                // Prepare data and confirm with the user
+                console.log('disciplineSpecification:', this.form.disciplineSpecification);
                 Swal.fire({
                     title: "Are you sure you want to proceed to the next section?",
                     icon: "question",
@@ -376,6 +452,7 @@ export default {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         console.log('Form data section B saved:', this.form);
+                        
                         this.$emit("update-form", this.form, "B");
                         this.$emit("next-section", this.form);
                     }
@@ -390,6 +467,12 @@ export default {
                 });
             }
         },
+    },
+    mounted() {
+        document.addEventListener('click', this.handleClickOutside);
+    },
+    beforeUnmount() {
+        document.removeEventListener('click', this.handleClickOutside);
     },
 };
 </script>

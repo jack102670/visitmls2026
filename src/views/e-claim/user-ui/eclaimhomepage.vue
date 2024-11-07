@@ -1,11 +1,8 @@
 <template>
-  <main
-    class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64"
-  >
+  <main class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64">
     <div class="">
       <div
-        class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-800 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
-      >
+        class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-800 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
         <div class="flex justify-between">
           <div class="flex justify-start flex-col ml-5">
             <h2 class="text-3xl font-bold text-blue-900 dark:text-white">
@@ -20,46 +17,14 @@
           <hr class="h-mx-auto bg-gray-100 border-0 rounded" />
         </div>
         <div class="pt-4 ml-4">
-          <button
-            @click="ChangePopUp()"
-            class="flex items-center justify-center text-center rounded-full bg-[#160959] dark:bg-[#111827] text-slate-200 py-2 px-4 text-sm hover:bg-[#190a70] hover:text=white"
-          >
-            <svg
-              class="mr-1"
-              width="20"
-              height="20"
-              viewBox="0 0 48 48"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M40 23V14L31 4H10C8.89543 4 8 4.89543 8 6V42C8 43.1046 8.89543 44 10 44H22"
-                stroke="white"
-                stroke-width="4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M33 29V43"
-                stroke="white"
-                stroke-width="4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M26 36H33H40"
-                stroke="white"
-                stroke-width="4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M30 4V14H40"
-                stroke="white"
-                stroke-width="4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
+          <button @click="ChangePopUp()"
+            class="flex items-center justify-center text-center rounded-full bg-[#160959] dark:bg-[#111827] text-slate-200 py-2 px-4 text-sm hover:bg-[#190a70] hover:text=white">
+            <svg class="mr-1" width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M40 23V14L31 4H10C8.89543 4 8 4.89543 8 6V42C8 43.1046 8.89543 44 10 44H22" stroke="white"
+                stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M33 29V43" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M26 36H33H40" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M30 4V14H40" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
 
             New Claim
@@ -68,9 +33,7 @@
 
         <!-- Box Info Section-->
         <section>
-          <div
-            class="p-5 mt-1 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5"
-          >
+          <div class="p-5 mt-1 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
             <!-- <div
               class="relative overflow-hidden hover:bg-fuchsia-100 bg-white max-h-[1000px] dark:bg-[#111827] shadow-xl border-x-2 border-y-2 rounded-lg border-fuchsia-300 dark:border-fuchsia-200 dark:hover:bg-gray-800"
             >
@@ -92,100 +55,65 @@
               </div>
             </div> -->
             <div
-              class="relative overflow-hidden dark:bg-[#111827] dark:border-green-200 dark:hover:bg-gray-800 hover:bg-green-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-green-300 rounded-lg"
-            >
+              class="relative overflow-hidden dark:bg-[#111827] dark:border-green-200 dark:hover:bg-gray-800 hover:bg-green-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-green-300 rounded-lg">
               <div class="card m-2" @click="filterTable('Approved')">
                 <div class="ml-5">
-                  <span
-                    class="text-gray-800 text-2xl font-bold dark:text-slate-200"
-                    >{{
-                      requests.filter(
-                        (request) => request.status === 'Approved'
-                      ).length
-                    }}</span
-                  >
-                  <span
-                    class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
-                    >Approved</span
-                  >
+                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
+                    requests.filter(
+                      (request) => request.status === 'Approved'
+                    ).length
+                  }}</span>
+                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200">Approved</span>
                 </div>
               </div>
             </div>
             <div
-              class="relative overflow-hidden dark:bg-[#111827] dark:border-blue-200 dark:hover:bg-gray-800 hover:bg-amber-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-amber-300 rounded-lg"
-            >
+              class="relative overflow-hidden dark:bg-[#111827] dark:border-blue-200 dark:hover:bg-gray-800 hover:bg-amber-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-amber-300 rounded-lg">
               <div class="card m-2" @click="filterTable('Verified')">
                 <div class="ml-5">
-                  <span
-                    class="text-gray-800 text-2xl font-bold dark:text-slate-200"
-                    >{{
-                      requests.filter(
-                        (request) => request.status === 'Verified'
-                      ).length
-                    }}</span
-                  >
-                  <span
-                    class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
-                    >Verified</span
-                  >
+                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
+                    requests.filter(
+                      (request) => request.status === 'Verified'
+                    ).length
+                  }}</span>
+                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200">Verified</span>
                 </div>
               </div>
             </div>
 
             <div
-              class="relative overflow-hidden dark:bg-[#111827] dark:border-red-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] hover:bg-red-100 shadow-xl border-x-2 border-y-2 rounded-lg border-red-300"
-            >
+              class="relative overflow-hidden dark:bg-[#111827] dark:border-red-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] hover:bg-red-100 shadow-xl border-x-2 border-y-2 rounded-lg border-red-300">
               <div class="card m-2" @click="filterTable('rejected')">
                 <div class="ml-5">
-                  <span
-                    class="text-gray-800 text-2xl font-bold dark:text-slate-200"
-                    >{{
-                      requests.filter(
-                        (request) => request.status === 'rejected'
-                      ).length
-                    }}</span
-                  >
-                  <span
-                    class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
-                    >Rejected</span
-                  >
+                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
+                    requests.filter(
+                      (request) => request.status === 'rejected'
+                    ).length
+                  }}</span>
+                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200">Rejected</span>
                 </div>
               </div>
             </div>
             <div
-              class="relative overflow-hidden dark:bg-[#111827] dark:border-yellow-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] shadow-xl hover:bg-yellow-100 border-x-2 border-y-2 rounded-lg border-yellow-300"
-            >
+              class="relative overflow-hidden dark:bg-[#111827] dark:border-yellow-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] shadow-xl hover:bg-yellow-100 border-x-2 border-y-2 rounded-lg border-yellow-300">
               <div class="card m-2" @click="filterTable('reimburse')">
                 <div class="ml-5">
-                  <span
-                    class="text-gray-800 text-2xl font-bold dark:text-slate-200"
-                  >
+                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
                     {{
                       requests.filter(
                         (request) => request.status === 'Approved'
                       ).length
-                    }}</span
-                  >
-                  <span
-                    class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
-                    >Reimburse</span
-                  >
+                    }}</span>
+                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200">Reimburse</span>
                 </div>
               </div>
             </div>
             <div
-              class="relative overflow-hidden dark:bg-[#111827] dark:border-teal-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] hover:bg-teal-100 shadow-xl border-x-2 border-y-2 rounded-lg border-teal-300"
-            >
+              class="relative overflow-hidden dark:bg-[#111827] dark:border-teal-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] hover:bg-teal-100 shadow-xl border-x-2 border-y-2 rounded-lg border-teal-300">
               <div class="card m-2" @click="filterTable('')">
                 <div class="ml-5">
-                  <span
-                    class="text-gray-800 text-2xl font-bold dark:text-slate-200"
-                    >{{ this.requests.length }}</span
-                  >
-                  <span
-                    class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
-                    >All Claims</span
-                  >
+                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{ this.requests.length }}</span>
+                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200">All Claims</span>
                 </div>
               </div>
             </div>
@@ -196,13 +124,11 @@
         <section class="container px-4 mx-auto pt-4">
           <div class="flex justify-between items-center">
             <div>
-              <h2
-                class="text-lg font-medium text-gray-800 dark:text-white ml-1"
-              >
+              <h2 class="text-lg font-medium text-gray-800 dark:text-white ml-1">
                 Claim
                 <span
-                  class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400"
-                  >{{ requests.length }}
+                  class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{{
+                  requests.length }}
                 </span>
               </h2>
             </div>
@@ -210,16 +136,9 @@
 
           <div class="flex flex-col mt-6">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div
-                class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
-              >
-                <div
-                  class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg"
-                >
-                  <table
-                    ref="myTable"
-                    class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe"
-                  >
+              <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                  <table ref="myTable" class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe">
                     <thead class="bg-gray-50 dark:bg-gray-800">
                       <tr>
                         <!-- <th
@@ -230,10 +149,8 @@
                             <span>Branch</span>
                           </div>
                         </th> -->
-                        <th
-                          scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                        >
+                        <th scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                           <div class="flex items-center gap-x-3">
                             <span>Report Name</span>
                           </div>
@@ -246,36 +163,28 @@
                             <span>Requester</span>
                           </div>
                         </th> -->
-                        <th
-                          scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                        >
+                        <th scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                           <div class="flex items-center gap-x-3">
                             <span>Reference Number</span>
                           </div>
                         </th>
 
-                        <th
-                          scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                        >
+                        <th scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                           <div class="flex items-center gap-x-3">
                             <span>Requested Date</span>
                           </div>
                         </th>
-                        <th
-                          scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                        >
+                        <th scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                           <div class="flex items-center gap-x-3">
                             <span>Approved Date</span>
                           </div>
                         </th>
 
-                        <th
-                          scope="col"
-                          class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                        >
+                        <th scope="col"
+                          class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                           <div class="flex items-center gap-x-3">
                             <span>Status</span>
                           </div>
@@ -286,9 +195,7 @@
                         </th>
                       </tr>
                     </thead>
-                    <tbody
-                      class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
-                    >
+                    <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                       <tr v-for="(data, index) in requests" :key="index">
                         <!-- <td
                           class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
@@ -317,53 +224,34 @@
                           </div>
                           {{ data.activity }}
                         </td> -->
-                        <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        >
+                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           {{ data.report_name }}
                         </td>
-                        <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        >
+                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           {{ data.reference_number }}
                         </td>
-                        <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        >
+                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           {{ data.date_requested }}
                         </td>
-                        <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        >
+                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           {{ data.endDate }}
                         </td>
-                        <td
-                          class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                        >
-                          <div
-                            :class="
-                              getStatusContainerClass(
-                                data.admin_status.split('.')[0].split(' ')[0]
-                              )
-                            "
-                          >
-                            <span
-                              :class="
-                                getStatusDotClass(
-                                  data.admin_status.split('.')[0].split(' ')[0]
-                                )
-                              "
-                            ></span>
-                            <h2
-                              :class="
-                                getStatusTextClass(
-                                  data.admin_status.split('.')[0].split(' ')[0]
-                                )
-                              "
-                            >
+                        <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                          <div :class="getStatusContainerClass(
+                            data.admin_status.split('.')[0].split(' ')[0]
+                          )
+                            ">
+                            <span :class="getStatusDotClass(
+                              data.admin_status.split('.')[0].split(' ')[0]
+                            )
+                              "></span>
+                            <h2 :class="getStatusTextClass(
+                              data.admin_status.split('.')[0].split(' ')[0]
+                            )
+                              ">
                               {{
                                 data.admin_status
-                                 
+
                               }}
                             </h2>
                           </div>
@@ -371,28 +259,14 @@
 
                         <td class="px-4 py-4 ml text-sm whitespace-nowrap">
                           <div class="flex items-center gap-x-6">
-                            <button
-                              @click="showclaim(data.reference_number)"
-                              class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                class="w-5 h-5"
-                              >
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                                />
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                />
+                            <button @click="showclaim(data.reference_number)"
+                              class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                               </svg>
                             </button>
                             <!-- this button for edit and deleted  -->
@@ -586,37 +460,14 @@
         </section>
 
         <!-- Loading Animation -->
-        <div
-          class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
-          v-if="loading"
-        >
+        <div class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
+          v-if="loading">
           <div class="absolute w-screen h-screen bg-gray-900 opacity-30"></div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 200 200"
-            class="w-16 h-16 z-50"
-          >
-            <circle
-              transform="rotate(0)"
-              transform-origin="center"
-              fill="none"
-              stroke="blue"
-              stroke-width="10"
-              stroke-linecap="round"
-              stroke-dasharray="230 1000"
-              stroke-dashoffset="0"
-              cx="100"
-              cy="100"
-              r="70"
-            >
-              <animateTransform
-                attributeName="transform"
-                type="rotate"
-                from="0"
-                to="360"
-                dur="2"
-                repeatCount="indefinite"
-              ></animateTransform>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="w-16 h-16 z-50">
+            <circle transform="rotate(0)" transform-origin="center" fill="none" stroke="blue" stroke-width="10"
+              stroke-linecap="round" stroke-dasharray="230 1000" stroke-dashoffset="0" cx="100" cy="100" r="70">
+              <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="2"
+                repeatCount="indefinite"></animateTransform>
             </circle>
           </svg>
           <h1 class="text-gray-50 font-semibold z-50 ml-2 text-lg">
@@ -624,16 +475,10 @@
           </h1>
         </div>
 
-        <div
-          class="mt-5 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4"
-        ></div>
+        <div class="mt-5 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4"></div>
       </div>
     </div>
-    <NewClaimPopUp
-      v-if="popup"
-      @close="ChangePopUp()"
-      :class="[animate ? 'PopUpAnimation' : 'BackAnimation']"
-    />
+    <NewClaimPopUp v-if="popup" @close="ChangePopUp()" :class="[animate ? 'PopUpAnimation' : 'BackAnimation']" />
   </main>
 </template>
 
@@ -927,14 +772,17 @@ export default {
 .BackAnimation .popup {
   animation: PopDownKeyframes 0.45s ease forwards;
 }
+
 @keyframes PopUpKeyframes {
   0% {
     transform: scale(0);
   }
+
   65%,
   80% {
     transform: scale(1.1);
   }
+
   100% {
     transform: scale(1);
   }
@@ -944,10 +792,12 @@ export default {
   0% {
     transform: scale(1);
   }
+
   30%,
   50% {
     transform: scale(1.1);
   }
+
   100% {
     transform: scale(0);
   }

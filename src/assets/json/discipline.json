@@ -1,0 +1,2981 @@
+{
+  "disciplines": [
+    { "id": 1, "name": "Computer Science" },
+    { "id": 2, "name": "Information Technology" },
+    { "id": 3, "name": "Data Science" },
+    { "id": 4, "name": "Cybersecurity" },
+    { "id": 5, "name": "Bioinformatics" },
+    { "id": 6, "name": "Software Engineering" },
+    { "id": 7, "name": "Artificial Intelligence" },
+    { "id": 8, "name": "Machine Learning" },
+    { "id": 9, "name": "Robotics" },
+    { "id": 10, "name": "Virtual Reality" },
+    { "id": 11, "name": "Quantum Computing" },
+    { "id": 12, "name": "Augmented Reality" },
+    { "id": 13, "name": "Embedded Systems" },
+    { "id": 14, "name": "Blockchain Technology" },
+    { "id": 15, "name": "Cloud Computing" },
+    { "id": 16, "name": "Mobile App Development" },
+    { "id": 17, "name": "Game Development" },
+    { "id": 18, "name": "Computer Networking" },
+    { "id": 19, "name": "Database Management" },
+    { "id": 20, "name": "Digital Humanities" },
+    { "id": 21, "name": "Digital Media" },
+    { "id": 22, "name": "Data Analytics" },
+    { "id": 23, "name": "Computer Graphics" },
+    { "id": 24, "name": "Web Development" },
+    { "id": 25, "name": "Artificial Intelligence Engineering" },
+    { "id": 26, "name": "Natural Language Processing" },
+    { "id": 27, "name": "Human-Computer Interaction" },
+    { "id": 28, "name": "Cyber Law" },
+    { "id": 29, "name": "E-commerce" },
+    { "id": 30, "name": "Fintech" },
+    { "id": 31, "name": "Information Science" },
+    { "id": 32, "name": "Electrical Engineering" },
+    { "id": 33, "name": "Mechanical Engineering" },
+    { "id": 34, "name": "Chemical Engineering" },
+    { "id": 35, "name": "Biomedical Engineering" },
+    { "id": 36, "name": "Materials Science" },
+    { "id": 37, "name": "Civil Engineering" },
+    { "id": 38, "name": "Aerospace Engineering" },
+    { "id": 39, "name": "Environmental Engineering" },
+    { "id": 40, "name": "Nanotechnology" },
+    { "id": 41, "name": "Environmental Science" },
+    { "id": 42, "name": "Geospatial Science" },
+    { "id": 43, "name": "Energy Systems Engineering" },
+    { "id": 44, "name": "Urban Planning" },
+    { "id": 45, "name": "Marine Engineering" },
+    { "id": 46, "name": "Energy Engineering" },
+    { "id": 47, "name": "Agricultural Engineering" },
+    { "id": 48, "name": "Mining Engineering" },
+    { "id": 49, "name": "Automotive Engineering" },
+    { "id": 50, "name": "Food Engineering" },
+    { "id": 51, "name": "Physics" },
+    { "id": 52, "name": "Astrophysics" },
+    { "id": 53, "name": "Quantum Physics" },
+    { "id": 54, "name": "Theoretical Physics" },
+    { "id": 55, "name": "Geophysics" },
+    { "id": 56, "name": "Physical Chemistry" },
+    { "id": 57, "name": "Materials Physics" },
+    { "id": 58, "name": "Nuclear Physics" },
+    { "id": 59, "name": "Biophysics" },
+    { "id": 60, "name": "Plasma Physics" },
+    { "id": 61, "name": "Condensed Matter Physics" },
+    { "id": 62, "name": "Optical Physics" },
+    { "id": 63, "name": "Particle Physics" },
+    { "id": 64, "name": "Fluid Dynamics" },
+    { "id": 65, "name": "Mathematical Physics" },
+    { "id": 66, "name": "Chemistry" },
+    { "id": 67, "name": "Organic Chemistry" },
+    { "id": 68, "name": "Inorganic Chemistry" },
+    { "id": 69, "name": "Biochemistry" },
+    { "id": 70, "name": "Environmental Chemistry" },
+    { "id": 71, "name": "Forensic Chemistry" },
+    { "id": 72, "name": "Molecular Biology" },
+    { "id": 73, "name": "Genetics" },
+    { "id": 74, "name": "Microbiology" },
+    { "id": 75, "name": "Immunology" },
+    { "id": 76, "name": "Biotechnology" },
+    { "id": 77, "name": "Bioengineering" },
+    { "id": 78, "name": "Nanomedicine" },
+    { "id": 79, "name": "Neuroscience" },
+    { "id": 80, "name": "Psychology" },
+    { "id": 81, "name": "Clinical Psychology" },
+    { "id": 82, "name": "Behavioral Psychology" },
+    { "id": 83, "name": "Cognitive Psychology" },
+    { "id": 84, "name": "Forensic Psychology" },
+    { "id": 85, "name": "Sports Psychology" },
+    { "id": 86, "name": "Social Psychology" },
+    { "id": 87, "name": "Educational Psychology" },
+    { "id": 88, "name": "Developmental Psychology" },
+    { "id": 89, "name": "Neuropsychology" },
+    { "id": 90, "name": "Health Psychology" },
+    { "id": 91, "name": "Pharmacology" },
+    { "id": 92, "name": "Pharmacy" },
+    { "id": 93, "name": "Toxicology" },
+    { "id": 94, "name": "Pharmaceutical Sciences" },
+    { "id": 95, "name": "Nursing" },
+    { "id": 96, "name": "Public Health" },
+    { "id": 97, "name": "Global Health" },
+    { "id": 98, "name": "Epidemiology" },
+    { "id": 99, "name": "Biostatistics" },
+    { "id": 100, "name": "Occupational Health" },
+    { "id": 101, "name": "Healthcare Administration" },
+    { "id": 102, "name": "Health Informatics" },
+    { "id": 103, "name": "Speech Pathology" },
+    { "id": 104, "name": "Occupational Therapy" },
+    { "id": 105, "name": "Physical Therapy" },
+    { "id": 106, "name": "Medical Laboratory Science" },
+    { "id": 107, "name": "Veterinary Science" },
+    { "id": 108, "name": "Dentistry" },
+    { "id": 109, "name": "Medical Imaging" },
+    { "id": 110, "name": "Pathology" },
+    { "id": 111, "name": "Radiology" },
+    { "id": 112, "name": "Clinical Research" },
+    { "id": 113, "name": "Biomedical Science" },
+    { "id": 114, "name": "Food Science" },
+    { "id": 115, "name": "Nutrition and Dietetics" },
+    { "id": 116, "name": "Sustainability" },
+    { "id": 117, "name": "Renewable Energy" },
+    { "id": 118, "name": "Agronomy" },
+    { "id": 119, "name": "Forestry" },
+    { "id": 120, "name": "Botany" },
+    { "id": 121, "name": "Zoology" },
+    { "id": 122, "name": "Marine Biology" },
+    { "id": 123, "name": "Ecology" },
+    { "id": 124, "name": "Conservation Biology" },
+    { "id": 125, "name": "Mathematics" },
+    { "id": 126, "name": "Pure Mathematics" },
+    { "id": 127, "name": "Applied Mathematics" },
+    { "id": 128, "name": "Statistics" },
+    { "id": 129, "name": "Operations Research" },
+    { "id": 130, "name": "Economics" },
+    { "id": 131, "name": "Macroeconomics" },
+    { "id": 132, "name": "Microeconomics" },
+    { "id": 133, "name": "Finance" },
+    { "id": 134, "name": "Accounting" },
+    { "id": 135, "name": "Management" },
+    { "id": 136, "name": "Human Resource Management" },
+    { "id": 137, "name": "Supply Chain Management" },
+    { "id": 138, "name": "Marketing" },
+    { "id": 139, "name": "Business Analytics" },
+    { "id": 140, "name": "Entrepreneurship" },
+    { "id": 141, "name": "International Relations" },
+    { "id": 142, "name": "Political Science" },
+    { "id": 143, "name": "Public Administration" },
+    { "id": 144, "name": "Law" },
+    { "id": 145, "name": "Criminal Justice" },
+    { "id": 146, "name": "Sociology" },
+    { "id": 147, "name": "Anthropology" },
+    { "id": 148, "name": "Philosophy" },
+    { "id": 149, "name": "Theology" },
+    { "id": 150, "name": "Religious Studies" },
+    { "id": 151, "name": "History" },
+    { "id": 152, "name": "Linguistics" },
+    { "id": 153, "name": "Literature" },
+    { "id": 154, "name": "Creative Writing" },
+    { "id": 155, "name": "Art History" },
+    { "id": 156, "name": "Music" },
+    { "id": 157, "name": "Fine Arts" },
+    { "id": 158, "name": "Performing Arts" },
+    { "id": 159, "name": "Film Studies" },
+    { "id": 160, "name": "Media Studies" },
+    { "id": 161, "name": "Communication Studies" },
+    { "id": 162, "name": "Education" },
+    { "id": 163, "name": "Special Education" },
+    { "id": 164, "name": "Curriculum and Instruction" },
+    { "id": 165, "name": "Educational Leadership" },
+    { "id": 166, "name": "Counseling" },
+    { "id": 167, "name": "Library Science" },
+    { "id": 168, "name": "Geography" },
+    { "id": 169, "name": "Archaeology" },
+    { "id": 170, "name": "Architecture" },
+    { "id": 171, "name": "Urban Design" },
+    { "id": 172, "name": "Landscape Architecture" },
+    { "id": 173, "name": "Fashion Design" },
+    { "id": 174, "name": "Graphic Design" },
+    { "id": 175, "name": "Industrial Design" },
+    { "id": 128, "name": "Statistics" },
+    { "id": 129, "name": "Applied Statistics" },
+    { "id": 130, "name": "Biostatistics" },
+    { "id": 131, "name": "Econometrics" },
+    { "id": 132, "name": "Statistical Computing" },
+    { "id": 133, "name": "Data Science" },
+    { "id": 134, "name": "Actuarial Science" },
+    { "id": 135, "name": "Quantitative Analysis" },
+    { "id": 136, "name": "Computational Mathematics" },
+    { "id": 137, "name": "Financial Mathematics" },
+    { "id": 138, "name": "Time Series Analysis" },
+    { "id": 139, "name": "Statistical Inference" },
+    { "id": 140, "name": "Probability Theory" },
+    { "id": 141, "name": "Machine Learning Statistics" },
+    { "id": 142, "name": "Physics" },
+    { "id": 143, "name": "Astrophysics" },
+    { "id": 144, "name": "Quantum Physics" },
+    { "id": 145, "name": "Theoretical Physics" },
+    { "id": 146, "name": "Geophysics" },
+    { "id": 147, "name": "Physical Chemistry" },
+    { "id": 148, "name": "Materials Physics" },
+    { "id": 149, "name": "Nuclear Physics" },
+    { "id": 150, "name": "Biophysics" },
+    { "id": 151, "name": "Plasma Physics" },
+    { "id": 152, "name": "Condensed Matter Physics" },
+    { "id": 153, "name": "Optical Physics" },
+    { "id": 154, "name": "Particle Physics" },
+    { "id": 155, "name": "Fluid Dynamics" },
+    { "id": 156, "name": "Mathematical Physics" },
+    { "id": 157, "name": "Chemistry" },
+    { "id": 158, "name": "Organic Chemistry" },
+    { "id": 159, "name": "Inorganic Chemistry" },
+    { "id": 160, "name": "Biochemistry" },
+    { "id": 161, "name": "Environmental Chemistry" },
+    { "id": 162, "name": "Forensic Chemistry" },
+    { "id": 163, "name": "Analytical Chemistry" },
+    { "id": 164, "name": "Physical Chemistry" },
+    { "id": 165, "name": "Materials Chemistry" },
+    { "id": 166, "name": "Polymer Chemistry" },
+    { "id": 167, "name": "Food Chemistry" },
+    { "id": 168, "name": "Medicinal Chemistry" },
+    { "id": 169, "name": "Industrial Chemistry" },
+    { "id": 170, "name": "Computational Chemistry" },
+    { "id": 171, "name": "Pharmaceutical Chemistry" },
+    { "id": 172, "name": "Geochemistry" },
+    { "id": 173, "name": "Nanochemistry" },
+    { "id": 174, "name": "Biology" },
+    { "id": 175, "name": "Genetics" },
+    { "id": 176, "name": "Molecular Biology" },
+    { "id": 177, "name": "Microbiology" },
+    { "id": 178, "name": "Immunology" },
+    { "id": 179, "name": "Biotechnology" },
+    { "id": 180, "name": "Neurobiology" },
+    { "id": 181, "name": "Ecology" },
+    { "id": 182, "name": "Evolutionary Biology" },
+    { "id": 183, "name": "Cell Biology" },
+    { "id": 184, "name": "Marine Biology" },
+    { "id": 185, "name": "Zoology" },
+    { "id": 186, "name": "Botany" },
+    { "id": 187, "name": "Biophysics" },
+    { "id": 188, "name": "Bioinformatics" },
+    { "id": 189, "name": "Environmental Science" },
+    { "id": 190, "name": "Agriculture Science" },
+    { "id": 191, "name": "Forestry" },
+    { "id": 192, "name": "Wildlife Biology" },
+    { "id": 193, "name": "Veterinary Medicine" },
+    { "id": 194, "name": "Genomic Medicine" },
+    { "id": 195, "name": "Environmental Policy" },
+    { "id": 196, "name": "Public Policy" },
+    { "id": 197, "name": "Ethics" },
+    { "id": 198, "name": "Linguistic Anthropology" },
+    { "id": 199, "name": "Healthcare Management" },
+    { "id": 200, "name": "Digital Marketing" },
+    { "id": 201, "name": "Actuarial Science" },
+    { "id": 202, "name": "Taxation" },
+    { "id": 203, "name": "Hotel Management" },
+    { "id": 204, "name": "Real Estate" },
+    { "id": 205, "name": "Event Management" },
+    { "id": 206, "name": "Tourism Management" },
+    { "id": 207, "name": "Fashion Design" },
+    { "id": 208, "name": "Interior Design" },
+    { "id": 209, "name": "Industrial Design" },
+    { "id": 210, "name": "Public Relations" },
+    { "id": 211, "name": "Sports Management" },
+    { "id": 212, "name": "Humanitarian Studies" },
+    { "id": 213, "name": "Emergency Management" },
+    { "id": 214, "name": "Disaster Management" },
+    { "id": 215, "name": "Cultural Studies" },
+    { "id": 216, "name": "Human Rights" },
+    { "id": 217, "name": "Sustainability Science" },
+    { "id": 218, "name": "Game Design" },
+    { "id": 219, "name": "Film Production" },
+    { "id": 220, "name": "Creative Technology" },
+    { "id": 221, "name": "Forensic Science" },
+    { "id": 222, "name": "Meteorology" },
+    { "id": 223, "name": "Oceanography" },
+    { "id": 224, "name": "Agricultural Economics" },
+    { "id": 225, "name": "Animal Science" },
+    { "id": 226, "name": "Food Safety" },
+    { "id": 227, "name": "Toxicology" },
+    { "id": 228, "name": "Biometrics" },
+    { "id": 229, "name": "Public Relations and Advertising" },
+    { "id": 230, "name": "Journalism" },
+    { "id": 231, "name": "Media Production" },
+    { "id": 232, "name": "Broadcasting" },
+    { "id": 233, "name": "Photography" },
+    { "id": 234, "name": "Filmmaking" },
+    {
+      "id": 235,
+      "name": "Acoustics"
+    },
+    {
+      "id": 236,
+      "name": "Actuarial Science"
+    },
+    {
+      "id": 237,
+      "name": "Aeronautical Engineering"
+    },
+    {
+      "id": 238,
+      "name": "Agronomy"
+    },
+    {
+      "id": 239,
+      "name": "Allied Health Sciences"
+    },
+    {
+      "id": 240,
+      "name": "American Studies"
+    },
+    {
+      "id": 241,
+      "name": "Animal Science"
+    },
+    {
+      "id": 242,
+      "name": "Applied Mathematics"
+    },
+    {
+      "id": 243,
+      "name": "Aquatic Biology"
+    },
+    {
+      "id": 244,
+      "name": "Astronomy"
+    },
+    {
+      "id": 245,
+      "name": "Audiology"
+    },
+    {
+      "id": 246,
+      "name": "Biotechnology"
+    },
+    {
+      "id": 247,
+      "name": "Botany"
+    },
+    {
+      "id": 248,
+      "name": "Business Analytics"
+    },
+    {
+      "id": 249,
+      "name": "Cartography"
+    },
+    {
+      "id": 250,
+      "name": "Chemical Physics"
+    },
+    {
+      "id": 251,
+      "name": "Child Development"
+    },
+    {
+      "id": 252,
+      "name": "Chinese Studies"
+    },
+    {
+      "id": 253,
+      "name": "Classical Studies"
+    },
+    {
+      "id": 254,
+      "name": "Communication Studies"
+    },
+    {
+      "id": 255,
+      "name": "Comparative Literature"
+    },
+    {
+      "id": 256,
+      "name": "Computer Graphics"
+    },
+    {
+      "id": 257,
+      "name": "Construction Management"
+    },
+    {
+      "id": 258,
+      "name": "Culinary Arts"
+    },
+    {
+      "id": 259,
+      "name": "Dance"
+    },
+    {
+      "id": 260,
+      "name": "Developmental Psychology"
+    },
+    {
+      "id": 261,
+      "name": "Digital Media"
+    },
+    {
+      "id": 262,
+      "name": "Early Childhood Education"
+    },
+    {
+      "id": 263,
+      "name": "Ecology"
+    },
+    {
+      "id": 264,
+      "name": "Econometrics"
+    },
+    {
+      "id": 265,
+      "name": "Educational Leadership"
+    },
+    {
+      "id": 266,
+      "name": "Electrical and Electronics Engineering"
+    },
+    {
+      "id": 267,
+      "name": "Emergency Management"
+    },
+    {
+      "id": 268,
+      "name": "Energy Engineering"
+    },
+    {
+      "id": 269,
+      "name": "Engineering Management"
+    },
+    {
+      "id": 270,
+      "name": "Entomology"
+    },
+    {
+      "id": 271,
+      "name": "Environmental Policy"
+    },
+    {
+      "id": 272,
+      "name": "Ethics"
+    },
+    {
+      "id": 273,
+      "name": "Event Management"
+    },
+    {
+      "id": 274,
+      "name": "Exercise Science"
+    },
+    {
+      "id": 275,
+      "name": "Fashion Design"
+    },
+    {
+      "id": 276,
+      "name": "Film Production"
+    },
+    {
+      "id": 277,
+      "name": "Food Science"
+    },
+    {
+      "id": 278,
+      "name": "Forensic Science"
+    },
+    {
+      "id": 279,
+      "name": "Foreign Languages"
+    },
+    {
+      "id": 280,
+      "name": "Game Design"
+    },
+    {
+      "id": 281,
+      "name": "Geophysics"
+    },
+    {
+      "id": 282,
+      "name": "Hematology"
+    },
+    {
+      "id": 283,
+      "name": "Herbal Medicine"
+    },
+    {
+      "id": 284,
+      "name": "Higher Education"
+    },
+    {
+      "id": 285,
+      "name": "Hospital Administration"
+    },
+    {
+      "id": 286,
+      "name": "Human Computer Interaction"
+    },
+    {
+      "id": 287,
+      "name": "Immunology"
+    },
+    {
+      "id": 288,
+      "name": "Industrial Design"
+    },
+    {
+      "id": 289,
+      "name": "Industrial Relations"
+    },
+    {
+      "id": 290,
+      "name": "Information Technology"
+    },
+    {
+      "id": 291,
+      "name": "International Business"
+    },
+    {
+      "id": 292,
+      "name": "International Development"
+    },
+    {
+      "id": 293,
+      "name": "Interior Design"
+    },
+    {
+      "id": 294,
+      "name": "Kinesiology"
+    },
+    {
+      "id": 295,
+      "name": "Landscape Architecture"
+    },
+    {
+      "id": 296,
+      "name": "Library Science"
+    },
+    {
+      "id": 297,
+      "name": "Liberal Arts"
+    },
+    {
+      "id": 298,
+      "name": "Marine Biology"
+    },
+    {
+      "id": 299,
+      "name": "Materials Science"
+    },
+    {
+      "id": 300,
+      "name": "Mathematical Biology"
+    },
+    {
+      "id": 301,
+      "name": "Medical Informatics"
+    },
+    {
+      "id": 302,
+      "name": "Medical Sociology"
+    },
+    {
+      "id": 303,
+      "name": "Metallurgical Engineering"
+    },
+    {
+      "id": 304,
+      "name": "Microbiology"
+    },
+    {
+      "id": 305,
+      "name": "Music Technology"
+    },
+    {
+      "id": 306,
+      "name": "Nanotechnology"
+    },
+    {
+      "id": 307,
+      "name": "Neuroscience"
+    },
+    {
+      "id": 308,
+      "name": "Nuclear Engineering"
+    },
+    {
+      "id": 309,
+      "name": "Occupational Health and Safety"
+    },
+    {
+      "id": 310,
+      "name": "Optometry"
+    },
+    {
+      "id": 311,
+      "name": "Pharmacology"
+    },
+    {
+      "id": 312,
+      "name": "Pharmacy"
+    },
+    {
+      "id": 313,
+      "name": "Photographic Arts"
+    },
+    {
+      "id": 314,
+      "name": "Physical Education"
+    },
+    {
+      "id": 315,
+      "name": "Physics Education"
+    },
+    {
+      "id": 316,
+      "name": "Plastic Surgery"
+    },
+    
+    {
+      "id": 317,
+      "name": "Public Administration"
+    },
+    {
+      "id": 318,
+      "name": "Public Policy"
+    },
+    {
+      "id": 319,
+      "name": "Quantum Computing"
+    },
+    {
+      "id": 320,
+      "name": "Rehabilitation Science"
+    },
+    {
+      "id": 321,
+      "name": "Renewable Energy"
+    },
+    {
+      "id": 322,
+      "name": "Robotics"
+    },
+    {
+      "id": 323,
+      "name": "Russian Studies"
+    },
+    {
+      "id": 324,
+      "name": "Science Communication"
+    },
+    {
+      "id": 325,
+      "name": "Sculpture"
+    },
+    {
+      "id": 326,
+      "name": "Speech Pathology"
+    },
+    {
+      "id": 327,
+      "name": "Sports Management"
+    },
+    {
+      "id": 328,
+      "name": "Statistics"
+    },
+    {
+      "id": 329,
+      "name": "Sustainable Development"
+    },
+    {
+      "id": 330,
+      "name": "Telecommunications"
+    },
+    {
+      "id": 331,
+      "name": "Toxicology"
+    },
+    {
+      "id": 332,
+      "name": "Transportation Engineering"
+    },
+    {
+      "id": 333,
+      "name": "Urban Studies"
+    },
+    {
+      "id": 334,
+      "name": "Veterinary Medicine"
+    },
+    {
+      "id": 335,
+      "name": "Visual Arts"
+    },
+    {
+      "id": 336,
+      "name": "Web Development"
+    },
+    {
+      "id": 337,
+      "name": "Accounting"
+    },
+    {
+      "id": 338,
+      "name": "Acting"
+    },
+    {
+      "id": 339,
+      "name": "Advertising"
+    },
+    {
+      "id": 340,
+      "name": "Agricultural Engineering"
+    },
+    {
+      "id": 341,
+      "name": "Anthropology"
+    },
+    {
+      "id": 342,
+      "name": "Applied Linguistics"
+    },
+    {
+      "id": 343,
+      "name": "Aviation"
+    },
+    {
+      "id": 344,
+      "name": "Banking and Finance"
+    },
+    {
+      "id": 345,
+      "name": "Biomedical Engineering"
+    },
+    {
+      "id": 346,
+      "name": "Biochemistry"
+    },
+    {
+      "id": 347,
+      "name": "Biomedical Sciences"
+    },
+    {
+      "id": 348,
+      "name": "Chemical Engineering"
+    },
+    {
+      "id": 349,
+      "name": "Civil Engineering"
+    },
+    {
+      "id": 350,
+      "name": "Clinical Psychology"
+    },
+    {
+      "id": 351,
+      "name": "Communication Disorders"
+    },
+    {
+      "id": 352,
+      "name": "Criminal Justice"
+    },
+    {
+      "id": 353,
+      "name": "Cybersecurity"
+    },
+    {
+      "id": 354,
+      "name": "Dance Therapy"
+    },
+    {
+      "id": 355,
+      "name": "Data Science"
+    },
+    {
+      "id": 356,
+      "name": "Dental Hygiene"
+    },
+    {
+      "id": 357,
+      "name": "Dentistry"
+    },
+    {
+      "id": 358,
+      "name": "Design Thinking"
+    },
+    {
+      "id": 359,
+      "name": "Drama"
+    },
+    {
+      "id": 360,
+      "name": "Early Childhood Development"
+    },
+    {
+      "id": 361,
+      "name": "Economics"
+    },
+    {
+      "id": 362,
+      "name": "Education Technology"
+    },
+    {
+      "id": 363,
+      "name": "Electrical Engineering"
+    },
+    {
+      "id": 364,
+      "name": "Energy Systems"
+    },
+    {
+      "id": 365,
+      "name": "Environmental Science"
+    },
+    {
+      "id": 366,
+      "name": "Exercise Physiology"
+    },
+    {
+      "id": 367,
+      "name": "Fashion Merchandising"
+    },
+    {
+      "id": 368,
+      "name": "Film Studies"
+    },
+    {
+      "id": 369,
+      "name": "Financial Engineering"
+    },
+    {
+      "id": 370,
+      "name": "Food Technology"
+    },
+    {
+      "id": 371,
+      "name": "Geography"
+    },
+    {
+      "id": 372,
+      "name": "Geology"
+    },
+    {
+      "id": 373,
+      "name": "Graphic Design"
+    },
+    {
+      "id": 374,
+      "name": "Health Informatics"
+    },
+    {
+      "id": 375,
+      "name": "Hospitality Management"
+    },
+    {
+      "id": 376,
+      "name": "Human Resources"
+    },
+    {
+      "id": 377,
+      "name": "Humanitarian Studies"
+    },
+    {
+      "id": 378,
+      "name": "Industrial Engineering"
+    },
+    {
+      "id": 379,
+      "name": "Information Systems"
+    },
+    {
+      "id": 380,
+      "name": "International Relations"
+    },
+    {
+      "id": 381,
+      "name": "Law"
+    },
+    {
+      "id": 382,
+      "name": "Library and Information Science"
+    },
+    {
+      "id": 383,
+      "name": "Linguistics"
+    },
+    {
+      "id": 384,
+      "name": "Management Science"
+    },
+    {
+      "id": 385,
+      "name": "Marine Engineering"
+    },
+    {
+      "id": 386,
+      "name": "Marketing"
+    },
+    {
+      "id": 387,
+      "name": "Mathematics Education"
+    },
+    {
+      "id": 388,
+      "name": "Mechanical Engineering"
+    },
+    {
+      "id": 389,
+      "name": "Medicine"
+    },
+    {
+      "id": 390,
+      "name": "Microelectronics"
+    },
+    {
+      "id": 391,
+      "name": "Mining Engineering"
+    },
+    {
+      "id": 392,
+      "name": "Music Performance"
+    },
+    {
+      "id": 393,
+      "name": "Nanoscience"
+    },
+    {
+      "id": 394,
+      "name": "Nursing"
+    },
+    {
+      "id": 395,
+      "name": "Nutrition Science"
+    },
+    {
+      "id": 396,
+      "name": "Occupational Therapy"
+    },
+    {
+      "id": 397,
+      "name": "Optical Engineering"
+    },
+    {
+      "id": 398,
+      "name": "Philosophy"
+    },
+    {
+      "id": 399,
+      "name": "Physics Education"
+    },
+    {
+      "id": 400,
+      "name": "Political Science"
+    },
+    {
+      "id": 401,
+      "name": "Public Health"
+    },
+    {
+      "id": 402,
+      "name": "Public Relations"
+    },
+    {
+      "id": 403,
+      "name": "Real Estate"
+    },
+    {
+      "id": 404,
+      "name": "Renewable Energy Engineering"
+    },
+    {
+      "id": 405,
+      "name": "Robotics Engineering"
+    },
+    {
+      "id": 406,
+      "name": "Social Work"
+    },
+    {
+      "id": 407,
+      "name": "Sociology"
+    },
+    {
+      "id": 408,
+      "name": "Software Engineering"
+    },
+    {
+      "id": 409,
+      "name": "Space Science"
+    },
+    {
+      "id": 410,
+      "name": "Sports Science"
+    },
+    {
+      "id": 411,
+      "name": "Supply Chain Management"
+    },
+    {
+      "id": 412,
+      "name": "Sustainable Architecture"
+    },
+    {
+      "id": 413,
+      "name": "Telecommunications Engineering"
+    },
+    {
+      "id": 414,
+      "name": "Textile Engineering"
+    },
+    {
+      "id": 415,
+      "name": "Theater Arts"
+    },
+    {
+      "id": 416,
+      "name": "Toxicology"
+    },
+    {
+      "id": 417,
+      "name": "Tourism Management"
+    },
+    {
+      "id": 418,
+      "name": "Transportation Management"
+    },
+    {
+      "id": 419,
+      "name": "Urban Planning"
+    },
+    {
+      "id": 420,
+      "name": "Veterinary Science"
+    },
+    {
+      "id": 421,
+      "name": "Visual Communication"
+    },
+    {
+      "id": 422,
+      "name": "Web Design"
+    },
+    {
+      "id": 423,
+      "name": "Wireless Communication"
+    },
+    {
+      "id": 424,
+      "name": "Aerospace Engineering"
+    },
+    {
+      "id": 425,
+      "name": "Agricultural Engineering"
+    },
+    {
+      "id": 426,
+      "name": "Automotive Engineering"
+    },
+    {
+      "id": 427,
+      "name": "Biochemical Engineering"
+    },
+    {
+      "id": 428,
+      "name": "Chemical Engineering"
+    },
+    {
+      "id": 429,
+      "name": "Civil Engineering"
+    },
+    {
+      "id": 430,
+      "name": "Electrical Engineering"
+    },
+    {
+      "id": 431,
+      "name": "Electronics Engineering"
+    },
+    {
+      "id": 432,
+      "name": "Environmental Engineering"
+    },
+    {
+      "id": 433,
+      "name": "Geotechnical Engineering"
+    },
+    {
+      "id": 434,
+      "name": "Industrial Engineering"
+    },
+    {
+      "id": 435,
+      "name": "Marine Engineering"
+    },
+    {
+      "id": 436,
+      "name": "Materials Engineering"
+    },
+    {
+      "id": 437,
+      "name": "Mechanical Engineering"
+    },
+    {
+      "id": 438,
+      "name": "Mining Engineering"
+    },
+    {
+      "id": 439,
+      "name": "Nuclear Engineering"
+    },
+    {
+      "id": 440,
+      "name": "Oil and Gas Engineering"
+    },
+    {
+      "id": 441,
+      "name": "Petroleum Engineering"
+    },
+    {
+      "id": 442,
+      "name": "Robotics Engineering"
+    },
+    {
+      "id": 443,
+      "name": "Software Engineering"
+    },
+    {
+      "id": 444,
+      "name": "Structural Engineering"
+    },
+    {
+      "id": 445,
+      "name": "Telecommunications Engineering"
+    },
+    {
+      "id": 446,
+      "name": "Transportation Engineering"
+    },
+    {
+      "id": 447,
+      "name": "Water Resources Engineering"
+    },
+    {
+      "id": 448,
+      "name": "Logistics Engineering"
+    },
+    {
+      "id": 449,
+      "name": "Supply Chain Engineering"
+    },
+    {
+      "id": 450,
+      "name": "Transportation Systems Engineering"
+    },
+    {
+      "id": 451,
+      "name": "Industrial Logistics"
+    },
+    {
+      "id": 452,
+      "name": "Operations Research in Logistics"
+    },
+    {
+      "id": 453,
+      "name": "Fleet Management Engineering"
+    },
+    {
+      "id": 454,
+      "name": "Global Logistics"
+    },
+    {
+      "id": 455,
+      "name": "Warehouse Management Engineering"
+    },
+    {
+      "id": 456,
+      "name": "Inventory Management Engineering"
+    },
+    {
+      "id": 457,
+      "name": "Logistics and Supply Chain Management"
+    },
+    {
+      "id": 458,
+      "name": "Transportation Management"
+    },
+    {
+      "id": 459,
+      "name": "Supply Chain Planning"
+    },
+    {
+      "id": 460,
+      "name": "Cold Chain Logistics"
+    },
+    {
+      "id": 461,
+      "name": "Reverse Logistics"
+    },
+    {
+      "id": 462,
+      "name": "E-commerce Logistics"
+    },
+    {
+      "id": 463,
+      "name": "Sustainability in Logistics"
+    },
+    {
+      "id": 464,
+      "name": "Lean Logistics"
+    },
+    {
+      "id": 465,
+      "name": "Procurement Logistics"
+    },
+    {
+      "id": 466,
+      "name": "Freight Forwarding"
+    },
+    {
+      "id": 467,
+      "name": "Distribution Network Design"
+    },
+    {
+      "id": 468,
+      "name": "Hotel Management"
+    },
+    {
+      "id": 469,
+      "name": "Restaurant Management"
+    },
+    {
+      "id": 470,
+      "name": "Event Management"
+    },
+    {
+      "id": 471,
+      "name": "Tourism Management"
+    },
+    {
+      "id": 472,
+      "name": "Hospitality Marketing"
+    },
+    {
+      "id": 473,
+      "name": "Culinary Arts"
+    },
+    {
+      "id": 474,
+      "name": "Travel and Tourism"
+    },
+    {
+      "id": 475,
+      "name": "Hospitality and Tourism Management"
+    },
+    {
+      "id": 476,
+      "name": "Hospitality Administration"
+    },
+    {
+      "id": 477,
+      "name": "Resort Management"
+    },
+    {
+      "id": 478,
+      "name": "Casino Management"
+    },
+    {
+      "id": 479,
+      "name": "Food and Beverage Management"
+    },
+    {
+      "id": 480,
+      "name": "Luxury Hospitality Management"
+    },
+    {
+      "id": 481,
+      "name": "Sustainable Hospitality"
+    },
+    {
+      "id": 482,
+      "name": "Hospitality Operations"
+    },
+    {
+      "id": 483,
+      "name": "Guest Services Management"
+    },
+    {
+      "id": 484,
+      "name": "MICE (Meetings, Incentives, Conventions, and Exhibitions) Management"
+    },
+    {
+      "id": 485,
+      "name": "Hotel and Resort Operations"
+    },
+    {
+      "id": 486,
+      "name": "International Hospitality Management"
+    },
+    {
+      "id": 487,
+      "name": "Cultural Tourism Management"
+    },
+    {
+      "id": 488,
+      "name": "Medicine"
+    },
+    {
+      "id": 489,
+      "name": "Nursing"
+    },
+    {
+      "id": 490,
+      "name": "Pharmacy"
+    },
+    {
+      "id": 491,
+      "name": "Dentistry"
+    },
+    {
+      "id": 492,
+      "name": "Veterinary Medicine"
+    },
+    {
+      "id": 493,
+      "name": "Physiotherapy"
+    },
+    {
+      "id": 494,
+      "name": "Public Health"
+    },
+    {
+      "id": 495,
+      "name": "Biomedical Sciences"
+    },
+    {
+      "id": 496,
+      "name": "Medical Laboratory Technology"
+    },
+    {
+      "id": 497,
+      "name": "Radiography"
+    },
+    {
+      "id": 498,
+      "name": "Medical Imaging"
+    },
+    {
+      "id": 499,
+      "name": "Occupational Therapy"
+    },
+    {
+      "id": 500,
+      "name": "Speech Therapy"
+    },
+    {
+      "id": 501,
+      "name": "Anesthesia Technology"
+    },
+    {
+      "id": 502,
+      "name": "Emergency Medical Services"
+    },
+    {
+      "id": 503,
+      "name": "Optometry"
+    },
+    {
+      "id": 504,
+      "name": "Nutrition and Dietetics"
+    },
+    {
+      "id": 505,
+      "name": "Healthcare Management"
+    },
+    {
+      "id": 506,
+      "name": "Health Information Management"
+    },
+    {
+      "id": 507,
+      "name": "Clinical Psychology"
+    },
+    {
+      "id": 508,
+      "name": "Pharmaceutical Sciences"
+    },
+    {
+      "id": 509,
+      "name": "Podiatry"
+    },
+    {
+      "id": 510,
+      "name": "Medical Informatics"
+    },
+    {
+      "id": 511,
+      "name": "Orthotics and Prosthetics"
+    },
+    {
+      "id": 512,
+      "name": "Geriatrics"
+    },
+    {
+      "id": 513,
+      "name": "Nuclear Medicine"
+    },
+    {
+      "id": 514,
+      "name": "Genetics"
+    },
+    {
+      "id": 515,
+      "name": "Neurosciences"
+    },
+    {
+      "id": 516,
+      "name": "Pathology"
+    },
+    {
+      "id": 517,
+      "name": "Network Engineering"
+    },
+    {
+      "id": 518,
+      "name": "Cybersecurity"
+    },
+    {
+      "id": 519,
+      "name": "Information Security"
+    },
+    {
+      "id": 520,
+      "name": "Network Security"
+    },
+    {
+      "id": 521,
+      "name": "Cryptography"
+    },
+    {
+      "id": 522,
+      "name": "Penetration Testing"
+    },
+    {
+      "id": 523,
+      "name": "Ethical Hacking"
+    },
+    {
+      "id": 524,
+      "name": "Cloud Security"
+    },
+    {
+      "id": 525,
+      "name": "Firewall Management"
+    },
+    {
+      "id": 526,
+      "name": "Intrusion Detection Systems"
+    },
+    {
+      "id": 527,
+      "name": "Data Loss Prevention"
+    },
+    {
+      "id": 528,
+      "name": "Network Administration"
+    },
+    {
+      "id": 529,
+      "name": "Wireless Network Security"
+    },
+    {
+      "id": 530,
+      "name": "Incident Response"
+    },
+    {
+      "id": 531,
+      "name": "Disaster Recovery"
+    },
+    {
+      "id": 532,
+      "name": "Security Operations"
+    },
+    {
+      "id": 533,
+      "name": "Security Architecture"
+    },
+    {
+      "id": 534,
+      "name": "Risk Management in Cybersecurity"
+    },
+    {
+      "id": 535,
+      "name": "Cybersecurity Compliance"
+    },
+    {
+      "id": 536,
+      "name": "Blockchain Security"
+    },
+    {
+      "id": 537,
+      "name": "Security Auditing"
+    },
+    {
+      "id": 538,
+      "name": "Security Testing"
+    },
+    {
+      "id": 539,
+      "name": "Threat Intelligence"
+    },
+    {
+      "id": 540,
+      "name": "Malware Analysis"
+    },
+    {
+      "id": 541,
+      "name": "Network Forensics"
+    },
+    {
+      "id": 542,
+      "name": "Virtualization Security"
+    },
+    {
+      "id": 543,
+      "name": "Data Analysis"
+    },
+    {
+      "id": 544,
+      "name": "Data Science"
+    },
+    {
+      "id": 545,
+      "name": "Data Engineering"
+    },
+    {
+      "id": 546,
+      "name": "Data Analytics"
+    },
+    {
+      "id": 547,
+      "name": "Business Intelligence"
+    },
+    {
+      "id": 548,
+      "name": "Machine Learning"
+    },
+    {
+      "id": 549,
+      "name": "Artificial Intelligence"
+    },
+    {
+      "id": 550,
+      "name": "Big Data"
+    },
+    {
+      "id": 551,
+      "name": "Data Mining"
+    },
+    {
+      "id": 552,
+      "name": "Predictive Analytics"
+    },
+    {
+      "id": 553,
+      "name": "Text Analytics"
+    },
+    {
+      "id": 554,
+      "name": "Statistical Analysis"
+    },
+    {
+      "id": 555,
+      "name": "Data Visualization"
+    },
+    {
+      "id": 556,
+      "name": "Quantitative Analysis"
+    },
+    {
+      "id": 557,
+      "name": "Data Quality Management"
+    },
+    {
+      "id": 558,
+      "name": "Data Governance"
+    },
+    {
+      "id": 559,
+      "name": "Data Wrangling"
+    },
+    {
+      "id": 560,
+      "name": "Business Analysis"
+    },
+    {
+      "id": 561,
+      "name": "System Analysis"
+    },
+    {
+      "id": 562,
+      "name": "Database Management"
+    },
+    {
+      "id": 563,
+      "name": "Information Systems Analysis"
+    },
+    {
+      "id": 564,
+      "name": "Operational Research"
+    },
+    {
+      "id": 565,
+      "name": "Data Architecture"
+    },
+    {
+      "id": 566,
+      "name": "Cloud Data Engineering"
+    },
+    {
+      "id": 567,
+      "name": "Decision Support Systems"
+    },
+    {
+      "id": 568,
+      "name": "Natural Language Processing"
+    },
+    {
+      "id": 569,
+      "name": "Data Reporting"
+    },
+    {
+      "id": 570,
+      "name": "Data Modeling"
+    },
+    {
+      "id": 571,
+      "name": "Enterprise Architecture"
+    },
+    {
+      "id": 572,
+      "name": "Information Retrieval"
+    },
+    {
+      "id": 573,
+      "name": "Operations Management"
+    },
+    {
+      "id": 574,
+      "name": "Business Process Modeling"
+    },
+    {
+      "id": 575,
+      "name": "System Design"
+    },
+    {
+      "id": 576,
+      "name": "Data-Driven Decision Making"
+    },
+    {
+      "id": 577,
+      "name": "Computational Statistics"
+    },
+    {
+      "id": 578,
+      "name": "Information Technology Management"
+    },
+    {
+      "id": 579,
+      "name": "Data Integration"
+    },
+    {
+      "id": 580,
+      "name": "Geospatial Data Analysis"
+    },
+    {
+      "id": 581,
+      "name": "Data Science Programming"
+    },
+    {
+      "id": 582,
+      "name": "Information Technology"
+    },
+    {
+      "id": 583,
+      "name": "Computer Science"
+    },
+    {
+      "id": 584,
+      "name": "Software Engineering"
+    },
+    {
+      "id": 585,
+      "name": "Cybersecurity"
+    },
+    {
+      "id": 586,
+      "name": "Networking"
+    },
+    {
+      "id": 587,
+      "name": "Cloud Computing"
+    },
+    {
+      "id": 588,
+      "name": "Database Administration"
+    },
+    {
+      "id": 589,
+      "name": "Systems Administration"
+    },
+    {
+      "id": 590,
+      "name": "Web Development"
+    },
+    {
+      "id": 591,
+      "name": "Mobile App Development"
+    },
+    {
+      "id": 592,
+      "name": "DevOps"
+    },
+    {
+      "id": 593,
+      "name": "Game Development"
+    },
+    {
+      "id": 594,
+      "name": "Artificial Intelligence"
+    },
+    {
+      "id": 595,
+      "name": "Machine Learning"
+    },
+    {
+      "id": 596,
+      "name": "Data Science"
+    },
+    {
+      "id": 597,
+      "name": "Blockchain Technology"
+    },
+    {
+      "id": 598,
+      "name": "Business Intelligence"
+    },
+    {
+      "id": 599,
+      "name": "IT Support"
+    },
+    {
+      "id": 600,
+      "name": "IT Project Management"
+    },
+    {
+      "id": 601,
+      "name": "Software Testing"
+    },
+    {
+      "id": 602,
+      "name": "System Analysis"
+    },
+    {
+      "id": 603,
+      "name": "Digital Marketing"
+    },
+    {
+      "id": 604,
+      "name": "Information Systems Management"
+    },
+    {
+      "id": 605,
+      "name": "Enterprise Architecture"
+    },
+    {
+      "id": 606,
+      "name": "E-commerce Development"
+    },
+    {
+      "id": 607,
+      "name": "Virtualization"
+    },
+    {
+      "id": 608,
+      "name": "IT Compliance"
+    },
+    {
+      "id": 609,
+      "name": "Networking Security"
+    },
+    {
+      "id": 610,
+      "name": "Cloud Security"
+    },
+    {
+      "id": 611,
+      "name": "IoT Development"
+    },
+    {
+      "id": 612,
+      "name": "Cloud Architecture"
+    },
+    {
+      "id": 613,
+      "name": "Data Engineering"
+    },
+    {
+      "id": 614,
+      "name": "Enterprise Resource Planning (ERP)"
+    },
+    {
+      "id": 615,
+      "name": "Information Security Management"
+    },
+    {
+      "id": 616,
+      "name": "Computer Network Engineering"
+    },
+    {
+      "id": 617,
+      "name": "Web Security"
+    },
+    {
+      "id": 618,
+      "name": "Software Architecture"
+    },
+    {
+      "id": 619,
+      "name": "Cloud Infrastructure"
+    },
+    {
+      "id": 620,
+      "name": "Application Development"
+    },
+    {
+      "id": 621,
+      "name": "IT Operations"
+    },
+    {
+      "id": 622,
+      "name": "Cloud DevOps"
+    },
+    {
+      "id": 623,
+      "name": "Robotics Process Automation"
+    },
+    {
+      "id": 624,
+      "name": "Information Management"
+    },
+    {
+      "id": 625,
+      "name": "Big Data Analytics"
+    },
+    {
+      "id": 626,
+      "name": "Digital Transformation"
+    },
+    {
+      "id": 627,
+      "name": "Cloud Services"
+    },
+    {
+      "id": 628,
+      "name": "IT Architecture"
+    },
+    {
+      "id": 629,
+      "name": "Mobile Security"
+    },
+    {
+      "id": 630,
+      "name": "Edge Computing"
+    },
+    {
+      "id": 631,
+      "name": "Server Management"
+    },
+    {
+      "id": 632,
+      "name": "UI/UX Design"
+    },
+    {
+      "id": 633,
+      "name": "Digital Forensics"
+    },
+    {
+      "id": 634,
+      "name": "Enterprise IT Management"
+    },
+    {
+      "id": 635,
+      "name": "IT Consulting"
+    },
+    {
+      "id": 636,
+      "name": "IT Governance"
+    },
+    {
+      "id": 637,
+      "name": "Office Management"
+    },
+    {
+      "id": 638,
+      "name": "Administrative Management"
+    },
+    {
+      "id": 639,
+      "name": "Executive Assistant"
+    },
+    {
+      "id": 640,
+      "name": "Office Administration"
+    },
+    {
+      "id": 641,
+      "name": "Facilities Management"
+    },
+    {
+      "id": 642,
+      "name": "Business Administration"
+    },
+    {
+      "id": 643,
+      "name": "Project Administration"
+    },
+    {
+      "id": 644,
+      "name": "Human Resources Management"
+    },
+    {
+      "id": 645,
+      "name": "Records Management"
+    },
+    {
+      "id": 646,
+      "name": "Customer Service Management"
+    },
+    {
+      "id": 647,
+      "name": "Office Operations"
+    },
+    {
+      "id": 648,
+      "name": "Office Supply Management"
+    },
+    {
+      "id": 649,
+      "name": "Business Support"
+    },
+    {
+      "id": 650,
+      "name": "Event Coordination"
+    },
+    {
+      "id": 651,
+      "name": "Data Entry"
+    },
+    {
+      "id": 652,
+      "name": "Time Management"
+    },
+    {
+      "id": 653,
+      "name": "Office Technology Management"
+    },
+    {
+      "id": 654,
+      "name": "Procurement Management"
+    },
+    {
+      "id": 655,
+      "name": "Corporate Communication"
+    },
+    {
+      "id": 656,
+      "name": "Document Management"
+    },
+    {
+      "id": 657,
+      "name": "Office Support Services"
+    },
+    {
+      "id": 658,
+      "name": "Virtual Office Management"
+    },
+    {
+      "id": 659,
+      "name": "Workplace Health and Safety"
+    },
+    {
+      "id": 660,
+      "name": "Workforce Planning"
+    },
+    {
+      "id": 661,
+      "name": "Strategic Office Management"
+    },
+    {
+      "id": 662,
+      "name": "Team Management"
+    },
+    {
+      "id": 663,
+      "name": "Budget Management"
+    },
+    {
+      "id": 663,
+      "name": "Freelance Writing"
+    },
+    {
+      "id": 664,
+      "name": "Freelance Graphic Design"
+    },
+    {
+      "id": 665,
+      "name": "Freelance Web Development"
+    },
+    {
+      "id": 666,
+      "name": "Freelance Photography"
+    },
+    {
+      "id": 667,
+      "name": "Freelance Video Editing"
+    },
+    {
+      "id": 668,
+      "name": "Freelance Content Creation"
+    },
+    {
+      "id": 669,
+      "name": "Freelance Marketing"
+    },
+    {
+      "id": 670,
+      "name": "Freelance Social Media Management"
+    },
+    {
+      "id": 671,
+      "name": "Freelance Copywriting"
+    },
+    {
+      "id": 672,
+      "name": "Freelance SEO Specialist"
+    },
+    {
+      "id": 673,
+      "name": "Freelance Virtual Assistance"
+    },
+    {
+      "id": 674,
+      "name": "Freelance Consulting"
+    },
+    {
+      "id": 675,
+      "name": "Freelance Translation"
+    },
+    {
+      "id": 676,
+      "name": "Freelance Data Entry"
+    },
+    {
+      "id": 677,
+      "name": "Freelance Illustration"
+    },
+    {
+      "id": 678,
+      "name": "Freelance Mobile App Development"
+    },
+    {
+      "id": 679,
+      "name": "Freelance UI/UX Design"
+    },
+    {
+      "id": 680,
+      "name": "Freelance Video Production"
+    },
+    {
+      "id": 681,
+      "name": "Freelance Voiceover"
+    },
+    {
+      "id": 682,
+      "name": "Freelance Software Development"
+    },
+    {
+      "id": 683,
+      "name": "Freelance Project Management"
+    },
+    {
+      "id": 684,
+      "name": "Freelance Legal Services"
+    },
+    {
+      "id": 685,
+      "name": "Freelance Accounting"
+    },
+    {
+      "id": 686,
+      "name": "Freelance Event Planning"
+    },
+    {
+      "id": 687,
+      "name": "Freelance Coaching"
+    },
+    {
+      "id": 688,
+      "name": "Freelance Research"
+    },
+    {
+      "id": 689,
+      "name": "Freelance IT Support"
+    },
+    {
+      "id": 690,
+      "name": "Freelance Transcription"
+    },
+    {
+      "id": 691,
+      "name": "Freelance Editing"
+    },
+    {
+      "id": 692,
+      "name": "Freelance Brand Strategy"
+    },
+    {
+      "id": 693,
+      "name": "Freelance App Design"
+    },
+    {
+      "id": 694,
+      "name": "Freelance Copyediting"
+    },
+    {
+      "id": 695,
+      "name": "Freelance Proofreading"
+    },
+    {
+      "id": 696,
+      "name": "Administrative Assistant"
+    },
+    {
+      "id": 697,
+      "name": "Executive Assistant"
+    },
+    {
+      "id": 698,
+      "name": "Office Administrator"
+    },
+    {
+      "id": 699,
+      "name": "Project Administrator"
+    },
+    {
+      "id": 700,
+      "name": "Database Administrator"
+    },
+    {
+      "id": 701,
+      "name": "Systems Administrator"
+    },
+    {
+      "id": 702,
+      "name": "Network Administrator"
+    },
+    {
+      "id": 703,
+      "name": "HR Administrator"
+    },
+    {
+      "id": 704,
+      "name": "Security Administrator"
+    },
+    {
+      "id": 705,
+      "name": "Operations Administrator"
+    },
+    {
+      "id": 706,
+      "name": "IT Administrator"
+    },
+    {
+      "id": 707,
+      "name": "Transport Administrator"
+    },
+    {
+      "id": 708,
+      "name": "Transport Coordinator"
+    },
+    {
+      "id": 709,
+      "name": "Security Manager"
+    },
+    {
+      "id": 710,
+      "name": "Security Officer"
+    },
+    {
+      "id": 711,
+      "name": "Security Analyst"
+    },
+    {
+      "id": 712,
+      "name": "Cybersecurity Specialist"
+    },
+    {
+      "id": 713,
+      "name": "Information Security Manager"
+    },
+    {
+      "id": 714,
+      "name": "IT Security Consultant"
+    },
+    {
+      "id": 715,
+      "name": "Penetration Tester"
+    },
+    {
+      "id": 716,
+      "name": "Security Operations Center (SOC) Analyst"
+    },
+    {
+      "id": 717,
+      "name": "Chief Information Security Officer (CISO)"
+    },
+    {
+      "id": 718,
+      "name": "Network Security Engineer"
+    },
+    {
+      "id": 719,
+      "name": "Cloud Security Architect"
+    },
+    {
+      "id": 720,
+      "name": "Compliance Analyst (Security)"
+    },
+    {
+      "id": 721,
+      "name": "Transportation Planner"
+    },
+    {
+      "id": 722,
+      "name": "Logistics Coordinator"
+    },
+    {
+      "id": 723,
+      "name": "Supply Chain Manager"
+    },
+    {
+      "id": 724,
+      "name": "Fleet Manager"
+    },
+    {
+      "id": 725,
+      "name": "Traffic Manager"
+    },
+    {
+      "id": 726,
+      "name": "Transportation Engineer"
+    },
+    {
+      "id": 727,
+      "name": "Public Transport Manager"
+    },
+    {
+      "id": 728,
+      "name": "Shipping Manager"
+    },
+    {
+      "id": 729,
+      "name": "Cargo Manager"
+    },
+    {
+      "id": 730,
+      "name": "Transportation Director"
+    },
+    {
+      "id": 731,
+      "name": "Logistics Manager"
+    },
+    {
+      "id": 732,
+      "name": "Transportation Safety Officer"
+    },
+    {
+      "id": 733,
+      "name": "Warehouse Manager"
+    },
+    {
+      "id": 734,
+      "name": "Transport Operations Manager"
+    },
+    {
+      "id": 735,
+      "name": "Railway Operations Manager"
+    },
+    {
+      "id": 736,
+      "name": "Fleet Supervisor"
+    },
+    {
+      "id": 737,
+      "name": "Freight Forwarder"
+    },
+    {
+      "id": 738,
+      "name": "Transport Compliance Officer"
+    },
+    {
+      "id": 739,
+      "name": "Route Planner"
+    },
+    {
+      "id": 740,
+      "name": "Dispatch Coordinator"
+    },
+    {
+      "id": 741,
+      "name": "Corporate Lawyer"
+    },
+    {
+      "id": 742,
+      "name": "Intellectual Property Lawyer"
+    },
+    {
+      "id": 743,
+      "name": "Family Law Attorney"
+    },
+    {
+      "id": 744,
+      "name": "Criminal Defense Attorney"
+    },
+    {
+      "id": 745,
+      "name": "Litigation Support Specialist"
+    },
+    {
+      "id": 746,
+      "name": "Legal Secretary"
+    },
+    {
+      "id": 747,
+      "name": "Paralegal"
+    },
+    {
+      "id": 748,
+      "name": "Legal Counsel"
+    },
+    {
+      "id": 749,
+      "name": "Public Defender"
+    },
+    {
+      "id": 750,
+      "name": "Contract Administrator"
+    },
+    {
+      "id": 751,
+      "name": "Higher Education Administrator"
+    },
+    {
+      "id": 752,
+      "name": "Elementary School Teacher"
+    },
+    {
+      "id": 753,
+      "name": "Special Education Teacher"
+    },
+    {
+      "id": 754,
+      "name": "Curriculum Developer"
+    },
+    {
+      "id": 755,
+      "name": "School Counselor"
+    },
+    {
+      "id": 756,
+      "name": "College Professor"
+    },
+    {
+      "id": 757,
+      "name": "Educational Consultant"
+    },
+    {
+      "id": 758,
+      "name": "Instructional Coordinator"
+    },
+    {
+      "id": 759,
+      "name": "Library Director"
+    },
+    {
+      "id": 760,
+      "name": "Vocational Instructor"
+    },
+    {
+      "id": 761,
+      "name": "Accountant"
+    },
+    {
+      "id": 762,
+      "name": "Financial Analyst"
+    },
+    {
+      "id": 763,
+      "name": "Auditor"
+    },
+    {
+      "id": 764,
+      "name": "Tax Consultant"
+    },
+    {
+      "id": 765,
+      "name": "Forensic Accountant"
+    },
+    {
+      "id": 766,
+      "name": "Financial Planner"
+    },
+    {
+      "id": 767,
+      "name": "Risk Manager"
+    },
+    {
+      "id": 768,
+      "name": "Investment Analyst"
+    },
+    {
+      "id": 769,
+      "name": "Controller"
+    },
+    {
+      "id": 770,
+      "name": "Treasury Analyst"
+    },
+    {
+      "id": 771,
+      "name": "Sales Executive"
+    },
+    {
+      "id": 772,
+      "name": "SEO Specialist"
+    },
+    {
+      "id": 773,
+      "name": "Content Manager"
+    },
+    {
+      "id": 774,
+      "name": "Market Research Analyst"
+    },
+    {
+      "id": 775,
+      "name": "E-commerce Manager"
+    },
+    {
+      "id": 776,
+      "name": "Public Relations Specialist"
+    },
+    {
+      "id": 777,
+      "name": "Brand Manager"
+    },
+    {
+      "id": 778,
+      "name": "Product Marketing Manager"
+    },
+    {
+      "id": 779,
+      "name": "Digital Marketing Specialist"
+    },
+    {
+      "id": 780,
+      "name": "Graphic Designer"
+    },
+    {
+      "id": 781,
+      "name": "Civil Engineer"
+    },
+    {
+      "id": 782,
+      "name": "Mechanical Engineer"
+    },
+    {
+      "id": 783,
+      "name": "Electrical Engineer"
+    },
+    {
+      "id": 784,
+      "name": "Structural Engineer"
+    },
+    {
+      "id": 785,
+      "name": "Construction Project Manager"
+    },
+    {
+      "id": 786,
+      "name": "Building Inspector"
+    },
+    {
+      "id": 787,
+      "name": "Quantity Surveyor"
+    },
+    {
+      "id": 788,
+      "name": "Architect"
+    },
+    {
+      "id": 789,
+      "name": "Safety Manager (Construction)"
+    },
+    {
+      "id": 790,
+      "name": "Urban Planner"
+    },
+    {
+      "id": 791,
+      "name": "Customer Support Representative"
+    },
+    {
+      "id": 792,
+      "name": "Technical Support Specialist"
+    },
+    {
+      "id": 793,
+      "name": "Call Center Agent"
+    },
+    {
+      "id": 794,
+      "name": "Customer Success Manager"
+    },
+    {
+      "id": 795,
+      "name": "Helpdesk Technician"
+    },
+    {
+      "id": 796,
+      "name": "Sales Support Specialist"
+    },
+    {
+      "id": 797,
+      "name": "Product Support Specialist"
+    },
+    {
+      "id": 798,
+      "name": "Client Relationship Manager"
+    },
+    {
+      "id": 799,
+      "name": "Field Support Specialist"
+    },
+    {
+      "id": 800,
+      "name": "Energy Analyst"
+    },
+    {
+      "id": 801,
+      "name": "Environmental Consultant"
+    },
+    {
+      "id": 802,
+      "name": "Sustainability Manager"
+    },
+    {
+      "id": 803,
+      "name": "Environmental Health and Safety Specialist"
+    },
+    {
+      "id": 804,
+      "name": "Recycling Coordinator"
+    },
+    {
+      "id": 805,
+      "name": "Conservation Biologist"
+    },
+    {
+      "id": 806,
+      "name": "Wildlife Biologist"
+    },
+    {
+      "id": 807,
+      "name": "Renewable Energy Specialist"
+    },
+    {
+      "id": 808,
+      "name": "Green Building Consultant"
+    },
+    {
+      "id": 809,
+      "name": "Climate Change Analyst"
+    },
+    {
+      "id": 810,
+      "name": "Medical Researcher"
+    },
+    {
+      "id": 811,
+      "name": "Biotech Researcher"
+    },
+    {
+      "id": 812,
+      "name": "Product Development Manager"
+    },
+    {
+      "id": 813,
+      "name": "Clinical Research Associate"
+    },
+    {
+      "id": 814,
+      "name": "Pharmaceutical Scientist"
+    },
+    {
+      "id": 815,
+      "name": "Agricultural Scientist"
+    },
+    {
+      "id": 816,
+      "name": "Biomedical Researcher"
+    },
+    {
+      "id": 817,
+      "name": "Market Researcher"
+    },
+    {
+      "id": 818,
+      "name": "Innovation Manager"
+    },
+    {
+      "id": 819,
+      "name": "Pharmacist"
+    },
+    {
+      "id": 820,
+      "name": "Registered Nurse"
+    },
+    {
+      "id": 821,
+      "name": "Medical Assistant"
+    },
+    {
+      "id": 822,
+      "name": "Surgeon"
+    },
+    {
+      "id": 823,
+      "name": "Radiologist"
+    },
+    {
+      "id": 824,
+      "name": "Dentist"
+    },
+    {
+      "id": 825,
+      "name": "Clinical Psychologist"
+    },
+    {
+      "id": 826,
+      "name": "Medical Lab Technician"
+    },
+    {
+      "id": 827,
+      "name": "Optometrist"
+    },
+    {
+      "id": 828,
+      "name": "Physical Therapist"
+    },
+    {
+      "id": 829,
+      "name": "Occupational Therapist"
+    },
+    {
+      "id": 830,
+      "name": "Pediatrician"
+    },
+    {
+      "id": 831,
+      "name": "Cardiologist"
+    },
+    {
+      "id": 832,
+      "name": "Dermatologist"
+    },
+    {
+      "id": 833,
+      "name": "Pathologist"
+    },
+    {
+      "id": 834,
+      "name": "Chiropractor"
+    },
+    {
+      "id": 835,
+      "name": "Anesthesiologist"
+    },
+    {
+      "id": 836,
+      "name": "Software Developer"
+    },
+    {
+      "id": 837,
+      "name": "Data Scientist"
+    },
+    {
+      "id": 838,
+      "name": "Cloud Architect"
+    },
+    {
+      "id": 839,
+      "name": "Network Administrator"
+    },
+    {
+      "id": 840,
+      "name": "IT Support Specialist"
+    },
+    {
+      "id": 841,
+      "name": "Web Developer"
+    },
+    {
+      "id": 842,
+      "name": "DevOps Engineer"
+    },
+    {
+      "id": 843,
+      "name": "UX/UI Designer"
+    },
+    {
+      "id": 844,
+      "name": "AI Engineer"
+    },
+    {
+      "id": 845,
+      "name": "Cybersecurity Analyst"
+    },
+    {
+      "id": 846,
+      "name": "Blockchain Developer"
+    },
+    {
+      "id": 847,
+      "name": "IT Consultant"
+    },
+    {
+      "id": 848,
+      "name": "System Administrator"
+    },
+    {
+      "id": 849,
+      "name": "Database Administrator"
+    },
+    {
+      "id": 850,
+      "name": "QA Tester"
+    },
+    {
+      "id": 851,
+      "name": "Mobile App Developer"
+    },
+    {
+      "id": 852,
+      "name": "Recruitment Specialist"
+    },
+    {
+      "id": 853,
+      "name": "HR Manager"
+    },
+    {
+      "id": 854,
+      "name": "HR Assistant"
+    },
+    {
+      "id": 855,
+      "name": "Compensation and Benefits Specialist"
+    },
+    {
+      "id": 856,
+      "name": "Employee Relations Manager"
+    },
+    {
+      "id": 857,
+      "name": "Talent Acquisition Specialist"
+    },
+    {
+      "id": 858,
+      "name": "Learning and Development Specialist"
+    },
+    {
+      "id": 859,
+      "name": "Payroll Specialist"
+    },
+    {
+      "id": 860,
+      "name": "Organizational Development Specialist"
+    },
+    {
+      "id": 861,
+      "name": "HR Business Partner"
+    },
+    {
+      "id": 862,
+      "name": "Training Coordinator"
+    },
+    {
+      "id": 863,
+      "name": "Diversity and Inclusion Officer"
+    },
+    {
+      "id": 864,
+      "name": "Budget Analyst"
+    },
+    {
+      "id": 865,
+      "name": "Financial Consultant"
+    },
+    {
+      "id": 866,
+      "name": "Credit Analyst"
+    },
+    {
+      "id": 867,
+      "name": "Financial Controller"
+    },
+    {
+      "id": 868,
+      "name": "Actuary"
+    },
+    {
+      "id": 869,
+      "name": "Investment Banker"
+    },
+    {
+      "id": 870,
+      "name": "Hedge Fund Manager"
+    },
+    {
+      "id": 871,
+      "name": "Tax Advisor"
+    },
+    {
+      "id": 872,
+      "name": "Accounting Manager"
+    },
+    {
+      "id": 873,
+      "name": "Insurance Underwriter"
+    },
+    {
+      "id": 874,
+      "name": "Auditor"
+    },
+    {
+      "id": 875,
+      "name": "Estate Planner"
+    },
+    {
+      "id": 876,
+      "name": "Personal Financial Advisor"
+    },
+    {
+      "id": 877,
+      "name": "Risk Analyst"
+    },
+    {
+      "id": 878,
+      "name": "Graphic Designer"
+    },
+    {
+      "id": 879,
+      "name": "Animator"
+    },
+    {
+      "id": 880,
+      "name": "Illustrator"
+    },
+    {
+      "id": 881,
+      "name": "Video Producer"
+    },
+    {
+      "id": 882,
+      "name": "Music Producer"
+    },
+    {
+      "id": 883,
+      "name": "Fashion Designer"
+    },
+    {
+      "id": 884,
+      "name": "Interior Designer"
+    },
+    {
+      "id": 885,
+      "name": "Photographer"
+    },
+    {
+      "id": 886,
+      "name": "Makeup Artist"
+    },
+    {
+      "id": 887,
+      "name": "Event Coordinator"
+    },
+    {
+      "id": 888,
+      "name": "Theater Director"
+    },
+    {
+      "id": 889,
+      "name": "Musician"
+    },
+    {
+      "id": 890,
+      "name": "Dancer"
+    },
+    {
+      "id": 891,
+      "name": "Comedian"
+    },
+    {
+      "id": 892,
+      "name": "Screenwriter"
+    },
+    {
+      "id": 893,
+      "name": "Film Editor"
+    },
+    {
+      "id": 894,
+      "name": "Research Scientist"
+    },
+    {
+      "id": 895,
+      "name": "Biologist"
+    },
+    {
+      "id": 896,
+      "name": "Chemist"
+    },
+    {
+      "id": 897,
+      "name": "Physicist"
+    },
+    {
+      "id": 898,
+      "name": "Meteorologist"
+    },
+    {
+      "id": 899,
+      "name": "Ecologist"
+    },
+    {
+      "id": 900,
+      "name": "Environmental Scientist"
+    },
+    {
+      "id": 901,
+      "name": "Marine Biologist"
+    },
+    {
+      "id": 902,
+      "name": "Astrophysicist"
+    },
+    {
+      "id": 903,
+      "name": "Geologist"
+    },
+    {
+      "id": 904,
+      "name": "Archaeologist"
+    },
+    {
+      "id": 905,
+      "name": "Sociologist"
+    },
+    {
+      "id": 906,
+      "name": "Anthropologist"
+    }
+
+    
+  ]
+}

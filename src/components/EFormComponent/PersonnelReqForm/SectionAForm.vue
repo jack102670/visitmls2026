@@ -12,12 +12,19 @@
                 <span v-if="validationErrors.position" class="text-red-500 text-sm">Please fill in this field</span>
             </div>
             <div>
-                <label for="company" class="block mb-2 text-sm font-medium text-primary dark:text-white">Company Name:
-                    <span class="text-red-500">*</span></label>
-                <input type="text" id="company" v-model="form.company"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Company Name" required readonly />
-                <span v-if="validationErrors.company" class="text-red-500 text-sm">Please fill in this field</span>
+                <label for="company" class="block mb-1 text-sm font-medium text-primary dark:text-white">
+                    Company Name: <span class="text-red-500">*</span>
+                </label>
+                <select id="company" v-model="form.company"
+                    class="bg-gray-50 dark:border-gray-600 dark:placeholder-gray-400 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value="" class="text-gray-400" disabled>Select Company</option>
+                    <option v-for="company in Companies" :key="company.company_code" :value="company.company_name"
+                        class="text-gray-900 text-sm">
+                        {{ company.company_name }}
+                    </option>
+                    <option v-if="Companies.length === 0" disabled>No companies available</option>
+                </select>
+                <span v-if="validationErrors.company" class="text-red-500 text-sm">Please fill in this field.</span>
             </div>
             <div class="">
                 <label for="dateRequired" class="block mb-2 text-sm font-medium text-primary dark:text-white">Date
@@ -39,13 +46,20 @@
                     field.</span>
             </div>
             <div>
-                <label for="department" class="block mb-2 text-sm font-medium text-primary dark:text-white">Department:
-                    <span class="text-red-500">*</span></label>
-                <input type="text" id="department" v-model="form.department"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Department name" required readonly />
-                <span class="text-red-500 text-sm" v-if="validationErrors.department"></span>
-            </div>
+          <label for="department" class="block mb-1 text-sm font-medium text-primary dark:text-white">
+            Department: <span class="text-red-500">*</span>
+          </label>
+          <select id="department" v-model="form.department"
+            class="bg-gray-50 dark:border-gray-600 dark:placeholder-gray-400 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value="" class="text-gray-400" disabled>Select Department</option>
+            <option v-for="department in Departments" :key="department.department" :value="department.department"
+              class="text-gray-900 text-sm">
+              {{ department.department }}
+            </option>
+            <option v-if="Departments.length === 0" disabled>No deparments available</option>
+          </select>
+          <span v-if="validationErrors.department" class="text-red-500 text-sm">Please fill in this field.</span>
+        </div>
             <div>
                 <label for="numberPersonnel" class="block mb-2 text-sm font-medium text-primary dark:text-white">No of
                     Personnel
@@ -133,16 +147,14 @@
                     placeholder="Input Name" required />
                 <span class="text-red-500 text-sm" v-if="validationErrors.name">Please fill in this field</span>
             </div>
-            <div>
+            <div v-if="form.manpowerBudget === 'unbudgeted'">
                 <label for="reasonUnbudget"
                     class="block mb-2 text-sm font-medium text-primary dark:text-white italic">Reason
-                    for UnBudgeted: <span class="text-red-500">*</span>
+                    for UnBudgeted:
                 </label>
                 <input type="text" id="reasonUnbudget" v-model="form.reasonUnbudget"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Reason for unbudgeted" required />
-                <span class="text-red-500 text-sm" v-if="validationErrors.reasonUnbudget">Please fill in this
-                    field</span>
+                    placeholder="Reason for unbudgeted"  />
             </div>
             <div>
                 <label for="position" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
@@ -184,9 +196,14 @@
 </template>
 <script>
 import Swal from 'sweetalert2';
-import { fetchHrData } from '@/api/EFormApi';
-import { store } from "@/views/store.js";
-
+import {
+    fetchHrData,
+    getCompanyName,
+    getDepartment
+} from '@/api/EFormApi';
+import {
+    store
+} from "@/views/store.js";
 export default {
     props: ['formData'],
     data() {
@@ -195,7 +212,6 @@ export default {
             form: this.formData.sectionA || {
                 position: '',
                 company: '',
-                status: 'Pending',
                 department: '',
                 location: '',
                 numberPersonnel: '',
@@ -208,7 +224,13 @@ export default {
                 requestReason: '',
             },
             validationErrors: {},
+            Companies: [],
+            Departments: [],
         }
+    },
+    async created() {
+        await this.getListCompanyName();
+        this.form.department = await this.getListOfDepartments();
     },
     methods: {
         async fetchHrData() {
@@ -223,14 +245,45 @@ export default {
                     this.form.company = data.company_name;
                     this.form.department = data.department;
                 }
-                console.log("Employee Data:", this.user);
+                // console.log("Employee Data:", this.user);
             } catch (error) {
                 throw new Error("Failed to fetch Employee data. Please try again.");
             } finally {
                 this.loading = false;
             }
         },
-
+        async getListCompanyName() {
+            try {
+                const data = await getCompanyName();
+                if (Array.isArray(data)) {
+                    this.Companies = data;
+                } else {
+                    console.error('Unexpected response format:', data);
+                    throw new Error('Unexpected. Failed to fetch companies.');
+                }
+            } catch (error) {
+                console.error('Error fetching companies:', error);
+                throw new Error('Failed to fetch companies.');
+            }
+        },
+        async getListOfDepartments() {
+      try {
+        const data = await getDepartment();
+        if (Array.isArray(data)) {
+          this.Departments = data;
+          // console.log('This is the list of Companies:');
+          // this.Departments.forEach(department => {
+          //   console.log(department.department);
+          // });
+        } else {
+          console.error('Unexpected response format:', data);
+          throw new Error('Failed to fetch departments.');
+        }
+      } catch (error) {
+        console.error('Error fetching departments:', error);
+        throw new Error('Failed to fetch departments.');
+      }
+    },
         confirmExit() {
             Swal.fire({
                 title: 'Are you sure you want to exit?',
@@ -249,6 +302,9 @@ export default {
         },
         validateForm() {
             this.validationErrors = {};
+            if (!this.form.reasonUnbudget || this.form.reasonUnbudget.trim() === '') {
+            this.form.reasonUnbudget = '';
+        }
             if (!this.form.position) this.validationErrors.position = true;
             if (!this.form.company) this.validationErrors.company = true;
             if (!this.form.dateRequired) this.validationErrors.dateRequired = true;
@@ -259,9 +315,7 @@ export default {
             if (!this.form.requisitionPurpose) this.validationErrors.requisitionPurpose = true;
             if (!this.form.manpowerBudget) this.validationErrors.manpowerBudget = true;
             if (!this.form.name) this.validationErrors.name = true;
-            if (!this.form.reasonUnbudget) this.validationErrors.reasonUnbudget = true;
             if (!this.form.requestReason) this.validationErrors.requestReason = true;
-
             return Object.keys(this.validationErrors).length === 0;
         },
         handleFileUpload(event) {
@@ -286,6 +340,7 @@ export default {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         console.log('Form data section A saved:', this.form);
+                        console.log ('reason undbudget:', this.form.reasonUnbudget);
                         this.$emit('update-form', this.form, 'A');
                         this.$emit('next-section', this.form);
                     }
@@ -301,7 +356,7 @@ export default {
             }
         },
     },
-    mounted(){
+    mounted() {
         this.fetchHrData();
     },
 }

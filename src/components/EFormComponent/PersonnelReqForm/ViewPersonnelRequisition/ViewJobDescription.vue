@@ -60,10 +60,6 @@
       </div>
 
     </div>
-
-    <div class="border-b my-4"></div>
-
-    <h2 class="font-bold text-lg">Duties</h2>
     <div>
       <label for="duty" class="block text-sm py-2 font-medium text-primary dark:text-white italic">
         Duties: <span class="text-red-500">*</span>
@@ -79,7 +75,7 @@
       </div>
     </div>
 
-    <div class="border-b my-6"></div>
+    <div class="border-b my-4"></div>
 
     <h2 class="font-bold text-lg mb-4">Competence</h2>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
@@ -123,6 +119,7 @@
           </div>
       </div>
     </div>
+    <div class="border-b my-4"></div>
 
   </div>
 </template>
@@ -143,7 +140,6 @@ export default {
         skills: "",
       },
       validationErrors: {},
-      uniqueKey: localStorage.getItem("uniqueKey"),
 
       props: {
         formData: Object,

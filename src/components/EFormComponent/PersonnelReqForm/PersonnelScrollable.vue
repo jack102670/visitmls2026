@@ -1,23 +1,5 @@
 <template>
     <div class="py-2">
-        <!-- <ul
-            class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
-            <li class="me-2" v-for="section in ['A', 'B', 'C', 'D']" :key="section">
-                <a
-                    href="#"
-                    @click.prevent="changeSection(section)"
-                    :class="[
-                        'inline-block p-4 rounded-t-lg',
-                        currentSection === section
-                            ? 'text-blue-600 bg-gray-100 dark:bg-gray-800 dark:text-blue-500'
-                            : 'hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300',
-                        !isSectionEnabled(section) ? 'text-gray-300 pointer-events-none' : ''
-                    ]"
-                >
-                    Section {{ section }}
-                </a>
-            </li>
-        </ul> -->
         <ul
             class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
             <li class="me-2" v-for="section in ['A', 'B', 'C', 'D']" :key="section">
@@ -34,7 +16,6 @@
         <!-- render component kat sini -->
         <component :is="currentComponent" :formData="formData" @update-form="updateFormData" @next-section="handleNext"
             @previous-section="handlePrevious" @submit-form="submitForm"
-            @form-submission-result="handleFormSubmissionResult"
             :uniqueKey="currentSection === 'D' ? formData.uniqueKey : null"></component>
     </div>
 </template>
@@ -121,28 +102,36 @@ export default {
 
             this.updateFormData(data, this.currentSection);
 
+            console.log('Checking ageLimit and disciplineSpecification in sectionB:');
+            console.log('ageLimit:', this.formData.sectionB.ageLimit);
+            console.log('disciplineSpecification:', this.formData.sectionB.disciplineSpecification);
+
             const finalPersonnelData = {
                 ...this.formData.sectionA,
                 ...this.formData.sectionB,
                 ...this.formData.sectionC,
-                uniqueKey: this.formData.uniqueKey
+                uniqueKey: this.formData.uniqueKey,
+
+                basicSalary: Number(this.formData.sectionA.basicSalary) || 0,
+                numberPersonnel: Number(this.formData.sectionA.numberPersonnel) || 0,
+                yearsRequired: Number(this.formData.sectionC.yearsRequired) || 0,
+
+                ageLimit: Array.isArray(this.formData.sectionB.ageLimit) ? this.formData.sectionB.ageLimit.join('-') : '',
+                disciplineSpecification: Array.isArray(this.formData.sectionB.disciplineSpecification) ? this.formData.sectionB.disciplineSpecification.join(',') : '',
             };
 
             if (this.currentSection === 'C') {
                 this.sectionDEnabled = true;
             }
 
-            console.log('Final Personnel Data:', finalPersonnelData);
+            console.log('Final Personnel Data:', finalPersonnelData, finalPersonnelData.ageLimit, finalPersonnelData.disciplineSpecification);
 
             try {
                 if (!finalPersonnelData) {
                     throw new Error('No personnel data found in the form.');
                 }
-
-                // Await API call for submission
                 const response = await PostPersonnelRequsitionForm(finalPersonnelData);
 
-                // Log full response for debugging purposes
                 console.log("Form submission result:", response);
 
                 if (response?.status_code === 200) {
@@ -174,9 +163,6 @@ export default {
                 if (error.response && error.response.data && error.response.data.errors) {
                     console.error('Validation errors:', error.response.data.errors);
                 }
-
-
-                // Display a more informative error message if available
                 Swal.fire({
                     title: "Submission Failed",
                     text: `Error: ${error.response?.data?.message || error.message}`,

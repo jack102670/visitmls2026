@@ -183,9 +183,9 @@ export const getPersonnelRequisitonForm = async (refNo) => {
       `${base_URL}/PersonnelRequisition/${refNo}`
     );
     if (response.data.result) {
-      console.log("Personnel requisition data:", response.data.result);
+      // console.log("Personnel requisition data:", response.data.result);
     } else {
-      console.log("Personnel requisition data not found");
+      // console.log("Personnel requisition data not found");
     }
     return response.data.result;
   } catch (error) {
@@ -228,12 +228,31 @@ export const getJobDescription = async (uniqueKey) => {
     const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
     const response = await axios.get(`${base_URL}/JobDescription/${uniqueKey}`);
     if (response.data.result) {
-      console.log("Job Description data:", response.data.result);
+      // console.log("Job Description data:", response.data.result);
     } else {
-      console.log("Job Description data not found");
+      // console.log("Job Description data not found");
     }
     return response.data.result;
   }catch (error){
     throw error("Error fetching job description data:", error);
+  }
+};
+
+export const postOnJobTraining = async (onJobTrainingData) => {
+  try {
+    const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
+    const response = await axios.post(
+      `${base_URL}/OJT`,
+      onJobTrainingData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  }catch (error){
+    console.error("Error submitting the on-job training data:", error);
+    throw error;
   }
 };
