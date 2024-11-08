@@ -8,7 +8,7 @@
           <font-awesome-icon icon="bars" :style="{ color: '#160959', fontSize: '20px' }" />
         </div>
         <div class="">
-          <h2 class="inline-flex font-bold text-lg uppercase text-primary"></h2>
+          <h2 class="inline-flex font-bold text-lg uppercase text-primary">E-FORMS</h2>
         </div>
 
       </div>

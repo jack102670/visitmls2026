@@ -295,3 +295,19 @@ export const PostUploadFile = async (files, userId, uniqueKey) => {
   }
 
 };
+
+export const getUploadFile = async (userId, uniqueKey) => {
+  try {
+    const base_URL = process.env.VUE_APP_API_BASE_URL_UPLOAD_FILE;
+    const response = await axios.get(`${base_URL}/Files/GetMultiImage/${userId}/${uniqueKey}`);
+    if (response.data.result) {
+      // console.log("Upload File data:", response.data.result);
+    } else {
+      console.log("Upload File data not found");
+    }
+    return response.data.result;
+  } catch (error){
+    console.error("Error fetching upload file data:", error);
+    throw error;
+  }
+}

@@ -171,8 +171,8 @@
                 <label for="position" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
                     Kindly Attach Job Description & Organization Chart:
                 </label>
-                <FilePond class="cursor-pointer" ref="pond" name="file" :server="null" :allowMultiple="true" :maxFileSize="'5MB'"
-                    :acceptedFileTypes="[
+                <FilePond class="cursor-pointer" ref="pond" name="file" :server="null" :allowMultiple="true"
+                    :maxFileSize="'5MB'" :acceptedFileTypes="[
                         'image/png',
                         'image/jpeg',
                         'application/pdf',
@@ -256,9 +256,9 @@ export default {
                 reasonUnbudget: '',
                 requestReason: '',
             },
-            localFileUpload: Array.isArray(this.formData.fileUpload) 
-            ? [...this.formData.fileUpload] 
-            : [],
+            localFileUpload: Array.isArray(this.formData.fileUpload)
+                ? [...this.formData.fileUpload]
+                : [],
             validationErrors: {},
             Companies: [],
             Departments: [],
@@ -269,47 +269,49 @@ export default {
         this.form.department = await this.getListOfDepartments();
     },
     methods: {
-        // handleAddFile(error, fileItem) {
-        //     if (!error){
-        //         const newFileName = `PRAttachment_${fileItem.file.name}`;
-        //         const renamedFile = new File([fileItem.file], newFileName, { type: fileItem.file.type });
-
-        //         if (!this.formData.fileUpload){
-        //             this.formData.fileUpload = [];
-        //         }
-        //         this.formData.fileUpload.push(renamedFile);
-        //         console.log("New file uploaded:", renamedFile);
-        //         console.log("Files after upload (plain array):", this.formData.fileUpload);
-        //     } else {
-        //         console.error("Error adding file:", error.message);
-        //         Swal.fire({
-        //             icon: 'error',
-        //             title: 'Oops...',
-        //             text: 'Something went wrong!',
-        //         })
-        //     }
-        // },
         handleAddFile(error, fileItem) {
-        if (!error) {
-            const newFileName = `PRAttachment_${fileItem.file.name}`;
-            const renamedFile = new File([fileItem.file], newFileName, { type: fileItem.file.type });
-            this.localFileUpload.push(renamedFile);
-            
-            console.log("New file uploaded:", renamedFile);
-            console.log("Files after upload:", this.localFileUpload);
-            this.$emit('update-form', {
-                ...this.form,
-                fileUpload: this.localFileUpload
-            }, 'A');
-        } else {
-            console.error("Error adding file:", error.message);
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Something went wrong!',
-            })
-        }
-    },
+            if (!error) {
+                const newFileName = `PRAttachment_${fileItem.file.name}`;
+                const renamedFile = new File([fileItem.file], newFileName, { type: fileItem.file.type });
+                this.localFileUpload.push(renamedFile);
+
+                // console.log("New file uploaded:", renamedFile);
+                // console.log("Files after upload:", this.localFileUpload);
+                this.$emit('update-form', {
+                    ...this.form,
+                    fileUpload: this.localFileUpload
+                }, 'A');
+            } else {
+                console.error("Error adding file:", error.message);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+            }
+        },
+        handleRemoveFile(error, fileItem) {
+            if (!error) {
+                this.localFileUpload = this.localFileUpload.filter(
+                    (file) => file.name !== fileItem.file.name
+                );
+                this.$emit('update-form', {
+                    ...this.formData,
+                    fileUpload: this.localFileUpload
+                }, 'A');
+
+                console.log("File removed:", fileItem.file);
+                console.log("Files after removal:", this.localFileUpload);
+            } else {
+                console.error("Error removing file:", error.message);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                });
+            }
+        },
+
         async fetchHrData() {
             const username_id = store.getSession().userDetails.userId;
             this.loadingText = 'Fetching';
@@ -416,12 +418,12 @@ export default {
                     cancelButtonColor: '#d33',
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        console.log('Form data section A saved:', this.form);
-                        console.log('reason undbudget:', this.form.reasonUnbudget);
+                        // console.log('Form data section A saved:', this.form);
+                        // console.log('reason undbudget:', this.form.reasonUnbudget);
 
                         const formData = {
-                        ...this.form,
-                        fileUpload: this.localFileUpload
+                            ...this.form,
+                            fileUpload: this.localFileUpload
                         };
 
                         // this.$emit('update-form', this.form, 'A');

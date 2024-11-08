@@ -94,8 +94,8 @@ export default {
                 this.formData[`section${section}`] = formData;
             }
 
-            console.log('Updated form data in PersonnelScrollable:', this.formData);
-            console.log('Uploaded files:', this.formData.fileUpload);
+            // console.log('Updated form data in PersonnelScrollable:', this.formData);
+            // console.log('Uploaded files:', this.formData.fileUpload);
         },
         handleNext(data) {
             const currentIndex = ['A', 'B', 'C', 'D'].indexOf(this.currentSection);
@@ -118,9 +118,9 @@ export default {
 
             this.updateFormData(data, this.currentSection);
 
-            console.log('Checking ageLimit and disciplineSpecification in sectionB:');
-            console.log('ageLimit:', this.formData.sectionB.ageLimit);
-            console.log('disciplineSpecification:', this.formData.sectionB.disciplineSpecification);
+            // console.log('Checking ageLimit and disciplineSpecification in sectionB:');
+            // console.log('ageLimit:', this.formData.sectionB.ageLimit);
+            // console.log('disciplineSpecification:', this.formData.sectionB.disciplineSpecification);
 
             const finalPersonnelData = {
                 ...this.formData.sectionA,
@@ -140,14 +140,14 @@ export default {
                 this.sectionDEnabled = true;
             }
 
-            console.log('Final Personnel Data:', finalPersonnelData, finalPersonnelData.ageLimit, finalPersonnelData.disciplineSpecification);
+            // console.log('Final Personnel Data:', finalPersonnelData, finalPersonnelData.ageLimit, finalPersonnelData.disciplineSpecification);
 
             try {
                 if (!finalPersonnelData) {
                     throw new Error('No personnel data found in the form.');
                 }
                 const response = await PostPersonnelRequsitionForm(finalPersonnelData);
-                console.log("Form submission with files result:", response);
+                // console.log("Form submission with files result:", response);
 
                 if (!this.formData.fileUpload || this.formData.fileUpload.length === 0) {
                     throw new Error('No files to upload.');
@@ -157,7 +157,7 @@ export default {
                 const uniqueKey = this.formData.uniqueKey;
 
                 const UploadFileResponse = await PostUploadFile(files, userId, uniqueKey);
-                console.log('Files uploaded successfully:', UploadFileResponse);
+                // console.log('Files uploaded successfully:', UploadFileResponse);
 
 
 

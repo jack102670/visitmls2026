@@ -87,7 +87,7 @@ export default {
             const username_id = currentUser.userId;
 
             this.form.requesterId = username_id;
-            console.log("Requester ID (Employee ID):", this.form.requesterId);
+            // console.log("Requester ID (Employee ID):", this.form.requesterId);
 
             this.loadingText = 'Fetching';
             this.loading = true;
@@ -158,8 +158,8 @@ export default {
                     cancelButtonColor: "#d33",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        console.log("Files being submitted:", this.formData.fileUpload || []);
-                        console.log("Form data saved:", this.form);
+                        // console.log("Files being submitted:", this.formData.fileUpload || []);
+                        // console.log("Form data saved:", this.form);
                         this.$emit("update-form", this.form, "C");
                         this.$emit("submit-form", this.form);
                     }

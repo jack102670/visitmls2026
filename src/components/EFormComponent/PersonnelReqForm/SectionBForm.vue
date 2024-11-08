@@ -439,8 +439,8 @@ export default {
         },
         handleNext() {
             if (this.validateForm() && this.validateAgeLimit()) {
-                console.log('Form data section B:', this.form, this.form.ageLimit);
-                console.log('disciplineSpecification:', this.form.disciplineSpecification);
+                // console.log('Form data section B:', this.form, this.form.ageLimit);
+                // console.log('disciplineSpecification:', this.form.disciplineSpecification);
                 Swal.fire({
                     title: "Are you sure you want to proceed to the next section?",
                     icon: "question",
@@ -451,7 +451,7 @@ export default {
                     cancelButtonColor: "#d33",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        console.log('Form data section B saved:', this.form);
+                        // console.log('Form data section B saved:', this.form);
                         
                         this.$emit("update-form", this.form, "B");
                         this.$emit("next-section", this.form);

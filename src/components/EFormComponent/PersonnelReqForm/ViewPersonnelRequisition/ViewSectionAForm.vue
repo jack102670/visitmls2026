@@ -132,16 +132,13 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Reason for unbudgeted" required readonly />
             </div>
-            <div>
+            <div class="flex space-x-2">
                 <label for="position" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
-                    Kindly Attach Job Description & Organization Chart:
+                    Job Description & Organization Chart:
                 </label>
-                <input
-                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                    aria-describedby="file_input_help" id="file_input" type="file">
-                <p class="mt-1 text-xs  text-right" id="file_input_help">Attachment(s):
-                    WORDS, PDF, SVG, PNG, or JPG
-                    (MAX. 5MB)</p>
+                <a :href="downloadLink" target="_blank" rel="noopener noreferrer">
+                    <font-awesome-icon :icon="['fas', 'file-export']"  class="cursor-pointer" />
+                </a>
             </div>
         </div>
         <div class="grid grid-cols-1">
@@ -158,8 +155,8 @@
     </div>
 </template>
 <script>
-import Swal from 'sweetalert2';
-import { getPersonnelRequisitonForm } from '@/api/EFormApi';
+import { getPersonnelRequisitonForm, getUploadFile } from '@/api/EFormApi';
+import { store } from '@/views/store.js';
 
 export default {
     props: ['formData'],
@@ -181,12 +178,16 @@ export default {
                 reasonUnbudget: '',
                 requestReason: '',  
             },
+            uniqueKey: '',
+            downloadLink: null,
             validationErrors: {},
         }
     },
     mounted(){
         const refNo = this.$route.params.refNo;
         this.getPersonnelRequisitonForm(refNo);
+        this.getUploadFile();
+
     },
     methods: {
         async getPersonnelRequisitonForm(refNo) {
@@ -197,9 +198,26 @@ export default {
                         ...data.form,
                         ...data,
                     };
+                    this.uniqueKey = data.uniqueKey;
+                    if (this.uniqueKey){
+                        this.getUploadFile(this.uniqueKey);
+                    }
                 }
             }catch (error){
                 console.error("Error loading training evaluation:", error);
+                throw error;
+            }
+        },
+
+        async getUploadFile(uniqueKey){
+            const userId = store.getSession().userDetails.userId;
+            try {
+                const result = await getUploadFile(userId, uniqueKey);
+                if (result && result.length > 0) {
+                    this.downloadLink = result[0];
+                } 
+            }catch (error){
+                console.error("Error loading Upload files:", error);
                 throw error;
             }
         }
