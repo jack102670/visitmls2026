@@ -58,17 +58,9 @@
 
 <script>
 import Swal from "sweetalert2";
-import SecCHOD from "./SectionCFormOtherRole/SecCHOD.vue";
 import { fetchHrData } from "@/api/EFormApi";
 import { store } from '@/views/store.js';
-// import SecCHR from "./SectionCFormOtherRole/SecCHR.vue";
-// import SecCDiv from "./SectionCFormOtherRole/SecCDiv.vue";
 export default {
-    components: {
-        // SecCHOD,
-        // SecCHR,
-        // SecCDiv
-    },
     props: ["formData", "uniqueKey"],
     data() {
         return {
@@ -133,6 +125,17 @@ export default {
             this.$emit("previous-section");
         },
         handleSubmit() {
+            if (!this.formData.fileUpload || this.formData.fileUpload.length === 0) {
+                Swal.fire({
+                    title: "File Upload Required",
+                    text: "Please upload a file before submitting.",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#3085d6",
+                });
+                return;
+                
+            }
             if (this.form.employeeConfirmation === "no") {
                 Swal.fire({
                     title: "Agreement Required",
@@ -155,6 +158,7 @@ export default {
                     cancelButtonColor: "#d33",
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        console.log("Files being submitted:", this.formData.fileUpload || []);
                         console.log("Form data saved:", this.form);
                         this.$emit("update-form", this.form, "C");
                         this.$emit("submit-form", this.form);

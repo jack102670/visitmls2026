@@ -1,4 +1,5 @@
 import axios from "axios";
+import { uniq } from "lodash";
 
 export const fetchHrData = async (username_id) => {
   try {
@@ -267,4 +268,30 @@ export const getOnJobTraining = async (refNo) => {
     console.error("Error fetching on-job training data:", error);
     throw error;
   }
+};
+
+export const PostUploadFile = async (files, userId, uniqueKey) => {
+  try {
+    const base_URL = process.env.VUE_APP_API_BASE_URL_UPLOAD_FILE;
+    const formData = new FormData();
+
+    files.forEach((file) => {
+      formData.append("filecollection", file);
+
+    });
+    formData.append("userId", userId);
+    formData.append("uniqueKey", uniqueKey);
+
+    const response = await axios.post(`${base_URL}/Files/MultiUploadImage/${userId}/${uniqueKey}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+
+  }catch (error){
+    console.error("Error uploading files:", error);
+    throw error;
+  }
+
 };

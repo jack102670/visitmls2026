@@ -46,20 +46,20 @@
                     field.</span>
             </div>
             <div>
-          <label for="department" class="block mb-1 text-sm font-medium text-primary dark:text-white">
-            Department: <span class="text-red-500">*</span>
-          </label>
-          <select id="department" v-model="form.department"
-            class="bg-gray-50 dark:border-gray-600 dark:placeholder-gray-400 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option value="" class="text-gray-400" disabled>Select Department</option>
-            <option v-for="department in Departments" :key="department.department" :value="department.department"
-              class="text-gray-900 text-sm">
-              {{ department.department }}
-            </option>
-            <option v-if="Departments.length === 0" disabled>No deparments available</option>
-          </select>
-          <span v-if="validationErrors.department" class="text-red-500 text-sm">Please fill in this field.</span>
-        </div>
+                <label for="department" class="block mb-1 text-sm font-medium text-primary dark:text-white">
+                    Department: <span class="text-red-500">*</span>
+                </label>
+                <select id="department" v-model="form.department"
+                    class="bg-gray-50 dark:border-gray-600 dark:placeholder-gray-400 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value="" class="text-gray-400" disabled>Select Department</option>
+                    <option v-for="department in Departments" :key="department.department"
+                        :value="department.department" class="text-gray-900 text-sm">
+                        {{ department.department }}
+                    </option>
+                    <option v-if="Departments.length === 0" disabled>No deparments available</option>
+                </select>
+                <span v-if="validationErrors.department" class="text-red-500 text-sm">Please fill in this field.</span>
+            </div>
             <div>
                 <label for="numberPersonnel" class="block mb-2 text-sm font-medium text-primary dark:text-white">No of
                     Personnel
@@ -154,9 +154,9 @@
                 </label>
                 <input type="text" id="reasonUnbudget" v-model="form.reasonUnbudget"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Reason for unbudgeted"  />
+                    placeholder="Reason for unbudgeted" />
             </div>
-            <div>
+            <!-- <div>
                 <label for="position" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
                     Kindly Attach Job Description & Organization Chart:
                 </label>
@@ -166,6 +166,19 @@
                 <p class="mt-1 text-xs  text-right" id="file_input_help">Attachment(s):
                     WORDS, PDF, SVG, PNG, or JPG
                     (MAX. 5MB)</p>
+            </div> -->
+            <div class="">
+                <label for="position" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
+                    Kindly Attach Job Description & Organization Chart:
+                </label>
+                <FilePond class="cursor-pointer" ref="pond" name="file" :server="null" :allowMultiple="true" :maxFileSize="'5MB'"
+                    :acceptedFileTypes="[
+                        'image/png',
+                        'image/jpeg',
+                        'application/pdf',
+                        'application/vnd.ms-excel',
+                        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    ]" @addfile="handleAddFile" @removefile="handleRemoveFile" />
             </div>
         </div>
         <div class="grid grid-cols-1">
@@ -195,7 +208,24 @@
     </div>
 </template>
 <script>
+import vueFilePond from "vue-filepond";
+import "filepond/dist/filepond.min.css";
+
+import FilePondPluginFilePoster from "filepond-plugin-file-poster";
+import FilePondPluginFileRename from "filepond-plugin-file-rename";
+import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
+import moment from "moment";
+
 import Swal from 'sweetalert2';
+
+const FilePond = vueFilePond(
+    FilePondPluginFilePoster,
+    FilePondPluginFileRename,
+    FilePondPluginFileValidateSize,
+    FilePondPluginFileValidateType
+);
+
 import {
     fetchHrData,
     getCompanyName,
@@ -206,6 +236,9 @@ import {
 } from "@/views/store.js";
 export default {
     props: ['formData'],
+    components: {
+        FilePond,
+    },
     data() {
         return {
             fileName: '',
@@ -223,6 +256,9 @@ export default {
                 reasonUnbudget: '',
                 requestReason: '',
             },
+            localFileUpload: Array.isArray(this.formData.fileUpload) 
+            ? [...this.formData.fileUpload] 
+            : [],
             validationErrors: {},
             Companies: [],
             Departments: [],
@@ -233,6 +269,47 @@ export default {
         this.form.department = await this.getListOfDepartments();
     },
     methods: {
+        // handleAddFile(error, fileItem) {
+        //     if (!error){
+        //         const newFileName = `PRAttachment_${fileItem.file.name}`;
+        //         const renamedFile = new File([fileItem.file], newFileName, { type: fileItem.file.type });
+
+        //         if (!this.formData.fileUpload){
+        //             this.formData.fileUpload = [];
+        //         }
+        //         this.formData.fileUpload.push(renamedFile);
+        //         console.log("New file uploaded:", renamedFile);
+        //         console.log("Files after upload (plain array):", this.formData.fileUpload);
+        //     } else {
+        //         console.error("Error adding file:", error.message);
+        //         Swal.fire({
+        //             icon: 'error',
+        //             title: 'Oops...',
+        //             text: 'Something went wrong!',
+        //         })
+        //     }
+        // },
+        handleAddFile(error, fileItem) {
+        if (!error) {
+            const newFileName = `PRAttachment_${fileItem.file.name}`;
+            const renamedFile = new File([fileItem.file], newFileName, { type: fileItem.file.type });
+            this.localFileUpload.push(renamedFile);
+            
+            console.log("New file uploaded:", renamedFile);
+            console.log("Files after upload:", this.localFileUpload);
+            this.$emit('update-form', {
+                ...this.form,
+                fileUpload: this.localFileUpload
+            }, 'A');
+        } else {
+            console.error("Error adding file:", error.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }
+    },
         async fetchHrData() {
             const username_id = store.getSession().userDetails.userId;
             this.loadingText = 'Fetching';
@@ -267,23 +344,23 @@ export default {
             }
         },
         async getListOfDepartments() {
-      try {
-        const data = await getDepartment();
-        if (Array.isArray(data)) {
-          this.Departments = data;
-          // console.log('This is the list of Companies:');
-          // this.Departments.forEach(department => {
-          //   console.log(department.department);
-          // });
-        } else {
-          console.error('Unexpected response format:', data);
-          throw new Error('Failed to fetch departments.');
-        }
-      } catch (error) {
-        console.error('Error fetching departments:', error);
-        throw new Error('Failed to fetch departments.');
-      }
-    },
+            try {
+                const data = await getDepartment();
+                if (Array.isArray(data)) {
+                    this.Departments = data;
+                    // console.log('This is the list of Companies:');
+                    // this.Departments.forEach(department => {
+                    //   console.log(department.department);
+                    // });
+                } else {
+                    console.error('Unexpected response format:', data);
+                    throw new Error('Failed to fetch departments.');
+                }
+            } catch (error) {
+                console.error('Error fetching departments:', error);
+                throw new Error('Failed to fetch departments.');
+            }
+        },
         confirmExit() {
             Swal.fire({
                 title: 'Are you sure you want to exit?',
@@ -303,8 +380,8 @@ export default {
         validateForm() {
             this.validationErrors = {};
             if (!this.form.reasonUnbudget || this.form.reasonUnbudget.trim() === '') {
-            this.form.reasonUnbudget = '';
-        }
+                this.form.reasonUnbudget = '';
+            }
             if (!this.form.position) this.validationErrors.position = true;
             if (!this.form.company) this.validationErrors.company = true;
             if (!this.form.dateRequired) this.validationErrors.dateRequired = true;
@@ -340,9 +417,18 @@ export default {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         console.log('Form data section A saved:', this.form);
-                        console.log ('reason undbudget:', this.form.reasonUnbudget);
-                        this.$emit('update-form', this.form, 'A');
-                        this.$emit('next-section', this.form);
+                        console.log('reason undbudget:', this.form.reasonUnbudget);
+
+                        const formData = {
+                        ...this.form,
+                        fileUpload: this.localFileUpload
+                        };
+
+                        // this.$emit('update-form', this.form, 'A');
+                        this.$emit('update-form', formData, 'A');
+                        this.$emit('next-section', formData);
+                        // this.$emit('update-form', { ...this.localFormData }, 'A');
+                        // this.$emit('next-section', this.localFormData);
                     }
                 });
             } else {

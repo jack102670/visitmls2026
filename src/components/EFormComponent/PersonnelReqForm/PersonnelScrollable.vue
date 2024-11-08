@@ -25,7 +25,8 @@ import SectionAForm from "./SectionAForm.vue";
 import SectionBForm from "./SectionBForm.vue";
 import SectionCForm from "./SectionCForm.vue";
 import JobDescriptionForm from "../JobDescriptionForm/JobDescriptionForm.vue";
-import { PostPersonnelRequsitionForm } from "@/api/EFormApi";
+import { PostPersonnelRequsitionForm, PostUploadFile } from "@/api/EFormApi";
+import { store } from '@/views/store.js';
 import Swal from "sweetalert2";
 
 export default {
@@ -42,6 +43,7 @@ export default {
                 sectionA: {},
                 sectionB: {},
                 sectionC: {},
+                fileUpload: [],
                 uniqueKey: null,
             },
             sectionDEnabled: false,
@@ -78,8 +80,22 @@ export default {
         //     if (!this.isSectionEnabled(section)) return;
         //     this.currentSection = section;
         // },
-        updateFormData(sectionData, section) {
-            this.formData[`section${section}`] = sectionData;
+        updateFormData(formData, section) {
+            if (section === 'A') {
+                this.formData = {
+                    ...this.formData,
+                    sectionA: {
+                        ...formData,
+                        fileUpload: undefined
+                    },
+                    fileUpload: formData.fileUpload || []
+                };
+            } else {
+                this.formData[`section${section}`] = formData;
+            }
+
+            console.log('Updated form data in PersonnelScrollable:', this.formData);
+            console.log('Uploaded files:', this.formData.fileUpload);
         },
         handleNext(data) {
             const currentIndex = ['A', 'B', 'C', 'D'].indexOf(this.currentSection);
@@ -131,8 +147,19 @@ export default {
                     throw new Error('No personnel data found in the form.');
                 }
                 const response = await PostPersonnelRequsitionForm(finalPersonnelData);
+                console.log("Form submission with files result:", response);
 
-                console.log("Form submission result:", response);
+                if (!this.formData.fileUpload || this.formData.fileUpload.length === 0) {
+                    throw new Error('No files to upload.');
+                }
+                const files = this.formData.fileUpload;
+                const userId = store.getSession().userDetails.userId;
+                const uniqueKey = this.formData.uniqueKey;
+
+                const UploadFileResponse = await PostUploadFile(files, userId, uniqueKey);
+                console.log('Files uploaded successfully:', UploadFileResponse);
+
+
 
                 if (response?.status_code === 200) {
                     Swal.fire({
