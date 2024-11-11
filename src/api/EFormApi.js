@@ -310,3 +310,29 @@ export const getUploadFile = async (userId, uniqueKey) => {
     throw error;
   }
 }
+
+export const UpdateTrainingEvaluationHOD = async (SectionBEvaluation) => {
+  try {
+    const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
+    const response = await axios.put(
+      `${base_URL}/TrainingEvaluation/HOD`, 
+      SectionBEvaluation,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+    );
+
+    if (response.data && response.data.result) {
+      console.log("Update Training Evaluation data:", response.data.result);
+      return response.data.result;
+    } else {
+      console.log("Update Training Evaluation data not found");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error updating training evaluation data:", error);
+    throw error;
+  }
+};

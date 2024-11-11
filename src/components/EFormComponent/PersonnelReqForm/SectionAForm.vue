@@ -46,20 +46,20 @@
                     field.</span>
             </div>
             <div>
-                <label for="department" class="block mb-1 text-sm font-medium text-primary dark:text-white">
-                    Department: <span class="text-red-500">*</span>
-                </label>
-                <select id="department" v-model="form.department"
-                    class="bg-gray-50 dark:border-gray-600 dark:placeholder-gray-400 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option value="" class="text-gray-400" disabled>Select Department</option>
-                    <option v-for="department in Departments" :key="department.department"
-                        :value="department.department" class="text-gray-900 text-sm">
-                        {{ department.department }}
-                    </option>
-                    <option v-if="Departments.length === 0" disabled>No deparments available</option>
-                </select>
-                <span v-if="validationErrors.department" class="text-red-500 text-sm">Please fill in this field.</span>
-            </div>
+          <label for="department" class="block mb-1 text-sm font-medium text-primary dark:text-white">
+            Department: <span class="text-red-500">*</span>
+          </label>
+          <select id="department" v-model="form.department"
+            class="bg-gray-50 dark:border-gray-600 dark:placeholder-gray-400 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value="" class="text-gray-400" disabled>Select Department</option>
+            <option v-for="department in Departments" :key="department.department" :value="department.department"
+              class="text-gray-900 text-sm">
+              {{ department.department }}
+            </option>
+            <option v-if="Departments.length === 0" disabled>No deparments available</option>
+          </select>
+          <span v-if="validationErrors.department" class="text-red-500 text-sm">Please fill in this field.</span>
+        </div>
             <div>
                 <label for="numberPersonnel" class="block mb-2 text-sm font-medium text-primary dark:text-white">No of
                     Personnel
@@ -266,8 +266,19 @@ export default {
     },
     async created() {
         await this.getListCompanyName();
-        this.form.department = await this.getListOfDepartments();
+        await this.getListOfDepartments();
     },
+    mounted() {
+        this.fetchHrData();
+    },
+    selectedDepartment: {
+    get() {
+      return this.form.department || ''  
+    },
+    set(value) {
+      this.form.department = value
+    }
+  },
     methods: {
         handleAddFile(error, fileItem) {
             if (!error) {
@@ -314,6 +325,7 @@ export default {
 
         async fetchHrData() {
             const username_id = store.getSession().userDetails.userId;
+            console.log("This is the current usernameid", username_id);
             this.loadingText = 'Fetching';
             this.loading = true;
             try {
@@ -322,7 +334,7 @@ export default {
                     this.user = data;
                     // this.form.position = data.position_title;
                     this.form.company = data.company_name;
-                    this.form.department = data.department;
+                    this.form.department = data.department || null;
                 }
                 // console.log("Employee Data:", this.user);
             } catch (error) {
@@ -443,9 +455,6 @@ export default {
                 });
             }
         },
-    },
-    mounted() {
-        this.fetchHrData();
     },
 }
 </script>
