@@ -158,15 +158,15 @@ export default {
   },
   computed: {
     filteredQueryApplications() {
-      const query = this.searchQuery.toLowerCase();
-      return this.sortedApplications.filter((application) =>
-        application.refNo.toLowerCase().includes(query) ||
-        application.status.toLowerCase().includes(query) ||
-        application.requestType.toLowerCase().includes(query) ||
-        application.requesterName.toLowerCase().includes(query) ||
-        application.requesterDept.toLowerCase().includes(query)
-      );
-    },
+    const query = this.searchQuery.toLowerCase();
+    return this.sortedApplications.filter((application) => 
+      (application.refNo && application.refNo.toLowerCase().includes(query)) ||
+      (application.status && application.status.toLowerCase().includes(query)) ||
+      (application.requestType && application.requestType.toLowerCase().includes(query)) ||
+      (application.requesterName && application.requesterName.toLowerCase().includes(query)) ||
+      (application.requesterDept && application.requesterDept.toLowerCase().includes(query))
+    );
+  },
     sortedApplications() {
       return [...this.userApplications].sort((a, b) => {
         const dateA = new Date(a[this.sortField]).getTime();
