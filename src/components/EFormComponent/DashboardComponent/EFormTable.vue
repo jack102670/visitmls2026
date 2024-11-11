@@ -25,10 +25,10 @@
           <th scope="col" class="p-4"></th>
           <th scope="col" class="px-6 py-3">No</th>
           <th scope="col" class="px-6 py-3">Reference Number</th>
-          <th scope="col" class="px-6 py-3 cursor-pointer" @click="toggleSort('dateRequested')">
+          <th scope="col" class="px-6 py-3 " >
             <div class="flex items-center">
               Requested Date
-              <span class="ml-1">
+              <span class="ml-1 cursor-pointer" @click="toggleSort('dateRequested')">
                 <template v-if="sortField === 'dateRequested'">
                   {{ sortDirection === 'desc' ? '↓' : '↑' }}
                 </template>

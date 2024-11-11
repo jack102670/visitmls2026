@@ -1,6 +1,6 @@
 <template>
 
-  <div class="w-full bg-white shadow-sm  top-0 z-50 ">
+  <div class="w-full bg-white shadow-md  top-0 z-50 ">
     <div class="flex justify-between items-center h-[60px]">
 
       <div class="p-4  bg-dark space-x-2 flex justify-start items-center ">

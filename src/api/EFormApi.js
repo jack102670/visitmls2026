@@ -1,5 +1,4 @@
 import axios from "axios";
-import { uniq } from "lodash";
 
 export const fetchHrData = async (username_id) => {
   try {
