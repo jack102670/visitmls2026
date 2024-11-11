@@ -265,6 +265,12 @@ export default {
                         this.form.staffDateStart = staffDateStart;
                         this.form.staffDateEnd = staffDateEnd;
                     }
+
+                    if (Array.isArray(data.descriptions)){
+                        this.bulletPoints = data.descriptions.map(desc => `• ${desc}`).join('\n');
+                    }else{
+                        this.bulletPoints = 'No descriptions available.';
+                    }
                     console.log("Hr date finished:", this.form.hrDateFinish);
                     console.log("Staff date finished:", this.form.staffDateFinish);
                     console.log("On Job Training:", this.form);

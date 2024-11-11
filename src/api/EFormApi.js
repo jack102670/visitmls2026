@@ -33,7 +33,7 @@ export const PostSectionATrainingEvaluation = async (evaluationData) => {
       }
     );
     if (response.data.result) {
-      console.log("Get Training Evaluation data:", response.data.result);
+      // console.log("Get Training Evaluation data:", response.data.result);
     } else {
       console.log("Training Evaluation data not found");
     }
@@ -258,7 +258,7 @@ export const getOnJobTraining = async (refNo) => {
     const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
     const response = await axios.get(`${base_URL}/OJT/${refNo}`);
     if (response.data.result) {
-      console.log("On Job Training data:", response.data.result);
+      // console.log("On Job Training data:", response.data.result);
     } else {
       console.log("On Job Training data not found");
     }
