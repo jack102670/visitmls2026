@@ -9,8 +9,10 @@
           <breadcrumbs :breadcrumbs="breadcrumbs" />
         </div>
         <div class="space-y-2">
-          <div class="">
+          <div class="space-y-2">
             <ViewOnJobTraining />
+            <ViewOnJobTrainingHOD />
+            <ViewOJTHOD />
           </div>
         </div>
   
@@ -20,11 +22,14 @@
   <script>
     import breadcrumbs from '../../../components/EFormComponent/OtherComponent/BreadCumbs.vue'
     import ViewOnJobTraining from '@/components/EFormComponent/OnJobTrainingForm/ViewOnJobTrainingForm/ViewOnJobTrainingForm.vue';
+    import ViewOJTHOD from "../../../components/EFormComponent/OnJobTrainingForm/ViewOnJobTrainingForm/ViewOJTHOD.vue"
+
 
     export default {
       components: {
         breadcrumbs,
-        ViewOnJobTraining
+        ViewOnJobTraining,
+        ViewOJTHOD
       },
       data() {
         return {

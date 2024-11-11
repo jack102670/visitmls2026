@@ -56,7 +56,6 @@ export default {
     },
     mounted() {
         this.refNo = this.$route.params.refNo;
-        // this.UpdateTrainingEvaluationHOD(redfNo);
     },
     methods: {
 
@@ -141,16 +140,16 @@ export default {
                             });
                         }
                     }
-                })
+                });
             }
             else {
                 Swal.fire({
-                    title: "Error!",
-                    text: "Please fill in all required fields.",
-                    icon: "error",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "OK",
-                });
+                        title: 'Error!',
+                        text: 'Please fill in all required fields.',
+                        icon: 'error',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                    });
             }
         },
         resetForm() {

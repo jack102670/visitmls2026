@@ -336,3 +336,22 @@ export const UpdateTrainingEvaluationHOD = async (SectionBEvaluation) => {
     throw error;
   }
 };
+
+export const UpdateOJT = async (UpdateOJT) => {
+  try {
+    const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
+    const response = await axios.put(`${base_URL}/OJT/HOD`, UpdateOJT, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.data.result) {
+      console.log("Update OJT data not found");
+      return null;
+    }
+    return response.data.result;
+  }catch (error){
+    console.error("Error updating on-job training data:", error);
+    throw error;
+  }
+}
