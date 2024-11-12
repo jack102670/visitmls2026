@@ -9,10 +9,9 @@
           <breadcrumbs :breadcrumbs="breadcrumbs" />
         </div>
         <div class="space-y-2">
-          <div class="space-y-2">
-            <ViewOnJobTraining />
-            <ViewOnJobTrainingHOD />
-            <ViewOJTHOD />
+          <div class="space-y-2 border-[1px] rounded-md">
+            <ViewOnJobTraining  @update-verify="handleVerifyUpdate" />
+            <ViewOJTHOD :verify-status="verifyStatus" />
           </div>
         </div>
   
@@ -33,11 +32,21 @@
       },
       data() {
         return {
+          verifyStatus: false,
           breadcrumbs: [{
             text: 'On Job Training ',
             replace: true
           }],
         };
+      },
+      methods: {
+        updateVerify(value) {
+      this.verify = value;
+    },
+
+    handleVerifyUpdate(status) {
+        this.verifyStatus = status;
+    }
       },
   
       mounted() {

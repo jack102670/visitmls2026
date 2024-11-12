@@ -65,7 +65,7 @@
           <td class="px-6 py-4">{{ application.requestType || 'N/A' }}</td>
           <td class="px-6 py-4">{{ application.requesterName || 'N/A' }}</td>
           <td class="px-6 py-4">{{ application.requesterDept || 'N/A' }}</td>
-          <td class="px-6 py-4">{{ application.status }}</td>
+          <td class="px-6 py-4">{{ application.status && application.status.trim() ? application.status : 'Pending' }}</td>
           <td class="px-6 py-2">
             <div class="flex flex-col sm:flex-row gap-2">
               <button @click="viewApplication(application)"

@@ -13,7 +13,7 @@
           <OnJobTrainingForm />
         </div>
         <div>
-          <OnJobTrainingHOD />
+          <!-- <OnJobTrainingHOD /> -->
         </div>
 
       </div>
@@ -24,13 +24,13 @@
 <script>
   import breadcrumbs from '../../../components/EFormComponent/OtherComponent/BreadCumbs.vue'
   import OnJobTrainingForm from '@/components/EFormComponent/OnJobTrainingForm/OnJobTrainingForm.vue';
-  import OnJobTrainingHOD from '@/components/EFormComponent/OnJobTrainingForm/OnJobTrainingHOD.vue';
+  // import OnJobTrainingHOD from '@/components/EFormComponent/OnJobTrainingForm/OnJobTrainingHOD.vue';
   
   export default {
     components: {
       breadcrumbs,
       OnJobTrainingForm,
-      OnJobTrainingHOD,
+      // OnJobTrainingHOD,
     },
     data() {
       return {
