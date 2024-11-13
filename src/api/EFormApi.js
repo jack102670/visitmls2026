@@ -355,3 +355,22 @@ export const UpdateOJT = async (UpdateOJT) => {
     throw error;
   }
 }
+
+export const UpdateJD = async (UpdateJd) => {
+  try {
+    const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
+    const response = await axios.put(`${base_URL}/JobDescription/HOD`, UpdateJd, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.data.result){
+      console.log("Update JD Data not found");
+      return null;
+    }
+    return response.data.result;
+  }catch(error){
+    console.error("Error updating Job Description HOD Data:", error);
+    throw error;
+  }
+}

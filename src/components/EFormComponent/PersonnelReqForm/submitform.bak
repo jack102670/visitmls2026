@@ -1,0 +1,89 @@
+        async submitForm(data) {
+            if (!this.formData.uniqueKey) {
+                this.formData.uniqueKey = this.generateUniqueKey();
+                localStorage.setItem('uniqueKey', this.formData.uniqueKey);
+            }
+
+            this.updateFormData(data, this.currentSection);
+
+            // console.log('Checking ageLimit and disciplineSpecification in sectionB:');
+            // console.log('ageLimit:', this.formData.sectionB.ageLimit);
+            // console.log('disciplineSpecification:', this.formData.sectionB.disciplineSpecification);
+
+            const finalPersonnelData = {
+                ...this.formData.sectionA,
+                ...this.formData.sectionB,
+                ...this.formData.sectionC,
+                uniqueKey: this.formData.uniqueKey,
+
+                basicSalary: Number(this.formData.sectionA.basicSalary) || 0,
+                numberPersonnel: Number(this.formData.sectionA.numberPersonnel) || 0,
+                // yearsRequired: Number(this.formData.sectionC.yearsRequired) || 0,
+
+                ageLimit: Array.isArray(this.formData.sectionB.ageLimit) ? this.formData.sectionB.ageLimit.join('-') : '',
+                disciplineSpecification: Array.isArray(this.formData.sectionB.disciplineSpecification) ? this.formData.sectionB.disciplineSpecification.join(',') : '',
+            };
+
+            if (this.currentSection === 'C') {
+                this.sectionDEnabled = true;
+            }
+
+            console.log('Final Personnel Data:', finalPersonnelData);
+
+            try {
+                if (!finalPersonnelData) {
+                    throw new Error('No personnel data found in the form.');
+                }
+                const response = await PostPersonnelRequsitionForm(finalPersonnelData);
+                console.log("Form submission with files result:", response);
+
+                if (!this.formData.fileUpload || this.formData.fileUpload.length === 0) {
+                    throw new Error('No files to upload.');
+                }
+                const files = this.formData.fileUpload;
+                const userId = store.getSession().userDetails.userId;
+                const uniqueKey = this.formData.uniqueKey;
+
+                const UploadFileResponse = await PostUploadFile(files, userId, uniqueKey);
+                console.log('Files uploaded successfully:', UploadFileResponse);
+
+
+
+                if (response?.status_code === 200) {
+                    Swal.fire({
+                        title: "Submitted!",
+                        text: "Your application has been submitted.",
+                        icon: "success",
+                        confirmButtonColor: "#3085d6",
+                        confirmButtonText: "OK",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // this.$emit("next-section", this.form);
+                            this.currentSection = 'D';
+                        }
+                    });
+                } else {
+                    throw new Error(`Submission failed: ${response?.statusText || 'Unknown error.'}`);
+                }
+            } catch (error) {
+                console.error('Error submitting the personnel data:', error.message);
+                Swal.fire({
+                    title: "Submission Failed",
+                    text: `Error: ${error.response?.data?.message || error.message || 'Unknown error'}`,
+                    icon: "error",
+                    confirmButtonColor: "#d33",
+                    confirmButtonText: "Retry",
+                });
+
+                if (error.response && error.response.data && error.response.data.errors) {
+                    console.error('Validation errors:', error.response.data.errors);
+                }
+                Swal.fire({
+                    title: "Submission Failed",
+                    text: `Error: ${error.response?.data?.message || error.message}`,
+                    icon: "error",
+                    confirmButtonColor: "#d33",
+                    confirmButtonText: "Retry",
+                });
+            }
+        }

@@ -102,7 +102,6 @@ export default {
                     this.form.requesterDesignation = data.position_title;
                     this.form.verifierEmpId = data.reporting_to;
                 }
-                // console.log("Employee Data:", this.user );
             } catch (error) {
                 console.error("Error fetching HR data:", error);
                 throw new Error("Failed to fetch HR data. Please try again.");
@@ -125,17 +124,6 @@ export default {
             this.$emit("previous-section");
         },
         handleSubmit() {
-            if (!this.formData.fileUpload || this.formData.fileUpload.length === 0) {
-                Swal.fire({
-                    title: "File Upload Required",
-                    text: "Please upload a file before submitting.",
-                    icon: "error",
-                    confirmButtonText: "OK",
-                    confirmButtonColor: "#3085d6",
-                });
-                return;
-                
-            }
             if (this.form.employeeConfirmation === "no") {
                 Swal.fire({
                     title: "Agreement Required",

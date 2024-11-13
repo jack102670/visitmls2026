@@ -1,26 +1,23 @@
 <template>
     <div class="py-2">
-        <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
-    <li class="me-2" v-for="section in ['A', 'B', 'C', 'D']" :key="section">
-        <a href="#" 
-           @click.prevent="changeSection(section)" 
-           :class="[
-               'inline-block p-4 rounded-t-lg',
-               // Active section
-               currentSection === section ? 
-                   'text-blue-600 bg-gray-100 dark:bg-gray-800 dark:text-blue-500' : 
-                   'hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300',
-               // Disabled section
-               !enabledSections.includes(section) ? 
-                   'text-gray-300 cursor-not-allowed opacity-50' : 
-                   'cursor-pointer'
-           ]"
-           :title="!enabledSections.includes(section) ? 'Complete previous sections first' : ''"
-        >
-            Section {{ section }}
-        </a>
-    </li>
-</ul>
+        <ul
+            class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
+            <li class="me-2" v-for="section in ['A', 'B', 'C', 'D']" :key="section">
+                <a href="#" @click.prevent="changeSection(section)" :class="[
+                    'inline-block p-4 rounded-t-lg',
+                    // Active section
+                    currentSection === section ?
+                        'text-blue-600 bg-gray-100 dark:bg-gray-800 dark:text-blue-500' :
+                        'hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300',
+                    // Disabled section
+                    !enabledSections.includes(section) ?
+                        'text-gray-300 cursor-not-allowed opacity-50' :
+                        'cursor-pointer'
+                ]" :title="!enabledSections.includes(section) ? 'Complete previous sections first' : ''">
+                    Section {{ section }}
+                </a>
+            </li>
+        </ul>
 
         <!-- render component kat sini -->
         <component :is="currentComponent" :formData="formData" @update-form="updateFormData" @next-section="handleNext"
@@ -78,19 +75,12 @@ export default {
             // return crypto.randomUUID();
 
         },
-        // changeSection(section) {
-        //     if (section === 'D' && !this.sectionDEnabled) return;
-        //     this.currentSection = section;
-        // },
-        // isSectionEnabled(section) {
-        //     return this.enabledSections.includes(section);
-        // },
         changeSection(section) {
             if (!this.enabledSections.includes(section)) return;
             this.currentSection = section;
         },
         isSectionEnabled(section) {
-        return this.enabledSections.includes(section);
+            return this.enabledSections.includes(section);
         },
 
         canMoveToSection(section) {
@@ -103,26 +93,13 @@ export default {
             if (section === 'A') {
                 this.formData = {
                     ...this.formData,
-                    sectionA: {
-                        ...formData,
-                        fileUpload: undefined
-                    },
-                    fileUpload: formData.fileUpload || []
+                    sectionA: formData,
                 };
+                this.formData.fileUpload = formData.fileUpload || [];
             } else {
                 this.formData[`section${section}`] = formData;
             }
-
-            // console.log('Updated form data in PersonnelScrollable:', this.formData);
-            // console.log('Uploaded files:', this.formData.fileUpload);
         },
-        // handleNext(data) {
-        //     const currentIndex = ['A', 'B', 'C', 'D'].indexOf(this.currentSection);
-        //     if (currentIndex < 3) {
-        //         this.updateFormData(data, this.currentSection);
-        //         this.changeSection(['A', 'B', 'C', 'D'][currentIndex + 1]);
-        //     }
-        // },
         handleNext(data) {
             const sections = ['A', 'B', 'C', 'D'];
             const currentIndex = sections.indexOf(this.currentSection);
@@ -144,94 +121,90 @@ export default {
             }
         },
         async submitForm(data) {
-            if (!this.formData.uniqueKey) {
-                this.formData.uniqueKey = this.generateUniqueKey();
-                localStorage.setItem('uniqueKey', this.formData.uniqueKey);
-            }
+    try {
+        if (!this.formData.uniqueKey) {
+            this.formData.uniqueKey = this.generateUniqueKey();
+            localStorage.setItem('uniqueKey', this.formData.uniqueKey);
+        }
 
-            this.updateFormData(data, this.currentSection);
+        this.updateFormData(data, this.currentSection);
 
-            // console.log('Checking ageLimit and disciplineSpecification in sectionB:');
-            // console.log('ageLimit:', this.formData.sectionB.ageLimit);
-            // console.log('disciplineSpecification:', this.formData.sectionB.disciplineSpecification);
+        const finalPersonnelData = {
+            ...this.formData.sectionA,
+            ...this.formData.sectionB,
+            ...this.formData.sectionC,
+            uniqueKey: this.formData.uniqueKey,
+            basicSalary: Number(this.formData.sectionA.basicSalary) || 0,
+            numberPersonnel: Number(this.formData.sectionA.numberPersonnel) || 0,
+            ageLimit: Array.isArray(this.formData.sectionB.ageLimit) ? this.formData.sectionB.ageLimit.join('-') : '',
+            disciplineSpecification: Array.isArray(this.formData.sectionB.disciplineSpecification) ? this.formData.sectionB.disciplineSpecification.join(',') : '',
+        };
 
-            const finalPersonnelData = {
-                ...this.formData.sectionA,
-                ...this.formData.sectionB,
-                ...this.formData.sectionC,
-                uniqueKey: this.formData.uniqueKey,
+        // console.log('Submitting Personnel Data:', finalPersonnelData);
+        
+        const response = await PostPersonnelRequsitionForm(finalPersonnelData);
+        // console.log('API Response:', response);
 
-                basicSalary: Number(this.formData.sectionA.basicSalary) || 0,
-                numberPersonnel: Number(this.formData.sectionA.numberPersonnel) || 0,
-                yearsRequired: Number(this.formData.sectionC.yearsRequired) || 0,
-
-                ageLimit: Array.isArray(this.formData.sectionB.ageLimit) ? this.formData.sectionB.ageLimit.join('-') : '',
-                disciplineSpecification: Array.isArray(this.formData.sectionB.disciplineSpecification) ? this.formData.sectionB.disciplineSpecification.join(',') : '',
-            };
-
-            if (this.currentSection === 'C') {
-                this.sectionDEnabled = true;
-            }
-
-            // console.log('Final Personnel Data:', finalPersonnelData, finalPersonnelData.ageLimit, finalPersonnelData.disciplineSpecification);
-
-            try {
-                if (!finalPersonnelData) {
-                    throw new Error('No personnel data found in the form.');
-                }
-                const response = await PostPersonnelRequsitionForm(finalPersonnelData);
-                // console.log("Form submission with files result:", response);
-
-                if (!this.formData.fileUpload || this.formData.fileUpload.length === 0) {
-                    throw new Error('No files to upload.');
-                }
+        if (!response) {
+            throw new Error('No response received from the API');
+        }
+        if (response?.status_code === 200) {
+            if (this.formData.fileUpload && this.formData.fileUpload.length > 0) {
                 const files = this.formData.fileUpload;
                 const userId = store.getSession().userDetails.userId;
                 const uniqueKey = this.formData.uniqueKey;
 
+                // console.log('Uploading files:', {
+                //     fileCount: files.length,
+                //     userId,
+                //     uniqueKey
+                // });
+
                 const UploadFileResponse = await PostUploadFile(files, userId, uniqueKey);
-                // console.log('Files uploaded successfully:', UploadFileResponse);
-
-
-
-                if (response?.status_code === 200) {
-                    Swal.fire({
-                        title: "Submitted!",
-                        text: "Your application has been submitted.",
-                        icon: "success",
-                        confirmButtonColor: "#3085d6",
-                        confirmButtonText: "OK",
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // this.$emit("next-section", this.form);
-                            this.currentSection = 'D';
-                        }
-                    });
-                } else {
-                    throw new Error(`Submission failed: ${response?.statusText || 'Unknown error.'}`);
-                }
-            } catch (error) {
-                console.error('Error submitting the personnel data:', error.message);
-                Swal.fire({
-                    title: "Submission Failed",
-                    text: `Error: ${error.response?.data?.message || error.message || 'Unknown error'}`,
-                    icon: "error",
-                    confirmButtonColor: "#d33",
-                    confirmButtonText: "Retry",
-                });
-
-                if (error.response && error.response.data && error.response.data.errors) {
-                    console.error('Validation errors:', error.response.data.errors);
-                }
-                Swal.fire({
-                    title: "Submission Failed",
-                    text: `Error: ${error.response?.data?.message || error.message}`,
-                    icon: "error",
-                    confirmButtonColor: "#d33",
-                    confirmButtonText: "Retry",
-                });
+                console.log('File upload response:', UploadFileResponse);
             }
+
+            Swal.fire({
+                title: "Submitted!",
+                text: "Your application has been submitted.",
+                icon: "success",
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "OK",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.currentSection = 'D';
+                }
+            });
+        } else {
+            throw new Error(`API returned status code ${response?.status_code}: ${response?.message || 'Unknown error'}`);
         }
+    } catch (error) {
+        console.error('Form submission error details:', {
+            message: error.message,
+            response: error.response?.data,
+            status: error.response?.status,
+            stack: error.stack
+        });
+
+        let errorMessage = 'An error occurred while submitting the form.';
+        
+        if (error.response?.data?.message) {
+            errorMessage = error.response.data.message;
+        } else if (error.response?.data?.errors) {
+            errorMessage = Object.values(error.response.data.errors).join('\n');
+        } else if (error.message) {
+            errorMessage = error.message;
+        }
+
+        Swal.fire({
+            title: "Submission Failed",
+            text: errorMessage,
+            icon: "error",
+            confirmButtonColor: "#d33",
+            confirmButtonText: "Retry",
+        });
+    }
+}
 
 
     }

@@ -269,7 +269,7 @@ export default {
                 ageLimit: [], //minAge and MaxAge
                 computerLiteracyRequired: "",
                 expRequired: "",
-                yearsRequired: 0,
+                yearsRequired: '',
                 qualificationRequired: "",
                 computerSpecification: "",
                 ownTransportRequired: "",
@@ -296,11 +296,7 @@ export default {
     },
     watch: {
         'form.expRequired': function (newValue) {
-            if (newValue === 'no') {
-                this.form.yearsRequired = 0;
-            } else {
-                this.form.yearsRequired = null;
-            }
+            this.form.yearsRequired = newValue === 'no' ? 0 : null;
         },
         minAge(newMinAge) {
         this.form.ageLimit[0] = newMinAge; // Update the first element of the array

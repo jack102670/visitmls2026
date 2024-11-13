@@ -5,139 +5,98 @@
             <div>
                 <label for="position" class="block mb-2 text-sm font-medium text-primary dark:text-white">Position to
                     be
-                    filled: <span class="text-red-500">*</span></label>
-                <input type="text" id="position" v-model="form.position"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Input position" required readonly />
+                    filled: </label>
+                <div>{{ form.position }}</div>
             </div>
             <div>
                 <label for="company" class="block mb-2 text-sm font-medium text-primary dark:text-white">Company Name:
-                    <span class="text-red-500">*</span></label>
-                <input type="text" id="company" v-model="form.company"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Company Name" required readonly />
+                </label>
+                <div>{{ form.company }}</div>
             </div>
             <div class="">
-                <label for="dateRequired" class="block mb-2 text-sm font-medium text-primary dark:text-white">Date Required:
-                    <span class="text-red-500">*</span></label>
-                <div class="relative max-w-full">
-                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                            <path
-                                d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                        </svg>
-                    </div>
-                    <input id="datepicker-autohide" type="date" v-model="form.dateRequired"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        required readonly />
-                </div>
+                <label for="dateRequired" class="block mb-2 text-sm font-medium text-primary dark:text-white">Date
+                    Required:
+                </label>
+                <div>{{ form.dateRequired }}</div>
             </div>
             <div>
                 <label for="department" class="block mb-2 text-sm font-medium text-primary dark:text-white">Department:
-                    <span class="text-red-500">*</span></label>
-                <input type="text" id="department" v-model="form.department"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Department name" required readonly />
+                </label>
+                <div>{{ form.department }}</div>
             </div>
             <div>
                 <label for="numberPersonnel" class="block mb-2 text-sm font-medium text-primary dark:text-white">No of
                     Personnel
-                    Required: <span class="text-red-500">*</span></label>
-                <input type="number" id="numberPersonnel" v-model="form.numberPersonnel"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="No of personnel required" required readonly />
+                    Required:</label>
+                <div>{{ form.numberPersonnel }}</div>
             </div>
             <div>
                 <label for="location" class="block mb-2 text-sm font-medium text-primary dark:text-white">Location:
-                    <span class="text-red-500">*</span></label>
-                <input type="text" id="location" v-model="form.location"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Location" required readonly />
+                </label>
+                <div>{{ form.location }}</div>
             </div>
             <div>
                 <label for="basicSalary" class="block mb-2 text-sm font-medium text-primary dark:text-white">Basic
                     Salary
-                    Propose: <span class="text-red-500">*</span></label>
-                <input type="number" id="basicSalary" v-model="form.basicSalary"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Basic salary" required readonly />
+                    Propose:</label>
+                <div>RM{{ form.basicSalary }}</div>
             </div>
         </div>
         <hr class="w-full border-b border-b-[1px]" />
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
                 <label for="requisitionPurpose" class="block mb-2 text-sm font-medium text-primary dark:text-white">
-                    Requisition if for: <span class="text-red-500">*</span></label>
-                <div class="flex flex-wrap gap-4 ">
-                    <div class="flex items-center">
-                        <input id="newReqruitment-requisitionPurpose" type="radio" name="requisitionPurpose"
-                            value="newRecruitment" v-model="form.requisitionPurpose" readonly @click.prevent
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="new-recruitment"
-                            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">New
-                            Recruitment</label>
-                    </div>
-                    <div class="flex items-center">
-                        <input id="temporary-requisitionPurpose" type="radio" name="requisitionPurpose" value="temporary"
-                            v-model="form.requisitionPurpose" readonly @click.prevent
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="temporary"
-                            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Temporary</label>
-                    </div>
-                    <div class="flex items-center">
-                        <input id="replacement-requisitionPurpose" type="radio" name="requisitionPurpose"
-                            value="replacement" v-model="form.requisitionPurpose" readonly @click.prevent
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="replacement"
-                            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Replacement</label>
+                    Requisition if for: </label>
+                <div class="flex flex-wrap gap-4">
+                    <div>
+                        {{
+                            form.requisitionPurpose === 'newRecruitment'
+                                ? 'New Recruitment'
+                                : form.requisitionPurpose === 'temporary'
+                                    ? 'Temporary'
+                                    : form.requisitionPurpose === 'replacement'
+                                        ? 'Replacement'
+                                        : 'Select a purpose'
+                        }}
                     </div>
                 </div>
             </div>
             <div>
                 <label for="manpowerBudget" class="block mb-2 text-sm font-medium text-primary dark:text-white">
-                    Manpower request is: <span class="text-red-500">*</span></label>
+                    Manpower request is: </label>
                 <div class="flex flex-wrap gap-4">
-                    <div class="flex items-center">
-                        <input id="budgeted-manpowerBudget" type="radio" name="manpowerBudget" value="budgeted"
-                            v-model="form.manpowerBudget" readonly @click.prevent
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="budgeted"
-                            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Budgeted</label>
-                    </div>
-                    <div class="flex items-center">
-                        <input id="unbudgeted-manpowerBudget" type="radio" name="manpowerBudget"
-                            value="unbudgeted" v-model="form.manpowerBudget" readonly @click.prevent
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="unbudgeted"
-                            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">UnBudgeted</label>
-                    </div>
+                    {{
+                        form.manpowerBudget === 'budgeted'
+                            ? 'Budgeted'
+                            : form.manpowerBudget === 'unbudgeted'
+                                ? 'UnBudgeted'
+                                : 'Select a purpose'
+                    }}
 
                 </div>
             </div>
             <div>
-                <label for="name"
-                    class="block mb-2 text-sm font-medium text-primary dark:text-white italic">Name
+                <label for="name" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">Name
                     of Person to be replaced: <span class="text-red-500">*</span></label>
-                <input type="text" id="name" v-model="form.name"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Input Name" required readonly />
+                <div>{{ form.name }}</div>
             </div>
             <div>
                 <label for="reasonUnbudget"
                     class="block mb-2 text-sm font-medium text-primary dark:text-white italic">Reason
-                    for UnBudgeted: <span class="text-red-500">*</span>
+                    for UnBudgeted:
                 </label>
-                <input type="text" id="reasonUnbudget" v-model="form.reasonUnbudget"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Reason for unbudgeted" required readonly />
+                <div
+                    v-if="!form.reasonUnbudget || form.reasonUnbudget.length === 0 || form.reasonUnbudget.every(item => item.trim() === '')">
+                    <span class="block text-gray-500">-</span>
+                </div>
+                <div v-else>{{ form.reasonUnbudget }}</div>
             </div>
             <div class="flex space-x-2">
                 <label for="position" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
                     Job Description & Organization Chart:
                 </label>
                 <a :href="downloadLink" target="_blank" rel="noopener noreferrer">
-                    <font-awesome-icon :icon="['fas', 'file-export']"  class="cursor-pointer" />
+                    <font-awesome-icon :icon="['fas', 'file-export']" class="cursor-pointer" />
                 </a>
             </div>
         </div>
@@ -147,9 +106,10 @@
                 <label for="requestReason"
                     class="block mb-2 text-sm font-medium text-primary dark:text-white italic">Justification / Reason
                     for request : </label>
-                <textarea id="requestReason" rows="4" v-model="form.requestReason"
-                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Write your comments here" readonly></textarea>
+                <div v-if="!form.requestReason || form.requestReason.trim() === ''">
+                    <span class="block text-gray-500">-</span>
+                </div>
+                <div v-else>{{ form.requestReason }}</div>
             </div>
         </div>
     </div>
@@ -170,20 +130,20 @@ export default {
                 department: '',
                 location: '',
                 numberPersonnel: '',
-                basicSalary: '', 
+                basicSalary: '',
                 requisitionPurpose: '',
                 manpowerBudget: '',
                 dateRequired: '',
                 name: '',
                 reasonUnbudget: '',
-                requestReason: '',  
+                requestReason: '',
             },
             uniqueKey: '',
             downloadLink: null,
             validationErrors: {},
         }
     },
-    mounted(){
+    mounted() {
         const refNo = this.$route.params.refNo;
         this.getPersonnelRequisitonForm(refNo);
         this.getUploadFile();
@@ -199,29 +159,29 @@ export default {
                         ...data,
                     };
                     this.uniqueKey = data.uniqueKey;
-                    if (this.uniqueKey){
+                    if (this.uniqueKey) {
                         this.getUploadFile(this.uniqueKey);
                     }
                 }
-            }catch (error){
+            } catch (error) {
                 console.error("Error loading training evaluation:", error);
                 throw error;
             }
         },
 
-        async getUploadFile(uniqueKey){
+        async getUploadFile(uniqueKey) {
             const userId = store.getSession().userDetails.userId;
             try {
                 const result = await getUploadFile(userId, uniqueKey);
                 if (result && result.length > 0) {
                     this.downloadLink = result[0];
-                } 
-            }catch (error){
+                }
+            } catch (error) {
                 console.error("Error loading Upload files:", error);
                 throw error;
             }
         }
     },
 
-    };
+};
 </script>
