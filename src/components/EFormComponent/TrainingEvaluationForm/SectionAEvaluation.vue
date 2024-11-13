@@ -444,14 +444,15 @@
                                     icon: 'success',
                                     confirmButtonColor: '#3085d6',
                                     confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        this.$router.push('/e-dashboard');
+                                    }
                                 });
-                                
                                 this.isSubmittedForm = true;
                                 this.resetForm();
                             } catch (error) {
-
                                 Swal.close();
-
                                 console.error('Submission failed:', error.response ? error.response.data :
                                     error.message);
                                 Swal.fire({

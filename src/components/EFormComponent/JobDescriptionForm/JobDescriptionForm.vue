@@ -10,7 +10,7 @@
           </label>
           <input type="text" id="company" v-model="form.company"
             class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Input company" required readonly/>
+            placeholder="Input company" required readonly />
           <span v-if="validationErrors.company" class="text-red-500 text-sm">Please fill in this field.</span>
         </div>
         <div>
@@ -136,28 +136,27 @@
             </span>
           </div>
         </div>
-        <div v-if="showInputCompetenceField" class=" flex items-center gap-2">
+        <div v-if="showInputCompetenceField" class="flex items-center gap-2">
           <input type="text" v-model="newCompetenceField"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Education" />
-          <button @click.prevent="addCompetenceField" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+          <button @click.prevent="addCompetenceField"
+            class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700">
             Add
           </button>
         </div>
         <button v-if="!showInputCompetenceField" @click="showInputCompetenceField = true"
           class="bg-transparent text-sm hover:border-primary hover:border-[1px] border-[1px] border-transparent p-2.5 rounded-2xl">
-          Add More <span>
-            <font-awesome-icon icon="fa-solid fa-plus" /></span>
+          Add More <span><font-awesome-icon icon="fa-solid fa-plus" /></span>
         </button>
         <span v-if="validationErrors.education" class="text-red-500 text-sm">Please fill in this field.</span>
-
       </div>
+
       <div>
         <label for="experience" class="block mb-1 text-sm font-medium text-primary dark:text-white">
           Experience: <span class="text-red-500">*</span>
         </label>
         <div class="space-y-2">
-
           <div class="flex flex-wrap gap-2">
             <div v-for="(field, index) in form.experience" :key="index" class="flex items-center">
               <span
@@ -169,28 +168,27 @@
               </span>
             </div>
           </div>
-          <div v-if="showInputExperienceField" class=" flex items-center gap-2">
+          <div v-if="showInputExperienceField" class="flex items-center gap-2">
             <input type="text" v-model="newExperienceField"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Experience" />
-            <button @click.prevent="addExperienceField" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+            <button @click.prevent="addExperienceField"
+              class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700">
               Add
             </button>
           </div>
           <button v-if="!showInputExperienceField" @click="showInputExperienceField = true"
             class="bg-transparent text-sm hover:border-primary hover:border-[1px] border-[1px] border-transparent p-2.5 rounded-2xl">
-            Add More <span>
-              <font-awesome-icon icon="fa-solid fa-plus" /></span>
+            Add More <span><font-awesome-icon icon="fa-solid fa-plus" /></span>
           </button>
-
         </div>
       </div>
+
       <div>
         <label for="skills" class="block mb-1 text-sm font-medium text-primary dark:text-white">
           Skills: <span class="text-red-500">*</span>
         </label>
         <div class="space-y-2">
-
           <div class="flex flex-wrap gap-2">
             <div v-for="(field, index) in form.skills" :key="index" class="flex items-center">
               <span
@@ -202,27 +200,24 @@
               </span>
             </div>
           </div>
-          <div v-if="showInputSkillsField" class=" flex items-center gap-2">
+          <div v-if="showInputSkillsField" class="flex items-center gap-2">
             <input type="text" v-model="newSkillsField"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Skills" />
-            <button @click.prevent="addSkillsField" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+            <button @click.prevent="addSkillsField"
+              class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700">
               Add
             </button>
-
           </div>
           <button v-if="!showInputSkillsField" @click="showInputSkillsField = true"
             class="bg-transparent text-sm hover:border-primary hover:border-[1px] border-[1px] border-transparent p-2.5 rounded-2xl">
-            Add More <span>
-              <font-awesome-icon icon="fa-solid fa-plus" /></span>
+            Add More <span><font-awesome-icon icon="fa-solid fa-plus" /></span>
           </button>
           <span v-if="validationErrors.skills" class="text-red-500 text-sm">Please fill in this field.</span>
-
         </div>
       </div>
     </div>
-
-    <div class="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-4">
+    <div class="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-4 py-2">
       <button @click.prevent="confirmExit"
         class="bg-transparent text-rejected px-6 py-2 rounded-md border-2 border-rejected font-bold order-2 sm:order-1">
         Exit
@@ -270,6 +265,7 @@ export default {
 
       showInputCompetenceField: false,
       newCompetenceField: "",
+
       showInputExperienceField: false,
       newExperienceField: "",
       showInputSkillsField: false,
@@ -294,13 +290,11 @@ export default {
     console.log("Unique Key assigned to JobDescription:", this.form.pr_uniqueKey);
   },
   methods: {
-
     // multifield fields for duty
     openInputForm() {
       this.newField = "";
       this.showInputField = true;
     },
-
     addField() {
       if (this.newField.trim()) {
         this.form.duty.push(this.newField.trim());
@@ -311,26 +305,22 @@ export default {
     removeField(index) {
       this.form.duty.splice(index, 1);
     },
-
     //multifield for responsibility
     openInputResponsibilityForm() {
       this.newResponsibilityField = "";
       this.showInputResponsibilityField = true;
     },
-
     addResponsibilityField() {
       if (this.newResponsibilityField.trim()) {
         this.form.responsibility.push(this.newResponsibilityField.trim());
         this.newResponsibilityField = "";
         this.showInputResponsibilityField = false;
       }
-
     },
     removeResponsibilityField(index) {
       this.form.responsibility.splice(index, 1);
     },
-    //multifield for education, skills, and experience
-
+    //multifield for education/competence
     addCompetenceField() {
       if (this.newCompetenceField.trim()) {
         this.form.education.push(this.newCompetenceField.trim());
@@ -341,19 +331,23 @@ export default {
     removeCompetenceField(index) {
       this.form.education.splice(index, 1);
     },
+    // multifiels for experience
     addExperienceField() {
-      if (this.newExperienceField.trim()) {
+      if (this.newExperienceField) {
         this.form.experience.push(this.newExperienceField);
-        this.newExperienceField = "";
+        this.newExperienceField = '';
+        this.showInputExperienceField = false;
       }
     },
     removeExperienceField(index) {
       this.form.experience.splice(index, 1);
     },
+    // multifield for skills
     addSkillsField() {
-      if (this.newSkillsField.trim()) {
+      if (this.newSkillsField) {
         this.form.skills.push(this.newSkillsField);
-        this.newSkillsField = "";
+        this.newSkillsField = '';
+        this.showInputSkillsField = false;
       }
     },
     removeSkillsField(index) {

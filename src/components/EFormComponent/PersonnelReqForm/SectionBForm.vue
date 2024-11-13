@@ -181,7 +181,6 @@
                             </span>
                         </div>
                     </div>
-
                     <div class="relative">
                         <input type="text" v-model="disciplineSearch" placeholder="Search for discipline..."
                             @input="handleSearchInput" @focus="showDropdown = true"
@@ -215,7 +214,6 @@
                             </span>
                         </div>
                     </div>
-
                     <div v-if="showInputPersonnelField" class=" flex items-center gap-2">
                         <input type="text" v-model="newPersonnelField"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -230,7 +228,6 @@
                         Add More <span>
                             <font-awesome-icon icon="fa-solid fa-plus" /></span>
                     </button>
-
                 </div>
             </div>
         </div>
@@ -241,7 +238,6 @@
                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Write your comments here"></textarea>
         </div>
-
         <div class="grid grid-cols-1 space-x-2 mt-4">
             <div class="col-span-8 flex justify-end">
                 <button @click="handlePrevious"
@@ -299,10 +295,10 @@ export default {
             this.form.yearsRequired = newValue === 'no' ? 0 : null;
         },
         minAge(newMinAge) {
-        this.form.ageLimit[0] = newMinAge; // Update the first element of the array
+        this.form.ageLimit[0] = newMinAge; 
     },
     maxAge(newMaxAge) {
-        this.form.ageLimit[1] = newMaxAge; // Update the second element of the array
+        this.form.ageLimit[1] = newMaxAge; 
     }
     },
     created() {
@@ -338,13 +334,6 @@ export default {
                 this.form.disciplineSpecification = "";
             }
         },
-        // selectDiscipline(discipline) {
-        //     if (!this.form.disciplineSpecification.includes(discipline.name)) {
-        //         this.form.disciplineSpecification.push(discipline.name);
-        //     }
-        //     this.disciplineSearch = '';
-        //     this.showDropdown = false;
-        // },
         selectDiscipline(discipline) {
             if (!Array.isArray(this.form.disciplineSpecification)) {
                 this.form.disciplineSpecification = [];
@@ -385,7 +374,6 @@ export default {
       this.validationErrors.ageLimit = "";
       return true;
     },
-
         // for List of Personnal Competencies required
         openPersonnelInputForm() {
             this.newPersonnelField = "";
@@ -448,7 +436,6 @@ export default {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // console.log('Form data section B saved:', this.form);
-                        
                         this.$emit("update-form", this.form, "B");
                         this.$emit("next-section", this.form);
                     }

@@ -9,20 +9,22 @@
         <breadcrumbs :breadcrumbs="breadcrumbs" />
         <UserProfileData />
       </div>
-      <TrainingScrollable />
+      <SectionAEvaluation />
 
     </div>
   </div>
 </template>
 <script>
-  import TrainingScrollable from '@/components/EFormComponent/TrainingEvaluationForm/TrainingScrollable.vue';
+  // import TrainingScrollable from '@/components/EFormComponent/TrainingEvaluationForm/TrainingScrollable.vue';
   import breadcrumbs from '../../../components/EFormComponent/OtherComponent/BreadCumbs.vue'
   import UserProfileData from "../../../components/EFormComponent/OtherComponent/UserData.vue"
+  import SectionAEvaluation from "../../../components/EFormComponent/TrainingEvaluationForm/SectionAEvaluation.vue"
   export default {
     components: {
-      TrainingScrollable,
+      // TrainingScrollable,
       breadcrumbs,
-      UserProfileData
+      UserProfileData,
+      SectionAEvaluation
     },
     data() {
       return {
