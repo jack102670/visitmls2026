@@ -1,18 +1,18 @@
 <template>
     <div class="border border-[1px] rounded-md mt-2 p-4 space-y-2">
-        <div class="grid grid-cols-1 space-y-2">
+        <div class="grid grid-cols-1 space-y-2" v-if="status !== 'Completed by Superior'">
             <div class="space-y-4">
                 <div class="space-y-2">
                     <p for="position" class="block text-md font-bold text-primary dark:text-white">
                         Training Effectiveness
                     </p>
-                    <p for="position" class="block mb-2 text-xs font-medium text-primary dark:text-white italic ">
+                    <p for="position" class="block mb-2 text-xs font-semibold text-primary dark:text-white italic ">
                         (To be filled in by the superior one month after the training if the course attended relevant to
                         Trainee’s job scope/function.)
                     </p>
                 </div>
                 <div class="space-y-2">
-                    <label for="position" class="block mb-2 text-sm font-medium text-primary dark:text-white ">
+                    <label for="position" class="block mb-2 text-sm font-semibold text-primary dark:text-white ">
                         How has the individuals performance changed after training? <span class="text-red-500">*</span>
                     </label>
                     <textarea id="message" rows="4" v-model="form.data"
@@ -29,8 +29,43 @@
                 </button>
                 <button @click.prevent="UpdateTrainingEvaluationHOD(refNo)"
                     class="bg-verified text-white px-10 py-2 rounded-md font-bold">
-                Submit
-            </button>
+                    Submit
+                </button>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 space-y-2" v-if="status === 'Completed by Superior'">
+            <div class="space-y-2">
+                <div class="space-y-2">
+                    <p for="position" class="block text-md font-bold text-primary dark:text-white">
+                        Training Effectiveness
+                    </p>
+                </div>
+                <div class="space-y-1">
+                    <label for="position" class="block text-sm font-semibold text-primary dark:text-white ">
+                        How has the individuals performance changed after training?
+                    </label>
+                    <div>
+                        <p class="text-sm">{{ DisplayForm.verifierFeedback }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="position" class="block text-sm font-semibold text-primary dark:text-white ">
+                        HOD Name:
+                    </label>
+                    <div>
+                        <p>{{ DisplayForm.verifierName || '-' }}</p>
+                    </div>
+                </div>
+                <div>
+                    <label for="position" class="block text-sm font-semibold text-primary dark:text-white ">
+                        Date:
+                    </label>
+                    <div>
+                        <p class="text-sm">{{ formattedVerifierDate }}</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -38,7 +73,7 @@
 </template>
 <script>
 
-import { UpdateTrainingEvaluationHOD } from '@/api/EFormApi';
+import { UpdateTrainingEvaluationHOD, GetViewTrainingEvaluation } from '@/api/EFormApi';
 import Swal from "sweetalert2";
 
 
@@ -49,6 +84,12 @@ export default {
             form: {
                 data: '',
             },
+            DisplayForm: {
+                verifierFeedback: '',
+                verifiedDate: '',
+                DisplayForm: '',
+            },
+            status: '',
             validationErrors: {},
             isSubmittedForm: false,
             refNo: null
@@ -56,6 +97,18 @@ export default {
     },
     mounted() {
         this.refNo = this.$route.params.refNo;
+        if (this.refNo) {
+            this.GetViewTrainingEvaluation(this.refNo);
+        }
+    },
+    computed: {
+        formattedVerifierDate() {
+            const date = new Date(this.DisplayForm.verifiedDate);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
     },
     methods: {
 
@@ -77,6 +130,23 @@ export default {
                     this.$router.push('/e-dashboard');
                 }
             })
+        },
+        async GetViewTrainingEvaluation(refNo) {
+            try {
+                const data = await GetViewTrainingEvaluation(refNo);
+                if (data) {
+                    this.DisplayForm = {
+                        ...data.DisplayForm,
+                        ...data,
+                    };
+                    this.status = data.status;
+                    console.log(data);
+                }
+            } catch (error) {
+                console.error("Error loading training evaluation:", error);
+                throw error;
+            }
+
         },
 
         async UpdateTrainingEvaluationHOD(refNo) {
@@ -144,12 +214,12 @@ export default {
             }
             else {
                 Swal.fire({
-                        title: 'Error!',
-                        text: 'Please fill in all required fields.',
-                        icon: 'error',
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'OK'
-                    });
+                    title: 'Error!',
+                    text: 'Please fill in all required fields.',
+                    icon: 'error',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                });
             }
         },
         resetForm() {

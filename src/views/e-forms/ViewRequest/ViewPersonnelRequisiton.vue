@@ -5,7 +5,7 @@
   
           <div>
             <h1 class="font-bold text-2xl text-primary"> Personnel Requisition Form</h1>
-            <p class="text-sm text-primary font-semibold">New Request</p>
+            <p class="text-sm text-primary font-semibold">View Request</p>
           </div>
           <div class="py-2 pb-2 pt-8">
             <breadcrumbs :breadcrumbs="breadcrumbs" />
@@ -35,7 +35,7 @@
       data() {
         return {
           breadcrumbs: [{
-            text: 'Personnel Requisition',
+            text: 'View Personnel Requisition',
             replace: true
           }],
         }

@@ -259,11 +259,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-2 mt-4">
             <div class="items-center space-x-2 space-y-2">
                 <div class="space-y-2 sm:space-y-4">
-                    <label for="position" class="block  text-sm font-medium text-primary dark:text-white">B.
-                        Please describe briefly on what you have gained from the course. (You may also share
-                        your idea
-                        on how would you plan or in what way will you apply the benefits from the course – if
-                        any.):
+                    <label for="position" class="block  text-sm font-medium text-primary dark:text-white">B: Please briefly describe what you have gained from the course. (You may also share how you plan or in what way you will apply the benefits – if any.):
                     </label>
                     <textarea id="CourseGained" rows="4" v-model="form.trainingBenefit"
                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -273,7 +269,7 @@
             <div class="items-center space-x-`2 space-y-2">
                 <div class="space-y-2 sm:space-y-4">
                     <label for="position" class="block  md:mb-7  text-sm font-medium text-primary dark:text-white ">
-                        General Comments (If any)
+                        C. General Comments (If any)
                     </label>
                     <textarea id="generalComments" rows="4" v-model="form.generalComment"
                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

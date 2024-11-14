@@ -3,7 +3,7 @@
       <div class="col-span-8 bg-white border-[1px] min-h-[76vh] rounded-md p-4 md:mx-8 ">
         <div class="space-y-2">
           <h1 class="font-bold text-2xl text-primary"> Familiriarisation Programme / On Job Training Form</h1>
-          <p class="text-sm text-primary font-semibold">New Request</p>
+          <p class="text-sm text-primary font-semibold">View Request</p>
         </div>
         <div class="py-2 pb-2 pt-8">
           <breadcrumbs :breadcrumbs="breadcrumbs" />
@@ -34,7 +34,7 @@
         return {
           verifyStatus: false,
           breadcrumbs: [{
-            text: 'On Job Training ',
+            text: 'View On Job Training ',
             replace: true
           }],
         };

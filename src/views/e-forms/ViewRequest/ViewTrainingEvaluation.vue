@@ -3,7 +3,7 @@
       <div class="col-span-8 bg-white border-[1px] min-h-auto rounded-md p-4 md:mx-8">
         <div>
           <h1 class="font-bold text-2xl text-primary">Training Evaluation Form</h1>
-          <p class="text-sm text-primary font-semibold">New Request</p>
+          <p class="text-sm text-primary font-semibold">View Request</p>
         </div>
         <div class="py-2 pb-2 pt-8 space-y-2">
           <breadcrumbs :breadcrumbs="breadcrumbs" />
@@ -27,7 +27,7 @@
       data() {
         return {
           breadcrumbs: [{
-            text: 'Training Evaluation',
+            text: 'View Training Evaluation',
             replace: true
           }],
          

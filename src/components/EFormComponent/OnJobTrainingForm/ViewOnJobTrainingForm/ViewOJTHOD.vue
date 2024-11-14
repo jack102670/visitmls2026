@@ -1,5 +1,5 @@
 <template>
-    <div class="space-y-6  py-4 px-6">
+    <div class="space-y-6  pb-4 px-6">
         <div v-if="status !== 'Completed by Superior. Waiting for HR'">
             <div>
                 <h1 class="font-bold text-md">
@@ -9,15 +9,15 @@
                     Employee to be evaluated within 3 months from the commencement of
                     familiarisation / training programme.
                 </h2>
-                <h1 class="font-bold text-md py-2">
+                <h1 class="font-semibold text-md py-2">
                     Head of Department Verification <span class="text-red-500">*</span>
                 </h1>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="">
-                        <label for="basicSalary" class="block mb-2 text-sm font-medium text-primary dark:text-white">
+                        <label for="basicSalary" class="block mb-2 text-sm font-semibold text-primary dark:text-white">
                             1. Has the employee achieved the level of knowledge & skills required for the job?: <span
                                 class="text-red-500">*</span></label>
-                        <div class="flex space-x-4 items-center mb-4">
+                        <div class="flex space-x-4 items-center ">
                             <input id="yes-experienceRequired" type="radio" value="yes" v-model="form.achieveTarget"
                                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                             <label for="yes-experienceRequired"
@@ -34,7 +34,7 @@
                     <!-- <div v-if="form.achieveTarget === 'no'"> -->
                     <div>
                         <label for="specifyRequirement"
-                            class="block mb-2 text-sm font-medium text-primary dark:text-white italic col-span-1">
+                            class="block mb-2 text-sm font-semibold text-primary dark:text-white italic col-span-1">
                             2. If the answer is No, What are the actions to be taken?:
                         </label>
                         <div class="col-span-3 w-full">
@@ -44,14 +44,14 @@
                         </div>
                     </div>
                     <div class="">
-                        <label for="basicSalary" class="block mb-2 text-sm font-medium text-primary dark:text-white">
+                        <label for="basicSalary" class="block mb-2 text-sm font-semibold text-primary dark:text-white">
                             Name of Head of Department: </label>
                         <input type="text" id="text" v-model="form.name" readonly
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Input Name" required />
                     </div>
                     <div class="">
-                        <label for="date" class="block mb-2 text-sm font-medium text-primary dark:text-white">Date
+                        <label for="date" class="block mb-2 text-sm font-semibold text-primary dark:text-white">Date
                             :
                             <span class="text-red-500">*</span></label>
                         <div class="relative max-w-full">
@@ -89,7 +89,7 @@
         <!-- second div for display form -->
         <div v-if="status === 'Completed by Superior. Waiting for HR'">
             <h1 class="font-bold text-md">
-                Remarkss
+                Remarks
             </h1>
             <h2 class="font-regular italic text-sm">
                 Employee to be evaluated within 3 months from the commencement of
@@ -100,32 +100,32 @@
             </h1>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="">
-                    <label for="basicSalary" class="block mb-2 text-sm font-medium text-primary dark:text-white">
+                    <label for="basicSalary" class="block mb-2 text-sm font-semibold text-primary dark:text-white">
                         1. Has the employee achieved the level of knowledge & skills required for the job?:
                     </label>
-                    <div class="flex space-x-4 items-center mb-4">
-                        <p>{{ DisplayForm.achieveTarget }}</p>
+                    <div class="flex space-x-4 items-center ">
+                    <p class="text-sm">{{ DisplayForm.achieveTarget === 'yes' ? 'Yes' : 'No' }}</p>
                     </div>
                 </div>
                 <div>
                     <label for="specifyRequirement"
-                        class="block mb-2 text-sm font-medium text-primary dark:text-white italic col-span-1">
+                        class="block mb-2 text-sm font-semibold text-primary dark:text-white italic col-span-1">
                         2. If the answer is No, What are the actions to be taken?:
                     </label>
                     <div class="col-span-3 w-full">
-                        <p>{{ DisplayForm.reasonifNo }}</p>
+                        <p class="text-sm">{{ DisplayForm.reasonifNo || '-' }}</p>
                     </div>
                 </div>
                 <div class="">
-                    <label for="basicSalary" class="block mb-2 text-sm font-medium text-primary dark:text-white">
+                    <label for="basicSalary" class="block mb-2 text-sm font-semibold text-primary dark:text-white">
                         Name of Head of Department: </label>
-                    <p>{{ DisplayForm.hodName }}</p>
+                    <p class="text-sm">{{ DisplayForm.hodName || '-' }}</p>
                 </div>
                 <div class="">
-                    <label for="date" class="block mb-2 text-sm font-medium text-primary dark:text-white">Date:
+                    <label for="date" class="block mb-2 text-sm font-semibold text-primary dark:text-white">Date:
                     </label>
                     <div>
-                        <p>{{ formattedHodDate }}</p>
+                        <p class="text-sm">{{ formattedHodDate || '-' }}</p>
                     </div>
                 </div>
             </div>

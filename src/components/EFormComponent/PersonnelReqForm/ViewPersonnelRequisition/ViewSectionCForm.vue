@@ -4,28 +4,28 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 py-2">
             <div>
                 <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
-                    <label class="text-sm font-medium text-primary dark:text-white sm:mr-1">
+                    <label class="text-sm font-semibold text-primary dark:text-white sm:mr-1">
                         Name:</label>
                     <p class="text-sm">{{ form.requesterName }}</p>
                 </div>
             </div>
             <div>
                 <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
-                    <label class="text-sm font-medium text-primary dark:text-white sm:mr-1">
+                    <label class="text-sm font-semibold text-primary dark:text-white sm:mr-1">
                         Designation:</label>
                     <p class="text-sm">{{ form.requesterDesignation }}</p>
                 </div>
             </div>
             <div>
                 <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
-                    <label class="text-sm font-medium text-primary dark:text-white sm:mr-1">
+                    <label class="text-sm font-semibold text-primary dark:text-white sm:mr-1">
                         Department:</label>
                     <p class="text-sm">{{ form.requesterDept }}</p>
                 </div>
             </div>
             <div>
                 <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
-                    <label class="text-sm font-medium text-primary dark:text-white sm:mr-1">
+                    <label class="text-sm font-semibold text-primary dark:text-white sm:mr-1">
                         Date Requested:</label>
                     <p class="text-sm">{{ formattedDateRequested }}</p>
                 </div>

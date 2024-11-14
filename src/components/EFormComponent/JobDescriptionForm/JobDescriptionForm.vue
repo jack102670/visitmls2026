@@ -5,7 +5,7 @@
     <div class="space-y-4">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label for="company" class="block mb-1 text-sm font-medium text-primary dark:text-white">
+          <label for="company" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
             Company: <span class="text-red-500">*</span>
           </label>
           <input type="text" id="company" v-model="form.company"
@@ -14,7 +14,7 @@
           <span v-if="validationErrors.company" class="text-red-500 text-sm">Please fill in this field.</span>
         </div>
         <div>
-          <label for="department" class="block mb-1 text-sm font-medium text-primary dark:text-white">
+          <label for="department" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
             Department: <span class="text-red-500">*</span>
           </label>
           <input type="text" id="department" v-model="form.department"
@@ -26,7 +26,7 @@
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label for="designation" class="block mb-1 text-sm font-medium text-primary dark:text-white">
+          <label for="designation" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
             Position: <span class="text-red-500">*</span>
           </label>
           <input type="text" id="position" v-model="form.designation"
@@ -35,7 +35,7 @@
           <span v-if="validationErrors.designation" class="text-red-500 text-sm">Please fill in this field.</span>
         </div>
         <div>
-          <label for="report-to" class="block mb-1 text-sm font-medium text-primary dark:text-white">
+          <label for="report-to" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
             Report to: <span class="text-red-500">*</span>
           </label>
           <input type="text" id="report-to" v-model="form.reportTo"
@@ -50,7 +50,7 @@
 
     <h2 class="font-bold text-lg">Responsibilities</h2>
     <div class="">
-      <label for="responsibility" class="block  text-sm py-2 font-medium text-primary dark:text-white italic">
+      <label for="responsibility" class="block  text-sm py-2 font-semibold text-primary dark:text-white italic">
         Responsibilities: <span class="text-red-500">*</span>
       </label>
       <div class="space-y-2">
@@ -83,7 +83,7 @@
 
     </div>
     <div>
-      <label for="duty" class="block text-sm py-2 font-medium text-primary dark:text-white italic">
+      <label for="duty" class="block text-sm py-2 font-semibold text-primary dark:text-white italic">
         Duties: <span class="text-red-500">*</span>
       </label>
       <div class="space-y-2">
@@ -122,7 +122,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
 
       <div class="space-y-2">
-        <label for="experience" class="block mb-1 text-sm font-medium text-primary dark:text-white">
+        <label for="experience" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
           Education: <span class="text-red-500">*</span>
         </label>
         <div class="flex flex-wrap gap-2">
@@ -153,7 +153,7 @@
       </div>
 
       <div>
-        <label for="experience" class="block mb-1 text-sm font-medium text-primary dark:text-white">
+        <label for="experience" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
           Experience: <span class="text-red-500">*</span>
         </label>
         <div class="space-y-2">
@@ -185,7 +185,7 @@
       </div>
 
       <div>
-        <label for="skills" class="block mb-1 text-sm font-medium text-primary dark:text-white">
+        <label for="skills" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
           Skills: <span class="text-red-500">*</span>
         </label>
         <div class="space-y-2">

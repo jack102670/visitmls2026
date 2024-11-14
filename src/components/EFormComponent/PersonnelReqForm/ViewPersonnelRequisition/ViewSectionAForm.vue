@@ -3,52 +3,53 @@
         <h1 class="font-bold text-md py-2">A. Position Requirements</h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-                <label for="position" class="block mb-2 text-sm font-medium text-primary dark:text-white">Position to
+                <label for="position" class="block mb-2 text-sm font-semibold text-primary dark:text-white">Position to
                     be
                     filled: </label>
-                <div>{{ form.position }}</div>
+                <div><p class="text-sm">{{ form.position || '-' }}</p></div>
             </div>
             <div>
-                <label for="company" class="block mb-2 text-sm font-medium text-primary dark:text-white">Company Name:
+                <label for="company" class="block mb-2 text-sm font-semibold text-primary dark:text-white">Company Name:
                 </label>
-                <div>{{ form.company }}</div>
+                <div><p class="text-sm">{{ form.company || '-' }}</p></div>
             </div>
             <div class="">
-                <label for="dateRequired" class="block mb-2 text-sm font-medium text-primary dark:text-white">Date
+                <label for="dateRequired" class="block mb-2 text-sm font-semibold text-primary dark:text-white">Date
                     Required:
                 </label>
-                <div>{{ form.dateRequired }}</div>
+                <div><p class="text-sm">{{ form.dateRequired || '-' }}</p></div>
             </div>
             <div>
-                <label for="department" class="block mb-2 text-sm font-medium text-primary dark:text-white">Department:
+                <label for="department" class="block mb-2 text-sm font-semibold text-primary dark:text-white">Department:
                 </label>
-                <div>{{ form.department }}</div>
+                <div><p class="text-sm">{{ form.department || '-' }}</p></div>
             </div>
             <div>
-                <label for="numberPersonnel" class="block mb-2 text-sm font-medium text-primary dark:text-white">No of
+                <label for="numberPersonnel" class="block mb-2 text-sm font-semibold text-primary dark:text-white">No of
                     Personnel
                     Required:</label>
-                <div>{{ form.numberPersonnel }}</div>
+                <div><p class="text-sm">{{ form.numberPersonnel || '-' }}</p></div>
             </div>
             <div>
-                <label for="location" class="block mb-2 text-sm font-medium text-primary dark:text-white">Location:
+                <label for="location" class="block mb-2 text-sm font-semibold text-primary dark:text-white">Location:
                 </label>
-                <div>{{ form.location }}</div>
+                <div><p class="text-sm">{{ form.location || '-' }}</p></div>
             </div>
             <div>
-                <label for="basicSalary" class="block mb-2 text-sm font-medium text-primary dark:text-white">Basic
+                <label for="basicSalary" class="block mb-2 text-sm font-semibold text-primary dark:text-white">Basic
                     Salary
                     Propose:</label>
-                <div>RM{{ form.basicSalary }}</div>
+                <div><p class="text-sm">RM{{ form.basicSalary || '-' }}</p></div>
             </div>
         </div>
         <hr class="w-full border-b border-b-[1px]" />
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-                <label for="requisitionPurpose" class="block mb-2 text-sm font-medium text-primary dark:text-white">
+                <label for="requisitionPurpose" class="block mb-2 text-sm font-semibold text-primary dark:text-white">
                     Requisition if for: </label>
                 <div class="flex flex-wrap gap-4">
                     <div>
+                        <p class="text-sm">
                         {{
                             form.requisitionPurpose === 'newRecruitment'
                                 ? 'New Recruitment'
@@ -58,13 +59,15 @@
                                         ? 'Replacement'
                                         : 'Select a purpose'
                         }}
+                        </p>
                     </div>
                 </div>
             </div>
             <div>
-                <label for="manpowerBudget" class="block mb-2 text-sm font-medium text-primary dark:text-white">
+                <label for="manpowerBudget" class="block mb-2 text-sm font-semibold text-primary dark:text-white">
                     Manpower request is: </label>
                 <div class="flex flex-wrap gap-4">
+                    <p class="text-sm">
                     {{
                         form.manpowerBudget === 'budgeted'
                             ? 'Budgeted'
@@ -72,26 +75,26 @@
                                 ? 'UnBudgeted'
                                 : 'Select a purpose'
                     }}
-
+</p>
                 </div>
             </div>
             <div>
-                <label for="name" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">Name
-                    of Person to be replaced: <span class="text-red-500">*</span></label>
-                <div>{{ form.name }}</div>
+                <label for="name" class="block mb-2 text-sm font-medium text-primary dark:text-white">Name
+                    of Person to be replaced: </label>
+                <div><p class="text-sm">{{ form.name }}</p></div>
             </div>
             <div>
                 <label for="reasonUnbudget"
-                    class="block mb-2 text-sm font-medium text-primary dark:text-white italic">Reason
+                    class="block mb-2 text-sm font-medium text-primary dark:text-white">Reason
                     for UnBudgeted:
                 </label>
                 <div
                     v-if="!form.reasonUnbudget || form.reasonUnbudget.length === 0 || form.reasonUnbudget.every(item => item.trim() === '')">
                     <span class="block text-gray-500">-</span>
                 </div>
-                <div v-else>{{ form.reasonUnbudget }}</div>
+                <div v-else><p class="text-sm">{{ form.reasonUnbudget }}</p></div>
             </div>
-            <div class="flex space-x-2">
+            <div class="">
                 <label for="position" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
                     Job Description & Organization Chart:
                 </label>
@@ -104,12 +107,12 @@
             <hr class="w-full border-b border-b-[1px] my-4" />
             <div>
                 <label for="requestReason"
-                    class="block mb-2 text-sm font-medium text-primary dark:text-white italic">Justification / Reason
+                    class="block mb-2 text-sm font-semibold text-primary dark:text-white italic">Justification / Reason
                     for request : </label>
                 <div v-if="!form.requestReason || form.requestReason.trim() === ''">
                     <span class="block text-gray-500">-</span>
                 </div>
-                <div v-else>{{ form.requestReason }}</div>
+                <div v-else><p class="text-sm">{{ form.requestReason }}</p></div>
             </div>
         </div>
     </div>
