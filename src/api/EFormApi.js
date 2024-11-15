@@ -382,12 +382,12 @@ export const UpdateJD = async (UpdateJd) => {
   }
 };
 
-export const UpdatePersonnelRequisitionHOD = async (UpdatePRHODData) => {
+export const UpdatePersonnelRequisitionHOD = async (updatePRHOD) => {
   try {
     const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
     const response = await axios.put(
       `${base_URL}/PersonnelRequisition/HOD`,
-      UpdatePRHODData,
+      updatePRHOD,
       {
         headers: {
           "Content-Type": "application/json",
