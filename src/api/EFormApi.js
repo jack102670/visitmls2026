@@ -276,51 +276,54 @@ export const PostUploadFile = async (files, userId, uniqueKey) => {
 
     files.forEach((file) => {
       formData.append("filecollection", file);
-
     });
     formData.append("userId", userId);
     formData.append("uniqueKey", uniqueKey);
 
-    const response = await axios.post(`${base_URL}/Files/MultiUploadImage/${userId}/${uniqueKey}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const response = await axios.post(
+      `${base_URL}/Files/MultiUploadImage/${userId}/${uniqueKey}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
     return response.data;
-
-  }catch (error){
+  } catch (error) {
     console.error("Error uploading files:", error);
     throw error;
   }
-
 };
 
 export const getUploadFile = async (userId, uniqueKey) => {
   try {
     const base_URL = process.env.VUE_APP_API_BASE_URL_UPLOAD_FILE;
-    const response = await axios.get(`${base_URL}/Files/GetMultiImage/${userId}/${uniqueKey}`);
+    const response = await axios.get(
+      `${base_URL}/Files/GetMultiImage/${userId}/${uniqueKey}`
+    );
     if (response.data.result) {
       // console.log("Upload File data:", response.data.result);
     } else {
       console.log("Upload File data not found");
     }
     return response.data.result;
-  } catch (error){
+  } catch (error) {
     console.error("Error fetching upload file data:", error);
     throw error;
   }
-}
+};
 
 export const UpdateTrainingEvaluationHOD = async (SectionBEvaluation) => {
   try {
     const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
     const response = await axios.put(
-      `${base_URL}/TrainingEvaluation/HOD`, 
+      `${base_URL}/TrainingEvaluation/HOD`,
       SectionBEvaluation,
       {
         headers: {
-          'Content-Type': 'application/json',
-        }
+          "Content-Type": "application/json",
+        },
       }
     );
 
@@ -350,27 +353,54 @@ export const UpdateOJT = async (UpdateOJT) => {
       return null;
     }
     return response.data.result;
-  }catch (error){
+  } catch (error) {
     console.error("Error updating on-job training data:", error);
     throw error;
   }
-}
+};
 
 export const UpdateJD = async (UpdateJd) => {
   try {
     const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
-    const response = await axios.put(`${base_URL}/JobDescription/HOD`, UpdateJd, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!response.data.result){
+    const response = await axios.put(
+      `${base_URL}/JobDescription/HOD`,
+      UpdateJd,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (!response.data.result) {
       console.log("Update JD Data not found");
       return null;
     }
     return response.data.result;
-  }catch(error){
+  } catch (error) {
     console.error("Error updating Job Description HOD Data:", error);
     throw error;
   }
-}
+};
+
+export const UpdatePersonnelRequisitionHOD = async (UpdatePRHODData) => {
+  try {
+    const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
+    const response = await axios.put(
+      `${base_URL}/PersonnelRequisition/HOD`,
+      UpdatePRHODData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (!response.data.result) {
+      console.log("Update PR HOD data not found");
+      return null;
+    }
+    return response.data.result;
+  } catch (error) {
+    console.error("Error updating PR Approval HOD");
+    throw error;
+  }
+};
