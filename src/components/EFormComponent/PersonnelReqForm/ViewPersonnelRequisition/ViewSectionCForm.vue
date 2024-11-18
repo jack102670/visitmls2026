@@ -5,25 +5,25 @@
             <div>
                     <label class="text-sm font-semibold text-primary dark:text-white sm:mr-1">
                         Name:</label>
-                    <p class="text-sm">{{ form.requesterName }}</p>
+                    <p class="text-sm">{{ form.requesterName || '-' }}</p>
             </div>
             <div>
                     <label class="text-sm font-semibold text-primary dark:text-white sm:mr-1">
                         Designation:</label>
-                    <p class="text-sm">{{ form.requesterDesignation }}</p>
+                    <p class="text-sm">{{ form.requesterDesignation || '-' }}</p>
             </div>
             <div>
           
                     <label class="text-sm font-semibold text-primary dark:text-white sm:mr-1">
                         Department:</label>
-                    <p class="text-sm">{{ form.requesterDept }}</p>
+                    <p class="text-sm">{{ form.requesterDept || '-' }}</p>
 
             </div>
             <div>
      
                     <label class="text-sm font-semibold text-primary dark:text-white sm:mr-1">
                         Date Requested:</label>
-                    <p class="text-sm">{{ formattedDateRequested }}</p>
+                    <p class="text-sm">{{ formattedDateRequested || '-' }}</p>
           
             </div>
         </div>
@@ -39,11 +39,6 @@
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                         <label for="yes-experienceRequired"
                             class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Yes</label>
-
-                        <input id="no-experienceRequired" type="radio" value="0" v-model="UpdateForm.data"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="no-experienceRequired"
-                            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">No</label>
                     </div>
                     <span class="text-red-500 text-sm" v-if="validationErrors.data">Please fill in this field</span>
                 </div>
@@ -230,7 +225,7 @@ export default {
                                 }
                             });
                             const updatePRHOD = {
-                                refNo: this.uniqueKey,
+                                refNo: this.refNo,
                                 data: this.UpdateForm.data,
                             };
 

@@ -435,7 +435,7 @@ export default {
                     cancelButtonColor: "#d33",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // console.log('Form data section B saved:', this.form);
+                        console.log('Form data section B saved:', this.form);
                         this.$emit("update-form", this.form, "B");
                         this.$emit("next-section", this.form);
                     }

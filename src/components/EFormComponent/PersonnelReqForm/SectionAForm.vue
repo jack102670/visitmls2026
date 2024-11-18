@@ -430,7 +430,7 @@ export default {
                     cancelButtonColor: '#d33',
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // console.log('Form data section A saved:', this.form);
+                        console.log('Form data section A saved:', this.form);
                         // console.log('reason undbudget:', this.form.reasonUnbudget);
 
                         const formData = {

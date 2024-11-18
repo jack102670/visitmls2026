@@ -140,7 +140,9 @@ export default {
             disciplineSpecification: Array.isArray(this.formData.sectionB.disciplineSpecification) ? this.formData.sectionB.disciplineSpecification.join(',') : '',
         };
 
-        // console.log('Submitting Personnel Data:', finalPersonnelData);
+        console.log('Submitting Personnel Data:', finalPersonnelData);
+        console.log('Final Personnel Data:', JSON.stringify(finalPersonnelData, null, 2));
+
         
         const response = await PostPersonnelRequsitionForm(finalPersonnelData);
         // console.log('API Response:', response);
