@@ -23,7 +23,6 @@
           <span v-if="validationErrors.department" class="text-red-500 text-sm">Please fill in this field.</span>
         </div>
       </div>
-
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label for="designation" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
@@ -48,7 +47,11 @@
 
     <hr class="border-[1px] my-4" />
 
+
     <h2 class="font-bold text-lg">Responsibilities</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+
     <div class="">
       <label for="responsibility" class="block  text-sm py-2 font-semibold text-primary dark:text-white italic">
         Responsibilities: <span class="text-red-500">*</span>
@@ -114,8 +117,7 @@
         <span v-if="validationErrors.duty" class="text-red-500 text-sm">Please fill in this field.</span>
       </div>
     </div>
-
-
+  </div>
     <div class="border-b my-4"></div>
 
     <h2 class="font-bold text-lg mb-4">Competence</h2>

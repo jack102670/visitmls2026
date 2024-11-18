@@ -18,10 +18,10 @@
         placeholder="Search for applications" />
     </div>
   </div>
-  <div class="relative overflow-x-auto sm:rounded-md">
+  <div class="relative overflow-x-auto rounded-md">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-md">
-      <thead class="text-md text-gray-700  bg-[#7393B3] dark:bg-gray-700 dark:text-gray-400 !rounded-t-md">
-        <tr class="text-white font-bold ">
+      <thead class="text-md text-gray-700  bg-[#7393B3] dark:bg-gray-700 dark:text-gray-400 rounded-md ">
+        <tr class="text-white font-bold rounded-md ">
           <th scope="col" class="p-4"></th>
           <th scope="col" class="px-6 py-3">No</th>
           <th scope="col" class="px-6 py-3">Reference Number</th>
