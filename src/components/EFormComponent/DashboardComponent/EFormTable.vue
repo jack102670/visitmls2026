@@ -25,7 +25,7 @@
           <th scope="col" class="p-4"></th>
           <th scope="col" class="px-6 py-3">No</th>
           <th scope="col" class="px-6 py-3">Reference Number</th>
-          <th scope="col" class="px-6 py-3 " >
+          <th scope="col" class="px-6 py-3 ">
             <div class="flex items-center">
               Requested Date
               <span class="ml-1 cursor-pointer" @click="toggleSort('dateRequested')">
@@ -65,7 +65,8 @@
           <td class="px-6 py-4">{{ application.requestType || 'N/A' }}</td>
           <td class="px-6 py-4">{{ application.requesterName || 'N/A' }}</td>
           <td class="px-6 py-4">{{ application.requesterDept || 'N/A' }}</td>
-          <td class="px-6 py-4">{{ application.status && application.status.trim() ? application.status : 'Pending' }}</td>
+          <td class="px-6 py-4">{{ application.status && application.status.trim() ? application.status : 'Pending' }}
+          </td>
           <td class="px-6 py-2">
             <div class="flex flex-col sm:flex-row gap-2">
               <button @click="viewApplication(application)"
@@ -73,10 +74,9 @@
                 View
               </button>
 
-              <button
-              
-                class="flex-1 bg-verified text-white font-regular  px-2 py-1 border-[1px] border-verified rounded-md hover:bg-transparent hover:border-verified hover:text-verified hover:border-[1px] text-xs sm:text-xs"
-                :disabled="isDisabled">
+              <button @click="DownloadPDF(application)"
+                class="flex-1 cursor-pointer bg-verified text-white font-regular  px-2 py-1 border-[1px] border-verified rounded-md hover:bg-transparent hover:border-verified hover:text-verified hover:border-[1px] text-xs sm:text-xs"
+                >
                 <span>Download</span>
               </button>
             </div>
@@ -133,6 +133,7 @@
     </div>
   </nav>
 
+  <TrainingEvaluationExportPDF ref="pdfExport" />
 
 </template>
 
@@ -143,7 +144,12 @@ import {
 import {
   store
 } from '@/views/store.js';
+import TrainingEvaluationExportPDF from '../ExportPdf/TrainingEvaluationExportPDF.vue';
+
 export default {
+  components: {
+    TrainingEvaluationExportPDF,
+  },
   data() {
     return {
       loading: false,
@@ -157,17 +163,18 @@ export default {
       isDisabled: true,
     };
   },
+
   computed: {
     filteredQueryApplications() {
-    const query = this.searchQuery.toLowerCase();
-    return this.sortedApplications.filter((application) => 
-      (application.refNo && application.refNo.toLowerCase().includes(query)) ||
-      (application.status && application.status.toLowerCase().includes(query)) ||
-      (application.requestType && application.requestType.toLowerCase().includes(query)) ||
-      (application.requesterName && application.requesterName.toLowerCase().includes(query)) ||
-      (application.requesterDept && application.requesterDept.toLowerCase().includes(query))
-    );
-  },
+      const query = this.searchQuery.toLowerCase();
+      return this.sortedApplications.filter((application) =>
+        (application.refNo && application.refNo.toLowerCase().includes(query)) ||
+        (application.status && application.status.toLowerCase().includes(query)) ||
+        (application.requestType && application.requestType.toLowerCase().includes(query)) ||
+        (application.requesterName && application.requesterName.toLowerCase().includes(query)) ||
+        (application.requesterDept && application.requesterDept.toLowerCase().includes(query))
+      );
+    },
     sortedApplications() {
       return [...this.userApplications].sort((a, b) => {
         const dateA = new Date(a[this.sortField]).getTime();
@@ -273,6 +280,18 @@ export default {
       }
 
     },
+    DownloadPDF(application) {
+      if (application.requestType === 'Training Evaluation Form') {
+        try {
+          this.$refs.pdfExport.generatePDF(application);
+        } catch (error) {
+          console.error("Error generating PDF:", error);
+          throw error;
+        }
+      } else {
+        console.error("Error: Invalid request type");
+      }
+    }
   },
   mounted() {
     this.getAllApplication();

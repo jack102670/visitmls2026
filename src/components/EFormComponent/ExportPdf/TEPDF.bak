@@ -5,10 +5,13 @@
 <script>
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+console.log(pdfFonts);
+
 
 export default {
   name: 'TrainingEvaluationExportPDF',
-
   methods: {
     generatePDF(application) {
       const dd = {
@@ -545,15 +548,7 @@ export default {
 
         }
       };
-      pdfMake.createPdf(dd).download('test.pdf');
-    },
+    }
   },
-  beforeMount() {
-  if (pdfMake && pdfFonts && pdfFonts.pdfMake && pdfFonts.pdfMake.vfs) {
-    pdfMake.vfs = pdfFonts.pdfMake.vfs;
-  } else {
-    console.error("Error: pdfMake or pdfFonts is not properly loaded");
-  }
-},
 };
 </script>
