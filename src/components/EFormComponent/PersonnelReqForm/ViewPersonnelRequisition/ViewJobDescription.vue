@@ -50,30 +50,30 @@
             <label for="responsibility" class="block  text-sm py-2 font-semibold text-primary dark:text-white italic">
               Responsibilities:
             </label>
+            <div class="space-y-2">
+            <div class="flex flex-wrap gap-2 ">
+              <span v-for="(field, index) in form.responsibility" :key="index" class="flex text-sm items-center w-full">
+                <span class="mr-2">{{ index + 1 }}.</span>
+                <span>{{ field || '-' }}</span>
+              </span>
+            </div>
+          </div>
           </div>
           <div>
             <label for="duty" class="block text-sm py-2 font-semibold text-primary dark:text-white italic">
               Duties:
             </label>
-          </div>
-          <div class="space-y-2">
-            <div class="flex flex-wrap gap-2 ">
-              <span v-for="(field, index) in form.responsibility" :key="index" class="flex text-sm items-center w-full">
-                <span class="mr-2">{{ index + 1 }}.</span>
-                <span>{{ field }}</span>
-              </span>
-            </div>
-          </div>
-
-
-          <div class="space-y-2">
+            <div class="space-y-2">
             <div class="flex flex-wrap gap-2">
               <span v-for="(field, index) in form.duty" :key="index" class="flex text-sm items-center w-full">
                 <span class="mr-2">{{ index + 1 }}.</span>
-                <span>{{ field }}</span>
+                <span>{{ field || '-' }}</span>
               </span>
             </div>
           </div>
+          </div>
+
+
         </div>
 
         <div class="border-b my-4"></div>

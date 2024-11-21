@@ -74,6 +74,7 @@
               </button>
 
               <button
+              
                 class="flex-1 bg-verified text-white font-regular  px-2 py-1 border-[1px] border-verified rounded-md hover:bg-transparent hover:border-verified hover:text-verified hover:border-[1px] text-xs sm:text-xs"
                 :disabled="isDisabled">
                 <span>Download</span>

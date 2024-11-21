@@ -1,4 +1,5 @@
 <template>
+    <LoadingOverlay :isLoading="isLoading" />
     <div class="space-y-4 mt-2 border-[1px] rounded-md px-4 py-2">
         <h1 class="font-bold text-md py-2">C. Verification / Approval</h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 py-2">
@@ -97,9 +98,14 @@
 </template>
 <script>
 import { getPersonnelRequisitonForm, UpdatePersonnelRequisitionHOD } from '@/api/EFormApi';
+import  LoadingOverlay from "@/components/EFormComponent/OtherComponent/LoadingOverlay.vue"
 import Swal from 'sweetalert2';
 export default {
     props: ["formData"],
+
+    components: {
+        LoadingOverlay,
+    },
 
     data() {
         return {
@@ -123,7 +129,8 @@ export default {
 
             },
             validationErrors: {},
-            isSubmittedForm: false
+            isSubmittedForm: false,
+            isLoading: false,
         };
     },
     computed: {
@@ -153,6 +160,7 @@ export default {
     },
     methods: {
         async getPersonnelRequisitonForm(refNo) {
+            this.isLoading = true;
             try {
                 const data = await getPersonnelRequisitonForm(refNo);
                 if (data) {
@@ -171,6 +179,8 @@ export default {
             } catch (error) {
                 console.error("Error loading training evaluation:", error);
                 throw error;
+            } finally {
+                this.isLoading = false;
             }
         },
 

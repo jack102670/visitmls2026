@@ -7,14 +7,16 @@
         <div @click="clickHambuger" class=" cursor-pointer border border-[1px] py-[6px] px-6 rounded-md">
           <font-awesome-icon icon="bars" :style="{ color: '#160959', fontSize: '20px' }" />
         </div>
+        <!-- <div class="border border-[1px] py-[6px] px-6 rounded-md">
+                  <font-awesome-icon :icon="['fas', 'circle-half-stroke']" class="cursor-pointer" :style="{ color: '#160959', fontSize: '20px' }" />
+        </div> -->
         <div class="">
           <h2 class="inline-flex font-bold text-lg uppercase text-primary">E-FORMS</h2>
         </div>
 
       </div>
       <div class="flex space-x-4 items-center justify-center px-4">
-        <font-awesome-icon :icon="['fas', 'circle-half-stroke']" class="cursor-pointer" :style="{ color: '#160959', fontSize: '20px' }" />
-        <font-awesome-icon @click="logout" icon="sign-out-alt" class="cursor-pointer" :style="{ color: '#160959', fontSize:'20px' }" />
+       <div class="space-x-2"><label class="text-s">logout</label><span><font-awesome-icon @click="logout" icon="sign-out-alt" class="cursor-pointer" :style="{ color: '#160959', fontSize:'20px' }" /></span></div> 
       </div>
     </div>
   </div>

@@ -42,7 +42,7 @@
     },
     data() {
       return {
-        openSidebar: false,
+        openSidebar: true,
         openMobileSidebar: false,
         isMobile: false, 
       };
