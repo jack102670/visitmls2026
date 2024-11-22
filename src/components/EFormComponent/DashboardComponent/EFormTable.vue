@@ -134,6 +134,7 @@
 
   <TrainingEvaluationExportPDF ref="pdfExport" />
   <OJTExportPDF ref="pdfExport" />
+  <JDExportPDF ref="pdfExport" />
 
 </template>
 
@@ -146,11 +147,13 @@ import {
 } from '@/views/store.js';
 import TrainingEvaluationExportPDF from '../ExportPdf/TrainingEvaluationExportPDF.vue';
 import OJTExportPDF from '../ExportPdf/OJTExportPDF.vue';
+import JDExportPDF from '../ExportPdf/JDExportPDF.vue';
 
 export default {
   components: {
     TrainingEvaluationExportPDF,
     OJTExportPDF,
+    JDExportPDF
   },
   data() {
     return {
@@ -296,6 +299,12 @@ export default {
         } catch (error) {
           console.error("Error generating PDF:", error);
           throw error;
+        }
+      } else if (application.requestType === 'Personnel Requisition Form') {
+        try {
+          this.$refs.pdfExport.generateJDPDF(application);
+        }catch(error){
+          console.error("Error generating PDF:", error);
         }
       } else {
         console.error("Error: Invalid request type for OJT");
