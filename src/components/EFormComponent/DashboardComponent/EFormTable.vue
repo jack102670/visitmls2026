@@ -75,8 +75,7 @@
               </button>
 
               <button @click="DownloadPDF(application)"
-                class="flex-1 cursor-pointer bg-verified text-white font-regular  px-2 py-1 border-[1px] border-verified rounded-md hover:bg-transparent hover:border-verified hover:text-verified hover:border-[1px] text-xs sm:text-xs"
-                >
+                class="flex-1 cursor-pointer bg-verified text-white font-regular  px-2 py-1 border-[1px] border-verified rounded-md hover:bg-transparent hover:border-verified hover:text-verified hover:border-[1px] text-xs sm:text-xs">
                 <span>Download</span>
               </button>
             </div>
@@ -134,6 +133,7 @@
   </nav>
 
   <TrainingEvaluationExportPDF ref="pdfExport" />
+  <OJTExportPDF ref="pdfExport" />
 
 </template>
 
@@ -145,10 +145,12 @@ import {
   store
 } from '@/views/store.js';
 import TrainingEvaluationExportPDF from '../ExportPdf/TrainingEvaluationExportPDF.vue';
+import OJTExportPDF from '../ExportPdf/OJTExportPDF.vue';
 
 export default {
   components: {
     TrainingEvaluationExportPDF,
+    OJTExportPDF,
   },
   data() {
     return {
@@ -288,8 +290,15 @@ export default {
           console.error("Error generating PDF:", error);
           throw error;
         }
+      } else if (application.requestType === 'On Job Training/familiarisation Programme Form') {
+        try {
+          this.$refs.pdfExport.generateOJTPDF(application);
+        } catch (error) {
+          console.error("Error generating PDF:", error);
+          throw error;
+        }
       } else {
-        console.error("Error: Invalid request type");
+        console.error("Error: Invalid request type for OJT");
       }
     }
   },
