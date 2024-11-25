@@ -132,9 +132,10 @@
     </div>
   </nav>
 
-  <TrainingEvaluationExportPDF ref="pdfExport" />
-  <OJTExportPDF ref="pdfExport" />
-  <JDExportPDF ref="pdfExport" />
+  <TrainingEvaluationExportPDF ref="trainingPdfExport" />
+  <OJTExportPDF ref="ojtPdfExport" />
+  <JDExportPDF ref="jdPdfExport" />
+  <PRExportPDF ref="prPdfExport" />
 
 </template>
 
@@ -148,12 +149,14 @@ import {
 import TrainingEvaluationExportPDF from '../ExportPdf/TrainingEvaluationExportPDF.vue';
 import OJTExportPDF from '../ExportPdf/OJTExportPDF.vue';
 import JDExportPDF from '../ExportPdf/JDExportPDF.vue';
+import PRExportPDF from '../ExportPdf/PRExportPDF.vue';
 
 export default {
   components: {
     TrainingEvaluationExportPDF,
     OJTExportPDF,
-    JDExportPDF
+    JDExportPDF,
+    PRExportPDF
   },
   data() {
     return {
@@ -288,21 +291,22 @@ export default {
     DownloadPDF(application) {
       if (application.requestType === 'Training Evaluation Form') {
         try {
-          this.$refs.pdfExport.generatePDF(application);
+          this.$refs.trainingPdfExport.generatePDF(application);
         } catch (error) {
           console.error("Error generating PDF:", error);
           throw error;
         }
       } else if (application.requestType === 'On Job Training/familiarisation Programme Form') {
         try {
-          this.$refs.pdfExport.generateOJTPDF(application);
+          this.$refs.ojtPdfExport.generateOJTPDF(application);
         } catch (error) {
           console.error("Error generating PDF:", error);
           throw error;
         }
       } else if (application.requestType === 'Personnel Requisition Form') {
         try {
-          this.$refs.pdfExport.generateJDPDF(application);
+          this.$refs.jdPdfExport.generateJDPDF(application);
+          this.$refs.prPdfExport.generatePRPDF(application);
         }catch(error){
           console.error("Error generating PDF:", error);
         }

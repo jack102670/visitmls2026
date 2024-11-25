@@ -1,0 +1,757 @@
+<template>
+    <div>
+
+    </div>
+</template>
+<script>
+
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+
+export default {
+    name: 'PRExportPDF',
+    methods: {
+        generatePRPDF(application) {
+            const PRPDF = {
+                header: {
+                    stack: [
+                        {
+                            columns: [
+                                { text: 'PKT GROUP COMPANIES', style: 'header' },
+                                {
+                                    stack: [
+                                        { text: 'PKT-FR06, Rev05, E/D 120824', style: 'headerRight', alignment: 'right' },
+
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    margin: [40, 10, 40, 10]
+                },
+                content: [
+                    {
+                        style: 'tableStyle',
+                        table: {
+                            widths: ['50%', '15%', '20%', '15%'],  // Fixed: Added % to last column
+                            body: [
+                                [
+                                    {
+                                        text: '',
+                                        alignment: 'right',
+                                        fontSize: 9,
+                                    },
+                                    {
+                                        text: 'Date Received:',
+                                        alignment: 'left',
+                                        fontSize: 9,
+                                    },
+                                    {
+                                        text: '_______________________',
+                                        alignment: 'left',
+                                        fontSize: 9,
+                                    },
+                                    {
+                                        text: '(For HRD used)',  // Fixed: Removed extra quote
+                                        alignment: 'left',
+                                        fontSize: 9,
+                                    },
+                                ]
+                            ],
+                        },
+                        layout: 'noBorders',
+                    },
+                    {
+                        text: 'PERSONNEL REQUISITION FORM',
+                        alignment: 'center',
+                        bold: true,
+                        fontSize: 14,
+                        margin: [0, 10, 0, 5]
+                    },
+                    {
+                        style: 'PrTable',
+                        table: {
+                            widths: ['16.6%', '16.6%', '16.6%', '16.6%', '16.6%', '16.6%'],
+                            body: [
+                                [
+                                    {
+                                        text: 'A. POSITION REQUIREMENTS',
+                                        colSpan: 6,
+                                        alignment: 'center',
+                                        bold: true,
+                                        fontSize: 12,
+                                        fillColor: '#E6E6E6'
+
+
+                                    }, {}, {}, {}, {}, {}
+                                ],
+                                [
+                                    {
+                                        text: 'POSITION TO BE FILLED:',
+                                        fontSize: 8,
+                                        bold: true,
+                                        border: [true, false, false, false],
+                                    }, {
+                                        text: '____________________________________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 2,
+                                        border: [false, false, false, false]
+                                    }, {
+
+                                    }, {
+                                        text: 'COMPANY, DEPARTMENT & LOCATION :',
+                                        fontSize: 8,
+                                        bold: true,
+                                        colSpan: 2,
+                                        border: [false, false, false, false]
+                                    }, {}, {
+                                        text: '_____________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, true, false]
+                                    }
+                                ],
+                                [
+                                    {
+                                        text: 'DATE REQUIRE:',
+                                        fontSize: 8,
+                                        bold: true,
+                                        border: [true, false, false, false],
+
+
+                                    }, {
+                                        text: '_____________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, false, false]
+                                    }, {
+                                        text: 'NO. OF PERSONNEL REQUIRED:',
+                                        fontSize: 8,
+                                        bold: true,
+                                        border: [false, false, false, false],
+                                    }, {
+                                        text: '_____________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, false, false]
+                                    }, {
+                                        text: 'BASIC SALARY PROPOSE:',
+                                        fontSize: 8,
+                                        bold: true,
+                                        border: [false, false, false, false],
+                                    }, {
+                                        text: '_____________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, true, false]
+                                    }
+                                ],
+                                [
+                                    {
+                                        text: '1. Requisition if for: ',
+                                        fontSize: 8,
+                                        bold: true,
+                                        colSpan: 6,
+                                        border: [true, true, true, false],
+                                    }, {}, {}, {}, {}, {}
+                                ],
+                                [
+                                    {
+                                        text: '[    ] New Reqruitment',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [true, false, false, false],
+
+                                    }, {
+                                        text: '[    ] Temporary',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, false, false],
+                                    }, {
+                                        text: '[    ] Replacement:-',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, false, false],
+                                    }, {
+                                        text: 'Name of Person to be replaced: ',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, false, false],
+                                    }, {
+                                        text: '____________________________________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 2,
+                                        border: [false, false, true, false],
+                                    }, {}
+                                ],
+                                [
+                                    {
+                                        text: '2. Manpower Request is: ',
+                                        fontSize: 8,
+                                        bold: true,
+                                        colSpan: 6,
+                                        border: [true, false, true, false],
+                                    }, {}, {}, {}, {}, {}
+                                ],
+                                [
+                                    {
+                                        text: '[    ] Budgeted',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [true, false, false, false],
+                                    }, {
+                                        text: '[    ] Unbudget',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, false, false],
+                                    }, {
+                                        text: 'Reason for Unbudget:',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, false, false],
+                                    }, {
+                                        text: '____________________________________________________________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 3,
+                                        border: [false, false, true, false],
+                                    }, {
+
+                                    }, {}
+                                ],
+                                [
+                                    {
+                                        text: '*Kindly attach Job Description and Organization chart. ',
+                                        fontSize: 8,
+                                        bold: true,
+                                        colSpan: 6,
+                                        border: [true, false, true, false],
+                                    }, {}, {}, {}, {}, {}
+                                ],
+                                [
+                                    {
+                                        text: 'Justification / Reason for Request: ',
+                                        fontSize: 8,
+                                        bold: true,
+                                        colSpan: 6,
+                                        border: [true, true, true, false],
+                                    }, {}, {}, {}, {}, {}
+                                ],
+                                [
+                                    {
+                                        text: ' ',
+                                        fontSize: 8,
+                                        bold: true,
+                                        colSpan: 6,
+                                        border: [true, false, true, false],
+                                    }, {}, {}, {}, {}, {}
+                                ],
+                                [
+                                    {
+                                        text: 'PERSON SPECIFICATION ',
+                                        alignment: 'center',
+                                        bold: true,
+                                        fontSize: 12,
+                                        colSpan: 6,
+                                        fillColor: '#E6E6E6'
+
+                                    }, {}, {}, {}, {}, {}
+                                ],
+                                [
+                                    {
+                                        text: '1. Age / Age limit:',
+                                        bold: false,
+                                        fontSize: 8,
+                                        border: [true, false, false, false],
+
+                                    }, {
+                                        text: '_____________________',
+                                        bold: false,
+                                        fontSize: 8,
+                                        colSpan: 5,
+                                        border: [false, false, true, false],
+                                    }, {}, {}, {}, {}
+                                ],
+                                [
+                                    {
+                                        text: '2. Experience Required?',
+                                        bold: false,
+                                        fontSize: 8,
+                                        border: [true, false, false, false],
+
+                                    }, {
+                                        text: '[    ] Yes',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, false, false],
+                                    }, {
+                                        text: '[    ] No',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, false, false],
+                                    }, {
+                                        text: 'If Yes, No of Years:',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, false, false],
+                                    }, {
+                                        text: '_____________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 2,
+                                        border: [false, false, true, false],
+                                    }, {}
+                                ],
+                                [
+                                    {
+                                        text: '3. Qualification Required:',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [true, false, false, false],
+
+                                    }, {
+                                        text: '[    ] SPM / SPVM / STPM',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 2,
+                                        border: [false, false, false, false],
+                                    }, {
+
+                                    }, {
+                                        text: '[    ] Diploma / Degree',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, false, false],
+                                    }, {
+                                        text: 'Please Specify Discipline:',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, false, false],
+                                    }, {
+                                        text: '_____________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, true, false],
+                                    }
+                                ],
+                                [
+                                    {
+                                        text: '4. Computer literacy?',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [true, false, false, false],
+
+                                    }, {
+                                        text: '[    ] Yes',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, false, false],
+                                    }, {
+                                        text: '[    ] No',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, false, false],
+                                    }, {
+                                        text: 'If Yes, Please specify:',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, false, false],
+                                    }, {
+                                        text: '____________________________________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 2,
+                                        border: [false, false, true, false],
+                                    }, {}
+                                ],
+                                [
+                                    {
+                                        text: '5. Posses Own transport?',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [true, false, false, false],
+
+                                    }, {
+                                        text: '[    ] Yes',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, false, false],
+                                    }, {
+                                        text: '[    ] No',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 4,
+                                        border: [false, false, true, false],
+                                    }, {}, {}, {}
+                                ],
+                                [
+                                    {
+                                        colSpan: 6,
+                                        border: [true, false, true, false],
+                                        stack: [
+                                            {
+                                                text: [
+                                                    {
+                                                        text: 'List of functional / technical job competencies required: ',
+                                                        fontSize: 8,
+                                                        bold: false
+                                                    },
+                                                    {
+                                                        text: 'e.g Selling/Accounting/Debtors Control/IT Management etc.',
+                                                        fontSize: 8,
+                                                        bold: false,
+                                                        italics: true
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {}, {}, {}, {}, {}
+                                ],
+                                [
+                                    {
+                                        text: ' ',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 6,
+                                        border: [true, false, true, false],
+
+                                    }, {}, {}, {}, {}, {}
+                                ],
+                                [
+                                    {
+                                        text: [
+                                            {
+                                                text: '6. List of personal competencies required: ',
+                                                fontSize: 8
+                                            },
+                                            {
+                                                text: 'e.g Leadership/Perseverance/Customer Driven/Interpersonal Skills etc.',
+                                                fontSize: 8,
+                                                italics: true
+                                            }
+                                        ],
+                                        colSpan: 6,
+                                        border: [true, false, true, false]
+                                    },
+                                    {}, {}, {}, {}, {}
+                                ],
+                                [
+                                    {
+                                        text: ' ',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 6,
+                                        border: [true, false, true, false],
+
+                                    }, {}, {}, {}, {}, {}
+                                ],
+                                [
+                                    {
+                                        text: 'Others, Please specify: ',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [true, false, false, false],
+
+                                    }, {
+                                        text: '__________________________________________________________ ',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 5,
+                                        border: [false, false, true, false],
+                                    }, {}, {}, {}, {}
+                                ],
+                                [
+                                    {
+                                        text: 'C. VERIFICATION / APPROVAL ',
+                                        alignment: 'center',
+                                        bold: true,
+                                        fontSize: 12,
+                                        colSpan: 6,
+                                        fillColor: '#E6E6E6'
+
+                                    }, {}, {}, {}, {}, {}
+                                ],
+                                [
+                                    {
+                                        text: '1. REQUESTED BY: ',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 3,
+                                        border: [true, false, true, false],
+
+                                    }, {}, {}, {
+                                        text: '2. VERIFIED BY: ',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 3,
+                                        border: [false, false, true, false],
+                                    }, {}, {}
+                                ],
+                                [
+                                    {
+                                        text: '____________________________________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 2,
+                                        border: [true, false, false, false],
+
+                                    }, {}, {
+                                        text: '_____________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, true, false],
+                                    }, {
+                                        text: '____________________________________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 2,
+                                        border: [true, false, false, false],
+                                    }, {}, {
+                                        text: '_____________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, true, false],
+                                    }
+                                ],
+                                [
+                                    {
+                                        text: 'NAME:   (Name here)  ',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 2,
+                                        border: [true, false, false, false],
+
+                                    }, {}, {
+                                        text: 'DATE',
+                                        fontSize: 8,
+                                        bold: false,
+                                        alignment: 'center',
+                                        border: [false, false, true, false],
+                                    }, {
+                                        text: 'NAME:   (Name here)  ',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 2,
+                                        border: [true, false, false, false],
+                                    }, {}, {
+                                        text: 'DATE',
+                                        fontSize: 8,
+                                        bold: false,
+                                        alignment: 'center',
+                                        border: [false, false, true, false],
+                                    }
+                                ],
+                                [
+                                    {
+                                        text: 'DESIGNATION:   (Designation Here) ',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 3,
+                                        border: [true, false, true, false],
+
+                                    }, {}, {}, {
+                                        text: 'DEPARTMENT HEAD',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 3,
+                                        border: [true, false, true, false],
+                                    }, {}, {}
+                                ],
+                                [
+                                    {
+                                        text: '3. VERIFIED BY: ',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 3,
+                                        border: [true, true, true, false],
+
+                                    }, {}, {}, {
+                                        text: '4. APPROVED BY: ',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 3,
+                                        border: [true, true, true, false],
+                                    }, {}, {}
+                                ],
+                                [
+                                    {
+                                        text: '____________________________________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 2,
+                                        border: [true, false, false, false],
+
+                                    }, {}, {
+                                        text: '_____________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, true, false],
+                                    }, {
+                                        text: '____________________________________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 2,
+                                        border: [true, false, false, false],
+                                    }, {}, {
+                                        text: '_____________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, true, false],
+                                    }
+                                ],
+                                [
+                                    {
+                                        text: 'DIVISION HEAD',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 2,
+                                        border: [true, false, false, false],
+
+                                    }, {}, {
+                                        text: 'DATE',
+                                        fontSize: 8,
+                                        bold: false,
+                                        alignment: 'center',
+                                        border: [false, false, true, false],
+                                    }, {
+                                        text: 'GROUP PRESIDENT / CEO / CHRO / HR',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 2,
+                                        border: [true, false, false, false],
+                                    }, {}, {
+                                        text: 'DATE',
+                                        fontSize: 8,
+                                        bold: false,
+                                        alignment: 'center',
+                                        border: [false, false, true, false],
+                                    }
+                                ],
+                                [
+                                    {
+                                        text: 'CHECKED BY HRD',
+                                        fontSize: 8,
+                                        bold: true,
+                                        colSpan: 6,
+                                        italics: true,
+                                        border: [true, true, true, false],
+                                    }, {}, {}, {}, {}, {}
+                                ],
+                                [
+                                    {
+                                        text: 'NAME: ',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [true, false, false, false],
+                                    },
+                                    {
+                                        text: ' ____________________________________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 2,
+                                        border: [false, false, false, false],
+                                    }, {}, {
+                                        text: 'DATE: ',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, false, false],
+                                    }, {
+                                        text: ' ___________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 2,
+                                        border: [false, false, true, false],
+                                    }, {}
+                                ],
+                                [
+                                    {
+                                        text: 'ACTION BY: ',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [true, false, false, false],
+                                    },
+                                    {
+                                        text: ' ____________________________________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 2,
+                                        border: [false, false, false, false],
+                                    }, {}, {
+                                        text: 'DATE: ',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, false, false],
+                                    }, {
+                                        text: ' ___________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 2,
+                                        border: [false, false, true, false],
+                                    }, {}
+                                ],
+                                [
+                                    {
+                                        text: 'POSITION FILLED BY: ',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [true, false, false, true],
+                                    },
+                                    {
+                                        text: ' ____________________________________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 2,
+                                        border: [false, false, false, true],
+                                    }, {}, {
+                                        text: 'DATE JOINED/REMARKS: ',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, false, true],
+                                    }, {
+                                        text: '____________________________________________',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 2,
+                                        border: [false, false, true, true],
+                                    }, {}
+                                ],
+                            ]
+                        }
+                    },
+                ],
+                styles: {
+                    header: {
+                        fontSize: 10,
+                        margin: [0, 0, 0, 10]
+                    },
+                    headerRight: {
+                        fontSize: 7,
+                        // margin: [0, 1, 0, 1]
+                    },
+                    subheader: {
+                        fontSize: 15,
+                        bold: true
+                    },
+                    quote: {
+                        italics: true
+                    },
+                    small: {
+                        fontSize: 8
+                    }
+                }
+            };
+            pdfMake.createPdf(PRPDF).download('testPR.pdf');
+        },
+    },
+    beforeMount() {
+        if (pdfMake && pdfFonts && pdfFonts.pdfMake && pdfFonts.pdfMake.vfs) {
+            pdfMake.vfs = pdfFonts.pdfMake.vfs;
+        } else {
+            console.error("Error: pdfMake or pdfFonts is not properly loaded");
+        }
+    },
+};
+</script>
