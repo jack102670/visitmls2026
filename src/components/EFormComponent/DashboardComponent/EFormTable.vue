@@ -136,6 +136,7 @@
   <OJTExportPDF ref="ojtPdfExport" />
   <JDExportPDF ref="jdPdfExport" />
   <PRExportPDF ref="prPdfExport" />
+  <ETExportPDF ref="etPdfExport" />
 
 </template>
 
@@ -150,13 +151,15 @@ import TrainingEvaluationExportPDF from '../ExportPdf/TrainingEvaluationExportPD
 import OJTExportPDF from '../ExportPdf/OJTExportPDF.vue';
 import JDExportPDF from '../ExportPdf/JDExportPDF.vue';
 import PRExportPDF from '../ExportPdf/PRExportPDF.vue';
+import ETExportPDF from '../ExportPdf/ETExportPDF.vue';
 
 export default {
   components: {
     TrainingEvaluationExportPDF,
     OJTExportPDF,
     JDExportPDF,
-    PRExportPDF
+    PRExportPDF,
+    ETExportPDF,
   },
   data() {
     return {
@@ -308,6 +311,12 @@ export default {
           this.$refs.jdPdfExport.generateJDPDF(application);
           this.$refs.prPdfExport.generatePRPDF(application);
         }catch(error){
+          console.error("Error generating PDF:", error);
+        }
+      } else if (application.requestType === 'Employee Transfer Form'){
+        try{
+          this.$refs.etPdfExport.generateET(application);
+        }catch (error){
           console.error("Error generating PDF:", error);
         }
       } else {

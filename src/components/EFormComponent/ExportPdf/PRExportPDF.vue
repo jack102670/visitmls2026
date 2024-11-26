@@ -33,28 +33,20 @@ export default {
                     {
                         style: 'tableStyle',
                         table: {
-                            widths: ['50%', '15%', '20%', '15%'],  // Fixed: Added % to last column
+                            widths: ['50%', '15%', '20%', '15%'], 
                             body: [
                                 [
                                     {
-                                        text: '',
-                                        alignment: 'right',
-                                        fontSize: 9,
+                                        text: '', alignment: 'right', fontSize: 9,
                                     },
                                     {
-                                        text: 'Date Received:',
-                                        alignment: 'left',
-                                        fontSize: 9,
+                                        text: 'Date Received:', alignment: 'left', fontSize: 9,
                                     },
                                     {
-                                        text: '_______________________',
-                                        alignment: 'left',
-                                        fontSize: 9,
+                                        text: '_______________________',alignment: 'left', fontSize: 9,
                                     },
                                     {
-                                        text: '(For HRD used)',  // Fixed: Removed extra quote
-                                        alignment: 'left',
-                                        fontSize: 9,
+                                        text: '(For HRD used)', alignment: 'left', fontSize: 9,
                                     },
                                 ]
                             ],
@@ -62,11 +54,7 @@ export default {
                         layout: 'noBorders',
                     },
                     {
-                        text: 'PERSONNEL REQUISITION FORM',
-                        alignment: 'center',
-                        bold: true,
-                        fontSize: 14,
-                        margin: [0, 10, 0, 5]
+                        text: 'PERSONNEL REQUISITION FORM', alignment: 'center', bold: true, fontSize: 14, margin: [0, 10, 0, 5]
                     },
                     {
                         style: 'PrTable',
