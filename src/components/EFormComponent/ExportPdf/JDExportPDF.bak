@@ -1,0 +1,314 @@
+const JDExportPDF = {
+                content: [
+                    {
+                        style: 'tableJD',
+                        table: {
+                            widths: ['20%', '30%', '20%', '10%', '10%', '10%'],
+                            body: [
+                                [
+                                    {
+                                        text: 'PKT GROUP OF COMPANIES',
+                                        fontSize: 14,
+                                        bold: true,
+                                        color: 'blue',
+                                        colSpan: 4,
+                                        rowSpan: 3,
+                                        alignment: 'center',
+                                        verticalAlignment: 'middle',
+                                        margin: [0, 12, 0, 0],
+
+
+                                    }, {}, {}, {},
+                                    {
+                                        text: 'form No',
+                                        fontSize: 7,
+                                        alignment: 'center',
+                                    }, {
+                                        text: 'PKT-FR33',
+                                        fontSize: 7,
+                                        alignment: 'center',
+                                    },
+                                ],
+                                [
+                                    {}, {}, {}, {},
+                                    {
+                                        text: 'Rev',
+                                        fontSize: 7,
+                                        alignment: 'center',
+                                    },
+                                    {
+                                        text: '03',
+                                        fontSize: 7,
+                                        alignment: 'center',
+                                    },
+                                ],
+                                [
+                                    {}, {}, {}, {},
+                                    {
+                                        text: 'Effective Date',
+                                        fontSize: 7,
+                                        alignment: 'center',
+                                    },
+                                    {
+                                        text: '18th May 2015 ',
+                                        fontSize: 7,
+                                        alignment: 'center',
+                                    },
+                                ],
+                                [
+                                    {
+                                        text: 'JOB DESCRIPTION',
+                                        alignment: 'center',
+                                        fontSize: 12,
+                                        colSpan: 6,
+                                        bold: true,
+
+
+                                    }, {}, {}, {}, {}, {},
+                                ],
+                                [
+                                    {
+                                        text: 'Company:',
+                                        fontSize: 8,
+                                        bold: true,
+                                        border: [true, false, false, false]
+
+                                    },
+                                    {
+                                        text: '',
+                                        colSpan: 5,
+                                        border: [false, false, true, false]
+
+                                    }, {}, {}, {}, {},
+                                ],
+                                [
+                                    {
+                                        text: 'Department:',
+                                        fontSize: 8,
+                                        bold: true,
+                                        border: [true, false, false, false]
+
+                                    },
+                                    {
+                                        text: '',
+                                        colSpan: 5,
+                                        border: [false, false, true, false]
+
+                                    }, {}, {}, {}, {},
+                                ],
+                                [
+                                    {
+                                        text: 'Position:',
+                                        fontSize: 8,
+                                        bold: true,
+                                        border: [true, false, false, false]
+                                    },
+                                    {
+                                        text: '',
+                                        colSpan: 5,
+                                        border: [false, false, true, false]
+                                    }, {}, {}, {}, {},
+                                ],
+                                [
+                                    {
+                                        text: 'Report To:',
+                                        fontSize: 8,
+                                        bold: true,
+                                        border: [true, false, false, false]
+                                    },
+                                    {
+                                        text: '',
+                                        colSpan: 5,
+                                        border: [false, false, true, false]
+
+                                    }, {}, {}, {}, {},
+                                ],
+                                [
+                                    {
+                                        text: 'RESPONSIBILITIES',
+                                        alignment: 'center',
+                                        fontSize: 12,
+                                        bold: true,
+                                        colSpan: 6,
+                                        fillColor: '#E6E6E6'
+
+                                    }, {}, {}, {}, {}, {},
+                                ],
+                                [
+                                    {
+                                        text: ' ',
+                                        alignment: 'left',
+                                        fontSize: 12,
+                                        bold: true,
+                                        colSpan: 6,
+
+                                    }, {}, {}, {}, {}, {},
+                                ],
+                                [
+                                    {
+                                        text: 'DUTIES',
+                                        alignment: 'center',
+                                        fontSize: 12,
+                                        bold: true,
+                                        colSpan: 6,
+                                        fillColor: '#E6E6E6'
+                                    }, {}, {}, {}, {}, {},
+                                ],
+                                [
+                                    {
+                                        text: ' ',
+                                        alignment: 'left',
+                                        fontSize: 12,
+                                        bold: true,
+                                        colSpan: 6,
+                                    }, {}, {}, {}, {}, {},
+                                ],
+                                [
+                                    {
+                                        text: 'COMPETENCE',
+                                        alignment: 'center',
+                                        fontSize: 12,
+                                        bold: true,
+                                        colSpan: 6,
+                                        fillColor: '#E6E6E6'
+                                    }, {}, {}, {}, {}, {},
+                                ],
+                                [
+                                    {
+                                        text: 'Education:',
+                                        fontSize: 8,
+                                        bold: true,
+                                        border: [true, false, false, false]
+
+                                    },
+                                    {
+                                        text: '',
+                                        colSpan: 5,
+                                        border: [false, false, true, false]
+
+                                    }, {}, {}, {}, {},
+                                ],
+                                [
+                                    {
+                                        text: 'Experience:',
+                                        fontSize: 8,
+                                        bold: true,
+                                        border: [true, false, false, false]
+                                    },
+                                    {
+                                        text: '',
+                                        colSpan: 5,
+                                        border: [false, false, true, false]
+
+                                    }, {}, {}, {}, {},
+                                ],
+                                [
+                                    {
+                                        text: 'Skills:',
+                                        fontSize: 8,
+                                        bold: true,
+                                        border: [true, false, false, false]
+
+                                    },
+                                    {
+                                        text: '',
+                                        colSpan: 5,
+                                        border: [false, false, true, false]
+
+                                    }, {}, {}, {}, {},
+                                ],
+                                [
+                                    {
+                                        text: 'PREPARED BY:',
+                                        fontSize: 8,
+                                        bold: true,
+                                        alignment: 'left',
+                                        border: [true, true, false, false]
+
+                                    },
+                                    {
+                                        text: '',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, true, true, false]
+                                    }, {
+                                        text: 'APPROVED BY:',
+                                        fontSize: 8,
+                                        bold: true,
+                                        alignment: 'left',
+                                        border: [true, true, false, false]
+                                    },
+                                    {
+                                        text: '',
+                                        fontSized: 8,
+                                        bold: false,
+                                        colSpan: 3,
+                                        border: [false, true, true, false]
+
+
+                                    }, {}, {},
+                                ],
+                                [
+                                    {
+                                        text: 'Name:',
+                                        fontSize: 8,
+                                        bold: true,
+                                        border: [true, false, false, false]
+
+                                    }, {
+                                        text: '',
+                                        fontSize: 8,
+                                        bold: true,
+                                        border: [false, false, true, false]
+                                    }, {
+                                        text: 'Name:',
+                                        fontSize: 8,
+                                        bold: true,
+                                        border: [false, false, false, false]
+                                    }, {
+                                        text: '',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 3,
+                                        border: [false, false, true, false]
+                                    }, {}, {},
+                                ],
+                                [
+                                    {
+                                        text: 'Dateq:',
+                                        fontSize: 8,
+                                        bold: true,
+                                        border: [true, false, false, true]
+                                    }, {
+                                        text: '',
+                                        fontSize: 8,
+                                        bold: false,
+                                        border: [false, false, false, true]
+                                    },
+                                    {
+                                        text: 'Date:',
+                                        fontSize: 8,
+                                        bold: true,
+                                        border: [true, false, false, true]
+                                    }, {
+                                        text: '',
+                                        fontSize: 8,
+                                        bold: false,
+                                        colSpan: 3,
+                                        border: [false, false, true, true]
+                                    }, {}, {},
+                                ],
+                            ],
+                        },
+                    }
+                ],
+                styles: {
+                    header: {
+                        fontSize: 10,
+                        margin: [0, 0, 0, 10]
+                    },
+                    headerRight: {
+                        fontSize: 7,
+                    },
+                }
+            };
