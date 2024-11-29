@@ -68,6 +68,7 @@ import ViewTrainingEvaluation from "../views/e-forms/ViewRequest/ViewTrainingEva
 import ViewEmployeeTransfer from "../views/e-forms/ViewRequest/ViewEmployeeTransfer.vue";
 import ViewPersonnelRequisiton from "@/views/e-forms/ViewRequest/ViewPersonnelRequisiton.vue";
 import ViewOnJobTraining from "@/views/e-forms/ViewRequest/ViewOnJobTraining.vue";
+import ViewOrientationCheckList from "@/views/e-forms/ViewRequest/ViewOrientationCheckList.vue";
 
 const routes = [
   {
@@ -616,6 +617,17 @@ const routes = [
         path: "",
         name: "view-on-job-training",
         component: ViewOnJobTraining
+      }
+    ]
+  },
+  {
+    path:"/view-orientation-list/:refNo",
+    component: EFormNavbar,
+    children: [
+      {
+        path:"",
+        name:"view-orientation-list",
+        component: ViewOrientationCheckList
       }
     ]
   }

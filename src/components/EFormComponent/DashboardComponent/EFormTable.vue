@@ -137,6 +137,7 @@
   <JDExportPDF ref="jdPdfExport" />
   <PRExportPDF ref="prPdfExport" />
   <ETExportPDF ref="etPdfExport" />
+  <EOCExportPDF ref="eocPdfExport" />
 
 </template>
 
@@ -152,6 +153,7 @@ import OJTExportPDF from '../ExportPdf/OJTExportPDF.vue';
 import JDExportPDF from '../ExportPdf/JDExportPDF.vue';
 import PRExportPDF from '../ExportPdf/PRExportPDF.vue';
 import ETExportPDF from '../ExportPdf/ETExportPDF.vue';
+import EOCExportPDF from '../ExportPdf/EOCExportPDF.vue';
 
 export default {
   components: {
@@ -160,6 +162,7 @@ export default {
     JDExportPDF,
     PRExportPDF,
     ETExportPDF,
+    EOCExportPDF
   },
   data() {
     return {
@@ -286,8 +289,9 @@ export default {
       } else if (application.requestType === 'On Job Training/familiarisation Programme Form') {
         this.$router.push({ name: 'view-on-job-training', params: { refNo: application.refNo } });
       } else if (application.requestType === 'Orientation List Form') {
+        this.$router.push({ name: 'view-orientation-list', params: { refNo: application.refNo } }); 
+      }else if (application.requestType === 'Orientation List Form'){
         this.$router.push({ name: 'view-orientation-list', params: { refNo: application.refNo } });
-        
       }
       else {
         console.error("Error: Invalid request type");
@@ -322,7 +326,13 @@ export default {
         }catch (error){
           console.error("Error generating PDF:", error);
         }
-      } else if (application.requestType === 'O'){
+       }
+      else if (application.requestType === 'Orientation List Form'){
+        try{
+          this.$refs.eocPdfExport.generateEOC(application);
+        }catch(error){
+          console.error("Error generating PDF:", error);
+        }
         
       } 
       else {

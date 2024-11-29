@@ -64,6 +64,23 @@ export const PostHODSectionAOrientationCheckList = async (checkListData) => {
   }
 };
 
+export const GetHODOrientationChecklist = async (refNo) => {
+  try {
+    const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
+    const response = await axios.get(`${base_URL}/OrientationList/${refNo}`);
+    if (response.data.result) {
+      // console.log("Training Evaluation data:", response.data.result);
+    } else {
+      console.log("HOD Orientation list data not found");
+    }
+    return response.data;
+
+  } catch (error){
+    console.error("Error getting the HOD orientation list data", error);
+    throw error;
+  }
+}
+
 export const PostSectionAEmployeeRequest = async (EmployeeTransferData) => {
   try {
     const base_URL = process.env.VUE_APP_API_BASE_URL_E_FORM;
