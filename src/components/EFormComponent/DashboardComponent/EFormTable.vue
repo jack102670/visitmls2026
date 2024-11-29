@@ -290,8 +290,6 @@ export default {
         this.$router.push({ name: 'view-on-job-training', params: { refNo: application.refNo } });
       } else if (application.requestType === 'Orientation List Form') {
         this.$router.push({ name: 'view-orientation-list', params: { refNo: application.refNo } }); 
-      }else if (application.requestType === 'Orientation List Form'){
-        this.$router.push({ name: 'view-orientation-list', params: { refNo: application.refNo } });
       }
       else {
         console.error("Error: Invalid request type");
