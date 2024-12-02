@@ -270,7 +270,6 @@ export default {
         const data = await getAllApplication(id);
         if (data) {
           this.userApplications = data;
-          console.log("User application in table", data);
         }
       } catch (error) {
         console.error("Error fetching user application:", error.response || error);
@@ -297,9 +296,16 @@ export default {
 
     },
     DownloadPDF(application) {
+      const refNo = application?.refNo;
+        if (!refNo) {
+          console.error("Error: refNo is undefined in the application object.");
+          return;
+        } else {
+          console.log("refNo from eformtable:", refNo);
+        }
       if (application.requestType === 'Training Evaluation Form') {
         try {
-          this.$refs.trainingPdfExport.generatePDF(application);
+          this.$refs.trainingPdfExport.generatePDF(refNo);
         } catch (error) {
           console.error("Error generating PDF:", error);
           throw error;

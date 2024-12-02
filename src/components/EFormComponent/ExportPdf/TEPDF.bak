@@ -1,19 +1,4 @@
-<template>
-  <div></div>
-</template>
 
-<script>
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
-console.log(pdfFonts);
-
-
-export default {
-  name: 'TrainingEvaluationExportPDF',
-  methods: {
-    generatePDF(application) {
       const dd = {
         header: {
           stack: [
@@ -548,7 +533,3 @@ export default {
 
         }
       };
-    }
-  },
-};
-</script>

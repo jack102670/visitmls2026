@@ -174,6 +174,7 @@ export default {
                 programSupport: '',
                 trainingNature: [],
                 trainingBenefit: '',
+                generalComment: '',
             },
         };
     },
