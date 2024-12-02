@@ -10,6 +10,7 @@
         </div>
         <div class="space-y-2">
           <ViewSectionAOrientationChecklist />
+          <ViewSectionBOrientationChecklist />
         </div>
       </div>
     </div>
@@ -17,7 +18,8 @@
   <script>
   
   import breadcrumbs from '../../../components/EFormComponent/OtherComponent/BreadCumbs.vue'
-  import ViewSectionAOrientationChecklist from "../../../components/EFormComponent/OrientationChecklistForm/ViewOrientationChecklist.vue/ViewSectionAOrientationChecklist.vue"
+  import ViewSectionAOrientationChecklist from "../../../components/EFormComponent/OrientationChecklistForm/ViewOrientationChecklist.vue/ViewSectionAOrientationChecklist.vue";
+  import ViewSectionBOrientationChecklist from '@/components/EFormComponent/OrientationChecklistForm/ViewOrientationChecklist.vue/ViewSectionBOrientationChecklist.vue';
   
   
   export default {
@@ -31,7 +33,8 @@
     },
     components: {
       breadcrumbs,
-      ViewSectionAOrientationChecklist
+      ViewSectionAOrientationChecklist,
+      ViewSectionBOrientationChecklist
   
     },
     mounted() {
