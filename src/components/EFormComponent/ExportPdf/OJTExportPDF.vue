@@ -47,7 +47,7 @@ export default {
                 const year = date.getFullYear();
                 const month = String(date.getMonth() + 1).padStart(2, '0');
                 const day = String(date.getDate()).padStart(2, '0');
-                return `${year}-${month}-${day}`;
+                return `${year}/${month}/${day}`;
             }
             return '';
         },
@@ -62,11 +62,6 @@ export default {
                         ...data,
                     };
                     this.status = data.status;
-
-                    console.log('Fetched data:', data);
-                    console.log('Company data:', this.displayPDF.company);
-
-
 
                     if (this.displayPDF.hrDateFinish) {
                         const [hrDateStart, hrDateEnd] = this.displayPDF.hrDateFinish.split(' - ').map(date => date.trim());
@@ -101,9 +96,7 @@ export default {
         async generateOJTPDF(refNo) {
             try {
                 await this.getOnJobTraining(refNo);
-                if (!this.displayPDF.company || this.displayPDF.company.trim() === '') {
-                    console.error('Company data is missing or empty.');
-                }
+
                 const {
                     staffName,
                     company,
@@ -121,7 +114,6 @@ export default {
                     status,
                     hrVerification,
                 } = this.displayPDF;
-                console.log('Company in PDF generation:', company);
                 const OJTPDF = {
                     header: {
                         stack: [
@@ -357,7 +349,6 @@ export default {
                         },
                     }
                 };
-                console.log('OJTPDF Object:', company);
                 pdfMake.createPdf(OJTPDF).download(`On_Job_Training_${refNo}.pdf`);
             }
             catch (error) {

@@ -123,7 +123,7 @@
 
       </div>
     </div>
-    <div class="border border-[1px] rounded-md px-4 py-6 sm:px-6">
+    <div class="border border-[1px] rounded-md px-4  sm:px-6">
       <h1 class="font-bold text-md py-2">Approval</h1>
       <div class="space-y-4" v-if="DisplayApprovalForm.approvedDate === ''">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -242,6 +242,7 @@ export default {
               ...JobDescription,
             };
           }
+          console.log("Unique key:", this.uniqueKey);
         }
       } catch (error) {
         console.error("Error fetching job description:", error);

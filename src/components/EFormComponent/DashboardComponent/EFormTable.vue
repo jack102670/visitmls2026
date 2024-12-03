@@ -288,21 +288,23 @@ export default {
       } else if (application.requestType === 'On Job Training/familiarisation Programme Form') {
         this.$router.push({ name: 'view-on-job-training', params: { refNo: application.refNo } });
       } else if (application.requestType === 'Orientation List Form') {
-        this.$router.push({ name: 'view-orientation-list', params: { refNo: application.refNo } }); 
+        this.$router.push({ name: 'view-orientation-list', params: { refNo: application.refNo } });
       }
       else {
         console.error("Error: Invalid request type");
       }
 
     },
+
+
     DownloadPDF(application) {
       const refNo = application?.refNo;
-        if (!refNo) {
-          console.error("Error: refNo is undefined in the application object.");
-          return;
-        } else {
-          console.log("refNo from eformtable:", refNo);
-        }
+      if (!refNo) {
+        console.error("Error: refNo is undefined in the application object.");
+        return;
+      } else {
+        console.log("refNo from eformtable:", refNo);
+      }
       if (application.requestType === 'Training Evaluation Form') {
         try {
           this.$refs.trainingPdfExport.generatePDF(refNo);
@@ -319,26 +321,26 @@ export default {
         }
       } else if (application.requestType === 'Personnel Requisition Form') {
         try {
-          this.$refs.jdPdfExport.generateJDPDF(application);
-          this.$refs.prPdfExport.generatePRPDF(application);
-        }catch(error){
+          this.$refs.jdPdfExport.generateJDPDF(refNo);
+          // this.$refs.prPdfExport.generatePRPDF(application);
+        } catch (error) {
           console.error("Error generating PDF:", error);
         }
-      } else if (application.requestType === 'Employee Transfer Form'){
-        try{
+      } else if (application.requestType === 'Employee Transfer Form') {
+        try {
           this.$refs.etPdfExport.generateET(application);
-        }catch (error){
+        } catch (error) {
           console.error("Error generating PDF:", error);
         }
-       }
-      else if (application.requestType === 'Orientation List Form'){
-        try{
+      }
+      else if (application.requestType === 'Orientation List Form') {
+        try {
           this.$refs.eocPdfExport.generateEOC(application);
-        }catch(error){
+        } catch (error) {
           console.error("Error generating PDF:", error);
         }
-        
-      } 
+
+      }
       else {
         console.error("Error: Invalid request type for OJT");
       }

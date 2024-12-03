@@ -228,9 +228,6 @@ export default {
                     } else {
                         this.bulletPointsArray = ['No descriptions available.'];
                     }
-                    console.log("Hr date finished:", this.DisplayForm.hrDateFinish);
-                    console.log("Staff date finished:", this.DisplayForm.staffDateFinish);
-                    console.log("On Job Training:", this.DisplayForm);
                 }
             } catch (error) {
                 console.error("Error loading training evaluation:", error);
