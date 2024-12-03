@@ -37,7 +37,6 @@ export default {
   methods: {
 
     async GetViewTrainingEvaluation(refNo) {
-      console.log('RefNo in get:', refNo);
       try {
         const data = await GetViewTrainingEvaluation(refNo);
         if (data) {
@@ -45,8 +44,7 @@ export default {
             ...data.displayPDF,
             ...data,
           };
-          console.log('Fetched data:', data);
-          console.log('displayPDF:', this.displayPDF);
+          
         } else {
           console.warn("No data retrieved for refNo:", refNo);
         }

@@ -55,6 +55,18 @@
                 </div>
                 <div class="space-y-2">
                     <label for="requesterVerification"
+                        class="block text-sm font-semibold text-primary dark:text-white">Trainer
+                        Verification:</label>
+                    <label for="requesterVerification"
+                        class="block text-sm font-regular text-primary dark:text-white italic">This section are for HR
+                        verification
+                        <span class="text-red-500">*</span></label>
+                    <!-- <input id="requesterVerification" type="radio"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"> -->
+                    
+                </div>
+                <div class="space-y-2">
+                        <label for="requesterVerification"
                         class="block text-sm font-semibold text-primary dark:text-white">Trainee
                         Acknowledgement:</label>
                     <label for="requesterVerification"
@@ -64,18 +76,7 @@
                     <div class="flex items-center" v-if="DisplayForm.requesterVerification === 'True'">
                         <p class="text-sm"> Verified </p>
                     </div>
-                </div>
-                <div class="space-y-2">
-                    <label for="requesterVerification"
-                        class="block text-sm font-semibold text-primary dark:text-white">Trainer
-                        Acknowledgement:</label>
-                    <label for="requesterVerification"
-                        class="block text-sm font-regular text-primary dark:text-white italic">This section are for HR
-                        verification
-                        <span class="text-red-500">*</span></label>
-                    <!-- <input id="requesterVerification" type="radio"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"> -->
-                </div>
+                    </div>
             </div>
             <hr class="w-full border-b border-b-[1px] my-4" />
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
@@ -107,20 +108,8 @@
                 </div>
                 <div class="space-y-2">
                     <label for="requesterVerification"
-                        class="block text-sm font-semibold text-primary dark:text-white">Trainee
-                        Acknowledgement:</label>
-                    <label for="requesterVerification"
-                        class="block text-sm font-regular text-primary dark:text-white italic">I acknowledge that my
-                        trainer introduced me to the familiarization program.
-                    </label>
-                    <div class="flex items-center" v-if="DisplayForm.requesterVerification === 'True'">
-                        <p class="text-sm"> Verified</p>
-                    </div>
-                </div>
-                <div class="space-y-2">
-                    <label for="requesterVerification"
                         class="block text-sm font-semibold text-primary dark:text-white">Trainer
-                        Acknowledgement:</label>
+                        Verification:</label>
                     <label for="requesterVerification" v-if="status !== 'Completed by Superior. Waiting for HR'"
                         class="block text-sm font-regular text-primary dark:text-white italic">This section is for HOD
                         verification
@@ -133,6 +122,18 @@
                     <span v-if="isSubmitAttempted && !isVerified" class="text-red-500 text-sm">Please fill in this fields</span>
                     <div class="" v-if="status === 'Completed by Superior. Waiting for HR'">
                         <p class=" dark:text-white text-sm">Verified</p>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label for="requesterVerification"
+                        class="block text-sm font-semibold text-primary dark:text-white">Trainee
+                        Acknoledgement:</label>
+                    <label for="requesterVerification"
+                        class="block text-sm font-regular text-primary dark:text-white italic">I acknowledge that my
+                        trainer introduced me to the familiarization program.
+                    </label>
+                    <div class="flex items-center" v-if="DisplayForm.requesterVerification === 'True'">
+                        <p class="text-sm"> Verified</p>
                     </div>
                 </div>
 

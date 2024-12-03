@@ -312,7 +312,7 @@ export default {
         }
       } else if (application.requestType === 'On Job Training/familiarisation Programme Form') {
         try {
-          this.$refs.ojtPdfExport.generateOJTPDF(application);
+          this.$refs.ojtPdfExport.generateOJTPDF(refNo);
         } catch (error) {
           console.error("Error generating PDF:", error);
           throw error;

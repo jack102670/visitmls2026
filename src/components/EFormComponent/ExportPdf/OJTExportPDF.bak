@@ -1,20 +1,46 @@
-const OJTPDF = {
+var dd = {
                 header: {
                     stack: [
                         {
                             columns: [
-                                { text: 'PKT GROUP COMPANIES', style: 'header' },
                                 {
+                                    text: 'PKT GROUP COMPANIES',
+                                    alignment: 'left',
+                                    style: 'header',
+                                    width: '73%'
+                                },
+                                {
+                                    width: '*',
+                                    alignment: 'right',
                                     stack: [
-                                        { text: 'FORM NO: PKT-FR13', style: 'headerRight', alignment: 'right' },
-                                        { text: 'REV NO: 02', style: 'headerRight', alignment: 'right' },
-                                        { text: 'Effective Date: 13th October 2024', style: 'headerRight', alignment: 'right' }
+                                        { 
+                                            text: [
+                                                { text: 'FORM NO:', style: 'headerRight' },
+                                                { text: '                         ', style: 'headerRight' }, // Add spaces here
+                                                { text: 'PKT-FR13', style: 'headerRight' }
+                                            ]
+                                        },
+                                        { 
+                                            text: [
+                                                { text: 'REV NO:', style: 'headerRight' },
+                                                { text: '                                      ', style: 'headerRight' }, // Add spaces here
+                                                { text: '02', style: 'headerRight' }
+                                            ]
+                                        },
+                                        { 
+                                            text: [
+                                                { text: 'Effective Date:', style: 'headerRight' },
+                                                { text: '    ', style: 'headerRight' }, // Add spaces here
+                                                { text: '19th September 2017', style: 'headerRight' }
+                                            ]
+                                        }
                                     ]
                                 }
-                            ]
+                            ],
+                                margin:[40,10,40,0],
                         }
-                    ],
-                    margin: [40, 10, 40, 10]
+                    ]
+
                 },
                 content: [
                     {
@@ -171,6 +197,7 @@ const OJTPDF = {
                         layout: 'noBorders',
                     }
                 ],
+                
                 styles: {
                     SectionATitle: {
                         fontSize: 12,
