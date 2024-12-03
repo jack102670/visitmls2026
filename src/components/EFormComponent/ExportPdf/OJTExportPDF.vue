@@ -140,14 +140,14 @@ export default {
                                             {
                                                 text: [
                                                     { text: 'FORM NO:', style: 'headerRight' },
-                                                    { text: '                         ', style: 'headerRight' }, 
+                                                    { text: '                         ', style: 'headerRight' },
                                                     { text: 'PKT-FR13', style: 'headerRight' }
                                                 ]
                                             },
                                             {
                                                 text: [
                                                     { text: 'REV NO:', style: 'headerRight' },
-                                                    { text: '                                      ', style: 'headerRight' }, 
+                                                    { text: '                                      ', style: 'headerRight' },
                                                     { text: '02', style: 'headerRight' }
                                                 ]
                                             },
@@ -186,10 +186,10 @@ export default {
                                         {}, {}, {}
                                     ],
                                     [
-                                        { text: '1. Name of staff:', fontSize: 10, alignment: 'left', bold: true, border: [true, false, false, true] },
-                                        { text: staffName || ' ', fontSize: 10, alignment: 'left', border: [false, false, false, true], width: '40%' },
-                                        { text: formType === 'familiarisation' ? '[   /   ]' : '[        ]', fontSize: 9, alignment: 'center', bold: false, border: [false, false, false, true] },
-                                        { text: 'Familiriasation Prog.', fontSize: 10, alignment: 'left', border: [false, true, true, true] }
+                                        { text: '1. Name of staff:', fontSize: 10, alignment: 'left', bold: true, border: [true, false, false, false] },
+                                        { text: staffName || ' ', fontSize: 10, alignment: 'left', border: [false, false, false, false], width: '40%' },
+                                        { text: formType === 'familiarisation' ? '[   /   ]' : '[        ]', fontSize: 9, alignment: 'center', bold: false, border: [false, false, false, false] },
+                                        { text: 'Familiriasation Prog.', fontSize: 10, alignment: 'left', border: [false, true, true, false] }
                                     ],
                                     [
                                         { text: '2. Date Joined: ', fontSize: 10, alignment: 'left', bold: true, border: [true, false, false, false] },
@@ -198,10 +198,10 @@ export default {
                                         { text: 'On Job Training', fontSize: 10, alignment: 'left', bold: false, border: [false, false, true, false] }
                                     ],
                                     [
-                                        { text: '3. Company: ', colSpan: 4, fontSize: 10, alignment: 'left', bold: true, border: [true, true, true, true] },
-                                        { text: company && company.trim() !== '' ? company.trim() : ' - ', fontSize: 10, alignment: 'left', bold: false, border: [false, false, false, false] },
-                                        { text: ' ', fontSize: 10, alignment: 'left', bold: true, border: [true, true, true, true] },
-                                        { text: ' ', fontSize: 10, alignment: 'left', bold: true, border: [false, true, true, true] },
+                                        { text: '3. Company: ', fontSize: 10, alignment: 'left', bold: true, border: [true, false, false, false] },
+                                        { text: company || ' ', fontSize: 10, alignment: 'left', bold: false, border: [false, false, false, false] },
+                                        { text: ' ', fontSize: 10, alignment: 'left', bold: true, border: [false, false, false, false] },
+                                        { text: ' ', fontSize: 10, alignment: 'left', bold: true, border: [false, false, true, false] },
                                     ],
 
                                     [
@@ -275,13 +275,13 @@ export default {
                             ]
                         },
                         {
-                            
+
                             fontSize: 10,
                             text: '2. If the answer is No, What are the actions to be taken?:',
                         },
                         {
-                            
-                            margin:[0, 2, 0, 2],
+
+                            margin: [0, 2, 0, 2],
                             text: [
                                 { text: reasonifNo || '-', color: '#000000', fontSize: 10, bold: false, margin: [0, 4, 0, 2], },
 
@@ -353,7 +353,7 @@ export default {
                         RemarksText: {
                             fontSize: 10,
                             bold: true,
-                            margin:[0,0,0,2]
+                            margin: [0, 0, 0, 2]
                         },
                     }
                 };
