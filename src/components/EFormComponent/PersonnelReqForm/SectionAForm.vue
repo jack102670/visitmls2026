@@ -311,8 +311,8 @@ export default {
                     fileUpload: this.localFileUpload
                 }, 'A');
 
-                console.log("File removed:", fileItem.file);
-                console.log("Files after removal:", this.localFileUpload);
+                // console.log("File removed:", fileItem.file);
+                // console.log("Files after removal:", this.localFileUpload);
             } else {
                 console.error("Error removing file:", error.message);
                 Swal.fire({
@@ -325,7 +325,7 @@ export default {
 
         async fetchHrData() {
             const username_id = store.getSession().userDetails.userId;
-            console.log("This is the current usernameid", username_id);
+            // console.log("This is the current usernameid", username_id);
             this.loadingText = 'Fetching';
             this.loading = true;
             try {
@@ -430,7 +430,7 @@ export default {
                     cancelButtonColor: '#d33',
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        console.log('Form data section A saved:', this.form);
+                        // console.log('Form data section A saved:', this.form);
                         // console.log('reason undbudget:', this.form.reasonUnbudget);
 
                         const formData = {

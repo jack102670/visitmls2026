@@ -149,8 +149,8 @@ export default {
                     cancelButtonColor: "#d33",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        console.log("Files being submitted:", this.formData.fileUpload || []);
-                        console.log("Form data saved:", this.form);
+                        // console.log("Files being submitted:", this.formData.fileUpload || []);
+                        // console.log("Form data saved:", this.form);
                         this.$emit("update-form", this.form, "C");
                         this.$emit("submit-form", this.form);
                     }

@@ -321,8 +321,8 @@ export default {
         }
       } else if (application.requestType === 'Personnel Requisition Form') {
         try {
-          this.$refs.jdPdfExport.generateJDPDF(refNo);
-          // this.$refs.prPdfExport.generatePRPDF(application);
+          // this.$refs.jdPdfExport.generateJDPDF(refNo);
+          this.$refs.prPdfExport.generatePRPDF(refNo);
         } catch (error) {
           console.error("Error generating PDF:", error);
         }

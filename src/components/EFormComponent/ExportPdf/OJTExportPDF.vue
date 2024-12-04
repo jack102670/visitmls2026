@@ -92,7 +92,6 @@ export default {
                 throw error;
             }
         },
-
         async generateOJTPDF(refNo) {
             try {
                 await this.getOnJobTraining(refNo);
@@ -333,7 +332,6 @@ export default {
                         },
                         headerRight: {
                             fontSize: 7,
-                            // margin: [0, 1, 0, 1]
                         },
                         tableObjectives: {
                             margin: [0, 5, 0, 15]

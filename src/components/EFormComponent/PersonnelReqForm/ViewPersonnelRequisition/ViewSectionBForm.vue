@@ -190,8 +190,6 @@ export default {
                         this.minAge = min;
                         this.maxAge = max;
                     }
-                    console.log("Min Age:", this.minAge);
-                    console.log("Max Age:", this.maxAge);
                 }
             } catch (error) {
                 console.error("Error loading Personnel requisition section B:", error);
