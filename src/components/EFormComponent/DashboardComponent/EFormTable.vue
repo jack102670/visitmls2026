@@ -335,7 +335,7 @@ export default {
       }
       else if (application.requestType === 'Orientation List Form') {
         try {
-          this.$refs.eocPdfExport.generateEOC(application);
+          this.$refs.eocPdfExport.generateEOC(refNo);
         } catch (error) {
           console.error("Error generating PDF:", error);
         }

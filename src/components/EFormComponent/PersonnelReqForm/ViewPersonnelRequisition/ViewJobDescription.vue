@@ -72,12 +72,8 @@
             </div>
           </div>
           </div>
-
-
         </div>
-
         <div class="border-b my-4"></div>
-
         <h2 class="font-bold text-md mb-4">Competence</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>

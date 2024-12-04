@@ -257,8 +257,6 @@ export default {
 
       },
       validationErrors: {},
-
-
       // multiple fields
       showInputField: false,
       newField: "",
@@ -272,9 +270,6 @@ export default {
       newExperienceField: "",
       showInputSkillsField: false,
       newSkillsField: "",
-
-
-
       props: {
         formData: Object,
       },
@@ -289,7 +284,7 @@ export default {
       localStorage.setItem("uniqueKey", this.form.pr_uniqueKey);
     }
 
-    console.log("Unique Key assigned to JobDescription:", this.form.pr_uniqueKey);
+    // console.log("Unique Key assigned to JobDescription:", this.form.pr_uniqueKey);
   },
   methods: {
     // multifield fields for duty
@@ -372,7 +367,7 @@ export default {
           this.form.requesterDesignation = data.position_title;
           this.form.verfierEmpId = data.reporting_to;
         }
-        console.log("Employee Data:", this.user);
+        // console.log("Employee Data:", this.user);
       } catch (error) {
         console.error("Error fetching Employee data:", error);
         throw new Error("Failed to fetch Employee data. Please try again.");
@@ -427,7 +422,7 @@ export default {
           confirmButtonText: "Yes, Submit!",
         }).then(async (result) => {
           if (result.isConfirmed) {
-            console.log("Form data for JD saved:", this.form);
+            // console.log("Form data for JD saved:", this.form);
             try {
               Swal.fire({
                 title: 'Submitting...',
@@ -442,9 +437,8 @@ export default {
                 ...this.form,
                 uniqueKey: this.uniqueKey || this.generateUniqueKey(),
               };
-              console.log("Data to be submitted:", JobDescriptionData);
               const response = await PostJobDescription(JobDescriptionData);
-              console.log("Job Description Response:", response);
+              // console.log("Job Description Response:", response);
               localStorage.removeItem("uniqueKey");
               Swal.close();
 

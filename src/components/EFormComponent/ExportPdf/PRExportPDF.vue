@@ -151,7 +151,7 @@ export default {
                     requesterDesignation,
                 } = this.displayPDF;
 
-                const checkmark = (condition) => (condition ? '[  /  ]' : '[     ]')
+                const checkmark = (condition) => (condition ? '[  /  ]' : '[     ]');
 
                 const newRecruitmentChecked = checkmark(requisitionPurpose === 'newRecruitment');
                 const temporaryChecked = checkmark(requisitionPurpose === 'temporary');
