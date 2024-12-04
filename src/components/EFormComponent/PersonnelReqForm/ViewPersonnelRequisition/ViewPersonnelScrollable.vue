@@ -11,7 +11,7 @@
                 </a>
             </li>
         </ul>
-        <component :is="currentComponent" :formData="formData" @update-form="updateFormData" @next-section="handleNext"
+        <component :is="currentComponent" v-bind="$attrs" :formData="formData" @update-form="updateFormData" @next-section="handleNext"
             @previous-section="handlePrevious"></component>
     </div>
 </template>

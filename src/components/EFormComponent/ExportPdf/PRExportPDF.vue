@@ -127,7 +127,6 @@ export default {
                 const {
                     position,
                     company,
-                    status,
                     dateRequired,
                     department,
                     location,
@@ -138,7 +137,6 @@ export default {
                     name,
                     reasonUnbudget,
                     requestReason,
-                    ageLimit,
                     computerLiteracyRequired,
                     expRequired,
                     yearsRequired,
@@ -150,9 +148,7 @@ export default {
                     personalCompetency,
                     others,
                     requesterName,
-                    requesterDept,
                     requesterDesignation,
-                    dateRequested,
                 } = this.displayPDF;
 
                 const checkmark = (condition) => (condition ? '[  /  ]' : '[     ]')
@@ -954,9 +950,7 @@ export default {
     beforeMount() {
         if (pdfMake && pdfFonts && pdfFonts.pdfMake && pdfFonts.pdfMake.vfs) {
             pdfMake.vfs = pdfFonts.pdfMake.vfs;
-        } else {
-            console.error("Error: pdfMake or pdfFonts is not properly loaded");
-        }
+        } 
     },
 };
 </script>

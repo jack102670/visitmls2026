@@ -236,13 +236,13 @@ export default {
               approvedDate: JobDescription.approvedDate,
               approverDesignation: JobDescription.approvedDesignation,
             };
-            console.log("Display approval date:", this.DisplayApprovalForm);
+            // console.log("Display approval date:", this.DisplayApprovalForm);
             this.form = {
               ...JobDescription.form,
               ...JobDescription,
             };
           }
-          console.log("Unique key:", this.uniqueKey);
+          // console.log("Unique key:", this.uniqueKey);
         }
       } catch (error) {
         console.error("Error fetching job description:", error);
@@ -306,10 +306,10 @@ export default {
                 data: String(this.UpdateForm.data),
               };
 
-              console.log("Payload to be sent:", UpdateJd);
+              // console.log("Payload to be sent:", UpdateJd);
 
               const update = await UpdateJD(UpdateJd);
-              console.log(update);
+              // console.log(update);
 
               Swal.close();
 

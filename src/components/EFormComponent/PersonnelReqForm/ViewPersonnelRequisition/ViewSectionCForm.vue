@@ -77,7 +77,7 @@
                 </div>
                 <div class="space-y-2">
                     <label for="basicSalary" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
-                        Verifier designation:
+                        Verifier department:
                     </label>
                     <div>
                         <p class="text-sm">{{ DisplayForm.verifier1?.dept || '-' }}</p>
@@ -101,6 +101,7 @@ import { getPersonnelRequisitonForm, UpdatePersonnelRequisitionHOD } from '@/api
 import  LoadingOverlay from "@/components/EFormComponent/OtherComponent/LoadingOverlay.vue"
 import Swal from 'sweetalert2';
 export default {
+    emits: ['updateForm', 'nextSection', 'previousSection'],
     props: ["formData"],
 
     components: {
@@ -174,7 +175,6 @@ export default {
                         status: data.status,
                         verifier1: data.verifier1 || this.DisplayForm.verifier1
                     };
-                    console.log(this.DisplayForm.verifier1);
                 }
             } catch (error) {
                 console.error("Error loading training evaluation:", error);
@@ -238,11 +238,8 @@ export default {
                                 refNo: this.refNo,
                                 data: this.UpdateForm.data,
                             };
-
-                            console.log("Submitting HOD form data:", updatePRHOD);
-
+                            
                             const update = await UpdatePersonnelRequisitionHOD(updatePRHOD);
-                            console.log(update);
 
                             Swal.close();
 

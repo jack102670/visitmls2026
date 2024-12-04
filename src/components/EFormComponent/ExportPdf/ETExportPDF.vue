@@ -618,9 +618,7 @@ export default {
     onMounted() {
         if (pdfMake && pdfFonts && pdfFonts.pdfMake && pdfFonts.pdfMake.vfs) {
             pdfMake.vfs = pdfFonts.pdfMake.vfs;
-        } else {
-            console.error("Error: pdfMake or pdfFonts is not properly loaded");
-        }
+        } 
     },
 }
 </script>
