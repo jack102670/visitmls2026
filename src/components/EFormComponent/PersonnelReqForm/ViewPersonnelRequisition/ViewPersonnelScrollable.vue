@@ -5,7 +5,7 @@
             <li class="me-2" v-for="section in ['A', 'B', 'C', 'D']" :key="section">
                 <a href="#" @click.prevent="changeSection(section)" :class="[
                     'inline-block p-4 rounded-t-lg',
-                    currentSection === section ? 'text-blue-600 bg-gray-100 dark:bg-gray-800 dark:text-blue-500' : 'hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300',
+                    currentSection === section ? 'text-white bg-primary dark:bg-gray-800 dark:text-blue-500' : 'hover:text-white bg-[#ADD8E6] text-white hover:bg-[#2d2169] dark:hover:bg-gray-800 dark:hover:text-gray-300',
                 ]">
                     Section {{ section }}
                 </a>

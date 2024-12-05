@@ -1,32 +1,48 @@
 <template>
     <LoadingOverlay :isLoading="isLoading" />
-    <div class="space-y-4 mt-2 border-[1px] rounded-md px-4 py-2">
+    <div class="space-y-4 mt-2 border-[1px] rounded-md shadow-sm px-4 py-2">
         <h1 class="font-bold text-md py-2">C. Verification / Approval</h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 py-2">
-            <div>
-                    <label class="text-sm font-semibold text-primary dark:text-white sm:mr-1">
-                        Name:</label>
-                    <p class="text-sm">{{ form.requesterName || '-' }}</p>
+
+            <div class="sm:pr-4 sm:border-r pr-4 sm:border-gray-300">
+                <div class="grid grid-cols-1 gap-4">
+                    <div>
+                        <label class="text-sm font-semibold text-primary dark:text-white sm:mr-1">
+                            Name:</label>
+                        <div>
+                            <p class="text-sm">{{ form.requesterName || '-' }}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+
+                            <label class="text-sm font-semibold text-primary dark:text-white sm:mr-1">
+                                Department:</label>
+                            <div>
+                                <p class="text-sm">{{ form.requesterDept || '-' }}</p>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            <div>
+            <div class="pl-4">
+                <div class="grid grid-cols-1 gap-4">
+                <div>
                     <label class="text-sm font-semibold text-primary dark:text-white sm:mr-1">
                         Designation:</label>
                     <p class="text-sm">{{ form.requesterDesignation || '-' }}</p>
-            </div>
-            <div>
-          
-                    <label class="text-sm font-semibold text-primary dark:text-white sm:mr-1">
-                        Department:</label>
-                    <p class="text-sm">{{ form.requesterDept || '-' }}</p>
-
-            </div>
-            <div>
-     
+                </div>
+                <div>
                     <label class="text-sm font-semibold text-primary dark:text-white sm:mr-1">
                         Date Requested:</label>
                     <p class="text-sm">{{ formattedDateRequested || '-' }}</p>
-          
+
+                </div>
             </div>
+        </div>
         </div>
         <hr class="border-[1px]" />
         <div class="space-y-2" v-if="DisplayForm.status !== 'Verified by Verifier 1. Waiting for Verifier 2'">
@@ -59,38 +75,52 @@
         </div>
         <div v-else>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="space-y-2">
-                    <label for="basicSalary" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
-                        Verify by:
-                    </label>
-                    <div>
-                        <p class="text-sm">{{ DisplayForm.verifier1?.name || '-' }}</p>
+                <div class="sm:pr-4 sm:border-r pr-4 sm:border-gray-300">
+                    <div class="grid grid-cols-1 gap-4">
+
+                        <div class="space-y-2">
+                            <label for="basicSalary"
+                                class="block mb-1 text-sm font-semibold text-primary dark:text-white">
+                                Verify by:
+                            </label>
+                            <div>
+                                <p class="text-sm">{{ DisplayForm.verifier1?.name || '-' }}</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label for="basicSalary"
+                                class="block mb-1 text-sm font-semibold text-primary dark:text-white">
+                                Verifier department:
+                            </label>
+                            <div>
+                                <p class="text-sm">{{ DisplayForm.verifier1?.dept || '-' }}</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-                <div class="space-y-2">
-                    <label for="basicSalary" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
-                        Verifier Designation:
-                    </label>
-                    <div>
-                        <p class="text-sm">{{ DisplayForm.verifier1?.designation || '-' }}</p>
+                <div class="pl-4">
+                    <div class="grid grid-cols-1 gap-4">
+                    <div class="space-y-2">
+                        <label for="basicSalary" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
+                            Verifier Designation:
+                        </label>
+                        <div>
+                            <p class="text-sm">{{ DisplayForm.verifier1?.designation || '-' }}</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="basicSalary" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
+                            Date:
+                        </label>
+                        <div>
+                            <p class="text-sm">{{ formattedVerifierDate || '-' }}</p>
+                        </div>
                     </div>
                 </div>
-                <div class="space-y-2">
-                    <label for="basicSalary" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
-                        Verifier department:
-                    </label>
-                    <div>
-                        <p class="text-sm">{{ DisplayForm.verifier1?.dept || '-' }}</p>
-                    </div>
-                </div>
-                <div class="space-y-2">
-                    <label for="basicSalary" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
-                        Date:
-                    </label>
-                    <div>
-                        <p class="text-sm">{{ formattedVerifierDate || '-' }}</p>
-                    </div>
-                </div>
+            </div>
+
             </div>
 
         </div>
@@ -98,7 +128,7 @@
 </template>
 <script>
 import { getPersonnelRequisitonForm, UpdatePersonnelRequisitionHOD } from '@/api/EFormApi';
-import  LoadingOverlay from "@/components/EFormComponent/OtherComponent/LoadingOverlay.vue"
+import LoadingOverlay from "@/components/EFormComponent/OtherComponent/LoadingOverlay.vue"
 import Swal from 'sweetalert2';
 export default {
     emits: ['updateForm', 'nextSection', 'previousSection'],
@@ -235,7 +265,7 @@ export default {
                                 refNo: this.refNo,
                                 data: this.UpdateForm.data,
                             };
-                            
+
                             const update = await UpdatePersonnelRequisitionHOD(updatePRHOD);
 
                             Swal.close();
