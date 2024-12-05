@@ -9,7 +9,7 @@
           <breadcrumbs :breadcrumbs="breadcrumbs" />
         </div>
         <div class="space-y-2">
-          <div class="space-y-2 border-[1px] rounded-md">
+          <div class="space-y-2 border-[1px] shadow-sm rounded-md">
             <ViewOnJobTraining  @update-verify="handleVerifyUpdate" />
             <ViewOJTHOD :verify-status="verifyStatus" />
           </div>

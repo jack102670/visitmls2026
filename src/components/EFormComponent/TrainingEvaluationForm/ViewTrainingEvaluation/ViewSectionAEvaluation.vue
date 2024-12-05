@@ -1,5 +1,5 @@
 <template>
-    <div class="border border-[1px] rounded-md mt-2 p-4 space-y-2">
+    <div class="border border-[1px] rounded-md shadow-sm mt-2 p-4 space-y-2">
         <div class="space-y-4">
             <div>
                 <p class="block text-md font-bold text-primary dark:text-white">Introduction</p>

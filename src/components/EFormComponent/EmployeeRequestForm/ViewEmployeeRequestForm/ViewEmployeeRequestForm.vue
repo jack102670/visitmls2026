@@ -1,5 +1,5 @@
 <template>
-    <div class="space-y-4 border border-[1px] rounded-md px-4 py-2">
+    <div class="space-y-4 border border-[1px] rounded-md shadow-sm px-4 py-2">
         <h1 class="font-bold text-md py-2">A. Employee Particulars</h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>

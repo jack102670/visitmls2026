@@ -7,7 +7,7 @@
                     @click.prevent="changeSection('A')"
                     :class="[
                         'inline-block p-4 rounded-t-lg text-white',
-                        currentSection === 'A' ? 'bg-primary text-white dark:bg-gray-800' : 'bg-[#ADD8E6] hover:bg-[#2d2169] hover:text-white dark:hover:bg-gray-800'
+                        currentSection === 'A' ? 'bg-primary text-white dark:bg-gray-800' : 'bg-[#7293B3] hover:bg-[#2d2169] hover:text-white dark:hover:bg-gray-800'
                     ]">
                     Section A
                 </a>
@@ -18,7 +18,7 @@
                     @click.prevent="changeSection('B')"
                     :class="[
                         'inline-block p-4 rounded-t-lg text-white',
-                        currentSection === 'B' ? 'bg-primary text-white dark:bg-gray-800' : 'bg-[#ADD8E6] hover:bg-[#2d2169] hover:text-white dark:hover:bg-gray-800'
+                        currentSection === 'B' ? 'bg-primary text-white dark:bg-gray-800' : 'bg-[#7293B3] hover:bg-[#2d2169] hover:text-white dark:hover:bg-gray-800'
                     ]">
                     Section B
                 </a>

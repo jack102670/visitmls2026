@@ -109,6 +109,7 @@
                     <label for="position" class="block mb-2 text-sm font-semibold text-primary dark:text-white italic">
                         Job Description & Organization Chart:
                     </label>
+                    
                     <a :href="downloadLink" target="_blank" rel="noopener noreferrer">
                         <font-awesome-icon :icon="['fas', 'file-export']" class="cursor-pointer" />
                     </a>
@@ -118,8 +119,6 @@
 
             <div class="pl-4">
                 <div class="grid grid-cols-1 gap-4">
-
-               
                 <div>
                     <label for="manpowerBudget" class="block mb-2 text-sm font-semibold text-primary dark:text-white">
                         Manpower request is: </label>

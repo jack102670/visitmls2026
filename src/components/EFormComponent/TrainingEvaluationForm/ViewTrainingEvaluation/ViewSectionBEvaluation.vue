@@ -1,5 +1,5 @@
 <template>
-    <div class="border border-[1px] rounded-md mt-2 p-4 space-y-2">
+    <div class="border border-[1px] rounded-md shadow-sm mt-2 p-4 space-y-2">
         <div class="grid grid-cols-1 space-y-2" v-if="status !== 'Completed by Superior'">
             <div class="space-y-4">
                 <div class="space-y-2">

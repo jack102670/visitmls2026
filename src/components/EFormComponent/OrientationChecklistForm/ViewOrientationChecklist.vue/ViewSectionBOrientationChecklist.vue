@@ -1,5 +1,5 @@
 <template>
-    <div class="border border-[1px] p-4 rounded-md">
+    <div class="border border-[1px] p-4 rounded-md shadow-sm">
         <div>
             <h1 class="font-bold text-md">Completion: </h1>
         </div>
