@@ -98,7 +98,7 @@ export default {
                         }
                     };
 
-                    console.log("Updated displayPDF:", this.displayPDF);
+                    // console.log("Updated displayPDF:", this.displayPDF);
                 } else {
                     console.error("Unexpected API response format:", response);
                 }
@@ -113,11 +113,6 @@ export default {
             try {
                 await this.GetHODOrientationChecklist(refNo);
 
-                const {
-                    dateRequested,
-                    approvedDate,
-                } = this.displayPDF;
-
                 const checkmark = (condition) => (condition ? '  /  ' : '     ');
 
                 const hoD_Emp_EmailChecked = checkmark(this.displayPDF.hod?.hoD_Emp_Email === '1');
@@ -125,7 +120,6 @@ export default {
                 const hoD_Emp_DesktopChecked = checkmark (this.displayPDF.hod?.hoD_Emp_Desktop === '1');
                 const hoD_Emp_LaptopChecked = checkmark(this.displayPDF.hod?.hoD_Emp_Laptop === '1');
                 const hoD_Emp_OtherChecked = checkmark(this.displayPDF.hod?.hoD_Emp_Other !== '');
-
 
                 const EOC = {
                     header: {

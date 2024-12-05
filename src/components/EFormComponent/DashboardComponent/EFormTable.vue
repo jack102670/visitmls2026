@@ -302,8 +302,6 @@ export default {
       if (!refNo) {
         console.error("Error: refNo is undefined in the application object.");
         return;
-      } else {
-        console.log("refNo from eformtable:", refNo);
       }
       if (application.requestType === 'Training Evaluation Form') {
         try {
@@ -321,14 +319,14 @@ export default {
         }
       } else if (application.requestType === 'Personnel Requisition Form') {
         try {
-          // this.$refs.jdPdfExport.generateJDPDF(refNo);
+          this.$refs.jdPdfExport.generateJDPDF(refNo);
           this.$refs.prPdfExport.generatePRPDF(refNo);
         } catch (error) {
           console.error("Error generating PDF:", error);
         }
       } else if (application.requestType === 'Employee Transfer Form') {
         try {
-          this.$refs.etPdfExport.generateET(application);
+          this.$refs.etPdfExport.generateET(refNo);
         } catch (error) {
           console.error("Error generating PDF:", error);
         }
