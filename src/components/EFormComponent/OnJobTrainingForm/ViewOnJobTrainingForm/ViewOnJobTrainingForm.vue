@@ -1,5 +1,5 @@
 <template>
-    <div class="space-y-2">
+    <div class="space-y-2 border-[1px] shadow-sm rounded-md">
         <div class="space-y-6  py-4 px-6">
             <h1 class="font-bold text-md">
                 Form Type : {{ DisplayForm.formType === 'onJobTraining' ? 'On Job Training Programme' : 'Familiarisation Programme' }}
@@ -138,7 +138,7 @@
                 </div>
 
             </div>
-            <hr class="w-full border-b border-b-[1px] my-4" />
+            <!-- <hr class="w-full border-b border-b-[1px] my-4" /> -->
         </div>
     </div>
 

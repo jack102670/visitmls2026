@@ -10,9 +10,9 @@
           <div class="flex flex-col justify-between items-start p-4 gap-2 space-y-2">
             <div>
               <h1 class="font-bold text-2xl text-primary">
-                PKT GROUP COMPANIES
+                Hello admin, Welcome back!
               </h1>
-              <p class="text-sm text-primary font-semibold">Other employee E-Forms</p>
+              <p class="text-sm text-primary font-regular">Start Applying now!</p>
             </div>
             <button id="dropdownDefaultButton" style="background-color: #160959;"
               class="text-white bg-primary hover:bg-blue-800 max-h-[40px] focus:outline-none font-medium rounded-md text-sm px-8 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -101,6 +101,7 @@
 
       <!-- 3rd box -->
       <div class="grid grid-cols-1 px-4 pb-4 pt-2 gap-2 md:mx-8">
+
         <div class="text-center bg-white min-h-full border-[1px] rounded-md p-4">
           <TableRequest />
         </div>

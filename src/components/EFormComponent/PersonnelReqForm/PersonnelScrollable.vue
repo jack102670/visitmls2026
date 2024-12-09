@@ -11,7 +11,7 @@
                         'hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300',
                     // Disabled section
                     !enabledSections.includes(section) ?
-                        'text-gray-300  bg-[#7293B3] hover:text-gray-300 cursor-not-allowed opacity-50' :
+                        'text-gray-300  bg-[#7293B3] hover:text-gray-300  cursor-not-allowed opacity-50' :
                         'cursor-pointer'
                 ]" :title="!enabledSections.includes(section) ? 'Complete previous sections first' : ''">
                     Section {{ section }}

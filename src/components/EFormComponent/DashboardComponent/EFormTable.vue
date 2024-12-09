@@ -5,7 +5,7 @@
         All Requested
       </h4>
     </div>
-    <div class="relative mt-1 md:mt-0 w-full md:w-auto">
+    <div class="relative md:mt-0 w-full md:w-auto">
       <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
           fill="none" viewBox="0 0 20 20">
@@ -20,8 +20,8 @@
   </div>
   <div class="relative overflow-x-auto rounded-md">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-md">
-      <thead class="text-md text-gray-700  bg-[#7393B3] dark:bg-gray-700 dark:text-gray-400 rounded-md ">
-        <tr class="text-white font-bold rounded-md ">
+      <thead class="text-md text-gray-700  bg-[#7293B3] dark:bg-gray-700 dark:text-gray-400 rounded-md ">
+        <tr class="text-white font-bold rounded-md uppercase ">
           <th scope="col" class="p-4"></th>
           <th scope="col" class="px-6 py-3">No</th>
           <th scope="col" class="px-6 py-3">Reference Number</th>

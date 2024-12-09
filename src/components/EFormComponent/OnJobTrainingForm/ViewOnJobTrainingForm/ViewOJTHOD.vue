@@ -1,5 +1,5 @@
 <template>
-    <div class="space-y-6  pb-4 px-6">
+    <div class="space-y-6  pb-4 px-6 py-2 border-[1px] shadow-sm rounded-md">
         <div v-if="status !== 'Completed by Superior. Waiting for HR'">
             <div>
                 <h1 class="font-bold text-md">
