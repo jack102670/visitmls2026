@@ -1,6 +1,7 @@
 <template>
+     
   <div class="border border-[1px] p-4 sm:p-6 rounded-md">
-    <h1 class="font-bold text-xl mb-6">Employee Orientation Checklist</h1>
+    <h1 class="font-bold text-md pb-2">Employee Orientation Checklist</h1>
     <div class="space-y-6">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>

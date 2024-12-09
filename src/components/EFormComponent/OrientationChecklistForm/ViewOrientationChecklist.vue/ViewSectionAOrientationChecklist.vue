@@ -3,60 +3,93 @@
     <h1 class="font-bold text-xl mb-6">Employee Orientation Checklist</h1>
     <div class="space-y-6">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="sm:pr-4 sm:border-r pr-4 sm:border-gray-300">
+          <div class="grid grid-cols-1 gap-4">
         <div>
           <label for="Employeename" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
             Name:
           </label>
-          <p class="text-sm">{{ EmployeeForm.hod.name || 'N/A' }}</p>
+          <p class="text-sm">{{ EmployeeForm.hod.name || '-' }}</p>
         </div>
-        <div>
-          <label for="company" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
-            Company:
-          </label>
-          <p class="text-sm">{{ EmployeeForm.hod.company || 'N/A' }}</p>
-        </div>
+
 
         <div>
           <label for="department" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
             Department:
           </label>
-          <p class="text-sm">{{ EmployeeForm.hod.department || 'N/A' }}</p>
+          <p class="text-sm">{{ EmployeeForm.hod.department || '-' }}</p>
+        </div>
+
+        <div>
+          <label for="branch" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
+            Branch:
+          </label>
+          <p class="text-sm">{{ EmployeeForm.hod.branch || '-' }}</p>
+        </div>
+
+        <div>
+          <label for="floor" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
+            Floor:
+          </label>
+          <p class="text-sm"> {{ EmployeeForm.hod.floor || '-' }}</p>
+        </div>
+
+        <div>
+          <label for="others" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
+            Others (Please specify):
+          </label>
+          <p class="text-sm">{{ EmployeeForm.hod.hoD_Emp_Other || '-' }}</p>
+        </div>
+
+        <div>
+          <div class="">
+            <div>
+              <label for="tagLine" class="mb-1 text-sm font-semibold text-gray-900 dark:text-gray-300">Employee
+                Tag
+                Line</label>
+              <p class="text-sm">{{ EmployeeForm.hoD_Emp_Tagline || '-' }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="">
+            <div>
+              <label for="otherRequisition" class="mb-1 text-sm font-semibold text-gray-900 dark:text-gray-300">Chinese
+                Name
+                (If Any)</label>
+              <p class="text-sm">{{ EmployeeForm.hoD_Emp_ChineseName || '-' }}</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="pl-4">
+      <div class="grid grid-cols-1 gap-4">
+      <div>
+          <label for="company" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
+            Company:
+          </label>
+          <p class="text-sm">{{ EmployeeForm.hod.company || '-' }}</p>
         </div>
         <div>
           <label for="dateJoined" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
             Date Joined:
           </label>
-          <p class="text-sm">{{ EmployeeForm.hod.dateJoined || 'N/A' }}</p>
-        </div>
-        <div>
-          <label for="branch" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
-            Branch:
-          </label>
-          <p class="text-sm">{{ EmployeeForm.hod.branch || 'N/A' }}</p>
+          <p class="text-sm">{{ EmployeeForm.hod.dateJoined || '-' }}</p>
         </div>
         <div>
           <label for="office" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
             Office:
           </label>
-          <p class="text-sm">{{ EmployeeForm.hod.office || 'N/A' }}</p>
-        </div>
-        <div>
-          <label for="floor" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
-            Floor:
-          </label>
-          <p class="text-sm"> {{ EmployeeForm.hod.floor || 'N/A' }}</p>
+          <p class="text-sm">{{ EmployeeForm.hod.office || '-' }}</p>
         </div>
         <div>
           <label for="purpose" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
             Purpose (Optional):
           </label>
-          <p class="text-sm">{{ EmployeeForm.hod.purpose || 'N/A' }}</p>
-        </div>
-        <div>
-          <label for="others" class="block mb-1 text-sm font-semibold text-primary dark:text-white">
-            Others (Please specify):
-          </label>
-          <p class="text-sm">{{ EmployeeForm.hod.hoD_Emp_Other || 'N/A' }}</p>
+          <p class="text-sm">{{ EmployeeForm.hod.purpose || '-' }}</p>
         </div>
         <div>
           <label for="requisition" class="block mb-2 text-sm font-semibold text-primary dark:text-white">
@@ -99,31 +132,11 @@
         <div>
           <div class="">
             <div>
-              <label for="tagLine" class="mb-1 text-sm font-semibold text-gray-900 dark:text-gray-300">Employee
-                Tag
-                Line</label>
-              <p class="text-sm">{{ EmployeeForm.hoD_Emp_Tagline || 'N/A' }}</p>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="">
-            <div>
               <label for="FacebookAccountName"
                 class="mb-1 text-sm font-semibold text-gray-900 dark:text-gray-300">Facebook
                 Account
                 Name</label>
-              <p class="text-sm">{{ EmployeeForm.hoD_Emp_FB || 'N/A' }}</p>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="">
-            <div>
-              <label for="otherRequisition" class="mb-1 text-sm font-semibold text-gray-900 dark:text-gray-300">Chinese
-                Name
-                (If Any)</label>
-              <p class="text-sm">{{ EmployeeForm.hoD_Emp_ChineseName || 'N/A' }}</p>
+              <p class="text-sm">{{ EmployeeForm.hoD_Emp_FB || '-' }}</p>
             </div>
           </div>
         </div>
@@ -133,12 +146,15 @@
               <label for="PhoneNumber" class="mb-1 text-sm font-semibold text-gray-900 dark:text-gray-300">
                 Employee Phone Number
               </label>
-              <p class="text-sm">{{ EmployeeForm.hoD_Emp_PhoneNo || 'N/A' }}</p>
+              <p class="text-sm">{{ EmployeeForm.hoD_Emp_PhoneNo || '-' }}</p>
             </div>
           </div>
         </div>
       </div>
-    </div>
+  </div>
+  </div>
+  </div>
+
 
   </div>
 </template>

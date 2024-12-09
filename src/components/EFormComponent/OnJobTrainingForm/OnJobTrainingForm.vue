@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-2">
-        <div class="space-y-6 border-[1px] rounded-md py-4 px-6">
+        <div class="space-y-6 border-[1px] bg-white shadow-sm rounded-md py-4 px-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label for="staffName" class="block mb-2 text-sm font-medium text-primary dark:text-white">Name of

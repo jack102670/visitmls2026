@@ -1,5 +1,4 @@
 <template>
-
   <div class="w-full bg-white shadow-md  top-0 z-50 ">
     <div class="flex justify-between items-center h-[60px]">
 
