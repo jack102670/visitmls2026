@@ -4,7 +4,7 @@
     <div class="bg-primary h-[60px] flex justify-between items-center px-2">
       <div class="text-md text-white flex justify-between items-center h-full space-x-2 px-5 py-4"
         v-show="dataOpenSideBar">
-        <img src="../../../../public/pkt-blue-log-crop.jpg" class="p-1 w-10 h-10" alt="Avatar" />
+        <router-link to="/homepage" class="cursor-pointer"> <img src="../../../../public/pkt-blue-log-crop.jpg" class="p-1 w-10 h-10" alt="Avatar" /></router-link>
         <p class="font-bold text-lg">Service Portal</p>
       </div>
       <a @click="redirectToHome" class="cursor-pointer">

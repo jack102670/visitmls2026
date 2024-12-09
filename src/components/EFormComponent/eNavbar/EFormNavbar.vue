@@ -9,7 +9,8 @@
         <div class="flex justify-between items-center">
           <div class="flex justify-between items-center px-2">
             <div class="text-md text-primary flex items-center h-full space-x-2 px-1 py-4" >
-              <img src="../../../../public/pkt-blue-log-crop.jpg" class="p-1 w-10 h-10" alt="Avatar" />
+              <router-link to="/homepage" class="cursor-pointer">
+              <img src="../../../../public/pkt-blue-log-crop.jpg" class="p-1 w-10 h-10" alt="Avatar" /></router-link>
               <p class="font-bold text-lg">Service Portal</p>
             </div>
           </div>
