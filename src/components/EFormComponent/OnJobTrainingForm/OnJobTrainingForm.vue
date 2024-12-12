@@ -152,7 +152,7 @@
                                         d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                 </svg>
                             </div>
-                            <input ref="Start" type="text" v-model="staffDateStart"
+                            <input ref="staffDatepickerStart" type="text" v-model="staffDateStart"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Select start date" />
                         </div>
@@ -165,7 +165,7 @@
                                         d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                 </svg>
                             </div>
-                            <input ref="End" type="text" v-model="staffDateEnd"
+                            <input ref="staffDatepickerEnd" type="text" v-model="staffDateEnd"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Select end date" />
                         </div>
@@ -261,6 +261,7 @@ export default {
             },
             hrDateStart: '',
             hrDateEnd: '',
+            flatpickrEndInstance: null,
             bulletPoints: '',
             validationErrors: {},
         }
@@ -268,19 +269,36 @@ export default {
     mounted() {
         flatpickr(this.$refs.datepickerStart, {
             dateFormat: "Y-m-d",
+            onChange: this.updateEndDateMin,
         });
-        flatpickr(this.$refs.datepickerEnd, {
+        this.flatpickrEndInstance = flatpickr(this.$refs.datepickerEnd, {
             dateFormat: "Y-m-d",
         });
-        flatpickr(this.$refs.Start, {
+        flatpickr(this.$refs.staffDatepickerStart, {
+            dateFormat: "Y-m-d",
+            onChange: this.updateStaffEndDateMin,
+        });
+        this.flatpickrStaffEndInstance = flatpickr(this.$refs.staffDatepickerEnd, {
             dateFormat: "Y-m-d",
         });
-        flatpickr(this.$refs.End, {
-            dateFormat: "Y-m-d",
-        });
+
         this.fetchHrData();
     },
     methods: {
+        updateEndDateMin(selectedDates) {
+            const selectedDate = selectedDates[0]; 
+            if (this.flatpickrEndInstance) {
+                this.flatpickrEndInstance.set("minDate", selectedDate);
+            }
+        },
+        updateStaffEndDateMin(selectedDates) {
+            const selectedDate = selectedDates[0];
+            if (this.flatpickrStaffEndInstance) {
+                this.flatpickrStaffEndInstance.set("minDate", selectedDate);
+            }
+        },
+
+
         processBulletPoints() {
             const points = this.bulletPoints.split('\n').map(point => point.trim()).filter(point => point !== '•').map(point => point.startsWith('•') ? point.substring(1).trim() : point);
             return points;
