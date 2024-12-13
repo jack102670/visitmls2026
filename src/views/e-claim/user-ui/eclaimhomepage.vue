@@ -659,7 +659,7 @@ export default {
       this.loadingText = 'Fetching';
       this.loading = true;
       const userId = store.getSession().userDetails.userId;
-
+      
       if (!userId) {
         console.error('UserId is not set.');
         this.loading = false;
