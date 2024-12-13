@@ -1032,11 +1032,9 @@ export default {
       this.dropdownOpen = !this.dropdownOpen;
     },
     async FetchClaimDetails() {
+      const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
       await axios
-        .get(
-          'http://172.28.28.91:91/api/User/GetClaimDetails/' +
-            this.referenceNumber
-        )
+        .get(`${base_URL}/api/User/GetClaimDetails/${this.referenceNumber}`)
         .then((response) => {
           this.claimDetails = response.data.result;
           this.adminStatus = this.claimDetails.admin_status
@@ -1144,11 +1142,9 @@ export default {
       this.claimDatasDetails = [];
       this.claimDataTotalAmount = [];
       this.claimDatas = [];
+      const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
       await axios
-        .get(
-          'http://172.28.28.91:99/api/User/GetLocalOutstation/' +
-            this.referenceNumber
-        )
+        .get(`${base_URL}/User/GetLocalOutstation/${this.referenceNumber}`)
         .then((response) => {
           const result = response.data.result;
           let details = [];
@@ -1184,10 +1180,7 @@ export default {
         });
 
       await axios
-        .get(
-          'http://172.28.28.91:99/api/User/GetOverseasOutstation/' +
-            this.referenceNumber
-        )
+        .get(`${base_URL}/User/GetOverseasOutstation/${this.referenceNumber}`)
         .then((response) => {
           const result = response.data.result;
           let details = [];
@@ -1224,10 +1217,7 @@ export default {
         });
 
       await axios
-        .get(
-          'http://172.28.28.91:99/api/User/GetRefreshment/' +
-            this.referenceNumber
-        )
+        .get(`${base_URL}/User/GetRefreshment/${this.referenceNumber}`)
         .then((response) => {
           const result = response.data.result;
           let details = [];
@@ -1259,10 +1249,7 @@ export default {
         });
 
       await axios
-        .get(
-          'http://172.28.28.91:91/api/User/GetEntertainment/' +
-            this.referenceNumber
-        )
+        .get(`${base_URL}/User/GetEntertainment/${this.referenceNumber}`)
         .then((response) => {
           const result = response.data.result;
           let details = [];
@@ -1293,9 +1280,7 @@ export default {
         });
 
       await axios
-        .get(
-          'http://172.28.28.91:99/api/User/GetOthers/' + this.referenceNumber
-        )
+        .get(`${base_URL}/User/GetOthers/${this.referenceNumber}`)
         .then((response) => {
           const result = response.data.result;
           let details = [];
@@ -1362,8 +1347,9 @@ export default {
     async GetUserData() {
       const username_id = store.getSession().userDetails.userId;
       let userData;
+      const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
       await axios
-        .get(`http://172.28.28.91:99/api/User/GetEmployeeById/${username_id}`)
+        .get(`${base_URL}/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           userData = {
             userName: response.data.result[0].name,
@@ -1409,34 +1395,22 @@ export default {
     async ApproveOrReject(AoR) {
       this.pending = false;
       const userData = await this.GetUserData();
-      console.log(userData);
+      const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
       this.singleRemarks.forEach((remark) => {
         let data = {
           verifier_comment: remark.remark,
           reference_number: remark.unique_code,
         };
         if (remark.Tab_Title == 'Local Outstation') {
-          axios.post('http://172.28.28.91:99/api/Verifier/VerifierLocal', data);
+          axios.post(`${base_URL}/Verifier/VerifierLocal`, data);
         } else if (remark.Tab_Title == 'Overseas Outstation') {
-          axios.post(
-            'http://172.28.28.91:99/api/Verifier/VerifierOverseas',
-            data
-          );
+          axios.post(`${base_URL}/Verifier/VerifierOverseas`, data);
         } else if (remark.Tab_Title == 'Staff Refreshment') {
-          axios.post(
-            'http://172.28.28.91:99/api/Verifier/VerifierRefreshment',
-            data
-          );
+          axios.post(`${base_URL}/Verifier/VerifierRefreshment`, data);
         } else if (remark.Tab_Title == 'Entertainment') {
-          axios.post(
-            'http://172.28.28.91:99/api/Verifier/VerifierEntertainment',
-            data
-          );
+          axios.post(`${base_URL}/Verifier/VerifierEntertainment`, data);
         } else if (remark.Tab_Title == 'Other') {
-          axios.post(
-            'http://172.28.28.91:99/api/Verifier/VerifierOthers',
-            data
-          );
+          axios.post(`${base_URL}/Verifier/VerifierOthers`, data);
         }
       });
 
@@ -1454,7 +1428,7 @@ export default {
         };
         console.log(approveData);
         await axios
-          .put('http://172.28.28.91:91/api/Admin/Check_Claim', approveData)
+          .put(`${base_URL}/Admin/Check_Claim`, approveData)
           .then((response) => {
             // Handle success response
             console.log('API response', response.data);
@@ -1480,7 +1454,7 @@ export default {
           reference_number: this.claimDetails.reference_number,
         };
         await axios
-          .put('http://172.28.28.91:91/api/Admin/Check_Claim', approveData)
+          .put(`${base_URL}/Admin/Check_Claim`, approveData)
           .then((response) => {
             // Handle success response
             this.loading = false;
@@ -1503,15 +1477,11 @@ export default {
           reference_number: this.claimDetails.reference_number,
         };
         await axios
-          .put('http://172.28.28.91:91/api/Admin/Check_Claim', approveData)
+          .put(`${base_URL}/Admin/Check_Claim`, approveData)
           .then((response) => {
-            // Handle success response
             this.loading = false;
-
-            console.log('API response', response.data);
           })
           .catch((error) => {
-            // Handle error response
             console.error('API error', error);
           });
       }
