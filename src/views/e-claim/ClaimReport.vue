@@ -1920,7 +1920,7 @@ export default {
 
       try {
         const base_URL = process.env.VUE_APP_API_BASE_URL_EC_HUDA_LX;
-        const response = await axios.post(`${base_URL}/InsertClaimDetails`, apiData);
+        const response = await axios.post(`${base_URL}/User/InsertClaimDetails`, apiData);
         // console.log("API response:", response.data);
         if (response.status === 200 || response.status === 201) {
           console.log("Data successfully inserted:", response.data);
@@ -2322,12 +2322,20 @@ export default {
                     );
                   }
 
-                  hudaAPI.post('/User/InsertOthers')
+                  hudaAPI.post('/User/InsertOthers',
+                  JSON.stringify(thisisforHandphoneBillReimbursement), // Explicitly stringify for JSON
+                      {
+                        headers: {
+                          "Content-Type": "application/json", // Ensure proper content type
+                        },
+                      }
+                  )
                     .then(response => {
                       console.log(response.data);
                     })
                     .catch(error => {
-                      console.error(error);
+                      console.error("Error sending data for Handphone Bill Reimbursement:",error);
+                      throw error;
                     });
                   const response2 = await hudaAPI.post(
                     "/",
@@ -2543,8 +2551,8 @@ export default {
         console.error("The files parameter is not an array or is undefined.");
         return;
       }
-
-      const uploadEndpoint = `http://172.28.28.91:93/api/Files/MultiUploadImage/${userId}/${uniqueCode}`;
+      const base_URL = process.env.VUE_APP_API_BASE_URL_UPLOAD_FILE;
+      const uploadEndpoint = `${base_URL}/Files/MultiUploadImage/${userId}/${uniqueCode}`;
       const formData = new FormData();
 
       for (let i = 0; i < files.length; i++) {
@@ -2573,22 +2581,15 @@ export default {
     },
     // other methods...
     fetchClaims() {
-      // Retrieve the current formData
       const formData = formStore.getFormData();
 
       if (formData.claimantName !== "") {
-        // Set the claims array to contain only the new formData
         this.claims = [formData];
-
-        // Update the local storage with the new claims array
         localStorage.setItem("claims", JSON.stringify(this.claims));
       } else {
-        // If no formData, retrieve the claims array from local storage
         const storedClaims = JSON.parse(localStorage.getItem("claims")) || [];
         this.claims = storedClaims;
       }
-
-      // Log the claims array to the console
       console.log("Claims:", this.claims);
     },
 
