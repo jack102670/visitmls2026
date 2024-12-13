@@ -665,8 +665,10 @@ export default {
         return;
       }
       try {
-        const base_URL = process.env.VUE_APP_API_BASE_URL;
-        const response = await axios.get(`${base_URL}/User/GetAllRequests/${userId}`);
+
+        const response = await fetch(
+          `http://172.28.28.91:91/api/User/GetAllRequests/${userId}`
+        );
         if (!response.ok) {
           throw new Error('Failed to fetch requests');
         }
