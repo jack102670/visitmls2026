@@ -489,7 +489,7 @@ import NewClaimPopUp from '@/components/e-claim/NewClaimPopUp.vue';
 import $ from 'jquery';
 import 'datatables.net-dt';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';
-// import axios from "axios";
+import axios from "axios";
 export default {
   components: {
     // CreateNewClaimPopUp,
@@ -665,14 +665,13 @@ export default {
         return;
       }
       try {
-        const response = await fetch(
-          `http://172.28.28.91:91/api/User/GetAllRequests/${userId}`
-        );
+        const base_URL = process.env.VUE_APP_API_BASE_URL;
+        const response = await axios.get(`${base_URL}/User/GetAllRequests/${userId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch requests');
         }
         const data = await response.json();
-        this.requests = data.result; // Update your data property with the fetched data
+        this.requests = data.result; 
         this.loading = false;
         // console.log("Fetched requests:", this.requests);
       } catch (error) {
@@ -715,7 +714,7 @@ export default {
 
         REIMBURSE: 'h-1.5 w-1.5 rounded-full bg-black',
       };
-      return colorMap[status] || 'bg-orange-500'; // Default to a dark color if the status is not recognized
+      return colorMap[status] || 'bg-orange-500'; 
     },
     getStatusTextClass(status) {
       const colorMap = {
@@ -728,7 +727,7 @@ export default {
         REIMBURSED: 'text-sm font-normal text-black',
         VERIFIED: 'text-sm font-normal text-orange-500',
       };
-      return colorMap[status] || 'text-orange-500'; // Default to a dark color if the status is not recognized
+      return colorMap[status] || 'text-orange-500'; 
     },
     ChangePopUp() {
       if (this.popup == true) {
