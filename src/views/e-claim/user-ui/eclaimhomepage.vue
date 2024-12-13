@@ -128,7 +128,7 @@
                 Claim
                 <span
                   class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{{
-                  requests.length }}
+                    requests.length }}
                 </span>
               </h2>
             </div>
@@ -659,27 +659,32 @@ export default {
       this.loadingText = 'Fetching';
       this.loading = true;
       const userId = store.getSession().userDetails.userId;
-      // console.log("userId", userId);
+
       if (!userId) {
         console.error('UserId is not set.');
+        this.loading = false;
         return;
       }
-      try {
 
-        const response = await fetch(
-          `http://172.28.28.91:91/api/User/GetAllRequests/${userId}`
-        );
-        if (!response.ok) {
-          throw new Error('Failed to fetch requests');
-        }
-        const data = await response.json();
-        this.requests = data.result; 
-        this.loading = false;
-        // console.log("Fetched requests:", this.requests);
+      try {
+        const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
+        console.log(`Using base URL: ${base_URL}`);
+        const response = await axios.get(`${base_URL}/User/GetAllRequests/${userId}`);
+        this.requests = response.data.result;
+
       } catch (error) {
-        console.error('Error fetching requests:', error);
+        if (error.response) {
+          console.error(`API error: ${error.response.status} ${error.response.statusText}`);
+        } else if (error.message.includes('Network Error')) {
+          console.error('Network error: failed to fetch');
+        } else {
+          console.error('Unknown error:', error);
+        }
+      } finally {
+        this.loading = false;
       }
     },
+
     getStatusContainerClass(status) {
       const colorMap = {
         RESUBMIT:
@@ -716,7 +721,7 @@ export default {
 
         REIMBURSE: 'h-1.5 w-1.5 rounded-full bg-black',
       };
-      return colorMap[status] || 'bg-orange-500'; 
+      return colorMap[status] || 'bg-orange-500';
     },
     getStatusTextClass(status) {
       const colorMap = {
@@ -729,7 +734,7 @@ export default {
         REIMBURSED: 'text-sm font-normal text-black',
         VERIFIED: 'text-sm font-normal text-orange-500',
       };
-      return colorMap[status] || 'text-orange-500'; 
+      return colorMap[status] || 'text-orange-500';
     },
     ChangePopUp() {
       if (this.popup == true) {
