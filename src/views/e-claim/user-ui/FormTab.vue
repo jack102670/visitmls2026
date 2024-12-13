@@ -3354,9 +3354,8 @@ export default {
     async checkstatus() {
       try {
         const username_id = store.getSession().userDetails.userId;
-        const response = await fetch(
-          `http://172.28.28.91:99/api/User/GetEmployeeById/${username_id}`
-        );
+        const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
+        const response = await axios.get(`${base_URL}/User/GetEmployeeById/${username_id}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -3387,9 +3386,8 @@ export default {
 
     async fetchDepartment() {
       try {
-        const response = await fetch(
-          "http://172.28.28.91:99/api/User/GetDepartment"
-        );
+        const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
+        const response = await axios.get(`${base_URL}/User/GetDepartment`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -3404,9 +3402,8 @@ export default {
 
     async fetchCompany() {
       try {
-        const response = await fetch(
-          "http://172.28.28.91:99/api/User/GetCompany"
-        );
+        const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
+        const response = await axios.get(`${base_URL}/User/GetCompany`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -3420,9 +3417,8 @@ export default {
     async fetchHrData() {
       try {
         const username_id = store.getSession().userDetails.userId;
-        const response = await axios.get(
-          `http://172.28.28.91:99/api/User/GetEmployeeById/${username_id}`
-        );
+        const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
+        const response = await axios.get(`${base_URL}/User/GetEmployeeById/${username_id}`);
         const data = response.data.result[0];
         if (data) {
           this.updateFields(data);
