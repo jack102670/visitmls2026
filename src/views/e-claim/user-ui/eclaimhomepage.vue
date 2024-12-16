@@ -665,6 +665,7 @@ export default {
         this.loading = false;
         return;
       }
+<<<<<<< HEAD
 
       try {
         const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
@@ -672,6 +673,18 @@ export default {
         const response = await axios.get(`${base_URL}/User/GetAllRequests/${userId}`);
         this.requests = response.data.result;
 
+=======
+      try {
+        const base_URL = process.env.VUE_APP_API_BASE_URL;
+        const response = await axios.get(`${base_URL}/User/GetAllRequests/${userId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch requests');
+        }
+        const data = await response.json();
+        this.requests = data.result; 
+        this.loading = false;
+        // console.log("Fetched requests:", this.requests);
+>>>>>>> parent of 8e3eb41 (FIx and replace API endpoit for eclaimhomepage and SumamryClaimpage)
       } catch (error) {
         if (error.response) {
           console.error(`API error: ${error.response.status} ${error.response.statusText}`);

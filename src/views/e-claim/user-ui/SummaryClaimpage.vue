@@ -1090,7 +1090,7 @@ export default {
       this.loadingText = 'Fetching';
       this.loading = true;
       await axios
-      .get(
+        .get(
           'http://172.28.28.91:91/api/User/GetClaimDetails/' +
             this.referenceNumber
         )
@@ -1130,8 +1130,11 @@ export default {
         });
     },
     async FetchClaimDatasDetails() {
-      const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
-      await axios.get(`${base_URL}/User/GetLocalOutstation/${this.referenceNumber}`)
+      await axios
+        .get(
+          'http://172.28.28.91:99/api/User/GetLocalOutstation/' +
+            this.referenceNumber
+        )
         .then((response) => {
           const result = response.data.result;
           console.log(result, 'local outstation');
@@ -1169,8 +1172,11 @@ export default {
           console.error(e);
         });
 
-      await axios.get(`${base_URL}/User/GetOverseasOutstation/${this.referenceNumber}`)
-      
+      await axios
+        .get(
+          'http://172.28.28.91:99/api/User/GetOverseasOutstation/' +
+            this.referenceNumber
+        )
         .then((response) => {
           const result = response.data.result;
           let details = [];
@@ -1208,7 +1214,11 @@ export default {
           console.error(e);
         });
 
-      await axios.get(`${base_URL}/User/GetRefreshment/${this.referenceNumber}`)
+      await axios
+        .get(
+          'http://172.28.28.91:99/api/User/GetRefreshment/' +
+            this.referenceNumber
+        )
         .then((response) => {
           const result = response.data.result;
           let details = [];
@@ -1347,7 +1357,9 @@ export default {
           console.error(e);
         });
       await axios
-        .get(`${base_URL}/User/GetOthers/${this.referenceNumber}`)
+        .get(
+          'http://172.28.28.91:99/api/User/GetOthers/' + this.referenceNumber
+        )
         .then((response) => {
           const result = response.data.result;
           let details = [];
@@ -1432,9 +1444,8 @@ export default {
     async GetUserData() {
       const username_id = store.getSession().userDetails.userId;
       let userData;
-      const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
       await axios
-        .get(`${base_URL}/User/GetEmployeeById/${username_id}`)
+        .get(`http://172.28.28.91:99/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           userData = {
             userName: response.data.result[0].name,
