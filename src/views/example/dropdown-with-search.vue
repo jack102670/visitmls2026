@@ -80,7 +80,7 @@
       },
     
       fetchData() {
-        fetch('http://172.28.28.117:7165/api/User/Get_all_employees')
+        fetch('http://172.28.28.116:7165/api/User/Get_all_employees')
           .then(response => {
             if (!response.ok) {
               throw new Error('Network response was not ok');

@@ -497,7 +497,7 @@ export default {
 
       console.log('Employee Data:', employeeData);
       axios
-        .put('http://172.28.28.117:7239/api/User/UpdateEmployee', employeeData)
+        .put('http://172.28.28.116:7239/api/User/UpdateEmployee', employeeData)
         .then((response) => {
           console.log('Response:', response);
           if (response.data.status_code === '200') {
@@ -539,7 +539,7 @@ export default {
       this.loadingText = 'Fetching';
       this.loading = true;
       axios
-        .get(`http://172.28.28.117:7239/api/User/GetEmployeeById/${username_id}`)
+        .get(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           const data = response.data.result;
           console.log('HR data:', data);
@@ -589,7 +589,7 @@ export default {
       formData.append('emp_id', this.user.emp_id);
 
       axios
-        .put('http://172.28.28.117:7239/api/User/UpdateImage', formData, {
+        .put('http://172.28.28.116:7239/api/User/UpdateImage', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -663,7 +663,7 @@ export default {
     checkUserStatus() {
       const username_id = store.getSession().userDetails.userId;
       axios
-        .get(`http://172.28.28.117:7239/api/User/GetEmployeeById/${username_id}`)
+        .get(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           // Assuming the API response structure has a status field
           const userStatus = response.data.result[0].account_status;
@@ -688,7 +688,7 @@ export default {
     checkUserStatusAndShowModal() {
       const username_id = store.getSession().userDetails.userId;
       axios
-        .get(`http://172.28.28.117:7239/api/User/GetEmployeeById/${username_id}`)
+        .get(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           // Assuming the API response structure has a status field
           const userStatus = response.data.result[0].account_status;
@@ -745,7 +745,7 @@ export default {
       console.log('Employee Data:', employeeData);
 
       axios
-        .put('http://172.28.28.117:7239/api/User/UpdateProfile', employeeData)
+        .put('http://172.28.28.116:7239/api/User/UpdateProfile', employeeData)
         .then((response) => {
           console.log('Response:', response);
           const elapsedTime = Date.now() - startTime; // Calculate elapsed time
@@ -801,7 +801,7 @@ export default {
       this.loadingsendOtpButton = true;
       try {
         const response = await axios.post(
-          'http://172.28.28.117:7239/api/User/GenerateOTP',
+          'http://172.28.28.116:7239/api/User/GenerateOTP',
           { email: this.user.email_address }
         );
 
@@ -864,7 +864,7 @@ export default {
       this.loadingverifyOtpButton = true;
       const startTime = Date.now();
       try {
-        const baseUrl = 'http://172.28.28.117:7239';
+        const baseUrl = 'http://172.28.28.116:7239';
         const email = encodeURIComponent(this.user.email_address);
         const otp = encodeURIComponent(this.otp);
         const url = `${baseUrl}/api/User/ValidateOTP?email=${email}&otp=${otp}`;
@@ -924,7 +924,7 @@ export default {
     requestNewOtp() {
       if (this.timer === 0) {
         axios
-          .post('http://172.28.28.117:7239/api/User/GenerateOTP', {
+          .post('http://172.28.28.116:7239/api/User/GenerateOTP', {
             email: this.user.email_address,
           })
           .then((response) => {

@@ -355,7 +355,7 @@ export default {
       this.loading = true;
       const userid = this.userDetails.userId;
       fetch(
-        `http://172.28.28.117:7165/api/ApproverVerifier/GetAllRequestVerifier/${userid}`
+        `http://172.28.28.116:7165/api/ApproverVerifier/GetAllRequestVerifier/${userid}`
       )
         .then((response) => response.json())
         .then((data) => {
