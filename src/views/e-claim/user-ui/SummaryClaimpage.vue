@@ -802,276 +802,242 @@ export default {
         });
     },
     async FetchClaimDatasDetails() {
-      try {
-        const base_URL = process.env.VUE_APP_API_BASE_URL_EC_HUDA_LX;
-        await axios.get(`${base_URL}/User/GetLocalOutstation/${this.referenceNumber}`)
-          .then((response) => {
-            const result = response.data.result;
-            console.log(result, 'local outstation');
-            let details = [];
-            let amount = 0;
-            // this.comment = result.comment;
-            for (let i in result) {
-              amount += result[i].total_fee;
+      const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
+      await axios.get(`${base_URL}/User/GetLocalOutstation/${this.referenceNumber}`)
+        .then((response) => {
+          const result = response.data.result;
+          console.log(result, 'local outstation');
+          let details = [];
+          let amount = 0;
+          // this.comment = result.comment;
+          for (let i in result) {
+            amount += result[i].total_fee;
 
-              const editedDetail = {
-                Mileage_Km: result[i].mileage_km,
-                Starting_Point: result[i].starting_point,
-                End_Point: result[i].end_point,
-                Date_Event: result[i].date_event,
-                'Park_Fee(RM)': result[i].park_fee,
-                'Toll_Fee(RM)': result[i].toll_fee,
-                'Total_Fee(RM)': result[i].total_fee,
-                Transport_Specification: result[i].transport_specification,
-                Transport_Mode: result[i].transport_mode,
-                Trip_Mode: result[i].trip_mode,
-                Total_Mileage: result[i].total_mileage,
-                Attachments: result[i].files,
-                Remark: result[i].comment,
-                Tab_Title: 'Local Outstation',
-                unique_code: result[i].unique_code,
-              };
-              details.push(editedDetail);
-            }
-            if (details.length > 0) {
-              this.claimDatasDetails.push(details);
-              this.claimDataTotalAmount.push(amount);
-            }
-          })
-          .catch((e) => {
-            console.error(e);
-          });
-      } catch (error) {
-        console.error("Error in FetchClaimDatasDetails", error);
-        throw error;
-      }
-      try {
-        const base_URL = process.env.VUE_APP_API_BASE_URL_EC_HUDA_LX;
-        await axios.get(`${base_URL}/User/GetOverseasOutstation/${this.referenceNumber}`)
-          .then((response) => {
-            const result = response.data.result;
-            let details = [];
-            let amount = 0;
-            for (let i in result) {
-              amount += result[i].total_fee;
-              const editedDetail = {
-                Description: result[i].description,
-                Meal_Allowance: result[i].meal_allowance,
-                'Transport_Fee(RM)': result[i].transport_fee,
-                Accom_Foreign_Currency: result[i].accom_foreign_currency,
-                Accom_Exchange_Rate: result[i].accom_exchange_rate,
-                Accom_Foreign_Total: result[i].accom_foreign_total,
-                Other_Foreign_Currency: result[i].other_foreign_currency,
-                Other_Exchange_Rate: result[i].other_exchange_rate,
-                Other_Foreign_Total: result[i].other_foreign_total,
-                Transportation_Mode: result[i].transportation_mode,
-                Date: result[i].date_event,
+            const editedDetail = {
+              Mileage_Km: result[i].mileage_km,
+              Starting_Point: result[i].starting_point,
+              End_Point: result[i].end_point,
+              Date_Event: result[i].date_event,
+              'Park_Fee(RM)': result[i].park_fee,
+              'Toll_Fee(RM)': result[i].toll_fee,
+              'Total_Fee(RM)': result[i].total_fee,
+              Transport_Specification: result[i].transport_specification,
+              Transport_Mode: result[i].transport_mode,
+              Trip_Mode: result[i].trip_mode,
+              Total_Mileage: result[i].total_mileage,
+              Attachments: result[i].files,
+              Remark: result[i].comment,
+              Tab_Title: 'Local Outstation',
+              unique_code: result[i].unique_code,
+            };
+            details.push(editedDetail);
+          }
+          if (details.length > 0) {
+            this.claimDatasDetails.push(details);
+            this.claimDataTotalAmount.push(amount);
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+        });
 
-                'Total_Fee(RM)': result[i].total_fee,
+      await axios.get(`${base_URL}/User/GetOverseasOutstation/${this.referenceNumber}`)
 
-                Attachments: result[i].files,
-                Tab_Title: 'Overseas Outstation',
-                Remark: result[i].comment,
-                unique_code: result[i].unique_code,
-              };
-              details.push(editedDetail);
-            }
-            if (details.length > 0) {
-              this.claimDatasDetails.push(details);
-              this.claimDataTotalAmount.push(amount);
-            }
-          })
-          .catch((e) => {
-            console.error(e);
-          });
-      } catch (error) {
-        console.error("Error in FetchClaimDatasDetails", error);
-        throw error;
-      }
-      try {
-        const base_URL = process.env.VUE_APP_API_BASE_URL_EC_HUDA_LX;
-        await axios.get(`${base_URL}/User/GetRefreshment/${this.referenceNumber}`)
-          .then((response) => {
-            const result = response.data.result;
-            let details = [];
-            let amount = 0;
-            for (let i in result) {
-              amount += result[i].total_fee;
-              const editedDetail = {
-                Type: result[i].refreshment_type,
-                Date: result[i].date_event,
-                Reference_Type: result[i].reference_type,
-                Venue: result[i].venue_name,
-                Company: result[i].company_name,
-                'Total_Fee(RM)': result[i].total_fee,
-                Staff_Involved: result[i].sim,
-                Attachments: result[i].files,
-                Remark: result[i].comment,
-                Tab_Title: 'Staff Refreshment',
-                unique_code: result[i].unique_code,
-              };
-              details.push(editedDetail);
-            }
-            if (details.length > 0) {
-              this.claimDatasDetails.push(details);
-              this.claimDataTotalAmount.push(amount);
-            }
-          })
-          .catch((e) => {
-            console.error(e);
-          });
-      } catch (error) {
-        console.error("Error in FetchClaimDatasDetails", error);
-        throw error;
-      }
-      try {
-        const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
-        await axios.get(`${base_URL}/User/GetEntertainment/${this.referenceNumber}`)
-          .then((response) => {
-            const result = response.data.result;
-            let details = [];
-            let amount = 0;
-            for (let i in result) {
-              amount += result[i].total_fee;
-              const editedDetail = {
-                Type: result[i].entertainment_type,
-                Date: result[i].date_event,
-                Venue: result[i].venue_name,
-                Company: result[i].company_name,
-                'Total_Fee(RM)': result[i].total_fee,
-                Participants: result[i].participants,
-                Attachments: result[i].files,
-                Remark: result[i].comment,
-                Tab_Title: 'Entertainment',
-                unique_code: result[i].unique_code,
-              };
-              details.push(editedDetail);
-            }
-            if (details.length > 0) {
-              this.claimDatasDetails.push(details);
-              this.claimDataTotalAmount.push(amount);
-            }
-          })
-          .catch((e) => {
-            console.error(e);
-          });
-      } catch (error) {
-        console.error("Error in FetchClaimDatasDetails", error);
-        throw error;
-      }
-      try {
-        const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
-        await axios.get(`${base_URL}/User/GetMedicalLeave/${this.referenceNumber}`)
-          .then((response) => {
-            const result = response.data.result;
-            let details = [];
-            let amount = 0;
-            for (let i in result) {
-              amount += result[i].claim_amount;
-              const editedDetail = {
-                reason: result[i].reason,
-                Date: result[i].date_leave_taken,
-                clinicselection: result[i].clinic_name
-                  ? result[i].clinic_name
-                  : result[i].clinic_selection,
-                reason_other_clinic: result[i].reason_different,
-                bank_name: result[i].bank_name,
-                bank_holder: result[i].bank_holder,
-                bank_account: result[i].bank_account,
-                'Total_Fee(RM)': result[i].claim_amount,
+        .then((response) => {
+          const result = response.data.result;
+          let details = [];
+          let amount = 0;
+          for (let i in result) {
+            amount += result[i].total_fee;
+            const editedDetail = {
+              Description: result[i].description,
+              Meal_Allowance: result[i].meal_allowance,
+              'Transport_Fee(RM)': result[i].transport_fee,
+              Accom_Foreign_Currency: result[i].accom_foreign_currency,
+              Accom_Exchange_Rate: result[i].accom_exchange_rate,
+              Accom_Foreign_Total: result[i].accom_foreign_total,
+              Other_Foreign_Currency: result[i].other_foreign_currency,
+              Other_Exchange_Rate: result[i].other_exchange_rate,
+              Other_Foreign_Total: result[i].other_foreign_total,
+              Transportation_Mode: result[i].transportation_mode,
+              Date: result[i].date_event,
 
-                Attachments: result[i].files,
+              'Total_Fee(RM)': result[i].total_fee,
 
-                Tab_Title: 'Medical Leave',
-                Remark: result[i].comment,
-                unique_code: result[i].unique_code,
-              };
-              details.push(editedDetail);
-            }
-            if (details.length > 0) {
-              this.claimDatasDetails.push(details);
-              this.claimDataTotalAmount.push(amount);
-            }
-          })
-          .catch((e) => {
-            console.error(e);
-          });
+              Attachments: result[i].files,
+              Tab_Title: 'Overseas Outstation',
+              Remark: result[i].comment,
+              unique_code: result[i].unique_code,
+            };
+            details.push(editedDetail);
+          }
+          if (details.length > 0) {
+            this.claimDatasDetails.push(details);
+            this.claimDataTotalAmount.push(amount);
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+        });
 
-      } catch (error) {
-        console.error("Error in FetchClaimDatasDetails", error);
-        throw error;
-      }
+      await axios.get(`${base_URL}/User/GetRefreshment/${this.referenceNumber}`)
+        .then((response) => {
+          const result = response.data.result;
+          let details = [];
+          let amount = 0;
+          for (let i in result) {
+            amount += result[i].total_fee;
+            const editedDetail = {
+              Type: result[i].refreshment_type,
+              Date: result[i].date_event,
+              Reference_Type: result[i].reference_type,
+              Venue: result[i].venue_name,
+              Company: result[i].company_name,
+              'Total_Fee(RM)': result[i].total_fee,
+              Staff_Involved: result[i].sim,
+              Attachments: result[i].files,
+              Remark: result[i].comment,
+              Tab_Title: 'Staff Refreshment',
+              unique_code: result[i].unique_code,
+            };
+            details.push(editedDetail);
+          }
+          if (details.length > 0) {
+            this.claimDatasDetails.push(details);
+            this.claimDataTotalAmount.push(amount);
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+        });
 
-      try {
-        const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
-        await axios.get(`${base_URL}/User/GetHandphone/${this.referenceNumber}`)
-          .then((response) => {
-            const result = response.data.result;
-            let details = [];
-            let amount = 0;
-            for (let i in result) {
-              amount += result[i].claim_amount;
-              const editedDetail = {
-                Claim_Month: result[i].claim_month,
-                Claim_Year: result[i].claim_year,
+      await axios
+        .get(`${base_URL}/User/GetEntertainment/${this.referenceNumber}`)
+        .then((response) => {
+          const result = response.data.result;
+          let details = [];
+          let amount = 0;
+          for (let i in result) {
+            amount += result[i].total_fee;
+            const editedDetail = {
+              Type: result[i].entertainment_type,
+              Date: result[i].date_event,
+              Venue: result[i].venue_name,
+              Company: result[i].company_name,
+              'Total_Fee(RM)': result[i].total_fee,
+              Participants: result[i].participants,
+              Attachments: result[i].files,
+              Remark: result[i].comment,
+              Tab_Title: 'Entertainment',
+              unique_code: result[i].unique_code,
+            };
+            details.push(editedDetail);
+          }
+          if (details.length > 0) {
+            this.claimDatasDetails.push(details);
+            this.claimDataTotalAmount.push(amount);
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+      await axios
+        .get(`${base_URL}/User/GetMedicalLeave/${this.referenceNumber}`)
+        .then((response) => {
+          const result = response.data.result;
+          let details = [];
+          let amount = 0;
+          for (let i in result) {
+            amount += result[i].claim_amount;
+            const editedDetail = {
+              reason: result[i].reason,
+              Date: result[i].date_leave_taken,
+              clinicselection: result[i].clinic_name
+                ? result[i].clinic_name
+                : result[i].clinic_selection,
+              reason_other_clinic: result[i].reason_different,
+              bank_name: result[i].bank_name,
+              bank_holder: result[i].bank_holder,
+              bank_account: result[i].bank_account,
+              'Total_Fee(RM)': result[i].claim_amount,
 
-                Bank: result[i].bank_name,
+              Attachments: result[i].files,
 
-                Bank_Holder: result[i].bank_holder,
-                Bank_Account: result[i].bank_account,
-                'Claim_Amount(RM)': result[i].claim_amount,
-                Attachments: result[i].files,
-                Tab_Title: 'Handphone Bill',
-                Remark: result[i].comment,
-                unique_code: result[i].unique_code,
-              };
-              details.push(editedDetail);
-            }
-            if (details.length > 0) {
-              this.claimDatasDetails.push(details);
-              this.claimDataTotalAmount.push(amount);
-            }
-          })
-          .catch((e) => {
-            console.error(e);
-          });
-      } catch (error) {
-        console.error("Error in FetchClaimDatasDetails", error);
-        throw error;
-      }
-      try {
-        const base_URL = process.env.VUE_APP_API_BASE_URL_EC_HUDA_LX;
-        await axios.get(`${base_URL}/User/GetOthers/${this.referenceNumber}`)
-          .then((response) => {
-            const result = response.data.result;
-            let details = [];
-            let amount = 0;
-            for (let i in result) {
-              amount += result[i].total_fee;
-              const editedDetail = {
-                Description: result[i].description,
-                Date: result[i].expense_date,
-                'Total_Fee(RM)': result[i].total_fee,
-                Attachments: result[i].files,
+              Tab_Title: 'Medical Leave',
+              Remark: result[i].comment,
+              unique_code: result[i].unique_code,
+            };
+            details.push(editedDetail);
+          }
+          if (details.length > 0) {
+            this.claimDatasDetails.push(details);
+            this.claimDataTotalAmount.push(amount);
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+        });
 
-                Tab_Title: 'Other',
-                Remark: result[i].comment,
-                unique_code: result[i].unique_code,
-              };
-              details.push(editedDetail);
-            }
-            if (details.length > 0) {
-              this.claimDatasDetails.push(details);
-              this.claimDataTotalAmount.push(amount);
-            }
-          })
-          .catch((e) => {
-            console.error(e);
-          });
-      } catch (error) {
-        console.error("Error in FetchClaimDatasDetails", error);
-        throw error;
-      }
+      await axios
+        .get(`${base_URL}/User/GetHandphone/${this.referenceNumber}`)
+        .then((response) => {
+          const result = response.data.result;
+          let details = [];
+          let amount = 0;
+          for (let i in result) {
+            amount += result[i].claim_amount;
+            const editedDetail = {
+              Claim_Month: result[i].claim_month,
+              Claim_Year: result[i].claim_year,
+
+              Bank: result[i].bank_name,
+
+              Bank_Holder: result[i].bank_holder,
+              Bank_Account: result[i].bank_account,
+              'Claim_Amount(RM)': result[i].claim_amount,
+              Attachments: result[i].files,
+              Tab_Title: 'Handphone Bill',
+              Remark: result[i].comment,
+              unique_code: result[i].unique_code,
+            };
+            details.push(editedDetail);
+          }
+          if (details.length > 0) {
+            this.claimDatasDetails.push(details);
+            this.claimDataTotalAmount.push(amount);
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+      await axios
+        .get(`${base_URL}/User/GetOthers/${this.referenceNumber}`)
+        .then((response) => {
+          const result = response.data.result;
+          let details = [];
+          let amount = 0;
+          for (let i in result) {
+            amount += result[i].total_fee;
+            const editedDetail = {
+              Description: result[i].description,
+              Date: result[i].expense_date,
+              'Total_Fee(RM)': result[i].total_fee,
+              Attachments: result[i].files,
+
+              Tab_Title: 'Other',
+              Remark: result[i].comment,
+              unique_code: result[i].unique_code,
+            };
+            details.push(editedDetail);
+          }
+          if (details.length > 0) {
+            this.claimDatasDetails.push(details);
+            this.claimDataTotalAmount.push(amount);
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+        });
       this.claimDatasDetails.forEach((details, index) => {
         if (details && details.length > 0) {
           const claimData = {
@@ -1182,6 +1148,7 @@ export default {
           comment: remark.remark,
           unique_code: remark.unique_code,
         };
+        const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
         if (remark.Tab_Title == 'Medical Bill') {
           axios.put(`${base_URL}/Admin/Approve_Comment_Medical`, data);
         } else if (remark.Tab_Title == 'Handphone Bill') {
