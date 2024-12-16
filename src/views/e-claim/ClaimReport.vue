@@ -1631,7 +1631,7 @@ export default {
       let result = null;
       try {
         const response = await axios.get(
-          "http://172.28.28.91:91/api/User/GetRunningNumber"
+          "http://172.28.28.117:7165/api/User/GetRunningNumber"
         );
         if (response.status === 200) {
           console.log("Serial Number:", response.data);
@@ -2204,7 +2204,7 @@ export default {
                   // Create axios instance
                   axiosInstance = axios.create({
                     baseURL:
-                      "http://172.28.28.91:91/api/User/InsertEntertainment",
+                      "http://172.28.28.117:7165/api/User/InsertEntertainment",
                   });
 
                   // Send the request
@@ -2351,7 +2351,7 @@ export default {
                   }
                   const axiosInstance = axios.create({
                     baseURL:
-                      "http://172.28.28.91:91/api/User/InsertHandphoneReimburse",
+                      "http://172.28.28.117:7165/api/User/InsertHandphoneReimburse",
                   });
 
                   try {
@@ -2430,7 +2430,7 @@ export default {
                   }
                   axiosInstance = axios.create({
                     baseURL:
-                      "http://172.28.28.91:91/api/User/InsertMedicalLeave",
+                      "http://172.28.28.117:7165/api/User/InsertMedicalLeave",
                   });
                   await axiosInstance.post(
                     "/",

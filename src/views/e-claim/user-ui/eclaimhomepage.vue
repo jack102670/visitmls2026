@@ -489,7 +489,7 @@ import NewClaimPopUp from '@/components/e-claim/NewClaimPopUp.vue';
 import $ from 'jquery';
 import 'datatables.net-dt';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';
-import axios from "axios";
+// import axios from "axios";
 export default {
   components: {
     // CreateNewClaimPopUp,
@@ -667,11 +667,16 @@ export default {
       }
 
       try {
-        const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
-        console.log(`Using base URL: ${base_URL}`);
-        const response = await axios.get(`${base_URL}/User/GetAllRequests/${userId}`);
-        this.requests = response.data.result;
-
+        const response = await fetch(
+          `http://172.28.28.117:7165/api/User/GetAllRequests/${userId}`
+        );
+        if (!response.ok) {
+          throw new Error('Failed to fetch requests');
+        }
+        const data = await response.json();
+        this.requests = data.result; // Update your data property with the fetched data
+        this.loading = false;
+        // console.log("Fetched requests:", this.requests);
       } catch (error) {
         if (error.response) {
           console.error(`API error: ${error.response.status} ${error.response.statusText}`);
