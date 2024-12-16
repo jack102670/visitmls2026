@@ -643,7 +643,7 @@ const router = createRouter({
 function checkUserStatusAndShowModal() {
   return new Promise((resolve, reject) => {
     const username_id = store.getSession().userDetails.userId;
-    fetch(`http://172.28.28.91:99/api/User/GetEmployeeById/${username_id}`)
+    fetch(`http://172.28.28.117:7239/api/User/GetEmployeeById/${username_id}`)
       .then((response) => response.json()) // Parse the response body to JSON
       .then((data) => {
         const userStatus = data.result[0].account_status;

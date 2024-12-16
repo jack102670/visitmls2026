@@ -331,7 +331,7 @@ export default {
   methods: {
     checkuser() {
       const username_id = this.userDetails.userId; // Assuming `store` is accessible through `this.$store`
-      fetch(`http://172.28.28.91:99/api/User/GetEmployeeById/${username_id}`)
+      fetch(`http://172.28.28.117:7239/api/User/GetEmployeeById/${username_id}`)
         .then((response) => response.json()) // Convert the response to JSON
         .then((data) => {
           // Assuming the API response structure has a status field in `data.result[0]`

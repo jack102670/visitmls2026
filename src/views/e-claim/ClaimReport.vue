@@ -1658,7 +1658,7 @@ export default {
     async fetchEmployeeID() {
       try {
         const response = await axios.get(
-          "http://172.28.28.91:99/api/User/GetAllEmployees"
+          "http://172.28.28.117:7239/api/User/GetAllEmployees"
         );
 
         if (response.data.result && response.data.result.length > 0) {
@@ -1921,7 +1921,7 @@ export default {
 
       try {
         const response = await axios.post(
-          "http://172.28.28.91:99/api/User/InsertClaimDetails",
+          "http://172.28.28.117:7239/api/User/InsertClaimDetails",
           apiData
         );
         // console.log("API response:", response.data);
@@ -2013,7 +2013,7 @@ export default {
 
                   axiosInstance = axios.create({
                     baseURL:
-                      "http://172.28.28.91:99/api/User/InsertLocalOutstation",
+                      "http://172.28.28.117:7239/api/User/InsertLocalOutstation",
                   });
                   if (claim.UploadLT && claim.UploadLT.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
@@ -2152,7 +2152,7 @@ export default {
 
                   axiosInstance = axios.create({
                     baseURL:
-                      "http://172.28.28.91:99/api/User/InsertOverseasOutstation",
+                      "http://172.28.28.117:7239/api/User/InsertOverseasOutstation",
                   });
                   const response = await axiosInstance.post(
                     "/",
@@ -2265,7 +2265,7 @@ export default {
                   }
                   axiosInstance = axios.create({
                     baseURL:
-                      "http://172.28.28.91:99/api/User/InsertStaffRefreshment",
+                      "http://172.28.28.117:7239/api/User/InsertStaffRefreshment",
                   });
                   const response2 = await axiosInstance.post(
                     "/",
@@ -2310,7 +2310,7 @@ export default {
                     );
                   }
                   axiosInstance = axios.create({
-                    baseURL: "http://172.28.28.91:99/api/User/InsertOthers",
+                    baseURL: "http://172.28.28.117:7239/api/User/InsertOthers",
                   });
                   const response2 = await axiosInstance.post(
                     "/",

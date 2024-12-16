@@ -931,7 +931,7 @@ export default {
       this.loading = true;
       await axios
         .get(
-          'http://172.28.28.91:91/api/User/GetClaimDetails/' +
+          'http://172.28.28.117:7165/api/User/GetClaimDetails/' +
             this.referenceNumber
         )
         .then((response) => {
@@ -975,7 +975,7 @@ export default {
       this.claimDatas = [];
       await axios
         .get(
-          'http://172.28.28.91:91/api/User/GetMedicalLeave/' +
+          'http://172.28.28.117:7165/api/User/GetMedicalLeave/' +
             this.referenceNumber
         )
         .then((response) => {
@@ -1016,7 +1016,7 @@ export default {
 
       await axios
         .get(
-          'http://172.28.28.91:91/api/User/GetHandphone/' + this.referenceNumber
+          'http://172.28.28.117:7165/api/User/GetHandphone/' + this.referenceNumber
         )
         .then((response) => {
           const result = response.data.result;
@@ -1099,7 +1099,7 @@ export default {
       const username_id = store.getSession().userDetails.userId;
       let userData;
       await axios
-        .get(`http://172.28.28.91:99/api/User/GetEmployeeById/${username_id}`)
+        .get(`http://172.28.28.117:7239/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           userData = {
             userName: response.data.result[0].name,
@@ -1150,12 +1150,12 @@ export default {
         };
         if (remark.Tab_Title == 'Medical Bill') {
           axios.put(
-            'http://172.28.28.91:91/api/Admin/Approve_Comment_Medical',
+            'http://172.28.28.117:7165/api/Admin/Approve_Comment_Medical',
             data
           );
         } else if (remark.Tab_Title == 'Handphone Bill') {
           axios.put(
-            'http://172.28.28.91:91/api/Admin/Approve_Comment_Handphone',
+            'http://172.28.28.117:7165/api/Admin/Approve_Comment_Handphone',
             data
           );
         }
@@ -1179,7 +1179,7 @@ export default {
         };
         console.log(approveData);
         await axios
-          .put('http://172.28.28.91:91/api/Admin/Approve_Claim', approveData)
+          .put('http://172.28.28.117:7165/api/Admin/Approve_Claim', approveData)
           .then((response) => {
             // Handle success response
             console.log('API response', response.data);
@@ -1212,7 +1212,7 @@ export default {
           reference_number: this.claimDetails.reference_number,
         };
         await axios
-          .put('http://172.28.28.91:91/api/Admin/Approve_Claim', approveData)
+          .put('http://172.28.28.117:7165/api/Admin/Approve_Claim', approveData)
           .then((response) => {
             // Handle success response
             this.loading = false;
@@ -1241,7 +1241,7 @@ export default {
           reference_number: this.claimDetails.reference_number,
         };
         await axios
-          .put('http://172.28.28.91:91/api/Admin/Approve_Claim', approveData)
+          .put('http://172.28.28.117:7165/api/Admin/Approve_Claim', approveData)
           .then((response) => {
             // Handle success response
             this.loading = false;
@@ -1270,7 +1270,7 @@ export default {
           reference_number: this.claimDetails.reference_number,
         };
         await axios
-          .put('http://172.28.28.91:91/api/Admin/Approve_Claim', approveData)
+          .put('http://172.28.28.117:7165/api/Admin/Approve_Claim', approveData)
           .then((response) => {
             // Handle success response
             this.loading = false;

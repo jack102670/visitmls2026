@@ -1111,7 +1111,7 @@ export default {
       this.loading = true;
       await axios
         .get(
-          'http://172.28.28.91:91/api/User/GetClaimDetails/' +
+          'http://172.28.28.117:7165/api/User/GetClaimDetails/' +
             this.referenceNumber
         )
         .then((response) => {
@@ -1337,7 +1337,7 @@ export default {
 
       await axios
         .get(
-          'http://172.28.28.91:91/api/User/GetEntertainment/' +
+          'http://172.28.28.117:7165/api/User/GetEntertainment/' +
             this.referenceNumber
         )
         .then((response) => {
