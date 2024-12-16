@@ -174,10 +174,10 @@
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           <span v-if="claim.LocationEnd">{{
                             claim.LocationEnd
-                          }}</span>
+                            }}</span>
                           <span v-if="claim.PurposeOT">{{
                             claim.PurposeOT
-                          }}</span>
+                            }}</span>
                           <span v-if="claim.VenueE">{{ claim.VenueE }}</span>
                           <span v-if="claim.VenueSR">{{ claim.VenueSR }}</span>
                         </td>
@@ -189,7 +189,7 @@
                           <span v-if="claim.dateSR">{{ claim.dateSR }}</span>
                           <span v-if="claim.dateOthers">{{
                             claim.dateOthers
-                          }}</span>
+                            }}</span>
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           <span v-if="claim.totalRM">RM {{ claim.totalRM }}</span>
@@ -219,15 +219,11 @@
         <tab class="mt-10" @formSubmitted="addClaim" :type="claims[0].reportType" @file-added="handleFileAdded"
           @file-removed="handleFileRemoved"></tab>
       </div>
-      <div 
-          v-if="isClickModal"
-          class="modal fixed inset-0 bg-transparent backdrop-blur-sm backdrop-brightness-75  dark:bg-[#111827] bg-opacity-50 flex justify-center items-center"
-          @click.self="closeClickModal"
-        >
-          <div 
-            class="modal-content bg-white rounded-lg p-8 w-full sm:w-3/4 lg:max-w-3xl"
-            style="max-height: calc(100vh - 20px); overflow-y: auto"
-          >
+      <div v-if="isClickModal"
+        class="modal fixed top-0 left-0 w-full flex-1 bg-[#CED1DA] dark:bg-[#111827] p-4 h-auto bg-opacity-75 flex justify-center items-center"
+        @click.self="closeClickModal">
+        <div class="modal-content bg-white rounded-lg p-8 w-full sm:w-3/4 lg:max-w-3xl"
+          style="max-height: calc(100vh - 20px); overflow-y: auto">
           <!-- Modal header -->
           <div v-if="selectedClaimType === 'LocalTravelling'">
             <div class="flex justify-end">
@@ -554,7 +550,7 @@
                       <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-64">
                         <span v-if="!isEditMode">{{
                           expense.description
-                        }}</span>
+                          }}</span>
                         <textarea v-else v-model="expense.description"
                           class="form-textarea mt-1 block w-full border border-gray-400 p-1" rows="2"></textarea>
                       </td>
@@ -562,7 +558,7 @@
                       <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24">
                         <span v-if="!isEditMode || nonEditableFields">{{
                           expense.ForeignCurrencyAccommodationOT || "-"
-                        }}</span>
+                          }}</span>
                         <input v-else type="text" v-model="expense.ForeignCurrencyAccommodationOT"
                           class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1" />
                       </td>
@@ -570,7 +566,7 @@
                       <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24">
                         <span v-if="!isEditMode">{{
                           expense.ExchangeRateAccommodationOT || "-"
-                        }}</span>
+                          }}</span>
                         <input v-else type="number" v-model="expense.ExchangeRateAccommodationOT"
                           class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1" />
                       </td>
@@ -578,7 +574,7 @@
                       <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24">
                         <span v-if="!isEditMode">{{
                           expense.AmountforAccommodationOT || "-"
-                        }}</span>
+                          }}</span>
                         <input v-else type="number" v-model="expense.AmountforAccommodationOT"
                           class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1" />
                       </td>
@@ -1353,7 +1349,6 @@ import tab from "./user-ui/FormTab.vue";
 import axios from "axios";
 import { formStore } from "../store.js";
 import { store } from "../store.js";
-import { ernaAPI, hudaAPI } from '../../api/EclaimAPI.js';
 
 export default {
   name: "TEtstS",
@@ -1634,9 +1629,10 @@ export default {
 
     async fetchSerialNumber() {
       let result = null;
-      const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
       try {
-        const response = await axios.get(`${base_URL}/User/GetRunningNumber`);
+        const response = await axios.get(
+          "http://172.28.28.91:91/api/User/GetRunningNumber"
+        );
         if (response.status === 200) {
           console.log("Serial Number:", response.data);
           let serialNumber = this.claims[0].uniqueCode + response.data.result;
@@ -1660,11 +1656,11 @@ export default {
       })} ${date.getFullYear()}`;
     },
     async fetchEmployeeID() {
-
       try {
-        const base_URL = process.env.VUE_APP_API_BASE_URL_EC_HUDA_LX;
-        const response = await axios.get(`${base_URL}/User/GetAllEmployees`);
-        console.log("TEST DATA EMP", response.data.result);
+        const response = await axios.get(
+          "http://172.28.28.91:99/api/User/GetAllEmployees"
+        );
+
         if (response.data.result && response.data.result.length > 0) {
           const selectedEmployee = response.data.result.find(
             (emp) => emp.username_id === store.getSession().userDetails.userId
@@ -1912,16 +1908,25 @@ export default {
         requester_email: store.getSession().userDetails.email,
         reference_number: referenceNumber,
         report_name: this.claims[0].reportName,
-        grand_total: String(parseFloat(this.grandTotal).toFixed(2)),
+        grand_total: String(parseFloat(this.grandTotal).toFixed(2)), // Ensure grand_total is a string
         requester_id: this.userDetails.userId,
         cost_center: this.claims[0].costCenter,
         unique_code: this.claims[0].uniqueCode,
       };
 
+      // console.log("API data being sent:", apiData); // Log the API data
+      // Object.keys(apiData).forEach((key) => {
+      //   console.log(`${key}: ${apiData[key]} (type: ${typeof apiData[key]})`);
+      // });
+
       try {
-        const base_URL = process.env.VUE_APP_API_BASE_URL_EC_HUDA_LX;
-        const response = await axios.post(`${base_URL}/User/InsertClaimDetails`, apiData);
+        const response = await axios.post(
+          "http://172.28.28.91:99/api/User/InsertClaimDetails",
+          apiData
+        );
         // console.log("API response:", response.data);
+
+        // Check if the response indicates success
         if (response.status === 200 || response.status === 201) {
           console.log("Data successfully inserted:", response.data);
           this.sendToAPI();
@@ -1971,7 +1976,7 @@ export default {
           console.log(`Claims to send for ${title}:`, claimsToSend); // Log the claimsToSend object
 
           try {
-
+            let axiosInstance;
             switch (title.toLowerCase()) {
               case "local travelling": {
                 for (const claim of claimsToSend) {
@@ -2006,14 +2011,10 @@ export default {
                     accommodation: claim.AccommodationLT || "-",
                   };
 
-
-                  hudaAPI.post('/User/InsertLocalOutstation')
-                    .then(response => {
-                      console.log(response.data);
-                    })
-                    .catch(error => {
-                      console.error(error);
-                    });
+                  axiosInstance = axios.create({
+                    baseURL:
+                      "http://172.28.28.91:99/api/User/InsertLocalOutstation",
+                  });
                   if (claim.UploadLT && claim.UploadLT.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
                     console.log("Preparing to upload files:", claim.UploadLT);
@@ -2068,7 +2069,7 @@ export default {
                       uniqueCodeLT
                     );
                   }
-                  const response = await hudaAPI.post(
+                  const response = await axiosInstance.post(
                     "/",
                     thisisforlocal1
                   );
@@ -2149,15 +2150,11 @@ export default {
                     }
                   }
 
-
-                  hudaAPI.post('/User/InsertOverseasOutstation')
-                    .then(response => {
-                      console.log(response.data);
-                    })
-                    .catch(error => {
-                      console.error(error);
-                    });
-                  const response = await hudaAPI.post(
+                  axiosInstance = axios.create({
+                    baseURL:
+                      "http://172.28.28.91:99/api/User/InsertOverseasOutstation",
+                  });
+                  const response = await axiosInstance.post(
                     "/",
                     thisisforoversea
                   );
@@ -2205,29 +2202,25 @@ export default {
                   }
 
                   // Create axios instance
-
-
-                  ernaAPI.post('/User/InsertEntertainment')
-                    .then(response => {
-                      console.log(response.data);
-                    })
-                    .catch(error => {
-                      console.error(error);
-                    });
+                  axiosInstance = axios.create({
+                    baseURL:
+                      "http://172.28.28.91:91/api/User/InsertEntertainment",
+                  });
 
                   // Send the request
                   try {
-                    const response = await ernaAPI.post(
+                    const response = await axiosInstance.post(
                       "/",
                       thisisforentertainment
                     );
                     console.log(`Data sent for ${title} 3:`, response.data);
-                    this.fileupload();
+                    this.fileupload(); // Assuming this function handles subsequent actions after successful submission
                   } catch (error) {
                     console.error(
                       "Error sending data for Entertainment:",
                       error.response.data
                     );
+                    // Handle error appropriately, e.g., display error message to user
                   }
                 }
 
@@ -2270,16 +2263,11 @@ export default {
 
                     this.uploadFiles(claim.UploadSR, userId, uniqcodeSR);
                   }
-
-                  hudaAPI.post('/User/InsertStaffRefreshment')
-                    .then(response => {
-                      console.log(response.data);
-                    })
-                    .catch(error => {
-                      console.error(error);
-                    });
-
-                  const response2 = await hudaAPI.post(
+                  axiosInstance = axios.create({
+                    baseURL:
+                      "http://172.28.28.91:99/api/User/InsertStaffRefreshment",
+                  });
+                  const response2 = await axiosInstance.post(
                     "/",
                     thisisforstaffrefreshment
                   );
@@ -2321,23 +2309,10 @@ export default {
                       uniqcodeothers
                     );
                   }
-
-                  hudaAPI.post('/User/InsertOthers',
-                  JSON.stringify(thisisforHandphoneBillReimbursement), // Explicitly stringify for JSON
-                      {
-                        headers: {
-                          "Content-Type": "application/json", // Ensure proper content type
-                        },
-                      }
-                  )
-                    .then(response => {
-                      console.log(response.data);
-                    })
-                    .catch(error => {
-                      console.error("Error sending data for Handphone Bill Reimbursement:",error);
-                      throw error;
-                    });
-                  const response2 = await hudaAPI.post(
+                  axiosInstance = axios.create({
+                    baseURL: "http://172.28.28.91:99/api/User/InsertOthers",
+                  });
+                  const response2 = await axiosInstance.post(
                     "/",
                     thisisforHandphoneBillReimbursement
                   );
@@ -2374,17 +2349,13 @@ export default {
                     // Assuming uploadFile has been adjusted to accept an array of files
                     this.uploadFiles(claim.UploadHR, userId, uniqcodeHR);
                   }
-
-                  ernaAPI.post('/User/InsertHandphoneReimburse')
-                    .then(response => {
-                      console.log(response.data);
-                    })
-                    .catch(error => {
-                      console.error(error);
-                    });
+                  const axiosInstance = axios.create({
+                    baseURL:
+                      "http://172.28.28.91:91/api/User/InsertHandphoneReimburse",
+                  });
 
                   try {
-                    const response = await ernaAPI.post(
+                    const response = await axiosInstance.post(
                       "/",
                       thisisforHandphoneBillReimbursement
                     );
@@ -2457,15 +2428,11 @@ export default {
 
                     this.uploadFiles(claim.UploadML, userId, uniqcodeML);
                   }
-
-                  ernaAPI.post('/User/InsertMedicalLeave')
-                    .then(response => {
-                      console.log(response.data);
-                    })
-                    .catch(error => {
-                      console.error(error);
-                    });
-                  await ernaAPI.post(
+                  axiosInstance = axios.create({
+                    baseURL:
+                      "http://172.28.28.91:91/api/User/InsertMedicalLeave",
+                  });
+                  await axiosInstance.post(
                     "/",
                     thisisforMedicalBillReimbursement
                   );
@@ -2510,10 +2477,10 @@ export default {
     },
 
     async uploadFiles(files, userId, uniqueCode) {
-      const base_URL = process.env.VUE_APP_API_BASE_URL_UPLOAD_FILE;
-      const uploadEndpoint = `${base_URL}/Files/MultiUploadImage/${userId}/${uniqueCode}`;
+      const uploadEndpoint = `http://172.28.28.91:93/api/Files/MultiUploadImage/${userId}/${uniqueCode}`;
       const formData = new FormData();
 
+      // Iterate over the files array and append each file to formData
       files.forEach((file) => {
         formData.append("filecollection", file);
       });
@@ -2531,7 +2498,7 @@ export default {
     },
 
     async sendFiles(X, Y) {
-      const files = this.formData.fileUpload;
+      const files = this.formData.fileUpload; // Ensure formData is correctly accessible
 
       if (!files || !files.length) {
         console.error("No files to upload.");
@@ -2577,7 +2544,7 @@ export default {
       if (this.index !== -1) {
         this.dataclaims.splice(this.index, 1);
       }
-      this.isClickModal = false;
+      this.isClickModal = false; // Close the modal
     },
     // other methods...
     fetchClaims() {
