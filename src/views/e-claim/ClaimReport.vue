@@ -220,7 +220,7 @@
           @file-removed="handleFileRemoved"></tab>
       </div>
       <div v-if="isClickModal"
-        class="modal fixed top-0 left-0 w-full flex-1 bg-[#CED1DA] dark:bg-[#111827] p-4 h-auto bg-opacity-75 flex justify-center items-center"
+        class="modal fixed inset-0 bg-transparent backdrop-blur-sm backdrop-brightness-75  dark:bg-[#111827] bg-opacity-50 flex justify-center items-center"
         @click.self="closeClickModal">
         <div class="modal-content bg-white rounded-lg p-8 w-full sm:w-3/4 lg:max-w-3xl"
           style="max-height: calc(100vh - 20px); overflow-y: auto">

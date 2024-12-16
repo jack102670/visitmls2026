@@ -1489,7 +1489,6 @@ export default {
     // need to post to database
     async ApproveOrReject(AoR) {
       const userData = await this.GetUserData();
-      const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
       this.singleRemarks.forEach((remark) => {
         let data = {
           comment: remark.remark,
