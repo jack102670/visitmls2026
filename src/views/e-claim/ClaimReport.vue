@@ -197,6 +197,7 @@
                           </span>
                           <span v-if="claim.AmountRME">RM {{ claim.AmountRME }}</span>
                           <span v-if="claim.AmountRMSR">RM {{ claim.AmountRMSR }}</span>
+                          <span v-if="claim.combinetotal">RM {{ claim.combinetotal }}</span>
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2">
                           <button @click="showDetails(claim, index)"
@@ -1578,7 +1579,7 @@ export default {
           if (claim.AmountRME) amount += parseFloat(claim.AmountRME);
           if (claim.totalRM) amount += parseFloat(claim.totalRM);
           if (claim.AmountRMSR) amount += parseFloat(claim.AmountRMSR);
-          if (claim.combinedTotal) amount += parseFloat(claim.combinedTotal);
+          if (claim.combinetotal) amount += parseFloat(claim.combinetotal);
           return total + amount;
         }, 0)
         .toFixed(2);

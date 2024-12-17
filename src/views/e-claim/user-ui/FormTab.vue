@@ -2913,6 +2913,19 @@ export default {
   },
 
   computed: {
+    totalMealAllowanceOTplusotherExpenses() {
+      let otherExpensesTotal = this.otherExpenses.reduce(
+        (total, expense) => total + (parseFloat(expense.amount) || 0),
+        0
+      );
+
+      let mealAllowanceOT = this.overseasTabs.find(tab => tab.title === "Details")
+        .fields.find(field => field.id === "MealAllowanceOT").value;
+
+      let total = (parseFloat(mealAllowanceOT) || 0) + otherExpensesTotal;
+
+      return total.toFixed(2); // Return the total formatted to 2 decimal places
+    },
     // Add new computed properties for each form
   hasLocalAccess() {
     return this.profilestatus.local_access ;
@@ -4244,8 +4257,9 @@ export default {
             formattedData[field.id] = field.value;
           }
         });
-        formattedData["otherExpenses"] = [...this.otherExpenses];
       });
+      formattedData["otherExpenses"] = [...this.otherExpenses];
+      formattedData["combinetotal"] = this.totalMealAllowanceOTplusotherExpenses;
       formattedData["tabTitle"] = "Overseas Travelling";
       this.$emit("formSubmitted", formattedData);
       console.log("Formatted Form Data:", formattedData);
