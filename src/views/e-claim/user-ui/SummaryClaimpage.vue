@@ -676,239 +676,178 @@
             <h1>VERIFIED SUCCESSFULLY</h1>
           </div>
         </div>
-        <div
-          v-show="showSimList"
-          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center"
-        >
+        <div v-show="showSimList"
+          class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
           <div
-            class="bg-white w-full sm:w-4/5 lg:w-2/5 rounded-xl flex flex-col items-center relative"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="absolute right-3 top-3 size-6"
-              @click="showSimList = !showSimList"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18 18 6M6 6l12 12"
-              />
-            </svg>
-            <div class="relative flex w-4/5 mx-auto">
-              <h1 class="text-xl font-semibold mt-4">Staff Involved</h1>
+            class="bg-white w-full p-2 max-w-3xl mx-4 shadow-xl transform transition-all duration-300 ease-in-out scale-100">
+            <div class="flex justify-between items-center p-4 border-b border-gray-200 relative">
+              <div class="absolute inset-0 flex justify-center items-center pointer-events-none">
+                <h1 class="text-xl font-bold text-gray-800">Staff Involved</h1>
+              </div>
+
+              <div class="ml-auto"> <!-- This ensures the close button stays on the right -->
+                <button @click="showSimList = !showSimList" class="text-gray-500 hover:text-gray-800 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
             </div>
-            <table class="w-4/5 text-center mt-1 mb-8">
-              <tr class="bg-gray-300 text-center h-12">
-                <th>No.</th>
-                <th>Company</th>
-                <th>Name</th>
-                <th>Department</th>
-              </tr>
-              <tr
-                v-for="(staff, i) in sim"
-                :key="i"
-                class="bg-white text-black text-center h-12"
-              >
-                <th class="font-normal">{{ i + 1 }}</th>
-                <th class="font-normal">{{ staff.company_name }}</th>
-                <th class="font-normal">{{ staff.name }}</th>
-                <th class="font-normal">{{ staff.department }}</th>
-              </tr>
-            </table>
+            <div class="overflow-x-auto p-2">
+              <table class="w-full p-2">
+                <thead class="bg-gray-100">
+                  <th class="py-3 px-4 text-left">No.</th>
+                  <th class="py-3 px-4 text-left">Company</th>
+                  <th class="py-3 px-4 text-left">Name</th>
+                  <th class="py-3 px-4 text-left">Department</th>
+                </thead>
+                <tbody class="text-gray-600">
+                  <tr v-for="(staff, i) in sim" :key="i"
+                    class="border-b border-gray-200 hover:bg-gray-100 transition-colors">
+                    <td class="py-3 px-4">{{ i + 1 }}</td>
+                    <td class="py-3 px-4">{{ staff.company_name }}</td>
+                    <td class="py-3 px-4">{{ staff.name }}</td>
+                    <td class="py-3 px-4">{{ staff.department }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-
         <!-- Participants List -->
-        <div
-          v-show="showParticipantsList"
-          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center"
-        >
-          <div
-            class="bg-white w-full sm:w-4/5 lg:w-2/5 rounded-xl flex flex-col items-center relative"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="absolute right-3 top-3 size-6"
-              @click="showParticipantsList = false"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18 18 6M6 6l12 12"
-              />
-            </svg>
-            <div class="relative flex w-4/5 mx-auto">
-              <h1 class="text-xl font-semibold mt-4">Participants</h1>
+        <div v-show="showParticipantsList"
+          class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
+          <div class="bg-white w-full p-2 max-w-3xl mx-4 shadow-xl relative">
+            <button @click="showSimList = false"
+              class="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <div class="text-center px-2 py-4">
+              <h1 class="text-xl font-semibold">Participants</h1>
             </div>
-            <table class="w-4/5 text-center mt-1 mb-8">
-              <tr class="bg-gray-300 text-center h-12">
-                <th>No.</th>
-                <th>Name</th>
-                <th>Company</th>
-              </tr>
-              <tr
-                v-for="(staff, i) in participants"
-                :key="i"
-                class="bg-white text-black text-center h-12"
-              >
-                <th class="font-normal">{{ i + 1 }}</th>
-                <th class="font-normal">{{ staff.name }}</th>
-                <th class="font-normal">{{ staff.company_name }}</th>
-              </tr>
-            </table>
+
+            <div class="overflow-x-auto p-2">
+              <table class="w-full text-center">
+                <thead class="bg-gray-100">
+                  <th class="py-3 px-4">No.</th>
+                  <th class="py-3 px-4">Name</th>
+                  <th class="py-3 px-4">Company</th>
+                </thead>
+                <tbody>
+                  <tr v-for="(staff, i) in participants" :key="i" class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-4">{{ i + 1 }}</td>
+                    <td class="py-3 px-4">{{ staff.name }}</td>
+                    <td class="py-3 px-4">{{ staff.company_name }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
         <!-- Other Expenses List -->
-        <div
-          v-show="showOEsList"
-          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center"
-        >
-          <div
-            class="bg-white w-full sm:w-4/5 lg:w-2/5 rounded-xl flex flex-col items-center relative"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="absolute right-3 top-3 size-6"
-              @click="showOEsList = false"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18 18 6M6 6l12 12"
-              />
-            </svg>
-            <div class="relative flex w-4/5 mx-auto">
-              <h1 class="text-xl font-semibold mt-4">Other Expenses</h1>
+        <div v-show="showOEsList"
+          class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
+          <div class="bg-white w-full max-w-3xl mx-4 shadow-xl relative">
+            <button @click="showOEsList = false"
+              class="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <div class="text-center py-4">
+              <h1 class="text-xl font-semibold">Other Expenses</h1>
             </div>
-            <table class="w-4/5 text-center mt-1 mb-8">
-              <tr class="bg-gray-300 text-center h-12">
-                <th>No.</th>
-                <th>Name</th>
-                <th>Amount</th>
-                <th>Description</th>
-              </tr>
-              <tr
-                v-for="(expense, i) in oe"
-                :key="i"
-                class="bg-white text-black text-center h-12"
-              >
-                <th class="font-normal">{{ i + 1 }}</th>
-                <th class="font-normal">{{ expense.name }}</th>
-                <th class="font-normal">{{ expense.amount }}</th>
-                <th class="font-normal">{{ expense.description }}</th>
-              </tr>
-            </table>
+
+            <div class="overflow-x-auto p-2">
+              <table class="w-full text-center">
+                <thead class="bg-gray-100">
+
+                  <th class="py-3 px-4">No.</th>
+                  <th class="py-3 px-4">Name</th>
+                  <th class="py-3 px-4">Amount</th>
+                  <th class="py-3 px-4">Description</th>
+                </thead>
+                <tbody>
+                  <tr v-for="(expense, i) in oe" :key="i"
+                    class="border-b border-gray-200 hover:bg-gray-100 transition-colors">
+                    <td class="py-3 px-4">{{ i + 1 }}</td>
+                    <td class="py-3 px-4">{{ expense.name }}</td>
+                    <td class="py-3 px-4">{{ expense.amount }}</td>
+                    <td class="py-3 px-4">{{ expense.description }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
         <!-- File List -->
-        <div
-          v-show="showFileList"
-          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center"
-        >
-          <div
-            class="bg-white w-full sm:w-4/5 rounded-xl flex flex-col items-center relative pb-6"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="absolute right-3 top-3 size-6"
-              @click="showFileList = false"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18 18 6M6 6l12 12"
-              />
-            </svg>
-            <div class="relative flex w-4/5 mx-auto justify-center">
-              <h1 class="text-xl font-semibold my-4">Attachments</h1>
+        <div v-show="showFileList"
+          class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
+          <div class="bg-white w-full max-w-3xl mx-4 shadow-xl relative">
+            <button @click="showFileList = false"
+              class="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <div class="text-center py-4">
+              <h1 class="text-xl font-semibold">Attachments</h1>
             </div>
-            <table v-if="files.length > 0" class="w-4/5 text-center mt-1 mb-8">
-              <tr class="bg-gray-300 text-center h-12">
-                <th>No.</th>
-                <th>File</th>
-                <th>Action</th>
-              </tr>
-              <tr
-                v-for="(file, i) in files"
-                :key="i"
-                class="bg-white text-black text-center h-12 mt-2"
-              >
-                <th class="font-normal">{{ i + 1 }}</th>
-                <th class="font-normal flex">
-                  <img
-                    v-if="
-                      file.split('.').slice(-1)[0].toLowerCase() == 'png' ||
-                      file.split('.').slice(-1)[0].toLowerCase() == 'jpg' ||
-                      file.split('.').slice(-1)[0].toLowerCase() == 'jpeg'
-                    "
-                    :src="file"
-                    alt="attachment"
-                    class="w-20 h-32 object-contain"
-                  />
-                  <svg
-                    v-else
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="0.5"
-                    stroke="currentColor"
-                    class="w-20 h-32"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
-                    />
-                  </svg>
 
-                  <h1 class="ml-2">
-                    {{ file.split('/')[file.split('/').length - 1] }}
-                  </h1>
-                </th>
-                <th class="font-normal">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-5 h-5 mx-auto"
-                    @click="
-                      DownloadFile(
-                        file,
-                        file.split('/')[file.split('/').length - 1]
-                      )
-                    "
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
-                    />
-                  </svg>
-                </th>
-              </tr>
-            </table>
+            <div v-if="files.length > 0" class="overflow-x-auto p-2">
+              <table class="w-full text-center">
+                <thead class="bg-gray-100">
+                  <tr>
+                    <th class="py-3 px-4">No.</th>
+                    <th class="py-3 px-4">File</th>
+                    <th class="py-3 px-4">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(file, i) in files" :key="i"
+                    class="border-b border-gray-200 hover:bg-gray-100 transition-colors">
+                    <td class="py-3 px-4">{{ i + 1 }}</td>
+                    <td class="py-3 px-4 flex items-center space-x-2">
+                      <div class="w-20 h-32 flex items-center justify-center">
+                        <img v-if="['png', 'jpg', 'jpeg'].includes(file.split('.').pop().toLowerCase())" :src="file"
+                          alt="attachment" class="max-w-full max-h-full object-contain" />
+                        <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                          stroke-width="0.5" stroke="currentColor" class="w-16 h-16 text-gray-500">
+                          <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                        </svg>
+                      </div>
+                      <span class="truncate">
+                        {{ file.split('/').pop() }}
+                      </span>
+                    </td>
+                    <td class="py-3 px-4">
+                      <button @click="DownloadFile(file, file.split('/').pop())"
+                        class="text-gray-600 hover:text-blue-600 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                          stroke="currentColor" class="w-5 h-5 mx-auto">
+                          <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-            <div v-if="files.length <= 0" class="w-full">
-              <h1 class="mx-auto text-center font-thin text-gray-500">Empty</h1>
+            <div v-else class="text-center py-4">
+              <p class="text-gray-500">No attachments</p>
             </div>
           </div>
         </div>

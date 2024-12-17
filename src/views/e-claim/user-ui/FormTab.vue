@@ -256,7 +256,7 @@
                                       v-if="
                                         field.id === 'UploadMileageRMLT' &&
                                         showMileageUpload
-                                      "
+                                      " 
                                       :name="field.id"
                                       :disabled="
                                         (tab.title ===
@@ -264,6 +264,7 @@
                                           isFormDisabled) ||
                                         field.disabled
                                       "
+                                      
                                       :required="field.required"
                                       ref="pond"
                                       label-idle="Drop files here..."
@@ -323,7 +324,7 @@
                                           isFormDisabled) ||
                                         field.disabled
                                       "
-                                      :required="field.required"
+                                      :required="isFieldRequired(field.id)"
                                       ref="pond"
                                       label-idle="Drop files here..."
                                       @addfile="
@@ -444,7 +445,7 @@
                                     "
                                     class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                                   />
-                                  <button
+                                  <!-- <button
                                     type="button"
                                     @click="toggleUploadField('MileageRMLT')"
                                     class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
@@ -463,7 +464,7 @@
                                         d="M7 8l5-5m0 0l5 5m-5-5v12"
                                       />
                                     </svg>
-                                  </button>
+                                  </button> -->
                                 </template>
 
                                 <template v-else-if="field.id === 'FareRMLT'">
@@ -486,7 +487,7 @@
                                     "
                                     class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                                   />
-                                  <button
+                                  <!-- <button
                                     type="button"
                                     @click="toggleUploadField('FareRMLT')"
                                     class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
@@ -505,7 +506,7 @@
                                         d="M7 8l5-5m0 0l5 5m-5-5v12"
                                       />
                                     </svg>
-                                  </button>
+                                  </button> -->
                                 </template>
 
                                 <template v-else-if="field.id === 'TollLT'">
@@ -528,7 +529,7 @@
                                     "
                                     class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                                   />
-                                  <button
+                                  <!-- <button
                                     type="button"
                                     @click="toggleUploadField('TollLT')"
                                     class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
@@ -547,7 +548,7 @@
                                         d="M7 8l5-5m0 0l5 5m-5-5v12"
                                       />
                                     </svg>
-                                  </button>
+                                  </button> -->
                                 </template>
 
                                 <template v-else-if="field.id === 'ParkingLT'">
@@ -570,7 +571,7 @@
                                     "
                                     class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                                   />
-                                  <button
+                                  <!-- <button
                                     type="button"
                                     @click="toggleUploadField('ParkingLT')"
                                     class="text-blue-500 transition-colors duration-200 dark:hover:text-blue-300 dark:text-gray-300 hover:text-blue-300 focus:outline-none"
@@ -589,7 +590,7 @@
                                         d="M7 8l5-5m0 0l5 5m-5-5v12"
                                       />
                                     </svg>
-                                  </button>
+                                  </button> -->
                                 </template>
 
                                 <template
@@ -2061,10 +2062,10 @@ export default {
       activeSubTab: 0,
       date: "",
       yearRange: [],
-      showMileageUpload: false,
-      showFareUpload: false,
-      showTollUpload: false,
-      showParkingUpload: false,
+      showMileageUpload: true,
+      showFareUpload: true,
+      showTollUpload: true,
+      showParkingUpload: true,
       LimitedAmountHR: 0,
       limit_medicaldental: 0,
       limit_outpatient: 0,
@@ -3364,6 +3365,29 @@ export default {
   },
 
   methods: {
+     isFieldRequired(fieldId) {
+      if (fieldId === "UploadMileageRMLT") {
+        const mileageField = this.tabs.find(tab => tab.title === "Local Travelling")
+          .fields.find(field => field.id === "MileageRMLT");
+        return mileageField && mileageField.value !== "";
+      }
+      if (fieldId === "UploadFareRMLT") {
+        const fareField = this.tabs.find(tab => tab.title === "Local Travelling")
+          .fields.find(field => field.id === "FareRMLT");
+        return fareField && fareField.value !== "";
+      }
+      if (fieldId === "UploadTollLT") {
+        const tollField = this.tabs.find(tab => tab.title === "Local Travelling")
+          .fields.find(field => field.id === "TollLT");
+        return tollField && tollField.value !== "";
+      }
+      if (fieldId === "UploadParkingLT") {
+        const parkingField = this.tabs.find(tab => tab.title === "Local Travelling")
+          .fields.find(field => field.id === "ParkingLT");
+        return parkingField && parkingField.value !== "";
+      }
+      return false;
+    },
     async checkstatus() {
       try {
         const username_id = store.getSession().userDetails.userId;

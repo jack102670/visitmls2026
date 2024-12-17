@@ -1612,6 +1612,7 @@ export default {
   },
 
   methods: {
+    
     handleClaimsAmountInput() {
       if (this.isOutpatient) {
         const limit = parseFloat(
