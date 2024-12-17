@@ -679,8 +679,8 @@
         <div v-show="showSimList"
           class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
           <div
-            class="bg-white w-full p-2 max-w-3xl mx-4 shadow-xl transform transition-all duration-300 ease-in-out scale-100">
-            <div class="flex justify-between items-center p-4 border-b border-gray-200 relative">
+            class="bg-white rounded-md w-full p-2 max-w-3xl mx-4 shadow-xl transform transition-all duration-300 ease-in-out scale-100">
+            <div class="flex justify-between items-center p-2 border-b border-gray-200 relative">
               <div class="absolute inset-0 flex justify-center items-center pointer-events-none">
                 <h1 class="text-xl font-bold text-gray-800">Staff Involved</h1>
               </div>
@@ -694,7 +694,7 @@
                 </button>
               </div>
             </div>
-            <div class="overflow-x-auto p-2">
+            <div class="overflow-x-auto pb-4">
               <table class="w-full p-2">
                 <thead class="bg-gray-100">
                   <th class="py-3 px-4 text-left">No.</th>
