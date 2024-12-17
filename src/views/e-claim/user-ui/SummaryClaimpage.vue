@@ -475,39 +475,44 @@
           </div>
         </div>
         <div v-show="showSimList"
-          class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
-          <div
-            class="bg-white w-full p-2 max-w-3xl mx-4 shadow-xl transform transition-all duration-300 ease-in-out scale-100">
-            <div class="flex justify-between items-center p-4 border-b border-gray-200">
-              <h1 class="text-xl font-bold text-gray-800">Staff Involved</h1>
-              <button @click="showSimList = !showSimList" class="text-gray-500 hover:text-gray-800 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                  stroke="currentColor" class="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <div class="overflow-x-auto p-2">
-              <table class="w-full p-2">
-                <thead class="bg-gray-100">
-                  <th class="py-3 px-4 text-left">No.</th>
-                  <th class="py-3 px-4 text-left">Company</th>
-                  <th class="py-3 px-4 text-left">Name</th>
-                  <th class="py-3 px-4 text-left">Department</th>
-                </thead>
-                <tbody class="text-gray-600">
-                  <tr v-for="(staff, i) in sim" :key="i"
-                    class="border-b border-gray-200 hover:bg-gray-100 transition-colors">
-                    <td class="py-3 px-4">{{ i + 1 }}</td>
-                    <td class="py-3 px-4">{{ staff.company_name }}</td>
-                    <td class="py-3 px-4">{{ staff.name }}</td>
-                    <td class="py-3 px-4">{{ staff.department }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+  class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
+  <div
+    class="bg-white w-full p-2 max-w-3xl mx-4 shadow-xl transform transition-all duration-300 ease-in-out scale-100">
+    <div class="flex justify-between items-center p-4 border-b border-gray-200 relative">
+      <div class="absolute inset-0 flex justify-center items-center pointer-events-none">
+        <h1 class="text-xl font-bold text-gray-800">Staff Involved</h1>
+      </div>
+      
+      <div class="ml-auto"> <!-- This ensures the close button stays on the right -->
+        <button @click="showSimList = !showSimList" class="text-gray-500 hover:text-gray-800 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="overflow-x-auto p-2">
+      <table class="w-full p-2">
+        <thead class="bg-gray-100">
+          <th class="py-3 px-4 text-left">No.</th>
+          <th class="py-3 px-4 text-left">Company</th>
+          <th class="py-3 px-4 text-left">Name</th>
+          <th class="py-3 px-4 text-left">Department</th>
+        </thead>
+        <tbody class="text-gray-600">
+          <tr v-for="(staff, i) in sim" :key="i"
+            class="border-b border-gray-200 hover:bg-gray-100 transition-colors">
+            <td class="py-3 px-4">{{ i + 1 }}</td>
+            <td class="py-3 px-4">{{ staff.company_name }}</td>
+            <td class="py-3 px-4">{{ staff.name }}</td>
+            <td class="py-3 px-4">{{ staff.department }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
         <!-- Participants List -->
         <div v-show="showParticipantsList"
           class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
