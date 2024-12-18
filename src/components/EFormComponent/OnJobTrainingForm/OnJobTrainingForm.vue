@@ -111,6 +111,18 @@
                         <p>Health, Safety & Environmental Policy Briefing</p>
                     </div>
                 </div>
+
+                <div>
+                    <label for="requesterVerification"
+                        class="block text-sm font-medium text-primary dark:text-white">Trainer
+                        Acknowledgement:</label>
+                    <label for="requesterVerification"
+                        class="block text-sm font-regular text-primary dark:text-white italic">This section are for HR
+                        verification
+                        <span class="text-red-500">*</span></label>
+                    <!-- <input id="requesterVerification" type="radio"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"> -->
+                </div>
                 <div class="space-y-2">
                     <label for="requesterVerification"
                         class="block text-sm font-medium text-primary dark:text-white">Trainee
@@ -126,17 +138,6 @@
                     </div>
                     <span v-if="validationErrors.requesterVerification" class="text-red-500 text-sm">Please fill in this
                         field.</span>
-                </div>
-                <div>
-                    <label for="requesterVerification"
-                        class="block text-sm font-medium text-primary dark:text-white">Trainer
-                        Acknowledgement:</label>
-                    <label for="requesterVerification"
-                        class="block text-sm font-regular text-primary dark:text-white italic">This section are for HR
-                        verification
-                        <span class="text-red-500">*</span></label>
-                    <!-- <input id="requesterVerification" type="radio"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"> -->
                 </div>
             </div>
             <hr class="w-full border-b border-b-[1px] my-4" />
@@ -184,6 +185,18 @@
                     <span v-if="validationErrors.descriptions" class="text-red-500 text-sm">Please fill in this
                         field.</span>
                 </div>
+
+                <div>
+                    <label for="requesterVerification"
+                        class="block text-sm font-medium text-primary dark:text-white">Trainer
+                        Acknowledgement:</label>
+                    <label for="requesterVerification"
+                        class="block text-sm font-regular text-primary dark:text-white italic">This section are for HOD
+                        verification
+                        <span class="text-red-500">*</span></label>
+                    <!-- <input id="requesterVerification" type="radio" v-model="form.requesterVerification"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"> -->
+                </div>
                 <div class="space-y-2">
                     <label for="requesterVerification"
                         class="block text-sm font-medium text-primary dark:text-white">Trainee
@@ -200,17 +213,6 @@
                     <span v-if="validationErrors.requesterVerification" class="text-red-500 text-sm">Please fill in this
                         field.</span>
                 </div>
-                <div>
-                    <label for="requesterVerification"
-                        class="block text-sm font-medium text-primary dark:text-white">Trainer
-                        Acknowledgement:</label>
-                    <label for="requesterVerification"
-                        class="block text-sm font-regular text-primary dark:text-white italic">This section are for HOD
-                        verification
-                        <span class="text-red-500">*</span></label>
-                    <!-- <input id="requesterVerification" type="radio" v-model="form.requesterVerification"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"> -->
-                </div>
             </div>
             <div class="space-y-4 px-4 py-2">
                 <div class="grid grid-cols-8 space-x-2 mt-4">
@@ -226,6 +228,7 @@
                     </div>
                 </div>
             </div>
+            
         </div>
 
     </div>

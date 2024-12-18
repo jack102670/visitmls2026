@@ -53,18 +53,20 @@
                         <p>Health, Safety & Environmental Policy Briefing</p>
                     </div>
                 </div>
-                <div class="space-y-2">
-                    <label for="requesterVerification"
-                        class="block text-sm font-semibold text-primary dark:text-white">Trainer
-                        Verification:</label>
-                    <label for="requesterVerification"
-                        class="block text-sm font-regular text-primary dark:text-white italic">This section are for HR
-                        verification
-                        <span class="text-red-500">*</span></label>
-                    <!-- <input id="requesterVerification" type="radio"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"> -->
-                    
-                </div>
+                        <div class="space-y-2">
+                        <label for="requesterVerification"
+                            class="block text-sm font-semibold text-primary dark:text-white">Trainer
+                            Verification:</label>
+                        <label for="requesterVerification" v-if="status !== 'Completed by Superior. Waiting for HR'"
+                            class="block text-sm font-regular text-primary dark:text-white italic">This section are for HR
+                            verification
+                            <span class="text-red-500">*</span></label>
+                        <div v-else class="flex space-x-2">
+                            <input id="requesterVerification" type="radio" :checked="isVerified" @click="toggleVerify"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <p class="text-sm dark:text-white">Verify</p>
+                        </div>
+                        </div>
                 <div class="space-y-2">
                         <label for="requesterVerification"
                         class="block text-sm font-semibold text-primary dark:text-white">Trainee
@@ -138,7 +140,21 @@
                 </div>
 
             </div>
-            <!-- <hr class="w-full border-b border-b-[1px] my-4" /> -->
+            <div v-if="status === 'Completed by Superior. Waiting for HR'">
+            <hr class="w-full border-b border-b-[1px] my-4" />
+            <div class="grid grid-cols-8 space-x-2 mt-4">
+                <div class="col-span-8 flex justify-end">
+                    <button
+                        class="bg-transparent font-bold text-dark px-10 py-2 rounded-md border-[2px] border-rejected mr-4">
+                        Exit
+                    </button>
+                    <button 
+                        class="bg-verified font-bold text-white px-10 py-2 rounded-md">
+                        Saved
+                    </button>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 
