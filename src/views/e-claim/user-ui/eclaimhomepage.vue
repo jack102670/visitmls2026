@@ -33,69 +33,48 @@
 
         <!-- Box Info Section-->
         <section>
-          <div class="p-5 mt-1 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
-            <!-- <div
-              class="relative overflow-hidden hover:bg-fuchsia-100 bg-white max-h-[1000px] dark:bg-[#111827] shadow-xl border-x-2 border-y-2 rounded-lg border-fuchsia-300 dark:border-fuchsia-200 dark:hover:bg-gray-800"
-            >
-              <div class="card m-2" @click="filterTable('Pending')">
-                <div class="ml-5">
-                  <span
-                    class="text-gray-800 text-2xl font-bold dark:text-slate-200"
-                    >{{
-                      requests.filter(
-                        (request) => request.status === 'Approved'
-                      ).length
-                    }}</span
-                  >
-                  <span
-                    class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
-                    >Resubmission</span
-                  >
-                </div>
-              </div>
-            </div> -->
+          <div class="p-5 mt-1 flex flex-col md:flex-row gap-1 justify-center">
             <div
-              class="relative overflow-hidden dark:bg-[#111827] dark:border-green-200 dark:hover:bg-gray-800 hover:bg-green-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-green-300 rounded-lg">
+              class="mb-2 md:mb-0 relative overflow-hidden dark:bg-[#111827] dark:border-green-200 dark:hover:bg-gray-800 hover:bg-green-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-green-300 rounded-lg w-full md:w-1/5">
               <div class="card m-2" @click="filterTable('Approved')">
                 <div class="ml-5">
                   <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
                     requests.filter(
                       (request) => request.status === 'Approved'
                     ).length
-                  }}</span>
+                    }}</span>
                   <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200">Approved</span>
                 </div>
               </div>
             </div>
             <div
-              class="relative overflow-hidden dark:bg-[#111827] dark:border-blue-200 dark:hover:bg-gray-800 hover:bg-amber-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-amber-300 rounded-lg">
+              class="mb-2 md:mb-0 relative overflow-hidden dark:bg-[#111827] dark:border-blue-200 dark:hover:bg-gray-800 hover:bg-amber-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-amber-300 rounded-lg w-full md:w-1/5">
               <div class="card m-2" @click="filterTable('Verified')">
                 <div class="ml-5">
                   <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
                     requests.filter(
                       (request) => request.status === 'Verified'
                     ).length
-                  }}</span>
+                    }}</span>
                   <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200">Verified</span>
                 </div>
               </div>
             </div>
-
             <div
-              class="relative overflow-hidden dark:bg-[#111827] dark:border-red-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] hover:bg-red-100 shadow-xl border-x-2 border-y-2 rounded-lg border-red-300">
+              class="mb-2 md:mb-0 relative overflow-hidden dark:bg-[#111827] dark:border-red-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] hover:bg-red-100 shadow-xl border-x-2 border-y-2 rounded-lg border-red-300 w-full md:w-1/5">
               <div class="card m-2" @click="filterTable('rejected')">
                 <div class="ml-5">
                   <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
                     requests.filter(
                       (request) => request.status === 'rejected'
                     ).length
-                  }}</span>
+                    }}</span>
                   <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200">Rejected</span>
                 </div>
               </div>
             </div>
             <div
-              class="relative overflow-hidden dark:bg-[#111827] dark:border-yellow-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] shadow-xl hover:bg-yellow-100 border-x-2 border-y-2 rounded-lg border-yellow-300">
+              class="mb-2 md:mb-0 relative overflow-hidden dark:bg-[#111827] dark:border-yellow-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] shadow-xl hover:bg-yellow-100 border-x-2 border-y-2 rounded-lg border-yellow-300 w-full md:w-1/5">
               <div class="card m-2" @click="filterTable('reimburse')">
                 <div class="ml-5">
                   <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
@@ -109,7 +88,7 @@
               </div>
             </div>
             <div
-              class="relative overflow-hidden dark:bg-[#111827] dark:border-teal-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] hover:bg-teal-100 shadow-xl border-x-2 border-y-2 rounded-lg border-teal-300">
+              class="relative overflow-hidden dark:bg-[#111827] dark:border-teal-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] hover:bg-teal-100 shadow-xl border-x-2 border-y-2 rounded-lg border-teal-300 w-full md:w-1/5">
               <div class="card m-2" @click="filterTable('')">
                 <div class="ml-5">
                   <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{ this.requests.length }}</span>
@@ -121,7 +100,7 @@
         </section>
 
         <!-- Claim Table Section-->
-        <section class="container px-4 mx-auto pt-4">
+        <section class=" px-4 mx-auto pt-4">
           <div class="flex justify-between items-center">
             <div>
               <h2 class="text-lg font-medium text-gray-800 dark:text-white ml-1">
@@ -141,28 +120,12 @@
                   <table ref="myTable" class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe">
                     <thead class="bg-gray-50 dark:bg-gray-800">
                       <tr>
-                        <!-- <th
-                          scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                        >
-                          <div class="flex items-center gap-x-3">
-                            <span>Branch</span>
-                          </div>
-                        </th> -->
                         <th scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                           <div class="flex items-center gap-x-3">
                             <span>Report Name</span>
                           </div>
                         </th>
-                        <!-- <th
-                          scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                        >
-                          <div class="flex items-center gap-x-3">
-                            <span>Requester</span>
-                          </div>
-                        </th> -->
                         <th scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                           <div class="flex items-center gap-x-3">
@@ -197,33 +160,6 @@
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                       <tr v-for="(data, index) in requests" :key="index">
-                        <!-- <td
-                          class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                        >
-                          <div class="inline-flex items-center gap-x-3">
-                            <div class="flex items-center gap-x-2">
-                              <div>
-                                <h2
-                                  class="font-medium text-gray-500 dark:text-gray-300"
-                                >
-                                  {{ data.location }}
-                                </h2>
-                              </div>
-                            </div>
-                          </div>
-                        </td> -->
-                        <!-- <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        >
-                          <div class="inline-flex items-center gap-x-3">
-                            <div class="flex items-center gap-x-2">
-                              <div>
-                               
-                              </div>
-                            </div>
-                          </div>
-                          {{ data.activity }}
-                        </td> -->
                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           {{ data.report_name }}
                         </td>
@@ -659,7 +595,7 @@ export default {
       this.loadingText = 'Fetching';
       this.loading = true;
       const userId = store.getSession().userDetails.userId;
-      
+
       if (!userId) {
         console.error('UserId is not set.');
         this.loading = false;
