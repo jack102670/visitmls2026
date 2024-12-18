@@ -51,13 +51,13 @@
             title: "E-claim System",
             description: "Manage your claims online with our E-claim system.",
             image: require("../assets/images/9628ed1e308244e8bb954039b474302f.jpeg"),
-            link: "/eclaimhomepage",
+            link: "/",
           },
           {
             title: "Safety & Security System",
             description: "Access our service portal for all your needs.",
             image: "https://media.licdn.com/dms/image/D4D12AQHf927L6V5QSA/article-cover_image-shrink_720_1280/0/1673929460399?e=2147483647&v=beta&t=drd3nagneztidtOjuAP49KDkkXGd1hmqUtMwLDK2_Tc",
-            link: "/Dashboard",
+            link: "/",
           },
           {
             title: "E-Forms",
