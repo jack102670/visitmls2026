@@ -3,7 +3,7 @@
   <main
     class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 p-4 sm:ml-64"
   >
-    <div class="container mx-auto">
+    <div class="mx-auto">
       <div
         class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 dark:text-white border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
@@ -16,7 +16,7 @@
         </div>
 
         <div class="flex flex-col mt-6">
-          <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div
               class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
             >
