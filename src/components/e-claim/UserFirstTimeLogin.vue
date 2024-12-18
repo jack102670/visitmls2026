@@ -133,7 +133,7 @@
               <div>
                 <label class="ml-2 font-semibold text-gray-600 dark:text-gray-200" for="phone_number">Phone Number<span
                     class="text-red-500">*</span></label>
-                <input v-model="user.phone_number" id="phone_number" required type="number"
+                <input v-model="user.phone_number" id="phone_number" required type="text"
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
               </div>
 
@@ -491,11 +491,13 @@ export default {
         email_address: this.user.email_address,
         home_address: this.user.home_address,
         spouse: this.user.spouse,
-        phone_number: this.user.phone_number,
-        ic_number: this.user.ic_number,
+        phone_number: String(this.user.phone_number),
+        ic_number: String(this.user.ic_number),
+        limit_medicaldental: this.user.limit_medical_dental,
+        limit_outpatient: this.user.limit_outpatient,
       };
 
-      console.log('Employee Data:', employeeData);
+      console.log('Employee Data this:', employeeData);
       axios
         .put('http://172.28.28.116:7239/api/User/UpdateEmployee', employeeData)
         .then((response) => {
@@ -713,11 +715,12 @@ export default {
 
     verifyAndSaveData() {
       // this.saveUserData();
-
+      console.log("Temp email now", this.tempEmail);
+      console.log("User email now", this.user.email_address);
       this.loadingButton = true;
       if (this.tempImageUrl) {
         this.uploadimg();
-      } else if (this.status === '0') {
+      } else if (this.status === '1' && this.tempEmail == this.user.email_address) {
         this.updateEmployeeData();
       } else {
         this.updateEmployeeDataNewEmail();
@@ -740,9 +743,9 @@ export default {
         home_address: this.user.home_address,
         spouse: this.user.spouse,
         phone_number: this.user.phone_number.toString(),
-        ic_number: this.user.ic_number,
+        ic_number: String(this.user.ic_number),
       };
-      console.log('Employee Data:', employeeData);
+      console.log('Employee Data test :', employeeData);
 
       axios
         .put('http://172.28.28.116:7239/api/User/UpdateProfile', employeeData)
