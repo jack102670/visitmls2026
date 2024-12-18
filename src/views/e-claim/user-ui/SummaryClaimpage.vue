@@ -719,7 +719,7 @@
         <div v-show="showParticipantsList"
           class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
           <div class="bg-white w-full p-2 max-w-3xl mx-4 shadow-xl relative">
-            <button @click="showSimList = false"
+            <button @click="showParticipantsList = false"
               class="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-6 h-6">
@@ -1229,20 +1229,22 @@ export default {
         )
         .then((response) => {
           const result = response.data.result;
+          // console.log(result, 'medical leave');
           let details = [];
           let amount = 0;
           for (let i in result) {
             amount += result[i].claim_amount;
             const editedDetail = {
-              reason: result[i].reason,
+              Category: result[i].medical_category,
+              Reason: result[i].reason,
               Date: result[i].date_leave_taken,
-              clinicselection: result[i].clinic_name
+              Clinicselection: result[i].clinic_name
                 ? result[i].clinic_name
                 : result[i].clinic_selection,
-              reason_other_clinic: result[i].reason_different,
-              bank_name: result[i].bank_name,
-              bank_holder: result[i].bank_holder,
-              bank_account: result[i].bank_account,
+              Reason_other_clinic: result[i].reason_different,
+              Bank_name: result[i].bank_name,
+              Bank_holder: result[i].bank_holder,
+              Bank_account: result[i].bank_account,
               'Total_Fee(RM)': result[i].claim_amount,
 
               Attachments: result[i].files,
