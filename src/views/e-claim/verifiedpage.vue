@@ -13,45 +13,7 @@
           >
             VERIFIER DASHBOARD
           </h1>
-
-          <!-- <div class="flex ml-14 mt-5">
-              <button @click="ChangePopUp()" class="p-2 flex items-center">
-                Add claim
-                <span class="ml-2 border border-2 px-4 border-blue-800">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-6 h-6"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M12 4.5v15m7.5-7.5h-15"
-                    />
-                  </svg>
-                </span>
-              </button>
-            </div> -->
-
-          <hr class="h-mx-auto bg-gray-100 border-0 rounded" />
         </div>
-
-        <!-- <div class="flex justify-between items-center">
-            <div>
-              <h2
-                class="text-lg font-medium text-gray-800 dark:text-white ml-1 capitalize"
-              >
-                verifier claim
-                <span
-                  class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400"
-                  >1
-                </span>
-              </h2>
-            </div>
-          </div> -->
 
         <div class="flex flex-col mt-6">
           <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -59,14 +21,32 @@
               class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
             >
               <div
-                class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg"
+                class="overflow-hidden "
               >
+              <div class="py-2 flex flex-col md:flex-row justify-between items-center md:items-end">
+                    <div class="flex items-center">
+
+
+                    </div>
+                    <div class="relative md:mt-0 w-full md:w-auto">
+                      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                      </div>
+                      <input type="text" id="table-search" v-model="searchQuery"
+                        class="block py-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full md:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Search for applications" />
+                    </div>
+                  </div>
                 <table
-                  ref="myTable"
-                  class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe"
+                  class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe border border-gray-200 dark:border-gray-700 md:rounded-lg rounded-md"
                 >
                   <thead class="bg-gray-50 dark:bg-gray-800">
                     <tr>
+                      <th scope="col" class="px-6 py-3">No</th>
                       <th
                         scope="col"
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
@@ -104,6 +84,14 @@
                           class="flex items-center gap-x-3 whitespace-nowrap"
                         >
                           <span>Date Requested</span>
+                          <span class="ml-1 cursor-pointer" @click="toggleSort('date_requested')">
+                              <template v-if="sortField === 'date_requested'">
+                                {{ sortDirection === 'desc' ? '↓' : '↑' }}
+                              </template>
+                              <template v-else>
+                                <span class="text-gray-300">↕</span>
+                              </template>
+                            </span>
                         </div>
                       </th>
                       <th
@@ -135,16 +123,20 @@
                           <span>Status</span>
                         </div>
                       </th>
-
-                      <th scope="col" class="relative py-3.5 px-4">
-                        <span class="sr-only">Edit</span>
+                      <th scope="col" class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <span>Edit</span>
                       </th>
                     </tr>
                   </thead>
                   <tbody
                     class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
                   >
-                    <tr v-for="(item, index) in items" :key="index">
+                    <tr v-for="(item, index) in paginatedApplications" :key="index">
+                                            <td
+                        class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                      {{ (currentPage - 1) * itemsPerPage + index + 1 }}
+                      </td>
                       <td
                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                       >
@@ -160,6 +152,7 @@
                           </div>
                         </div>
                       </td>
+
                       <td
                         class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-balance"
                       >
@@ -234,9 +227,8 @@
                           >
                         </span>
                       </td>
-                      <td class="px-4 py-4 ml text-sm whitespace-nowrap">
-                        <div class="flex items-center gap-x-6">
-                          <!-- buttons here -->
+                      <td class="px-4 py-4 ml justify-center items-center text-sm whitespace-nowrap">
+                        <div class="gap-x-6 text-center">
                           <button
                             @click="ViewClaim(item.reference_number)"
                             class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
@@ -266,6 +258,55 @@
                     </tr>
                   </tbody>
                 </table>
+                <nav class="flex items-center flex-col flex-wrap md:flex-row justify-between items-center pt-4"
+                    aria-label="Table navigation">
+                    <div>
+                      <span class="text-xs md:text-xs font-normal text-gray-500 dark:text-gray-400">
+                        Showing <span class="font-semibold text-gray-900 dark:text-white">
+                          {{ (currentPage - 1) * itemsPerPage + 1 }}-{{ Math.min(currentPage * itemsPerPage,
+                          filteredQueryApplications.length) }}
+                        </span>
+                        of <span class="font-semibold text-gray-900 dark:text-white">{{ filteredQueryApplications.length
+                          }}</span>
+                      </span>
+                    </div>
+                    <div>
+                      <ul class="inline-flex -space-x-px text-xs md:text-sm h-6 md:h-8">
+                        <li>
+                          <a href="#" @click.prevent="previousPage"
+                            :class="{ 'cursor-not-allowed opacity-50': currentPage === 1 }"
+                            class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
+                            Previous
+                          </a>
+                        </li>
+
+                        <li v-for="page in visiblePages" :key="page">
+                          <template v-if="page === '...'">
+                            <span
+                              class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight border border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700">
+                              {{ page }}
+                            </span>
+                          </template>
+                          <template v-else>
+                            <a href="#" @click.prevent="goToPage(page)" :class="{
+                              'bg-blue-500 text-dark': page === currentPage,
+                              'text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700': page !== currentPage
+                            }" class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700">
+                              {{ page }}
+                            </a>
+                          </template>
+                        </li>
+
+                        <li>
+                          <a href="#" @click.prevent="nextPage"
+                            :class="{ 'cursor-not-allowed opacity-50': currentPage >= totalPages }"
+                            class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
+                            Next
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </nav>
               </div>
             </div>
           </div>
@@ -331,18 +372,105 @@ export default {
   name: 'homepageeclaiMq',
   data() {
     return {
-      items: [
-        // add more items as needed
-      ],
+      items: [],
       popup: false,
       animate: false,
       userDetails: [],
-
+      userApplications: [],
       loading: false,
       loadingText: '',
+      searchQuery: '',
+      sortField: 'date_requested',
+      sortDirection: 'desc',
+      currentPage: 1,
+      itemsPerPage: 10,
+
     };
   },
+  computed: {
+    filteredQueryApplications() {
+      const query = this.searchQuery.toLowerCase();
+      return this.sortedApplications.filter((item) =>
+        (item.reference_number && item.reference_number.toLowerCase().includes(query)) ||
+        (item.report_name && item.report_name.toLowerCase().includes(query)) ||
+        (item.date_requested && item.date_requested.toLowerCase().includes(query)) ||
+        (item.requester_name && item.requester_name.toLowerCase().includes(query)) ||
+        (item.grand_total && item.grand_total.toLowerCase().includes(query)) ||
+        (item.admin_status && item.admin_status.toLowerCase().includes(query))
+      );
+    },
+    sortedApplications() {
+      return [...this.userApplications].sort((a, b) => {
+        const dateA = new Date(a[this.sortField]).getTime();
+        const dateB = new Date(b[this.sortField]).getTime();
+        return this.sortDirection === 'desc' ? dateB - dateA : dateA - dateB;
+      });
+    },
+    paginatedApplications() {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+      return this.filteredQueryApplications.slice(start, end);
+    },
+    totalPages() {
+      return Math.ceil(this.filteredQueryApplications.length / this.itemsPerPage);
+    },
+    visiblePages() {
+      const total = this.totalPages;
+      const current = this.currentPage;
+      const maxVisiblePages = 2;
+
+      let pages = [];
+
+      if (total <= maxVisiblePages) {
+        pages = Array.from({ length: total }, (_, i) => i + 1);
+      } else {
+        // First page (1, 2, 3, ..., total)
+        if (current === 1) {
+          pages = [1, 2, 3, '...', total];
+        }
+        // Last page (1, ..., last-2, last-1, last)
+        else if (current === total) {
+          pages = [1, '...', total - 2, total - 1, total];
+        }
+        // handle second to last page
+        else if (current === total - 1) {
+          pages = [1, '...', total - 2, total - 1, total];
+        }
+        // Intermediate pages (1, ..., current-1, current, current+1, ..., total)
+        else {
+          pages = [1, '...', current - 1, current, current + 1, '...', total];
+        }
+      }
+
+      return pages;
+    },
+  },
   methods: {
+
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    },
+    previousPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    goToPage(page) {
+      if (typeof page === 'number') {
+        this.currentPage = page;
+      }
+    },
+    toggleSort(field) {
+      if (this.sortField === field) {
+        this.sortDirection = this.sortDirection === 'desc' ? 'asc' : 'desc';
+      } else {
+        this.sortField = field;
+        this.sortDirection = 'desc';
+      }
+    },
+
     ViewClaim(rn) {
       this.$router.push({ name: 'VerifierSummaryClaimpage', params: { rn } });
     },
@@ -360,8 +488,9 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           this.items = data.result;
-          console.log('api data', this.items);
-
+          if (data.result.length > 0) {
+            this.userApplications = data.result;
+          }
           this.$nextTick(() => {
             this.initializeDataTable();
           });

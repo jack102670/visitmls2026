@@ -271,6 +271,7 @@ export default {
         if (data) {
           this.userApplications = data;
         }
+        console.log("User applications:", data);
       } catch (error) {
         console.error("Error fetching user application:", error.response || error);
         this.errorMessage = "Failed to fetch user application";

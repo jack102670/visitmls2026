@@ -471,7 +471,6 @@ export default {
         if (data.result.length > 0) {
           this.userApplications = data.result;
         }
-        console.log("data from user application", this.userApplications)
         this.loading = false;
       } catch (error) {
         if (error.response) {
