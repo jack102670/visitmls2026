@@ -2479,7 +2479,7 @@ export default {
     },
 
     async uploadFiles(files, userId, uniqueCode) {
-      const uploadEndpoint = `http://172.28.28.91:93/api/Files/MultiUploadImage/${userId}/${uniqueCode}`;
+      const uploadEndpoint = `http://172.28.28.116:7267/api/Files/MultiUploadImage/${userId}/${uniqueCode}`;
       const formData = new FormData();
 
       // Iterate over the files array and append each file to formData

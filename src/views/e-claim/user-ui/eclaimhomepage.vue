@@ -31,71 +31,50 @@
           </button>
         </div>
 
-        <!-- Box Info Section-->
-        <section>
-          <div class="p-5 mt-1 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
-            <!-- <div
-              class="relative overflow-hidden hover:bg-fuchsia-100 bg-white max-h-[1000px] dark:bg-[#111827] shadow-xl border-x-2 border-y-2 rounded-lg border-fuchsia-300 dark:border-fuchsia-200 dark:hover:bg-gray-800"
-            >
-              <div class="card m-2" @click="filterTable('Pending')">
-                <div class="ml-5">
-                  <span
-                    class="text-gray-800 text-2xl font-bold dark:text-slate-200"
-                    >{{
-                      requests.filter(
-                        (request) => request.status === 'Approved'
-                      ).length
-                    }}</span
-                  >
-                  <span
-                    class="block text-sm text-gray-500 font-semibold dark:text-slate-200"
-                    >Resubmission</span
-                  >
-                </div>
-              </div>
-            </div> -->
+       <!-- Box Info Section-->
+       <section>
+          <div class="p-5 mt-1 flex flex-col md:flex-row gap-1 justify-center">
             <div
-              class="relative overflow-hidden dark:bg-[#111827] dark:border-green-200 dark:hover:bg-gray-800 hover:bg-green-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-green-300 rounded-lg">
+              class="mb-2 md:mb-0 relative overflow-hidden dark:bg-[#111827] dark:border-green-200 dark:hover:bg-gray-800 hover:bg-green-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-green-300 rounded-lg w-full md:w-1/5">
               <div class="card m-2" @click="filterTable('Approved')">
                 <div class="ml-5">
                   <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
                     requests.filter(
                       (request) => request.status === 'Approved'
                     ).length
-                  }}</span>
+                    }}</span>
                   <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200">Approved</span>
                 </div>
               </div>
             </div>
             <div
-              class="relative overflow-hidden dark:bg-[#111827] dark:border-blue-200 dark:hover:bg-gray-800 hover:bg-amber-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-amber-300 rounded-lg">
+              class="mb-2 md:mb-0 relative overflow-hidden dark:bg-[#111827] dark:border-blue-200 dark:hover:bg-gray-800 hover:bg-amber-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-amber-300 rounded-lg w-full md:w-1/5">
               <div class="card m-2" @click="filterTable('Verified')">
                 <div class="ml-5">
                   <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
                     requests.filter(
                       (request) => request.status === 'Verified'
                     ).length
-                  }}</span>
+                    }}</span>
                   <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200">Verified</span>
                 </div>
               </div>
             </div>
-
             <div
-              class="relative overflow-hidden dark:bg-[#111827] dark:border-red-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] hover:bg-red-100 shadow-xl border-x-2 border-y-2 rounded-lg border-red-300">
+              class="mb-2 md:mb-0 relative overflow-hidden dark:bg-[#111827] dark:border-red-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] hover:bg-red-100 shadow-xl border-x-2 border-y-2 rounded-lg border-red-300 w-full md:w-1/5">
               <div class="card m-2" @click="filterTable('rejected')">
                 <div class="ml-5">
                   <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
                     requests.filter(
                       (request) => request.status === 'rejected'
                     ).length
-                  }}</span>
+                    }}</span>
                   <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200">Rejected</span>
                 </div>
               </div>
             </div>
             <div
-              class="relative overflow-hidden dark:bg-[#111827] dark:border-yellow-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] shadow-xl hover:bg-yellow-100 border-x-2 border-y-2 rounded-lg border-yellow-300">
+              class="mb-2 md:mb-0 relative overflow-hidden dark:bg-[#111827] dark:border-yellow-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] shadow-xl hover:bg-yellow-100 border-x-2 border-y-2 rounded-lg border-yellow-300 w-full md:w-1/5">
               <div class="card m-2" @click="filterTable('reimburse')">
                 <div class="ml-5">
                   <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
@@ -109,7 +88,7 @@
               </div>
             </div>
             <div
-              class="relative overflow-hidden dark:bg-[#111827] dark:border-teal-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] hover:bg-teal-100 shadow-xl border-x-2 border-y-2 rounded-lg border-teal-300">
+              class="relative overflow-hidden dark:bg-[#111827] dark:border-teal-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] hover:bg-teal-100 shadow-xl border-x-2 border-y-2 rounded-lg border-teal-300 w-full md:w-1/5">
               <div class="card m-2" @click="filterTable('')">
                 <div class="ml-5">
                   <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{ this.requests.length }}</span>

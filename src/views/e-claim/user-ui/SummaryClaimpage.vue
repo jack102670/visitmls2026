@@ -1195,6 +1195,7 @@ export default {
         )
         .then((response) => {
           const result = response.data.result;
+          
           let details = [];
           let amount = 0;
           for (let i in result) {
