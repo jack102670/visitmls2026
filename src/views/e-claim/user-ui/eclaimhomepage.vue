@@ -42,7 +42,7 @@
                     requests.filter(
                       (request) => request.status === 'Approved'
                     ).length
-                    }}</span>
+                  }}</span>
                   <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200">Approved</span>
                 </div>
               </div>
@@ -55,7 +55,7 @@
                     requests.filter(
                       (request) => request.status === 'Verified'
                     ).length
-                    }}</span>
+                  }}</span>
                   <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200">Verified</span>
                 </div>
               </div>
@@ -68,7 +68,7 @@
                     requests.filter(
                       (request) => request.status === 'rejected'
                     ).length
-                    }}</span>
+                  }}</span>
                   <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200">Rejected</span>
                 </div>
               </div>
@@ -101,25 +101,37 @@
 
         <!-- Claim Table Section-->
         <section class=" px-4 mx-auto pt-4">
-          <div class="flex justify-between items-center">
-            <div>
-              <h2 class="text-lg font-medium text-gray-800 dark:text-white ml-1">
-                Claim
-                <span
-                  class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{{
-                    requests.length }}
-                </span>
-              </h2>
-            </div>
-          </div>
-
           <div class="flex flex-col mt-6">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                  <table ref="myTable" class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe">
+                <div class="overflow-hidden">
+                  <div class="py-2 flex flex-col md:flex-row justify-between items-center md:items-end">
+                    <div class="flex items-center">
+                      <h2 class="text-lg font-medium text-gray-800 dark:text-white">
+                        Claim
+                        <span
+                          class="px-3 py-0.5 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{{
+                            requests.length }}
+                        </span>
+                      </h2>
+                    </div>
+                    <div class="relative md:mt-0 w-full md:w-auto">
+                      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                      </div>
+                      <input type="text" id="table-search" v-model="searchQuery"
+                        class="block py-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full md:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Search for applications" />
+                    </div>
+                  </div>
+                  <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe border border-gray-200 dark:border-gray-700 md:rounded-lg">
                     <thead class="bg-gray-50 dark:bg-gray-800">
                       <tr>
+                        <th scope="col" class="px-6 py-3">No</th>
                         <th scope="col"
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                           <div class="flex items-center gap-x-3">
@@ -137,6 +149,14 @@
                           class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                           <div class="flex items-center gap-x-3">
                             <span>Requested Date</span>
+                            <span class="ml-1 cursor-pointer" @click="toggleSort('date_requested')">
+                              <template v-if="sortField === 'date_requested'">
+                                {{ sortDirection === 'desc' ? '↓' : '↑' }}
+                              </template>
+                              <template v-else>
+                                <span class="text-gray-300">↕</span>
+                              </template>
+                            </span>
                           </div>
                         </th>
                         <th scope="col"
@@ -159,7 +179,10 @@
                       </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                      <tr v-for="(data, index) in requests" :key="index">
+                      <tr v-for="(data, index) in paginatedApplications" :key="index">
+                        <td class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
+                          {{ (currentPage - 1) * itemsPerPage + index + 1 }}
+                        </td>
                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           {{ data.report_name }}
                         </td>
@@ -205,190 +228,60 @@
                                   d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                               </svg>
                             </button>
-                            <!-- this button for edit and deleted  -->
-                            <!-- <button
-          v-if="requester.status === 'Pending'"
-          class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-5 h-5"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-            />
-          </svg>
-        </button>
-
-        <button
-          v-if="requester.status === 'Pending'"
-          class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-5 h-5"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-            />
-          </svg>
-        </button> -->
                           </div>
                         </td>
                       </tr>
                     </tbody>
                   </table>
-                  <!-- <div
-                    v-if="isClickModal"
-                    class="modal fixed top-0 left-0 w-full flex-1 bg-[#CED1DA] dark:bg-[#111827] p-4 h-auto h-full bg-gray-800 bg-opacity-75 flex justify-center items-center"
-                    @click.self="closeClickModal"
-                  >
-                    <div
-                      class="modal-content bg-white rounded-lg p-8 w-full sm:w-3/4 lg:max-w-2xl border border-3 border-[#5037cebf]"
-                      style="max-height: calc(100vh - 20px); overflow-y: auto"
-                    >
-                      <div class="flex justify-between">
-                        <p
-                          class="flex items-center text-2xl uppercase font-semibold text-[#160959]"
-                        >
-                          {{ claimDetails.name
-                          }}<span
-                            class="ml-2 flex items-center"
-                            :class="getStatusContainerClass(datatable.status)"
-                          >
-                            <span
-                              :class="getStatusDotClass(datatable.status)"
-                            ></span>
-                            <h2 :class="getStatusTextClass(datatable.status)">
-                              {{
-                                datatable.status === ""
-                                  ? "OPEN"
-                                  : datatable.status
-                              }}
-                            </h2>
-                          </span>
-                        </p>
-                        <button
-                          @click="closeClickModal"
-                          type="button"
-                          class="bg-slate-50 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-                        >
-                          <span class="sr-only">Close menu</span>
-                         
-                          <svg
-                            class="h-6 w-6"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            aria-hidden="true"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M6 18L18 6M6 6l12 12"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                      <div></div>
-                      <div class="bg-slate-50 rounded-xl px-2 py-1 mt-1">
-                        <div class="flex">
-                          <h1 class="inline">
-                            <span style="margin-right: 120px">Name</span>
-                          </h1>
-                          <p class="inline">: {{ claimDetails.name }}</p>
-                        </div>
-                        <div class="flex">
-                          <h1 class="inline">
-                            <span style="margin-right: 50px"
-                              >Date Requested</span
-                            >
-                          </h1>
-                          <p class="inline">: {{ claimDetails.date_requested }}</p>
-                        </div>
-                      </div>
-
-                      <div class="p-2 mt-2">
-                        <table
-                          class="w-full rounded-lg overflow-hidden bg-slate-50"
-                        >
-                          <thead class="text-slate-800">
-                            <tr>
-                              <th
-                                class="border-r border-b border-slate-400 p-2 text-center"
-                              >
-                                No
-                              </th>
-                              <th
-                                class="border-r border-b border-slate-400 p-2"
-                              >
-                                Type of Claim
-                              </th>
-                              <th
-                                class="border-r border-b border-slate-400 p-2"
-                              >
-                                Amount
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr v-for="(claim, index) in localOutstation " :key="index">
-                              <td
-                                class="border-r border-b border-slate-400 p-2 text-center"
-                              >
-                                {{ index+1 }}
-                              </td>
-                              <td
-                                class="border-r border-b border-slate-400 p-2"
-                              >
-                                 Local Outstation
-                              </td>
-                              <td
-                                class="border-r border-b border-slate-400 p-2"
-                              >
-                                {{ claim.total_fee }}
-                              </td>
-                            </tr>
-                           
-                            <tr>
-                              <td class=""></td>
-                              <td
-                                class="border-r border-slate-400 p-2 text-right text-xl font-semibold"
-                              >
-                                Total:
-                              </td>
-                              <td
-                                class="border-r border-slate-400 p-2 text-xl font-semibold"
-                              >
-                                $100
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div class="flex justify-end">
-                        <button
-                          class="py-1 px-2 bg-blue-800 text-white rounded-full text-sm"
-                        >
-                          See More
-                        </button>
-                      </div>
+                  <nav class="flex items-center flex-col flex-wrap md:flex-row justify-between items-center pt-4"
+                    aria-label="Table navigation">
+                    <div>
+                      <span class="text-xs md:text-xs font-normal text-gray-500 dark:text-gray-400">
+                        Showing <span class="font-semibold text-gray-900 dark:text-white">
+                          {{ (currentPage - 1) * itemsPerPage + 1 }}-{{ Math.min(currentPage * itemsPerPage,
+                          filteredQueryApplications.length) }}
+                        </span>
+                        of <span class="font-semibold text-gray-900 dark:text-white">{{ filteredQueryApplications.length
+                          }}</span>
+                      </span>
                     </div>
-                  </div> -->
+                    <div>
+                      <ul class="inline-flex -space-x-px text-xs md:text-sm h-6 md:h-8">
+                        <li>
+                          <a href="#" @click.prevent="previousPage"
+                            :class="{ 'cursor-not-allowed opacity-50': currentPage === 1 }"
+                            class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
+                            Previous
+                          </a>
+                        </li>
+
+                        <li v-for="page in visiblePages" :key="page">
+                          <template v-if="page === '...'">
+                            <span
+                              class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight border border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700">
+                              {{ page }}
+                            </span>
+                          </template>
+                          <template v-else>
+                            <a href="#" @click.prevent="goToPage(page)" :class="{
+                              'bg-blue-500 text-dark': page === currentPage,
+                              'text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700': page !== currentPage
+                            }" class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700">
+                              {{ page }}
+                            </a>
+                          </template>
+                        </li>
+
+                        <li>
+                          <a href="#" @click.prevent="nextPage"
+                            :class="{ 'cursor-not-allowed opacity-50': currentPage >= totalPages }"
+                            class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
+                            Next
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </nav>
                 </div>
               </div>
             </div>
@@ -403,7 +296,8 @@
             <circle transform="rotate(0)" transform-origin="center" fill="none" stroke="blue" stroke-width="10"
               stroke-linecap="round" stroke-dasharray="230 1000" stroke-dashoffset="0" cx="100" cy="100" r="70">
               <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="2"
-                repeatCount="indefinite"></animateTransform>
+                repeatCount="indefinite">
+              </animateTransform>
             </circle>
           </svg>
           <h1 class="text-gray-50 font-semibold z-50 ml-2 text-lg">
@@ -420,15 +314,10 @@
 
 <script>
 import { store } from '../../store.js';
-// import CreateNewClaimPopUp from '@/components/e-claim/CreateNewClaimPopUp.vue';
 import NewClaimPopUp from '@/components/e-claim/NewClaimPopUp.vue';
 import $ from 'jquery';
-import 'datatables.net-dt';
-import 'datatables.net-dt/css/jquery.dataTables.min.css';
-// import axios from "axios";
 export default {
   components: {
-    // CreateNewClaimPopUp,
     NewClaimPopUp,
   },
   name: 'homepageeclaiM',
@@ -437,38 +326,12 @@ export default {
       isClickModal: false,
       userDetails: {},
       requests: [],
-      dummyData: [
-        {
-          location: 'HQ',
-          typeOfRequest: 'Badge Request',
-          activity: 'Entertainment',
-          name: 'MR MAN',
-          id: 'ET2584232',
-          startDate: '20 July 2024',
-          endDate: '20 July 2024',
-          adminStatus: 'APPROVED',
-        },
-        {
-          location: 'HQ',
-          typeOfRequest: '',
-          activity: 'Entertainment',
-          name: 'MS WOMAN',
-          id: 'ET2584233',
-          startDate: '21 July 2024',
-          endDate: '21 July 2024',
-          adminStatus: 'PENDING',
-        },
-        {
-          location: 'HQ',
-          typeOfRequest: '',
-          activity: 'Entertainment',
-          name: 'MS WOMAN',
-          id: 'ET2584233',
-          startDate: '21 July 2024',
-          endDate: '21 July 2024',
-          adminStatus: 'REIMBURSE',
-        },
-      ],
+      userApplications: [],
+      searchQuery: '',
+      sortField: 'date_requested',
+      sortDirection: 'desc',
+      currentPage: 1,
+      itemsPerPage: 10,
       datatable: [
         {
           name: 'HQ',
@@ -476,118 +339,112 @@ export default {
           date_requested: '20 July 2024',
         },
       ],
-
       popup: false,
       animate: false,
-      // localOutstation: [],
-      // overseasOutstation: [],
-      // refreshment: [],
-      // entertainment: [],
-      // handphone: [],
-      // medicalLeave: [],
-      // others: [],
-      // claimDetails: {},
-
       loading: false,
       loadingText: '',
     };
   },
-  computed: {
-    reimburseCount() {
-      return this.requests.filter((request) => request.status === 'reimburse')
-        .length;
-    },
-  },
-  // this code to control the scroll bar when the modal is open
   watch: {
     popup(newValue) {
       const body = document.querySelector('body');
       body.style.overflow = newValue ? 'hidden' : 'auto';
     },
   },
+  computed: {
+    reimburseCount() {
+      return this.requests.filter((request) => request.status === 'reimburse')
+        .length;
+    },
+    filteredQueryApplications() {
+      const query = this.searchQuery.toLowerCase();
+      return this.sortedApplications.filter((data) =>
+        (data.report_name && data.report_name.toLowerCase().includes(query)) ||
+        (data.reference_number && data.reference_number.toLowerCase().includes(query)) ||
+        (data.date_requested && data.date_requested.toLowerCase().includes(query)) ||
+        (data.endDate && data.endDate.toLowerCase().includes(query)) ||
+        (data.admin_status && data.admin_status.toLowerCase().includes(query))
+      );
+    },
+    sortedApplications() {
+      return [...this.userApplications].sort((a, b) => {
+        const dateA = new Date(a[this.sortField]).getTime();
+        const dateB = new Date(b[this.sortField]).getTime();
+        return this.sortDirection === 'desc' ? dateB - dateA : dateA - dateB;
+      });
+    },
+    paginatedApplications() {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+      return this.filteredQueryApplications.slice(start, end);
+    },
+    totalPages() {
+      return Math.ceil(this.filteredQueryApplications.length / this.itemsPerPage);
+    },
+    visiblePages() {
+      const total = this.totalPages;
+      const current = this.currentPage;
+      const maxVisiblePages = 2;
 
+      let pages = [];
+
+      if (total <= maxVisiblePages) {
+        pages = Array.from({ length: total }, (_, i) => i + 1);
+      } else {
+        // First page (1, 2, 3, ..., total)
+        if (current === 1) {
+          pages = [1, 2, 3, '...', total];
+        }
+        // Last page (1, ..., last-2, last-1, last)
+        else if (current === total) {
+          pages = [1, '...', total - 2, total - 1, total];
+        }
+        // handle second to last page
+        else if (current === total - 1) {
+          pages = [1, '...', total - 2, total - 1, total];
+        }
+        // Intermediate pages (1, ..., current-1, current, current+1, ..., total)
+        else {
+          pages = [1, '...', current - 1, current, current + 1, '...', total];
+        }
+      }
+
+      return pages;
+    },
+  },
   methods: {
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    },
+    previousPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    goToPage(page) {
+      if (typeof page === 'number') {
+        this.currentPage = page;
+      }
+    },
+    toggleSort(field) {
+      if (this.sortField === field) {
+        this.sortDirection = this.sortDirection === 'desc' ? 'asc' : 'desc';
+      } else {
+        this.sortField = field;
+        this.sortDirection = 'desc';
+      }
+    },
+
+
     showclaim(rn) {
       this.$router.push({ name: 'SummaryClaimpage', params: { rn } });
     },
-    //     async showModal(referenceNumber) {
-    //       this.isClickModal = true;
-    //   const urls = [
-    //     `http://172.28.28.117:7239/api/User/GetLocalOutstation/${referenceNumber}`,
-    //     `http://172.28.28.117:7239/api/User/GetOverseasOutstation/${referenceNumber}`,
-    //     `http://172.28.28.117:7165/api/User/GetRefreshment/${referenceNumber}`,
-    //     `http://172.28.28.117:7165/api/User/GetEntertainment/${referenceNumber}`,
-    //     `http://172.28.28.117:7165/api/User/GetHandphone/${referenceNumber}`,
-    //     `http://172.28.28.117:7165/api/User/GetMedicalLeave/${referenceNumber}`,
-    //     `http://172.28.28.117:7239/api/User/GetOthers/${referenceNumber}`,
-    //     `http://172.28.28.117:7165/api/User/GetClaimDetails/${referenceNumber}`
-    //   ];
-
-    //   // Mapping URLs to modal display functions
-
-    //   try {
-    //     const responses = await Promise.allSettled(urls.map(url => fetch(url).then(res => res.json())));
-
-    //     responses.forEach((result, index) => {
-    //       if (result.status === 'fulfilled') {
-    //         const data = result.value; // Assuming each response is an array
-    //         // Process and store the array based on the URL index
-    //         switch (index) {
-    //           case 0:
-    //   this.localOutstation = data;
-    //   console.log("Local Outstation:", this.localOutstation);
-    //   break;
-    // case 1:
-    //   this.overseasOutstation = data;
-    //   console.log("Overseas Outstation:", this.overseasOutstation);
-    //   break;
-    // case 2:
-    //   this.refreshment = data;
-    //   console.log("Refreshment:", this.refreshment);
-    //   break;
-    // case 3:
-    //   this.entertainment = data;
-    //   console.log("Entertainment:", this.entertainment);
-    //   break;
-    // case 4:
-    //   this.handphone = data;
-    //   console.log("Handphone:", this.handphone);
-    //   break;
-    // case 5:
-    //   this.medicalLeave = data;
-    //   console.log("Medical Leave:", this.medicalLeave);
-    //   break;
-    // case 6:
-    //   this.others = data;
-    //   console.log("Others:", this.others);
-    //   break;
-    // case 7:
-    //   this.claimDetails = data.result;
-    //   console.log("Claim Details:", this.claimDetails);
-    //   break;
-    //           // Add more cases as needed
-    //         }
-    //       } else {
-    //         console.error(`Error fetching data from ${urls[index]}:`, result.reason);
-    //       }
-    //     });
-    //   } catch (error) {
-    //     console.error("Error in executing requests:", error);
-    //   }
-    //     },
-
-    //showYourModalWithData() {
-    // Logic to display the modal with the fetched data
-    // console.log(data); // For demonstration
-    //},
-    // closeClickModal() {
-    //   this.isClickModal = false;
-    // },
     initializeDataTable() {
       $(this.$refs.myTable).DataTable({});
     },
     filterTable(status) {
-      // Use DataTables API to search for `status` and redraw the table
       const dataTable = $(this.$refs.myTable).DataTable();
       dataTable.search(status).draw();
     },
@@ -610,9 +467,12 @@ export default {
           throw new Error('Failed to fetch requests');
         }
         const data = await response.json();
-        this.requests = data.result; // Update your data property with the fetched data
+        this.requests = data.result;
+        if (data.result.length > 0) {
+          this.userApplications = data.result;
+        }
+        console.log("data from user application", this.userApplications)
         this.loading = false;
-        // console.log("Fetched requests:", this.requests);
       } catch (error) {
         if (error.response) {
           console.error(`API error: ${error.response.status} ${error.response.statusText}`);
@@ -648,7 +508,7 @@ export default {
         REIMBURSED:
           'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-white-100/60 dark:bg-gray-800',
       };
-      return colorMap[status] || '  bg-orange-100/ 60 dark:bg-gray-800'; // Default to a dark color if the status is not recognized
+      return colorMap[status] || '  bg-orange-100/ 60 dark:bg-gray-800';
     },
     getStatusDotClass(status) {
       const colorMap = {
@@ -691,7 +551,6 @@ export default {
     },
   },
   mounted() {
-    // Sidebar close or open
     this.fetchAllRequests();
     this.fetchAllRequests().then(() => {
       this.$nextTick(() => {
