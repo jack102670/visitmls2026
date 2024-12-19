@@ -510,7 +510,7 @@ export default {
     async fetchusername() {
       try {
         const response = await fetch(
-          "http://172.28.28.117:7239/api/User/GetAllEmployees"
+          "http://172.28.28.116:7239/api/User/GetAllEmployees"
         );
         if (response.status !== 200) {
           // Corrected status code check
@@ -583,7 +583,7 @@ export default {
     async fetchDesignations() {
       try {
         const response = await fetch(
-          "http://172.28.28.117:7239/api/User/GetDesignation"
+          "http://172.28.28.116:7239/api/User/GetDesignation"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -598,7 +598,7 @@ export default {
     async fetchCompany() {
       try {
         const response = await fetch(
-          "http://172.28.28.117:7239/api/User/GetCompany"
+          "http://172.28.28.116:7239/api/User/GetCompany"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -613,7 +613,7 @@ export default {
     async fetchDepartments() {
       try {
         const response = await fetch(
-          "http://172.28.28.117:7239/api/User/GetDepartment"
+          "http://172.28.28.116:7239/api/User/GetDepartment"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -677,7 +677,7 @@ export default {
         // };
 
         // // Send API request using axios
-        // axios.post('http://172.28.28.117:7239/api/User/InsertClaimDetails', apiData)
+        // axios.post('http://172.28.28.116:7239/api/User/InsertClaimDetails', apiData)
         //   .then(response => {
         //     // Handle success response
         //     console.log('API response', response.data);

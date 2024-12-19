@@ -32,7 +32,7 @@
         </div>
 
         <!-- Box Info Section-->
-        <section>
+        <section v-if="requests">
           <div class="p-5 mt-1 flex flex-col md:flex-row gap-1 justify-center">
             <div
               class="mb-2 md:mb-0 relative overflow-hidden dark:bg-[#111827] dark:border-green-200 dark:hover:bg-gray-800 hover:bg-green-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-green-300 rounded-lg w-full md:w-1/5">
@@ -173,8 +173,8 @@
                           </div>
                         </th>
 
-                        <th scope="col" class="relative py-3.5 px-4">
-                          <span class="sr-only">Edit</span>
+                        <th scope="col" class="px-12 py-3.5 text-sm text-center font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                          <span class="">Edit</span>
                         </th>
                       </tr>
                     </thead>
@@ -217,7 +217,7 @@
                         </td>
 
                         <td class="px-4 py-4 ml text-sm whitespace-nowrap">
-                          <div class="flex items-center gap-x-6">
+                          <div class="flex text-center justify-center items-center items-center gap-x-6">
                             <button @click="showclaim(data.reference_number)"
                               class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -461,7 +461,7 @@ export default {
 
       try {
         const response = await fetch(
-          `http://172.28.28.117:7165/api/User/GetAllRequests/${userId}`
+          `http://172.28.28.116:7165/api/User/GetAllRequests/${userId}`
         );
         if (!response.ok) {
           throw new Error('Failed to fetch requests');

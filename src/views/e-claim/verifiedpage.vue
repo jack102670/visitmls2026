@@ -123,7 +123,7 @@
                           <span>Status</span>
                         </div>
                       </th>
-                      <th scope="col" class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                      <th scope="col" class="px-12 py-3.5 text-center text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <span>Edit</span>
                       </th>
                     </tr>
@@ -395,7 +395,7 @@ export default {
         (item.report_name && item.report_name.toLowerCase().includes(query)) ||
         (item.date_requested && item.date_requested.toLowerCase().includes(query)) ||
         (item.requester_name && item.requester_name.toLowerCase().includes(query)) ||
-        (item.grand_total && item.grand_total.toLowerCase().includes(query)) ||
+        (item.grand_total && item.grand_total.toString().toLowerCase().includes(query)) ||
         (item.admin_status && item.admin_status.toLowerCase().includes(query))
       );
     },
@@ -483,7 +483,7 @@ export default {
       this.loading = true;
       const userid = this.userDetails.userId;
       fetch(
-        `http://172.28.28.117:7165/api/ApproverVerifier/GetAllRequestVerifier/${userid}`
+        `http://172.28.28.116:7165/api/ApproverVerifier/GetAllRequestVerifier/${userid}`
       )
         .then((response) => response.json())
         .then((data) => {

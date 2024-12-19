@@ -198,7 +198,7 @@ export default {
   methods: {
     async GetAllDepartments() {
       await axios
-        .get('http://172.28.28.117:7239/api/User/GetDepartment')
+        .get('http://172.28.28.116:7239/api/User/GetDepartment')
         .then((response) => {
           this.AllDepartments = response.data.result.map(
             (item) => item.department
@@ -208,7 +208,7 @@ export default {
     },
     async GetAllEmployees() {
       await axios
-        .get('http://172.28.28.117:7239/api/User/GetAllEmployees')
+        .get('http://172.28.28.116:7239/api/User/GetAllEmployees')
         .then((response) => {
           this.AllEmployees = response.data.result;
           console.log(response);
@@ -243,7 +243,7 @@ export default {
 
         await axios
           .put(
-            'http://172.28.28.117:7165/api/Admin/AssignChecker/' + username_id,
+            'http://172.28.28.116:7165/api/Admin/AssignChecker/' + username_id,
             data
           )
           .then((response) => {

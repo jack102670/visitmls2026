@@ -3355,7 +3355,7 @@ export default {
       try {
         const username_id = store.getSession().userDetails.userId;
         const response = await fetch(
-          `http://172.28.28.117:7239/api/User/GetEmployeeById/${username_id}`
+          `http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -3388,7 +3388,7 @@ export default {
     async fetchDepartment() {
       try {
         const response = await fetch(
-          "http://172.28.28.117:7239/api/User/GetDepartment"
+          "http://172.28.28.116:7239/api/User/GetDepartment"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -3405,7 +3405,7 @@ export default {
     async fetchCompany() {
       try {
         const response = await fetch(
-          "http://172.28.28.117:7239/api/User/GetCompany"
+          "http://172.28.28.116:7239/api/User/GetCompany"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -3421,7 +3421,7 @@ export default {
       try {
         const username_id = store.getSession().userDetails.userId;
         const response = await axios.get(
-          `http://172.28.28.117:7239/api/User/GetEmployeeById/${username_id}`
+          `http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`
         );
         const data = response.data.result[0];
         if (data) {
