@@ -1897,6 +1897,9 @@ export default {
       this.loadingText = "Uploading";
       this.loading = true;
 
+      
+
+    
       const referenceNumber = await this.fetchSerialNumber();
       this.serialnumber = referenceNumber;
       this.sendFiles(this.userDetails.userId, referenceNumber);

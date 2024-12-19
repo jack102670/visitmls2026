@@ -2,42 +2,45 @@
   <div
     class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
   >
-    <div  class="sm:flex justify-start flex-wrap">
+    <div class="sm:flex justify-start flex-wrap">
       <button
         v-for="(tab, index) in tabs"
         v-show="
-    tab.tabType == type &&
-    (
-      (tab.title === 'Local Travelling' && profilestatus.local_access === '1') ||
-      (tab.title === 'Others' && profilestatus.others_access === '1') ||
-      (tab.title === 'Handphone Bill Reimbursement' && profilestatus.phone_access === '1') ||
-      (tab.title === 'Medical Bill Reimbursement' && profilestatus.md_access === '1') ||
-      (tab.title === 'Staff Refreshment' && profilestatus.staff_access === '1') ||
-      (tab.title === 'Overseas Travelling' && profilestatus.overseas_access === '1') ||
-      (tab.title === 'Entertainment' && profilestatus.ent_access === '1')
-    )
-  "
+          tab.tabType == type &&
+          ((tab.title === 'Local Travelling' &&
+            profilestatus.local_access === '1') ||
+            (tab.title === 'Others' && profilestatus.others_access === '1') ||
+            (tab.title === 'Handphone Bill Reimbursement' &&
+              profilestatus.phone_access === '1') ||
+            (tab.title === 'Medical Bill Reimbursement' &&
+              profilestatus.md_access === '1') ||
+            (tab.title === 'Staff Refreshment' &&
+              profilestatus.staff_access === '1') ||
+            (tab.title === 'Overseas Travelling' &&
+              profilestatus.overseas_access === '1') ||
+            (tab.title === 'Entertainment' && profilestatus.ent_access === '1'))
+        "
         :key="index"
         @click="activeTab = index"
         :class="[
-        'flex-1 px-4 py-1 text-md mr-2 rounded-3xl focus:outline-none border border-gray-300',
-        {
-          'bg-[#160959] text-white': activeTab === index,
-          'hover:bg-gray-200': activeTab !== index,
-          'px-8 py-4 mr-4':
-            tab.title === 'Handphone Bill Reimbursement' ||
-            tab.title === 'Medical Bill Reimbursement',
-        },
-        // Large screens
-        'max-w-xs'
-      ]"
-    >
-      {{ tab.title }}
-    </button>
+          'flex-1 px-4 py-1 text-md mr-2 rounded-3xl focus:outline-none border border-gray-300',
+          {
+            'bg-[#160959] text-white': activeTab === index,
+            'hover:bg-gray-200': activeTab !== index,
+            'px-8 py-4 mr-4':
+              tab.title === 'Handphone Bill Reimbursement' ||
+              tab.title === 'Medical Bill Reimbursement',
+          },
+          // Large screens
+          'max-w-xs',
+        ]"
+      >
+        {{ tab.title }}
+      </button>
     </div>
 
     <div
-      class="relative overflow-hidden mt-5  max-w-4xl p-6 bg-white border-2 border-e-gray-200 rounded-md dark:bg-gray-800"
+      class="relative overflow-hidden mt-5 max-w-4xl p-6 bg-white border-2 border-e-gray-200 rounded-md dark:bg-gray-800"
     >
       <div
         v-for="(tab, index) in tabs"
@@ -52,7 +55,7 @@
         <section>
           <div
             v-if="
-              tab.title === 'Handphone Bill Reimbursement' && isFormDisabled 
+              tab.title === 'Handphone Bill Reimbursement' && isFormDisabled
             "
             class="relative flex items-center justify-center mt-4 p-4 bg-yellow-200 border border-yellow-400 text-yellow-800 rounded-md"
             style="width: 100%; max-width: 600px; margin: 0 auto"
@@ -81,7 +84,7 @@
             tab.title !== 'Overseas Travelling'
           "
         >
-          <form 
+          <form
             @submit.prevent="submitForm(tab)"
             :class="{
               blur:
@@ -256,7 +259,7 @@
                                       v-if="
                                         field.id === 'UploadMileageRMLT' &&
                                         showMileageUpload
-                                      " 
+                                      "
                                       :name="field.id"
                                       :disabled="
                                         (tab.title ===
@@ -264,7 +267,6 @@
                                           isFormDisabled) ||
                                         field.disabled
                                       "
-                                      
                                       :required="field.required"
                                       ref="pond"
                                       label-idle="Drop files here..."
@@ -736,8 +738,7 @@
                     <button
                       :class="{
                         'bg-blue-500 hover:bg-blue-700': !isSaveButtonDisabled,
-                        '':
-                          isSaveButtonDisabled || isFormDisabled,
+                        '': isSaveButtonDisabled || isFormDisabled,
                         'text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline': true,
                       }"
                       type="submit"
@@ -784,7 +785,7 @@
             <div class="pt-4">
               <hr />
               <div class="m-2">
-                <form @submit.prevent="submitForm4(subTab)">
+                <form @submit.prevent="submitForm4('overseas')">
                   <div
                     v-for="(field, fieldIndex) in subTab.fields"
                     :key="fieldIndex"
@@ -1450,7 +1451,7 @@
             <div class="pt-4">
               <hr />
               <div class="m-2">
-                <form @submit.prevent="submitForm2(subTab)">
+                <form @submit.prevent="submitForm2('entertainment')">
                   <div
                     v-for="(field, fieldIndex) in subTab.fields"
                     :key="fieldIndex"
@@ -1731,7 +1732,7 @@
             <div class="pt-4">
               <hr />
               <div class="m-2">
-                <form @submit.prevent="submitForm3(subTab)">
+                <form @submit.prevent="submitForm3('staffrefreshment')">
                   <div
                     v-for="(field, fieldIndex) in subTab.fields"
                     :key="fieldIndex"
@@ -2920,36 +2921,37 @@ export default {
         0
       );
 
-      let mealAllowanceOT = this.overseasTabs.find(tab => tab.title === "Details")
-        .fields.find(field => field.id === "MealAllowanceOT").value;
+      let mealAllowanceOT = this.overseasTabs
+        .find((tab) => tab.title === "Details")
+        .fields.find((field) => field.id === "MealAllowanceOT").value;
 
       let total = (parseFloat(mealAllowanceOT) || 0) + otherExpensesTotal;
 
       return total.toFixed(2); // Return the total formatted to 2 decimal places
     },
     // Add new computed properties for each form
-  hasLocalAccess() {
-    return this.profilestatus.local_access ;
-  },
-  hasMdAccess() {
-    return this.profilestatus.md_access;
-  },
-  hasEntAccess() {
-    return this.profilestatus.ent_access;
-  },
-  hasStaffAccess() {
-    return this.profilestatus.staff_access;
-  },
-  hasOverseasAccess() {
-    return this.profilestatus.overseas_access;
-  },
-  hasOthersAccess() {
-    return this.profilestatus.others_access;
-  },
-  hasPhoneAccess() {
-    return this.profilestatus.phone_access;
-  },
-    
+    hasLocalAccess() {
+      return this.profilestatus.local_access;
+    },
+    hasMdAccess() {
+      return this.profilestatus.md_access;
+    },
+    hasEntAccess() {
+      return this.profilestatus.ent_access;
+    },
+    hasStaffAccess() {
+      return this.profilestatus.staff_access;
+    },
+    hasOverseasAccess() {
+      return this.profilestatus.overseas_access;
+    },
+    hasOthersAccess() {
+      return this.profilestatus.others_access;
+    },
+    hasPhoneAccess() {
+      return this.profilestatus.phone_access;
+    },
+
     selectedCurrency() {
       return this.currencyOptions.find(
         (currency) =>
@@ -3365,25 +3367,29 @@ export default {
   },
 
   methods: {
-     isFieldRequired(fieldId) {
+    isFieldRequired(fieldId) {
       if (fieldId === "UploadMileageRMLT") {
-        const mileageField = this.tabs.find(tab => tab.title === "Local Travelling")
-          .fields.find(field => field.id === "MileageRMLT");
+        const mileageField = this.tabs
+          .find((tab) => tab.title === "Local Travelling")
+          .fields.find((field) => field.id === "MileageRMLT");
         return mileageField && mileageField.value !== "";
       }
       if (fieldId === "UploadFareRMLT") {
-        const fareField = this.tabs.find(tab => tab.title === "Local Travelling")
-          .fields.find(field => field.id === "FareRMLT");
+        const fareField = this.tabs
+          .find((tab) => tab.title === "Local Travelling")
+          .fields.find((field) => field.id === "FareRMLT");
         return fareField && fareField.value !== "";
       }
       if (fieldId === "UploadTollLT") {
-        const tollField = this.tabs.find(tab => tab.title === "Local Travelling")
-          .fields.find(field => field.id === "TollLT");
+        const tollField = this.tabs
+          .find((tab) => tab.title === "Local Travelling")
+          .fields.find((field) => field.id === "TollLT");
         return tollField && tollField.value !== "";
       }
       if (fieldId === "UploadParkingLT") {
-        const parkingField = this.tabs.find(tab => tab.title === "Local Travelling")
-          .fields.find(field => field.id === "ParkingLT");
+        const parkingField = this.tabs
+          .find((tab) => tab.title === "Local Travelling")
+          .fields.find((field) => field.id === "ParkingLT");
         return parkingField && parkingField.value !== "";
       }
       return false;
@@ -4207,7 +4213,9 @@ export default {
       });
     },
 
-    submitForm2() {
+    submitForm2(tabTitle) {
+      if (this.validateCurrentTab(tabTitle)) {
+      
       const formattedData = {};
       this.entertainmentTabs.forEach((tab) => {
         tab.fields.forEach((field) => {
@@ -4237,9 +4245,17 @@ export default {
         });
       });
       this.attendees = [];
+        // Your logic to handle form submission
+        console.log('Form submitted successfully');
+      } else {
+        alert('Please fill all required fields before submitting.');
+      }
     },
 
-    submitForm3() {
+    submitForm3(tabTitle) {
+      if (this.validateCurrentTab(tabTitle)) {
+        // Your logic to handle form submission
+      
       const formattedData = {};
       this.staffRefreshmentTabs.forEach((tab) => {
         tab.fields.forEach((field) => {
@@ -4269,46 +4285,86 @@ export default {
         });
       });
       this.staffInvolved = [];
+      console.log('Form submitted successfully');
+      } else {
+        alert('Please fill all required fields before submitting.');
+      }
     },
+    validateCurrentTab(tabTitle) {
+      let currentTab;
+      if(tabTitle ==='overseas'){
+      const currentTab = this.overseasTabs.find(tab => tab.title === 'Details');
+      return currentTab.fields.every(field => {
+        if (field.required) {
+          return field.value !== '';
+        }
+        return true;
+      });}
+      else if (tabTitle ==='staffrefreshment'){
+        const currentTab = this.staffRefreshmentTabs.find(tab => tab.title === 'Details');
+      return currentTab.fields.every(field => {
+        if (field.required) {
+          return field.value !== '';
+        }
+        return true;
+      });}
+      else if (tabTitle ==='entertainment'){
+        const currentTab = this.entertainmentTabs.find(tab => tab.title === 'Details');
+      return currentTab.fields.every(field => {
+        if (field.required) {
+          return field.value !== '';
+        }
+        return true;
+      });}
+      
+       
+    },
+    submitForm4(tabTitle) {
+      if (this.validateCurrentTab(tabTitle)) {
+        // Your logic to handle form submission
 
-    submitForm4() {
-      const formattedData = {};
-      this.overseasTabs.forEach((tab) => {
-        tab.fields.forEach((field) => {
-          if (field.id === "dateOT") {
-            formattedData[field.id] = this.formatDate(field.value);
-          } else {
-            formattedData[field.id] = field.value;
-          }
-        });
-      });
-      formattedData["otherExpenses"] = [...this.otherExpenses];
-      formattedData["combinetotal"] = this.totalMealAllowanceOTplusotherExpenses;
-      formattedData["tabTitle"] = "Overseas Travelling";
-      this.$emit("formSubmitted", formattedData);
-      console.log("Formatted Form Data:", formattedData);
-
-      this.overseasTabs.forEach((tab) => {
-        tab.fields.forEach((field) => {
-          field.value = null;
-          if (field.type === "file") {
-            const pond = this.$refs[field.id];
-            if (pond) {
-              pond.removeFiles();
+        const formattedData = {};
+        this.overseasTabs.forEach((tab) => {
+          tab.fields.forEach((field) => {
+            if (field.id === "dateOT") {
+              formattedData[field.id] = this.formatDate(field.value);
+            } else {
+              formattedData[field.id] = field.value;
             }
-          }
+          });
         });
-      });
-      this.otherExpenses = [];
-      this.newExpense = {
-        name: "",
-        amount: "",
-        description: "",
-        ForeignCurrencyAccommodationOT: "",
-        ExchangeRateAccommodationOT: "",
-        AmountforAccommodationOT: "",
-        files: [],
-      };
+        formattedData["otherExpenses"] = [...this.otherExpenses];
+        formattedData["combinetotal"] =
+          this.totalMealAllowanceOTplusotherExpenses;
+        formattedData["tabTitle"] = "Overseas Travelling";
+        this.$emit("formSubmitted", formattedData);
+        console.log("Formatted Form Data:", formattedData);
+
+        this.overseasTabs.forEach((tab) => {
+          tab.fields.forEach((field) => {
+            field.value = null;
+            if (field.type === "file") {
+              const pond = this.$refs[field.id];
+              if (pond) {
+                pond.removeFiles();
+              }
+            }
+          });
+        });
+        this.otherExpenses = [];
+        this.newExpense = {
+          name: "",
+          amount: "",
+          description: "",
+          ForeignCurrencyAccommodationOT: "",
+          ExchangeRateAccommodationOT: "",
+          AmountforAccommodationOT: "",
+          files: [],
+        };
+        console.log("Form submitted successfully");
+      } else {
+        alert("Please fill all required fields before submitting.");
+      }
     },
   },
 };
