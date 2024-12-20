@@ -482,7 +482,7 @@ export default {
   },
 
   methods: {
-    updateEmployeeData() {
+    async updateEmployeeData() {
       const employeeData = {
         emp_id: this.user.emp_id,
         name: this.user.name,
@@ -501,7 +501,7 @@ export default {
       axios
         .put('http://172.28.28.116:7239/api/User/UpdateEmployee', employeeData)
         .then((response) => {
-          console.log('Response:', response);
+          console.log('Response: this method', response);
           if (response.data.status_code === '200') {
             console.log('Successfully Updated:', response.data.message);
 
@@ -509,7 +509,12 @@ export default {
             this.showSuccessNotification = true;
             setTimeout(() => {
               this.showSuccessNotification = false;
-            }, 3000);
+              window.location.reload();
+            }, 2000);
+            window.removeEventListener(
+              'beforeunload',
+              this.beforeUnloadHandler
+            );
             // Additional logic here for successful update
           } else if (response.data.status_code === '400') {
             // console.log("Successfully Updated:", response.data.message);
@@ -576,7 +581,7 @@ export default {
         });
     },
 
-    uploadimg() {
+    async uploadimg() {
       console.log('Profile picture value:', this.profile_picture); // Debugging line
       if (!this.profile_picture) {
         // alert("Please select a profile picture.");
@@ -688,6 +693,8 @@ export default {
         });
     },
     checkUserStatusAndShowModal() {
+      console.log('Checking user status and showing modal');
+   
       const username_id = store.getSession().userDetails.userId;
       axios
         .get(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`)
@@ -695,7 +702,7 @@ export default {
           // Assuming the API response structure has a status field
           const userStatus = response.data.result[0].account_status;
 
-          console.log('User status:', userStatus);
+          console.log('User status: baru', userStatus);
 
           if (userStatus === '0') {
             // User has not completed their OTP, show the modal
@@ -713,24 +720,31 @@ export default {
         });
     },
 
-    verifyAndSaveData() {
-      // this.saveUserData();
+    async verifyAndSaveData() {
       console.log("Temp email now", this.tempEmail);
       console.log("User email now", this.user.email_address);
       this.loadingButton = true;
-      if (this.tempImageUrl) {
-        this.uploadimg();
-      } else if (this.status === '1' && this.tempEmail == this.user.email_address) {
-        this.updateEmployeeData();
-      } else {
-        this.updateEmployeeDataNewEmail();
-      }
 
-      // this.saveProfilePicture();
-      this.checkUserStatusAndShowModal();
+      try {
+        if (this.tempImageUrl) {
+          await this.uploadimg(); // Wait for the image upload to finish
+        } else if (this.status === '1' && this.tempEmail === this.user.email_address) {
+          await this.updateEmployeeData(); // Wait for the employee data update
+        } else {
+          await this.updateEmployeeDataNewEmail(); // Wait for the employee data update with new email
+        }
+      } catch (error) {
+        console.error('Error during verify and save data process:', error);
+      } finally {
+        // Ensure checkUserStatusAndShowModal runs last
+        console.log('Executing finally block');
+        this.checkUserStatusAndShowModal();
+        this.loadingButton = false;
+      }
     },
+
     // update utk email baru dan lama / bila dia update emel then akan kena verify balik
-    updateEmployeeDataNewEmail() {
+    async updateEmployeeDataNewEmail() {
       // Start loading
       const startTime = Date.now(); // Record start time
 
@@ -765,6 +779,7 @@ export default {
               }, 3000);
               // alert(response.data.message);
               // Additional logic here for successful update
+              window.location.reload();
             } else if (
               response.data.message.includes(
                 'Successfully Updated. Verify Your Email.'
