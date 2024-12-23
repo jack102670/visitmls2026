@@ -1,212 +1,208 @@
 <template>
-  <main
-    class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 p-4 sm:ml-64"
-  >
-    <div class="container mx-auto">
+  <main class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 p-4 sm:ml-64">
+    <div class=" mx-auto">
       <div
-        class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 dark:text-white border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
-      >
-        <h1
-          class="text-blue-800 dark:text-blue-600 text-xl md:text-2xl font-bold"
-        >
+        class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 dark:text-white border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
+        <h1 class="text-blue-800 dark:text-blue-600 text-xl md:text-2xl font-bold">
           HR DASHBOARD
         </h1>
-
-        <!-- Datatable -->
         <div class="flex flex-col mt-6">
-          <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div
-              class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
-            >
-              <div
-                class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg"
-              >
+          <div class="overflow-x-auto">
+            <div class="inline-block min-w-full py-2 align-middle ">
+              <div class="overflow-hidden ">
+                <div class="py-2 flex flex-col md:flex-row justify-between items-center md:items-end">
+                  <div class="flex items-center">
+                  </div>
+                  <div class="relative md:mt-0 w-full md:w-auto">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                      <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                      </svg>
+                    </div>
+                    <input type="text" id="table-search" v-model="searchQuery"
+                      class="block py-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full md:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Search for applications" />
+                  </div>
+                </div>
                 <table
-                  ref="myTable"
-                  class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover strip"
-                >
+                  class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover strip border border-gray-200 dark:border-gray-700 md:rounded-lg">
                   <thead class="bg-gray-50 dark:bg-gray-800">
                     <tr>
+                      <th scope="col" class="px-6 py-3">No</th>
                       <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         Report Name
                       </th>
                       <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         Requester Name
                       </th>
                       <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         Verifier Name
                       </th>
                       <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         Reference Number
                       </th>
                       <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         Amount
                       </th>
                       <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         Date requested
+                        <span class="ml-1 cursor-pointer" @click="toggleSort('date_requested')">
+                          <template v-if="sortField === 'date_requested'">
+                            {{ sortDirection === 'desc' ? '↓' : '↑' }}
+                          </template>
+                          <template v-else>
+                            <span class="text-gray-300">↕</span>
+                          </template>
+                        </span>
                       </th>
                       <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         Status
                       </th>
                       <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         View
                       </th>
                     </tr>
                   </thead>
-                  <tbody
-                    class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
-                  >
-                    <tr v-for="(claim, index) in claimsData" :key="index">
-                      <td
-                        class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                      >
+                  <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                    <tr v-for="(claim, index) in paginatedApplications" :key="index">
+                      <td class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
+                        {{ (currentPage - 1) * itemsPerPage + index + 1 }}
+                      </td>
+                      <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         {{ claim.report_name }}
                       </td>
-                      <td
-                        class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                      >
+                      <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         {{ claim.requester_name }}
                       </td>
-                      <td
-                        class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                      >
+                      <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         {{ claim.verifier_name }}
                       </td>
-                      <td
-                        class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                      >
+                      <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         {{ claim.reference_number }}
                       </td>
-                      <td
-                        class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                      >
+                      <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         RM {{ claim.grand_total }}
                       </td>
-                      <td
-                        class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                      >
+                      <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         {{ claim.date_requested }}
                       </td>
-                      <td
-                        class="px-12 py-4 text-sm font-medium text-gray-700 text-wrap whitespace-nowrap"
-                      >
-                      <span
-  :class="{
-    'inline-flex items-center px-3 py-1 rounded-full gap-x-2': true,
-    'bg-red-100/60 dark:bg-gray-800': claim.admin_status.split('.')[0].split(' ')[0] === 'REJECT',
-    'bg-green-100/60 dark:bg-gray-800': claim.admin_status.split('.')[0].split(' ')[0] === 'APPROVED',
-    'bg-amber-100/60 dark:bg-gray-800': claim.admin_status.split('.')[0] === 'VERIFIED',
-    'bg-blue-100/60 dark:bg-gray-800': claim.admin_status.split('.')[0].split(' ')[0] === 'OPEN', // Added for empty status
-  }"
->
-  <span
-    :class="{
-      'h-1.5 w-1.5 rounded-full': true,
-      'bg-red-500': claim.admin_status.split('.')[0].split(' ')[0] === 'REJECT',
-      'bg-green-500': claim.admin_status.split('.')[0].split(' ')[0] === 'APPROVED',
-      'bg-amber-500': claim.admin_status.split('.')[0] === 'VERIFIED',
-      'bg-blue-500': claim.admin_status.split('.')[0].split(' ')[0] === 'OPEN', // Added for empty status
-    }"
-  ></span>
-  <span
-    :class="{
-      'text-sm font-normal': true,
-      'text-red-500': claim.admin_status.split('.')[0].split(' ')[0] === 'REJECT',
-      'text-green-500': claim.admin_status.split('.')[0].split(' ')[0] === 'APPROVED',
-      'text-amber-500': claim.admin_status.split('.')[0] === 'VERIFIED',
-      'text-blue-500': claim.admin_status.split('.')[0].split(' ')[0] === 'OPEN', // Added for empty status
-    }"
-  >
-    {{
+                      <td class="px-12 py-4 text-sm font-medium text-gray-700 text-wrap whitespace-nowrap">
+                        <span :class="{
+                          'inline-flex items-center px-3 py-1 rounded-full gap-x-2': true,
+                          'bg-red-100/60 dark:bg-gray-800': claim.admin_status.split('.')[0].split(' ')[0] === 'REJECT',
+                          'bg-green-100/60 dark:bg-gray-800': claim.admin_status.split('.')[0].split(' ')[0] === 'APPROVED',
+                          'bg-amber-100/60 dark:bg-gray-800': claim.admin_status.split('.')[0] === 'VERIFIED',
+                          'bg-blue-100/60 dark:bg-gray-800': claim.admin_status.split('.')[0].split(' ')[0] === 'OPEN', // Added for empty status
+                        }">
+                          <span :class="{
+                            'h-1.5 w-1.5 rounded-full': true,
+                            'bg-red-500': claim.admin_status.split('.')[0].split(' ')[0] === 'REJECT',
+                            'bg-green-500': claim.admin_status.split('.')[0].split(' ')[0] === 'APPROVED',
+                            'bg-amber-500': claim.admin_status.split('.')[0] === 'VERIFIED',
+                            'bg-blue-500': claim.admin_status.split('.')[0].split(' ')[0] === 'OPEN', // Added for empty status
+                          }"></span>
+                          <span :class="{
+                            'text-sm font-normal': true,
+                            'text-red-500': claim.admin_status.split('.')[0].split(' ')[0] === 'REJECT',
+                            'text-green-500': claim.admin_status.split('.')[0].split(' ')[0] === 'APPROVED',
+                            'text-amber-500': claim.admin_status.split('.')[0] === 'VERIFIED',
+                            'text-blue-500': claim.admin_status.split('.')[0].split(' ')[0] === 'OPEN', // Added for empty status
+                          }">
+                            {{
                               claim.admin_status.split('.')[0].split(' ')[0]
                             }}
-  </span>
-</span>
+                          </span>
+                        </span>
                       </td>
-                      <td
-                        class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                      >
-                        <button
-                          @click="ViewClaim(claim.reference_number)"
-                          class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-5 h-5"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                            />
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                            />
+                      <td class="px-4 py-4 text-sm text-center text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        <button @click="ViewClaim(claim.reference_number)"
+                          class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                           </svg>
                         </button>
                       </td>
                     </tr>
                   </tbody>
                 </table>
+                <nav class="flex items-center flex-col flex-wrap md:flex-row justify-between items-center pt-4"
+                  aria-label="Table navigation">
+                  <div>
+                    <span class="text-xs md:text-xs font-normal text-gray-500 dark:text-gray-400">
+                      Showing <span class="font-semibold text-gray-900 dark:text-white">
+                        {{ (currentPage - 1) * itemsPerPage + 1 }}-{{ Math.min(currentPage * itemsPerPage,
+                          filteredQueryApplications.length) }}
+                      </span>
+                      of <span class="font-semibold text-gray-900 dark:text-white">{{ filteredQueryApplications.length
+                        }}</span>
+                    </span>
+                  </div>
+                  <div>
+                    <ul class="inline-flex -space-x-px text-xs md:text-sm h-6 md:h-8">
+                      <li>
+                        <a href="#" @click.prevent="previousPage"
+                          :class="{ 'cursor-not-allowed opacity-50': currentPage === 1 }"
+                          class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
+                          Previous
+                        </a>
+                      </li>
+
+                      <li v-for="page in visiblePages" :key="page">
+                        <template v-if="page === '...'">
+                          <span
+                            class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight border border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700">
+                            {{ page }}
+                          </span>
+                        </template>
+                        <template v-else>
+                          <a href="#" @click.prevent="goToPage(page)" :class="{
+                            'bg-blue-500 text-dark': page === currentPage,
+                            'text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700': page !== currentPage
+                          }"
+                            class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700">
+                            {{ page }}
+                          </a>
+                        </template>
+                      </li>
+
+                      <li>
+                        <a href="#" @click.prevent="nextPage"
+                          :class="{ 'cursor-not-allowed opacity-50': currentPage >= totalPages }"
+                          class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
+                          Next
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </nav>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Loading Animation -->
-        <div
-          class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
-          v-if="loading"
-        >
+        <div class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
+          v-if="loading">
           <div class="absolute w-screen h-screen bg-gray-900 opacity-30"></div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 200 200"
-            class="w-16 h-16 z-50"
-          >
-            <circle
-              transform="rotate(0)"
-              transform-origin="center"
-              fill="none"
-              stroke="blue"
-              stroke-width="10"
-              stroke-linecap="round"
-              stroke-dasharray="230 1000"
-              stroke-dashoffset="0"
-              cx="100"
-              cy="100"
-              r="70"
-            >
-              <animateTransform
-                attributeName="transform"
-                type="rotate"
-                from="0"
-                to="360"
-                dur="2"
-                repeatCount="indefinite"
-              ></animateTransform>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="w-16 h-16 z-50">
+            <circle transform="rotate(0)" transform-origin="center" fill="none" stroke="blue" stroke-width="10"
+              stroke-linecap="round" stroke-dasharray="230 1000" stroke-dashoffset="0" cx="100" cy="100" r="70">
+              <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="2"
+                repeatCount="indefinite">
+              </animateTransform>
             </circle>
           </svg>
           <h1 class="text-gray-50 font-semibold z-50 ml-2 text-lg">
@@ -227,14 +223,97 @@ export default {
   data() {
     return {
       userId: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-
-      // need to fetch from API
       claimsData: [],
-
+      userApplications: [],
+      searchQuery: '',
+      sortField: 'date_requested',
+      sortDirection: 'desc',
+      currentPage: 1,
+      itemsPerPage: 10,
       loading: false,
     };
   },
+  computed: {
+    filteredQueryApplications() {
+      const query = this.searchQuery.toLowerCase();
+      return this.sortedApplications.filter((claim) =>
+        (claim.report_name && claim.report_name.toLowerCase().includes(query)) ||
+        (claim.requester_name && claim.requester_name.toLowerCase().includes(query)) ||
+        (claim.verifier_name && claim.verifier_name.toLowerCase().includes(query)) ||
+        (claim.reference_number && claim.reference_number.toLowerCase().includes(query)) ||
+        (claim.date_requested && claim.date_requested.toLowerCase().includes(query)) ||
+        (claim.grand_total && claim.grand_total.toLowerCase().includes(query)) ||
+        (claim.admin_status && claim.admin_status.toLowerCase().includes(query))
+      );
+    },
+    sortedApplications() {
+      return [...this.userApplications].sort((a, b) => {
+        const dateA = new Date(a[this.sortField]).getTime();
+        const dateB = new Date(b[this.sortField]).getTime();
+        return this.sortDirection === 'desc' ? dateB - dateA : dateA - dateB;
+      });
+    },
+    paginatedApplications() {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+      return this.filteredQueryApplications.slice(start, end);
+    },
+    totalPages() {
+      return Math.ceil(this.filteredQueryApplications.length / this.itemsPerPage);
+    },
+    visiblePages() {
+      const total = this.totalPages;
+      const current = this.currentPage;
+      const maxVisiblePages = 2;
+
+      let pages = [];
+
+      if (total <= maxVisiblePages) {
+        pages = Array.from({ length: total }, (_, i) => i + 1);
+      } else {
+        if (current === 1) {
+          pages = [1, 2, 3, '...', total];
+        }
+        else if (current === total) {
+          pages = [1, '...', total - 2, total - 1, total];
+        }
+        else if (current === total - 1) {
+          pages = [1, '...', total - 2, total - 1, total];
+        }
+        else {
+          pages = [1, '...', current - 1, current, current + 1, '...', total];
+        }
+      }
+
+      return pages;
+    },
+  },
   methods: {
+
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    },
+    previousPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    goToPage(page) {
+      if (typeof page === 'number') {
+        this.currentPage = page;
+      }
+    },
+    toggleSort(field) {
+      if (this.sortField === field) {
+        this.sortDirection = this.sortDirection === 'desc' ? 'asc' : 'desc';
+      } else {
+        this.sortField = field;
+        this.sortDirection = 'desc';
+      }
+    },
+
     ViewClaim(rn) {
       console.log(rn);
       this.$router.push({
@@ -253,8 +332,9 @@ export default {
         )
         .then((response) => {
           this.claimsData = response.data.result;
-          console.log(this.claimsData);
-
+          if (this.claimsData.length > 0) {
+            this.userApplications = this.claimsData;
+          }
           this.loading = false;
 
           this.$nextTick(() => {
