@@ -361,24 +361,23 @@
                   </div>
                 </div>
               </div>
-
-              <div v-show="confirm"
-                class="fixed w-screen h-screen overflow-hidden top-0 left-0 z-50 bg-gray-600/50 dark:bg-gray-800/50 flex justify-center items-center">
-                <div class="bg-white dark:bg-gray-700 rounded-2xl px-4 py-6">
-                  <h1 class="text-lg mb-2 font-semibold">
-                    Confirm to Save the edit?
-                  </h1>
-                  <div class="flex justify-center">
-                    <button class="rounded-lg p-2 bg-[#160959] hover:bg-blue-950 text-white" @click="updateProfile()">
-                      Confirm
-                    </button>
-                    <button class="rounded-lg p-2 bg-gray-500 hover:bg-gray-600 text-white ml-2"
-                      @click="confirm = false">
-                      Back
-                    </button>
+                <div v-show="confirm"
+                  class="fixed w-screen h-screen overflow-hidden top-0 left-0 z-50 bg-gray-600/50 dark:bg-gray-800/50 flex justify-center items-center">
+                  <div class="bg-white dark:bg-gray-700 rounded-md px-8 py-8 min-w-6xl max-h-[250vh]">
+                    <h1 class="text-lg mb-2 font-semibold">
+                      Confirm to Save the edit?
+                    </h1>
+                    <div class="flex justify-center">
+                      <button class="rounded-lg py-2 px-4 bg-[#160959] hover:bg-blue-950 text-white" @click="updateProfile()">
+                        Confirm
+                      </button>
+                      <button class="rounded-lg py-2 px-4 bg-gray-500 hover:bg-gray-600 text-white ml-2"
+                        @click="confirm = false">
+                        Back
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
 
               <div class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
                 v-if="loading">
