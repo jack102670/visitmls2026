@@ -470,6 +470,18 @@ export default {
   },
 
   mounted() {
+    // this.checkUserStatus2()
+    //   .then((status) => {
+    //     if (status === 2) {
+    //       // Redirect to the last page if user status is 2
+    //       alert("You don't have a user profile yet. Please contact the HR administrator.");
+    //       this.$router.push('/homepage'); // Replace 'lastPageRouteName' with the actual route name
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error checking user status:', error);
+    //   });
+
     this.checkUserStatus();
 
     let openOrNot = localStorage.getItem('openOrNot');
@@ -482,6 +494,41 @@ export default {
   },
 
   methods: {
+    checkUserStatus2() {
+      return new Promise((resolve, reject) => {
+        const session = store.getSession();
+        if (!session || !session.userDetails || !session.userDetails.userId) {
+          alert("User session not found. Please log in again.");
+          return reject(new Error("User session not found."));
+        }
+        const username_id = session.userDetails.userId;
+        fetch(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data.result && data.result.length > 0) {
+              const userStatus = data.result[0];
+              console.log('User status:', userStatus);
+              if (userStatus.branch === "" &&  userStatus.department === "" && userStatus.emp_id === "") {
+                resolve(2); // Incomplete profile
+              } else {
+                resolve(1); // Completed profile
+              }
+            } else {
+              resolve(0); // No user profile found
+            }
+          })
+          .catch((error) => {
+            console.error('Error fetching user status:', error);
+            alert("There was an error fetching your user status. Please try again later.");
+            reject(error);
+          });
+      });
+    },
     async updateEmployeeData() {
       const employeeData = {
         emp_id: this.user.emp_id,
@@ -668,30 +715,41 @@ export default {
     },
 
     checkUserStatus() {
-      const username_id = store.getSession().userDetails.userId;
-      axios
-        .get(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`)
-        .then((response) => {
-          // Assuming the API response structure has a status field
-          const userStatus = response.data.result[0].account_status;
-          const email = response.data.result[0].email_address;
-          console.log('User status:', userStatus);
+  const username_id = store.getSession().userDetails.userId;
 
-          if (userStatus === '0' && email !== '') {
-            // User has not completed their OTP, show the modal
+  axios
+    .get(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`)
+    .then((response) => {
+      // Assuming the API response structure has a result array
+      const user = response.data.result[0];
 
-            this.showRequestOtpModal = true;
-          } else {
-            // User has completed their OTP, do not show the modal
+      if (!user || !user.account_status) {
+        // Redirect to another page if account_status is missing
+        alert("You don't have a user profile yet. Please contact the HR administrator.");
+        window.location.href = '/homepage'; // Replace '/redirect-page' with your desired route
+        return;
+      }
 
-            this.showRequestOtpModal = false;
-          }
-        })
-        .catch((error) => {
-          console.error('There was an error fetching the user status:', error);
-          // Handle error or set a default behavior if the API call fails
-        });
-    },
+      const userStatus = user.account_status;
+      const email = user.email_address;
+
+      console.log('User status:', userStatus);
+
+      if (userStatus === '0' && email !== '') {
+        // User has not completed their OTP, show the modal
+        this.showRequestOtpModal = true;
+      } else {
+        // User has completed their OTP, do not show the modal
+        this.showRequestOtpModal = false;
+      }
+    })
+    .catch((error) => {
+      console.error('There was an error fetching the user status:', error);
+      // Handle error or set a default behavior if the API call fails
+   
+    });
+},
+
     checkUserStatusAndShowModal() {
       console.log('Checking user status and showing modal');
    
@@ -703,7 +761,8 @@ export default {
           const userStatus = response.data.result[0].account_status;
 
           console.log('User status: baru', userStatus);
-
+if (userStatus===null) this.$router.push('/homepage')
+{
           if (userStatus === '0') {
             // User has not completed their OTP, show the modal
 
@@ -713,10 +772,11 @@ export default {
 
             this.showRequestOtpModal = false;
           }
+        }
         })
         .catch((error) => {
           console.error('There was an error fetching the user status:', error);
-          // Handle error or set a default behavior if the API call fails
+          this.$router.push('/homepage')
         });
     },
 

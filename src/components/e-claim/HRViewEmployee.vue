@@ -153,7 +153,7 @@
 
             <div class="flex my-0 items-center">
               <h1 class="text-xl font-bold m-3 mb-2 ml-7">
-                {{ edit ? 'Edit Employee Profile' : 'Employee Details' }}
+                {{ edit ? "Edit Employee Profile" : "Employee Details" }}
               </h1>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -203,12 +203,12 @@
                   <h1
                     class="text-base font-semibold text-gray-900 dark:text-gray-100"
                   >
-                    {{ key + ':' }}
+                    {{ key + ":" }}
                   </h1>
                   <h1
                     class="font-thin text-sm text-gray-700 dark:text-gray-300 break-words"
                   >
-                    {{ val ? val : '-' }}
+                    {{ val ? val : "-" }}
                   </h1>
                 </div>
               </div>
@@ -459,25 +459,28 @@
               v-show="confirm"
               class="fixed w-screen h-screen overflow-hidden top-0 left-0 z-50 bg-gray-600/50 dark:bg-gray-800/50 flex justify-center items-center"
             >
-              <div class="bg-white dark:bg-gray-700 rounded-2xl px-4 py-6">
+              <div
+                class="bg-white dark:bg-gray-700 rounded-md px-8 py-8 min-w-6xl max-h-[250vh]"
+              >
                 <h1 class="text-lg mb-2 font-semibold">
                   Confirm to Save the edit?
                 </h1>
                 <div class="flex justify-center">
                   <button
-                    class="rounded-lg p-2 bg-[#160959] hover:bg-blue-950 text-white"
-                    @click="Register()"
+                    class="rounded-lg py-2 px-4 bg-[#160959] hover:bg-blue-950 text-white"
+                    @click="updateProfile()"
                   >
                     Confirm
                   </button>
                   <button
-                    class="rounded-lg p-2 bg-gray-500 hover:bg-gray-600 text-white ml-2"
+                    class="rounded-lg py-2 px-4 bg-gray-500 hover:bg-gray-600 text-white ml-2"
                     @click="confirm = false"
                   >
                     Back
                   </button>
                 </div>
               </div>
+              
             </div>
 
             <!-- Loading Animation -->
@@ -528,11 +531,11 @@
 </template>
 
 <script>
-import $ from 'jquery';
-import 'datatables.net-dt';
-import 'datatables.net-dt/css/jquery.dataTables.min.css';
-import axios from 'axios';
-import DropDown from './DropDown.vue';
+import $ from "jquery";
+import "datatables.net-dt";
+import "datatables.net-dt/css/jquery.dataTables.min.css";
+import axios from "axios";
+import DropDown from "./DropDown.vue";
 export default {
   components: {
     DropDown,
@@ -548,17 +551,17 @@ export default {
 
       //edit employee data
       form: {
-        branch: '',
-        company: '',
-        department: '',
-        position: '',
-        userId: '',
-        employeeId: '',
-        reportingDepartment: '',
-        reportingId: '',
+        branch: "",
+        company: "",
+        department: "",
+        position: "",
+        userId: "",
+        employeeId: "",
+        reportingDepartment: "",
+        reportingId: "",
         limit: null,
-        limitOutpatient: '',
-        limitMedicaldental: '',
+        limitOutpatient: "",
+        limitMedicaldental: "",
       },
       // option for dropdown
       fetchOptions: [],
@@ -580,10 +583,10 @@ export default {
         handphone: false,
       },
 
-      enableLimit: 'no',
+      enableLimit: "no",
 
       loading: false,
-      loadingText: '',
+      loadingText: "",
     };
   },
   methods: {
@@ -592,24 +595,24 @@ export default {
         profile_picture: data.profile_picture,
         Username: data.username,
         Name: data.name,
-        'Employee ID': data.emp_id,
+        "Employee ID": data.emp_id,
         Branch: data.branch,
         Company: data.company_name,
         Department: data.department,
         Position: data.position_title,
-        'Reporting ID': data.reporting_to,
-        'Reporting Department': data.reporting_to_dept,
+        "Reporting ID": data.reporting_to,
+        "Reporting Department": data.reporting_to_dept,
         Email: data.email_address,
         Phone: data.phone_number,
         Address: data.home_address,
         Bank: data.bank_name,
-        'Bank Number': data.bank_number,
-        'Limit Handphone': data.limit_amount,
-        'Limit Outpatient': data.limit_outpatient,
-        'Limit Medical Dental': data.limit_medicaldental,
+        "Bank Number": data.bank_number,
+        "Limit Handphone": data.limit_amount,
+        "Limit Outpatient": data.limit_outpatient,
+        "Limit Medical Dental": data.limit_medicaldental,
       };
 
-      console.log('employee', this.employee);
+      console.log("employee", this.employee);
 
       this.view = true;
       await this.getFormData(data, data.reporting_to);
@@ -619,7 +622,7 @@ export default {
     },
     FetchEmployeesData() {
       axios
-        .get('http://172.28.28.116:7239/api/User/GetAllEmployees')
+        .get("http://172.28.28.116:7239/api/User/GetAllEmployees")
         .then((response) => {
           this.employeesData = response.data.result;
           console.log(this.employeesData);
@@ -631,7 +634,7 @@ export default {
     },
     async getFormData(data, id) {
       await axios
-        .get('http://172.28.28.116:7239/api/User/GetAllEmployees')
+        .get("http://172.28.28.116:7239/api/User/GetAllEmployees")
         .then((response) => {
           console.log(response.data.result.filter((item) => item.emp_id == id));
           const reportingName = response.data.result.filter(
@@ -646,7 +649,7 @@ export default {
             userId: data.name,
             employeeId: data.emp_id,
             reportingDepartment: data.reporting_to_dept,
-            reportingId: reportingName + ' (' + data.reporting_to + ')',
+            reportingId: reportingName + " (" + data.reporting_to + ")",
             limit: data.limit_amount,
             limitOutpatient: data.limit_outpatient,
             limitMedicaldental: data.limit_medicaldental,
@@ -654,17 +657,17 @@ export default {
           };
 
           if (data.limit_amount > 0) {
-            this.enableLimit = 'yes';
+            this.enableLimit = "yes";
             this.form.limit = data.limit_amount;
           } else {
-            this.enableLimit = 'no';
+            this.enableLimit = "no";
             this.form.limit = 0;
           }
         });
     },
     Register() {
-      console.log('form ', this.form);
-      this.loadingText = 'Uploading';
+      console.log("form ", this.form);
+      this.loadingText = "Uploading";
       this.loading = true;
       const accessData = this.convertValues();
 
@@ -678,10 +681,10 @@ export default {
         employeeId: this.form.employeeId,
         department: this.form.department,
         reportingToDept: this.form.reportingDepartment,
-        reportingToId: this.form.reportingId.split('(')[
+        reportingToId: this.form.reportingId.split("(")[
           // eslint-disable-next-line no-unexpected-multiline
-          this.form.reportingId.split('(').length - 1
-        ].split(')')[0],
+          this.form.reportingId.split("(").length - 1
+        ].split(")")[0],
         position: this.form.position,
         local_access: accessData.local,
         overseas_access: accessData.overseas,
@@ -693,15 +696,15 @@ export default {
         limit_md_dental: this.form.limitMedicaldental,
         limit_outpatient: this.form.limitOutpatient,
       };
-      console.log('Form Data:', registerData);
+      console.log("Form Data:", registerData);
 
       axios
         .put(
-          'http://172.28.28.116:7165/api/Admin/Update_UserProfile',
+          "http://172.28.28.116:7165/api/Admin/Update_UserProfile",
           registerData
         )
         .then((response) => {
-          console.log('Response:', response.data);
+          console.log("Response:", response.data);
           this.loading = false;
           this.confirm = false;
           this.edit = false;
@@ -712,15 +715,15 @@ export default {
           // Handle success
         })
         .catch((error) => {
-          console.error('Error:', error);
+          console.error("Error:", error);
           // Handle error
         });
     },
     async fetchData() {
-      this.loadingText = 'Fetching';
+      this.loadingText = "Fetching";
       this.loading = true;
       await axios
-        .get('http://172.28.28.91:89/api/Security/getusersAD')
+        .get("http://172.28.28.91:89/api/Security/getusersAD")
         .then((response) => {
           this.loading = false;
           this.fetchOptions = response.data; // Make sure to access response.data
@@ -740,7 +743,7 @@ export default {
         })
         .catch((error) => {
           this.error = error;
-          console.error('There was an error!', error);
+          console.error("There was an error!", error);
         });
     },
     extractBranches() {
@@ -756,11 +759,11 @@ export default {
     getFormAccess() {
       axios
         .get(
-          'http://172.28.28.116:7239/api/User/GetEmployeeById/' +
+          "http://172.28.28.116:7239/api/User/GetEmployeeById/" +
             this.form.userNameId
         )
         .then((response) => {
-          console.log('result', response.data.result);
+          console.log("result", response.data.result);
           const result = response.data.result;
           this.formAccess = {
             local: result[0].local_access == 0 ? false : true,
@@ -775,7 +778,7 @@ export default {
     },
     getAllPositions() {
       axios
-        .get('http://172.28.28.116:7239/api/User/GetDesignation')
+        .get("http://172.28.28.116:7239/api/User/GetDesignation")
         .then((response) => {
           this.AllPositions = response.data.result.map(
             (item) => item.designation
@@ -783,12 +786,12 @@ export default {
         })
         .catch((error) => {
           this.error = error;
-          console.error('There was an error!', error);
+          console.error("There was an error!", error);
         });
     },
     getAllCompanies() {
       axios
-        .get('http://172.28.28.116:7239/api/User/GetCompany')
+        .get("http://172.28.28.116:7239/api/User/GetCompany")
         .then((response) => {
           this.Company = response.data.result.map((item) => item.company_name);
         });
@@ -816,7 +819,7 @@ export default {
         );
         return response.data.result[0].emp_id;
       } catch (error) {
-        console.error('Error fetching employee ID:', error);
+        console.error("Error fetching employee ID:", error);
         return null;
       }
     },
@@ -850,12 +853,12 @@ export default {
       try {
         // Fetch additional data from the API
         const response = await axios.get(
-          'http://172.28.28.116:7239/api/User/GetAllEmployees'
+          "http://172.28.28.116:7239/api/User/GetAllEmployees"
         );
         const existUserIds = response.data.result.map(
           (user) => user.username_id
         );
-        console.log('Existing User IDs from API:', existUserIds);
+        console.log("Existing User IDs from API:", existUserIds);
 
         // Fetch empIds asynchronously and wait for all to complete
         const employeesWithEmpId = await Promise.all(
@@ -871,52 +874,52 @@ export default {
         );
 
         this.filteredReportingEmployees = employeesWithEmpId.map(
-          (employee) => employee.userName + ' (' + employee.empId + ')'
+          (employee) => employee.userName + " (" + employee.empId + ")"
         );
 
         console.log(this.filteredReportingEmployees);
       } catch (error) {
-        console.error('Error fetching data from API:', error);
+        console.error("Error fetching data from API:", error);
       }
     },
   },
   mounted() {
     // Sidebar close or open
-    let openOrNot = localStorage.getItem('openOrNot');
-    const element = document.querySelector('main');
-    if (element && openOrNot == 'false') {
-      element.classList.add('become-big');
-    } else if (element && openOrNot == 'true') {
-      element.classList.remove('become-big');
+    let openOrNot = localStorage.getItem("openOrNot");
+    const element = document.querySelector("main");
+    if (element && openOrNot == "false") {
+      element.classList.add("become-big");
+    } else if (element && openOrNot == "true") {
+      element.classList.remove("become-big");
     }
 
     // fetch claims data from api
     this.FetchEmployeesData();
   },
   watch: {
-    'form.branch'(newBranch) {
+    "form.branch"(newBranch) {
       // This will execute whenever branch value changes
       this.changeDepartment(newBranch);
     },
 
-    async 'form.reportingDepartment'(newReportingDept) {
+    async "form.reportingDepartment"(newReportingDept) {
       // This will execute whenever department value changes
-      console.log('123');
+      console.log("123");
       this.changeEmployee(newReportingDept);
     },
 
-    'form.limit'(newLimit) {
-      if (newLimit <= 0 && this.enableLimit == 'yes') {
+    "form.limit"(newLimit) {
+      if (newLimit <= 0 && this.enableLimit == "yes") {
         this.form.limit = 1;
       }
     },
 
     enableLimit(newVal) {
-      if (newVal === 'yes') {
+      if (newVal === "yes") {
         if (this.form.limit == 0) {
           this.form.limit = 1;
         }
-      } else if (newVal == 'no') {
+      } else if (newVal == "no") {
         this.form.limit = 0;
       }
       console.log(this.form.limit);
