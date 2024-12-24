@@ -75,17 +75,22 @@
                       <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         {{ employee.position_title }}
                       </td>
-                      <td class="px-4 py-4 text-sm text-center text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        <button @click="ViewEmployee(employee)"
-                          class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-5 h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                          </svg>
-                        </button>
-                      </td>
+                        <td class="px-4 py-4 text-sm text-center text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          <div v-if="updatingEmployeeId !== employee.emp_id">
+                            <button @click="ViewEmployee(employee)"
+                              class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                              </svg>
+                            </button>
+                          </div>
+                          <div v-else class="flex justify-center items-center">
+                            <div class="loader"></div>
+                          </div>
+                        </td>
                     </tr>
                   </tbody>
                 </table>
@@ -282,11 +287,11 @@
                     <label class="font-semibold text-gray-600 dark:text-gray-300">Limit</label>
                     <div class="mt-2 ">
                       <div class="space-x-2">
-                      <input type="radio" id="no" value="no" v-model="enableLimit" />
-                      <label for="no">No</label>
+                        <input type="radio" id="no" value="no" v-model="enableLimit" />
+                        <label for="no">No</label>
 
-                      <input type="radio" id="yes" value="yes" class="ml-4" v-model="enableLimit" />
-                      <label for="yes">Yes</label>
+                        <input type="radio" id="yes" value="yes" class="ml-4" v-model="enableLimit" />
+                        <label for="yes">Yes</label>
                       </div>
                       <div v-if="enableLimit === 'yes'" class="mt-1">
                         <input id="limitInput" v-model="form.limit"
@@ -361,23 +366,24 @@
                   </div>
                 </div>
               </div>
-                <div v-show="confirm"
-                  class="fixed w-screen h-screen overflow-hidden top-0 left-0 z-50 bg-gray-600/50 dark:bg-gray-800/50 flex justify-center items-center">
-                  <div class="bg-white dark:bg-gray-700 rounded-md px-8 py-8 min-w-6xl max-h-[250vh]">
-                    <h1 class="text-lg mb-2 font-semibold">
-                      Confirm to Save the edit?
-                    </h1>
-                    <div class="flex justify-center">
-                      <button class="rounded-lg py-2 px-4 bg-[#160959] hover:bg-blue-950 text-white" @click="updateProfile()">
-                        Confirm
-                      </button>
-                      <button class="rounded-lg py-2 px-4 bg-gray-500 hover:bg-gray-600 text-white ml-2"
-                        @click="confirm = false">
-                        Back
-                      </button>
-                    </div>
+              <div v-show="confirm"
+                class="fixed w-screen h-screen overflow-hidden top-0 left-0 z-50 bg-gray-600/50 dark:bg-gray-800/50 flex justify-center items-center">
+                <div class="bg-white dark:bg-gray-700 rounded-md px-8 py-8 min-w-6xl max-h-[250vh]">
+                  <h1 class="text-lg mb-2 font-semibold">
+                    Confirm to Save the edit?
+                  </h1>
+                  <div class="flex justify-center">
+                    <button class="rounded-lg py-2 px-4 bg-[#160959] hover:bg-blue-950 text-white"
+                      @click="updateProfile()">
+                      Confirm
+                    </button>
+                    <button class="rounded-lg py-2 px-4 bg-gray-500 hover:bg-gray-600 text-white ml-2"
+                      @click="confirm = false">
+                      Back
+                    </button>
                   </div>
                 </div>
+              </div>
 
               <div class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
                 v-if="loading">
@@ -413,7 +419,7 @@ export default {
   },
   data() {
     return {
-
+      updatingEmployeeId: null,
       inputId: 'branchInput',
       // need to fetch from API
       employeesData: [],
@@ -479,6 +485,13 @@ export default {
   },
 
   computed: {
+    paginatedApplications() {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+      const paginatedApps = this.filteredQueryApplications.slice(start, end);
+      // console.log('Paginated Applications:', paginatedApps);
+      return paginatedApps;
+    },
     filteredQueryApplications() {
       const query = this.searchQuery.toLowerCase();
       return this.sortedApplications.filter((employee) =>
@@ -493,13 +506,6 @@ export default {
         const dateB = new Date(b[this.sortField]).getTime();
         return this.sortDirection === 'desc' ? dateB - dateA : dateA - dateB;
       });
-    },
-    paginatedApplications() {
-      const start = (this.currentPage - 1) * this.itemsPerPage;
-      const end = start + this.itemsPerPage;
-      const paginatedApps = this.filteredQueryApplications.slice(start, end);
-      // console.log('Paginated Applications:', paginatedApps);
-      return paginatedApps;
     },
 
     totalPages() {
@@ -623,7 +629,7 @@ export default {
         const reportingEmployee = allEmployees.find(emp => emp.emp_id === employee.reporting_to);
         console.log("Found reporting employee:", reportingEmployee);
         console.log("Reporting to (emp_id):", reporting_to);
-        
+
 
         if (reportingEmployee) {
           reportingName = reportingEmployee.name;
@@ -636,7 +642,7 @@ export default {
         throw error;
       }
 
-      
+
 
       try {
         const response = await axios.get(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`);
@@ -711,7 +717,9 @@ export default {
       this.loading = true;
       const accessData = this.convertValues();
 
-      // Post the 'form' object to API
+      this.updatingEmployeeId = this.form.employeeId; // Trigger loader
+      console.log('Loader triggered for:', this.updatingEmployeeId);
+
       const registerData = {
         company_name: this.form.company,
         limit_amount: this.form.limit,
@@ -722,7 +730,6 @@ export default {
         department: this.form.department,
         reportingToDept: this.form.reportingDepartment,
         reportingToId: this.form.reportingId.split('(')[
-          // eslint-disable-next-line no-unexpected-multiline
           this.form.reportingId.split('(').length - 1
         ].split(')')[0],
         position: this.form.position,
@@ -738,22 +745,40 @@ export default {
       };
       // console.log('Form Data:', registerData);
 
-      axios
-        .put(
-          'http://172.28.28.116:7165/api/Admin/Update_UserProfile',
-          registerData
-        )
+      try {
+        axios.put('http://172.28.28.116:7165/api/Admin/Update_UserProfile',registerData)
         .then((response) => {
           this.loading = false;
           this.confirm = false;
           this.edit = false;
           this.view = false;
-
-          // Handle success
         })
         .catch(error => {
           console.error('Error while updating user profile:', error.response.data);
         });
+      const index = this.userApplications.findIndex(emp => emp.emp_id === this.form.employeeId);
+      if (index !== -1) {
+        this.userApplications[index] = {
+          ...this.userApplications[index],
+          name: this.form.userId,
+          department: this.form.department,
+          position_title: this.form.position,
+          branch: this.form.branch,
+          company_name: this.form.company,
+          reporting_to: this.form.reportingId.split('(')[1].split(')')[0],
+          reporting_to_dept: this.form.reportingDepartment,
+        };
+        this.userApplications = [...this.userApplications];
+      }
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      } catch (error){
+        console.error('Error while updating user profile:', error.response?.data || error);
+      } finally {
+        this.updatingEmployeeId = null;
+      }
+
+
+
     },
     async getFormAccess(username_id) {
 
@@ -932,7 +957,7 @@ export default {
       ];
 
       const employeesWithEmpId = uniqueEmployees.map(employee => {
-        const match = this.employeeCache.find(emp => emp.username_id === employee.userId && emp.department=== employee.department);
+        const match = this.employeeCache.find(emp => emp.username_id === employee.userId && emp.department === employee.department);
         if (match) {
           return {
             name: match.name,
@@ -1010,3 +1035,25 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.loader {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>

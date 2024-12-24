@@ -32,7 +32,7 @@ export const getDepartment = async () => {
   }
 };
 
-export const getDesignation = async () => {
+export const c = async () => {
   try {
     const base_URL = process.env.VUE_APP_API_BASE_URL_EC_HUDA_LX;
     const response = await axios.get(`${base_URL}/User/GetDesignation`);
