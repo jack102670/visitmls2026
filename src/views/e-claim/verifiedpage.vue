@@ -47,14 +47,14 @@
                   <thead class="bg-gray-50 dark:bg-gray-800">
                     <tr>
                       <th scope="col" class="px-6 py-3">No</th>
-                      <th
+                      <!-- <th
                         scope="col"
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                       >
                         <div class="flex items-center gap-x-3">
                           <span>Branch</span>
                         </div>
-                      </th>
+                      </th> -->
                       <th
                         scope="col"
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
@@ -137,7 +137,7 @@
                       >
                       {{ (currentPage - 1) * itemsPerPage + index + 1 }}
                       </td>
-                      <td
+                      <!-- <td
                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
                       >
                         <div class="inline-flex items-center gap-x-3">
@@ -146,12 +146,12 @@
                               <h2
                                 class="font-medium text-gray-500 dark:text-gray-300"
                               >
-                                HQ
+                                {{ item.branch }}
                               </h2>
                             </div>
                           </div>
                         </div>
-                      </td>
+                      </td> -->
 
                       <td
                         class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-balance"
@@ -391,6 +391,7 @@ export default {
     filteredQueryApplications() {
       const query = this.searchQuery.toLowerCase();
       return this.sortedApplications.filter((item) =>
+      // (item.reference_number && item.reference_number.toLowerCase().includes(query)) ||
         (item.reference_number && item.reference_number.toLowerCase().includes(query)) ||
         (item.report_name && item.report_name.toLowerCase().includes(query)) ||
         (item.date_requested && item.date_requested.toLowerCase().includes(query)) ||
@@ -478,25 +479,26 @@ export default {
       this.loading = false;
       $(this.$refs.myTable).DataTable({});
     },
-    fetchData() {
-      this.loadingText = 'Fetching';
-      this.loading = true;
-      const userid = this.userDetails.userId;
-      fetch(
-        `http://172.28.28.116:7165/api/ApproverVerifier/GetAllRequestVerifier/${userid}`
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          this.items = data.result;
-          if (data.result.length > 0) {
-            this.userApplications = data.result;
-          }
-          this.$nextTick(() => {
-            this.initializeDataTable();
-          });
-        })
-        .catch((error) => console.error(error));
-    },
+          fetchData() {
+            this.loadingText = 'Fetching';
+            this.loading = true;
+            const userid = this.userDetails.userId;
+            fetch(
+              `http://172.28.28.116:7165/api/ApproverVerifier/GetAllRequestVerifier/${userid}`
+            )
+              .then((response) => response.json())
+              .then((data) => {
+                console.log('API Response:', data);
+                this.items = data.result;
+                if (data.result.length > 0) {
+                  this.userApplications = data.result;
+                }
+                this.$nextTick(() => {
+                  this.initializeDataTable();
+                });
+              })
+              .catch((error) => console.error(error));
+          },
     ChangePopUp() {
       if (this.popup == true) {
         this.animate = !this.animate;

@@ -151,11 +151,11 @@
 
         <!-- View Employees -->
         <div v-show="view"
-          class=" fixed top-0 bg-gray-600/50 left-0 right-0 bottom-0  h-screen  z-50 flex justify-center items-center">
-          <div class="mx-auto max-w-screen-2xl ">
+          class=" fixed top-0 bg-gray-600/50 left-0 right-0 bottom-0  max-h-xl  z-50 flex justify-center items-center">
+          <div class="mx-auto max-w-screen-2xl max-h-xl ">
 
 
-            <div class="bg-white dark:bg-gray-900 w-full sm:w-4/5 lg:w-3/5 rounded-xl relative h-5/6 overflow-auto">
+            <div class="bg-white dark:bg-gray-900 w-full sm:w-4/5 lg:w-3/5 rounded-xl relative h-[90vh] overflow-auto">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="absolute right-3 top-3 size-6" @click="(view = false), (edit = false)">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -701,8 +701,6 @@ export default {
         console.error("Error fetching employees in getFormData:", error);
       }
     },
-
-
     async updateProfile() {
       console.log('form list', this.form);
       if (!this.form.reportingId) {
@@ -776,9 +774,6 @@ export default {
       } finally {
         this.updatingEmployeeId = null;
       }
-
-
-
     },
     async getFormAccess(username_id) {
 
@@ -845,8 +840,6 @@ export default {
         this.loading = false;
       }
     },
-
-
     async extractBranches() {
       // console.log("extractBranches - fetchOptions:", this.fetchOptions);
       const branches = this.fetchOptions.map((item) => item.branch);
@@ -865,8 +858,6 @@ export default {
         console.error('Error fetching departments:', error);
       }
     },
-
-
     async getAllPositions() {
       try {
         const response = await axios.get('http://172.28.28.116:7239/api/User/GetDesignation');
