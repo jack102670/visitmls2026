@@ -103,17 +103,29 @@
         <section class=" px-4 mx-auto pt-4">
           <div class="flex flex-col mt-6">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+
               <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                <div class="pb-4">
+                  <h2 class="text-lg font-bold text-gray-800 dark:text-white">
+                    Claim
+                    <span
+                      class="px-3 py-0.5 text-md text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{{
+                        requests.length }}
+                    </span>
+                  </h2>
+                </div>
                 <div class="overflow-hidden">
                   <div class="py-2 flex flex-col md:flex-row justify-between items-center md:items-end">
                     <div class="flex items-center">
-                      <h2 class="text-lg font-medium text-gray-800 dark:text-white">
-                        Claim
-                        <span
-                          class="px-3 py-0.5 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{{
-                            requests.length }}
-                        </span>
-                      </h2>
+                      <div class="space-x-2">
+                        <label for="number-dd" class="text-md font-medium">Sort</label>
+                        <select id="number-dd" name="number" @change="updateItemsPerPage"
+                          class="rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 text-sm bg-gray-50 ">
+                          <option value="10">10</option>
+                          <option value="50">50</option>
+                          <option value="100">100</option>
+                        </select>
+                      </div>
                     </div>
                     <div class="relative md:mt-0 w-full md:w-auto">
                       <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -124,11 +136,12 @@
                         </svg>
                       </div>
                       <input type="text" id="table-search" v-model="searchQuery"
-                        class="block py-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full md:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        class="block py-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full md:w-80 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white "
                         placeholder="Search for applications" />
                     </div>
                   </div>
-                  <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                  <table
+                    class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe border border-gray-200 dark:border-gray-700 md:rounded-lg">
                     <thead class="bg-gray-50 dark:bg-gray-800">
                       <tr>
                         <th scope="col" class="px-6 py-3">No</th>
@@ -173,7 +186,8 @@
                           </div>
                         </th>
 
-                        <th scope="col" class="px-12 py-3.5 text-sm text-center font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <th scope="col"
+                          class="px-12 py-3.5 text-sm text-center font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                           <span class="">Edit</span>
                         </th>
                       </tr>
@@ -266,7 +280,8 @@
                             <a href="#" @click.prevent="goToPage(page)" :class="{
                               'bg-blue-500 text-dark': page === currentPage,
                               'text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700': page !== currentPage
-                            }" class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700">
+                            }"
+                              class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700">
                               {{ page }}
                             </a>
                           </template>
@@ -428,6 +443,10 @@ export default {
         this.currentPage = page;
       }
     },
+    updateItemsPerPage(event) {
+      this.itemsPerPage = parseInt(event.target.value);
+      this.currentPage = 1;
+    },
     toggleSort(field) {
       if (this.sortField === field) {
         this.sortDirection = this.sortDirection === 'desc' ? 'asc' : 'desc';
@@ -436,8 +455,6 @@ export default {
         this.sortDirection = 'desc';
       }
     },
-
-
     showclaim(rn) {
       this.$router.push({ name: 'SummaryClaimpage', params: { rn } });
     },

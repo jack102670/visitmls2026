@@ -12,7 +12,16 @@
               <div class="overflow-hidden ">
                 <div class="py-2 flex flex-col md:flex-row justify-between items-center md:items-end">
                   <div class="flex items-center">
-                  </div>
+                      <div class="space-x-2">
+                        <label for="number-dd" class="text-md font-medium">Sort</label>
+                        <select id="number-dd" name="number" @change="updateItemsPerPage"
+                          class="rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 text-sm bg-gray-50 ">
+                          <option value="10">10</option>
+                          <option value="50">50</option>
+                          <option value="100">100</option>
+                        </select>
+                      </div>
+                    </div>
                   <div class="relative md:mt-0 w-full md:w-auto">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                       <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
@@ -304,6 +313,10 @@ export default {
       if (typeof page === 'number') {
         this.currentPage = page;
       }
+    },
+    updateItemsPerPage(event) {
+      this.itemsPerPage = parseInt(event.target.value);
+      this.currentPage = 1;
     },
     toggleSort(field) {
       if (this.sortField === field) {

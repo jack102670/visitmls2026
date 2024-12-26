@@ -1,12 +1,8 @@
 <template>
-  <main
-    class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 dark:text-white p-4 sm:ml-64"
-  >
+  <main class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 dark:text-white p-4 sm:ml-64">
     <div class="container mx-auto text-xs lg:text-base">
-      <div
-        id="summaryPrint"
-        class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
-      >
+      <div id="summaryPrint"
+        class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
         <h1 class="text-gray-500 italic absolute top-4 right-4">
           SN: {{ referenceNumber }}
         </h1>
@@ -16,24 +12,11 @@
           </h1>
         </div>
         <!-- Head Title -->
-        <button
-          class="absolute top-1 lg:top-6 p-1 bg-blue-800 hover:bg-blue-900 rounded-[100%]"
-          v-show="seeMore"
-          @click="seeMore = !seeMore"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="white"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
-            />
+        <button class="absolute top-1 lg:top-6 p-1 bg-blue-800 hover:bg-blue-900 rounded-[100%]" v-show="seeMore"
+          @click="seeMore = !seeMore">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white"
+            class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
           </svg>
         </button>
         <div class="flex justify-center">
@@ -44,47 +27,28 @@
 
         <!-- Information -->
         <div class="flex justify-between items-center">
-          <h1
-            class="text-blue-900 dark:text-blue-600 font-bold text-3xl"
-            id="title"
-          >
+          <h1 class="text-blue-900 dark:text-blue-600 font-bold text-3xl" id="title">
             {{ claimDetails.report_name }}
 
-            <span class="text-blue-900 dark:text-blue-600 text-3xl" id="title"
-              >| RM{{ claimDetails.grand_total }}</span
-            >
+            <span class="text-blue-900 dark:text-blue-600 text-3xl" id="title">| RM{{ claimDetails.grand_total }}</span>
           </h1>
 
           <div class="h-12 flex items-center">
-            <button
-              v-show="!seeMore"
-              @click="seeMore = !seeMore"
-              class="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white rounded-xl px-8 text-sm font-bold py-2"
-            >
+            <button v-show="!seeMore" @click="seeMore = !seeMore"
+              class="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white rounded-xl px-8 text-sm font-bold py-2">
               See More
             </button>
             <button v-show="seeMore" @click="PrintSummary">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-7 h-7"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z"
-                />
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-7 h-7">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
               </svg>
             </button>
           </div>
         </div>
-        <div
-          id="claimant-informations"
-          class="text-sm grid grid-cols-2 lg:grid-cols-3 gap-2 [&>*:nth-child(even)]:text-right lg:[&>*:nth-child(even)]:text-left"
-        >
+        <div id="claimant-informations"
+          class="text-sm grid grid-cols-2 lg:grid-cols-3 gap-2 [&>*:nth-child(even)]:text-right lg:[&>*:nth-child(even)]:text-left">
           <div class="mt-2 h-10">
             <h2 class="font-semibold">Name of Claimaint :</h2>
             <p class="text-gray-600 dark:text-gray-400">
@@ -136,81 +100,44 @@
           <h1 class="text-lg font-semibold">Status</h1>
           <div class="relative inline-block text-left">
             <div>
-              <button
-                @click="toggleDropdown"
-                type="button"
-                :class="
-                  selectedStatus.class +
-                  ' inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-3 py-1 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-                "
-              >
+              <button @click="toggleDropdown" type="button" :class="selectedStatus.class +
+                ' inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-3 py-1 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                ">
                 {{ selectedStatus.label }}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="-mr-1 ml-2 mt-1 h-5 w-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                  />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="-mr-1 ml-2 mt-1 h-5 w-5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                 </svg>
               </button>
             </div>
-            <div
-              v-if="dropdownOpen"
-              class="origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
-            >
-              <div
-                class="py-1"
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="options-menu"
-              >
-                <button
-                  v-for="(status, i) in statuses"
-                  :key="i"
-                  @click="selectStatus(status)"
-                  :class="
-                    status.dropDownClass +
-                    'block px-4 py-2 text-sm  w-full text-left hover:bg-gray-200'
-                  "
-                  role="menuitem"
-                >
+            <div v-if="dropdownOpen"
+              class="origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+              <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                <button v-for="(status, i) in statuses" :key="i" @click="selectStatus(status)" :class="status.dropDownClass +
+                  'block px-4 py-2 text-sm  w-full text-left hover:bg-gray-200'
+                  " role="menuitem">
                   {{ status.label }}
                 </button>
               </div>
             </div>
           </div>
         </div>
-   
+
 
         <!-- Summary -->
         <div class="summary" v-show="!seeMore">
           <!-- Claim Table -->
-          <div
-            class="border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl"
-          >
+          <div class="border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl">
             <table class="w-full text-xs">
               <!-- title -->
-              <tr
-                class="h-8 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl"
-              >
+              <tr class="h-8 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
                 <th class="rounded-tl-2xl w-[20%] text-center">NO</th>
                 <th class="w-[60%]">TYPE OF CLAIM</th>
                 <th class="w-[20%]">AMOUNT (RM)</th>
               </tr>
 
               <!-- table information -->
-              <tr
-                class="h-8 text-left align-top text-xs lg:text-base"
-                v-for="claim in claimDatas"
-                :key="claim.no"
-              >
+              <tr class="h-8 text-left align-top text-xs lg:text-base" v-for="claim in claimDatas" :key="claim.no">
                 <td class="text-center font-normal">{{ claim.No }}</td>
                 <td class="font-normal">
                   {{
@@ -224,9 +151,7 @@
               </tr>
 
               <!-- total -->
-              <tr
-                class="border-t-2 border-gray-400 dark:border-gray-600 h-8 text-base lg:text-lg font-semibold"
-              >
+              <tr class="border-t-2 border-gray-400 dark:border-gray-600 h-8 text-base lg:text-lg font-semibold">
                 <td colspan="2" class="px-6 text-right">TOTAL:</td>
                 <td>{{ totalAmount.toFixed(2) }}</td>
               </tr>
@@ -236,33 +161,17 @@
 
         <!-- Details -->
         <div class="details" v-show="seeMore">
-          <div
-            v-for="(detail, i) in claimDatasDetails"
-            :key="i"
-            class="detail-table mt-5"
-          >
-            <h1
-              class="mt-4 text-xl font-semibold tab-title"
-              v-if="detail && detail.length > 0"
-            >
+          <div v-for="(detail, i) in claimDatasDetails" :key="i" class="detail-table mt-5">
+            <h1 class="mt-4 text-xl font-semibold tab-title" v-if="detail && detail.length > 0">
               {{ detail[0].Tab_Title }}
             </h1>
-            <div
-              class="border-2 border-gray-400 dark:border-gray-600 rounded-2xl overflow-y-auto"
-              id="table-overflow"
-            >
+            <div class="border-2 border-gray-400 dark:border-gray-600 rounded-2xl overflow-y-auto" id="table-overflow">
               <table class="w-full">
                 <!-- title -->
-                <tr
-                  class="h-8 bg-gray-300 dark:bg-gray-700 rounded-2xl text-xs"
-                >
+                <tr class="h-8 bg-gray-300 dark:bg-gray-700 rounded-2xl text-xs">
                   <th class="w-40">Remark</th>
 
-                  <th
-                    class="px-6 w-36 break-words text-xs"
-                    v-for="(val, key, i) in detail[0]"
-                    :key="i"
-                  >
+                  <th class="px-6 w-36 break-words text-xs" v-for="(val, key, i) in detail[0]" :key="i">
                     {{
                       key
                         .split('_')
@@ -273,25 +182,14 @@
                 </tr>
 
                 <!-- table information -->
-                <tr
-                  class="h-8 text-left align-top text-xs hover:bg-gray-200 dark:hover:bg-gray-800"
-                  v-for="(item, index) in detail"
-                  :key="index"
-                >
+                <tr class="h-8 text-left align-top text-xs hover:bg-gray-200 dark:hover:bg-gray-800"
+                  v-for="(item, index) in detail" :key="index">
                   <td>
-                    <h1
-                      id="remarkText"
-                      v-if="item.Remark"
-                      class="m-1 px-2 py-1 bg-sky-100 rounded-2xl dark:bg-sky-950"
-                    >
+                    <h1 id="remarkText" v-if="item.Remark" class="m-1 px-2 py-1 bg-sky-100 rounded-2xl dark:bg-sky-950">
                       {{ item.Remark }}
                     </h1>
                   </td>
-                  <td
-                    class="text-center font-normal px-3 py-1 align-middle"
-                    v-for="(val, key, i) in item"
-                    :key="i"
-                  >
+                  <td class="text-center font-normal px-3 py-1 align-middle" v-for="(val, key, i) in item" :key="i">
                     {{
                       key == 'Attachments'
                         ? ''
@@ -304,43 +202,28 @@
 
                     <!-- See More button for show list of staff involved -->
                     <div v-show="key == 'Staff_Involved'" id="staffDetails">
-                      <h1
-                        @click="showStaffInvolved(val)"
-                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white p-1 rounded-lg"
-                      >
+                      <h1 @click="showStaffInvolved(val)"
+                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white p-1 rounded-lg">
                         See More
                       </h1>
                     </div>
 
                     <!-- See More button for show list of staff involved -->
                     <div v-show="key == 'Participants'" id="staffDetails">
-                      <h1
-                        @click="showParticipants(val)"
-                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white p-1 rounded-lg"
-                      >
+                      <h1 @click="showParticipants(val)"
+                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white p-1 rounded-lg">
                         See More
                       </h1>
                     </div>
 
                     <!-- Click to pop up files -->
-                    <div
-                      v-show="key == 'Attachments'"
+                    <div v-show="key == 'Attachments'"
                       class="text-blue-700 flex items-center justify-center cursor-pointer"
-                      @click.prevent="ShowFile(val)"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-6 h-6"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
-                        />
+                      @click.prevent="ShowFile(val)">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                       </svg>
                       x{{ val ? val.length : '0' }}
                     </div>
@@ -348,9 +231,7 @@
                 </tr>
 
                 <!-- total -->
-                <tr
-                  class="border-t-2 border-gray-400 dark:border-gray-600 h-8 text-base font-semibold"
-                >
+                <tr class="border-t-2 border-gray-400 dark:border-gray-600 h-8 text-base font-semibold">
                   <td class="text-center">TOTAL:</td>
                   <td class="text-center">RM{{ claimDataTotalAmount[i] }}</td>
                   <td></td>
@@ -361,16 +242,11 @@
         </div>
 
         <!-- Status Table -->
-        <div
-          class="text-xs border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl"
-          id="table-overflow"
-        >
+        <div class="text-xs border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl" id="table-overflow">
           <table class="w-full">
             <!-- title -->
             <tr class="h-8 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
-              <th
-                class="rounded-tl-2xl w-[20%] text-center border-r-2 border-gray-400 dark:border-gray-600"
-              >
+              <th class="rounded-tl-2xl w-[20%] text-center border-r-2 border-gray-400 dark:border-gray-600">
                 STATUS
               </th>
               <th class="w-[24%] pl-6">NAME</th>
@@ -378,31 +254,24 @@
               <th class="w-[23%]">DEPARTMENT</th>
               <th class="w-[10%]">DATE</th>
             </tr>
-            <tr
-              v-if="claimDetails.reference_number.includes('Finance')"
-              class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
-            >
-              <th
-                class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
-              >
+            <tr v-if="claimDetails.reference_number.includes('Finance')"
+              class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600">
+              <th class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600">
                 <!-- Status Bar -->
-                <div
-                  class="mx-auto rounded-full py-2 text-center lg:w-[90%] w-full"
-                  :class="{
-                    'bg-orange-200 dark:bg-orange-500':
-                      statusVerifier == 'PENDING',
-                    'bg-amber-200 dark:bg-amber-500':
-                      statusVerifier == 'VERIFIED',
-                    'bg-red-200 dark:bg-red-500': statusVerifier == 'REJECTED',
-                    'text-orange-500 dark:text-orange-100':
-                      statusVerifier == 'PENDING',
-                    'text-amber-500 dark:text-amber-100':
-                      statusVerifier == 'VERIFIED',
-                    'text-red-500 dark:text-red-100':
-                      statusVerifier == 'REJECTED',
-                  }"
-                >
-                  <p>{{ statusVerifier }}</p>
+                <div class="mx-auto rounded-full py-2 my-1 text-center" :class="{
+                  'bg-orange-200 dark:bg-orange-500':
+                    statusVerifier == 'OPEN',
+                  'bg-amber-200 dark:bg-amber-500':
+                    statusVerifier == 'VERIFIED',
+                  'bg-red-200 dark:bg-red-500': statusVerifier == 'REJECTED',
+                  'text-orange-500 dark:text-orange-100':
+                    statusVerifier == 'OPEN',
+                  'text-amber-500 dark:text-amber-100':
+                    statusVerifier == 'VERIFIED',
+                  'text-red-500 dark:text-red-100':
+                    statusVerifier == 'REJECTED',
+                }">
+                  <p>{{ statusVerifier === 'OPEN' ? 'PENDING' : statusVerifier }}</p>
                 </div>
               </th>
               <td class="pl-6">{{ claimDetails.verifier_name }}</td>
@@ -413,54 +282,47 @@
 
             <!-- table information -->
 
-            <tr
-              class="text-wrap h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
-            >
-              <th
-                class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
-              >
+            <tr class="text-wrap h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600">
+              <th class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600">
                 <!-- Status Bar -->
-                <div
-                  class="mx-auto rounded-full py-2 text-center lg:w-[90%] w-full"
-                  :class="{
-                    'bg-orange-200 dark:bg-orange-500':
-                      statusApprover == 'PENDING',
-                    'bg-green-200 dark:bg-green-500':
-                      statusApprover == 'APPROVED',
-                    'bg-red-200 dark:bg-red-500': statusApprover == 'REJECTED',
-                    'text-orange-500 dark:text-orange-100':
-                      statusApprover == 'PENDING',
-                    'text-green-500 dark:text-green-100':
-                      statusApprover == 'APPROVED',
-                    'text-red-500 dark:text-red-100':
-                      statusApprover == 'REJECTED',
-                  }"
-                >
-                  <p>{{ statusApprover }}</p>
+                <div class="mx-auto rounded-full py-2 my-1 text-center" :class="{
+                  'bg-orange-200 dark:bg-orange-500':
+                    statusApprover == 'OPEN',
+                  'bg-green-200 dark:bg-green-500':
+                    statusApprover == 'APPROVED',
+                  'bg-red-200 dark:bg-red-500': statusApprover == 'REJECTED',
+                  'text-orange-500 dark:text-orange-100':
+                    statusApprover == 'OPEN',
+                  'text-green-500 dark:text-green-100':
+                    statusApprover == 'APPROVED',
+                  'text-red-500 dark:text-red-100':
+                    statusApprover == 'REJECTED',
+                }">
+                  <p>{{ statusApprover === 'OPEN' ? 'PENDING' : statusApprover }}</p>
                 </div>
               </th>
               <td class="pl-6">
                 {{
-                  statusApprover == 'PENDING' ? '' : claimDetails.approver_name
+                  statusApprover == 'OPEN' ? '' : claimDetails.approver_name
                 }}
               </td>
               <td class="">
                 {{
-                  statusApprover == 'PENDING'
+                  statusApprover == 'OPEN'
                     ? ''
                     : claimDetails.approver_designation
                 }}
               </td>
               <td>
                 {{
-                  statusApprover == 'PENDING'
+                  statusApprover == 'OPEN'
                     ? ''
                     : claimDetails.approver_department
                 }}
               </td>
               <td class="">
                 {{
-                  statusApprover == 'PENDING' ? '' : claimDetails.approved_date
+                  statusApprover == 'OPEN' ? '' : claimDetails.approved_date
                 }}
               </td>
             </tr>
@@ -469,13 +331,8 @@
 
         <!-- Remark table -->
 
-        <div
-          v-show="
-            approve || verified || reimbursed || resubmit || rejectApprover
-          "
-          class="text-xs border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl"
-          id="table-overflow"
-        >
+        <div v-show="approve || verified || reimbursed || resubmit || rejectApprover
+          " class="text-xs border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl" id="table-overflow">
           <table class="w-full">
             <!-- title -->
             <tr class="h-8 bg-gray-300 dark:bg-gray-700 rounded-2xl">
@@ -483,75 +340,42 @@
             </tr>
 
             <!-- table information -->
-            <tr
-              class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
-            >
+            <tr class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600">
               <td class="pl-6">{{ remark }}</td>
             </tr>
           </table>
         </div>
 
         <!-- Button -->
-        <div
-          v-show="
-            approve != true &&
-            verified != true &&
-            rejectApprover != true &&
-            rejectVerifier != true &&
-            resubmit != true &&
-            reimbursed != true
-          "
-          class=".detail-table w-full lg:flex-row flex flex-col justify-between h-full items-center pt-6"
-        >
+        <div v-show="approve != true &&
+          verified != true &&
+          rejectApprover != true &&
+          rejectVerifier != true &&
+          resubmit != true &&
+          reimbursed != true
+          " class=".detail-table w-full lg:flex-row flex flex-col justify-between h-full items-center pt-6">
           <div class="flex w-full items-center">
-            <label class="font-semibold mr-2 mb-4 lg:mb-0"
-              >Overall Remark:
+            <label class="font-semibold mr-2 mb-4 lg:mb-0">Overall Remark:
             </label>
-            <p
-              class="py-3 px-2 mb-4 lg:mb-0 w-full lg:max-w-96 lg:mr-2 rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
-              type="text"
-              placeholder="Eg. Blurry Receipt Image"
-            >
+            <p class="py-3 px-2 mb-4 lg:mb-0 w-full lg:max-w-96 lg:mr-2 rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
+              type="text" placeholder="Eg. Blurry Receipt Image">
               {{ remark }}
             </p>
           </div>
-          <!-- <div class="flex">
-            <button
-              @click="confirmApprove = true"
-              class="mr-2 text-sm font-semibold py-3 w-16 sm:w-24 md:w-36 bg-green-500 hover:bg-green-600 rounded-lg text-white"
-            >
-              Approve
-            </button>
-          
-            <button
-              @click="confirmReject = true"
-              class="text-sm font-semibold py-3 w-16 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white"
-            >
-              Reject
-            </button>
-          </div> -->
         </div>
 
         <!-- Approve Confirmation -->
-        <div
-          v-show="confirmApprove"
-          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
-        >
-          <div
-            class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center"
-          >
+        <div v-show="confirmApprove"
+          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center">
+          <div class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center">
             <h1 class="text-2xl font-bold">Do you confirm to approve?</h1>
             <div class="flex mt-4">
-              <button
-                class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
-                @click="confirmApprove = false"
-              >
+              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
+                @click="confirmApprove = false">
                 Back
               </button>
-              <button
-                class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
-                @click="ConfirmApprove"
-              >
+              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
+                @click="ConfirmApprove">
                 Confirm
               </button>
             </div>
@@ -559,32 +383,23 @@
         </div>
 
         <!-- Resubmit Confirmation -->
-        <div
-          v-show="confirmResubmit"
-          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
-        >
+        <div v-show="confirmResubmit"
+          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center">
           <div
-            class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center px-1"
-          >
+            class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center px-1">
             <h1 class="text-2xl font-bold text-center">
               Please write the remark to return to claimant for resubmission?
             </h1>
             <input
               class="py-4 px-2 w-4/5 rounded-lg mt-4 outline-none border-gray-300 dark:border-gray-600 dark:bg-gray-500 border-2"
-              placeholder="Eg. Blurry Receipt Image"
-              v-model="remark"
-            />
+              placeholder="Eg. Blurry Receipt Image" v-model="remark" />
             <div class="flex mt-4">
-              <button
-                class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
-                @click="confirmResubmit = false"
-              >
+              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
+                @click="confirmResubmit = false">
                 Back
               </button>
-              <button
-                class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
-                @click="ConfirmResubmit()"
-              >
+              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
+                @click="ConfirmResubmit()">
                 Confirm
               </button>
             </div>
@@ -592,27 +407,18 @@
         </div>
 
         <!-- Reimburse Confirmation -->
-        <div
-          v-show="confirmReimburse"
-          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
-        >
-          <div
-            class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center"
-          >
+        <div v-show="confirmReimburse"
+          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center">
+          <div class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center">
             <h1 class="text-2xl font-bold">Do you confirm to reimburse?</h1>
             <div class="flex mt-4">
-              <button
-                class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
-                @click="
-                  (confirmReimburse = false), (selectedStatus = statuses[0])
-                "
-              >
+              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white" @click="
+                (confirmReimburse = false), (selectedStatus = statuses[0])
+                ">
                 Back
               </button>
-              <button
-                class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
-                @click="ConfirmReimburse()"
-              >
+              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
+                @click="ConfirmReimburse()">
                 Confirm
               </button>
             </div>
@@ -620,30 +426,21 @@
         </div>
 
         <!-- Reject Confirmation -->
-        <div
-          v-show="confirmReject"
-          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
-        >
+        <div v-show="confirmReject"
+          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center">
           <div
-            class="bg-white dark:bg-gray-900 w-96 px-8 h-52 rounded-xl fixed flex flex-col justify-center items-center"
-          >
+            class="bg-white dark:bg-gray-900 w-96 px-8 h-52 rounded-xl fixed flex flex-col justify-center items-center">
             <h1 class="text-xl font-bold">Please write the remark to reject</h1>
             <input
               class="py-4 px-2 w-4/5 rounded-lg mt-4 outline-none border-gray-300 dark:border-gray-600 dark:bg-gray-500 border-2"
-              placeholder="Eg. Blurry Receipt Image"
-              v-model="remark"
-            />
+              placeholder="Eg. Blurry Receipt Image" v-model="remark" />
             <div class="flex mt-4">
-              <button
-                class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
-                @click="confirmReject = false"
-              >
+              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
+                @click="confirmReject = false">
                 Back
               </button>
-              <button
-                class="rounded-lg px-4 py-2 w-28 text-lg bg-red-600 hover:bg-red-700 text-white ml-2"
-                @click="ConfirmReject"
-              >
+              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-red-600 hover:bg-red-700 text-white ml-2"
+                @click="ConfirmReject">
                 Reject
               </button>
             </div>
@@ -651,26 +448,12 @@
         </div>
 
         <!-- Approve Success Notification -->
-        <div
-          class="fixed left-0 top-0 flex justify-center items-center z-50 w-screen h-screen"
-          v-if="approveSuccess"
-        >
-          <div
-            class="bg-gray-100 dark:bg-gray-500 px-10 py-3 rounded-full z-50 flex justify-center items-center"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="green"
-              class="w-8 h-8"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
-              />
+        <div class="fixed left-0 top-0 flex justify-center items-center z-50 w-screen h-screen" v-if="approveSuccess">
+          <div class="bg-gray-100 dark:bg-gray-500 px-10 py-3 rounded-full z-50 flex justify-center items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="green"
+              class="w-8 h-8">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
             </svg>
 
             <h1>VERIFIED SUCCESSFULLY</h1>
@@ -679,7 +462,7 @@
         <div v-show="showSimList"
           class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
           <div
-            class="bg-white rounded-md w-full p-2 max-w-3xl mx-4 shadow-xl transform transition-all duration-300 ease-in-out scale-100">
+            class="bg-white w-full pt-4 pb-6 px-4 max-w-3xl mx-4 shadow-xl transform transition-all duration-300 ease-in-out scale-100">
             <div class="flex justify-between items-center p-2 border-b border-gray-200 relative">
               <div class="absolute inset-0 flex justify-center items-center pointer-events-none">
                 <h1 class="text-xl font-bold text-gray-800">Staff Involved</h1>
@@ -694,7 +477,7 @@
                 </button>
               </div>
             </div>
-            <div class="overflow-x-auto pb-4">
+            <div class="overflow-x-auto p-2">
               <table class="w-full p-2">
                 <thead class="bg-gray-100">
                   <th class="py-3 px-4 text-left">No.</th>
@@ -719,7 +502,7 @@
         <div v-show="showParticipantsList"
           class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
           <div class="bg-white w-full p-2 max-w-3xl mx-4 shadow-xl relative">
-            <button @click="showParticipantsList = false"
+            <button @click="showSimList = false"
               class="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-6 h-6">
@@ -845,7 +628,6 @@
                 </tbody>
               </table>
             </div>
-
             <div v-else class="text-center py-4">
               <p class="text-gray-500">No attachments</p>
             </div>
@@ -853,37 +635,14 @@
         </div>
 
         <!-- Loading Animation -->
-        <div
-          class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
-          v-if="loading"
-        >
+        <div class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
+          v-if="loading">
           <div class="absolute w-screen h-screen bg-gray-900 opacity-30"></div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 200 200"
-            class="w-16 h-16 z-50"
-          >
-            <circle
-              transform="rotate(0)"
-              transform-origin="center"
-              fill="none"
-              stroke="blue"
-              stroke-width="10"
-              stroke-linecap="round"
-              stroke-dasharray="230 1000"
-              stroke-dashoffset="0"
-              cx="100"
-              cy="100"
-              r="70"
-            >
-              <animateTransform
-                attributeName="transform"
-                type="rotate"
-                from="0"
-                to="360"
-                dur="2"
-                repeatCount="indefinite"
-              ></animateTransform>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="w-16 h-16 z-50">
+            <circle transform="rotate(0)" transform-origin="center" fill="none" stroke="blue" stroke-width="10"
+              stroke-linecap="round" stroke-dasharray="230 1000" stroke-dashoffset="0" cx="100" cy="100" r="70">
+              <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="2"
+                repeatCount="indefinite"></animateTransform>
             </circle>
           </svg>
           <h1 class="text-gray-50 font-semibold z-50 ml-2 text-lg">
@@ -999,19 +758,14 @@ export default {
     // status of verifier to change the status color and title in table
     // need to post to database
     statusVerifier() {
-      let status = 'PENDING';
-      if (this.rejectVerifier) {
-        status = 'REJECTED';
-      } else if (this.verified) {
-        status = 'VERIFIED';
-      } else {
-        status = 'VERIFIED';
+        if (this.rejectVerifier) {
+          return 'REJECTED';
+        }
+        if (this.verified) {
+          return 'VERIFIED';
+        }
+        return 'OPEN';
       }
-
-      status = 'VERIFIED';
-
-      return status;
-    },
   },
   methods: {
     toggleDropdown() {
@@ -1031,7 +785,7 @@ export default {
       await axios
         .get(
           'http://172.28.28.116:7165/api/User/GetClaimDetails/' +
-            this.referenceNumber
+          this.referenceNumber
         )
         .then((response) => {
           this.loading = false;
@@ -1064,7 +818,7 @@ export default {
           } else if (this.statusApprover == 'REIMBURSED') {
             this.reimbursed = true;
           } else {
-            this.statusApprover = 'PENDING';
+            this.statusApprover = 'OPEN';
           }
         });
     },
@@ -1072,7 +826,7 @@ export default {
       await axios
         .get(
           'http://172.28.28.116:7239/api/User/GetLocalOutstation/' +
-            this.referenceNumber
+          this.referenceNumber
         )
         .then((response) => {
           const result = response.data.result;
@@ -1114,7 +868,7 @@ export default {
       await axios
         .get(
           'http://172.28.28.116:7239/api/User/GetOverseasOutstation/' +
-            this.referenceNumber
+          this.referenceNumber
         )
         .then((response) => {
           const result = response.data.result;
@@ -1156,7 +910,7 @@ export default {
       await axios
         .get(
           'http://172.28.28.116:7239/api/User/GetRefreshment/' +
-            this.referenceNumber
+          this.referenceNumber
         )
         .then((response) => {
           const result = response.data.result;
@@ -1191,11 +945,10 @@ export default {
       await axios
         .get(
           'http://172.28.28.116:7165/api/User/GetEntertainment/' +
-            this.referenceNumber
+          this.referenceNumber
         )
         .then((response) => {
           const result = response.data.result;
-          
           let details = [];
           let amount = 0;
           for (let i in result) {
@@ -1225,26 +978,24 @@ export default {
       await axios
         .get(
           'http://172.28.28.116:7165/api/User/GetMedicalLeave/' +
-            this.referenceNumber
+          this.referenceNumber
         )
         .then((response) => {
           const result = response.data.result;
-          // console.log(result, 'medical leave');
           let details = [];
           let amount = 0;
           for (let i in result) {
             amount += result[i].claim_amount;
             const editedDetail = {
-              Category: result[i].medical_category,
-              Reason: result[i].reason,
+              reason: result[i].reason,
               Date: result[i].date_leave_taken,
-              Clinicselection: result[i].clinic_name
+              clinicselection: result[i].clinic_name
                 ? result[i].clinic_name
                 : result[i].clinic_selection,
-              Reason_other_clinic: result[i].reason_different,
-              Bank_name: result[i].bank_name,
-              Bank_holder: result[i].bank_holder,
-              Bank_account: result[i].bank_account,
+              reason_other_clinic: result[i].reason_different,
+              bank_name: result[i].bank_name,
+              bank_holder: result[i].bank_holder,
+              bank_account: result[i].bank_account,
               'Total_Fee(RM)': result[i].claim_amount,
 
               Attachments: result[i].files,
@@ -1606,12 +1357,15 @@ export default {
 tr:first-child th:first-child {
   border-top-left-radius: 16px;
 }
+
 tr:first-child th:last-child {
   border-top-right-radius: 16px;
 }
+
 tr:last-child th:first-child {
   border-bottom-left-radius: 16px;
 }
+
 tr:last-child th:last-child {
   border-bottom-right-radius: 16px;
 }
@@ -1619,18 +1373,23 @@ tr:last-child th:last-child {
 .details tr td:last-child {
   display: none;
 }
+
 .details tr th:last-child {
   display: none;
 }
+
 .details tr td:nth-last-child(2) {
   display: none;
 }
+
 .details tr th:nth-last-child(2) {
   display: none;
 }
+
 .details tr td:nth-last-child(3) {
   display: none;
 }
+
 .details tr th:nth-last-child(3) {
   display: none;
 }
@@ -1650,12 +1409,15 @@ td {
 tr:first-child th:first-child {
   border-top-left-radius: 16px;
 }
+
 tr:first-child th:last-child {
   border-top-right-radius: 16px;
 }
+
 tr:last-child th:first-child {
   border-bottom-left-radius: 16px;
 }
+
 tr:last-child th:last-child {
   border-bottom-right-radius: 16px;
 }
@@ -1663,18 +1425,23 @@ tr:last-child th:last-child {
 .details tr td:last-child {
   display: none;
 }
+
 .details tr th:last-child {
   display: none;
 }
+
 .details tr td:nth-last-child(2) {
   display: none;
 }
+
 .details tr th:nth-last-child(2) {
   display: none;
 }
+
 .details tr td:nth-last-child(3) {
   display: none;
 }
+
 .details tr th:nth-last-child(3) {
   display: none;
 }
@@ -1695,36 +1462,46 @@ td {
   @page {
     size: A4 portrait;
   }
+
   * {
     color: black;
   }
+
   input {
     display: none;
   }
+
   #title {
     white-space: nowrap;
   }
+
   #claimant-informations {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+
   .details h1 {
     font-size: 12px;
     margin-bottom: 6px;
     margin-top: 6px;
   }
+
   .print-div {
     box-shadow: none;
     border: none;
   }
+
   body *:not(#summaryPrint):not(#summaryPrint *) {
     visibility: hidden !important;
   }
+
   .detail-table {
     page-break-inside: avoid;
   }
+
   table {
     page-break-inside: avoid;
   }
+
   * {
     box-shadow: 0;
     margin: 0;
@@ -1732,43 +1509,53 @@ td {
     --tw-ring-shadow: 0;
     --tw-ring-color: 0;
   }
+
   #toLeft {
     text-align: left !important;
   }
+
   #summaryPrint {
     margin-left: 0;
     width: 100vw !important;
     padding: 0;
   }
+
   #summaryPrint div {
     visibility: visible !important;
     width: 100% !important;
     box-shadow: 0;
   }
+
   #summaryPrint button {
     display: none;
   }
+
   #total {
     position: absolute;
     right: 10px;
   }
+
   .tab-title {
     font-size: 12px;
     line-height: 30px;
   }
+
   #table-overflow {
     width: 100%;
     overflow: hidden;
     margin-bottom: 15px !important;
   }
+
   #table-overflow table {
     width: 100%;
   }
+
   #table-overflow table tr {
     height: 120%;
     width: 100%;
     font-size: 8px !important;
   }
+
   #table-overflow table th {
     padding: 0 auto;
     margin: 0 auto;
@@ -1780,6 +1567,7 @@ td {
     line-height: 10px !important;
     vertical-align: middle !important;
   }
+
   #summaryPrint #table-overflow table td {
     padding: 0 auto;
     margin: 0 auto;

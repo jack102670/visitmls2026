@@ -354,15 +354,17 @@
               >
                 <!-- Status Bar -->
                 <div
-                  class="mx-auto rounded-full py-2 text-center lg:w-[90%] w-full"
+                  class="mx-auto rounded-full py-2 px-4 my-1 text-center"
                   :class="{
-                    'bg-amber-200 dark:bg-amber-500': verified,
-                    'bg-yellow-200 dark:bg-yellow-500': resubmitVerifier,
-                    'bg-red-200 dark:bg-red-500': rejectVerifier,
-                    'text-yellow-500 dark:text-yellow-100': resubmitVerifier,
-                    'text-amber-500 dark:text-amber-100': verified,
-                    'text-red-500 dark:text-red-100': rejectVerifier,
-                  }"
+                      'bg-amber-200 dark:bg-amber-500': verified,
+                      'bg-yellow-200 dark:bg-yellow-500': resubmitVerifier,
+                      'bg-red-200 dark:bg-red-500': rejectVerifier,
+                      'bg-orange-200 dark:bg-orange-500': open, 
+                      'text-yellow-500 dark:text-yellow-100': resubmitVerifier,
+                      'text-amber-500 dark:text-amber-100': verified,
+                      'text-red-500 dark:text-red-100': rejectVerifier,
+                      'text-orange-500 dark:text-orange-100': open, 
+                    }"
                 >
                   <p>
                     {{
@@ -372,15 +374,17 @@
                           ? 'RESUBMIT'
                           : rejectVerifier
                             ? 'REJECTED'
-                            : 'PENDING'
+                            : open
+                              ? 'PENDING'
+                              : '-'
                     }}
                   </p>
                 </div>
               </th>
-              <td class="pl-6">{{ claimDetails.verifier_name }}</td>
-              <td class="">{{ claimDetails.verifier_designation }}</td>
-              <td>{{ claimDetails.department }}</td>
-              <td class="">{{ claimDetails.verified_date }}</td>
+              <td class="pl-6">{{ claimDetails.verifier_name || '-' }}</td>
+              <td class="">{{ claimDetails.verifier_designation || '-' }}</td>
+              <td>{{ claimDetails.department || '-' }}</td>
+              <td class="">{{ claimDetails.verified_date || '-' }}</td>
             </tr>
             <tr
               class="text-wrap h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
@@ -599,10 +603,11 @@
           </div>
         </div>
 
+        
         <!-- Approve Confirmation -->
         <div
           v-show="confirmApprove"
-          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
+          class="backdrop-blur-md bg-black/50 dark:bg-black/60 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
         >
           <div
             class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center"
@@ -708,7 +713,7 @@
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
+                d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.745 3.745 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
               />
             </svg>
 
@@ -1059,6 +1064,7 @@ export default {
       checked: false,
       approved: false,
       approvedFinance: false,
+      open: false,
 
       rejectVerifier: false,
       rejectChecker: false,
@@ -1107,120 +1113,119 @@ export default {
       }
     },
     async FetchClaimDetails() {
-      this.loadingText = 'Uploading';
-      this.loading = true;
-      await axios
-        .get(
-          'http://172.28.28.116:7165/api/User/GetClaimDetails/' +
-            this.referenceNumber
-        )
-        .then((response) => {
-          this.loading = false;
-          this.claimDetails = response.data.result;
-          this.adminStatus = this.claimDetails.admin_status
-            .split(' ')[0]
-            .split('.')[0]
-            .toUpperCase();
+  try {
+    this.loadingText = 'Uploading';
+    this.loading = true;
+    const response = await axios.get('http://172.28.28.116:7165/api/User/GetClaimDetails/' + this.referenceNumber);
+    this.loading = false;
+    this.claimDetails = response.data.result;
+    this.adminStatus = this.claimDetails.admin_status
+      .split(' ')[0]
+      .split('.')[0]
+      .toUpperCase();
 
-          console.log(this.claimDetails.admin_status);
+    console.log("get claimdetails : ",this.claimDetails);
 
-          switch (this.adminStatus) {
-            case 'VERIFIED':
-              this.verified = true;
-              this.pending = false;
+    switch (this.adminStatus) {
+      case 'VERIFIED':
+        this.verified = true;
+        this.pending = false;
+        this.remark = this.claimDetails.comment;
+        break;
 
-              this.remark = this.claimDetails.comment;
-              break;
+      case 'CHECKED':
+        this.verified = true;
+        this.checked = true;
+        this.pending = false;
+        this.remark = this.claimDetails.comment;
+        break;
 
-            case 'CHECKED':
-              this.verified = true;
-              this.checked = true;
-              this.pending = false;
-              this.remark = this.claimDetails.comment;
-              break;
+      case 'APPROVED':
+        if (this.claimDetails.admin_status.includes('APPROVER')) {
+          this.verified = true;
+          this.checked = true;
+          this.approved = true;
+        } else {
+          this.verified = true;
+          this.checked = true;
+          this.approved = true;
+          this.approvedFinance = true;
+        }
+        this.pending = false;
+        this.remark = this.claimDetails.comment;
+        break;
 
-            case 'APPROVED':
-              if (this.claimDetails.admin_status.includes('APPROVER')) {
-                this.verified = true;
-                this.checked = true;
-                this.approved = true;
-              } else {
-                this.verified = true;
-                this.checked = true;
-                this.approved = true;
-                this.approvedFinance = true;
-              }
-              this.pending = false;
+      case 'REJECTED':
+        if (this.claimDetails.admin_status.includes('VERIFIER')) {
+          this.rejectVerifier = true;
+          // console.log('yes');
+        } else if (this.claimDetails.admin_status.includes('CHECKER')) {
+          this.verified = true;
+          this.rejectChecker = true;
+          // console.log('yes2');
+        } else if (this.claimDetails.admin_status.includes('APPROVER')) {
+          this.verified = true;
+          this.checked = true;
+          this.rejectApprover = true;
+          // console.log('yes2');
+        } else if (this.claimDetails.admin_status.includes('FINANCE')) {
+          this.verified = true;
+          this.checked = true;
+          this.approved = true;
+          this.rejectFinance = true;
+          // console.log('yes2');
+        }
+        this.pending = false;
+        // console.log('no ' + this.claimDetails.admin_status);
+        this.remark = this.claimDetails.comment;
+        break;
 
-              this.remark = this.claimDetails.comment;
-              break;
+      case 'RESUBMIT':
+        if (this.claimDetails.admin_status.includes('VERIFIER')) {
+          this.resubmitVerifier = true;
+        } else if (this.claimDetails.admin_status.includes('CHECKER')) {
+          this.verified = true;
+          this.resubmitChecker = true;
+        } else if (this.claimDetails.admin_status.includes('APPROVER')) {
+          this.verified = true;
+          this.checked = true;
+          this.resubmitApprover = true;
+        } else if (this.claimDetails.admin_status.includes('FINANCE')) {
+          this.verified = true;
+          this.checked = true;
+          this.approved = true;
+          this.resubmitFinance = true;
+        }
+        this.pending = false;
+        this.remark = this.claimDetails.comment;
+        break;
 
-            case 'REJECTED':
-              if (this.claimDetails.admin_status.includes('VERIFIER')) {
-                this.rejectVerifier = true;
-                console.log('yes');
-              } else if (this.claimDetails.admin_status.includes('CHECKER')) {
-                this.verified = true;
-                this.rejectChecker = true;
-                console.log('yes2');
-              } else if (this.claimDetails.admin_status.includes('APPROVER')) {
-                this.verified = true;
-                this.checked = true;
-                this.rejectApprover = true;
-                console.log('yes2');
-              } else if (this.claimDetails.admin_status.includes('FINANCE')) {
-                this.verified = true;
-                this.checked = true;
-                this.approved = true;
-                this.rejectFinance = true;
-                console.log('yes2');
-              }
-              this.pending = false;
+      case 'REIMBURSED':
+        this.verified = true;
+        this.checked = true;
+        this.approved = true;
+        this.reimbursed = true;
+        this.pending = false;
+        this.remark = this.claimDetails.comment;
+        break;
 
-              console.log('no ' + this.claimDetails.admin_status);
+      case 'OPEN':
+        this.open = true;
+        this.pending = true;
+        this.remark = this.claimDetails.comment;
+      break;
 
-              this.remark = this.claimDetails.comment;
-              break;
+      default:
+        this.pending = true;
+        break;
+    }
 
-            case 'RESUBMIT':
-              if (this.claimDetails.admin_status.includes('VERIFIER')) {
-                this.resubmitVerifier = true;
-              } else if (this.claimDetails.admin_status.includes('CHECKER')) {
-                this.verified = true;
-                this.resubmitChecker = true;
-              } else if (this.claimDetails.admin_status.includes('APPROVER')) {
-                this.verified = true;
-                this.checked = true;
-                this.resubmitApprover = true;
-              } else if (this.claimDetails.admin_status.includes('FINANCE')) {
-                this.verified = true;
-                this.checked = true;
-                this.approved = true;
-                this.resubmitFinance = true;
-              }
-              this.pending = false;
-
-              this.remark = this.claimDetails.comment;
-              break;
-
-            case 'REIMBURSED':
-              this.verified = true;
-              this.checked = true;
-              this.approved = true;
-              this.reimbursed = true;
-              this.pending = false;
-
-              this.remark = this.claimDetails.comment;
-              break;
-
-            default:
-              this.pending = true;
-              break;
-          }
-
-          console.log(this.adminStatus);
-        });
-    },
+    // console.log(this.adminStatus);
+  } catch (error) {
+    console.error("Error while fetching claims details:", error);
+    throw error;
+  }
+},
     async FetchClaimDatasDetails() {
       this.claimDatasDetails = [];
       this.claimDataTotalAmount = [];
@@ -1421,8 +1426,8 @@ export default {
         }
       });
 
-      console.log(this.claimDatas);
-      console.log(this.claimDatasDetails);
+      // console.log(this.claimDatas);
+      // console.log(this.claimDatasDetails);
     },
 
     PrintSummary() {
@@ -1459,13 +1464,13 @@ export default {
             designation: response.data.result[0].position_title,
           };
 
-          console.log(userData);
+          // console.log(userData);
         });
       return userData;
     },
     // If any single remark is change, save in the array
     UpdateSingleRemark(event, uc, tab) {
-      console.log(this.singleRemarks);
+      // console.log(this.singleRemarks);
 
       let index = this.singleRemarks.findIndex(
         (item) => item.unique_code == uc
@@ -1497,7 +1502,7 @@ export default {
     async ApproveOrReject(AoR) {
       this.pending = false;
       const userData = await this.GetUserData();
-      console.log(userData);
+      // console.log(userData);
       this.singleRemarks.forEach((remark) => {
         let data = {
           verifier_comment: remark.remark,
@@ -1528,37 +1533,35 @@ export default {
         }
       });
 
-      if (AoR == 'Approve') {
+        if (AoR == 'Approve') {
         this.approve = true;
-        // post the status and remark to API
         this.loadingText = 'Uploading';
         this.loading = true;
-
         const approveData = {
           admin_status: 'VERIFIED. WAITING FOR CHECKER',
           verifier_feedback: this.remark ? this.remark : '',
           reference_number: this.claimDetails.reference_number,
+          report_name: this.claimDetails.report_name === '-' ? '-' : this.claimDetails.report_name,
+          verifier_name: this.claimDetails.verifier_name === '-' ? '-' : this.claimDetails.verifier_name,
+          requester_email: this.claimDetails.email === '-' ? '-' : this.claimDetails.email,
         };
-        console.log(approveData);
-        await axios
-          .post(
-            'http://172.28.28.116:7239/api/Verifier/VerifierFeedback',
-            approveData
-          )
-          .then((response) => {
-            // Handle success response
-            console.log('API response', response.data);
-
-            this.approveSuccess = true;
-            this.loading = false;
-            setTimeout(() => {
-              this.$router.push({ name: 'verified' });
-            }, 2500);
-          })
-          .catch((error) => {
-            // Handle error response
-            console.error('API error', error);
+        try {
+          const response = await axios.post('http://172.28.28.116:7239/api/Verifier/VerifierFeedback', approveData);
+          this.approveSuccess = true;
+          this.loading = false;
+          setTimeout(() => {
+            this.$router.push({ name: 'verified' });
+          }, 2500);
+        } catch (error) {
+          this.loading = false;
+          console.error('Error Details:', {
+            message: error.message,
+            response: error.response?.data,
+            status: error.response?.status,
+            statusText: error.response?.statusText,
+            validationErrors: error.response?.data?.errors
           });
+        }
       } else if (AoR == 'Reject') {
         this.rejectVerifier = true;
         this.loadingText = 'Uploading';
@@ -1569,21 +1572,20 @@ export default {
           verifier_feedback: this.remark ? this.remark : '',
           reference_number: this.claimDetails.reference_number,
         };
-        await axios
-          .post(
+
+        try {
+          const response = await axios.post(
             'http://172.28.28.116:7239/api/Verifier/VerifierFeedback',
             approveData
-          )
-          .then((response) => {
-            // Handle success response
-            this.loading = false;
-
-            console.log('API response', response.data);
-          })
-          .catch((error) => {
-            // Handle error response
-            console.error('API error', error);
-          });
+          );
+          // Handle success response
+          this.loading = false;
+          console.log('API response', response.data);
+        } catch (error) {
+          // Handle error response
+          this.loading = false;
+          console.error('API error', error);
+        }
       } else if (AoR == 'Resubmit') {
         this.resubmitVerifier = true;
         this.loadingText = 'Uploading';
@@ -1603,7 +1605,7 @@ export default {
             // Handle success response
             this.loading = false;
 
-            console.log('API response', response.data);
+            // console.log('API response', response.data);
           })
           .catch((error) => {
             // Handle error response
@@ -1655,50 +1657,6 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-tr:first-child th:first-child {
-  border-top-left-radius: 16px;
-}
-tr:first-child th:last-child {
-  border-top-right-radius: 16px;
-}
-tr:last-child th:first-child {
-  border-bottom-left-radius: 16px;
-}
-tr:last-child th:last-child {
-  border-bottom-right-radius: 16px;
-}
-
-.details tr td:last-child {
-  display: none;
-}
-.details tr th:last-child {
-  display: none;
-}
-.details tr td:nth-last-child(2) {
-  display: none;
-}
-.details tr th:nth-last-child(2) {
-  display: none;
-}
-.details tr td:nth-last-child(3) {
-  display: none;
-}
-.details tr th:nth-last-child(3) {
-  display: none;
-}
-
-div:has(> table) {
-  overflow-x: auto;
-}
-
-table th,
-td {
-  padding-right: 4px;
-  padding-left: 4px;
-}
-</style>
 
 <style scoped>
 tr:first-child th:first-child {
