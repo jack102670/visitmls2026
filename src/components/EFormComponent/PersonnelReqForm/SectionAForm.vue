@@ -12,7 +12,7 @@
                 <span v-if="validationErrors.position" class="text-red-500 text-sm">Please fill in this field</span>
             </div>
             <div>
-                <label for="company" class="block mb-1 text-sm font-medium text-primary dark:text-white">
+                <label for="company" class="block mb-2 text-sm font-medium text-primary dark:text-white">
                     Company Name: <span class="text-red-500">*</span>
                 </label>
                 <select id="company" v-model="form.company"
@@ -46,7 +46,7 @@
                     field.</span>
             </div>
             <div>
-          <label for="department" class="block mb-1 text-sm font-medium text-primary dark:text-white">
+          <label for="department" class="block mb-2 text-sm font-medium text-primary dark:text-white">
             Department: <span class="text-red-500">*</span>
           </label>
           <select id="department" v-model="form.department"

@@ -149,6 +149,7 @@
                         Exit
                     </button>
                     <button 
+                            @click="saveForm"
                         class="bg-verified font-bold text-white px-10 py-2 rounded-md">
                         Saved
                     </button>
@@ -249,6 +250,22 @@ export default {
                 console.error("Error loading training evaluation:", error);
                 throw error;
             }
+        },
+
+        async saveForm() {
+            console.log('saveForm');
+            //create if user not click verify checkbox, display sweet alert popup before user click save button
+            if (!this.isVerified) {
+                this.$swal.fire({
+                    title: 'Are you sure?',
+                    text: 'You are about to save the form without verifying the trainer.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Save',
+                    cancelButtonText: 'Cancel',
+                });
+            }
+            
         }
     },
 

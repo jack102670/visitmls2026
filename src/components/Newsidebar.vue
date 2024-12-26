@@ -276,6 +276,12 @@ import { store } from '../views/store.js';
 
 export default {
   name: 'NewsidebarComponent',
+  props: {
+    rn: {
+      type: String,
+      required: false
+    }
+  },
 
 
   data() {

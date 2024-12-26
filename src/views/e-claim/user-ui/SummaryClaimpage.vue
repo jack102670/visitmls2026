@@ -258,20 +258,20 @@
               class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600">
                 <!-- Status Bar -->
-                <div class="mx-auto rounded-full py-2 text-center lg:w-[90%] w-full" :class="{
+                <div class="mx-auto rounded-full py-2 my-1 text-center" :class="{
                   'bg-orange-200 dark:bg-orange-500':
-                    statusVerifier == 'PENDING',
+                    statusVerifier == 'OPEN',
                   'bg-amber-200 dark:bg-amber-500':
                     statusVerifier == 'VERIFIED',
                   'bg-red-200 dark:bg-red-500': statusVerifier == 'REJECTED',
                   'text-orange-500 dark:text-orange-100':
-                    statusVerifier == 'PENDING',
+                    statusVerifier == 'OPEN',
                   'text-amber-500 dark:text-amber-100':
                     statusVerifier == 'VERIFIED',
                   'text-red-500 dark:text-red-100':
                     statusVerifier == 'REJECTED',
                 }">
-                  <p>{{ statusVerifier }}</p>
+                  <p>{{ statusVerifier === 'OPEN' ? 'PENDING' : statusVerifier }}</p>
                 </div>
               </th>
               <td class="pl-6">{{ claimDetails.verifier_name }}</td>
@@ -285,44 +285,44 @@
             <tr class="text-wrap h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600">
                 <!-- Status Bar -->
-                <div class="mx-auto rounded-full py-2 text-center lg:w-[90%] w-full" :class="{
+                <div class="mx-auto rounded-full py-2 my-1 text-center" :class="{
                   'bg-orange-200 dark:bg-orange-500':
-                    statusApprover == 'PENDING',
+                    statusApprover == 'OPEN',
                   'bg-green-200 dark:bg-green-500':
                     statusApprover == 'APPROVED',
                   'bg-red-200 dark:bg-red-500': statusApprover == 'REJECTED',
                   'text-orange-500 dark:text-orange-100':
-                    statusApprover == 'PENDING',
+                    statusApprover == 'OPEN',
                   'text-green-500 dark:text-green-100':
                     statusApprover == 'APPROVED',
                   'text-red-500 dark:text-red-100':
                     statusApprover == 'REJECTED',
                 }">
-                  <p>{{ statusApprover }}</p>
+                  <p>{{ statusApprover === 'OPEN' ? 'PENDING' : statusApprover }}</p>
                 </div>
               </th>
               <td class="pl-6">
                 {{
-                  statusApprover == 'PENDING' ? '' : claimDetails.approver_name
+                  statusApprover == 'OPEN' ? '' : claimDetails.approver_name
                 }}
               </td>
               <td class="">
                 {{
-                  statusApprover == 'PENDING'
+                  statusApprover == 'OPEN'
                     ? ''
                     : claimDetails.approver_designation
                 }}
               </td>
               <td>
                 {{
-                  statusApprover == 'PENDING'
+                  statusApprover == 'OPEN'
                     ? ''
                     : claimDetails.approver_department
                 }}
               </td>
               <td class="">
                 {{
-                  statusApprover == 'PENDING' ? '' : claimDetails.approved_date
+                  statusApprover == 'OPEN' ? '' : claimDetails.approved_date
                 }}
               </td>
             </tr>
@@ -362,21 +362,6 @@
               {{ remark }}
             </p>
           </div>
-          <!-- <div class="flex">
-            <button
-              @click="confirmApprove = true"
-              class="mr-2 text-sm font-semibold py-3 w-16 sm:w-24 md:w-36 bg-green-500 hover:bg-green-600 rounded-lg text-white"
-            >
-              Approve
-            </button>
-          
-            <button
-              @click="confirmReject = true"
-              class="text-sm font-semibold py-3 w-16 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white"
-            >
-              Reject
-            </button>
-          </div> -->
         </div>
 
         <!-- Approve Confirmation -->
@@ -773,19 +758,14 @@ export default {
     // status of verifier to change the status color and title in table
     // need to post to database
     statusVerifier() {
-      let status = 'PENDING';
-      if (this.rejectVerifier) {
-        status = 'REJECTED';
-      } else if (this.verified) {
-        status = 'VERIFIED';
-      } else {
-        status = 'VERIFIED';
+        if (this.rejectVerifier) {
+          return 'REJECTED';
+        }
+        if (this.verified) {
+          return 'VERIFIED';
+        }
+        return 'OPEN';
       }
-
-      status = 'VERIFIED';
-
-      return status;
-    },
   },
   methods: {
     toggleDropdown() {
@@ -838,7 +818,7 @@ export default {
           } else if (this.statusApprover == 'REIMBURSED') {
             this.reimbursed = true;
           } else {
-            this.statusApprover = 'PENDING';
+            this.statusApprover = 'OPEN';
           }
         });
     },

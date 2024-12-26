@@ -1,6 +1,6 @@
 <template>
   <main class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 p-4 sm:ml-64">
-    <div class="container mx-auto">
+    <div class=" mx-auto">
       <div
         class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 dark:text-white border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
         <div class="flex justify-between">
@@ -22,7 +22,16 @@
               <div class="overflow-hidden ">
                 <div class="py-2 flex flex-col md:flex-row justify-between items-center md:items-end">
                   <div class="flex items-center">
-                  </div>
+                      <div class="space-x-2">
+                        <label for="number-dd" class="text-md font-medium">Sort</label>
+                        <select id="number-dd" name="number" @change="updateItemsPerPage"
+                          class="rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 text-sm bg-gray-50 ">
+                          <option value="10">10</option>
+                          <option value="50">50</option>
+                          <option value="100">100</option>
+                        </select>
+                      </div>
+                    </div>
                   <div class="relative md:mt-0 w-full md:w-auto">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                       <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
@@ -151,11 +160,9 @@
 
         <!-- View Employees -->
         <div v-show="view"
-          class=" fixed top-0 bg-gray-600/50 left-0 right-0 bottom-0  max-h-xl  z-50 flex justify-center items-center">
-          <div class="mx-auto max-w-screen-2xl max-h-xl ">
-
-
-            <div class="bg-white dark:bg-gray-900 w-full sm:w-4/5 lg:w-3/5 rounded-xl relative h-[90vh] overflow-auto">
+          class=" fixed top-0 bg-gray-600/50 left-0 right-0 bottom-0 z-50 flex justify-center items-center">
+          <div class="mx-auto max-w-screen-2xl ">
+            <div class="bg-white dark:bg-gray-900 w-full sm:w-4/5 lg:w-3/5 rounded-xl relative min-h-[90vh]  overflow-auto">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="absolute right-3 top-3 size-6" @click="(view = false), (edit = false)">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -555,6 +562,10 @@ export default {
       if (typeof page === 'number') {
         this.currentPage = page;
       }
+    },
+    updateItemsPerPage(event) {
+      this.itemsPerPage = parseInt(event.target.value);
+      this.currentPage = 1;
     },
     toggleSort(field) {
       if (this.sortField === field) {
