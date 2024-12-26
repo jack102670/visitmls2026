@@ -455,8 +455,6 @@ export default {
         this.sortDirection = 'desc';
       }
     },
-
-
     showclaim(rn) {
       this.$router.push({ name: 'SummaryClaimpage', params: { rn } });
     },

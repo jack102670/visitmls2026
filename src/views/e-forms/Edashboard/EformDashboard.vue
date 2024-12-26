@@ -101,7 +101,11 @@
 
       <!-- 3rd box -->
       <div class="grid grid-cols-1 px-4 pb-4 pt-2 gap-2 md:mx-8">
-
+        <div class="mb-2 md:mb-0">
+            <h4 class="font-bold text-primary text-md">
+              All Requested
+            </h4>
+          </div>
         <div class="text-center bg-white min-h-full border-[1px] rounded-md p-4">
           <TableRequest />
         </div>

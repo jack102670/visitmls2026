@@ -1,10 +1,19 @@
 <template>
+
+
   <div class="pb-4 bg-white dark:bg-gray-900 flex flex-col md:flex-row justify-between items-start md:items-end">
-    <div class="mb-2 md:mb-0">
-      <h4 class="font-bold text-primary text-md">
-        All Requested
-      </h4>
-    </div>
+
+    <div class="flex items-center">
+                      <div class="space-x-2">
+                        <label for="number-dd" class="text-md font-medium">Sort</label>
+                        <select id="number-dd" name="number" @change="updateItemsPerPage"
+                          class="rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 text-sm bg-gray-50 ">
+                          <option value="10">10</option>
+                          <option value="50">50</option>
+                          <option value="100">100</option>
+                        </select>
+                      </div>
+                    </div>
     <div class="relative md:mt-0 w-full md:w-auto">
       <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -20,8 +29,8 @@
   </div>
   <div class="relative overflow-x-auto rounded-md">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-md">
-      <thead class="text-md text-gray-700  bg-[#7293B3] dark:bg-gray-700 dark:text-gray-400 rounded-md ">
-        <tr class="text-white font-bold rounded-md uppercase ">
+      <thead class="text-md text-gray-700 border bg-[#F9FAFB] dark:bg-gray-700 dark:text-gray-400 rounded-md ">
+        <tr class="text-dark font-bold rounded-md ">
           <th scope="col" class="p-4"></th>
           <th scope="col" class="px-6 py-3">No</th>
           <th scope="col" class="px-6 py-3">Reference Number</th>
@@ -55,7 +64,7 @@
           </td>
         </tr>
         <tr v-for="(application, index) in paginatedApplications" :key="application.refNo"
-          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          class="bg-white border dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
           <td class="w-4 p-4"></td>
           <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             {{ (currentPage - 1) * itemsPerPage + index + 1 }}
@@ -250,6 +259,10 @@ export default {
       if (typeof page === 'number') {
         this.currentPage = page;
       }
+    },
+    updateItemsPerPage(event) {
+      this.itemsPerPage = parseInt(event.target.value);
+      this.currentPage = 1;
     },
     toggleSort(field) {
       if (this.sortField === field) {
