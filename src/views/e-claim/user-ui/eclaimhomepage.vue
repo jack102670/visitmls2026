@@ -140,6 +140,7 @@
                         placeholder="Search for applications" />
                     </div>
                   </div>
+                  
                   <table
                     class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe border border-gray-200 dark:border-gray-700 md:rounded-lg">
                     <thead class="bg-gray-50 dark:bg-gray-800">

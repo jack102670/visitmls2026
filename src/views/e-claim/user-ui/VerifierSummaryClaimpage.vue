@@ -109,10 +109,6 @@
               {{ claimDetails.department }}
             </p>
           </div>
-          <!-- <div class="mt-5 h-12">
-            <h2 class="font-semibold">Report Type :</h2>
-            <p class="text-gray-600 dark:text-gray-400">Finance</p>
-          </div> -->
           <div class="mt-2 h-10">
             <h2 class="font-semibold">Cost Center :</h2>
             <p class="text-gray-600 dark:text-gray-400">
@@ -125,11 +121,8 @@
               {{ claimDetails.date_requested }}
             </p>
           </div>
-          <!-- <div class="mt-5 h-12">
-            <h2 class="font-semibold">Claim for the Month Ended :</h2>
-            <p class="text-gray-600 dark:text-gray-400">31 MAY 2024</p>
-          </div> -->
         </div>
+        
 
         <!-- Summary -->
         <div class="summary" v-show="!seeMore">
@@ -588,12 +581,6 @@
             >
               Verify
             </button>
-            <!-- <button
-              @click="confirmResubmit = true"
-              class="mr-2 text-sm font-semibold py-3 w-16 sm:w-24 md:w-36 bg-yellow-500 hover:bg-yellow-600 rounded-lg text-white"
-            >
-              Resubmit
-            </button> -->
             <button
               @click="confirmReject = true"
               class="text-sm font-semibold py-3 w-16 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white"
