@@ -86,69 +86,61 @@
             </p>
           </div>
         </div>
+        <!-- Summary -->
+        <div class="summary" v-show="!seeMore">
+          <div class="overflow-x-auto mt-4">
+            <div class="min-w-full inline-block align-middle">
+              <div class="border rounded-lg overflow-x-auto border-gray-400 dark:border-gray-600">
+                <table class="min-w-full divide-y divide-gray-400 dark:divide-gray-600">
+                  <thead class="bg-gray-300 dark:bg-gray-700">
 
-        <!-- status button after approved -->
-        <div v-if="claimDetails.admin_status === 'APPROVED BY HR & ADMIN'" class="my-3" id="hidden">
-          <h1 class="text-lg font-semibold">Status</h1>
-          <div class="relative inline-block text-left">
-            <div>
-              <button @click="toggleDropdown" type="button" :class="selectedStatus.class +
-                ' inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-3 py-1 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-                ">
-                {{ selectedStatus.label }}
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                  stroke="currentColor" class="-mr-1 ml-2 mt-1 h-5 w-5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                </svg>
-              </button>
-            </div>
-            <div v-if="dropdownOpen"
-              class="origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-              <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                <button v-for="(status, i) in statuses" :key="i" @click="selectStatus(status)" :class="status.dropDownClass +
-                  'block px-4 py-2 text-sm  w-full text-left hover:bg-gray-200'
-                  " role="menuitem">
-                  {{ status.label }}
-                </button>
+                    <th scope="col" class="px-4 py-3 text-center text-xs font-bold uppercase">
+                      No
+                    </th>
+                    <th scope="col" class="px-4 py-3 text-left text-xs font-bold uppercase">
+                      Type of Claim
+                    </th>
+                    <th>
+                    </th>
+                    <th scope="col" class="px-4 py-3 text-right text-xs font-bold uppercase">
+                      Amount (RM)
+                    </th>
+                  </thead>
+                  <tbody class="dark:bg-gray-800 divide-y divide-gray-400 dark:divide-gray-600">
+                    <tr v-for="claim in claimDatas" :key="claim.no"
+                      class="hover:bg-gray-200 dark:hover:bg-gray-800transition-colors duration-200">
+                      <td class="px-4 py-3 text-center text-xs">
+                       <p>{{ claim.No }}</p> 
+                      </td>
+                      <td class="px-4 py-3 text-xs">
+                        <span class="font-medium">{{ claim.Type }}</span>
+                        <span class="ml-1 text-gray-500 dark:text-gray-400">
+                          (x{{ claimDatasDetails[claim.No - 1].length }})
+                        </span>
+                      </td>
+                      <td>
+
+                      </td>
+                      <td class="px-4 py-3 text-xs text-right">
+                      <p class="px-2"> {{ claim.Amount.toFixed(2) }}</p> 
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot class="dark:bg-gray-900">
+                    <tr class="font-semibold text-gray-900 dark:text-white">
+                      <td colspan="3" class="text-right"></td>
+                      <td colspan="1" class="px-4 py-3 text-sm sm:text-base text-right whitespace-nowrap">
+                     <p class="px-2 text-sm">
+                      Total : MYR {{ totalAmount.toFixed(2) }}</p>  
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Summary -->
-        <div class="summary" v-show="!seeMore">
-          <!-- Claim Table -->
-          <div class="border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl">
-            <table class="w-full text-xs">
-              <!-- title -->
-              <tr class="h-8 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
-                <th class="rounded-tl-2xl w-[20%] text-center">NO</th>
-                <th class="w-[60%]">TYPE OF CLAIM</th>
-                <th class="w-[20%]">AMOUNT (RM)</th>
-              </tr>
-
-              <!-- table information -->
-              <tr class="h-8 text-left align-top text-xs lg:text-base" v-for="claim in claimDatas" :key="claim.no">
-                <td class="text-center font-normal">{{ claim.No }}</td>
-                <td class="font-normal">
-                  {{
-                    claim.Type +
-                    ' (x' +
-                    claimDatasDetails[claim.No - 1].length +
-                    ')'
-                  }}
-                </td>
-                <td class="font-normal">{{ claim.Amount.toFixed(2) }}</td>
-              </tr>
-
-              <!-- total -->
-              <tr class="border-t-2 border-gray-400 dark:border-gray-600 h-8 text-base lg:text-lg font-semibold">
-                <td colspan="2" class="px-6 text-right">TOTAL:</td>
-                <td>{{ totalAmount.toFixed(2) }}</td>
-              </tr>
-            </table>
-          </div>
-        </div>
 
         <!-- Details -->
         <div class="details" v-show="seeMore">
@@ -156,27 +148,21 @@
             <h1 class="mt-4 text-xl font-semibold tab-title" v-if="detail && detail.length > 0">
               {{ detail[0].Tab_Title }}
             </h1>
-            <div class="border-2 border-gray-400 dark:border-gray-600 rounded-2xl overflow-y-auto" id="table-overflow">
+            <div class="border rounded-lg overflow-x-auto border-gray-400 dark:border-gray-600">
               <table class="w-full">
-                <!-- title -->
-                <tr class="h-8 bg-gray-300 dark:bg-gray-700 rounded-2xl text-xs">
+                <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md text-xs">
                   <th class="w-40">Remark</th>
-
-                  <th class="px-6 w-36 break-words text-xs" v-for="(val, key, i) in detail[0]" :key="i">
-                    {{
-                      key
-                        .split('_')
-
-                        .join(' ')
-                    }}
+                  <th class="px-6 w-36 break-words text-xs"
+                    v-for="key in Object.keys(detail[0]).filter(k => !['Tab_Title', 'unique_code', 'comment'].includes(k))"
+                    :key="key">
+                    {{ key.split('_').join(' ') }}
                   </th>
-                </tr>
-
-                <!-- table information -->
-                <tr class="h-8 text-left align-top text-xs hover:bg-gray-200 dark:hover:bg-gray-800"
+                </thead>
+                <tr class="h-8 text-left align-center text-xs hover:bg-gray-200 dark:hover:bg-gray-800"
                   v-for="(item, index) in detail" :key="index">
-                  <td>
-                    <input @input="
+                  <td class="text-center justify-between items-center flex">
+                    <div class="justify-center items-center flex py-2 align-middle">
+                      <input @input="
                       UpdateSingleRemark(
                         $event,
                         item.unique_code,
@@ -185,13 +171,14 @@
                       " v-if="
                         !reimbursed && !approve && !rejectApprover && !resubmit
                       " type="text"
-                      class="p-1 text-xs w-full rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2" />
-                    <h1 id="remarkText" v-if="
-                      (reimbursed || approve || rejectApprover || resubmit) &&
-                      item.comment.trim() !== ''
-                    " class="m-1 px-2 py-1 bg-sky-100 rounded-2xl dark:bg-sky-950">
+                      class="p-1 text-xs w-full rounded-md outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border" />
+                    <h1 id="remarkText" 
+                        v-if="(reimbursed || approve || rejectApprover || resubmit) && item.comment.trim() !== ''"
+                        class="m-1 px-2 py-1 bg-sky-100 rounded-md text-xs mx-auto w-fit block dark:bg-sky-950 text-center">
                       {{ item.comment }}
-                    </h1>
+                    </h1>                    
+                    </div>
+
                   </td>
                   <td class="text-center font-normal px-3 py-1 align-middle" v-for="(val, key, i) in item" :key="i">
                     {{
@@ -233,9 +220,8 @@
                     </div>
                   </td>
                 </tr>
-
-                <!-- total -->
-                <tr class="border-t-2 border-gray-400 dark:border-gray-600 h-8 text-base font-semibold">
+                <tr
+                  class="border-t border-gray-400 dark:border-gray-600 h-8 text-dark dark:text-white text-base font-semibold">
                   <td class="text-center">TOTAL:</td>
                   <td class="text-center">RM{{ claimDataTotalAmount[i] }}</td>
                   <td></td>
@@ -246,115 +232,116 @@
         </div>
 
         <!-- Status Table -->
-        <div class="text-xs border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl" id="table-overflow">
+        <div class="border rounded-lg overflow-x-auto border-gray-400 dark:border-gray-600 my-4">
           <table class="w-full">
-            <!-- title -->
-            <tr class="h-8 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
-              <th class="rounded-tl-2xl w-[20%] text-center border-r-2 border-gray-400 dark:border-gray-600">
+            <thead class="h-8 font-semibold bg-gray-300 dark:bg-gray-700 text-left rounded-md space-x-2">
+              <th class="rounded-tl-md text-center border-r border-gray-400 dark:border-gray-600">
                 STATUS
               </th>
-              <th class="w-[24%] pl-6">NAME</th>
-              <th class="w-[23%]">DESIGNATION</th>
-              <th class="w-[23%]">DEPARTMENT</th>
-              <th class="w-[10%]">DATE</th>
-            </tr>
-
-            <!-- table information -->
-
-            <tr class="text-wrap h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600">
-              <th class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600">
-                <!-- Status Bar -->
-                <div class="mx-auto rounded-full py-2 text-center lg:w-[90%] w-full" :class="{
-                  'bg-orange-200 dark:bg-orange-500':
-                    statusApprover == 'PENDING',
-                  'bg-green-200 dark:bg-green-500':
-                    statusApprover == 'APPROVED',
-                  'bg-red-200 dark:bg-red-500': statusApprover == 'REJECTED',
-                  'text-orange-500 dark:text-orange-100':
-                    statusApprover == 'PENDING',
-                  'text-green-500 dark:text-green-100':
-                    statusApprover == 'APPROVED',
-                  'text-red-500 dark:text-red-100':
-                    statusApprover == 'REJECTED',
-                }">
-                  <p>{{ statusApprover }}</p>
+              <th class="">NAME</th>
+              <th class="">DESIGNATION</th>
+              <th class="">DEPARTMENT</th>
+              <th class="">DATE</th>
+            </thead>
+            <tr class="text-wrap text-left text-xs border-t border-gray-400 dark:border-gray-600">
+              <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                <div
+                  class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
+                  :class="{
+                    'bg-red-100/60 dark:bg-gray-800': getSimplifiedStatus(statusApprover) === 'REJECTED',
+                    'bg-green-100/60 dark:bg-gray-800': getSimplifiedStatus(statusApprover) === 'APPROVED',
+                    'bg-amber-100/60 dark:bg-gray-800': getSimplifiedStatus(statusApprover) === 'PENDING',
+                    'bg-slate-100/60 dark:bg-gray-800': getSimplifiedStatus(statusApprover) === 'REIMBURSED'
+                  }">
+                  <span :class="{
+                    'h-1.5 w-1.5 rounded-full': true,
+                    'bg-red-500': getSimplifiedStatus(statusApprover) === 'REJECTED',
+                    'bg-green-500': getSimplifiedStatus(statusApprover) === 'APPROVED',
+                    'bg-amber-500': getSimplifiedStatus(statusApprover) === 'PENDING',
+                    'bg-black': getSimplifiedStatus(statusApprover) === 'REIMBURSED'
+                  }"></span>
+                  <span :class="{
+                    'text-xs font-normal': true,
+                    'text-red-500': getSimplifiedStatus(statusApprover) === 'REJECTED',
+                    'text-green-500': getSimplifiedStatus(statusApprover) === 'APPROVED',
+                    'text-amber-500': getSimplifiedStatus(statusApprover) === 'PENDING',
+                    'text-black': getSimplifiedStatus(statusApprover) === 'REIMBURSED'
+                  }">
+                    {{ getSimplifiedStatus(statusApprover || 'PENDING') }}
+                  </span>
                 </div>
               </th>
               <td class="pl-6">
-                {{
-                  statusApprover == 'PENDING' ? '' : claimDetails.approver_name
-                }}
-              </td>
-              <td class="">
-                {{
-                  statusApprover == 'PENDING'
-                    ? ''
-                    : claimDetails.approver_designation
-                }}
+                {{ statusApprover !== 'PENDING' && claimDetails ? claimDetails.approver_name : '' }}
               </td>
               <td>
-                {{
-                  statusApprover == 'PENDING'
-                    ? ''
-                    : claimDetails.approver_department
-                }}
+                {{ statusApprover !== 'PENDING' && claimDetails ? claimDetails.approver_designation : '' }}
               </td>
-              <td class="">
-                {{
-                  statusApprover == 'PENDING' ? '' : claimDetails.approved_date
-                }}
+              <td>
+                {{ statusApprover !== 'PENDING' && claimDetails ? claimDetails.approver_department : '' }}
+              </td>
+              <td>
+                {{ statusApprover !== 'PENDING' && claimDetails ? claimDetails.approved_date : '' }}
               </td>
             </tr>
+
           </table>
         </div>
 
         <!-- Remark table -->
 
-        <div v-show="approve || verified || reimbursed || resubmit || rejectApprover
-          " class="text-xs border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl" id="table-overflow">
+        <div v-show="approve || verified || reimbursed || resubmit || claimDetails.admin_status === 'REJECTED BY HR & ADMIN'
+          " class="border rounded-lg overflow-x-auto border-gray-400 dark:border-gray-600 my-4">
           <table class="w-full">
-            <!-- title -->
-            <tr class="h-8 bg-gray-300 dark:bg-gray-700 rounded-2xl">
-              <th class="pl-6">Remark</th>
-            </tr>
-
-            <!-- table information -->
-            <tr class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600">
-              <td class="pl-6">{{ remark }}</td>
+            <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md">
+              <th class="uppercase">Remark</th>
+            </thead>
+            <tr class="h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+              <td class="text-xs"><p class="px-2 font-semibold">{{ remark }}</p></td>
             </tr>
           </table>
         </div>
 
-        <!-- Button -->
-        <div v-show="approve != true &&
-          verified != true &&
-          rejectApprover != true &&
-          rejectVerifier != true &&
-          resubmit != true &&
-          reimbursed != true
-          " class=".detail-table w-full lg:flex-row flex flex-col justify-between h-full items-center pt-6">
-          <div class="flex w-full items-center">
-            <label class="font-semibold mr-2 mb-4 lg:mb-0">Overall Remark:
-            </label>
-            <input
-              class="py-3 px-2 mb-4 lg:mb-0 w-full lg:max-w-96 lg:mr-2 rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
-              type="text" placeholder="Eg. Blurry Receipt Image" v-model="remark" />
-          </div>
-          <div class="flex" v-if="claimDetails.admin_status !== 'APPROVED BY HR & ADMIN'">
-            <button @click="confirmApprove = true"
-              class="mr-2 text-sm font-semibold py-2 sm:w-24 md:w-36 bg-green-500 hover:bg-green-600 rounded-lg text-white">
-              Approve
-            </button>
-            <button @click="confirmReject = true"
-              class="text-sm font-semibold py-2 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white">
-              Reject
-            </button>
+        <div class="flex space-x-2 py-2">
+          <!-- Remark/approve/reject/reimburshed button -->
+          <div class="w-full">
+            <div
+              v-if="claimDetails.admin_status !== 'APPROVED BY HR & ADMIN' && claimDetails.admin_status !== 'REJECTED BY HR & ADMIN' && claimDetails.admin_status !== 'REIMBURSED' &&  claimDetails.admin_status === 'OPEN'"
+              class="w-full flex items-center justify-between">
+              <div class="flex items-center">
+                <label class="font-semibold whitespace-nowrap mr-2">Overall Remark:</label>
+                <input class="mx-auto py-2 min-w-[80px] rounded-md border text-xs" type="text"
+                  placeholder="Eg. Blurry Receipt Image" v-model="remark" />
+              </div>
+              <div class="flex space-x-2">
+                <button @click="confirmApprove = true"
+                  class="mr-2 text-sm font-semibold py-2 sm:w-24 md:w-36 bg-green-500 hover:bg-green-600 rounded-lg text-white">
+                  Approve
+                </button>
+                <button @click="confirmReject = true"
+                  class="text-sm font-semibold py-2 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white">
+                  Reject
+                </button>
+              </div>
+            </div>
+            <div v-else-if="claimDetails.admin_status === 'APPROVED BY HR & ADMIN'" class="w-full flex justify-end">
+              <div class="my-3">
+                <div class="relative inline-block text-left">
+                  <div>
+                    <button @click="confirmReimburse = true"
+                      class="text-sm font-semibold py-2 px-6 bg-green-600 hover:bg-green-700 rounded-lg text-white">
+                      Reimburse
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- Approve Confirmation -->
         <div v-show="confirmApprove"
-          class="bg-black backdrop-filter backdrop-blur-sm bg-opacity-50  dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center backdrop-filter backdrop-blur-sm">
+          class="bg-black backdrop-filter backdrop-blur-sm bg-opacity-50  dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center">
           <div class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center">
             <h1 class="text-2xl font-bold">Do you confirm to approve?</h1>
             <div class="flex mt-4">
@@ -372,7 +359,7 @@
 
         <!-- Resubmit Confirmation -->
         <div v-show="confirmResubmit"
-          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center backdrop-filter backdrop-blur-sm">
+          class="bg-black backdrop-filter backdrop-blur-sm bg-opacity-50  dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center backdrop-filter backdrop-blur-sm">
           <div
             class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center px-1">
             <h1 class="text-2xl font-bold text-center">
@@ -396,13 +383,12 @@
 
         <!-- Reimburse Confirmation -->
         <div v-show="confirmReimburse"
-          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center backdrop-filter backdrop-blur-sm">
+          class="bg-black backdrop-filter backdrop-blur-sm bg-opacity-50  dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center backdrop-filter backdrop-blur-sm">
           <div class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center">
             <h1 class="text-2xl font-bold">Do you confirm to reimburse?</h1>
             <div class="flex mt-4">
-              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white" @click="
-                (confirmReimburse = false), (selectedStatus = statuses[0])
-                ">
+              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
+                @click="confirmReimburse = false">
                 Back
               </button>
               <button class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
@@ -415,7 +401,7 @@
 
         <!-- Reject Confirmation -->
         <div v-show="confirmReject"
-          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center backdrop-filter backdrop-blur-sm">
+          class="bg-black backdrop-filter backdrop-blur-sm bg-opacity-50  dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center backdrop-filter backdrop-blur-sm">
           <div
             class="bg-white dark:bg-gray-900 w-96 px-8 h-52 rounded-xl fixed flex flex-col justify-center items-center">
             <h1 class="text-xl font-bold">Please write the remark to reject</h1>
@@ -451,7 +437,7 @@
         <!-- File List -->
         <div v-show="showFileList"
           class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center">
-          <div class="bg-white w-full sm:w-4/5 rounded-xl flex flex-col items-center relative pb-6">
+          <div class="bg-white max-w-4xl sm:w-4/5 rounded-xl flex flex-col relative p-4">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="absolute right-3 top-3 size-6" @click="showFileList = false">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -459,44 +445,60 @@
             <div class="relative flex w-4/5 mx-auto justify-center">
               <h1 class="text-xl font-semibold my-4">Attachments</h1>
             </div>
-            <table v-if="files.length > 0" class="w-4/5 text-center mt-1 mb-8">
-              <tr class="bg-gray-300 text-center h-12">
-                <th>No.</th>
-                <th>File</th>
-                <th>Action</th>
-              </tr>
-              <tr v-for="(file, i) in files" :key="i" class="bg-white text-black text-center h-12 mt-2">
-                <th class="font-normal">{{ i + 1 }}</th>
-                <th class="font-normal flex">
-                  <img v-if="
-                    file.split('.').slice(-1)[0].toLowerCase() == 'png' ||
-                    file.split('.').slice(-1)[0].toLowerCase() == 'jpg' ||
-                    file.split('.').slice(-1)[0].toLowerCase() == 'jpeg'
-                  " :src="file" alt="attachment" class="w-20 h-32 object-contain" />
-                  <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.5"
-                    stroke="currentColor" class="w-20 h-32">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-                  </svg>
-
-                  <h1 class="ml-2">
-                    {{ file.split('/')[file.split('/').length - 1] }}
-                  </h1>
-                </th>
-                <th class="font-normal">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-5 h-5 mx-auto" @click="
-                      DownloadFile(
-                        file,
-                        file.split('/')[file.split('/').length - 1]
-                      )
-                      ">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                  </svg>
-                </th>
-              </tr>
-            </table>
+            <div v-if="files.length > 0" class="overflow-x-auto p-2">
+              <div class=" min-w-full">
+                <div class="border rounded-md overflow-hidden border-gray-300 dark:border-gray-600 shadow-sm">
+                  <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-600">
+                    <thead class="bg-gray-300 dark:bg-gray-700">
+                      <th scope="col" class="px-4 py-3 text-center text-xs font-semibold uppercase w-[10%]">
+                        No.
+                      </th>
+                      <th scope="col" class="px-4 py-3 text-left text-xs font-semibold uppercase w-[70%]">
+                        File
+                      </th>
+                      <th scope="col" class="px-4 py-3 text-center text-xs font-semibold uppercase w-[20%]">
+                        Action
+                      </th>
+                    </thead>
+                    <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-300 dark:divide-gray-600">
+                      <tr v-for="(file, i) in files" :key="i"
+                        class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
+                        <td class="px-4 py-3 text-center text-sm">
+                          {{ i + 1 }}
+                        </td>
+                        <td class="px-4 py-3">
+                          <div class="flex items-center space-x-3">
+                            <div class="flex-shrink-0 w-20 h-32">
+                              <img v-if="['png', 'jpg', 'jpeg'].includes(file.split('.').pop().toLowerCase())"
+                                :src="file" alt="attachment" class="w-full h-full object-contain rounded-sm" />
+                              <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor" class="w-full h-full text-gray-500 dark:text-gray-400">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5"
+                                  d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                              </svg>
+                            </div>
+                            <span class="text-sm text-gray-900 dark:text-gray-200">
+                              {{ file.split('/').pop() }}
+                            </span>
+                          </div>
+                        </td>
+                        <td class="px-4 py-3 text-center">
+                          <button @click="DownloadFile(file, file.split('/').pop())"
+                            class="inline-flex items-center justify-center p-2 rounded-full text-gray-500 hover:text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-600 transition-colors duration-200"
+                            title="Download file">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                              stroke="currentColor" class="w-5 h-5">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                            </svg>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
 
             <div v-if="files.length <= 0" class="w-full">
               <h1 class="mx-auto text-center font-thin text-gray-500">Empty</h1>
@@ -542,37 +544,11 @@ export default {
     return {
       // need to get from API
       role: 'approver',
-
-      // remark for every single detail
       singleRemarks: [],
-
-      //remark for every single details in one tab
       singleColumnRemarks: [],
-
-      // user's data
       userData: {},
-
-      // File List
       files: [],
       showFileList: false,
-
-      dropdownOpen: false,
-      selectedStatus: {
-        label: 'Approved',
-        class: 'bg-green-500 text-white hover:bg-green-600',
-      },
-      statuses: [
-        {
-          label: 'Approved',
-          class: 'bg-green-500 text-white hover:bg-green-600',
-          dropDownClass: 'text-green-500 hover:text-green-600',
-        },
-        {
-          label: 'Reimbursed',
-          class: 'bg-white text-gray-700 hover:bg-gray-100',
-          dropDownClass: 'text-gray-700 hover:text-gray-800',
-        },
-      ],
 
       seeMore: false,
       confirmReject: false,
@@ -591,7 +567,7 @@ export default {
       reimbursed: false,
       resubmit: false,
       remark: '',
-      statusApprover: '',
+      statusApprover: 'PENDING',
 
       // fetch from backend
       claimDetails: [],
@@ -613,77 +589,80 @@ export default {
       }
       return num;
     },
-    // status of verifier to change the status color and title in table
-    // need to post to database
-    statusVerifier() {
-      let status = 'PENDING';
-      if (this.rejectVerifier) {
-        status = 'REJECTED';
-      } else if (this.verified) {
-        status = 'VERIFIED';
-      } else {
-        status = 'VERIFIED';
-      }
-
-      status = 'VERIFIED';
-
-      return status;
-    },
   },
   methods: {
-    toggleDropdown() {
-      this.dropdownOpen = !this.dropdownOpen;
+    getStatusClass() {
+      const status = this.getSimplifiedStatus(this.statusApprover);
+      return {
+        'bg-orange-200 my-2 dark:bg-orange-500': status === 'PENDING',
+        'bg-green-200 my-2 dark:bg-green-500': status === 'APPROVED',
+        'bg-red-200 my-2 dark:bg-red-500': status === 'REJECTED',
+        'bg-slate-200 my-2 dark:bg-slate-500': status === 'REIMBURSED',
+        'text-orange-500 my-2 dark:text-orange-100': status === 'PENDING',
+        'text-green-500 my-2 dark:text-green-100': status === 'APPROVED',
+        'text-red-500 my-2 dark:text-red-100': status === 'REJECTED',
+        'text-black my-2 dark:text-white': status === 'REIMBURSED'
+      };
     },
-    selectStatus(status) {
-      this.selectedStatus = status;
-      this.dropdownOpen = false;
 
-      if (status.label == 'Reimbursed') {
-        this.confirmReimburse = true;
-      }
+    getSimplifiedStatus(status) {
+      if (!status) return 'PENDING';
+      const statusMap = {
+        'APPROVED BY HR & ADMIN': 'APPROVED',
+        'REJECTED BY HR & ADMIN': 'REJECTED',
+        'RESUBMIT BY HR & ADMIN': 'RESUBMIT',
+        'REIMBURSED BY HR & ADMIN': 'REIMBURSED',
+        'OPEN': 'PENDING'
+      };
+      return statusMap[status] || status;
     },
+
     async FetchClaimDetails() {
       this.loadingText = 'Fetching';
       this.loading = true;
       try {
         const response = await axios.get(
-          'http://172.28.28.116:7165/api/User/GetClaimDetails/' +
-          this.referenceNumber
-        )
-        this.loading = false;
-          this.claimDetails = response.data.result;
-          this.statusApprover = this.claimDetails.admin_status
-            .split('.')[0]
-            .toUpperCase();
-          if (this.statusApprover == 'APPROVED') {
-            this.approve = true;
-            this.remark = this.claimDetails.comment;
-          } else if (this.statusApprover == 'REJECTED') {
-            this.rejectApprover = true;
-            this.remark = this.claimDetails.comment;
-          } else if (this.statusApprover == 'RESUBMIT') {
-            this.resubmit = true;
-            this.remark = this.claimDetails.comment;
-          } else if (this.statusApprover == 'REIMBURSED') {
-            this.reimbursed = true;
-            this.remark = this.claimDetails.comment;
-          }
-          console.log("Get application claim details",this.claimDetails);
+          `http://172.28.28.116:7165/api/User/GetClaimDetails/${this.referenceNumber}`
+        );
 
-          if (this.statusApprover == 'APPROVED') {
-            this.approve = true;
-          } else if (this.statusApprover == 'REJECTED') {
-            this.rejectApprover = true;
-          } else if (this.statusApprover == 'RESUBMIT') {
-            this.resubmit = true;
-          } else if (this.statusApprover == 'REIMBURSED') {
-            this.reimbursed = true;
-          } else {
-            this.statusApprover = 'PENDING';
-          }
-      }catch (error){
         this.loading = false;
-        console.error('API error', error);
+        this.claimDetails = response.data.result;
+        this.statusApprover = this.claimDetails.admin_status || 'PENDING';
+
+        // Reset all status flags
+        this.approve = false;
+        this.rejectApprover = false;
+        this.resubmit = false;
+        this.reimbursed = false;
+        this.remark = '';
+
+        // Set the appropriate flag and remark based on status
+        switch (this.statusApprover) {
+          case 'APPROVED BY HR & ADMIN':
+            this.approve = true;
+            break;
+          case 'REJECTED BY HR & ADMIN':
+            this.rejectApprover = true;
+            break;
+          case 'RESUBMIT BY HR & ADMIN':
+            this.resubmit = true;
+            break;
+          case 'REIMBURSED BY HR & ADMIN':
+            this.reimbursed = true;
+            break;
+            case 'OPEN':
+            this.reimbursed = true;
+            break;
+        }
+
+        if (this.statusApprover !== 'PENDING') {
+          this.remark = this.claimDetails.comment;
+        }
+
+        console.log("Get application claim details", this.claimDetails);
+      } catch (error) {
+        this.loading = false;
+        console.error('API error:', error.message);
         console.error('Error Details:', {
           message: error.message,
           response: error.response?.data,
@@ -733,6 +712,7 @@ export default {
             this.claimDatasDetails.push(details);
             this.claimDataTotalAmount.push(amount);
           }
+          console.log("Claim datas details", this.claimDataTotalAmount);
         })
         .catch((e) => {
           console.error(e);
@@ -780,7 +760,7 @@ export default {
         if (details && details.length > 0) {
           const claimData = {
             No: index + 1,
-            Type: details[0].Tab_Title, // Ensure details[0] exists before accessing properties
+            Type: details[0].Tab_Title,
             Amount: this.claimDataTotalAmount[index],
           };
           this.claimDatas.push(claimData);
@@ -864,7 +844,6 @@ export default {
     },
 
     //approve or reject action
-    // need to post to database
     async ApproveOrReject(AoR) {
       const userData = await this.GetUserData();
       this.singleRemarks.forEach((remark) => {
@@ -926,100 +905,110 @@ export default {
           );
         }
       } else if (AoR == 'Reject') {
-        this.rejectApprover = true;
-        this.dateApprover = moment(new Date()).format('D MMM YYYY');
-        this.loadingText = 'Uploading';
-        this.loading = true;
 
-        const approveData = {
-          approver_name: userData.userName,
-          approver_designation: userData.designation,
-          approver_department: userData.department,
-          approver_status: 'REJECTED',
+        try {
+          this.rejectApprover = true;
+          this.dateApprover = moment(new Date()).format('D MMM YYYY');
+          this.loadingText = 'Uploading';
+          this.loading = true;
 
+          const approveData = {
+            approver_name: userData.userName,
+            approver_designation: userData.designation,
+            approver_department: userData.department,
+            approver_status: 'REJECTED',
+            approver_comment: this.remark ? this.remark : '-',
+            requester_email: this.claimDetails.email ? this.claimDetails.email : '-',
+            requester_name: this.claimDetails.name ? this.claimDetails.name : '-',
+            report_name: this.claimDetails.report_name ? this.claimDetails.report_name : '-',
+            verifier_email: this.claimDetails.verifier_email ? this.claimDetails.verifier_email : 'test@gmail.com',
+            reference_number: this.claimDetails.reference_number
+          };
 
-          approver_comment: this.remark ? this.remark : '',
-          user_email: 'user_email',
-          verifier_email: this.claimDetails.verifier_email,
-          reference_number: this.claimDetails.reference_number,
-        };
-        await axios
-          .put('http://172.28.28.116:7165/api/Admin/Approve_Claim_HR', approveData)
-          .then((response) => {
-            // Handle success response
-            this.loading = false;
-
-            console.log('API response', response.data);
-            localStorage.setItem('ApproveOrNot', 'reject');
-          })
-          .catch((error) => {
-            // Handle error response
-            console.error('API error', error);
+          const response = await axios.put('http://172.28.28.116:7165/api/Admin/Approve_Claim_HR', approveData);
+          this.loading = false;
+          console.log('API response', response.data);
+          localStorage.setItem('ApproveOrNot', 'reject');
+        } catch (error) {
+          console.error('Error during Reject:', {
+            message: error.message,
+            response: error.response?.data,
+            status: error.response?.status
           });
+        }
       } else if (AoR == 'Resubmit') {
-        this.resubmit = true;
-        this.dateApprover = moment(new Date()).format('D MMM YYYY');
-        this.loadingText = 'Uploading';
-        this.loading = true;
 
-        const approveData = {
-          approver_name: userData.userName,
-          approver_designation: userData.designation,
-          approver_department: userData.department,
-          approver_status: 'RESUBMIT',
-          approver_comment: this.remark ? this.remark : '',
-          user_email: 'user_email',
-          verifier_email: this.claimDetails.verifier_email,
-          reference_number: this.claimDetails.reference_number,
-        };
-        await axios
-          .put('http://172.28.28.116:7165/api/Admin/Approve_Claim_HR', approveData)
-          .then((response) => {
-            // Handle success response
-            this.loading = false;
+        try {
+          this.resubmit = true;
+          this.dateApprover = moment(new Date()).format('D MMM YYYY');
+          this.loadingText = 'Uploading';
+          this.loading = true;
 
-            console.log('API response', response.data);
-            localStorage.setItem('ApproveOrNot', 'resubmit');
-          })
-          .catch((error) => {
-            // Handle error response
-            console.error('API error', error);
+          const approveData = {
+            approver_name: userData.userName,
+            approver_designation: userData.designation,
+            approver_department: userData.department,
+            approver_status: 'RESUBMIT',
+            approver_comment: this.remark ? this.remark : '-',
+            requester_email: this.claimDetails.email ? this.claimDetails.email : '-',
+            requester_name: this.claimDetails.name ? this.claimDetails.name : '-',
+            report_name: this.claimDetails.report_name ? this.claimDetails.report_name : '-',
+            verifier_email: this.claimDetails.verifier_email ? this.claimDetails.verifier_email : 'test@gmail.com',
+            reference_number: this.claimDetails.reference_number
+          };
+
+
+          const response = await axios.put('http://172.28.28.116:7165/api/Admin/Approve_Claim_HR', approveData);
+          this.loading = false;
+
+          console.log('API response', response.data);
+          localStorage.setItem('ApproveOrNot', 'resubmit');
+
+        } catch (error) {
+          console.error('Error during Reject:', {
+            message: error.message,
+            response: error.response?.data,
+            status: error.response?.status
           });
+        }
       } else if (AoR == 'Reimbursed') {
-        this.reimbursed = true;
-        this.dateApprover = moment(new Date()).format('D MMM YYYY');
-        this.loadingText = 'Uploading';
-        this.loading = true;
 
-        const approveData = {
-          approver_name: userData.userName,
-          approver_designation: userData.designation,
-          approver_department: userData.department,
-          approver_status: 'REIMBURSED',
-          approver_comment: this.remark ? this.remark : '',
-          user_email: 'user_email',
-          verifier_email: this.claimDetails.verifier_email,
-          reference_number: this.claimDetails.reference_number,
-        };
-        await axios
-          .put('http://172.28.28.116:7165/api/Admin/Approve_Claim_HR', approveData)
-          .then((response) => {
-            // Handle success response
-            this.loading = false;
+        try {
+          this.reimbursed = true;
+          this.dateApprover = moment(new Date()).format('D MMM YYYY');
+          this.loadingText = 'Uploading';
+          this.loading = true;
 
-            console.log('API response', response.data);
-            localStorage.setItem('ApproveOrNot', 'reimbursed');
-          })
-          .catch((error) => {
-            // Handle error response
-            console.error('API error', error);
+          const approveData = {
+            approver_name: userData.userName,
+            approver_designation: userData.designation,
+            approver_department: userData.department,
+            approver_status: 'REIMBURSED',
+            approver_comment: this.remark ? this.remark : '-',
+            requester_email: this.claimDetails.email ? this.claimDetails.email : '-',
+            requester_name: this.claimDetails.name ? this.claimDetails.name : '-',
+            report_name: this.claimDetails.report_name ? this.claimDetails.report_name : '-',
+            verifier_email: this.claimDetails.verifier_email ? this.claimDetails.verifier_email : 'test@gmail.com',
+            reference_number: this.claimDetails.reference_number
+          };
+
+          const response = await axios.put('http://172.28.28.116:7165/api/Admin/Approve_Claim_HR', approveData);
+          this.loading = false;
+
+          console.log('API response', response.data);
+          localStorage.setItem('ApproveOrNot', 'reimbursed');
+
+        } catch (error) {
+          console.error('Error during Reject:', {
+            message: error.message,
+            response: error.response?.data,
+            status: error.response?.status
           });
+        }
       }
       this.FetchClaimDetails();
       this.FetchClaimDatasDetails();
     },
-
-    // Download the file
     DownloadFile(url, fileName) {
       fileSaver.saveAs(url, fileName);
     },

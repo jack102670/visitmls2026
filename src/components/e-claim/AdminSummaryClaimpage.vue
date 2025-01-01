@@ -11,7 +11,6 @@
             SN: {{ referenceNumber }}
           </h1>
         </div>
-        <!-- Head Title -->
         <button class="absolute top-1 lg:top-6 p-1 bg-blue-800 hover:bg-blue-900 rounded-[100%]" v-show="seeMore"
           @click="seeMore = !seeMore">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white"
@@ -88,36 +87,56 @@
         </div>
         <!-- Summary -->
         <div class="summary" v-show="!seeMore">
-          <!-- Claim Table -->
-          <div class="border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl">
-            <table class="w-full text-xs">
-              <!-- title -->
-              <tr class="h-8 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
-                <th class="rounded-tl-2xl w-[20%] text-center">NO</th>
-                <th class="w-[60%]">TYPE OF CLAIM</th>
-                <th class="w-[20%]">AMOUNT (RM)</th>
-              </tr>
+          <div class="overflow-x-auto mt-4">
+            <div class="min-w-full inline-block align-middle">
+              <div class="border rounded-lg overflow-x-auto border-gray-400 dark:border-gray-600">
+                <table class="min-w-full divide-y divide-gray-400 dark:divide-gray-600">
+                  <thead class="bg-gray-300 dark:bg-gray-700">
 
-              <!-- table information -->
-              <tr class="h-8 text-left align-top text-xs lg:text-base" v-for="claim in claimDatas" :key="claim.no">
-                <td class="text-center font-normal">{{ claim.No }}</td>
-                <td class="font-normal">
-                  {{
-                    claim.Type +
-                    ' (x' +
-                    claimDatasDetails[claim.No - 1].length +
-                    ')'
-                  }}
-                </td>
-                <td class="font-normal">{{ claim.Amount.toFixed(2) }}</td>
-              </tr>
+                    <th scope="col" class="px-4 py-3 text-center text-xs font-bold uppercase">
+                      No
+                    </th>
+                    <th scope="col" class="px-4 py-3 text-left text-xs font-bold uppercase">
+                      Type of Claim
+                    </th>
+                    <th>
+                    </th>
+                    <th scope="col" class="px-4 py-3 text-right text-xs font-bold uppercase">
+                      Amount (RM)
+                    </th>
+                  </thead>
+                  <tbody class="dark:bg-gray-800 divide-y divide-gray-400 dark:divide-gray-600">
+                    <tr v-for="claim in claimDatas" :key="claim.no"
+                      class="hover:bg-gray-200 dark:hover:bg-gray-800transition-colors duration-200">
+                      <td class="px-4 py-3 text-center text-xs">
+                       <p>{{ claim.No }}</p> 
+                      </td>
+                      <td class="px-4 py-3 text-xs">
+                        <span class="font-medium">{{ claim.Type }}</span>
+                        <span class="ml-1 text-gray-500 dark:text-gray-400">
+                          (x{{ claimDatasDetails[claim.No - 1].length }})
+                        </span>
+                      </td>
+                      <td>
 
-              <!-- total -->
-              <tr class="border-t-2 border-gray-400 dark:border-gray-600 h-8 text-base lg:text-lg font-semibold">
-                <td colspan="2" class="px-6 text-right">TOTAL:</td>
-                <td>{{ totalAmount.toFixed(2) }}</td>
-              </tr>
-            </table>
+                      </td>
+                      <td class="px-4 py-3 text-xs text-right">
+                      <p class="px-2"> {{ claim.Amount.toFixed(2) }}</p> 
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot class="dark:bg-gray-900">
+                    <tr class="font-semibold text-gray-900 dark:text-white">
+                      <td colspan="3" class="text-right"></td>
+                      <td colspan="1" class="px-4 py-3 text-sm sm:text-base text-right whitespace-nowrap">
+                     <p class="px-2 text-sm">
+                      Total : MYR {{ totalAmount.toFixed(2) }}</p>  
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -127,10 +146,9 @@
             <h1 class="mt-4 text-xl font-semibold tab-title" v-if="detail && detail.length > 0">
               {{ detail[0].Tab_Title }}
             </h1>
-            <div class="border-2 border-gray-400 dark:border-gray-600 rounded-2xl overflow-y-auto" id="table-overflow">
+            <div class="border border-gray-400 dark:border-gray-600 rounded-md overflow-y-auto" id="table-overflow">
               <table class="w-full">
-                <!-- title -->
-                <tr class="h-8 bg-gray-300 dark:bg-gray-700 rounded-2xl text-xs">
+                <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md text-xs">
                   <th class="w-40">Remark</th>
 
                   <th class="px-6 w-36 break-words text-xs" v-for="(val, key, i) in detail[0]" :key="i">
@@ -141,7 +159,7 @@
                         .join(' ')
                     }}
                   </th>
-                </tr>
+                </thead>
 
                 <!-- table information -->
                 <tr class="h-8 text-left align-top text-xs hover:bg-gray-200 dark:hover:bg-gray-800"
@@ -154,9 +172,9 @@
                         item.Tab_Title
                       )
                       " v-if="pending" type="text"
-                      class="p-1 text-xs w-full rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2" />
+                      class="p-1 text-xs w-full rounded-md outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border" />
                     <h1 id="remarkText" v-if="!pending && item.comment.trim() !== ''"
-                      class="m-1 px-2 py-1 bg-sky-100 rounded-2xl dark:bg-sky-950">
+                      class="m-1 px-2 py-1 bg-sky-100 rounded-md dark:bg-sky-950">
                       {{ item.comment }}
                     </h1>
                   </td>
@@ -212,7 +230,7 @@
                 </tr>
 
                 <!-- total -->
-                <tr class="border-t-2 border-gray-400 dark:border-gray-600 h-8 text-base font-semibold">
+                <tr class="border-t border-gray-400 dark:border-gray-600 h-8 text-base font-semibold">
                   <td class="text-center">TOTAL:</td>
                   <td class="text-center">RM{{ claimDataTotalAmount[i] }}</td>
                   <td></td>
@@ -223,97 +241,107 @@
         </div>
 
         <!-- Status Table -->
-        <div class="text-xs border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl" id="table-overflow">
+        <div class="text-xs border mt-4 border-gray-400 dark:border-gray-600 rounded-md" >
           <table class="w-full">
             <!-- title -->
-            <tr class="h-8 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
-              <th class="rounded-tl-2xl w-[20%] text-center border-r-2 border-gray-400 dark:border-gray-600">
+            <thead class="h-8 bg-gray-300 dark:bg-gray-700 text-left rounded-md space-x-2">
+              <th class="rounded-tl w-[20%] text-center border-r border-gray-400 dark:border-gray-600">
                 STATUS
               </th>
-              <th class="w-[24%] pl-6">NAME</th>
-              <th class="w-[23%]">DESIGNATION</th>
-              <th class="w-[23%]">DEPARTMENT</th>
-              <th class="w-[10%]">DATE</th>
-            </tr>
-
-            <!-- table information -->
-            <tr class="text-wrap h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600">
-              <th class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600">
-                <!-- Status Bar -->
-                <div class="mx-auto rounded-full py-2 text-center lg:w-[90%] w-full" :class="{
-                  'bg-amber-200 dark:bg-amber-500': verified,
-                  'bg-yellow-200 dark:bg-yellow-500': resubmitVerifier,
-                  'bg-red-200 dark:bg-red-500': rejectVerifier,
-                  'text-yellow-500 dark:text-yellow-100': resubmitVerifier,
-                  'text-amber-500 dark:text-amber-100': verified,
-                  'text-red-500 dark:text-red-100': rejectVerifier,
-                }">
-                  <p>
-                    {{
-                      verified
-                        ? 'VERIFIED'
-                        : resubmitVerifier
-                          ? 'RESUBMIT'
-                          : rejectVerifier
-                            ? 'REJECTED'
-                            : 'PENDING'
+              <th class="">NAME</th>
+              <th class="">DESIGNATION</th>
+              <th class="">DEPARTMENT</th>
+              <th class="">DATE</th>
+            </thead>
+            <tr class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+              <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
+                  :class="{
+                    'bg-blue-100/60 dark:bg-gray-800': checked,
+                    'bg-amber-100/60 dark:bg-gray-800': resubmitChecker,
+                    'bg-red-100/60 dark:bg-gray-800': rejectChecker,
+                    'bg-gray-100/60 dark:bg-gray-800': !checked && !rejectChecker && !resubmitChecker
+                  }">
+                  <span :class="{
+                    'h-1.5 w-1.5 rounded-full': true,
+                    'bg-blue-500': checked,
+                    'bg-amber-500': resubmitChecker,
+                    'bg-red-500': rejectChecker,
+                    'bg-gray-500': !checked && !rejectChecker && !resubmitChecker
+                  }"></span>
+                  <span :class="{
+                    'text-xs font-normal': true,
+                    'text-blue-500': checked,
+                    'text-amber-500': resubmitChecker,
+                    'text-red-500': rejectChecker,
+                    'text-gray-500': !checked && !rejectChecker && !resubmitChecker 
+                  }">
+                    {{ approved || approvedFinance || reimbursed
+                        ? 'CHECKED'
+                        : checked || rejectChecker || resubmitChecker
+                          ? adminStatus
+                          : 'PENDING'
                     }}
-                  </p>
+                  </span>
                 </div>
               </th>
+              <td class="pl-6">{{ claimDetails.checker_name || '-' }}</td>
+              <td class="">{{ claimDetails.checker_designation || '-' }}</td>
+              <td>{{ claimDetails.checker_department || '-' }}</td>
+              <td class="">{{ claimDetails.checked_date || '-' }}</td>
+            </tr>
+            <tr class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+              <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
+                :class="{
+                  'bg-amber-100/60 dark:bg-gray-800': simplifyVerifierStatus === 'VERIFIED' || simplifyVerifierStatus === 'RESUBMIT' || simplifyVerifierStatus === 'PENDING',
+                  'bg-red-100/60 dark:bg-gray-800': simplifyVerifierStatus === 'REJECTED'
+                }">
+                <span :class="{
+                  'h-1.5 w-1.5 rounded-full': true,
+                  'bg-amber-500': simplifyVerifierStatus === 'VERIFIED' || simplifyVerifierStatus === 'RESUBMIT' || simplifyVerifierStatus === 'PENDING',
+                  'bg-red-500': simplifyVerifierStatus === 'REJECTED'
+                }"></span>
+                <span :class="{
+                  'text-xs font-normal': true,
+                  'text-amber-500': simplifyVerifierStatus === 'VERIFIED' || simplifyVerifierStatus === 'RESUBMIT' || simplifyVerifierStatus === 'PENDING',
+                  'text-red-500': simplifyVerifierStatus === 'REJECTED'
+                }">
+                  {{ simplifyVerifierStatus }}
+                </span>
+              </div>
+            </th>
               <td class="pl-6">{{ claimDetails.verifier_name }}</td>
               <td class="">{{ claimDetails.verifier_designation }}</td>
               <td>{{ claimDetails.department }}</td>
               <td class="">{{ claimDetails.verified_date }}</td>
             </tr>
-            <tr class="text-wrap h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600">
-              <th class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600">
-                <!-- Status Bar -->
-                <div class="mx-auto rounded-full py-2 text-center lg:w-[90%] w-full" :class="{
-                  'bg-blue-200 dark:bg-blue-500': checked,
-                  'bg-yellow-200 dark:bg-yellow-500': resubmitChecker,
-                  'bg-red-200 dark:bg-red-500': rejectChecker,
 
-                  'text-blue-500 dark:text-blue-100': checked,
-                  'text-yellow-500 dark:text-yellow-100': resubmitChecker,
-
-                  'text-red-500 dark:text-red-100': rejectChecker,
-                }">
-                  <p>
-                    {{
-                      approved || approvedFinance || reimbursed
-                        ? 'CHECKED'
-                        : checked || rejectChecker || resubmitChecker
-                          ? adminStatus
-                          : ''
-                    }}
-                  </p>
-                </div>
-              </th>
-              <td class="pl-6">Checker</td>
-            </tr>
-            <tr class="text-wrap h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600">
-              <th class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600">
-                <!-- Status Bar -->
-                <div class="mx-auto rounded-full py-2 text-center lg:w-[90%] w-full" :class="{
-                  'bg-green-200 dark:bg-green-500': approved,
-                  'bg-yellow-200 dark:bg-yellow-500': resubmitApprover,
-                  'bg-red-200 dark:bg-red-500': rejectApprover,
-
-                  'text-green-500 dark:text-green-100': approved,
-                  'text-yellow-500 dark:text-yellow-100': resubmitApprover,
-
-                  'text-red-500 dark:text-red-100': rejectApprover,
-                }">
-                  <p>
-                    {{
-                      reimbursed
-                        ? 'APPROVED'
-                        : approved || rejectApprover || resubmitApprover
-                          ? adminStatus
-                          : ''
-                    }}
-                  </p>
+            <tr v-if="simplifiedApproverFinStatus === 'APPROVED' || simplifiedApproverFinStatus === 'REJECTED' || simplifiedApproverFinStatus === 'REIMBURSED'"  class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+              <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
+                  :class="{
+                    'bg-green-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'APPROVED',
+                    'bg-amber-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'RESUBMIT',
+                    'bg-red-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'REJECTED',
+                    'bg-slate-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'PENDING',
+                  }">
+                  <span :class="{
+                    'h-1.5 w-1.5 rounded-full': true,
+                    'bg-green-500': simplifiedApproverFinStatus === 'APPROVED',
+                    'bg-amber-500': simplifiedApproverFinStatus === 'RESUBMIT',
+                    'bg-red-500': simplifiedApproverFinStatus === 'REJECTED',
+                    'bg-slate-500': simplifiedApproverFinStatus === 'PENDING'
+                  }"></span>
+                  <span :class="{
+                    'text-xs font-normal': true,
+                    'text-green-500': simplifiedApproverFinStatus === 'APPROVED',
+                    'text-amber-500': simplifiedApproverFinStatus === 'RESUBMIT',
+                    'text-red-500': simplifiedApproverFinStatus === 'REJECTED',
+                    'text-slate-500': simplifiedApproverFinStatus === 'PENDING'
+                  }">
+                    {{ simplifiedApproverFinStatus }}
+                  </span>
                 </div>
               </th>
               <td class="pl-6">
@@ -345,31 +373,36 @@
                 }}
               </td>
             </tr>
-            <tr class="text-wrap h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600">
-              <th class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600">
-                <!-- Status Bar -->
-                <div class="mx-auto rounded-full py-2 text-center lg:w-[90%] w-full" :class="{
-                  'bg-green-200 dark:bg-green-500': approvedFinance,
-                  'bg-yellow-200 dark:bg-yellow-500': resubmitFinance,
-                  'bg-red-200 dark:bg-red-500': rejectFinance,
-
-                  'text-green-500 dark:text-green-100': approvedFinance,
-                  'text-yellow-500 dark:text-yellow-100': resubmitFinance,
-
-                  'text-red-500 dark:text-red-100': rejectFinance,
-                }">
-                  <p>
-                    {{
-                      approvedFinance ||
-                        rejectFinance ||
-                        resubmitFinance ||
-                        reimbursed
-                        ? adminStatus
-                        : ''
-                    }}
-                  </p>
-                </div>
-              </th>
+            <tr  v-if="simplifiedFinanceStatus === 'REIMBURSED' " class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+              <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+              <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
+              :class="{
+                'bg-green-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'APPROVED',
+                'bg-amber-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'RESUBMIT',
+                'bg-red-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'REJECTED',
+                'bg-slate-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'REIMBURSED', // Use a unique color
+                'bg-blue-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'PENDING'
+              }">
+              <span :class="{
+                'h-1.5 w-1.5 rounded-full': true,
+                'bg-green-500': simplifiedFinanceStatus === 'APPROVED',
+                'bg-amber-500': simplifiedFinanceStatus === 'RESUBMIT',
+                'bg-red-500': simplifiedFinanceStatus === 'REJECTED',
+                'bg-slate-500': simplifiedFinanceStatus === 'REIMBURSED', // Use a unique color
+                'bg-blue-500': simplifiedFinanceStatus === 'PENDING'
+              }"></span>
+              <span :class="{
+                'text-xs font-normal': true,
+                'text-green-500': simplifiedFinanceStatus === 'APPROVED',
+                'text-amber-500': simplifiedFinanceStatus === 'RESUBMIT',
+                'text-red-500': simplifiedFinanceStatus === 'REJECTED',
+                'text-slate-500': simplifiedFinanceStatus === 'REIMBURSED', // Use a unique color
+                'text-blue-500': simplifiedFinanceStatus === 'PENDING'
+              }">
+                {{ simplifiedFinanceStatus }}
+              </span>
+            </div>
+            </th>
               <td class="pl-6">
                 {{
                   approved || rejectApprover || resubmitApprover || reimbursed
@@ -405,23 +438,19 @@
         <!-- Remark table -->
 
         <div>
-          <div v-show="!pending" class="text-xs border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl"
+          <div v-show="!pending"  class="text-xs border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl"
             id="table-overflow">
             <table class="w-full">
-              <!-- title -->
               <tr class="h-8 bg-gray-300 dark:bg-gray-700 rounded-2xl">
                 <th class="pl-6">Remark</th>
               </tr>
-
-              <!-- table information -->
               <tr class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600">
                 <td class="pl-6">{{ remark }}</td>
               </tr>
             </table>
           </div>
           <div class="flex space-x-2 py-2">
-            <!-- First section: Approve/Reject buttons -->
-            <div v-if="!approved && !approvedFinance && !reimbursed" class=".detail-table w-full lg:flex-row flex flex-col justify-between items-center">
+            <div v-if="!approved && !approvedFinance && !reimbursed && claimDetails.admin_status !== 'REJECTED BY FINANCE'" class=".detail-table w-full lg:flex-row flex flex-col justify-between items-center">
               <div class="flex space-x-2 justify-between items-center">
                 <label class="font-semibold mr-2 mb-4 lg:mb-0">Overall Remark:
                 </label>
@@ -439,9 +468,6 @@
                 </button>
               </div>
             </div>
-
-
-            <!-- Second section: Reimburse button -->
             <div v-else-if="claimDetails.admin_status === 'APPROVED BY FINANCE. WAITING FOR REIMBURSED'" 
               class="w-full flex justify-end">
               <div class="my-3" id="hidden">
@@ -525,7 +551,7 @@
 
         <!-- Reject Confirmation -->
         <div v-show="confirmReject"
-          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center">
+          class="bg-black backdrop-blur-sm bg-opactity-50 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center">
           <div
             class="bg-white dark:bg-gray-900 w-96 px-8 h-52 rounded-xl fixed flex flex-col justify-center items-center">
             <h1 class="text-xl font-bold">Please write the remark to reject</h1>
@@ -813,6 +839,92 @@ export default {
       }
       return num;
     },
+    simplifiedFinanceStatus() {
+    switch (this.adminStatus) {
+      case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
+        return 'APPROVED';
+      case 'REJECTED BY VERIFIER.':
+        return 'REJECTED';
+      case 'RESUBMIT':
+        return 'RESUBMIT';
+      case 'REIMBURSED':
+        return 'REIMBURSED';
+      case 'OPEN':
+        return 'PENDING';
+        case 'VERIFIED. WAITING FOR APPROVER.':
+        return 'PENDING';
+      default:
+        return this.adminStatus; 
+    }
+  },
+  simplifiedApproverFinStatus() {
+    switch (this.adminStatus) {
+      case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
+        return 'APPROVED';
+      case 'REJECTED BY VERIFIER.':
+        return 'REJECTED';
+      case 'RESUBMIT':
+        return 'RESUBMIT';
+      case 'REIMBURSED':
+        return 'APPROVED';
+      case 'OPEN':
+        return 'PENDING';
+        case 'VERIFIED. WAITING FOR APPROVER.':
+        return 'PENDING';
+      default:
+        return this.adminStatus; 
+    }
+  },
+  simplifiedApproverStatus() {
+    switch (this.adminStatus) {
+      case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
+        return 'APPROVED';
+      case 'REJECTED BY VERIFIER.':
+        return 'REJECTED';
+      case 'RESUBMIT':
+        return 'RESUBMIT';
+      case 'REIMBURSED':
+        return 'APPROVED';
+      case 'OPEN':
+        return 'PENDING';
+      case 'VERIFIED. WAITING FOR APPROVER.':
+        return 'PENDING';
+      default:
+        return this.adminStatus; 
+    }
+  },
+  // simplifiedVerifierStatus() {
+  //   if (this.verified) {
+  //     return 'VERIFIED';
+  //   } else if (this.resubmitVerifier) {
+  //     return 'RESUBMIT';
+  //   } else if (this.rejectVerifier) {
+  //     return 'REJECTED';
+  //   } else if (this.open) {
+  //     return 'PENDING';
+  //   }
+  //   return '-';
+  // },
+
+  simplifyVerifierStatus(){
+    switch (this.adminStatus) {
+      case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
+        return 'APPROVED';
+      case 'REJECTED BY VERIFIER.':
+        return 'REJECTED';
+      case 'RESUBMIT':
+        return 'RESUBMIT';
+      case 'REIMBURSED':
+        return 'APPROVED';
+      case 'OPEN':
+      case 'REJECTED BY FINANCE':
+        return 'REJECTED';
+      case 'VERIFIED. WAITING FOR APPROVER.':
+        return 'PENDING';
+      default:
+        return this.adminStatus; 
+  }
+  },
   },
   methods: {
     toggleDropdown() {
@@ -830,12 +942,9 @@ export default {
           this.loading = false;
           this.claimDetails = response.data.result;
           this.adminStatus = this.claimDetails.admin_status
-            .split(' ')[0]
-            .split('.')[0]
-            .toUpperCase();
-          console.log(this.claimDetails.admin_status);
+          console.log("claimDetails", this.claimDetails);
           switch (this.adminStatus) {
-            case 'VERIFIED':
+            case 'VERIFIED. WAITING FOR APPROVER.':
               this.verified = true;
               this.pending = false;
 
@@ -849,7 +958,7 @@ export default {
               this.remark = this.claimDetails.comment;
               break;
 
-            case 'APPROVED':
+            case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
               if (this.claimDetails.admin_status.includes('APPROVER')) {
                 this.verified = true;
                 this.checked = true;
@@ -866,7 +975,7 @@ export default {
               this.remark = this.claimDetails.comment;
               break;
 
-            case 'REJECTED':
+            case 'REJECTED BY VERIFIER.':
               if (this.claimDetails.admin_status.includes('VERIFIER')) {
                 this.rejectVerifier = true;
                 console.log('yes');
