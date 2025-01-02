@@ -269,21 +269,21 @@
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
               <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
                 :class="{
-                  'bg-red-100/60 dark:bg-gray-800': ['REJECTED BY VERIFIER.', 'REJECTED BY FINANCE.', 'REJECTED BY HR & ADMIN'].includes(statusApprover),
+                  'bg-red-100/60 dark:bg-gray-800': ['REJECTED BY VERIFIER.', 'REJECTED BY FINANCE', 'REJECTED BY HR & ADMIN'].includes(statusApprover),
                   'bg-green-100/60 dark:bg-gray-800': ['APPROVED BY FINANCE. WAITING FOR REIMBURSED', 'APPROVED BY HR & ADMIN'].includes(statusApprover),
                   'bg-amber-100/60 dark:bg-gray-800': ['VERIFIED. WAITING FOR APPROVER.'].includes(statusApprover),
                   'bg-slate-100/60 dark:bg-gray-800': statusApprover === 'REIMBURSED'
                 }">
                 <span :class="{
                   'h-1.5 w-1.5 rounded-full': true,
-                  'bg-red-500': ['REJECTED BY VERIFIER.', 'REJECTED BY FINANCE.', 'REJECTED BY HR & ADMIN'].includes(statusApprover),
+                  'bg-red-500': ['REJECTED BY VERIFIER.', 'REJECTED BY FINANCE', 'REJECTED BY HR & ADMIN'].includes(statusApprover),
                   'bg-green-500': ['APPROVED BY FINANCE. WAITING FOR REIMBURSED', 'APPROVED BY HR & ADMIN'].includes(statusApprover),
                   'bg-amber-500': ['VERIFIED. WAITING FOR APPROVER.'].includes(statusApprover),
                   'bg-black': statusApprover === 'REIMBURSED'
                 }"></span>
                 <span :class="{
                   'text-xs font-normal': true,
-                  'text-red-500': ['REJECTED BY VERIFIER.', 'REJECTED BY FINANCE.', 'REJECTED BY HR & ADMIN'].includes(statusApprover),
+                  'text-red-500': ['REJECTED BY VERIFIER.', 'REJECTED BY FINANCE', 'REJECTED BY HR & ADMIN'].includes(statusApprover),
                   'text-green-500': ['APPROVED BY FINANCE. WAITING FOR REIMBURSED', 'APPROVED BY HR & ADMIN'].includes(statusApprover),
                   'text-amber-500': ['VERIFIED. WAITING FOR APPROVER.'].includes(statusApprover),
                   'text-black': statusApprover === 'REIMBURSED'
