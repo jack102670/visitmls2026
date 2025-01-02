@@ -1,5 +1,5 @@
 <template>
-  <main class="flex text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 p-4 sm:ml-64">
+  <main class="flex overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 p-4 sm:ml-64">
     <div class=" mx-auto">
       <div
         class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 dark:text-white border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
@@ -85,8 +85,8 @@
                       @blur="handleStartBlur"
                       class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
                       placeholder="Select start date" />
-                    <div v-if="isStartCalendarOpen"
-                      class="absolute z-10 w-full mt-1 bg-white border rounded-md shadow-lg">
+                    <div v-if="isStartCalendarOpen" ref="startCalendar"
+                      class="absolute z-50 w-full mt-1 bg-white border rounded-md shadow-lg">
                       <div class="p-4">
                         <div class="flex justify-between mb-4">
                           <button @click="prevMonth">⬅️</button>
@@ -117,8 +117,8 @@
                       @blur="handleEndBlur"
                       class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
                       placeholder="Select end date" />
-                    <div v-if="isEndCalendarOpen"
-                      class="absolute z-10 w-full mt-1 bg-white border rounded-md shadow-lg">
+                    <div v-if="isEndCalendarOpen"  ref="endCalendar"
+                      class="absolute z-50 w-full mt-1 bg-white border rounded-md shadow-lg">
                       <div class="p-4">
                         <div class="flex justify-between mb-4">
                           <button @click="prevMonth">⬅️</button>
@@ -152,7 +152,7 @@
               </div>
 
               <div class="flex flex-col mb-8">
-                <button @click="AddCheckers()" class="bg-blue-800 text-white py-2 mb-[160px] w-32 rounded-lg hover:bg-blue-900">
+                <button @click="AddCheckers()" class="bg-blue-800 text-white py-2 mb-[200px] w-32 rounded-lg hover:bg-blue-900">
                   Confirm
                 </button>
               </div>
@@ -471,17 +471,21 @@ export default {
       return selectedDate.isSame(moment(this.endDate), 'day');
     },
 
-    handleStartBlur() {
-      setTimeout(() => {
+    handleStartBlur(event) {
+    setTimeout(() => {
+      if (this.$refs.startCalendar && !this.$refs.startCalendar.contains(event.relatedTarget)) {
         this.isStartCalendarOpen = false;
-      }, 200);
-    },
+      }
+    }, 200);
+  },
 
-    handleEndBlur() {
-      setTimeout(() => {
+  handleEndBlur(event) {
+    setTimeout(() => {
+      if (this.$refs.endCalendar && !this.$refs.endCalendar.contains(event.relatedTarget)) {
         this.isEndCalendarOpen = false;
-      }, 200);
-    },
+      }
+    }, 200);
+  },
 
     saveCheckersToLocalStorage() {
       localStorage.setItem('assignedCheckers', JSON.stringify(this.Checkers));
