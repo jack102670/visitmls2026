@@ -158,17 +158,30 @@
 
           <span class="mx-4 font-medium">Dashboard Finance</span>
         </router-link> -->
-        <router-link v-if="controlView === 'eclaim' && userData.department === 'FIN'"
-          class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
-          :to="{ name: 'AdminDashboardpage' }">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-            stroke="currentColor" class="w-5 h-5">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
-          </svg>
-
-          <span class="mx-4 font-medium">Dashboard Finance</span>
-        </router-link>
+        <router-link v-if="controlView === 'eclaim' && userData.checker_valid !== '0'"
+        class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
+        :to="{ name: 'AssignChecker' }">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke-width="1.5"
+          stroke="currentColor" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9 11l3 3L22 4" />
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M2 12l7 7 4-4" />
+        </svg>
+        <span class="mx-4 font-medium">Assign Checker</span>
+      </router-link>
+        <router-link v-if="controlView === 'eclaim'"
+        class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
+        :to="{ name: 'checkerDashboardPage' }">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke-width="1.5"
+          stroke="currentColor" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9 11l3 3L22 4" />
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M2 12l7 7 4-4" />
+        </svg>
+        <span class="mx-4 font-medium">Check claims</span>
+      </router-link>
         <router-link v-if="controlView === 'eclaim'"
           class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
           :to="{ name: 'verified' }">
@@ -177,8 +190,17 @@
             <path stroke-linecap="round" stroke-linejoin="round"
               d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
           </svg>
-
           <span class="mx-4 font-medium">Verify Claims</span>
+        </router-link>
+        <router-link v-if="controlView === 'eclaim' && userData.department === 'FIN'"
+          class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
+          :to="{ name: 'AdminDashboardpage' }">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
+          </svg>
+          <span class="mx-4 font-medium">Dashboard Finance</span>
         </router-link>
         <router-link v-if="controlView === 'eclaim' && userData.department === 'HR & ADMIN'"
           class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
@@ -260,19 +282,11 @@
     </div>
   </aside>
 
-  <!-- <div v-if="controlView === 'eform'">
-    <EformSidbarFComponent  />
-  </div> -->
-
-
-
-
-
 </template>
 
 <script>
 import { store } from '../views/store.js';
-// import EformSidbarFComponent from "../components/E-form-component/eNavbar/EFormNavbar.vue"
+import axios from 'axios';
 
 export default {
   name: 'NewsidebarComponent',
@@ -293,14 +307,14 @@ export default {
       role: null,
       showLogOutButton: true,
       showLoadingButton: false,
-      controlView: null, // or some initial value
+      controlView: null,
     };
   },
   computed: {
     sidebarPosition() {
       return {
         left: this.open ? '240px' : '4px',
-        top: this.open ? '9px' : '9px', // Add your top position style here
+        top: this.open ? '9px' : '9px', 
         transition: this.open ? 'all 0.5s ease-out' : 'all 0.6s ease-in',
         transform: this.open ? 'rotate(0deg)' : 'rotate(180deg)',
       };
@@ -313,16 +327,11 @@ export default {
     this.checkuser();
     this.role = store.getRole();
     console.log(this.userDetails, 'user details');
-    // Fetch data when the component is mounted
-
-    //this.currentUser();
   },
   watch: {
     // Watch for changes in controlView
     controlView(newVal, oldVal) {
-      // Code to execute when controlView changes
       console.log(`controlView changed from ${oldVal} to ${newVal}`);
-      // Perform any additional actions here
     },
   },
   beforeCreate() {
@@ -331,34 +340,28 @@ export default {
       window.location.reload();
     } else {
       localStorage.removeItem('reloaded');
-      // Additional code for your component
     }
   },
   methods: {
-    checkuser() {
-      const username_id = this.userDetails.userId; // Assuming `store` is accessible through `this.$store`
-      fetch(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`)
-        .then((response) => response.json()) // Convert the response to JSON
-        .then((data) => {
-          // Assuming the API response structure has a status field in `data.result[0]`
-          this.userData = data.result[0];
-          console.log('User status:', this.userData);
-        })
-        .catch((error) => {
-          console.error('There was an error fetching the user status:', error);
-          // Handle error or set a default behavior if the API call fails
-        });
+    async checkuser() {
+      const username_id = this.userDetails.userId;
+      try {
+        const response = await axios.get(
+          `http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`
+        );
+        this.userData = response.data.result[0];
+        console.log('User status:', this.userData);
+      } catch (error) {
+        console.error('There was an error fetching the user status:', error);
+      }
     },
 
     logout() {
       this.showLogOutButton = false;
       this.showLoadingButton = true;
       store.clearSession();
-      this.$router.push('/'); // Redirect to login
+      this.$router.push('/'); 
     },
-    // logoutAPI(){
-    //   axios.post("http://172.28.28.91:8085api/Security/logout")
-    // },
     toggleTheme() {
       const root = document.documentElement;
       const isDarkMode = root.classList.contains('dark');
@@ -372,8 +375,6 @@ export default {
       }
 
       this.isLightTheme = !isDarkMode;
-
-      // Store the current theme in localStorage
       localStorage.setItem('theme', this.isLightTheme ? 'light' : 'dark');
     },
     toggleDropdown() {
