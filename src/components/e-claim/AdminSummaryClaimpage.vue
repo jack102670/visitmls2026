@@ -151,13 +151,18 @@
                 <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md text-xs">
                   <th class="w-40">Remark</th>
 
-                  <th class="px-6 w-36 break-words text-xs" v-for="(val, key, i) in detail[0]" :key="i">
+                  <!-- <th class="px-6 w-36 break-words text-xs" v-for="(val, key, i) in detail[0]" :key="i">
                     {{
                       key
                         .split('_')
 
                         .join(' ')
                     }}
+                  </th> -->
+                  <th class="px-6 w-36 break-words text-xs"
+                    v-for="key in Object.keys(detail[0]).filter(k => !['Tab_Title', 'unique_code', 'comment'].includes(k))"
+                    :key="key">
+                    {{ key.split('_').join(' ') }}
                   </th>
                 </thead>
 
@@ -253,7 +258,7 @@
               <th class="">DEPARTMENT</th>
               <th class="">DATE</th>
             </thead>
-            <tr class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+            <tr v-show="claimDetails.checker_name !== ''" class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
                 <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
                   :class="{
@@ -293,24 +298,24 @@
             <tr class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
                 <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
-                :class="{
-                  'bg-amber-100/60 dark:bg-gray-800': simplifyVerifierStatus === 'VERIFIED' || simplifyVerifierStatus === 'RESUBMIT' || simplifyVerifierStatus === 'PENDING',
-                  'bg-red-100/60 dark:bg-gray-800': simplifyVerifierStatus === 'REJECTED'
-                }">
-                <span :class="{
-                  'h-1.5 w-1.5 rounded-full': true,
-                  'bg-amber-500': simplifyVerifierStatus === 'VERIFIED' || simplifyVerifierStatus === 'RESUBMIT' || simplifyVerifierStatus === 'PENDING',
-                  'bg-red-500': simplifyVerifierStatus === 'REJECTED'
-                }"></span>
-                <span :class="{
-                  'text-xs font-normal': true,
-                  'text-amber-500': simplifyVerifierStatus === 'VERIFIED' || simplifyVerifierStatus === 'RESUBMIT' || simplifyVerifierStatus === 'PENDING',
-                  'text-red-500': simplifyVerifierStatus === 'REJECTED'
-                }">
-                  {{ simplifyVerifierStatus }}
-                </span>
-              </div>
-            </th>
+                  :class="{
+                    'bg-amber-100/60 dark:bg-gray-800': simplifyVerifierStatus === 'VERIFIED' || simplifyVerifierStatus === 'RESUBMIT' || simplifyVerifierStatus === 'PENDING',
+                    'bg-red-100/60 dark:bg-gray-800': simplifyVerifierStatus === 'REJECTED'
+                  }">
+                  <span :class="{
+                    'h-1.5 w-1.5 rounded-full': true,
+                    'bg-amber-500': simplifyVerifierStatus === 'VERIFIED' || simplifyVerifierStatus === 'RESUBMIT' || simplifyVerifierStatus === 'PENDING',
+                    'bg-red-500': simplifyVerifierStatus === 'REJECTED'
+                  }"></span>
+                  <span :class="{
+                    'text-xs font-normal': true,
+                    'text-amber-500': simplifyVerifierStatus === 'VERIFIED' || simplifyVerifierStatus === 'RESUBMIT' || simplifyVerifierStatus === 'PENDING',
+                    'text-red-500': simplifyVerifierStatus === 'REJECTED'
+                  }">
+                    {{ simplifyVerifierStatus }}
+                  </span>
+                </div>
+              </th>
               <td class="pl-6">{{ claimDetails.verifier_name }}</td>
               <td class="">{{ claimDetails.verifier_designation }}</td>
               <td>{{ claimDetails.department }}</td>
@@ -348,14 +353,14 @@
                 {{
                   approved || rejectApprover || resubmitApprover || reimbursed
                     ? claimDetails.approver_name
-                    : ''
+                    : '-'
                 }}
               </td>
               <td class="">
                 {{
                   approved || rejectApprover || resubmitApprover || reimbursed
                     ? claimDetails.approver_designation
-                    : ''
+                    : '-'
                 }}
               </td>
               <td>
@@ -369,7 +374,7 @@
                 {{
                   approved || rejectApprover || resubmitApprover || reimbursed
                     ? claimDetails.approved_date
-                    : ''
+                    : '-'
                 }}
               </td>
             </tr>
@@ -380,7 +385,7 @@
                 'bg-green-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'APPROVED',
                 'bg-amber-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'RESUBMIT',
                 'bg-red-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'REJECTED',
-                'bg-slate-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'REIMBURSED', // Use a unique color
+                'bg-slate-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'REIMBURSED',
                 'bg-blue-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'PENDING'
               }">
               <span :class="{
@@ -388,7 +393,7 @@
                 'bg-green-500': simplifiedFinanceStatus === 'APPROVED',
                 'bg-amber-500': simplifiedFinanceStatus === 'RESUBMIT',
                 'bg-red-500': simplifiedFinanceStatus === 'REJECTED',
-                'bg-slate-500': simplifiedFinanceStatus === 'REIMBURSED', // Use a unique color
+                'bg-slate-500': simplifiedFinanceStatus === 'REIMBURSED', 
                 'bg-blue-500': simplifiedFinanceStatus === 'PENDING'
               }"></span>
               <span :class="{
@@ -396,7 +401,7 @@
                 'text-green-500': simplifiedFinanceStatus === 'APPROVED',
                 'text-amber-500': simplifiedFinanceStatus === 'RESUBMIT',
                 'text-red-500': simplifiedFinanceStatus === 'REJECTED',
-                'text-slate-500': simplifiedFinanceStatus === 'REIMBURSED', // Use a unique color
+                'text-black-500': simplifiedFinanceStatus === 'REIMBURSED', 
                 'text-blue-500': simplifiedFinanceStatus === 'PENDING'
               }">
                 {{ simplifiedFinanceStatus }}
@@ -407,28 +412,28 @@
                 {{
                   approved || rejectApprover || resubmitApprover || reimbursed
                     ? claimDetails.approver_name
-                    : ''
+                    : '-'
                 }}
               </td>
               <td class="">
                 {{
                   approved || rejectApprover || resubmitApprover || reimbursed
                     ? claimDetails.approver_designation
-                    : ''
+                    : '-'
                 }}
               </td>
               <td>
                 {{
                   approved || rejectApprover || resubmitApprover || reimbursed
                     ? claimDetails.approver_department
-                    : ''
+                    : '-'
                 }}
               </td>
               <td class="">
                 {{
                   approved || rejectApprover || resubmitApprover || reimbursed
                     ? claimDetails.approved_date
-                    : ''
+                    : '-'
                 }}
               </td>
             </tr>
@@ -438,13 +443,13 @@
         <!-- Remark table -->
 
         <div>
-          <div v-show="!pending"  class="text-xs border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl"
+          <div v-show="!pending"  class="text-xs border mt-4 border-gray-400 dark:border-gray-600 rounded-md"
             id="table-overflow">
             <table class="w-full">
-              <tr class="h-8 bg-gray-300 dark:bg-gray-700 rounded-2xl">
+              <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md">
                 <th class="pl-6">Remark</th>
-              </tr>
-              <tr class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600">
+              </thead>
+              <tr class="h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
                 <td class="pl-6">{{ remark }}</td>
               </tr>
             </table>
@@ -909,18 +914,18 @@ export default {
   simplifyVerifierStatus(){
     switch (this.adminStatus) {
       case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
-        return 'APPROVED';
+        return 'VERIFIED';
       case 'REJECTED BY VERIFIER.':
         return 'REJECTED';
       case 'RESUBMIT':
         return 'RESUBMIT';
       case 'REIMBURSED':
-        return 'APPROVED';
+        return 'VERIFIED';
       case 'OPEN':
       case 'REJECTED BY FINANCE':
         return 'REJECTED';
       case 'VERIFIED. WAITING FOR APPROVER.':
-        return 'PENDING';
+        return 'VERIFIED'; 
       default:
         return this.adminStatus; 
   }
@@ -1383,12 +1388,21 @@ export default {
           console.log(approveData);
 
           const response = await axios.put('http://172.28.28.116:7165/api/Admin/Approve_Claim_FN', approveData);
+          // if (response.status === 200) {
+          //   this.approveSuccess = true;
+          //   this.loading = false;
+          //   setTimeout(() => {
+          //     this.$router.push({ name: 'AdminDashboardpage' });
+          //   }, 2500);
+          // }
+
           if (response.status === 200) {
             this.approveSuccess = true;
             this.loading = false;
-            setTimeout(() => {
-              this.$router.push({ name: 'AdminDashboardpage' });
-            }, 2500);
+            // console.log('Approved successful:', response.data);
+
+            await this.FetchClaimDetails();
+            await this.FetchClaimDatasDetails();
           }
         } catch (error) {
           console.error('Error during Reject:', {
@@ -1420,7 +1434,10 @@ export default {
           const response = await axios.put('http://172.28.28.116:7165/api/Admin/Approve_Claim_FN', approveData);
           if (response.status === 200) {
             this.loading = false;
-            console.log('API response', response.data);
+            // console.log('Reject successful:', response.data);
+
+            await this.FetchClaimDetails();
+            await this.FetchClaimDatasDetails();
           }
         } catch (error) {
           console.error('Error during Reject:', {
@@ -1453,7 +1470,10 @@ export default {
 
           if (response.status === 200) {
             this.loading = false;
-            console.log('API response', response.data);
+            // console.log('Reimbursement successful:', response.data);
+
+            await this.FetchClaimDetails();
+            await this.FetchClaimDatasDetails();
           }
         } catch (error) {
           console.error('Error during Resubmit:', {
@@ -1490,7 +1510,7 @@ export default {
 
           if (response.status === 200) {
             this.loading = false;
-            console.log('Reimbursement successful:', response.data);
+            // console.log('Reimbursement successful:', response.data);
 
             await this.FetchClaimDetails();
             await this.FetchClaimDatasDetails();

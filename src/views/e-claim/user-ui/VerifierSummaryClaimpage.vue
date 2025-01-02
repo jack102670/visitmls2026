@@ -252,66 +252,61 @@
               <th class="">DEPARTMENT</th>
               <th class="">DATE</th>
             </thead>
-
-            <!-- table information -->
-            <tr v-if="checked" class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
-              <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
-                <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
-                  :class="{
-                    'bg-blue-100/60 dark:bg-gray-800': checked,
-                    'bg-amber-100/60 dark:bg-gray-800': resubmitChecker,
-                    'bg-red-100/60 dark:bg-gray-800': rejectChecker,
-                    'bg-gray-100/60 dark:bg-gray-800': !checked && !rejectChecker && !resubmitChecker
-                  }">
-                  <span :class="{
-                    'h-1.5 w-1.5 rounded-full': true,
-                    'bg-blue-500': checked,
-                    'bg-amber-500': resubmitChecker,
-                    'bg-red-500': rejectChecker,
-                    'bg-gray-500': !checked && !rejectChecker && !resubmitChecker
-                  }"></span>
-                  <span :class="{
-                    'text-xs font-normal': true,
-                    'text-blue-500': checked,
-                    'text-amber-500': resubmitChecker,
-                    'text-red-500': rejectChecker,
-                    'text-gray-500': !checked && !rejectChecker && !resubmitChecker 
-                  }">
-                    {{ approved || approvedFinance || reimbursed
-                        ? 'CHECKED'
-                        : checked || rejectChecker || resubmitChecker
-                          ? adminStatus
-                          : 'PENDING'
-                    }}
-                  </span>
-                </div>
-              </th>
-                <td class="pl-6">{{ claimDetails.checker_name || '-' }}</td>
-                <td class="pl-6">{{ claimDetails.checker_designation || '-' }}</td>
-                <td>{{ claimDetails.checker_department || '-' }}</td>
-                <td>{{ claimDetails.checked_date || '-' }}</td>
-              </tr>
-            <tr class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
-              <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
-                <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
+            <tr v-if="checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' || claimDetails.admin_status === 'VERIFIED. WAITING FOR APPROVER.' || rejectChecker || claimDetails.admin_status === 'REJECTED BY CHECKER' && claimDetails.checker_name !== ''" class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+            <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+              <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
                 :class="{
-                  'bg-amber-100/60 dark:bg-gray-800': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'RESUBMIT' || simplifiedVerifierStatus === 'PENDING',
-                  'bg-red-100/60 dark:bg-gray-800': simplifiedVerifierStatus === 'REJECTED'
+                  'bg-green-100/60 dark:bg-gray-800': checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' || claimDetails.admin_status === 'VERIFIED. WAITING FOR APPROVER.',
+                  'bg-red-100/60 dark:bg-gray-800': rejectChecker || claimDetails.admin_status === 'REJECTED BY CHECKER',
+                  'bg-gray-100/60 dark:bg-gray-800': !checked && !rejectChecker && !resubmitChecker
                 }">
                 <span :class="{
                   'h-1.5 w-1.5 rounded-full': true,
-                  'bg-amber-500': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'RESUBMIT' || simplifiedVerifierStatus === 'PENDING',
-                  'bg-red-500': simplifiedVerifierStatus === 'REJECTED'
+                  'bg-green-500': checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' || claimDetails.admin_status === 'VERIFIED. WAITING FOR APPROVER.',
+                  'bg-red-500': rejectChecker || claimDetails.admin_status === 'REJECTED BY CHECKER',
+                  'bg-gray-500': !checked && !rejectChecker && !resubmitChecker
                 }"></span>
                 <span :class="{
                   'text-xs font-normal': true,
-                  'text-amber-500': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'RESUBMIT' || simplifiedVerifierStatus === 'PENDING',
-                  'text-red-500': simplifiedVerifierStatus === 'REJECTED'
+                  'text-green-500': checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' || claimDetails.admin_status === 'VERIFIED. WAITING FOR APPROVER.',
+                  'text-red-500': rejectChecker || claimDetails.admin_status === 'REJECTED BY CHECKER',
+                  'text-gray-500': !checked && !rejectChecker && !resubmitChecker 
                 }">
-                  {{ simplifiedVerifierStatus }}
+                  {{ checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' || claimDetails.admin_status === 'VERIFIED. WAITING FOR APPROVER.'
+                      ? 'CHECKED'
+                      : rejectChecker || claimDetails.admin_status === 'REJECTED BY CHECKER'
+                        ? 'REJECTED'
+                        : 'PENDING'
+                  }}
                 </span>
               </div>
             </th>
+            <td class="pl-6">{{ claimDetails.checker_name || '-' }}</td>
+            <td class="pl-6">{{ claimDetails.checker_designation || '-' }}</td>
+            <td>{{ claimDetails.checker_department || '-' }}</td>
+            <td>{{ claimDetails.checked_date || '-' }}</td>
+          </tr>
+            <tr class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+              <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
+                  :class="{
+                    'bg-amber-100/60 dark:bg-gray-800': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'RESUBMIT' || simplifiedVerifierStatus === 'PENDING',
+                    'bg-red-100/60 dark:bg-gray-800': simplifiedVerifierStatus === 'REJECTED'
+                  }">
+                  <span :class="{
+                    'h-1.5 w-1.5 rounded-full': true,
+                    'bg-amber-500': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'RESUBMIT' || simplifiedVerifierStatus === 'PENDING',
+                    'bg-red-500': simplifiedVerifierStatus === 'REJECTED'
+                  }"></span>
+                  <span :class="{
+                    'text-xs font-normal': true,
+                    'text-amber-500': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'RESUBMIT' || simplifiedVerifierStatus === 'PENDING',
+                    'text-red-500': simplifiedVerifierStatus === 'REJECTED'
+                  }">
+                    {{ simplifiedVerifierStatus }} 
+                  </span>
+                </div>
+              </th>
               <td class="pl-6">{{ claimDetails.verifier_name || '-' }}</td>
               <td class="">{{ claimDetails.verifier_designation || '-' }}</td>
               <td>{{ claimDetails.department || '-' }}</td>
@@ -380,7 +375,7 @@
                 'bg-green-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'APPROVED',
                 'bg-amber-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'RESUBMIT',
                 'bg-red-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'REJECTED',
-                'bg-slate-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'REIMBURSED', // Use a unique color
+                'bg-slate-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'REIMBURSED', 
                 'bg-blue-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'PENDING'
               }">
               <span :class="{
@@ -388,7 +383,7 @@
                 'bg-green-500': simplifiedFinanceStatus === 'APPROVED',
                 'bg-amber-500': simplifiedFinanceStatus === 'RESUBMIT',
                 'bg-red-500': simplifiedFinanceStatus === 'REJECTED',
-                'bg-slate-500': simplifiedFinanceStatus === 'REIMBURSED', // Use a unique color
+                'bg-slate-500': simplifiedFinanceStatus === 'REIMBURSED',
                 'bg-blue-500': simplifiedFinanceStatus === 'PENDING'
               }"></span>
               <span :class="{
@@ -396,7 +391,7 @@
                 'text-green-500': simplifiedFinanceStatus === 'APPROVED',
                 'text-amber-500': simplifiedFinanceStatus === 'RESUBMIT',
                 'text-red-500': simplifiedFinanceStatus === 'REJECTED',
-                'text-slate-500': simplifiedFinanceStatus === 'REIMBURSED', // Use a unique color
+                'text-slate-500': simplifiedFinanceStatus === 'REIMBURSED', 
                 'text-blue-500': simplifiedFinanceStatus === 'PENDING'
               }">
                 {{ simplifiedFinanceStatus }}
@@ -436,34 +431,30 @@
         </div>
 
         <!-- Remark table -->
-        <div v-show="!pending" class="text-xs border mt-4 border-gray-400 dark:border-gray-600 rounded-md"
-          id="table-overflow">
-          <table class="w-full">
-
-            <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md">
-              <th class="pl-6">Remark</th>
-            </thead>
-            <tr class="h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
-              <td class="pl-6">{{ remark }}</td>
-            </tr>
-          </table>
-        </div>
-        <div v-show="pending"
-          class=".detail-table w-full lg:flex-row flex flex-col justify-between h-14 items-center pt-6">
-          <div class="flex items-center">
-                <label class="font-semibold whitespace-nowrap mr-2">Overall Remark:</label>
-                <input class="mx-auto py-2 min-w-[80px] rounded-md border text-xs" type="text"
-                  placeholder="Eg. Blurry Receipt Image" v-model="remark" />
-              </div>
-          <div class="flex">
-            <button @click="confirmApprove = true"
-              class="mr-2 text-sm font-semibold py-2 sm:w-24 md:w-36 bg-green-500 hover:bg-green-600 rounded-lg text-white">
-              Verify
-            </button>
-            <button @click="confirmReject = true"
-              class="text-sm font-semibold py-2 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white">
-              Reject
-            </button>
+        <div v-show="(claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' || claimDetails.admin_status === 'OPEN') && (claimDetails.admin_status !== 'VERIFIED. WAITING FOR APPROVER.' && claimDetails.admin_status !== 'REJECTED BY CHECKER')">
+          <div class="text-xs border mt-4 border-gray-400 dark:border-gray-600 rounded-md" id="table-overflow">
+            <table class="w-full">
+              <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md">
+                <th class="pl-6">Remark</th>
+              </thead>
+              <tr class="h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+                <td class="pl-6">{{ remark }}</td>
+              </tr>
+            </table>
+          </div>
+          <div class=".detail-table w-full lg:flex-row flex flex-col justify-between h-14 items-center pt-6">
+            <div class="flex items-center">
+              <label class="font-semibold whitespace-nowrap mr-2">Overall Remark:</label>
+              <input class="mx-auto py-2 min-w-[80px] rounded-md border text-xs" type="text" placeholder="Eg. Blurry Receipt Image" v-model="remark" />
+            </div>
+            <div class="flex">
+              <button @click="confirmApprove = true" class="mr-2 text-sm font-semibold py-2 sm:w-24 md:w-36 bg-green-500 hover:bg-green-600 rounded-lg text-white">
+                Verify
+              </button>
+              <button @click="confirmReject = true" class="text-sm font-semibold py-2 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white">
+                Reject
+              </button>
+            </div>
           </div>
         </div>
 
@@ -538,7 +529,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="green"
               class="w-8 h-8">
               <path stroke-linecap="round" stroke-linejoin="round"
-                d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.745 3.745 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.745 3.745 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.745 3.745 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
             </svg>
 
             <h1>VERIFIED SUCCESSFULLY</h1>
@@ -841,15 +832,17 @@ export default {
     }
   },
   simplifiedVerifierStatus() {
-    if (this.verified) {
+    if (this.claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER') {
+      return 'PENDING';
+    } else if (this.verified) {
       return 'VERIFIED';
     } else if (this.resubmitVerifier) {
       return 'RESUBMIT';
-    } else if (this.rejectVerifier) {
+    } else if (this.rejectVerifier || this.rejectChecker) {
       return 'REJECTED';
     } else if (this.reimbursed) { 
-       return 'REIMBURSED';
-     } else if (this.open) {
+      return 'REIMBURSED';
+    } else if (this.open) {
       return 'PENDING';
     }
     return '-';
@@ -908,27 +901,25 @@ export default {
             break;
 
           case 'REJECTED BY VERIFIER.':
-            if (this.claimDetails.admin_status.includes('VERIFIER')) {
               this.rejectVerifier = true;
-              // console.log('yes');
-            } else if (this.claimDetails.admin_status.includes('CHECKER')) {
-              this.verified = true;
-              this.rejectChecker = true;
-              // console.log('yes2');
-            } else if (this.claimDetails.admin_status.includes('APPROVER')) {
-              this.verified = true;
-              this.checked = true;
-              this.rejectApprover = true;
-              // console.log('yes2');
-            } else if (this.claimDetails.admin_status.includes('FINANCE')) {
-              this.verified = true;
-              this.checked = true;
-              this.approved = true;
-              this.rejectFinance = true;
-              // console.log('yes2');
-            }
+              this.pending = false;
+              this.remark = this.claimDetails.comment;
+            break;
+            case 'REJECTED BY FINANCE':
+              this.rejectVerifier = true;
+              this.pending = false;
+              this.remark = this.claimDetails.comment;
+            break;
+
+          case 'REJECTED BY CHECKER':
+            this.rejectChecker = true;
             this.pending = false;
-            // console.log('no ' + this.claimDetails.admin_status);
+            this.remark = this.claimDetails.comment;
+            break;
+          
+          case 'CHECKED BY CHECKER. WAITING FOR VERIFIER':
+            this.rejectChecker = false;
+            this.pending = false;
             this.remark = this.claimDetails.comment;
             break;
 
@@ -1255,33 +1246,25 @@ export default {
       this.pending = false;
       const userData = await this.GetUserData();
       // console.log(userData);
-      this.singleRemarks.forEach((remark) => {
+      this.singleRemarks.forEach(async (remark) => {
         let data = {
           verifier_comment: remark.remark,
           reference_number: remark.unique_code,
         };
-        if (remark.Tab_Title == 'Local Outstation') {
-          axios.post('http://172.28.28.116:7239/api/Verifier/VerifierLocal', data);
-        } else if (remark.Tab_Title == 'Overseas Outstation') {
-          axios.post(
-            'http://172.28.28.116:7239/api/Verifier/VerifierOverseas',
-            data
-          );
-        } else if (remark.Tab_Title == 'Staff Refreshment') {
-          axios.post(
-            'http://172.28.28.116:7239/api/Verifier/VerifierRefreshment',
-            data
-          );
-        } else if (remark.Tab_Title == 'Entertainment') {
-          axios.post(
-            'http://172.28.28.116:7239/api/Verifier/VerifierEntertainment',
-            data
-          );
-        } else if (remark.Tab_Title == 'Other') {
-          axios.post(
-            'http://172.28.28.116:7239/api/Verifier/VerifierOthers',
-            data
-          );
+        try {
+          if (remark.Tab_Title == 'Local Outstation') {
+            await axios.post('http://172.28.28.116:7239/api/Verifier/VerifierLocal', data);
+          } else if (remark.Tab_Title == 'Overseas Outstation') {
+            await axios.post('http://172.28.28.116:7239/api/Verifier/VerifierOverseas', data);
+          } else if (remark.Tab_Title == 'Staff Refreshment') {
+            await axios.post('http://172.28.28.116:7239/api/Verifier/VerifierRefreshment', data);
+          } else if (remark.Tab_Title == 'Entertainment') {
+            await axios.post('http://172.28.28.116:7239/api/Verifier/VerifierEntertainment', data);
+          } else if (remark.Tab_Title == 'Other') {
+            await axios.post('http://172.28.28.116:7239/api/Verifier/VerifierOthers', data);
+          }
+        } catch (error) {
+          console.error(`Error posting ${remark.Tab_Title}:`, error);
         }
       });
 

@@ -19,14 +19,14 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
             <DropDown
               inputId="branchInput"
-              label="Branch"
+              label="1. Branch"
               :options="Branches"
               :mandatory="true"
               @input="(payload) => (form.branch = payload)"
             />
             <DropDown
               inputId="companyInput"
-              label="Company"
+              label="2. Company"
               :options="Company"
               :mandatory="true"
               class="mt-6 lg:mt-0 lg:ml-4"
@@ -37,14 +37,14 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
             <DropDown
               inputId="departmentInput"
-              label="Department"
+              label="3. Department"
               :options="filteredDepartments"
               :mandatory="true"
               @input="(payload) => (form.department = payload)"
             />
             <DropDown
               inputId="positionInput"
-              label="Position"
+              label="4. Position"
               :options="AllPositions"
               :mandatory="true"
               class="mt-6 lg:mt-0 lg:ml-4"
@@ -55,7 +55,7 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
             <DropDown
               inputId="userIdInput"
-              label="User ID"
+              label="5. User ID"
               :options="filteredUsers"
               :mandatory="true"
               @input="(payload) => (form.userId = payload)"
@@ -64,7 +64,7 @@
               <label
                 :for="inputId"
                 class="font-semibold text-gray-600 dark:text-gray-300"
-                >Employee ID<span class="text-red-500">*</span></label
+                >6. Employee ID<span class="text-red-500">*</span></label
               >
               <input
                 :id="inputId"
@@ -79,14 +79,14 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
             <DropDown
               inputId="reportingDepartmentInput"
-              label="Reporting to (Department)"
+              label="7. Reporting to (Department)"
               :options="AllDepartments"
               :mandatory="true"
               @input="(payload) => (form.reportingDepartment = payload)"
             />
             <DropDown
               inputId="reportingStaffInput"
-              label="Reporting to (Employee ID)"
+              label="8. Reporting to (Employee ID)"
               :options="filteredReportingEmployees"
               :mandatory="true"
               class="mt-6 lg:mt-0 lg:ml-4"

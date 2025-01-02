@@ -109,22 +109,6 @@
                       <td class="px-2 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
                         {{ (currentPage - 1) * itemsPerPage + index + 1 }}
                       </td>
-                      <!-- <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                      >
-                        <div class="inline-flex items-center gap-x-3">
-                          <div class="flex items-center gap-x-2">
-                            <div>
-                              <h2
-                                class="font-medium text-gray-500 dark:text-gray-300"
-                              >
-                                {{ item.branch }}
-                              </h2>
-                            </div>
-                          </div>
-                        </div>
-                      </td> -->
-
                       <td class="px-2 py-4 text-sm text-gray-500 dark:text-gray-300 text-balance">
                         {{ item.reference_number }}
                       </td>
@@ -421,32 +405,25 @@ export default {
       }
     },
     getStatusContainerClass(status) {
+      console.log('Status:', status);
       const colorMap = {
-        RESUBMIT:
-          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
-        CLOSE:
-          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800',
+        // RESUBMIT: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
+        CLOSE: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800',
         OPEN: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-indigo-100/60 dark:bg-gray-800',
-        APPROVED:
-          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
-        'APPROVED. AWAITING PAYMENT.':
-          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
-        COMPLETED:
-          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800',
-        REJECTED:
-          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800',
-        VERIFIED:
-          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
-        PENDING:
-          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
-        REIMBURSED:
-          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-gray-100 dark:bg-gray-800',
+        APPROVED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
+        'APPROVED. AWAITING PAYMENT.': 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
+        COMPLETED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800',
+        REJECTED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800',
+        VERIFIED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
+        PENDING: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
+        REIMBURSED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-gray-100 dark:bg-gray-800',
+        'CHECKED BY CHECKER. WAITING FOR VERIFIER': 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
       };
-      return colorMap[status] || '  bg-orange-100/ 60 dark:bg-gray-800';
+      return colorMap[status] || 'bg-orange-100/60 dark:bg-gray-800';
     },
     getStatusDotClass(status) {
       const colorMap = {
-        RESUBMIT: 'h-1.5 w-1.5 rounded-full bg-orange-500',
+        // RESUBMIT: 'h-1.5 w-1.5 rounded-full bg-orange-500',
         OPEN: 'h-1.5 w-1.5 rounded-full bg-indigo-500',
         APPROVED: 'h-1.5 w-1.5 rounded-full bg-emerald-500',
         COMPLETED: 'h-1.5 w-1.5 rounded-full bg-blue-500',
@@ -454,12 +431,15 @@ export default {
         PENDING: 'h-1.5 w-1.5 rounded-full bg-orange-500',
         VERIFIED: 'h-1.5 w-1.5 rounded-full bg-orange-500',
         REIMBURSED: 'h-1.5 w-1.5 rounded-full bg-black',
+        'CHECKED BY CHECKER. WAITING FOR VERIFIER': 'h-1.5 w-1.5 rounded-full bg-orange-500',
       };
-      return colorMap[status] || 'bg-orange-500';
+      const className = colorMap[status] || 'bg-orange-500';
+        // console.log('Dot Class:', className);
+        return className;
     },
     getStatusTextClass(status) {
       const colorMap = {
-        RESUBMIT: 'text-sm font-normal text-orange-500',
+        // RESUBMIT: 'text-sm font-normal text-orange-500',
         OPEN: 'text-sm font-normal text-indigo-500',
         APPROVED: 'text-sm font-normal text-emerald-500',
         COMPLETED: 'text-sm font-normal text-blue-500',
@@ -467,8 +447,11 @@ export default {
         PENDING: 'text-sm font-normal text-orange-500',
         REIMBURSED: 'text-sm font-normal text-black',
         VERIFIED: 'text-sm font-normal text-orange-500',
+        'CHECKED BY CHECKER. WAITING FOR VERIFIER': 'text-sm font-normal text-orange-500',
       };
-      return colorMap[status] || 'text-orange-500';
+      const className = colorMap[status] || 'text-orange-500';
+      // console.log('Text Class:', className); 
+      return className;
     },
     ViewClaim(rn) {
       this.$router.push({ name: 'VerifierSummaryClaimpage', params: { rn } });
