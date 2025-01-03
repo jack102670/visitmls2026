@@ -158,30 +158,31 @@
 
           <span class="mx-4 font-medium">Dashboard Finance</span>
         </router-link> -->
-        <router-link v-if="controlView === 'eclaim' && userData.checker_valid !== '0'"
-        class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
-        :to="{ name: 'AssignChecker' }">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke-width="1.5"
-          stroke="currentColor" class="w-5 h-5">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M9 11l3 3L22 4" />
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M2 12l7 7 4-4" />
-        </svg>
-        <span class="mx-4 font-medium">Assign Checker</span>
-      </router-link>
+        <router-link 
+          v-if="controlView === 'eclaim' && userData.checker_valid !== '0'"
+          class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
+          :to="{ name: 'AssignChecker' }"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M17 11l2 2 4-4" />
+          </svg>
+          <span class="mx-4 font-medium">Assign Checker</span>
+        </router-link>
         <router-link v-if="controlView === 'eclaim'"
-        class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
-        :to="{ name: 'checkerDashboardPage' }">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke-width="1.5"
-          stroke="currentColor" class="w-5 h-5">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M9 11l3 3L22 4" />
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M2 12l7 7 4-4" />
-        </svg>
-        <span class="mx-4 font-medium">Check claims</span>
-      </router-link>
+          class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
+          :to="{ name: 'checkerDashboardPage' }">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M9 11l3 3L22 4" />
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M2 12l7 7 4-4" />
+          </svg>
+          <span class="mx-4 font-medium">Check claims</span>
+        </router-link>
         <router-link v-if="controlView === 'eclaim'"
           class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
           :to="{ name: 'verified' }">
