@@ -558,10 +558,24 @@ export default {
       selectedepartment: "",
     };
   },
+
+  // //filteredQueryApplications() {
+  //   const query = this.searchQuery.toLowerCase();
+  //     return this.sortedApplications.filter((claim) =>
+  //       (claim.report_name && claim.report_name.toLowerCase().includes(query)) ||
+  //       (claim.requester_name && claim.requester_name.toLowerCase().includes(query)) ||
+  //       (claim.verifier_name && claim.verifier_name.toLowerCase().includes(query)) ||
+  //       (claim.reference_number && claim.reference_number.toLowerCase().includes(query)) ||
+  //       (claim.date_requested && claim.date_requested.toLowerCase().includes(query)) ||
+  //       (claim.grand_total && claim.grand_total.toLowerCase().includes(query)) ||
+  //       (claim.admin_status && claim.admin_status.toLowerCase().includes(query))
+  //     );
+  //   },
   computed: {
     filteredData() {
       return this.data.filter((item) =>
-        item.name.toUpperCase().includes(this.newNode.parentId.toUpperCase())
+       // item.name.toUpperCase().includes(this.newNode.name.toUpperCase()) ||
+        item.position_title.toLowerCase().includes(this.newNode.parentId.toUpperCase())
       );
     },
     filteredParentidNewNode() {
@@ -574,8 +588,9 @@ export default {
       (person.department && person.department.toLowerCase().includes(this.newNode.parentId.toLowerCase())) ||
       (person.id && person.id.toLowerCase().includes(this.newNode.parentId.toLowerCase()))
     : true;
-
+    console.log("HELLOW",keywordMatch);
   return keywordMatch;
+  
 });
     },
     filteredParentid() {
@@ -1037,6 +1052,9 @@ axios
                      <div style="color:#404040;font-size:10px;margin-top:4px"> ${
                        d.data.positionName
                      } </div>
+                      <div style="color:#404040;font-size:10px;margin-top:4px"> ${
+                       d.data.department
+                     } </div>
                  </div> 
                  <div style="display:flex;justify-content:space-between;padding-left:15px;padding-right:15px;">
                    <div > Manages:  ${d.data._directSubordinates} 👤</div>  
@@ -1145,7 +1163,7 @@ axios
 
       // Loop over data and check if input value matches any name
       data.forEach((d) => {
-        if (value !== "" && d.name && d.name.toLowerCase().includes(value)) {
+        if (value !== "" && d.name && d.name.toLowerCase().includes(value) || value !== "" && d.department && d.department.toLowerCase().includes(value)) {
           // If matches, mark node as highlighted
           d._highlighted = true;
           d._expanded = true;
