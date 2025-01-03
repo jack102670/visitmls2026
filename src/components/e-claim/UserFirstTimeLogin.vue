@@ -715,25 +715,14 @@ export default {
     },
 
     checkUserStatus() {
-  const username_id = store.getSession().userDetails.userId;
-
-  axios
-    .get(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`)
-    .then((response) => {
-      // Assuming the API response structure has a result array
-      const user = response.data.result[0];
-
-      if (!user || !user.account_status) {
-        // Redirect to another page if account_status is missing
-        alert("You don't have a user profile yet. Please contact the HR administrator.");
-        window.location.href = '/homepage'; // Replace '/redirect-page' with your desired route
-        return;
-      }
-
-      const userStatus = user.account_status;
-      const email = user.email_address;
-
-      console.log('User status:', userStatus);
+      const username_id = store.getSession().userDetails.userId;
+      axios
+        .get(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`)
+        .then((response) => {
+          // Assuming the API response structure has a status field
+          const userStatus = response.data.result[0].account_status;
+          const email = response.data.result[0].email_address;
+          console.log('User status:', userStatus);
 
       if (userStatus === '0' && email !== '') {
         // User has not completed their OTP, show the modal

@@ -2,66 +2,65 @@
   <main class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 p-4 sm:ml-64">
     <div class=" mx-auto">
       <div
-        class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 dark:text-white border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
+        class="relative bg-[#f7fbff] dark:bg-gray-900 dark:text-white border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
         <h1 class="text-blue-800 dark:text-blue-600 text-xl md:text-2xl font-bold">
           HR DASHBOARD
         </h1>
         <div class="flex flex-col mt-6">
+          <div class=" py-2 flex flex-col md:flex-row justify-between items-center md:items-end">
+            <div class="flex items-center">
+              <div class="space-x-2">
+                <label for="number-dd" class="text-md font-medium">Sort</label>
+                <select id="number-dd" name="number" @change="updateItemsPerPage"
+                  class="rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 text-sm bg-gray-50 ">
+                  <option value="10">10</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
+            </div>
+            <div class="relative md:mt-0 w-full md:w-auto">
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                </svg>
+              </div>
+              <input type="text" id="table-search" v-model="searchQuery"
+                class="block py-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full md:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Search for applications" />
+            </div>
+          </div>
           <div class="overflow-x-auto">
             <div class="inline-block min-w-full py-2 align-middle ">
-              <div class="overflow-hidden ">
-                <div class="py-2 flex flex-col md:flex-row justify-between items-center md:items-end">
-                  <div class="flex items-center">
-                      <div class="space-x-2">
-                        <label for="number-dd" class="text-md font-medium">Sort</label>
-                        <select id="number-dd" name="number" @change="updateItemsPerPage"
-                          class="rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 text-sm bg-gray-50 ">
-                          <option value="10">10</option>
-                          <option value="50">50</option>
-                          <option value="100">100</option>
-                        </select>
-                      </div>
-                    </div>
-                  <div class="relative md:mt-0 w-full md:w-auto">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                      <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                      </svg>
-                    </div>
-                    <input type="text" id="table-search" v-model="searchQuery"
-                      class="block py-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full md:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder="Search for applications" />
-                  </div>
-                </div>
                 <table
                   class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover strip border border-gray-200 dark:border-gray-700 md:rounded-lg">
                   <thead class="bg-gray-50 dark:bg-gray-800">
                     <tr>
-                      <th scope="col" class="px-6 py-3">No</th>
+                      <th scope="col" class="px-4 py-3">No</th>
                       <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        class="text-nowrappy-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         Report Name
                       </th>
                       <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        class="text-nowrap py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         Requester Name
                       </th>
                       <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        class="text-nowrap py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         Verifier Name
                       </th>
                       <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        class="text-nowrap py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         Reference Number
                       </th>
                       <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        class="text-nowrap py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         Amount
                       </th>
                       <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        class="text-nowrap py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         Date requested
                         <span class="ml-1 cursor-pointer" @click="toggleSort('date_requested')">
                           <template v-if="sortField === 'date_requested'">
@@ -73,66 +72,89 @@
                         </span>
                       </th>
                       <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        class="text-nowrap py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         Status
                       </th>
                       <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        class="text-nowrap py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         View
                       </th>
                     </tr>
                   </thead>
                   <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                     <tr v-for="(claim, index) in paginatedApplications" :key="index">
-                      <td class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
+                      <td class="px-4 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
                         {{ (currentPage - 1) * itemsPerPage + index + 1 }}
                       </td>
-                      <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                      <td class="text-wrap py-4 px-2 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         {{ claim.report_name }}
                       </td>
-                      <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                      <td class="text-wrap py-4 px-2 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         {{ claim.requester_name }}
                       </td>
-                      <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                      <td class="text-wrap py-4 px-2 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         {{ claim.verifier_name }}
                       </td>
-                      <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                      <td class="text-wrap  py-4 px-2 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         {{ claim.reference_number }}
                       </td>
-                      <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                      <td class="text-wrap py-4 px-2 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         RM {{ claim.grand_total }}
                       </td>
-                      <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                      <td class="text-wrap  py-4 px-2 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         {{ claim.date_requested }}
                       </td>
-                      <td class="px-12 py-4 text-sm font-medium text-gray-700 text-wrap whitespace-nowrap">
+                      <!-- <td class=" py-4 px-2 text-sm font-medium text-gray-700 text-wrap whitespace-nowrap">
                         <span :class="{
                           'inline-flex items-center px-3 py-1 rounded-full gap-x-2': true,
-                          'bg-red-100/60 dark:bg-gray-800': claim.admin_status.split('.')[0].split(' ')[0] === 'REJECT',
+                          'bg-red-100/60 dark:bg-gray-800': claim.admin_status.split('.')[0].split(' ')[0] === 'REJECTED',
                           'bg-green-100/60 dark:bg-gray-800': claim.admin_status.split('.')[0].split(' ')[0] === 'APPROVED',
                           'bg-amber-100/60 dark:bg-gray-800': claim.admin_status.split('.')[0] === 'VERIFIED',
-                          'bg-blue-100/60 dark:bg-gray-800': claim.admin_status.split('.')[0].split(' ')[0] === 'OPEN', // Added for empty status
+                          'bg-blue-100/60 dark:bg-gray-800': claim.admin_status.split('.')[0].split(' ')[0] === 'OPEN',
+                          'bg-slate-100/60 dark:bg-gray-800': claim.admin_status.split('.')[0].split(' ')[0] === 'REIMBURSED',
                         }">
                           <span :class="{
                             'h-1.5 w-1.5 rounded-full': true,
-                            'bg-red-500': claim.admin_status.split('.')[0].split(' ')[0] === 'REJECT',
+                            'bg-red-500': claim.admin_status.split('.')[0].split(' ')[0] === 'REJECTED',
                             'bg-green-500': claim.admin_status.split('.')[0].split(' ')[0] === 'APPROVED',
                             'bg-amber-500': claim.admin_status.split('.')[0] === 'VERIFIED',
-                            'bg-blue-500': claim.admin_status.split('.')[0].split(' ')[0] === 'OPEN', // Added for empty status
+                            'bg-blue-500': claim.admin_status.split('.')[0].split(' ')[0] === 'OPEN',
+                            'bg-black': claim.admin_status.split('.')[0].split(' ')[0] === 'REIMBURSED',
                           }"></span>
                           <span :class="{
                             'text-sm font-normal': true,
-                            'text-red-500': claim.admin_status.split('.')[0].split(' ')[0] === 'REJECT',
+                            'text-red-500': claim.admin_status.split('.')[0].split(' ')[0] === 'REJECTED',
                             'text-green-500': claim.admin_status.split('.')[0].split(' ')[0] === 'APPROVED',
                             'text-amber-500': claim.admin_status.split('.')[0] === 'VERIFIED',
-                            'text-blue-500': claim.admin_status.split('.')[0].split(' ')[0] === 'OPEN', // Added for empty status
+                            'text-blue-500': claim.admin_status.split('.')[0].split(' ')[0] === 'OPEN',
+                            'text-black': claim.admin_status.split('.')[0].split(' ')[0] === 'REIMBURSED',
                           }">
                             {{
                               claim.admin_status.split('.')[0].split(' ')[0]
                             }}
                           </span>
                         </span>
-                      </td>
+                      </td> -->
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                          <div :class="getStatusContainerClass(
+                            claim.admin_status.split('.')[0].split(' ')[0]
+                          )
+                            ">
+                            <span :class="getStatusDotClass(
+                              claim.admin_status.split('.')[0].split(' ')[0]
+                            )
+                              "></span>
+                            <h2 :class="getStatusTextClass(
+                              claim.admin_status.split('.')[0].split(' ')[0]
+                            )
+                              ">
+                              {{
+                                claim.admin_status
+
+                              }}
+                            </h2>
+                          </div>
+                        </td>
                       <td class="px-4 py-4 text-sm text-center text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         <button @click="ViewClaim(claim.reference_number)"
                           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
@@ -147,7 +169,9 @@
                     </tr>
                   </tbody>
                 </table>
-                <nav class="flex items-center flex-col flex-wrap md:flex-row justify-between items-center pt-4"
+              </div>
+          </div>
+          <nav class=" overflow-hidden flex items-center flex-col flex-wrap md:flex-row justify-between items-center pt-4"
                   aria-label="Table navigation">
                   <div>
                     <span class="text-xs md:text-xs font-normal text-gray-500 dark:text-gray-400">
@@ -196,10 +220,7 @@
                       </li>
                     </ul>
                   </div>
-                </nav>
-              </div>
-            </div>
-          </div>
+          </nav>
         </div>
 
         <!-- Loading Animation -->
@@ -337,23 +358,77 @@ export default {
     initializeDataTable() {
       $(this.$refs.myTable).DataTable({});
     },
-    FetchClaimsData() {
-      this.loading = true;
-      axios
-        .get(
-          'http://172.28.28.116:7165/api/ApproverVerifier/GetAllRequestApproverHR/'
-        )
-        .then((response) => {
-          this.claimsData = response.data.result;
-          if (this.claimsData.length > 0) {
-            this.userApplications = this.claimsData;
-          }
-          this.loading = false;
 
-          this.$nextTick(() => {
-            this.initializeDataTable();
-          });
+    getStatusContainerClass(status) {
+      const colorMap = {
+        RESUBMIT:
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
+        CLOSE:
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800',
+        OPEN: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-indigo-100/60 dark:bg-gray-800',
+        APPROVED:
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
+        'APPROVED. AWAITING PAYMENT.':
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
+        COMPLETED:
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800',
+        REJECTED:
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800',
+        VERIFIED:
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
+        PENDING:
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
+        REIMBURSED:
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-gray-100 dark:bg-gray-800',
+      };
+      return colorMap[status] || '  bg-orange-100/ 60 dark:bg-gray-800';
+    },
+    getStatusDotClass(status) {
+      const colorMap = {
+        RESUBMIT: 'h-1.5 w-1.5 rounded-full bg-orange-500',
+        OPEN: 'h-1.5 w-1.5 rounded-full bg-indigo-500',
+        APPROVED: 'h-1.5 w-1.5 rounded-full bg-emerald-500',
+        COMPLETED: 'h-1.5 w-1.5 rounded-full bg-blue-500',
+        REJECTED: 'h-1.5 w-1.5 rounded-full bg-red-500',
+        PENDING: 'h-1.5 w-1.5 rounded-full bg-orange-500',
+        VERIFIED: 'h-1.5 w-1.5 rounded-full bg-orange-500',
+        REIMBURSED: 'h-1.5 w-1.5 rounded-full bg-black',
+      };
+      return colorMap[status] || 'bg-orange-500';
+    },
+    getStatusTextClass(status) {
+      const colorMap = {
+        RESUBMIT: 'text-sm font-normal text-orange-500',
+        OPEN: 'text-sm font-normal text-indigo-500',
+        APPROVED: 'text-sm font-normal text-emerald-500',
+        COMPLETED: 'text-sm font-normal text-blue-500',
+        REJECTED: 'text-sm font-normal text-red-500',
+        PENDING: 'text-sm font-normal text-orange-500',
+        REIMBURSED: 'text-sm font-normal text-black',
+        VERIFIED: 'text-sm font-normal text-orange-500',
+      };
+      return colorMap[status] || 'text-orange-500';
+    },
+    async FetchClaimsData() {
+      this.loading = true;
+      try {
+        const response = await axios.get('http://172.28.28.116:7165/api/ApproverVerifier/GetAllRequestApproverHR/');
+        this.claimsData = response.data.result;
+        if (this.claimsData.length > 0) {
+          this.userApplications = this.claimsData;
+        }
+        console.log("User application: ", this.userApplications);
+        this.loading = false;
+        this.$nextTick(() => {
+          this.initializeDataTable();
         });
+      } catch (error) {
+        console.error('Error during reimbursement:', {
+          message: error.message,
+          response: error.response?.data,
+          status: error.response?.status
+        });
+      }
     },
   },
   mounted() {

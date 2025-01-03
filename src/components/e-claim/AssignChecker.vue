@@ -1,131 +1,176 @@
 <template>
-  <main
-    class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 p-4 sm:ml-64"
-  >
-    <div class="container mx-auto">
+  <main class="flex overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 p-4 sm:ml-64">
+    <div class=" mx-auto">
       <div
-        class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 dark:text-white border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
-      >
-        <h1
-          class="text-blue-800 dark:text-blue-600 text-xl md:text-2xl font-bold"
-        >
+        class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 dark:text-white border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
+        <h1 class="text-blue-800 dark:text-blue-600 text-xl md:text-2xl font-bold uppercase">
           Assign Checker
         </h1>
+        <div class="grid grid-cols-8 gap-4 w-full">
+          <div class="col-span-4">
+            <div class="flex flex-col py-8">
+              <div class="flex flex-col mb-8">
+                <h1 class="text-md font-semibold w-screen mb-6">
+                  Choose the checker and select the duration
+                </h1>
 
-        <!-- body -->
-        <div class="flex flex-col lg:flex-row">
-          <!-- left -->
-          <div class="flex flex-1 flex-col py-8">
-            <div class="flex flex-col w-52 mb-8">
-              <h1 class="text-lg font-semibold w-screen mb-6">
-                Choose the checker and select the duration
-              </h1>
-              <DropDown
-                inputId="departmentInput"
-                label="Department"
-                :options="AllDepartments"
-                :mandatory="true"
-                @input="(payload) => (chosenDepartment = payload)"
-              />
-              <DropDown
-                inputId="nameInput"
-                label="Employee Name"
-                :options="FilteredEmployees.map((item) => item.name)"
-                :mandatory="true"
-                @input="(payload) => (checkerName = payload)"
-                class="mt-4"
-              />
-            </div>
+                <!-- Department Dropdown -->
+                <div class="relative mb-4">
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Department</label>
+                  <div class="relative">
+                    <input type="text" :id="departmentInputId" v-model="departmentSearch"
+                      @focus="isDepartmentOpen = true" @blur="handleDepartmentBlur"
+                      class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                      placeholder="Search department..." />
+                    <div v-if="isDepartmentOpen"
+                      class="absolute z-10 w-full mt-1 bg-white border rounded-md shadow-lg max-h-60 overflow-auto">
+                      <div v-for="dept in filteredDepartments" :key="dept" @mousedown="selectDepartment(dept)"
+                        class="p-2 hover:bg-gray-100 cursor-pointer">
+                        {{ dept }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-            <!-- calendar -->
-            <div class="w-80 mb-8 bg-white dark:bg-gray-700 p-4 rounded-lg">
-              <!-- calendar header -->
-              <div class="flex w-full justify-between pb-4">
-                <button @click="prevMonth">⬅️</button>
-                <h2>{{ monthYear }}</h2>
-                <button @click="nextMonth">➡️</button>
+                <!-- Employee Dropdown -->
+                <div class="relative">
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Employee Name</label>
+                  <div class="relative">
+                    <input type="text" :id="nameInputId" v-model="employeeSearch" @focus="isEmployeeOpen = true"
+                      @blur="handleEmployeeBlur"
+                      class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                      placeholder="Search employee..." />
+                    <div v-if="isEmployeeOpen"
+                      class="absolute z-10 w-full mt-1 bg-white border rounded-md shadow-lg max-h-60 overflow-auto">
+                      <div v-for="employee in filteredEmployees" :key="employee.name"
+                        @mousedown="selectEmployee(employee.name)" class="p-2 hover:bg-gray-100 cursor-pointer">
+                        {{ employee.name }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <!-- calendar body -->
-              <div class="grid grid-cols-7 mt-4">
-                <div
-                  v-for="day in [
-                    'Mon',
-                    'Tue',
-                    'Wed',
-                    'Thu',
-                    'Fri',
-                    'Sun',
-                    'Sat',
-                  ]"
-                  :key="day"
-                  class="text-center p-2"
-                >
-                  {{ day }}
+              <!-- calendar -->
+              <!-- <div class="w-80 mb-8 bg-white dark:bg-gray-700 p-4 rounded-lg">
+                <div class="flex w-full justify-between pb-4">
+                  <button @click="prevMonth">⬅️</button>
+                  <h2>{{ monthYear }}</h2>
+                  <button @click="nextMonth">➡️</button>
                 </div>
-                <div
-                  v-for="n in firstDayOfMonth"
-                  :key="n"
-                  class="text-center p-2"
-                ></div>
-                <div
-                  v-for="day in daysInMonth"
-                  :key="day"
-                  class="text-center p-2 cursor-pointer"
-                  :class="[
+                <div class="grid grid-cols-7 mt-4">
+                  <div v-for="day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sun', 'Sat']" :key="day"
+                    class="text-center p-2">
+                    {{ day }}
+                  </div>
+                  <div v-for="n in firstDayOfMonth" :key="n" class="text-center p-2"></div>
+                  <div v-for="day in daysInMonth" :key="day" class="text-center p-2 cursor-pointer" :class="[
                     isPastDate(day)
                       ? 'bg-gray-300 text-gray-400 dark:text-gray-400'
                       : '',
                     isSelectedDate(day)
                       ? 'bg-blue-800 text-white'
                       : 'bg-gray-100 hover:bg-gray-200 dark:text-black',
-                  ]"
-                  @click="selectDate(day)"
-                >
-                  {{ day }}
+                  ]" @click="selectDate(day)">
+                    {{ day }}
+                  </div>
+                </div>
+              </div> -->
+
+              <div class="grid grid-cols-4 gap-4">
+                <div class="col-span-2 relative mb-8">
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                  <div class="relative">
+                    <input type="text" readonly v-model="formattedStartDate" @focus="isStartCalendarOpen = true"
+                      @blur="handleStartBlur"
+                      class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                      placeholder="Select start date" />
+                    <div v-if="isStartCalendarOpen" ref="startCalendar"
+                      class="absolute z-50 w-full mt-1 bg-white border rounded-md shadow-lg">
+                      <div class="p-4">
+                        <div class="flex justify-between mb-4">
+                          <button @click="prevMonth">⬅️</button>
+                          <span>{{ monthYear }}</span>
+                          <button @click="nextMonth">➡️</button>
+                        </div>
+                        <div class="grid grid-cols-7 gap-2">
+                          <span v-for="day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" :key="day"
+                            class="text-center text-sm font-bold">
+                            {{ day }}
+                          </span>
+                          <span v-for="n in firstDayOfMonth" :key="`empty-${n}`" class="text-transparent">0</span>
+                          <button v-for="day in daysInMonth" :key="day" class="p-2 text-sm rounded hover:bg-gray-200"
+                            :class="{ 'bg-blue-500 text-white': isSelectedStartDate(day) }"
+                            @click="selectStartDate(day)">
+                            {{ day }}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-span-2 relative">
+                  <label class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+                  <div class="relative">
+                    <input type="text" readonly v-model="formattedEndDate" @focus="isEndCalendarOpen = true"
+                      @blur="handleEndBlur"
+                      class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                      placeholder="Select end date" />
+                    <div v-if="isEndCalendarOpen"  ref="endCalendar"
+                      class="absolute z-50 w-full mt-1 bg-white border rounded-md shadow-lg">
+                      <div class="p-4">
+                        <div class="flex justify-between mb-4">
+                          <button @click="prevMonth">⬅️</button>
+                          <span>{{ monthYear }}</span>
+                          <button @click="nextMonth">➡️</button>
+                        </div>
+                        <div class="grid grid-cols-7 gap-2">
+                          <span v-for="day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" :key="day"
+                            class="text-center text-sm font-bold">
+                            {{ day }}
+                          </span>
+                          <span v-for="n in firstDayOfMonth" :key="`empty-${n}`" class="text-transparent">0</span>
+                          <button
+                        v-for="day in daysInMonth"
+                        :key="day"
+                        class="p-2 text-sm rounded hover:bg-gray-200"
+                        :class="{
+                          'bg-blue-500 text-white': isSelectedEndDate(day),
+                          'cursor-not-allowed opacity-50': isDateDisabled(day)
+                        }"
+                        :disabled="isDateDisabled(day)"
+                        @click="selectEndDate(day)"
+                      >
+                        {{ day }}
+                      </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="flex flex-col w-52 mb-8">
-              <button
-                @click="AddCheckers()"
-                class="bg-blue-800 text-white py-2 w-32 rounded-lg hover:bg-blue-900"
-              >
-                Confirm
-              </button>
+              <div class="flex flex-col mb-8">
+                <button @click="AddCheckers()" class="bg-blue-800 text-white py-2 mb-[200px] w-32 rounded-lg hover:bg-blue-900">
+                  Confirm
+                </button>
+              </div>
             </div>
           </div>
-
-          <!-- right -->
-          <div class="flex-1">
-            <div
-              v-for="(checker, i) in Checkers"
-              :key="i"
-              class="bg-blue-800 text-white p-4 rounded-xl text-xl mb-6 shadow-lg"
-            >
-              <div
-                class="text-3xl mb-4 font-bold flex justify-between items-center"
-              >
+          <div class="col-span-4">
+            <div v-for="(checker, i) in Checkers" :key="i"
+              class="bg-blue-800 text-white p-4 rounded-xl text-xl mb-6 shadow-lg">
+              <div class="text-3xl mb-4 font-bold flex justify-between items-center">
                 <h1>
                   {{
                     checker.checkerName + ' (' + checker.chosenDepartment + ')'
                   }}
                 </h1>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="white"
-                  class="size-8 cursor-pointer"
-                  @click="DeleteChecker(i)"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-                  />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="white" class="size-8 cursor-pointer" @click="DeleteChecker(i)">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                 </svg>
               </div>
               <div class="flex text-gray-200 w-full justify-between">
@@ -152,186 +197,320 @@ import DropDown from './DropDown.vue';
 import moment from 'moment';
 import axios from 'axios';
 import { store } from '@/views/store.js';
+import Swal from 'sweetalert2';
+
 
 export default {
-  components: {
-    DropDown,
+  props: {
+    departmentInputId: {
+      type: String,
+      default: "departmentInput",
+    },
+    nameInputId: {
+      type: String,
+      default: "nameInput",
+    },
   },
+
   data() {
     return {
-      checkerName: '',
-      startDate: null,
-      endDate: null,
+      checkerName: "",
       Checkers: [],
       AllDepartments: [],
       AllEmployees: [],
-      chosenDepartment: '',
+      chosenDepartment: "",
       FilteredEmployees: [],
-
-      // Calendar
-      currentDate: new Date(),
+      departmentSearch: "",
+      employeeSearch: "",
+      isDepartmentOpen: false,
+      isEmployeeOpen: false,
+      isStartCalendarOpen: false,
+      isEndCalendarOpen: false,
+      startDate: null,
+      endDate: null,
+      currentMonth: moment().startOf("month"),
     };
   },
+
   computed: {
-    month() {
-      return this.currentDate.getMonth();
+    formattedStartDate() {
+      return this.startDate ? moment(this.startDate).format("MM/DD/YYYY") : "";
     },
-    year() {
-      return this.currentDate.getFullYear();
+    formattedEndDate() {
+      return this.endDate ? moment(this.endDate).format("MM/DD/YYYY") : "";
     },
     daysInMonth() {
-      return new Date(this.year, this.month + 1, 0).getDate();
+      return this.currentMonth.daysInMonth();
     },
     firstDayOfMonth() {
-      return new Date(this.year, this.month, 1).getDay();
+      return moment(this.currentMonth).startOf("month").weekday();
     },
     monthYear() {
-      return this.currentDate.toLocaleString('default', {
-        month: 'long',
-        year: 'numeric',
-      });
+      return this.currentMonth.format("MMMM YYYY");
     },
-    today() {
-      return new Date().setHours(0, 0, 0, 0);
+    filteredDepartments() {
+      return this.AllDepartments.filter((dept) =>
+        dept.toLowerCase().includes(this.departmentSearch.toLowerCase())
+      );
+    },
+    filteredEmployees() {
+      return this.AllEmployees.filter(
+        (emp) =>
+          emp.name.toLowerCase().includes(this.employeeSearch.toLowerCase()) &&
+          (!this.chosenDepartment || emp.department === this.chosenDepartment)
+      );
     },
   },
+
   methods: {
     async GetAllDepartments() {
-      await axios
-        .get('http://172.28.28.116:7239/api/User/GetDepartment')
-        .then((response) => {
-          this.AllDepartments = response.data.result.map(
-            (item) => item.department
-          );
-          this.GetAllEmployees();
-        });
+      try {
+        const response = await axios.get(
+          "http://172.28.28.116:7239/api/User/GetDepartment"
+        );
+        this.AllDepartments = response.data.result.map((item) => item.department);
+        this.GetAllEmployees();
+      } catch (error) {
+        console.error("Error fetching departments:", error);
+      }
     },
+
     async GetAllEmployees() {
-      await axios
-        .get('http://172.28.28.116:7239/api/User/GetAllEmployees')
-        .then((response) => {
-          this.AllEmployees = response.data.result;
-          console.log(response);
-        });
+      try {
+        const response = await axios.get(
+          "http://172.28.28.116:7239/api/User/GetAllEmployees"
+        );
+        this.AllEmployees = response.data.result;
+      } catch (error) {
+        console.error("Error fetching employees:", error);
+      }
     },
+
+    selectDepartment(dept) {
+      this.departmentSearch = dept;
+      this.chosenDepartment = dept;
+      this.$emit("update:chosenDepartment", dept);
+      this.isDepartmentOpen = false;
+    },
+
+    selectEmployee(name) {
+      this.employeeSearch = name;
+      this.checkerName = name;
+      this.$emit("update:checkerName", name);
+      this.isEmployeeOpen = false;
+    },
+
     async AddCheckers() {
-      if (this.startDate && !this.endDate) {
-        this.endDate = this.startDate;
-      }
-      if (
-        this.checkerName &&
-        this.startDate &&
-        this.endDate &&
-        this.chosenDepartment
-      ) {
-        const newChecker = {
-          checkerName: this.checkerName,
-          startDate: moment(this.startDate).format('DD MMMM YYYY'),
-          endDate: moment(this.endDate).format('DD MMMM YYYY'),
-          chosenDepartment: this.chosenDepartment,
-        };
-
-        const username_id = store.getSession().userDetails.userId;
-        const result = this.FilteredEmployees.find(
-          (person) => person.name === this.checkerName
-        );
-        const data = {
-          checker_userId: result.id,
-          start_date: moment(this.startDate).format('DD MMMM YYYY'),
-          end_date: moment(this.endDate).format('DD MMMM YYYY'),
-        };
-
-        await axios
-          .put(
-            'http://172.28.28.116:7165/api/Admin/AssignChecker/' + username_id,
-            data
-          )
-          .then((response) => {
-            console.log(response);
-            this.Checkers.push(newChecker);
-            this.checkerName = '';
-            this.startDate = null;
-            this.endDate = null;
-            this.chosenDepartment = '';
-          });
-      } else {
-        alert('Please fill in all details');
-      }
-    },
-    prevMonth() {
-      this.currentDate.setMonth(this.currentDate.getMonth() - 1);
-      this.currentDate = new Date(this.currentDate); // Refresh the date object
-    },
-    nextMonth() {
-      this.currentDate.setMonth(this.currentDate.getMonth() + 1);
-      this.currentDate = new Date(this.currentDate); // Refresh the date object
-    },
-    isPastDate(day) {
-      const date = new Date(this.year, this.month, day).setHours(0, 0, 0, 0);
-      return date < this.today;
-    },
-    isSelectedDate(day) {
-      const date = new Date(this.year, this.month, day).setHours(0, 0, 0, 0);
-      if (this.startDate && !this.endDate) {
-        return date == this.startDate;
-      } else if (this.startDate && this.endDate) {
-        return (
-          this.startDate &&
-          date >= this.startDate &&
-          (!this.endDate || date <= this.endDate)
-        );
+      if (!this.startDate || !this.endDate || !this.chosenDepartment || !this.checkerName) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Missing Information',
+          text: 'Please fill in all details',
+          confirmButtonColor: '#3085d6'
+        });
+        return;
       }
 
-      return null;
-    },
-    selectDate(day) {
-      const selectedDate = new Date(this.year, this.month, day).setHours(
-        0,
-        0,
-        0,
-        0
+      const newChecker = {
+        checkerName: this.checkerName,
+        startDate: moment(this.startDate).format("DD MMMM YYYY"),
+        endDate: moment(this.endDate).format("DD MMMM YYYY"),
+        chosenDepartment: this.chosenDepartment,
+      };
+
+      const username_id = store.getSession().userDetails.userId;
+      const result = this.FilteredEmployees.find(
+        (person) => person.name === this.checkerName
       );
-      if (!this.startDate && !this.isPastDate(day)) {
-        this.startDate = selectedDate;
-        this.endDate = null;
-      } else if (this.startDate && !this.endDate && !this.isPastDate(day)) {
-        if (selectedDate < this.startDate) {
-          this.endDate = this.startDate;
-          this.startDate = selectedDate;
-        } else {
-          this.endDate = selectedDate;
-        }
-      } else {
-        this.resetSelection();
+
+      const data = {
+        checker_userId: result.id,
+        start_date: moment(this.startDate).format("DD MMMM YYYY"),
+        end_date: moment(this.endDate).format("DD MMMM YYYY"),
+      };
+
+      try {
+        const response = await axios.put(
+          `http://172.28.28.116:7165/api/Admin/AssignChecker/${username_id}`,
+          data
+        );
+        console.log("Data successfully updated:", response);
+        this.Checkers.push(newChecker);
+        this.saveCheckersToLocalStorage();
+        this.resetForm();
+        
+        await Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: `Checker ${this.checkerName} has been successfully assigned`,
+          confirmButtonColor: '#3085d6',
+          timer: 2000,
+          timerProgressBar: true
+        });
+        
+      } catch (error) {
+        console.error("Error updating data:", error);
+        
+        await Swal.fire({
+          icon: 'error',
+          title: 'Update Failed',
+          text: 'Failed to assign checker. Please try again.',
+          confirmButtonColor: '#3085d6'
+        });
       }
     },
-    resetSelection() {
+
+    resetForm() {
+      this.checkerName = "";
       this.startDate = null;
       this.endDate = null;
+      this.chosenDepartment = "";
     },
-    DeleteChecker(index) {
-      this.Checkers.splice(index, 1);
-    },
-  },
-  mounted() {
-    // Sidebar close or open
-    let openOrNot = localStorage.getItem('openOrNot');
-    const element = document.querySelector('main');
-    if (element && openOrNot == 'false') {
-      element.classList.add('become-big');
-    } else if (element && openOrNot == 'true') {
-      element.classList.remove('become-big');
-    }
 
-    this.GetAllDepartments();
+    selectStartDate(day) {
+      const selectedDate = moment(this.currentMonth).date(day);
+      if (this.endDate && selectedDate.isAfter(this.endDate)) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid Date Selection',
+          text: 'Start date cannot be after end date',
+          confirmButtonColor: '#3085d6'
+        });
+        return;
+      }
+      this.startDate = selectedDate.toDate();
+      this.isStartCalendarOpen = false;
+    },
+
+    selectEndDate(day) {
+      const selectedDate = moment(this.currentMonth).date(day);
+      if (this.startDate && selectedDate.isBefore(this.startDate)) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid Date Selection',
+          text: 'End date cannot be before start date',
+          confirmButtonColor: '#3085d6'
+        });
+        return;
+      }
+      this.endDate = selectedDate.toDate();
+      this.isEndCalendarOpen = false;
+    },
+
+    isDateDisabled(day) {
+      const date = moment(this.currentMonth).date(day);
+      return (
+        date.isBefore(moment(), "day") || 
+        (this.startDate && date.isBefore(moment(this.startDate), "day"))
+      );
+    },
+
+    nextMonth() {
+      this.currentMonth = moment(this.currentMonth).add(1, "month");
+    },
+
+    prevMonth() {
+      this.currentMonth = moment(this.currentMonth).subtract(1, "month");
+    },
+
+    DeleteChecker(index) {
+      const checkerToDelete = this.Checkers[index];
+      
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            this.Checkers.splice(index, 1);
+            
+            if (this.Checkers.length === 0) {
+              localStorage.removeItem('assignedCheckers');
+            } else {
+              localStorage.setItem('assignedCheckers', JSON.stringify(this.Checkers));
+            }
+            await Swal.fire({
+              icon: 'success',
+              title: 'Deleted!',
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              text: `${checkerToDelete.checkerName} has been removed as checker`,
+              timer: 1500,
+              timerProgressBar: true
+            });
+          } catch (error) {
+            console.error('Error deleting checker:', error);
+            
+            await Swal.fire({
+              icon: 'error',
+              title: 'Delete Failed',
+              text: 'Failed to remove checker. Please try again.',
+              confirmButtonColor: '#3085d6'
+            });
+            
+            this.loadCheckersFromLocalStorage();
+          }
+        }
+      });
+    },
+
+    isSelectedStartDate(day) {
+      if (!this.startDate) return false;
+      const selectedDate = moment(this.currentMonth).date(day);
+      return selectedDate.isSame(moment(this.startDate), 'day');
+    },
+
+    isSelectedEndDate(day) {
+      if (!this.endDate) return false;
+      const selectedDate = moment(this.currentMonth).date(day);
+      return selectedDate.isSame(moment(this.endDate), 'day');
+    },
+
+    handleStartBlur(event) {
+    setTimeout(() => {
+      if (this.$refs.startCalendar && !this.$refs.startCalendar.contains(event.relatedTarget)) {
+        this.isStartCalendarOpen = false;
+      }
+    }, 200);
   },
+
+  handleEndBlur(event) {
+    setTimeout(() => {
+      if (this.$refs.endCalendar && !this.$refs.endCalendar.contains(event.relatedTarget)) {
+        this.isEndCalendarOpen = false;
+      }
+    }, 200);
+  },
+
+    saveCheckersToLocalStorage() {
+      localStorage.setItem('assignedCheckers', JSON.stringify(this.Checkers));
+    },
+
+    loadCheckersFromLocalStorage() {
+      const savedCheckers = localStorage.getItem('assignedCheckers');
+      if (savedCheckers) {
+        this.Checkers = JSON.parse(savedCheckers);
+      }
+    }
+  },
+
   watch: {
     chosenDepartment(newDepartment) {
-      console.log(this.AllEmployees);
       this.FilteredEmployees = this.AllEmployees.filter(
-        (item) => item.department == newDepartment
+        (item) => item.department === newDepartment
       ).map((item) => ({ name: item.name, id: item.username_id }));
     },
   },
+
+  mounted() {
+    this.GetAllDepartments();
+    this.loadCheckersFromLocalStorage();
+  },
 };
+
 </script>
