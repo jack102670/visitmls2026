@@ -722,7 +722,7 @@ export default {
           // Assuming the API response structure has a status field
           const userStatus = response.data.result[0].account_status;
           const email = response.data.result[0].email_address;
-          console.log('User status:', userStatus);
+       //   console.log('User status:', userStatus);
 
       if (userStatus === '0' && email !== '') {
         // User has not completed their OTP, show the modal
