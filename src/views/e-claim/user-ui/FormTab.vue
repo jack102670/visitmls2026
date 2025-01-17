@@ -3796,7 +3796,7 @@ export default {
       }
     },
 
-    updateFieldVisibility2(Clinicfield, clinicselectvalue, clinicspecifyvalue) {
+    updateFieldVisibility2(Clinicfield) {
       const medicalBillReimbursementTab = this.tabs.find(
         (tab) => tab.title === "Medical Bill Reimbursement"
       );
@@ -4291,7 +4291,6 @@ export default {
       }
     },
     validateCurrentTab(tabTitle) {
-      let currentTab;
       if(tabTitle ==='overseas'){
       const currentTab = this.overseasTabs.find(tab => tab.title === 'Details');
       return currentTab.fields.every(field => {

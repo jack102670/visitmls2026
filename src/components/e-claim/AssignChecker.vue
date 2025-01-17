@@ -193,7 +193,6 @@
 </template>
 
 <script>
-import DropDown from './DropDown.vue';
 import moment from 'moment';
 import axios from 'axios';
 import { store } from '@/views/store.js';

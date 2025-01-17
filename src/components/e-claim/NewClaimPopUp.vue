@@ -355,7 +355,6 @@ import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import moment from "moment";
 import { formStore } from "../../views/store.js"; // Import your form store
 import { store } from "../../views/store.js";
-import { unique } from "jquery";
 // import axios from 'axios';
 
 const FilePond = vueFilePond(

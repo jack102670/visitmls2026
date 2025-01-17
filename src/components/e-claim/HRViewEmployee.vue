@@ -420,7 +420,6 @@ import $ from 'jquery';
 import 'datatables.net-dt';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';
 import axios from 'axios';
-import { getDepartment } from '@/api/EFormApi';
 export default {
   components: {
   },
@@ -756,7 +755,7 @@ export default {
 
       try {
         axios.put('http://172.28.28.116:7165/api/Admin/Update_UserProfile',registerData)
-        .then((response) => {
+        .then(() => {
           this.loading = false;
           this.confirm = false;
           this.edit = false;

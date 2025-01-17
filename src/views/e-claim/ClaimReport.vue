@@ -2702,7 +2702,7 @@ export default {
         "Toll/Touch n'Go": this.localTravellingDetails?.UploadTollLT || [],
       };
 
-      return Object.entries(groups).filter(([type, files]) => files.length > 0);
+      return Object.entries(groups).filter(([files]) => files.length > 0);
     },
 
     totallocalTravellingDetails() {

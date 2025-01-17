@@ -112,7 +112,7 @@
                     <tr v-for="claim in claimDatas" :key="claim.no"
                       class="hover:bg-gray-200 dark:hover:bg-gray-800transition-colors duration-200">
                       <td class="px-4 py-3 text-center text-xs">
-                       <p>{{ claim.No }}</p> 
+                        <p>{{ claim.No }}</p>
                       </td>
                       <td class="px-4 py-3 text-xs">
                         <span class="font-medium">{{ claim.Type }}</span>
@@ -124,7 +124,7 @@
 
                       </td>
                       <td class="px-4 py-3 text-xs text-right">
-                      <p class="px-2"> {{ claim.Amount.toFixed(2) }}</p> 
+                        <p class="px-2"> {{ claim.Amount.toFixed(2) }}</p>
                       </td>
                     </tr>
                   </tbody>
@@ -132,8 +132,8 @@
                     <tr class="font-semibold text-gray-900 dark:text-white">
                       <td colspan="3" class="text-right"></td>
                       <td colspan="1" class="px-4 py-3 text-sm sm:text-base text-right whitespace-nowrap">
-                     <p class="px-2 text-sm">
-                      Total : MYR {{ totalAmount.toFixed(2) }}</p>  
+                        <p class="px-2 text-sm">
+                          Total : MYR {{ totalAmount.toFixed(2) }}</p>
                       </td>
                     </tr>
                   </tfoot>
@@ -252,43 +252,48 @@
               <th class="">DEPARTMENT</th>
               <th class="">DATE</th>
             </thead>
-            <tr v-if="checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' || claimDetails.admin_status === 'VERIFIED. WAITING FOR APPROVER.' || rejectChecker || claimDetails.admin_status === 'REJECTED BY CHECKER' && claimDetails.checker_name !== ''" class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
-            <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
-              <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
-                :class="{
-                  'bg-green-100/60 dark:bg-gray-800': checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' || claimDetails.admin_status === 'VERIFIED. WAITING FOR APPROVER.',
-                  'bg-red-100/60 dark:bg-gray-800': rejectChecker || claimDetails.admin_status === 'REJECTED BY CHECKER',
-                  'bg-gray-100/60 dark:bg-gray-800': !checked && !rejectChecker && !resubmitChecker
-                }">
-                <span :class="{
-                  'h-1.5 w-1.5 rounded-full': true,
-                  'bg-green-500': checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' || claimDetails.admin_status === 'VERIFIED. WAITING FOR APPROVER.',
-                  'bg-red-500': rejectChecker || claimDetails.admin_status === 'REJECTED BY CHECKER',
-                  'bg-gray-500': !checked && !rejectChecker && !resubmitChecker
-                }"></span>
-                <span :class="{
-                  'text-xs font-normal': true,
-                  'text-green-500': checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' || claimDetails.admin_status === 'VERIFIED. WAITING FOR APPROVER.',
-                  'text-red-500': rejectChecker || claimDetails.admin_status === 'REJECTED BY CHECKER',
-                  'text-gray-500': !checked && !rejectChecker && !resubmitChecker 
-                }">
-                  {{ checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' || claimDetails.admin_status === 'VERIFIED. WAITING FOR APPROVER.'
+            <tr
+              v-if="checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' || claimDetails.admin_status === 'VERIFIED. WAITING FOR APPROVER.' || rejectChecker || claimDetails.admin_status === 'REJECTED BY CHECKER' && claimDetails.checker_name !== ''"
+              class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+              <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                <div
+                  class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
+                  :class="{
+                    'bg-green-100/60 dark:bg-gray-800': checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' || claimDetails.admin_status === 'VERIFIED. WAITING FOR APPROVER.',
+                    'bg-red-100/60 dark:bg-gray-800': rejectChecker || claimDetails.admin_status === 'REJECTED BY CHECKER',
+                    'bg-gray-100/60 dark:bg-gray-800': !checked && !rejectChecker && !resubmitChecker
+                  }">
+                  <span :class="{
+                    'h-1.5 w-1.5 rounded-full': true,
+                    'bg-green-500': checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' || claimDetails.admin_status === 'VERIFIED. WAITING FOR APPROVER.',
+                    'bg-red-500': rejectChecker || claimDetails.admin_status === 'REJECTED BY CHECKER',
+                    'bg-gray-500': !checked && !rejectChecker && !resubmitChecker
+                  }"></span>
+                  <span :class="{
+                    'text-xs font-normal': true,
+                    'text-green-500': checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' || claimDetails.admin_status === 'VERIFIED. WAITING FOR APPROVER.',
+                    'text-red-500': rejectChecker || claimDetails.admin_status === 'REJECTED BY CHECKER',
+                    'text-gray-500': !checked && !rejectChecker && !resubmitChecker
+                  }">
+                    {{ checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' ||
+                      claimDetails.admin_status === 'VERIFIED. WAITING FOR APPROVER.'
                       ? 'CHECKED'
                       : rejectChecker || claimDetails.admin_status === 'REJECTED BY CHECKER'
                         ? 'REJECTED'
                         : 'PENDING'
-                  }}
-                </span>
-              </div>
-            </th>
-            <td class="pl-6">{{ claimDetails.checker_name || '-' }}</td>
-            <td class="pl-6">{{ claimDetails.checker_designation || '-' }}</td>
-            <td>{{ claimDetails.checker_department || '-' }}</td>
-            <td>{{ claimDetails.checked_date || '-' }}</td>
-          </tr>
+                    }}
+                  </span>
+                </div>
+              </th>
+              <td class="pl-6">{{ claimDetails.checker_name || '-' }}</td>
+              <td class="pl-6">{{ claimDetails.checker_designation || '-' }}</td>
+              <td>{{ claimDetails.checker_department || '-' }}</td>
+              <td>{{ claimDetails.checked_date || '-' }}</td>
+            </tr>
             <tr class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
-                <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
+                <div
+                  class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
                   :class="{
                     'bg-amber-100/60 dark:bg-gray-800': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'RESUBMIT' || simplifiedVerifierStatus === 'PENDING',
                     'bg-red-100/60 dark:bg-gray-800': simplifiedVerifierStatus === 'REJECTED'
@@ -303,7 +308,7 @@
                     'text-amber-500': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'RESUBMIT' || simplifiedVerifierStatus === 'PENDING',
                     'text-red-500': simplifiedVerifierStatus === 'REJECTED'
                   }">
-                    {{ simplifiedVerifierStatus }} 
+                    {{ simplifiedVerifierStatus }}
                   </span>
                 </div>
               </th>
@@ -312,9 +317,12 @@
               <td>{{ claimDetails.department || '-' }}</td>
               <td class="">{{ claimDetails.verified_date || '-' }}</td>
             </tr>
-            <tr v-if="simplifiedApproverFinStatus === 'APPROVED' || simplifiedApproverFinStatus === 'REJECTED' || simplifiedApproverFinStatus === 'REIMBURSED'"  class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+            <tr
+              v-if="simplifiedApproverFinStatus === 'APPROVED' || simplifiedApproverFinStatus === 'REJECTED' || simplifiedApproverFinStatus === 'REIMBURSED'"
+              class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
-                <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
+                <div
+                  class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
                   :class="{
                     'bg-green-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'APPROVED',
                     'bg-amber-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'RESUBMIT',
@@ -368,70 +376,73 @@
                 }}
               </td>
             </tr>
-            <tr v-if="simplifiedFinanceStatus === 'REIMBURSED' " class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
-            <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
-              <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
-              :class="{
-                'bg-green-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'APPROVED',
-                'bg-amber-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'RESUBMIT',
-                'bg-red-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'REJECTED',
-                'bg-slate-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'REIMBURSED', 
-                'bg-blue-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'PENDING'
-              }">
-              <span :class="{
-                'h-1.5 w-1.5 rounded-full': true,
-                'bg-green-500': simplifiedFinanceStatus === 'APPROVED',
-                'bg-amber-500': simplifiedFinanceStatus === 'RESUBMIT',
-                'bg-red-500': simplifiedFinanceStatus === 'REJECTED',
-                'bg-slate-500': simplifiedFinanceStatus === 'REIMBURSED',
-                'bg-blue-500': simplifiedFinanceStatus === 'PENDING'
-              }"></span>
-              <span :class="{
-                'text-xs font-normal': true,
-                'text-green-500': simplifiedFinanceStatus === 'APPROVED',
-                'text-amber-500': simplifiedFinanceStatus === 'RESUBMIT',
-                'text-red-500': simplifiedFinanceStatus === 'REJECTED',
-                'text-slate-500': simplifiedFinanceStatus === 'REIMBURSED', 
-                'text-blue-500': simplifiedFinanceStatus === 'PENDING'
-              }">
-                {{ simplifiedFinanceStatus }}
-              </span>
-            </div>
-            </th>
-            <td class="pl-6">
-              {{
-                approved || rejectApprover || resubmitApprover || reimbursed
-                  ? claimDetails.approver_name
-                  : ''
-              }}
-            </td>
-            <td class="">
-              {{
-                approved || rejectApprover || resubmitApprover || reimbursed
-                  ? claimDetails.approver_designation
-                  : ''
-              }}
-            </td>
-            <td>
-              {{
-                approved || rejectApprover || resubmitApprover || reimbursed
-                  ? claimDetails.approver_department
-                  : ''
-              }}
-            </td>
-            <td class="">
-              {{
-                approved || rejectApprover || resubmitApprover || reimbursed
-                  ? claimDetails.approved_date
-                  : ''
-              }}
-            </td>
-          </tr>
+            <tr v-if="simplifiedFinanceStatus === 'REIMBURSED'"
+              class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+              <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                <div
+                  class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
+                  :class="{
+                    'bg-green-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'APPROVED',
+                    'bg-amber-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'RESUBMIT',
+                    'bg-red-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'REJECTED',
+                    'bg-slate-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'REIMBURSED',
+                    'bg-blue-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'PENDING'
+                  }">
+                  <span :class="{
+                    'h-1.5 w-1.5 rounded-full': true,
+                    'bg-green-500': simplifiedFinanceStatus === 'APPROVED',
+                    'bg-amber-500': simplifiedFinanceStatus === 'RESUBMIT',
+                    'bg-red-500': simplifiedFinanceStatus === 'REJECTED',
+                    'bg-slate-500': simplifiedFinanceStatus === 'REIMBURSED',
+                    'bg-blue-500': simplifiedFinanceStatus === 'PENDING'
+                  }"></span>
+                  <span :class="{
+                    'text-xs font-normal': true,
+                    'text-green-500': simplifiedFinanceStatus === 'APPROVED',
+                    'text-amber-500': simplifiedFinanceStatus === 'RESUBMIT',
+                    'text-red-500': simplifiedFinanceStatus === 'REJECTED',
+                    'text-slate-500': simplifiedFinanceStatus === 'REIMBURSED',
+                    'text-blue-500': simplifiedFinanceStatus === 'PENDING'
+                  }">
+                    {{ simplifiedFinanceStatus }}
+                  </span>
+                </div>
+              </th>
+              <td class="pl-6">
+                {{
+                  approved || rejectApprover || resubmitApprover || reimbursed
+                    ? claimDetails.approver_name
+                    : ''
+                }}
+              </td>
+              <td class="">
+                {{
+                  approved || rejectApprover || resubmitApprover || reimbursed
+                    ? claimDetails.approver_designation
+                    : ''
+                }}
+              </td>
+              <td>
+                {{
+                  approved || rejectApprover || resubmitApprover || reimbursed
+                    ? claimDetails.approver_department
+                    : ''
+                }}
+              </td>
+              <td class="">
+                {{
+                  approved || rejectApprover || resubmitApprover || reimbursed
+                    ? claimDetails.approved_date
+                    : ''
+                }}
+              </td>
+            </tr>
           </table>
         </div>
 
         <!-- Remark table -->
-        <div v-show="(claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' || claimDetails.admin_status === 'OPEN') && (claimDetails.admin_status !== 'VERIFIED. WAITING FOR APPROVER.' && claimDetails.admin_status !== 'REJECTED BY CHECKER')">
+        <div
+          v-show="(claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' || claimDetails.admin_status === 'OPEN') && (claimDetails.admin_status !== 'VERIFIED. WAITING FOR APPROVER.' && claimDetails.admin_status !== 'REJECTED BY CHECKER')">
           <div class="text-xs border mt-4 border-gray-400 dark:border-gray-600 rounded-md" id="table-overflow">
             <table class="w-full">
               <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md">
@@ -445,13 +456,16 @@
           <div class=".detail-table w-full lg:flex-row flex flex-col justify-between h-14 items-center pt-6">
             <div class="flex items-center">
               <label class="font-semibold whitespace-nowrap mr-2">Overall Remark:</label>
-              <input class="mx-auto py-2 min-w-[80px] rounded-md border text-xs" type="text" placeholder="Eg. Blurry Receipt Image" v-model="remark" />
+              <input class="mx-auto py-2 min-w-[80px] rounded-md border text-xs" type="text"
+                placeholder="Eg. Blurry Receipt Image" v-model="remark" />
             </div>
             <div class="flex">
-              <button @click="confirmApprove = true" class="mr-2 text-sm font-semibold py-2 sm:w-24 md:w-36 bg-green-500 hover:bg-green-600 rounded-lg text-white">
+              <button @click="confirmApprove = true"
+                class="mr-2 text-sm font-semibold py-2 sm:w-24 md:w-36 bg-green-500 hover:bg-green-600 rounded-lg text-white">
                 Verify
               </button>
-              <button @click="confirmReject = true" class="text-sm font-semibold py-2 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white">
+              <button @click="confirmReject = true"
+                class="text-sm font-semibold py-2 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white">
                 Reject
               </button>
             </div>
@@ -699,7 +713,6 @@
 </template>
 
 <script>
-import moment from 'moment';
 import fileSaver from 'file-saver';
 import axios from 'axios';
 import { store } from '@/views/store.js';
@@ -776,77 +789,77 @@ export default {
       return num;
     },
     simplifiedFinanceStatus() {
-    switch (this.adminStatus) {
-      case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
-        return 'APPROVED';
-      case 'REJECTED BY VERIFIER.':
-        return 'REJECTED';
-      case 'RESUBMIT':
+      switch (this.adminStatus) {
+        case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
+          return 'APPROVED';
+        case 'REJECTED BY VERIFIER.':
+          return 'REJECTED';
+        case 'RESUBMIT':
+          return 'RESUBMIT';
+        case 'REIMBURSED':
+          return 'REIMBURSED';
+        case 'OPEN':
+          return 'PENDING';
+        case 'VERIFIED. WAITING FOR APPROVER.':
+          return 'PENDING';
+        default:
+          return this.adminStatus;
+      }
+    },
+
+    simplifiedApproverFinStatus() {
+      switch (this.adminStatus) {
+        case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
+          return 'APPROVED';
+        case 'REJECTED BY VERIFIER.':
+          return 'REJECTED';
+        case 'RESUBMIT':
+          return 'RESUBMIT';
+        case 'REIMBURSED':
+          return 'APPROVED';
+        case 'OPEN':
+          return 'PENDING';
+        case 'VERIFIED. WAITING FOR APPROVER.':
+          return 'PENDING';
+        default:
+          return this.adminStatus;
+      }
+    },
+
+    simplifiedApproverStatus() {
+      switch (this.adminStatus) {
+        case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
+          return 'APPROVED';
+        case 'REJECTED BY VERIFIER.':
+          return 'REJECTED';
+        case 'RESUBMIT':
+          return 'RESUBMIT';
+        case 'REIMBURSED':
+          return 'APPROVED';
+        case 'OPEN':
+          return 'PENDING';
+        case 'VERIFIED. WAITING FOR APPROVER.':
+          return 'PENDING';
+        default:
+          return this.adminStatus;
+      }
+    },
+    simplifiedVerifierStatus() {
+      if (this.claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER') {
+        return 'PENDING';
+      } else if (this.verified) {
+        return 'VERIFIED';
+      } else if (this.resubmitVerifier) {
         return 'RESUBMIT';
-      case 'REIMBURSED':
+      } else if (this.rejectVerifier || this.rejectChecker) {
+        return 'REJECTED';
+      } else if (this.reimbursed) {
         return 'REIMBURSED';
-      case 'OPEN':
+      } else if (this.open) {
         return 'PENDING';
-        case 'VERIFIED. WAITING FOR APPROVER.':
-        return 'PENDING';
-      default:
-        return this.adminStatus; 
+      }
+      return '-';
     }
-  },
-
-  simplifiedApproverFinStatus() {
-    switch (this.adminStatus) {
-      case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
-        return 'APPROVED';
-      case 'REJECTED BY VERIFIER.':
-        return 'REJECTED';
-      case 'RESUBMIT':
-        return 'RESUBMIT';
-      case 'REIMBURSED':
-        return 'APPROVED';
-      case 'OPEN':
-        return 'PENDING';
-        case 'VERIFIED. WAITING FOR APPROVER.':
-        return 'PENDING';
-      default:
-        return this.adminStatus; 
-    }
-  },
-
-  simplifiedApproverStatus() {
-    switch (this.adminStatus) {
-      case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
-        return 'APPROVED';
-      case 'REJECTED BY VERIFIER.':
-        return 'REJECTED';
-      case 'RESUBMIT':
-        return 'RESUBMIT';
-      case 'REIMBURSED':
-        return 'APPROVED';
-      case 'OPEN':
-        return 'PENDING';
-      case 'VERIFIED. WAITING FOR APPROVER.':
-        return 'PENDING';
-      default:
-        return this.adminStatus; 
-    }
-  },
-  simplifiedVerifierStatus() {
-    if (this.claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER') {
-      return 'PENDING';
-    } else if (this.verified) {
-      return 'VERIFIED';
-    } else if (this.resubmitVerifier) {
-      return 'RESUBMIT';
-    } else if (this.rejectVerifier || this.rejectChecker) {
-      return 'REJECTED';
-    } else if (this.reimbursed) { 
-      return 'REIMBURSED';
-    } else if (this.open) {
-      return 'PENDING';
-    }
-    return '-';
-  }
   },
   methods: {
     toggleDropdown() {
@@ -901,14 +914,14 @@ export default {
             break;
 
           case 'REJECTED BY VERIFIER.':
-              this.rejectVerifier = true;
-              this.pending = false;
-              this.remark = this.claimDetails.comment;
+            this.rejectVerifier = true;
+            this.pending = false;
+            this.remark = this.claimDetails.comment;
             break;
-            case 'REJECTED BY FINANCE':
-              this.rejectVerifier = true;
-              this.pending = false;
-              this.remark = this.claimDetails.comment;
+          case 'REJECTED BY FINANCE':
+            this.rejectVerifier = true;
+            this.pending = false;
+            this.remark = this.claimDetails.comment;
             break;
 
           case 'REJECTED BY CHECKER':
@@ -916,7 +929,7 @@ export default {
             this.pending = false;
             this.remark = this.claimDetails.comment;
             break;
-          
+
           case 'CHECKED BY CHECKER. WAITING FOR VERIFIER':
             this.rejectChecker = false;
             this.pending = false;
@@ -1244,8 +1257,7 @@ export default {
     // need to post to database
     async ApproveOrReject(AoR) {
       this.pending = false;
-      const userData = await this.GetUserData();
-      // console.log(userData);
+      await this.GetUserData();
       this.singleRemarks.forEach(async (remark) => {
         let data = {
           verifier_comment: remark.remark,
@@ -1269,22 +1281,18 @@ export default {
       });
 
       if (AoR == 'Approve') {
-
         try {
-
           this.approve = true;
           this.loadingText = 'Uploading';
           this.loading = true;
-          const approveData = {
+          await axios.post('http://172.28.28.116:7239/api/Verifier/VerifierFeedback', {
             admin_status: 'VERIFIED. WAITING FOR CHECKER',
             verifier_feedback: this.remark ? this.remark : '',
             reference_number: this.claimDetails.reference_number,
             report_name: this.claimDetails.report_name === '-' ? '-' : this.claimDetails.report_name,
             verifier_name: this.claimDetails.verifier_name === '-' ? '-' : this.claimDetails.verifier_name,
             requester_email: this.claimDetails.email === '-' ? '-' : this.claimDetails.email,
-          };
-
-          const response = await axios.post('http://172.28.28.116:7239/api/Verifier/VerifierFeedback', approveData);
+          });
           this.approveSuccess = true;
           this.loading = false;
           setTimeout(() => {
@@ -1345,7 +1353,7 @@ export default {
             'http://172.28.28.116:7239/api/Verifier/VerifierFeedback',
             approveData
           )
-          .then((response) => {
+          .then(() => {
             // Handle success response
             this.loading = false;
 

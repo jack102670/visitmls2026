@@ -287,7 +287,6 @@ import $ from 'jquery';
 import 'datatables.net-dt';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';
 import axios from 'axios';
-import { data } from 'jquery';
 export default {
   data() {
     return {

@@ -921,7 +921,6 @@
 </template>
 
 <script>
-import moment from 'moment';
 import fileSaver from 'file-saver';
 import axios from 'axios';
 import { store } from '@/views/store.js';
