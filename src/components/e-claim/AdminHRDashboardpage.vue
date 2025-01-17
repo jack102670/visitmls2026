@@ -349,7 +349,7 @@ export default {
     },
 
     ViewClaim(rn) {
-      console.log(rn);
+    //  console.log(rn);
       this.$router.push({
         name: 'AdminHRSummaryClaimpage',
         params: { rn: String(rn) },
@@ -417,7 +417,7 @@ export default {
         if (this.claimsData.length > 0) {
           this.userApplications = this.claimsData;
         }
-        console.log("User application: ", this.userApplications);
+       // console.log("User application: ", this.userApplications);
         this.loading = false;
         this.$nextTick(() => {
           this.initializeDataTable();

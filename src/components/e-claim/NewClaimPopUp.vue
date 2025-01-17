@@ -466,14 +466,14 @@ export default {
   methods: {
     handleAddFile(error, fileItem) {
       if (!error) {
-        console.log("Added file name:", fileItem.file.name);
+    //    console.log("Added file name:", fileItem.file.name);
 
         // Rename the file
         const newFileName = `ClaimsAttachment_${fileItem.file.name}`;
         const renamedFile = new File([fileItem.file], newFileName, { type: fileItem.file.type });
 
         this.formData.fileUpload.push(renamedFile);
-        console.log("Files after upload (plain array):", this.formData.fileUpload);
+      //  console.log("Files after upload (plain array):", this.formData.fileUpload);
       }
     },
 

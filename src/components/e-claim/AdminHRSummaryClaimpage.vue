@@ -659,7 +659,7 @@ export default {
           this.remark = this.claimDetails.comment;
         }
 
-        console.log("Get application claim details", this.claimDetails);
+     //   console.log("Get application claim details", this.claimDetails);
       } catch (error) {
         this.loading = false;
         console.error('API error:', error.message);
@@ -683,7 +683,7 @@ export default {
         )
         .then((response) => {
           const result = response.data.result;
-          console.log(result);
+       //   console.log(result);
           let details = [];
           let amount = 0;
           for (let i in result) {
@@ -712,7 +712,7 @@ export default {
             this.claimDatasDetails.push(details);
             this.claimDataTotalAmount.push(amount);
           }
-          console.log("Claim datas details", this.claimDataTotalAmount);
+      //   console.log("Claim datas details", this.claimDataTotalAmount);
         })
         .catch((e) => {
           console.error(e);
@@ -724,7 +724,7 @@ export default {
         )
         .then((response) => {
           const result = response.data.result;
-          console.log(result);
+        //  console.log(result);
 
           let details = [];
           let amount = 0;
@@ -767,8 +767,8 @@ export default {
         }
       });
 
-      console.log(this.claimDatas);
-      console.log(this.claimDatasDetails);
+      // console.log(this.claimDatas);
+      // console.log(this.claimDatasDetails);
     },
 
     PrintSummary() {
@@ -811,7 +811,7 @@ export default {
             designation: response.data.result[0].position_title,
           };
 
-          console.log(userData);
+       //   console.log(userData);
         });
       return userData;
     },
@@ -881,10 +881,10 @@ export default {
           verifier_email: this.claimDetails.verifier_email ? this.claimDetails.verifier_email : 'test@gmail.com',
           reference_number: this.claimDetails.reference_number
         };
-        console.log("Approved data to be sent to admin Approved-claim-HR:", approveData);
+  //      console.log("Approved data to be sent to admin Approved-claim-HR:", approveData);
         try {
           const response = await axios.put('http://172.28.28.116:7165/api/Admin/Approve_Claim_HR', approveData)
-          console.log('API response after approval', response.data);
+      //    console.log('API response after approval', response.data);
           localStorage.setItem('ApproveOrNot', 'approve');
 
           this.approveSuccess = true;
@@ -927,7 +927,7 @@ export default {
 
           const response = await axios.put('http://172.28.28.116:7165/api/Admin/Approve_Claim_HR', approveData);
           this.loading = false;
-          console.log('API response', response.data);
+     //     console.log('API response', response.data);
           localStorage.setItem('ApproveOrNot', 'reject');
         } catch (error) {
           console.error('Error during Reject:', {
@@ -961,7 +961,7 @@ export default {
           const response = await axios.put('http://172.28.28.116:7165/api/Admin/Approve_Claim_HR', approveData);
           this.loading = false;
 
-          console.log('API response', response.data);
+      //    console.log('API response', response.data);
           localStorage.setItem('ApproveOrNot', 'resubmit');
 
         } catch (error) {
@@ -995,7 +995,7 @@ export default {
           const response = await axios.put('http://172.28.28.116:7165/api/Admin/Approve_Claim_HR', approveData);
           this.loading = false;
 
-          console.log('API response', response.data);
+      //    console.log('API response', response.data);
           localStorage.setItem('ApproveOrNot', 'reimbursed');
 
         } catch (error) {

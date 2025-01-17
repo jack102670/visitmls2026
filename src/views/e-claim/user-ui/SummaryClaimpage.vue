@@ -863,7 +863,7 @@ statusApproverClasses() {
             this.approve = true;
             this.remark = this.claimDetails.comment;
           }
-          console.log("current status approver",this.statusApprover);
+        //  console.log("current status approver",this.statusApprover);
 
         });
     },
@@ -875,7 +875,7 @@ statusApproverClasses() {
         )
         .then((response) => {
           const result = response.data.result;
-          console.log(result, 'local outstation');
+        //  console.log(result, 'local outstation');
           let details = [];
           let amount = 0;
           // this.comment = result.comment;
@@ -1135,8 +1135,8 @@ statusApproverClasses() {
         }
       });
 
-      console.log(this.claimDatas, 'claimDatas');
-      console.log(this.claimDatasDetails);
+      // console.log(this.claimDatas, 'claimDatas');
+      // console.log(this.claimDatasDetails);
     },
 
     PrintSummary() {
@@ -1191,7 +1191,7 @@ statusApproverClasses() {
             designation: response.data.result[0].position_title,
           };
 
-          console.log(userData);
+         // console.log(userData);
         });
       return userData;
     },
@@ -1254,13 +1254,13 @@ statusApproverClasses() {
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
         };
-        console.log(approveData);
+     //   console.log(approveData);
 
         const response = await axios.put('http://172.28.28.116:7165/api/Admin/Approve_Claim', approveData);
 
         if (response.status === 200) {
 
-          console.log('API response', response.data);
+        //  console.log('API response', response.data);
           localStorage.setItem('ApproveOrNot', 'approve');
           this.FetchClaimDetails();
           this.FetchClaimDatasDetails();
@@ -1296,7 +1296,7 @@ statusApproverClasses() {
           .then((response) => {
             this.loading = false;
 
-            console.log('API response', response.data);
+        //    console.log('API response', response.data);
             localStorage.setItem('ApproveOrNot', 'reject');
 
             this.FetchClaimDetails();
@@ -1326,7 +1326,7 @@ statusApproverClasses() {
           .then((response) => {
             this.loading = false;
 
-            console.log('API response', response.data);
+         //   console.log('API response', response.data);
             localStorage.setItem('ApproveOrNot', 'resubmit');
           })
           .catch((error) => {
@@ -1353,7 +1353,7 @@ statusApproverClasses() {
           .then((response) => {
             this.loading = false;
 
-            console.log('API response', response.data);
+         //   console.log('API response', response.data);
             localStorage.setItem('ApproveOrNot', 'reimbursed');
 
             this.FetchClaimDetails();

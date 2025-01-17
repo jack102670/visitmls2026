@@ -541,7 +541,7 @@ export default {
   },
   created() {
     this.userDetails = store.getSession().userDetails;
-    console.log(this.userDetails);
+ //   console.log(this.userDetails);
     this.fetchHrData();
   },
   methods: {
@@ -558,13 +558,13 @@ export default {
         spouse: this.user.spouse,
         phone_number: this.user.phone_number,
       };
-      console.log('Employee Data:', employeeData);
+   //   console.log('Employee Data:', employeeData);
       axios
         .put('http://172.28.28.116:7239/api/User/UpdateEmployee', employeeData)
         .then((response) => {
-          console.log('Response:', response);
+    //      console.log('Response:', response);
           if (response.data.status_code === '200') {
-            console.log('Successfully Updated:', response.data.message);
+    //        console.log('Successfully Updated:', response.data.message);
             alert('Successfully Updated.');
             this.showUpdateModal = false;
           } else {
@@ -614,7 +614,7 @@ export default {
     },
 
     uploadimg() {
-      console.log('Profile picture value:', this.profile_picture);
+  //    console.log('Profile picture value:', this.profile_picture);
       this.loadingText = 'Uploading';
       this.loading = true;
       if (!this.profile_picture) {
@@ -630,8 +630,8 @@ export default {
         .put('http://172.28.28.116:7239/api/User/UpdateImage', formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         })
-        .then((response) => {
-          console.log('File uploaded successfully:', response.data);
+        .then(() => {
+   //       console.log('File uploaded successfully:', response.data);
           this.loading = true;
         })
         .catch((error) => {

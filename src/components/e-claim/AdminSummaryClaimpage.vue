@@ -946,7 +946,7 @@ export default {
           this.loading = false;
           this.claimDetails = response.data.result;
           this.adminStatus = this.claimDetails.admin_status
-          console.log("claimDetails", this.claimDetails);
+     //     console.log("claimDetails", this.claimDetails);
           switch (this.adminStatus) {
             case 'VERIFIED. WAITING FOR APPROVER.':
               this.verified = true;
@@ -982,26 +982,26 @@ export default {
             case 'REJECTED BY VERIFIER.':
               if (this.claimDetails.admin_status.includes('VERIFIER')) {
                 this.rejectVerifier = true;
-                console.log('yes');
+         //       console.log('yes');
               } else if (this.claimDetails.admin_status.includes('CHECKER')) {
                 this.verified = true;
                 this.rejectChecker = true;
-                console.log('yes2');
+           //     console.log('yes2');
               } else if (this.claimDetails.admin_status.includes('APPROVER')) {
                 this.verified = true;
                 this.checked = true;
                 this.rejectApprover = true;
-                console.log('yes2');
+          //      console.log('yes2');
               } else if (this.claimDetails.admin_status.includes('FINANCE')) {
                 this.verified = true;
                 this.checked = true;
                 this.approved = true;
                 this.rejectFinance = true;
-                console.log('yes2');
+         //       console.log('yes2');
               }
               this.pending = false;
 
-              console.log('no ' + this.claimDetails.admin_status);
+        //      console.log('no ' + this.claimDetails.admin_status);
 
               this.remark = this.claimDetails.comment;
               break;
@@ -1041,7 +1041,7 @@ export default {
               break;
           }
 
-          console.log(this.adminStatus);
+     //     console.log(this.adminStatus);
         });
     },
     async FetchClaimDatasDetails() {
@@ -1055,7 +1055,7 @@ export default {
         )
         .then((response) => {
           const result = response.data.result;
-          console.log(result);
+   //       console.log(result);
           let details = [];
           let amount = 0;
           for (let i in result) {
@@ -1099,7 +1099,7 @@ export default {
         )
         .then((response) => {
           const result = response.data.result;
-          console.log(result);
+      //    console.log(result);
           let details = [];
           let amount = 0;
           for (let i in result) {
@@ -1143,7 +1143,7 @@ export default {
         )
         .then((response) => {
           const result = response.data.result;
-          console.log(result);
+    //      console.log(result);
           let details = [];
           let amount = 0;
           for (let i in result) {
@@ -1179,7 +1179,7 @@ export default {
         )
         .then((response) => {
           const result = response.data.result;
-          console.log(result);
+  //        console.log(result);
           let details = [];
           let amount = 0;
           for (let i in result) {
@@ -1214,7 +1214,7 @@ export default {
         )
         .then((response) => {
           const result = response.data.result;
-          console.log(result);
+     //     console.log(result);
           let details = [];
           let amount = 0;
           for (let i in result) {
@@ -1251,8 +1251,8 @@ export default {
         }
       });
 
-      console.log(this.claimDatas);
-      console.log(this.claimDatasDetails);
+      // console.log(this.claimDatas);
+      // console.log(this.claimDatasDetails);
     },
 
     PrintSummary() {
@@ -1295,13 +1295,13 @@ export default {
             designation: response.data.result[0].position_title,
           };
 
-          console.log(userData);
+      //    console.log(userData);
         });
       return userData;
     },
     // If any single remark is change, save in the array
     UpdateSingleRemark(event, uc, tab) {
-      console.log(this.singleRemarks);
+    //  console.log(this.singleRemarks);
 
       let index = this.singleRemarks.findIndex(
         (item) => item.unique_code == uc
@@ -1334,7 +1334,7 @@ export default {
       this.pending = false;
 
       const userData = await this.GetUserData();
-      console.log(userData);
+   //   console.log(userData);
       this.singleRemarks.forEach((remark) => {
         let data = {
           comment: remark.remark,
@@ -1384,7 +1384,7 @@ export default {
             verifier_email: this.claimDetails.verifier_email ? this.claimDetails.verifier_email : 'test@gmail.com',
             reference_number: this.claimDetails.reference_number ? this.claimDetails.reference_number : '-',
           };
-          console.log(approveData);
+      //    console.log(approveData);
 
           const response = await axios.put('http://172.28.28.116:7165/api/Admin/Approve_Claim_FN', approveData);
           // if (response.status === 200) {

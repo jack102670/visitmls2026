@@ -2883,7 +2883,7 @@ export default {
         .toFixed(2);
     },
     referenceNumber() {
-      console.log("Current uniqueCode:", this.claims.uniqueCode);
+      // console.log("Current uniqueCode:", this.claims.uniqueCode);
       return this.claims.uniqueCode;
     },
   },
@@ -2933,7 +2933,7 @@ export default {
           "http://172.28.28.116:7165/api/User/GetRunningNumber"
         );
         if (response.status === 200) {
-          console.log("Serial Number:", response.data);
+          // console.log("Serial Number:", response.data);
           let serialNumber = this.claims[0].uniqueCode + response.data.result;
           result = serialNumber;
         } else {
@@ -2944,7 +2944,7 @@ export default {
         console.error("Error fetching serial number:", error);
         result = "Error: " + error.message;
       }
-      console.log("Result:", result);
+      // console.log("Result:", result);
       return result; // Return result outside the finally block
     },
 
@@ -2964,11 +2964,11 @@ export default {
           const selectedEmployee = response.data.result.find(
             (emp) => emp.username_id === store.getSession().userDetails.userId
           );
-          console.log("Selected Employee:", selectedEmployee);
+          // console.log("Selected Employee:", selectedEmployee);
           if (selectedEmployee) {
             if ("emp_id" in selectedEmployee) {
               this.employeeID = selectedEmployee.emp_id;
-              console.log("Employee ID:", this.employeeID);
+              // console.log("Employee ID:", this.employeeID);
             } else {
               console.error(
                 "Employee found but employee_id is missing:",
@@ -2995,7 +2995,7 @@ export default {
     },
     totalplusmethod(total) {
       this.totalplus = total;
-      console.log("totalplus", this.totalplus);
+      // console.log("totalplus", this.totalplus);
     },
     createObjectURL(file) {
       return URL.createObjectURL(file);
@@ -3020,7 +3020,7 @@ export default {
 
     showDetails(claim, index) {
       this.index = index;
-      console.log("Current index", this.index);
+      // console.log("Current index", this.index);
       // Update selectedClaimType based on the type of claim
       this.selectedClaimType = claim.tabTitle.replace(/\s+/g, ""); // Remove spaces from claim type
       this.formToDelete = index;
@@ -3028,44 +3028,44 @@ export default {
       switch (this.selectedClaimType) {
         case "LocalTravelling":
           this.localTravellingDetails = claim;
-          console.log("Local Travelling Details:", this.localTravellingDetails);
-          console.log("upload", this.localTravellingDetails.UploadLT);
+          // console.log("Local Travelling Details:", this.localTravellingDetails);
+          // console.log("upload", this.localTravellingDetails.UploadLT);
           break;
         case "OverseasTravelling":
           this.overseasTravellingDetails = claim;
-          console.log(
-            "Overseas Travelling Details:",
-            this.overseasTravellingDetails
-          );
+          // console.log(
+          //   "Overseas Travelling Details:",
+          //   this.overseasTravellingDetails
+          // );
           break;
         case "Entertainment":
           this.entertainmentDetails = claim;
-          console.log("Entertainment Details:", this.entertainmentDetails);
+          // console.log("Entertainment Details:", this.entertainmentDetails);
           break;
         case "StaffRefreshment":
           this.staffRefreshmentDetails = claim;
-          console.log(
-            "Staff Refreshment Details:",
-            this.staffRefreshmentDetails
-          );
+          // console.log(
+          //   "Staff Refreshment Details:",
+          //   this.staffRefreshmentDetails
+          // );
           break;
         case "Others":
           this.othersDetails = claim;
-          console.log("Others Details:", this.othersDetails);
+          // console.log("Others Details:", this.othersDetails);
           break;
         case "HandphoneBillReimbursement":
           this.handphoneBillReimbursementDetails = claim;
-          console.log(
-            "Handphone Bill Reimbursement Details:",
-            this.handphoneBillReimbursementDetails
-          );
+          // console.log(
+          //   "Handphone Bill Reimbursement Details:",
+          //   this.handphoneBillReimbursementDetails
+          // );
           break;
         case "MedicalBillReimbursement":
           this.medicalBillReimbursementDetails = claim;
-          console.log(
-            "Medical Bill Reimbursement Details:",
-            this.medicalBillReimbursementDetails
-          );
+          // console.log(
+          //   "Medical Bill Reimbursement Details:",
+          //   this.medicalBillReimbursementDetails
+          // );
           break;
         // Add cases for other types of claims
       }
@@ -3117,7 +3117,7 @@ export default {
 
         // Construct the uniqueCode
         const uniqueCode = `${prefix}${userIdFragment}${randomNumber}${timestamp}`;
-        console.log("Unique Code:", uniqueCode);
+        // console.log("Unique Code:", uniqueCode);
         return uniqueCode;
       } else {
         console.error("User ID is undefined.");
@@ -3170,7 +3170,7 @@ export default {
 
         // Construct the uniqueCode
         const uniqueCode = `SN${prefix}${userIdFragment}${randomNumber}${timestamp}`;
-        console.log("Unique Code:", uniqueCode);
+        // console.log("Unique Code:", uniqueCode);
         return uniqueCode;
       } else {
         console.error("User ID is undefined.");
@@ -3179,7 +3179,7 @@ export default {
       }
     },
     someMethod() {
-      console.log(this.claims.uniqueCode);
+      // console.log(this.claims.uniqueCode);
       // Other logic
     },
     isValidClaimData() {
@@ -3227,7 +3227,7 @@ export default {
 
         // Check if the response indicates success
         if (response.status === 200 || response.status === 201) {
-          console.log("Data successfully inserted:", response.data);
+          // console.log("Data successfully inserted:", response.data);
           this.sendToAPI();
         } else {
           console.warn("Unexpected response status:", response.status);
@@ -3272,7 +3272,7 @@ export default {
       for (const title in groupedClaims) {
         if (Object.hasOwnProperty.call(groupedClaims, title)) {
           const claimsToSend = groupedClaims[title];
-          console.log(`Claims to send for ${title}:`, claimsToSend); // Log the claimsToSend object
+          // console.log(`Claims to send for ${title}:`, claimsToSend); // Log the claimsToSend object
 
           
             let axiosInstance;
@@ -3282,7 +3282,7 @@ export default {
                   // Iterate over each claim
                   const uniqueCodeLT = this.generateUniqueCode(claim.tabTitle);
                   const userId = this.userDetails.userId;
-                  console.log("unik kod:", uniqueCodeLT);
+                  // console.log("unik kod:", uniqueCodeLT);
 
                   const transportSpec =
                     claim.TransportLT.toLowerCase() === "personal transport"
@@ -3316,7 +3316,7 @@ export default {
                   });
                   if (claim.UploadLT && claim.UploadLT.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
-                    console.log("Preparing to upload files:", claim.UploadLT);
+                    // console.log("Preparing to upload files:", claim.UploadLT);
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
@@ -3326,10 +3326,10 @@ export default {
                     claim.UploadParkingLT &&
                     claim.UploadParkingLT.length > 0
                   ) {
-                    console.log(
-                      "Preparing to upload files:",
-                      claim.UploadParkingLT
-                    );
+                    // console.log(
+                    //   "Preparing to upload files:",
+                    //   claim.UploadParkingLT
+                    // );
                     this.uploadFiles(
                       claim.UploadParkingLT,
                       userId,
@@ -3337,17 +3337,17 @@ export default {
                     );
                   }
                   if (claim.UploadTollLT && claim.UploadTollLT.length > 0) {
-                    console.log(
-                      "Preparing to upload files:",
-                      claim.UploadTollLT
-                    );
+                    // console.log(
+                    //   "Preparing to upload files:",
+                    //   claim.UploadTollLT
+                    // );
                     this.uploadFiles(claim.UploadTollLT, userId, uniqueCodeLT);
                   }
                   if (claim.UploadFareRMLT && claim.UploadFareRMLT.length > 0) {
-                    console.log(
-                      "Preparing to upload files:",
-                      claim.UploadFareRMLT
-                    );
+                    // console.log(
+                    //   "Preparing to upload files:",
+                    //   claim.UploadFareRMLT
+                    // );
                     this.uploadFiles(
                       claim.UploadFareRMLT,
                       userId,
@@ -3358,10 +3358,10 @@ export default {
                     claim.UploadMileageRMLT &&
                     claim.UploadMileageRMLT.length > 0
                   ) {
-                    console.log(
-                      "Preparing to upload files:",
-                      claim.UploadMileageRMLT
-                    );
+                    // console.log(
+                    //   "Preparing to upload files:",
+                    //   claim.UploadMileageRMLT
+                    // );
                     this.uploadFiles(
                       claim.UploadMileageRMLT,
                       userId,
@@ -3372,7 +3372,7 @@ export default {
                     "/",
                     thisisforlocal1
                   );
-                  console.log(`Data sent for ${title} 1:`, response.data);
+                  // console.log(`Data sent for ${title} 1:`, response.data);
                 }
                 break;
               }
@@ -3415,10 +3415,10 @@ export default {
                   };
 
                   const userId = this.userDetails.userId;
-                  console.log("unik kod:", this.uniqueCode);
+                  // console.log("unik kod:", this.uniqueCode);
                   if (claim.UploadOT && claim.UploadOT.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
-                    console.log("Preparing to upload files:", claim.UploadOT);
+                    // console.log("Preparing to upload files:", claim.UploadOT);
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
@@ -3428,10 +3428,10 @@ export default {
                     claim.UploadAirportLimoTeksiOT &&
                     claim.UploadAirportLimoTeksiOT.length > 0
                   ) {
-                    console.log(
-                      "Preparing to upload files:",
-                      claim.UploadAirportLimoTeksiOT
-                    );
+                    // console.log(
+                    //   "Preparing to upload files:",
+                    //   claim.UploadAirportLimoTeksiOT
+                    // );
                     this.uploadFiles(
                       claim.UploadAirportLimoTeksiOT,
                       userId,
@@ -3444,7 +3444,7 @@ export default {
                       (expense) => expense.files || []
                     );
                     if (filesToUpload.length > 0) {
-                      console.log("Preparing to upload files:", filesToUpload);
+                      // console.log("Preparing to upload files:", filesToUpload);
                       await this.uploadFiles(filesToUpload, userId, uniqcodeOT);
                     }
                   }
@@ -3457,7 +3457,7 @@ export default {
                     "/",
                     thisisforoversea
                   );
-                  console.log(`Data sent for ${title} 2:`, response.data);
+                  // console.log(`Data sent for ${title} 2:`, response.data);
                 }
                 break;
               case "entertainment":
@@ -3493,7 +3493,7 @@ export default {
 
                   if (claim.UploadE && claim.UploadE.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
-                    console.log("Preparing to upload files:", claim.UploadE);
+                    // console.log("Preparing to upload files:", claim.UploadE);
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
@@ -3512,7 +3512,7 @@ export default {
                       "/",
                       thisisforentertainment
                     );
-                    console.log(`Data sent for ${title} 3:`, response.data);
+                    // console.log(`Data sent for ${title} 3:`, response.data);
                   //  this.fileupload(); // Assuming this function handles subsequent actions after successful submission
                   // } catch (error) {
                   //   console.error(
@@ -3556,7 +3556,7 @@ export default {
                   // console.log("unik kod:", uniqueCode);
                   if (claim.UploadSR && claim.UploadSR.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
-                    console.log("Preparing to upload files:", claim.UploadSR);
+                   // console.log("Preparing to upload files:", claim.UploadSR);
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
@@ -3570,7 +3570,7 @@ export default {
                     "/",
                     thisisforstaffrefreshment
                   );
-                  console.log(`Data sent for ${title} 2:`, response2.data);
+               //   console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
               case "others":
@@ -3595,10 +3595,10 @@ export default {
                   // console.log("unik kod:", uniqueCode);
                   if (claim.UploadOthers && claim.UploadOthers.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
-                    console.log(
-                      "Preparing to upload files:",
-                      claim.UploadOthers
-                    );
+                    // console.log(
+                    //   "Preparing to upload files:",
+                    //   claim.UploadOthers
+                    // );
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
@@ -3615,7 +3615,7 @@ export default {
                     "/",
                     thisisforHandphoneBillReimbursement
                   );
-                  console.log(`Data sent for ${title} 2:`, response2.data);
+                 // console.log(`Data sent for ${title} 2:`, response2.data);
                 }
                 break;
               case "handphone bill reimbursement":
@@ -3643,7 +3643,7 @@ export default {
                   // console.log("unik kod:", uniqueCode);
                   if (claim.UploadHR && claim.UploadHR.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
-                    console.log("Preparing to upload files:", claim.UploadLT);
+                  //  console.log("Preparing to upload files:", claim.UploadLT);
 
                     // Assuming uploadFile has been adjusted to accept an array of files
                     this.uploadFiles(claim.UploadHR, userId, uniqcodeHR);
@@ -3658,10 +3658,10 @@ export default {
                       "/",
                       thisisforHandphoneBillReimbursement
                     );
-                    console.log(
-                      `Data successfully submitted for handphone bill reimbursement:`,
-                      response.data
-                    );
+                    // console.log(
+                    //   `Data successfully submitted for handphone bill reimbursement:`,
+                    //   response.data
+                    // );
 
                     // Handle success here, e.g., update UI or notify user
                   } catch (error) {
@@ -3721,7 +3721,7 @@ export default {
                   // console.log("unik kod:", uniqueCode);
                   if (claim.UploadML && claim.UploadML.length > 0) {
                     // Log the file data to verify it's correct before attempting to upload
-                    console.log("Preparing to upload files:", claim.UploadML);
+                  //  console.log("Preparing to upload files:", claim.UploadML);
 
                     // Assuming uploadFile has been adjusted to accept an array of files
 
@@ -3736,7 +3736,7 @@ export default {
                     thisisforMedicalBillReimbursement
                   );
                   // console.log(`Data sent for ${title} 2:`, response2.data);
-                  console.log("Data sent for Medical Bill Reimbursement");
+                //  console.log("Data sent for Medical Bill Reimbursement");
                 }
                 break;
               // Add cases for other tab titles here
@@ -3793,7 +3793,7 @@ export default {
             "Content-Type": "multipart/form-data",
           },
         });
-        console.log("Files uploaded successfully:", response.data);
+     //   console.log("Files uploaded successfully:", response.data);
       } catch (error) {
         console.error("Error uploading files:", error);
       }
@@ -3810,11 +3810,11 @@ export default {
       await this.uploadFilesclaims(files, X, Y);
     },
     async uploadFilesclaims(files, userId, uniqueCode) {
-      console.log("Files parameter received:", files);
-      console.log("User ID:", userId);
-      console.log("Unique Code:", uniqueCode);
-      console.log("Files type:", typeof files);
-      console.log("Is Array:", Array.isArray(files));
+      // console.log("Files parameter received:", files);
+      // console.log("User ID:", userId);
+      // console.log("Unique Code:", uniqueCode);
+      // console.log("Files type:", typeof files);
+      // console.log("Is Array:", Array.isArray(files));
 
       if (!files || !Array.isArray(files)) {
         console.error("The files parameter is not an array or is undefined.");
@@ -3834,7 +3834,7 @@ export default {
             "Content-Type": "multipart/form-data",
           },
         });
-        console.log("Files uploaded successfully:", response.data);
+        //console.log("Files uploaded successfully:", response.data);
 
         formStore.clearFormData();
       } catch (error) {
@@ -3859,7 +3859,7 @@ export default {
         const storedClaims = JSON.parse(localStorage.getItem("claims")) || [];
         this.claims = storedClaims;
       }
-      console.log("Claims:", this.claims);
+    //  console.log("Claims:", this.claims);
     },
 
     addClaim(formData) {

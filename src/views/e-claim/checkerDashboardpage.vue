@@ -464,7 +464,7 @@ export default {
           `http://172.28.28.116:7165/api/ApproverVerifier/GetAllRequestChecker/${userid}`
         );
         this.items = response.data.result;
-        console.log('api data', this.items);
+        // console.log('api data', this.items);
 
         if (response.data.result.length > 0) {
           this.userApplications = response.data.result;

@@ -1741,13 +1741,13 @@ export default {
       this.showConfirmButton = false;
       this.showLoadingButton = true;
  
-      console.log('refNumber:', this.getRequest2.refNumber);
-  console.log('ticketStatus:', "open");
-  console.log('adminStatus:', this.getRequest2.securityAdminStatus);
-  console.log('adminComment:', this.getRequest2.securityAdminComment);
-  console.log('modifiedBy:', this.store);
-  console.log('userEmail:', this.getRequest2.vendorEmail);
-  console.log('dateFinish:', this.getRequest2.dateUntil);
+  //     console.log('refNumber:', this.getRequest2.refNumber);
+  // console.log('ticketStatus:', "open");
+  // console.log('adminStatus:', this.getRequest2.securityAdminStatus);
+  // console.log('adminComment:', this.getRequest2.securityAdminComment);
+  // console.log('modifiedBy:', this.store);
+  // console.log('userEmail:', this.getRequest2.vendorEmail);
+  // console.log('dateFinish:', this.getRequest2.dateUntil);
       axios
         .put("http://172.28.28.91:8085/api/Admin/AdminSecUpdatePTW", {
   
@@ -1952,7 +1952,7 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetBadgeRequest/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
-            console.log("this is get request masuk tak" + this.getRequest);
+            // console.log("this is get request masuk tak" + this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1960,7 +1960,7 @@ export default {
 
         this.isModalVisible = true;
 
-        console.log(this.isModalVisible);
+        // console.log(this.isModalVisible);
         this.showBadgeRequest = true;
         this.showMaskRequest = false;
         this.showTeskit = false;
@@ -1974,7 +1974,7 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetVisitor/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
-            console.log("try" + this.getRequest);
+            // console.log("try" + this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1994,7 +1994,7 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetCCTVRequest/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
-            console.log(this.getRequest);
+            // console.log(this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -2014,9 +2014,9 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetPTW/" + refNumber)
           .then((response) => {
             this.getRequest2 = response.data;
-            console.log(this.getRequest2);
+            // console.log(this.getRequest2);
             this.length = this.getRequest2.files.length;
-            console.log(this.length);
+            // console.log(this.length);
 
             //To append files name with SECURITY into new array
             for (let i = 0; i < this.length; i++) {
@@ -2026,7 +2026,7 @@ export default {
                 this.securityFiles.push(this.getRequest2.files[i]);
               }
 
-              console.log("this is new files with security" + this.files);
+              // console.log("this is new files with security" + this.files);
             }
           })
           .catch((error) => {
@@ -2049,7 +2049,7 @@ export default {
           )
           .then((response) => {
             this.getRequest = response.data;
-            console.log(this.getRequest);
+            // console.log(this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -2069,7 +2069,7 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetTestKits/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
-            console.log(this.getRequest);
+            // console.log(this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -2089,7 +2089,7 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetMask/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
-            console.log(this.getRequest);
+            // console.log(this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -2174,7 +2174,7 @@ export default {
     },
     viewRequestDetails() {
       // You can implement the logic to show the details view here
-      console.log("see", this.requester);
+      // console.log("see", this.requester);
     },
     convertJsonToArray(json, keysToExclude) {
       return Object.entries(json).reduce((tableData, [key, value]) => {
@@ -2260,14 +2260,14 @@ export default {
 
       const test = this.convertJsonToKeyValArray(this.getRequest);
 
-      console.log(test);
+      // console.log(test);
 
       const tableRows = this.convertJsonToArray(
         this.getRequest,
         this.keysToExclude
       );
 
-      console.log(tableRows);
+      // console.log(tableRows);
 
       // doc.autoTable({
       //   startY: yPos,

@@ -247,7 +247,7 @@ export default {
   },
   methods: {
     ViewClaim(rn) {
-      console.log(rn);
+    //  console.log(rn);
       this.$router.push({
         name: 'AdminHODClaimpage',
         params: { rn: String(rn) },
@@ -267,7 +267,7 @@ export default {
           this.claimsData = response.data.result.filter(
             (item) => item.admin_status != ''
           );
-          console.log(this.claimsData);
+      //    console.log(this.claimsData);
 
           this.loading = false;
 

@@ -464,7 +464,7 @@ export default {
 
   created() {
     this.userDetails = store.getSession().userDetails;
-    console.log(this.userDetails);
+ //   console.log(this.userDetails);
     this.fetchHrData();
     this.addEventListeners();
   },
@@ -512,7 +512,7 @@ export default {
           .then((data) => {
             if (data.result && data.result.length > 0) {
               const userStatus = data.result[0];
-              console.log('User status:', userStatus);
+         //     console.log('User status:', userStatus);
               if (userStatus.branch === "" &&  userStatus.department === "" && userStatus.emp_id === "") {
                 resolve(2); // Incomplete profile
               } else {
@@ -544,13 +544,13 @@ export default {
         limit_outpatient: this.user.limit_outpatient,
       };
 
-      console.log('Employee Data this:', employeeData);
+   //   console.log('Employee Data this:', employeeData);
       axios
         .put('http://172.28.28.116:7239/api/User/UpdateEmployee', employeeData)
         .then((response) => {
-          console.log('Response: this method', response);
+      //    console.log('Response: this method', response);
           if (response.data.status_code === '200') {
-            console.log('Successfully Updated:', response.data.message);
+        //    console.log('Successfully Updated:', response.data.message);
 
             this.message = 'Successfully Updated';
             this.showSuccessNotification = true;
@@ -596,7 +596,7 @@ export default {
         .get(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           const data = response.data.result;
-          console.log('HR data:', data);
+    //      console.log('HR data:', data);
           if (data && data.length > 0) {
             const user = data[0];
             this.user.branch = user.branch;
@@ -620,7 +620,7 @@ export default {
             this.tempEmail = user.email_address;
 
           }
-          console.log('HR data:', this.tempEmail);
+      //    console.log('HR data:', this.tempEmail);
           this.loading = false;
         })
         .catch((error) => {
@@ -629,7 +629,7 @@ export default {
     },
 
     async uploadimg() {
-      console.log('Profile picture value:', this.profile_picture); // Debugging line
+   //   console.log('Profile picture value:', this.profile_picture); // Debugging line
       if (!this.profile_picture) {
         // alert("Please select a profile picture.");
         return;
@@ -650,7 +650,7 @@ export default {
         })
         .then((response) => {
           this.loadingButton = false;
-          console.log('File uploaded successfully:', response.data);
+      //    console.log('File uploaded successfully:', response.data);
           this.message = 'Profile picture uploaded successfully.';
           this.showSuccessNotification = true;
           setTimeout(() => (this.showSuccessNotification = false), 3000); // Auto-hide after 3 seconds
@@ -740,7 +740,7 @@ export default {
 },
 
     checkUserStatusAndShowModal() {
-      console.log('Checking user status and showing modal');
+   //   console.log('Checking user status and showing modal');
    
       const username_id = store.getSession().userDetails.userId;
       axios
@@ -749,7 +749,7 @@ export default {
           // Assuming the API response structure has a status field
           const userStatus = response.data.result[0].account_status;
 
-          console.log('User status: baru', userStatus);
+     //     console.log('User status: baru', userStatus);
 if (userStatus===null) this.$router.push('/homepage')
 {
           if (userStatus === '0') {
@@ -770,8 +770,8 @@ if (userStatus===null) this.$router.push('/homepage')
     },
 
     async verifyAndSaveData() {
-      console.log("Temp email now", this.tempEmail);
-      console.log("User email now", this.user.email_address);
+      // console.log("Temp email now", this.tempEmail);
+      // console.log("User email now", this.user.email_address);
       this.loadingButton = true;
 
       try {
@@ -786,7 +786,7 @@ if (userStatus===null) this.$router.push('/homepage')
         console.error('Error during verify and save data process:', error);
       } finally {
         // Ensure checkUserStatusAndShowModal runs last
-        console.log('Executing finally block');
+     //  console.log('Executing finally block');
         this.checkUserStatusAndShowModal();
         this.loadingButton = false;
       }
@@ -808,19 +808,19 @@ if (userStatus===null) this.$router.push('/homepage')
         phone_number: this.user.phone_number.toString(),
         ic_number: String(this.user.ic_number),
       };
-      console.log('Employee Data test :', employeeData);
+   //   console.log('Employee Data test :', employeeData);
 
       axios
         .put('http://172.28.28.116:7239/api/User/UpdateProfile', employeeData)
         .then((response) => {
-          console.log('Response:', response);
+     //     console.log('Response:', response);
           const elapsedTime = Date.now() - startTime; // Calculate elapsed time
           const remainingTime = Math.max(2000 - elapsedTime, 0); // Ensure min 2 seconds loading time
 
           setTimeout(() => {
             this.loadingButton = false; // Stop loading after ensuring min 2 seconds
             if (response.data.status_code === '200') {
-              console.log(':', response.data.status_code);
+     //         console.log(':', response.data.status_code);
               this.message = 'Successfully Updated';
               this.showSuccessNotification = true;
               setTimeout(() => {
@@ -834,7 +834,7 @@ if (userStatus===null) this.$router.push('/homepage')
                 'Successfully Updated. Verify Your Email.'
               )
             ) {
-              console.log(':otp is sent', response.data.message);
+      //        console.log(':otp is sent', response.data.message);
               this.message = 'Successfully Updated. Verify Your Email.';
               this.showSuccessNotification = true;
               setTimeout(() => {
@@ -873,7 +873,7 @@ if (userStatus===null) this.$router.push('/homepage')
         );
 
         if (response.data.status_code === '200') {
-          console.log('OTP sent successfully:', response.data);
+    //      console.log('OTP sent successfully:', response.data);
           this.showRequestOtpModal = false;
           // alert("OTP has been sent to your email.");
           this.message = 'OTP has been sent to your email.';

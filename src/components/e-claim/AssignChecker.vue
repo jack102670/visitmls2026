@@ -333,7 +333,7 @@ export default {
           `http://172.28.28.116:7165/api/Admin/AssignChecker/${username_id}`,
           data
         );
-        console.log("Data successfully updated:", response);
+    //    console.log("Data successfully updated:", response);
         this.Checkers.push(newChecker);
         this.saveCheckersToLocalStorage();
         this.resetForm();

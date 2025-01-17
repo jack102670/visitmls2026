@@ -881,8 +881,8 @@ export default {
         this.loading = false;
         this.claimDetails = response.data.result;
         this.adminStatus = this.claimDetails.admin_status
-        console.log("get claimdetails : ", this.claimDetails);
-        console.log("get admin status", this.adminStatus);
+        // console.log("get claimdetails : ", this.claimDetails);
+        // console.log("get admin status", this.adminStatus);
 
         switch (this.adminStatus) {
           case 'VERIFIED. WAITING FOR APPROVER.':
@@ -1329,7 +1329,7 @@ export default {
           );
           // Handle success response
           this.loading = false;
-          console.log('API response', response.data);
+         // console.log('API response', response.data);
         } catch (error) {
           // Handle error response
           this.loading = false;

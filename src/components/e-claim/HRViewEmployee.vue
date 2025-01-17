@@ -626,24 +626,24 @@ export default {
     },
 
     async getFormData(employee, emp_id, username_id, reporting_to) {
-      console.log("4. employee in getFormData method: ", employee);
-      console.log("1. emp_id in getFormData method: ", emp_id);
-      console.log("2. username in getFormData method: ", username_id);
-      console.log("(2). username in getFormData method: ", reporting_to);
+      // console.log("4. employee in getFormData method: ", employee);
+      // console.log("1. emp_id in getFormData method: ", emp_id);
+      // console.log("2. username in getFormData method: ", username_id);
+      // console.log("(2). username in getFormData method: ", reporting_to);
 
       let reportingName = '';
       try {
         const reportingResponse = await axios.get('http://172.28.28.116:7239/api/User/GetAllEmployees');
         const allEmployees = reportingResponse.data.result;
-        console.log("All employees:", allEmployees);
+        // console.log("All employees:", allEmployees);
         const reportingEmployee = allEmployees.find(emp => emp.emp_id === employee.reporting_to);
-        console.log("Found reporting employee:", reportingEmployee);
-        console.log("Reporting to (emp_id):", reporting_to);
+        // console.log("Found reporting employee:", reportingEmployee);
+        // console.log("Reporting to (emp_id):", reporting_to);
 
 
         if (reportingEmployee) {
           reportingName = reportingEmployee.name;
-          console.log("Reporting name:", reportingName);
+        //  console.log("Reporting name:", reportingName);
         } else {
           reportingName = 'Unknown';
         }
@@ -658,10 +658,10 @@ export default {
         const response = await axios.get(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`);
         // console.log("3. All employees fetched successfully:", response.data.result);
         const responseResult = response.data.result;
-        console.log("4. responseResult: ", responseResult);
+      //  console.log("4. responseResult: ", responseResult);
 
         const reportingId = `${reportingName} (${employee.reporting_to})`;
-        console.log("Constructed reportingId:", reportingId);
+       // console.log("Constructed reportingId:", reportingId);
 
         if (employee.reporting_to_dept) {
           // console.log("reporting to department:", employee.reporting_to_dept)
@@ -686,9 +686,9 @@ export default {
           userNameId: employee.username_id,
         };
 
-        console.log("Form data set in getFormData:", this.form);
+        // console.log("Form data set in getFormData:", this.form);
 
-        console.log("Form.reportingId after assignment:", this.form.reportingId);
+        // console.log("Form.reportingId after assignment:", this.form.reportingId);
 
 
         // console.log("5. Form data set in getFormData:", this.form);
@@ -703,7 +703,7 @@ export default {
         this.form.limit = employee.limit_amount > 0 ? employee.limit_amount : 0;
 
         this.$nextTick(() => {
-          console.log("Form data after nextTick:", this.form);
+       //   console.log("Form data after nextTick:", this.form);
         });
 
 
@@ -712,13 +712,13 @@ export default {
       }
     },
     async updateProfile() {
-      console.log('form list', this.form);
+   //   console.log('form list', this.form);
       if (!this.form.reportingId) {
-        console.log('Reporting ID is required');
+    //    console.log('Reporting ID is required');
         return;
       }
       if (!this.form.employeeId) {
-        console.log('Employee ID is required');
+     //   console.log('Employee ID is required');
         return;
       }
       this.loadingText = 'Uploading';
@@ -726,7 +726,7 @@ export default {
       const accessData = this.convertValues();
 
       this.updatingEmployeeId = this.form.employeeId; // Trigger loader
-      console.log('Loader triggered for:', this.updatingEmployeeId);
+    //  console.log('Loader triggered for:', this.updatingEmployeeId);
 
       const registerData = {
         company_name: this.form.company,
@@ -949,7 +949,7 @@ export default {
           department: item.department,
         }));
 
-      console.log('Department Employees:', departmentEmployees);
+    //  console.log('Department Employees:', departmentEmployees);
 
       const uniqueEmployees = [
         ...new Map(
@@ -973,7 +973,7 @@ export default {
         employee => `${employee.name} (${employee.empId})`
       );
 
-      console.log('Filtered Reporting Employees:', this.filteredReportingEmployees);
+   //   console.log('Filtered Reporting Employees:', this.filteredReportingEmployees);
     }
   },
 
@@ -1029,7 +1029,7 @@ export default {
       immediate: true,
       handler(newValue) {
         console.group('[Employee Watcher]');
-        console.log('ReportingId changed to:', newValue);
+   //    console.log('ReportingId changed to:', newValue);
         console.groupEnd();
       },
     },
