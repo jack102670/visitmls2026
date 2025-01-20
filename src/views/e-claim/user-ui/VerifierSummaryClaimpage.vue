@@ -314,7 +314,7 @@
               </th>
               <td class="pl-6">{{ claimDetails.verifier_name || '-' }}</td>
               <td class="">{{ claimDetails.verifier_designation || '-' }}</td>
-              <td>{{ claimDetails.department || '-' }}</td>
+              <td>{{ claimDetails.verifier_department || '-' }}</td>
               <td class="">{{ claimDetails.verified_date || '-' }}</td>
             </tr>
             <tr
@@ -881,7 +881,7 @@ export default {
         this.loading = false;
         this.claimDetails = response.data.result;
         this.adminStatus = this.claimDetails.admin_status
-        // console.log("get claimdetails : ", this.claimDetails);
+        console.log("get claimdetails : ", this.claimDetails);
         // console.log("get admin status", this.adminStatus);
 
         switch (this.adminStatus) {

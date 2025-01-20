@@ -312,7 +312,7 @@
                 {{
                   claimDetails.admin_status === 'REJECTED BY HR & ADMIN' || claimDetails.admin_status === 'APPROVED BY HR & ADMIN'
                     ? claimDetails.approver_department || '-'
-                    : claimDetails.department || '-'
+                    : claimDetails.verifier_department || '-'
                 }}
               </td>
               <td class="">
