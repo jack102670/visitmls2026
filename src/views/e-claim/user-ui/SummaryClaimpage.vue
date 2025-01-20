@@ -921,112 +921,114 @@ export default {
   },
   methods: {
 
-    async FetchClaimDetails() {
-      try {
-        this.loadingText = 'Uploading';
-        this.loading = true;
-        const response = await axios.get('http://172.28.28.116:7165/api/User/GetClaimDetails/' + this.referenceNumber);
-        this.loading = false;
-        this.claimDetails = response.data.result;
-        this.adminStatus = this.claimDetails.admin_status
-        console.log("get claimdetails : ", this.claimDetails);
-        console.log("get admin status", this.adminStatus);
+async FetchClaimDetails() {
+  try {
+    this.loadingText = 'Uploading';
+    this.loading = true;
+    const response = await axios.get('http://172.28.28.116:7165/api/User/GetClaimDetails/' + this.referenceNumber);
+    this.loading = false;
+    this.claimDetails = response.data.result;
+    this.adminStatus = this.claimDetails.admin_status
+    console.log("get claimdetails : ", this.claimDetails);
+    console.log("get admin status", this.adminStatus);
 
-        switch (this.adminStatus) {
-          case 'VERIFIED. WAITING FOR APPROVER.':
-            this.verified = true;
-            this.pending = false;
-            this.remark = this.claimDetails.comment;
-            break;
+    switch (this.adminStatus) {
+      case 'VERIFIED. WAITING FOR APPROVER.':
+        this.verified = true;
+        this.pending = false;
+        this.remark = this.claimDetails.comment;
+        break;
 
-          case 'CHECKED':
-            this.verified = true;
-            this.checked = true;
-            this.pending = false;
-            this.remark = this.claimDetails.comment;
-            break;
+      case 'CHECKED':
+        this.verified = true;
+        this.checked = true;
+        this.pending = false;
+        this.remark = this.claimDetails.comment;
+        break;
 
-          case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
-            if (this.claimDetails.admin_status.includes('APPROVER')) {
-              this.verified = true;
-              this.checked = true;
-              this.approved = true;
-            } else {
-              this.verified = true;
-              this.checked = true;
-              this.approved = true;
-              this.approvedFinance = true;
-            }
-            this.pending = false;
-            this.remark = this.claimDetails.comment;
-            break;
+      case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
+        this.verified = true;
+        this.checked = true;
+        this.approved = true;
+        this.approvedFinance = true;
+        this.pending = false;
+        this.remark = this.claimDetails.comment;
+        break;
 
-          case 'REJECTED BY VERIFIER.':
-              this.rejectVerifier = true;
-              this.pending = false;
-              this.remark = this.claimDetails.comment;
-            break;
-            case 'REJECTED BY FINANCE':
-              this.rejectVerifier = true;
-              this.pending = false;
-              this.remark = this.claimDetails.comment;
-            break;
+      case 'REJECTED BY VERIFIER.':
+        this.rejectVerifier = true;
+        this.pending = false;
+        this.remark = this.claimDetails.comment;
+        break;
 
-          case 'REJECTED BY CHECKER':
-            this.rejectChecker = true;
-            this.pending = false;
-            this.remark = this.claimDetails.comment;
-            break;
-          
-          case 'CHECKED BY CHECKER. WAITING FOR VERIFIER':
-            this.rejectChecker = false;
-            this.pending = false;
-            this.remark = this.claimDetails.comment;
-            break;
+      case 'REJECTED BY FINANCE':
+        this.rejectVerifier = true;
+        this.pending = false;
+        this.remark = this.claimDetails.comment;
+        break;
 
-          case 'REJECTED BY HR & ADMIN':
-            this.rejectChecker = false;
-            this.pending = false;
-            this.remark = this.claimDetails.comment;
-            break;
-          case 'APPROVED BY HR & ADMIN':
-            this.rejectChecker = false;
-            this.pending = false;
-            this.remark = this.claimDetails.comment;
-            break;
+      case 'REJECTED BY CHECKER':
+        this.rejectChecker = true;
+        this.pending = false;
+        this.remark = this.claimDetails.comment;
+        break;
 
-          case 'RESUBMIT':
-            if (this.claimDetails.admin_status.includes('VERIFIER')) {
-              this.resubmitVerifier = true;
-            } else if (this.claimDetails.admin_status.includes('CHECKER')) {
-              this.verified = true;
-              this.resubmitChecker = true;
-            } else if (this.claimDetails.admin_status.includes('APPROVER')) {
-              this.verified = true;
-              this.checked = true;
-              this.resubmitApprover = true;
-            } else if (this.claimDetails.admin_status.includes('FINANCE')) {
-              this.verified = true;
-              this.checked = true;
-              this.approved = true;
-              this.resubmitFinance = true;
-            }
-            this.pending = false;
-            this.remark = this.claimDetails.comment;
-            break;
+      case 'CHECKED BY CHECKER. WAITING FOR VERIFIER':
+        this.rejectChecker = false;
+        this.pending = false;
+        this.remark = this.claimDetails.comment;
+        break;
 
-          case 'REIMBURSED':
-            this.verified = true;
-            this.checked = true;
-            this.approved = true;
-            this.reimbursed = true;
-            this.pending = false;
-            this.remark = this.claimDetails.comment;
-          }
-        //  console.log("current status approver",this.statusApprover);
+      case 'REJECTED BY HR & ADMIN':
+        this.rejectChecker = false;
+        this.pending = false;
+        this.remark = this.claimDetails.comment;
+        break;
 
-        });
-    },
+      case 'APPROVED BY HR & ADMIN':
+        this.rejectChecker = false;
+        this.pending = false;
+        this.remark = this.claimDetails.comment;
+        break;
+
+      case 'RESUBMIT':
+        if (this.claimDetails.admin_status.includes('VERIFIER')) {
+          this.resubmitVerifier = true;
+        } else if (this.claimDetails.admin_status.includes('CHECKER')) {
+          this.verified = true;
+          this.resubmitChecker = true;
+        } else if (this.claimDetails.admin_status.includes('APPROVER')) {
+          this.verified = true;
+          this.checked = true;
+          this.resubmitApprover = true;
+        } else if (this.claimDetails.admin_status.includes('FINANCE')) {
+          this.verified = true;
+          this.checked = true;
+          this.approved = true;
+          this.resubmitFinance = true;
+        }
+        this.pending = false;
+        this.remark = this.claimDetails.comment;
+        break;
+
+      case 'REIMBURSED':
+        this.verified = true;
+        this.checked = true;
+        this.approved = true;
+        this.reimbursed = true;
+        this.pending = false;
+        this.remark = this.claimDetails.comment;
+        break;
+
+      default:
+        console.log('Unknown admin status:', this.adminStatus);
+        break;
+    }
+  } catch (error) {
+    console.error("Error,", error);
+    throw error;
+  }
+},
     async FetchClaimDatasDetails() {
       await axios
         .get(
