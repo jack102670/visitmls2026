@@ -946,7 +946,7 @@ export default {
           this.loading = false;
           this.claimDetails = response.data.result;
           this.adminStatus = this.claimDetails.admin_status
-     //     console.log("claimDetails", this.claimDetails);
+        //  console.log("claimDetails", this.claimDetails);
           switch (this.adminStatus) {
             case 'VERIFIED. WAITING FOR APPROVER.':
               this.verified = true;

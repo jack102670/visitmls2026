@@ -1937,7 +1937,6 @@ export default {
               showConfirmButton: true,
               confirmButtonText: 'OK',
               confirmButtonColor: '#6d6d6d',
-              textColor: '#6d6d6d',
             });
           } else {
             this.sendToAPI();

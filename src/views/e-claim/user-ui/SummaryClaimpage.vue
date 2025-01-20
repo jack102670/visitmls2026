@@ -923,8 +923,8 @@ async FetchClaimDetails() {
     this.loading = false;
     this.claimDetails = response.data.result;
     this.adminStatus = this.claimDetails.admin_status
-    console.log("get claimdetails : ", this.claimDetails);
-    console.log("get admin status", this.adminStatus);
+    // console.log("get claimdetails in summary claum : ", this.claimDetails);
+    // console.log("get admin status", this.adminStatus);
 
     switch (this.adminStatus) {
       case 'VERIFIED. WAITING FOR APPROVER.':
