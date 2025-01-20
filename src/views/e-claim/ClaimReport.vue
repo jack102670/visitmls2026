@@ -1928,7 +1928,7 @@ export default {
         );
 
         if (response.status === 200 || response.status === 201) {
-          console.log("API response:", response.data);
+          // console.log("API response:", response.data);
           if (response.data.status_code === "400") {
             Swal.fire({
               icon: 'error',
