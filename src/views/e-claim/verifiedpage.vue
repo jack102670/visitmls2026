@@ -210,55 +210,6 @@
                     </tr>
                   </tbody>
                 </table>
-                <nav class="flex items-center flex-col flex-wrap md:flex-row justify-between items-center pt-4"
-                    aria-label="Table navigation">
-                    <div>
-                      <span class="text-xs md:text-xs font-normal text-gray-500 dark:text-gray-400">
-                        Showing <span class="font-semibold text-gray-900 dark:text-white">
-                          {{ (currentPage - 1) * itemsPerPage + 1 }}-{{ Math.min(currentPage * itemsPerPage,
-                          filteredQueryApplications.length) }}
-                        </span>
-                        of <span class="font-semibold text-gray-900 dark:text-white">{{ filteredQueryApplications.length
-                          }}</span>
-                      </span>
-                    </div>
-                    <div>
-                      <ul class="inline-flex -space-x-px text-xs md:text-sm h-6 md:h-8">
-                        <li>
-                          <a href="#" @click.prevent="previousPage"
-                            :class="{ 'cursor-not-allowed opacity-50': currentPage === 1 }"
-                            class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
-                            Previous
-                          </a>
-                        </li>
-
-                        <li v-for="page in visiblePages" :key="page">
-                          <template v-if="page === '...'">
-                            <span
-                              class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight border border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700">
-                              {{ page }}
-                            </span>
-                          </template>
-                          <template v-else>
-                            <a href="#" @click.prevent="goToPage(page)" :class="{
-                              'bg-blue-500 text-dark': page === currentPage,
-                              'text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700': page !== currentPage
-                            }" class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700">
-                              {{ page }}
-                            </a>
-                          </template>
-                        </li>
-
-                        <li>
-                          <a href="#" @click.prevent="nextPage"
-                            :class="{ 'cursor-not-allowed opacity-50': currentPage >= totalPages }"
-                            class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
-                            Next
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </nav>
               </div>
             </div>
           </div>
