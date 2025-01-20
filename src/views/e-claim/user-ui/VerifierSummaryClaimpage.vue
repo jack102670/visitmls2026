@@ -252,7 +252,7 @@
               <th class="">DEPARTMENT</th>
               <th class="">DATE</th>
             </thead>
-            <tr v-if="checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' || claimDetails.admin_status === 'VERIFIED. WAITING FOR APPROVER.' || rejectChecker || claimDetails.admin_status === 'REJECTED BY CHECKER' && claimDetails.checker_name !== ''" class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+            <tr v-if="checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' || claimDetails.admin_status === 'VERIFIED. WAITING FOR APPROVER.' && claimDetails.checker_name !== ''|| claimDetails.admin_status === 'OPEN' || rejectChecker || claimDetails.admin_status === 'REJECTED BY CHECKER' " class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
             <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
               <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
                 :class="{
@@ -832,7 +832,7 @@ export default {
     }
   },
   simplifiedVerifierStatus() {
-    if (this.claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER') {
+    if (this.claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' || this.claimDetails.admin_status === 'OPEN') {
       return 'PENDING';
     } else if (this.verified) {
       return 'VERIFIED';

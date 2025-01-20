@@ -28,6 +28,7 @@ COPY --from=build-stage /app/dist /usr/share/nginx/html
 
 # Expose port 80 to the outside world
 EXPOSE 80
+EXPOSE 443
 
 # Start Nginx server
 CMD ["nginx", "-g", "daemon off;"]
