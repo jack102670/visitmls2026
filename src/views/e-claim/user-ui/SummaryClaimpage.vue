@@ -312,7 +312,7 @@
                 {{
                   claimDetails.admin_status === 'REJECTED BY HR & ADMIN' || claimDetails.admin_status === 'APPROVED BY HR & ADMIN'
                     ? claimDetails.approver_department || '-'
-                    : claimDetails.department || '-'
+                    : claimDetails.verifier_department || '-'
                 }}
               </td>
               <td class="">
@@ -923,8 +923,8 @@ async FetchClaimDetails() {
     this.loading = false;
     this.claimDetails = response.data.result;
     this.adminStatus = this.claimDetails.admin_status
-    console.log("get claimdetails : ", this.claimDetails);
-    console.log("get admin status", this.adminStatus);
+    // console.log("get claimdetails in summary claum : ", this.claimDetails);
+    // console.log("get admin status", this.adminStatus);
 
     switch (this.adminStatus) {
       case 'VERIFIED. WAITING FOR APPROVER.':
