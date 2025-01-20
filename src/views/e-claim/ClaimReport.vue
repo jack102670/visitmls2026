@@ -174,10 +174,10 @@
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           <span v-if="claim.LocationEnd">{{
                             claim.LocationEnd
-                          }}</span>
+                            }}</span>
                           <span v-if="claim.PurposeOT">{{
                             claim.PurposeOT
-                          }}</span>
+                            }}</span>
                           <span v-if="claim.VenueE">{{ claim.VenueE }}</span>
                           <span v-if="claim.VenueSR">{{ claim.VenueSR }}</span>
                         </td>
@@ -189,7 +189,7 @@
                           <span v-if="claim.dateSR">{{ claim.dateSR }}</span>
                           <span v-if="claim.dateOthers">{{
                             claim.dateOthers
-                          }}</span>
+                            }}</span>
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           <span v-if="claim.totalRM">RM {{ claim.totalRM }}</span>
@@ -551,7 +551,7 @@
                       <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-64">
                         <span v-if="!isEditMode">{{
                           expense.description
-                        }}</span>
+                          }}</span>
                         <textarea v-else v-model="expense.description"
                           class="form-textarea mt-1 block w-full border border-gray-400 p-1" rows="2"></textarea>
                       </td>
@@ -559,7 +559,7 @@
                       <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24">
                         <span v-if="!isEditMode || nonEditableFields">{{
                           expense.ForeignCurrencyAccommodationOT || "-"
-                        }}</span>
+                          }}</span>
                         <input v-else type="text" v-model="expense.ForeignCurrencyAccommodationOT"
                           class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1" />
                       </td>
@@ -567,7 +567,7 @@
                       <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24">
                         <span v-if="!isEditMode">{{
                           expense.ExchangeRateAccommodationOT || "-"
-                        }}</span>
+                          }}</span>
                         <input v-else type="number" v-model="expense.ExchangeRateAccommodationOT"
                           class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1" />
                       </td>
@@ -575,7 +575,7 @@
                       <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24">
                         <span v-if="!isEditMode">{{
                           expense.AmountforAccommodationOT || "-"
-                        }}</span>
+                          }}</span>
                         <input v-else type="number" v-model="expense.AmountforAccommodationOT"
                           class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1" />
                       </td>
@@ -1350,6 +1350,7 @@ import tab from "./user-ui/FormTab.vue";
 import axios from "axios";
 import { formStore } from "../store.js";
 import { store } from "../store.js";
+import Swal from 'sweetalert2';
 
 export default {
   name: "TEtstS",
@@ -1925,12 +1926,22 @@ export default {
           "http://172.28.28.116:7239/api/User/InsertClaimDetails",
           apiData
         );
-        // console.log("API response:", response.data);
 
-        // Check if the response indicates success
         if (response.status === 200 || response.status === 201) {
-          // console.log("Data successfully inserted:", response.data);
-          this.sendToAPI();
+          console.log("API response:", response.data);
+          if (response.data.status_code === "400") {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: response.data.message,
+              showConfirmButton: true,
+              confirmButtonText: 'OK',
+              confirmButtonColor: '#6d6d6d',
+              textColor: '#6d6d6d',
+            });
+          } else {
+            this.sendToAPI();
+          }
         } else {
           console.warn("Unexpected response status:", response.status);
         }
@@ -2052,78 +2063,78 @@ export default {
               break;
             }
             case "overseas travelling":
-            for (const claim of claimsToSend) {
-  try {
-    const uniqcodeOT = this.generateUniqueCode(claim.tabTitle);
+              for (const claim of claimsToSend) {
+                try {
+                  const uniqcodeOT = this.generateUniqueCode(claim.tabTitle);
 
-    // Construct the payload
-    let thisisforoversea;
-    try {
-      thisisforoversea = {
-        requester_id: this.userDetails.userId || "-",
-        description: claim.PurposeOT || "-",
-        meal_allowance: String(claim.MealAllowanceOT || 0),
-        date_event: claim.dateOT || "-",
-        total_fee: claim.combinedTotal || 0,
-        reference_number: this.serialnumber || "-",
-        unique_code: uniqcodeOT || "-",
-        return_date: claim.ReturendateOT || "-",
-        accommodation: claim.AccommodationOT || "-",
-        oem: claim.otherExpenses
-          ? claim.otherExpenses.map((expense) => ({
-              name: expense.name || "-",
-              amount: expense.amount || 0,
-              description: expense.description || "-",
-              foreign_currency: expense.foreign_currency || "-",
-              exchange_rate: expense.exchange_rate || 0,
-              currency_total: expense.currency_total || 0,
-            }))
-          : [],
-      };
-      console.log("Payload constructed successfully:", thisisforoversea);
-    } catch (payloadError) {
-      console.error("Error constructing the payload:", payloadError.message);
-      continue; // Skip this iteration if the payload fails to construct
-    }
+                  // Construct the payload
+                  let thisisforoversea;
+                  try {
+                    thisisforoversea = {
+                      requester_id: this.userDetails.userId || "-",
+                      description: claim.PurposeOT || "-",
+                      meal_allowance: String(claim.MealAllowanceOT || 0),
+                      date_event: claim.dateOT || "-",
+                      total_fee: claim.combinedTotal || 0,
+                      reference_number: this.serialnumber || "-",
+                      unique_code: uniqcodeOT || "-",
+                      return_date: claim.ReturendateOT || "-",
+                      accommodation: claim.AccommodationOT || "-",
+                      oem: claim.otherExpenses
+                        ? claim.otherExpenses.map((expense) => ({
+                          name: expense.name || "-",
+                          amount: expense.amount || 0,
+                          description: expense.description || "-",
+                          foreign_currency: expense.foreign_currency || "-",
+                          exchange_rate: expense.exchange_rate || 0,
+                          currency_total: expense.currency_total || 0,
+                        }))
+                        : [],
+                    };
+                    console.log("Payload constructed successfully:", thisisforoversea);
+                  } catch (payloadError) {
+                    console.error("Error constructing the payload:", payloadError.message);
+                    continue; // Skip this iteration if the payload fails to construct
+                  }
 
-    const userId = this.userDetails.userId;
+                  const userId = this.userDetails.userId;
 
-    // Handle file uploads
-    try {
-      if (claim.UploadOT && claim.UploadOT.length > 0) {
-        console.log("Uploading files for UploadOT...");
-        await this.uploadFiles(claim.UploadOT, userId, uniqcodeOT);
-      }
-      if (claim.UploadAirportLimoTeksiOT && claim.UploadAirportLimoTeksiOT.length > 0) {
-        console.log("Uploading files for UploadAirportLimoTeksiOT...");
-        await this.uploadFiles(claim.UploadAirportLimoTeksiOT, userId, uniqcodeOT);
-      }
-      if (claim.otherExpenses && claim.otherExpenses.length > 0) {
-        const filesToUpload = claim.otherExpenses.flatMap((expense) => expense.files || []);
-        if (filesToUpload.length > 0) {
-          console.log("Uploading files for otherExpenses...");
-          await this.uploadFiles(filesToUpload, userId, uniqcodeOT);
-        }
-      }
-    } catch (fileUploadError) {
-      console.error("Error uploading files:", fileUploadError.message);
-      // Proceed with API call even if file uploads fail
-    }
+                  // Handle file uploads
+                  try {
+                    if (claim.UploadOT && claim.UploadOT.length > 0) {
+                      console.log("Uploading files for UploadOT...");
+                      await this.uploadFiles(claim.UploadOT, userId, uniqcodeOT);
+                    }
+                    if (claim.UploadAirportLimoTeksiOT && claim.UploadAirportLimoTeksiOT.length > 0) {
+                      console.log("Uploading files for UploadAirportLimoTeksiOT...");
+                      await this.uploadFiles(claim.UploadAirportLimoTeksiOT, userId, uniqcodeOT);
+                    }
+                    if (claim.otherExpenses && claim.otherExpenses.length > 0) {
+                      const filesToUpload = claim.otherExpenses.flatMap((expense) => expense.files || []);
+                      if (filesToUpload.length > 0) {
+                        console.log("Uploading files for otherExpenses...");
+                        await this.uploadFiles(filesToUpload, userId, uniqcodeOT);
+                      }
+                    }
+                  } catch (fileUploadError) {
+                    console.error("Error uploading files:", fileUploadError.message);
+                    // Proceed with API call even if file uploads fail
+                  }
 
-    // Send the POST request to the API
-    try {
-      const axiosInstance = axios.create({
-        baseURL: "http://172.28.28.116:7239/api/User/InsertOverseasOutstation",
-      });
-      const response = await axiosInstance.post("/", thisisforoversea);
-      console.log("Data successfully sent to API:", response.data);
-    } catch (apiError) {
-      console.error("Error sending data to API:", apiError.response?.data || apiError.message);
-    }
-  } catch (error) {
-    console.error("Unexpected error processing claim:", error.message);
-  }
-}
+                  // Send the POST request to the API
+                  try {
+                    const axiosInstance = axios.create({
+                      baseURL: "http://172.28.28.116:7239/api/User/InsertOverseasOutstation",
+                    });
+                    const response = await axiosInstance.post("/", thisisforoversea);
+                    console.log("Data successfully sent to API:", response.data);
+                  } catch (apiError) {
+                    console.error("Error sending data to API:", apiError.response?.data || apiError.message);
+                  }
+                } catch (error) {
+                  console.error("Unexpected error processing claim:", error.message);
+                }
+              }
 
               break;
             case "entertainment":

@@ -1,8 +1,8 @@
 <template>
   <main class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 dark:text-white p-4 sm:ml-64">
-    <div class="container mx-auto text-xs lg:text-base">
+    <div class=" mx-auto text-xs lg:text-base">
       <div id="summaryPrint"
-        class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
+        class="relative bg-[#f7fbff] dark:bg-gray-900 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
         <h1 class="text-gray-500 italic absolute top-4 right-4">
           SN: {{ referenceNumber }}
         </h1>
@@ -143,21 +143,22 @@
 
 
         <!-- Details -->
-        <div class="details" v-show="seeMore">
+        <div class="overflow-x-auto w-full">
+        <div class="details inline-block min-w-full py-2 align-middle" v-show="seeMore" >
           <div v-for="(detail, i) in claimDatasDetails" :key="i" class="detail-table mt-5">
             <h1 class="mt-4 text-xl font-semibold tab-title" v-if="detail && detail.length > 0">
               {{ detail[0].Tab_Title }}
             </h1>
-            <div class="border rounded-md overflow-x-auto border-gray-400 dark:border-gray-600">
-              <table class="w-full">
-                <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md text-xs">
-                  <th class="w-40">Remark</th>
-                  <th class="px-6 w-36 break-words text-xs"
-                    v-for="key in Object.keys(detail[0]).filter(k => !['Tab_Title', 'unique_code', 'comment', 'Remark'].includes(k))"
-                    :key="key">
-                    {{ key.split('_').join(' ') }}
-                  </th>
-                </thead>
+            <div class="border rounded-md border-gray-400 dark:border-gray-600 max-h-[400px] overflow-y-auto">
+              <table class="table-fixed min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe border border-gray-200 dark:border-gray-700 md:rounded-lg">
+          <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md text-xs space-x-2" style="border-spacing: 2px;">
+            <th class="w-40">Remark</th>
+            <th class="px-6 w-36 break-words text-xs"
+              v-for="key in Object.keys(detail[0]).filter(k => !['Tab_Title', 'unique_code', 'comment', 'Remark'].includes(k))"
+              :key="key">
+              {{ key.split('_').join(' ') }}
+            </th>
+          </thead>
                 <tr class="h-8 text-left align-center text-xs hover:bg-gray-200 dark:hover:bg-gray-800"
                   v-for="(item, index) in detail" :key="index">
                   <td>
@@ -175,24 +176,18 @@
                             ? ''
                             : val
                     }}
-
-                    <!-- See More button for show list of staff involved -->
                     <div v-show="key == 'Staff_Involved'" id="staffDetails">
                       <h1 @click="showStaffInvolved(val)"
                         class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white p-1 rounded-lg">
                         See More
                       </h1>
                     </div>
-
-                    <!-- See More button for show list of staff involved -->
                     <div v-show="key == 'Participants'" id="staffDetails">
                       <h1 @click="showParticipants(val)"
                         class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white p-1 rounded-lg">
                         See More
                       </h1>
                     </div>
-
-                    <!-- Click to pop up files -->
                     <div v-show="key == 'Attachments'"
                       class="text-blue-700 flex items-center justify-center cursor-pointer"
                       @click.prevent="ShowFile(val)">
@@ -205,8 +200,6 @@
                     </div>
                   </td>
                 </tr>
-
-                <!-- total -->
                 <tr class="border-t border-gray-400 dark:border-gray-600 h-8 text-base font-semibold">
                   <td class="text-center">TOTAL:</td>
                   <td class="text-center">RM{{ claimDataTotalAmount[i] }}</td>
@@ -216,6 +209,7 @@
             </div>
           </div>
         </div>
+      </div>
 
         <!-- Status Table -->
         <div class="border rounded-lg overflow-x-auto border-gray-400 dark:border-gray-600 my-4">
@@ -1029,7 +1023,7 @@ async FetchClaimDetails() {
     throw error;
   }
 },
-    async FetchClaimDatasDetails() {
+async FetchClaimDatasDetails() {
       await axios
         .get(
           'http://172.28.28.116:7239/api/User/GetLocalOutstation/' +
@@ -1086,14 +1080,14 @@ async FetchClaimDetails() {
             const editedDetail = {
               Description: result[i].description,
               Meal_Allowance: result[i].meal_allowance,
-              'Transport_Fee(RM)': result[i].transport_fee,
-              Accom_Foreign_Currency: result[i].accom_foreign_currency,
-              Accom_Exchange_Rate: result[i].accom_exchange_rate,
-              Accom_Foreign_Total: result[i].accom_foreign_total,
-              Other_Foreign_Currency: result[i].other_foreign_currency,
-              Other_Exchange_Rate: result[i].other_exchange_rate,
-              Other_Foreign_Total: result[i].other_foreign_total,
-              Transportation_Mode: result[i].transportation_mode,
+              // 'Transport_Fee(RM)': result[i].transport_fee,
+              // Accom_Foreign_Currency: result[i].accom_foreign_currency,
+              // Accom_Exchange_Rate: result[i].accom_exchange_rate,
+              // Accom_Foreign_Total: result[i].accom_foreign_total,
+              // Other_Foreign_Currency: result[i].other_foreign_currency,
+              // Other_Exchange_Rate: result[i].other_exchange_rate,
+              // Other_Foreign_Total: result[i].other_foreign_total,
+              // Transportation_Mode: result[i].transportation_mode,
               Date: result[i].date_event,
 
               'Total_Fee(RM)': result[i].total_fee,
