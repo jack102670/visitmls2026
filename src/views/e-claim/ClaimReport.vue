@@ -1,53 +1,34 @@
 <template>
-  <main
-    class="flex-1 overflow-x-hidden text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64 h-auto"
-  >
+  <main class="flex-1 overflow-x-hidden text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64 h-auto">
     <div class="container mx-auto">
       <div
-        class="bg-[#f7fbff] dark:bg-gray-800 relative dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
-      >
+        class="bg-[#f7fbff] dark:bg-gray-800 relative dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
         <!-- <h1 class="text-base italic absolute top-4 right-4 text-gray-500">
           SN: {{ claims[0].uniqueCode }}
         </h1> -->
         <!-- Header Section -->
-        <p
-          class="absolute right-0 mr-2 top-1 pt-2 text-sm text-gray-500 italic"
-        >
+        <p class="absolute right-0 mr-2 top-1 pt-2 text-sm text-gray-500 italic">
           SN: {{ claims[0].uniqueCode }}
         </p>
-        <div
-          class="relative overflow-hidden mt-2 grid cols-start-1 md:flex justify-between items-center"
-        >
+        <div class="relative overflow-hidden mt-2 grid cols-start-1 md:flex justify-between items-center">
           <div class="flex items-center flex-wrap">
             <div class="flex items-center flex-shrink-0">
-              <h3
-                class="ml-4 text-3xl font-bold text-blue-900"
-                v-for="(claim, index) in claims"
-                :key="index"
-                style="max-width: 400px"
-              >
+              <h3 class="ml-4 text-3xl font-bold text-blue-900" v-for="(claim, index) in claims" :key="index"
+                style="max-width: 400px">
                 {{ claim.reportName }}
               </h3>
             </div>
             <div class="flex items-center ml-4 mt-2 md:mt-0 flex-shrink-0">
               <span class="text-3xl font-bold text-blue-900">|</span>
-              <span class="ml-4 text-2xl font-bold text-blue-900"
-                >Grand Total : RM {{ grandTotal }}</span
-              >
+              <span class="ml-4 text-2xl font-bold text-blue-900">Grand Total : RM {{ grandTotal }}</span>
             </div>
           </div>
           <!-- Buttons Section -->
-          <div
-            class="md:mr-4 md:mt-0 mt-5 gap-2 flex flex-row-reverse flex-shrink-0"
-          >
-            <button
-              @click="senttheclaim"
-              class="w-36 h-12 p-1 font-semibold rounded-lg items-center text-sm dark:bg-gray-900 dark:border-gray-700 bg-green-700 border text-white"
-            >
+          <div class="md:mr-4 md:mt-0 mt-5 gap-2 flex flex-row-reverse flex-shrink-0">
+            <button @click="senttheclaim"
+              class="w-36 h-12 p-1 font-semibold rounded-lg items-center text-sm dark:bg-gray-900 dark:border-gray-700 bg-green-700 border text-white">
               <div class="flex justify-center">
-                <span class="mr-2 ml-2 text-slate-100 hover:text-blue-200"
-                  >Submit Claim</span
-                >
+                <span class="mr-2 ml-2 text-slate-100 hover:text-blue-200">Submit Claim</span>
               </div>
             </button>
             <!-- <button
@@ -134,65 +115,45 @@
         <section class="container px-4 mx-auto">
           <div class="flex flex-col mt-6">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div
-                class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
-              >
-                <div
-                  class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg"
-                >
-                  <table
-                    ref="reportTable"
-                    class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
-                  >
+              <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                  <table ref="reportTable" class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                     <!-- Table Header -->
                     <thead class="bg-slate-200 dark:bg-gray-800 text-gray-900">
                       <tr>
-                        <th
-                          scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400"
-                        >
+                        <th scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400">
                           <div class="flex items-center gap-x-3">
                             <span>No</span>
                           </div>
                         </th>
-                        <th
-                          scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400"
-                        >
+                        <th scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400">
                           <div class="flex items-center gap-x-3">
                             <span>Type Of Claim</span>
                           </div>
                         </th>
 
-                        <th
-                          v-if="claims[0].reportType === 'Finance'"
-                          scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400"
-                        >
+                        <th v-if="claims[0].reportType === 'Finance'" scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400">
                           <div class="flex items-center gap-x-3 capitalize">
                             <span>location / purpose </span>
                           </div>
                         </th>
-                        <th
-                          scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400"
-                        >
+                        <th scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400">
                           <div class="flex items-center gap-x-3">
                             <span>Date</span>
                           </div>
                         </th>
-                        <th
-                          scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400"
-                        >
+                        <th scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400">
                           <div class="flex items-center gap-x-3">
                             <span>Amount</span>
                           </div>
                         </th>
-                        <th
-                          scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400"
-                        >
+                        <th scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right dark:text-gray-400">
                           <div class="flex items-center gap-x-3">
                             <span>Action</span>
                           </div>
@@ -200,25 +161,17 @@
                       </tr>
                     </thead>
                     <!-- Table Body -->
-                    <tbody
-                      class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
-                    >
+                    <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                       <tr v-for="(claim, index) in dataclaims" :key="index">
                         <!-- Display claim details in each cell -->
-                        <td
-                          class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                        >
+                        <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                           {{ index + 1 }}
                         </td>
-                        <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        >
+                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           {{ claim.tabTitle }}
                         </td>
-                        <td
-                          v-if="claims[0].reportType === 'Finance'"
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        >
+                        <td v-if="claims[0].reportType === 'Finance'"
+                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           <span v-if="claim.LocationEnd">{{
                             claim.LocationEnd
                           }}</span>
@@ -228,9 +181,7 @@
                           <span v-if="claim.VenueE">{{ claim.VenueE }}</span>
                           <span v-if="claim.VenueSR">{{ claim.VenueSR }}</span>
                         </td>
-                        <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        >
+                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           <span v-if="claim.dateLT">{{ claim.dateLT }}</span>
                           <span v-if="claim.dateOT">{{ claim.dateOT }}</span>
                           <span v-if="claim.dateML">{{ claim.dateML }}</span>
@@ -240,45 +191,21 @@
                             claim.dateOthers
                           }}</span>
                         </td>
-                        <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                        >
-                          <span v-if="claim.totalRM"
-                            >RM {{ claim.totalRM }}</span
-                          >
-                          <span v-if="claim.combinedTotal"
-                            >RM {{ claim.combinedTotal }}
+                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          <span v-if="claim.totalRM">RM {{ claim.totalRM }}</span>
+                          <span v-if="claim.combinedTotal">RM {{ claim.combinedTotal }}
                           </span>
-                          <span v-if="claim.AmountRME"
-                            >RM {{ claim.AmountRME }}</span
-                          >
-                          <span v-if="claim.AmountRMSR"
-                            >RM {{ claim.AmountRMSR }}</span
-                          >
-                          <span v-if="claim.combinetotal"
-                            >RM {{ claim.combinetotal }}</span
-                          >
+                          <span v-if="claim.AmountRME">RM {{ claim.AmountRME }}</span>
+                          <span v-if="claim.AmountRMSR">RM {{ claim.AmountRMSR }}</span>
+                          <span v-if="claim.combinetotal">RM {{ claim.combinetotal }}</span>
                         </td>
-                        <td
-                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2"
-                        >
-                          <button
-                            @click="showDetails(claim, index)"
-                            class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke-width="1.5"
-                              stroke="currentColor"
-                              class="w-5 h-5"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                              />
+                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2">
+                          <button @click="showDetails(claim, index)"
+                            class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                              stroke="currentColor" class="w-5 h-5">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                             </svg>
                           </button>
                         </td>
@@ -290,23 +217,14 @@
             </div>
           </div>
         </section>
-        <tab
-          class="mt-10"
-          @formSubmitted="addClaim"
-          :type="claims[0].reportType"
-          @file-added="handleFileAdded"
-          @file-removed="handleFileRemoved"
-        ></tab>
+        <tab class="mt-10" @formSubmitted="addClaim" :type="claims[0].reportType" @file-added="handleFileAdded"
+          @file-removed="handleFileRemoved"></tab>
       </div>
-      <div
-        v-if="isClickModal"
+      <div v-if="isClickModal"
         class="modal fixed inset-0 bg-transparent backdrop-blur-sm backdrop-brightness-75 dark:bg-[#111827] bg-opacity-50 flex justify-center items-center"
-        @click.self="closeClickModal"
-      >
-        <div
-          class="modal-content bg-white rounded-lg p-8 w-full sm:w-3/4 lg:max-w-3xl"
-          style="max-height: calc(100vh - 20px); overflow-y: auto"
-        >
+        @click.self="closeClickModal">
+        <div class="modal-content bg-white rounded-lg p-8 w-full sm:w-3/4 lg:max-w-3xl"
+          style="max-height: calc(100vh - 20px); overflow-y: auto">
           <!-- Modal header -->
           <div v-if="selectedClaimType === 'LocalTravelling'">
             <div class="flex justify-end">
@@ -317,27 +235,12 @@
               >
                 X
               </button> -->
-              <button
-                v-show="!isEditMode"
-                @click="isClickModal = false"
-                type="button"
-                class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
-              >
+              <button v-show="!isEditMode" @click="isClickModal = false" type="button"
+                class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none">
                 <span class="sr-only">Close</span>
-                <svg
-                  class="h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
+                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
@@ -349,235 +252,92 @@
               <hr class="mt-2 mb-4" />
 
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeId" class="text-gray-700 font-bold mr-2"
-                  >Trip:</label
-                >
-                <input
-                  type="text"
-                  id="triplt"
-                  v-model="localTravellingDetails.tripwayLT"
-                  :disabled="!isEditMode || nonEditableFields"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeId" class="text-gray-700 font-bold mr-2">Trip:</label>
+                <input type="text" id="triplt" v-model="localTravellingDetails.tripwayLT"
+                  :disabled="!isEditMode || nonEditableFields" class="border rounded-md px-16 py-2" />
               </div>
 
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeName" class="text-gray-700 font-bold mr-2"
-                  >Departure Date:</label
-                >
-                <input
-                  type="text"
-                  id="nodeId"
-                  v-model="localTravellingDetails.dateLT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeName" class="text-gray-700 font-bold mr-2">Departure Date:</label>
+                <input type="text" id="nodeId" v-model="localTravellingDetails.dateLT" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
-              <div
-                v-if="!isOneWay"
-                class="flex justify-between items-center mb-4"
-              >
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Return Date:</label
-                >
-                <input
-                  type="text"
-                  id="returndate"
-                  v-model="localTravellingDetails.ReturndateLT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+              <div v-if="!isOneWay" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Return Date:</label>
+                <input type="text" id="returndate" v-model="localTravellingDetails.ReturndateLT" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Travelling Mode By:</label
-                >
-                <input
-                  type="text"
-                  id="transport"
-                  v-model="localTravellingDetails.TransportLT"
-                  :disabled="!isEditMode || nonEditableFields"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Travelling Mode By:</label>
+                <input type="text" id="transport" v-model="localTravellingDetails.TransportLT"
+                  :disabled="!isEditMode || nonEditableFields" class="border rounded-md px-16 py-2" />
               </div>
-              <div
-                v-if="!isCompanyTransport && !isPublicTransport"
-                class="flex justify-between items-center mb-4"
-              >
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Transport Specification:</label
-                >
-                <input
-                  type="text"
-                  id="transportSpecify"
-                  v-model="localTravellingDetails.TransportSpec"
-                  :disabled="!isEditMode || nonEditableFields"
-                  class="border rounded-md px-16 py-2"
-                />
+              <div v-if="!isCompanyTransport && !isPublicTransport" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Transport Specification:</label>
+                <input type="text" id="transportSpecify" v-model="localTravellingDetails.TransportSpec"
+                  :disabled="!isEditMode || nonEditableFields" class="border rounded-md px-16 py-2" />
               </div>
-              <div
-                v-if="!isCompanyTransport && !isPersonalTransport"
-                class="flex justify-between items-center mb-4"
-              >
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Transport Specification:</label
-                >
-                <input
-                  type="text"
-                  id="publicTransportSpecify"
-                  v-model="localTravellingDetails.PublicTransportSpec"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+              <div v-if="!isCompanyTransport && !isPersonalTransport" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Transport Specification:</label>
+                <input type="text" id="publicTransportSpecify" v-model="localTravellingDetails.PublicTransportSpec"
+                  :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Location Start:</label
-                >
-                <input
-                  type="text"
-                  id="locationstart"
-                  v-model="localTravellingDetails.LocationStart"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Location Start:</label>
+                <input type="text" id="locationstart" v-model="localTravellingDetails.LocationStart"
+                  :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Location End:</label
-                >
-                <input
-                  type="text"
-                  id="locationend"
-                  v-model="localTravellingDetails.LocationEnd"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Location End:</label>
+                <input type="text" id="locationend" v-model="localTravellingDetails.LocationEnd" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
-              <div
-                v-if="!isOneWay"
-                class="flex justify-between items-center mb-4"
-              >
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Accommodation:</label
-                >
-                <input
-                  type="text"
-                  id="accommodationlt"
-                  v-model="localTravellingDetails.AccommodationLT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+              <div v-if="!isOneWay" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Accommodation:</label>
+                <input type="text" id="accommodationlt" v-model="localTravellingDetails.AccommodationLT"
+                  :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
               </div>
-              <div
-                v-if="!isOneWay"
-                class="flex justify-between items-center mb-4"
-              >
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Meal Allowance(RM):</label
-                >
-                <input
-                  type="text"
-                  id="mealallowancelt"
-                  v-model="localTravellingDetails.MealAllowanceLT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+              <div v-if="!isOneWay" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Meal Allowance(RM):</label>
+                <input type="text" id="mealallowancelt" v-model="localTravellingDetails.MealAllowanceLT"
+                  :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
               </div>
-              <div
-                v-if="!isCompanyTransport && !isPublicTransport"
-                class="flex justify-between items-center mb-4"
-              >
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Mileage/Kilometer(KM):</label
-                >
-                <input
-                  type="text"
-                  id="mileagekm"
-                  v-model="localTravellingDetails.MileageKMLT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+              <div v-if="!isCompanyTransport && !isPublicTransport" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Mileage/Kilometer(KM):</label>
+                <input type="text" id="mileagekm" v-model="localTravellingDetails.MileageKMLT" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
 
-              <div
-                v-if="!isCompanyTransport && !isPublicTransport"
-                class="flex justify-between items-center mb-4"
-              >
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Total Mileage(RM):</label
-                >
-                <input
-                  type="text"
-                  id="mileagerm"
-                  v-model="localTravellingDetails.MileageRMLT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+              <div v-if="!isCompanyTransport && !isPublicTransport" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Total Mileage(RM):</label>
+                <input type="text" id="mileagerm" v-model="localTravellingDetails.MileageRMLT" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
 
-              <div
-                v-if="!isCompanyTransport && !isPersonalTransport"
-                class="flex justify-between items-center mb-4"
-              >
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Fare(RM):</label
-                >
-                <input
-                  type="text"
-                  id="farerm"
-                  v-model="localTravellingDetails.FareRMLT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+              <div v-if="!isCompanyTransport && !isPersonalTransport" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Fare(RM):</label>
+                <input type="text" id="farerm" v-model="localTravellingDetails.FareRMLT" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
 
-              <div
-                v-if="!isPublicTransport"
-                class="flex justify-between items-center mb-4"
-              >
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Toll:</label
-                >
-                <input
-                  type="text"
-                  id="phonenumber"
-                  v-model="localTravellingDetails.TollLT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+              <div v-if="!isPublicTransport" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Toll:</label>
+                <input type="text" id="phonenumber" v-model="localTravellingDetails.TollLT" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
 
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Parking:</label
-                >
-                <input
-                  type="text"
-                  id="positioname"
-                  v-model="localTravellingDetails.ParkingLT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Parking:</label>
+                <input type="text" id="positioname" v-model="localTravellingDetails.ParkingLT" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Additional Supporting Document(s). :</label
-                >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Additional Supporting Document(s).
+                  :</label>
                 <div class="flex flex-wrap">
-                  <div
-                    v-for="(file, index) in localTravellingDetails.UploadLT"
-                    :key="index"
-                    class="m-2"
-                  >
-                    <div
-                      class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
-                    >
-                      <img
-                        :src="createObjectURL(file)"
-                        :alt="file.name"
-                        class="w-full h-full object-cover"
-                      />
+                  <div v-for="(file, index) in localTravellingDetails.UploadLT" :key="index" class="m-2">
+                    <div class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24">
+                      <img :src="createObjectURL(file)" :alt="file.name" class="w-full h-full object-cover" />
                     </div>
                   </div>
                 </div>
@@ -586,57 +346,32 @@
               <!-- Fare Attachment table -->
               <div class="mb-4">
                 <h2 class="text-xl font-bold">Fare Attachment</h2>
-                <table
-                  class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
-                >
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                   <thead class="bg-gray-50 dark:bg-gray-800">
                     <tr>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3">
                           <span>Type of Fare</span>
                         </div>
                       </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3">
                           <span>Attachment(s)</span>
                         </div>
                       </th>
                     </tr>
                   </thead>
-                  <tbody
-                    class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
-                  >
-                    <tr
-                      v-for="([type, fileGroup], index) in fileGroups"
-                      :key="index"
-                    >
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-32"
-                      >
+                  <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                    <tr v-for="([type, fileGroup], index) in fileGroups" :key="index">
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-32">
                         {{ type }}
                       </td>
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
-                      >
-                        <div
-                          v-for="(file, fileIndex) in fileGroup"
-                          :key="fileIndex"
-                          class="m-2"
-                        >
-                          <div
-                            class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
-                          >
-                            <img
-                              :src="createObjectURL(file)"
-                              :alt="file.name"
-                              class="w-full h-full object-cover"
-                            />
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24">
+                        <div v-for="(file, fileIndex) in fileGroup" :key="fileIndex" class="m-2">
+                          <div class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24">
+                            <img :src="createObjectURL(file)" :alt="file.name" class="w-full h-full object-cover" />
                           </div>
                         </div>
                       </td>
@@ -647,99 +382,40 @@
 
               <hr />
               <div class="flex justify-end items-center mb-4 mt-4">
-                <label
-                  for="nodeParentId"
-                  class="text-gray-700 font-bold mr-2 text-2xl"
-                  >Total: RM {{ totallocalTravellingDetails }}</label
-                >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2 text-2xl">Total: RM {{
+                  totallocalTravellingDetails }}</label>
               </div>
 
               <!-- Add/Edit node button -->
             </div>
             <div class="flex justify-end">
-              <button
-                @click="toggleEditMode"
-                class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800"
-              >
+              <button @click="toggleEditMode"
+                class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800">
                 <!-- Edit Icon -->
 
-                <svg
-                  v-if="isEditMode"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5"
-                >
-                  <rect
-                    x="3"
-                    y="3"
-                    width="18"
-                    height="18"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linejoin="round"
-                  />
-                  <rect
-                    x="7"
-                    y="3"
-                    width="10"
-                    height="12"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M12 8v4"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                  />
-                  <path
-                    d="M5 3h14"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                  />
+                <svg v-if="isEditMode" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                  <rect x="3" y="3" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linejoin="round" />
+                  <rect x="7" y="3" width="10" height="12" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linejoin="round" />
+                  <path d="M12 8v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                  <path d="M5 3h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                 </svg>
 
                 <!-- Save Icon -->
-                <svg
-                  v-else
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                  />
+                <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-5 h-5">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                 </svg>
               </button>
-              <button
-                @click="deleteForm()"
-                class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                  />
+              <button @click="deleteForm()"
+                class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-5 h-5">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
               </button>
             </div>
@@ -747,27 +423,12 @@
 
           <div v-if="selectedClaimType === 'OverseasTravelling'">
             <div class="flex justify-end">
-              <button
-                v-show="!isEditMode"
-                @click="isClickModal = false"
-                type="button"
-                class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
-              >
+              <button v-show="!isEditMode" @click="isClickModal = false" type="button"
+                class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none">
                 <span class="sr-only">Close</span>
-                <svg
-                  class="h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
+                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
@@ -779,71 +440,32 @@
               <hr class="mt-2 mb-4" />
 
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeId" class="text-gray-700 font-bold mr-2"
-                  >Departure Date:</label
-                >
-                <input
-                  type="text"
-                  id="nodeId"
-                  v-model="overseasTravellingDetails.dateOT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeId" class="text-gray-700 font-bold mr-2">Departure Date:</label>
+                <input type="text" id="nodeId" v-model="overseasTravellingDetails.dateOT" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeId" class="text-gray-700 font-bold mr-2"
-                  >Return Date:</label
-                >
-                <input
-                  type="text"
-                  id="nodeId"
-                  v-model="overseasTravellingDetails.ReturendateOT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeId" class="text-gray-700 font-bold mr-2">Return Date:</label>
+                <input type="text" id="nodeId" v-model="overseasTravellingDetails.ReturendateOT" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeName" class="text-gray-700 font-bold mr-2"
-                  >Purpose:</label
-                >
-                <input
-                  type="text"
-                  id="nodeName"
-                  v-model="overseasTravellingDetails.PurposeOT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeName" class="text-gray-700 font-bold mr-2">Purpose:</label>
+                <input type="text" id="nodeName" v-model="overseasTravellingDetails.PurposeOT" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="mealAllowance" class="text-gray-700 font-bold mr-2"
-                  >Meal Allowance(RM):</label
-                >
-                <input
-                  type="text"
-                  id="mealAllowance"
-                  v-model="overseasTravellingDetails.MealAllowanceOT"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="mealAllowance" class="text-gray-700 font-bold mr-2">Meal Allowance(RM):</label>
+                <input type="text" id="mealAllowance" v-model="overseasTravellingDetails.MealAllowanceOT"
+                  :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Additional Supporting Document(s). :</label
-                >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Additional Supporting Document(s).
+                  :</label>
                 <div class="flex flex-wrap">
-                  <div
-                    v-for="(file, index) in overseasTravellingDetails.UploadOT"
-                    :key="index"
-                    class="m-2"
-                  >
-                    <div
-                      class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
-                    >
-                      <img
-                        :src="createObjectURL(file)"
-                        :alt="file.name"
-                        class="w-full h-full object-cover"
-                      />
+                  <div v-for="(file, index) in overseasTravellingDetails.UploadOT" :key="index" class="m-2">
+                    <div class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24">
+                      <img :src="createObjectURL(file)" :alt="file.name" class="w-full h-full object-cover" />
                     </div>
                   </div>
                 </div>
@@ -852,214 +474,133 @@
               <!-- Other Expenses Table-->
               <div class="mb-4">
                 <h2 class="text-xl font-bold">Other Expenses</h2>
-                <table
-                  class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
-                >
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                   <thead class="bg-gray-50 dark:bg-gray-800">
                     <tr>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3">
                           <span>No</span>
                         </div>
                       </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3">
                           <span>Expense</span>
                         </div>
                       </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3">
                           <span>Description</span>
                         </div>
                       </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3">
                           <span>Foreign Currency</span>
                         </div>
                       </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3">
                           <span>Exchange Rate</span>
                         </div>
                       </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3">
                           <span>Amount(Foreign Currency)</span>
                         </div>
                       </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3">
                           <span>Amount(RM)</span>
                         </div>
                       </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3">
                           <span>Attachment(s)</span>
                         </div>
                       </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3">
                           <span>Action</span>
                         </div>
                       </th>
                     </tr>
                   </thead>
-                  <tbody
-                    class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
-                  >
-                    <tr
-                      v-for="(
+                  <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                    <tr v-for="(
                         expense, index
-                      ) in overseasTravellingDetails.otherExpenses"
-                      :key="index"
-                    >
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                      >
+                      ) in overseasTravellingDetails.otherExpenses" :key="index">
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                         {{ index + 1 }}
                       </td>
                       <!-- Name Field -->
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-32"
-                      >
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-32">
                         <span v-if="!isEditMode">{{ expense.name }}</span>
-                        <input
-                          v-else
-                          type="text"
-                          v-model="expense.name"
-                          class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1"
-                        />
+                        <input v-else type="text" v-model="expense.name"
+                          class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1" />
                       </td>
 
                       <!-- Description Field -->
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-64"
-                      >
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-64">
                         <span v-if="!isEditMode">{{
                           expense.description
                         }}</span>
-                        <textarea
-                          v-else
-                          v-model="expense.description"
-                          class="form-textarea mt-1 block w-full border border-gray-400 p-1"
-                          rows="2"
-                        ></textarea>
+                        <textarea v-else v-model="expense.description"
+                          class="form-textarea mt-1 block w-full border border-gray-400 p-1" rows="2"></textarea>
                       </td>
 
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
-                      >
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24">
                         <span v-if="!isEditMode || nonEditableFields">{{
                           expense.ForeignCurrencyAccommodationOT || "-"
                         }}</span>
-                        <input
-                          v-else
-                          type="text"
-                          v-model="expense.ForeignCurrencyAccommodationOT"
-                          class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1"
-                        />
+                        <input v-else type="text" v-model="expense.ForeignCurrencyAccommodationOT"
+                          class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1" />
                       </td>
 
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
-                      >
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24">
                         <span v-if="!isEditMode">{{
                           expense.ExchangeRateAccommodationOT || "-"
                         }}</span>
-                        <input
-                          v-else
-                          type="number"
-                          v-model="expense.ExchangeRateAccommodationOT"
-                          class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1"
-                        />
+                        <input v-else type="number" v-model="expense.ExchangeRateAccommodationOT"
+                          class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1" />
                       </td>
 
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
-                      >
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24">
                         <span v-if="!isEditMode">{{
                           expense.AmountforAccommodationOT || "-"
                         }}</span>
-                        <input
-                          v-else
-                          type="number"
-                          v-model="expense.AmountforAccommodationOT"
-                          class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1"
-                        />
+                        <input v-else type="number" v-model="expense.AmountforAccommodationOT"
+                          class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1" />
                       </td>
 
                       <!-- Amount Field -->
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
-                      >
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24">
                         <span v-if="!isEditMode">{{ expense.amount }}</span>
-                        <input
-                          v-else
-                          type="number"
-                          v-model="expense.amount"
-                          class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1"
-                        />
+                        <input v-else type="number" v-model="expense.amount"
+                          class="form-input rounded-md shadow-sm mt-1 block w-full border border-gray-400 p-1" />
                       </td>
 
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24"
-                      >
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24">
                         <div v-for="file in expense.files" :key="file.id">
-                          <a
-                            :href="file.url"
-                            :download="file.name"
-                            class="text-blue-500 hover:underline"
-                            >{{ file.name }}</a
-                          >
+                          <a :href="file.url" :download="file.name" class="text-blue-500 hover:underline">{{ file.name
+                            }}</a>
                         </div>
                       </td>
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                      >
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                         <button
                           class="text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
-                          @click="deleteExpense(index)"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-5 h-5"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                            />
+                          @click="deleteExpense(index)">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                           </svg>
                         </button>
                       </td>
@@ -1070,99 +611,40 @@
 
               <hr />
               <div class="flex justify-end items-center mb-4 mt-4">
-                <label
-                  for="nodeParentId"
-                  class="text-gray-700 font-bold mr-2 text-2xl"
-                  >Total: RM {{ totalOverseasTravellingAmount }}</label
-                >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2 text-2xl">Total: RM {{
+                  totalOverseasTravellingAmount }}</label>
               </div>
 
               <!-- Add/Edit node button -->
             </div>
             <div class="flex justify-end">
-              <button
-                @click="toggleEditMode"
-                class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800"
-              >
+              <button @click="toggleEditMode"
+                class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800">
                 <!-- Edit Icon -->
 
-                <svg
-                  v-if="isEditMode"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5"
-                >
-                  <rect
-                    x="3"
-                    y="3"
-                    width="18"
-                    height="18"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linejoin="round"
-                  />
-                  <rect
-                    x="7"
-                    y="3"
-                    width="10"
-                    height="12"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M12 8v4"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                  />
-                  <path
-                    d="M5 3h14"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                  />
+                <svg v-if="isEditMode" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                  <rect x="3" y="3" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linejoin="round" />
+                  <rect x="7" y="3" width="10" height="12" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linejoin="round" />
+                  <path d="M12 8v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                  <path d="M5 3h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                 </svg>
 
                 <!-- Save Icon -->
-                <svg
-                  v-else
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                  />
+                <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-5 h-5">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                 </svg>
               </button>
-              <button
-                @click="deleteForm()"
-                class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                  />
+              <button @click="deleteForm()"
+                class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-5 h-5">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
               </button>
             </div>
@@ -1172,27 +654,12 @@
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
               <div class="flex justify-end">
-                <button
-                  v-show="!isEditMode"
-                  @click="isClickModal = false"
-                  type="button"
-                  class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
-                >
+                <button v-show="!isEditMode" @click="isClickModal = false" type="button"
+                  class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none">
                   <span class="sr-only">Close</span>
-                  <svg
-                    class="h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
+                  <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </div>
@@ -1202,178 +669,75 @@
               <hr class="mt-2 mb-4" />
 
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeId" class="text-gray-700 font-bold mr-2"
-                  >Date of Medical Bill:</label
-                >
-                <input
-                  type="text"
-                  id="nodeId"
-                  v-model="medicalBillReimbursementDetails.dateML"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeId" class="text-gray-700 font-bold mr-2">Date of Medical Bill:</label>
+                <input type="text" id="nodeId" v-model="medicalBillReimbursementDetails.dateML" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
 
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeName" class="text-gray-700 font-bold mr-2"
-                  >Medical Category:</label
-                >
-                <input
-                  type="text"
-                  id="nodeName"
-                  v-model="medicalBillReimbursementDetails.MedicalCategoryML"
-                  :disabled="!isEditMode || nonEditableFields"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeName" class="text-gray-700 font-bold mr-2">Medical Category:</label>
+                <input type="text" id="nodeName" v-model="medicalBillReimbursementDetails.MedicalCategoryML"
+                  :disabled="!isEditMode || nonEditableFields" class="border rounded-md px-16 py-2" />
               </div>
 
-              <div
-                v-if="!isOtherThanOutpatient"
-                class="flex justify-between items-center mb-4"
-              >
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Reason for Medical:</label
-                >
-                <input
-                  type="text"
-                  id="nodeParentId"
-                  v-model="medicalBillReimbursementDetails.ReasonML"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+              <div v-if="!isOtherThanOutpatient" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Reason for Medical:</label>
+                <input type="text" id="nodeParentId" v-model="medicalBillReimbursementDetails.ReasonML"
+                  :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
               </div>
 
-              <div
-                v-if="!isOtherThanOutpatient"
-                class="flex justify-between items-center mb-4"
-              >
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Clinic Selection:</label
-                >
-                <input
-                  type="text"
-                  id="ClinicSelectionML"
-                  v-model="medicalBillReimbursementDetails.ClinicSelectionML"
-                  :disabled="!isEditMode || nonEditableFields"
-                  class="border rounded-md px-16 py-2"
-                />
+              <div v-if="!isOtherThanOutpatient" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Clinic Selection:</label>
+                <input type="text" id="ClinicSelectionML" v-model="medicalBillReimbursementDetails.ClinicSelectionML"
+                  :disabled="!isEditMode || nonEditableFields" class="border rounded-md px-16 py-2" />
               </div>
 
-              <div
-                v-if="!isPanelClinic && !isOtherThanOutpatient"
-                class="flex justify-between items-center mb-4"
-              >
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Specify Clinic Name:</label
-                >
-                <input
-                  type="text"
-                  id="OtherClinicSpecML"
-                  v-model="medicalBillReimbursementDetails.OtherClinicSpecML"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+              <div v-if="!isPanelClinic && !isOtherThanOutpatient" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Specify Clinic Name:</label>
+                <input type="text" id="OtherClinicSpecML" v-model="medicalBillReimbursementDetails.OtherClinicSpecML"
+                  :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
               </div>
 
-              <div
-                v-if="!isPanelClinic && !isOtherThanOutpatient"
-                class="flex justify-between items-center mb-4"
-              >
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Reason not Going to Panel Clinic:</label
-                >
-                <input
-                  type="text"
-                  id="OtherClinicReasonML"
-                  v-model="medicalBillReimbursementDetails.OtherClinicReasonML"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+              <div v-if="!isPanelClinic && !isOtherThanOutpatient" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Reason not Going to Panel Clinic:</label>
+                <input type="text" id="OtherClinicReasonML"
+                  v-model="medicalBillReimbursementDetails.OtherClinicReasonML" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
 
               <div class="flex justify-between items-center mb-4">
-                <label for="bankName" class="text-gray-700 font-bold mr-2"
-                  >Bank Name:</label
-                >
-                <input
-                  type="text"
-                  id="bankName"
-                  v-model="medicalBillReimbursementDetails.BankNameML"
-                  :disabled="!isEditMode || nonEditableFields"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="bankName" class="text-gray-700 font-bold mr-2">Bank Name:</label>
+                <input type="text" id="bankName" v-model="medicalBillReimbursementDetails.BankNameML"
+                  :disabled="!isEditMode || nonEditableFields" class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="accBankNumber" class="text-gray-700 font-bold mr-2"
-                  >Account Bank No:</label
-                >
-                <input
-                  type="text"
-                  id="accBankNumber"
-                  v-model="medicalBillReimbursementDetails.AccBankNumberML"
-                  :disabled="!isEditMode || nonEditableFields"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="accBankNumber" class="text-gray-700 font-bold mr-2">Account Bank No:</label>
+                <input type="text" id="accBankNumber" v-model="medicalBillReimbursementDetails.AccBankNumberML"
+                  :disabled="!isEditMode || nonEditableFields" class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="accHolderName" class="text-gray-700 font-bold mr-2"
-                  >Account Holder Name:</label
-                >
-                <input
-                  type="text"
-                  id="accHolderName"
-                  v-model="medicalBillReimbursementDetails.AccHolderNameML"
-                  :disabled="!isEditMode || nonEditableFields"
-                  class="border rounded-md px-16 py-2 overflow-x-auto"
-                />
+                <label for="accHolderName" class="text-gray-700 font-bold mr-2">Account Holder Name:</label>
+                <input type="text" id="accHolderName" v-model="medicalBillReimbursementDetails.AccHolderNameML"
+                  :disabled="!isEditMode || nonEditableFields" class="border rounded-md px-16 py-2 overflow-x-auto" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="limitAmount" class="text-gray-700 font-bold mr-2"
-                  >Limited Amount (RM):</label
-                >
-                <input
-                  type="text"
-                  id="limitsAmount"
-                  v-model="medicalBillReimbursementDetails.LimitedAmountML"
-                  :disabled="!isEditMode || nonEditableFields"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="limitAmount" class="text-gray-700 font-bold mr-2">Limited Amount (RM):</label>
+                <input type="text" id="limitsAmount" v-model="medicalBillReimbursementDetails.LimitedAmountML"
+                  :disabled="!isEditMode || nonEditableFields" class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="claimsAmount" class="text-gray-700 font-bold mr-2"
-                  >Claims Amount (RM):</label
-                >
-                <input
-                  type="text"
-                  id="claimsAmount"
-                  v-model="medicalBillReimbursementDetails.ClaimsAmountML"
-                  :disabled="
-                    !isEditMode || (isOutpatient && claimsAmountExceedsLimit)
-                  "
-                  @input="handleClaimsAmountInput"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="claimsAmount" class="text-gray-700 font-bold mr-2">Claims Amount (RM):</label>
+                <input type="text" id="claimsAmount" v-model="medicalBillReimbursementDetails.ClaimsAmountML" :disabled="!isEditMode || (isOutpatient && claimsAmountExceedsLimit)
+                  " @input="handleClaimsAmountInput" class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Attachment(s). :</label
-                >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Attachment(s). :</label>
                 <div class="flex flex-wrap">
-                  <div
-                    v-for="(
+                  <div v-for="(
                       file, index
-                    ) in medicalBillReimbursementDetails.UploadML"
-                    :key="index"
-                    class="m-2"
-                  >
-                    <div
-                      class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
-                    >
-                      <img
-                        :src="createObjectURL(file)"
-                        :alt="file.name"
-                        class="w-full h-full object-cover"
-                      />
+                    ) in medicalBillReimbursementDetails.UploadML" :key="index" class="m-2">
+                    <div class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24">
+                      <img :src="createObjectURL(file)" :alt="file.name" class="w-full h-full object-cover" />
                     </div>
                   </div>
                 </div>
@@ -1385,98 +749,38 @@
 
             <hr />
             <div class="flex justify-end items-center mb-4 mt-4">
-              <label
-                for="nodeParentId"
-                class="text-gray-700 font-bold mr-2 text-2xl"
-                >Total: RM {{ totalMedicalBillReimbursementDetails }}</label
-              >
+              <label for="nodeParentId" class="text-gray-700 font-bold mr-2 text-2xl">Total: RM {{
+                totalMedicalBillReimbursementDetails }}</label>
             </div>
 
             <div class="flex justify-end">
-              <button
-                @click="toggleEditMode"
-                :disabled="isSaveDisabled"
-                class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800"
-              >
+              <button @click="toggleEditMode" :disabled="isSaveDisabled"
+                class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800">
                 <!-- Edit Icon -->
 
-                <svg
-                  v-if="isEditMode"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5"
-                >
-                  <rect
-                    x="3"
-                    y="3"
-                    width="18"
-                    height="18"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linejoin="round"
-                  />
-                  <rect
-                    x="7"
-                    y="3"
-                    width="10"
-                    height="12"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M12 8v4"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                  />
-                  <path
-                    d="M5 3h14"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                  />
+                <svg v-if="isEditMode" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                  <rect x="3" y="3" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linejoin="round" />
+                  <rect x="7" y="3" width="10" height="12" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linejoin="round" />
+                  <path d="M12 8v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                  <path d="M5 3h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                 </svg>
 
                 <!-- Save Icon -->
-                <svg
-                  v-else
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                  />
+                <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-5 h-5">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                 </svg>
               </button>
-              <button
-                @click="deleteForm()"
-                class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                  />
+              <button @click="deleteForm()"
+                class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-5 h-5">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
               </button>
 
@@ -1493,27 +797,12 @@
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
               <div class="flex justify-end">
-                <button
-                  v-show="!isEditMode"
-                  @click="isClickModal = false"
-                  type="button"
-                  class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
-                >
+                <button v-show="!isEditMode" @click="isClickModal = false" type="button"
+                  class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none">
                   <span class="sr-only">Close</span>
-                  <svg
-                    class="h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
+                  <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </div>
@@ -1523,110 +812,46 @@
               <hr class="mt-2 mb-4" />
 
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeId" class="text-gray-700 font-bold mr-2"
-                  >Date:</label
-                >
-                <input
-                  type="text"
-                  id="nodeId"
-                  v-model="entertainmentDetails.dateE"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeId" class="text-gray-700 font-bold mr-2">Date:</label>
+                <input type="text" id="nodeId" v-model="entertainmentDetails.dateE" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeName" class="text-gray-700 font-bold mr-2"
-                  >Type of Entertainment:</label
-                >
-                <input
-                  type="text"
-                  id="nodeName"
-                  v-model="entertainmentDetails.TypeofEntertainmentE"
-                  :disabled="!isEditMode || nonEditableFields"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeName" class="text-gray-700 font-bold mr-2">Type of Entertainment:</label>
+                <input type="text" id="nodeName" v-model="entertainmentDetails.TypeofEntertainmentE"
+                  :disabled="!isEditMode || nonEditableFields" class="border rounded-md px-16 py-2" />
               </div>
-              <div
-                v-if="!isOtherEntertainment"
-                class="flex justify-between items-center mb-4"
-              >
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Other Type of Entertainment:</label
-                >
-                <input
-                  type="text"
-                  id="nodeParentId"
-                  v-model="entertainmentDetails.OtherTypeofEntertainmentE"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+              <div v-if="!isOtherEntertainment" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Other Type of Entertainment:</label>
+                <input type="text" id="nodeParentId" v-model="entertainmentDetails.OtherTypeofEntertainmentE"
+                  :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Company:</label
-                >
-                <input
-                  type="text"
-                  id="nodeParentId"
-                  v-model="entertainmentDetails.CompanyE"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Company:</label>
+                <input type="text" id="nodeParentId" v-model="entertainmentDetails.CompanyE" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Venue:</label
-                >
-                <input
-                  type="text"
-                  id="nodeParentId"
-                  v-model="entertainmentDetails.VenueE"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Venue:</label>
+                <input type="text" id="nodeParentId" v-model="entertainmentDetails.VenueE" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Reference:</label
-                >
-                <input
-                  type="text"
-                  id="nodeParentId"
-                  v-model="entertainmentDetails.ReferenceE"
-                  :disabled="!isEditMode || nonEditableFields"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Reference:</label>
+                <input type="text" id="nodeParentId" v-model="entertainmentDetails.ReferenceE"
+                  :disabled="!isEditMode || nonEditableFields" class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="amount" class="text-gray-700 font-bold mr-2"
-                  >Amount (RM):</label
-                >
-                <input
-                  type="text"
-                  id="amount"
-                  v-model="entertainmentDetails.AmountRME"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="amount" class="text-gray-700 font-bold mr-2">Amount (RM):</label>
+                <input type="text" id="amount" v-model="entertainmentDetails.AmountRME" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Attachment(s). :</label
-                >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Attachment(s). :</label>
                 <div class="flex flex-wrap">
-                  <div
-                    v-for="(file, index) in entertainmentDetails.UploadE"
-                    :key="index"
-                    class="m-2"
-                  >
-                    <div
-                      class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
-                    >
-                      <img
-                        :src="createObjectURL(file)"
-                        :alt="file.name"
-                        class="w-full h-full object-cover"
-                      />
+                  <div v-for="(file, index) in entertainmentDetails.UploadE" :key="index" class="m-2">
+                    <div class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24">
+                      <img :src="createObjectURL(file)" :alt="file.name" class="w-full h-full object-cover" />
                     </div>
                   </div>
                 </div>
@@ -1634,69 +859,47 @@
 
               <hr />
               <div class="flex justify-end items-center mb-4 mt-4">
-                <label
-                  for="nodeParentId"
-                  class="text-gray-700 font-bold mr-2 text-2xl"
-                  >Total: RM {{ entertainmentDetails.AmountRME }}</label
-                >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2 text-2xl">Total: RM {{
+                  entertainmentDetails.AmountRME }}</label>
               </div>
 
               <!-- Attendees table -->
               <div class="mb-4">
                 <h2 class="text-xl font-bold text-gray-700">Attendees</h2>
-                <table
-                  class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
-                >
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                   <thead class="bg-gray-50 dark:bg-gray-800">
                     <tr>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3">
                           <span>No</span>
                         </div>
                       </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3">
                           <span>Name</span>
                         </div>
                       </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3">
                           <span>Company Name</span>
                         </div>
                       </th>
                     </tr>
                   </thead>
-                  <tbody
-                    class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
-                  >
-                    <tr
-                      v-for="(
+                  <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                    <tr v-for="(
                         attendee, index
-                      ) in entertainmentDetails.attendees"
-                      :key="index"
-                    >
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                      >
+                      ) in entertainmentDetails.attendees" :key="index">
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                         {{ index + 1 }}
                       </td>
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                      >
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                         {{ attendee.name }}
                       </td>
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                      >
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                         {{ attendee.company_Name }}
                       </td>
                     </tr>
@@ -1706,89 +909,33 @@
             </div>
 
             <div class="flex justify-end">
-              <button
-                @click="toggleEditMode"
-                class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800"
-              >
+              <button @click="toggleEditMode"
+                class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800">
                 <!-- Edit Icon -->
 
-                <svg
-                  v-if="isEditMode"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5"
-                >
-                  <rect
-                    x="3"
-                    y="3"
-                    width="18"
-                    height="18"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linejoin="round"
-                  />
-                  <rect
-                    x="7"
-                    y="3"
-                    width="10"
-                    height="12"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M12 8v4"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                  />
-                  <path
-                    d="M5 3h14"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                  />
+                <svg v-if="isEditMode" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                  <rect x="3" y="3" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linejoin="round" />
+                  <rect x="7" y="3" width="10" height="12" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linejoin="round" />
+                  <path d="M12 8v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                  <path d="M5 3h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                 </svg>
 
                 <!-- Save Icon -->
-                <svg
-                  v-else
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                  />
+                <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-5 h-5">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                 </svg>
               </button>
-              <button
-                @click="deleteForm()"
-                class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                  />
+              <button @click="deleteForm()"
+                class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-5 h-5">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
               </button>
 
@@ -1805,27 +952,12 @@
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
               <div class="flex justify-end">
-                <button
-                  v-show="!isEditMode"
-                  @click="isClickModal = false"
-                  type="button"
-                  class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
-                >
+                <button v-show="!isEditMode" @click="isClickModal = false" type="button"
+                  class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none">
                   <span class="sr-only">Close</span>
-                  <svg
-                    class="h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
+                  <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </div>
@@ -1835,112 +967,46 @@
               <hr class="mt-2 mb-4" />
 
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeId" class="text-gray-700 font-bold mr-2"
-                  >Date:</label
-                >
-                <input
-                  type="text"
-                  id="nodeId"
-                  v-model="staffRefreshmentDetails.dateSR"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeId" class="text-gray-700 font-bold mr-2">Date:</label>
+                <input type="text" id="nodeId" v-model="staffRefreshmentDetails.dateSR" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeName" class="text-gray-700 font-bold mr-2"
-                  >Type of Refreshment:</label
-                >
-                <input
-                  type="text"
-                  id="nodeName"
-                  v-model="staffRefreshmentDetails.TypeofRefreshmentSR"
-                  :disabled="!isEditMode || nonEditableFields"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeName" class="text-gray-700 font-bold mr-2">Type of Refreshment:</label>
+                <input type="text" id="nodeName" v-model="staffRefreshmentDetails.TypeofRefreshmentSR"
+                  :disabled="!isEditMode || nonEditableFields" class="border rounded-md px-16 py-2" />
               </div>
-              <div
-                v-if="!isOtherStaffRefreshment"
-                class="flex justify-between items-center mb-4"
-              >
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Other Type of Staff Refreshment:</label
-                >
-                <input
-                  type="text"
-                  id="nodeParentId"
-                  v-model="
-                    staffRefreshmentDetails.OtherTypeofStaffRefreshmentSR
-                  "
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+              <div v-if="!isOtherStaffRefreshment" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Other Type of Staff Refreshment:</label>
+                <input type="text" id="nodeParentId" v-model="staffRefreshmentDetails.OtherTypeofStaffRefreshmentSR
+                  " :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Company:</label
-                >
-                <input
-                  type="text"
-                  id="nodeParentId"
-                  v-model="staffRefreshmentDetails.CompanySR"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Company:</label>
+                <input type="text" id="nodeParentId" v-model="staffRefreshmentDetails.CompanySR" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Venue:</label
-                >
-                <input
-                  type="text"
-                  id="nodeParentId"
-                  v-model="staffRefreshmentDetails.VenueSR"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Venue:</label>
+                <input type="text" id="nodeParentId" v-model="staffRefreshmentDetails.VenueSR" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Reference:</label
-                >
-                <input
-                  type="text"
-                  id="nodeParentId"
-                  v-model="staffRefreshmentDetails.ReferenceSR"
-                  :disabled="!isEditMode || nonEditableFields"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Reference:</label>
+                <input type="text" id="nodeParentId" v-model="staffRefreshmentDetails.ReferenceSR"
+                  :disabled="!isEditMode || nonEditableFields" class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Amount (RM):</label
-                >
-                <input
-                  type="text"
-                  id="nodeParentId"
-                  v-model="staffRefreshmentDetails.AmountRMSR"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Amount (RM):</label>
+                <input type="text" id="nodeParentId" v-model="staffRefreshmentDetails.AmountRMSR"
+                  :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Attachment(s). :</label
-                >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Attachment(s). :</label>
                 <div class="flex flex-wrap">
-                  <div
-                    v-for="(file, index) in staffRefreshmentDetails.UploadSR"
-                    :key="index"
-                    class="m-2"
-                  >
-                    <div
-                      class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
-                    >
-                      <img
-                        :src="createObjectURL(file)"
-                        :alt="file.name"
-                        class="w-full h-full object-cover"
-                      />
+                  <div v-for="(file, index) in staffRefreshmentDetails.UploadSR" :key="index" class="m-2">
+                    <div class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24">
+                      <img :src="createObjectURL(file)" :alt="file.name" class="w-full h-full object-cover" />
                     </div>
                   </div>
                 </div>
@@ -1948,82 +1014,56 @@
 
               <hr />
               <div class="flex justify-end items-center mb-4 mt-4">
-                <label
-                  for="nodeParentId"
-                  class="text-gray-700 font-bold mr-2 text-2xl"
-                  >Total: RM {{ totalStaffRefreshmentDetails }}</label
-                >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2 text-2xl">Total: RM {{
+                  totalStaffRefreshmentDetails }}</label>
               </div>
 
               <!-- Staff Involved table -->
               <div class="mb-4">
                 <h2 class="text-xl font-bold text-gray-700">Staff Involved</h2>
-                <table
-                  class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
-                >
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                   <thead class="bg-gray-50 dark:bg-gray-800">
                     <tr>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3">
                           <span>No</span>
                         </div>
                       </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3">
                           <span>Name</span>
                         </div>
                       </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3">
                           <span>Department</span>
                         </div>
                       </th>
-                      <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3">
                           <span>Company Name</span>
                         </div>
                       </th>
                     </tr>
                   </thead>
-                  <tbody
-                    class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
-                  >
-                    <tr
-                      v-for="(
+                  <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                    <tr v-for="(
                         staff, index
-                      ) in staffRefreshmentDetails.staffInvolved"
-                      :key="index"
-                    >
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                      >
+                      ) in staffRefreshmentDetails.staffInvolved" :key="index">
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                         {{ index + 1 }}
                       </td>
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                      >
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                         {{ staff.name }}
                       </td>
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                      >
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                         {{ staff.department }}
                       </td>
-                      <td
-                        class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
-                      >
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                         {{ staff.companyName }}
                       </td>
                     </tr>
@@ -2033,89 +1073,33 @@
             </div>
 
             <div class="flex justify-end">
-              <button
-                @click="toggleEditMode"
-                class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800"
-              >
+              <button @click="toggleEditMode"
+                class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800">
                 <!-- Edit Icon -->
 
-                <svg
-                  v-if="isEditMode"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5"
-                >
-                  <rect
-                    x="3"
-                    y="3"
-                    width="18"
-                    height="18"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linejoin="round"
-                  />
-                  <rect
-                    x="7"
-                    y="3"
-                    width="10"
-                    height="12"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M12 8v4"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                  />
-                  <path
-                    d="M5 3h14"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                  />
+                <svg v-if="isEditMode" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                  <rect x="3" y="3" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linejoin="round" />
+                  <rect x="7" y="3" width="10" height="12" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linejoin="round" />
+                  <path d="M12 8v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                  <path d="M5 3h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                 </svg>
 
                 <!-- Save Icon -->
-                <svg
-                  v-else
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                  />
+                <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-5 h-5">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                 </svg>
               </button>
-              <button
-                @click="deleteForm()"
-                class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                  />
+              <button @click="deleteForm()"
+                class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-5 h-5">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
               </button>
               <!-- <button
@@ -2131,27 +1115,12 @@
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
               <div class="flex justify-end">
-                <button
-                  v-show="!isEditMode"
-                  @click="isClickModal = false"
-                  type="button"
-                  class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
-                >
+                <button v-show="!isEditMode" @click="isClickModal = false" type="button"
+                  class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none">
                   <span class="sr-only">Close</span>
-                  <svg
-                    class="h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
+                  <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </div>
@@ -2159,71 +1128,31 @@
               <hr class="mt-2 mb-4" />
 
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeId" class="text-gray-700 font-bold mr-2"
-                  >Date:</label
-                >
-                <input
-                  type="text"
-                  id="nodeId"
-                  v-model="othersDetails.dateOthers"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="nodeId" class="text-gray-700 font-bold mr-2">Date:</label>
+                <input type="text" id="nodeId" v-model="othersDetails.dateOthers" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="expensename" class="text-gray-700 font-bold mr-2"
-                  >Expense Name:</label
-                >
-                <input
-                  type="text"
-                  id="expensename"
-                  v-model="othersDetails.ExpenseNameOthers"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="expensename" class="text-gray-700 font-bold mr-2">Expense Name:</label>
+                <input type="text" id="expensename" v-model="othersDetails.ExpenseNameOthers" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="amount" class="text-gray-700 font-bold mr-2"
-                  >Amount (RM):</label
-                >
-                <input
-                  type="text"
-                  id="amount"
-                  v-model="othersDetails.AmountRMOthers"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                />
+                <label for="amount" class="text-gray-700 font-bold mr-2">Amount (RM):</label>
+                <input type="text" id="amount" v-model="othersDetails.AmountRMOthers" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="desription" class="text-gray-700 font-bold mr-2"
-                  >Description:</label
-                >
-                <textarea
-                  id="DescriptionOthers"
-                  v-model="othersDetails.DescriptionOthers"
-                  :disabled="!isEditMode"
-                  class="border rounded-md px-16 py-2"
-                  rows="4"
-                ></textarea>
+                <label for="desription" class="text-gray-700 font-bold mr-2">Description:</label>
+                <textarea id="DescriptionOthers" v-model="othersDetails.DescriptionOthers" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" rows="4"></textarea>
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                  >Attachment(s). :</label
-                >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Attachment(s). :</label>
                 <div class="flex flex-wrap">
-                  <div
-                    v-for="(file, index) in othersDetails.UploadOthers"
-                    :key="index"
-                    class="m-2"
-                  >
-                    <div
-                      class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
-                    >
-                      <img
-                        :src="createObjectURL(file)"
-                        :alt="file.name"
-                        class="w-full h-full object-cover"
-                      />
+                  <div v-for="(file, index) in othersDetails.UploadOthers" :key="index" class="m-2">
+                    <div class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24">
+                      <img :src="createObjectURL(file)" :alt="file.name" class="w-full h-full object-cover" />
                     </div>
                   </div>
                 </div>
@@ -2232,97 +1161,38 @@
 
             <hr />
             <div class="flex justify-end items-center mb-4 mt-4">
-              <label
-                for="nodeParentId"
-                class="text-gray-700 font-bold mr-2 text-2xl"
-                >Total: RM {{ totalOthersDetails }}</label
-              >
+              <label for="nodeParentId" class="text-gray-700 font-bold mr-2 text-2xl">Total: RM {{ totalOthersDetails
+                }}</label>
             </div>
 
             <div class="flex justify-end">
-              <button
-                @click="toggleEditMode"
-                class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800"
-              >
+              <button @click="toggleEditMode"
+                class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800">
                 <!-- Edit Icon -->
 
-                <svg
-                  v-if="isEditMode"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5"
-                >
-                  <rect
-                    x="3"
-                    y="3"
-                    width="18"
-                    height="18"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linejoin="round"
-                  />
-                  <rect
-                    x="7"
-                    y="3"
-                    width="10"
-                    height="12"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M12 8v4"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                  />
-                  <path
-                    d="M5 3h14"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                  />
+                <svg v-if="isEditMode" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                  <rect x="3" y="3" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linejoin="round" />
+                  <rect x="7" y="3" width="10" height="12" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linejoin="round" />
+                  <path d="M12 8v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                  <path d="M5 3h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                 </svg>
 
                 <!-- Save Icon -->
-                <svg
-                  v-else
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                  />
+                <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-5 h-5">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                 </svg>
               </button>
-              <button
-                @click="deleteForm()"
-                class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                  />
+              <button @click="deleteForm()"
+                class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-5 h-5">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
               </button>
               <!-- <button
@@ -2338,27 +1208,12 @@
             <div class="flex-1 gap-4 justify-center items-center">
               <!-- Modal content -->
               <div class="flex justify-end">
-                <button
-                  v-show="!isEditMode"
-                  @click="isClickModal = false"
-                  type="button"
-                  class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none"
-                >
+                <button v-show="!isEditMode" @click="isClickModal = false" type="button"
+                  class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none">
                   <span class="sr-only">Close</span>
-                  <svg
-                    class="h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
+                  <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </div>
@@ -2369,222 +1224,92 @@
 
               <div class="flex flex-col">
                 <div class="flex justify-between items-center mb-4">
-                  <label for="nodeId" class="text-gray-700 font-bold mr-2"
-                    >Month:</label
-                  >
-                  <input
-                    type="text"
-                    id="nodeId"
-                    v-model="handphoneBillReimbursementDetails.MonthHR"
-                    :disabled="!isEditMode"
-                    class="border rounded-md px-16 py-2"
-                  />
+                  <label for="nodeId" class="text-gray-700 font-bold mr-2">Month:</label>
+                  <input type="text" id="nodeId" v-model="handphoneBillReimbursementDetails.MonthHR"
+                    :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
                 </div>
                 <div class="flex justify-between items-center mb-4">
-                  <label for="nodeName" class="text-gray-700 font-bold mr-2"
-                    >Year:</label
-                  >
-                  <input
-                    type="text"
-                    id="nodeName"
-                    v-model="handphoneBillReimbursementDetails.YearHR"
-                    :disabled="!isEditMode"
-                    class="border rounded-md px-16 py-2"
-                  />
+                  <label for="nodeName" class="text-gray-700 font-bold mr-2">Year:</label>
+                  <input type="text" id="nodeName" v-model="handphoneBillReimbursementDetails.YearHR"
+                    :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
                 </div>
                 <div class="flex justify-between items-center mb-4">
-                  <label for="bankName" class="text-gray-700 font-bold mr-2"
-                    >Bank Name:</label
-                  >
-                  <input
-                    type="text"
-                    id="bankName"
-                    v-model="handphoneBillReimbursementDetails.BankNameHR"
-                    :disabled="!isEditMode || nonEditableFields"
-                    class="border rounded-md px-16 py-2"
-                  />
+                  <label for="bankName" class="text-gray-700 font-bold mr-2">Bank Name:</label>
+                  <input type="text" id="bankName" v-model="handphoneBillReimbursementDetails.BankNameHR"
+                    :disabled="!isEditMode || nonEditableFields" class="border rounded-md px-16 py-2" />
                 </div>
                 <div class="flex justify-between items-center mb-4">
-                  <label
-                    for="accBankNumber"
-                    class="text-gray-700 font-bold mr-2"
-                    >Account Bank No:</label
-                  >
-                  <input
-                    type="text"
-                    id="accBankNumber"
-                    v-model="handphoneBillReimbursementDetails.AccBankNumberHR"
-                    :disabled="!isEditMode || nonEditableFields"
-                    class="border rounded-md px-16 py-2"
-                  />
+                  <label for="accBankNumber" class="text-gray-700 font-bold mr-2">Account Bank No:</label>
+                  <input type="text" id="accBankNumber" v-model="handphoneBillReimbursementDetails.AccBankNumberHR"
+                    :disabled="!isEditMode || nonEditableFields" class="border rounded-md px-16 py-2" />
                 </div>
                 <div class="flex justify-between items-center mb-4">
-                  <label
-                    for="accHolderName"
-                    class="text-gray-700 font-bold mr-2"
-                    >Account Holder Name:</label
-                  >
-                  <input
-                    type="text"
-                    id="accHolderName"
-                    v-model="handphoneBillReimbursementDetails.AccHolderNameHR"
-                    :disabled="!isEditMode || nonEditableFields"
-                    class="border rounded-md px-16 py-2"
-                  />
+                  <label for="accHolderName" class="text-gray-700 font-bold mr-2">Account Holder Name:</label>
+                  <input type="text" id="accHolderName" v-model="handphoneBillReimbursementDetails.AccHolderNameHR"
+                    :disabled="!isEditMode || nonEditableFields" class="border rounded-md px-16 py-2" />
                 </div>
                 <div class="flex justify-between items-center mb-4">
-                  <label
-                    for="limitedAmount"
-                    class="text-gray-700 font-bold mr-2"
-                    >Limited Amount (RM):</label
-                  >
-                  <input
-                    type="text"
-                    id="limitedAmount"
-                    v-model="handphoneBillReimbursementDetails.LimitedAmountHR"
-                    :disabled="!isEditMode || nonEditableFields"
-                    class="border rounded-md px-16 py-2"
-                  />
+                  <label for="limitedAmount" class="text-gray-700 font-bold mr-2">Limited Amount (RM):</label>
+                  <input type="text" id="limitedAmount" v-model="handphoneBillReimbursementDetails.LimitedAmountHR"
+                    :disabled="!isEditMode || nonEditableFields" class="border rounded-md px-16 py-2" />
                 </div>
                 <div class="flex justify-between items-center mb-4">
-                  <label for="claimsAmount" class="text-gray-700 font-bold mr-2"
-                    >Claims Amount (RM):</label
-                  >
-                  <input
-                    type="text"
-                    id="claimsAmount"
-                    v-model="handphoneBillReimbursementDetails.ClaimsAmountHR"
-                    :disabled="!isEditMode"
-                    class="border rounded-md px-16 py-2"
-                  />
+                  <label for="claimsAmount" class="text-gray-700 font-bold mr-2">Claims Amount (RM):</label>
+                  <input type="text" id="claimsAmount" v-model="handphoneBillReimbursementDetails.ClaimsAmountHR"
+                    :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
                 </div>
                 <div class="flex justify-between items-center mb-4">
-                  <label for="nodeParentId" class="text-gray-700 font-bold mr-2"
-                    >Attachment(s). :</label
-                  >
+                  <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Attachment(s). :</label>
                   <div class="flex flex-wrap">
-                    <div
-                      v-for="(
+                    <div v-for="(
                         file, index
-                      ) in handphoneBillReimbursementDetails.UploadHR"
-                      :key="index"
-                      class="m-2"
-                    >
-                      <div
-                        class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24"
-                      >
-                        <img
-                          :src="createObjectURL(file)"
-                          :alt="file.name"
-                          class="w-full h-full object-cover"
-                        />
+                      ) in handphoneBillReimbursementDetails.UploadHR" :key="index" class="m-2">
+                      <div class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24">
+                        <img :src="createObjectURL(file)" :alt="file.name" class="w-full h-full object-cover" />
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div
-                v-if="claimsAmountExceedsLimitHR"
-                class="text-red-500 text-sm mb-4"
-              >
+              <div v-if="claimsAmountExceedsLimitHR" class="text-red-500 text-sm mb-4">
                 {{ claimsAmountErrorMessageHR }}
               </div>
 
               <hr />
               <div class="flex justify-end items-center mb-4 mt-4">
-                <label
-                  for="nodeParentId"
-                  class="text-gray-700 font-bold mr-2 text-2xl"
-                  >Total: RM {{ totalHandphoneBillReimbursementDetails }}</label
-                >
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2 text-2xl">Total: RM {{
+                  totalHandphoneBillReimbursementDetails }}</label>
               </div>
 
               <div class="flex justify-end">
-                <button
-                  @click="toggleEditMode"
-                  :disabled="isSaveDisabledHR"
-                  class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800"
-                >
+                <button @click="toggleEditMode" :disabled="isSaveDisabledHR"
+                  class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800">
                   <!-- Edit Icon -->
 
-                  <svg
-                    v-if="isEditMode"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-5 h-5"
-                  >
-                    <rect
-                      x="3"
-                      y="3"
-                      width="18"
-                      height="18"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linejoin="round"
-                    />
-                    <rect
-                      x="7"
-                      y="3"
-                      width="10"
-                      height="12"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linejoin="round"
-                    />
-                    <path
-                      d="M12 8v4"
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                    />
-                    <path
-                      d="M5 3h14"
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                    />
+                  <svg v-if="isEditMode" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <rect x="3" y="3" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"
+                      stroke-linejoin="round" />
+                    <rect x="7" y="3" width="10" height="12" fill="none" stroke="currentColor" stroke-width="1.5"
+                      stroke-linejoin="round" />
+                    <path d="M12 8v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                    <path d="M5 3h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                   </svg>
 
                   <!-- Save Icon -->
-                  <svg
-                    v-else
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-5 h-5"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                    />
+                  <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                   </svg>
                 </button>
-                <button
-                  @click="deleteForm()"
-                  class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-5 h-5"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                    />
+                <button @click="deleteForm()"
+                  class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                   </svg>
                 </button>
                 <!-- You can uncomment the cancel button if needed -->
@@ -2603,37 +1328,14 @@
       </div>
     </div>
     <!-- Loading Animation -->
-    <div
-      class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
-      v-if="loading"
-    >
+    <div class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
+      v-if="loading">
       <div class="absolute w-screen h-screen bg-gray-900 opacity-30"></div>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 200 200"
-        class="w-16 h-16 z-50"
-      >
-        <circle
-          transform="rotate(0)"
-          transform-origin="center"
-          fill="none"
-          stroke="blue"
-          stroke-width="10"
-          stroke-linecap="round"
-          stroke-dasharray="230 1000"
-          stroke-dashoffset="0"
-          cx="100"
-          cy="100"
-          r="70"
-        >
-          <animateTransform
-            attributeName="transform"
-            type="rotate"
-            from="0"
-            to="360"
-            dur="2"
-            repeatCount="indefinite"
-          ></animateTransform>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="w-16 h-16 z-50">
+        <circle transform="rotate(0)" transform-origin="center" fill="none" stroke="blue" stroke-width="10"
+          stroke-linecap="round" stroke-dasharray="230 1000" stroke-dashoffset="0" cx="100" cy="100" r="70">
+          <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="2" repeatCount="indefinite">
+          </animateTransform>
         </circle>
       </svg>
       <h1 class="text-gray-50 font-semibold z-50 ml-2 text-lg">
@@ -2702,7 +1404,7 @@ export default {
         "Toll/Touch n'Go": this.localTravellingDetails?.UploadTollLT || [],
       };
 
-      return Object.entries(groups).filter(([type, files]) => files.length > 0);
+      return Object.entries(groups).filter(([files]) => files.length > 0);
     },
 
     totallocalTravellingDetails() {
@@ -2883,7 +1585,7 @@ export default {
         .toFixed(2);
     },
     referenceNumber() {
-      console.log("Current uniqueCode:", this.claims.uniqueCode);
+      // console.log("Current uniqueCode:", this.claims.uniqueCode);
       return this.claims.uniqueCode;
     },
   },
@@ -2933,7 +1635,7 @@ export default {
           "http://172.28.28.116:7165/api/User/GetRunningNumber"
         );
         if (response.status === 200) {
-          console.log("Serial Number:", response.data);
+          // console.log("Serial Number:", response.data);
           let serialNumber = this.claims[0].uniqueCode + response.data.result;
           result = serialNumber;
         } else {
@@ -2944,7 +1646,7 @@ export default {
         console.error("Error fetching serial number:", error);
         result = "Error: " + error.message;
       }
-      console.log("Result:", result);
+      // console.log("Result:", result);
       return result; // Return result outside the finally block
     },
 
@@ -2964,11 +1666,11 @@ export default {
           const selectedEmployee = response.data.result.find(
             (emp) => emp.username_id === store.getSession().userDetails.userId
           );
-          console.log("Selected Employee:", selectedEmployee);
+          // console.log("Selected Employee:", selectedEmployee);
           if (selectedEmployee) {
             if ("emp_id" in selectedEmployee) {
               this.employeeID = selectedEmployee.emp_id;
-              console.log("Employee ID:", this.employeeID);
+              // console.log("Employee ID:", this.employeeID);
             } else {
               console.error(
                 "Employee found but employee_id is missing:",
@@ -2995,7 +1697,7 @@ export default {
     },
     totalplusmethod(total) {
       this.totalplus = total;
-      console.log("totalplus", this.totalplus);
+      // console.log("totalplus", this.totalplus);
     },
     createObjectURL(file) {
       return URL.createObjectURL(file);
@@ -3020,7 +1722,7 @@ export default {
 
     showDetails(claim, index) {
       this.index = index;
-      console.log("Current index", this.index);
+      // console.log("Current index", this.index);
       // Update selectedClaimType based on the type of claim
       this.selectedClaimType = claim.tabTitle.replace(/\s+/g, ""); // Remove spaces from claim type
       this.formToDelete = index;
@@ -3028,44 +1730,44 @@ export default {
       switch (this.selectedClaimType) {
         case "LocalTravelling":
           this.localTravellingDetails = claim;
-          console.log("Local Travelling Details:", this.localTravellingDetails);
-          console.log("upload", this.localTravellingDetails.UploadLT);
+          // console.log("Local Travelling Details:", this.localTravellingDetails);
+          // console.log("upload", this.localTravellingDetails.UploadLT);
           break;
         case "OverseasTravelling":
           this.overseasTravellingDetails = claim;
-          console.log(
-            "Overseas Travelling Details:",
-            this.overseasTravellingDetails
-          );
+          // console.log(
+          //   "Overseas Travelling Details:",
+          //   this.overseasTravellingDetails
+          // );
           break;
         case "Entertainment":
           this.entertainmentDetails = claim;
-          console.log("Entertainment Details:", this.entertainmentDetails);
+          // console.log("Entertainment Details:", this.entertainmentDetails);
           break;
         case "StaffRefreshment":
           this.staffRefreshmentDetails = claim;
-          console.log(
-            "Staff Refreshment Details:",
-            this.staffRefreshmentDetails
-          );
+          // console.log(
+          //   "Staff Refreshment Details:",
+          //   this.staffRefreshmentDetails
+          // );
           break;
         case "Others":
           this.othersDetails = claim;
-          console.log("Others Details:", this.othersDetails);
+          // console.log("Others Details:", this.othersDetails);
           break;
         case "HandphoneBillReimbursement":
           this.handphoneBillReimbursementDetails = claim;
-          console.log(
-            "Handphone Bill Reimbursement Details:",
-            this.handphoneBillReimbursementDetails
-          );
+          // console.log(
+          //   "Handphone Bill Reimbursement Details:",
+          //   this.handphoneBillReimbursementDetails
+          // );
           break;
         case "MedicalBillReimbursement":
           this.medicalBillReimbursementDetails = claim;
-          console.log(
-            "Medical Bill Reimbursement Details:",
-            this.medicalBillReimbursementDetails
-          );
+          // console.log(
+          //   "Medical Bill Reimbursement Details:",
+          //   this.medicalBillReimbursementDetails
+          // );
           break;
         // Add cases for other types of claims
       }
@@ -3117,7 +1819,7 @@ export default {
 
         // Construct the uniqueCode
         const uniqueCode = `${prefix}${userIdFragment}${randomNumber}${timestamp}`;
-        console.log("Unique Code:", uniqueCode);
+        // console.log("Unique Code:", uniqueCode);
         return uniqueCode;
       } else {
         console.error("User ID is undefined.");
@@ -3170,7 +1872,7 @@ export default {
 
         // Construct the uniqueCode
         const uniqueCode = `SN${prefix}${userIdFragment}${randomNumber}${timestamp}`;
-        console.log("Unique Code:", uniqueCode);
+        // console.log("Unique Code:", uniqueCode);
         return uniqueCode;
       } else {
         console.error("User ID is undefined.");
@@ -3179,7 +1881,7 @@ export default {
       }
     },
     someMethod() {
-      console.log(this.claims.uniqueCode);
+      // console.log(this.claims.uniqueCode);
       // Other logic
     },
     isValidClaimData() {
@@ -3227,7 +1929,7 @@ export default {
 
         // Check if the response indicates success
         if (response.status === 200 || response.status === 201) {
-          console.log("Data successfully inserted:", response.data);
+          // console.log("Data successfully inserted:", response.data);
           this.sendToAPI();
         } else {
           console.warn("Unexpected response status:", response.status);
@@ -3272,480 +1974,444 @@ export default {
       for (const title in groupedClaims) {
         if (Object.hasOwnProperty.call(groupedClaims, title)) {
           const claimsToSend = groupedClaims[title];
-          console.log(`Claims to send for ${title}:`, claimsToSend); // Log the claimsToSend object
+          // console.log(`Claims to send for ${title}:`, claimsToSend); // Log the claimsToSend object
 
-          
-            let axiosInstance;
-            switch (title.toLowerCase()) {
-              case "local travelling": {
-                for (const claim of claimsToSend) {
-                  // Iterate over each claim
+
+          let axiosInstance;
+          switch (title.toLowerCase()) {
+            case "local travelling": {
+              for (const claim of claimsToSend) {
+                try {
+                  // Generate unique code
                   const uniqueCodeLT = this.generateUniqueCode(claim.tabTitle);
                   const userId = this.userDetails.userId;
-                  console.log("unik kod:", uniqueCodeLT);
+                  console.log("Unique code generated:", uniqueCodeLT);
 
-                  const transportSpec =
-                    claim.TransportLT.toLowerCase() === "personal transport"
-                      ? claim.TransportSpec
-                      : claim.PublicTransportSpec;
-
+                  // Construct the payload based on the expected structure
                   const thisisforlocal1 = {
-                    requester_id: this.userDetails.userId,
                     mileage_km: claim.MileageKMLT || 0,
-                    starting_point: claim.LocationStart || "-",
-                    end_point: claim.LocationEnd || "-",
-                    date_event: claim.dateLT || "-", // Default to empty string if not provided
+                    starting_point: claim.LocationStart || "string",
+                    end_point: claim.LocationEnd || "string",
+                    date_event: claim.dateLT || "string",
                     park_fee: claim.ParkingLT || 0,
                     toll_fee: claim.TollLT || 0,
                     total_fee: claim.totalRM || 0,
-                    unique_code: uniqueCodeLT || "-",
-                    reference_number: this.serialnumber || "-",
-                    transport_mode: claim.TransportLT || "-",
-                    trip_mode: claim.tripwayLT || "-",
-                    total_mileage: claim.MileageRMLT || 0,
-                    transport_specification: transportSpec || "-",
                     fare: claim.FareRMLT || 0,
-                    return_date: claim.ReturnDateLT || "-",
-                    meal_allowance: String(claim.MealAllowanceLT || "-"),
-                    accommodation: claim.AccommodationLT || "-",
+                    transport_specification: claim.TransportLT.toLowerCase() === "personal transport"
+                      ? claim.TransportSpec
+                      : claim.PublicTransportSpec || "string",
+                    requester_id: this.userDetails.userId || "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    unique_code: uniqueCodeLT || "string",
+                    reference_number: this.serialnumber || "string",
+                    transport_mode: claim.TransportLT || "string",
+                    trip_mode: claim.tripwayLT || "string",
+                    total_mileage: claim.MileageRMLT || 0,
+                    return_date: claim.ReturnDateLT || "string",
+                    meal_allowance: String(claim.MealAllowanceLT || "string"),
+                    accommodation: claim.AccommodationLT || "string",
                   };
 
-                  axiosInstance = axios.create({
-                    baseURL:
-                      "http://172.28.28.116:7239/api/User/InsertLocalOutstation",
-                  });
-                  if (claim.UploadLT && claim.UploadLT.length > 0) {
-                    // Log the file data to verify it's correct before attempting to upload
-                    console.log("Preparing to upload files:", claim.UploadLT);
+                  console.log("Payload for API:", thisisforlocal1);
 
-                    // Assuming uploadFile has been adjusted to accept an array of files
+                  // Send the POST request to the API
+                  try {
+                    const axiosInstance = axios.create({
+                      baseURL: "http://172.28.28.116:7239/api/User/InsertLocalOutstation",
+                    });
 
-                    this.uploadFiles(claim.UploadLT, userId, uniqueCodeLT);
-                  }
-                  if (
-                    claim.UploadParkingLT &&
-                    claim.UploadParkingLT.length > 0
-                  ) {
-                    console.log(
-                      "Preparing to upload files:",
-                      claim.UploadParkingLT
-                    );
-                    this.uploadFiles(
-                      claim.UploadParkingLT,
-                      userId,
-                      uniqueCodeLT
-                    );
-                  }
-                  if (claim.UploadTollLT && claim.UploadTollLT.length > 0) {
-                    console.log(
-                      "Preparing to upload files:",
-                      claim.UploadTollLT
-                    );
-                    this.uploadFiles(claim.UploadTollLT, userId, uniqueCodeLT);
-                  }
-                  if (claim.UploadFareRMLT && claim.UploadFareRMLT.length > 0) {
-                    console.log(
-                      "Preparing to upload files:",
-                      claim.UploadFareRMLT
-                    );
-                    this.uploadFiles(
-                      claim.UploadFareRMLT,
-                      userId,
-                      uniqueCodeLT
-                    );
-                  }
-                  if (
-                    claim.UploadMileageRMLT &&
-                    claim.UploadMileageRMLT.length > 0
-                  ) {
-                    console.log(
-                      "Preparing to upload files:",
-                      claim.UploadMileageRMLT
-                    );
-                    this.uploadFiles(
-                      claim.UploadMileageRMLT,
-                      userId,
-                      uniqueCodeLT
-                    );
-                  }
-                  const response = await axiosInstance.post(
-                    "/",
-                    thisisforlocal1
-                  );
-                  console.log(`Data sent for ${title} 1:`, response.data);
-                }
-                break;
-              }
-              case "overseas travelling":
-                for (const claim of claimsToSend) {
-                  const uniqcodeOT = this.generateUniqueCode(claim.tabTitle);
-                  const thisisforoversea = {
-                    requester_id: this.userDetails.userId || "-",
-                    description: claim.PurposeOT || "-",
-                    meal_allowance: String(claim.MealAllowanceOT || 0),
-                    date_event: claim.dateOT || "-",
-                    transport_fee: claim.AirportLimoTeksiOT || 0,
-                    total_fee: claim.combinedTotal || 0,
-                    accom_foreign_total: claim.AmountforAccommodationOT || 0,
-                    accom_foreign_currency:
-                      claim.ForeignCurrencyAccommodationOT || "-",
-                    accom_exchange_rate: parseFloat(
-                      claim.ExchangeRateAccommodationOT || 0
-                    ).toFixed(2),
-                    other_foreign_currency:
-                      claim.ForeignCurrencyOthersOT || "-",
-                    other_exchange_rate: parseFloat(
-                      claim.ExchangeRateOthersOT || 0
-                    ).toFixed(2),
-                    other_foreign_total: claim.AmountforOthersOT || 0,
-                    reference_number: this.serialnumber || "-",
-                    unique_code: uniqcodeOT || "-",
-                    transportation_mode: String(
-                      claim.AirportLimoTeksiOT || "-"
-                    ),
-                    return_date: claim.ReturendateOT || "-",
-                    accommodation: claim.AccommodationOT || "-",
-                    oem: claim.otherExpenses
-                      ? claim.otherExpenses.map((expense) => ({
-                          name: expense.name || "-",
-                          amount: expense.amount || 0,
-                          description: expense.description || "-",
-                        }))
-                      : [],
-                  };
-
-                  const userId = this.userDetails.userId;
-                  console.log("unik kod:", this.uniqueCode);
-                  if (claim.UploadOT && claim.UploadOT.length > 0) {
-                    // Log the file data to verify it's correct before attempting to upload
-                    console.log("Preparing to upload files:", claim.UploadOT);
-
-                    // Assuming uploadFile has been adjusted to accept an array of files
-
-                    this.uploadFiles(claim.UploadOT, userId, uniqcodeOT);
-                  }
-                  if (
-                    claim.UploadAirportLimoTeksiOT &&
-                    claim.UploadAirportLimoTeksiOT.length > 0
-                  ) {
-                    console.log(
-                      "Preparing to upload files:",
-                      claim.UploadAirportLimoTeksiOT
-                    );
-                    this.uploadFiles(
-                      claim.UploadAirportLimoTeksiOT,
-                      userId,
-                      uniqcodeOT
-                    );
+                    const response = await axiosInstance.post("/", thisisforlocal1);
+                    console.log("API response:", response.data);
+                  } catch (apiError) {
+                    console.error("Error sending data to API:", apiError.response?.data || apiError.message);
                   }
 
-                  if (claim.otherExpenses && claim.otherExpenses.length > 0) {
-                    const filesToUpload = claim.otherExpenses.flatMap(
-                      (expense) => expense.files || []
-                    );
-                    if (filesToUpload.length > 0) {
-                      console.log("Preparing to upload files:", filesToUpload);
-                      await this.uploadFiles(filesToUpload, userId, uniqcodeOT);
+                  // Handle file uploads (if any)
+                  try {
+                    const fileUploads = [
+                      { type: "UploadLT", files: claim.UploadLT },
+                      { type: "UploadParkingLT", files: claim.UploadParkingLT },
+                      { type: "UploadTollLT", files: claim.UploadTollLT },
+                      { type: "UploadFareRMLT", files: claim.UploadFareRMLT },
+                      { type: "UploadMileageRMLT", files: claim.UploadMileageRMLT },
+                    ];
+
+                    for (const { type, files } of fileUploads) {
+                      if (files && files.length > 0) {
+                        console.log(`Uploading files for ${type}:`, files);
+                        await this.uploadFiles(files, userId, uniqueCodeLT);
+                      }
                     }
+                  } catch (fileUploadError) {
+                    console.error("File upload error:", fileUploadError.message);
                   }
+                } catch (error) {
+                  console.error("Error processing claim:", error.message);
+                }
+              }
 
-                  axiosInstance = axios.create({
-                    baseURL:
-                      "http://172.28.28.116:7239/api/User/InsertOverseasOutstation",
-                  });
+              break;
+            }
+            case "overseas travelling":
+            for (const claim of claimsToSend) {
+  try {
+    const uniqcodeOT = this.generateUniqueCode(claim.tabTitle);
+
+    // Construct the payload
+    let thisisforoversea;
+    try {
+      thisisforoversea = {
+        requester_id: this.userDetails.userId || "-",
+        description: claim.PurposeOT || "-",
+        meal_allowance: String(claim.MealAllowanceOT || 0),
+        date_event: claim.dateOT || "-",
+        total_fee: claim.combinedTotal || 0,
+        reference_number: this.serialnumber || "-",
+        unique_code: uniqcodeOT || "-",
+        return_date: claim.ReturendateOT || "-",
+        accommodation: claim.AccommodationOT || "-",
+        oem: claim.otherExpenses
+          ? claim.otherExpenses.map((expense) => ({
+              name: expense.name || "-",
+              amount: expense.amount || 0,
+              description: expense.description || "-",
+              foreign_currency: expense.foreign_currency || "-",
+              exchange_rate: expense.exchange_rate || 0,
+              currency_total: expense.currency_total || 0,
+            }))
+          : [],
+      };
+      console.log("Payload constructed successfully:", thisisforoversea);
+    } catch (payloadError) {
+      console.error("Error constructing the payload:", payloadError.message);
+      continue; // Skip this iteration if the payload fails to construct
+    }
+
+    const userId = this.userDetails.userId;
+
+    // Handle file uploads
+    try {
+      if (claim.UploadOT && claim.UploadOT.length > 0) {
+        console.log("Uploading files for UploadOT...");
+        await this.uploadFiles(claim.UploadOT, userId, uniqcodeOT);
+      }
+      if (claim.UploadAirportLimoTeksiOT && claim.UploadAirportLimoTeksiOT.length > 0) {
+        console.log("Uploading files for UploadAirportLimoTeksiOT...");
+        await this.uploadFiles(claim.UploadAirportLimoTeksiOT, userId, uniqcodeOT);
+      }
+      if (claim.otherExpenses && claim.otherExpenses.length > 0) {
+        const filesToUpload = claim.otherExpenses.flatMap((expense) => expense.files || []);
+        if (filesToUpload.length > 0) {
+          console.log("Uploading files for otherExpenses...");
+          await this.uploadFiles(filesToUpload, userId, uniqcodeOT);
+        }
+      }
+    } catch (fileUploadError) {
+      console.error("Error uploading files:", fileUploadError.message);
+      // Proceed with API call even if file uploads fail
+    }
+
+    // Send the POST request to the API
+    try {
+      const axiosInstance = axios.create({
+        baseURL: "http://172.28.28.116:7239/api/User/InsertOverseasOutstation",
+      });
+      const response = await axiosInstance.post("/", thisisforoversea);
+      console.log("Data successfully sent to API:", response.data);
+    } catch (apiError) {
+      console.error("Error sending data to API:", apiError.response?.data || apiError.message);
+    }
+  } catch (error) {
+    console.error("Unexpected error processing claim:", error.message);
+  }
+}
+
+              break;
+            case "entertainment":
+              for (const claim of claimsToSend) {
+                const uniqcodeE = this.generateUniqueCode(claim.tabTitle);
+                const thisisforentertainment = {
+                  requester_id: this.userDetails.userId,
+                  date_event: claim.dateE,
+                  entertainment_type: claim.TypeofEntertainmentE,
+                  other_type_of_entertainment:
+                    claim.OtherTypeofEntertainmentE,
+                  company_name: claim.CompanyE,
+                  venue_name: claim.VenueE,
+                  description: claim.ReferenceE,
+                  total_fee: parseFloat(claim.AmountRME),
+                  reference_number: this.serialnumber,
+                  unique_code: uniqcodeE, // Ensure this is in the correct format and not null/undefined
+                  // Add the required 'ent' field with the appropriate value
+
+                  participants: claim.attendees
+                    ? claim.attendees.map((participant) => ({
+                      name: participant.name,
+                      company_Name: participant.company_Name
+                        ? participant.company_Name
+                        : "",
+                      emp_id: "-",
+                      status: "-",
+                    }))
+                    : [],
+                };
+
+                const userId = this.userDetails.userId;
+
+                if (claim.UploadE && claim.UploadE.length > 0) {
+                  // Log the file data to verify it's correct before attempting to upload
+                  // console.log("Preparing to upload files:", claim.UploadE);
+
+                  // Assuming uploadFile has been adjusted to accept an array of files
+
+                  this.uploadFiles(claim.UploadE, userId, uniqcodeE);
+                }
+
+                // Create axios instance
+                axiosInstance = axios.create({
+                  baseURL:
+                    "http://172.28.28.116:7165/api/User/InsertEntertainment",
+                });
+
+                // Send the request
+                // try {
+                const response = await axiosInstance.post(
+                  "/",
+                  thisisforentertainment
+                );
+                // console.log(`Data sent for ${title} 3:`, response.data);
+                //  this.fileupload(); // Assuming this function handles subsequent actions after successful submission
+                // } catch (error) {
+                //   console.error(
+                //     "Error sending data for Entertainment:",
+                //     error.response.data
+                //   );
+                //   // Handle error appropriately, e.g., display error message to user
+                // }
+              }
+
+              break;
+
+            case "staff refreshment":
+              for (const claim of claimsToSend) {
+                // Iterate over each claim
+                // Dummy data for a claim
+                const uniqcodeSR = this.generateUniqueCode(claim.tabTitle);
+                const thisisforstaffrefreshment = {
+                  refreshment_type: claim.OtherTypeofStaffRefreshmentSR
+                    ? claim.OtherTypeofStaffRefreshmentSR
+                    : claim.TypeofRefreshmentSR,
+
+                  date_event: claim.dateSR, // Example date
+                  company_name: claim.CompanySR,
+                  venue_name: claim.VenueSR,
+                  reference_type: claim.ReferenceSR,
+                  total_fee: claim.AmountRMSR,
+                  reference_number: this.serialnumber,
+                  unique_code: uniqcodeSR,
+                  requester_id: this.userDetails.userId,
+                  sim: claim.staffInvolved
+                    ? claim.staffInvolved.map((participant) => ({
+                      company_name: participant.companyName,
+                      name: participant.name,
+                      department: participant.department,
+                    }))
+                    : [],
+                };
+
+                const userId = this.userDetails.userId;
+                // console.log("unik kod:", uniqueCode);
+                if (claim.UploadSR && claim.UploadSR.length > 0) {
+                  // Log the file data to verify it's correct before attempting to upload
+                  // console.log("Preparing to upload files:", claim.UploadSR);
+
+                  // Assuming uploadFile has been adjusted to accept an array of files
+
+                  this.uploadFiles(claim.UploadSR, userId, uniqcodeSR);
+                }
+                axiosInstance = axios.create({
+                  baseURL:
+                    "http://172.28.28.116:7239/api/User/InsertStaffRefreshment",
+                });
+                const response2 = await axiosInstance.post(
+                  "/",
+                  thisisforstaffrefreshment
+                );
+                //   console.log(`Data sent for ${title} 2:`, response2.data);
+              }
+              break;
+            case "others":
+              for (const claim of claimsToSend) {
+                // Iterate over each claim
+                // Dummy data for a claim
+                const uniqcodeothers = this.generateUniqueCode(
+                  claim.tabTitle
+                );
+                const thisisforHandphoneBillReimbursement = {
+                  expense_date: claim.dateOthers, // Example date
+                  amount: parseFloat(claim.AmountRMOthers).toFixed(2),
+                  description: claim.DescriptionOthers,
+                  unique_code: uniqcodeothers,
+                  total_fee: parseFloat(claim.totalRM).toFixed(2),
+                  reference_number: this.serialnumber,
+                  requester_id: this.userDetails.userId,
+                  expense_name: claim.ExpenseNameOthers,
+                };
+
+                const userId = this.userDetails.userId;
+                // console.log("unik kod:", uniqueCode);
+                if (claim.UploadOthers && claim.UploadOthers.length > 0) {
+                  // Log the file data to verify it's correct before attempting to upload
+                  // console.log(
+                  //   "Preparing to upload files:",
+                  //   claim.UploadOthers
+                  // );
+
+                  // Assuming uploadFile has been adjusted to accept an array of files
+
+                  this.uploadFiles(
+                    claim.UploadOthers,
+                    userId,
+                    uniqcodeothers
+                  );
+                }
+                axiosInstance = axios.create({
+                  baseURL: "http://172.28.28.116:7239/api/User/InsertOthers",
+                });
+                const response2 = await axiosInstance.post(
+                  "/",
+                  thisisforHandphoneBillReimbursement
+                );
+                // console.log(`Data sent for ${title} 2:`, response2.data);
+              }
+              break;
+            case "handphone bill reimbursement":
+              for (const claim of claimsToSend) {
+                // Iterate over each claim
+                // Dummy data for a claim
+                const uniqcodeHR = this.generateUniqueCode(claim.tabTitle);
+                const thisisforHandphoneBillReimbursement = {
+                  date_claim: this.todayFormatted(), // Example date
+                  claim_month: claim.MonthHR,
+                  claim_year: `${claim.YearHR}`,
+                  bank_name: claim.BankNameHR,
+                  bank_account: String(claim.AccBankNumberHR),
+                  bank_holder: claim.AccHolderNameHR,
+
+                  claim_amount: claim.totalRM,
+                  unique_code: uniqcodeHR,
+                  reference_number: this.serialnumber,
+                  phone_limit: claim.LimitedAmountHR,
+                  ic_number: claim.icNumber,
+                  requester_id: this.userDetails.userId,
+                };
+
+                const userId = this.userDetails.userId;
+                // console.log("unik kod:", uniqueCode);
+                if (claim.UploadHR && claim.UploadHR.length > 0) {
+                  // Log the file data to verify it's correct before attempting to upload
+                  //  console.log("Preparing to upload files:", claim.UploadLT);
+
+                  // Assuming uploadFile has been adjusted to accept an array of files
+                  this.uploadFiles(claim.UploadHR, userId, uniqcodeHR);
+                }
+                const axiosInstance = axios.create({
+                  baseURL:
+                    "http://172.28.28.116:7165/api/User/InsertHandphoneReimburse",
+                });
+
+                try {
                   const response = await axiosInstance.post(
-                    "/",
-                    thisisforoversea
-                  );
-                  console.log(`Data sent for ${title} 2:`, response.data);
-                }
-                break;
-              case "entertainment":
-                for (const claim of claimsToSend) {
-                  const uniqcodeE = this.generateUniqueCode(claim.tabTitle);
-                  const thisisforentertainment = {
-                    requester_id: this.userDetails.userId,
-                    date_event: claim.dateE,
-                    entertainment_type: claim.TypeofEntertainmentE,
-                    other_type_of_entertainment:
-                      claim.OtherTypeofEntertainmentE,
-                    company_name: claim.CompanyE,
-                    venue_name: claim.VenueE,
-                    description: claim.ReferenceE,
-                    total_fee: parseFloat(claim.AmountRME),
-                    reference_number: this.serialnumber,
-                    unique_code: uniqcodeE, // Ensure this is in the correct format and not null/undefined
-                    // Add the required 'ent' field with the appropriate value
-
-                    participants: claim.attendees
-                      ? claim.attendees.map((participant) => ({
-                          name: participant.name,
-                          company_Name: participant.company_Name
-                            ? participant.company_Name
-                            : "",
-                          emp_id: "-",
-                          status: "-",
-                        }))
-                      : [],
-                  };
-
-                  const userId = this.userDetails.userId;
-
-                  if (claim.UploadE && claim.UploadE.length > 0) {
-                    // Log the file data to verify it's correct before attempting to upload
-                    console.log("Preparing to upload files:", claim.UploadE);
-
-                    // Assuming uploadFile has been adjusted to accept an array of files
-
-                    this.uploadFiles(claim.UploadE, userId, uniqcodeE);
-                  }
-
-                  // Create axios instance
-                  axiosInstance = axios.create({
-                    baseURL:
-                      "http://172.28.28.116:7165/api/User/InsertEntertainment",
-                  });
-
-                  // Send the request
-                 // try {
-                    const response = await axiosInstance.post(
-                      "/",
-                      thisisforentertainment
-                    );
-                    console.log(`Data sent for ${title} 3:`, response.data);
-                  //  this.fileupload(); // Assuming this function handles subsequent actions after successful submission
-                  // } catch (error) {
-                  //   console.error(
-                  //     "Error sending data for Entertainment:",
-                  //     error.response.data
-                  //   );
-                  //   // Handle error appropriately, e.g., display error message to user
-                  // }
-                }
-
-                break;
-
-              case "staff refreshment":
-                for (const claim of claimsToSend) {
-                  // Iterate over each claim
-                  // Dummy data for a claim
-                  const uniqcodeSR = this.generateUniqueCode(claim.tabTitle);
-                  const thisisforstaffrefreshment = {
-                    refreshment_type: claim.OtherTypeofStaffRefreshmentSR
-                      ? claim.OtherTypeofStaffRefreshmentSR
-                      : claim.TypeofRefreshmentSR,
-
-                    date_event: claim.dateSR, // Example date
-                    company_name: claim.CompanySR,
-                    venue_name: claim.VenueSR,
-                    reference_type: claim.ReferenceSR,
-                    total_fee: claim.AmountRMSR,
-                    reference_number: this.serialnumber,
-                    unique_code: uniqcodeSR,
-                    requester_id: this.userDetails.userId,
-                    sim: claim.staffInvolved
-                      ? claim.staffInvolved.map((participant) => ({
-                          company_name: participant.companyName,
-                          name: participant.name,
-                          department: participant.department,
-                        }))
-                      : [],
-                  };
-
-                  const userId = this.userDetails.userId;
-                  // console.log("unik kod:", uniqueCode);
-                  if (claim.UploadSR && claim.UploadSR.length > 0) {
-                    // Log the file data to verify it's correct before attempting to upload
-                    console.log("Preparing to upload files:", claim.UploadSR);
-
-                    // Assuming uploadFile has been adjusted to accept an array of files
-
-                    this.uploadFiles(claim.UploadSR, userId, uniqcodeSR);
-                  }
-                  axiosInstance = axios.create({
-                    baseURL:
-                      "http://172.28.28.116:7239/api/User/InsertStaffRefreshment",
-                  });
-                  const response2 = await axiosInstance.post(
-                    "/",
-                    thisisforstaffrefreshment
-                  );
-                  console.log(`Data sent for ${title} 2:`, response2.data);
-                }
-                break;
-              case "others":
-                for (const claim of claimsToSend) {
-                  // Iterate over each claim
-                  // Dummy data for a claim
-                  const uniqcodeothers = this.generateUniqueCode(
-                    claim.tabTitle
-                  );
-                  const thisisforHandphoneBillReimbursement = {
-                    expense_date: claim.dateOthers, // Example date
-                    amount: parseFloat(claim.AmountRMOthers).toFixed(2),
-                    description: claim.DescriptionOthers,
-                    unique_code: uniqcodeothers,
-                    total_fee: parseFloat(claim.totalRM).toFixed(2),
-                    reference_number: this.serialnumber,
-                    requester_id: this.userDetails.userId,
-                    expense_name: claim.ExpenseNameOthers,
-                  };
-
-                  const userId = this.userDetails.userId;
-                  // console.log("unik kod:", uniqueCode);
-                  if (claim.UploadOthers && claim.UploadOthers.length > 0) {
-                    // Log the file data to verify it's correct before attempting to upload
-                    console.log(
-                      "Preparing to upload files:",
-                      claim.UploadOthers
-                    );
-
-                    // Assuming uploadFile has been adjusted to accept an array of files
-
-                    this.uploadFiles(
-                      claim.UploadOthers,
-                      userId,
-                      uniqcodeothers
-                    );
-                  }
-                  axiosInstance = axios.create({
-                    baseURL: "http://172.28.28.116:7239/api/User/InsertOthers",
-                  });
-                  const response2 = await axiosInstance.post(
                     "/",
                     thisisforHandphoneBillReimbursement
                   );
-                  console.log(`Data sent for ${title} 2:`, response2.data);
-                }
-                break;
-              case "handphone bill reimbursement":
-                for (const claim of claimsToSend) {
-                  // Iterate over each claim
-                  // Dummy data for a claim
-                  const uniqcodeHR = this.generateUniqueCode(claim.tabTitle);
-                  const thisisforHandphoneBillReimbursement = {
-                    date_claim: this.todayFormatted(), // Example date
-                    claim_month: claim.MonthHR,
-                    claim_year: `${claim.YearHR}`,
-                    bank_name: claim.BankNameHR,
-                    bank_account: String(claim.AccBankNumberHR),
-                    bank_holder: claim.AccHolderNameHR,
+                  // console.log(
+                  //   `Data successfully submitted for handphone bill reimbursement:`,
+                  //   response.data
+                  // );
 
-                    claim_amount: claim.totalRM,
-                    unique_code: uniqcodeHR,
-                    reference_number: this.serialnumber,
-                    phone_limit: claim.LimitedAmountHR,
-                    ic_number: claim.icNumber,
-                    requester_id: this.userDetails.userId,
-                  };
-
-                  const userId = this.userDetails.userId;
-                  // console.log("unik kod:", uniqueCode);
-                  if (claim.UploadHR && claim.UploadHR.length > 0) {
-                    // Log the file data to verify it's correct before attempting to upload
-                    console.log("Preparing to upload files:", claim.UploadLT);
-
-                    // Assuming uploadFile has been adjusted to accept an array of files
-                    this.uploadFiles(claim.UploadHR, userId, uniqcodeHR);
-                  }
-                  const axiosInstance = axios.create({
-                    baseURL:
-                      "http://172.28.28.116:7165/api/User/InsertHandphoneReimburse",
-                  });
-
-                  try {
-                    const response = await axiosInstance.post(
-                      "/",
-                      thisisforHandphoneBillReimbursement
+                  // Handle success here, e.g., update UI or notify user
+                } catch (error) {
+                  if (error.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    console.error(
+                      "Error submitting handphone bill reimbursement:",
+                      error.response.data
                     );
-                    console.log(
-                      `Data successfully submitted for handphone bill reimbursement:`,
-                      response.data
+                  } else if (error.request) {
+                    // The request was made but no response was received
+                    console.error(
+                      "Error submitting handphone bill reimbursement: No response received"
                     );
-
-                    // Handle success here, e.g., update UI or notify user
-                  } catch (error) {
-                    if (error.response) {
-                      // The request was made and the server responded with a status code
-                      // that falls out of the range of 2xx
-                      console.error(
-                        "Error submitting handphone bill reimbursement:",
-                        error.response.data
-                      );
-                    } else if (error.request) {
-                      // The request was made but no response was received
-                      console.error(
-                        "Error submitting handphone bill reimbursement: No response received"
-                      );
-                    } else {
-                      // Something happened in setting up the request that triggered an error
-                      console.error(
-                        "Error submitting handphone bill reimbursement:",
-                        error.message
-                      );
-                    }
-                    // Handle error here, e.g., show an error message to the user
+                  } else {
+                    // Something happened in setting up the request that triggered an error
+                    console.error(
+                      "Error submitting handphone bill reimbursement:",
+                      error.message
+                    );
                   }
+                  // Handle error here, e.g., show an error message to the user
                 }
-                break;
-              case "medical bill reimbursement":
-                for (const claim of claimsToSend) {
-                  // Iterate over each claim
-                  // Dummy data for a claim
+              }
+              break;
+            case "medical bill reimbursement":
+              for (const claim of claimsToSend) {
+                // Iterate over each claim
+                // Dummy data for a claim
 
-                  const uniqcodeML = this.generateUniqueCode(claim.tabTitle);
-                  const thisisforMedicalBillReimbursement = {
-                    reference_number: this.serialnumber || "-",
-                    date_leave_taken: claim.dateML, // Example date
-                    reason: claim.ReasonML || "-",
-                    bank_name: claim.BankNameML,
-                    bank_holder: claim.AccHolderNameML,
-                    bank_account: String(claim.AccBankNumberML),
-                    claim_amount: String(claim.ClaimsAmountML),
-                    clinic_name: String(
-                      claim.OtherClinicSpecML
-                        ? claim.OtherClinicSpecML
-                        : claim.ClinicSelectionML || "-"
-                    ),
-                    clinic_selection: String(claim.ClinicSelectionML || "-"),
-                    reason_different: claim.OtherClinicReasonML || "-",
-                    medical_category: claim.MedicalCategoryML,
-                    requester_id: this.userDetails.userId,
-                    limit_outpatient: claim.limit_outpatient,
-                    limit_medic_dental: claim.limit_medic_dental,
-                    ic_number: claim.icNumber,
-                    unique_code: uniqcodeML,
-                  };
+                const uniqcodeML = this.generateUniqueCode(claim.tabTitle);
+                const thisisforMedicalBillReimbursement = {
+                  reference_number: this.serialnumber || "-",
+                  date_leave_taken: claim.dateML, // Example date
+                  reason: claim.ReasonML || "-",
+                  bank_name: claim.BankNameML,
+                  bank_holder: claim.AccHolderNameML,
+                  bank_account: String(claim.AccBankNumberML),
+                  claim_amount: String(claim.ClaimsAmountML),
+                  clinic_name: String(
+                    claim.OtherClinicSpecML
+                      ? claim.OtherClinicSpecML
+                      : claim.ClinicSelectionML || "-"
+                  ),
+                  clinic_selection: String(claim.ClinicSelectionML || "-"),
+                  reason_different: claim.OtherClinicReasonML || "-",
+                  medical_category: claim.MedicalCategoryML,
+                  requester_id: this.userDetails.userId,
+                  limit_outpatient: claim.limit_outpatient,
+                  limit_medic_dental: claim.limit_medic_dental,
+                  ic_number: claim.icNumber,
+                  unique_code: uniqcodeML,
+                };
 
-                  const userId = this.userDetails.userId;
-                  // console.log("unik kod:", uniqueCode);
-                  if (claim.UploadML && claim.UploadML.length > 0) {
-                    // Log the file data to verify it's correct before attempting to upload
-                    console.log("Preparing to upload files:", claim.UploadML);
+                const userId = this.userDetails.userId;
+                // console.log("unik kod:", uniqueCode);
+                if (claim.UploadML && claim.UploadML.length > 0) {
+                  // Log the file data to verify it's correct before attempting to upload
+                  //  console.log("Preparing to upload files:", claim.UploadML);
 
-                    // Assuming uploadFile has been adjusted to accept an array of files
+                  // Assuming uploadFile has been adjusted to accept an array of files
 
-                    this.uploadFiles(claim.UploadML, userId, uniqcodeML);
-                  }
-                  axiosInstance = axios.create({
-                    baseURL:
-                      "http://172.28.28.116:7165/api/User/InsertMedicalLeave",
-                  });
-                  await axiosInstance.post(
-                    "/",
-                    thisisforMedicalBillReimbursement
-                  );
-                  // console.log(`Data sent for ${title} 2:`, response2.data);
-                  console.log("Data sent for Medical Bill Reimbursement");
+                  this.uploadFiles(claim.UploadML, userId, uniqcodeML);
                 }
-                break;
-              // Add cases for other tab titles here
-              default:
-                console.error(`No endpoint found for ${title}`);
-                continue; // Skip to the next iteration
-            }
-            this.$router.push({ name: "eclaimhomepages" });
-           
+                axiosInstance = axios.create({
+                  baseURL:
+                    "http://172.28.28.116:7165/api/User/InsertMedicalLeave",
+                });
+                await axiosInstance.post(
+                  "/",
+                  thisisforMedicalBillReimbursement
+                );
+                // console.log(`Data sent for ${title} 2:`, response2.data);
+                //  console.log("Data sent for Medical Bill Reimbursement");
+              }
+              break;
+            // Add cases for other tab titles here
+            default:
+              console.error(`No endpoint found for ${title}`);
+              continue; // Skip to the next iteration
+          }
+          this.$router.push({ name: "eclaimhomepages" });
+
           //  catch (error) {
           //   if (error.response) {
           //     // The request was made, and the server responded with a status code out of 2xx
@@ -3768,7 +2434,7 @@ export default {
         }
       }
     },
-    
+
     todayFormatted() {
       const options = {
         year: "numeric",
@@ -3793,7 +2459,7 @@ export default {
             "Content-Type": "multipart/form-data",
           },
         });
-        console.log("Files uploaded successfully:", response.data);
+        //   console.log("Files uploaded successfully:", response.data);
       } catch (error) {
         console.error("Error uploading files:", error);
       }
@@ -3810,11 +2476,11 @@ export default {
       await this.uploadFilesclaims(files, X, Y);
     },
     async uploadFilesclaims(files, userId, uniqueCode) {
-      console.log("Files parameter received:", files);
-      console.log("User ID:", userId);
-      console.log("Unique Code:", uniqueCode);
-      console.log("Files type:", typeof files);
-      console.log("Is Array:", Array.isArray(files));
+      // console.log("Files parameter received:", files);
+      // console.log("User ID:", userId);
+      // console.log("Unique Code:", uniqueCode);
+      // console.log("Files type:", typeof files);
+      // console.log("Is Array:", Array.isArray(files));
 
       if (!files || !Array.isArray(files)) {
         console.error("The files parameter is not an array or is undefined.");
@@ -3834,7 +2500,7 @@ export default {
             "Content-Type": "multipart/form-data",
           },
         });
-        console.log("Files uploaded successfully:", response.data);
+        //console.log("Files uploaded successfully:", response.data);
 
         formStore.clearFormData();
       } catch (error) {
@@ -3859,7 +2525,7 @@ export default {
         const storedClaims = JSON.parse(localStorage.getItem("claims")) || [];
         this.claims = storedClaims;
       }
-      console.log("Claims:", this.claims);
+      //  console.log("Claims:", this.claims);
     },
 
     addClaim(formData) {

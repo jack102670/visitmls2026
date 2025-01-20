@@ -921,7 +921,6 @@
 </template>
 
 <script>
-import moment from 'moment';
 import fileSaver from 'file-saver';
 import axios from 'axios';
 import { store } from '@/views/store.js';
@@ -1185,8 +1184,8 @@ export default {
         const response = await axios.get('http://172.28.28.116:7165/api/User/GetClaimDetails/' + this.referenceNumber);
         this.claimDetails = response.data.result;
         this.adminStatus = this.claimDetails.admin_status;
-        console.log("get claimdetails : ", this.claimDetails);
-        console.log("get admin status", this.adminStatus);
+        // console.log("get claimdetails : ", this.claimDetails);
+        // console.log("get admin status", this.adminStatus);
 
         switch (this.adminStatus) {
           case 'VERIFIED. WAITING FOR APPROVER.':
@@ -1268,7 +1267,7 @@ export default {
             this.pending = true;
             break;
         }
-        console.log("admin status", this.claimDetails);
+        // console.log("admin status", this.claimDetails);
       } catch (error) {
         console.error("Error while fetching claims details:", error);
         throw error;
@@ -1467,8 +1466,8 @@ export default {
         }
       });
 
-      console.log(this.claimDatas);
-      console.log(this.claimDatasDetails);
+      // console.log(this.claimDatas);
+      // console.log(this.claimDatasDetails);
     },
 
     PrintSummary() {
@@ -1505,13 +1504,13 @@ export default {
             designation: response.data.result[0].position_title,
           };
 
-          console.log("userData",userData);
+          // console.log("userData",userData);
         });
       return userData;
     },
     // If any single remark is change, save in the array
     UpdateSingleRemark(event, uc, tab) {
-      console.log(this.singleRemarks);
+      // console.log(this.singleRemarks);
 
       let index = this.singleRemarks.findIndex(
         (item) => item.unique_code == uc
@@ -1543,7 +1542,7 @@ export default {
     async ApproveOrReject(AoR) {
       this.pending = false;
       const userData = await this.GetUserData();
-      console.log(userData);
+      // console.log(userData);
       this.singleRemarks.forEach(async (remark) => {
         let data = {
           verifier_comment: remark.remark,
@@ -1582,11 +1581,11 @@ export default {
           reference_number: this.claimDetails.reference_number === '-' ? '-' : this.claimDetails.reference_number,
         };
 
-        console.log(approveData);
+        // console.log(approveData);
 
         try {
           const response = await axios.put('http://172.28.28.116:7165/api/Admin/Check_Claim', approveData);
-          console.log('API response', response.data);
+          // console.log('API response', response.data);
 
           this.approveSuccess = true;
           setTimeout(() => {
@@ -1613,7 +1612,7 @@ export default {
         try {
           const response = await axios.put('http://172.28.28.116:7165/api/Admin/Check_Claim', approveData);
           this.loading = false;
-          console.log('API response', response.data);
+          // console.log('API response', response.data);
         } catch (error) {
           console.error('API error', error);
         }
@@ -1637,7 +1636,7 @@ export default {
             // Handle success response
             this.loading = false;
 
-            console.log('API response', response.data);
+            // console.log('API response', response.data);
           })
           .catch((error) => {
             // Handle error response

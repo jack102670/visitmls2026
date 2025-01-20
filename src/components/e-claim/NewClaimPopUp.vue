@@ -355,7 +355,6 @@ import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import moment from "moment";
 import { formStore } from "../../views/store.js"; // Import your form store
 import { store } from "../../views/store.js";
-import { unique } from "jquery";
 // import axios from 'axios';
 
 const FilePond = vueFilePond(
@@ -467,14 +466,14 @@ export default {
   methods: {
     handleAddFile(error, fileItem) {
       if (!error) {
-        console.log("Added file name:", fileItem.file.name);
+    //    console.log("Added file name:", fileItem.file.name);
 
         // Rename the file
         const newFileName = `ClaimsAttachment_${fileItem.file.name}`;
         const renamedFile = new File([fileItem.file], newFileName, { type: fileItem.file.type });
 
         this.formData.fileUpload.push(renamedFile);
-        console.log("Files after upload (plain array):", this.formData.fileUpload);
+      //  console.log("Files after upload (plain array):", this.formData.fileUpload);
       }
     },
 

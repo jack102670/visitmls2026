@@ -370,7 +370,7 @@ export default {
         ent_access: accessData.entertainment,
         others_access: accessData.others,
       };
-      console.log('Form Data:', registerData);
+   //   console.log('Form Data:', registerData);
 
       axios
         .post(
@@ -378,7 +378,7 @@ export default {
           registerData
         )
         .then((response) => {
-          console.log('Response:', response.data);
+     //     console.log('Response:', response.data);
           this.loading = false;
           this.registerSuccess = true;
 
@@ -389,7 +389,7 @@ export default {
           console.error('Error:', error);
           // Handle error
         });
-      console.log(this.convertValues());
+   //   console.log(this.convertValues());
     },
     convertValues() {
       let convertedValues = Object.keys(this.formAccess).reduce(
@@ -484,7 +484,7 @@ export default {
     form: {
       handler(newVal) {
         let count = 0;
-        console.log(newVal);
+      //  console.log(newVal);
         for (let item in newVal) {
           if (item != 'limit') {
             if (this.form[item].length > 0) {
@@ -510,7 +510,7 @@ export default {
 
       this.filteredDepartments = uniqueDepartments;
 
-      console.log(this.filteredDepartments);
+    //  console.log(this.filteredDepartments);
     },
 
     'form.department'(newDepartment) {
@@ -530,7 +530,7 @@ export default {
         ...new Map(users.map((user) => [user.userId, user])).values(),
       ];
 
-      console.log('unique users: ', uniqueUsers);
+   //  console.log('unique users: ', uniqueUsers);
 
       // Update filteredUsers with unique users initially
       this.filteredUsers = uniqueUsers.map((user) => user.userName);
@@ -542,13 +542,13 @@ export default {
           const existUserIds = response.data.result.map(
             (user) => user.username_id
           );
-          console.log('Existing User IDs from API:', existUserIds);
+        //  console.log('Existing User IDs from API:', existUserIds);
 
           this.filteredUsers = uniqueUsers
             .filter((user) => !existUserIds.includes(user.userId))
             .map((user) => user.userName);
 
-          console.log('Filtered Users:', this.filteredUsers);
+       //   console.log('Filtered Users:', this.filteredUsers);
         })
         .catch((error) => {
           console.error('Error fetching data from API:', error);
@@ -570,7 +570,7 @@ export default {
         ).values(),
       ];
 
-      console.log(uniqueEmployees);
+   //   console.log(uniqueEmployees);
       try {
         // Fetch additional data from the API
         const response = await axios.get(
@@ -579,7 +579,7 @@ export default {
         const existUserIds = response.data.result.map(
           (user) => user.username_id
         );
-        console.log('Existing User IDs from API:', existUserIds);
+      //  console.log('Existing User IDs from API:', existUserIds);
 
         // Fetch empIds asynchronously and wait for all to complete
         const employeesWithEmpId = await Promise.all(
@@ -598,7 +598,7 @@ export default {
           (employee) => employee.userName + ' (' + employee.empId + ')'
         );
 
-        console.log(this.filteredReportingEmployees);
+   //     console.log(this.filteredReportingEmployees);
       } catch (error) {
         console.error('Error fetching data from API:', error);
       }

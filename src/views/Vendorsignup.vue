@@ -253,14 +253,14 @@ export default {
       this.files.forEach((file) => {
         formData.append("filecollection", file);
       });
-      console.log("userid uniqcode:", this.userEmail, this.uniqueCode);
+      // console.log("userid uniqcode:", this.userEmail, this.uniqueCode);
       const url = `http://172.28.28.91:8085/api/Files/MultiUploadImage/${this.userEmail}/${this.uniqueCode}`;
 
       axios
         .post(url, formData)
         .then((response) => {
           this.$router.push("/Vendorlogin");
-          console.log("Upload successful:", response.data);
+          // console.log("Upload successful:", response.data);
         })
         .catch((error) => {
           if (error.response) {
@@ -275,7 +275,7 @@ export default {
     },
     handleAddFile(error, fileItem) {
       if (!error) {
-        console.log("Added file name:", fileItem.file.name);
+        // console.log("Added file name:", fileItem.file.name);
         this.files.push(fileItem.file);
       }
     },
@@ -299,7 +299,7 @@ export default {
 
         // Construct the uniqueCode
         this.uniqueCode = `SIGNUP${userEmailFragment}${randomNumber}${timestamp}`;
-        console.log("Unique Code:", this.uniqueCode);
+        // console.log("Unique Code:", this.uniqueCode);
         return this.uniqueCode;
       } else {
         console.error("User ID is undefined.");
@@ -324,7 +324,7 @@ export default {
         .then((response) => {
           alert(response.data.message);
           this.uploadMultiImage();
-          console.log("Server response:", response.data);
+          // console.log("Server response:", response.data);
         })
         .catch((error) => {
           if (error.response) {
@@ -333,15 +333,15 @@ export default {
             this.showLoadingButton = false;
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
+            // console.log(error.response.data);
+            // console.log(error.response.status);
+            // console.log(error.response.headers);
           } else if (error.request) {
             // The request was made but no response was received
-            console.log(error.request);
+            // console.log(error.request);
           } else {
             // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message);
+            // console.log("Error", error.message);
           }
         });
     },

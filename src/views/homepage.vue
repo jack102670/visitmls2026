@@ -117,7 +117,7 @@
                 alert("You don't have a user profile yet. Please contact the HR administrator.");
               }
             })
-            .catch((error) => {
+            .catch(() => {
               alert("There was an error checking your user status. Please try again later.");
             });
         }

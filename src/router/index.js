@@ -473,7 +473,7 @@ function checkUserStatusAndShowModal() {
       .then((response) => response.json()) // Parse the response body to JSON
       .then((data) => {
         const userStatus = data.result[0].account_status;
-        console.log("User status:", userStatus);
+     //   console.log("User status:", userStatus);
         if (userStatus === "0") {
           resolve(false); // User has not completed their profile
         } else {

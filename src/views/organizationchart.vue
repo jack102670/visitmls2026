@@ -588,7 +588,7 @@ export default {
       (person.department && person.department.toLowerCase().includes(this.newNode.parentId.toLowerCase())) ||
       (person.id && person.id.toLowerCase().includes(this.newNode.parentId.toLowerCase()))
     : true;
-    console.log("HELLOW",keywordMatch);
+    // console.log("HELLOW",keywordMatch);
   return keywordMatch;
   
 });
@@ -646,16 +646,16 @@ export default {
       }
     },
     initializeFilePond3() {
-      console.log("check filepond", this.$refs.filepond3);
+      // console.log("check filepond", this.$refs.filepond3);
       if (this.$refs.filepond3) {
         const pond = create(this.$refs.filepond3, {
           labelIdle: `Drag & Drop to update your picture`,
         });
-        console.log("check filepond", this.clickedNodeData.imageUrl);
+        // console.log("check filepond", this.clickedNodeData.imageUrl);
 
         pond.on("addfile", (error, file) => {
           if (!error) {
-            console.log("Added file name:", file.file.name); // Access file name
+            // console.log("Added file name:", file.file.name); 
             this.files2 = [file.file]; // Replace files array with the new file
           }
         });
@@ -668,16 +668,16 @@ export default {
       }
     },
     initializeFilePond() {
-      console.log("check filepond", this.$refs.filepond);
+      // console.log("check filepond", this.$refs.filepond);
       if (this.$refs.filepond) {
         const pond = create(this.$refs.filepond, {
           labelIdle: `Drag & Drop to update your picture`,
         });
-        console.log("check filepond", this.clickedNodeData.imageUrl);
+        // console.log("check filepond", this.clickedNodeData.imageUrl);
 
         pond.on("addfile", (error, file) => {
           if (!error) {
-            console.log("Added file name:", file.file.name); // Access file name
+            // console.log("Added file name:", file.file.name); // Access file name
             this.files2 = [file.file]; // Replace files array with the new file
           }
         });
@@ -712,7 +712,7 @@ export default {
 
         pond2.on("addfile", (error, file) => {
           if (!error) {
-            console.log("Added file name:", file.file.name); // Access file name
+            // console.log("Added file name:", file.file.name); // Access file name
             this.files = [file.file]; // Replace files array with the new file
           } // Event handler for the second FilePond instance
         });
@@ -788,8 +788,8 @@ formData.append("profile_picture", this.files2[0]);
 
 axios
   .put("http://172.28.28.116:7239/api/Admin/UpdateImage", formData)
-  .then((response) => {
-    console.log("File uploaded successfully:", response.data);
+  .then(() => {
+    // console.log("File uploaded successfully:", response.data);
   
     this.fetchData();
   })
@@ -821,8 +821,8 @@ axios
         "Content-Type": "application/json"
       }
     })
-    .then((response) => {
-      console.log("Employee data updated successfully:", response.data);
+    .then(() => {
+      // console.log("Employee data updated successfully:", response.data);
       this.fetchData();
       this.uploadimg();
       this.isClickModal = false;
@@ -857,7 +857,7 @@ axios
           formData
         );
 
-        console.log("Node data saved to the database:", uploadResponse.data);
+        // console.log("Node data saved to the database:", uploadResponse.data);
 
         // After saving to the database, add the node to the organization chart
         if (this.chartReference) {
@@ -948,7 +948,7 @@ axios
     addNode() {
       // Here you can implement the logic to add the node based on this.clickedNodeData
       // For example, you can call an API to add the node to your data source
-      console.log("Adding node:", this.clickedNodeData);
+      // console.log("Adding node:", this.clickedNodeData);
 
       // After adding the node, you might want to close the modal
       this.isClickModal = false;
@@ -959,7 +959,7 @@ axios
       })
         .then((response) => response.json())
         .then((response) => {
-          console.log("Fetched data:", response);
+          // console.log("Fetched data:", response);
 
           // Extract the result array from the response data
           const resultArray = response.result;
@@ -980,14 +980,14 @@ axios
             imageUrl: item.profile_picture, // You may need to provide an image URL
           }));
 
-          console.log("Fetched and modified data:", modifiedData);
+          // console.log("Fetched and modified data:", modifiedData);
 
           // Assign the modified data to your component's data property
           this.data = modifiedData;
 
           // Perform any other actions with the data
           // For example, render a chart
-          console.log("Value of this selepas fetcg:", this.data);
+          // console.log("Value of this selepas fetcg:", this.data);
           this.renderChart();
         })
         .catch((error) => {
@@ -1005,8 +1005,8 @@ axios
       //   })
     },
     renderChart() {
-      console.log("renderChart method called");
-      console.log("Value of this:", this);
+      // console.log("renderChart method called");
+      // console.log("Value of this:", this);
       // Existing logic of the renderChart method...
 
       if (!this.chartReference) {
@@ -1083,14 +1083,14 @@ axios
         };
 
         // Log the clicked node data for debugging
-        console.log("Clicked Node Data:", this.clickedNodeData);
+        // console.log("Clicked Node Data:", this.clickedNodeData);
         this.isClickModal = true;
         this.files = this.clickedNodeData.imageUrl;
-        console.log("img files", this.files);
+        // console.log("img files", this.files);
         // Open the add node modal
       });
 
-      console.log("Chart rendered:", this.chartReference);
+      // console.log("Chart rendered:", this.chartReference);
     },
     fitChart() {
       if (this.chartReference) {
@@ -1205,7 +1205,7 @@ axios
       }
     },
     exportCurrentImage() {
-      console.log("Exporting current image...");
+      // console.log("Exporting current image...");
       if (this.chartReference) {
         this.chartReference.exportImg({
           save: true,
@@ -1227,7 +1227,7 @@ axios
     },
 
     exportFullImage() {
-      console.log("Exporting full image...");
+      // console.log("Exporting full image...");
       if (this.chartReference) {
         this.chartReference.exportImg({
           save: true,
@@ -1273,7 +1273,7 @@ axios
       this.isAddNodeModalOpen = false;
     },
     addNodeToRoot() {
-      console.log("addNodeToRoot method called");
+      // console.log("addNodeToRoot method called");
       if (this.chartReference) {
         // Call the method to add a node to the root with the values from the form
         this.chartReference.addNode(this.newNode).render();

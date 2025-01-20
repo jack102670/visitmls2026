@@ -454,7 +454,7 @@ export default {
       }
     },
     getStatusContainerClass(status) {
-      console.log('Status:', status);
+     // console.log('Status:', status);
       const colorMap = {
         // RESUBMIT: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
         CLOSE: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800',
@@ -518,7 +518,7 @@ export default {
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log('API Response:', data);
+        //  console.log('API Response:', data);
           this.items = data.result;
           if (data.result.length > 0) {
             this.userApplications = data.result;

@@ -1022,24 +1022,10 @@ export default {
             this.reimbursed = true;
             this.pending = false;
             this.remark = this.claimDetails.comment;
-            break;
+          }
+        //  console.log("current status approver",this.statusApprover);
 
-          case 'OPEN':
-            this.open = true;
-            this.pending = true;
-            this.remark = this.claimDetails.comment;
-            break;
-
-          default:
-            this.pending = true;
-            break;
-        }
-
-        // console.log(this.adminStatus);
-      } catch (error) {
-        console.error("Error while fetching claims details:", error);
-        throw error;
-      }
+        });
     },
     async FetchClaimDatasDetails() {
       await axios
@@ -1049,7 +1035,7 @@ export default {
         )
         .then((response) => {
           const result = response.data.result;
-          console.log(result, 'local outstation');
+        //  console.log(result, 'local outstation');
           let details = [];
           let amount = 0;
           // this.comment = result.comment;
@@ -1309,8 +1295,8 @@ export default {
         }
       });
 
-      console.log(this.claimDatas, 'claimDatas');
-      console.log(this.claimDatasDetails);
+      // console.log(this.claimDatas, 'claimDatas');
+      // console.log(this.claimDatasDetails);
     },
 
     PrintSummary() {
@@ -1365,7 +1351,7 @@ export default {
             designation: response.data.result[0].position_title,
           };
 
-          console.log(userData);
+         // console.log(userData);
         });
       return userData;
     },
@@ -1428,13 +1414,13 @@ export default {
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
         };
-        console.log(approveData);
+     //   console.log(approveData);
 
         const response = await axios.put('http://172.28.28.116:7165/api/Admin/Approve_Claim', approveData);
 
         if (response.status === 200) {
 
-          console.log('API response', response.data);
+        //  console.log('API response', response.data);
           localStorage.setItem('ApproveOrNot', 'approve');
           this.FetchClaimDetails();
           this.FetchClaimDatasDetails();
@@ -1470,7 +1456,7 @@ export default {
           .then((response) => {
             this.loading = false;
 
-            console.log('API response', response.data);
+        //    console.log('API response', response.data);
             localStorage.setItem('ApproveOrNot', 'reject');
 
             this.FetchClaimDetails();
@@ -1500,7 +1486,7 @@ export default {
           .then((response) => {
             this.loading = false;
 
-            console.log('API response', response.data);
+         //   console.log('API response', response.data);
             localStorage.setItem('ApproveOrNot', 'resubmit');
           })
           .catch((error) => {
@@ -1527,7 +1513,7 @@ export default {
           .then((response) => {
             this.loading = false;
 
-            console.log('API response', response.data);
+         //   console.log('API response', response.data);
             localStorage.setItem('ApproveOrNot', 'reimbursed');
 
             this.FetchClaimDetails();

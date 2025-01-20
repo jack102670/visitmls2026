@@ -3093,8 +3093,8 @@ export default {
         clinicspecify.value
       );
 
-      console.log("test clinic select" + clinicselect.value);
-      console.log("test clinic specify" + clinicspecify.value);
+      // console.log("test clinic select" + clinicselect.value);
+      // console.log("test clinic specify" + clinicspecify.value);
 
       return clinicField.value === "Mediviron Clinic - Panel";
     },
@@ -3179,7 +3179,7 @@ export default {
                 )
             );
             if (clinicField) {
-              console.log("test 123" + clinicField.value);
+            //  console.log("test 123" + clinicField.value);
               //this.updateFieldVisibility2(clinicField.value);
             }
 
@@ -3198,7 +3198,7 @@ export default {
                 Object.prototype.hasOwnProperty.call(field, "OtherClinicSpecML")
             );
             if (medCategoryField) {
-              console.log("test hazman" + medCategoryField.value);
+            //  console.log("test hazman" + medCategoryField.value);
               // this.updateFieldVisibility8(medCategoryField.value);
             }
 
@@ -3405,7 +3405,7 @@ export default {
         }
         const data = await response.json();
         this.profilestatus = data.result[0];
-        console.log("Profile Status:", this.profilestatus);
+      //  console.log("Profile Status:", this.profilestatus);
       } catch (error) {
         console.error(`Error fetching checkstatus: ${error}`);
       }
@@ -3474,7 +3474,7 @@ export default {
           this.limit_medicaldental = data[0].limit_medicaldental || 0;
           this.limit_outpatient = data[0].limit_outpatient || 0;
         }
-        console.log("Bank Data:", data);
+      //  console.log("Bank Data:", data);
       } catch (error) {
         console.error("Error fetching Bank Data:", error);
       }
@@ -3600,8 +3600,8 @@ export default {
         field.value = [...field.value, renamedFile];
       }
 
-      console.log("File added:", renamedFile);
-      console.log("Updated files:", field.value);
+      // console.log("File added:", renamedFile);
+      // console.log("Updated files:", field.value);
     },
 
     handleRemoveFile(error, file, field) {
@@ -3621,7 +3621,7 @@ export default {
       }
 
       const fileObject = file.file;
-      console.log("Removing file:", fileObject);
+    //  console.log("Removing file:", fileObject);
 
       // Generate the expected file name with prefix
       const expectedFileName = this.generateNewFileName(
@@ -3643,7 +3643,7 @@ export default {
         field.value = [...newFileList];
       }
 
-      console.log("Files after removal:", field.value);
+     // console.log("Files after removal:", field.value);
     },
 
     handleAddFileOT(error, file, filesArray) {
@@ -3663,8 +3663,8 @@ export default {
       // Add renamed file to the files array
       filesArray = [...filesArray, renamedFile]; // Create a new array instance to ensure reactivity
 
-      console.log("File added:", renamedFile);
-      console.log("Updated files:", filesArray);
+      // console.log("File added:", renamedFile);
+      // console.log("Updated files:", filesArray);
     },
 
     handleRemoveFileOT(error, file, filesArray) {
@@ -3688,8 +3688,8 @@ export default {
         // Remove the file by creating a new array excluding the file to be removed
         filesArray = filesArray.filter((_, i) => i !== index);
 
-        console.log("File removed:", fileObject.name, fileObject);
-        console.log("Updated files:", filesArray);
+        // console.log("File removed:", fileObject.name, fileObject);
+        // console.log("Updated files:", filesArray);
       } else {
         console.warn("File to remove not found:", fileObject.name);
       }
@@ -3740,7 +3740,7 @@ export default {
     },
 
     updateFieldVisibility10(param) {
-      console.log("test console log : " + param);
+    //  console.log("test console log : " + param);
       const localTravellingTab = this.tabs.find(
         (tab) => tab.title === "Local Travelling"
       );
@@ -3796,7 +3796,7 @@ export default {
       }
     },
 
-    updateFieldVisibility2(Clinicfield, clinicselectvalue, clinicspecifyvalue) {
+    updateFieldVisibility2(Clinicfield) {
       const medicalBillReimbursementTab = this.tabs.find(
         (tab) => tab.title === "Medical Bill Reimbursement"
       );
@@ -3812,11 +3812,11 @@ export default {
       if (Clinicfield === "Mediviron Clinic - Panel") {
         OtherClinicSpecMLField.hidden = true;
         OtherClinicReasonMLField.hidden = true;
-        console.log("test clinic hidden value: " + Clinicfield);
+     //   console.log("test clinic hidden value: " + Clinicfield);
         OtherClinicSpecMLField.value = ""; // Reset value
         OtherClinicReasonMLField.value = "";
       } else {
-        console.log("test clinic hidden value: " + Clinicfield);
+       // console.log("test clinic hidden value: " + Clinicfield);
         OtherClinicSpecMLField.hidden = false;
         OtherClinicReasonMLField.hidden = false;
         // Reset value
@@ -3991,7 +3991,7 @@ export default {
         ClinicSelectionMLField.hidden = true;
         OtherClinicReasonMLField.hidden = true;
         OtherClinicSpecMLField.hidden = true;
-        console.log("test hidden value: " + OtherClinicSpecMLField.value);
+   //     console.log("test hidden value: " + OtherClinicSpecMLField.value);
         OtherClinicSpecMLField.value = "";
         OtherClinicReasonMLField.value = "";
         ReasonMLField.value = "";
@@ -4186,7 +4186,7 @@ export default {
       }
 
       this.$emit("formSubmitted", formattedData);
-      console.log("Formatted Form Data:", formattedData);
+   //   console.log("Formatted Form Data:", formattedData);
 
       tab.fields.forEach((field) => {
         if (
@@ -4231,7 +4231,7 @@ export default {
       });
       formattedData["tabTitle"] = "Entertainment";
       this.$emit("formSubmitted", formattedData);
-      console.log("Formatted Form Data:", formattedData);
+   //   console.log("Formatted Form Data:", formattedData);
 
       this.entertainmentTabs.forEach((tab) => {
         tab.fields.forEach((field) => {
@@ -4246,7 +4246,7 @@ export default {
       });
       this.attendees = [];
         // Your logic to handle form submission
-        console.log('Form submitted successfully');
+    //    console.log('Form submitted successfully');
       } else {
         alert('Please fill all required fields before submitting.');
       }
@@ -4271,7 +4271,7 @@ export default {
       });
       formattedData["tabTitle"] = "Staff Refreshment";
       this.$emit("formSubmitted", formattedData);
-      console.log("Formatted Form Data:", formattedData);
+    //  console.log("Formatted Form Data:", formattedData);
 
       this.staffRefreshmentTabs.forEach((tab) => {
         tab.fields.forEach((field) => {
@@ -4285,13 +4285,12 @@ export default {
         });
       });
       this.staffInvolved = [];
-      console.log('Form submitted successfully');
+    //  console.log('Form submitted successfully');
       } else {
         alert('Please fill all required fields before submitting.');
       }
     },
     validateCurrentTab(tabTitle) {
-      let currentTab;
       if(tabTitle ==='overseas'){
       const currentTab = this.overseasTabs.find(tab => tab.title === 'Details');
       return currentTab.fields.every(field => {
@@ -4338,7 +4337,7 @@ export default {
           this.totalMealAllowanceOTplusotherExpenses;
         formattedData["tabTitle"] = "Overseas Travelling";
         this.$emit("formSubmitted", formattedData);
-        console.log("Formatted Form Data:", formattedData);
+      //  console.log("Formatted Form Data:", formattedData);
 
         this.overseasTabs.forEach((tab) => {
           tab.fields.forEach((field) => {
@@ -4361,7 +4360,7 @@ export default {
           AmountforAccommodationOT: "",
           files: [],
         };
-        console.log("Form submitted successfully");
+      //  console.log("Form submitted successfully");
       } else {
         alert("Please fill all required fields before submitting.");
       }

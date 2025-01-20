@@ -327,12 +327,12 @@ export default {
     this.token = store.data.token;
     this.checkuser();
     this.role = store.getRole();
-    console.log(this.userDetails, 'user details');
+   // console.log(this.userDetails, 'user details');
   },
   watch: {
     // Watch for changes in controlView
     controlView(newVal, oldVal) {
-      console.log(`controlView changed from ${oldVal} to ${newVal}`);
+     // console.log(`controlView changed from ${oldVal} to ${newVal}`);
     },
   },
   beforeCreate() {
@@ -351,7 +351,7 @@ export default {
           `http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`
         );
         this.userData = response.data.result[0];
-        console.log('User status:', this.userData);
+      //  console.log('User status:', this.userData);
       } catch (error) {
         console.error('There was an error fetching the user status:', error);
       }

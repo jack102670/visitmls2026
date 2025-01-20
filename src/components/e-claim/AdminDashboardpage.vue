@@ -287,7 +287,6 @@ import $ from 'jquery';
 import 'datatables.net-dt';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';
 import axios from 'axios';
-import { data } from 'jquery';
 export default {
   data() {
     return {
@@ -441,7 +440,7 @@ export default {
       return colorMap[status] || 'text-orange-500';
     },
     ViewClaim(rn) {
-      console.log(rn);
+      // console.log(rn);
       this.$router.push({
         name: 'AdminSummaryClaimpage',
         params: { rn: String(rn) },
@@ -460,7 +459,7 @@ export default {
         if (response.data.result.length > 0) {
           this.userApplications = response.data.result;
         }
-        console.log(this.claimsData);
+     //   console.log(this.claimsData);
         this.loading = false;
         this.$nextTick(() => {
           this.initializeDataTable();

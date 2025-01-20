@@ -416,10 +416,10 @@ export default {
 
   mounted() {
     //this.refNumber = this.$route.params.refNumber;
-    console.log("this refNumber" + this.refNumber);
+    // console.log("this refNumber" + this.refNumber);
 
     //this.fetchPTWData();
-    console.log("try" + this.$route.params.refNumber);
+    // console.log("try" + this.$route.params.refNumber);
   },
   created() {
     this.refNumber = this.$route.params.refNumber;
