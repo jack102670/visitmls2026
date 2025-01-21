@@ -881,7 +881,7 @@ export default {
         this.loading = false;
         this.claimDetails = response.data.result;
         this.adminStatus = this.claimDetails.admin_status
-        // console.log("get claimdetails : ", this.claimDetails);
+        console.log("get claimdetails : ", this.claimDetails);
         // console.log("get admin status", this.adminStatus);
 
         switch (this.adminStatus) {
