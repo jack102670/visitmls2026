@@ -3,10 +3,6 @@
     <div class="container mx-auto">
       <div
         class="bg-[#f7fbff] dark:bg-gray-800 relative dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
-        <!-- <h1 class="text-base italic absolute top-4 right-4 text-gray-500">
-          SN: {{ claims[0].uniqueCode }}
-        </h1> -->
-        <!-- Header Section -->
         <p class="absolute right-0 mr-2 top-1 pt-2 text-sm text-gray-500 italic">
           SN: {{ claims[0].uniqueCode }}
         </p>
@@ -23,7 +19,6 @@
               <span class="ml-4 text-2xl font-bold text-blue-900">Grand Total : RM {{ grandTotal }}</span>
             </div>
           </div>
-          <!-- Buttons Section -->
           <div class="md:mr-4 md:mt-0 mt-5 gap-2 flex flex-row-reverse flex-shrink-0">
             <button @click="senttheclaim"
               class="w-36 h-12 p-1 font-semibold rounded-lg items-center text-sm dark:bg-gray-900 dark:border-gray-700 bg-green-700 border text-white">
@@ -31,19 +26,13 @@
                 <span class="mr-2 ml-2 text-slate-100 hover:text-blue-200">Submit Claim</span>
               </div>
             </button>
-            <!-- <button
-              @click="sendToAPI"
-              class="w-36 h-12 p-1 font-semibold rounded-lg items-center text-sm dark:bg-gray-900 dark:border-gray-700 bg-blue-700 border text-white"
-            ></button> -->
           </div>
         </div>
 
         <!-- Summary Section -->
         <section class="mt-8 px-4 mx-auto">
           <div class="grid grid-cols-14 gap-4">
-            <!-- Iterate over each claim -->
             <template v-for="(claim, index) in claims" :key="index">
-              <!-- Display Claimant's Name -->
               <div class="col-start-1 col-end-2">
                 <h5 class="text-sm font-semibold text-gray-600">
                   Claimaint's Name
@@ -57,7 +46,6 @@
                   {{ claim.claimantName }}
                 </h3>
               </div>
-              <!-- Display Designation -->
               <div class="lg:col-start-8 lg:col-end-9 col-start-1 col-end-2">
                 <h5 class="text-sm font-semibold text-gray-600">Designation</h5>
               </div>
@@ -69,7 +57,6 @@
                   {{ claim.designation }}
                 </h5>
               </div>
-              <!-- Display Company's Name -->
               <div class="col-start-1 col-end-2">
                 <h5 class="text-sm font-semibold text-gray-600">Department</h5>
               </div>
@@ -81,7 +68,6 @@
                   {{ claim.department }}
                 </h3>
               </div>
-              <!-- Display Company Name -->
               <div class="lg:col-start-8 lg:col-end-9 col-start-1 col-end-2">
                 <h5 class="text-sm font-semibold text-gray-600">
                   Company Name
@@ -95,7 +81,6 @@
                   {{ claim.companyName }}
                 </h5>
               </div>
-              <!-- Display Cost Center -->
               <div class="lg:col-start-8 lg:col-end-9 col-start-1 col-end-2">
                 <h5 class="text-sm font-semibold text-gray-600">Cost Center</h5>
               </div>
@@ -118,7 +103,6 @@
               <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                 <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
                   <table ref="reportTable" class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                    <!-- Table Header -->
                     <thead class="bg-slate-200 dark:bg-gray-800 text-gray-900">
                       <tr>
                         <th scope="col"
@@ -228,13 +212,6 @@
           <!-- Modal header -->
           <div v-if="selectedClaimType === 'LocalTravelling'">
             <div class="flex justify-end">
-              <!-- <button
-                v-show="!isEditMode"
-                @click="isClickModal = false"
-                class="bg-[#2B87DB] hover:bg-[#2774bc] text-white font-bold py-2 px-4 rounded-full ml-2"
-              >
-                X
-              </button> -->
               <button v-show="!isEditMode" @click="isClickModal = false" type="button"
                 class="mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none">
                 <span class="sr-only">Close</span>
@@ -382,7 +359,7 @@
 
               <hr />
               <div class="flex justify-end items-center mb-4 mt-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2 text-2xl">Total: RM {{
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2 text-2xl">Total local: RM {{
                   totallocalTravellingDetails }}</label>
               </div>
 
@@ -391,7 +368,6 @@
             <div class="flex justify-end">
               <button @click="toggleEditMode"
                 class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800">
-                <!-- Edit Icon -->
 
                 <svg v-if="isEditMode" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                   stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -402,8 +378,6 @@
                   <path d="M12 8v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                   <path d="M5 3h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                 </svg>
-
-                <!-- Save Icon -->
                 <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                   stroke="currentColor" class="w-5 h-5">
                   <path stroke-linecap="round" stroke-linejoin="round"
@@ -608,20 +582,15 @@
                   </tbody>
                 </table>
               </div>
-
               <hr />
               <div class="flex justify-end items-center mb-4 mt-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2 text-2xl">Total: RM {{
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2 text-2xl">Total dddd: {{
                   totalOverseasTravellingAmount }}</label>
               </div>
-
-              <!-- Add/Edit node button -->
             </div>
             <div class="flex justify-end">
               <button @click="toggleEditMode"
                 class="font-bold py-2 px-4 rounded bg-gray-300 hover:bg-blue-700 hover:text-white text-gray-800">
-                <!-- Edit Icon -->
-
                 <svg v-if="isEditMode" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                   stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                   <rect x="3" y="3" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"
@@ -631,8 +600,6 @@
                   <path d="M12 8v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                   <path d="M5 3h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                 </svg>
-
-                <!-- Save Icon -->
                 <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                   stroke="currentColor" class="w-5 h-5">
                   <path stroke-linecap="round" stroke-linejoin="round"
@@ -783,13 +750,6 @@
                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
               </button>
-
-              <!-- <button
-                @click="isClickModal = false"
-                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
-              >
-                Cancel
-              </button> -->
             </div>
           </div>
 
@@ -1102,12 +1062,6 @@
                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
               </button>
-              <!-- <button
-                @click="isClickModal = false"
-                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
-              >
-                Cancel
-              </button> -->
             </div>
           </div>
 
@@ -1195,12 +1149,6 @@
                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
               </button>
-              <!-- <button
-                @click="isClickModal = false"
-                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
-              >
-                Cancel
-              </button> -->
             </div>
           </div>
 
@@ -1389,7 +1337,7 @@ export default {
       cancel: true,
       formData: {
         ...formStore.getFormData(),
-        fileUpload: formStore.getFormData().fileUpload.slice(), // Ensure we work with a copy
+        fileUpload: formStore.getFormData().fileUpload.slice(),
       },
       loading: false,
       loadingText: "",
@@ -1478,15 +1426,22 @@ export default {
       ) {
         otherExpensesTotal =
           this.overseasTravellingDetails.otherExpenses.reduce(
-            (total, expense) => total + (parseFloat(expense.amount) || 0),
+            (total, expense) => {
+              console.log('Current expense amount:', expense.amount);
+              console.log('Running total:', total + (parseFloat(expense.amount) || 0));
+              return total + (parseFloat(expense.amount) || 0);
+            },
             0
           );
       }
+      console.log('Other expenses total:', otherExpensesTotal);
+      console.log('Meal Allowance:', this.overseasTravellingDetails.MealAllowanceOT);
 
       let total =
         (parseFloat(this.overseasTravellingDetails.MealAllowanceOT) || 0) +
         otherExpensesTotal;
 
+      console.log('Final total:', total);
       this.totalplusmethod(total);
       return total;
     },
@@ -1736,10 +1691,10 @@ export default {
           break;
         case "OverseasTravelling":
           this.overseasTravellingDetails = claim;
-          // console.log(
-          //   "Overseas Travelling Details:",
-          //   this.overseasTravellingDetails
-          // );
+          console.log(
+            "Overseas Travelling Details:",
+            this.overseasTravellingDetails
+          );
           break;
         case "Entertainment":
           this.entertainmentDetails = claim;
