@@ -152,8 +152,8 @@
               <div class="border rounded-md border-gray-400 dark:border-gray-600 overflow-y-auto">
                 <table class="overflow-x-auto min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe border border-gray-200 dark:border-gray-700 md:rounded-lg">
                   <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md text-xs space-x-2" style="border-spacing: 2px;">
-                    <th class="w-40 border-r border-gray-400">Remark</th>
-                    <th class="px-6 w-36 break-words text-xs border-r border-gray-400"
+                    <th class="w-40 ">Remark</th>
+                    <th class="px-6 w-36 break-words text-xs "
                       v-for="key in Object.keys(detail[0]).filter(k => !['Tab_Title', 'unique_code', 'comment', 'Remark'].includes(k))"
                       :key="key">
                       {{ key.split('_').join(' ') }}
@@ -161,12 +161,12 @@
                   </thead>
                 <tr class="h-8 text-left align-center text-xs hover:bg-gray-200 dark:hover:bg-gray-800"
                   v-for="(item, index) in detail" :key="index">
-                  <td class="border-r border-gray-400">
+                  <td class="">
                     <h1 id="remarkText" v-if="item.Remark" class="m-1 px-2 py-1 bg-sky-100 rounded-md dark:bg-sky-950 ">
                       {{ item.Remark }}
                     </h1>
                   </td>
-                  <td class="text-center font-normal px-3 py-1 justify-center items-center border-r border-gray-400" v-for="(val, key, i) in item" :key="i">
+                  <td class="text-center font-normal px-3 py-1 justify-center items-center " v-for="(val, key, i) in item" :key="i">
                     {{
                       key == 'Attachments'
                         ? ''
@@ -226,7 +226,6 @@
         <!-- Status Table -->
         <div class="border rounded-lg overflow-x-auto border-gray-400 dark:border-gray-600 my-4">
           <table class="w-full">
-            <!-- title -->
             <thead class="h-8 bg-gray-300 dark:bg-gray-700 text-left rounded-md space-x-2">
               <th class="rounded-tl-md text-center border-r border-gray-400 dark:border-gray-600">
                 STATUS

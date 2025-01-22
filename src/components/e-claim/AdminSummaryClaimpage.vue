@@ -781,22 +781,6 @@ export default {
       files: [],
       showFileList: false,
       dropdownOpen: false,
-      selectedStatus: {
-        label: 'Approved',
-        class: 'bg-green-500 text-white hover:bg-green-600',
-      },
-      statuses: [
-        {
-          label: 'Approved',
-          class: 'bg-green-500 text-white hover:bg-green-600',
-          dropDownClass: 'text-green-500 hover:text-green-600',
-        },
-        {
-          label: 'Reimbursed',
-          class: 'bg-white text-gray-700 hover:bg-gray-100',
-          dropDownClass: 'text-gray-700 hover:text-gray-800',
-        },
-      ],
       seeMore: false,
       confirmReject: false,
       confirmApprove: false,
@@ -935,325 +919,302 @@ export default {
       this.dropdownOpen = !this.dropdownOpen;
     },
     async FetchClaimDetails() {
-      this.loadingText = 'Fetching';
-      this.loading = true;
-      await axios
-        .get(
-          'http://172.28.28.116:7165/api/User/GetClaimDetails/' +
-          this.referenceNumber
-        )
-        .then((response) => {
-          this.loading = false;
-          this.claimDetails = response.data.result;
-          this.adminStatus = this.claimDetails.admin_status
-        //  console.log("claimDetails", this.claimDetails);
-          switch (this.adminStatus) {
-            case 'VERIFIED. WAITING FOR APPROVER.':
-              this.verified = true;
-              this.pending = false;
+  this.loadingText = 'Fetching';
+  this.loading = true;
 
-              this.remark = this.claimDetails.comment;
-              break;
+  try {
+    const response = await axios.get(
+      'http://172.28.28.116:7165/api/User/GetClaimDetails/' + this.referenceNumber
+    );
 
-            case 'CHECKED':
-              this.verified = true;
-              this.checked = true;
-              this.pending = false;
-              this.remark = this.claimDetails.comment;
-              break;
+    // Handle the successful response
+    this.loading = false;
+    this.claimDetails = response.data.result;
+    this.adminStatus = this.claimDetails.admin_status;
+    
+    switch (this.adminStatus) {
+      case 'VERIFIED. WAITING FOR APPROVER.':
+        this.verified = true;
+        this.pending = false;
+        this.remark = this.claimDetails.comment;
+        break;
 
-            case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
-              if (this.claimDetails.admin_status.includes('APPROVER')) {
-                this.verified = true;
-                this.checked = true;
-                this.approved = true;
-                this.pending = true;
-              } else {
-                this.verified = true;
-                this.checked = true;
-                this.approved = true;
-                this.approvedFinance = true;
-                this.pending = false;
-              }
+      case 'CHECKED':
+        this.verified = true;
+        this.checked = true;
+        this.pending = false;
+        this.remark = this.claimDetails.comment;
+        break;
 
-              this.remark = this.claimDetails.comment;
-              break;
-
-            case 'REJECTED BY VERIFIER.':
-              if (this.claimDetails.admin_status.includes('VERIFIER')) {
-                this.rejectVerifier = true;
-         //       console.log('yes');
-              } else if (this.claimDetails.admin_status.includes('CHECKER')) {
-                this.verified = true;
-                this.rejectChecker = true;
-           //     console.log('yes2');
-              } else if (this.claimDetails.admin_status.includes('APPROVER')) {
-                this.verified = true;
-                this.checked = true;
-                this.rejectApprover = true;
-          //      console.log('yes2');
-              } else if (this.claimDetails.admin_status.includes('FINANCE')) {
-                this.verified = true;
-                this.checked = true;
-                this.approved = true;
-                this.rejectFinance = true;
-         //       console.log('yes2');
-              }
-              this.pending = false;
-
-        //      console.log('no ' + this.claimDetails.admin_status);
-
-              this.remark = this.claimDetails.comment;
-              break;
-
-            case 'RESUBMIT':
-              if (this.claimDetails.admin_status.includes('VERIFIER')) {
-                this.resubmitVerifier = true;
-              } else if (this.claimDetails.admin_status.includes('CHECKER')) {
-                this.verified = true;
-                this.resubmitChecker = true;
-              } else if (this.claimDetails.admin_status.includes('APPROVER')) {
-                this.verified = true;
-                this.checked = true;
-                this.resubmitApprover = true;
-              } else if (this.claimDetails.admin_status.includes('FINANCE')) {
-                this.verified = true;
-                this.checked = true;
-                this.approved = true;
-                this.resubmitFinance = true;
-              }
-              this.pending = false;
-
-              this.remark = this.claimDetails.comment;
-              break;
-
-            case 'REIMBURSED':
-              this.verified = true;
-              this.checked = true;
-              this.approved = true;
-              this.reimbursed = true;
-              this.pending = false;
-
-              this.remark = this.claimDetails.comment;
-              break;
-
-            default:
-              break;
-          }
-
-     //     console.log(this.adminStatus);
-        });
-    },
-    async FetchClaimDatasDetails() {
-      this.claimDatasDetails = [];
-      this.claimDataTotalAmount = [];
-      this.claimDatas = [];
-      await axios
-        .get(
-          'http://172.28.28.116:7239/api/User/GetLocalOutstation/' +
-          this.referenceNumber
-        )
-        .then((response) => {
-          const result = response.data.result;
-   //       console.log(result);
-          let details = [];
-          let amount = 0;
-          for (let i in result) {
-            amount += result[i].total_fee;
-            const editedDetail = {
-              Date_Event: result[i].date_event,
-              Return_Date: result[i].return_date,
-              Starting_Point: result[i].starting_point,
-              End_Point: result[i].end_point,
-              'Accom.': result[i].accommodation,
-              'Mileage(KM)': result[i].mileage_km,
-              'Park_Fee(RM)': result[i].park_fee,
-              'Toll_Fee(RM)': result[i].toll_fee,
-              Fare: result[i].fare,
-              Meal_Allowance: result[i].meal_allowance,
-              Transport_Specification: result[i].transport_specification,
-              Transport_Mode: result[i].transport_mode,
-              Trip_Mode: result[i].trip_mode,
-              'Total_Mileage(RM)': result[i].total_mileage,
-              'Total_Fee(RM)': result[i].total_fee,
-              Attachments: result[i].files,
-              Tab_Title: 'Local Outstation',
-              unique_code: result[i].unique_code,
-              comment: result[i].comment,
-            };
-            details.push(editedDetail);
-          }
-          if (details.length > 0) {
-            this.claimDatasDetails.push(details);
-            this.claimDataTotalAmount.push(amount);
-          }
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-
-      await axios
-        .get(
-          'http://172.28.28.116:7239/api/User/GetOverseasOutstation/' +
-          this.referenceNumber
-        )
-        .then((response) => {
-          const result = response.data.result;
-      //    console.log(result);
-          let details = [];
-          let amount = 0;
-          for (let i in result) {
-            amount += result[i].total_fee;
-            const editedDetail = {
-              Description: result[i].description,
-              Date: result[i].date_event,
-              Return_Date: result[i].return_date,
-              'Meal_Allowance_(RM)': result[i].meal_allowance,
-              'Transport_Fee(RM)': result[i].transport_fee,
-              'Accom.': result[i].accommodation,
-              Accom_Foreign_Currency: result[i].accom_foreign_currency,
-              Accom_Exchange_Rate: result[i].accom_exchange_rate,
-              Accom_Foreign_Total: result[i].accom_foreign_total,
-              Other_Foreign_Currency: result[i].other_foreign_currency,
-              Other_Exchange_Rate: result[i].other_exchange_rate,
-              Other_Foreign_Total: result[i].other_foreign_total,
-              Transportation_Mode: result[i].transportation_mode,
-              Other_Expenses: result[i].oem,
-              'Total_Fee(RM)': result[i].total_fee,
-              Attachments: result[i].files,
-              Tab_Title: 'Overseas Outstation',
-              unique_code: result[i].unique_code,
-              comment: result[i].comment,
-            };
-            details.push(editedDetail);
-          }
-          if (details.length > 0) {
-            this.claimDatasDetails.push(details);
-            this.claimDataTotalAmount.push(amount);
-          }
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-
-      await axios
-        .get(
-          'http://172.28.28.116:7239/api/User/GetRefreshment/' +
-          this.referenceNumber
-        )
-        .then((response) => {
-          const result = response.data.result;
-    //      console.log(result);
-          let details = [];
-          let amount = 0;
-          for (let i in result) {
-            amount += result[i].total_fee;
-            const editedDetail = {
-              Type: result[i].refreshment_type,
-              Date: result[i].date_event,
-              Reference_Type: result[i].reference_type,
-              Venue: result[i].venue_name,
-              Company: result[i].company_name,
-              Staff_Involved: result[i].sim,
-              'Total_Fee(RM)': result[i].total_fee,
-              Attachments: result[i].files,
-              Tab_Title: 'Staff Refreshment',
-              unique_code: result[i].unique_code,
-              comment: result[i].comment,
-            };
-            details.push(editedDetail);
-          }
-          if (details.length > 0) {
-            this.claimDatasDetails.push(details);
-            this.claimDataTotalAmount.push(amount);
-          }
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-
-      await axios
-        .get(
-          'http://172.28.28.116:7165/api/User/GetEntertainment/' +
-          this.referenceNumber
-        )
-        .then((response) => {
-          const result = response.data.result;
-  //        console.log(result);
-          let details = [];
-          let amount = 0;
-          for (let i in result) {
-            amount += result[i].total_fee;
-            const editedDetail = {
-              Type: result[i].entertainment_type,
-              Date: result[i].date_event,
-              Description: result[i].description,
-              Venue: result[i].venue_name,
-              Company: result[i].company_name,
-              Participants: result[i].participants,
-              'Total_Fee(RM)': result[i].total_fee,
-              Attachments: result[i].files,
-              Tab_Title: 'Entertainment',
-              unique_code: result[i].unique_code,
-              comment: result[i].comment,
-            };
-            details.push(editedDetail);
-          }
-          if (details.length > 0) {
-            this.claimDatasDetails.push(details);
-            this.claimDataTotalAmount.push(amount);
-          }
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-
-      await axios
-        .get(
-          'http://172.28.28.116:7239/api/User/GetOthers/' + this.referenceNumber
-        )
-        .then((response) => {
-          const result = response.data.result;
-     //     console.log(result);
-          let details = [];
-          let amount = 0;
-          for (let i in result) {
-            amount += result[i].total_fee;
-            const editedDetail = {
-              Name: result[i].expense_name,
-              Description: result[i].description,
-              Date: result[i].expense_date,
-              'Total_Fee(RM)': result[i].total_fee,
-              Attachments: result[i].files,
-              Tab_Title: 'Other',
-              unique_code: result[i].unique_code,
-              comment: result[i].comment,
-            };
-            details.push(editedDetail);
-          }
-          if (details.length > 0) {
-            this.claimDatasDetails.push(details);
-            this.claimDataTotalAmount.push(amount);
-          }
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-
-      this.claimDatasDetails.forEach((details, index) => {
-        if (details && details.length > 0) {
-          const claimData = {
-            No: index + 1,
-            Type: details[0].Tab_Title, // Ensure details[0] exists before accessing properties
-            Amount: this.claimDataTotalAmount[index],
-          };
-          this.claimDatas.push(claimData);
+      case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
+        if (this.claimDetails.admin_status.includes('APPROVER')) {
+          this.verified = true;
+          this.checked = true;
+          this.approved = true;
+          this.pending = true;
+        } else {
+          this.verified = true;
+          this.checked = true;
+          this.approved = true;
+          this.approvedFinance = true;
+          this.pending = false;
         }
-      });
+        this.remark = this.claimDetails.comment;
+        break;
 
-      // console.log(this.claimDatas);
-      // console.log(this.claimDatasDetails);
-    },
+      case 'REJECTED BY VERIFIER.':
+        if (this.claimDetails.admin_status.includes('VERIFIER')) {
+          this.rejectVerifier = true;
+        } else if (this.claimDetails.admin_status.includes('CHECKER')) {
+          this.verified = true;
+          this.rejectChecker = true;
+        } else if (this.claimDetails.admin_status.includes('APPROVER')) {
+          this.verified = true;
+          this.checked = true;
+          this.rejectApprover = true;
+        } else if (this.claimDetails.admin_status.includes('FINANCE')) {
+          this.verified = true;
+          this.checked = true;
+          this.approved = true;
+          this.rejectFinance = true;
+        }
+        this.pending = false;
+        this.remark = this.claimDetails.comment;
+        break;
+
+      case 'RESUBMIT':
+        if (this.claimDetails.admin_status.includes('VERIFIER')) {
+          this.resubmitVerifier = true;
+        } else if (this.claimDetails.admin_status.includes('CHECKER')) {
+          this.verified = true;
+          this.resubmitChecker = true;
+        } else if (this.claimDetails.admin_status.includes('APPROVER')) {
+          this.verified = true;
+          this.checked = true;
+          this.resubmitApprover = true;
+        } else if (this.claimDetails.admin_status.includes('FINANCE')) {
+          this.verified = true;
+          this.checked = true;
+          this.approved = true;
+          this.resubmitFinance = true;
+        }
+        this.pending = false;
+        this.remark = this.claimDetails.comment;
+        break;
+
+      case 'REIMBURSED':
+        this.verified = true;
+        this.checked = true;
+        this.approved = true;
+        this.reimbursed = true;
+        this.pending = false;
+        this.remark = this.claimDetails.comment;
+        break;
+
+      default:
+        break;
+    }
+  } catch (error) {
+    // Handle any errors that occur during the axios request
+    this.loading = false;
+    console.error('Error fetching claim details:', error);
+    // Optionally, display an error message to the user
+    this.errorMessage = 'An error occurred while fetching claim details. Please try again later.';
+  }
+},
+async FetchClaimDatasDetails() {
+  this.claimDatasDetails = [];
+  this.claimDataTotalAmount = [];
+  this.claimDatas = [];
+
+  try {
+    const response1 = await axios.get(
+      'http://172.28.28.116:7239/api/User/GetLocalOutstation/' + this.referenceNumber
+    );
+    const result1 = response1.data.result;
+    let details1 = [];
+    let amount1 = 0;
+    for (let i in result1) {
+      amount1 += result1[i].total_fee;
+      const editedDetail = {
+        Date_Event: result1[i].date_event,
+        Return_Date: result1[i].return_date,
+        Starting_Point: result1[i].starting_point,
+        End_Point: result1[i].end_point,
+        'Accom.': result1[i].accommodation,
+        'Mileage(KM)': result1[i].mileage_km,
+        'Park_Fee(RM)': result1[i].park_fee,
+        'Toll_Fee(RM)': result1[i].toll_fee,
+        Fare: result1[i].fare,
+        Meal_Allowance: result1[i].meal_allowance,
+        Transport_Specification: result1[i].transport_specification,
+        Transport_Mode: result1[i].transport_mode,
+        Trip_Mode: result1[i].trip_mode,
+        'Total_Mileage(RM)': result1[i].total_mileage,
+        'Total_Fee(RM)': result1[i].total_fee,
+        Attachments: result1[i].files,
+        Tab_Title: 'Local Outstation',
+        unique_code: result1[i].unique_code,
+        comment: result1[i].comment,
+      };
+      details1.push(editedDetail);
+    }
+    if (details1.length > 0) {
+      this.claimDatasDetails.push(details1);
+      this.claimDataTotalAmount.push(amount1);
+    }
+  } catch (error) {
+    console.error('Error fetching local outstation data:', error);
+  }
+
+  try {
+    const response2 = await axios.get(
+      'http://172.28.28.116:7239/api/User/GetOverseasOutstation/' + this.referenceNumber
+    );
+    const result2 = response2.data.result;
+    let details2 = [];
+    let amount2 = 0;
+    for (let i in result2) {
+      amount2 += result2[i].total_fee;
+      const editedDetail = {
+        Description: result2[i].description,
+        Date: result2[i].date_event,
+        Return_Date: result2[i].return_date,
+        'Meal_Allowance_(RM)': result2[i].meal_allowance,
+        'Transport_Fee(RM)': result2[i].transport_fee,
+        'Accom.': result2[i].accommodation,
+        Accom_Foreign_Currency: result2[i].accom_foreign_currency,
+        Accom_Exchange_Rate: result2[i].accom_exchange_rate,
+        Accom_Foreign_Total: result2[i].accom_foreign_total,
+        Other_Foreign_Currency: result2[i].other_foreign_currency,
+        Other_Exchange_Rate: result2[i].other_exchange_rate,
+        Other_Foreign_Total: result2[i].other_foreign_total,
+        Transportation_Mode: result2[i].transportation_mode,
+        Other_Expenses: result2[i].oem,
+        'Total_Fee(RM)': result2[i].total_fee,
+        Attachments: result2[i].files,
+        Tab_Title: 'Overseas Outstation',
+        unique_code: result2[i].unique_code,
+        comment: result2[i].comment,
+      };
+      details2.push(editedDetail);
+    }
+    if (details2.length > 0) {
+      this.claimDatasDetails.push(details2);
+      this.claimDataTotalAmount.push(amount2);
+    }
+  } catch (error) {
+    console.error('Error fetching overseas outstation data:', error);
+  }
+
+  try {
+    const response3 = await axios.get(
+      'http://172.28.28.116:7239/api/User/GetRefreshment/' + this.referenceNumber
+    );
+    const result3 = response3.data.result;
+    let details3 = [];
+    let amount3 = 0;
+    for (let i in result3) {
+      amount3 += result3[i].total_fee;
+      const editedDetail = {
+        Type: result3[i].refreshment_type,
+        Date: result3[i].date_event,
+        Reference_Type: result3[i].reference_type,
+        Venue: result3[i].venue_name,
+        Company: result3[i].company_name,
+        Staff_Involved: result3[i].sim,
+        'Total_Fee(RM)': result3[i].total_fee,
+        Attachments: result3[i].files,
+        Tab_Title: 'Staff Refreshment',
+        unique_code: result3[i].unique_code,
+        comment: result3[i].comment,
+      };
+      details3.push(editedDetail);
+    }
+    if (details3.length > 0) {
+      this.claimDatasDetails.push(details3);
+      this.claimDataTotalAmount.push(amount3);
+    }
+  } catch (error) {
+    console.error('Error fetching refreshment data:', error);
+  }
+
+  try {
+    const response4 = await axios.get(
+      'http://172.28.28.116:7165/api/User/GetEntertainment/' + this.referenceNumber
+    );
+    const result4 = response4.data.result;
+    let details4 = [];
+    let amount4 = 0;
+    for (let i in result4) {
+      amount4 += result4[i].total_fee;
+      const editedDetail = {
+        Type: result4[i].entertainment_type,
+        Date: result4[i].date_event,
+        Description: result4[i].description,
+        Venue: result4[i].venue_name,
+        Company: result4[i].company_name,
+        Participants: result4[i].participants,
+        'Total_Fee(RM)': result4[i].total_fee,
+        Attachments: result4[i].files,
+        Tab_Title: 'Entertainment',
+        unique_code: result4[i].unique_code,
+        comment: result4[i].comment,
+      };
+      details4.push(editedDetail);
+    }
+    if (details4.length > 0) {
+      this.claimDatasDetails.push(details4);
+      this.claimDataTotalAmount.push(amount4);
+    }
+  } catch (error) {
+    console.error('Error fetching entertainment data:', error);
+  }
+
+  try {
+    const response5 = await axios.get(
+      'http://172.28.28.116:7239/api/User/GetOthers/' + this.referenceNumber
+    );
+    const result5 = response5.data.result;
+    let details5 = [];
+    let amount5 = 0;
+    for (let i in result5) {
+      amount5 += result5[i].total_fee;
+      const editedDetail = {
+        Name: result5[i].expense_name,
+        Description: result5[i].description,
+        Date: result5[i].expense_date,
+        'Total_Fee(RM)': result5[i].total_fee,
+        Attachments: result5[i].files,
+        Tab_Title: 'Other',
+        unique_code: result5[i].unique_code,
+        comment: result5[i].comment,
+      };
+      details5.push(editedDetail);
+    }
+    if (details5.length > 0) {
+      this.claimDatasDetails.push(details5);
+      this.claimDataTotalAmount.push(amount5);
+    }
+  } catch (error) {
+    console.error('Error fetching other data:', error);
+  }
+
+  this.claimDatasDetails.forEach((details, index) => {
+    if (details && details.length > 0) {
+      const claimData = {
+        No: index + 1,
+        Type: details[0].Tab_Title, // Ensure details[0] exists before accessing properties
+        Amount: this.claimDataTotalAmount[index],
+      };
+      this.claimDatas.push(claimData);
+    }
+  });
+
+  // console.log(this.claimDatas);
+  // console.log(this.claimDatasDetails);
+}
+,
 
     PrintSummary() {
       print();

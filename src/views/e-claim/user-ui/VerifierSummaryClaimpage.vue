@@ -177,7 +177,7 @@
                       {{ item.comment }}
                     </h1>
                   </td>
-                  <td class="text-center font-normal px-3 py-1 align-middle" v-for="(val, key, i) in item" :key="i">
+                  <td class="text-center font-normal px-3 py-1 justify-center items-center " v-for="(val, key, i) in item" :key="i">
                     {{
                       key == 'Attachments'
                         ? ''
@@ -185,36 +185,31 @@
                           ? ''
                           : key == 'Participants'
                             ? ''
-                            : key == 'Other_Expenses'
-                              ? ''
-                              : val
+                            : key == 'oem'
+                            ? ''
+                            : val
                     }}
-
-                    <!-- See More button for show list of staff involved -->
-                    <div v-show="key == 'Staff_Involved'" id="staffDetails">
-                      <h1 @click="showStaffInvolved(val)"
-                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white p-1 rounded-lg">
+                    <div v-show="key === 'oem'" id="staffDetails" class="my-1">
+                      <a 
+                        @click="showOemModal(val)" 
+                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white px-4 py-1 rounded-md w-20 text-center justify-center items-center">
                         See More
-                      </h1>
+                      </a>
                     </div>
-
-                    <!-- See More button for show list of staff involved -->
-                    <div v-show="key == 'Participants'" id="staffDetails">
-                      <h1 @click="showParticipants(val)"
-                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white p-1 rounded-lg">
+                    <div v-show="key == 'Staff_Involved'" id="staffDetails" class="my-1">
+                      <a 
+                        @click="showStaffInvolved(val)" 
+                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white px-4 py-1 rounded-md w-20 text-center">
                         See More
-                      </h1>
+                      </a>
                     </div>
-
-                    <!-- See More button for show list of other expenses -->
-                    <div v-show="key == 'Other_Expenses'" id="staffDetails">
-                      <h1 @click="showOtherExpenses(val)"
-                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white p-1 rounded-lg">
+                    <div v-show="key == 'Participants'" id="staffDetails" class="my-1">
+                      <a 
+                        @click="showParticipants(val)" 
+                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white px-4 py-1 rounded-md w-20 text-center">
                         See More
-                      </h1>
+                      </a>
                     </div>
-
-                    <!-- Click to pop up files -->
                     <div v-show="key == 'Attachments'"
                       class="text-blue-700 flex items-center justify-center cursor-pointer"
                       @click.prevent="ShowFile(val)">
@@ -227,8 +222,6 @@
                     </div>
                   </td>
                 </tr>
-
-                <!-- total -->
                 <tr class="border-t border-gray-400 dark:border-gray-600 h-8 text-base font-semibold">
                   <td class="text-center">TOTAL:</td>
                   <td class="text-center">RM{{ claimDataTotalAmount[i] }}</td>
@@ -242,7 +235,6 @@
         <!-- Status Table -->
         <div class="border rounded-lg overflow-x-auto border-gray-400 dark:border-gray-600 my-4">
           <table class="w-full">
-            <!-- title -->
             <thead class="h-8 bg-gray-300 dark:bg-gray-700 text-left rounded-md space-x-2">
               <th class="rounded-tl-md text-center border-r border-gray-400 dark:border-gray-600">
                 STATUS
@@ -552,35 +544,48 @@
 
         <!-- Staff Involved List -->
         <div v-show="showSimList"
-          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center">
-          <div class="bg-white w-full sm:w-4/5 lg:w-2/5 rounded-xl flex flex-col items-center relative">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor" class="absolute right-3 top-3 size-6" @click="showSimList = !showSimList">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
-            <div class="relative flex w-4/5 mx-auto">
-              <h1 class="text-xl font-semibold mt-4">Staff Involved</h1>
+          class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
+          <div
+            class="bg-white w-full pt-4 pb-6 px-4 max-w-3xl mx-4 shadow-xl transform transition-all duration-300 ease-in-out scale-100">
+            <div class="flex justify-between items-center p-2 border-b border-gray-200 relative">
+              <div class="absolute inset-0 flex justify-center items-center pointer-events-none">
+                <h1 class="text-xl font-bold text-gray-800">Staff Involved</h1>
+              </div>
+
+              <div class="ml-auto"> <!-- This ensures the close button stays on the right -->
+                <button @click="showSimList = !showSimList" class="text-gray-500 hover:text-gray-800 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
             </div>
-            <table class="w-4/5 text-center mt-1 mb-8">
-              <tr class="bg-gray-300 text-center h-12">
-                <th>No.</th>
-                <th>Company</th>
-                <th>Name</th>
-                <th>Employee ID</th>
-              </tr>
-              <tr v-for="(staff, i) in sim" :key="i" class="bg-white text-black text-center h-12">
-                <th class="font-normal">{{ i + 1 }}</th>
-                <th class="font-normal">{{ staff.company_name }}</th>
-                <th class="font-normal">{{ staff.name }}</th>
-                <th class="font-normal">{{ staff.emp_id }}</th>
-              </tr>
-            </table>
+            <div class="overflow-x-auto p-2">
+              <table class="w-full p-2">
+                <thead class="bg-gray-100">
+                  <th class="py-3 px-4 text-left">No.</th>
+                  <th class="py-3 px-4 text-left">Company</th>
+                  <th class="py-3 px-4 text-left">Name</th>
+                  <th class="py-3 px-4 text-left">Department</th>
+                </thead>
+                <tbody class="text-gray-600">
+                  <tr v-for="(staff, i) in sim" :key="i"
+                    class="border-b border-gray-200 hover:bg-gray-100 transition-colors">
+                    <td class="py-3 px-4">{{ i + 1 }}</td>
+                    <td class="py-3 px-4">{{ staff.company_name }}</td>
+                    <td class="py-3 px-4">{{ staff.name }}</td>
+                    <td class="py-3 px-4">{{ staff.department }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
         <!-- Participants List -->
         <div v-show="showParticipantsList"
-          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center">
+          class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
           <div class="bg-white w-full sm:w-4/5 lg:w-2/5 rounded-xl flex flex-col items-center relative">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="absolute right-3 top-3 size-6" @click="showParticipantsList = false">
@@ -608,86 +613,145 @@
           </div>
         </div>
 
+                <!-- oem -->
+                <div v-show="showOemList"
+     class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
+  <div class="bg-white w-full p-2 max-w-3xl mx-4 shadow-xl relative">
+    <button @click="showOemList = false"
+            class="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+           stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      </svg>
+    </button>
+    <div class="text-center px-2 py-4">
+      <h1 class="text-xl font-semibold">Other Expenses & Mileage</h1>
+    </div>
+    <div class="overflow-x-auto p-2">
+      <table class="w-full text-center">
+        <thead class="bg-gray-100">
+          <th class="py-3 px-4">No.</th>
+          <th class="py-3 px-4">Name</th>
+          <th class="py-3 px-4">Description</th>
+          <th class="py-3 px-4">Amount (RM)</th>
+          <th class="py-3 px-4">Foreign Currency</th>
+          <th class="py-3 px-4">Exchange Rate</th>
+          <th class="py-3 px-4">Currency Total</th>
+        </thead>
+        <tbody>
+          <tr v-for="(item, i) in oem" :key="i" class="border-b border-gray-200 hover:bg-gray-100">
+            <td class="py-3 px-4">{{ i + 1 }}</td>
+            <td class="py-3 px-4">{{ item.name }}</td>
+            <td class="py-3 px-4">{{ item.description }}</td>
+            <td class="py-3 px-4">{{ item.amount.toFixed(2) }}</td>
+            <td class="py-3 px-4">{{ item.foreign_currency }}</td>
+            <td class="py-3 px-4">{{ item.exchange_rate }}</td>
+            <td class="py-3 px-4">{{ item.currency_total }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
         <!-- Other Expenses List -->
         <div v-show="showOEsList"
-          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center">
-          <div class="bg-white w-full sm:w-4/5 lg:w-2/5 rounded-xl flex flex-col items-center relative">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor" class="absolute right-3 top-3 size-6" @click="showOEsList = false">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
-            <div class="relative flex w-4/5 mx-auto">
-              <h1 class="text-xl font-semibold mt-4">Other Expenses</h1>
+          class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
+          <div class="bg-white w-full max-w-3xl mx-4 shadow-xl relative">
+            <button @click="showOEsList = false"
+              class="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <div class="text-center py-4">
+              <h1 class="text-xl font-semibold">Other Expenses</h1>
             </div>
-            <table class="w-4/5 text-center mt-1 mb-8">
-              <tr class="bg-gray-300 text-center h-12">
-                <th>No.</th>
-                <th>Name</th>
-                <th>Amount</th>
-                <th>Description</th>
-              </tr>
-              <tr v-for="(expense, i) in oe" :key="i" class="bg-white text-black text-center h-12">
-                <th class="font-normal">{{ i + 1 }}</th>
-                <th class="font-normal">{{ expense.name }}</th>
-                <th class="font-normal">{{ expense.amount }}</th>
-                <th class="font-normal">{{ expense.description }}</th>
-              </tr>
-            </table>
+
+            <div class="overflow-x-auto p-2">
+              <table class="w-full text-center">
+                <thead class="bg-gray-100">
+
+                  <th class="py-3 px-4">No.</th>
+                  <th class="py-3 px-4">Name</th>
+                  <th class="py-3 px-4">Amount</th>
+                  <th class="py-3 px-4">Description</th>
+                </thead>
+                <tbody>
+                  <tr v-for="(expense, i) in oe" :key="i"
+                    class="border-b border-gray-200 hover:bg-gray-100 transition-colors">
+                    <td class="py-3 px-4">{{ i + 1 }}</td>
+                    <td class="py-3 px-4">{{ expense.name }}</td>
+                    <td class="py-3 px-4">{{ expense.amount }}</td>
+                    <td class="py-3 px-4">{{ expense.description }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
         <!-- File List -->
         <div v-show="showFileList"
-          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center">
-          <div class="bg-white w-full sm:w-4/5 rounded-xl flex flex-col items-center relative pb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor" class="absolute right-3 top-3 size-6" @click="showFileList = false">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
-            <div class="relative flex w-4/5 mx-auto justify-center">
-              <h1 class="text-xl font-semibold my-4">Attachments</h1>
+          class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
+          <div class="bg-white w-full max-w-3xl mx-4 shadow-xl relative">
+            <button @click="showFileList = false"
+              class="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <div class="text-center py-4">
+              <h1 class="text-xl font-semibold">Attachments</h1>
             </div>
-            <table v-if="files.length > 0" class="w-4/5 text-center mt-1 mb-8">
-              <tr class="bg-gray-300 text-center h-12">
-                <th>No.</th>
-                <th>File</th>
-                <th>Action</th>
-              </tr>
-              <tr v-for="(file, i) in files" :key="i" class="bg-white text-black text-center h-12 mt-2">
-                <th class="font-normal">{{ i + 1 }}</th>
-                <th class="font-normal flex">
-                  <img v-if="
-                    file.split('.').slice(-1)[0].toLowerCase() == 'png' ||
-                    file.split('.').slice(-1)[0].toLowerCase() == 'jpg' ||
-                    file.split('.').slice(-1)[0].toLowerCase() == 'jpeg'
-                  " :src="file" alt="attachment" class="w-20 h-32 object-contain" />
-                  <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.5"
-                    stroke="currentColor" class="w-20 h-32">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-                  </svg>
 
-                  <h1 class="ml-2">
-                    {{ file.split('/')[file.split('/').length - 1] }}
-                  </h1>
-                </th>
-                <th class="font-normal">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-5 h-5 mx-auto" @click="
-                      DownloadFile(
-                        file,
-                        file.split('/')[file.split('/').length - 1]
-                      )
-                      ">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                  </svg>
-                </th>
-              </tr>
-            </table>
-
-            <div v-if="files.length <= 0" class="w-full">
-              <h1 class="mx-auto text-center font-thin text-gray-500">Empty</h1>
+            <div v-if="files.length > 0" class="overflow-x-auto p-2">
+              <table class="w-full text-center">
+                <thead class="bg-gray-100">
+                
+                    <th class="py-3 px-4">No.</th>
+                    <th class="py-3 px-4">File</th>
+                    <th class="py-3 px-4">Action</th>
+                  
+                </thead>
+                <tbody>
+                  <tr v-for="(file, i) in files" :key="i"
+                    class="border-b border-gray-200 hover:bg-gray-100 transition-colors">
+                    <td class="py-3 px-4">{{ i + 1 }}</td>
+                    <td class="py-3 px-4 flex items-center space-x-2">
+                      <div class="w-20 h-32 flex items-center justify-center">
+                        <img v-if="['png', 'jpg', 'jpeg'].includes(file.split('.').pop().toLowerCase())" :src="file"
+                          alt="attachment" class="max-w-full max-h-full object-contain" />
+                        <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                          stroke-width="0.5" stroke="currentColor" class="w-16 h-16 text-gray-500">
+                          <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                        </svg>
+                      </div>
+                      <span class="truncate">
+                        {{ file.split('/').pop() }}
+                      </span>
+                    </td>
+                    <td class="py-3 px-4">
+                      <button @click="DownloadFile(file, file.split('/').pop())"
+                        class="text-gray-600 hover:text-blue-600 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                          stroke="currentColor" class="w-5 h-5 mx-auto">
+                          <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div v-else class="text-center py-4">
+              <p class="text-gray-500">No attachments</p>
             </div>
           </div>
         </div>
@@ -727,6 +791,9 @@ export default {
   },
   data() {
     return {
+      oem: [],
+      showOemList: false,
+
       singleRemarks: [],
       singleColumnRemarks: [],
       userData: {},
@@ -1039,21 +1106,14 @@ export default {
           let details = [];
           let amount = 0;
           for (let i in result) {
-            amount += result[i].total_fee;
+             const mealAllowance = result[i].meal_allowance;
+            const oemAmount = result[i].oem[0]?.amount;
+            amount = Number(mealAllowance) + Number(oemAmount);
             const editedDetail = {
               Description: result[i].description,
               Date: result[i].date_event,
               'Meal_Allowance_(RM)': result[i].meal_allowance,
-              // 'Transport_Fee(RM)': result[i].transport_fee,
-              // 'Accom.': result[i].accommodation,
-              // Accom_Foreign_Currency: result[i].accom_foreign_currency,
-              // Accom_Exchange_Rate: result[i].accom_exchange_rate,
-              // Accom_Foreign_Total: result[i].accom_foreign_total,
-              // Other_Foreign_Currency: result[i].other_foreign_currency,
-              // Other_Exchange_Rate: result[i].other_exchange_rate,
-              // Other_Foreign_Total: result[i].other_foreign_total,
-              // Transportation_Mode: result[i].transportation_mode,
-              Other_Expenses: result[i].oem,
+              oem: result[i].oem,
               'Total_Fee(RM)': result[i].total_fee,
               Attachments: result[i].files,
               Tab_Title: 'Overseas Outstation',
@@ -1383,6 +1443,10 @@ export default {
       this.participants = val;
       this.showParticipantsList = true;
     },
+    showOemModal(val) {
+   this.oem = val;
+   this.showOemList = true;
+  },
     showOtherExpenses(val) {
       this.oe = val;
       this.showOEsList = true;
