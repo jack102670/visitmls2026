@@ -513,7 +513,7 @@ export default {
     VERIFIED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
     PENDING: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
     REIMBURSED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-gray-100 dark:bg-gray-800',
-    CHECKED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800', // New status
+    CHECKED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800', 
   };
   return colorMap[status] || 'bg-orange-100/60 dark:bg-gray-800';
 },
@@ -528,7 +528,7 @@ getStatusDotClass(status) {
     PENDING: 'h-1.5 w-1.5 rounded-full bg-orange-500',
     VERIFIED: 'h-1.5 w-1.5 rounded-full bg-orange-500',
     REIMBURSED: 'h-1.5 w-1.5 rounded-full bg-black',
-    CHECKED: 'h-1.5 w-1.5 rounded-full bg-indigo-500', // New status
+    CHECKED: 'h-1.5 w-1.5 rounded-full bg-green-500', 
   };
   return colorMap[status] || 'bg-orange-500';
 },
@@ -543,7 +543,7 @@ getStatusTextClass(status) {
     PENDING: 'text-sm font-normal text-orange-500',
     REIMBURSED: 'text-sm font-normal text-black',
     VERIFIED: 'text-sm font-normal text-orange-500',
-    CHECKED: 'text-sm font-normal text-green-500', // New status
+    CHECKED: 'text-sm font-normal text-green-500',
   };
   return colorMap[status] || 'text-orange-500';
 },
