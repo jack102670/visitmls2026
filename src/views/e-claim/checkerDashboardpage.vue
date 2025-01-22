@@ -10,10 +10,10 @@
             </h1>
           <hr class="h-mx-auto bg-gray-100 border-0 rounded" />
         </div>
-        <section class="container mx-auto pt-12">
+        <section class="mx-auto pt-12">
           <div class="flex justify-between items-center">
             <div>
-              <h2 class="text-lg font-medium text-gray-800 dark:text-white ml-1 capitalize">
+              <h2 class="text-lg font-medium text-gray-800 dark:text-white capitalize">
                 checker claim
                 <span
                   class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">1
