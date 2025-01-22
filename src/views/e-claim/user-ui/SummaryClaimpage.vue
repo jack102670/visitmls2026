@@ -144,29 +144,29 @@
 
         <!-- Details -->
         <div class="overflow-x-auto w-full">
-        <div class="details inline-block min-w-full py-2 align-middle" v-show="seeMore" >
-          <div v-for="(detail, i) in claimDatasDetails" :key="i" class="detail-table mt-5">
-            <h1 class="mt-4 text-xl font-semibold tab-title" v-if="detail && detail.length > 0">
-              {{ detail[0].Tab_Title }}
-            </h1>
-            <div class="border rounded-md border-gray-400 dark:border-gray-600 max-h-[400px] overflow-y-auto">
-              <table class="table-fixed min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe border border-gray-200 dark:border-gray-700 md:rounded-lg">
-          <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md text-xs space-x-2" style="border-spacing: 2px;">
-            <th class="w-40">Remark</th>
-            <th class="px-6 w-36 break-words text-xs"
-              v-for="key in Object.keys(detail[0]).filter(k => !['Tab_Title', 'unique_code', 'comment', 'Remark'].includes(k))"
-              :key="key">
-              {{ key.split('_').join(' ') }}
-            </th>
-          </thead>
+          <div class="details inline-block min-w-full py-2 align-middle" v-show="seeMore">
+            <div v-for="(detail, i) in claimDatasDetails" :key="i" class="detail-table mt-5">
+              <h1 class="mt-4 text-xl font-semibold tab-title" v-if="detail && detail.length > 0">
+                {{ detail[0].Tab_Title }}
+              </h1>
+              <div class="border rounded-md border-gray-400 dark:border-gray-600 overflow-y-auto">
+                <table class="overflow-x-auto min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                  <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md text-xs space-x-2" style="border-spacing: 2px;">
+                    <th class="w-40 border-r border-gray-400">Remark</th>
+                    <th class="px-6 w-36 break-words text-xs border-r border-gray-400"
+                      v-for="key in Object.keys(detail[0]).filter(k => !['Tab_Title', 'unique_code', 'comment', 'Remark'].includes(k))"
+                      :key="key">
+                      {{ key.split('_').join(' ') }}
+                    </th>
+                  </thead>
                 <tr class="h-8 text-left align-center text-xs hover:bg-gray-200 dark:hover:bg-gray-800"
                   v-for="(item, index) in detail" :key="index">
-                  <td>
-                    <h1 id="remarkText" v-if="item.Remark" class="m-1 px-2 py-1 bg-sky-100 rounded-md dark:bg-sky-950">
+                  <td class="border-r border-gray-400">
+                    <h1 id="remarkText" v-if="item.Remark" class="m-1 px-2 py-1 bg-sky-100 rounded-md dark:bg-sky-950 ">
                       {{ item.Remark }}
                     </h1>
                   </td>
-                  <td class="text-center font-normal px-3 py-1 align-middle" v-for="(val, key, i) in item" :key="i">
+                  <td class="text-center font-normal px-3 py-1 justify-center items-center border-r border-gray-400" v-for="(val, key, i) in item" :key="i">
                     {{
                       key == 'Attachments'
                         ? ''
@@ -174,20 +174,32 @@
                           ? ''
                           : key == 'Participants'
                             ? ''
+                            : key == 'oem'
+                            ? ''
                             : val
                     }}
-                    <div v-show="key == 'Staff_Involved'" id="staffDetails">
-                      <h1 @click="showStaffInvolved(val)"
-                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white p-1 rounded-lg">
+                    <div v-show="key === 'oem'" id="staffDetails">
+                      <a 
+                        @click="showOemModal(val)" 
+                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white px-4 py-1 rounded-md w-20 text-center justify-center items-center">
                         See More
-                      </h1>
+                      </a>
+                    </div>
+                    <div v-show="key == 'Staff_Involved'" id="staffDetails">
+                      <a 
+                        @click="showStaffInvolved(val)" 
+                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white px-4 py-1 rounded-md w-20 text-center">
+                        See More
+                      </a>
                     </div>
                     <div v-show="key == 'Participants'" id="staffDetails">
-                      <h1 @click="showParticipants(val)"
-                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white p-1 rounded-lg">
+                      <a 
+                        @click="showParticipants(val)" 
+                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white px-4 py-1 rounded-md w-20 text-center">
                         See More
-                      </h1>
+                      </a>
                     </div>
+
                     <div v-show="key == 'Attachments'"
                       class="text-blue-700 flex items-center justify-center cursor-pointer"
                       @click.prevent="ShowFile(val)">
@@ -201,8 +213,8 @@
                   </td>
                 </tr>
                 <tr class="border-t border-gray-400 dark:border-gray-600 h-8 text-base font-semibold">
-                  <td class="text-center">TOTAL:</td>
-                  <td class="text-center">RM{{ claimDataTotalAmount[i] }}</td>
+                  <td class="text-center border-r border-gray-400">TOTAL:</td>
+                  <td class="text-center border-r border-gray-400">RM{{ claimDataTotalAmount[i] }}</td>
                   <td></td>
                 </tr>
               </table>
@@ -595,7 +607,7 @@
         <div v-show="showParticipantsList"
           class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
           <div class="bg-white w-full p-2 max-w-3xl mx-4 shadow-xl relative">
-            <button @click="showSimList = false"
+            <button @click="showParticipantsList = false"
               class="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-6 h-6">
@@ -625,6 +637,47 @@
             </div>
           </div>
         </div>
+
+        <!-- oem -->
+        <div v-show="showOemList"
+     class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
+  <div class="bg-white w-full p-2 max-w-3xl mx-4 shadow-xl relative">
+    <button @click="showOemList = false"
+            class="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+           stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      </svg>
+    </button>
+    <div class="text-center px-2 py-4">
+      <h1 class="text-xl font-semibold">Other Expenses & Mileage</h1>
+    </div>
+    <div class="overflow-x-auto p-2">
+      <table class="w-full text-center">
+        <thead class="bg-gray-100">
+          <th class="py-3 px-4">No.</th>
+          <th class="py-3 px-4">Name</th>
+          <th class="py-3 px-4">Description</th>
+          <th class="py-3 px-4">Amount (RM)</th>
+          <th class="py-3 px-4">Foreign Currency</th>
+          <th class="py-3 px-4">Exchange Rate</th>
+          <th class="py-3 px-4">Currency Total</th>
+        </thead>
+        <tbody>
+          <tr v-for="(item, i) in oem" :key="i" class="border-b border-gray-200 hover:bg-gray-100">
+            <td class="py-3 px-4">{{ i + 1 }}</td>
+            <td class="py-3 px-4">{{ item.name }}</td>
+            <td class="py-3 px-4">{{ item.description }}</td>
+            <td class="py-3 px-4">{{ item.amount.toFixed(2) }}</td>
+            <td class="py-3 px-4">{{ item.foreign_currency }}</td>
+            <td class="py-3 px-4">{{ item.exchange_rate }}</td>
+            <td class="py-3 px-4">{{ item.currency_total }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
         <!-- Other Expenses List -->
         <div v-show="showOEsList"
@@ -683,11 +736,11 @@
             <div v-if="files.length > 0" class="overflow-x-auto p-2">
               <table class="w-full text-center">
                 <thead class="bg-gray-100">
-                  <tr>
+                
                     <th class="py-3 px-4">No.</th>
                     <th class="py-3 px-4">File</th>
                     <th class="py-3 px-4">Action</th>
-                  </tr>
+                  
                 </thead>
                 <tbody>
                   <tr v-for="(file, i) in files" :key="i"
@@ -769,6 +822,8 @@ export default {
       showSimList: false,
       participants: [],
       showParticipantsList: false,
+      oem: [],
+      showOemList: false,
       oe: [],
       showOEsList: false,
       userData: {},
@@ -1070,7 +1125,7 @@ async FetchClaimDatasDetails() {
         this.referenceNumber
       );
       const result = response.data.result;
-      // console.log("Overseas data:", result);
+      console.log("Overseas data:", result);
       let details = [];
       let amount = 0;
       for (let i in result) {
@@ -1085,11 +1140,14 @@ async FetchClaimDatasDetails() {
           Date: result[i].date_event,
           'Total_Fee(RM)': result[i].total_fee,
           Attachments: result[i].files,
+          oem: result[i].oem,
           Tab_Title: 'Overseas Outstation',
           Remark: result[i].comment,
           unique_code: result[i].unique_code,
+
         };
         details.push(editedDetail);
+        console.log("editedDetails in overseas,", editedDetail);
       }
       // console.log("Amount oversears:",amount)
       if (details.length > 0) {
@@ -1139,7 +1197,7 @@ async FetchClaimDatasDetails() {
         this.referenceNumber
       );
       const result = response.data.result;
-    
+    console.log("Get entertainment", result);
       let details = [];
       let amount = 0;
       for (let i in result) {
@@ -1304,6 +1362,8 @@ async FetchClaimDatasDetails() {
       this.sim = val;
       this.showSimList = true;
     },
+
+    
     // click function after confirm the reimburse
     ConfirmReimburse() {
       this.confirmReimburse = false;
@@ -1313,6 +1373,10 @@ async FetchClaimDatasDetails() {
       this.participants = val;
       this.showParticipantsList = true;
     },
+    showOemModal(val) {
+   this.oem = val;
+   this.showOemList = true;
+  },
     showOtherExpenses(val) {
       this.oe = val;
       this.showOEsList = true;
