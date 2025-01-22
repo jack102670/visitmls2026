@@ -147,7 +147,6 @@
                     <!-- Table Body -->
                     <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                       <tr v-for="(claim, index) in dataclaims" :key="index">
-                        <!-- Display claim details in each cell -->
                         <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                           {{ index + 1 }}
                         </td>
@@ -156,14 +155,10 @@
                         </td>
                         <td v-if="claims[0].reportType === 'Finance'"
                           class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          <span v-if="claim.LocationEnd">{{
-                            claim.LocationEnd
-                            }}</span>
-                          <span v-if="claim.PurposeOT">{{
-                            claim.PurposeOT
-                            }}</span>
-                          <span v-if="claim.VenueE">{{ claim.VenueE }}</span>
-                          <span v-if="claim.VenueSR">{{ claim.VenueSR }}</span>
+                          <span v-if="claim.LocationEnd">{{ claim.LocationEnd || '-' }}</span>
+                          <span v-if="claim.PurposeOT">{{ claim.PurposeOT || '-'  }}</span>
+                          <span v-if="claim.VenueE">{{ claim.VenueE || '-' }}</span>
+                          <span v-if="claim.VenueSR">{{ claim.VenueSR || '-' }}</span>
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           <span v-if="claim.dateLT">{{ claim.dateLT }}</span>
@@ -1846,7 +1841,12 @@ export default {
     },
     async senttheclaim() {
       if (!this.isValidClaimData()) {
-        alert("Please add at least 1 claim before submitting");
+        Swal.fire({
+            icon: 'warning',
+            title: 'Invalid Claim',
+            text: 'Please add at least 1 claim before submitting',
+            confirmButtonColor: '#3085d6'
+          });
         return;
       }
       this.loadingText = "Uploading";
@@ -1947,12 +1947,9 @@ export default {
             case "local travelling": {
               for (const claim of claimsToSend) {
                 try {
-                  // Generate unique code
                   const uniqueCodeLT = this.generateUniqueCode(claim.tabTitle);
                   const userId = this.userDetails.userId;
                   console.log("Unique code generated:", uniqueCodeLT);
-
-                  // Construct the payload based on the expected structure
                   const thisisforlocal1 = {
                     mileage_km: claim.MileageKMLT || 0,
                     starting_point: claim.LocationStart || "string",
@@ -1977,8 +1974,6 @@ export default {
                   };
 
                   console.log("Payload for API:", thisisforlocal1);
-
-                  // Send the POST request to the API
                   try {
                     const axiosInstance = axios.create({
                       baseURL: "http://172.28.28.116:7239/api/User/InsertLocalOutstation",
@@ -1989,8 +1984,6 @@ export default {
                   } catch (apiError) {
                     console.error("Error sending data to API:", apiError.response?.data || apiError.message);
                   }
-
-                  // Handle file uploads (if any)
                   try {
                     const fileUploads = [
                       { type: "UploadLT", files: claim.UploadLT },
@@ -2020,8 +2013,6 @@ export default {
               for (const claim of claimsToSend) {
                 try {
                   const uniqcodeOT = this.generateUniqueCode(claim.tabTitle);
-
-                  // Construct the payload
                   let thisisforoversea;
                   try {
                     thisisforoversea = {
@@ -2048,12 +2039,10 @@ export default {
                     console.log("Payload constructed successfully:", thisisforoversea);
                   } catch (payloadError) {
                     console.error("Error constructing the payload:", payloadError.message);
-                    continue; // Skip this iteration if the payload fails to construct
+                    continue; 
                   }
 
                   const userId = this.userDetails.userId;
-
-                  // Handle file uploads
                   try {
                     if (claim.UploadOT && claim.UploadOT.length > 0) {
                       console.log("Uploading files for UploadOT...");
@@ -2072,10 +2061,7 @@ export default {
                     }
                   } catch (fileUploadError) {
                     console.error("Error uploading files:", fileUploadError.message);
-                    // Proceed with API call even if file uploads fail
                   }
-
-                  // Send the POST request to the API
                   try {
                     const axiosInstance = axios.create({
                       baseURL: "http://172.28.28.116:7239/api/User/InsertOverseasOutstation",
@@ -2105,8 +2091,7 @@ export default {
                   description: claim.ReferenceE,
                   total_fee: parseFloat(claim.AmountRME),
                   reference_number: this.serialnumber,
-                  unique_code: uniqcodeE, // Ensure this is in the correct format and not null/undefined
-                  // Add the required 'ent' field with the appropriate value
+                  unique_code: uniqcodeE, 
 
                   participants: claim.attendees
                     ? claim.attendees.map((participant) => ({
@@ -2123,21 +2108,13 @@ export default {
                 const userId = this.userDetails.userId;
 
                 if (claim.UploadE && claim.UploadE.length > 0) {
-                  // Log the file data to verify it's correct before attempting to upload
                   // console.log("Preparing to upload files:", claim.UploadE);
-
-                  // Assuming uploadFile has been adjusted to accept an array of files
-
                   this.uploadFiles(claim.UploadE, userId, uniqcodeE);
                 }
-
-                // Create axios instance
                 axiosInstance = axios.create({
                   baseURL:
                     "http://172.28.28.116:7165/api/User/InsertEntertainment",
                 });
-
-                // Send the request
                 // try {
                 const response = await axiosInstance.post(
                   "/",
@@ -2150,7 +2127,6 @@ export default {
                 //     "Error sending data for Entertainment:",
                 //     error.response.data
                 //   );
-                //   // Handle error appropriately, e.g., display error message to user
                 // }
               }
 
@@ -2158,15 +2134,13 @@ export default {
 
             case "staff refreshment":
               for (const claim of claimsToSend) {
-                // Iterate over each claim
-                // Dummy data for a claim
                 const uniqcodeSR = this.generateUniqueCode(claim.tabTitle);
                 const thisisforstaffrefreshment = {
                   refreshment_type: claim.OtherTypeofStaffRefreshmentSR
                     ? claim.OtherTypeofStaffRefreshmentSR
                     : claim.TypeofRefreshmentSR,
 
-                  date_event: claim.dateSR, // Example date
+                  date_event: claim.dateSR,
                   company_name: claim.CompanySR,
                   venue_name: claim.VenueSR,
                   reference_type: claim.ReferenceSR,
@@ -2189,8 +2163,6 @@ export default {
                   // Log the file data to verify it's correct before attempting to upload
                   // console.log("Preparing to upload files:", claim.UploadSR);
 
-                  // Assuming uploadFile has been adjusted to accept an array of files
-
                   this.uploadFiles(claim.UploadSR, userId, uniqcodeSR);
                 }
                 axiosInstance = axios.create({
@@ -2206,8 +2178,6 @@ export default {
               break;
             case "others":
               for (const claim of claimsToSend) {
-                // Iterate over each claim
-                // Dummy data for a claim
                 const uniqcodeothers = this.generateUniqueCode(
                   claim.tabTitle
                 );
@@ -2231,8 +2201,6 @@ export default {
                   //   claim.UploadOthers
                   // );
 
-                  // Assuming uploadFile has been adjusted to accept an array of files
-
                   this.uploadFiles(
                     claim.UploadOthers,
                     userId,
@@ -2251,11 +2219,9 @@ export default {
               break;
             case "handphone bill reimbursement":
               for (const claim of claimsToSend) {
-                // Iterate over each claim
-                // Dummy data for a claim
                 const uniqcodeHR = this.generateUniqueCode(claim.tabTitle);
                 const thisisforHandphoneBillReimbursement = {
-                  date_claim: this.todayFormatted(), // Example date
+                  date_claim: this.todayFormatted(), 
                   claim_month: claim.MonthHR,
                   claim_year: `${claim.YearHR}`,
                   bank_name: claim.BankNameHR,
@@ -2275,8 +2241,6 @@ export default {
                 if (claim.UploadHR && claim.UploadHR.length > 0) {
                   // Log the file data to verify it's correct before attempting to upload
                   //  console.log("Preparing to upload files:", claim.UploadLT);
-
-                  // Assuming uploadFile has been adjusted to accept an array of files
                   this.uploadFiles(claim.UploadHR, userId, uniqcodeHR);
                 }
                 const axiosInstance = axios.create({
@@ -2293,41 +2257,31 @@ export default {
                   //   `Data successfully submitted for handphone bill reimbursement:`,
                   //   response.data
                   // );
-
-                  // Handle success here, e.g., update UI or notify user
                 } catch (error) {
                   if (error.response) {
-                    // The request was made and the server responded with a status code
-                    // that falls out of the range of 2xx
                     console.error(
                       "Error submitting handphone bill reimbursement:",
                       error.response.data
                     );
                   } else if (error.request) {
-                    // The request was made but no response was received
                     console.error(
                       "Error submitting handphone bill reimbursement: No response received"
                     );
                   } else {
-                    // Something happened in setting up the request that triggered an error
                     console.error(
                       "Error submitting handphone bill reimbursement:",
                       error.message
                     );
                   }
-                  // Handle error here, e.g., show an error message to the user
                 }
               }
               break;
             case "medical bill reimbursement":
               for (const claim of claimsToSend) {
-                // Iterate over each claim
-                // Dummy data for a claim
-
                 const uniqcodeML = this.generateUniqueCode(claim.tabTitle);
                 const thisisforMedicalBillReimbursement = {
                   reference_number: this.serialnumber || "-",
-                  date_leave_taken: claim.dateML, // Example date
+                  date_leave_taken: claim.dateML,
                   reason: claim.ReasonML || "-",
                   bank_name: claim.BankNameML,
                   bank_holder: claim.AccHolderNameML,
@@ -2354,8 +2308,6 @@ export default {
                   // Log the file data to verify it's correct before attempting to upload
                   //  console.log("Preparing to upload files:", claim.UploadML);
 
-                  // Assuming uploadFile has been adjusted to accept an array of files
-
                   this.uploadFiles(claim.UploadML, userId, uniqcodeML);
                 }
                 axiosInstance = axios.create({
@@ -2375,27 +2327,17 @@ export default {
               console.error(`No endpoint found for ${title}`);
               continue; // Skip to the next iteration
           }
+          await Swal.fire({
+            icon: 'success',
+            title: 'Submitted Successfully!',
+            text: 'Your claim has been submitted.',
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: true,
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#3085d6',
+          });
           this.$router.push({ name: "eclaimhomepages" });
-
-          //  catch (error) {
-          //   if (error.response) {
-          //     // The request was made, and the server responded with a status code out of 2xx
-          //     console.error(
-          //       `Error sending data for ${title}:`,
-          //       error.response
-          //     );
-          //   } else if (error.request) {
-          //     // The request was made, but no response was received
-          //     console.error(
-          //       `Error sending data for ${title}: No response received`
-          //     );
-          //     console.error("Request details:", error.request);
-          //    } // } else {
-          //   //   // Something went wrong in setting up the request
-          //   //   console.error(`Error sending data for 1 ${title}:`, error.message);
-          //   // }
-          //   console.error("Full error details:", error);
-          // }
         }
       }
     },
