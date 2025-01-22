@@ -502,55 +502,51 @@ export default {
     },
 
     getStatusContainerClass(status) {
-      const colorMap = {
-        RESUBMIT:
-          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
-        CLOSE:
-          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800',
-        OPEN: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-indigo-100/60 dark:bg-gray-800',
-        APPROVED:
-          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
-        'APPROVED. AWAITING PAYMENT.':
-          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
-        COMPLETED:
-          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800',
-        REJECTED:
-          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800',
-        VERIFIED:
-          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
-        PENDING:
-          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
-        REIMBURSED:
-          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-gray-100 dark:bg-gray-800',
-      };
-      return colorMap[status] || '  bg-orange-100/ 60 dark:bg-gray-800';
-    },
-    getStatusDotClass(status) {
-      const colorMap = {
-        RESUBMIT: 'h-1.5 w-1.5 rounded-full bg-orange-500',
-        OPEN: 'h-1.5 w-1.5 rounded-full bg-indigo-500',
-        APPROVED: 'h-1.5 w-1.5 rounded-full bg-emerald-500',
-        COMPLETED: 'h-1.5 w-1.5 rounded-full bg-blue-500',
-        REJECTED: 'h-1.5 w-1.5 rounded-full bg-red-500',
-        PENDING: 'h-1.5 w-1.5 rounded-full bg-orange-500',
-        VERIFIED: 'h-1.5 w-1.5 rounded-full bg-orange-500',
-        REIMBURSED: 'h-1.5 w-1.5 rounded-full bg-black',
-      };
-      return colorMap[status] || 'bg-orange-500';
-    },
-    getStatusTextClass(status) {
-      const colorMap = {
-        RESUBMIT: 'text-sm font-normal text-orange-500',
-        OPEN: 'text-sm font-normal text-indigo-500',
-        APPROVED: 'text-sm font-normal text-emerald-500',
-        COMPLETED: 'text-sm font-normal text-blue-500',
-        REJECTED: 'text-sm font-normal text-red-500',
-        PENDING: 'text-sm font-normal text-orange-500',
-        REIMBURSED: 'text-sm font-normal text-black',
-        VERIFIED: 'text-sm font-normal text-orange-500',
-      };
-      return colorMap[status] || 'text-orange-500';
-    },
+  const colorMap = {
+    RESUBMIT: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
+    CLOSE: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800',
+    OPEN: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-indigo-100/60 dark:bg-gray-800',
+    APPROVED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
+    'APPROVED. AWAITING PAYMENT.': 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
+    COMPLETED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800',
+    REJECTED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800',
+    VERIFIED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
+    PENDING: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
+    REIMBURSED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-gray-100 dark:bg-gray-800',
+    CHECKED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800', // New status
+  };
+  return colorMap[status] || 'bg-orange-100/60 dark:bg-gray-800';
+},
+
+getStatusDotClass(status) {
+  const colorMap = {
+    RESUBMIT: 'h-1.5 w-1.5 rounded-full bg-orange-500',
+    OPEN: 'h-1.5 w-1.5 rounded-full bg-indigo-500',
+    APPROVED: 'h-1.5 w-1.5 rounded-full bg-emerald-500',
+    COMPLETED: 'h-1.5 w-1.5 rounded-full bg-blue-500',
+    REJECTED: 'h-1.5 w-1.5 rounded-full bg-red-500',
+    PENDING: 'h-1.5 w-1.5 rounded-full bg-orange-500',
+    VERIFIED: 'h-1.5 w-1.5 rounded-full bg-orange-500',
+    REIMBURSED: 'h-1.5 w-1.5 rounded-full bg-black',
+    CHECKED: 'h-1.5 w-1.5 rounded-full bg-indigo-500', // New status
+  };
+  return colorMap[status] || 'bg-orange-500';
+},
+
+getStatusTextClass(status) {
+  const colorMap = {
+    RESUBMIT: 'text-sm font-normal text-orange-500',
+    OPEN: 'text-sm font-normal text-indigo-500',
+    APPROVED: 'text-sm font-normal text-emerald-500',
+    COMPLETED: 'text-sm font-normal text-blue-500',
+    REJECTED: 'text-sm font-normal text-red-500',
+    PENDING: 'text-sm font-normal text-orange-500',
+    REIMBURSED: 'text-sm font-normal text-black',
+    VERIFIED: 'text-sm font-normal text-orange-500',
+    CHECKED: 'text-sm font-normal text-green-500', // New status
+  };
+  return colorMap[status] || 'text-orange-500';
+},
     ChangePopUp() {
       if (this.popup == true) {
         this.animate = !this.animate;
