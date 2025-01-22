@@ -572,7 +572,7 @@
                 <h1 class="text-xl font-bold text-gray-800">Staff Involved</h1>
               </div>
 
-              <div class="ml-auto"> <!-- This ensures the close button stays on the right -->
+              <div class="ml-auto">
                 <button @click="showSimList = !showSimList" class="text-gray-500 hover:text-gray-800 transition-colors">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-6 h-6">
@@ -1124,7 +1124,7 @@ async FetchClaimDatasDetails() {
         this.referenceNumber
       );
       const result = response.data.result;
-      console.log("Overseas data:", result);
+      // console.log("Overseas data:", result);
       let details = [];
       let amount = 0;
       for (let i in result) {
@@ -1146,7 +1146,7 @@ async FetchClaimDatasDetails() {
 
         };
         details.push(editedDetail);
-        console.log("editedDetails in overseas,", editedDetail);
+        // console.log("editedDetails in overseas,", editedDetail);
       }
       // console.log("Amount oversears:",amount)
       if (details.length > 0) {

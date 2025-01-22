@@ -136,57 +136,6 @@
                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           RM {{ item.grand_total }}
                         </td>
-
-                        <!-- <td class="px-12 py-4 text-sm font-medium text-gray-700 text-wrap whitespace-nowrap">
-                          <span :class="{
-                            'inline-flex items-center px-3 py-1 rounded-full gap-x-2': true,
-                            'bg-red-100/60 dark:bg-gray-800':
-                              item.admin_status
-                                .split('.')[0]
-                                .split(' ')[0] === 'REJECT',
-                            'bg-green-100/60 dark:bg-gray-800':
-                              item.admin_status
-                                .split('.')[0]
-                                .split(' ')[0] === 'APPROVED',
-                            'bg-amber-100/60 dark:bg-gray-800':
-                              item.admin_status
-                                .split('.')[0]
-                                .split(' ')[0] === 'VERIFIED', // Added for VERIFIED status
-                          }">
-                            <span :class="{
-                              'h-1.5 w-1.5 rounded-full': true,
-                              'bg-red-500':
-                                item.admin_status
-                                  .split('.')[0]
-                                  .split(' ')[0] === 'REJECT',
-                              'bg-green-500':
-                                item.admin_status
-                                  .split('.')[0]
-                                  .split(' ')[0] === 'APPROVED',
-                              'bg-amber-500':
-                                item.admin_status
-                                  .split('.')[0]
-                                  .split(' ')[0] === 'VERIFIED', // Added for VERIFIED status
-                            }"></span>
-                            <span :class="{
-                              'text-sm font-normal': true,
-                              'text-red-500':
-                                item.admin_status
-                                  .split('.')[0]
-                                  .split(' ')[0] === 'REJECT',
-                              'text-green-500':
-                                item.admin_status
-                                  .split('.')[0]
-                                  .split(' ')[0] === 'APPROVED',
-                              'text-amber-500':
-                                item.admin_status
-                                  .split('.')[0]
-                                  .split(' ')[0] === 'VERIFIED', // Added for VERIFIED status
-                            }">{{
-                                item.admin_status.split('.')[0].split(' ')[0]
-                              }}</span>
-                          </span>
-                        </td> -->
                         <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                           <div :class="getStatusContainerClass(
                             item.admin_status.split('.')[0].split(' ')[0]
@@ -210,7 +159,6 @@
 
                         <td class="px-4 py-4 ml text-sm whitespace-nowrap">
                           <div class="flex items-center gap-x-6">
-                            <!-- buttons here -->
                             <button @click="ViewClaim(item.reference_number)"
                               class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

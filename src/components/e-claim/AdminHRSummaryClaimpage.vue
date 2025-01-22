@@ -173,7 +173,7 @@
                       " type="text"
                       class="p-1 text-xs w-full rounded-md outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border" />
                     <h1 id="remarkText" 
-                        v-if="(reimbursed || approve || rejectApprover || resubmit) && item.comment.trim() !== ''"
+                        v-if="(reimbursed || approve || rejectApprover || resubmit) && item.comment && item.comment.trim() !== ''"
                         class="m-1 px-2 py-1 bg-sky-100 rounded-md text-xs mx-auto w-fit block dark:bg-sky-950 text-center">
                       {{ item.comment }}
                     </h1>                    

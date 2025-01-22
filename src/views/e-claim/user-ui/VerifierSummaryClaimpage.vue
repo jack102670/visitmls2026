@@ -586,30 +586,35 @@
         <!-- Participants List -->
         <div v-show="showParticipantsList"
           class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
-          <div class="bg-white w-full sm:w-4/5 lg:w-2/5 rounded-xl flex flex-col items-center relative">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor" class="absolute right-3 top-3 size-6" @click="showParticipantsList = false">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
-            <div class="relative flex w-4/5 mx-auto">
-              <h1 class="text-xl font-semibold mt-4">Participants</h1>
+          <div class="bg-white w-full p-2 max-w-3xl mx-4 shadow-xl relative">
+            <button @click="showParticipantsList = false"
+              class="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <div class="text-center px-2 py-4">
+              <h1 class="text-xl font-semibold">Participants</h1>
             </div>
-            <table class="w-4/5 text-center mt-1 mb-8">
-              <tr class="bg-gray-300 text-center h-12">
-                <th>No.</th>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Company</th>
-                <th>Employee ID</th>
-              </tr>
-              <tr v-for="(staff, i) in participants" :key="i" class="bg-white text-black text-center h-12">
-                <th class="font-normal">{{ i + 1 }}</th>
-                <th class="font-normal">{{ staff.name }}</th>
-                <th class="font-normal">{{ staff.status }}</th>
-                <th class="font-normal">{{ staff.company_name }}</th>
-                <th class="font-normal">{{ staff.emp_id }}</th>
-              </tr>
-            </table>
+
+            <div class="overflow-x-auto p-2">
+              <table class="w-full text-center">
+                <thead class="bg-gray-100">
+                  <th class="py-3 px-4">No.</th>
+                  <th class="py-3 px-4">Name</th>
+                  <th class="py-3 px-4">Company</th>
+                </thead>
+                <tbody>
+                  <tr v-for="(staff, i) in participants" :key="i" class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-4">{{ i + 1 }}</td>
+                    <td class="py-3 px-4">{{ staff.name }}</td>
+                    <td class="py-3 px-4">{{ staff.company_name }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 

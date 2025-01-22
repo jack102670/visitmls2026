@@ -150,20 +150,11 @@
               <table class="w-full">
                 <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md text-xs">
                   <th class="w-40">Remark</th>
-
-                  <!-- <th class="px-6 w-36 break-words text-xs" v-for="(val, key, i) in detail[0]" :key="i">
-                    {{
-                      key
-                        .split('_')
-
-                        .join(' ')
-                    }}
-                  </th> -->
-                  <th class="px-6 w-36 break-words text-xs"
-                    v-for="key in Object.keys(detail[0]).filter(k => !['Tab_Title', 'unique_code', 'comment'].includes(k))"
-                    :key="key">
-                    {{ key.split('_').join(' ') }}
-                  </th>
+                  <th class="px-6 w-36 break-words text-xs "
+                      v-for="key in Object.keys(detail[0]).filter(k => !['Tab_Title', 'unique_code', 'comment', 'Remark'].includes(k))"
+                      :key="key">
+                      {{ key.split('_').join(' ') }}
+                    </th>
                 </thead>
 
                 <!-- table information -->
@@ -178,12 +169,12 @@
                       )
                       " v-if="pending" type="text"
                       class="p-1 text-xs w-full rounded-md outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border" />
-                    <h1 id="remarkText" v-if="!pending && item.comment.trim() !== ''"
+                      <h1 id="remarkText" v-if="!pending && item.comment && item.comment.trim() !== ''"
                       class="m-1 px-2 py-1 bg-sky-100 rounded-md dark:bg-sky-950">
                       {{ item.comment }}
                     </h1>
                   </td>
-                  <td class="text-center font-normal px-3 py-1 align-middle" v-for="(val, key, i) in item" :key="i">
+                  <td class="text-center font-normal px-3 py-1 justify-center items-center " v-for="(val, key, i) in item" :key="i">
                     {{
                       key == 'Attachments'
                         ? ''
@@ -191,45 +182,41 @@
                           ? ''
                           : key == 'Participants'
                             ? ''
-                            : key == 'Other_Expenses'
-                              ? ''
-                              : val
+                            : key == 'oem'
+                            ? ''
+                            : val
                     }}
-
-                    <!-- See More button for show list of staff involved -->
-                    <div v-show="key == 'Staff_Involved'" id="staffDetails">
-                      <h1 @click="showStaffInvolved(val)"
-                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white p-1 rounded-lg">
+                    <div v-show="key === 'oem'" id="staffDetails" class="my-1">
+                      <a 
+                        @click="showOemModal(val)" 
+                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white px-4 py-1 my-1 rounded-md w-20 text-center justify-center items-center">
                         See More
-                      </h1>
+                      </a>
+                    </div>
+                    <div v-show="key == 'Staff_Involved'" id="staffDetails" class="my-1">
+                      <a 
+                        @click="showStaffInvolved(val)" 
+                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white px-4 py-1 my-1 rounded-md w-20 text-center">
+                        See More
+                      </a>
+                    </div>
+                    <div v-show="key == 'Participants'" id="staffDetails" class="my-1">
+                      <a 
+                        @click="showParticipants(val)" 
+                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white px-4 py-1 my-1 rounded-md w-20 text-center">
+                        See More
+                      </a>
                     </div>
 
-                    <!-- See More button for show list of staff involved -->
-                    <div v-show="key == 'Participants'" id="staffDetails">
-                      <h1 @click="showParticipants(val)"
-                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white p-1 rounded-lg">
-                        See More
-                      </h1>
-                    </div>
-
-                    <!-- See More button for show list of other expenses -->
-                    <div v-show="key == 'Other_Expenses'" id="staffDetails">
-                      <h1 @click="showOtherExpenses(val)"
-                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white p-1 rounded-lg">
-                        See More
-                      </h1>
-                    </div>
-
-                    <!-- Click to pop up files -->
                     <div v-show="key == 'Attachments'"
-                      class="text-blue-700 flex items-center justify-center cursor-pointer" id="attachments"
+                      class="text-blue-700 flex items-center justify-center cursor-pointer"
                       @click.prevent="ShowFile(val)">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
                           d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                       </svg>
-                      x{{ val.length }}
+                      x{{ val ? val.length : '0' }}
                     </div>
                   </td>
                 </tr>
@@ -591,145 +578,219 @@
 
         <!-- Staff Involved List -->
         <div v-show="showSimList"
-          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center dark:bg-gray-800/50">
+          class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
           <div
-            class="bg-white w-full sm:w-4/5 lg:w-2/5 rounded-xl flex flex-col items-center relative dark:bg-gray-800">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor" class="absolute right-3 top-3 size-6" @click="showSimList = !showSimList">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
-            <div class="relative flex w-4/5 mx-auto">
-              <h1 class="text-xl font-semibold mt-4">Staff Involved</h1>
+            class="bg-white w-full pt-4 pb-6 px-4 max-w-3xl mx-4 shadow-xl transform transition-all duration-300 ease-in-out scale-100">
+            <div class="flex justify-between items-center p-2 border-b border-gray-200 relative">
+              <div class="absolute inset-0 flex justify-center items-center pointer-events-none">
+                <h1 class="text-xl font-bold text-gray-800">Staff Involved</h1>
+              </div>
+
+              <div class="ml-auto"> 
+                <button @click="showSimList = !showSimList" class="text-gray-500 hover:text-gray-800 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
             </div>
-            <table class="w-4/5 text-center mt-1 mb-8">
-              <tr class="bg-gray-300 text-center h-12 dark:bg-gray-600">
-                <th>No.</th>
-                <th>Company</th>
-                <th>Name</th>
-                <th>Department</th>
-              </tr>
-              <tr v-for="(staff, i) in sim" :key="i"
-                class="bg-white text-black text-center h-12 dark:bg-gray-500 dark:text-white">
-                <th class="font-normal">{{ i + 1 }}</th>
-                <th class="font-normal">{{ staff.company_name }}</th>
-                <th class="font-normal">{{ staff.name }}</th>
-                <th class="font-normal">{{ staff.department }}</th>
-              </tr>
-            </table>
+            <div class="overflow-x-auto p-2">
+              <table class="w-full p-2">
+                <thead class="bg-gray-100">
+                  <th class="py-3 px-4 text-left">No.</th>
+                  <th class="py-3 px-4 text-left">Company</th>
+                  <th class="py-3 px-4 text-left">Name</th>
+                  <th class="py-3 px-4 text-left">Department</th>
+                </thead>
+                <tbody class="text-gray-600">
+                  <tr v-for="(staff, i) in sim" :key="i"
+                    class="border-b border-gray-200 hover:bg-gray-100 transition-colors">
+                    <td class="py-3 px-4">{{ i + 1 }}</td>
+                    <td class="py-3 px-4">{{ staff.company_name }}</td>
+                    <td class="py-3 px-4">{{ staff.name }}</td>
+                    <td class="py-3 px-4">{{ staff.department }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
         <!-- Participants List -->
         <div v-show="showParticipantsList"
-          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center dark:bg-gray-800/50">
-          <div
-            class="bg-white w-full sm:w-4/5 lg:w-2/5 rounded-xl flex flex-col items-center relative dark:bg-gray-800">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor" class="absolute right-3 top-3 size-6" @click="showParticipantsList = false">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
-            <div class="relative flex w-4/5 mx-auto">
-              <h1 class="text-xl font-semibold mt-4">Participants</h1>
+          class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
+          <div class="bg-white w-full p-2 max-w-3xl mx-4 shadow-xl relative">
+            <button @click="showParticipantsList = false"
+              class="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <div class="text-center px-2 py-4">
+              <h1 class="text-xl font-semibold">Participants</h1>
             </div>
-            <table class="w-4/5 text-center mt-1 mb-8">
-              <tr class="bg-gray-300 text-center h-12 dark:bg-gray-600">
-                <th>No.</th>
-                <th>Name</th>
-                <th>Company</th>
-              </tr>
-              <tr v-for="(staff, i) in participants" :key="i"
-                class="bg-white text-black text-center h-12 dark:bg-gray-500 dark:text-white">
-                <th class="font-normal">{{ i + 1 }}</th>
-                <th class="font-normal">{{ staff.name }}</th>
-                <th class="font-normal">{{ staff.company_name }}</th>
-              </tr>
-            </table>
+
+            <div class="overflow-x-auto p-2">
+              <table class="w-full text-center">
+                <thead class="bg-gray-100">
+                  <th class="py-3 px-4">No.</th>
+                  <th class="py-3 px-4">Name</th>
+                  <th class="py-3 px-4">Company</th>
+                </thead>
+                <tbody>
+                  <tr v-for="(staff, i) in participants" :key="i" class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-4">{{ i + 1 }}</td>
+                    <td class="py-3 px-4">{{ staff.name }}</td>
+                    <td class="py-3 px-4">{{ staff.company_name }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
+                <!-- oem -->
+                <div v-show="showOemList"
+     class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
+  <div class="bg-white w-full p-2 max-w-3xl mx-4 shadow-xl relative">
+    <button @click="showOemList = false"
+            class="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+           stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      </svg>
+    </button>
+    <div class="text-center px-2 py-4">
+      <h1 class="text-xl font-semibold">Other Expenses & Mileage</h1>
+    </div>
+    <div class="overflow-x-auto p-2">
+      <table class="w-full text-center">
+        <thead class="bg-gray-100">
+          <th class="py-3 px-4">No.</th>
+          <th class="py-3 px-4">Name</th>
+          <th class="py-3 px-4">Description</th>
+          <th class="py-3 px-4">Amount (RM)</th>
+          <th class="py-3 px-4">Foreign Currency</th>
+          <th class="py-3 px-4">Exchange Rate</th>
+          <th class="py-3 px-4">Currency Total</th>
+        </thead>
+        <tbody>
+          <tr v-for="(item, i) in oem" :key="i" class="border-b border-gray-200 hover:bg-gray-100">
+            <td class="py-3 px-4">{{ i + 1 }}</td>
+            <td class="py-3 px-4">{{ item.name }}</td>
+            <td class="py-3 px-4">{{ item.description }}</td>
+            <td class="py-3 px-4">{{ item.amount.toFixed(2) }}</td>
+            <td class="py-3 px-4">{{ item.foreign_currency }}</td>
+            <td class="py-3 px-4">{{ item.exchange_rate }}</td>
+            <td class="py-3 px-4">{{ item.currency_total }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
         <!-- Other Expenses List -->
         <div v-show="showOEsList"
-          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center dark:bg-gray-800/50">
-          <div
-            class="bg-white w-full sm:w-4/5 lg:w-2/5 rounded-xl flex flex-col items-center relative dark:bg-gray-800">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor" class="absolute right-3 top-3 size-6" @click="showOEsList = false">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
-            <div class="relative flex w-4/5 mx-auto">
-              <h1 class="text-xl font-semibold mt-4">Other Expenses</h1>
+          class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
+          <div class="bg-white w-full max-w-3xl mx-4 shadow-xl relative">
+            <button @click="showOEsList = false"
+              class="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <div class="text-center py-4">
+              <h1 class="text-xl font-semibold">Other Expenses</h1>
             </div>
-            <table class="w-4/5 text-center mt-1 mb-8">
-              <tr class="bg-gray-300 text-center h-12 dark:bg-gray-600">
-                <th>No.</th>
-                <th>Name</th>
-                <th>Amount</th>
-                <th>Description</th>
-              </tr>
-              <tr v-for="(expense, i) in oe" :key="i"
-                class="bg-white text-black text-center h-12 dark:bg-gray-500 dark:text-white">
-                <th class="font-normal">{{ i + 1 }}</th>
-                <th class="font-normal">{{ expense.name }}</th>
-                <th class="font-normal">{{ expense.amount }}</th>
-                <th class="font-normal">{{ expense.description }}</th>
-              </tr>
-            </table>
+
+            <div class="overflow-x-auto p-2">
+              <table class="w-full text-center">
+                <thead class="bg-gray-100">
+
+                  <th class="py-3 px-4">No.</th>
+                  <th class="py-3 px-4">Name</th>
+                  <th class="py-3 px-4">Amount</th>
+                  <th class="py-3 px-4">Description</th>
+                </thead>
+                <tbody>
+                  <tr v-for="(expense, i) in oe" :key="i"
+                    class="border-b border-gray-200 hover:bg-gray-100 transition-colors">
+                    <td class="py-3 px-4">{{ i + 1 }}</td>
+                    <td class="py-3 px-4">{{ expense.name }}</td>
+                    <td class="py-3 px-4">{{ expense.amount }}</td>
+                    <td class="py-3 px-4">{{ expense.description }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
         <!-- File List -->
         <div v-show="showFileList"
-          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center dark:bg-gray-800/50">
-          <div class="bg-white w-full sm:w-4/5 rounded-xl flex flex-col items-center relative pb-6 dark:bg-gray-800">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor" class="absolute right-3 top-3 size-6" @click="showFileList = false">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
-            <div class="relative flex w-4/5 mx-auto justify-center">
-              <h1 class="text-xl font-semibold my-4">Attachments</h1>
+          class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
+          <div class="bg-white w-full max-w-3xl mx-4 shadow-xl relative">
+            <button @click="showFileList = false"
+              class="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <div class="text-center py-4">
+              <h1 class="text-xl font-semibold">Attachments</h1>
             </div>
-            <table v-if="files.length > 0" class="w-4/5 text-center mt-1 mb-8">
-              <tr class="bg-gray-300 text-center h-12 dark:bg-gray-600">
-                <th>No.</th>
-                <th>File</th>
-                <th>Action</th>
-              </tr>
-              <tr v-for="(file, i) in files" :key="i"
-                class="bg-white text-black text-center h-12 mt-2 dark:bg-gray-500 dark:text-white">
-                <th class="font-normal">{{ i + 1 }}</th>
-                <th class="font-normal flex">
-                  <img v-if="
-                    file.split('.').slice(-1)[0].toLowerCase() == 'png' ||
-                    file.split('.').slice(-1)[0].toLowerCase() == 'jpg' ||
-                    file.split('.').slice(-1)[0].toLowerCase() == 'jpeg'
-                  " :src="file" alt="attachment" class="w-20 h-32 object-contain" />
-                  <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.5"
-                    stroke="currentColor" class="w-20 h-32">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-                  </svg>
 
-                  <h1 class="ml-2">
-                    {{ file.split('/')[file.split('/').length - 1] }}
-                  </h1>
-                </th>
-                <th class="font-normal">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-5 h-5 mx-auto" @click="
-                      DownloadFile(
-                        file,
-                        file.split('/')[file.split('/').length - 1]
-                      )
-                      ">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                  </svg>
-                </th>
-              </tr>
-            </table>
-
-            <div v-if="files.length <= 0" class="w-full">
-              <h1 class="mx-auto text-center font-thin text-gray-500">Empty</h1>
+            <div v-if="files.length > 0" class="overflow-x-auto p-2">
+              <table class="w-full text-center">
+                <thead class="bg-gray-100">
+                
+                    <th class="py-3 px-4">No.</th>
+                    <th class="py-3 px-4">File</th>
+                    <th class="py-3 px-4">Action</th>
+                  
+                </thead>
+                <tbody>
+                  <tr v-for="(file, i) in files" :key="i"
+                    class="border-b border-gray-200 hover:bg-gray-100 transition-colors">
+                    <td class="py-3 px-4">{{ i + 1 }}</td>
+                    <td class="py-3 px-4 flex items-center space-x-2">
+                      <div class="w-20 h-32 flex items-center justify-center">
+                        <img v-if="['png', 'jpg', 'jpeg'].includes(file.split('.').pop().toLowerCase())" :src="file"
+                          alt="attachment" class="max-w-full max-h-full object-contain" />
+                        <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                          stroke-width="0.5" stroke="currentColor" class="w-16 h-16 text-gray-500">
+                          <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                        </svg>
+                      </div>
+                      <span class="truncate">
+                        {{ file.split('/').pop() }}
+                      </span>
+                    </td>
+                    <td class="py-3 px-4">
+                      <button @click="DownloadFile(file, file.split('/').pop())"
+                        class="text-gray-600 hover:text-blue-600 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                          stroke="currentColor" class="w-5 h-5 mx-auto">
+                          <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div v-else class="text-center py-4">
+              <p class="text-gray-500">No attachments</p>
             </div>
           </div>
         </div>
@@ -776,6 +837,8 @@ export default {
       showSimList: false,
       participants: [],
       showParticipantsList: false,
+      oem: [],
+      showOemList: false,
       oe: [],
       showOEsList: false,
       files: [],
@@ -881,18 +944,6 @@ export default {
         return this.adminStatus; 
     }
   },
-  // simplifiedVerifierStatus() {
-  //   if (this.verified) {
-  //     return 'VERIFIED';
-  //   } else if (this.resubmitVerifier) {
-  //     return 'RESUBMIT';
-  //   } else if (this.rejectVerifier) {
-  //     return 'REJECTED';
-  //   } else if (this.open) {
-  //     return 'PENDING';
-  //   }
-  //   return '-';
-  // },
 
   simplifyVerifierStatus(){
     switch (this.adminStatus) {
@@ -1023,196 +1074,268 @@ export default {
   }
 },
 async FetchClaimDatasDetails() {
-  this.claimDatasDetails = [];
-  this.claimDataTotalAmount = [];
-  this.claimDatas = [];
-
   try {
-    const response1 = await axios.get(
-      'http://172.28.28.116:7239/api/User/GetLocalOutstation/' + this.referenceNumber
-    );
-    const result1 = response1.data.result;
-    let details1 = [];
-    let amount1 = 0;
-    for (let i in result1) {
-      amount1 += result1[i].total_fee;
-      const editedDetail = {
-        Date_Event: result1[i].date_event,
-        Return_Date: result1[i].return_date,
-        Starting_Point: result1[i].starting_point,
-        End_Point: result1[i].end_point,
-        'Accom.': result1[i].accommodation,
-        'Mileage(KM)': result1[i].mileage_km,
-        'Park_Fee(RM)': result1[i].park_fee,
-        'Toll_Fee(RM)': result1[i].toll_fee,
-        Fare: result1[i].fare,
-        Meal_Allowance: result1[i].meal_allowance,
-        Transport_Specification: result1[i].transport_specification,
-        Transport_Mode: result1[i].transport_mode,
-        Trip_Mode: result1[i].trip_mode,
-        'Total_Mileage(RM)': result1[i].total_mileage,
-        'Total_Fee(RM)': result1[i].total_fee,
-        Attachments: result1[i].files,
-        Tab_Title: 'Local Outstation',
-        unique_code: result1[i].unique_code,
-        comment: result1[i].comment,
-      };
-      details1.push(editedDetail);
+    try {
+      const response = await axios.get(
+        'http://172.28.28.116:7239/api/User/GetLocalOutstation/' +
+        this.referenceNumber
+      );
+      const result = response.data.result;
+      // console.log(result, 'local outstation');
+      let details = [];
+      let amount = 0;
+      
+      for (let i in result) {
+        amount += result[i].total_fee;
+        const editedDetail = {
+          Mileage_Km: result[i].mileage_km,
+          Starting_Point: result[i].starting_point,
+          End_Point: result[i].end_point,
+          Date_Event: result[i].date_event,
+          'Park_Fee(RM)': result[i].park_fee,
+          'Toll_Fee(RM)': result[i].toll_fee,
+          'Total_Fee(RM)': result[i].total_fee,
+          Transport_Specification: result[i].transport_specification,
+          Transport_Mode: result[i].transport_mode,
+          Trip_Mode: result[i].trip_mode,
+          Total_Mileage: result[i].total_mileage,
+          Attachments: result[i].files,
+          Remark: result[i].comment,
+          Tab_Title: 'Local Outstation',
+          unique_code: result[i].unique_code,
+        };
+        details.push(editedDetail);
+      }
+      if (details.length > 0) {
+        this.claimDatasDetails.push(details);
+        this.claimDataTotalAmount.push(amount);
+      }
+    } catch (e) {
+      console.error('Error fetching Local Outstation data:', e);
     }
-    if (details1.length > 0) {
-      this.claimDatasDetails.push(details1);
-      this.claimDataTotalAmount.push(amount1);
+
+    try {
+      const response = await axios.get(
+        'http://172.28.28.116:7239/api/User/GetOverseasOutstation/' +
+        this.referenceNumber
+      );
+      const result = response.data.result;
+      // console.log("Overseas data:", result);
+      let details = [];
+      let amount = 0;
+      for (let i in result) {
+
+        const mealAllowance = result[i].meal_allowance;
+        const oemAmount = result[i].oem[0]?.amount;
+        amount = Number(mealAllowance) + Number(oemAmount);
+        // amount = result[i].meal_allowance + result[i].oem.amount;
+        const editedDetail = {
+          Description: result[i].description,
+          Meal_Allowance: result[i].meal_allowance,
+          Date: result[i].date_event,
+          'Total_Fee(RM)': result[i].total_fee,
+          Attachments: result[i].files,
+          oem: result[i].oem,
+          Tab_Title: 'Overseas Outstation',
+          Remark: result[i].comment,
+          unique_code: result[i].unique_code,
+
+        };
+        details.push(editedDetail);
+        // console.log("editedDetails in overseas,", editedDetail);
+      }
+      // console.log("Amount oversears:",amount)
+      if (details.length > 0) {
+        this.claimDatasDetails.push(details);
+        this.claimDataTotalAmount.push(amount);
+      }
+    } catch (e) {
+      console.error('Error fetching Overseas Outstation data:', e);
     }
-  } catch (error) {
-    console.error('Error fetching local outstation data:', error);
+
+    try {
+      const response = await axios.get(
+        'http://172.28.28.116:7239/api/User/GetRefreshment/' +
+        this.referenceNumber
+      );
+      const result = response.data.result;
+      let details = [];
+      let amount = 0;
+      for (let i in result) {
+        amount += result[i].total_fee;
+        const editedDetail = {
+          Type: result[i].refreshment_type,
+          Date: result[i].date_event,
+          Reference_Type: result[i].reference_type,
+          Venue: result[i].venue_name,
+          Company: result[i].company_name,
+          'Total_Fee(RM)': result[i].total_fee,
+          Staff_Involved: result[i].sim,
+          Attachments: result[i].files,
+          Remark: result[i].comment,
+          Tab_Title: 'Staff Refreshment',
+          unique_code: result[i].unique_code,
+        };
+        details.push(editedDetail);
+      }
+      if (details.length > 0) {
+        this.claimDatasDetails.push(details);
+        this.claimDataTotalAmount.push(amount);
+      }
+    } catch (e) {
+      console.error('Error fetching Refreshment data:', e);
+    }
+
+    try {
+      const response = await axios.get(
+        'http://172.28.28.116:7165/api/User/GetEntertainment/' +
+        this.referenceNumber
+      );
+      const result = response.data.result;
+    // console.log("Get entertainment", result);
+      let details = [];
+      let amount = 0;
+      for (let i in result) {
+        amount += result[i].total_fee;
+        const editedDetail = {
+          Type: result[i].entertainment_type,
+          Date: result[i].date_event,
+          Venue: result[i].venue_name,
+          Company: result[i].company_name,
+          'Total_Fee(RM)': result[i].total_fee,
+          Participants: result[i].participants,
+          Attachments: result[i].files,
+          Remark: result[i].comment,
+          Tab_Title: 'Entertainment',
+          unique_code: result[i].unique_code,
+        };
+        details.push(editedDetail);
+      }
+      if (details.length > 0) {
+        this.claimDatasDetails.push(details);
+        this.claimDataTotalAmount.push(amount);
+        
+      }
+    } catch (e) {
+      console.error('Error fetching Entertainment data:', e);
+    }
+
+    try {
+      const response = await axios.get(
+        'http://172.28.28.116:7165/api/User/GetMedicalLeave/' +
+        this.referenceNumber
+      );
+      const result = response.data.result;
+      let details = [];
+      let amount = 0;
+      for (let i in result) {
+        amount += result[i].claim_amount;
+        const editedDetail = {
+          reason: result[i].reason,
+          Date: result[i].date_leave_taken,
+          clinicselection: result[i].clinic_name
+            ? result[i].clinic_name
+            : result[i].clinic_selection,
+          reason_other_clinic: result[i].reason_different,
+          bank_name: result[i].bank_name,
+          bank_holder: result[i].bank_holder,
+          bank_account: result[i].bank_account,
+          'Total_Fee(RM)': result[i].claim_amount,
+          Attachments: result[i].files,
+          Tab_Title: 'Medical Leave',
+          Remark: result[i].comment,
+          unique_code: result[i].unique_code,
+        };
+        details.push(editedDetail);
+      }
+      if (details.length > 0) {
+        this.claimDatasDetails.push(details);
+        this.claimDataTotalAmount.push(amount);
+      }
+    } catch (e) {
+      console.error('Error fetching Medical Leave data:', e);
+    }
+
+    try {
+      const response = await axios.get(
+        'http://172.28.28.116:7165/api/User/GetHandphone/' + this.referenceNumber
+      );
+      const result = response.data.result;
+      let details = [];
+      let amount = 0;
+      for (let i in result) {
+        amount += result[i].claim_amount;
+        const editedDetail = {
+          Claim_Month: result[i].claim_month,
+          Claim_Year: result[i].claim_year,
+          Bank: result[i].bank_name,
+          Bank_Holder: result[i].bank_holder,
+          Bank_Account: result[i].bank_account,
+          'Claim_Amount(RM)': result[i].claim_amount,
+          Attachments: result[i].files,
+          Tab_Title: 'Handphone Bill',
+          Remark: result[i].comment,
+          unique_code: result[i].unique_code,
+        };
+        details.push(editedDetail);
+      }
+      if (details.length > 0) {
+        this.claimDatasDetails.push(details);
+        this.claimDataTotalAmount.push(amount);
+      }
+    } catch (e) {
+      console.error('Error fetching Handphone data:', e);
+    }
+
+    try {
+      const response = await axios.get(
+        'http://172.28.28.116:7239/api/User/GetOthers/' + this.referenceNumber
+      );
+      const result = response.data.result;
+      let details = [];
+      let amount = 0;
+      for (let i in result) {
+        amount += result[i].total_fee;
+        const editedDetail = {
+          Description: result[i].description,
+          Date: result[i].expense_date,
+          'Total_Fee(RM)': result[i].total_fee,
+          Attachments: result[i].files,
+          Tab_Title: 'Other',
+          Remark: result[i].comment,
+          unique_code: result[i].unique_code,
+        };
+        details.push(editedDetail);
+      }
+      if (details.length > 0) {
+        this.claimDatasDetails.push(details);
+        this.claimDataTotalAmount.push(amount);
+      }
+    } catch (e) {
+      console.error('Error fetching Others data:', e);
+    }
+
+    // Process the final claim data
+    try {
+      this.claimDatasDetails.forEach((details, index) => {
+        if (details && details.length > 0) {
+          const claimData = {
+            No: index + 1,
+            Type: details[0].Tab_Title,
+            Amount: this.claimDataTotalAmount[index],
+          };
+          this.claimDatas.push(claimData);
+        }
+      });
+
+      // console.log(this.claimDatas, 'claimDatas');
+      // console.log(this.claimDatasDetails);
+    } catch (e) {
+      console.error('Error processing final claim data:', e);
+    }
+  } catch (e) {
+    console.error('Fatal error in FetchClaimDatasDetails:', e);
   }
-
-  try {
-    const response2 = await axios.get(
-      'http://172.28.28.116:7239/api/User/GetOverseasOutstation/' + this.referenceNumber
-    );
-    const result2 = response2.data.result;
-    let details2 = [];
-    let amount2 = 0;
-    for (let i in result2) {
-      amount2 += result2[i].total_fee;
-      const editedDetail = {
-        Description: result2[i].description,
-        Date: result2[i].date_event,
-        Return_Date: result2[i].return_date,
-        'Meal_Allowance_(RM)': result2[i].meal_allowance,
-        'Transport_Fee(RM)': result2[i].transport_fee,
-        'Accom.': result2[i].accommodation,
-        Accom_Foreign_Currency: result2[i].accom_foreign_currency,
-        Accom_Exchange_Rate: result2[i].accom_exchange_rate,
-        Accom_Foreign_Total: result2[i].accom_foreign_total,
-        Other_Foreign_Currency: result2[i].other_foreign_currency,
-        Other_Exchange_Rate: result2[i].other_exchange_rate,
-        Other_Foreign_Total: result2[i].other_foreign_total,
-        Transportation_Mode: result2[i].transportation_mode,
-        Other_Expenses: result2[i].oem,
-        'Total_Fee(RM)': result2[i].total_fee,
-        Attachments: result2[i].files,
-        Tab_Title: 'Overseas Outstation',
-        unique_code: result2[i].unique_code,
-        comment: result2[i].comment,
-      };
-      details2.push(editedDetail);
-    }
-    if (details2.length > 0) {
-      this.claimDatasDetails.push(details2);
-      this.claimDataTotalAmount.push(amount2);
-    }
-  } catch (error) {
-    console.error('Error fetching overseas outstation data:', error);
-  }
-
-  try {
-    const response3 = await axios.get(
-      'http://172.28.28.116:7239/api/User/GetRefreshment/' + this.referenceNumber
-    );
-    const result3 = response3.data.result;
-    let details3 = [];
-    let amount3 = 0;
-    for (let i in result3) {
-      amount3 += result3[i].total_fee;
-      const editedDetail = {
-        Type: result3[i].refreshment_type,
-        Date: result3[i].date_event,
-        Reference_Type: result3[i].reference_type,
-        Venue: result3[i].venue_name,
-        Company: result3[i].company_name,
-        Staff_Involved: result3[i].sim,
-        'Total_Fee(RM)': result3[i].total_fee,
-        Attachments: result3[i].files,
-        Tab_Title: 'Staff Refreshment',
-        unique_code: result3[i].unique_code,
-        comment: result3[i].comment,
-      };
-      details3.push(editedDetail);
-    }
-    if (details3.length > 0) {
-      this.claimDatasDetails.push(details3);
-      this.claimDataTotalAmount.push(amount3);
-    }
-  } catch (error) {
-    console.error('Error fetching refreshment data:', error);
-  }
-
-  try {
-    const response4 = await axios.get(
-      'http://172.28.28.116:7165/api/User/GetEntertainment/' + this.referenceNumber
-    );
-    const result4 = response4.data.result;
-    let details4 = [];
-    let amount4 = 0;
-    for (let i in result4) {
-      amount4 += result4[i].total_fee;
-      const editedDetail = {
-        Type: result4[i].entertainment_type,
-        Date: result4[i].date_event,
-        Description: result4[i].description,
-        Venue: result4[i].venue_name,
-        Company: result4[i].company_name,
-        Participants: result4[i].participants,
-        'Total_Fee(RM)': result4[i].total_fee,
-        Attachments: result4[i].files,
-        Tab_Title: 'Entertainment',
-        unique_code: result4[i].unique_code,
-        comment: result4[i].comment,
-      };
-      details4.push(editedDetail);
-    }
-    if (details4.length > 0) {
-      this.claimDatasDetails.push(details4);
-      this.claimDataTotalAmount.push(amount4);
-    }
-  } catch (error) {
-    console.error('Error fetching entertainment data:', error);
-  }
-
-  try {
-    const response5 = await axios.get(
-      'http://172.28.28.116:7239/api/User/GetOthers/' + this.referenceNumber
-    );
-    const result5 = response5.data.result;
-    let details5 = [];
-    let amount5 = 0;
-    for (let i in result5) {
-      amount5 += result5[i].total_fee;
-      const editedDetail = {
-        Name: result5[i].expense_name,
-        Description: result5[i].description,
-        Date: result5[i].expense_date,
-        'Total_Fee(RM)': result5[i].total_fee,
-        Attachments: result5[i].files,
-        Tab_Title: 'Other',
-        unique_code: result5[i].unique_code,
-        comment: result5[i].comment,
-      };
-      details5.push(editedDetail);
-    }
-    if (details5.length > 0) {
-      this.claimDatasDetails.push(details5);
-      this.claimDataTotalAmount.push(amount5);
-    }
-  } catch (error) {
-    console.error('Error fetching other data:', error);
-  }
-
-  this.claimDatasDetails.forEach((details, index) => {
-    if (details && details.length > 0) {
-      const claimData = {
-        No: index + 1,
-        Type: details[0].Tab_Title, // Ensure details[0] exists before accessing properties
-        Amount: this.claimDataTotalAmount[index],
-      };
-      this.claimDatas.push(claimData);
-    }
-  });
-
-  // console.log(this.claimDatas);
-  // console.log(this.claimDatasDetails);
 }
 ,
 
@@ -1502,6 +1625,10 @@ async FetchClaimDatasDetails() {
       this.participants = val;
       this.showParticipantsList = true;
     },
+    showOemModal(val) {
+   this.oem = val;
+   this.showOemList = true;
+  },
     showOtherExpenses(val) {
       this.oe = val;
       this.showOEsList = true;
