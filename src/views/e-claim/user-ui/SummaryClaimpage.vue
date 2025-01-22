@@ -1230,6 +1230,7 @@ async FetchClaimDatasDetails() {
         this.referenceNumber
       );
       const result = response.data.result;
+      console.log("Medical leaves", result);
       let details = [];
       let amount = 0;
       for (let i in result) {
@@ -1237,20 +1238,24 @@ async FetchClaimDatasDetails() {
         const editedDetail = {
           reason: result[i].reason,
           Date: result[i].date_leave_taken,
-          clinicselection: result[i].clinic_name
-            ? result[i].clinic_name
-            : result[i].clinic_selection,
+          clinic_selection:result[i].clinic_selection,
           reason_other_clinic: result[i].reason_different,
           bank_name: result[i].bank_name,
           bank_holder: result[i].bank_holder,
           bank_account: result[i].bank_account,
           'Total_Fee(RM)': result[i].claim_amount,
           Attachments: result[i].files,
+          medical_category: result[i].medical_category,
+          claim_amount:result[i].claim_amount,
+          clinic_name:result[i].clinic_name,
+          ic_number: result[i].ic_number,
           Tab_Title: 'Medical Leave',
           Remark: result[i].comment,
           unique_code: result[i].unique_code,
+
         };
         details.push(editedDetail);
+        console.log(`Transformed Data for index ${i}:`, editedDetail);
       }
       if (details.length > 0) {
         this.claimDatasDetails.push(details);
