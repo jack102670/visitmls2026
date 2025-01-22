@@ -334,7 +334,10 @@
                 }}
               </td>
             </tr>
-            <tr v-if="simplifiedApproverFinStatus === 'APPROVED' || simplifiedApproverFinStatus === 'REJECTED' || simplifiedApproverFinStatus === 'REIMBURSED'"  class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+            <tr v-if="simplifiedApproverFinStatus === 'APPROVED' || simplifiedApproverFinStatus === 'REJECTED' || simplifiedApproverFinStatus === 'REIMBURSED'
+            //  || claimDetails.reference_number.startsWith('X-HR') || claimDetails.reference_number.startsWith('CM-HR')
+             "  
+             class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
                 <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
                   :class="{
@@ -398,7 +401,7 @@
                 'bg-amber-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'RESUBMIT',
                 'bg-red-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'REJECTED',
                 'bg-slate-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'REIMBURSED', 
-                'bg-blue-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'PENDING'
+                'bg-amber-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'PENDING'
               }">
               <span :class="{
                 'h-1.5 w-1.5 rounded-full': true,
@@ -406,7 +409,7 @@
                 'bg-amber-500': simplifiedFinanceStatus === 'RESUBMIT',
                 'bg-red-500': simplifiedFinanceStatus === 'REJECTED',
                 'bg-slate-500': simplifiedFinanceStatus === 'REIMBURSED',
-                'bg-blue-500': simplifiedFinanceStatus === 'PENDING'
+                'bg-amber-500': simplifiedFinanceStatus === 'PENDING'
               }"></span>
               <span :class="{
                 'text-xs font-normal': true,
@@ -414,7 +417,7 @@
                 'text-amber-500': simplifiedFinanceStatus === 'RESUBMIT',
                 'text-red-500': simplifiedFinanceStatus === 'REJECTED',
                 'text-slate-500': simplifiedFinanceStatus === 'REIMBURSED', 
-                'text-blue-500': simplifiedFinanceStatus === 'PENDING'
+                'text-amber-500': simplifiedFinanceStatus === 'PENDING'
               }">
                 {{ simplifiedFinanceStatus }}
               </span>
@@ -823,6 +826,7 @@ export default {
       showParticipantsList: false,
       oem: [],
       showOemList: false,
+      resubmitApprover: false,
       oe: [],
       showOEsList: false,
       userData: {},

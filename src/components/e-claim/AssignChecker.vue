@@ -94,17 +94,26 @@
                           <button @click="nextMonth">➡️</button>
                         </div>
                         <div class="grid grid-cols-7 gap-2">
-                          <span v-for="day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" :key="day"
-                            class="text-center text-sm font-bold">
-                            {{ day }}
-                          </span>
-                          <span v-for="n in firstDayOfMonth" :key="`empty-${n}`" class="text-transparent">0</span>
-                          <button v-for="day in daysInMonth" :key="day" class="p-2 text-sm rounded hover:bg-gray-200"
-                            :class="{ 'bg-blue-500 text-white': isSelectedStartDate(day) }"
-                            @click="selectStartDate(day)">
-                            {{ day }}
-                          </button>
-                        </div>
+                            <span v-for="day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" :key="day"
+                              class="text-center text-sm font-bold w-10 py-2">
+                              {{ day }}
+                            </span>
+                            <span v-for="n in firstDayOfMonth" :key="`empty-${n}`" 
+                              class="text-transparent w-10 h-10">
+                              0
+                            </span>
+                            <button v-for="day in daysInMonth" 
+                              :key="day" 
+                              class="w-10 h-10 text-sm rounded-full hover:bg-gray-200 flex items-center justify-center"
+                              :class="{
+                                'bg-blue-500 text-white': isSelectedStartDate(day),
+                                'cursor-not-allowed opacity-50': isStartDateDisabled(day)
+                              }"
+                              :disabled="isStartDateDisabled(day)"
+                              @click="selectStartDate(day)">
+                              {{ day }}
+                            </button>
+                          </div>
                       </div>
                     </div>
                   </div>
@@ -134,7 +143,7 @@
                           <button
                         v-for="day in daysInMonth"
                         :key="day"
-                        class="p-2 text-sm rounded hover:bg-gray-200"
+                        class="w-10 h-10 text-sm rounded-full hover:bg-gray-200 flex items-center justify-center"
                         :class="{
                           'bg-blue-500 text-white': isSelectedEndDate(day),
                           'cursor-not-allowed opacity-50': isDateDisabled(day)
@@ -367,19 +376,24 @@ export default {
     },
 
     selectStartDate(day) {
-      const selectedDate = moment(this.currentMonth).date(day);
-      if (this.endDate && selectedDate.isAfter(this.endDate)) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Invalid Date Selection',
-          text: 'Start date cannot be after end date',
-          confirmButtonColor: '#3085d6'
-        });
-        return;
-      }
-      this.startDate = selectedDate.toDate();
-      this.isStartCalendarOpen = false;
-    },
+        const selectedDate = moment(this.currentMonth).date(day);
+
+        if (selectedDate.isBefore(moment(), "day")) {
+          return;
+        }
+        
+        if (this.endDate && selectedDate.isAfter(this.endDate)) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Invalid Date Selection',
+            text: 'Start date cannot be after end date',
+            confirmButtonColor: '#3085d6'
+          });
+          return;
+        }
+        this.startDate = selectedDate.toDate();
+        this.isStartCalendarOpen = false;
+      },
 
     selectEndDate(day) {
       const selectedDate = moment(this.currentMonth).date(day);
@@ -403,14 +417,22 @@ export default {
         (this.startDate && date.isBefore(moment(this.startDate), "day"))
       );
     },
+    isStartDateDisabled(day) {
+      const date = moment(this.currentMonth).date(day);
+      return date.isBefore(moment(), "day");
+    },
 
     nextMonth() {
       this.currentMonth = moment(this.currentMonth).add(1, "month");
     },
 
     prevMonth() {
-      this.currentMonth = moment(this.currentMonth).subtract(1, "month");
-    },
+     const newDate = moment(this.currentMonth).subtract(1, "month");
+
+      if (!newDate.endOf('month').isBefore(moment(), 'day')) {
+         this.currentMonth = newDate;
+      }
+},
 
     DeleteChecker(index) {
       const checkerToDelete = this.Checkers[index];
