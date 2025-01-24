@@ -179,13 +179,13 @@
                           <span v-if="claim.combinetotal">RM {{ claim.combinetotal }}</span>
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2">
-                          <button @click="showDetails(claim, index)"
+                          <button @click="deleteForm()"
                             class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                              stroke="currentColor" class="w-5 h-5">
-                              <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                            </svg>
+                                stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
+                              </svg>
                           </button>
                         </td>
                       </tr>
@@ -579,7 +579,7 @@
               </div>
               <hr />
               <div class="flex justify-end items-center mb-4 mt-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2 text-2xl">Total dddd: {{
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2 text-2xl">Total: {{
                   totalOverseasTravellingAmount }}</label>
               </div>
             </div>
@@ -1139,10 +1139,10 @@
               <button @click="deleteForm()"
                 class="bg-gray-300 hover:bg-red-500 text-gray-800 hover:text-white font-bold py-2 px-4 rounded ml-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                  stroke="currentColor" class="w-5 h-5">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
+                      stroke="currentColor" class="w-5 h-5">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
               </button>
             </div>
           </div>
@@ -1671,59 +1671,57 @@ export default {
       this.isClickModal = false;
     },
 
-    showDetails(claim, index) {
-      this.index = index;
-      // console.log("Current index", this.index);
-      // Update selectedClaimType based on the type of claim
-      this.selectedClaimType = claim.tabTitle.replace(/\s+/g, ""); // Remove spaces from claim type
-      this.formToDelete = index;
-      // Update corresponding details object based on claim type
-      switch (this.selectedClaimType) {
-        case "LocalTravelling":
-          this.localTravellingDetails = claim;
-          // console.log("Local Travelling Details:", this.localTravellingDetails);
-          // console.log("upload", this.localTravellingDetails.UploadLT);
-          break;
-        case "OverseasTravelling":
-          this.overseasTravellingDetails = claim;
-          console.log(
-            "Overseas Travelling Details:",
-            this.overseasTravellingDetails
-          );
-          break;
-        case "Entertainment":
-          this.entertainmentDetails = claim;
-          // console.log("Entertainment Details:", this.entertainmentDetails);
-          break;
-        case "StaffRefreshment":
-          this.staffRefreshmentDetails = claim;
-          // console.log(
-          //   "Staff Refreshment Details:",
-          //   this.staffRefreshmentDetails
-          // );
-          break;
-        case "Others":
-          this.othersDetails = claim;
-          // console.log("Others Details:", this.othersDetails);
-          break;
-        case "HandphoneBillReimbursement":
-          this.handphoneBillReimbursementDetails = claim;
-          // console.log(
-          //   "Handphone Bill Reimbursement Details:",
-          //   this.handphoneBillReimbursementDetails
-          // );
-          break;
-        case "MedicalBillReimbursement":
-          this.medicalBillReimbursementDetails = claim;
-          // console.log(
-          //   "Medical Bill Reimbursement Details:",
-          //   this.medicalBillReimbursementDetails
-          // );
-          break;
-        // Add cases for other types of claims
-      }
-      this.isClickModal = true; // Show the modal
-    },
+    // showDetails(claim, index) {
+    //   this.index = index;
+    //   // console.log("Current index", this.index);
+    //   this.selectedClaimType = claim.tabTitle.replace(/\s+/g, ""); // Remove spaces from claim type
+    //   this.formToDelete = index;
+    //   switch (this.selectedClaimType) {
+    //     case "LocalTravelling":
+    //       this.localTravellingDetails = claim;
+    //       // console.log("Local Travelling Details:", this.localTravellingDetails);
+    //       // console.log("upload", this.localTravellingDetails.UploadLT);
+    //       break;
+    //     case "OverseasTravelling":
+    //       this.overseasTravellingDetails = claim;
+    //       console.log(
+    //         "Overseas Travelling Details:",
+    //         this.overseasTravellingDetails
+    //       );
+    //       break;
+    //     case "Entertainment":
+    //       this.entertainmentDetails = claim;
+    //       // console.log("Entertainment Details:", this.entertainmentDetails);
+    //       break;
+    //     case "StaffRefreshment":
+    //       this.staffRefreshmentDetails = claim;
+    //       // console.log(
+    //       //   "Staff Refreshment Details:",
+    //       //   this.staffRefreshmentDetails
+    //       // );
+    //       break;
+    //     case "Others":
+    //       this.othersDetails = claim;
+    //       // console.log("Others Details:", this.othersDetails);
+    //       break;
+    //     case "HandphoneBillReimbursement":
+    //       this.handphoneBillReimbursementDetails = claim;
+    //       // console.log(
+    //       //   "Handphone Bill Reimbursement Details:",
+    //       //   this.handphoneBillReimbursementDetails
+    //       // );
+    //       break;
+    //     case "MedicalBillReimbursement":
+    //       this.medicalBillReimbursementDetails = claim;
+    //       // console.log(
+    //       //   "Medical Bill Reimbursement Details:",
+    //       //   this.medicalBillReimbursementDetails
+    //       // );
+    //       break;
+    //     // Add cases for other types of claims
+    //   }
+    //   this.isClickModal = true; // Show the modal
+    // },
     generateUniqueCode(tabTitle) {
       // Check if this.userId is defined
       if (this.userDetails.userId) {
