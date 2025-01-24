@@ -181,24 +181,23 @@ export default {
   emits: ["close"],
   data() {
 
-   const initialFormData = {
-  claimantName: "Teowcheewen",
-  companyName: formStore.formData.companyName || "",
-  department: formStore.formData.department || "",
-  costCenter: formStore.formData.costCenter || "",
-  designation: formStore.formData.designation || "",
-  reportName: formStore.formData.reportName || "",
-  internalOrder: formStore.formData.internalOrder || "",
-  reportType: "Finance",
-  reportDate: formStore.formData.reportDate || "",
-  reportStartDate: formStore.formData.reportStartDate || "",
-  reportEndDate: formStore.formData.reportEndDate || "",
-  memo: formStore.formData.memo || "",
-  uniqueCode: formStore.formData.uniqueCode || "",
-  uniqueCodeForFileUpload: formStore.formData.uniqueCodeForFileUpload || "",
-  fileUpload: formStore.formData.fileUpload ? formStore.formData.fileUpload.slice() : [],
-};
-
+    const initialFormData = {
+    claimantName: "Teowcheewen",
+    companyName: formStore.formData.companyName,
+    department: formStore.formData.department,
+    costCenter: formStore.formData.costCenter,
+    designation: formStore.formData.designation,
+    reportName: formStore.formData.reportName,
+    internalOrder: formStore.formData.internalOrder,
+    reportType: "Finance",
+    reportDate: formStore.formData.reportDate,
+    reportStartDate: formStore.formData.reportStartDate,
+    reportEndDate: formStore.formData.reportEndDate,
+    memo: formStore.formData.memo,
+    uniqueCode: formStore.formData.uniqueCode,
+    uniqueCodeForFileUpload: formStore.formData.uniqueCodeForFileUpload,
+    fileUpload: formStore.formData.fileUpload.slice()
+  };
 
     return {
       loading: false,
@@ -215,7 +214,7 @@ export default {
       designations: [],
       active: 0,
 
-      formData: { ...initialFormData },
+      formData: { ...initialFormData }, // Use a copy of the initial data
       defaultFormData: initialFormData,
 
       // formData: {
@@ -249,45 +248,41 @@ export default {
   },
   computed: {
     filteredDesignation() {
-  return this.designations.filter((designation) => {
-    return (
-      designation.designation &&
-      this.formData.designation &&
-      designation.designation.toLowerCase().includes(this.formData.designation.toLowerCase())
-    );
-  });
-},
-filteredDepartments() {
-  return this.departments.filter((department) => {
-    return (
-      department.department &&
-      this.formData.department &&
-      department.department.toLowerCase().includes(this.formData.department.toLowerCase())
-    );
-  });
-},
-filteredCompanyName() {
-  return this.Companies.filter((company) => {
-    const searchTerm = this.formData.companyName ? this.formData.companyName.toLowerCase() : "";
-    return (
-      (company.company_code &&
-        company.company_code.toLowerCase().includes(searchTerm)) ||
-      (company.company_name &&
-        company.company_name.toLowerCase().includes(searchTerm))
-    );
-  });
-},
-filteredCostcenter() {
-  return this.Companies.filter((company) => {
-    const searchTerm = this.formData.costCenter ? this.formData.costCenter.toLowerCase() : "";
-    return (
-      (company.company_code &&
-        company.company_code.toLowerCase().includes(searchTerm)) ||
-      (company.company_name &&
-        company.company_name.toLowerCase().includes(searchTerm))
-    );
-  });
-},
+      return this.designations.filter((designation) => {
+        return designation.designation
+          .toLowerCase()
+          .includes(this.formData.designation.toLowerCase());
+      });
+    },
+    filteredDepartments() {
+      return this.departments.filter((department) => {
+        return department.department
+          .toLowerCase()
+          .includes(this.formData.department.toLowerCase());
+      });
+    },
+    filteredCompanyName() {
+      return this.Companies.filter((park) => {
+        const searchTerm = this.formData.companyName.toLowerCase();
+        return (
+          (park.company_code &&
+            park.company_code.toLowerCase().includes(searchTerm)) ||
+          (park.company_name &&
+            park.company_name.toLowerCase().includes(searchTerm))
+        );
+      });
+    },
+    filteredCostcenter() {
+      return this.Companies.filter((park) => {
+        const searchTerm = this.formData.costCenter.toLowerCase();
+        return (
+          (park.company_code &&
+            park.company_code.toLowerCase().includes(searchTerm)) ||
+          (park.company_name &&
+            park.company_name.toLowerCase().includes(searchTerm))
+        );
+      });
+    },
   },
 
   mounted() {
@@ -303,7 +298,7 @@ filteredCostcenter() {
     resetForm() {
     this.formData = { ...this.defaultFormData };
   },
-
+  
     handleAddFile(error, fileItem) {
       if (!error) {
         const newFileName = `ClaimsAttachment_${fileItem.file.name}`;
@@ -471,33 +466,29 @@ filteredCostcenter() {
     },
 
     submitForm(page) {
-  this.active += page;
+      this.active += page;
 
-  if (this.active > 0) {
-    // Reset formData with default structure
-    this.formData = {
-      reportName: "",
-      reportType: "",
-      uniqueCode: "",
-      designation: "",
-    };
-    formStore.clearFormData();
-    this.generateSerialNumber();
-    this.generateUniqueCode();
-    formStore.setFormData(this.formData);
+      if (this.active > 0) {
+        formStore.clearFormData();
+        this.generateSerialNumber();
+        this.generateUniqueCode();
+        formStore.setFormData(this.formData);
 
-    this.$emit("close");
-    this.$nextTick(() => {
-      this.$router.push({ name: "ClaimReport" });
-    });
-    this.active = 0;
-  }
 
-  if (this.active < 0) {
-    this.$emit("close");
-    this.active = 0;
-  }
-},
+        // Log the form data before navigation
+        // console.log("Form submitted", formStore.getFormData());
+        this.$emit("close");
+        this.$nextTick(() => {
+          this.$router.push({ name: "ClaimReport" });
+        });
+        this.active = 0;
+      }
+
+      if (this.active < 0) {
+        this.$emit("close");
+        this.active = 0;
+      }
+    },
   },
 };
 </script>
