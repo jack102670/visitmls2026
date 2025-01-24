@@ -571,13 +571,13 @@
                         <form @submit.prevent="addOtherExpense">
                           <div class="mb-4 mt-4">
                             <label class="block text-sm font-medium text-gray-700" for="expenseName">Expense
-                              Name</label>
+                              Name <span class="text-red-500">*</span></label>
                             <input v-model="newExpense.name" id="expenseName" type="text"
                               class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required />
                           </div>
                           <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700"
-                              for="expenseDescription">Description</label>
+                              for="expenseDescription">Description <span class="text-red-500">*</span></label>
                             <textarea v-model="newExpense.description" id="expenseDescription"
                               class="mt-1 block w-full p-2 border border-gray-300 rounded-md" rows="4"
                               required></textarea>
@@ -585,7 +585,7 @@
                           <div class="mb-4" v-if="currencyType === 'foreign'">
                             <label class="block text-sm font-medium text-gray-700"
                               for="ForeignCurrencyAccommodationOT">Foreign
-                              Currency</label>
+                              Currency <span class="text-red-500">*</span></label>
                             <select v-model="newExpense.ForeignCurrencyAccommodationOT
                               " id="ForeignCurrencyAccommodationOT"
                               class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
@@ -600,14 +600,14 @@
                           <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700"
                               for="ExchangeRateAccommodationOT">Exchange
-                              Rate</label>
+                              Rate <span class="text-red-500">*</span></label>
                             <input v-model="newExpense.ExchangeRateAccommodationOT" id="ExchangeRateAccommodationOT"
                               type="number" step="0.01" class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                               required />
                           </div>
                           <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700" for="AmountforAccommodationOT">
-                              Amount
+                              Amount <span class="text-red-500">*</span>
                               <span v-if="selectedCurrencySymbol">({{ selectedCurrencySymbol }})</span>
                               <div class="relative group ml-1">
                                 <button type="button"
@@ -637,7 +637,7 @@
                           <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700" for="expenseAttachment">Attachment(s)
                               (png,
-                              jpeg, pdf, or xlsx)</label>
+                              jpeg, pdf, or xlsx) <span class="text-red-500">*</span></label>
                             <file-pond ref="pond" name="files" label-idle="Drop files here..." @addfile="(error, file) =>
                               handleAddFileOT(error, file, newExpense.files)
                               " @removefile="(error, file) =>
@@ -651,7 +651,7 @@
                                   'image/png',
                                   'image/jpeg',
                                   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                                ]" :max-file-size="5000000" allow-multiple="true" />
+                                ]" :max-file-size="5000000" allow-multiple="true" :required="true" />
                           </div>
                           <div class="mt-8 flex justify-end">
                             <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded mr-2">
