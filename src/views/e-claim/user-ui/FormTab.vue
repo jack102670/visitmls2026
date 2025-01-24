@@ -42,8 +42,7 @@
         <section>
           <div v-if="
             tab.title === 'Handphone Bill Reimbursement' && isFormDisabled
-          "
-            class="relative flex items-center justify-center mt-4 p-4 bg-yellow-200 border border-yellow-400 text-yellow-800 rounded-md"
+          " class="relative flex items-center justify-center mt-4 p-4 bg-yellow-200 border border-yellow-400 text-yellow-800 rounded-md"
             style="width: 100%; max-width: 600px; margin: 0 auto">
             <h1 class="text-sm font-bold text-center">
               Note : You are not eligible to claim the Handphone Bill.
@@ -132,8 +131,8 @@
                                 <template v-if="field.type === 'select'">
                                   <select v-model="field.value" @change="onMedicalCategoryChange"
                                     :required="field.required" :disabled="(tab.title ===
-                                        'Handphone Bill Reimbursement' &&
-                                        isFormDisabled) ||
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
                                       field.disabled
                                       " :id="field.id"
                                     class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
@@ -147,8 +146,8 @@
 
                                 <template v-else-if="field.type === 'year'">
                                   <select v-model="field.value" :required="field.required" :disabled="(tab.title ===
-                                      'Handphone Bill Reimbursement' &&
-                                      isFormDisabled) ||
+                                    'Handphone Bill Reimbursement' &&
+                                    isFormDisabled) ||
                                     field.disabled
                                     " :id="field.id"
                                     class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
@@ -164,8 +163,8 @@
                                       :key="option.value">
                                       <input type="radio" :id="option.value" :name="field.id" :value="option.value"
                                         v-model="field.value" :required="field.required" :disabled="(tab.title ===
-                                            'Handphone Bill Reimbursement' &&
-                                            isFormDisabled) ||
+                                          'Handphone Bill Reimbursement' &&
+                                          isFormDisabled) ||
                                           field.disabled
                                           " class="mr-2" />
                                       <label :for="option.value" class="text-sm text-gray-700">
@@ -181,86 +180,91 @@
                                       field.id === 'UploadMileageRMLT' &&
                                       showMileageUpload
                                     " :name="field.id" :disabled="(tab.title ===
-                                          'Handphone Bill Reimbursement' &&
-                                          isFormDisabled) ||
-                                        field.disabled
-                                        " :required="field.required" ref="pond" label-idle="Drop files here..." @addfile="(error, file) =>
-                                          handleAddFile(error, file, field)
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
+                                      field.disabled
+                                      " :required="field.required" ref="pond" label-idle="Drop files here..."
+                                      @addfile="(error, file) =>
+                                        handleAddFile(error, file, field)
                                         " @removefile="(error, file) =>
                                           handleRemoveFile(error, file, field)
-                                        " :accepted-file-types="field.acceptedFileTypes
-                                        " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
+                                          " :accepted-file-types="field.acceptedFileTypes
+                                          " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
                                     <file-pond v-if="
                                       field.id === 'UploadFareRMLT' &&
                                       showFareUpload
                                     " :name="field.id" :disabled="(tab.title ===
-                                          'Handphone Bill Reimbursement' &&
-                                          isFormDisabled) ||
-                                        field.disabled
-                                        " :required="field.required" ref="pond" label-idle="Drop files here..." @addfile="(error, file) =>
-                                          handleAddFile(error, file, field)
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
+                                      field.disabled
+                                      " :required="field.required" ref="pond" label-idle="Drop files here..."
+                                      @addfile="(error, file) =>
+                                        handleAddFile(error, file, field)
                                         " @removefile="(error, file) =>
                                           handleRemoveFile(error, file, field)
-                                        " :accepted-file-types="field.acceptedFileTypes
-                                        " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
+                                          " :accepted-file-types="field.acceptedFileTypes
+                                          " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
                                     <file-pond v-if="
                                       field.id === 'UploadTollLT' &&
                                       showTollUpload
                                     " :name="field.id" :label="field.label" :disabled="(tab.title ===
-                                          'Handphone Bill Reimbursement' &&
-                                          isFormDisabled) ||
-                                        field.disabled
-                                        " :required="isFieldRequired(field.id)" ref="pond"
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
+                                      field.disabled
+                                      " :required="isFieldRequired(field.id)" ref="pond"
                                       label-idle="Drop files here..." @addfile="(error, file) =>
-                                          handleAddFile(error, file, field)
+                                        handleAddFile(error, file, field)
                                         " @removefile="(error, file) =>
                                           handleRemoveFile(error, file, field)
-                                        " :accepted-file-types="field.acceptedFileTypes
-                                        " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
+                                          " :accepted-file-types="field.acceptedFileTypes
+                                          " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
                                     <file-pond v-if="
                                       field.id === 'UploadParkingLT' &&
                                       showParkingUpload
                                     " :name="field.id" :disabled="(tab.title ===
-                                          'Handphone Bill Reimbursement' &&
-                                          isFormDisabled) ||
-                                        field.disabled
-                                        " :required="field.required" ref="pond" label-idle="Drop files here..." @addfile="(error, file) =>
-                                          handleAddFile(error, file, field)
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
+                                      field.disabled
+                                      " :required="field.required" ref="pond" label-idle="Drop files here..."
+                                      @addfile="(error, file) =>
+                                        handleAddFile(error, file, field)
                                         " @removefile="(error, file) =>
                                           handleRemoveFile(error, file, field)
-                                        " :accepted-file-types="field.acceptedFileTypes
-                                        " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
-                                     
-                                     
-                                     <!-- new -->
-                                     <file-pond v-if="
+                                          " :accepted-file-types="field.acceptedFileTypes
+                                          " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
+
+
+                                    <!-- new -->
+                                    <file-pond v-if="
                                       field.id === 'UploadPetrolCharged' &&
                                       showPetrolUpload
                                     " :name="field.id" :disabled="(tab.title ===
-                                          'Handphone Bill Reimbursement' &&
-                                          isFormDisabled) ||
-                                        field.disabled
-                                        " :required="field.required" ref="pond" label-idle="Drop files here..." @addfile="(error, file) =>
-                                          handleAddFile(error, file, field)
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
+                                      field.disabled
+                                      " :required="field.required" ref="pond" label-idle="Drop files here..."
+                                      @addfile="(error, file) =>
+                                        handleAddFile(error, file, field)
                                         " @removefile="(error, file) =>
                                           handleRemoveFile(error, file, field)
-                                        " :accepted-file-types="field.acceptedFileTypes
-                                        " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
+                                          " :accepted-file-types="field.acceptedFileTypes
+                                          " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
 
 
-                                      <file-pond v-if="
+                                    <file-pond v-if="
                                       field.id === 'UploadEvCharged' &&
                                       showEvUpload
                                     " :name="field.id" :disabled="(tab.title ===
-                                          'Handphone Bill Reimbursement' &&
-                                          isFormDisabled) ||
-                                        field.disabled
-                                        " :required="field.required" ref="pond" label-idle="Drop files here..." @addfile="(error, file) =>
-                                          handleAddFile(error, file, field)
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
+                                      field.disabled
+                                      " :required="field.required" ref="pond" label-idle="Drop files here..."
+                                      @addfile="(error, file) =>
+                                        handleAddFile(error, file, field)
                                         " @removefile="(error, file) =>
                                           handleRemoveFile(error, file, field)
-                                        " :accepted-file-types="field.acceptedFileTypes
-                                        " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
+                                          " :accepted-file-types="field.acceptedFileTypes
+                                          " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
 
 
 
@@ -270,23 +274,24 @@
                                       field.id === 'UploadHR' ||
                                       field.id === 'UploadML'
                                     " :name="field.id" :disabled="(tab.title ===
-                                          'Handphone Bill Reimbursement' &&
-                                          isFormDisabled) ||
-                                        field.disabled
-                                        " :required="field.required" ref="pond" label-idle="Drop files here..." @addfile="(error, file) =>
-                                          handleAddFile(error, file, field)
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
+                                      field.disabled
+                                      " :required="field.required" ref="pond" label-idle="Drop files here..."
+                                      @addfile="(error, file) =>
+                                        handleAddFile(error, file, field)
                                         " @removefile="(error, file) =>
                                           handleRemoveFile(error, file, field)
-                                        " :accepted-file-types="field.acceptedFileTypes
-                                        " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
+                                          " :accepted-file-types="field.acceptedFileTypes
+                                          " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
                                   </div>
                                 </template>
 
                                 <template v-else-if="field.type === 'long-text'">
                                   <textarea v-model="field.value" :required="field.required" :id="field.id"
                                     :placeholder="field.placeholder" :disabled="(tab.title ===
-                                        'Handphone Bill Reimbursement' &&
-                                        isFormDisabled) ||
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
                                       field.disabled
                                       "
                                     class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
@@ -296,52 +301,52 @@
                                 <template v-else-if="field.id === 'MileageRMLT'">
                                   <input v-model="field.value" type="number" :required="field.required" :id="field.id"
                                     :placeholder="field.placeholder" :step="field.type === 'number'
-                                        ? '0.01'
-                                        : undefined
+                                      ? '0.01'
+                                      : undefined
                                       " :disabled="(tab.title ===
                                         'Handphone Bill Reimbursement' &&
                                         isFormDisabled) ||
-                                      field.disabled
-                                      "
+                                        field.disabled
+                                        "
                                     class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
                                 </template>
 
                                 <template v-else-if="field.id === 'FareRMLT'">
                                   <input v-model="field.value" type="number" :required="field.required" :id="field.id"
                                     :placeholder="field.placeholder" :step="field.type === 'number'
-                                        ? '0.01'
-                                        : undefined
+                                      ? '0.01'
+                                      : undefined
                                       " :disabled="(tab.title ===
                                         'Handphone Bill Reimbursement' &&
                                         isFormDisabled) ||
-                                      field.disabled
-                                      "
+                                        field.disabled
+                                        "
                                     class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
                                 </template>
 
                                 <template v-else-if="field.id === 'TollLT'">
                                   <input v-model="field.value" type="number" :required="field.required" :id="field.id"
                                     :placeholder="field.placeholder" :step="field.type === 'number'
-                                        ? '0.01'
-                                        : undefined
+                                      ? '0.01'
+                                      : undefined
                                       " :disabled="(tab.title ===
                                         'Handphone Bill Reimbursement' &&
                                         isFormDisabled) ||
-                                      field.disabled
-                                      "
+                                        field.disabled
+                                        "
                                     class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
                                 </template>
 
                                 <template v-else-if="field.id === 'ParkingLT'">
                                   <input v-model="field.value" type="number" :required="field.required" :id="field.id"
                                     :placeholder="field.placeholder" :step="field.type === 'number'
-                                        ? '0.01'
-                                        : undefined
+                                      ? '0.01'
+                                      : undefined
                                       " :disabled="(tab.title ===
                                         'Handphone Bill Reimbursement' &&
                                         isFormDisabled) ||
-                                      field.disabled
-                                      "
+                                        field.disabled
+                                        "
                                     class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
                                 </template>
 
@@ -355,12 +360,12 @@
                                   field.id === 'LimitedAmountHR'
                                 ">
                                   <input v-model="field.value" :required="field.required" :disabled="(tab.title ===
-                                      'Handphone Bill Reimbursement' &&
-                                      isFormDisabled) ||
+                                    'Handphone Bill Reimbursement' &&
+                                    isFormDisabled) ||
                                     field.disabled
                                     " :id="field.id" :type="field.type" :placeholder="field.placeholder" :step="field.type === 'number'
-                                        ? '0.01'
-                                        : undefined
+                                      ? '0.01'
+                                      : undefined
                                       "
                                     class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
                                 </template>
@@ -368,13 +373,13 @@
                                 <template v-else-if="field.id === 'LimitedAmountML'">
                                   <input v-model="field.value" type="number" :required="field.required" :id="field.id"
                                     :placeholder="field.placeholder" :step="field.type === 'number'
-                                        ? '0.01'
-                                        : undefined
+                                      ? '0.01'
+                                      : undefined
                                       " :disabled="(tab.title ===
                                         'Handphone Bill Reimbursement' &&
                                         isFormDisabled) ||
-                                      field.disabled
-                                      "
+                                        field.disabled
+                                        "
                                     class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
                                   <div class="relative group ml-1">
                                     <button type="button"
@@ -393,12 +398,12 @@
 
                                 <template v-else>
                                   <input v-model="field.value" :required="field.required" :disabled="(tab.title ===
-                                      'Handphone Bill Reimbursement' &&
-                                      isFormDisabled) ||
+                                    'Handphone Bill Reimbursement' &&
+                                    isFormDisabled) ||
                                     field.disabled
                                     " :id="field.id" :type="field.type" :placeholder="field.placeholder" :step="field.type === 'number'
-                                        ? '0.01'
-                                        : undefined
+                                      ? '0.01'
+                                      : undefined
                                       "
                                     class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
                                 </template>
@@ -447,7 +452,7 @@
                     }" type="submit"
                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                       :disabled="(tab.title === 'Handphone Bill Reimbursement' &&
-                          isFormDisabled) ||
+                        isFormDisabled) ||
                         (tab.title === 'Medical Bill Reimbursement' &&
                           isSaveButtonDisabled)
                         ">
@@ -503,7 +508,7 @@
                           :key="option.value">
                           <input type="radio" :id="option.value" :name="field.id" :value="option.value"
                             v-model="field.value" :required="field.required" :disabled="(tab.title === 'Handphone Bill Reimbursement' &&
-                                isFormDisabled) ||
+                              isFormDisabled) ||
                               field.disabled
                               " class="mr-2" />
                           <label :for="option.value" class="text-sm text-gray-700">
@@ -519,7 +524,7 @@
                           label-idle="Drop files here..." @addfile="(error, file) => handleAddFile(error, file, field)
                             " @removefile="(error, file) =>
                               handleRemoveFile(error, file, field)
-                            " :accepted-file-types="field.acceptedFileTypes" :max-file-size="field.maxFileSize"
+                              " :accepted-file-types="field.acceptedFileTypes" :max-file-size="field.maxFileSize"
                           :allow-multiple="field.allowMultiple" />
                       </div>
                     </template>
@@ -634,19 +639,19 @@
                               (png,
                               jpeg, pdf, or xlsx)</label>
                             <file-pond ref="pond" name="files" label-idle="Drop files here..." @addfile="(error, file) =>
-                                handleAddFileOT(error, file, newExpense.files)
+                              handleAddFileOT(error, file, newExpense.files)
                               " @removefile="(error, file) =>
-                                  handleRemoveFileOT(
-                                    error,
-                                    file,
-                                    newExpense.files
-                                  )
+                                handleRemoveFileOT(
+                                  error,
+                                  file,
+                                  newExpense.files
+                                )
                                 " :accepted-file-types="[
-                                'application/pdf',
-                                'image/png',
-                                'image/jpeg',
-                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                              ]" :max-file-size="5000000" allow-multiple="true" />
+                                  'application/pdf',
+                                  'image/png',
+                                  'image/jpeg',
+                                  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                                ]" :max-file-size="5000000" allow-multiple="true" />
                           </div>
                           <div class="mt-8 flex justify-end">
                             <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded mr-2">
@@ -696,19 +701,19 @@
                               (png,
                               jpeg, pdf, or xlsx)</label>
                             <file-pond ref="pond" name="files" label-idle="Drop files here..." @addfile="(error, file) =>
-                                handleAddFileOT(error, file, newExpense.files)
+                              handleAddFileOT(error, file, newExpense.files)
                               " @removefile="(error, file) =>
-                                  handleRemoveFileOT(
-                                    error,
-                                    file,
-                                    newExpense.files
-                                  )
+                                handleRemoveFileOT(
+                                  error,
+                                  file,
+                                  newExpense.files
+                                )
                                 " :accepted-file-types="[
-                                'application/pdf',
-                                'image/png',
-                                'image/jpeg',
-                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                              ]" :max-file-size="5000000" allow-multiple="true" />
+                                  'application/pdf',
+                                  'image/png',
+                                  'image/jpeg',
+                                  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                                ]" :max-file-size="5000000" allow-multiple="true" />
                           </div>
                           <div class="mt-8 flex justify-end">
                             <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded mr-2">
@@ -802,14 +807,14 @@
                                 {{ expense.totalAccommodation }}
                               </span>
                               <span v-if="currencyType === 'rm'">
-                              {{ (Math.round(expense.amount * 100) / 100).toFixed(2) }}
-                            </span>
+                                {{ (Math.round(expense.amount * 100) / 100).toFixed(2) }}
+                              </span>
                             </td>
                             <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                               <div v-for="file in expense.files" :key="file.id">
                                 <a :href="file.url" :download="file.name" class="text-blue-500 hover:underline">{{
                                   file.name
-                                  }}</a>
+                                }}</a>
                               </div>
                             </td>
                             <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
@@ -829,9 +834,10 @@
                               colspan="5">
                               Total Amount
                             </td>
-                              <td class="px-4 py-2 border text-sm font-medium text-gray-700 whitespace-nowrap" colspan="3">
-                                RM {{ (Math.round(calculateOverseasTotal() * 100) / 100).toFixed(2) }}
-                              </td>
+                            <td class="px-4 py-2 border text-sm font-medium text-gray-700 whitespace-nowrap"
+                              colspan="3">
+                              RM {{ (Math.round(calculateOverseasTotal() * 100) / 100).toFixed(2) }}
+                            </td>
 
                           </tr>
                         </tbody>
@@ -920,7 +926,7 @@
                             label-idle="Drop files here..." @addfile="(error, file) => handleAddFile(error, file, field)
                               " @removefile="(error, file) =>
                                 handleRemoveFile(error, file, field)
-                              " :accepted-file-types="field.acceptedFileTypes" :max-file-size="field.maxFileSize"
+                                " :accepted-file-types="field.acceptedFileTypes" :max-file-size="field.maxFileSize"
                             :allow-multiple="field.allowMultiple" />
                         </div>
                       </template>
@@ -1088,14 +1094,14 @@
                         <div class="pt-3">
                           <file-pond :name="field.id" ref="pond" label-idle="Drop files here..." @addfile="(error, file) => handleAddFile(error, file, field)
                             " @removefile="(error, file) =>
-                                handleRemoveFile(error, file, field)
+                              handleRemoveFile(error, file, field)
                               " :accepted-file-types="field.acceptedFileTypes" :max-file-size="field.maxFileSize"
                             :allow-multiple="field.allowMultiple" />
                         </div>
                       </template>
                       <template v-else>
-                        <input v-model="field.value" :id="field.id" :type="field.type" :placeholder="field.placeholder " :readonly="field.readonly"
-                          :step="field.type === 'number' ? '0.01' : undefined"
+                        <input v-model="field.value" :id="field.id" :type="field.type" :placeholder="field.placeholder"
+                          :readonly="field.readonly" :step="field.type === 'number' ? '0.01' : undefined"
                           class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
                       </template>
                     </template>
@@ -1460,6 +1466,7 @@ export default {
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
+              placeholder: "0.00",
               required: true,
               hidden: false,
             },
@@ -1486,6 +1493,7 @@ export default {
               id: "TollLT",
               label: "Toll/Touch' n Go(RM)",
               type: "number",
+              placeholder: "0.00",
               value: "",
               gridClass: "sm:col-span-1",
               hidden: false,
@@ -1515,6 +1523,7 @@ export default {
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
+              placeholder: "0.00",
               hidden: false,
             },
             {
@@ -1543,6 +1552,7 @@ export default {
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
+              placeholder: "0.00",
               hidden: false,
             },
             {
@@ -1570,6 +1580,7 @@ export default {
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
+              placeholder: "0.00",
               hidden: false,
             },
             {
@@ -2184,20 +2195,20 @@ export default {
 
   computed: {
     totalMealAllowanceOTplusotherExpenses() {
-  let otherExpensesTotal = this.otherExpenses.reduce((total, expense) => {
-    const amount = parseFloat(expense.amount) || 0;
-    return total + amount;
-  }, 0);
+      let otherExpensesTotal = this.otherExpenses.reduce((total, expense) => {
+        const amount = parseFloat(expense.amount) || 0;
+        return total + amount;
+      }, 0);
 
-  let mealAllowanceOT = this.overseasTabs
-    .find(tab => tab.title === "Details")
-    ?.fields.find(field => field.id === "MealAllowanceOT")?.value || 0;
-  mealAllowanceOT = parseFloat(mealAllowanceOT) || 0;
-  let total = mealAllowanceOT + otherExpensesTotal;
-  // console.log("total?", total); 
+      let mealAllowanceOT = this.overseasTabs
+        .find(tab => tab.title === "Details")
+        ?.fields.find(field => field.id === "MealAllowanceOT")?.value || 0;
+      mealAllowanceOT = parseFloat(mealAllowanceOT) || 0;
+      let total = mealAllowanceOT + otherExpensesTotal;
+      // console.log("total?", total); 
 
-  return total.toFixed(2);
-},
+      return total.toFixed(2);
+    },
     // Add new computed properties for each form
     hasLocalAccess() {
       return this.profilestatus.local_access;
@@ -2636,6 +2647,25 @@ export default {
   },
 
   methods: {
+
+    formatDecimal(event) {
+      // List of field IDs that need decimal formatting
+      const decimalFields = [
+        'MealAllowanceLT', 
+        'FareRMLT', 
+        'TollLT', 
+        'ParkingLT', 
+        'petrolCharged', 
+        'evCharged'
+      ];
+      if (decimalFields.includes(event.target.id)) {
+        const value = parseFloat(event.target.value);
+        if (!isNaN(value)) {
+          event.target.value = value.toFixed(2);
+        }
+      }
+    },
+
     isFieldRequired(fieldId) {
       if (fieldId === "UploadMileageRMLT") {
         const mileageField = this.tabs
@@ -2832,7 +2862,7 @@ export default {
         case "evCharged":
           this.showPetrolUpload = !this.showEvUpload;
           break;
-        
+
       }
     },
 
@@ -2851,10 +2881,10 @@ export default {
         case "UploadParkingLT":
           prefix = "PARKING_";
           break;
-          case "UploadPetrolCharged":
+        case "UploadPetrolCharged":
           prefix = "PETROL_";
           break;
-          case "UploadEvCharged":
+        case "UploadEvCharged":
           prefix = "EV_";
           break;
         default:
@@ -3310,32 +3340,32 @@ export default {
     },
 
     addOtherExpense() {
-  if (this.currencyType === "foreign") {
-    this.newExpense.amount = parseFloat(this.newExpense.totalAccommodation).toFixed(2);
-  } else {
-    this.newExpense.amount = parseFloat(this.newExpense.amount).toFixed(2);
-  }
+      if (this.currencyType === "foreign") {
+        this.newExpense.amount = parseFloat(this.newExpense.totalAccommodation).toFixed(2);
+      } else {
+        this.newExpense.amount = parseFloat(this.newExpense.amount).toFixed(2);
+      }
 
-  // Convert the string back to a number if needed
-  this.newExpense.amount = parseFloat(this.newExpense.amount);
+      // Convert the string back to a number if needed
+      this.newExpense.amount = parseFloat(this.newExpense.amount);
 
-  this.otherExpenses.push({ ...this.newExpense });
+      this.otherExpenses.push({ ...this.newExpense });
 
-  console.log("New expense added:", this.newExpense);
+      console.log("New expense added:", this.newExpense);
 
-  this.newExpense = {
-    name: "",
-    description: "",
-    ForeignCurrencyAccommodationOT: "",
-    ExchangeRateAccommodationOT: "",
-    AmountforAccommodationOT: 0,
-    amount: 0,
-    files: [],
-  };
-  this.showOtherExpensesModal = false;
-}
+      this.newExpense = {
+        name: "",
+        description: "",
+        ForeignCurrencyAccommodationOT: "",
+        ExchangeRateAccommodationOT: "",
+        AmountforAccommodationOT: 0,
+        amount: 0,
+        files: [],
+      };
+      this.showOtherExpensesModal = false;
+    }
 
-,
+    ,
 
     removeExpense(index) {
       this.otherExpenses.splice(index, 1);
@@ -3448,10 +3478,10 @@ export default {
             (field.id !== "MileageRMLT" && field.id !== "TollLT")) &&
           (!isPersonalTransport ||
             (field.id !== "FareRMLT" && field.id !== "ParkingLT")) &&
-            (!isPersonalTransport || 
-              (field.id !== "FareRMLT" && field.id !== "petrolCharged")) &&
-              (!isPersonalTransport || 
-                (!field.id !== "FareRMLT" && field.id !== "evCharged") )
+          (!isPersonalTransport ||
+            (field.id !== "FareRMLT" && field.id !== "petrolCharged")) &&
+          (!isPersonalTransport ||
+            (!field.id !== "FareRMLT" && field.id !== "evCharged"))
         ) {
           total += parseFloat(field.value);
         }

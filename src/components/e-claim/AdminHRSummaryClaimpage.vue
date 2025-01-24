@@ -700,7 +700,7 @@ export default {
               Bank: result[i].bank_name,
               Bank_Holder: result[i].bank_holder,
               Bank_Account: result[i].bank_account,
-              'Claim_Amount(RM)': result[i].claim_amount,
+              'Claim_Amount(RM)': Number(result[i].claim_amount).toFixed(2),
               Attachments: result[i].files,
               Tab_Title: 'Medical Bill',
               unique_code: result[i].unique_code,
@@ -739,7 +739,7 @@ export default {
 
               Bank_Holder: result[i].bank_holder,
               Bank_Account: result[i].bank_account,
-              'Claim_Amount(RM)': result[i].claim_amount,
+              'Claim_Amount(RM)': Number(result[i].claim_amount).toFixed(2),
               Attachments: result[i].files,
               Tab_Title: 'Handphone Bill',
               unique_code: result[i].unique_code,
