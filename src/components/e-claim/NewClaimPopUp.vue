@@ -28,39 +28,7 @@
               <input disabled type="text" required placeholder="Company name.." v-model="formData.companyName"
                 @click="toggleDropdown2"
                 class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
-              <!-- <div
-                class="bg-slate-200 py-4 px-2 mt-2 rounded"
-                @click="toggleDropdown2"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 21 21"
-                  stroke="currentColor"
-                  class="h-2 w-4 text-gray-600"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  ></path>
-                </svg>
-              </div> -->
             </div>
-            <!-- <div
-              v-show="dropdownVisible2"
-              class="dropdown-content absolute left-0 bg-gray-100 w-full max-h-56 overflow-y-auto border border-gray-300 z-10 mt-2 rounded shadow-lg"
-            >
-              <a
-                v-for="Company in filteredCompanyName"
-                :key="Company.company_name"
-                @click="selectCompanyName(Company.company_name)"
-                class="block text-black py-2 px-4 hover:bg-gray-200"
-              >
-                {{ Company.company_name }}
-              </a>
-            </div> -->
           </div>
           <div class="relative">
             <label class="font-semibold text-gray-700 dark:text-gray-200" for="designation">
@@ -69,39 +37,7 @@
             <div class="flex justify-between">
               <input disabled type="text" placeholder="Designation.." v-model="formData.designation" required
                 class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
-              <!-- <div
-                class="bg-slate-200 py-4 px-2 mt-2 rounded"
-                @click="toggleDropdown3"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 21 21"
-                  stroke="currentColor"
-                  class="h-2 w-4 text-gray-600"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  ></path>
-                </svg>
-              </div> -->
             </div>
-            <!-- <div
-              v-show="dropdownVisible3"
-              class="dropdown-content absolute left-0 bg-gray-100 w-full max-h-56 overflow-y-auto border border-gray-300 z-10 mt-2 rounded shadow-lg"
-            >
-              <a
-                v-for="designation in filteredDesignation"
-                :key="designation.designation"
-                @click="selectDesignation(designation.designation)"
-                class="block text-black py-2 px-4 hover:bg-gray-200"
-              >
-                {{ designation.designation }}
-              </a>
-            </div> -->
           </div>
         </div>
         <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-3">
@@ -113,25 +49,6 @@
               <input type="text" placeholder="Department.." disabled v-model="formData.department" required
                 @click="toggleDropdown"
                 class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
-              <!-- <div
-                class="bg-slate-200 py-4 px-2 mt-2 rounded"
-                @click="toggleDropdown"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 21 21"
-                  stroke="currentColor"
-                  class="h-2 w-4 text-gray-600"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  ></path>
-                </svg>
-              </div> -->
             </div>
             <div v-show="dropdownVisible"
               class="dropdown-content absolute left-0 bg-gray-100 w-full max-h-56 overflow-y-auto border border-gray-300 z-10 mt-2 rounded shadow-lg">
@@ -141,18 +58,6 @@
               </a>
             </div>
           </div>
-
-          <!-- <div>
-            <label
-              class="font-semibold text-gray-700 dark:text-gray-200"
-              for="designation"
-              >Cost Center<span class="text-red-500">*</span></label
-            >
-            <input
-              v-model="formData.costCenter"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
-          </div> -->
           <div class="relative">
             <label class="font-semibold text-gray-700 dark:text-gray-200" for="companyName">Cost Center </label>
 
@@ -176,15 +81,6 @@
           </div>
         </div>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
-          <!-- <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200"
-              >Internal Order</label
-            >
-            <input
-              v-model="formData.internalOrder"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
-          </div> -->
           <div>
             <label class="font-semibold text-gray-700 dark:text-gray-200">
               Claim Type <span class="text-red-500">*</span>
@@ -192,17 +88,10 @@
 
             <div
               class="space-x-3 block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
-              <!-- HR Group -->
               <div class="relative inline-block" @mouseover="showHRMessage = true" @mouseleave="showHRMessage = false">
                 <input type="radio" id="HR" name="claimType" value="HR" required v-model="formData.reportType"
                   class="mr-2" />
                 <label for="HR">Medical & Handphone Reimbursement</label>
-                <!-- <div
-                  class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
-                  v-show="showHRMessage"
-                >
-                  Medical Bill and Handphone Bill Reimbursement
-                </div> -->
               </div>
 
               <!-- Finance Group -->
@@ -211,75 +100,13 @@
                 <input type="radio" id="Finance" name="claimType" value="Finance" v-model="formData.reportType"
                   class="mr-2" />
                 <label for="Finance">Travelling, Entertainment & Others</label>
-                <!-- <div
-                  class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
-                  v-show="showFinanceMessage"
-                >
-                  Local Travelling, Overseas Travelling With Accommodation,
-                  Entertainment, Staff Refreshment, and Others Form
-                </div> -->
               </div>
             </div>
           </div>
-
-          <!-- <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-3"> -->
-          <!-- <div>
-            <label
-              class="font-semibold text-gray-700 dark:text-gray-200"
-              for="ReportDate"
-              >Report Date</label
-            >
-            <input
-              v-model="formData.reportDate"
-              id="ReportDate"
-              type="date"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
-          </div> -->
-          <!-- <div>
-            <label
-              class="font-semibold text-gray-700 dark:text-gray-200"
-              for="ReportStartDate"
-              >Report Start Date</label
-            >
-            <input
-              v-model="formData.reportStartDate"
-              id="ReportStartDate"
-              type="date"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
-          </div>
-          <div>
-            <label
-              class="font-semibold text-gray-700 dark:text-gray-200"
-              for="ReportEndDate"
-              >Report End Date</label
-            >
-            <input
-              v-model="formData.reportEndDate"
-              id="ReportEndDate"
-              type="date"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
-          </div> -->
         </div>
-        <!-- <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
-          <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200"
-              >Note:
-            </label>
-            <label class="text-gray-700 dark:text-gray-200"
-              >First 7 days of a month will be paid in this month, else if after
-              7 days will be paid in next month</label
-            >
-          </div>
-        </div> -->
         <div class="pt-5">
           <label class="font-semibold text-gray-700 dark:text-gray-200" for="username">Upload Attachment (png, jpeg, pdf
             or xlsx)</label>
-
-          <!-- component -->
-
           <div>
             <div class="pt-3">
               <FilePond ref="pond" name="file" :server="null" :allowMultiple="true" :maxFileSize="'5MB'"
@@ -291,7 +118,6 @@
                   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 ]" @addfile="handleAddFile" @removefile="handleRemoveFile" />
             </div>
-            <!-- component -->
           </div>
         </div>
 
@@ -300,19 +126,6 @@
           Submissions made after this date will be processed in the
           following month.
         </h1>
-        <!-- <h1 class="text-gray-500 text-sm">
-          <span class="text-red-500">*</span
-          ><span class="text-red-500">*</span> HR: Medical Bill and Handphone
-          Bill Reimbursement
-        </h1>
-        <h1 class="text-gray-500 text-sm">
-          <span class="text-red-500">*</span
-          ><span class="text-red-500">*</span> Finance: Local Travelling,
-          Overseas Travelling With Accommodation, Entertainment, Staff
-          Refreshment, and Others Form
-        </h1> -->
-
-        <!-- button -->
         <div class="gap-3 flex flex-row-reverse">
           <div class="flex justify-center mt-10">
             <button type="submit"
@@ -328,7 +141,6 @@
           </div>
         </div>
       </form>
-      <!-- Loading Animation -->
       <div class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
         v-if="loading && !approveSuccess">
         <div class="absolute w-screen h-screen bg-gray-900 opacity-10"></div>
@@ -353,9 +165,8 @@ import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 
 import moment from "moment";
-import { formStore } from "../../views/store.js"; // Import your form store
+import { formStore } from "../../views/store.js"; 
 import { store } from "../../views/store.js";
-// import axios from 'axios';
 
 const FilePond = vueFilePond(
   FilePondPluginFilePoster,
@@ -369,6 +180,25 @@ export default {
   },
   emits: ["close"],
   data() {
+
+    const initialFormData = {
+    claimantName: "Teowcheewen",
+    companyName: formStore.formData.companyName,
+    department: formStore.formData.department,
+    costCenter: formStore.formData.costCenter,
+    designation: formStore.formData.designation,
+    reportName: formStore.formData.reportName,
+    internalOrder: formStore.formData.internalOrder,
+    reportType: "Finance",
+    reportDate: formStore.formData.reportDate,
+    reportStartDate: formStore.formData.reportStartDate,
+    reportEndDate: formStore.formData.reportEndDate,
+    memo: formStore.formData.memo,
+    uniqueCode: formStore.formData.uniqueCode,
+    uniqueCodeForFileUpload: formStore.formData.uniqueCodeForFileUpload,
+    fileUpload: formStore.formData.fileUpload.slice()
+  };
+
     return {
       loading: false,
       showHRMessage: false,
@@ -384,24 +214,27 @@ export default {
       designations: [],
       active: 0,
 
-      formData: {
-        claimantName: "Teowcheewen",
-        companyName: formStore.formData.companyName,
-        department: formStore.formData.department,
-        costCenter: formStore.formData.costCenter,
-        designation: formStore.formData.designation,
-        reportName: formStore.formData.reportName,
-        internalOrder: formStore.formData.internalOrder,
-        reportType: "Finance",
-        reportDate: formStore.formData.reportDate,
-        reportStartDate: formStore.formData.reportStartDate,
-        reportEndDate: formStore.formData.reportEndDate,
-        memo: formStore.formData.memo,
-        uniqueCode: formStore.formData.uniqueCode,
-        uniqueCodeForFileUpload: formStore.formData.uniqueCodeForFileUpload,
-        fileUpload: formStore.formData.fileUpload.slice()
-      },
-      branch: "", // Add the missing branch property
+      formData: { ...initialFormData }, // Use a copy of the initial data
+      defaultFormData: initialFormData,
+
+      // formData: {
+      //   claimantName: "Teowcheewen",
+      //   companyName: formStore.formData.companyName,
+      //   department: formStore.formData.department,
+      //   costCenter: formStore.formData.costCenter,
+      //   designation: formStore.formData.designation,
+      //   reportName: formStore.formData.reportName,
+      //   internalOrder: formStore.formData.internalOrder,
+      //   reportType: "Finance",
+      //   reportDate: formStore.formData.reportDate,
+      //   reportStartDate: formStore.formData.reportStartDate,
+      //   reportEndDate: formStore.formData.reportEndDate,
+      //   memo: formStore.formData.memo,
+      //   uniqueCode: formStore.formData.uniqueCode,
+      //   uniqueCodeForFileUpload: formStore.formData.uniqueCodeForFileUpload,
+      //   fileUpload: formStore.formData.fileUpload.slice()
+      // },
+      branch: "", 
       userDetails: {},
     };
   },
@@ -409,8 +242,6 @@ export default {
     "formData.reportName": function (newVal) {
       this.formData.reportName = this.capitalizeWords(newVal);
     },
-
-    // this is for full capital
     "formData.designation": function (newVal) {
       this.formData.designation = newVal.toUpperCase();
     },
@@ -458,22 +289,22 @@ export default {
     this.fetchDesignations();
     this.fetchCompany();
     this.fetchDepartments();
-    // Get the branch from the store
     this.userDetails = store.getSession().userDetails;
     this.fetchusername();
   },
 
   methods: {
+
+    resetForm() {
+    this.formData = { ...this.defaultFormData };
+  },
+  
     handleAddFile(error, fileItem) {
       if (!error) {
-    //    console.log("Added file name:", fileItem.file.name);
-
-        // Rename the file
         const newFileName = `ClaimsAttachment_${fileItem.file.name}`;
         const renamedFile = new File([fileItem.file], newFileName, { type: fileItem.file.type });
 
         this.formData.fileUpload.push(renamedFile);
-      //  console.log("Files after upload (plain array):", this.formData.fileUpload);
       }
     },
 
@@ -482,27 +313,18 @@ export default {
     },
 
     generateUniqueCode() {
-      // Check if this.userId is defined
       if (this.userDetails.userId) {
-        // Use part of the userId for uniqueness, e.g., 4 characters
         const userIdFragment = this.userDetails.userId.substring(0, 4);
-
-        // Generate a random number and pad it to 2 characters
         const randomNumber = Math.floor(Math.random() * 100)
           .toString()
           .padStart(2, "0");
-
-        // Create a timestamp and take the last 2 digits for uniqueness
         const timestamp = Date.now().toString().slice(-2);
-
-        // Construct the uniqueCode
         this.uniqueCode = `Claims${userIdFragment}${randomNumber}${timestamp}`;
         // console.log("Unique Code:", this.uniqueCode);
         this.formData.uniqueCodeForFileUpload = this.uniqueCode;
         return this.uniqueCode;
       } else {
         console.error("User ID is undefined.");
-        // You may want to handle this case differently based on your application logic.
         return "";
       }
     },
@@ -512,10 +334,9 @@ export default {
           "http://172.28.28.116:7239/api/User/GetAllEmployees"
         );
         if (response.status !== 200) {
-          // Corrected status code check
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json(); // Correctly parsing the JSON response
+        const data = await response.json();
         if (data && data.result && data.result.length > 0) {
           const selectedEmployee = data.result.find(
             (emp) => emp.username_id === store.getSession().userDetails.userId
@@ -648,8 +469,6 @@ export default {
       this.active += page;
 
       if (this.active > 0) {
-        // Update form data in the form store
-
         formStore.clearFormData();
         this.generateSerialNumber();
         this.generateUniqueCode();
@@ -662,40 +481,12 @@ export default {
         this.$nextTick(() => {
           this.$router.push({ name: "ClaimReport" });
         });
-
-        // Send API request using axios
-        // const apiData = {
-        //   name: this.formData.claimantName,
-        //   company_name: this.formData.companyName,
-        //   department: this.formData.department,
-        //   designation_title: this.formData.designation,
-        //   claim_startdate: this.formData.reportStartDate,
-        //   claim_enddate: this.formData.reportEndDate,
-        //   reference_number: this.generateUniqueCode(),
-        //   report_name: this.formData.reportName,
-        // };
-
-        // // Send API request using axios
-        // axios.post('http://172.28.28.116:7239/api/User/InsertClaimDetails', apiData)
-        //   .then(response => {
-        //     // Handle success response
-        //     console.log('API response', response.data);
-        //     this.$router.push({ name: 'ClaimReport' });
-        //   })
-        //   .catch(error => {
-        //     // Handle error response
-        //     console.error('API error', error);
-        //   });
-
         this.active = 0;
       }
-      // this.active = 0;
 
       if (this.active < 0) {
-        // close the create new claim pop up
         this.$emit("close");
         this.active = 0;
-        // close the create new claim pop up
       }
     },
   },
@@ -704,7 +495,6 @@ export default {
 <style scoped>
 .dropdown-content {
   max-height: 10rem;
-  /* max-h-56 in Tailwind CSS */
 }
 
 .formStepCircle:not(:first-child)::before {
