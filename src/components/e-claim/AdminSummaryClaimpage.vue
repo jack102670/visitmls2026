@@ -1124,8 +1124,9 @@ async FetchClaimDatasDetails() {
       let amount = 0;
       for (let i in result) {
 
-        const mealAllowance = result[i].meal_allowance;
-        const oemAmount = result[i].oem[0]?.amount;
+        
+        const mealAllowance = result[i].meal_allowance || 0;
+        const oemAmount = result[i].oem?.[0]?.amount || 0;
         amount = Number(mealAllowance) + Number(oemAmount);
         // amount = result[i].meal_allowance + result[i].oem.amount;
         const editedDetail = {
