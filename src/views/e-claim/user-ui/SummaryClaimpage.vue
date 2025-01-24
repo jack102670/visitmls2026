@@ -1133,9 +1133,18 @@ async FetchClaimDatasDetails() {
       let amount = 0;
       for (let i in result) {
 
-        const mealAllowance = result[i].meal_allowance;
-        const oemAmount = result[i].oem[0]?.amount;
+        const mealAllowance = result[i].meal_allowance || 0;
+        const oemAmount = result[i].oem?.[0]?.amount || 0;
+        console.log('Meal Allowance:', mealAllowance, 'Type:', typeof mealAllowance);
+        console.log('OEM Amount:', oemAmount, 'Type:', typeof oemAmount);
+
+
         amount = Number(mealAllowance) + Number(oemAmount);
+
+        console.log('Calculated Amount:', amount);
+
+
+
         // amount = result[i].meal_allowance + result[i].oem.amount;
         const editedDetail = {
           Description: result[i].description,

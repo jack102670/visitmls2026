@@ -804,7 +804,7 @@
                             </td>
                             <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                               <span v-if="currencyType === 'foreign'">
-                                {{ expense.totalAccommodation }}
+                                {{ (Math.round(expense.totalAccommodation * 100) / 100).toFixed(2) }}
                               </span>
                               <span v-if="currencyType === 'rm'">
                                 {{ (Math.round(expense.amount * 100) / 100).toFixed(2) }}
