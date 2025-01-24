@@ -49,7 +49,7 @@ export const refOptions = [
   },
   { label: "GIFT TO CLIENT", value: "GIFT TO CLIENT" },
   { label: "GIFT TO OTHERS", value: "GIFT TO OTHERS" },
-  { label: "MEAL FOR STAFF", value: "MEAL FOR STAFF" },
+  // { label: "MEAL FOR STAFF", value: "MEAL FOR STAFF" },
 ];
 
 export const TypeOptions = [

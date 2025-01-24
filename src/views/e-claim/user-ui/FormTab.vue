@@ -230,6 +230,40 @@
                                           handleRemoveFile(error, file, field)
                                         " :accepted-file-types="field.acceptedFileTypes
                                         " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
+                                     
+                                     
+                                     <!-- new -->
+                                     <file-pond v-if="
+                                      field.id === 'UploadPetrolCharged' &&
+                                      showPetrolUpload
+                                    " :name="field.id" :disabled="(tab.title ===
+                                          'Handphone Bill Reimbursement' &&
+                                          isFormDisabled) ||
+                                        field.disabled
+                                        " :required="field.required" ref="pond" label-idle="Drop files here..." @addfile="(error, file) =>
+                                          handleAddFile(error, file, field)
+                                        " @removefile="(error, file) =>
+                                          handleRemoveFile(error, file, field)
+                                        " :accepted-file-types="field.acceptedFileTypes
+                                        " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
+
+
+                                      <file-pond v-if="
+                                      field.id === 'UploadEvCharged' &&
+                                      showEvUpload
+                                    " :name="field.id" :disabled="(tab.title ===
+                                          'Handphone Bill Reimbursement' &&
+                                          isFormDisabled) ||
+                                        field.disabled
+                                        " :required="field.required" ref="pond" label-idle="Drop files here..." @addfile="(error, file) =>
+                                          handleAddFile(error, file, field)
+                                        " @removefile="(error, file) =>
+                                          handleRemoveFile(error, file, field)
+                                        " :accepted-file-types="field.acceptedFileTypes
+                                        " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
+
+
+
                                     <file-pond v-if="
                                       field.id === 'UploadLT' ||
                                       field.id === 'UploadOthers' ||
@@ -1060,7 +1094,7 @@
                         </div>
                       </template>
                       <template v-else>
-                        <input v-model="field.value" :id="field.id" :type="field.type" :placeholder="field.placeholder"
+                        <input v-model="field.value" :id="field.id" :type="field.type" :placeholder="field.placeholder " :readonly="field.readonly"
                           :step="field.type === 'number' ? '0.01' : undefined"
                           class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
                       </template>
@@ -1243,6 +1277,8 @@ export default {
       showFareUpload: true,
       showTollUpload: true,
       showParkingUpload: true,
+      showPetrolUpload: true,
+      showEvUpload: true,
       LimitedAmountHR: 0,
       limit_medicaldental: 0,
       limit_outpatient: 0,
@@ -1500,6 +1536,62 @@ export default {
               gridClass: "sm:col-span-1",
               hidden: false,
             },
+            //new 
+            {
+              id: "petrolCharged",
+              label: "Petrol(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
+              hidden: false,
+            },
+            {
+              id: "UploadPetrolCharged",
+              label: "",
+              type: "file",
+              value: [],
+              allowMultiple: true,
+              server: null,
+              required: false,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
+              hidden: false,
+            },
+            {
+              id: "evCharged",
+              label: "EV (RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
+              hidden: false,
+            },
+            {
+              id: "UploadEvCharged",
+              label: "",
+              type: "file",
+              value: [],
+              allowMultiple: true,
+              server: null,
+              required: false,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
+              hidden: false,
+            },
+            //old
             {
               id: "UploadLT",
               label:
@@ -1955,7 +2047,7 @@ export default {
               label: "Venue",
               type: "text",
               value: "",
-              required: true,
+              required: false,
               gridClass: "sm:col-span-2",
             },
             {
@@ -2032,7 +2124,7 @@ export default {
             },
             {
               id: "CompanySR",
-              label: "Company",
+              label: "Customer",
               type: "text",
               value: "",
               required: true,
@@ -2043,17 +2135,17 @@ export default {
               label: "Venue",
               type: "text",
               value: "",
-              required: true,
+              required: false,
               gridClass: "sm:col-span-2",
             },
             {
               id: "ReferenceSR",
               label: "Reference",
-              type: "select",
-              value: "",
+              type: "text",
+              value: "MEAL FOR STAFF",
               required: true,
-              options: refOptions,
               gridClass: "sm:col-span-2",
+              readonly: true,
             },
             {
               id: "AmountRMSR",
@@ -2569,6 +2661,18 @@ export default {
           .fields.find((field) => field.id === "ParkingLT");
         return parkingField && parkingField.value !== "";
       }
+      if (fieldId === "UploadPetrolCharged") {
+        const parkingField = this.tabs
+          .find((tab) => tab.title === "Local Travelling")
+          .fields.find((field) => field.id === "ParkingLT");
+        return parkingField && parkingField.value !== "";
+      }
+      if (fieldId === "UploadEvCharged") {
+        const parkingField = this.tabs
+          .find((tab) => tab.title === "Local Travelling")
+          .fields.find((field) => field.id === "ParkingLT");
+        return parkingField && parkingField.value !== "";
+      }
       return false;
     },
     async checkstatus() {
@@ -2722,6 +2826,13 @@ export default {
         case "ParkingLT":
           this.showParkingUpload = !this.showParkingUpload;
           break;
+        case "petrolCharged":
+          this.showPetrolUpload = !this.showPetrolUpload;
+          break;
+        case "evCharged":
+          this.showPetrolUpload = !this.showEvUpload;
+          break;
+        
       }
     },
 
@@ -2739,6 +2850,12 @@ export default {
           break;
         case "UploadParkingLT":
           prefix = "PARKING_";
+          break;
+          case "UploadPetrolCharged":
+          prefix = "PETROL_";
+          break;
+          case "UploadEvCharged":
+          prefix = "EV_";
           break;
         default:
           prefix = "SUPPORTING_DOC_";
@@ -2944,6 +3061,12 @@ export default {
       const ParkingLT = localTravellingTab.fields.find(
         (field) => field.id === "ParkingLT"
       );
+      const petrolCharged = localTravellingTab.fields.find(
+        (field) => field.id === "petrolCharged"
+      );
+      const evCharged = localTravellingTab.fields.find(
+        (field) => field.id === "evCharged"
+      );
       const TollLT = localTravellingTab.fields.find(
         (field) => field.id === "TollLT"
       );
@@ -2969,7 +3092,9 @@ export default {
         MileageRMLT.value = ""; // Reset value
         MileageKMLT.value = "";
         ParkingLT.value = "";
+        evCharged.value = "";
         TollLT.value = "";
+        petrolCharged.value = "";
       }
     },
 
@@ -3322,7 +3447,11 @@ export default {
           (!isPublicTransport ||
             (field.id !== "MileageRMLT" && field.id !== "TollLT")) &&
           (!isPersonalTransport ||
-            (field.id !== "FareRMLT" && field.id !== "ParkingLT"))
+            (field.id !== "FareRMLT" && field.id !== "ParkingLT")) &&
+            (!isPersonalTransport || 
+              (field.id !== "FareRMLT" && field.id !== "petrolCharged")) &&
+              (!isPersonalTransport || 
+                (!field.id !== "FareRMLT" && field.id !== "evCharged") )
         ) {
           total += parseFloat(field.value);
         }

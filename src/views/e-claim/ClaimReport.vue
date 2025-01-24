@@ -1956,6 +1956,8 @@ export default {
                     end_point: claim.LocationEnd || "string",
                     date_event: claim.dateLT || "string",
                     park_fee: claim.ParkingLT || 0,
+                    petrol: claim.petrolCharged || 0,
+                    evCharged: claim.evCharged || 0,
                     toll_fee: claim.TollLT || 0,
                     total_fee: claim.totalRM || 0,
                     fare: claim.FareRMLT || 0,
