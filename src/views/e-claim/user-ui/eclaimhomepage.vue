@@ -3,7 +3,7 @@
     <div class="">
       <div
         class="relative bg-[#f7fbff] dark:bg-gray-800 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
-        <div class="grid grid-cols-12 gap-4">
+        <div class="grid grid-cols-12 gap-4 pr-5">
           <div class="col-span-4">
             <div class="flex flex-col">
               <div class="ml-5">
