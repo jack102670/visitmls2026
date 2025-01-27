@@ -174,11 +174,11 @@
                           ? ''
                           : key == 'Participants'
                             ? ''
-                            : key == 'oem'
+                            : key == 'Others Expenses'
                             ? ''
                             : val
                     }}
-                    <div v-show="key === 'oem'" id="staffDetails">
+                    <div v-show="key === 'Others Expenses'" id="staffDetails">
                       <a 
                         @click="showOemModal(val)" 
                         class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white px-4 py-1 rounded-md w-20 text-center justify-center items-center">
@@ -1152,7 +1152,6 @@ async FetchClaimDatasDetails() {
           Date: result[i].date_event,
           'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
           Attachments: result[i].files,
-          oem: result[i].oem,
           Tab_Title: 'Overseas Outstation',
           Remark: result[i].comment,
           unique_code: result[i].unique_code,
