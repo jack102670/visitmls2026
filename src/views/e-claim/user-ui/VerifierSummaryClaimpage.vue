@@ -1075,16 +1075,16 @@ export default {
               Starting_Point: result[i].starting_point,
               End_Point: result[i].end_point,
               'Accom.': result[i].accommodation,
-              'Mileage(KM)': result[i].mileage_km,
-              'Park_Fee(RM)': result[i].park_fee,
-              'Toll_Fee(RM)': result[i].toll_fee,
+              'Mileage(KM)': Number(result[i].mileage_km).toFixed(2),
+              'Park_Fee(RM)': Number(result[i].park_fee).toFixed(2),
+              'Toll_Fee(RM)': Number(result[i].toll_fee).toFixed(2),
               Fare: result[i].fare,
-              Meal_Allowance: result[i].meal_allowance,
+              Meal_Allowance: Number(result[i].meal_allowance).toFixed(2),
               Transport_Specification: result[i].transport_specification,
               Transport_Mode: result[i].transport_mode,
               Trip_Mode: result[i].trip_mode,
-              'Total_Mileage(RM)': result[i].total_mileage,
-              'Total_Fee(RM)': result[i].total_fee,
+              'Total_Mileage(RM)': Number(result[i].total_mileage).toFixed(2),
+              'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
               Attachments: result[i].files,
               Tab_Title: 'Local Outstation',
               unique_code: result[i].unique_code,
@@ -1111,15 +1111,16 @@ export default {
           let details = [];
           let amount = 0;
           for (let i in result) {
-             const mealAllowance = result[i].meal_allowance;
-            const oemAmount = result[i].oem[0]?.amount;
+          
+              const mealAllowance = result[i].meal_allowance || 0;
+              const oemAmount = result[i].oem?.[0]?.amount || 0;
             amount = Number(mealAllowance) + Number(oemAmount);
             const editedDetail = {
               Description: result[i].description,
               Date: result[i].date_event,
-              'Meal_Allowance_(RM)': result[i].meal_allowance,
+              'Meal_Allowance_(RM)': Number(result[i].meal_allowance).toFixed(2),
               oem: result[i].oem,
-              'Total_Fee(RM)': result[i].total_fee,
+              'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
               Attachments: result[i].files,
               Tab_Title: 'Overseas Outstation',
               unique_code: result[i].unique_code,
@@ -1154,7 +1155,7 @@ export default {
               Venue: result[i].venue_name,
               Company: result[i].company_name,
               Staff_Involved: result[i].sim,
-              'Total_Fee(RM)': result[i].total_fee,
+              'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
               Attachments: result[i].files,
               Tab_Title: 'Staff Refreshment',
               unique_code: result[i].unique_code,
@@ -1189,7 +1190,7 @@ export default {
               Venue: result[i].venue_name,
               Company: result[i].company_name,
               Participants: result[i].participants,
-              'Total_Fee(RM)': result[i].total_fee,
+              'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
               Attachments: result[i].files,
               Tab_Title: 'Entertainment',
               unique_code: result[i].unique_code,
@@ -1219,7 +1220,7 @@ export default {
             const editedDetail = {
               Description: result[i].description,
               Date: result[i].expense_date,
-              'Total_Fee(RM)': result[i].total_fee,
+              'Total_Fee(RM)': Number(result[i].total_fee).toFixed,
               Attachments: result[i].files,
               Tab_Title: 'Other',
               unique_code: result[i].unique_code,

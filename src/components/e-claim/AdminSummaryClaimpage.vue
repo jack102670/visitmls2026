@@ -1088,17 +1088,16 @@ async FetchClaimDatasDetails() {
       for (let i in result) {
         amount += result[i].total_fee;
         const editedDetail = {
-          Mileage_Km: result[i].mileage_km,
           Starting_Point: result[i].starting_point,
           End_Point: result[i].end_point,
           Date_Event: result[i].date_event,
-          'Park_Fee(RM)': result[i].park_fee,
-          'Toll_Fee(RM)': result[i].toll_fee,
-          'Total_Fee(RM)': result[i].total_fee,
+          'Mileage(KM)': Number(result[i].mileage_km).toFixed(2),
+              'Park_Fee(RM)': Number(result[i].park_fee).toFixed(2),
+              'Toll_Fee(RM)': Number(result[i].toll_fee).toFixed(2),
           Transport_Specification: result[i].transport_specification,
           Transport_Mode: result[i].transport_mode,
           Trip_Mode: result[i].trip_mode,
-          Total_Mileage: result[i].total_mileage,
+          'Total_Mileage(RM)': Number(result[i].total_mileage).toFixed(2),
           Attachments: result[i].files,
           Remark: result[i].comment,
           Tab_Title: 'Local Outstation',
@@ -1125,17 +1124,18 @@ async FetchClaimDatasDetails() {
       let amount = 0;
       for (let i in result) {
 
-        const mealAllowance = result[i].meal_allowance;
-        const oemAmount = result[i].oem[0]?.amount;
+        
+        const mealAllowance = result[i].meal_allowance || 0;
+        const oemAmount = result[i].oem?.[0]?.amount || 0;
         amount = Number(mealAllowance) + Number(oemAmount);
         // amount = result[i].meal_allowance + result[i].oem.amount;
         const editedDetail = {
           Description: result[i].description,
-          Meal_Allowance: result[i].meal_allowance,
+          'Meal_Allowance_(RM)': Number(result[i].meal_allowance).toFixed(2),
           Date: result[i].date_event,
-          'Total_Fee(RM)': result[i].total_fee,
-          Attachments: result[i].files,
+          'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
           oem: result[i].oem,
+          Attachments: result[i].files,
           Tab_Title: 'Overseas Outstation',
           Remark: result[i].comment,
           unique_code: result[i].unique_code,
@@ -1169,7 +1169,7 @@ async FetchClaimDatasDetails() {
           Reference_Type: result[i].reference_type,
           Venue: result[i].venue_name,
           Company: result[i].company_name,
-          'Total_Fee(RM)': result[i].total_fee,
+          'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
           Staff_Involved: result[i].sim,
           Attachments: result[i].files,
           Remark: result[i].comment,
@@ -1202,7 +1202,7 @@ async FetchClaimDatasDetails() {
           Date: result[i].date_event,
           Venue: result[i].venue_name,
           Company: result[i].company_name,
-          'Total_Fee(RM)': result[i].total_fee,
+          'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
           Participants: result[i].participants,
           Attachments: result[i].files,
           Remark: result[i].comment,
@@ -1240,7 +1240,7 @@ async FetchClaimDatasDetails() {
           bank_name: result[i].bank_name,
           bank_holder: result[i].bank_holder,
           bank_account: result[i].bank_account,
-          'Total_Fee(RM)': result[i].claim_amount,
+          'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
           Attachments: result[i].files,
           Tab_Title: 'Medical Leave',
           Remark: result[i].comment,
@@ -1271,7 +1271,7 @@ async FetchClaimDatasDetails() {
           Bank: result[i].bank_name,
           Bank_Holder: result[i].bank_holder,
           Bank_Account: result[i].bank_account,
-          'Claim_Amount(RM)': result[i].claim_amount,
+          'Claim_Amount(RM)': Number(result[i].claim_amount).toFixed(2),
           Attachments: result[i].files,
           Tab_Title: 'Handphone Bill',
           Remark: result[i].comment,
@@ -1299,7 +1299,7 @@ async FetchClaimDatasDetails() {
         const editedDetail = {
           Description: result[i].description,
           Date: result[i].expense_date,
-          'Total_Fee(RM)': result[i].total_fee,
+          'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
           Attachments: result[i].files,
           Tab_Title: 'Other',
           Remark: result[i].comment,

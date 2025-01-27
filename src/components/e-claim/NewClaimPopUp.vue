@@ -417,41 +417,45 @@ export default {
   },
   computed: {
     filteredDesignation() {
-      return this.designations.filter((designation) => {
-        return designation.designation
-          .toLowerCase()
-          .includes(this.formData.designation.toLowerCase());
-      });
-    },
-    filteredDepartments() {
-      return this.departments.filter((department) => {
-        return department.department
-          .toLowerCase()
-          .includes(this.formData.department.toLowerCase());
-      });
-    },
-    filteredCompanyName() {
-      return this.Companies.filter((park) => {
-        const searchTerm = this.formData.companyName.toLowerCase();
-        return (
-          (park.company_code &&
-            park.company_code.toLowerCase().includes(searchTerm)) ||
-          (park.company_name &&
-            park.company_name.toLowerCase().includes(searchTerm))
-        );
-      });
-    },
-    filteredCostcenter() {
-      return this.Companies.filter((park) => {
-        const searchTerm = this.formData.costCenter.toLowerCase();
-        return (
-          (park.company_code &&
-            park.company_code.toLowerCase().includes(searchTerm)) ||
-          (park.company_name &&
-            park.company_name.toLowerCase().includes(searchTerm))
-        );
-      });
-    },
+  return this.designations.filter((designation) => {
+    return (
+      designation.designation &&
+      this.formData.designation &&
+      designation.designation.toLowerCase().includes(this.formData.designation.toLowerCase())
+    );
+  });
+},
+filteredDepartments() {
+  return this.departments.filter((department) => {
+    return (
+      department.department &&
+      this.formData.department &&
+      department.department.toLowerCase().includes(this.formData.department.toLowerCase())
+    );
+  });
+},
+filteredCompanyName() {
+  return this.Companies.filter((company) => {
+    const searchTerm = this.formData.companyName ? this.formData.companyName.toLowerCase() : "";
+    return (
+      (company.company_code &&
+        company.company_code.toLowerCase().includes(searchTerm)) ||
+      (company.company_name &&
+        company.company_name.toLowerCase().includes(searchTerm))
+    );
+  });
+},
+filteredCostcenter() {
+  return this.Companies.filter((company) => {
+    const searchTerm = this.formData.costCenter ? this.formData.costCenter.toLowerCase() : "";
+    return (
+      (company.company_code &&
+        company.company_code.toLowerCase().includes(searchTerm)) ||
+      (company.company_name &&
+        company.company_name.toLowerCase().includes(searchTerm))
+    );
+  });
+},
   },
 
   mounted() {
@@ -645,7 +649,7 @@ export default {
     },
 
     submitForm(page) {
-      this.active += page;
+  this.active += page;
 
       if (this.active > 0) {
         // Update form data in the form store
