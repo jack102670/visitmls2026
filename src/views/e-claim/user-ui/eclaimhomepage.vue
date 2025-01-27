@@ -3,140 +3,144 @@
     <div class="">
       <div
         class="relative bg-[#f7fbff] dark:bg-gray-800 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
-        <div class="flex justify-between">
-          <div class="flex justify-start flex-col ml-5">
-            <h2 class="text-3xl font-bold text-blue-900 dark:text-white">
-              PKT GROUP OF COMPANIES
-            </h2>
-            <h3 class="text-xl font-bold text-blue-800 dark:text-white">
-              Claim for Reimbursement of All Expenses
-            </h3>
-          </div>
-          <div class="flex mt-5"></div>
-
-          <hr class="h-mx-auto bg-gray-100 border-0 rounded" />
-        </div>
-        <div class="pt-4 ml-4">
-          <button @click="ChangePopUp()"
-            class="flex items-center justify-center text-center rounded-full bg-[#160959] dark:bg-[#111827] text-slate-200 py-2 px-4 text-sm hover:bg-[#190a70] hover:text=white">
-            <svg class="mr-1" width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M40 23V14L31 4H10C8.89543 4 8 4.89543 8 6V42C8 43.1046 8.89543 44 10 44H22" stroke="white"
-                stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M33 29V43" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M26 36H33H40" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M30 4V14H40" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-
-            New Claim
-          </button>
-        </div>
-
-        <!-- Box Info Section-->
-        <section v-if="requests">
-          <div class="p-5 mt-1 flex flex-col md:flex-row gap-1 justify-center">
-            <div
-              class="mb-2 md:mb-0 relative overflow-hidden dark:bg-[#111827] dark:border-green-200 dark:hover:bg-gray-800 hover:bg-green-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-green-300 rounded-lg w-full md:w-1/5">
-              <div class="card m-2" @click="filterTable('Approved')">
-                <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
-                    requests.filter(
-                      (request) => request.status === 'Approved'
-                    ).length
-                  }}</span>
-                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200">Approved</span>
-                </div>
+        <div class="grid grid-cols-12 gap-4">
+          <div class="col-span-4">
+            <div class="flex flex-col">
+              <div class="ml-5">
+                <h2 class="text-3xl font-bold text-blue-900 dark:text-white">
+                  PKT GROUP OF COMPANIES
+                </h2>
+                <h3 class="text-xl font-bold text-blue-800 dark:text-white">
+                  Claim for Reimbursement of All Expenses
+                </h3>
               </div>
-            </div>
-            <div
-              class="mb-2 md:mb-0 relative overflow-hidden dark:bg-[#111827] dark:border-blue-200 dark:hover:bg-gray-800 hover:bg-amber-100 bg-white max-h-[1000px] shadow-xl border-x-2 border-y-2 border-amber-300 rounded-lg w-full md:w-1/5">
-              <div class="card m-2" @click="filterTable('Verified')">
-                <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
-                    requests.filter(
-                      (request) => request.status === 'Verified'
-                    ).length
-                  }}</span>
-                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200">Verified</span>
-                </div>
-              </div>
-            </div>
-            <div
-              class="mb-2 md:mb-0 relative overflow-hidden dark:bg-[#111827] dark:border-red-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] hover:bg-red-100 shadow-xl border-x-2 border-y-2 rounded-lg border-red-300 w-full md:w-1/5">
-              <div class="card m-2" @click="filterTable('rejected')">
-                <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{
-                    requests.filter(
-                      (request) => request.status === 'rejected'
-                    ).length
-                  }}</span>
-                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200">Rejected</span>
-                </div>
-              </div>
-            </div>
-            <div
-              class="mb-2 md:mb-0 relative overflow-hidden dark:bg-[#111827] dark:border-yellow-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] shadow-xl hover:bg-yellow-100 border-x-2 border-y-2 rounded-lg border-yellow-300 w-full md:w-1/5">
-              <div class="card m-2" @click="filterTable('reimburse')">
-                <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
-                    {{
-                      requests.filter(
-                        (request) => request.status === 'Approved'
-                      ).length
-                    }}</span>
-                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200">Reimburse</span>
-                </div>
-              </div>
-            </div>
-            <div
-              class="relative overflow-hidden dark:bg-[#111827] dark:border-teal-200 dark:hover:bg-gray-800 bg-white max-h-[1000px] hover:bg-teal-100 shadow-xl border-x-2 border-y-2 rounded-lg border-teal-300 w-full md:w-1/5">
-              <div class="card m-2" @click="filterTable('')">
-                <div class="ml-5">
-                  <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{ this.requests.length }}</span>
-                  <span class="block text-sm text-gray-500 font-semibold dark:text-slate-200">All Claims</span>
-                </div>
+              <div class="pt-4 ml-5">
+                <button @click="ChangePopUp()"
+                  class="flex items-center justify-center text-center rounded-full bg-[#160959] dark:bg-[#111827] text-slate-200 py-2 px-4 text-sm hover:bg-[#190a70] hover:text-white">
+                  <svg class="mr-1" width="20" height="20" viewBox="0 0 48 48" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M40 23V14L31 4H10C8.89543 4 8 4.89543 8 6V42C8 43.1046 8.89543 44 10 44H22" stroke="white"
+                      stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M33 29V43" stroke="white" stroke-width="4" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path d="M26 36H33H40" stroke="white" stroke-width="4" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path d="M30 4V14H40" stroke="white" stroke-width="4" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                  New Claim
+                </button>
               </div>
             </div>
           </div>
-        </section>
-
-        <!-- Claim Table Section-->
+          <div v-if="requests" class="col-span-8">
+            <div class="grid grid-cols-6 gap-4">
+              <div
+                class="dark:bg-[#111827] dark:border-green-200 dark:hover:bg-gray-800 hover:bg-green-100 bg-white shadow-xl border-2 border-green-300 rounded-lg">
+                <div class="card p-4" @click="filterTable('OPEN')">
+                  <div class="flex flex-col items-center">
+                    <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
+                      {{ requests.filter((request) => request.admin_status === 'OPEN').length }}
+                    </span>
+                    <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">Open</span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="dark:bg-[#111827] dark:border-red-200 dark:hover:bg-gray-800 bg-white hover:bg-red-100 shadow-xl border-2 border-red-300 rounded-lg">
+                <div class="card p-4" @click="filterTable('REJECTED')">
+                  <div class="flex flex-col items-center">
+                    <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
+                      {{ requests.filter((request) => request.admin_status === 'REJECTED BY HR & ADMIN' ||
+                        request.admin_status === 'REJECTED BY FINANCE').length }}
+                    </span>
+                    <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">Rejected</span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="dark:bg-[#111827] dark:border-red-200 dark:hover:bg-gray-800 bg-white hover:bg-red-100 shadow-xl border-2 border-red-300 rounded-lg">
+                <div class="card p-4" @click="filterTable('APPROVED')">
+                  <div class="flex flex-col items-center">
+                    <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
+                      {{ requests.filter((request) => request.admin_status === 'APPROVED BY FINANCE' ||
+                        request.admin_status === 'APPROVED BY HR & ADMIN').length }}
+                    </span>
+                    <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">Approved</span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="dark:bg-[#111827] dark:border-yellow-200 dark:hover:bg-gray-800 bg-white shadow-xl hover:bg-yellow-100 border-2 border-yellow-300 rounded-lg">
+                <div class="card p-4" @click="filterTable('REIMBURSED')">
+                  <div class="flex flex-col items-center">
+                    <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
+                      {{ requests.filter((request) => request.admin_status === 'REIMBURSED').length }}
+                    </span>
+                    <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">Reimburse</span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="dark:bg-[#111827] dark:border-yellow-200 dark:hover:bg-gray-800 bg-white shadow-xl hover:bg-yellow-100 border-2 border-yellow-300 rounded-lg">
+                <div class="card p-4" @click="filterTable('CHECKED BY CHECKER. WAITING FOR VERIFIER')">
+                  <div class="flex flex-col items-center">
+                    <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
+                      {{ requests.filter((request) => request.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER').length }}
+                    </span>
+                    <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">Checked</span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="dark:bg-[#111827] dark:border-teal-200 dark:hover:bg-gray-800 bg-white hover:bg-teal-100 shadow-xl border-2 border-teal-300 rounded-lg">
+                <div class="card p-4" @click="filterTable('')">
+                  <div class="flex flex-col items-center">
+                    <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{ this.requests.length }}</span>
+                    <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">All Claims</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <section class="flex flex-col mt-6">
           <div class="px-5">
             <div>
               <div class="pb-4">
-              <h2 class="text-lg font-bold text-gray-800 dark:text-white">
-                Claim
-                <span
-                  class="px-3 py-0.5 text-md text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{{
-                    requests.length }}
-                </span>
-              </h2>
-            </div>
-            <div class=" py-2 flex flex-col md:flex-row justify-between items-center md:items-end">
-              <div class="flex items-center">
-                <div class="space-x-2">
-                  <label for="number-dd" class="text-md font-medium">Sort</label>
-                  <select id="number-dd" name="number" @change="updateItemsPerPage"
-                    class="rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 text-sm bg-gray-50 ">
-                    <option value="10">10</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                  </select>
+                <h2 class="text-lg font-bold text-gray-800 dark:text-white">
+                  Claim
+                  <span
+                    class="px-3 py-0.5 text-md text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{{
+                      requests.length }}
+                  </span>
+                </h2>
+              </div>
+              <div class=" py-2 flex flex-col md:flex-row justify-between items-center md:items-end">
+                <div class="flex items-center">
+                  <div class="space-x-2">
+                    <label for="number-dd" class="text-md font-medium">Sort</label>
+                    <select id="number-dd" name="number" @change="updateItemsPerPage"
+                      class="rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 text-sm bg-gray-50 ">
+                      <option value="10">10</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="relative md:mt-0 w-full md:w-auto">
+                  <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    </svg>
+                  </div>
+                  <input type="text" id="table-search" v-model="searchQuery"
+                    class="block py-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full md:w-80 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white "
+                    placeholder="Search for applications" />
                 </div>
               </div>
-              <div class="relative md:mt-0 w-full md:w-auto">
-                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                  <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                  </svg>
-                </div>
-                <input type="text" id="table-search" v-model="searchQuery"
-                  class="block py-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full md:w-80 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white "
-                  placeholder="Search for applications" />
-              </div>
-            </div>
             </div>
             <div class="overflow-x-auto">
               <div class="inline-block min-w-full py-2 align-middle">
@@ -301,26 +305,10 @@
               </div>
             </nav>
           </div>
-      </section>
+        </section>
 
-    <!-- Loading Animation -->
-    <div class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
-      v-if="loading">
-      <div class="absolute w-screen h-screen bg-gray-900 opacity-30"></div>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="w-16 h-16 z-50">
-        <circle transform="rotate(0)" transform-origin="center" fill="none" stroke="blue" stroke-width="10"
-          stroke-linecap="round" stroke-dasharray="230 1000" stroke-dashoffset="0" cx="100" cy="100" r="70">
-          <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="2" repeatCount="indefinite">
-          </animateTransform>
-        </circle>
-      </svg>
-      <h1 class="text-gray-50 font-semibold z-50 ml-2 text-lg">
-        {{ loadingText }} Data...
-      </h1>
-    </div>
-
-    <div class="mt-5 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4"></div>
-    </div>
+        <div class="mt-5 grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4"></div>
+      </div>
     </div>
     <NewClaimPopUp v-if="popup" @close="ChangePopUp()" :class="[animate ? 'PopUpAnimation' : 'BackAnimation']" />
   </main>
@@ -462,7 +450,11 @@ export default {
     },
     filterTable(status) {
       const dataTable = $(this.$refs.myTable).DataTable();
-      dataTable.search(status).draw();
+      if (status === 'REJECTED') {
+        dataTable.search('REJECTED').draw();  // This will match both rejection types
+      } else {
+        dataTable.search(status).draw();
+      }
     },
     async fetchAllRequests() {
       this.loadingText = 'Fetching';
@@ -484,6 +476,22 @@ export default {
         }
         const data = await response.json();
         this.requests = data.result;
+        console.log("fetch applicants", data.result);
+
+
+        const totalRejected = data.result.filter(
+          request =>
+            request.admin_status === 'REJECTED BY HR & ADMIN' ||
+            request.admin_status === 'REJECTED BY FINANCE'
+        ).length;
+
+        console.log('Total Rejected:', totalRejected);
+        console.log('Breakdown of Rejected:', {
+          'REJECTED BY HR & ADMIN': data.result.filter(request => request.admin_status === 'REJECTED BY HR & ADMIN').length,
+          'REJECTED BY FINANCE': data.result.filter(request => request.admin_status === 'REJECTED BY FINANCE').length
+        });
+
+
         if (data.result.length > 0) {
           this.userApplications = data.result;
         }
@@ -502,51 +510,51 @@ export default {
     },
 
     getStatusContainerClass(status) {
-  const colorMap = {
-    RESUBMIT: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
-    CLOSE: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800',
-    OPEN: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-indigo-100/60 dark:bg-gray-800',
-    APPROVED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
-    'APPROVED. AWAITING PAYMENT.': 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
-    COMPLETED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800',
-    REJECTED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800',
-    VERIFIED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
-    PENDING: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
-    REIMBURSED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-gray-100 dark:bg-gray-800',
-    CHECKED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800', 
-  };
-  return colorMap[status] || 'bg-orange-100/60 dark:bg-gray-800';
-},
+      const colorMap = {
+        RESUBMIT: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
+        CLOSE: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800',
+        OPEN: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-indigo-100/60 dark:bg-gray-800',
+        APPROVED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
+        'APPROVED. AWAITING PAYMENT.': 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
+        COMPLETED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800',
+        REJECTED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800',
+        VERIFIED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
+        PENDING: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
+        REIMBURSED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-gray-100 dark:bg-gray-800',
+        CHECKED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800',
+      };
+      return colorMap[status] || 'bg-orange-100/60 dark:bg-gray-800';
+    },
 
-getStatusDotClass(status) {
-  const colorMap = {
-    RESUBMIT: 'h-1.5 w-1.5 rounded-full bg-orange-500',
-    OPEN: 'h-1.5 w-1.5 rounded-full bg-indigo-500',
-    APPROVED: 'h-1.5 w-1.5 rounded-full bg-emerald-500',
-    COMPLETED: 'h-1.5 w-1.5 rounded-full bg-blue-500',
-    REJECTED: 'h-1.5 w-1.5 rounded-full bg-red-500',
-    PENDING: 'h-1.5 w-1.5 rounded-full bg-orange-500',
-    VERIFIED: 'h-1.5 w-1.5 rounded-full bg-orange-500',
-    REIMBURSED: 'h-1.5 w-1.5 rounded-full bg-black',
-    CHECKED: 'h-1.5 w-1.5 rounded-full bg-green-500', 
-  };
-  return colorMap[status] || 'bg-orange-500';
-},
+    getStatusDotClass(status) {
+      const colorMap = {
+        RESUBMIT: 'h-1.5 w-1.5 rounded-full bg-orange-500',
+        OPEN: 'h-1.5 w-1.5 rounded-full bg-indigo-500',
+        APPROVED: 'h-1.5 w-1.5 rounded-full bg-emerald-500',
+        COMPLETED: 'h-1.5 w-1.5 rounded-full bg-blue-500',
+        REJECTED: 'h-1.5 w-1.5 rounded-full bg-red-500',
+        PENDING: 'h-1.5 w-1.5 rounded-full bg-orange-500',
+        VERIFIED: 'h-1.5 w-1.5 rounded-full bg-orange-500',
+        REIMBURSED: 'h-1.5 w-1.5 rounded-full bg-black',
+        CHECKED: 'h-1.5 w-1.5 rounded-full bg-green-500',
+      };
+      return colorMap[status] || 'bg-orange-500';
+    },
 
-getStatusTextClass(status) {
-  const colorMap = {
-    RESUBMIT: 'text-sm font-normal text-orange-500',
-    OPEN: 'text-sm font-normal text-indigo-500',
-    APPROVED: 'text-sm font-normal text-emerald-500',
-    COMPLETED: 'text-sm font-normal text-blue-500',
-    REJECTED: 'text-sm font-normal text-red-500',
-    PENDING: 'text-sm font-normal text-orange-500',
-    REIMBURSED: 'text-sm font-normal text-black',
-    VERIFIED: 'text-sm font-normal text-orange-500',
-    CHECKED: 'text-sm font-normal text-green-500',
-  };
-  return colorMap[status] || 'text-orange-500';
-},
+    getStatusTextClass(status) {
+      const colorMap = {
+        RESUBMIT: 'text-sm font-normal text-orange-500',
+        OPEN: 'text-sm font-normal text-indigo-500',
+        APPROVED: 'text-sm font-normal text-emerald-500',
+        COMPLETED: 'text-sm font-normal text-blue-500',
+        REJECTED: 'text-sm font-normal text-red-500',
+        PENDING: 'text-sm font-normal text-orange-500',
+        REIMBURSED: 'text-sm font-normal text-black',
+        VERIFIED: 'text-sm font-normal text-orange-500',
+        CHECKED: 'text-sm font-normal text-green-500',
+      };
+      return colorMap[status] || 'text-orange-500';
+    },
     ChangePopUp() {
       if (this.popup == true) {
         this.animate = !this.animate;
