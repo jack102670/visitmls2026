@@ -36,7 +36,7 @@
           <div v-if="requests" class="col-span-8">
             <div class="grid grid-cols-6 gap-4">
               <div
-                class="dark:bg-[#111827] dark:border-green-200 dark:hover:bg-gray-800 hover:bg-green-100 bg-white shadow-xl border-2 border-green-300 rounded-lg">
+                class="dark:bg-[#111827] dark:border-indigo-200 dark:hover:bg-gray-800 hover:bg-indigo-100 bg-white shadow-xl border-2 border-green-300 rounded-lg">
                 <div class="card p-4" @click="filterTable('OPEN')">
                   <div class="flex flex-col items-center">
                     <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
@@ -59,7 +59,7 @@
                 </div>
               </div>
               <div
-                class="dark:bg-[#111827] dark:border-red-200 dark:hover:bg-gray-800 bg-white hover:bg-red-100 shadow-xl border-2 border-red-300 rounded-lg">
+                class="dark:bg-[#111827] dark:border-green-600 dark:hover:bg-gray-800 bg-white hover:bg-gray-100 shadow-xl border-2 border-green-300 rounded-lg">
                 <div class="card p-4" @click="filterTable('APPROVED')">
                   <div class="flex flex-col items-center">
                     <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
@@ -71,16 +71,16 @@
                 </div>
               </div>
               <div
-                class="dark:bg-[#111827] dark:border-yellow-200 dark:hover:bg-gray-800 bg-white shadow-xl hover:bg-yellow-100 border-2 border-yellow-300 rounded-lg">
-                <div class="card p-4" @click="filterTable('REIMBURSED')">
-                  <div class="flex flex-col items-center">
-                    <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
-                      {{ requests.filter((request) => request.admin_status === 'REIMBURSED').length }}
-                    </span>
-                    <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">Reimburse</span>
+                  class="dark:bg-[#111827] dark:border-black-200 dark:hover:bg-gray-800 bg-white hover:bg-gray-100 shadow-xl border-2 border-black-400 rounded-lg">
+                  <div class="card p-4" @click="filterTable('REIMBURSED')">
+                    <div class="flex flex-col items-center">
+                      <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
+                        {{ requests.filter((request) => request.admin_status === 'REIMBURSED').length }}
+                      </span>
+                      <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">Reimburse</span>
+                    </div>
                   </div>
                 </div>
-              </div>
               <div
                 class="dark:bg-[#111827] dark:border-yellow-200 dark:hover:bg-gray-800 bg-white shadow-xl hover:bg-yellow-100 border-2 border-yellow-300 rounded-lg">
                 <div class="card p-4" @click="filterTable('CHECKED BY CHECKER. WAITING FOR VERIFIER')">
