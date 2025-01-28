@@ -13,8 +13,8 @@
                 <h1 class="text-md font-semibold w-screen mb-6">
                   Choose the checker and select the duration
                 </h1>
-
-                <!-- Department Dropdown -->
+                <div>
+                </div>
                 <div class="relative mb-4">
                   <label class="block text-sm font-medium text-gray-700 mb-1">Department</label>
                   <div class="relative">
@@ -31,8 +31,6 @@
                     </div>
                   </div>
                 </div>
-
-                <!-- Employee Dropdown -->
                 <div class="relative">
                   <label class="block text-sm font-medium text-gray-700 mb-1">Employee Name</label>
                   <div class="relative">
@@ -49,121 +47,97 @@
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <!-- calendar -->
-              <!-- <div class="w-80 mb-8 bg-white dark:bg-gray-700 p-4 rounded-lg">
-                <div class="flex w-full justify-between pb-4">
-                  <button @click="prevMonth">⬅️</button>
-                  <h2>{{ monthYear }}</h2>
-                  <button @click="nextMonth">➡️</button>
-                </div>
-                <div class="grid grid-cols-7 mt-4">
-                  <div v-for="day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sun', 'Sat']" :key="day"
-                    class="text-center p-2">
-                    {{ day }}
+                <div class="flex space-x-4 py-4">
+                    <div class="flex items-center ">
+                      <input type="radio" id="permanent" value="permanent" v-model="duration" name="duration"
+                        class="mr-2">
+                      <label for="permanent" class="text-gray-700">Permanent</label>
+                    </div>
+                    <div class="flex items-center">
+                      <input type="radio" id="temporary" value="temporary" v-model="duration" name="duration"
+                        class="mr-2">
+                      <label for="temporary" class="text-gray-700">Temporary</label>
+                    </div>
                   </div>
-                  <div v-for="n in firstDayOfMonth" :key="n" class="text-center p-2"></div>
-                  <div v-for="day in daysInMonth" :key="day" class="text-center p-2 cursor-pointer" :class="[
-                    isPastDate(day)
-                      ? 'bg-gray-300 text-gray-400 dark:text-gray-400'
-                      : '',
-                    isSelectedDate(day)
-                      ? 'bg-blue-800 text-white'
-                      : 'bg-gray-100 hover:bg-gray-200 dark:text-black',
-                  ]" @click="selectDate(day)">
-                    {{ day }}
-                  </div>
-                </div>
-              </div> -->
-
-              <div class="grid grid-cols-4 gap-4">
-                <div class="col-span-2 relative mb-8">
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
-                  <div class="relative">
-                    <input type="text" readonly v-model="formattedStartDate" @focus="isStartCalendarOpen = true"
-                      @blur="handleStartBlur"
-                      class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                      placeholder="Select start date" />
-                    <div v-if="isStartCalendarOpen" ref="startCalendar"
-                      class="absolute z-50 w-full mt-1 bg-white border rounded-md shadow-lg">
-                      <div class="p-4">
-                        <div class="flex justify-between mb-4">
-                          <button @click="prevMonth">⬅️</button>
-                          <span>{{ monthYear }}</span>
-                          <button @click="nextMonth">➡️</button>
-                        </div>
-                        <div class="grid grid-cols-7 gap-2">
+                <div v-show="duration === 'temporary'" class="grid grid-cols-4 gap-4">
+                  <div class="col-span-2 relative mb-8">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                    <div class="relative">
+                      <input type="text" readonly v-model="formattedStartDate" @focus="isStartCalendarOpen = true"
+                        @blur="handleStartBlur"
+                        class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                        placeholder="Select start date" />
+                      <div v-if="isStartCalendarOpen" ref="startCalendar"
+                        class="absolute z-50 w-full mt-1 bg-white border rounded-md shadow-lg">
+                        <div class="p-4">
+                          <div class="flex justify-between mb-4">
+                            <button @click="prevMonth">⬅️</button>
+                            <span>{{ monthYear }}</span>
+                            <button @click="nextMonth">➡️</button>
+                          </div>
+                          <div class="grid grid-cols-7 gap-2">
                             <span v-for="day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" :key="day"
                               class="text-center text-sm font-bold w-10 py-2">
                               {{ day }}
                             </span>
-                            <span v-for="n in firstDayOfMonth" :key="`empty-${n}`" 
-                              class="text-transparent w-10 h-10">
+                            <span v-for="n in firstDayOfMonth" :key="`empty-${n}`" class="text-transparent w-10 h-10">
                               0
                             </span>
-                            <button v-for="day in daysInMonth" 
-                              :key="day" 
+                            <button v-for="day in daysInMonth" :key="day"
                               class="w-10 h-10 text-sm rounded-full hover:bg-gray-200 flex items-center justify-center"
                               :class="{
                                 'bg-blue-500 text-white': isSelectedStartDate(day),
                                 'cursor-not-allowed opacity-50': isStartDateDisabled(day)
-                              }"
-                              :disabled="isStartDateDisabled(day)"
-                              @click="selectStartDate(day)">
+                              }" :disabled="isStartDateDisabled(day)" @click="selectStartDate(day)">
                               {{ day }}
                             </button>
                           </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="col-span-2 relative">
-                  <label class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
-                  <div class="relative">
-                    <input type="text" readonly v-model="formattedEndDate" @focus="isEndCalendarOpen = true"
-                      @blur="handleEndBlur"
-                      class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                      placeholder="Select end date" />
-                    <div v-if="isEndCalendarOpen"  ref="endCalendar"
-                      class="absolute z-50 w-full mt-1 bg-white border rounded-md shadow-lg">
-                      <div class="p-4">
-                        <div class="flex justify-between mb-4">
-                          <button @click="prevMonth">⬅️</button>
-                          <span>{{ monthYear }}</span>
-                          <button @click="nextMonth">➡️</button>
-                        </div>
-                        <div class="grid grid-cols-7 gap-2">
-                          <span v-for="day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" :key="day"
-                            class="text-center text-sm font-bold">
-                            {{ day }}
-                          </span>
-                          <span v-for="n in firstDayOfMonth" :key="`empty-${n}`" class="text-transparent">0</span>
-                          <button
-                        v-for="day in daysInMonth"
-                        :key="day"
-                        class="w-10 h-10 text-sm rounded-full hover:bg-gray-200 flex items-center justify-center"
-                        :class="{
-                          'bg-blue-500 text-white': isSelectedEndDate(day),
-                          'cursor-not-allowed opacity-50': isDateDisabled(day)
-                        }"
-                        :disabled="isDateDisabled(day)"
-                        @click="selectEndDate(day)"
-                      >
-                        {{ day }}
-                      </button>
+                  <div class="col-span-2 relative">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+                    <div class="relative">
+                      <input type="text" readonly v-model="formattedEndDate" @focus="isEndCalendarOpen = true"
+                        @blur="handleEndBlur"
+                        class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                        placeholder="Select end date" />
+                      <div v-if="isEndCalendarOpen" ref="endCalendar"
+                        class="absolute z-50 w-full mt-1 bg-white border rounded-md shadow-lg">
+                        <div class="p-4">
+                          <div class="flex justify-between mb-4">
+                            <button @click="prevMonth">⬅️</button>
+                            <span>{{ monthYear }}</span>
+                            <button @click="nextMonth">➡️</button>
+                          </div>
+                          <div class="grid grid-cols-7 gap-2">
+                            <span v-for="day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" :key="day"
+                              class="text-center text-sm font-bold">
+                              {{ day }}
+                            </span>
+                            <span v-for="n in firstDayOfMonth" :key="`empty-${n}`" class="text-transparent">0</span>
+                            <button v-for="day in daysInMonth" :key="day"
+                              class="w-10 h-10 text-sm rounded-full hover:bg-gray-200 flex items-center justify-center"
+                              :class="{
+                                'bg-blue-500 text-white': isSelectedEndDate(day),
+                                'cursor-not-allowed opacity-50': isDateDisabled(day)
+                              }" :disabled="isDateDisabled(day)" @click="selectEndDate(day)">
+                              {{ day }}
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <div class="flex flex-col mb-8">
-                <button @click="AddCheckers()" class="bg-blue-800 text-white py-2 mb-[200px] w-32 rounded-lg hover:bg-blue-900">
-                  Confirm
-                </button>
+                <div class="flex flex-col mb-8">
+                  <button @click="AddCheckers()"
+                    class="bg-blue-800 text-white py-2 mb-[200px] w-32 rounded-lg hover:bg-blue-900">
+                    Confirm
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -208,6 +182,7 @@ import { store } from '@/views/store.js';
 import Swal from 'sweetalert2';
 
 
+
 export default {
   props: {
     departmentInputId: {
@@ -223,6 +198,7 @@ export default {
   data() {
     return {
       checkerName: "",
+      duration: 'permanent',
       Checkers: [],
       AllDepartments: [],
       AllEmployees: [],
@@ -342,11 +318,11 @@ export default {
           `http://172.28.28.116:7165/api/Admin/AssignChecker/${username_id}`,
           data
         );
-    //    console.log("Data successfully updated:", response);
+        //    console.log("Data successfully updated:", response);
         this.Checkers.push(newChecker);
         this.saveCheckersToLocalStorage();
         this.resetForm();
-        
+
         await Swal.fire({
           icon: 'success',
           title: 'Success!',
@@ -355,10 +331,10 @@ export default {
           timer: 2000,
           timerProgressBar: true
         });
-        
+
       } catch (error) {
         console.error("Error updating data:", error);
-        
+
         await Swal.fire({
           icon: 'error',
           title: 'Update Failed',
@@ -376,24 +352,24 @@ export default {
     },
 
     selectStartDate(day) {
-        const selectedDate = moment(this.currentMonth).date(day);
+      const selectedDate = moment(this.currentMonth).date(day);
 
-        if (selectedDate.isBefore(moment(), "day")) {
-          return;
-        }
-        
-        if (this.endDate && selectedDate.isAfter(this.endDate)) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Invalid Date Selection',
-            text: 'Start date cannot be after end date',
-            confirmButtonColor: '#3085d6'
-          });
-          return;
-        }
-        this.startDate = selectedDate.toDate();
-        this.isStartCalendarOpen = false;
-      },
+      if (selectedDate.isBefore(moment(), "day")) {
+        return;
+      }
+
+      if (this.endDate && selectedDate.isAfter(this.endDate)) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid Date Selection',
+          text: 'Start date cannot be after end date',
+          confirmButtonColor: '#3085d6'
+        });
+        return;
+      }
+      this.startDate = selectedDate.toDate();
+      this.isStartCalendarOpen = false;
+    },
 
     selectEndDate(day) {
       const selectedDate = moment(this.currentMonth).date(day);
@@ -413,7 +389,7 @@ export default {
     isDateDisabled(day) {
       const date = moment(this.currentMonth).date(day);
       return (
-        date.isBefore(moment(), "day") || 
+        date.isBefore(moment(), "day") ||
         (this.startDate && date.isBefore(moment(this.startDate), "day"))
       );
     },
@@ -427,16 +403,16 @@ export default {
     },
 
     prevMonth() {
-     const newDate = moment(this.currentMonth).subtract(1, "month");
+      const newDate = moment(this.currentMonth).subtract(1, "month");
 
       if (!newDate.endOf('month').isBefore(moment(), 'day')) {
-         this.currentMonth = newDate;
+        this.currentMonth = newDate;
       }
-},
+    },
 
     DeleteChecker(index) {
       const checkerToDelete = this.Checkers[index];
-      
+
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -449,7 +425,7 @@ export default {
         if (result.isConfirmed) {
           try {
             this.Checkers.splice(index, 1);
-            
+
             if (this.Checkers.length === 0) {
               localStorage.removeItem('assignedCheckers');
             } else {
@@ -466,14 +442,14 @@ export default {
             });
           } catch (error) {
             console.error('Error deleting checker:', error);
-            
+
             await Swal.fire({
               icon: 'error',
               title: 'Delete Failed',
               text: 'Failed to remove checker. Please try again.',
               confirmButtonColor: '#3085d6'
             });
-            
+
             this.loadCheckersFromLocalStorage();
           }
         }
@@ -493,20 +469,20 @@ export default {
     },
 
     handleStartBlur(event) {
-    setTimeout(() => {
-      if (this.$refs.startCalendar && !this.$refs.startCalendar.contains(event.relatedTarget)) {
-        this.isStartCalendarOpen = false;
-      }
-    }, 200);
-  },
+      setTimeout(() => {
+        if (this.$refs.startCalendar && !this.$refs.startCalendar.contains(event.relatedTarget)) {
+          this.isStartCalendarOpen = false;
+        }
+      }, 200);
+    },
 
-  handleEndBlur(event) {
-    setTimeout(() => {
-      if (this.$refs.endCalendar && !this.$refs.endCalendar.contains(event.relatedTarget)) {
-        this.isEndCalendarOpen = false;
-      }
-    }, 200);
-  },
+    handleEndBlur(event) {
+      setTimeout(() => {
+        if (this.$refs.endCalendar && !this.$refs.endCalendar.contains(event.relatedTarget)) {
+          this.isEndCalendarOpen = false;
+        }
+      }, 200);
+    },
 
     saveCheckersToLocalStorage() {
       localStorage.setItem('assignedCheckers', JSON.stringify(this.Checkers));

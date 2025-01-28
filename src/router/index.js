@@ -453,7 +453,7 @@ const routes = [
     component: Vendorsignup,
   },
   {
-    path: "/:pathMatch(.*)*", // This regex matches any route
+    path: "/:pathMatch(.*)*",
     name: "NotFound",
     component: NotFound,
   },
@@ -464,20 +464,19 @@ const router = createRouter({
   routes,
 });
 
-// Step 1: Modify the checkUserStatusAndShowModal method
-// Step 1: Modify the checkUserStatusAndShowModal method
+
 function checkUserStatusAndShowModal() {
   return new Promise((resolve, reject) => {
     const username_id = store.getSession().userDetails.userId;
     fetch(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`)
-      .then((response) => response.json()) // Parse the response body to JSON
+      .then((response) => response.json()) 
       .then((data) => {
         const userStatus = data.result[0].account_status;
      //   console.log("User status:", userStatus);
         if (userStatus === "0") {
-          resolve(false); // User has not completed their profile
+          resolve(false);
         } else {
-          resolve(true); // User has completed their profile
+          resolve(true);
         }
       })
       .catch((error) => {
@@ -486,20 +485,15 @@ function checkUserStatusAndShowModal() {
       });
   });
 }
-
-// Step 2: Define routes that require profile completion checks
-const routesRequiringProfileCheck = ["eclaimhomepages"]; // Add route names that require profile completion
-
-// Step 3: Modify the router.beforeEach guard
+const routesRequiringProfileCheck = ["eclaimhomepages"]; 
 router.beforeEach((to, from, next) => {
-  const publicPages = ["Login", "Loginstaff", "Vendorsingup", "testing"]; // Add other public route names as necessary
+  const publicPages = ["Login", "Loginstaff", "Vendorsingup", "testing"]; 
   const authRequired = !publicPages.includes(to.name);
   const session = store.getSession();
 
   if (authRequired && !session) {
     next({ name: "Loginstaff" });
   } else if (session) {
-    // Check if the route requires profile completion
     if (routesRequiringProfileCheck.includes(to.name)) {
       checkUserStatusAndShowModal()
         .then((isProfileComplete) => {
@@ -514,7 +508,7 @@ router.beforeEach((to, from, next) => {
           next("/error");
         });
     } else {
-      next(); // Allow navigation for routes that don't require profile completion
+      next();
     }
   } else {
     next();
