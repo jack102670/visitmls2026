@@ -107,7 +107,7 @@
         <section class="flex flex-col mt-6">
           <div class="px-5">
             <div>
-              <div class="pb-4">
+              <!-- <div class="pb-4">
                 <h2 class="text-lg font-bold text-gray-800 dark:text-white">
                   Claim
                   <span
@@ -115,7 +115,7 @@
                       requests.length }}
                   </span>
                 </h2>
-              </div>
+              </div> -->
               <div class=" py-2 flex flex-col md:flex-row justify-between items-center md:items-end">
                 <div class="flex items-center">
                   <div class="space-x-2">
