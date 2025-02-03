@@ -74,23 +74,6 @@ const routes = [
     },
   },
   {
-    path: "/checkerclaimpage/:rn",
-    name: "checkerClaimpage",
-    components: {
-      default: checkerClaimpage,
-      Sidebar: Newsidebar,
-    },
-    props: true,
-  },
-  {
-    path: "/checker",
-    name: "checkerDashboardPage",
-    components: {
-      default: checkerDashboardpage,
-      Sidebar: Newsidebar,
-    },
-  },
-  {
     path: "/homepage",
     name: "UserHomepage",
     components: {
@@ -217,6 +200,23 @@ const routes = [
     name: "AssignChecker",
     components: {
       default: AssignChecker,
+      Sidebar: Newsidebar,
+    },
+  },
+  {
+    path: "/checkerclaimpage/:rn",
+    name: "checkerClaimpage",
+    components: {
+      default: checkerClaimpage,
+      Sidebar: Newsidebar,
+    },
+    props: true,
+  },
+  {
+    path: "/checker",
+    name: "checkerDashboardPage",
+    components: {
+      default: checkerDashboardpage,
       Sidebar: Newsidebar,
     },
   },

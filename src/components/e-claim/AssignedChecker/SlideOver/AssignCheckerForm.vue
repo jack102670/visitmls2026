@@ -4,8 +4,7 @@
     </transition>
     <transition name="slide">
       <div v-if="isOpen" class="fixed inset-y-0 right-0 w-1/3 bg-white dark:bg-gray-800 z-50 p-6 overflow-y-auto">
-        <div class="flex justify-between items-center mb-6">
-          <h2 class="text-xl font-bold">Slide Over Content</h2>
+        <div class="flex justify-end items-center mb-2">
           <button @click="closeSlideOver" class="text-gray-500 hover:text-gray-700">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -199,7 +198,7 @@ import { store } from '@/views/store.js';
 import Swal from 'sweetalert2';
 
   export default {
-    emits: ['update:chosenDepartment', 'update:checkerName', 'close'],
+    emits: ['update:chosenDepartment', 'update:checkerName', 'close', 'checkerAdded', 'closeSlideOver'],
     props: {
       isOpen: {
         type: Boolean,
@@ -307,7 +306,7 @@ import Swal from 'sweetalert2';
     },
 
     async AddCheckers() {
-      if (!this.startDate || !this.endDate || !this.chosenDepartment || !this.checkerName) {
+      if (!this.startDate || !this.chosenDepartment || !this.checkerName) {
         Swal.fire({
           icon: 'warning',
           title: 'Missing Information',
@@ -329,11 +328,15 @@ import Swal from 'sweetalert2';
         (person) => person.name === this.checkerName
       );
 
+      const formattedEndDate = this.duration === 'permanent' ? '-' : moment(this.endDate).format("DD MMMM YYYY");
+
       const data = {
         checker_userId: result.id,
         start_date: moment(this.startDate).format("DD MMMM YYYY"),
-        end_date: moment(this.endDate).format("DD MMMM YYYY"),
+        end_date: formattedEndDate,
       };
+
+      console.log("Data to be updated:", data);
 
       try {
         const response = await axios.put(
@@ -341,9 +344,21 @@ import Swal from 'sweetalert2';
           data
         );
            console.log("Data successfully updated:", response);
-        this.Checkers.push(newChecker);
-        this.saveCheckersToLocalStorage();
+
+           let storedCheckers = localStorage.getItem('assignedCheckers');
+           storedCheckers = storedCheckers ? JSON.parse(storedCheckers) : [];
+
+        storedCheckers.push(newChecker);
+
+
+        localStorage.setItem('assignedCheckers', JSON.stringify(storedCheckers));
+        this.loadCheckersFromLocalStorage();
+
+        this.Checkers = storedCheckers;
+
         this.resetForm();
+
+        this.$emit("checkerAdded");
 
         await Swal.fire({
           icon: 'success',
@@ -353,6 +368,7 @@ import Swal from 'sweetalert2';
           timer: 2000,
           timerProgressBar: true
         });
+        this.$emit("closeSlideOver");
 
       } catch (error) {
         console.error("Error updating data:", error);
@@ -363,7 +379,13 @@ import Swal from 'sweetalert2';
           text: 'Failed to assign checker. Please try again.',
           confirmButtonColor: '#3085d6'
         });
+        this.$emit("closeSlideOver");
       }
+    },
+
+    loadCheckersFromLocalStorage() {
+      const storedCheckers = localStorage.getItem("assignedCheckers");
+      this.checkers = storedCheckers ? JSON.parse(storedCheckers) : [];
     },
 
     resetForm() {
@@ -432,51 +454,7 @@ import Swal from 'sweetalert2';
       }
     },
 
-    DeleteChecker(index) {
-      const checkerToDelete = this.Checkers[index];
 
-      Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          try {
-            this.Checkers.splice(index, 1);
-
-            if (this.Checkers.length === 0) {
-              localStorage.removeItem('assignedCheckers');
-            } else {
-              localStorage.setItem('assignedCheckers', JSON.stringify(this.Checkers));
-            }
-            await Swal.fire({
-              icon: 'success',
-              title: 'Deleted!',
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              text: `${checkerToDelete.checkerName} has been removed as checker`,
-              timer: 1500,
-              timerProgressBar: true
-            });
-          } catch (error) {
-            console.error('Error deleting checker:', error);
-
-            await Swal.fire({
-              icon: 'error',
-              title: 'Delete Failed',
-              text: 'Failed to remove checker. Please try again.',
-              confirmButtonColor: '#3085d6'
-            });
-
-            this.loadCheckersFromLocalStorage();
-          }
-        }
-      });
-    },
 
     isSelectedStartDate(day) {
       if (!this.startDate) return false;
@@ -506,16 +484,7 @@ import Swal from 'sweetalert2';
       }, 200);
     },
 
-    saveCheckersToLocalStorage() {
-      localStorage.setItem('assignedCheckers', JSON.stringify(this.Checkers));
-    },
 
-    loadCheckersFromLocalStorage() {
-      const savedCheckers = localStorage.getItem('assignedCheckers');
-      if (savedCheckers) {
-        this.Checkers = JSON.parse(savedCheckers);
-      }
-    }
     },
     watch: {
     chosenDepartment(newDepartment) {
