@@ -11,10 +11,11 @@
         Sign in to your account
       </h5>
       <div class="p-10 flex flex-col gap-4 text-sm">
+        <form @submit.prevent="login">
         <div>
-          <label class="text-slate-300 font-bold inline-block pb-2" for="email">Username</label>
+          <label class="text-slate-300 font-bold inline-block pb-2" for="username">Username</label>
           <input class="border border-gray-400 focus:outline-slate-400 rounded-md w-full shadow-sm px-5 py-2"
-            type="email" name="email" placeholder="user" v-model="userName"
+            type="text" name="username" placeholder="user" v-model="userName"
             :class="{ 'border-red-500': errors.username }" />
           <p v-if="errors.username" class="text-red-500 text-xs mt-1">{{ errors.username }}</p>
         </div>
@@ -26,14 +27,14 @@
           <p v-if="errors.password" class="text-red-500 text-xs mt-1">{{ errors.password }}</p>
         </div>
         <div class="flex">
-          <div class="w-1/2">
-            <input type="checkbox" id="rememberMe" name="rememberMe" v-model="rememberMe" />
+          <div class="w-1/2 py-2">
+            <input type="checkbox" id="rememberMe" name="rememberMe" class="rounded-md" v-model="rememberMe" />
             <label class="text-slate-200" for="rememberMe"> Remember me</label>
           </div>
         </div>
         <div v-show="showLoginButton">
           <button class="bg-blue-900 w-full py-2 rounded-md text-white font-bold cursor-pointer hover:bg-blue-700"
-            type="submit" @click.prevent="login">
+            type="submit">
             Login
           </button>
         </div>
@@ -53,6 +54,7 @@
             Loading....
           </button>
         </div>
+      </form>
       </div>
       <p class="text-sm text-slate-200 mt-10">
         Are you a vendor?
@@ -128,7 +130,9 @@ export default {
       this.validatePassword();
       return !this.errors.username && !this.errors.password;
     },
-    async login() {
+    async login(event) {
+      event.preventDefault();
+
       if (!this.validateForm()) {
         Swal.fire({
           icon: 'warning',
@@ -173,6 +177,7 @@ export default {
 
           store.setSession(userDetails, token, role);
 
+          this.$router.push(redirectPath);
           await Swal.fire({
             icon: "success",
             title: "Login Success!",
@@ -181,7 +186,7 @@ export default {
             confirmButtonText: 'OK',
             confirmButtonColor: '#3085d6'
           });
-          this.$router.push(redirectPath);
+
         } else {
           Swal.fire({
             icon: 'error',
