@@ -1,5 +1,4 @@
 <template>
-  <!-- component -->
   <button :style="sidebarPosition" class="toggle-btn block fixed z-50 p-2 bg-slate-200 text-blue-900 rounded-full mt-4"
     @click.stop="toggleSidebar">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -136,28 +135,6 @@
 
           <span class="mx-4 font-medium">Manage Vendor</span>
         </router-link>
-        <!-- <router-link
-          v-if="controlView === 'eclaim' && userDetails.userName.includes('FN')"
-          class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
-          :to="{ name: 'AdminDashboardpage' }"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-5 h-5"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z"
-            />
-          </svg>
-
-          <span class="mx-4 font-medium">Dashboard Finance</span>
-        </router-link> -->
         <router-link 
           v-if="controlView === 'eclaim' && userData.checker_valid !== '0'"
           class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
@@ -231,29 +208,6 @@
 
           <span class="mx-4 font-medium">Employee</span>
         </router-link>
-        <!-- <router-link
-          v-if="controlView === 'eclaim' && userData.department === ('CB')"
-          class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
-          :to="{ name: 'AdminDashboardpage' }"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-5 h-5"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z"
-            />
-          </svg>
-
-          <span class="mx-4 font-medium">Approve Claims</span>
-        </router-link> -->
-
         <a class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
           href="#">
           <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -265,7 +219,7 @@
               stroke-linejoin="round" />
           </svg>
 
-          <span @click="logout" v-show="showLogOutButton" class="mx-4 font-medium">Log Out</span>
+          <span @click.prevent="logout" v-show="showLogOutButton" class="mx-4 font-medium">Log Out</span>
           <span v-show="showLoadingButton" class="mx-4 font-medium">
             <svg aria-hidden="true" role="status"
               class="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101"
@@ -288,6 +242,7 @@
 <script>
 import { store } from '../views/store.js';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default {
   name: 'NewsidebarComponent',
@@ -357,11 +312,36 @@ export default {
       }
     },
 
-    logout() {
-      this.showLogOutButton = false;
-      this.showLoadingButton = true;
-      store.clearSession();
-      this.$router.push('/'); 
+    async logout() {
+      const result = await Swal.fire({
+        title: 'Are you sure you want to logout?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Logout!',
+      });
+      if (result.isConfirmed) {
+        try {
+          store.clearSession();
+          this.$router.push('/');
+          Swal.fire({
+            icon: "success",
+            title: "Logout Success!",
+            text: 'You have been logged out successfully.',
+            showConfirmButton: true,
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#3085d6'
+          });
+        } catch (error) {
+          console.error('Error during logout:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          });
+        }
+      }
     },
     toggleTheme() {
       const root = document.documentElement;
