@@ -37,14 +37,14 @@
           </div>
           <div v-show="showLoginButton">
             <button
-              class="bg-blue-600 w-full py-3 rounded-md text-white font-bold cursor-pointer hover:bg-blue-500 transition duration-300"
+              class="bg-blue-900 w-full py-3 rounded-md text-white font-bold cursor-pointer hover:bg-blue-500 transition duration-300"
               type="submit" @click.prevent="login">
               Login
             </button>
           </div>
           <div v-show="showLoadingButton">
             <button disabled type="button"
-              class="bg-blue-600 w-full py-3 rounded-md text-white font-bold cursor-pointer hover:bg-blue-500 transition duration-300">
+              class="bg-blue-900 w-full py-3 rounded-md text-white font-bold cursor-pointer hover:bg-blue-500 transition duration-300">
               <svg aria-hidden="true" role="status"
                 class="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101"
                 fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -181,7 +181,7 @@ export default {
 
           store.setSession(userDetails, token, role);
 
-          this.$router.push(redirectPath);
+
           await Swal.fire({
             icon: "success",
             title: "Login Success!",
@@ -190,6 +190,7 @@ export default {
             confirmButtonText: 'OK',
             confirmButtonColor: '#3085d6'
           });
+          this.$router.push(redirectPath);
 
         } else {
           Swal.fire({
@@ -245,7 +246,7 @@ export default {
   height: 100%;
   background-image: url("@/assets/images/1503506.jpg");
   background-size: cover;
-  filter: blur(2px);
+  filter: blur(3px);
   z-index: -1;
 }
 </style>
