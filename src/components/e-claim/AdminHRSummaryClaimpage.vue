@@ -542,7 +542,6 @@ export default {
   },
   data() {
     return {
-      // need to get from API
       role: 'approver',
       singleRemarks: [],
       singleColumnRemarks: [],
@@ -558,8 +557,6 @@ export default {
       approveSuccess: false,
       loading: false,
       loadingText: '',
-
-      // need to fetch from or post to API
       rejectApprover: false,
       rejectVerifier: false,
       approve: false,
@@ -568,17 +565,16 @@ export default {
       resubmit: false,
       remark: '',
       statusApprover: 'PENDING',
-
-      // fetch from backend
       claimDetails: [],
       claimDatas: [],
       claimDatasDetails: [],
       claimDataTotalAmount: [],
 
       keysToExclude: ['Tab_Title', 'unique_code'],
-
-      // referenceNumber: 'TMTM-Finance-2024-07-0451',
       referenceNumber: 'HS-HR-2024-07-5800',
+
+      outpatientTotal: 0,
+      medicalAndDentalTotal: 0
     };
   },
   computed: {
@@ -629,6 +625,7 @@ export default {
         this.claimDetails = response.data.result;
         this.statusApprover = this.claimDetails.admin_status || 'PENDING';
 
+
         // Reset all status flags
         this.approve = false;
         this.rejectApprover = false;
@@ -673,103 +670,111 @@ export default {
       }
     },
     async FetchClaimDatasDetails() {
-      this.claimDatasDetails = [];
-      this.claimDataTotalAmount = [];
-      this.claimDatas = [];
-      await axios
-        .get(
-          'http://172.28.28.116:7165/api/User/GetMedicalLeave/' +
-          this.referenceNumber
-        )
-        .then((response) => {
-          const result = response.data.result;
-       //   console.log(result);
-          let details = [];
-          let amount = 0;
-          for (let i in result) {
-            amount += result[i].claim_amount;
-            const editedDetail = {
-              IC_Number: result[i].ic_number,
-              Date_Leave: result[i].date_leave_taken,
-              Reason: result[i].reason,
-              Medical_Category: result[i].medical_category,
-              Clinic_Selection: result[i].clinic_selection,
-              Clinic_Name: result[i].clinic_name,
-              Reason_Different_Clinic: result[i].reason_different,
+  try {
+    this.claimDatasDetails = [];
+    this.claimDataTotalAmount = [];
+    this.claimDatas = [];
 
-              Bank: result[i].bank_name,
-              Bank_Holder: result[i].bank_holder,
-              Bank_Account: result[i].bank_account,
-              'Claim_Amount(RM)': Number(result[i].claim_amount).toFixed(2),
-              Attachments: result[i].files,
-              Tab_Title: 'Medical Bill',
-              unique_code: result[i].unique_code,
-              comment: result[i].comment,
-            };
-            details.push(editedDetail);
-          }
-          if (details.length > 0) {
-            this.claimDatasDetails.push(details);
-            this.claimDataTotalAmount.push(amount);
-          }
-      //   console.log("Claim datas details", this.claimDataTotalAmount);
-        })
-        .catch((e) => {
-          console.error(e);
-        });
+    let outpatientTotal = 0;
+    let medicalAndDentalTotal = 0;
 
-      await axios
-        .get(
-          'http://172.28.28.116:7165/api/User/GetHandphone/' + this.referenceNumber
-        )
-        .then((response) => {
-          const result = response.data.result;
-        //  console.log(result);
+    const response = await axios.get(
+      'http://172.28.28.116:7165/api/User/GetMedicalLeave/' +
+      this.referenceNumber
+    );
+    const result = response.data.result;
+    console.table(response.data.result, ['claim_amount', 'medical_category']);
+    console.log("Medical Leave", response.data.result);
+    let details = [];
+    let amount = 0;
+    for (let i in result) {
+      amount += result[i].claim_amount;
 
-          let details = [];
-          let amount = 0;
-          for (let i in result) {
-            amount += result[i].claim_amount;
-            const editedDetail = {
-              IC_Number: result[i].ic_number,
-              Claim_Month: result[i].claim_month,
-              Claim_Year: result[i].claim_year,
-
-              Bank: result[i].bank_name,
-
-              Bank_Holder: result[i].bank_holder,
-              Bank_Account: result[i].bank_account,
-              'Claim_Amount(RM)': Number(result[i].claim_amount).toFixed(2),
-              Attachments: result[i].files,
-              Tab_Title: 'Handphone Bill',
-              unique_code: result[i].unique_code,
-              comment: result[i].comment,
-            };
-            details.push(editedDetail);
-          }
-          if (details.length > 0) {
-            this.claimDatasDetails.push(details);
-            this.claimDataTotalAmount.push(amount);
-          }
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-
-      this.claimDatasDetails.forEach((details, index) => {
-        if (details && details.length > 0) {
-          const claimData = {
-            No: index + 1,
-            Type: details[0].Tab_Title,
-            Amount: this.claimDataTotalAmount[index],
-          };
-          this.claimDatas.push(claimData);
+      if (result[i].medical_category === "Outpatient") {
+          outpatientTotal += result[i].claim_amount;
+          this.outpatientTotal = outpatientTotal;
+        } else if (result[i].medical_category === "Medical Check-Up" || 
+                  result[i].medical_category === "Dental") {
+          medicalAndDentalTotal += result[i].claim_amount;
+          this.medicalAndDentalTotal = medicalAndDentalTotal;
         }
-      });
+      const editedDetail = {
+        IC_Number: result[i].ic_number,
+        Date_Leave: result[i].date_leave_taken,
+        Reason: result[i].reason,
+        Medical_Category: result[i].medical_category,
+        Clinic_Selection: result[i].clinic_selection,
+        Clinic_Name: result[i].clinic_name,
+        Reason_Different_Clinic: result[i].reason_different,
 
-      // console.log(this.claimDatas);
-      // console.log(this.claimDatasDetails);
-    },
+        Bank: result[i].bank_name,
+        Bank_Holder: result[i].bank_holder,
+        Bank_Account: result[i].bank_account,
+        'Claim_Amount(RM)': Number(result[i].claim_amount).toFixed(2),
+        Attachments: result[i].files,
+        Tab_Title: 'Medical Bill',
+        unique_code: result[i].unique_code,
+        comment: result[i].comment,
+      };
+      details.push(editedDetail);
+    }
+    if (details.length > 0) {
+      this.claimDatasDetails.push(details);
+      this.claimDataTotalAmount.push(amount);
+    }
+    console.log("Claim datas details", this.claimDataTotalAmount);
+    console.log("Outpatient Total:", outpatientTotal);
+    console.log("Medical Check-Up & Dental Total:", medicalAndDentalTotal);
+  } catch (error) {
+    console.error("Error fetching medical leave data:", error);
+  }
+
+  try {
+    const response = await axios.get(
+      'http://172.28.28.116:7165/api/User/GetHandphone/' + this.referenceNumber
+    );
+    const result = response.data.result;
+
+    let details = [];
+    let amount = 0;
+    for (let i in result) {
+      amount += result[i].claim_amount;
+      const editedDetail = {
+        IC_Number: result[i].ic_number,
+        Claim_Month: result[i].claim_month,
+        Claim_Year: result[i].claim_year,
+
+        Bank: result[i].bank_name,
+
+        Bank_Holder: result[i].bank_holder,
+        Bank_Account: result[i].bank_account,
+        'Claim_Amount(RM)': Number(result[i].claim_amount).toFixed(2),
+        Attachments: result[i].files,
+        Tab_Title: 'Handphone Bill',
+        unique_code: result[i].unique_code,
+        comment: result[i].comment,
+      };
+      details.push(editedDetail);
+    }
+    if (details.length > 0) {
+      this.claimDatasDetails.push(details);
+      this.claimDataTotalAmount.push(amount);
+    }
+  } catch (error) {
+    console.error("Error fetching handphone data:", error);
+  }
+
+  this.claimDatasDetails.forEach((details, index) => {
+    if (details && details.length > 0) {
+      const claimData = {
+        No: index + 1,
+        Type: details[0].Tab_Title,
+        Amount: this.claimDataTotalAmount[index],
+      };
+      this.claimDatas.push(claimData);
+    }
+  });
+},
 
     PrintSummary() {
       print();
@@ -829,14 +834,11 @@ export default {
 
       if (index !== -1) {
         if (data.remark.trim() === '') {
-          // Remove the item if the remark is empty
           this.singleRemarks.splice(index, 1);
         } else {
-          // Update the existing remark
           this.singleRemarks[index] = { ...this.singleRemarks[index], ...data };
         }
       } else {
-        // Only push new data if the remark is not empty
         if (data.remark.trim() !== '') {
           this.singleRemarks.push(data);
         }
@@ -879,9 +881,15 @@ export default {
           requester_name: this.claimDetails.name ? this.claimDetails.name : '-',
           report_name: this.claimDetails.report_name ? this.claimDetails.report_name : '-',
           verifier_email: this.claimDetails.verifier_email ? this.claimDetails.verifier_email : 'test@gmail.com',
-          reference_number: this.claimDetails.reference_number
+          reference_number: this.claimDetails.reference_number,
+          
+
+          outpatient_total: Number(this.outpatientTotal).toFixed(2),
+          medical_dental_total: Number(this.medicalAndDentalTotal).toFixed(2),
+          total_claim_amount: Number(this.outpatientTotal + this.medicalAndDentalTotal).toFixed(2)
+          
         };
-  //      console.log("Approved data to be sent to admin Approved-claim-HR:", approveData);
+        console.log("Approved data to be sent to admin Approved-claim-HR:", approveData);
         try {
           const response = await axios.put('http://172.28.28.116:7165/api/Admin/Approve_Claim_HR', approveData)
       //    console.log('API response after approval', response.data);
@@ -1087,57 +1095,7 @@ td {
 }
 </style>
 
-<style scoped>
-tr:first-child th:first-child {
-  border-top-left-radius: 16px;
-}
 
-tr:first-child th:last-child {
-  border-top-right-radius: 16px;
-}
-
-tr:last-child th:first-child {
-  border-bottom-left-radius: 16px;
-}
-
-tr:last-child th:last-child {
-  border-bottom-right-radius: 16px;
-}
-
-.details tr td:last-child {
-  display: none;
-}
-
-.details tr th:last-child {
-  display: none;
-}
-
-.details tr td:nth-last-child(2) {
-  display: none;
-}
-
-.details tr th:nth-last-child(2) {
-  display: none;
-}
-
-.details tr td:nth-last-child(3) {
-  display: none;
-}
-
-.details tr th:nth-last-child(3) {
-  display: none;
-}
-
-div:has(> table) {
-  overflow-x: auto;
-}
-
-table th,
-td {
-  padding-right: 4px;
-  padding-left: 4px;
-}
-</style>
 
 <style scoped>
 @media print {

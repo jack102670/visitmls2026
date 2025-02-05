@@ -2276,56 +2276,46 @@ export default {
                 }
               }
               break;
-            case "medical bill reimbursement":
-              for (const claim of claimsToSend) {
-                const uniqcodeML = this.generateUniqueCode(claim.tabTitle);
-                const thisisforMedicalBillReimbursement = {
-                  reference_number: this.serialnumber || "-",
-                  date_leave_taken: claim.dateML,
-                  reason: claim.ReasonML || "-",
-                  bank_name: claim.BankNameML,
-                  bank_holder: claim.AccHolderNameML,
-                  bank_account: String(claim.AccBankNumberML),
-                  claim_amount: String(claim.ClaimsAmountML),
-                  clinic_name: String(
-                    claim.OtherClinicSpecML
-                      ? claim.OtherClinicSpecML
-                      : claim.ClinicSelectionML || "-"
-                  ),
-                  clinic_selection: String(claim.ClinicSelectionML || "-"),
-                  reason_different: claim.OtherClinicReasonML || "-",
-                  medical_category: claim.MedicalCategoryML,
-                  requester_id: this.userDetails.userId,
-                  limit_outpatient: claim.limit_outpatient,
-                  limit_medic_dental: claim.limit_medic_dental,
-                  ic_number: claim.icNumber,
-                  unique_code: uniqcodeML,
-                };
+              case "medical bill reimbursement":
+                    for (const claim of claimsToSend) {
+                      const uniqcodeML = this.generateUniqueCode(claim.tabTitle);
+                      const thisisforMedicalBillReimbursement = {
+                        reference_number: this.serialnumber || "-",
+                        date_leave_taken: claim.dateML,
+                        reason: claim.ReasonML || "-",
+                        bank_name: claim.BankNameML,
+                        bank_holder: claim.AccHolderNameML,
+                        bank_account: String(claim.AccBankNumberML),
+                        claim_amount: String(claim.ClaimsAmountML),
+                        clinic_name: String(
+                          claim.OtherClinicSpecML
+                            ? claim.OtherClinicSpecML
+                            : claim.ClinicSelectionML || "-"
+                        ),
+                        clinic_selection: String(claim.ClinicSelectionML || "-"),
+                        reason_different: claim.OtherClinicReasonML || "-",
+                        medical_category: claim.MedicalCategoryML,
+                        requester_id: this.userDetails.userId,
+                        limit_outpatient: claim.limit_outpatient || 0,
+                        limit_medic_dental: claim.limit_medic_dental || 0,
+                        ic_number: claim.icNumber,
+                        unique_code: uniqcodeML,
+                      };
 
-                const userId = this.userDetails.userId;
-                // console.log("unik kod:", uniqueCode);
-                if (claim.UploadML && claim.UploadML.length > 0) {
-                  // Log the file data to verify it's correct before attempting to upload
-                  //  console.log("Preparing to upload files:", claim.UploadML);
-
-                  this.uploadFiles(claim.UploadML, userId, uniqcodeML);
-                }
-                axiosInstance = axios.create({
-                  baseURL:
-                    "http://172.28.28.116:7165/api/User/InsertMedicalLeave",
-                });
-                await axiosInstance.post(
-                  "/",
-                  thisisforMedicalBillReimbursement
-                );
-                // console.log(`Data sent for ${title} 2:`, response2.data);
-                //  console.log("Data sent for Medical Bill Reimbursement");
-              }
-              break;
-            // Add cases for other tab titles here
+                      console.log("Payload for Medical Bill Reimbursement:", thisisforMedicalBillReimbursement);
+                      const userId = this.userDetails.userId;
+                      if (claim.UploadML && claim.UploadML.length > 0) {
+                        this.uploadFiles(claim.UploadML, userId, uniqcodeML);
+                      }
+                      const axiosInstance = axios.create({
+                        baseURL: "http://172.28.28.116:7165/api/User/InsertMedicalLeave",
+                      });
+                      await axiosInstance.post("/", thisisforMedicalBillReimbursement);
+                    }
+                    break;
             default:
               console.error(`No endpoint found for ${title}`);
-              continue; // Skip to the next iteration
+              continue;
           }
           await Swal.fire({
             icon: 'success',
@@ -2428,6 +2418,7 @@ export default {
       if (formData.claimantName !== "") {
         this.claims = [formData];
         localStorage.setItem("claims", JSON.stringify(this.claims));
+        console.log("Claims data:", this.claims);
       } else {
         const storedClaims = JSON.parse(localStorage.getItem("claims")) || [];
         this.claims = storedClaims;
@@ -2438,7 +2429,7 @@ export default {
     addClaim(formData) {
       // Push new form data into the claims array
       this.dataclaims.push(formData);
-      // console.log("Data Claims:", this.dataclaims);
+      console.log("Data Claims:", this.dataclaims);
     },
     handleFileAdded() {
       // console.log("File added:", file);
