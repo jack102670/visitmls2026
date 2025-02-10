@@ -179,7 +179,7 @@
                           <span v-if="claim.combinetotal">RM {{ claim.combinetotal }}</span>
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2">
-                          <button @click="deleteForm()"
+                          <button @click="deleteForm(index)"
                             class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
@@ -196,8 +196,8 @@
             </div>
           </div>
         </section>
-        <tab class="mt-10" @formSubmitted="addClaim" :type="claims[0].reportType" @file-added="handleFileAdded"
-          @file-removed="handleFileRemoved"></tab>
+        <tab class="mt-10" @formSubmitted="addClaim" :type="claims[0].reportType" 
+          ></tab>
       </div>
       <div v-if="isClickModal"
         class="modal fixed inset-0 bg-transparent backdrop-blur-sm backdrop-brightness-75 dark:bg-[#111827] bg-opacity-50 flex justify-center items-center"
@@ -1255,15 +1255,6 @@
                       d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                   </svg>
                 </button>
-                <!-- You can uncomment the cancel button if needed -->
-                <!--
-      <button
-        @click="isClickModal = false"
-        class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
-      >
-        Cancel
-      </button>
-      -->
               </div>
             </div>
           </div>
@@ -1302,6 +1293,23 @@ export default {
   },
   data() {
     return {
+
+      limitsInitialized: false,
+      claimsValidation: {
+        // Initialize limits
+        limits: {
+          outpatient: 0,
+          medicalDental: 0
+        },
+        // Track current totals
+        currentTotals: {
+          outpatient: 0,
+          medicalDental: 0
+        }
+      },
+
+
+      
       storefiles: [],
       serialnumber: "",
       employeeID: null,
@@ -1547,7 +1555,7 @@ export default {
   },
 
   mounted() {
-    // Sidebar close or open
+    // Sidebar 
     const body = document.querySelector("body");
     body.style.overflow = "auto";
 
@@ -1560,6 +1568,12 @@ export default {
     } else if (element && openOrNot == "true") {
       element.classList.remove("become-big");
     }
+
+    //dont delete this comment. Saved the data in array from localStorage
+    const storedDataclaims = localStorage.getItem('dataclaims');
+      if (storedDataclaims) {
+        this.dataclaims = JSON.parse(storedDataclaims);
+      }
   },
 
   methods: {
@@ -1598,7 +1612,7 @@ export default {
         result = "Error: " + error.message;
       }
       // console.log("Result:", result);
-      return result; // Return result outside the finally block
+      return result;
     },
 
     formatDate(dateString) {
@@ -1639,7 +1653,7 @@ export default {
         }
       } catch (error) {
         console.error("Failed to fetch employee ID:", error);
-        // Handle error appropriately
+        throw error;
       }
     },
     deleteExpense(index) {
@@ -1671,72 +1685,14 @@ export default {
       this.isClickModal = false;
     },
 
-    // showDetails(claim, index) {
-    //   this.index = index;
-    //   // console.log("Current index", this.index);
-    //   this.selectedClaimType = claim.tabTitle.replace(/\s+/g, ""); // Remove spaces from claim type
-    //   this.formToDelete = index;
-    //   switch (this.selectedClaimType) {
-    //     case "LocalTravelling":
-    //       this.localTravellingDetails = claim;
-    //       // console.log("Local Travelling Details:", this.localTravellingDetails);
-    //       // console.log("upload", this.localTravellingDetails.UploadLT);
-    //       break;
-    //     case "OverseasTravelling":
-    //       this.overseasTravellingDetails = claim;
-    //       console.log(
-    //         "Overseas Travelling Details:",
-    //         this.overseasTravellingDetails
-    //       );
-    //       break;
-    //     case "Entertainment":
-    //       this.entertainmentDetails = claim;
-    //       // console.log("Entertainment Details:", this.entertainmentDetails);
-    //       break;
-    //     case "StaffRefreshment":
-    //       this.staffRefreshmentDetails = claim;
-    //       // console.log(
-    //       //   "Staff Refreshment Details:",
-    //       //   this.staffRefreshmentDetails
-    //       // );
-    //       break;
-    //     case "Others":
-    //       this.othersDetails = claim;
-    //       // console.log("Others Details:", this.othersDetails);
-    //       break;
-    //     case "HandphoneBillReimbursement":
-    //       this.handphoneBillReimbursementDetails = claim;
-    //       // console.log(
-    //       //   "Handphone Bill Reimbursement Details:",
-    //       //   this.handphoneBillReimbursementDetails
-    //       // );
-    //       break;
-    //     case "MedicalBillReimbursement":
-    //       this.medicalBillReimbursementDetails = claim;
-    //       // console.log(
-    //       //   "Medical Bill Reimbursement Details:",
-    //       //   this.medicalBillReimbursementDetails
-    //       // );
-    //       break;
-    //     // Add cases for other types of claims
-    //   }
-    //   this.isClickModal = true; // Show the modal
-    // },
     generateUniqueCode(tabTitle) {
-      // Check if this.userId is defined
       if (this.userDetails.userId) {
-        // Use part of the userId for uniqueness, e.g., 4 characters
         const userIdFragment = this.userDetails.userId.substring(0, 4);
-
-        // Generate a random number and pad it to 2 characters
         const randomNumber = Math.floor(Math.random() * 100)
           .toString()
           .padStart(2, "0");
 
-        // Create a timestamp and take the last 2 digits for uniqueness
         const timestamp = Date.now().toString().slice(-2);
-
-        // Determine the prefix based on the location
         let prefix = "";
         switch (tabTitle) {
           case "Local Travelling":
@@ -1766,31 +1722,23 @@ export default {
             break;
         }
 
-        // Construct the uniqueCode
         const uniqueCode = `${prefix}${userIdFragment}${randomNumber}${timestamp}`;
         // console.log("Unique Code:", uniqueCode);
         return uniqueCode;
       } else {
         console.error("User ID is undefined.");
-        // You may want to handle this case differently based on your application logic.
         return "";
       }
     },
     generateUniqueCodeSN(tabTitle) {
-      // Check if this.userId is defined
       if (this.userDetails.userId) {
-        // Use part of the userId for uniqueness, e.g., 4 characters
         const userIdFragment = this.userDetails.userId.substring(0, 4);
-
-        // Generate a random number and pad it to 2 characters
         const randomNumber = Math.floor(Math.random() * 100)
           .toString()
           .padStart(2, "0");
 
-        // Create a timestamp and take the last 2 digits for uniqueness
         const timestamp = Date.now().toString().slice(-2);
 
-        // Determine the prefix based on the location
         let prefix = "";
         switch (tabTitle) {
           case "Local Travelling":
@@ -1819,24 +1767,33 @@ export default {
             return "";
         }
 
-        // Construct the uniqueCode
         const uniqueCode = `SN${prefix}${userIdFragment}${randomNumber}${timestamp}`;
         // console.log("Unique Code:", uniqueCode);
         return uniqueCode;
       } else {
         console.error("User ID is undefined.");
-        // You may want to handle this case differently based on your application logic.
         return "";
       }
     },
-    someMethod() {
-      // console.log(this.claims.uniqueCode);
-      // Other logic
+    fetchClaims() {
+      const formData = formStore.getFormData();
+
+      if (formData.claimantName !== "") {
+        this.claims = [formData];
+        localStorage.setItem("claims", JSON.stringify(this.claims));
+        console.log("Claims data:", this.claims);
+      } else {
+        const storedClaims = JSON.parse(localStorage.getItem("claims")) || [];
+        this.claims = storedClaims;
+      }
+      //  console.log("Claims:", this.claims);
     },
+
     isValidClaimData() {
-      // Example validation: check if the first claim has a claimantName
       return this.dataclaims.length > 0;
     },
+
+
     async senttheclaim() {
       if (!this.isValidClaimData()) {
         Swal.fire({
@@ -1923,8 +1880,6 @@ export default {
       this.loading = false;
     },
     async sendToAPI() {
-      // Group claims by tabTitle
-      // this.$router.push({ name: "eclaimhomepages" });
       const groupedClaims = this.dataclaims.reduce((acc, claim) => {
         if (!acc[claim.tabTitle]) {
           acc[claim.tabTitle] = [];
@@ -1933,11 +1888,10 @@ export default {
         return acc;
       }, {});
 
-      // Iterate over each group and send to respective API
       for (const title in groupedClaims) {
         if (Object.hasOwnProperty.call(groupedClaims, title)) {
           const claimsToSend = groupedClaims[title];
-          // console.log(`Claims to send for ${title}:`, claimsToSend); // Log the claimsToSend object
+          // console.log(`Claims to send for ${title}:`, claimsToSend); 
 
 
           let axiosInstance;
@@ -2081,17 +2035,19 @@ export default {
               for (const claim of claimsToSend) {
                 const uniqcodeE = this.generateUniqueCode(claim.tabTitle);
                 const thisisforentertainment = {
-                  requester_id: this.userDetails.userId,
+
+                  description: claim.ReferenceE,
+                  reference_number: this.serialnumber,
                   date_event: claim.dateE,
                   entertainment_type: claim.TypeofEntertainmentE,
-                  other_type_of_entertainment:
-                    claim.OtherTypeofEntertainmentE,
-                  company_name: claim.CompanyE,
                   venue_name: claim.VenueE,
-                  description: claim.ReferenceE,
+                  company_name: claim.CompanyE,
                   total_fee: parseFloat(claim.AmountRME),
-                  reference_number: this.serialnumber,
+                  requester_id: this.userDetails.userId,
                   unique_code: uniqcodeE, 
+                
+                  // other_type_of_entertainment:
+                  //   claim.OtherTypeofEntertainmentE,
 
                   participants: claim.attendees
                     ? claim.attendees.map((participant) => ({
@@ -2158,9 +2114,7 @@ export default {
                 };
 
                 const userId = this.userDetails.userId;
-                // console.log("unik kod:", uniqueCode);
                 if (claim.UploadSR && claim.UploadSR.length > 0) {
-                  // Log the file data to verify it's correct before attempting to upload
                   // console.log("Preparing to upload files:", claim.UploadSR);
 
                   this.uploadFiles(claim.UploadSR, userId, uniqcodeSR);
@@ -2221,25 +2175,22 @@ export default {
               for (const claim of claimsToSend) {
                 const uniqcodeHR = this.generateUniqueCode(claim.tabTitle);
                 const thisisforHandphoneBillReimbursement = {
+                  reference_number: this.serialnumber,
                   date_claim: this.todayFormatted(), 
                   claim_month: claim.MonthHR,
                   claim_year: `${claim.YearHR}`,
                   bank_name: claim.BankNameHR,
-                  bank_account: String(claim.AccBankNumberHR),
                   bank_holder: claim.AccHolderNameHR,
-
+                  bank_account: String(claim.AccBankNumberHR),
                   claim_amount: claim.totalRM,
-                  unique_code: uniqcodeHR,
-                  reference_number: this.serialnumber,
-                  phone_limit: claim.LimitedAmountHR,
                   ic_number: claim.icNumber,
                   requester_id: this.userDetails.userId,
+                  unique_code: uniqcodeHR,
+    
                 };
 
                 const userId = this.userDetails.userId;
-                // console.log("unik kod:", uniqueCode);
                 if (claim.UploadHR && claim.UploadHR.length > 0) {
-                  // Log the file data to verify it's correct before attempting to upload
                   //  console.log("Preparing to upload files:", claim.UploadLT);
                   this.uploadFiles(claim.UploadHR, userId, uniqcodeHR);
                 }
@@ -2283,6 +2234,8 @@ export default {
                         reference_number: this.serialnumber || "-",
                         date_leave_taken: claim.dateML,
                         reason: claim.ReasonML || "-",
+                        medical_category: claim.MedicalCategoryML,
+                        clinic_selection: String(claim.ClinicSelectionML || "-"),
                         bank_name: claim.BankNameML,
                         bank_holder: claim.AccHolderNameML,
                         bank_account: String(claim.AccBankNumberML),
@@ -2292,12 +2245,8 @@ export default {
                             ? claim.OtherClinicSpecML
                             : claim.ClinicSelectionML || "-"
                         ),
-                        clinic_selection: String(claim.ClinicSelectionML || "-"),
                         reason_different: claim.OtherClinicReasonML || "-",
-                        medical_category: claim.MedicalCategoryML,
                         requester_id: this.userDetails.userId,
-                        limit_outpatient: claim.limit_outpatient || 0,
-                        limit_medic_dental: claim.limit_medic_dental || 0,
                         ic_number: claim.icNumber,
                         unique_code: uniqcodeML,
                       };
@@ -2345,7 +2294,6 @@ export default {
       const uploadEndpoint = `http://172.28.28.116:7267/api/Files/MultiUploadImage/${userId}/${uniqueCode}`;
       const formData = new FormData();
 
-      // Iterate over the files array and append each file to formData
       files.forEach((file) => {
         formData.append("filecollection", file);
       });
@@ -2363,7 +2311,7 @@ export default {
     },
 
     async sendFiles(X, Y) {
-      const files = this.formData.fileUpload; // Ensure formData is correctly accessible
+      const files = this.formData.fileUpload; 
 
       if (!files || !files.length) {
         console.error("No files to upload.");
@@ -2405,40 +2353,52 @@ export default {
       }
     },
 
-    deleteForm() {
-      if (this.index !== -1) {
-        this.dataclaims.splice(this.index, 1);
+    deleteForm(index) {
+      let dataclaims = JSON.parse(localStorage.getItem('dataclaims')) || [];
+
+      if (index >= 0 && index < dataclaims.length) {
+        const deletedClaim = dataclaims[index];
+        
+        // Get the current remaining limit based on category
+        const category = deletedClaim.MedicalCategoryML;
+        const storageKey = category === "Outpatient" 
+          ? "remaining_limit_outpatient"
+          : "remaining_limit_medicaldental";
+        
+        let currentLimit = parseFloat(localStorage.getItem(storageKey)) || 0;
+        const claimAmount = parseFloat(deletedClaim.ClaimsAmountML) || 0;
+        
+        // Add back the claimed amount to the remaining limit
+        currentLimit += claimAmount;
+        
+        // Update localStorage with new remaining limit
+        localStorage.setItem(storageKey, currentLimit);
+
+        // Remove the claim from dataclaims
+        dataclaims.splice(index, 1);
+        localStorage.setItem('dataclaims', JSON.stringify(dataclaims));
+        
+        // Emit both the deleted claim and updated limit
+        this.$emit('claimDeleted', {
+          claim: deletedClaim,
+          updatedLimit: currentLimit,
+          category: category
+        });
+        
+        this.dataclaims = dataclaims;
       }
-      this.isClickModal = false; // Close the modal
     },
-    // other methods...
-    fetchClaims() {
-      const formData = formStore.getFormData();
 
-      if (formData.claimantName !== "") {
-        this.claims = [formData];
-        localStorage.setItem("claims", JSON.stringify(this.claims));
-        console.log("Claims data:", this.claims);
-      } else {
-        const storedClaims = JSON.parse(localStorage.getItem("claims")) || [];
-        this.claims = storedClaims;
+    async addClaim(formData) {
+      try {
+        const dataclaims = JSON.parse(localStorage.getItem('dataclaims')) || [];
+        dataclaims.push(formData);
+        localStorage.setItem('dataclaims', JSON.stringify(dataclaims));
+        this.dataclaims = dataclaims;
+      } catch(error) {
+        console.error("error", error);
+        throw error;
       }
-      //  console.log("Claims:", this.claims);
-    },
-
-    addClaim(formData) {
-      // Push new form data into the claims array
-      this.dataclaims.push(formData);
-      console.log("Data Claims:", this.dataclaims);
-    },
-    handleFileAdded() {
-      // console.log("File added:", file);
-      // console.log("Updated field value:", field.value);
-    },
-
-    handleFileRemoved() {
-      // console.log("File removed:", file);
-      // console.log("Updated field value:", field.value);
     },
   },
 };

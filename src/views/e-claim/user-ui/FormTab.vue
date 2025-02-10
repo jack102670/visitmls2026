@@ -370,6 +370,8 @@
                                     class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
                                 </template>
 
+                                <!-- LIMIT AMOUNT COMMENT-->
+
                                 <template v-else-if="field.id === 'LimitedAmountML'">
                                   <input v-model="field.value" type="number" :required="field.required" :id="field.id"
                                     :placeholder="field.placeholder" :step="field.type === 'number'
@@ -405,6 +407,7 @@
                                       ? '0.01'
                                       : undefined
                                       "
+                                        @input="updateLimitedAmount"
                                     class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
                                 </template>
                               </template>
@@ -1272,6 +1275,22 @@ export default {
 
   data() {
     return {
+
+      claimsHistory: {
+          Dental: 0,
+          "Medical Check-Up": 0,
+          Outpatient: 0
+        },
+
+        totalMedicalDeduction: 0,
+        selectedMedicalCategory: '',
+
+        LimitedAmountHR: 0,
+      limit_medicaldental: 0,
+      limit_outpatient: 0,
+
+
+      limit_outp:0,
       profilestatus: "",
       IcNumber: "",
       chooseform: true,
@@ -1285,9 +1304,7 @@ export default {
       showParkingUpload: true,
       showPetrolUpload: true,
       showEvUpload: true,
-      LimitedAmountHR: 0,
-      limit_medicaldental: 0,
-      limit_outpatient: 0,
+
       uploadedFiles: [],
       currencies: [],
       currencyOptions: [],
@@ -1773,22 +1790,7 @@ export default {
               required: true,
               gridClass: "sm:col-span-2",
             },
-            {
-              id: "ClinicSelectionML",
-              label: "Clinic Selection",
-              type: "radio-group",
-              value: [],
-              hidden: false,
-              required: true,
-              options: [
-                {
-                  label: "Mediviron Clinic - Panel",
-                  value: "Mediviron Clinic - Panel",
-                },
-                { label: "Other Clinic", value: "Other Clinic" },
-              ],
-              gridClass: "sm:col-span-1",
-            },
+
             {
               id: "OtherClinicSpecML",
               label: "Specify Clinic Name",
@@ -1834,6 +1836,23 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
+              id: "ClinicSelectionML",
+              label: "Clinic Selection",
+              type: "radio-group",
+              value: [],
+              hidden: false,
+              required: true,
+              options: [
+                {
+                  label: "Mediviron Clinic - Panel",
+                  value: "Mediviron Clinic - Panel",
+                },
+                { label: "Other Clinic", value: "Other Clinic" },
+              ],
+              gridClass: "sm:col-span-1",
+            },
+            {
+              //To display the choosen limit amount
               id: "LimitedAmountML",
               label: "Limited Amount(RM)",
               type: "number",
@@ -1858,6 +1877,7 @@ export default {
               hidden: true,
             },
             {
+              //Taken from api
               id: "limit_medic_dental",
               // label: "ic number",
               type: "number",
@@ -1866,6 +1886,7 @@ export default {
               hidden: true,
             },
             {
+              //Taken from api
               id: "limit_outpatient",
               // label: "ic number",
               type: "number",
@@ -2644,6 +2665,9 @@ export default {
     this.fetchHrData();
     this.fetchCurrencies();
     this.checkstatus();
+
+    this.updateLimitedAmount(this.selectedMedicalCategory);
+
   },
 
   methods: {
@@ -2771,69 +2795,54 @@ export default {
       }
     },
 
-    async fetchHrData() {
-      try {
-        const username_id = store.getSession().userDetails.userId;
-        const response = await axios.get(
-          `http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`
-        );
-        const data = response.data.result[0];
-        if (data) {
-          this.updateFields(data);
-        }
-        if (data && data.length > 0) {
-          this.limit_medicaldental = data[0].limit_medicaldental || 0;
-          this.limit_outpatient = data[0].limit_outpatient || 0;
-        }
-        //  console.log("Bank Data:", data);
-      } catch (error) {
-        console.error("Error fetching Bank Data:", error);
-      }
-    },
+    // async fetchHrData() {
+    //   try {
+    //     const username_id = store.getSession().userDetails.userId;
+    //     const response = await axios.get(
+    //       `http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`
+    //     );
+    //     const data = response.data.result[0];
 
-    updateFields(data) {
-      this.limit_medicaldental = data.limit_medicaldental;
-      this.limit_outpatient = data.limit_outpatient;
+    //     if (data) {
+    //       this.updateFields(data);
+    //     }
 
-      const fieldMap = {
-        BankNameHR: data.bank_name,
-        AccBankNumberHR: data.bank_number,
-        AccHolderNameHR: data.name,
-        LimitedAmountHR: data.limit_amount,
-        BankNameML: data.bank_name,
-        AccBankNumberML: data.bank_number,
-        AccHolderNameML: data.name,
-        icNumber: data.ic_number,
-        limit_medic_dental: data.limit_medicaldental,
-        limit_outpatient: data.limit_outpatient,
-      };
+    //     if (data && data.length > 0) {
+    //       this.limit_medicaldental = data[0].limit_medicaldental || 0;
+    //       this.limit_outpatient = data[0].limit_outpatient || 0;
+    //     }
 
-      this.tabs.forEach((tab) => {
-        tab.fields.forEach((field) => {
-          if (fieldMap[field.id] !== undefined) {
-            field.value = fieldMap[field.id];
-          }
-        });
-      });
-    },
+    //     // 🛠 Check if localStorage has a stored value before setting LimitedAmountML
+    //     const storedMedicalDental = localStorage.getItem("LimitedAmountML_Dental") || this.limit_medicaldental;
+    //     const storedOutpatient = localStorage.getItem("LimitedAmountML_Outpatient") || this.limit_outpatient;
 
-    onMedicalCategoryChange(event) {
-      const selectedCategory = event.target.value;
-      const limitedAmountField = this.tabs
-        .find((tab) => tab.title === "Medical Bill Reimbursement")
-        .fields.find((field) => field.id === "LimitedAmountML");
+    //     this.limitedAmountML = storedMedicalDental; // Default to medical dental
+    //     localStorage.setItem("LimitedAmountML_Dental", storedMedicalDental);
+    //     localStorage.setItem("LimitedAmountML_Outpatient", storedOutpatient);
+    //   } catch (error) {
+    //     console.error("Error fetching HR Data:", error);
+    //   }
+    // },
 
-      if (
-        selectedCategory === "Dental" ||
-        selectedCategory === "Medical Check-Up"
-      ) {
-        limitedAmountField.value = this.limit_medicaldental;
-      } else if (selectedCategory === "Outpatient") {
-        limitedAmountField.value = this.limit_outpatient;
-      } else {
-        limitedAmountField.value = "";
-      }
-    },
+
+
+    // onMedicalCategoryChange(event) {
+    //   const selectedCategory = event.target.value;
+    //   const limitedAmountField = this.tabs
+    //     .find((tab) => tab.title === "Medical Bill Reimbursement")
+    //     .fields.find((field) => field.id === "LimitedAmountML");
+
+    //   if (
+    //     selectedCategory === "Dental" ||
+    //     selectedCategory === "Medical Check-Up"
+    //   ) {
+    //     limitedAmountField.value = this.limit_medicaldental;
+    //   } else if (selectedCategory === "Outpatient") {
+    //     limitedAmountField.value = this.limit_outpatient;
+    //   } else {
+    //     limitedAmountField.value = "";
+    //   }
+    // },
 
     formatDate(dateString) {
       const date = new Date(dateString);
@@ -3363,9 +3372,7 @@ export default {
         files: [],
       };
       this.showOtherExpensesModal = false;
-    }
-
-    ,
+    },
 
     removeExpense(index) {
       this.otherExpenses.splice(index, 1);
@@ -3512,41 +3519,175 @@ export default {
     //   return true;
     // },
 
-    submitForm(tab) {
-      const formattedData = {};
-      tab.fields.forEach((field) => {
-        if (field.type === "date" && field.value) {
-          formattedData[field.id] = this.formatDate(field.value);
-        } else {
-          formattedData[field.id] = field.value;
+
+    //calculate limit amount
+   
+    async fetchHrData() {
+      try {
+        const username_id = store.getSession().userDetails.userId;
+        const response = await axios.get(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`);
+        const data = response.data.result[0];
+
+        if (data) {
+          this.updateFields(data);
+          this.formData = {
+            ...this.formData, 
+            limit_medicaldental: localStorage.getItem('initial_limit_medicaldental')
+              ? parseFloat(localStorage.getItem('initial_limit_medicaldental'))
+              : data.limit_medicaldental || 0,
+
+            limit_outpatient: localStorage.getItem('initial_limit_outpatient')
+              ? parseFloat(localStorage.getItem('initial_limit_outpatient'))
+              : data.limit_outpatient || 0,
+          };
+
+          if (!localStorage.getItem('initial_limit_medicaldental')) {
+            localStorage.setItem('initial_limit_medicaldental', this.formData.limit_medicaldental);
+          }
+          if (!localStorage.getItem('initial_limit_outpatient')) {
+            localStorage.setItem('initial_limit_outpatient', this.formData.limit_outpatient);
+          }
+
+
+          this.remaining_medicaldental = localStorage.getItem('remaining_limit_medicaldental')
+            ? parseFloat(localStorage.getItem('remaining_limit_medicaldental'))
+            : this.formData.limit_medicaldental;
+
+          this.remaining_outpatient = localStorage.getItem('remaining_limit_outpatient')
+            ? parseFloat(localStorage.getItem('remaining_limit_outpatient'))
+            : this.formData.limit_outpatient;
+
+          if (!localStorage.getItem('remaining_limit_medicaldental')) {
+            localStorage.setItem('remaining_limit_medicaldental', this.remaining_medicaldental);
+          }
+          if (!localStorage.getItem('remaining_limit_outpatient')) {
+            localStorage.setItem('remaining_limit_outpatient', this.remaining_outpatient);
+          }
+        }
+
+        this.updateLimitedAmount(this.selectedMedicalCategory);
+      } catch (error) {
+        console.error("Error fetching HR Data:", error);
+      }
+},
+    updateFields(data) {
+      //this.limit_outpatient = data.limit_outpatient;
+      this.limit_outp = data.limit_outpatient;
+      this.limit_medicaldental = data.limit_medicaldental;
+      this.limit_outpatient = data.limit_outpatient;
+
+      const fieldMap = {
+        BankNameHR: data.bank_name,
+        AccBankNumberHR: data.bank_number,
+        AccHolderNameHR: data.name,
+        LimitedAmountHR: data.limit_amount,
+        BankNameML: data.bank_name,
+        AccBankNumberML: data.bank_number,
+        AccHolderNameML: data.name,
+        icNumber: data.ic_number,
+        // limit_medic_dental: data.limit_medicaldental,
+        // limit_outpatient: data.limit_outpatient,
+      };
+
+      this.tabs.forEach((tab) => {
+        tab.fields.forEach((field) => {
+          if (fieldMap[field.id] !== undefined) {
+            field.value = fieldMap[field.id];
+          }
+        });
+      });
+    },
+
+    updateLimitedAmount(category) {
+      let remainingLimit = category === "Outpatient"
+        ? parseFloat(localStorage.getItem("remaining_limit_outpatient")) || this.limit_outpatient
+        : parseFloat(localStorage.getItem("remaining_limit_medicaldental")) || this.limit_medicaldental;
+
+      // ✅ Update the form field dynamically
+      this.tabs.forEach(tab => {
+        const limitedAmountField = tab.fields.find(field => field.id === 'LimitedAmountML');
+        if (limitedAmountField) {
+          limitedAmountField.value = remainingLimit;
         }
       });
+    },
+    onMedicalCategoryChange(event) {
+      this.selectedMedicalCategory = event.target.value;
+      this.updateLimitedAmount(this.selectedMedicalCategory);
+    },
+    calculateLimitedAmount(operation = 'subtract') {
+      const category = this.selectedMedicalCategory;
+      const claimsAmount = parseFloat(this.tabs.find(tab => 
+        tab.fields.some(f => f.id === 'ClaimsAmountML'))
+        .fields.find(f => f.id === 'ClaimsAmountML').value) || 0;
+
+      const storageKey = category === "Outpatient"
+        ? "remaining_limit_outpatient"
+        : "remaining_limit_medicaldental";
+
+      let currentLimit = parseFloat(localStorage.getItem(storageKey)) ||
+        (category === "Outpatient" ? this.limit_outpatient : this.limit_medicaldental);
+
+      // Add or subtract based on operation
+      if (operation === 'subtract') {
+        currentLimit -= claimsAmount;
+      } else if (operation === 'add') {
+        currentLimit += claimsAmount;
+      }
+
+      // Prevent negative values
+      currentLimit = Math.max(0, currentLimit);
+
+      // Store the updated remaining limit
+      localStorage.setItem(storageKey, currentLimit);
+
+      // Update the displayed limit
+      this.updateLimitedAmount(category);
+    },
+
+
+
+    submitForm(tab) {
+      this.calculateLimitedAmount(); 
+
+      const medicalCategoryField = tab.fields.find(field => field.id === "MedicalCategoryML");
+      const claimsAmountField = tab.fields.find(field => field.id === "ClaimsAmountML");
+
+      if (medicalCategoryField && claimsAmountField) {
+        const category = medicalCategoryField.value;
+        const claimsAmount = parseFloat(claimsAmountField.value) || 0;
+
+        if (category === "Dental" || category === "Medical Check-Up") {
+          this.totalMedicalDeduction += claimsAmount;
+        }
+        const storageKey = category === "Outpatient"
+          ? "LimitedAmountML_Outpatient"
+          : "LimitedAmountML_Dental";
+
+        const updatedLimitedAmount = parseFloat(localStorage.getItem(storageKey)) || 0;
+        localStorage.setItem(storageKey, updatedLimitedAmount);
+      }
+
+      const formattedData = {};
+      tab.fields.forEach((field) => {
+        formattedData[field.id] = field.type === "date" && field.value
+          ? this.formatDate(field.value)
+          : field.value;
+      });
+
       formattedData["tabTitle"] = tab.title;
       formattedData["totalRM"] = this.calculateTotal(tab);
 
-      if (
-        tab.title === "Overseas Travelling" &&
-        this.otherExpenses.length > 0
-      ) {
-        // Add otherExpenses to formattedData
+      if (tab.title === "Overseas Travelling" && this.otherExpenses.length > 0) {
         formattedData["otherExpenses"] = [...this.otherExpenses];
       }
-
+      
       this.$emit("formSubmitted", formattedData);
-      //   console.log("Formatted Form Data:", formattedData);
 
       tab.fields.forEach((field) => {
-        if (
-          field.id !== "LimitedAmountHR" &&
-          field.id !== "LimitedAmountML" &&
-          field.id !== "BankNameHR" &&
-          field.id !== "BankNameML" &&
-          field.id !== "AccBankNumberHR" &&
-          field.id !== "AccBankNumberML" &&
-          field.id !== "AccHolderNameHR" &&
-          field.id !== "AccHolderNameML" &&
-          field.id !== "icNumber"
-        ) {
+        if (!["LimitedAmountHR", "LimitedAmountML", "BankNameHR", "BankNameML",
+          "AccBankNumberHR", "AccBankNumberML", "AccHolderNameHR", "AccHolderNameML", "icNumber"]
+          .includes(field.id)) {
           field.value = null;
         }
 
@@ -3559,6 +3700,8 @@ export default {
         }
       });
     },
+
+
 
     submitForm2(tabTitle) {
       if (this.validateCurrentTab(tabTitle)) {
