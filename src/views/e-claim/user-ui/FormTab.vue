@@ -183,13 +183,13 @@
                                       'Handphone Bill Reimbursement' &&
                                       isFormDisabled) ||
                                       field.disabled
-                                      " :required="field.required" ref="pond" label-idle="Drop files here..."
-                                      @addfile="(error, file) =>
+                                      " :required="field.required" ref="pond" label-idle="Drop files here..." @addfile="(error, file) =>
                                         handleAddFile(error, file, field)
                                         " @removefile="(error, file) =>
                                           handleRemoveFile(error, file, field)
                                           " :accepted-file-types="field.acceptedFileTypes
-                                          " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
+                                            " :max-file-size="field.maxFileSize"
+                                      :allow-multiple="field.allowMultiple" />
                                     <file-pond v-if="
                                       field.id === 'UploadFareRMLT' &&
                                       showFareUpload
@@ -197,13 +197,13 @@
                                       'Handphone Bill Reimbursement' &&
                                       isFormDisabled) ||
                                       field.disabled
-                                      " :required="field.required" ref="pond" label-idle="Drop files here..."
-                                      @addfile="(error, file) =>
+                                      " :required="field.required" ref="pond" label-idle="Drop files here..." @addfile="(error, file) =>
                                         handleAddFile(error, file, field)
                                         " @removefile="(error, file) =>
                                           handleRemoveFile(error, file, field)
                                           " :accepted-file-types="field.acceptedFileTypes
-                                          " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
+                                            " :max-file-size="field.maxFileSize"
+                                      :allow-multiple="field.allowMultiple" />
                                     <file-pond v-if="
                                       field.id === 'UploadTollLT' &&
                                       showTollUpload
@@ -217,7 +217,8 @@
                                         " @removefile="(error, file) =>
                                           handleRemoveFile(error, file, field)
                                           " :accepted-file-types="field.acceptedFileTypes
-                                          " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
+                                            " :max-file-size="field.maxFileSize"
+                                      :allow-multiple="field.allowMultiple" />
                                     <file-pond v-if="
                                       field.id === 'UploadParkingLT' &&
                                       showParkingUpload
@@ -225,13 +226,13 @@
                                       'Handphone Bill Reimbursement' &&
                                       isFormDisabled) ||
                                       field.disabled
-                                      " :required="field.required" ref="pond" label-idle="Drop files here..."
-                                      @addfile="(error, file) =>
+                                      " :required="field.required" ref="pond" label-idle="Drop files here..." @addfile="(error, file) =>
                                         handleAddFile(error, file, field)
                                         " @removefile="(error, file) =>
                                           handleRemoveFile(error, file, field)
                                           " :accepted-file-types="field.acceptedFileTypes
-                                          " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
+                                            " :max-file-size="field.maxFileSize"
+                                      :allow-multiple="field.allowMultiple" />
 
 
                                     <!-- new -->
@@ -242,13 +243,13 @@
                                       'Handphone Bill Reimbursement' &&
                                       isFormDisabled) ||
                                       field.disabled
-                                      " :required="field.required" ref="pond" label-idle="Drop files here..."
-                                      @addfile="(error, file) =>
+                                      " :required="field.required" ref="pond" label-idle="Drop files here..." @addfile="(error, file) =>
                                         handleAddFile(error, file, field)
                                         " @removefile="(error, file) =>
                                           handleRemoveFile(error, file, field)
                                           " :accepted-file-types="field.acceptedFileTypes
-                                          " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
+                                            " :max-file-size="field.maxFileSize"
+                                      :allow-multiple="field.allowMultiple" />
 
 
                                     <file-pond v-if="
@@ -258,13 +259,13 @@
                                       'Handphone Bill Reimbursement' &&
                                       isFormDisabled) ||
                                       field.disabled
-                                      " :required="field.required" ref="pond" label-idle="Drop files here..."
-                                      @addfile="(error, file) =>
+                                      " :required="field.required" ref="pond" label-idle="Drop files here..." @addfile="(error, file) =>
                                         handleAddFile(error, file, field)
                                         " @removefile="(error, file) =>
                                           handleRemoveFile(error, file, field)
                                           " :accepted-file-types="field.acceptedFileTypes
-                                          " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
+                                            " :max-file-size="field.maxFileSize"
+                                      :allow-multiple="field.allowMultiple" />
 
 
 
@@ -277,13 +278,13 @@
                                       'Handphone Bill Reimbursement' &&
                                       isFormDisabled) ||
                                       field.disabled
-                                      " :required="field.required" ref="pond" label-idle="Drop files here..."
-                                      @addfile="(error, file) =>
+                                      " :required="field.required" ref="pond" label-idle="Drop files here..." @addfile="(error, file) =>
                                         handleAddFile(error, file, field)
                                         " @removefile="(error, file) =>
                                           handleRemoveFile(error, file, field)
                                           " :accepted-file-types="field.acceptedFileTypes
-                                          " :max-file-size="field.maxFileSize" :allow-multiple="field.allowMultiple" />
+                                            " :max-file-size="field.maxFileSize"
+                                      :allow-multiple="field.allowMultiple" />
                                   </div>
                                 </template>
 
@@ -399,15 +400,11 @@
                                 </template>
 
                                 <template v-else>
-                                  <input v-model="field.value" :required="field.required" :disabled="(tab.title ===
-                                    'Handphone Bill Reimbursement' &&
-                                    isFormDisabled) ||
-                                    field.disabled
-                                    " :id="field.id" :type="field.type" :placeholder="field.placeholder" :step="field.type === 'number'
-                                      ? '0.01'
-                                      : undefined
-                                      "
-                                        @input="updateLimitedAmount"
+                                  <input v-model="field.value" :required="field.required"
+                                    :disabled="(tab.title === 'Handphone Bill Reimbursement' && isFormDisabled) || field.disabled"
+                                    :id="field.id" :type="field.type" @input="updateLimitedAmount"
+                                    :placeholder="field.placeholder"
+                                    :step="field.type === 'number' ? '0.01' : undefined"
                                     class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
                                 </template>
                               </template>
@@ -579,8 +576,8 @@
                               class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required />
                           </div>
                           <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700"
-                              for="expenseDescription">Description <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-medium text-gray-700" for="expenseDescription">Description
+                              <span class="text-red-500">*</span></label>
                             <textarea v-model="newExpense.description" id="expenseDescription"
                               class="mt-1 block w-full p-2 border border-gray-300 rounded-md" rows="4"
                               required></textarea>
@@ -1257,6 +1254,7 @@ import { refOptions } from "@/javascript/eClaimOptions.js";
 import { TypeOptions } from "@/javascript/eClaimOptions.js";
 import axios from "axios";
 import { store } from "@/views/store.js";
+import Swal from 'sweetalert2';
 
 // Create component
 const FilePond = vueFilePond(
@@ -1277,20 +1275,20 @@ export default {
     return {
 
       claimsHistory: {
-          Dental: 0,
-          "Medical Check-Up": 0,
-          Outpatient: 0
-        },
+        Dental: 0,
+        "Medical Check-Up": 0,
+        Outpatient: 0
+      },
 
-        totalMedicalDeduction: 0,
-        selectedMedicalCategory: '',
+      totalMedicalDeduction: 0,
+      selectedMedicalCategory: '',
 
-        LimitedAmountHR: 0,
+      LimitedAmountHR: 0,
       limit_medicaldental: 0,
       limit_outpatient: 0,
 
 
-      limit_outp:0,
+      limit_outp: 0,
       profilestatus: "",
       IcNumber: "",
       chooseform: true,
@@ -2673,13 +2671,12 @@ export default {
   methods: {
 
     formatDecimal(event) {
-      // List of field IDs that need decimal formatting
       const decimalFields = [
-        'MealAllowanceLT', 
-        'FareRMLT', 
-        'TollLT', 
-        'ParkingLT', 
-        'petrolCharged', 
+        'MealAllowanceLT',
+        'FareRMLT',
+        'TollLT',
+        'ParkingLT',
+        'petrolCharged',
         'evCharged'
       ];
       if (decimalFields.includes(event.target.id)) {
@@ -2795,54 +2792,6 @@ export default {
       }
     },
 
-    // async fetchHrData() {
-    //   try {
-    //     const username_id = store.getSession().userDetails.userId;
-    //     const response = await axios.get(
-    //       `http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`
-    //     );
-    //     const data = response.data.result[0];
-
-    //     if (data) {
-    //       this.updateFields(data);
-    //     }
-
-    //     if (data && data.length > 0) {
-    //       this.limit_medicaldental = data[0].limit_medicaldental || 0;
-    //       this.limit_outpatient = data[0].limit_outpatient || 0;
-    //     }
-
-    //     // 🛠 Check if localStorage has a stored value before setting LimitedAmountML
-    //     const storedMedicalDental = localStorage.getItem("LimitedAmountML_Dental") || this.limit_medicaldental;
-    //     const storedOutpatient = localStorage.getItem("LimitedAmountML_Outpatient") || this.limit_outpatient;
-
-    //     this.limitedAmountML = storedMedicalDental; // Default to medical dental
-    //     localStorage.setItem("LimitedAmountML_Dental", storedMedicalDental);
-    //     localStorage.setItem("LimitedAmountML_Outpatient", storedOutpatient);
-    //   } catch (error) {
-    //     console.error("Error fetching HR Data:", error);
-    //   }
-    // },
-
-
-
-    // onMedicalCategoryChange(event) {
-    //   const selectedCategory = event.target.value;
-    //   const limitedAmountField = this.tabs
-    //     .find((tab) => tab.title === "Medical Bill Reimbursement")
-    //     .fields.find((field) => field.id === "LimitedAmountML");
-
-    //   if (
-    //     selectedCategory === "Dental" ||
-    //     selectedCategory === "Medical Check-Up"
-    //   ) {
-    //     limitedAmountField.value = this.limit_medicaldental;
-    //   } else if (selectedCategory === "Outpatient") {
-    //     limitedAmountField.value = this.limit_outpatient;
-    //   } else {
-    //     limitedAmountField.value = "";
-    //   }
-    // },
 
     formatDate(dateString) {
       const date = new Date(dateString);
@@ -3505,23 +3454,27 @@ export default {
       // Switch to the next tab only if current tab's validation passes
       this.activeSubTab += 1;
     },
-    // validateCurrentTab() {
-    //   // Example validation logic for the current tab
-    //   // This needs to be customized based on your actual form structure and requirements
-    //   const currentTabFields = this.formFields[this.activeSubTab];
-    //   for (const key in currentTabFields) {
-    //     if (currentTabFields[key] === '') {
-    //       // Found an unfilled field, validation fails
-    //       return false;
-    //     }
-    //   }
-    //   // All fields in the current tab are filled, validation passes
-    //   return true;
-    // },
+
 
 
     //calculate limit amount
-   
+    handleClaimDeleted(deletedClaimAmount) {
+      const category = this.selectedMedicalCategory;
+      let remainingLimit;
+
+      if (category === "Outpatient") {
+        let currentLimit = parseFloat(localStorage.getItem("remaining_limit_outpatient")) || this.limit_outpatient;
+        remainingLimit = currentLimit + deletedClaimAmount; // Restore deleted amount
+        localStorage.setItem("remaining_limit_outpatient", remainingLimit);
+      } else {
+        let currentLimit = parseFloat(localStorage.getItem("remaining_limit_medicaldental")) || this.limit_medicaldental;
+        remainingLimit = currentLimit + deletedClaimAmount; // Restore deleted amount
+        localStorage.setItem("remaining_limit_medicaldental", remainingLimit);
+      }
+
+      this.updateLimitedAmount(category); // Ensure UI updates
+    },
+
     async fetchHrData() {
       try {
         const username_id = store.getSession().userDetails.userId;
@@ -3531,7 +3484,7 @@ export default {
         if (data) {
           this.updateFields(data);
           this.formData = {
-            ...this.formData, 
+            ...this.formData,
             limit_medicaldental: localStorage.getItem('initial_limit_medicaldental')
               ? parseFloat(localStorage.getItem('initial_limit_medicaldental'))
               : data.limit_medicaldental || 0,
@@ -3569,7 +3522,7 @@ export default {
       } catch (error) {
         console.error("Error fetching HR Data:", error);
       }
-},
+    },
     updateFields(data) {
       //this.limit_outpatient = data.limit_outpatient;
       this.limit_outp = data.limit_outpatient;
@@ -3598,12 +3551,25 @@ export default {
       });
     },
 
-    updateLimitedAmount(category) {
-      let remainingLimit = category === "Outpatient"
-        ? parseFloat(localStorage.getItem("remaining_limit_outpatient")) || this.limit_outpatient
-        : parseFloat(localStorage.getItem("remaining_limit_medicaldental")) || this.limit_medicaldental;
+    updateLimitedAmount(event) {
+      // If called from input event, use the selected category
+      const category = this.selectedMedicalCategory;
 
-      // ✅ Update the form field dynamically
+      // Get remaining limit from localStorage, or fall back to initial limit if not set
+      let remainingLimit;
+
+      if (category === "Outpatient") {
+        remainingLimit = parseFloat(localStorage.getItem("remaining_limit_outpatient"));
+        if (remainingLimit === null || isNaN(remainingLimit)) {
+          remainingLimit = this.limit_outpatient;
+        }
+      } else {
+        remainingLimit = parseFloat(localStorage.getItem("remaining_limit_medicaldental"));
+        if (remainingLimit === null || isNaN(remainingLimit)) {
+          remainingLimit = this.limit_medicaldental;
+        }
+      }
+
       this.tabs.forEach(tab => {
         const limitedAmountField = tab.fields.find(field => field.id === 'LimitedAmountML');
         if (limitedAmountField) {
@@ -3617,7 +3583,7 @@ export default {
     },
     calculateLimitedAmount(operation = 'subtract') {
       const category = this.selectedMedicalCategory;
-      const claimsAmount = parseFloat(this.tabs.find(tab => 
+      const claimsAmount = parseFloat(this.tabs.find(tab =>
         tab.fields.some(f => f.id === 'ClaimsAmountML'))
         .fields.find(f => f.id === 'ClaimsAmountML').value) || 0;
 
@@ -3628,27 +3594,35 @@ export default {
       let currentLimit = parseFloat(localStorage.getItem(storageKey)) ||
         (category === "Outpatient" ? this.limit_outpatient : this.limit_medicaldental);
 
-      // Add or subtract based on operation
+      // Check if the limit will become 0 or negative after subtraction
+      if (operation === 'subtract' && currentLimit === 0) {
+        Swal.fire({
+          icon: 'error',
+          title: 'No Remaining Balance',
+          text: `Your ${category} balance is 0. Cannot proceed with the claim.`,
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'OK'
+        });
+        return false;
+      }
+
+      // Proceed with the calculation if validation passes
       if (operation === 'subtract') {
         currentLimit -= claimsAmount;
       } else if (operation === 'add') {
         currentLimit += claimsAmount;
       }
-
-      // Prevent negative values
       currentLimit = Math.max(0, currentLimit);
-
-      // Store the updated remaining limit
       localStorage.setItem(storageKey, currentLimit);
-
-      // Update the displayed limit
       this.updateLimitedAmount(category);
+
+      return true;
     },
 
-
-
     submitForm(tab) {
-      this.calculateLimitedAmount(); 
+      if (!this.calculateLimitedAmount()) {
+        return;
+      }
 
       const medicalCategoryField = tab.fields.find(field => field.id === "MedicalCategoryML");
       const claimsAmountField = tab.fields.find(field => field.id === "ClaimsAmountML");
@@ -3657,15 +3631,33 @@ export default {
         const category = medicalCategoryField.value;
         const claimsAmount = parseFloat(claimsAmountField.value) || 0;
 
+        const storageKey = category === "Outpatient"
+          ? "remaining_limit_outpatient"
+          : "remaining_limit_medicaldental";
+
+        const currentLimit = parseFloat(localStorage.getItem(storageKey)) || 0;
+
+        if (currentLimit <= 0) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Zero Limit Remaining',
+            text: `Your ${category} limit is currently ${currentLimit}. Cannot proceed with submission.`,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+          });
+          return;
+        }
+
         if (category === "Dental" || category === "Medical Check-Up") {
           this.totalMedicalDeduction += claimsAmount;
         }
-        const storageKey = category === "Outpatient"
+
+        const limitStorageKey = category === "Outpatient"
           ? "LimitedAmountML_Outpatient"
           : "LimitedAmountML_Dental";
 
-        const updatedLimitedAmount = parseFloat(localStorage.getItem(storageKey)) || 0;
-        localStorage.setItem(storageKey, updatedLimitedAmount);
+        const updatedLimitedAmount = parseFloat(localStorage.getItem(limitStorageKey)) || 0;
+        localStorage.setItem(limitStorageKey, updatedLimitedAmount);
       }
 
       const formattedData = {};
@@ -3681,7 +3673,7 @@ export default {
       if (tab.title === "Overseas Travelling" && this.otherExpenses.length > 0) {
         formattedData["otherExpenses"] = [...this.otherExpenses];
       }
-      
+
       this.$emit("formSubmitted", formattedData);
 
       tab.fields.forEach((field) => {

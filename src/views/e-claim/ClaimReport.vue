@@ -2354,40 +2354,35 @@ export default {
     },
 
     deleteForm(index) {
-      let dataclaims = JSON.parse(localStorage.getItem('dataclaims')) || [];
+  let dataclaims = JSON.parse(localStorage.getItem('dataclaims')) || [];
 
-      if (index >= 0 && index < dataclaims.length) {
-        const deletedClaim = dataclaims[index];
-        
-        // Get the current remaining limit based on category
-        const category = deletedClaim.MedicalCategoryML;
-        const storageKey = category === "Outpatient" 
-          ? "remaining_limit_outpatient"
-          : "remaining_limit_medicaldental";
-        
-        let currentLimit = parseFloat(localStorage.getItem(storageKey)) || 0;
-        const claimAmount = parseFloat(deletedClaim.ClaimsAmountML) || 0;
-        
-        // Add back the claimed amount to the remaining limit
-        currentLimit += claimAmount;
-        
-        // Update localStorage with new remaining limit
-        localStorage.setItem(storageKey, currentLimit);
+  if (index >= 0 && index < dataclaims.length) {
+    const deletedClaim = dataclaims[index];
+    
+    const category = deletedClaim.MedicalCategoryML;
+    const storageKey = category === "Outpatient" 
+      ? "remaining_limit_outpatient"
+      : "remaining_limit_medicaldental";
+    
+    let currentLimit = parseFloat(localStorage.getItem(storageKey)) || 0;
+    const claimAmount = parseFloat(deletedClaim.ClaimsAmountML) || 0;
+    
+    currentLimit += claimAmount;
+  
+    localStorage.setItem(storageKey, currentLimit);
 
-        // Remove the claim from dataclaims
-        dataclaims.splice(index, 1);
-        localStorage.setItem('dataclaims', JSON.stringify(dataclaims));
-        
-        // Emit both the deleted claim and updated limit
-        this.$emit('claimDeleted', {
-          claim: deletedClaim,
-          updatedLimit: currentLimit,
-          category: category
-        });
-        
-        this.dataclaims = dataclaims;
-      }
-    },
+    dataclaims.splice(index, 1);
+    localStorage.setItem('dataclaims', JSON.stringify(dataclaims));
+    
+    this.$emit('claimDeleted', {
+      claim: deletedClaim,
+      updatedLimit: currentLimit,
+      category: category
+    });
+    
+    this.dataclaims = dataclaims;
+  }
+},
 
     async addClaim(formData) {
       try {
