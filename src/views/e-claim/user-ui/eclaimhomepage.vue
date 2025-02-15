@@ -192,7 +192,7 @@
 
                       <th scope="col"
                         class="px-12 py-3.5 text-sm text-center font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <span class="">Edit</span>
+                        <span class="">Action.</span>
                       </th>
                     </tr>
                   </thead>
@@ -234,8 +234,8 @@
                         </div>
                       </td>
 
-                      <td class="px-4 py-4 ml text-sm whitespace-nowrap">
-                        <div class="flex text-center justify-center items-center items-center gap-x-6">
+                      <td class="px-4 py-4 text-sm whitespace-nowrap">
+                        <div class="flex text-center justify-center items-center items-center space-x-2">
                           <button @click="showclaim(data.reference_number)"
                             class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -246,6 +246,7 @@
                                 d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
                           </button>
+                        <button @click="redirecttoupdateclaim(data.reference_number)" class="bg-white border-2 border-green-600 text-green-600 hover:text-white hover:bg-green-600 hover:border-white transition-300 px-2 py-1 rounded-md">Update</button>
                         </div>
                       </td>
                     </tr>
@@ -415,6 +416,7 @@ export default {
     },
   },
   methods: {
+
     nextPage() {
       if (this.currentPage < this.totalPages) {
         this.currentPage++;
@@ -444,6 +446,10 @@ export default {
     },
     showclaim(rn) {
       this.$router.push({ name: 'SummaryClaimpage', params: { rn } });
+    },
+
+    redirecttoupdateclaim(rn){
+      this.$router.push({ name: 'updateclaim', params: { rn } })
     },
     initializeDataTable() {
       $(this.$refs.myTable).DataTable({});

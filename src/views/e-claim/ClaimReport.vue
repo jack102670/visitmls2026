@@ -179,7 +179,7 @@
                           <span v-if="claim.combinetotal">RM {{ claim.combinetotal }}</span>
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2">
-                          <button @click="deleteForm(index)"
+                          <button @click="deleteForm()"
                             class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
@@ -1555,7 +1555,7 @@ export default {
   },
 
   mounted() {
-    // Sidebar 
+    // Sidebar close or open
     const body = document.querySelector("body");
     body.style.overflow = "auto";
 
@@ -1568,12 +1568,6 @@ export default {
     } else if (element && openOrNot == "true") {
       element.classList.remove("become-big");
     }
-
-    //dont delete this comment. Saved the data in array from localStorage
-    const storedDataclaims = localStorage.getItem('dataclaims');
-      if (storedDataclaims) {
-        this.dataclaims = JSON.parse(storedDataclaims);
-      }
   },
 
   methods: {
@@ -2353,48 +2347,25 @@ export default {
       }
     },
 
-    deleteForm(index) {
-  let dataclaims = JSON.parse(localStorage.getItem('dataclaims')) || [];
+    deleteForm() {
+      if (this.index !== -1) {
+        this.dataclaims.splice(this.index, 1);
+      }
+      this.isClickModal = false; // Close the modal
+    },
 
-  if (index >= 0 && index < dataclaims.length) {
-    const deletedClaim = dataclaims[index];
-    
-    const category = deletedClaim.MedicalCategoryML;
-    const storageKey = category === "Outpatient" 
-      ? "remaining_limit_outpatient"
-      : "remaining_limit_medicaldental";
-    
-    let currentLimit = parseFloat(localStorage.getItem(storageKey)) || 0;
-    const claimAmount = parseFloat(deletedClaim.ClaimsAmountML) || 0;
-    
-    currentLimit += claimAmount;
-  
-    localStorage.setItem(storageKey, currentLimit);
 
-    dataclaims.splice(index, 1);
-    localStorage.setItem('dataclaims', JSON.stringify(dataclaims));
-    
-    this.$emit('claimDeleted', {
-      claim: deletedClaim,
-      updatedLimit: currentLimit,
-      category: category
-    });
-    
-    this.dataclaims = dataclaims;
-  }
-},
 
     async addClaim(formData) {
-      try {
-        const dataclaims = JSON.parse(localStorage.getItem('dataclaims')) || [];
-        dataclaims.push(formData);
-        localStorage.setItem('dataclaims', JSON.stringify(dataclaims));
-        this.dataclaims = dataclaims;
-      } catch(error) {
-        console.error("error", error);
-        throw error;
-      }
-    },
+  try {
+    // Simply add the validated form data to dataclaims array
+    this.dataclaims.push(formData);
+    console.log("Data Claims added:", this.dataclaims);
+  } catch(error) {
+    console.error("error", error);
+    throw error;
+  }
+}
   },
 };
 </script>

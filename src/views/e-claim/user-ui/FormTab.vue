@@ -1237,7 +1237,6 @@
             </div>
           </div>
         </div>
-        <!-- End of Staff Refreshment tab -->
       </div>
     </div>
   </div>
@@ -3388,6 +3387,10 @@ export default {
     removeStaff(index) {
       this.staffInvolved.splice(index, 1);
     },
+    nextTab() {
+      // Switch to the next tab only if current tab's validation passes
+      this.activeSubTab += 1;
+    },
 
     calculateTotal(tab) {
       // console.log("tabs nme",tab);
@@ -3450,30 +3453,22 @@ export default {
 
     },
 
-    nextTab() {
-      // Switch to the next tab only if current tab's validation passes
-      this.activeSubTab += 1;
-    },
-
-
-
     //calculate limit amount
-    handleClaimDeleted(deletedClaimAmount) {
-      const category = this.selectedMedicalCategory;
-      let remainingLimit;
+    handleClaimDeleted({ claimAmount, category, updatedLimit }) {
+      console.log("Claim Deleted:", claimAmount, category, updatedLimit);
 
+      // Update local storage
       if (category === "Outpatient") {
-        let currentLimit = parseFloat(localStorage.getItem("remaining_limit_outpatient")) || this.limit_outpatient;
-        remainingLimit = currentLimit + deletedClaimAmount; // Restore deleted amount
-        localStorage.setItem("remaining_limit_outpatient", remainingLimit);
+        localStorage.setItem("remaining_limit_outpatient", updatedLimit);
       } else {
-        let currentLimit = parseFloat(localStorage.getItem("remaining_limit_medicaldental")) || this.limit_medicaldental;
-        remainingLimit = currentLimit + deletedClaimAmount; // Restore deleted amount
-        localStorage.setItem("remaining_limit_medicaldental", remainingLimit);
+        localStorage.setItem("remaining_limit_medicaldental", updatedLimit);
       }
 
-      this.updateLimitedAmount(category); // Ensure UI updates
+      // Call your existing update functions
+      this.calculateLimitedAmount('add'); 
+      this.updateLimitedAmount(category); 
     },
+
 
     async fetchHrData() {
       try {
@@ -3581,6 +3576,8 @@ export default {
       this.selectedMedicalCategory = event.target.value;
       this.updateLimitedAmount(this.selectedMedicalCategory);
     },
+
+
     calculateLimitedAmount(operation = 'subtract') {
       const category = this.selectedMedicalCategory;
       const claimsAmount = parseFloat(this.tabs.find(tab =>
@@ -3692,9 +3689,6 @@ export default {
         }
       });
     },
-
-
-
     submitForm2(tabTitle) {
       if (this.validateCurrentTab(tabTitle)) {
 

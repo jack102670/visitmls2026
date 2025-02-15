@@ -52,6 +52,7 @@ import checkerClaimpage from "../views/e-claim/checkerClaimpage.vue";
 import NotFound from "../views/pagenotfound.vue";
 import AdminHODpage from "@/components/e-claim/AdminHODpage.vue";
 import AdminHODClaimpage from "@/components/e-claim/AdminHODClaimpage.vue";
+import UpdateClaims from "@/components/e-claim/UpdateClaim/UpdateClaims.vue"
 
 
 
@@ -133,6 +134,15 @@ const routes = [
     name: "SummaryClaimpage",
     components: {
       default: SummaryClaimpage,
+      Sidebar: Newsidebar,
+    },
+    props: true,
+  },
+  {
+    path: "/updateclaim/:rn",
+    name: "updateclaim",
+    components: {
+      default: UpdateClaims,
       Sidebar: Newsidebar,
     },
     props: true,
