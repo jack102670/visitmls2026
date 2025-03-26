@@ -374,7 +374,7 @@ export default {
 
       axios
         .post(
-          'http://172.28.28.116:7165/api/Admin/Register_UserProfile',
+          'https://esvcportal.pktgroup.com/api/erna/api/Admin/Register_UserProfile',
           registerData
         )
         .then((response) => {
@@ -405,7 +405,7 @@ export default {
       this.loadingText = 'Fetching';
       this.loading = true;
       await axios
-        .get('http://172.28.28.91:89/api/Security/getusersAD')
+        .get('https://esvcportal.pktgroup.com/api/Security/getusersAD')
         .then((response) => {
           this.loading = false;
           this.fetchOptions = response.data; // Make sure to access response.data
@@ -431,7 +431,7 @@ export default {
     },
     getAllPositions() {
       axios
-        .get('http://172.28.28.116:7239/api/User/GetDesignation')
+        .get('https://esvcportal.pktgroup.com/api/huda/api/User/GetDesignation')
         .then((response) => {
           this.AllPositions = response.data.result.map(
             (item) => item.designation
@@ -444,7 +444,7 @@ export default {
     },
     getAllCompanies() {
       axios
-        .get('http://172.28.28.116:7239/api/User/GetCompany')
+        .get('https://esvcportal.pktgroup.com/api/huda/api/User/GetCompany')
         .then((response) => {
           this.Company = response.data.result.map((item) => item.company_name);
         });
@@ -458,7 +458,7 @@ export default {
     async getEmpId(id) {
       try {
         const response = await axios.get(
-          `http://172.28.28.116:7239/api/User/GetEmployeeById/${id}`
+          `https://esvcportal.pktgroup.com/api/huda/api/User/GetEmployeeById/${id}`
         );
         return response.data.result[0].emp_id;
       } catch (error) {
@@ -537,7 +537,7 @@ export default {
 
       // Fetch additional data from the API and filter uniqueUsers
       axios
-        .get('http://172.28.28.116:7239/api/User/GetAllEmployees')
+        .get('https://esvcportal.pktgroup.com/api/huda/api/User/GetAllEmployees')
         .then((response) => {
           const existUserIds = response.data.result.map(
             (user) => user.username_id
@@ -574,7 +574,7 @@ export default {
       try {
         // Fetch additional data from the API
         const response = await axios.get(
-          'http://172.28.28.116:7239/api/User/GetAllEmployees'
+          'https://esvcportal.pktgroup.com/api/huda/api/User/GetAllEmployees'
         );
         const existUserIds = response.data.result.map(
           (user) => user.username_id

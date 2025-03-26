@@ -60,11 +60,7 @@
           </div>
       </form>
     </div>
-    <p class="text-sm text-white py-2 text-sm">
-      Are you a vendor?
-      <router-link to="/Vendorlogin" class="text-sky-400 font-medium text-sm">Login Here
-      </router-link>
-    </p>
+  
   </div>
   </div>
 </template>
@@ -155,7 +151,7 @@ export default {
 
       try {
         const response = await axios.post(
-          "http://172.28.28.91:89/api/Security/login",
+          "https://esvcportal.pktgroup.com/api/Security/login",
           {
             userName: this.userName,
             password: this.password,
@@ -189,8 +185,10 @@ export default {
             showConfirmButton: true,
             confirmButtonText: 'OK',
             confirmButtonColor: '#3085d6'
-          });
-          this.$router.push(redirectPath);
+          }).then(() => {
+            this.$router.push(redirectPath);
+          })
+          
 
         } else {
           Swal.fire({
@@ -244,7 +242,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("@/assets/images/1503506.jpg");
+  background-image: url("@/assets/images/hq_pkt.jpeg");
   background-size: cover;
   filter: blur(3px);
   z-index: -1;

@@ -412,7 +412,7 @@ export default {
     async FetchClaimsData() {
       this.loading = true;
       try {
-        const response = await axios.get('http://172.28.28.116:7165/api/ApproverVerifier/GetAllRequestApproverHR/');
+        const response = await axios.get('https://esvcportal.pktgroup.com/api/erna/api/ApproverVerifier/GetAllRequestApproverHR/');
         this.claimsData = response.data.result;
         if (this.claimsData.length > 0) {
           this.userApplications = this.claimsData;

@@ -949,7 +949,7 @@ export default {
       try {
         this.loadingText = 'Uploading';
         this.loading = true;
-        const response = await axios.get('http://172.28.28.116:7165/api/User/GetClaimDetails/' + this.referenceNumber);
+        const response = await axios.get('https://esvcportal.pktgroup.com/api/erna/api/User/GetClaimDetails/' + this.referenceNumber);
         this.loading = false;
         this.claimDetails = response.data.result;
         this.adminStatus = this.claimDetails.admin_status
@@ -1060,7 +1060,7 @@ export default {
       this.claimDatas = [];
       await axios
         .get(
-          'http://172.28.28.116:7239/api/User/GetLocalOutstation/' +
+          'https://esvcportal.pktgroup.com/api/huda/api/User/GetLocalOutstation/' +
           this.referenceNumber
         )
         .then((response) => {
@@ -1103,7 +1103,7 @@ export default {
 
       await axios
         .get(
-          'http://172.28.28.116:7239/api/User/GetOverseasOutstation/' +
+          'https://esvcportal.pktgroup.com/api/huda/api/User/GetOverseasOutstation/' +
           this.referenceNumber
         )
         .then((response) => {
@@ -1139,7 +1139,7 @@ export default {
 
       await axios
         .get(
-          'http://172.28.28.116:7239/api/User/GetRefreshment/' +
+          'https://esvcportal.pktgroup.com/api/huda/api/User/GetRefreshment/' +
           this.referenceNumber
         )
         .then((response) => {
@@ -1174,7 +1174,7 @@ export default {
 
       await axios
         .get(
-          'http://172.28.28.116:7165/api/User/GetEntertainment/' +
+          'https://esvcportal.pktgroup.com/api/erna/api/User/GetEntertainment/' +
           this.referenceNumber
         )
         .then((response) => {
@@ -1209,7 +1209,7 @@ export default {
 
       await axios
         .get(
-          'http://172.28.28.116:7239/api/User/GetOthers/' + this.referenceNumber
+          'https://esvcportal.pktgroup.com/api/huda/api/User/GetOthers/' + this.referenceNumber
         )
         .then((response) => {
           const result = response.data.result;
@@ -1278,7 +1278,7 @@ export default {
       const username_id = store.getSession().userDetails.userId;
       let userData;
       await axios
-        .get(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`)
+        .get(`https://esvcportal.pktgroup.com/api/huda/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           userData = {
             userName: response.data.result[0].name,
@@ -1331,15 +1331,15 @@ export default {
         };
         try {
           if (remark.Tab_Title == 'Local Outstation') {
-            await axios.post('http://172.28.28.116:7239/api/Verifier/VerifierLocal', data);
+            await axios.post('https://esvcportal.pktgroup.com/api/huda/api/Verifier/VerifierLocal', data);
           } else if (remark.Tab_Title == 'Overseas Outstation') {
-            await axios.post('http://172.28.28.116:7239/api/Verifier/VerifierOverseas', data);
+            await axios.post('https://esvcportal.pktgroup.com/api/huda/api/Verifier/VerifierOverseas', data);
           } else if (remark.Tab_Title == 'Staff Refreshment') {
-            await axios.post('http://172.28.28.116:7239/api/Verifier/VerifierRefreshment', data);
+            await axios.post('https://esvcportal.pktgroup.com/api/huda/api/Verifier/VerifierRefreshment', data);
           } else if (remark.Tab_Title == 'Entertainment') {
-            await axios.post('http://172.28.28.116:7239/api/Verifier/VerifierEntertainment', data);
+            await axios.post('https://esvcportal.pktgroup.com/api/huda/api/Verifier/VerifierEntertainment', data);
           } else if (remark.Tab_Title == 'Other') {
-            await axios.post('http://172.28.28.116:7239/api/Verifier/VerifierOthers', data);
+            await axios.post('https://esvcportal.pktgroup.com/api/huda/api/Verifier/VerifierOthers', data);
           }
         } catch (error) {
           console.error(`Error posting ${remark.Tab_Title}:`, error);
@@ -1351,7 +1351,7 @@ export default {
           this.approve = true;
           this.loadingText = 'Uploading';
           this.loading = true;
-          await axios.post('http://172.28.28.116:7239/api/Verifier/VerifierFeedback', {
+          await axios.post('https://esvcportal.pktgroup.com/api/huda/api/Verifier/VerifierFeedback', {
             admin_status: 'VERIFIED. WAITING FOR CHECKER',
             verifier_feedback: this.remark ? this.remark : '',
             reference_number: this.claimDetails.reference_number,
@@ -1390,7 +1390,7 @@ export default {
 
         try {
           const response = await axios.post(
-            'http://172.28.28.116:7239/api/Verifier/VerifierFeedback',
+            'https://esvcportal.pktgroup.com/api/huda/api/Verifier/VerifierFeedback',
             approveData
           );
           // Handle success response
@@ -1416,7 +1416,7 @@ export default {
         };
         await axios
           .post(
-            'http://172.28.28.116:7239/api/Verifier/VerifierFeedback',
+            'https://esvcportal.pktgroup.com/api/huda/api/Verifier/VerifierFeedback',
             approveData
           )
           .then(() => {

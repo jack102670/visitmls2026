@@ -18,7 +18,8 @@ export const hudaAPI = axios.create({
 
 export const getDepartment = async () => {
   try {
-    const base_URL = process.env.VUE_APP_API_BASE_URL_HUD;
+    //const base_URL = process.env.VUE_APP_API_BASE_URL_EC_HUDA_LX;
+    const base_URL = process.env.VUE_APP_API_BASE_URL_EC_HUDA_PROD_LX;
     const response = await axios.get(`${base_URL}/User/GetDepartment`);
     if (response.data.result) {
       // console.log("Department name:", response.data.result);
@@ -34,7 +35,8 @@ export const getDepartment = async () => {
 
 export const c = async () => {
   try {
-    const base_URL = process.env.VUE_APP_API_BASE_URL_EC_HUDA_LX;
+    //const base_URL = process.env.VUE_APP_API_BASE_URL_EC_HUDA_LX;
+    const base_URL = process.env.VUE_APP_API_BASE_URL_EC_HUDA_PROD_LX;
     const response = await axios.get(`${base_URL}/User/GetDesignation`);
     if (response.data.result) {
       // console.log("Department name:", response.data.result);
@@ -51,7 +53,8 @@ export const c = async () => {
 export const getUserClaimDetails = async (refNo) => {
 
   try {
-      const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
+     // const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
+      const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_PROD_LX;
       const response = await axios.get(
         `${base_URL}/User/GetClaimDetails/${refNo}`,
         {
@@ -78,7 +81,8 @@ export const getEntertainment = async (refNo) => {
   console.log("refNo", refNo);
   try {
 
-    const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
+   // const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
+    const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_PROD_LX;
     const response = await axios.get(`${base_URL}/User/GetEntertainment/${refNo}`, {
       params: {
         refNo: refNo,
@@ -99,7 +103,8 @@ export const getHandphone = async (refNo) => {
   console.log("refNo", refNo);
   try {
 
-    const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
+    //const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
+    const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_PROD_LX;
     const response = await axios.get(`${base_URL}/User/GetHandphone/${refNo}`, {
       params: {
         refNo: refNo,
@@ -152,7 +157,8 @@ export const getMedicalLeave = async (refNo) => {
   console.log("refNo", refNo);
   try {
 
-    const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
+    //const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
+    const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_PROD_LX;
     const response = await axios.get(`${base_URL}/User/GetMedicalLeave/${refNo}`, {
       params: {
         refNo: refNo,
@@ -173,6 +179,7 @@ export const getMedicalLeave = async (refNo) => {
 export const updateMedical = async (submitData) => {
   try {
     const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
+   // const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_PROD_LX;
     const response = await axios.put(`${base_URL}/User/UpdateMedical`, submitData, {
       headers: {
         "Content-Type": "application/json",
@@ -203,6 +210,7 @@ export const updateMedical = async (submitData) => {
 export const updateEntertainment = async (submitData) => {
   try {
     const base_URL = process.env.VUE_APP_API_BASE_URL_EC_ERNA_LX;
+    //const base_URL = process.env.VUE_APP_API_BASE_URL_EC_HUDA_PROD_LX;
     const response = await axios.put(`${base_URL}/User/UpdateMedical`, submitData, {
       headers: {
         "Content-Type": "application/json",

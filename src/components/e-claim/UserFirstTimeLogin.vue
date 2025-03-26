@@ -21,7 +21,7 @@
           </section>
 
           <form @submit.prevent="verifyAndSaveData()">
-            <div class="mt-4">
+            <!-- <div class="mt-4">
               <label class="ml-2 font-semibold text-gray-600 dark:text-gray-200">Profile Picture</label>
               <div class="flex items-center mt-2">
                 <img :src="profile_picture || defaultProfilePicture" alt="Profile Picture"
@@ -29,7 +29,7 @@
                 <div class="ml-4">
                   <input type="file" @change="onProfilePictureChange"
                     class="block w-full text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
-                  <button @click="deleteProfilePicture" type="button"
+                  <button disabled @click="deleteProfilePicture" type="button"
                     class="mt-2 text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                       stroke="currentColor" class="w-5 h-5">
@@ -39,7 +39,7 @@
                   </button>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <!-- Image Crop Modal -->
             <div v-if="showCropper" class="fixed z-50 inset-0 overflow-y-auto">
@@ -225,9 +225,9 @@
             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
               <div>
                 <label class="ml-2 font-semibold text-gray-600 dark:text-gray-200" for="home_address">
-                  Home Address
+                  Home Address <span class="text-red-500">*</span>
                 </label>
-                <textarea v-model="user.home_address" id="home_address" type="text"
+                <textarea required v-model="user.home_address" id="home_address" type="text"
                   class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                   row="4"></textarea>
               </div>
@@ -313,6 +313,56 @@
                       class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-700 text-base font-bold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">
                       Verify
                     </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+             <!-- PROFILE UPDATE Request Modal -->
+             <div v-if="showCompleteProfileModal" class="fixed z-10 inset-0 overflow-y-auto">
+              <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                  <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
+
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+                <div
+                  class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                  <button @click="showCompleteProfileModal = false" type="button"
+                    class="absolute top-0 right-0 mt-4 mr-4 text-gray-400 hover:text-gray-500 focus:outline-none">
+                    <span class="sr-only">Close</span>
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+
+                  <div>
+                    
+               
+                    <h3 class="text-xl leading-6 font-medium text-gray-900">
+                      Please complete the User Profile
+                    </h3>
+                    <p class="mt-4 mb-8 text-md text-gray-500">
+                      Make sure to fill in all the required details before you get to activate the account.
+                      <strong>{{ user.email_address }}</strong>.
+                    </p>
+                  </div>
+                  <div class="mt-5 sm:mt-6 sm:flex sm:flex-row-reverse">
+                    <!-- <button v-if="loadingsendOtpButton" type="button"
+                      class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-700 text-base font-bold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm hover:cursor-not-allowed duration-[500ms,800ms]"
+                      disabled>
+                      <div class="flex items-center justify-center">
+                        <div
+                          class="h-5 w-5 border-t-transparent border-solid animate-spin rounded-full border-white border-4">
+                        </div>
+                        <div class="ml-2">Request OTP</div>
+                      </div>
+                    </button>
+                    <button v-else type="button" @click="sendOtp"
+                      class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-700 text-base font-bold text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">
+                      Request OTP
+                    </button> -->
                   </div>
                 </div>
               </div>
@@ -450,6 +500,7 @@ export default {
       userDetails: '',
       defaultProfilePicture: require('@/assets/images/profile.png'),
       showRequestOtpModal: false,
+      showCompleteProfileModal: false,
       showOtpModal: false,
       showSuccessNotification: false,
       message: '',
@@ -502,7 +553,8 @@ export default {
           return reject(new Error("User session not found."));
         }
         const username_id = session.userDetails.userId;
-        fetch(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`)
+       fetch(`https://esvcportal.pktgroup.com/api/huda/api/User/GetEmployeeById/${username_id}`)
+        //fetch(`https://esvcportal.pktgroup.com/api/huda/api/User/GetEmployeeById/${username_id}`)
           .then((response) => {
             if (!response.ok) {
               throw new Error(`HTTP error! Status: ${response.status}`);
@@ -546,7 +598,7 @@ export default {
 
    //   console.log('Employee Data this:', employeeData);
       axios
-        .put('http://172.28.28.116:7239/api/User/UpdateEmployee', employeeData)
+        .put('https://esvcportal.pktgroup.com/api/huda/api/User/UpdateEmployee', employeeData)
         .then((response) => {
       //    console.log('Response: this method', response);
           if (response.data.status_code === '200') {
@@ -593,7 +645,8 @@ export default {
       this.loadingText = 'Fetching';
       this.loading = true;
       axios
-        .get(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`)
+        //.get(`https://esvcportal.pktgroup.com/api/huda/api/User/GetEmployeeById/${username_id}`)
+        .get(`https://esvcportal.pktgroup.com/api/huda/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           const data = response.data.result;
     //      console.log('HR data:', data);
@@ -643,7 +696,7 @@ export default {
       formData.append('emp_id', this.user.emp_id);
 
       axios
-        .put('http://172.28.28.116:7239/api/User/UpdateImage', formData, {
+        .put('https://esvcportal.pktgroup.com/api/huda/api/User/UpdateImage', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -717,17 +770,21 @@ export default {
     checkUserStatus() {
       const username_id = store.getSession().userDetails.userId;
       axios
-        .get(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`)
+        .get(`https://esvcportal.pktgroup.com/api/huda/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           // Assuming the API response structure has a status field
           const userStatus = response.data.result[0].account_status;
           const email = response.data.result[0].email_address;
        //   console.log('User status:', userStatus);
 
-      if (userStatus === '0' && email !== '') {
+      if (userStatus === '0' && email === null) {
+        // User has not completed their OTP, show the modal
+        this.showCompleteProfileModal = true;
+      }
+      else if (userStatus === '0' && email !=='') {
         // User has not completed their OTP, show the modal
         this.showRequestOtpModal = true;
-      } else {
+      }  else {
         // User has completed their OTP, do not show the modal
         this.showRequestOtpModal = false;
       }
@@ -744,15 +801,16 @@ export default {
    
       const username_id = store.getSession().userDetails.userId;
       axios
-        .get(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`)
+        .get(`https://esvcportal.pktgroup.com/api/huda/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           // Assuming the API response structure has a status field
           const userStatus = response.data.result[0].account_status;
+          const email = response.data.result[0].email_address;
 
      //     console.log('User status: baru', userStatus);
 if (userStatus===null) this.$router.push('/homepage')
 {
-          if (userStatus === '0') {
+          if (userStatus === '0' && email !== '') {
             // User has not completed their OTP, show the modal
 
             this.showRequestOtpModal = true;
@@ -811,7 +869,7 @@ if (userStatus===null) this.$router.push('/homepage')
    //   console.log('Employee Data test :', employeeData);
 
       axios
-        .put('http://172.28.28.116:7239/api/User/UpdateProfile', employeeData)
+        .put('https://esvcportal.pktgroup.com/api/huda/api/User/UpdateProfile', employeeData)
         .then((response) => {
      //     console.log('Response:', response);
           const elapsedTime = Date.now() - startTime; // Calculate elapsed time
@@ -868,7 +926,7 @@ if (userStatus===null) this.$router.push('/homepage')
       this.loadingsendOtpButton = true;
       try {
         const response = await axios.post(
-          'http://172.28.28.116:7239/api/User/GenerateOTP',
+          'https://esvcportal.pktgroup.com/api/huda/api/User/GenerateOTP',
           { email: this.user.email_address }
         );
 
@@ -931,7 +989,7 @@ if (userStatus===null) this.$router.push('/homepage')
       this.loadingverifyOtpButton = true;
       const startTime = Date.now();
       try {
-        const baseUrl = 'http://172.28.28.116:7239';
+        const baseUrl = 'https://esvcportal.pktgroup.com/api/huda';
         const email = encodeURIComponent(this.user.email_address);
         const otp = encodeURIComponent(this.otp);
         const url = `${baseUrl}/api/User/ValidateOTP?email=${email}&otp=${otp}`;
@@ -991,7 +1049,7 @@ if (userStatus===null) this.$router.push('/homepage')
     requestNewOtp() {
       if (this.timer === 0) {
         axios
-          .post('http://172.28.28.116:7239/api/User/GenerateOTP', {
+          .post('https://esvcportal.pktgroup.com/api/huda/api/User/GenerateOTP', {
             email: this.user.email_address,
           })
           .then((response) => {

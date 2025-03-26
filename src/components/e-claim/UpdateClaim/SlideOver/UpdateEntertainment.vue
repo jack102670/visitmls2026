@@ -196,7 +196,7 @@ export default {
             descriptionType: ["ENTERTAINMENT-CLIENT(EXISTING)", "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)", "ENTERTAINMENT-NON TRADE", "GIFT TO CLIENT", "GIFT TO OTHERS"],
             currentPage: 1,
             pageSize: 5,
-            entertainment: {},
+            //entertainment: {},
             isParticipantFormOpen: false,
             selectedParticipant: {}
 

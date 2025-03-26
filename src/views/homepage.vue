@@ -78,7 +78,7 @@
             return reject(new Error("User session not found."));
           }
           const username_id = session.userDetails.userId;
-          fetch(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`)
+          fetch(`https://esvcportal.pktgroup.com/api/huda/api/User/GetEmployeeById/${username_id}`)
             .then((response) => {
               if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);

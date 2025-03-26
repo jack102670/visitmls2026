@@ -1591,7 +1591,7 @@ export default {
       let result = null;
       try {
         const response = await axios.get(
-          "http://172.28.28.116:7165/api/User/GetRunningNumber"
+          "https://esvcportal.pktgroup.com/api/erna/api/User/GetRunningNumber"
         );
         if (response.status === 200) {
           // console.log("Serial Number:", response.data);
@@ -1618,7 +1618,7 @@ export default {
     async fetchEmployeeID() {
       try {
         const response = await axios.get(
-          "http://172.28.28.116:7239/api/User/GetAllEmployees"
+          "https://esvcportal.pktgroup.com/api/huda/api/User/GetAllEmployees"
         );
 
         if (response.data.result && response.data.result.length > 0) {
@@ -1827,7 +1827,7 @@ export default {
 
       try {
         const response = await axios.post(
-          "http://172.28.28.116:7239/api/User/InsertClaimDetails",
+          "https://esvcportal.pktgroup.com/api/huda/api/User/InsertClaimDetails",
           apiData
         );
 
@@ -1924,7 +1924,7 @@ export default {
                   console.log("Payload for API:", thisisforlocal1);
                   try {
                     const axiosInstance = axios.create({
-                      baseURL: "http://172.28.28.116:7239/api/User/InsertLocalOutstation",
+                      baseURL: "https://esvcportal.pktgroup.com/api/huda/api/User/InsertLocalOutstation",
                     });
 
                     const response = await axiosInstance.post("/", thisisforlocal1);
@@ -2012,7 +2012,7 @@ export default {
                   }
                   try {
                     const axiosInstance = axios.create({
-                      baseURL: "http://172.28.28.116:7239/api/User/InsertOverseasOutstation",
+                      baseURL: "https://esvcportal.pktgroup.com/api/huda/api/User/InsertOverseasOutstation",
                     });
                     const response = await axiosInstance.post("/", thisisforoversea);
                     console.log("Data successfully sent to API:", response.data);
@@ -2063,7 +2063,7 @@ export default {
                 }
                 axiosInstance = axios.create({
                   baseURL:
-                    "http://172.28.28.116:7165/api/User/InsertEntertainment",
+                    "https://esvcportal.pktgroup.com/api/erna/api/User/InsertEntertainment",
                 });
                 // try {
                 const response = await axiosInstance.post(
@@ -2115,7 +2115,7 @@ export default {
                 }
                 axiosInstance = axios.create({
                   baseURL:
-                    "http://172.28.28.116:7239/api/User/InsertStaffRefreshment",
+                    "https://esvcportal.pktgroup.com/api/huda/api/User/InsertStaffRefreshment",
                 });
                 const response2 = await axiosInstance.post(
                   "/",
@@ -2156,7 +2156,7 @@ export default {
                   );
                 }
                 axiosInstance = axios.create({
-                  baseURL: "http://172.28.28.116:7239/api/User/InsertOthers",
+                  baseURL: "https://esvcportal.pktgroup.com/api/huda/api/User/InsertOthers",
                 });
                 const response2 = await axiosInstance.post(
                   "/",
@@ -2190,7 +2190,7 @@ export default {
                 }
                 const axiosInstance = axios.create({
                   baseURL:
-                    "http://172.28.28.116:7165/api/User/InsertHandphoneReimburse",
+                    "https://esvcportal.pktgroup.com/api/erna/api/User/InsertHandphoneReimburse",
                 });
 
                 try {
@@ -2251,7 +2251,7 @@ export default {
                         this.uploadFiles(claim.UploadML, userId, uniqcodeML);
                       }
                       const axiosInstance = axios.create({
-                        baseURL: "http://172.28.28.116:7165/api/User/InsertMedicalLeave",
+                        baseURL: "https://esvcportal.pktgroup.com/api/erna/api/User/InsertMedicalLeave",
                       });
                       await axiosInstance.post("/", thisisforMedicalBillReimbursement);
                     }
@@ -2285,7 +2285,7 @@ export default {
     },
 
     async uploadFiles(files, userId, uniqueCode) {
-      const uploadEndpoint = `http://172.28.28.116:7267/api/Files/MultiUploadImage/${userId}/${uniqueCode}`;
+      const uploadEndpoint = `https://esvcportal.pktgroup.com/api/file/api/Files/MultiUploadImage/${userId}/${uniqueCode}`;
       const formData = new FormData();
 
       files.forEach((file) => {

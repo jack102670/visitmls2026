@@ -246,7 +246,7 @@
                                 d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
                           </button>
-                        <button @click="redirecttoupdateclaim(data.reference_number)" class="bg-white border-2 border-green-600 text-green-600 hover:text-white hover:bg-green-600 hover:border-white transition-300 px-2 py-1 rounded-md">Update</button>
+                        <!-- <button @click="redirecttoupdateclaim(data.reference_number)" class="bg-white border-2 border-green-600 text-green-600 hover:text-white hover:bg-green-600 hover:border-white transition-300 px-2 py-1 rounded-md">Update</button> -->
                         </div>
                       </td>
                     </tr>
@@ -475,7 +475,7 @@ export default {
 
       try {
         const response = await fetch(
-          `http://172.28.28.116:7165/api/User/GetAllRequests/${userId}`
+          `https://esvcportal.pktgroup.com/api/erna/api/User/GetAllRequests/${userId}`
         );
         if (!response.ok) {
           throw new Error('Failed to fetch requests');

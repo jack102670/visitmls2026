@@ -579,7 +579,7 @@ export default {
     },
     FetchEmployeesData() {
       axios
-        .get('http://172.28.28.116:7239/api/User/GetAllEmployees')
+        .get('https://esvcportal.pktgroup.com/api/huda/api/User/GetAllEmployees')
         .then((response) => {
           this.employeesData = response.data.result;
           if (this.employeesData.length > 0) {
@@ -633,7 +633,7 @@ export default {
 
       let reportingName = '';
       try {
-        const reportingResponse = await axios.get('http://172.28.28.116:7239/api/User/GetAllEmployees');
+        const reportingResponse = await axios.get('https://esvcportal.pktgroup.com/api/huda/api/User/GetAllEmployees');
         const allEmployees = reportingResponse.data.result;
         // console.log("All employees:", allEmployees);
         const reportingEmployee = allEmployees.find(emp => emp.emp_id === employee.reporting_to);
@@ -655,7 +655,7 @@ export default {
 
 
       try {
-        const response = await axios.get(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`);
+        const response = await axios.get(`https://esvcportal.pktgroup.com/api/huda/api/User/GetEmployeeById/${username_id}`);
         // console.log("3. All employees fetched successfully:", response.data.result);
         const responseResult = response.data.result;
       //  console.log("4. responseResult: ", responseResult);
@@ -754,7 +754,7 @@ export default {
       // console.log('Form Data:', registerData);
 
       try {
-        axios.put('http://172.28.28.116:7165/api/Admin/Update_UserProfile',registerData)
+        axios.put('https://esvcportal.pktgroup.com/api/erna/api/Admin/Update_UserProfile',registerData)
         .then(() => {
           this.loading = false;
           this.confirm = false;
@@ -796,7 +796,7 @@ export default {
       }
 
       try {
-        const response = await axios.get(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`);
+        const response = await axios.get(`https://esvcportal.pktgroup.com/api/huda/api/User/GetEmployeeById/${username_id}`);
 
 
         const result = response.data.result;
@@ -826,7 +826,7 @@ export default {
       this.loading = true;
 
       try {
-        const response = await axios.get('http://172.28.28.91:89/api/Security/getusersAD');
+        const response = await axios.get('https://esvcportal.pktgroup.com/api/Security/getusersAD');
         this.fetchOptions = response.data;
         // console.log("list of fetchOptions from usersAD:", response);
 
@@ -870,7 +870,7 @@ export default {
     },
     async getAllPositions() {
       try {
-        const response = await axios.get('http://172.28.28.116:7239/api/User/GetDesignation');
+        const response = await axios.get('https://esvcportal.pktgroup.com/api/huda/api/User/GetDesignation');
 
         this.AllPositions = response.data.result
           .map((item) => item.designation)
@@ -883,7 +883,7 @@ export default {
 
     async getAllCompanies() {
       try {
-        const response = await axios.get('http://172.28.28.116:7239/api/User/GetCompany');
+        const response = await axios.get('https://esvcportal.pktgroup.com/api/huda/api/User/GetCompany');
         this.Company = response.data.result.map((item) => item.company_name);
       } catch (error) {
         this.error = error;
@@ -899,7 +899,7 @@ export default {
 
     async loadEmployeeData() {
       try {
-        const response = await axios.get('http://172.28.28.116:7239/api/User/GetAllEmployees');
+        const response = await axios.get('https://esvcportal.pktgroup.com/api/huda/api/User/GetAllEmployees');
         this.employeeCache = response.data.result;
       } catch (error) {
         console.error('Error loading employee data:', error);

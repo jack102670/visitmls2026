@@ -513,7 +513,7 @@ filteredCostcenter() {
     async fetchusername() {
       try {
         const response = await fetch(
-          "http://172.28.28.116:7239/api/User/GetAllEmployees"
+          "https://esvcportal.pktgroup.com/api/huda/api/User/GetAllEmployees"
         );
         if (response.status !== 200) {
           // Corrected status code check
@@ -586,7 +586,7 @@ filteredCostcenter() {
     async fetchDesignations() {
       try {
         const response = await fetch(
-          "http://172.28.28.116:7239/api/User/GetDesignation"
+          "https://esvcportal.pktgroup.com/api/huda/api/User/GetDesignation"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -601,7 +601,7 @@ filteredCostcenter() {
     async fetchCompany() {
       try {
         const response = await fetch(
-          "http://172.28.28.116:7239/api/User/GetCompany"
+          "https://esvcportal.pktgroup.com/api/huda/api/User/GetCompany"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -616,7 +616,7 @@ filteredCostcenter() {
     async fetchDepartments() {
       try {
         const response = await fetch(
-          "http://172.28.28.116:7239/api/User/GetDepartment"
+          "https://esvcportal.pktgroup.com/api/huda/api/User/GetDepartment"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -680,7 +680,7 @@ filteredCostcenter() {
         // };
 
         // // Send API request using axios
-        // axios.post('http://172.28.28.116:7239/api/User/InsertClaimDetails', apiData)
+        // axios.post('https://esvcportal.pktgroup.com/api/huda/api/User/InsertClaimDetails', apiData)
         //   .then(response => {
         //     // Handle success response
         //     console.log('API response', response.data);

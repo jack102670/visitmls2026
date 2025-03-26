@@ -271,7 +271,7 @@ import Swal from 'sweetalert2';
       async GetAllDepartments() {
       try {
         const response = await axios.get(
-          "http://172.28.28.116:7239/api/User/GetDepartment"
+          "https://esvcportal.pktgroup.com/api/huda/api/User/GetDepartment"
         );
         this.AllDepartments = response.data.result.map((item) => item.department);
         this.GetAllEmployees();
@@ -283,7 +283,7 @@ import Swal from 'sweetalert2';
     async GetAllEmployees() {
       try {
         const response = await axios.get(
-          "http://172.28.28.116:7239/api/User/GetAllEmployees"
+          "https://esvcportal.pktgroup.com/api/huda/api/User/GetAllEmployees"
         );
         this.AllEmployees = response.data.result;
       } catch (error) {

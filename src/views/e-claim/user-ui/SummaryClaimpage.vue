@@ -977,7 +977,7 @@ async FetchClaimDetails() {
   try {
     this.loadingText = 'Uploading';
     this.loading = true;
-    const response = await axios.get('http://172.28.28.116:7165/api/User/GetClaimDetails/' + this.referenceNumber);
+    const response = await axios.get('https://esvcportal.pktgroup.com/api/erna/api/User/GetClaimDetails/' + this.referenceNumber);
     this.loading = false;
     this.claimDetails = response.data.result;
     this.adminStatus = this.claimDetails.admin_status
@@ -1085,7 +1085,7 @@ async FetchClaimDatasDetails() {
   try {
     try {
       const response = await axios.get(
-        'http://172.28.28.116:7239/api/User/GetLocalOutstation/' +
+        'https://esvcportal.pktgroup.com/api/huda/api/User/GetLocalOutstation/' +
         this.referenceNumber
       );
       const result = response.data.result;
@@ -1124,7 +1124,7 @@ async FetchClaimDatasDetails() {
 
     try {
       const response = await axios.get(
-        'http://172.28.28.116:7239/api/User/GetOverseasOutstation/' +
+        'https://esvcportal.pktgroup.com/api/huda/api/User/GetOverseasOutstation/' +
         this.referenceNumber
       );
       const result = response.data.result;
@@ -1171,7 +1171,7 @@ async FetchClaimDatasDetails() {
 
     try {
       const response = await axios.get(
-        'http://172.28.28.116:7239/api/User/GetRefreshment/' +
+        'https://esvcportal.pktgroup.com/api/huda/api/User/GetRefreshment/' +
         this.referenceNumber
       );
       const result = response.data.result;
@@ -1204,7 +1204,7 @@ async FetchClaimDatasDetails() {
 
     try {
       const response = await axios.get(
-        'http://172.28.28.116:7165/api/User/GetEntertainment/' +
+        'https://esvcportal.pktgroup.com/api/erna/api/User/GetEntertainment/' +
         this.referenceNumber
       );
       const result = response.data.result;
@@ -1238,7 +1238,7 @@ async FetchClaimDatasDetails() {
 
     try {
       const response = await axios.get(
-        'http://172.28.28.116:7165/api/User/GetMedicalLeave/' +
+        'https://esvcportal.pktgroup.com/api/erna/api/User/GetMedicalLeave/' +
         this.referenceNumber
       );
       const result = response.data.result;
@@ -1279,7 +1279,7 @@ async FetchClaimDatasDetails() {
 
     try {
       const response = await axios.get(
-        'http://172.28.28.116:7165/api/User/GetHandphone/' + this.referenceNumber
+        'https://esvcportal.pktgroup.com/api/erna/api/User/GetHandphone/' + this.referenceNumber
       );
       const result = response.data.result;
       let details = [];
@@ -1310,7 +1310,7 @@ async FetchClaimDatasDetails() {
 
     try {
       const response = await axios.get(
-        'http://172.28.28.116:7239/api/User/GetOthers/' + this.referenceNumber
+        'https://esvcportal.pktgroup.com/api/huda/api/User/GetOthers/' + this.referenceNumber
       );
       const result = response.data.result;
       let details = [];
@@ -1409,7 +1409,7 @@ async FetchClaimDatasDetails() {
       const username_id = store.getSession().userDetails.userId;
       let userData;
       await axios
-        .get(`http://172.28.28.116:7239/api/User/GetEmployeeById/${username_id}`)
+        .get(`https://esvcportal.pktgroup.com/api/huda/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           userData = {
             userName: response.data.result[0].name,
@@ -1454,12 +1454,12 @@ async FetchClaimDatasDetails() {
         };
         if (remark.Tab_Title == 'Medical Bill') {
           axios.put(
-            'http://172.28.28.116:7165/api/Admin/Approve_Comment_Medical',
+            'https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Comment_Medical',
             data
           );
         } else if (remark.Tab_Title == 'Handphone Bill') {
           axios.put(
-            'http://172.28.28.116:7165/api/Admin/Approve_Comment_Handphone',
+            'https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Comment_Handphone',
             data
           );
         }
@@ -1482,7 +1482,7 @@ async FetchClaimDatasDetails() {
         };
      //   console.log(approveData);
 
-        const response = await axios.put('http://172.28.28.116:7165/api/Admin/Approve_Claim', approveData);
+        const response = await axios.put('https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Claim', approveData);
 
         if (response.status === 200) {
 
@@ -1518,7 +1518,7 @@ async FetchClaimDatasDetails() {
           reference_number: this.claimDetails.reference_number,
         };
         await axios
-          .put('http://172.28.28.116:7165/api/Admin/Approve_Claim', approveData)
+          .put('https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Claim', approveData)
           .then((response) => {
             this.loading = false;
 
@@ -1548,7 +1548,7 @@ async FetchClaimDatasDetails() {
           reference_number: this.claimDetails.reference_number,
         };
         await axios
-          .put('http://172.28.28.116:7165/api/Admin/Approve_Claim', approveData)
+          .put('https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Claim', approveData)
           .then((response) => {
             this.loading = false;
 
@@ -1575,7 +1575,7 @@ async FetchClaimDatasDetails() {
           reference_number: this.claimDetails.reference_number,
         };
         await axios
-          .put('http://172.28.28.116:7165/api/Admin/Approve_Claim', approveData)
+          .put('https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Claim', approveData)
           .then((response) => {
             this.loading = false;
 
