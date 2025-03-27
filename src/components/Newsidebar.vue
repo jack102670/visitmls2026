@@ -324,6 +324,7 @@ export default {
       if (result.isConfirmed) {
         try {
           store.clearSession();
+          localStorage.clear();
           this.$router.push('/');
           Swal.fire({
             icon: "success",
