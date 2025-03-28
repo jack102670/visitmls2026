@@ -2514,87 +2514,65 @@ export default {
               medicalCategoryMLField &&
               limitedAmountMLField &&
               claimsAmountMLField
-            ) {
-              this.$watch(
-                () => medicalCategoryMLField.value,
-                (newValue) => {
+            ) this.$watch(
+              () => medicalCategoryMLField.value,
+              (newValue) => {
+                if (newValue === "Medical Check-Up" || newValue === "Dental") {
                   if (
-                    newValue === "Medical Check-Up" ||
-                    newValue === "Dental"
+                    parseFloat(claimsAmountMLField.value) >
+                    parseFloat(limitedAmountMLField.value)
                   ) {
-                    if (
-                      parseFloat(claimsAmountMLField.value) >
-                      parseFloat(limitedAmountMLField.value)
-                    ) {
-                      claimsAmountMLField.value = limitedAmountMLField.value;
-                    }
+                    claimsAmountMLField.value = limitedAmountMLField.value;
+                  }
+                } else if (newValue === "Outpatient") {
+                  const limitOutpatient = 70.00;
+                  const availableLimit = parseFloat(limitedAmountMLField.value);
 
-                    this.$watch(
-                      () => claimsAmountMLField.value,
-                      (newClaimValue) => {
-                        if (
-                          parseFloat(newClaimValue) >
-                          parseFloat(limitedAmountMLField.value)
-                        ) {
-                          claimsAmountMLField.value =
-                            limitedAmountMLField.value;
-                        }
-                      }
-                    );
-                  } else if (newValue === "Outpatient") {
-                    const limitOutpatient = 70;
+                  claimsAmountMLField.value = availableLimit >= limitOutpatient 
+                    ? limitOutpatient 
+                    : availableLimit;
+                }
+              }
+            );
 
-                    if (
-                      parseFloat(limitedAmountMLField.value) >= limitOutpatient
-                    ) {
-                      claimsAmountMLField.value = limitOutpatient;
-                    } else {
-                      claimsAmountMLField.value = limitedAmountMLField.value;
-                    }
+            this.$watch(
+              () => claimsAmountMLField.value,
+              (newClaimValue) => {
+                const availableLimit = parseFloat(limitedAmountMLField.value);
+                const limitOutpatient = 70.00;
 
-                    this.$watch(
-                      () => claimsAmountMLField.value,
-                      (newClaimValue) => {
-                        if (parseFloat(newClaimValue) > limitOutpatient) {
-                          claimsAmountMLField.value = limitOutpatient;
-                        } else if (
-                          parseFloat(newClaimValue) >
-                          parseFloat(limitedAmountMLField.value)
-                        ) {
-                          claimsAmountMLField.value =
-                            limitedAmountMLField.value;
-                        }
-                      }
-                    );
+                if (medicalCategoryMLField.value === "Medical Check-Up" || medicalCategoryMLField.value === "Dental") {
+                  if (parseFloat(newClaimValue) > availableLimit) {
+                    claimsAmountMLField.value = availableLimit;
+                  }
+                } else if (medicalCategoryMLField.value === "Outpatient") {
+                  if (parseFloat(newClaimValue) > limitOutpatient) {
+                    claimsAmountMLField.value = limitOutpatient;
+                  } else if (parseFloat(newClaimValue) > availableLimit) {
+                    claimsAmountMLField.value = availableLimit;
                   }
                 }
-              );
+              }
+            );
 
-              this.$watch(
-                () => limitedAmountMLField.value,
-                (newLimitedValue) => {
-                  if (
-                    medicalCategoryMLField.value === "Medical Check-Up" ||
-                    medicalCategoryMLField.value === "Dental"
-                  ) {
-                    if (
-                      parseFloat(claimsAmountMLField.value) >
-                      parseFloat(newLimitedValue)
-                    ) {
-                      claimsAmountMLField.value = newLimitedValue;
-                    }
-                  } else if (medicalCategoryMLField.value === "Outpatient") {
-                    const limitOutpatient = 70;
+            this.$watch(
+              () => limitedAmountMLField.value,
+              (newLimitedValue) => {
+                const availableLimit = parseFloat(newLimitedValue);
+                const limitOutpatient = 70.00;
 
-                    if (parseFloat(newLimitedValue) >= limitOutpatient) {
-                      claimsAmountMLField.value = limitOutpatient;
-                    } else {
-                      claimsAmountMLField.value = newLimitedValue;
-                    }
+                if (medicalCategoryMLField.value === "Medical Check-Up" || medicalCategoryMLField.value === "Dental") {
+                  if (parseFloat(claimsAmountMLField.value) > availableLimit) {
+                    claimsAmountMLField.value = availableLimit;
                   }
+                } else if (medicalCategoryMLField.value === "Outpatient") {
+                  claimsAmountMLField.value = availableLimit >= limitOutpatient 
+                    ? limitOutpatient 
+                    : availableLimit;
                 }
-              );
-            }
+              }
+            );
+
           }
 
           if (tab.title === "Details") {
@@ -3462,7 +3440,11 @@ export default {
         localStorage.setItem("remaining_limit_outpatient", updatedLimit);
       } else {
         localStorage.setItem("remaining_limit_medicaldental", updatedLimit);
-      }
+      } 
+
+      let remainingTotalLimit = parseFloat(localStorage.getItem("remaining_limit_amount")) || this.limit_amount;
+      remainingTotalLimit += claimAmount;
+      localStorage.setItem("remaining_limit_amount", remainingTotalLimit);
 
       // Call your existing update functions
       this.calculateLimitedAmount('add'); 
@@ -3487,6 +3469,10 @@ export default {
             limit_outpatient: localStorage.getItem('initial_limit_outpatient')
               ? parseFloat(localStorage.getItem('initial_limit_outpatient'))
               : data.limit_outpatient || 0,
+
+            limit_amount: localStorage.getItem('initial_limit_amount')
+              ? parseFloat(localStorage.getItem('initial_limit_amount'))
+              : data.limit_amount || 0,
           };
 
           if (!localStorage.getItem('initial_limit_medicaldental')) {
@@ -3494,6 +3480,9 @@ export default {
           }
           if (!localStorage.getItem('initial_limit_outpatient')) {
             localStorage.setItem('initial_limit_outpatient', this.formData.limit_outpatient);
+          }
+          if (!localStorage.getItem('initial_limit_amount')) {
+            localStorage.setItem('initial_limit_amount', this.formData.limit_amount);
           }
 
 
@@ -3505,15 +3494,23 @@ export default {
             ? parseFloat(localStorage.getItem('remaining_limit_outpatient'))
             : this.formData.limit_outpatient;
 
+          this.remaining_amount = localStorage.getItem('remaining_limit_amount')
+            ? parseFloat(localStorage.getItem('remaining_limit_amount'))
+            : this.formData.limit_amount;
+
           if (!localStorage.getItem('remaining_limit_medicaldental')) {
             localStorage.setItem('remaining_limit_medicaldental', this.remaining_medicaldental);
           }
           if (!localStorage.getItem('remaining_limit_outpatient')) {
             localStorage.setItem('remaining_limit_outpatient', this.remaining_outpatient);
           }
+          if (!localStorage.getItem('remaining_limit_amount')) {
+            localStorage.setItem('remaining_limit_amount', this.remaining_amount);
+          }
         }
 
         this.updateLimitedAmount(this.selectedMedicalCategory);
+        this.updateLimitAmountPhone();
       } catch (error) {
         console.error("Error fetching HR Data:", error);
       }
@@ -3523,12 +3520,13 @@ export default {
       this.limit_outp = data.limit_outpatient;
       this.limit_medicaldental = data.limit_medicaldental;
       this.limit_outpatient = data.limit_outpatient;
+      this.limit_amount = data.limit_amount;
 
       const fieldMap = {
         BankNameHR: data.bank_name,
         AccBankNumberHR: data.bank_number,
         AccHolderNameHR: data.name,
-        LimitedAmountHR: data.limit_amount,
+        // LimitedAmountHR: data.limit_amount,
         BankNameML: data.bank_name,
         AccBankNumberML: data.bank_number,
         AccHolderNameML: data.name,
@@ -3543,6 +3541,18 @@ export default {
             field.value = fieldMap[field.id];
           }
         });
+      });
+    },
+
+    updateLimitAmountPhone() {
+      // Get remaining limit from localStorage, or fall back to initial limit if not set
+      let remainingLimitPhone = parseFloat(localStorage.getItem("remaining_limit_amount")) || this.limit_amount;
+
+      this.tabs.forEach(tab => {
+        const totalAmountField = tab.fields.find(field => field.id === 'LimitedAmountHR');
+        if (totalAmountField) {
+          totalAmountField.value = remainingLimitPhone;
+        }
       });
     },
 
@@ -3565,10 +3575,16 @@ export default {
         }
       }
 
+      let remainingLimitPhone = parseFloat(localStorage.getItem("remaining_limit_amount")) || this.limit_amount;
+
       this.tabs.forEach(tab => {
         const limitedAmountField = tab.fields.find(field => field.id === 'LimitedAmountML');
         if (limitedAmountField) {
           limitedAmountField.value = remainingLimit;
+        }
+        const totalAmountField = tab.fields.find(field => field.id === 'LimitedAmountHR');
+        if (totalAmountField) {
+          totalAmountField.value = remainingLimitPhone;
         }
       });
     },
@@ -3584,6 +3600,10 @@ export default {
         tab.fields.some(f => f.id === 'ClaimsAmountML'))
         .fields.find(f => f.id === 'ClaimsAmountML').value) || 0;
 
+      const claimAmountHP = parseFloat(this.tabs.find(tab =>
+        tab.fields.some(f => f.id === 'ClaimsAmountHR'))
+        .fields.find(f => f.id === 'ClaimsAmountHR').value) || 0;
+
       const storageKey = category === "Outpatient"
         ? "remaining_limit_outpatient"
         : "remaining_limit_medicaldental";
@@ -3591,8 +3611,10 @@ export default {
       let currentLimit = parseFloat(localStorage.getItem(storageKey)) ||
         (category === "Outpatient" ? this.limit_outpatient : this.limit_medicaldental);
 
+      let currentLimitPhone = parseFloat(localStorage.getItem("remaining_limit_amount")) || this.limit_amount;
+
       // Check if the limit will become 0 or negative after subtraction
-      if (operation === 'subtract' && currentLimit === 0) {
+      if (operation === 'subtract' && (currentLimit === 0 || currentLimitPhone === 0)) {
         Swal.fire({
           icon: 'error',
           title: 'No Remaining Balance',
@@ -3606,13 +3628,20 @@ export default {
       // Proceed with the calculation if validation passes
       if (operation === 'subtract') {
         currentLimit -= claimsAmount;
+        currentLimitPhone -= claimAmountHP;
       } else if (operation === 'add') {
         currentLimit += claimsAmount;
+        currentLimitPhone += claimAmountHP;
       }
+      // Ensure values do not go below 0
       currentLimit = Math.max(0, currentLimit);
+      currentLimitPhone = Math.max(0, currentLimitPhone);
+      //update local storage
       localStorage.setItem(storageKey, currentLimit);
-      this.updateLimitedAmount(category);
+      localStorage.setItem("remaining_limit_amount", currentLimitPhone);
 
+      this.updateLimitedAmount(category);
+      this.updateLimitAmountPhone();
       return true;
     },
 
