@@ -1814,16 +1814,16 @@ export default {
         requester_email: store.getSession().userDetails.email,
         reference_number: referenceNumber,
         report_name: this.claims[0].reportName,
-        grand_total: String(parseFloat(this.grandTotal).toFixed(2)), // Ensure grand_total is a string
+        grand_total: Number(parseFloat(this.grandTotal).toFixed(2)), // Ensure grand_total is a string
         requester_id: this.userDetails.userId,
         cost_center: this.claims[0].costCenter,
         unique_code: this.claims[0].uniqueCode,
       };
 
-      // console.log("API data being sent:", apiData); // Log the API data
-      // Object.keys(apiData).forEach((key) => {
-      //   console.log(`${key}: ${apiData[key]} (type: ${typeof apiData[key]})`);
-      // });
+      console.log("API data being sent:", apiData); // Log the API data
+      Object.keys(apiData).forEach((key) => {
+        console.log(`${key}: ${apiData[key]} (type: ${typeof apiData[key]})`);
+      });
 
       try {
         const response = await axios.post(
@@ -1852,7 +1852,15 @@ export default {
         // this.sendToAPI();
         // this.resetClaimsAfterSubmit();
       } catch (error) {
-        console.error("API error", error);
+        console.log(error);
+        Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: '',
+              showConfirmButton: true,
+              confirmButtonText: 'OK',
+              confirmButtonColor: '#6d6d6d',
+            });
         this.loading = false;
         // Extract the detailed server error message from the response
         let serverErrorMessage =
@@ -2325,8 +2333,9 @@ export default {
         console.error("The files parameter is not an array or is undefined.");
         return;
       }
-      const base_URL = process.env.VUE_APP_API_BASE_URL_UPLOAD_FILE;
+      const base_URL = process.env.VUE_APP_API_BASE_URL_EC_FILE_PROD_LX;
       const uploadEndpoint = `${base_URL}/Files/MultiUploadImage/${userId}/${uniqueCode}`;
+      console.log("Upload Endpoint:", uploadEndpoint);
       const formData = new FormData();
 
       for (let i = 0; i < files.length; i++) {
