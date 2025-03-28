@@ -865,6 +865,8 @@ if (userStatus===null) this.$router.push('/homepage')
         spouse: this.user.spouse,
         phone_number: this.user.phone_number.toString(),
         ic_number: String(this.user.ic_number),
+        limit_medicaldental: this.user.limit_medical_dental,
+        limit_outpatient: this.user.limit_outpatient,
       };
    //   console.log('Employee Data test :', employeeData);
 
