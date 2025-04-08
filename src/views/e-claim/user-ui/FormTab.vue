@@ -2518,10 +2518,7 @@ export default {
               () => medicalCategoryMLField.value,
               (newValue) => {
                 if (newValue === "Medical Check-Up" || newValue === "Dental") {
-                  if (
-                    parseFloat(claimsAmountMLField.value) >
-                    parseFloat(limitedAmountMLField.value)
-                  ) {
+                  if (parseFloat(claimsAmountMLField.value) > parseFloat(limitedAmountMLField.value)) {
                     claimsAmountMLField.value = limitedAmountMLField.value;
                   }
                 } else if (newValue === "Outpatient") {
@@ -2544,12 +2541,16 @@ export default {
                 if (medicalCategoryMLField.value === "Medical Check-Up" || medicalCategoryMLField.value === "Dental") {
                   if (parseFloat(newClaimValue) > availableLimit) {
                     claimsAmountMLField.value = availableLimit;
+                  } else if (parseFloat(newClaimValue) < -1) {
+                    claimsAmountMLField.value = -1; // Prevent values below -1
                   }
                 } else if (medicalCategoryMLField.value === "Outpatient") {
                   if (parseFloat(newClaimValue) > limitOutpatient) {
                     claimsAmountMLField.value = limitOutpatient;
                   } else if (parseFloat(newClaimValue) > availableLimit) {
                     claimsAmountMLField.value = availableLimit;
+                  } else if (parseFloat(newClaimValue) < -1) {
+                    claimsAmountMLField.value = -1; // Prevent values below -1
                   }
                 }
               }
@@ -2564,6 +2565,8 @@ export default {
                 if (medicalCategoryMLField.value === "Medical Check-Up" || medicalCategoryMLField.value === "Dental") {
                   if (parseFloat(claimsAmountMLField.value) > availableLimit) {
                     claimsAmountMLField.value = availableLimit;
+                  } else if (parseFloat(claimsAmountMLField.value) < -1) {
+                    claimsAmountMLField.value = -1; // Prevent values below -1
                   }
                 } else if (medicalCategoryMLField.value === "Outpatient") {
                   claimsAmountMLField.value = availableLimit >= limitOutpatient 
@@ -2572,7 +2575,6 @@ export default {
                 }
               }
             );
-
           }
 
           if (tab.title === "Details") {
@@ -3432,25 +3434,39 @@ export default {
     },
 
     //calculate limit amount
-    handleClaimDeleted({ claimAmount, category, updatedLimit }) {
+    handleClaimDeleted({ claimAmount, category, updatedLimit, tabTitle }) {
       console.log("Claim Deleted:", claimAmount, category, updatedLimit);
 
-      // Update local storage
-      if (category === "Outpatient") {
-        localStorage.setItem("remaining_limit_outpatient", updatedLimit);
-      } else {
-        localStorage.setItem("remaining_limit_medicaldental", updatedLimit);
-      } 
+      // Add the deleted claim amount back to the correct category's limit
+      // const currentTab = this.tabs.find(tab => tab.title === this.activeTabTitle);
 
-      let remainingTotalLimit = parseFloat(localStorage.getItem("remaining_limit_amount")) || this.limit_amount;
-      remainingTotalLimit += claimAmount;
-      localStorage.setItem("remaining_limit_amount", remainingTotalLimit);
+      if (tabTitle === "Medical Bill Reimbursement") {
+        if (category === "Outpatient") {
+          let remainingOutpatient = parseFloat(localStorage.getItem("remaining_limit_outpatient")) || 0;
+          remainingOutpatient += claimAmount; // Add the claimAmount back
+          localStorage.setItem("remaining_limit_outpatient", remainingOutpatient);
+          console.log("Updated remaining_limit_outpatient:", remainingOutpatient);
+        } else if (category === "Medical Check-Up" || category === "Dental") {
+          let remainingMedicalDental = parseFloat(localStorage.getItem("remaining_limit_medicaldental")) || 0;
+          remainingMedicalDental += claimAmount; // Add the claimAmount back
+          localStorage.setItem("remaining_limit_medicaldental", remainingMedicalDental);
+          console.log("Updated remaining_limit_medicaldental:", remainingMedicalDental);
+        }
+      } else if (tabTitle === "Handphone Bill Reimbursement") {
+        let remainingLimitAmount = parseFloat(localStorage.getItem("remaining_limit_amount")) || 0;
+        remainingLimitAmount += claimAmount; // Add the claimAmount back
+        localStorage.setItem("remaining_limit_amount", remainingLimitAmount);
+        console.log("Updated remaining_limit_amount:", remainingLimitAmount);
+      }
 
-      // Call your existing update functions
-      this.calculateLimitedAmount('add'); 
-      this.updateLimitedAmount(category); 
+      // Update the UI with the new remaining limits
+      this.updateLimitedAmount();
+      console.log("Claim amount added back:", claimAmount);
+      console.log("Remaining outpatient:", this.remaining_outpatient);
+      console.log("Remaining medical/dental:", this.remaining_medicaldental);
+      console.log("Remaining total amount:", this.remaining_amount);
+      console.log("Tab title:", this.tabTitle);
     },
-
 
     async fetchHrData() {
       try {
@@ -3510,7 +3526,7 @@ export default {
         }
 
         this.updateLimitedAmount(this.selectedMedicalCategory);
-        this.updateLimitAmountPhone();
+        // this.updateLimitAmountPhone();
       } catch (error) {
         console.error("Error fetching HR Data:", error);
       }
@@ -3520,13 +3536,13 @@ export default {
       this.limit_outp = data.limit_outpatient;
       this.limit_medicaldental = data.limit_medicaldental;
       this.limit_outpatient = data.limit_outpatient;
-      this.limit_amount = data.limit_amount;
+      // this.limit_amount = data.limit_amount;
 
       const fieldMap = {
         BankNameHR: data.bank_name,
         AccBankNumberHR: data.bank_number,
         AccHolderNameHR: data.name,
-        // LimitedAmountHR: data.limit_amount,
+        LimitedAmountHR: data.limit_amount,
         BankNameML: data.bank_name,
         AccBankNumberML: data.bank_number,
         AccHolderNameML: data.name,
@@ -3544,17 +3560,17 @@ export default {
       });
     },
 
-    updateLimitAmountPhone() {
-      // Get remaining limit from localStorage, or fall back to initial limit if not set
-      let remainingLimitPhone = parseFloat(localStorage.getItem("remaining_limit_amount")) || this.limit_amount;
+    // updateLimitAmountPhone() {
+    //   // Get remaining limit from localStorage, or fall back to initial limit if not set
+    //   let remainingLimitPhone = parseFloat(localStorage.getItem("remaining_limit_amount")) || this.limit_amount;
 
-      this.tabs.forEach(tab => {
-        const totalAmountField = tab.fields.find(field => field.id === 'LimitedAmountHR');
-        if (totalAmountField) {
-          totalAmountField.value = remainingLimitPhone;
-        }
-      });
-    },
+    //   this.tabs.forEach(tab => {
+    //     const totalAmountField = tab.fields.find(field => field.id === 'LimitedAmountHR');
+    //     if (totalAmountField) {
+    //       totalAmountField.value = remainingLimitPhone;
+    //     }
+    //   });
+    // },
 
     updateLimitedAmount(event) {
       // If called from input event, use the selected category
@@ -3593,7 +3609,6 @@ export default {
       this.updateLimitedAmount(this.selectedMedicalCategory);
     },
 
-
     calculateLimitedAmount(operation = 'subtract') {
       const category = this.selectedMedicalCategory;
       const claimsAmount = parseFloat(this.tabs.find(tab =>
@@ -3613,35 +3628,46 @@ export default {
 
       let currentLimitPhone = parseFloat(localStorage.getItem("remaining_limit_amount")) || this.limit_amount;
 
-      // Check if the limit will become 0 or negative after subtraction
-      if (operation === 'subtract' && (currentLimit === 0 || currentLimitPhone === 0)) {
-        Swal.fire({
-          icon: 'error',
-          title: 'No Remaining Balance',
-          text: `Your ${category} balance is 0. Cannot proceed with the claim.`,
-          confirmButtonColor: '#3085d6',
-          confirmButtonText: 'OK'
-        });
-        return false;
-      }
-
-      // Proceed with the calculation if validation passes
+      // Ensure the claim does not exceed the remaining limit
       if (operation === 'subtract') {
+        if (claimsAmount > currentLimit) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Exceeds Limit',
+            text: `Your claim amount exceeds the remaining limit of ${currentLimit}. Please adjust your claim.`,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+          });
+          return false;
+        }
+
+        if (claimAmountHP > currentLimitPhone) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Exceeds Limit',
+            text: `Your phone claim amount exceeds the remaining limit of ${currentLimitPhone}. Please adjust your claim.`,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+          });
+          return false;
+        }
+
         currentLimit -= claimsAmount;
         currentLimitPhone -= claimAmountHP;
       } else if (operation === 'add') {
         currentLimit += claimsAmount;
         currentLimitPhone += claimAmountHP;
       }
+
       // Ensure values do not go below 0
       currentLimit = Math.max(0, currentLimit);
       currentLimitPhone = Math.max(0, currentLimitPhone);
-      //update local storage
+
+      // Update local storage
       localStorage.setItem(storageKey, currentLimit);
       localStorage.setItem("remaining_limit_amount", currentLimitPhone);
 
       this.updateLimitedAmount(category);
-      this.updateLimitAmountPhone();
       return true;
     },
 
@@ -3663,7 +3689,7 @@ export default {
 
         const currentLimit = parseFloat(localStorage.getItem(storageKey)) || 0;
 
-        if (currentLimit <= 0) {
+        if (currentLimit < 0) {
           Swal.fire({
             icon: 'error',
             title: 'Zero Limit Remaining',
@@ -3679,8 +3705,8 @@ export default {
         }
 
         const limitStorageKey = category === "Outpatient"
-          ? "LimitedAmountML_Outpatient"
-          : "LimitedAmountML_Dental";
+          ? "remaining_limit_outpatient"
+          : "remaining_limit_medicaldental";
 
         const updatedLimitedAmount = parseFloat(localStorage.getItem(limitStorageKey)) || 0;
         localStorage.setItem(limitStorageKey, updatedLimitedAmount);

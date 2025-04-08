@@ -179,7 +179,7 @@
                           <span v-if="claim.combinetotal">RM {{ claim.combinetotal }}</span>
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2">
-                          <button @click="deleteForm()"
+                          <button @click="deleteForm(index)"
                             class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
@@ -2356,25 +2356,82 @@ export default {
       }
     },
 
-    deleteForm() {
-      if (this.index !== -1) {
-        this.dataclaims.splice(this.index, 1);
+    deleteForm(index) {
+      console.log("Deleting index:", index);
+      console.log("Current dataclaims array:", this.dataclaims);
+
+      // Check if dataclaims is empty
+      if (!this.dataclaims || this.dataclaims.length === 0) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "No claims available to delete. Please add a claim first.",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "OK",
+        });
+        return;
       }
+
+      // Check if index is valid
+      if (index === null || index < 0 || index >= this.dataclaims.length) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Invalid index or claim not found. Please try again.",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "OK",
+        });
+        return;
+      }
+
+      // Get the deleted claim
+      const deletedClaim = this.dataclaims[index];
+      this.dataclaims.splice(index, 1);
+
+      // Add the deleted claim amount back to the correct category's limit
+      const claimAmount = deletedClaim.ClaimsAmountML || deletedClaim.ClaimsAmountHR || 0;
+      const category = deletedClaim.MedicalCategoryML || "Outpatient";
+
+      if (deletedClaim.tabTitle === "Medical Bill Reimbursement") {
+        if (category === "Outpatient") {
+          let remainingOutpatient = parseFloat(localStorage.getItem("remaining_limit_outpatient")) || 0;
+          remainingOutpatient += claimAmount; // Add the claimAmount back
+          localStorage.setItem("remaining_limit_outpatient", remainingOutpatient);
+        } else if (category === "Medical Check-Up" || category === "Dental") {
+          let remainingMedicalDental = parseFloat(localStorage.getItem("remaining_limit_medicaldental")) || 0;
+          remainingMedicalDental += claimAmount; // Add the claimAmount back
+          localStorage.setItem("remaining_limit_medicaldental", remainingMedicalDental);
+        }
+      } else if (deletedClaim.tabTitle === "Handphone Bill Reimbursement") {
+        let remainingLimitAmount = parseFloat(localStorage.getItem("remaining_limit_amount")) || 0;
+        remainingLimitAmount += claimAmount; // Add the claimAmount back
+        localStorage.setItem("remaining_limit_amount", remainingLimitAmount);
+      }
+
+      // Emit the claimDeleted event
+      this.$emit("claimDeleted", {
+        claimAmount,
+        category,
+      });
+
+      console.log("Deleted claim amount:", claimAmount);
+      console.log("Deleted claim category:", category);
+      console.log("Tab title:", deletedClaim.tabTitle);
+      console.log("Claim deleted successfully:", deletedClaim);
+
       this.isClickModal = false; // Close the modal
     },
 
-
-
     async addClaim(formData) {
-  try {
-    // Simply add the validated form data to dataclaims array
-    this.dataclaims.push(formData);
-    console.log("Data Claims added:", this.dataclaims);
-  } catch(error) {
-    console.error("error", error);
-    throw error;
-  }
-}
+      try {
+        // Simply add the validated form data to dataclaims array
+        this.dataclaims.push(formData);
+        console.log("Data Claims added:", this.dataclaims);
+      } catch(error) {
+        console.error("error", error);
+        throw error;
+      }
+    }
   },
 };
 </script>
