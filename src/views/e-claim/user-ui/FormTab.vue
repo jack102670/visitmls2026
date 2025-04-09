@@ -3476,44 +3476,31 @@ export default {
 
         if (data) {
           this.updateFields(data);
-          this.formData = {
-            ...this.formData,
-            limit_medicaldental: localStorage.getItem('initial_limit_medicaldental')
-              ? parseFloat(localStorage.getItem('initial_limit_medicaldental'))
-              : data.limit_medicaldental || 0,
-
-            limit_outpatient: localStorage.getItem('initial_limit_outpatient')
-              ? parseFloat(localStorage.getItem('initial_limit_outpatient'))
-              : data.limit_outpatient || 0,
-
-            limit_amount: localStorage.getItem('initial_limit_amount')
-              ? parseFloat(localStorage.getItem('initial_limit_amount'))
-              : data.limit_amount || 0,
-          };
-
+          
+          // Initialize limits only if they are not already set
           if (!localStorage.getItem('initial_limit_medicaldental')) {
-            localStorage.setItem('initial_limit_medicaldental', this.formData.limit_medicaldental);
+            localStorage.setItem('initial_limit_medicaldental', data.limit_medicaldental);
           }
           if (!localStorage.getItem('initial_limit_outpatient')) {
-            localStorage.setItem('initial_limit_outpatient', this.formData.limit_outpatient);
+            localStorage.setItem('initial_limit_outpatient', data.limit_outpatient);
           }
           if (!localStorage.getItem('initial_limit_amount')) {
-            localStorage.setItem('initial_limit_amount', this.formData.limit_amount);
+            localStorage.setItem('initial_limit_amount', data.limit_amount);
           }
-
 
           this.remaining_medicaldental = localStorage.getItem('remaining_limit_medicaldental')
             ? parseFloat(localStorage.getItem('remaining_limit_medicaldental'))
-            : this.formData.limit_medicaldental;
+            : parseFloat(localStorage.getItem('initial_limit_medicaldental'));
 
           this.remaining_outpatient = localStorage.getItem('remaining_limit_outpatient')
             ? parseFloat(localStorage.getItem('remaining_limit_outpatient'))
-            : this.formData.limit_outpatient;
+            : parseFloat(localStorage.getItem('initial_limit_outpatient'));
 
           this.remaining_amount = localStorage.getItem('remaining_limit_amount')
             ? parseFloat(localStorage.getItem('remaining_limit_amount'))
-            : this.formData.limit_amount;
+            : parseFloat(localStorage.getItem('initial_limit_amount'));
 
+          // Save remaining limits back to localStorage if not already set
           if (!localStorage.getItem('remaining_limit_medicaldental')) {
             localStorage.setItem('remaining_limit_medicaldental', this.remaining_medicaldental);
           }
@@ -3526,7 +3513,6 @@ export default {
         }
 
         this.updateLimitedAmount(this.selectedMedicalCategory);
-        // this.updateLimitAmountPhone();
       } catch (error) {
         console.error("Error fetching HR Data:", error);
       }
@@ -3572,6 +3558,42 @@ export default {
     //   });
     // },
 
+    // updateLimitedAmount(category) {
+    //   if (category === "Outpatient") {
+    //     // Update outpatient limits
+    //     let remainingLimit = parseFloat(localStorage.getItem("remaining_limit_outpatient")) || 
+    //                         parseFloat(localStorage.getItem("initial_limit_outpatient"));
+
+    //     this.tabs.forEach(tab => {
+    //       const limitedAmountField = tab.fields.find(field => field.id === 'LimitedAmountML');
+    //       if (limitedAmountField) {
+    //         limitedAmountField.value = remainingLimit;
+    //       }
+    //     });
+    //   } else if(category === "Medical Check-Up" || category === "Dental"){
+    //     // Update medical/dental limits
+    //     let remainingLimit = parseFloat(localStorage.getItem("remaining_limit_medicaldental")) || 
+    //                         parseFloat(localStorage.getItem("initial_limit_medicaldental"));
+
+    //     this.tabs.forEach(tab => {
+    //       const limitedAmountField = tab.fields.find(field => field.id === 'LimitedAmountML');
+    //       if (limitedAmountField) {
+    //         limitedAmountField.value = remainingLimit;
+    //       }
+    //     });
+    //   } else if (category === "Handphone Bill Reimbursement") {
+    //     // Update handphone limits
+    //     let remainingLimitPhone = parseFloat(localStorage.getItem("remaining_limit_amount")) || 
+    //                               parseFloat(localStorage.getItem("initial_limit_amount"));
+
+    //     this.tabs.forEach(tab => {
+    //       const totalAmountField = tab.fields.find(field => field.id === 'LimitedAmountHR');
+    //       if (totalAmountField) {
+    //         totalAmountField.value = remainingLimitPhone;
+    //       }
+    //     });
+    //   }
+    // },
     updateLimitedAmount(event) {
       // If called from input event, use the selected category
       const category = this.selectedMedicalCategory;
@@ -3619,131 +3641,175 @@ export default {
         tab.fields.some(f => f.id === 'ClaimsAmountHR'))
         .fields.find(f => f.id === 'ClaimsAmountHR').value) || 0;
 
-      const storageKey = category === "Outpatient"
-        ? "remaining_limit_outpatient"
-        : "remaining_limit_medicaldental";
+      if (category === "Outpatient") {
+        const storageKey = "remaining_limit_outpatient";
+        let currentLimit = parseFloat(localStorage.getItem(storageKey)) || 
+                          parseFloat(localStorage.getItem("initial_limit_outpatient"));
 
-      let currentLimit = parseFloat(localStorage.getItem(storageKey)) ||
-        (category === "Outpatient" ? this.limit_outpatient : this.limit_medicaldental);
-
-      let currentLimitPhone = parseFloat(localStorage.getItem("remaining_limit_amount")) || this.limit_amount;
-
-      // Ensure the claim does not exceed the remaining limit
-      if (operation === 'subtract') {
-        if (claimsAmount > currentLimit) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Exceeds Limit',
-            text: `Your claim amount exceeds the remaining limit of ${currentLimit}. Please adjust your claim.`,
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'OK'
-          });
-          return false;
+        if (operation === 'subtract') {
+          if (claimsAmount > currentLimit) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Exceeds Limit',
+              text: `Your claim amount exceeds the remaining limit of ${currentLimit}. Please adjust your claim.`,
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'OK'
+            });
+            return false;
+          }
+          currentLimit -= claimsAmount;
+        } else if (operation === 'add') {
+          currentLimit += claimsAmount;
         }
 
-        if (claimAmountHP > currentLimitPhone) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Exceeds Limit',
-            text: `Your phone claim amount exceeds the remaining limit of ${currentLimitPhone}. Please adjust your claim.`,
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'OK'
-          });
-          return false;
+        currentLimit = Math.max(0, currentLimit);
+        localStorage.setItem(storageKey, currentLimit);
+      } else if (category === "Medical Check-Up" || category === "Dental") {
+        const storageKey = "remaining_limit_medicaldental";
+        let currentLimit = parseFloat(localStorage.getItem(storageKey)) || 
+                          parseFloat(localStorage.getItem("initial_limit_medicaldental"));
+
+        if (operation === 'subtract') {
+          if (claimsAmount > currentLimit) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Exceeds Limit',
+              text: `Your claim amount exceeds the remaining limit of ${currentLimit}. Please adjust your claim.`,
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'OK'
+            });
+            return false;
+          }
+          currentLimit -= claimsAmount;
+        } else if (operation === 'add') {
+          currentLimit += claimsAmount;
         }
 
-        currentLimit -= claimsAmount;
-        currentLimitPhone -= claimAmountHP;
-      } else if (operation === 'add') {
-        currentLimit += claimsAmount;
-        currentLimitPhone += claimAmountHP;
+        currentLimit = Math.max(0, currentLimit);
+        localStorage.setItem(storageKey, currentLimit);
+      } else if (category === "Handphone Bill Reimbursement") {
+        const storageKey = "remaining_limit_amount";
+        let currentLimitPhone = parseFloat(localStorage.getItem(storageKey)) || 
+                                parseFloat(localStorage.getItem("initial_limit_amount"));
+
+        if (operation === 'subtract') {
+          if (claimAmountHP > currentLimitPhone) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Exceeds Limit',
+              text: `Your phone claim amount exceeds the remaining limit of ${currentLimitPhone}. Please adjust your claim.`,
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'OK'
+            });
+            return false;
+          }
+          currentLimitPhone -= claimAmountHP;
+        } else if (operation === 'add') {
+          currentLimitPhone += claimAmountHP;
+        }
+
+        currentLimitPhone = Math.max(0, currentLimitPhone);
+        localStorage.setItem(storageKey, currentLimitPhone);
       }
-
-      // Ensure values do not go below 0
-      currentLimit = Math.max(0, currentLimit);
-      currentLimitPhone = Math.max(0, currentLimitPhone);
-
-      // Update local storage
-      localStorage.setItem(storageKey, currentLimit);
-      localStorage.setItem("remaining_limit_amount", currentLimitPhone);
 
       this.updateLimitedAmount(category);
       return true;
     },
 
-    submitForm(tab) {
-      if (!this.calculateLimitedAmount()) {
-        return;
-      }
+submitForm(tab) {
+  if (!this.calculateLimitedAmount()) {
+    return;
+  }
 
-      const medicalCategoryField = tab.fields.find(field => field.id === "MedicalCategoryML");
-      const claimsAmountField = tab.fields.find(field => field.id === "ClaimsAmountML");
+  const medicalCategoryField = tab.fields.find(field => field.id === "MedicalCategoryML");
+  const claimsAmountField = tab.fields.find(field => field.id === "ClaimsAmountML");
+  const claimsAmountHRField = tab.fields.find(field => field.id === "ClaimsAmountHR");
 
-      if (medicalCategoryField && claimsAmountField) {
-        const category = medicalCategoryField.value;
-        const claimsAmount = parseFloat(claimsAmountField.value) || 0;
+  if (medicalCategoryField && claimsAmountField) {
+    const category = medicalCategoryField.value;
+    const claimsAmount = parseFloat(claimsAmountField.value) || 0;
 
-        const storageKey = category === "Outpatient"
-          ? "remaining_limit_outpatient"
-          : "remaining_limit_medicaldental";
+    const storageKey = category === "Outpatient"
+      ? "remaining_limit_outpatient"
+      : "remaining_limit_medicaldental";
 
-        const currentLimit = parseFloat(localStorage.getItem(storageKey)) || 0;
+    const currentLimit = parseFloat(localStorage.getItem(storageKey)) || 0;
 
-        if (currentLimit < 0) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Zero Limit Remaining',
-            text: `Your ${category} limit is currently ${currentLimit}. Cannot proceed with submission.`,
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'OK'
-          });
-          return;
-        }
-
-        if (category === "Dental" || category === "Medical Check-Up") {
-          this.totalMedicalDeduction += claimsAmount;
-        }
-
-        const limitStorageKey = category === "Outpatient"
-          ? "remaining_limit_outpatient"
-          : "remaining_limit_medicaldental";
-
-        const updatedLimitedAmount = parseFloat(localStorage.getItem(limitStorageKey)) || 0;
-        localStorage.setItem(limitStorageKey, updatedLimitedAmount);
-      }
-
-      const formattedData = {};
-      tab.fields.forEach((field) => {
-        formattedData[field.id] = field.type === "date" && field.value
-          ? this.formatDate(field.value)
-          : field.value;
+    if (currentLimit < 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Zero Limit Remaining',
+        text: `Your ${category} limit is currently ${currentLimit}. Cannot proceed with submission.`,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK'
       });
+      return;
+    }
 
-      formattedData["tabTitle"] = tab.title;
-      formattedData["totalRM"] = this.calculateTotal(tab);
+    if (category === "Dental" || category === "Medical Check-Up") {
+      this.totalMedicalDeduction += claimsAmount;
+    }
 
-      if (tab.title === "Overseas Travelling" && this.otherExpenses.length > 0) {
-        formattedData["otherExpenses"] = [...this.otherExpenses];
-      }
+    const limitStorageKey = category === "Outpatient"
+      ? "remaining_limit_outpatient"
+      : "remaining_limit_medicaldental";
 
-      this.$emit("formSubmitted", formattedData);
+    const updatedLimitedAmount = parseFloat(localStorage.getItem(limitStorageKey)) || 0;
+    localStorage.setItem(limitStorageKey, updatedLimitedAmount);
+  }
 
-      tab.fields.forEach((field) => {
-        if (!["LimitedAmountHR", "LimitedAmountML", "BankNameHR", "BankNameML",
-          "AccBankNumberHR", "AccBankNumberML", "AccHolderNameHR", "AccHolderNameML", "icNumber"]
-          .includes(field.id)) {
-          field.value = null;
-        }
+  if (claimsAmountHRField) {
+    const claimsAmountHR = parseFloat(claimsAmountHRField.value) || 0;
+    const storageKeyHR = "remaining_limit_amount";
+    let currentLimitHR = parseFloat(localStorage.getItem(storageKeyHR)) || 0;
 
-        if (field.type === "file" && this.$refs.pond) {
-          this.$refs.pond.forEach((pond) => {
-            if (pond && typeof pond.removeFiles === "function") {
-              pond.removeFiles();
-            }
-          });
+    if (currentLimitHR < claimsAmountHR) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Exceeds Limit',
+        text: `Your handphone bill claim amount exceeds the remaining limit of ${currentLimitHR}.`,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK'
+      });
+      return;
+    }
+
+    currentLimitHR -= claimsAmountHR;
+    localStorage.setItem(storageKeyHR, currentLimitHR);
+  }
+
+  const formattedData = {};
+  tab.fields.forEach((field) => {
+    formattedData[field.id] = field.type === "date" && field.value
+      ? this.formatDate(field.value)
+      : field.value;
+  });
+
+  formattedData["tabTitle"] = tab.title;
+  formattedData["totalRM"] = this.calculateTotal(tab);
+
+  if (tab.title === "Overseas Travelling" && this.otherExpenses.length > 0) {
+    formattedData["otherExpenses"] = [...this.otherExpenses];
+  }
+
+  this.$emit("formSubmitted", formattedData);
+
+  tab.fields.forEach((field) => {
+    if (!["LimitedAmountHR", "LimitedAmountML", "BankNameHR", "BankNameML",
+      "AccBankNumberHR", "AccBankNumberML", "AccHolderNameHR", "AccHolderNameML", "icNumber"]
+      .includes(field.id)) {
+      field.value = null;
+    }
+
+    if (field.type === "file" && this.$refs.pond) {
+      this.$refs.pond.forEach((pond) => {
+        if (pond && typeof pond.removeFiles === "function") {
+          pond.removeFiles();
         }
       });
-    },
+    }
+  });
+},
     submitForm2(tabTitle) {
       if (this.validateCurrentTab(tabTitle)) {
 

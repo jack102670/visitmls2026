@@ -324,6 +324,7 @@ export default {
       if (result.isConfirmed) {
         try {
           store.clearSession();
+          // sessionStorage.removeItem('token');
           localStorage.clear();
           this.$router.push('/');
           Swal.fire({
