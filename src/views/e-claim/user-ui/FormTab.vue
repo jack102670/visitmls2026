@@ -820,7 +820,7 @@
                             <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                               <button
                                 class="text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none"
-                                @click="removeExpense(index)">
+                                @click.stop.prevent="removeExpense(index)">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                   stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                   <path stroke-linecap="round" stroke-linejoin="round"
@@ -1014,7 +1014,7 @@
                               {{ attendee.company_Name }}
                             </td>
                             <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                              <button @click="removeAttendee(index)"
+                              <button @click.stop.prevent="removeAttendee(index)"
                                 class="text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                   stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -1205,7 +1205,7 @@
                               {{ staff.companyName }}
                             </td>
                             <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                              <button @click="removeStaff(index)"
+                              <button @click.stop.prevent="removeStaff(index)"
                                 class="text-red-500 transition-colors duration-200 dark:hover:text-red-300 dark:text-gray-300 hover:text-red-300 focus:outline-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                   stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -3304,6 +3304,7 @@ export default {
 
     removeExpense(index) {
       this.otherExpenses.splice(index, 1);
+      console.log("Expense removed:", index);
     },
 
     calculateTotalAccommodation() {
@@ -3435,7 +3436,7 @@ export default {
 
     //calculate limit amount
     handleClaimDeleted({ claimAmount, category, updatedLimit, tabTitle }) {
-      console.log("Claim Deleted:", claimAmount, category, updatedLimit);
+      //console.log("Claim Deleted:", claimAmount, category, updatedLimit);
 
       // Add the deleted claim amount back to the correct category's limit
       // const currentTab = this.tabs.find(tab => tab.title === this.activeTabTitle);
@@ -3445,27 +3446,27 @@ export default {
           let remainingOutpatient = parseFloat(localStorage.getItem("remaining_limit_outpatient")) || 0;
           remainingOutpatient += claimAmount; // Add the claimAmount back
           localStorage.setItem("remaining_limit_outpatient", remainingOutpatient);
-          console.log("Updated remaining_limit_outpatient:", remainingOutpatient);
+          //console.log("Updated remaining_limit_outpatient:", remainingOutpatient);
         } else if (category === "Medical Check-Up" || category === "Dental") {
           let remainingMedicalDental = parseFloat(localStorage.getItem("remaining_limit_medicaldental")) || 0;
           remainingMedicalDental += claimAmount; // Add the claimAmount back
           localStorage.setItem("remaining_limit_medicaldental", remainingMedicalDental);
-          console.log("Updated remaining_limit_medicaldental:", remainingMedicalDental);
+          //console.log("Updated remaining_limit_medicaldental:", remainingMedicalDental);
         }
       } else if (tabTitle === "Handphone Bill Reimbursement") {
         let remainingLimitAmount = parseFloat(localStorage.getItem("remaining_limit_amount")) || 0;
         remainingLimitAmount += claimAmount; // Add the claimAmount back
         localStorage.setItem("remaining_limit_amount", remainingLimitAmount);
-        console.log("Updated remaining_limit_amount:", remainingLimitAmount);
+        //console.log("Updated remaining_limit_amount:", remainingLimitAmount);
       }
 
       // Update the UI with the new remaining limits
       this.updateLimitedAmount();
-      console.log("Claim amount added back:", claimAmount);
-      console.log("Remaining outpatient:", this.remaining_outpatient);
-      console.log("Remaining medical/dental:", this.remaining_medicaldental);
-      console.log("Remaining total amount:", this.remaining_amount);
-      console.log("Tab title:", this.tabTitle);
+      // console.log("Claim amount added back:", claimAmount);
+      // console.log("Remaining outpatient:", this.remaining_outpatient);
+      // console.log("Remaining medical/dental:", this.remaining_medicaldental);
+      // console.log("Remaining total amount:", this.remaining_amount);
+      // console.log("Tab title:", this.tabTitle);
     },
 
     async fetchHrData() {
@@ -3716,100 +3717,103 @@ export default {
       return true;
     },
 
-submitForm(tab) {
-  if (!this.calculateLimitedAmount()) {
-    return;
-  }
+    submitForm(tab) {
+      if (!this.calculateLimitedAmount()) {
+        return;
+      }
 
-  const medicalCategoryField = tab.fields.find(field => field.id === "MedicalCategoryML");
-  const claimsAmountField = tab.fields.find(field => field.id === "ClaimsAmountML");
-  const claimsAmountHRField = tab.fields.find(field => field.id === "ClaimsAmountHR");
+      const medicalCategoryField = tab.fields.find(field => field.id === "MedicalCategoryML");
+      const claimsAmountField = tab.fields.find(field => field.id === "ClaimsAmountML");
+      const claimsAmountHRField = tab.fields.find(field => field.id === "ClaimsAmountHR");
 
-  if (medicalCategoryField && claimsAmountField) {
-    const category = medicalCategoryField.value;
-    const claimsAmount = parseFloat(claimsAmountField.value) || 0;
+      if (medicalCategoryField && claimsAmountField) {
+        const category = medicalCategoryField.value;
+        const claimsAmount = parseFloat(claimsAmountField.value) || 0;
 
-    const storageKey = category === "Outpatient"
-      ? "remaining_limit_outpatient"
-      : "remaining_limit_medicaldental";
+        const storageKey = category === "Outpatient"
+          ? "remaining_limit_outpatient"
+          : "remaining_limit_medicaldental";
 
-    const currentLimit = parseFloat(localStorage.getItem(storageKey)) || 0;
+        const currentLimit = parseFloat(localStorage.getItem(storageKey)) || 0;
 
-    if (currentLimit < 0) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Zero Limit Remaining',
-        text: `Your ${category} limit is currently ${currentLimit}. Cannot proceed with submission.`,
-        confirmButtonColor: '#3085d6',
-        confirmButtonText: 'OK'
+        if (currentLimit < 0) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Zero Limit Remaining',
+            text: `Your ${category} limit is currently ${currentLimit}. Cannot proceed with submission.`,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+          });
+          return;
+        }
+
+        if (category === "Dental" || category === "Medical Check-Up") {
+          this.totalMedicalDeduction += claimsAmount;
+        }
+
+        const limitStorageKey = category === "Outpatient"
+          ? "remaining_limit_outpatient"
+          : "remaining_limit_medicaldental";
+
+        const updatedLimitedAmount = parseFloat(localStorage.getItem(limitStorageKey)) || 0;
+        localStorage.setItem(limitStorageKey, updatedLimitedAmount);
+      }
+
+      if (claimsAmountHRField) {
+        const claimsAmountHR = parseFloat(claimsAmountHRField.value) || 0;
+        const storageKeyHR = "remaining_limit_amount";
+        let currentLimitHR = parseFloat(localStorage.getItem(storageKeyHR)) || 0;
+
+        if (currentLimitHR < claimsAmountHR) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Exceeds Limit',
+            text: `Your handphone bill claim amount exceeds the remaining limit of ${currentLimitHR}.`,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+          });
+          return;
+        }
+
+        currentLimitHR -= claimsAmountHR;
+        localStorage.setItem(storageKeyHR, currentLimitHR);
+      }
+
+      const formattedData = {};
+      tab.fields.forEach((field) => {
+        formattedData[field.id] = field.type === "date" && field.value
+          ? this.formatDate(field.value)
+          : field.value;
       });
-      return;
-    }
 
-    if (category === "Dental" || category === "Medical Check-Up") {
-      this.totalMedicalDeduction += claimsAmount;
-    }
+      formattedData["tabTitle"] = tab.title;
+      formattedData["totalRM"] = this.calculateTotal(tab);
 
-    const limitStorageKey = category === "Outpatient"
-      ? "remaining_limit_outpatient"
-      : "remaining_limit_medicaldental";
+      if (tab.title === "Overseas Travelling" && this.otherExpenses.length > 0) {
+        formattedData["otherExpenses"] = [...this.otherExpenses];
+      }
 
-    const updatedLimitedAmount = parseFloat(localStorage.getItem(limitStorageKey)) || 0;
-    localStorage.setItem(limitStorageKey, updatedLimitedAmount);
-  }
+      this.$emit("formSubmitted", formattedData);
 
-  if (claimsAmountHRField) {
-    const claimsAmountHR = parseFloat(claimsAmountHRField.value) || 0;
-    const storageKeyHR = "remaining_limit_amount";
-    let currentLimitHR = parseFloat(localStorage.getItem(storageKeyHR)) || 0;
+      tab.fields.forEach((field) => {
+        if (!["LimitedAmountHR", "LimitedAmountML", "BankNameHR", "BankNameML",
+          "AccBankNumberHR", "AccBankNumberML", "AccHolderNameHR", "AccHolderNameML", "icNumber"]
+          .includes(field.id)) {
+          field.value = null;
+        }
 
-    if (currentLimitHR < claimsAmountHR) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Exceeds Limit',
-        text: `Your handphone bill claim amount exceeds the remaining limit of ${currentLimitHR}.`,
-        confirmButtonColor: '#3085d6',
-        confirmButtonText: 'OK'
-      });
-      return;
-    }
-
-    currentLimitHR -= claimsAmountHR;
-    localStorage.setItem(storageKeyHR, currentLimitHR);
-  }
-
-  const formattedData = {};
-  tab.fields.forEach((field) => {
-    formattedData[field.id] = field.type === "date" && field.value
-      ? this.formatDate(field.value)
-      : field.value;
-  });
-
-  formattedData["tabTitle"] = tab.title;
-  formattedData["totalRM"] = this.calculateTotal(tab);
-
-  if (tab.title === "Overseas Travelling" && this.otherExpenses.length > 0) {
-    formattedData["otherExpenses"] = [...this.otherExpenses];
-  }
-
-  this.$emit("formSubmitted", formattedData);
-
-  tab.fields.forEach((field) => {
-    if (!["LimitedAmountHR", "LimitedAmountML", "BankNameHR", "BankNameML",
-      "AccBankNumberHR", "AccBankNumberML", "AccHolderNameHR", "AccHolderNameML", "icNumber"]
-      .includes(field.id)) {
-      field.value = null;
-    }
-
-    if (field.type === "file" && this.$refs.pond) {
-      this.$refs.pond.forEach((pond) => {
-        if (pond && typeof pond.removeFiles === "function") {
-          pond.removeFiles();
+        if (field.type === "file" ) {
+          field.value = []; // Clear file field value
+          if (this.$refs.pond) {
+            this.$refs.pond.forEach((pond) => {
+              if (pond && typeof pond.removeFiles === "function") {
+                pond.removeFiles(); // Clear FilePond files
+              }
+            });
+          }
         }
       });
-    }
-  });
-},
+    },
     submitForm2(tabTitle) {
       if (this.validateCurrentTab(tabTitle)) {
 
@@ -3834,9 +3838,13 @@ submitForm(tab) {
           tab.fields.forEach((field) => {
             field.value = null;
             if (field.type === "file") {
-              const pond = this.$refs[field.id];
-              if (pond) {
-                pond.removeFiles();
+              field.value = []; // Clear file field value
+              if (this.$refs.pond) {
+                this.$refs.pond.forEach((pond) => {
+                  if (pond && typeof pond.removeFiles === "function") {
+                    pond.removeFiles(); // Clear FilePond files
+                  }
+                });
               }
             }
           });
@@ -3874,9 +3882,13 @@ submitForm(tab) {
           tab.fields.forEach((field) => {
             field.value = null;
             if (field.type === "file") {
-              const pond = this.$refs[field.id];
-              if (pond) {
-                pond.removeFiles();
+              field.value = []; // Clear file field value
+              if (this.$refs.pond) {
+                this.$refs.pond.forEach((pond) => {
+                  if (pond && typeof pond.removeFiles === "function") {
+                    pond.removeFiles(); // Clear FilePond files
+                  }
+                });
               }
             }
           });
@@ -3919,6 +3931,7 @@ submitForm(tab) {
 
     },
     submitForm4(tabTitle) {
+      console.log("submitForm4 called for tab:", tabTitle);
       if (this.validateCurrentTab(tabTitle)) {
         const formattedData = {};
         this.overseasTabs.forEach((tab) => {
@@ -3941,9 +3954,13 @@ submitForm(tab) {
           tab.fields.forEach((field) => {
             field.value = null;
             if (field.type === "file") {
-              const pond = this.$refs[field.id];
-              if (pond) {
-                pond.removeFiles();
+              field.value = []; // Clear file field value
+              if (this.$refs.pond) {
+                this.$refs.pond.forEach((pond) => {
+                  if (pond && typeof pond.removeFiles === "function") {
+                    pond.removeFiles(); // Clear FilePond files
+                  }
+                });
               }
             }
           });
@@ -3959,6 +3976,7 @@ submitForm(tab) {
           files: [],
         };
         //  console.log("Form submitted successfully");
+        console.log("submitForm4 called for tab:", tabTitle);
       } else {
         alert("Please fill all required fields before submitting.");
       }

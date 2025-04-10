@@ -1437,14 +1437,14 @@ export default {
             0
           );
       }
-      console.log('Other expenses total:', otherExpensesTotal);
-      console.log('Meal Allowance:', this.overseasTravellingDetails.MealAllowanceOT);
+      // console.log('Other expenses total:', otherExpensesTotal);
+      // console.log('Meal Allowance:', this.overseasTravellingDetails.MealAllowanceOT);
 
       let total =
         (parseFloat(this.overseasTravellingDetails.MealAllowanceOT) || 0) +
         otherExpensesTotal;
 
-      console.log('Final total:', total);
+      // console.log('Final total:', total);
       this.totalplusmethod(total);
       return total;
     },
@@ -1820,7 +1820,7 @@ export default {
         unique_code: this.claims[0].uniqueCode,
       };
 
-      console.log("API data being sent:", apiData); // Log the API data
+      // console.log("API data being sent:", apiData); // Log the API data
       Object.keys(apiData).forEach((key) => {
         console.log(`${key}: ${apiData[key]} (type: ${typeof apiData[key]})`);
       });
@@ -1852,7 +1852,7 @@ export default {
         // this.sendToAPI();
         // this.resetClaimsAfterSubmit();
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         Swal.fire({
               icon: 'error',
               title: 'Error',
@@ -1903,7 +1903,7 @@ export default {
                 try {
                   const uniqueCodeLT = this.generateUniqueCode(claim.tabTitle);
                   const userId = this.userDetails.userId;
-                  console.log("Unique code generated:", uniqueCodeLT);
+                  // console.log("Unique code generated:", uniqueCodeLT);
                   const thisisforlocal1 = {
                     mileage_km: claim.MileageKMLT || 0,
                     starting_point: claim.LocationStart || "string",
@@ -1929,14 +1929,14 @@ export default {
                     accommodation: claim.AccommodationLT || "string",
                   };
 
-                  console.log("Payload for API:", thisisforlocal1);
+                  // console.log("Payload for API:", thisisforlocal1);
                   try {
                     const axiosInstance = axios.create({
                       baseURL: "https://esvcportal.pktgroup.com/api/huda/api/User/InsertLocalOutstation",
                     });
 
                     const response = await axiosInstance.post("/", thisisforlocal1);
-                    console.log("API response:", response.data);
+                    // console.log("API response:", response.data);
                   } catch (apiError) {
                     console.error("Error sending data to API:", apiError.response?.data || apiError.message);
                   }
@@ -1951,7 +1951,7 @@ export default {
 
                     for (const { type, files } of fileUploads) {
                       if (files && files.length > 0) {
-                        console.log(`Uploading files for ${type}:`, files);
+                        // console.log(`Uploading files for ${type}:`, files);
                         await this.uploadFiles(files, userId, uniqueCodeLT);
                       }
                     }
@@ -1992,7 +1992,7 @@ export default {
                         }))
                         : [],
                     };
-                    console.log("Payload constructed successfully:", thisisforoversea);
+                    // console.log("Payload constructed successfully:", thisisforoversea);
                   } catch (payloadError) {
                     console.error("Error constructing the payload:", payloadError.message);
                     continue; 
@@ -2001,17 +2001,17 @@ export default {
                   const userId = this.userDetails.userId;
                   try {
                     if (claim.UploadOT && claim.UploadOT.length > 0) {
-                      console.log("Uploading files for UploadOT...");
+                      // console.log("Uploading files for UploadOT...");
                       await this.uploadFiles(claim.UploadOT, userId, uniqcodeOT);
                     }
                     if (claim.UploadAirportLimoTeksiOT && claim.UploadAirportLimoTeksiOT.length > 0) {
-                      console.log("Uploading files for UploadAirportLimoTeksiOT...");
+                      // console.log("Uploading files for UploadAirportLimoTeksiOT...");
                       await this.uploadFiles(claim.UploadAirportLimoTeksiOT, userId, uniqcodeOT);
                     }
                     if (claim.otherExpenses && claim.otherExpenses.length > 0) {
                       const filesToUpload = claim.otherExpenses.flatMap((expense) => expense.files || []);
                       if (filesToUpload.length > 0) {
-                        console.log("Uploading files for otherExpenses...");
+                        // console.log("Uploading files for otherExpenses...");
                         await this.uploadFiles(filesToUpload, userId, uniqcodeOT);
                       }
                     }
@@ -2023,7 +2023,7 @@ export default {
                       baseURL: "https://esvcportal.pktgroup.com/api/huda/api/User/InsertOverseasOutstation",
                     });
                     const response = await axiosInstance.post("/", thisisforoversea);
-                    console.log("Data successfully sent to API:", response.data);
+                    // console.log("Data successfully sent to API:", response.data);
                   } catch (apiError) {
                     console.error("Error sending data to API:", apiError.response?.data || apiError.message);
                   }
@@ -2253,7 +2253,7 @@ export default {
                         unique_code: uniqcodeML,
                       };
 
-                      console.log("Payload for Medical Bill Reimbursement:", thisisforMedicalBillReimbursement);
+                      // console.log("Payload for Medical Bill Reimbursement:", thisisforMedicalBillReimbursement);
                       const userId = this.userDetails.userId;
                       if (claim.UploadML && claim.UploadML.length > 0) {
                         this.uploadFiles(claim.UploadML, userId, uniqcodeML);
@@ -2335,7 +2335,7 @@ export default {
       }
       const base_URL = process.env.VUE_APP_API_BASE_URL_EC_FILE_PROD_LX;
       const uploadEndpoint = `${base_URL}/Files/MultiUploadImage/${userId}/${uniqueCode}`;
-      console.log("Upload Endpoint:", uploadEndpoint);
+      // console.log("Upload Endpoint:", uploadEndpoint);
       const formData = new FormData();
 
       for (let i = 0; i < files.length; i++) {
@@ -2357,8 +2357,8 @@ export default {
     },
 
     deleteForm(index) {
-      console.log("Deleting index:", index);
-      console.log("Current dataclaims array:", this.dataclaims);
+      // console.log("Deleting index:", index);
+      // console.log("Current dataclaims array:", this.dataclaims);
 
       // Check if dataclaims is empty
       if (!this.dataclaims || this.dataclaims.length === 0) {
@@ -2414,10 +2414,10 @@ export default {
         category,
       });
 
-      console.log("Deleted claim amount:", claimAmount);
-      console.log("Deleted claim category:", category);
-      console.log("Tab title:", deletedClaim.tabTitle);
-      console.log("Claim deleted successfully:", deletedClaim);
+      // console.log("Deleted claim amount:", claimAmount);
+      // console.log("Deleted claim category:", category);
+      // console.log("Tab title:", deletedClaim.tabTitle);
+      // console.log("Claim deleted successfully:", deletedClaim);
 
       this.isClickModal = false; // Close the modal
     },
@@ -2426,7 +2426,7 @@ export default {
       try {
         // Simply add the validated form data to dataclaims array
         this.dataclaims.push(formData);
-        console.log("Data Claims added:", this.dataclaims);
+        // console.log("Data Claims added:", this.dataclaims);
       } catch(error) {
         console.error("error", error);
         throw error;
