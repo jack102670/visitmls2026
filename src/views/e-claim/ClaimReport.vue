@@ -1832,8 +1832,8 @@ export default {
         );
 
         if (response.status === 200 || response.status === 201) {
-          // console.log("API response:", response.data);
           if (response.data.status_code === "400") {
+            // Invalid data, show error
             Swal.fire({
               icon: 'error',
               title: 'Error',
@@ -1843,445 +1843,340 @@ export default {
               confirmButtonColor: '#6d6d6d',
             });
           } else {
-            this.sendToAPI();
+            // Success - now send the details
+            await this.sendToAPI();
+            Swal.fire({
+              icon: 'success',
+              title: 'Success',
+              text: 'Claim submitted successfully!',
+              showConfirmButton: true,
+              confirmButtonText: 'OK',
+              confirmButtonColor: '#3085d6',
+            });
+            //this.resetClaimsAfterSubmit(); // Optional: Reset form after submit
           }
         } else {
           console.warn("Unexpected response status:", response.status);
         }
-
-        // this.sendToAPI();
-        // this.resetClaimsAfterSubmit();
       } catch (error) {
-        // console.log(error);
         Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: '',
-              showConfirmButton: true,
-              confirmButtonText: 'OK',
-              confirmButtonColor: '#6d6d6d',
-            });
-        this.loading = false;
-        // Extract the detailed server error message from the response
+          icon: 'error',
+          title: 'Error',
+          text: 'Just submit the claim details',
+          showConfirmButton: true,
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#6d6d6d',
+        });
         let serverErrorMessage =
-          error.response && error.response.data && error.response.data.message
-            ? error.response.data.message
-            : "";
+          error.response?.data?.message || "";
 
-        // Check if the server error message contains the specific UNIQUE KEY constraint violation message
         if (serverErrorMessage.includes("Violation of UNIQUE KEY constraint")) {
-          console.error(
-            "Duplicate entry detected for reference number. Not calling sendToAPI."
-          );
+          console.error("Duplicate entry detected for reference number. Not calling sendToAPI.");
         } else {
-          console.error(
-            "An error occurred that is not a duplicate entry issue. Review error details for appropriate action."
-          );
+          console.error("An error occurred that is not a duplicate entry issue. Review error details for appropriate action.");
         }
       }
       this.loading = false;
     },
     async sendToAPI() {
-      const groupedClaims = this.dataclaims.reduce((acc, claim) => {
-        if (!acc[claim.tabTitle]) {
-          acc[claim.tabTitle] = [];
-        }
-        acc[claim.tabTitle].push(claim);
-        return acc;
-      }, {});
+  const groupedClaims = this.dataclaims.reduce((acc, claim) => {
+    if (!acc[claim.tabTitle]) {
+      acc[claim.tabTitle] = [];
+    }
+    acc[claim.tabTitle].push(claim);
+    return acc;
+  }, {});
 
-      for (const title in groupedClaims) {
-        if (Object.hasOwnProperty.call(groupedClaims, title)) {
-          const claimsToSend = groupedClaims[title];
-          // console.log(`Claims to send for ${title}:`, claimsToSend); 
+  for (const title in groupedClaims) {
+    if (Object.hasOwnProperty.call(groupedClaims, title)) {
+      const claimsToSend = groupedClaims[title];
 
+      try {
+        switch (title.toLowerCase()) {
+          case "local travelling":
+            for (const claim of claimsToSend) {
+              const uniqueCodeLT = this.generateUniqueCode(claim.tabTitle);
+              const payload = {
+                mileage_km: claim.MileageKMLT || 0,
+                starting_point: claim.LocationStart || "string",
+                end_point: claim.LocationEnd || "string",
+                date_event: claim.dateLT || "string",
+                park_fee: claim.ParkingLT || 0,
+                petrol: claim.petrolCharged || 0,
+                evCharged: claim.evCharged || 0,
+                toll_fee: claim.TollLT || 0,
+                total_fee: claim.totalRM || 0,
+                fare: claim.FareRMLT || 0,
+                transport_specification: claim.TransportLT.toLowerCase() === "personal transport"
+                  ? claim.TransportSpec
+                  : claim.PublicTransportSpec || "string",
+                requester_id: this.userDetails.userId || "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                unique_code: uniqueCodeLT || "string",
+                reference_number: this.serialnumber || "string",
+                transport_mode: claim.TransportLT || "string",
+                trip_mode: claim.tripwayLT || "string",
+                total_mileage: claim.MileageRMLT || 0,
+                return_date: claim.ReturnDateLT || "string",
+                meal_allowance: String(claim.MealAllowanceLT || "string"),
+                accommodation: claim.AccommodationLT || "string",
+              };
 
-          let axiosInstance;
-          switch (title.toLowerCase()) {
-            case "local travelling": {
-              for (const claim of claimsToSend) {
-                try {
-                  const uniqueCodeLT = this.generateUniqueCode(claim.tabTitle);
-                  const userId = this.userDetails.userId;
-                  // console.log("Unique code generated:", uniqueCodeLT);
-                  const thisisforlocal1 = {
-                    mileage_km: claim.MileageKMLT || 0,
-                    starting_point: claim.LocationStart || "string",
-                    end_point: claim.LocationEnd || "string",
-                    date_event: claim.dateLT || "string",
-                    park_fee: claim.ParkingLT || 0,
-                    petrol: claim.petrolCharged || 0,
-                    evCharged: claim.evCharged || 0,
-                    toll_fee: claim.TollLT || 0,
-                    total_fee: claim.totalRM || 0,
-                    fare: claim.FareRMLT || 0,
-                    transport_specification: claim.TransportLT.toLowerCase() === "personal transport"
-                      ? claim.TransportSpec
-                      : claim.PublicTransportSpec || "string",
-                    requester_id: this.userDetails.userId || "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    unique_code: uniqueCodeLT || "string",
-                    reference_number: this.serialnumber || "string",
-                    transport_mode: claim.TransportLT || "string",
-                    trip_mode: claim.tripwayLT || "string",
-                    total_mileage: claim.MileageRMLT || 0,
-                    return_date: claim.ReturnDateLT || "string",
-                    meal_allowance: String(claim.MealAllowanceLT || "string"),
-                    accommodation: claim.AccommodationLT || "string",
-                  };
+              const axiosInstance = axios.create({
+                baseURL: "https://esvcportal.pktgroup.com/api/huda/api/User/InsertLocalOutstation",
+              });
 
-                  // console.log("Payload for API:", thisisforlocal1);
-                  try {
-                    const axiosInstance = axios.create({
-                      baseURL: "https://esvcportal.pktgroup.com/api/huda/api/User/InsertLocalOutstation",
-                    });
+              await axiosInstance.post("/", payload);
 
-                    const response = await axiosInstance.post("/", thisisforlocal1);
-                    // console.log("API response:", response.data);
-                  } catch (apiError) {
-                    console.error("Error sending data to API:", apiError.response?.data || apiError.message);
-                  }
-                  try {
-                    const fileUploads = [
-                      { type: "UploadLT", files: claim.UploadLT },
-                      { type: "UploadParkingLT", files: claim.UploadParkingLT },
-                      { type: "UploadTollLT", files: claim.UploadTollLT },
-                      { type: "UploadFareRMLT", files: claim.UploadFareRMLT },
-                      { type: "UploadMileageRMLT", files: claim.UploadMileageRMLT },
-                    ];
+              const fileUploads = [
+                { type: "UploadLT", files: claim.UploadLT },
+                { type: "UploadParkingLT", files: claim.UploadParkingLT },
+                { type: "UploadTollLT", files: claim.UploadTollLT },
+                { type: "UploadFareRMLT", files: claim.UploadFareRMLT },
+                { type: "UploadMileageRMLT", files: claim.UploadMileageRMLT },
+              ];
 
-                    for (const { type, files } of fileUploads) {
-                      if (files && files.length > 0) {
-                        // console.log(`Uploading files for ${type}:`, files);
-                        await this.uploadFiles(files, userId, uniqueCodeLT);
-                      }
-                    }
-                  } catch (fileUploadError) {
-                    console.error("File upload error:", fileUploadError.message);
-                  }
-                } catch (error) {
-                  console.error("Error processing claim:", error.message);
+              for (const { type, files } of fileUploads) {
+                if (files && files.length > 0) {
+                  await this.uploadFiles(files, this.userDetails.userId, uniqueCodeLT);
                 }
               }
-
-              break;
             }
-            case "overseas travelling":
-              for (const claim of claimsToSend) {
-                try {
-                  const uniqcodeOT = this.generateUniqueCode(claim.tabTitle);
-                  let thisisforoversea;
-                  try {
-                    thisisforoversea = {
-                      requester_id: this.userDetails.userId || "-",
-                      description: claim.PurposeOT || "-",
-                      meal_allowance: String(claim.MealAllowanceOT || 0),
-                      date_event: claim.dateOT || "-",
-                      total_fee: claim.combinedTotal || 0,
-                      reference_number: this.serialnumber || "-",
-                      unique_code: uniqcodeOT || "-",
-                      return_date: claim.ReturendateOT || "-",
-                      accommodation: claim.AccommodationOT || "-",
-                      oem: claim.otherExpenses
-                        ? claim.otherExpenses.map((expense) => ({
-                          name: expense.name || "-",
-                          amount: expense.amount || 0,
-                          description: expense.description || "-",
-                          foreign_currency: expense.foreign_currency || "-",
-                          exchange_rate: expense.exchange_rate || 0,
-                          currency_total: expense.currency_total || 0,
-                        }))
-                        : [],
-                    };
-                    // console.log("Payload constructed successfully:", thisisforoversea);
-                  } catch (payloadError) {
-                    console.error("Error constructing the payload:", payloadError.message);
-                    continue; 
-                  }
+            break;
 
-                  const userId = this.userDetails.userId;
-                  try {
-                    if (claim.UploadOT && claim.UploadOT.length > 0) {
-                      // console.log("Uploading files for UploadOT...");
-                      await this.uploadFiles(claim.UploadOT, userId, uniqcodeOT);
-                    }
-                    if (claim.UploadAirportLimoTeksiOT && claim.UploadAirportLimoTeksiOT.length > 0) {
-                      // console.log("Uploading files for UploadAirportLimoTeksiOT...");
-                      await this.uploadFiles(claim.UploadAirportLimoTeksiOT, userId, uniqcodeOT);
-                    }
-                    if (claim.otherExpenses && claim.otherExpenses.length > 0) {
-                      const filesToUpload = claim.otherExpenses.flatMap((expense) => expense.files || []);
-                      if (filesToUpload.length > 0) {
-                        // console.log("Uploading files for otherExpenses...");
-                        await this.uploadFiles(filesToUpload, userId, uniqcodeOT);
-                      }
-                    }
-                  } catch (fileUploadError) {
-                    console.error("Error uploading files:", fileUploadError.message);
-                  }
-                  try {
-                    const axiosInstance = axios.create({
-                      baseURL: "https://esvcportal.pktgroup.com/api/huda/api/User/InsertOverseasOutstation",
-                    });
-                    const response = await axiosInstance.post("/", thisisforoversea);
-                    // console.log("Data successfully sent to API:", response.data);
-                  } catch (apiError) {
-                    console.error("Error sending data to API:", apiError.response?.data || apiError.message);
-                  }
-                } catch (error) {
-                  console.error("Unexpected error processing claim:", error.message);
-                }
+          case "overseas travelling":
+            for (const claim of claimsToSend) {
+              const uniqueCodeOT = this.generateUniqueCode(claim.tabTitle);
+              const payload = {
+                requester_id: this.userDetails.userId || "-",
+                description: claim.PurposeOT || "-",
+                meal_allowance: String(claim.MealAllowanceOT || 0),
+                date_event: claim.dateOT || "-",
+                total_fee: claim.combinedTotal || 0,
+                reference_number: this.serialnumber || "-",
+                unique_code: uniqueCodeOT || "-",
+                return_date: claim.ReturendateOT || "-",
+                accommodation: claim.AccommodationOT || "-",
+                oem: claim.otherExpenses
+                  ? claim.otherExpenses.map((expense) => ({
+                      name: expense.name || "-",
+                      amount: expense.amount || 0,
+                      description: expense.description || "-",
+                      foreign_currency: expense.foreign_currency || "-",
+                      exchange_rate: expense.exchange_rate || 0,
+                      currency_total: expense.currency_total || 0,
+                    }))
+                  : [],
+              };
+
+              const axiosInstance = axios.create({
+                baseURL: "https://esvcportal.pktgroup.com/api/huda/api/User/InsertOverseasOutstation",
+              });
+
+              await axiosInstance.post("/", payload);
+
+              if (claim.UploadOT && claim.UploadOT.length > 0) {
+                await this.uploadFiles(claim.UploadOT, this.userDetails.userId, uniqueCodeOT);
               }
 
-              break;
-            case "entertainment":
-              for (const claim of claimsToSend) {
-                const uniqcodeE = this.generateUniqueCode(claim.tabTitle);
-                const thisisforentertainment = {
+              if (claim.otherExpenses && claim.otherExpenses.length > 0) {
+                const filesToUpload = claim.otherExpenses.flatMap((expense) => expense.files || []);
+                if (filesToUpload.length > 0) {
+                  await this.uploadFiles(filesToUpload, this.userDetails.userId, uniqueCodeOT);
+                }
+              }
+            }
+            break;
 
-                  description: claim.ReferenceE,
-                  reference_number: this.serialnumber,
-                  date_event: claim.dateE,
-                  entertainment_type: claim.TypeofEntertainmentE,
-                  venue_name: claim.VenueE,
-                  company_name: claim.CompanyE,
-                  total_fee: parseFloat(claim.AmountRME),
-                  requester_id: this.userDetails.userId,
-                  unique_code: uniqcodeE, 
-                
-                  // other_type_of_entertainment:
-                  //   claim.OtherTypeofEntertainmentE,
-
-                  participants: claim.attendees
-                    ? claim.attendees.map((participant) => ({
+          case "entertainment":
+            for (const claim of claimsToSend) {
+              const uniqueCodeE = this.generateUniqueCode(claim.tabTitle);
+              const payload = {
+                description: claim.ReferenceE,
+                reference_number: this.serialnumber,
+                date_event: claim.dateE,
+                entertainment_type: claim.TypeofEntertainmentE,
+                venue_name: claim.VenueE,
+                company_name: claim.CompanyE,
+                total_fee: parseFloat(claim.AmountRME),
+                requester_id: this.userDetails.userId,
+                unique_code: uniqueCodeE,
+                participants: claim.attendees
+                  ? claim.attendees.map((participant) => ({
                       name: participant.name,
-                      company_Name: participant.company_Name
-                        ? participant.company_Name
-                        : "",
+                      company_Name: participant.company_Name || "",
                       emp_id: "-",
                       status: "-",
                     }))
-                    : [],
-                };
+                  : [],
+              };
 
-                const userId = this.userDetails.userId;
+              const axiosInstance = axios.create({
+                baseURL: "https://esvcportal.pktgroup.com/api/erna/api/User/InsertEntertainment",
+              });
 
-                if (claim.UploadE && claim.UploadE.length > 0) {
-                  // console.log("Preparing to upload files:", claim.UploadE);
-                  this.uploadFiles(claim.UploadE, userId, uniqcodeE);
-                }
-                axiosInstance = axios.create({
-                  baseURL:
-                    "https://esvcportal.pktgroup.com/api/erna/api/User/InsertEntertainment",
-                });
-                // try {
-                const response = await axiosInstance.post(
-                  "/",
-                  thisisforentertainment
-                );
-                // console.log(`Data sent for ${title} 3:`, response.data);
-                //  this.fileupload(); // Assuming this function handles subsequent actions after successful submission
-                // } catch (error) {
-                //   console.error(
-                //     "Error sending data for Entertainment:",
-                //     error.response.data
-                //   );
-                // }
+              await axiosInstance.post("/", payload);
+
+              if (claim.UploadE && claim.UploadE.length > 0) {
+                await this.uploadFiles(claim.UploadE, this.userDetails.userId, uniqueCodeE);
               }
+            }
+            break;
 
-              break;
-
-            case "staff refreshment":
-              for (const claim of claimsToSend) {
-                const uniqcodeSR = this.generateUniqueCode(claim.tabTitle);
-                const thisisforstaffrefreshment = {
-                  refreshment_type: claim.OtherTypeofStaffRefreshmentSR
-                    ? claim.OtherTypeofStaffRefreshmentSR
-                    : claim.TypeofRefreshmentSR,
-
-                  date_event: claim.dateSR,
-                  company_name: claim.CompanySR,
-                  venue_name: claim.VenueSR,
-                  reference_type: claim.ReferenceSR,
-                  total_fee: claim.AmountRMSR,
-                  reference_number: this.serialnumber,
-                  unique_code: uniqcodeSR,
-                  requester_id: this.userDetails.userId,
-                  sim: claim.staffInvolved
-                    ? claim.staffInvolved.map((participant) => ({
+          case "staff refreshment":
+            for (const claim of claimsToSend) {
+              const uniqueCodeSR = this.generateUniqueCode(claim.tabTitle);
+              const payload = {
+                refreshment_type: claim.OtherTypeofStaffRefreshmentSR || claim.TypeofRefreshmentSR,
+                date_event: claim.dateSR,
+                company_name: claim.CompanySR,
+                venue_name: claim.VenueSR,
+                reference_type: claim.ReferenceSR,
+                total_fee: claim.AmountRMSR,
+                reference_number: this.serialnumber,
+                unique_code: uniqueCodeSR,
+                requester_id: this.userDetails.userId,
+                sim: claim.staffInvolved
+                  ? claim.staffInvolved.map((participant) => ({
                       company_name: participant.companyName,
                       name: participant.name,
                       department: participant.department,
                     }))
-                    : [],
-                };
+                  : [],
+              };
 
-                const userId = this.userDetails.userId;
-                if (claim.UploadSR && claim.UploadSR.length > 0) {
-                  // console.log("Preparing to upload files:", claim.UploadSR);
+              const axiosInstance = axios.create({
+                baseURL: "https://esvcportal.pktgroup.com/api/huda/api/User/InsertStaffRefreshment",
+              });
 
-                  this.uploadFiles(claim.UploadSR, userId, uniqcodeSR);
-                }
-                axiosInstance = axios.create({
-                  baseURL:
-                    "https://esvcportal.pktgroup.com/api/huda/api/User/InsertStaffRefreshment",
-                });
-                const response2 = await axiosInstance.post(
-                  "/",
-                  thisisforstaffrefreshment
-                );
-                //   console.log(`Data sent for ${title} 2:`, response2.data);
+              await axiosInstance.post("/", payload);
+
+              if (claim.UploadSR && claim.UploadSR.length > 0) {
+                await this.uploadFiles(claim.UploadSR, this.userDetails.userId, uniqueCodeSR);
               }
-              break;
-            case "others":
-              for (const claim of claimsToSend) {
-                const uniqcodeothers = this.generateUniqueCode(
-                  claim.tabTitle
-                );
-                const thisisforHandphoneBillReimbursement = {
-                  expense_date: claim.dateOthers, // Example date
-                  amount: parseFloat(claim.AmountRMOthers).toFixed(2),
-                  description: claim.DescriptionOthers,
-                  unique_code: uniqcodeothers,
-                  total_fee: parseFloat(claim.totalRM).toFixed(2),
-                  reference_number: this.serialnumber,
-                  requester_id: this.userDetails.userId,
-                  expense_name: claim.ExpenseNameOthers,
-                };
+            }
+            break;
 
-                const userId = this.userDetails.userId;
-                // console.log("unik kod:", uniqueCode);
-                if (claim.UploadOthers && claim.UploadOthers.length > 0) {
-                  // Log the file data to verify it's correct before attempting to upload
-                  // console.log(
-                  //   "Preparing to upload files:",
-                  //   claim.UploadOthers
-                  // );
+          case "others":
+            for (const claim of claimsToSend) {
+              const uniqueCodeOthers = this.generateUniqueCode(claim.tabTitle);
+              const payload = {
+                expense_date: claim.dateOthers,
+                amount: parseFloat(claim.AmountRMOthers).toFixed(2),
+                description: claim.DescriptionOthers,
+                unique_code: uniqueCodeOthers,
+                total_fee: parseFloat(claim.totalRM).toFixed(2),
+                reference_number: this.serialnumber,
+                requester_id: this.userDetails.userId,
+                expense_name: claim.ExpenseNameOthers,
+              };
 
-                  this.uploadFiles(
-                    claim.UploadOthers,
-                    userId,
-                    uniqcodeothers
-                  );
-                }
-                axiosInstance = axios.create({
-                  baseURL: "https://esvcportal.pktgroup.com/api/huda/api/User/InsertOthers",
-                });
-                const response2 = await axiosInstance.post(
-                  "/",
-                  thisisforHandphoneBillReimbursement
-                );
-                // console.log(`Data sent for ${title} 2:`, response2.data);
+              const axiosInstance = axios.create({
+                baseURL: "https://esvcportal.pktgroup.com/api/huda/api/User/InsertOthers",
+              });
+
+              await axiosInstance.post("/", payload);
+
+              if (claim.UploadOthers && claim.UploadOthers.length > 0) {
+                await this.uploadFiles(claim.UploadOthers, this.userDetails.userId, uniqueCodeOthers);
               }
-              break;
-            case "handphone bill reimbursement":
-              for (const claim of claimsToSend) {
-                const uniqcodeHR = this.generateUniqueCode(claim.tabTitle);
-                const thisisforHandphoneBillReimbursement = {
-                  reference_number: this.serialnumber,
-                  date_claim: this.todayFormatted(), 
-                  claim_month: claim.MonthHR,
-                  claim_year: `${claim.YearHR}`,
-                  bank_name: claim.BankNameHR,
-                  bank_holder: claim.AccHolderNameHR,
-                  bank_account: String(claim.AccBankNumberHR),
-                  claim_amount: claim.totalRM,
-                  ic_number: claim.icNumber,
-                  requester_id: this.userDetails.userId,
-                  unique_code: uniqcodeHR,
-    
-                };
+            }
+            break;
 
-                const userId = this.userDetails.userId;
-                if (claim.UploadHR && claim.UploadHR.length > 0) {
-                  //  console.log("Preparing to upload files:", claim.UploadLT);
-                  this.uploadFiles(claim.UploadHR, userId, uniqcodeHR);
-                }
-                const axiosInstance = axios.create({
-                  baseURL:
-                    "https://esvcportal.pktgroup.com/api/erna/api/User/InsertHandphoneReimburse",
-                });
+          case "handphone bill reimbursement":
+            for (const claim of claimsToSend) {
+              const uniqueCodeHR = this.generateUniqueCode(claim.tabTitle);
+              const payload = {
+                reference_number: this.serialnumber,
+                date_claim: this.todayFormatted(),
+                claim_month: claim.MonthHR,
+                claim_year: `${claim.YearHR}`,
+                bank_name: claim.BankNameHR,
+                bank_holder: claim.AccHolderNameHR,
+                bank_account: String(claim.AccBankNumberHR),
+                claim_amount: claim.totalRM,
+                ic_number: claim.icNumber,
+                requester_id: this.userDetails.userId,
+                unique_code: uniqueCodeHR,
+              };
 
-                try {
-                  const response = await axiosInstance.post(
-                    "/",
-                    thisisforHandphoneBillReimbursement
-                  );
-                  // console.log(
-                  //   `Data successfully submitted for handphone bill reimbursement:`,
-                  //   response.data
-                  // );
-                } catch (error) {
-                  if (error.response) {
-                    console.error(
-                      "Error submitting handphone bill reimbursement:",
-                      error.response.data
-                    );
-                  } else if (error.request) {
-                    console.error(
-                      "Error submitting handphone bill reimbursement: No response received"
-                    );
-                  } else {
-                    console.error(
-                      "Error submitting handphone bill reimbursement:",
-                      error.message
-                    );
-                  }
-                }
+              const axiosInstance = axios.create({
+                baseURL: "https://esvcportal.pktgroup.com/api/erna/api/User/InsertHandphoneReimburse",
+              });
+
+              await axiosInstance.post("/", payload);
+
+              if (claim.UploadHR && claim.UploadHR.length > 0) {
+                await this.uploadFiles(claim.UploadHR, this.userDetails.userId, uniqueCodeHR);
               }
-              break;
-              case "medical bill reimbursement":
-                    for (const claim of claimsToSend) {
-                      const uniqcodeML = this.generateUniqueCode(claim.tabTitle);
-                      const thisisforMedicalBillReimbursement = {
-                        reference_number: this.serialnumber || "-",
-                        date_leave_taken: claim.dateML,
-                        reason: claim.ReasonML || "-",
-                        medical_category: claim.MedicalCategoryML,
-                        clinic_selection: String(claim.ClinicSelectionML || "-"),
-                        bank_name: claim.BankNameML,
-                        bank_holder: claim.AccHolderNameML,
-                        bank_account: String(claim.AccBankNumberML),
-                        claim_amount: String(claim.ClaimsAmountML),
-                        clinic_name: String(
-                          claim.OtherClinicSpecML
-                            ? claim.OtherClinicSpecML
-                            : claim.ClinicSelectionML || "-"
-                        ),
-                        reason_different: claim.OtherClinicReasonML || "-",
-                        requester_id: this.userDetails.userId,
-                        ic_number: claim.icNumber,
-                        unique_code: uniqcodeML,
-                      };
+            }
+            break;
 
-                      // console.log("Payload for Medical Bill Reimbursement:", thisisforMedicalBillReimbursement);
-                      const userId = this.userDetails.userId;
-                      if (claim.UploadML && claim.UploadML.length > 0) {
-                        this.uploadFiles(claim.UploadML, userId, uniqcodeML);
-                      }
-                      const axiosInstance = axios.create({
-                        baseURL: "https://esvcportal.pktgroup.com/api/erna/api/User/InsertMedicalLeave",
-                      });
-                      await axiosInstance.post("/", thisisforMedicalBillReimbursement);
-                    }
-                    break;
-            default:
-              console.error(`No endpoint found for ${title}`);
-              continue;
-          }
-          await Swal.fire({
-            icon: 'success',
-            title: 'Submitted Successfully!',
-            text: 'Your claim has been submitted.',
-            timer: 2000,
-            timerProgressBar: true,
-            showConfirmButton: true,
-            confirmButtonText: 'OK',
-            confirmButtonColor: '#3085d6',
-          });
-          this.$router.push({ name: "eclaimhomepages" });
+          case "medical bill reimbursement":
+            for (const claim of claimsToSend) {
+              const uniqueCodeML = this.generateUniqueCode(claim.tabTitle);
+              const payload = {
+                reference_number: this.serialnumber || "-",
+                date_leave_taken: claim.dateML,
+                reason: claim.ReasonML || "-",
+                medical_category: claim.MedicalCategoryML,
+                clinic_selection: String(claim.ClinicSelectionML || "-"),
+                bank_name: claim.BankNameML,
+                bank_holder: claim.AccHolderNameML,
+                bank_account: String(claim.AccBankNumberML),
+                claim_amount: String(claim.ClaimsAmountML),
+                clinic_name: String(
+                  claim.OtherClinicSpecML
+                    ? claim.OtherClinicSpecML
+                    : claim.ClinicSelectionML || "-"
+                ),
+                reason_different: claim.OtherClinicReasonML || "-",
+                requester_id: this.userDetails.userId,
+                ic_number: claim.icNumber,
+                unique_code: uniqueCodeML,
+              };
+
+              const axiosInstance = axios.create({
+                baseURL: "https://esvcportal.pktgroup.com/api/erna/api/User/InsertMedicalLeave",
+              });
+
+              await axiosInstance.post("/", payload);
+
+              if (claim.UploadML && claim.UploadML.length > 0) {
+                await this.uploadFiles(claim.UploadML, this.userDetails.userId, uniqueCodeML);
+              }
+            }
+            break;
+
+          default:
+            console.error(`No endpoint found for ${title}`);
+            break;
         }
+      } catch (error) {
+        console.error(`Error processing claims for ${title}:`, error.message);
+        Swal.fire({
+          icon: "error",
+          title: "Submission Failed",
+          text: `Failed to submit claims for ${title}. Please try again.`,
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "OK",
+        });
       }
-    },
+    }
+  }
+
+  Swal.fire({
+    icon: "success",
+    title: "Submitted Successfully!",
+    text: "Your claims have been submitted.",
+    timer: 2000,
+    timerProgressBar: true,
+    showConfirmButton: true,
+    confirmButtonText: "OK",
+    confirmButtonColor: "#3085d6",
+  });
+
+  this.$router.push({ name: "eclaimhomepages" });
+},
 
     todayFormatted() {
       const options = {
