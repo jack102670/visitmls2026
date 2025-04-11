@@ -1787,7 +1787,22 @@ export default {
               required: true,
               gridClass: "sm:col-span-2",
             },
-
+            {
+              id: "ClinicSelectionML",
+              label: "Clinic Selection",
+              type: "radio-group",
+              value: [],
+              hidden: false,
+              required: true,
+              options: [
+                {
+                  label: "Mediviron Clinic - Panel",
+                  value: "Mediviron Clinic - Panel",
+                },
+                { label: "Other Clinic", value: "Other Clinic" },
+              ],
+              gridClass: "sm:col-span-1",
+            },
             {
               id: "OtherClinicSpecML",
               label: "Specify Clinic Name",
@@ -1831,22 +1846,6 @@ export default {
               value: "",
               disabled: true,
               gridClass: "sm:col-span-2",
-            },
-            {
-              id: "ClinicSelectionML",
-              label: "Clinic Selection",
-              type: "radio-group",
-              value: [],
-              hidden: false,
-              required: true,
-              options: [
-                {
-                  label: "Mediviron Clinic - Panel",
-                  value: "Mediviron Clinic - Panel",
-                },
-                { label: "Other Clinic", value: "Other Clinic" },
-              ],
-              gridClass: "sm:col-span-1",
             },
             {
               //To display the choosen limit amount
@@ -2171,10 +2170,10 @@ export default {
               id: "ReferenceSR",
               label: "Reference",
               type: "text",
-              value: "MEAL FOR STAFF",
+              value: "",
               required: true,
               gridClass: "sm:col-span-2",
-              readonly: true,
+              // readonly: true,
             },
             {
               id: "AmountRMSR",
