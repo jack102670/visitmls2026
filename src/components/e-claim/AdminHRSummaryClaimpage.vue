@@ -1021,8 +1021,22 @@ export default {
       fileSaver.saveAs(url, fileName);
     },
     ShowFile(val) {
-      this.files = val;
-      this.showFileList = true;
+      if (Array.isArray(val)) {
+        this.files = val;
+        this.showFileList = true;
+      } else if (val.userId && val.uniqueCode) {
+        axios
+          .get(`https://esvcportal.pktgroup.com/api/file/api/Files/GetMultiImage/${val.userId}/${val.uniqueCode}`)
+          .then((response) => {
+            this.files = response.data.result || [];
+            this.showFileList = true;
+          })
+          .catch((error) => {
+            console.error("Error fetching files:", error);
+          });
+      } else {
+        console.error("Invalid file data provided.");
+      }
     },
   },
   mounted() {

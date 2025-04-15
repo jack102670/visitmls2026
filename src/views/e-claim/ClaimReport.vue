@@ -1846,13 +1846,7 @@ export default {
         };
 
         console.log("API Data:", apiData);
-
-        // Validate and send grouped claims
-        const isClaimsValid = await this.sendToAPI();
-        if (!isClaimsValid) {
-          throw new Error("Some claims failed validation or submission.");
-        }
-
+        
         // Send the claim details to the API
         const response = await axios.post(
           "https://esvcportal.pktgroup.com/api/huda/api/User/InsertClaimDetails",
@@ -2206,9 +2200,15 @@ export default {
     },
 
     async uploadFiles(files, userId, uniqueCode) {
+      if (!files || !Array.isArray(files) || files.length === 0) {
+        console.error("No files to upload or invalid file list.");
+        return;
+      }
+
       const uploadEndpoint = `https://esvcportal.pktgroup.com/api/file/api/Files/MultiUploadImage/${userId}/${uniqueCode}`;
       const formData = new FormData();
 
+      // Append all files under the same key
       files.forEach((file) => {
         formData.append("filecollection", file);
       });
@@ -2218,23 +2218,48 @@ export default {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          // Optional: You can add onUploadProgress to track progress
+          // onUploadProgress: progressEvent => {
+          //   const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          //   console.log(`Upload progress: ${percentCompleted}%`);
+          // }
         });
-        //   console.log("Files uploaded successfully:", response.data);
+
+        console.log("Files uploaded successfully:", response.data);
+        console.log("Backend message:", response.data.message);
+
+        // Optional: show a success message (if you use a toast/snackbar)
+        // this.$toast.success("Files uploaded successfully!");
+
+        // Optional: Clear form state
+        if (typeof formStore !== "undefined" && formStore.clearFormData) {
+          formStore.clearFormData();
+        }
+
+        // Refresh the file list (if needed)
+        if (typeof this.ShowFile === "function") {
+          this.ShowFile({ userId, uniqueCode });
+        }
+
       } catch (error) {
         console.error("Error uploading files:", error);
+        // Optional: Show error to user
+        // this.$toast.error("Upload failed. Please try again.");
       }
     },
 
-    async sendFiles(X, Y) {
-      const files = this.formData.fileUpload; 
+
+    async sendFiles(userId, uniqueCode) {
+      const files = this.formData.fileUpload;
 
       if (!files || !files.length) {
         console.error("No files to upload.");
         return;
       }
 
-      await this.uploadFilesclaims(files, X, Y);
+      await this.uploadFiles(files, userId, uniqueCode);
     },
+
     async uploadFilesclaims(files, userId, uniqueCode) {
       // console.log("Files parameter received:", files);
       // console.log("User ID:", userId);
