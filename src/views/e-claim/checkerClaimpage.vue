@@ -1035,7 +1035,7 @@ export default {
 
     async FetchClaimDetails() {
       try {
-        const response = await axios.get('https://esvcportal.pktgroup.com/api/erna/api/User/GetClaimDetails/' + this.referenceNumber);
+        const response = await axios.get('http://172.28.28.116:6165/api/User/GetClaimDetails/' + this.referenceNumber);
         this.claimDetails = response.data.result;
         this.adminStatus = this.claimDetails.admin_status;
         // console.log("get claimdetails : ", this.claimDetails);
@@ -1131,7 +1131,7 @@ export default {
   try {
     try {
       const response = await axios.get(
-        'https://esvcportal.pktgroup.com/api/huda/api/User/GetLocalOutstation/' +
+        'http://172.28.28.116:6239/api/User/GetLocalOutstation/' +
         this.referenceNumber
       );
       const result = response.data.result;
@@ -1170,7 +1170,7 @@ export default {
 
     try {
       const response = await axios.get(
-        'https://esvcportal.pktgroup.com/api/huda/api/User/GetOverseasOutstation/' +
+        'http://172.28.28.116:6239/api/User/GetOverseasOutstation/' +
         this.referenceNumber
       );
       const result = response.data.result;
@@ -1209,7 +1209,7 @@ export default {
 
     try {
       const response = await axios.get(
-        'https://esvcportal.pktgroup.com/api/huda/api/User/GetRefreshment/' +
+        'http://172.28.28.116:6239/api/User/GetRefreshment/' +
         this.referenceNumber
       );
       const result = response.data.result;
@@ -1242,7 +1242,7 @@ export default {
 
     try {
       const response = await axios.get(
-        'https://esvcportal.pktgroup.com/api/erna/api/User/GetEntertainment/' +
+        'http://172.28.28.116:6165/api/User/GetEntertainment/' +
         this.referenceNumber
       );
       const result = response.data.result;
@@ -1276,7 +1276,7 @@ export default {
 
     try {
       const response = await axios.get(
-        'https://esvcportal.pktgroup.com/api/erna/api/User/GetMedicalLeave/' +
+        'http://172.28.28.116:6165/api/User/GetMedicalLeave/' +
         this.referenceNumber
       );
       const result = response.data.result;
@@ -1312,7 +1312,7 @@ export default {
 
     try {
       const response = await axios.get(
-        'https://esvcportal.pktgroup.com/api/erna/api/User/GetHandphone/' + this.referenceNumber
+        'http://172.28.28.116:6165/api/User/GetHandphone/' + this.referenceNumber
       );
       const result = response.data.result;
       let details = [];
@@ -1343,7 +1343,7 @@ export default {
 
     try {
       const response = await axios.get(
-        'https://esvcportal.pktgroup.com/api/huda/api/User/GetOthers/' + this.referenceNumber
+        'http://172.28.28.116:6239/api/User/GetOthers/' + this.referenceNumber
       );
       const result = response.data.result;
       let details = [];
@@ -1418,7 +1418,7 @@ export default {
       const username_id = store.getSession().userDetails.userId;
       let userData;
       await axios
-        .get(`https://esvcportal.pktgroup.com/api/huda/api/User/GetEmployeeById/${username_id}`)
+        .get(`http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           userData = {
             userName: response.data.result[0].name,
@@ -1473,15 +1473,15 @@ export default {
 
         try {
           if (remark.Tab_Title == 'Local Outstation') {
-            await axios.post('https://esvcportal.pktgroup.com/api/huda/api/Verifier/VerifierLocal', data);
+            await axios.post('http://172.28.28.116:6239/api/Verifier/VerifierLocal', data);
           } else if (remark.Tab_Title == 'Overseas Outstation') {
-            await axios.post('https://esvcportal.pktgroup.com/api/huda/api/Verifier/VerifierOverseas', data);
+            await axios.post('http://172.28.28.116:6239/api/Verifier/VerifierOverseas', data);
           } else if (remark.Tab_Title == 'Staff Refreshment') {
-            await axios.post('https://esvcportal.pktgroup.com/api/huda/api/Verifier/VerifierRefreshment', data);
+            await axios.post('http://172.28.28.116:6239/api/Verifier/VerifierRefreshment', data);
           } else if (remark.Tab_Title == 'Entertainment') {
-            await axios.post('https://esvcportal.pktgroup.com/api/huda/api/Verifier/VerifierEntertainment', data);
+            await axios.post('http://172.28.28.116:6239/api/Verifier/VerifierEntertainment', data);
           } else if (remark.Tab_Title == 'Other') {
-            await axios.post('https://esvcportal.pktgroup.com/api/huda/api/Verifier/VerifierOthers', data);
+            await axios.post('http://172.28.28.116:6239/api/Verifier/VerifierOthers', data);
           }
         } catch (error) {
           console.error(`Error posting ${remark.Tab_Title}:`, error);
@@ -1506,7 +1506,7 @@ export default {
         // console.log(approveData);
 
         try {
-          const response = await axios.put('https://esvcportal.pktgroup.com/api/erna/api/Admin/Check_Claim', approveData);
+          const response = await axios.put('http://172.28.28.116:6165/api/Admin/Check_Claim', approveData);
           // console.log('API response', response.data);
 
           this.approveSuccess = true;
@@ -1532,7 +1532,7 @@ export default {
         };
 
         try {
-          const response = await axios.put('https://esvcportal.pktgroup.com/api/erna/api/Admin/Check_Claim', approveData);
+          const response = await axios.put('http://172.28.28.116:6165/api/Admin/Check_Claim', approveData);
           this.loading = false;
           // console.log('API response', response.data);
         } catch (error) {
@@ -1553,7 +1553,7 @@ export default {
           reference_number: this.claimDetails.reference_number === '-' ? '-' : this.claimDetails.reference_number,
         };
         await axios
-          .put('https://esvcportal.pktgroup.com/api/erna/api/Admin/Check_Claim', approveData)
+          .put('http://172.28.28.116:6165/api/Admin/Check_Claim', approveData)
           .then((response) => {
             // Handle success response
             this.loading = false;

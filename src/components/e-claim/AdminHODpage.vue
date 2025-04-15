@@ -260,7 +260,7 @@ export default {
       this.loading = true;
       axios
         .get(
-          'https://esvcportal.pktgroup.com/api/erna/api/ApproverVerifier/GetAllRequestApprover/' +
+          'http://172.28.28.116:6165/api/ApproverVerifier/GetAllRequestApprover/' +
             this.userId
         )
         .then((response) => {

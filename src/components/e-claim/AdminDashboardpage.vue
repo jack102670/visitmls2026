@@ -452,7 +452,7 @@ export default {
     async FetchClaimsData() {
       this.loading = true;
       try {
-        const response = await axios.get('https://esvcportal.pktgroup.com/api/erna/api/ApproverVerifier/GetAllRequestApproverFinance');
+        const response = await axios.get('http://172.28.28.116:6165/api/ApproverVerifier/GetAllRequestApproverFinance');
         this.claimsData = response.data.result.filter(
           (item) => item.admin_status != ''
         );

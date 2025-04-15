@@ -303,7 +303,7 @@ export default {
       const username_id = this.userDetails.userId;
       try {
         const response = await axios.get(
-          `https://esvcportal.pktgroup.com/api/huda/api/User/GetEmployeeById/${username_id}`
+          `http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`
         );
         this.userData = response.data.result[0];
       //  console.log('User status:', this.userData);

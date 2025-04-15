@@ -1592,7 +1592,7 @@ export default {
       let result = null;
       try {
         const response = await axios.get(
-          "https://esvcportal.pktgroup.com/api/erna/api/User/GetRunningNumber"
+          "http://172.28.28.116:6165/api/User/GetRunningNumber"
         );
         if (response.status === 200) {
           // console.log("Serial Number:", response.data);
@@ -1619,7 +1619,7 @@ export default {
     async fetchEmployeeID() {
       try {
         const response = await axios.get(
-          "https://esvcportal.pktgroup.com/api/huda/api/User/GetAllEmployees"
+          "http://172.28.28.116:6239/api/User/GetAllEmployees"
         );
 
         if (response.data.result && response.data.result.length > 0) {
@@ -1787,7 +1787,7 @@ export default {
     async fetchProfileData() {
       try {
         const userId = store.getSession().userDetails.userId; // Get the user ID from the session
-        const response = await axios.get(`https://esvcportal.pktgroup.com/api/huda/api/User/GetEmployeeById/${userId}`);
+        const response = await axios.get(`http://172.28.28.116:6239/api/User/GetEmployeeById/${userId}`);
         if (response.status === 200 && response.data.result.length > 0) {
           const profileData = response.data.result[0];
           this.requesterEmail = profileData.email_address; // Assign the email_address to a data property
@@ -1849,7 +1849,7 @@ export default {
         
         // Send the claim details to the API
         const response = await axios.post(
-          "https://esvcportal.pktgroup.com/api/huda/api/User/InsertClaimDetails",
+          "http://172.28.28.116:6239/api/User/InsertClaimDetails",
           apiData
         );
 
@@ -1934,7 +1934,7 @@ export default {
                   };
 
                   const axiosInstance = axios.create({
-                    baseURL: "https://esvcportal.pktgroup.com/api/huda/api/User/InsertLocalOutstation",
+                    baseURL: "http://172.28.28.116:6239/api/User/InsertLocalOutstation",
                   });
 
                   await axiosInstance.post("/", payload);
@@ -1981,7 +1981,7 @@ export default {
                   };
 
                   const axiosInstance = axios.create({
-                    baseURL: "https://esvcportal.pktgroup.com/api/huda/api/User/InsertOverseasOutstation",
+                    baseURL: "http://172.28.28.116:6239/api/User/InsertOverseasOutstation",
                   });
 
                   await axiosInstance.post("/", payload);
@@ -2023,7 +2023,7 @@ export default {
                   };
 
                   const axiosInstance = axios.create({
-                    baseURL: "https://esvcportal.pktgroup.com/api/erna/api/User/InsertEntertainment",
+                    baseURL: "http://172.28.28.116:6165/api/User/InsertEntertainment",
                   });
 
                   await axiosInstance.post("/", payload);
@@ -2057,7 +2057,7 @@ export default {
                   };
 
                   const axiosInstance = axios.create({
-                    baseURL: "https://esvcportal.pktgroup.com/api/huda/api/User/InsertStaffRefreshment",
+                    baseURL: "http://172.28.28.116:6239/api/User/InsertStaffRefreshment",
                   });
 
                   await axiosInstance.post("/", payload);
@@ -2083,7 +2083,7 @@ export default {
                   };
 
                   const axiosInstance = axios.create({
-                    baseURL: "https://esvcportal.pktgroup.com/api/huda/api/User/InsertOthers",
+                    baseURL: "http://172.28.28.116:6239/api/User/InsertOthers",
                   });
 
                   await axiosInstance.post("/", payload);
@@ -2112,7 +2112,7 @@ export default {
                   };
 
                   const axiosInstance = axios.create({
-                    baseURL: "https://esvcportal.pktgroup.com/api/erna/api/User/InsertHandphoneReimburse",
+                    baseURL: "http://172.28.28.116:6165/api/User/InsertHandphoneReimburse",
                   });
 
                   await axiosInstance.post("/", payload);
@@ -2148,7 +2148,7 @@ export default {
                   };
 
                   const axiosInstance = axios.create({
-                    baseURL: "https://esvcportal.pktgroup.com/api/erna/api/User/InsertMedicalLeave",
+                    baseURL: "http://172.28.28.116:6165/api/User/InsertMedicalLeave",
                   });
 
                   await axiosInstance.post("/", payload);

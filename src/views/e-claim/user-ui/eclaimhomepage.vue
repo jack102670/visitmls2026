@@ -475,7 +475,7 @@ export default {
 
       try {
         const response = await fetch(
-          `https://esvcportal.pktgroup.com/api/erna/api/User/GetAllRequests/${userId}`
+          `http://172.28.28.116:6165/api/User/GetAllRequests/${userId}`
         );
         if (!response.ok) {
           throw new Error('Failed to fetch requests');

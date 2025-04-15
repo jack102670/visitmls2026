@@ -409,7 +409,7 @@ export default {
       const userid = this.userDetails.userId;
       try {
         const response = await axios.get(
-          `https://esvcportal.pktgroup.com/api/erna/api/ApproverVerifier/GetAllRequestChecker/${userid}`
+          `http://172.28.28.116:6165/api/ApproverVerifier/GetAllRequestChecker/${userid}`
         );
         this.items = response.data.result;
         // console.log('api data', this.items);

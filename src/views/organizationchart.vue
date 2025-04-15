@@ -743,7 +743,7 @@ export default {
     //   formData.append("department", this.clickedNodeData.department);
 
     //   axios
-    //     .put("https://esvcportal.pktgroup.com/api/huda/api/Admin/UpdateEmployee", formData, {
+    //     .put("http://172.28.28.116:6239/api/Admin/UpdateEmployee", formData, {
     //       headers: {
     //         "Content-Type": "multipart/form-data",
     //       },
@@ -787,7 +787,7 @@ formData.append("profile_picture", this.files2[0]);
 
 
 axios
-  .put("https://esvcportal.pktgroup.com/api/huda/api/Admin/UpdateImage", formData)
+  .put("http://172.28.28.116:6239/api/Admin/UpdateImage", formData)
   .then(() => {
     // console.log("File uploaded successfully:", response.data);
   
@@ -816,7 +816,7 @@ axios
 
   // Make the PUT request with JSON data
   axios
-    .put("https://esvcportal.pktgroup.com/api/huda/api/Admin/UpdateEmployee", employeeData, {
+    .put("http://172.28.28.116:6239/api/Admin/UpdateEmployee", employeeData, {
       headers: {
         "Content-Type": "application/json"
       }
@@ -853,7 +853,7 @@ axios
         formData.append("profile_picture", this.files2[0]);
 
         const uploadResponse = await axios.post(
-          "https://esvcportal.pktgroup.com/api/huda/api/Admin/InsertNewEmployee",
+          "http://172.28.28.116:6239/api/Admin/InsertNewEmployee",
           formData
         );
 
@@ -907,7 +907,7 @@ axios
         // If the node is not being referred to, proceed with deletion
         // Send a request to your API to delete the node using the nodeId
         await axios.delete(
-          `https://esvcportal.pktgroup.com/api/huda/api/Admin/DeleteEmployee/${nodeId}`
+          `http://172.28.28.116:6239/api/Admin/DeleteEmployee/${nodeId}`
         );
 
         // If the deletion is successful, remove the node from the data array
@@ -954,7 +954,7 @@ axios
       this.isClickModal = false;
     },
     fetchData() {
-      fetch("https://esvcportal.pktgroup.com/api/huda/api/User/GetAllEmployees", {
+      fetch("http://172.28.28.116:6239/api/User/GetAllEmployees", {
         mode: "cors", // Adding CORS mode
       })
         .then((response) => response.json())

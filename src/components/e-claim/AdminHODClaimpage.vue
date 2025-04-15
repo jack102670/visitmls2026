@@ -1152,7 +1152,7 @@ export default {
       this.loading = true;
       await axios
         .get(
-          'https://esvcportal.pktgroup.com/api/erna/api/User/GetClaimDetails/' +
+          'http://172.28.28.116:6165/api/User/GetClaimDetails/' +
             this.referenceNumber
         )
         .then((response) => {
@@ -1265,7 +1265,7 @@ export default {
       this.claimDatas = [];
       await axios
         .get(
-          'https://esvcportal.pktgroup.com/api/huda/api/User/GetLocalOutstation/' +
+          'http://172.28.28.116:6239/api/User/GetLocalOutstation/' +
             this.referenceNumber
         )
         .then((response) => {
@@ -1309,7 +1309,7 @@ export default {
 
       await axios
         .get(
-          'https://esvcportal.pktgroup.com/api/huda/api/User/GetOverseasOutstation/' +
+          'http://172.28.28.116:6239/api/User/GetOverseasOutstation/' +
             this.referenceNumber
         )
         .then((response) => {
@@ -1353,7 +1353,7 @@ export default {
 
       await axios
         .get(
-          'https://esvcportal.pktgroup.com/api/huda/api/User/GetRefreshment/' +
+          'http://172.28.28.116:6239/api/User/GetRefreshment/' +
             this.referenceNumber
         )
         .then((response) => {
@@ -1389,7 +1389,7 @@ export default {
 
       await axios
         .get(
-          'https://esvcportal.pktgroup.com/api/erna/api/User/GetEntertainment/' +
+          'http://172.28.28.116:6165/api/User/GetEntertainment/' +
             this.referenceNumber
         )
         .then((response) => {
@@ -1425,7 +1425,7 @@ export default {
 
       await axios
         .get(
-          'https://esvcportal.pktgroup.com/api/huda/api/User/GetOthers/' + this.referenceNumber
+          'http://172.28.28.116:6239/api/User/GetOthers/' + this.referenceNumber
         )
         .then((response) => {
           const result = response.data.result;
@@ -1502,7 +1502,7 @@ export default {
       const username_id = store.getSession().userDetails.userId;
       let userData;
       await axios
-        .get(`https://esvcportal.pktgroup.com/api/huda/api/User/GetEmployeeById/${username_id}`)
+        .get(`http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           userData = {
             userName: response.data.result[0].name,
@@ -1557,26 +1557,26 @@ export default {
         };
         if (remark.Tab_Title == 'Local Outstation') {
           axios.put(
-            'https://esvcportal.pktgroup.com/api/erna/api/Admin/Approver_Comment_Local',
+            'http://172.28.28.116:6165/api/Admin/Approver_Comment_Local',
             data
           );
         } else if (remark.Tab_Title == 'Overseas Outstation') {
           axios.put(
-            'https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Comment_Overseas',
+            'http://172.28.28.116:6165/api/Admin/Approve_Comment_Overseas',
             data
           );
         } else if (remark.Tab_Title == 'Staff Refreshment') {
           axios.put(
-            'https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Comment_Refreshment',
+            'http://172.28.28.116:6165/api/Admin/Approve_Comment_Refreshment',
             data
           );
         } else if (remark.Tab_Title == 'Entertainment') {
           axios.put(
-            'https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Comment_Entertainment',
+            'http://172.28.28.116:6165/api/Admin/Approve_Comment_Entertainment',
             data
           );
         } else if (remark.Tab_Title == 'Other') {
-          axios.put('https://esvcportal.pktgroup.com/api/huda/api/Verifier/VerifierOthers', data);
+          axios.put('http://172.28.28.116:6239/api/Verifier/VerifierOthers', data);
         }
       });
 
@@ -1596,7 +1596,7 @@ export default {
     //    console.log(approveData);
         await axios
           .put(
-            'https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Claim_HOD',
+            'http://172.28.28.116:6165/api/Admin/Approve_Claim_HOD',
             approveData
           )
           .then((response) => {
@@ -1627,7 +1627,7 @@ export default {
         };
         await axios
           .put(
-            'https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Claim_HOD',
+            'http://172.28.28.116:6165/api/Admin/Approve_Claim_HOD',
             approveData
           )
           .then((response) => {
@@ -1654,7 +1654,7 @@ export default {
         };
         await axios
           .put(
-            'https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Claim_HOD',
+            'http://172.28.28.116:6165/api/Admin/Approve_Claim_HOD',
             approveData
           )
           .then((response) => {

@@ -442,7 +442,8 @@
             </table>
           </div>
           <div class="flex space-x-2 py-2">
-            <div v-if="!approved && !approvedFinance && !reimbursed && claimDetails.admin_status !== 'REJECTED BY FINANCE'" class=".detail-table w-full lg:flex-row flex flex-col justify-between items-center">
+            <div v-if="!approved && !approvedFinance && !reimbursed && claimDetails.admin_status !== 'REJECTED BY FINANCE'" 
+            class=".detail-table w-full lg:flex-row flex flex-col justify-between items-center">
               <div class="flex space-x-2 justify-between items-center">
                 <label class="font-semibold mr-2 mb-4 lg:mb-0">Overall Remark:
                 </label>
@@ -460,7 +461,7 @@
                 </button>
               </div>
             </div>
-            <div v-else-if="claimDetails.admin_status === 'APPROVED BY FINANCE. WAITING FOR REIMBURSED'" 
+            <div v-else-if="claimDetails.admin_status === 'APPROVED BY FINANCE'" 
               class="w-full flex justify-end">
               <div class="my-3" id="hidden">
                 <div class="relative inline-block text-left">
@@ -975,7 +976,7 @@ export default {
 
   try {
     const response = await axios.get(
-      'https://esvcportal.pktgroup.com/api/erna/api/User/GetClaimDetails/' + this.referenceNumber
+      'http://172.28.28.116:6165/api/User/GetClaimDetails/' + this.referenceNumber
     );
 
     // Handle the successful response
@@ -1077,7 +1078,7 @@ async FetchClaimDatasDetails() {
   try {
     try {
       const response = await axios.get(
-        'https://esvcportal.pktgroup.com/api/huda/api/User/GetLocalOutstation/' +
+        'http://172.28.28.116:6239/api/User/GetLocalOutstation/' +
         this.referenceNumber
       );
       const result = response.data.result;
@@ -1115,7 +1116,7 @@ async FetchClaimDatasDetails() {
 
     try {
       const response = await axios.get(
-        'https://esvcportal.pktgroup.com/api/huda/api/User/GetOverseasOutstation/' +
+        'http://172.28.28.116:6239/api/User/GetOverseasOutstation/' +
         this.referenceNumber
       );
       const result = response.data.result;
@@ -1155,7 +1156,7 @@ async FetchClaimDatasDetails() {
 
     try {
       const response = await axios.get(
-        'https://esvcportal.pktgroup.com/api/huda/api/User/GetRefreshment/' +
+        'http://172.28.28.116:6239/api/User/GetRefreshment/' +
         this.referenceNumber
       );
       const result = response.data.result;
@@ -1188,7 +1189,7 @@ async FetchClaimDatasDetails() {
 
     try {
       const response = await axios.get(
-        'https://esvcportal.pktgroup.com/api/erna/api/User/GetEntertainment/' +
+        'http://172.28.28.116:6165/api/User/GetEntertainment/' +
         this.referenceNumber
       );
       const result = response.data.result;
@@ -1222,7 +1223,7 @@ async FetchClaimDatasDetails() {
 
     try {
       const response = await axios.get(
-        'https://esvcportal.pktgroup.com/api/erna/api/User/GetMedicalLeave/' +
+        'http://172.28.28.116:6165/api/User/GetMedicalLeave/' +
         this.referenceNumber
       );
       const result = response.data.result;
@@ -1258,7 +1259,7 @@ async FetchClaimDatasDetails() {
 
     try {
       const response = await axios.get(
-        'https://esvcportal.pktgroup.com/api/erna/api/User/GetHandphone/' + this.referenceNumber
+        'http://172.28.28.116:6165/api/User/GetHandphone/' + this.referenceNumber
       );
       const result = response.data.result;
       let details = [];
@@ -1289,24 +1290,25 @@ async FetchClaimDatasDetails() {
 
     try {
       const response = await axios.get(
-        'https://esvcportal.pktgroup.com/api/huda/api/User/GetOthers/' + this.referenceNumber
+        'http://172.28.28.116:6239/api/User/GetOthers/' + this.referenceNumber
       );
       const result = response.data.result;
       let details = [];
       let amount = 0;
       for (let i in result) {
-        amount += result[i].total_fee;
-        const editedDetail = {
-          Description: result[i].description,
-          Date: result[i].expense_date,
-          'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
-          Attachments: result[i].files,
-          Tab_Title: 'Other',
-          Remark: result[i].comment,
-          unique_code: result[i].unique_code,
-        };
-        details.push(editedDetail);
-      }
+      const fee = parseFloat(result[i].total_fee);
+      amount += isNaN(fee) ? 0 : fee;
+      const editedDetail = {
+        Description: result[i].description,
+        Date: result[i].expense_date,
+        'Total_Fee(RM)': isNaN(fee) ? '0.00' : fee.toFixed(2),
+        Attachments: result[i].files,
+        Tab_Title: 'Other',
+        Remark: result[i].comment,
+        unique_code: result[i].unique_code,
+      };
+      details.push(editedDetail);
+    }
       if (details.length > 0) {
         this.claimDatasDetails.push(details);
         this.claimDataTotalAmount.push(amount);
@@ -1371,7 +1373,7 @@ async FetchClaimDatasDetails() {
       const username_id = store.getSession().userDetails.userId;
       let userData;
       await axios
-        .get(`https://esvcportal.pktgroup.com/api/huda/api/User/GetEmployeeById/${username_id}`)
+        .get(`http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           userData = {
             userName: response.data.result[0].name,
@@ -1426,26 +1428,26 @@ async FetchClaimDatasDetails() {
         };
         if (remark.Tab_Title == 'Local Outstation') {
           axios.put(
-            'https://esvcportal.pktgroup.com/api/erna/api/Admin/Approver_Comment_Local',
+            'http://172.28.28.116:6165/api/Admin/Approver_Comment_Local',
             data
           );
         } else if (remark.Tab_Title == 'Overseas Outstation') {
           axios.put(
-            'https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Comment_Overseas',
+            'http://172.28.28.116:6165/api/Admin/Approve_Comment_Overseas',
             data
           );
         } else if (remark.Tab_Title == 'Staff Refreshment') {
           axios.put(
-            'https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Comment_Refreshment',
+            'http://172.28.28.116:6165/api/Admin/Approve_Comment_Refreshment',
             data
           );
         } else if (remark.Tab_Title == 'Entertainment') {
           axios.put(
-            'https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Comment_Entertainment',
+            'http://172.28.28.116:6165/api/Admin/Approve_Comment_Entertainment',
             data
           );
         } else if (remark.Tab_Title == 'Other') {
-          axios.put('https://esvcportal.pktgroup.com/api/huda/api/Verifier/VerifierOthers', data);
+          axios.put('http://172.28.28.116:6239/api/Verifier/VerifierOthers', data);
         }
       });
 
@@ -1470,7 +1472,7 @@ async FetchClaimDatasDetails() {
           };
       //    console.log(approveData);
 
-          const response = await axios.put('https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Claim_FN', approveData);
+          const response = await axios.put('http://172.28.28.116:6165/api/Admin/Approve_Claim_FN', approveData);
           // if (response.status === 200) {
           //   this.approveSuccess = true;
           //   this.loading = false;
@@ -1514,7 +1516,7 @@ async FetchClaimDatasDetails() {
             verifier_email: this.claimDetails.verifier_email ? this.claimDetails.verifier_email : 'test@gmail.com',
             reference_number: this.claimDetails.reference_number ? this.claimDetails.reference_number : '-',
           };
-          const response = await axios.put('https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Claim_FN', approveData);
+          const response = await axios.put('http://172.28.28.116:6165/api/Admin/Approve_Claim_FN', approveData);
           if (response.status === 200) {
             this.loading = false;
             // console.log('Reject successful:', response.data);
@@ -1549,7 +1551,7 @@ async FetchClaimDatasDetails() {
             verifier_email: this.claimDetails.verifier_email ? this.claimDetails.verifier_email : 'test@gmail.com',
             reference_number: this.claimDetails.reference_number ? this.claimDetails.reference_number : '-',
           };
-          const response = await axios.put('https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Claim_FN', approveData);
+          const response = await axios.put('http://172.28.28.116:6165/api/Admin/Approve_Claim_FN', approveData);
 
           if (response.status === 200) {
             this.loading = false;
@@ -1587,7 +1589,7 @@ async FetchClaimDatasDetails() {
           };
 
           const response = await axios.put(
-            'https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Claim_FN',
+            'http://172.28.28.116:6165/api/Admin/Approve_Claim_FN',
             approveData
           );
 

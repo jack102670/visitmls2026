@@ -465,7 +465,7 @@ export default {
       this.loading = true;
       const userid = this.userDetails.userId;
       fetch(
-        `https://esvcportal.pktgroup.com/api/erna/api/ApproverVerifier/GetAllRequestVerifier/${userid}`
+        `http://172.28.28.116:6165/api/ApproverVerifier/GetAllRequestVerifier/${userid}`
       )
         .then((response) => response.json())
         .then((data) => {

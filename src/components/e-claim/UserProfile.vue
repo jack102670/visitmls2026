@@ -560,7 +560,7 @@ export default {
       };
    //   console.log('Employee Data:', employeeData);
       axios
-        .put('https://esvcportal.pktgroup.com/api/huda/api/User/UpdateEmployee', employeeData)
+        .put('http://172.28.28.116:6239/api/User/UpdateEmployee', employeeData)
         .then((response) => {
     //      console.log('Response:', response);
           if (response.data.status_code === '200') {
@@ -586,7 +586,7 @@ export default {
       this.loading = true;
       const username_id = store.getSession().userDetails.userId;
       axios
-        .get(`https://esvcportal.pktgroup.com/api/huda/api/User/GetEmployeeById/${username_id}`)
+        .get(`http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           const data = response.data.result;
           if (data && data.length > 0) {
@@ -627,7 +627,7 @@ export default {
       );
       formData.append('emp_id', store.getSession().userDetails.userId);
       axios
-        .put('https://esvcportal.pktgroup.com/api/huda/api/User/UpdateImage', formData, {
+        .put('http://172.28.28.116:6239/api/User/UpdateImage', formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         })
         .then(() => {

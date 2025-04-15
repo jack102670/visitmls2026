@@ -169,7 +169,7 @@
                         item.Tab_Title
                       )
                       " v-if="
-                        !reimbursed && !approve && !rejectApprover && !resubmit
+                        (statusApprover === 'OPEN' || (!reimbursed && approve && !rejectApprover && !resubmit))
                       " type="text"
                       class="p-1 text-xs w-full rounded-md outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border" />
                     <h1 id="remarkText" 
@@ -618,7 +618,7 @@ export default {
       this.loading = true;
       try {
         const response = await axios.get(
-          `https://esvcportal.pktgroup.com/api/erna/api/User/GetClaimDetails/${this.referenceNumber}`
+          `http://172.28.28.116:6165/api/User/GetClaimDetails/${this.referenceNumber}`
         );
 
         this.loading = false;
@@ -679,7 +679,7 @@ export default {
     let medicalAndDentalTotal = 0;
 
     const response = await axios.get(
-      'https://esvcportal.pktgroup.com/api/erna/api/User/GetMedicalLeave/' +
+      'http://172.28.28.116:6165/api/User/GetMedicalLeave/' +
       this.referenceNumber
     );
     const result = response.data.result;
@@ -731,7 +731,7 @@ export default {
 
   try {
     const response = await axios.get(
-      'https://esvcportal.pktgroup.com/api/erna/api/User/GetHandphone/' + this.referenceNumber
+      'http://172.28.28.116:6165/api/User/GetHandphone/' + this.referenceNumber
     );
     const result = response.data.result;
 
@@ -808,7 +808,7 @@ export default {
       const username_id = store.getSession().userDetails.userId;
       let userData;
       await axios
-        .get(`https://esvcportal.pktgroup.com/api/huda/api/User/GetEmployeeById/${username_id}`)
+        .get(`http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           userData = {
             userName: response.data.result[0].name,
@@ -855,12 +855,12 @@ export default {
         };
         if (remark.Tab_Title == 'Medical Bill') {
           axios.put(
-            'https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Comment_Medical',
+            'http://172.28.28.116:6165/api/Admin/Approve_Comment_Medical',
             data
           );
         } else if (remark.Tab_Title == 'Handphone Bill') {
           axios.put(
-            'https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Comment_Handphone',
+            'http://172.28.28.116:6165/api/Admin/Approve_Comment_Handphone',
             data
           );
         }
@@ -891,7 +891,7 @@ export default {
         };
         console.log("Approved data to be sent to admin Approved-claim-HR:", approveData);
         try {
-          const response = await axios.put('https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Claim_HR', approveData)
+          const response = await axios.put('http://172.28.28.116:6165/api/Admin/Approve_Claim_HR', approveData)
       //    console.log('API response after approval', response.data);
           localStorage.setItem('ApproveOrNot', 'approve');
 
@@ -933,7 +933,7 @@ export default {
             reference_number: this.claimDetails.reference_number
           };
 
-          const response = await axios.put('https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Claim_HR', approveData);
+          const response = await axios.put('http://172.28.28.116:6165/api/Admin/Approve_Claim_HR', approveData);
           this.loading = false;
      //     console.log('API response', response.data);
           localStorage.setItem('ApproveOrNot', 'reject');
@@ -966,7 +966,7 @@ export default {
           };
 
 
-          const response = await axios.put('https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Claim_HR', approveData);
+          const response = await axios.put('http://172.28.28.116:6165/api/Admin/Approve_Claim_HR', approveData);
           this.loading = false;
 
       //    console.log('API response', response.data);
@@ -1000,7 +1000,7 @@ export default {
             reference_number: this.claimDetails.reference_number
           };
 
-          const response = await axios.put('https://esvcportal.pktgroup.com/api/erna/api/Admin/Approve_Claim_HR', approveData);
+          const response = await axios.put('http://172.28.28.116:6165/api/Admin/Approve_Claim_HR', approveData);
           this.loading = false;
 
       //    console.log('API response', response.data);

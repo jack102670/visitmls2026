@@ -478,7 +478,7 @@ const router = createRouter({
 function checkUserStatusAndShowModal() {
   return new Promise((resolve, reject) => {
     const username_id = store.getSession().userDetails.userId;
-    fetch(`https://esvcportal.pktgroup.com/api/huda/api/User/GetEmployeeById/${username_id}`)
+    fetch(`http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`)
       .then((response) => response.json()) 
       .then((data) => {
         const userStatus = data.result[0].account_status;
