@@ -174,11 +174,11 @@
                           ? ''
                           : key == 'Participants'
                             ? ''
-                            : key == 'oem'
+                            : key == 'Other_Expenses'
                             ? ''
                             : val
                     }}
-                    <div v-show="key === 'oem'" id="staffDetails">
+                    <div v-show="key === 'Other_Expenses'" id="staffDetails">
                       <a 
                         @click="showOemModal(val)" 
                         class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white px-4 py-1 rounded-md w-20 text-center justify-center items-center">
@@ -808,6 +808,8 @@ import moment from 'moment';
 import fileSaver from 'file-saver';
 import axios from 'axios';
 import { store } from '@/views/store.js';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import AccApproval from '@/views/AccApproval.vue';
 
 export default {
   name: 'AdminSummaryClaimpage',
@@ -1104,12 +1106,16 @@ export default {
               End_Point: result[i].end_point,
               Date_Event: result[i].date_event,
               'Mileage(KM)': Number(result[i].mileage_km).toFixed(2),
-                  'Park_Fee(RM)': Number(result[i].park_fee).toFixed(2),
-                  'Toll_Fee(RM)': Number(result[i].toll_fee).toFixed(2),
+              'Fare': Number(result[i].fare).toFixed(2),
+              'Meal_Allowance(RM)': Number(result[i].meal_allowance).toFixed(2),
+              'Accomodation': result[i].accommodation,
+              'Park_Fee(RM)': Number(result[i].park_fee).toFixed(2),
+              'Toll_Fee(RM)': Number(result[i].toll_fee).toFixed(2),
               Transport_Specification: result[i].transport_specification,
               Transport_Mode: result[i].transport_mode,
               Trip_Mode: result[i].trip_mode,
-              'Total_Mileage(RM)': Number(result[i].total_mileage).toFixed(2),
+              'Petrol/EV(RM)': Number(result[i].total_mileage).toFixed(2),
+              'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
               Attachments: result[i].files,
               Remark: result[i].comment,
               Tab_Title: 'Local Outstation',
@@ -1152,7 +1158,7 @@ export default {
               'Meal_Allowance_(RM)': Number(result[i].meal_allowance).toFixed(2),
               Date: result[i].date_event,
               'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
-              oem: result[i].oem,
+              Other_Expenses: result[i].oem,
               Attachments: result[i].files,
               Tab_Title: 'Overseas Outstation',
               Remark: result[i].comment,

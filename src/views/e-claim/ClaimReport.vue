@@ -1910,9 +1910,9 @@ export default {
                   const uniqueCodeLT = this.generateUniqueCode(claim.tabTitle);
                   const payload = {
                     mileage_km: claim.MileageKMLT || 0,
-                    starting_point: claim.LocationStart || "string",
-                    end_point: claim.LocationEnd || "string",
-                    date_event: claim.dateLT || "string",
+                    starting_point: claim.LocationStart || "-",
+                    end_point: claim.LocationEnd || "-",
+                    date_event: claim.dateLT || "-",
                     park_fee: claim.ParkingLT || 0,
                     petrol: claim.petrolCharged || 0,
                     evCharged: claim.evCharged || 0,
@@ -1921,16 +1921,16 @@ export default {
                     fare: claim.FareRMLT || 0,
                     transport_specification: claim.TransportLT.toLowerCase() === "personal transport"
                       ? claim.TransportSpec
-                      : claim.PublicTransportSpec || "string",
-                    requester_id: this.userDetails.userId || "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    unique_code: uniqueCodeLT || "string",
-                    reference_number: this.serialnumber || "string",
-                    transport_mode: claim.TransportLT || "string",
-                    trip_mode: claim.tripwayLT || "string",
+                      : claim.PublicTransportSpec || "-",
+                    requester_id: this.userDetails.userId || "-",
+                    unique_code: uniqueCodeLT || "-",
+                    reference_number: this.serialnumber || "-",
+                    transport_mode: claim.TransportLT || "-",
+                    trip_mode: claim.tripwayLT || "-",
                     total_mileage: claim.MileageRMLT || 0,
-                    return_date: claim.ReturnDateLT || "string",
-                    meal_allowance: String(claim.MealAllowanceLT || "string"),
-                    accommodation: claim.AccommodationLT || "string",
+                    return_date: claim.ReturnDateLT || "-",
+                    meal_allowance: String(claim.MealAllowanceLT || "-"),
+                    accommodation: claim.AccommodationLT || "-",
                   };
 
                   const axiosInstance = axios.create({
