@@ -3943,8 +3943,7 @@ export default {
           });
         });
         formattedData["otherExpenses"] = [...this.otherExpenses];
-        formattedData["combinetotal"] =
-          this.totalMealAllowanceOTplusotherExpenses;
+        formattedData["combinetotal"] = parseFloat(this.totalMealAllowanceOTplusotherExpenses);
         formattedData["tabTitle"] = "Overseas Travelling";
         this.$emit("formSubmitted", formattedData);
         //  console.log("Formatted Form Data:", formattedData);

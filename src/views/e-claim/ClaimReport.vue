@@ -1963,7 +1963,9 @@ export default {
                     description: claim.PurposeOT || "-",
                     meal_allowance: String(claim.MealAllowanceOT || 0),
                     date_event: claim.dateOT || "-",
-                    total_fee: claim.combinedTotal || 0,
+                    total_fee: claim.combinedTotal ||
+                      (parseFloat(claim.MealAllowanceOT) || 0) +
+                      ((claim.otherExpenses || []).reduce((sum, e) => sum + (parseFloat(e.amount) || 0), 0)),
                     reference_number: this.serialnumber || "-",
                     unique_code: uniqueCodeOT || "-",
                     return_date: claim.ReturendateOT || "-",
@@ -1973,9 +1975,9 @@ export default {
                           name: expense.name || "-",
                           amount: expense.amount || 0,
                           description: expense.description || "-",
-                          foreign_currency: expense.foreign_currency || "-",
-                          exchange_rate: expense.exchange_rate || 0,
-                          currency_total: expense.currency_total || 0,
+                          foreign_currency: expense.ForeignCurrencyAccommodationOT || "-",
+                          exchange_rate: parseFloat(expense.ExchangeRateAccommodationOT) || 0,
+                          currency_total: parseFloat(expense.AmountforAccommodationOT) || 0,
                         }))
                       : [],
                   };
