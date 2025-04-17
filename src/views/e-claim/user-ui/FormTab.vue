@@ -98,8 +98,6 @@
                         <template v-if="
                           !isPublicTransport ||
                           (field.id !== 'MileageKMLT' &&
-                            field.id !== 'MileageRMLT' &&
-                            field.id !== 'UploadMileageRMLT' &&
                             field.id !== 'TransportSpec' &&
                             field.id !== 'TollLT' &&
                             field.id !== 'UploadTollLT')
@@ -236,7 +234,7 @@
 
 
                                     <!-- new -->
-                                    <file-pond v-if="
+                                    <!-- <file-pond v-if="
                                       field.id === 'UploadPetrolCharged' &&
                                       showPetrolUpload
                                     " :name="field.id" :disabled="(tab.title ===
@@ -265,7 +263,7 @@
                                           handleRemoveFile(error, file, field)
                                           " :accepted-file-types="field.acceptedFileTypes
                                             " :max-file-size="field.maxFileSize"
-                                      :allow-multiple="field.allowMultiple" />
+                                      :allow-multiple="field.allowMultiple" /> -->
 
 
 
@@ -1299,8 +1297,8 @@ export default {
       showFareUpload: true,
       showTollUpload: true,
       showParkingUpload: true,
-      showPetrolUpload: true,
-      showEvUpload: true,
+      // showPetrolUpload: true,
+      // showEvUpload: true,
 
       uploadedFiles: [],
       currencies: [],
@@ -1449,10 +1447,11 @@ export default {
             },
             {
               id: "MileageRMLT",
-              label: "Total Mileage(RM)",
+              label: "Petrol/EV(RM)",
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
+              placeholder: "0.00",
               hidden: false,
             },
             {
@@ -1560,62 +1559,62 @@ export default {
               hidden: false,
             },
             //new 
-            {
-              id: "petrolCharged",
-              label: "Petrol(RM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-1",
-              placeholder: "0.00",
-              hidden: false,
-            },
-            {
-              id: "UploadPetrolCharged",
-              label: "",
-              type: "file",
-              value: [],
-              allowMultiple: true,
-              server: null,
-              required: false,
-              maxFileSize: "5MB",
-              acceptedFileTypes: [
-                "image/png",
-                "image/jpeg",
-                "application/pdf",
-                "application/vnd.ms-excel",
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-              ],
-              gridClass: "sm:col-span-1",
-              hidden: false,
-            },
-            {
-              id: "evCharged",
-              label: "EV (RM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-1",
-              placeholder: "0.00",
-              hidden: false,
-            },
-            {
-              id: "UploadEvCharged",
-              label: "",
-              type: "file",
-              value: [],
-              allowMultiple: true,
-              server: null,
-              required: false,
-              maxFileSize: "5MB",
-              acceptedFileTypes: [
-                "image/png",
-                "image/jpeg",
-                "application/pdf",
-                "application/vnd.ms-excel",
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-              ],
-              gridClass: "sm:col-span-1",
-              hidden: false,
-            },
+            // {
+            //   id: "petrolCharged",
+            //   label: "Petrol(RM)",
+            //   type: "number",
+            //   value: "",
+            //   gridClass: "sm:col-span-1",
+            //   placeholder: "0.00",
+            //   hidden: false,
+            // },
+            // {
+            //   id: "UploadPetrolCharged",
+            //   label: "",
+            //   type: "file",
+            //   value: [],
+            //   allowMultiple: true,
+            //   server: null,
+            //   required: false,
+            //   maxFileSize: "5MB",
+            //   acceptedFileTypes: [
+            //     "image/png",
+            //     "image/jpeg",
+            //     "application/pdf",
+            //     "application/vnd.ms-excel",
+            //     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            //   ],
+            //   gridClass: "sm:col-span-1",
+            //   hidden: false,
+            // },
+            // {
+            //   id: "evCharged",
+            //   label: "EV (RM)",
+            //   type: "number",
+            //   value: "",
+            //   gridClass: "sm:col-span-1",
+            //   placeholder: "0.00",
+            //   hidden: false,
+            // },
+            // {
+            //   id: "UploadEvCharged",
+            //   label: "",
+            //   type: "file",
+            //   value: [],
+            //   allowMultiple: true,
+            //   server: null,
+            //   required: false,
+            //   maxFileSize: "5MB",
+            //   acceptedFileTypes: [
+            //     "image/png",
+            //     "image/jpeg",
+            //     "application/pdf",
+            //     "application/vnd.ms-excel",
+            //     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            //   ],
+            //   gridClass: "sm:col-span-1",
+            //   hidden: false,
+            // },
             //old
             {
               id: "UploadLT",
@@ -2654,8 +2653,9 @@ export default {
         'FareRMLT',
         'TollLT',
         'ParkingLT',
-        'petrolCharged',
-        'evCharged'
+        'MileageRMLT',
+        // 'petrolCharged',
+        // 'evCharged'
       ];
       if (decimalFields.includes(event.target.id)) {
         const value = parseFloat(event.target.value);
@@ -2690,18 +2690,18 @@ export default {
           .fields.find((field) => field.id === "ParkingLT");
         return parkingField && parkingField.value !== "";
       }
-      if (fieldId === "UploadPetrolCharged") {
-        const parkingField = this.tabs
-          .find((tab) => tab.title === "Local Travelling")
-          .fields.find((field) => field.id === "ParkingLT");
-        return parkingField && parkingField.value !== "";
-      }
-      if (fieldId === "UploadEvCharged") {
-        const parkingField = this.tabs
-          .find((tab) => tab.title === "Local Travelling")
-          .fields.find((field) => field.id === "ParkingLT");
-        return parkingField && parkingField.value !== "";
-      }
+      // if (fieldId === "UploadPetrolCharged") {
+      //   const parkingField = this.tabs
+      //     .find((tab) => tab.title === "Local Travelling")
+      //     .fields.find((field) => field.id === "ParkingLT");
+      //   return parkingField && parkingField.value !== "";
+      // }
+      // if (fieldId === "UploadEvCharged") {
+      //   const parkingField = this.tabs
+      //     .find((tab) => tab.title === "Local Travelling")
+      //     .fields.find((field) => field.id === "ParkingLT");
+      //   return parkingField && parkingField.value !== "";
+      // }
       return false;
     },
     async checkstatus() {
@@ -2792,12 +2792,12 @@ export default {
         case "ParkingLT":
           this.showParkingUpload = !this.showParkingUpload;
           break;
-        case "petrolCharged":
-          this.showPetrolUpload = !this.showPetrolUpload;
-          break;
-        case "evCharged":
-          this.showPetrolUpload = !this.showEvUpload;
-          break;
+        // case "petrolCharged":
+        //   this.showPetrolUpload = !this.showPetrolUpload;
+        //   break;
+        // case "evCharged":
+        //   this.showPetrolUpload = !this.showEvUpload;
+        //   break;
 
       }
     },
@@ -2817,12 +2817,12 @@ export default {
         case "UploadParkingLT":
           prefix = "PARKING_";
           break;
-        case "UploadPetrolCharged":
-          prefix = "PETROL_";
-          break;
-        case "UploadEvCharged":
-          prefix = "EV_";
-          break;
+        // case "UploadPetrolCharged":
+        //   prefix = "PETROL_";
+        //   break;
+        // case "UploadEvCharged":
+        //   prefix = "EV_";
+        //   break;
         default:
           prefix = "SUPPORTING_DOC_";
       }
@@ -3027,12 +3027,12 @@ export default {
       const ParkingLT = localTravellingTab.fields.find(
         (field) => field.id === "ParkingLT"
       );
-      const petrolCharged = localTravellingTab.fields.find(
-        (field) => field.id === "petrolCharged"
-      );
-      const evCharged = localTravellingTab.fields.find(
-        (field) => field.id === "evCharged"
-      );
+      // const petrolCharged = localTravellingTab.fields.find(
+      //   (field) => field.id === "petrolCharged"
+      // );
+      // const evCharged = localTravellingTab.fields.find(
+      //   (field) => field.id === "evCharged"
+      // );
       const TollLT = localTravellingTab.fields.find(
         (field) => field.id === "TollLT"
       );
@@ -3058,9 +3058,9 @@ export default {
         MileageRMLT.value = ""; // Reset value
         MileageKMLT.value = "";
         ParkingLT.value = "";
-        evCharged.value = "";
+        // evCharged.value = "";
         TollLT.value = "";
-        petrolCharged.value = "";
+        // petrolCharged.value = "";
       }
     },
 
