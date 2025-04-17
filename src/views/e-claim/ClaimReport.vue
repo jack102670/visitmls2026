@@ -1414,7 +1414,7 @@ export default {
       const validTypes = ["BREAKFAST", "LUNCH", "DINNER", "TEA BREAK"];
       return validTypes.includes(
         this.entertainmentDetails.TypeofEntertainmentE
-      );
+      ) && this.entertainmentDetails.TypeofEntertainmentE !== "OTHERS";
     },
 
     isOtherStaffRefreshment() {
@@ -1928,7 +1928,7 @@ export default {
                     transport_mode: claim.TransportLT || "-",
                     trip_mode: claim.tripwayLT || "-",
                     total_mileage: claim.MileageRMLT || 0,
-                    return_date: claim.ReturnDateLT || "-",
+                    return_date: claim.ReturndateLT || "-",
                     meal_allowance: String(claim.MealAllowanceLT || "-"),
                     accommodation: claim.AccommodationLT || "-",
                   };
@@ -2008,7 +2008,7 @@ export default {
                     description: claim.ReferenceE,
                     reference_number: this.serialnumber,
                     date_event: claim.dateE,
-                    entertainment_type: claim.TypeofEntertainmentE,
+                    entertainment_type: claim.OtherTypeofEntertainmentE || claim.TypeofEntertainmentE,
                     venue_name: claim.VenueE,
                     company_name: claim.CompanyE,
                     total_fee: parseFloat(claim.AmountRME),

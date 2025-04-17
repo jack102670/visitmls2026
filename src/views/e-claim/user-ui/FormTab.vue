@@ -3414,13 +3414,13 @@ export default {
           (!isCompanyTransport ||
             (field.id !== "MileageRMLT" && field.id !== "FareRMLT")) &&
           (!isPublicTransport ||
-            (field.id !== "MileageRMLT" && field.id !== "TollLT")) &&
+            (field.id !== "TollLT")) &&
+          // (!isPersonalTransport ||
+          //   (field.id !== "FareRMLT" && field.id !== "ParkingLT")) &&
+          // (!isPersonalTransport ||
+          //   (field.id !== "FareRMLT" && field.id !== "petrolCharged")) &&
           (!isPersonalTransport ||
-            (field.id !== "FareRMLT" && field.id !== "ParkingLT")) &&
-          (!isPersonalTransport ||
-            (field.id !== "FareRMLT" && field.id !== "petrolCharged")) &&
-          (!isPersonalTransport ||
-            (!field.id !== "FareRMLT" && field.id !== "evCharged"))
+            (!field.id !== "FareRMLT"))
         ) {
           total += parseFloat(field.value);
         }
