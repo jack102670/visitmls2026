@@ -949,40 +949,38 @@ export default {
             this.remark = this.claimDetails.comment;
             break;
 
-          case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
+          case 'APPROVED BY FINANCE':
             if (this.claimDetails.admin_status.includes('APPROVER')) {
               this.verified = true;
               this.checked = true;
               this.approved = true;
+              this.pending = true;
             } else {
               this.verified = true;
               this.checked = true;
               this.approved = true;
               this.approvedFinance = true;
+              this.pending = false;
             }
-            this.pending = false;
             this.remark = this.claimDetails.comment;
             break;
 
           case 'REJECTED BY VERIFIER.':
-            this.rejectVerifier = true;
-            this.pending = false;
-            this.remark = this.claimDetails.comment;
-            break;
-          case 'REJECTED BY FINANCE':
-            this.rejectVerifier = true;
-            this.pending = false;
-            this.remark = this.claimDetails.comment;
-            break;
-
-          case 'REJECTED BY CHECKER':
-            this.rejectChecker = true;
-            this.pending = false;
-            this.remark = this.claimDetails.comment;
-            break;
-
-          case 'CHECKED BY CHECKER. WAITING FOR VERIFIER':
-            this.rejectChecker = false;
+            if (this.claimDetails.admin_status.includes('VERIFIER')) {
+              this.rejectVerifier = true;
+            } else if (this.claimDetails.admin_status.includes('CHECKER')) {
+              this.verified = true;
+              this.rejectChecker = true;
+            } else if (this.claimDetails.admin_status.includes('APPROVER')) {
+              this.verified = true;
+              this.checked = true;
+              this.rejectApprover = true;
+            } else if (this.claimDetails.admin_status.includes('FINANCE')) {
+              this.verified = true;
+              this.checked = true;
+              this.approved = true;
+              this.rejectFinance = true;
+            }
             this.pending = false;
             this.remark = this.claimDetails.comment;
             break;
@@ -1016,14 +1014,7 @@ export default {
             this.remark = this.claimDetails.comment;
             break;
 
-          case 'OPEN':
-            this.open = true;
-            this.pending = true;
-            this.remark = this.claimDetails.comment;
-            break;
-
           default:
-            this.pending = true;
             break;
         }
 
@@ -1277,6 +1268,7 @@ export default {
           for (let i in result) {
             amount += result[i].total_fee;
             const editedDetail = {
+             'Expense_Name': result[i].expense_name,
               Description: result[i].description,
               Date: result[i].expense_date,
               'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
@@ -1408,7 +1400,7 @@ export default {
           );
         } else if (remark.Tab_Title == 'Staff Refreshment') {
           axios.put(
-            'http://172.28.28.116:6239/api/Verifier/VerifierRefreshment',
+            'http://172.28.28.116:6239/api/Verifier/VerifierStaffRefreshment',
             data
           );
         } else if (remark.Tab_Title == 'Entertainment') {

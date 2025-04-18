@@ -390,7 +390,8 @@
         <!-- Remark table -->
 
         <div>
-          <div v-show="!pending"  class="text-xs border mt-4 border-gray-400 dark:border-gray-600 rounded-md"
+          <div v-show="!pending"  
+            class="text-xs border mt-4 border-gray-400 dark:border-gray-600 rounded-md"
             id="table-overflow">
             <table class="w-full">
               <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md">
@@ -1286,9 +1287,10 @@ export default {
           const fee = parseFloat(result[i].total_fee);
           amount += isNaN(fee) ? 0 : fee;
           const editedDetail = {
+            'Expense_Name': result[i].expense_name,
             Description: result[i].description,
             Date: result[i].expense_date,
-            'Total_Fee(RM)': isNaN(fee) ? '0.00' : fee.toFixed(2),
+            'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
             Attachments: result[i].files,
             Tab_Title: 'Other',
             comment: result[i].comment,
@@ -1433,7 +1435,7 @@ export default {
             data
           );
         } else if (remark.Tab_Title == 'Other') {
-          axios.put('http://172.28.28.116:6165/api/Admin/Approve_Comment_Others', data);
+          axios.put('http://172.28.28.116:6165/api/Admin/Approver_Comment_Others', data);
         }
       });
 

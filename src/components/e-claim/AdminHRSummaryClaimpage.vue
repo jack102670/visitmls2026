@@ -318,9 +318,9 @@
         
 
         <!-- Remark table -->
-
-        <div v-show="approve || verified || reimbursed || resubmit || claimDetails.admin_status === 'REJECTED BY HR & ADMIN'
-          " class="border rounded-lg overflow-x-auto border-gray-400 dark:border-gray-600 my-4">
+        <!-- v-show="approve || verified || reimbursed || resubmit || claimDetails.admin_status === 'REJECTED BY HR & ADMIN' -->
+        <div v-show="!pending"
+          class="border rounded-lg overflow-x-auto border-gray-400 dark:border-gray-600 my-4">
           <table class="w-full">
             <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md">
               <th class="uppercase">Remark</th>
@@ -660,7 +660,7 @@ export default {
         this.rejectApprover = false;
         this.resubmit = false;
         this.reimbursed = false;
-        this.remark = '';
+        this.remark = this.claimDetails.comment;
 
         // Set the appropriate flag and remark based on status
         switch (this.statusApprover) {
@@ -681,9 +681,9 @@ export default {
             break;
         }
 
-        if (this.statusApprover !== 'PENDING') {
-          this.remark = this.claimDetails.comment;
-        }
+        // if (this.statusApprover !== 'PENDING') {
+        //   this.remark = this.claimDetails.comment;
+        // }
 
      //   console.log("Get application claim details", this.claimDetails);
       } catch (error) {

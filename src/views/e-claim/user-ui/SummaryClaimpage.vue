@@ -375,10 +375,9 @@
         </div>
 
         <!-- Remark table -->
-
-        <div v-show="approve || verified || reimbursed || resubmit || rejectApprover || claimDetails.admin_status === 'REJECTED BY HR & ADMIN' || claimDetails.admin_status === 'APPROVED BY HR & ADMIN'
-
-          " class="border rounded-lg overflow-x-auto border-gray-400 dark:border-gray-600 my-4">
+        <!-- v-show="['VERIFIED', 'RESUBMIT', 'APPROVED', 'REIMBURSED', 'CHECKED', 'REJECTED'].includes(simplifiedApproverFinStatus)" -->
+        <div v-show="!pending"
+          class="border rounded-lg overflow-x-auto border-gray-400 dark:border-gray-600 my-4">
           <table class="w-full">
             <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md">
               <th class="pl-6">Remark</th>
@@ -842,12 +841,15 @@ export default {
       const status = this.adminStatus?.trim()?.toUpperCase();
       switch (status) {
         case 'APPROVED BY FINANCE':
+        case 'APPROVED BY HR & ADMIN':
         case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
         case 'REIMBURSED':
           return 'APPROVED';
         case 'REJECTED BY FINANCE':
+        case 'REJECTED BY HR & ADMIN':
           return 'REJECTED';
         case 'RESUBMIT REQUESTED BY FINANCE':
+        case 'RESUBMIT REQUESTED BY HR & ADMIN':
           return 'RESUBMIT';
         case 'OPEN':
         case 'VERIFIED. WAITING FOR APPROVER.':
@@ -859,11 +861,11 @@ export default {
 
     simplifiedApproverStatus() {
       switch (this.adminStatus) {
-        case 'APPROVED BY FINANCE':
+        case 'APPROVED BY HR & ADMIN':
           return 'APPROVED';
-        case 'REJECTED BY FINANCE':
+        case 'REJECTED BY HR & ADMIN':
           return 'REJECTED';
-        case 'RESUBMIT REQUESTED BY FINANCE':
+        case 'RESUBMIT REQUESTED BY HR & ADMIN':
           return 'RESUBMIT';
         case 'REIMBURSED':
           return 'REIMBURSED';
@@ -907,9 +909,11 @@ export default {
         const response = await axios.get('http://172.28.28.116:6165/api/User/GetClaimDetails/' + this.referenceNumber);
         this.loading = false;
         this.claimDetails = response.data.result;
-        this.adminStatus = this.claimDetails.admin_status
+        this.adminStatus = this.claimDetails.admin_status;
+        this.remark = this.claimDetails.comment;
         console.log("get claimdetails in summary claum : ", this.claimDetails);
         console.log("get admin status", this.adminStatus);
+
 
         switch (this.adminStatus) {
           case 'VERIFIED. WAITING FOR APPROVER.':
@@ -925,47 +929,38 @@ export default {
             this.remark = this.claimDetails.comment;
             break;
 
-          case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
-            this.verified = true;
-            this.checked = true;
-            this.approved = true;
-            this.approvedFinance = true;
-            this.pending = false;
+          case 'APPROVED BY FINANCE':
+            if (this.claimDetails.admin_status.includes('APPROVER')) {
+              this.verified = true;
+              this.checked = true;
+              this.approved = true;
+              this.pending = true;
+            } else {
+              this.verified = true;
+              this.checked = true;
+              this.approved = true;
+              this.approvedFinance = true;
+              this.pending = false;
+            }
             this.remark = this.claimDetails.comment;
             break;
 
           case 'REJECTED BY VERIFIER.':
-            this.rejectVerifier = true;
-            this.pending = false;
-            this.remark = this.claimDetails.comment;
-            break;
-
-          case 'REJECTED BY FINANCE':
-            this.rejectVerifier = true;
-            this.pending = false;
-            this.remark = this.claimDetails.comment;
-            break;
-
-          case 'REJECTED BY CHECKER':
-            this.rejectChecker = true;
-            this.pending = false;
-            this.remark = this.claimDetails.comment;
-            break;
-
-          case 'CHECKED BY CHECKER. WAITING FOR VERIFIER':
-            this.rejectChecker = false;
-            this.pending = false;
-            this.remark = this.claimDetails.comment;
-            break;
-
-          case 'REJECTED BY HR & ADMIN':
-            this.rejectChecker = false;
-            this.pending = false;
-            this.remark = this.claimDetails.comment;
-            break;
-
-          case 'APPROVED BY HR & ADMIN':
-            this.rejectChecker = false;
+            if (this.claimDetails.admin_status.includes('VERIFIER')) {
+              this.rejectVerifier = true;
+            } else if (this.claimDetails.admin_status.includes('CHECKER')) {
+              this.verified = true;
+              this.rejectChecker = true;
+            } else if (this.claimDetails.admin_status.includes('APPROVER')) {
+              this.verified = true;
+              this.checked = true;
+              this.rejectApprover = true;
+            } else if (this.claimDetails.admin_status.includes('FINANCE')) {
+              this.verified = true;
+              this.checked = true;
+              this.approved = true;
+              this.rejectFinance = true;
+            }
             this.pending = false;
             this.remark = this.claimDetails.comment;
             break;
@@ -1000,7 +995,6 @@ export default {
             break;
 
           default:
-            console.log('Unknown admin status:', this.adminStatus);
             break;
         }
       } catch (error) {
@@ -1042,7 +1036,7 @@ export default {
               'Petrol/EV(RM)': Number(result[i].total_mileage).toFixed(2),
               'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
               Attachments: result[i].files,
-              'Remark': result[i].comment,
+              comment: result[i].comment,
               Tab_Title: 'Local Outstation',
               unique_code: result[i].unique_code,
             };
