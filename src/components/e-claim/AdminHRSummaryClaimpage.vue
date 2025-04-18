@@ -162,21 +162,20 @@
                   v-for="(item, index) in detail" :key="index">
                   <td class="text-center justify-between items-center flex">
                     <div class="justify-center items-center flex py-2 align-middle">
-                      <input @input="
-                      UpdateSingleRemark(
-                        $event,
-                        item.unique_code,
-                        item.Tab_Title
-                      )
-                      " v-if="
-                        (statusApprover === 'OPEN' || (!reimbursed && approve && !rejectApprover && !resubmit))
-                      " type="text"
-                      class="p-1 text-xs w-full rounded-md outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border" />
-                    <h1 id="remarkText" 
-                        v-if="(reimbursed || approve || rejectApprover || resubmit) && item.comment && item.comment.trim() !== ''"
-                        class="m-1 px-2 py-1 bg-sky-100 rounded-md text-xs mx-auto w-fit block dark:bg-sky-950 text-center">
-                      {{ item.comment }}
-                    </h1>                    
+                      <!-- Render input only if status is OPEN and no existing comment -->
+                      <input
+                        v-if="statusApprover === 'OPEN' && (!item.comment || item.comment.trim() === '')"
+                        @input="UpdateSingleRemark($event, item.unique_code, item.Tab_Title)"
+                        type="text"
+                        class="p-1 text-xs w-full rounded-md outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border" />
+
+                      <!-- Render static remark if status is not OPEN or a comment exists -->
+                      <h1
+                        id="remarkText"
+                        v-else-if="item.comment && item.comment.trim() !== ''"
+                        class="m-1 px-2 py-1 rounded-md text-xs mx-auto w-fit block dark:bg-sky-950 text-center">
+                        {{ item.comment }}
+                      </h1>           
                     </div>
 
                   </td>
@@ -243,50 +242,80 @@
               <th class="">DEPARTMENT</th>
               <th class="">DATE</th>
             </thead>
-            <tr class="text-wrap text-left text-xs border-t border-gray-400 dark:border-gray-600">
-              <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
-                <div
-                  class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
-                  :class="{
-                    'bg-red-100/60 dark:bg-gray-800': getSimplifiedStatus(statusApprover) === 'REJECTED',
-                    'bg-green-100/60 dark:bg-gray-800': getSimplifiedStatus(statusApprover) === 'APPROVED',
-                    'bg-amber-100/60 dark:bg-gray-800': getSimplifiedStatus(statusApprover) === 'PENDING',
-                    'bg-slate-100/60 dark:bg-gray-800': getSimplifiedStatus(statusApprover) === 'REIMBURSED'
-                  }">
-                  <span :class="{
-                    'h-1.5 w-1.5 rounded-full': true,
-                    'bg-red-500': getSimplifiedStatus(statusApprover) === 'REJECTED',
-                    'bg-green-500': getSimplifiedStatus(statusApprover) === 'APPROVED',
-                    'bg-amber-500': getSimplifiedStatus(statusApprover) === 'PENDING',
-                    'bg-black': getSimplifiedStatus(statusApprover) === 'REIMBURSED'
-                  }"></span>
-                  <span :class="{
-                    'text-xs font-normal': true,
-                    'text-red-500': getSimplifiedStatus(statusApprover) === 'REJECTED',
-                    'text-green-500': getSimplifiedStatus(statusApprover) === 'APPROVED',
-                    'text-amber-500': getSimplifiedStatus(statusApprover) === 'PENDING',
-                    'text-black': getSimplifiedStatus(statusApprover) === 'REIMBURSED'
-                  }">
-                    {{ getSimplifiedStatus(statusApprover || 'PENDING') }}
-                  </span>
-                </div>
-              </th>
-              <td class="pl-6">
-                {{ statusApprover !== 'PENDING' && claimDetails ? claimDetails.approver_name : '' }}
-              </td>
-              <td>
-                {{ statusApprover !== 'PENDING' && claimDetails ? claimDetails.approver_designation : '' }}
-              </td>
-              <td>
-                {{ statusApprover !== 'PENDING' && claimDetails ? claimDetails.approver_department : '' }}
-              </td>
-              <td>
-                {{ statusApprover !== 'PENDING' && claimDetails ? claimDetails.approved_date : '' }}
-              </td>
-            </tr>
+            <tbody>
+              <!-- Show only OPEN if not yet reimbursed -->
+              <tr v-if="getSimplifiedStatus(statusApprover) === 'PENDING'" class="text-wrap text-left text-xs border-t border-gray-400 dark:border-gray-600">
+                <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                  <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2 bg-amber-100/60 dark:bg-gray-800">
+                    <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>
+                    <span class="text-xs font-normal text-amber-500">PENDING</span>
+                  </div>
+                </th>
+                <td class="pl-6">{{ claimDetails.approver_name }}</td>
+                <td>{{ claimDetails.approver_designation }}</td>
+                <td>{{ claimDetails.approver_department }}</td>
+                <td>{{ claimDetails.approved_date }}</td>
+              </tr>
 
+              <!-- Show only APPROVED if not yet reimbursed -->
+              <tr v-else-if="getSimplifiedStatus(statusApprover) === 'APPROVED' || getSimplifiedStatus(statusApprover) === 'PENDING'" class="text-wrap text-left text-xs border-t border-gray-400 dark:border-gray-600">
+                <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                  <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2 bg-green-100/60 dark:bg-gray-800">
+                    <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
+                    <span class="text-xs font-normal text-green-500">APPROVED</span>
+                  </div>
+                </th>
+                <td class="pl-6">{{ claimDetails.approver_name || '-'}}</td>
+                <td>{{ claimDetails.approver_designation || '-'}}</td>
+                <td>{{ claimDetails.approver_department || '-'}}</td>
+                <td>{{ claimDetails.approved_date || '-'}}</td>
+              </tr>
+
+              <!-- Show both APPROVED and REIMBURSED -->
+              <template v-else-if="getSimplifiedStatus(statusApprover) === 'REIMBURSED'">
+                <tr class="text-wrap text-left text-xs border-t border-gray-400 dark:border-gray-600">
+                  <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                    <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2 bg-green-100/60 dark:bg-gray-800">
+                      <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
+                      <span class="text-xs font-normal text-green-500">APPROVED</span>
+                    </div>
+                  </th>
+                  <td class="pl-6">{{ claimDetails.approver_name || '-'}}</td>
+                  <td>{{ claimDetails.approver_designation || '-'}}</td>
+                  <td>{{ claimDetails.approver_department || '-'}}</td>
+                  <td>{{ claimDetails.approved_date || '-'}}</td>
+                </tr>
+                <tr class="text-wrap text-left text-xs border-t border-gray-400 dark:border-gray-600">
+                  <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                    <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2 bg-slate-100/60 dark:bg-gray-800">
+                      <span class="h-1.5 w-1.5 rounded-full bg-black"></span>
+                      <span class="text-xs font-normal text-black dark:text-white">REIMBURSED</span>
+                    </div>
+                  </th>
+                  <td class="pl-6">{{ claimDetails.approver_name || '-'}}</td>
+                  <td>{{ claimDetails.approver_designation || '-'}}</td>
+                  <td>{{ claimDetails.approver_department || '-'}}</td>
+                  <td>{{ claimDetails.approved_date || '-'}}</td>
+                </tr>
+              </template>
+
+              <!-- Show only REJECTED if not yet reimbursed -->
+              <tr v-else-if="getSimplifiedStatus(statusApprover) === 'REJECTED'" class="text-wrap text-left text-xs border-t border-gray-400 dark:border-gray-600">
+                <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                  <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2 bg-red-100/60 dark:bg-gray-800">
+                    <span class="h-1.5 w-1.5 rounded-full bg-red-500"></span>
+                    <span class="text-xs font-normal text-red-500">REJECTED</span>
+                  </div>
+                </th>
+                <td class="pl-6">{{ claimDetails.approver_name || '-'}}</td>
+                <td>{{ claimDetails.approver_designation || '-'}}</td>
+                <td>{{ claimDetails.approver_department || '-'}}</td>
+                <td>{{ claimDetails.approved_date || '-'}}</td>
+              </tr>
+            </tbody>
           </table>
         </div>
+        
 
         <!-- Remark table -->
 
@@ -703,14 +732,12 @@ export default {
         Date_Leave: result[i].date_leave_taken,
         Reason: result[i].reason,
         Medical_Category: result[i].medical_category,
-        Clinic_Selection: result[i].clinic_selection,
         Clinic_Name: result[i].clinic_name,
         Reason_Different_Clinic: result[i].reason_different,
-
-        Bank: result[i].bank_name,
+        'Bank_Name': result[i].bank_name,
         Bank_Holder: result[i].bank_holder,
         Bank_Account: result[i].bank_account,
-        'Claim_Amount(RM)': Number(result[i].claim_amount).toFixed(2),
+        'Total_Fee(RM)': Number(result[i].claim_amount).toFixed(2),
         Attachments: result[i].files,
         Tab_Title: 'Medical Bill',
         unique_code: result[i].unique_code,
@@ -743,12 +770,10 @@ export default {
         IC_Number: result[i].ic_number,
         Claim_Month: result[i].claim_month,
         Claim_Year: result[i].claim_year,
-
-        Bank: result[i].bank_name,
-
+        Bank_Name: result[i].bank_name,
         Bank_Holder: result[i].bank_holder,
         Bank_Account: result[i].bank_account,
-        'Claim_Amount(RM)': Number(result[i].claim_amount).toFixed(2),
+        'Total_Fee(RM)': Number(result[i].claim_amount).toFixed(2),
         Attachments: result[i].files,
         Tab_Title: 'Handphone Bill',
         unique_code: result[i].unique_code,

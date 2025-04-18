@@ -160,20 +160,37 @@
                 <!-- table information -->
                 <tr class="h-8 text-left align-top text-xs hover:bg-gray-200 dark:hover:bg-gray-800"
                   v-for="(item, index) in detail" :key="index">
-                  <td>
-                    <input @input="
-                      UpdateSingleRemark(
+                  <!-- <td>
+                    <input 
+                      :value="item.comment || ''"
+                      @input=" UpdateSingleRemark(
                         $event,
                         item.unique_code,
                         item.Tab_Title
                       )
-                      " v-if="pending" type="text"
+                      " v-if="!pending" type="text"
                       class="p-1 text-xs w-full rounded-md outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border" />
-                      <h1 id="remarkText" v-if="!pending && item.comment && item.comment.trim() !== ''"
+                      <h1 id="remarkText" v-if="!approved && !approvedFinance && !reimbursed && simplifiedFinanceStatus !== 'REJECTED' && item.comment && item.comment.trim() !== ''"
                       class="m-1 px-2 py-1 bg-sky-100 rounded-md dark:bg-sky-950">
                       {{ item.comment }}
                     </h1>
+                  </td> -->
+                  <td class="px-2 py-1 text-xs text-left align-middle">
+                    <div v-if="!approved && !approvedFinance && !reimbursed && simplifiedFinanceStatus !== 'REJECTED'">
+                      <input 
+                        :value="item.comment || ''"
+                        @input="UpdateSingleRemark($event, item.unique_code, item.Tab_Title)"
+                        type="text"
+                        class="p-1 text-xs w-full rounded-md outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border"
+                      />
+                    </div>
+                    <div v-else>
+                      <span class="m-2 px-2 py-1 rounded-md dark:bg-sky-950">
+                        {{ item.comment }}
+                      </span>
+                    </div>
                   </td>
+
                   <td class="text-center font-normal px-3 py-1 justify-center items-center " v-for="(val, key, i) in item" :key="i">
                     {{
                       key == 'Attachments'
@@ -182,11 +199,11 @@
                           ? ''
                           : key == 'Participants'
                             ? ''
-                            : key == 'oem'
+                            : key == 'Others_Expenses'
                             ? ''
                             : val
                     }}
-                    <div v-show="key === 'oem'" id="staffDetails" class="my-1">
+                    <div v-show="key === 'Others_Expenses'" id="staffDetails" class="my-1">
                       <a 
                         @click="showOemModal(val)" 
                         class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white px-4 py-1 my-1 rounded-md w-20 text-center justify-center items-center">
@@ -233,199 +250,142 @@
         </div>
 
         <!-- Status Table -->
-        <div class="text-xs border mt-4 border-gray-400 dark:border-gray-600 rounded-md" >
+        <div class="text-xs border mt-4 border-gray-400 dark:border-gray-600 rounded-md">
           <table class="w-full">
             <!-- title -->
             <thead class="h-8 bg-gray-300 dark:bg-gray-700 text-left rounded-md space-x-2">
               <th class="rounded-tl w-[20%] text-center border-r border-gray-400 dark:border-gray-600">
                 STATUS
               </th>
-              <th class="">NAME</th>
-              <th class="">DESIGNATION</th>
-              <th class="">DEPARTMENT</th>
-              <th class="">DATE</th>
+              <th>NAME</th>
+              <th>DESIGNATION</th>
+              <th>DEPARTMENT</th>
+              <th>DATE</th>
             </thead>
+
+            <!-- CHECKED -->
             <tr v-show="claimDetails.checker_name !== ''" class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
-                <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
+                <div class="mx-auto text-xs rounded-full py-2 my-1 w-fit inline-flex items-center px-3 gap-x-2"
                   :class="{
                     'bg-blue-100/60 dark:bg-gray-800': checked,
                     'bg-amber-100/60 dark:bg-gray-800': resubmitChecker,
                     'bg-red-100/60 dark:bg-gray-800': rejectChecker,
                     'bg-gray-100/60 dark:bg-gray-800': !checked && !rejectChecker && !resubmitChecker
                   }">
-                  <span :class="{
-                    'h-1.5 w-1.5 rounded-full': true,
-                    'bg-blue-500': checked,
-                    'bg-amber-500': resubmitChecker,
-                    'bg-red-500': rejectChecker,
-                    'bg-gray-500': !checked && !rejectChecker && !resubmitChecker
-                  }"></span>
-                  <span :class="{
-                    'text-xs font-normal': true,
-                    'text-blue-500': checked,
-                    'text-amber-500': resubmitChecker,
-                    'text-red-500': rejectChecker,
-                    'text-gray-500': !checked && !rejectChecker && !resubmitChecker 
-                  }">
-                    {{ approved || approvedFinance || reimbursed
+                  <span class="h-1.5 w-1.5 rounded-full"
+                    :class="{
+                      'bg-blue-500': checked,
+                      'bg-amber-500': resubmitChecker,
+                      'bg-red-500': rejectChecker,
+                      'bg-gray-500': !checked && !rejectChecker && !resubmitChecker
+                    }"></span>
+                  <span
+                    :class="{
+                      'text-blue-500': checked,
+                      'text-amber-500': resubmitChecker,
+                      'text-red-500': rejectChecker,
+                      'text-gray-500': !checked && !rejectChecker && !resubmitChecker
+                    }">
+                    {{
+                      approved || approvedFinance || reimbursed
                         ? 'CHECKED'
                         : checked || rejectChecker || resubmitChecker
-                          ? adminStatus
+                          ? adminStatus.includes('CHECKED') ? 'CHECKED' : adminStatus
                           : 'PENDING'
                     }}
                   </span>
                 </div>
               </th>
               <td class="pl-6">{{ claimDetails.checker_name || '-' }}</td>
-              <td class="">{{ claimDetails.checker_designation || '-' }}</td>
+              <td>{{ claimDetails.checker_designation || '-' }}</td>
               <td>{{ claimDetails.checker_department || '-' }}</td>
-              <td class="">{{ claimDetails.checked_date || '-' }}</td>
+              <td>{{ claimDetails.checked_date || '-' }}</td>
             </tr>
+
+            <!-- VERIFIED -->
             <tr class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
-                <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
+                <div class="mx-auto text-xs rounded-full py-2 my-1 w-fit inline-flex items-center px-3 gap-x-2"
                   :class="{
-                    'bg-amber-100/60 dark:bg-gray-800': simplifyVerifierStatus === 'VERIFIED' || simplifyVerifierStatus === 'RESUBMIT' || simplifyVerifierStatus === 'PENDING',
+                    'bg-amber-100/60 dark:bg-gray-800': ['VERIFIED', 'RESUBMIT', 'PENDING'].includes(simplifyVerifierStatus),
                     'bg-red-100/60 dark:bg-gray-800': simplifyVerifierStatus === 'REJECTED'
                   }">
-                  <span :class="{
-                    'h-1.5 w-1.5 rounded-full': true,
-                    'bg-amber-500': simplifyVerifierStatus === 'VERIFIED' || simplifyVerifierStatus === 'RESUBMIT' || simplifyVerifierStatus === 'PENDING',
-                    'bg-red-500': simplifyVerifierStatus === 'REJECTED'
-                  }"></span>
-                  <span :class="{
-                    'text-xs font-normal': true,
-                    'text-amber-500': simplifyVerifierStatus === 'VERIFIED' || simplifyVerifierStatus === 'RESUBMIT' || simplifyVerifierStatus === 'PENDING',
-                    'text-red-500': simplifyVerifierStatus === 'REJECTED'
-                  }">
+                  <span class="h-1.5 w-1.5 rounded-full"
+                    :class="{
+                      'bg-amber-500': ['VERIFIED', 'RESUBMIT', 'PENDING'].includes(simplifyVerifierStatus),
+                      'bg-red-500': simplifyVerifierStatus === 'REJECTED'
+                    }"></span>
+                  <span
+                    :class="{
+                      'text-amber-500': ['VERIFIED', 'RESUBMIT', 'PENDING'].includes(simplifyVerifierStatus),
+                      'text-red-500': simplifyVerifierStatus === 'REJECTED'
+                    }">
                     {{ simplifyVerifierStatus }}
                   </span>
                 </div>
               </th>
-              <td class="pl-6">{{ claimDetails.verifier_name }}</td>
-              <td class="">{{ claimDetails.verifier_designation }}</td>
-              <td>{{ claimDetails.verifier_department }}</td>
-              <td class="">{{ claimDetails.verified_date }}</td>
+              <td class="pl-6">{{ claimDetails.verifier_name || '-'}}</td>
+              <td>{{ claimDetails.verifier_designation || '-'}}</td>
+              <td>{{ claimDetails.verifier_department || '-'}}</td>
+              <td>{{ claimDetails.verified_date || '-'}}</td>
             </tr>
 
-            <tr v-if="simplifiedApproverFinStatus === 'APPROVED' || simplifiedApproverFinStatus === 'REJECTED' || simplifiedApproverFinStatus === 'REIMBURSED'"  class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+            <!-- APPROVED -->
+            <tr v-if="['APPROVED', 'REJECTED', 'REIMBURSED'].includes(simplifiedApproverFinStatus)" class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
-                <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
+                <div class="mx-auto text-xs rounded-full py-2 my-1 w-fit inline-flex items-center px-3 gap-x-2"
                   :class="{
                     'bg-green-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'APPROVED',
                     'bg-amber-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'RESUBMIT',
                     'bg-red-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'REJECTED',
-                    'bg-slate-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'PENDING',
+                    'bg-slate-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'PENDING'
                   }">
-                  <span :class="{
-                    'h-1.5 w-1.5 rounded-full': true,
-                    'bg-green-500': simplifiedApproverFinStatus === 'APPROVED',
-                    'bg-amber-500': simplifiedApproverFinStatus === 'RESUBMIT',
-                    'bg-red-500': simplifiedApproverFinStatus === 'REJECTED',
-                    'bg-slate-500': simplifiedApproverFinStatus === 'PENDING'
-                  }"></span>
-                  <span :class="{
-                    'text-xs font-normal': true,
-                    'text-green-500': simplifiedApproverFinStatus === 'APPROVED',
-                    'text-amber-500': simplifiedApproverFinStatus === 'RESUBMIT',
-                    'text-red-500': simplifiedApproverFinStatus === 'REJECTED',
-                    'text-slate-500': simplifiedApproverFinStatus === 'PENDING'
-                  }">
+                  <span class="h-1.5 w-1.5 rounded-full"
+                    :class="{
+                      'bg-green-500': simplifiedApproverFinStatus === 'APPROVED',
+                      'bg-amber-500': simplifiedApproverFinStatus === 'RESUBMIT',
+                      'bg-red-500': simplifiedApproverFinStatus === 'REJECTED',
+                      'bg-slate-500': simplifiedApproverFinStatus === 'PENDING'
+                    }"></span>
+                  <span
+                    :class="{
+                      'text-green-500': simplifiedApproverFinStatus === 'APPROVED',
+                      'text-amber-500': simplifiedApproverFinStatus === 'RESUBMIT',
+                      'text-red-500': simplifiedApproverFinStatus === 'REJECTED',
+                      'text-slate-500': simplifiedApproverFinStatus === 'PENDING'
+                    }">
                     {{ simplifiedApproverFinStatus }}
                   </span>
                 </div>
               </th>
-              <td class="pl-6">
-                {{
-                  approved || rejectApprover || resubmitApprover || reimbursed
-                    ? claimDetails.approver_name
-                    : '-'
-                }}
-              </td>
-              <td class="">
-                {{
-                  approved || rejectApprover || resubmitApprover || reimbursed
-                    ? claimDetails.approver_designation
-                    : '-'
-                }}
-              </td>
-              <td>
-                {{
-                  approved || rejectApprover || resubmitApprover || reimbursed
-                    ? claimDetails.approver_department
-                    : ''
-                }}
-              </td>
-              <td class="">
-                {{
-                  approved || rejectApprover || resubmitApprover || reimbursed
-                    ? claimDetails.approved_date
-                    : '-'
-                }}
-              </td>
+              <td class="pl-6">{{ claimDetails.approver_name || '-' }}</td>
+              <td>{{ claimDetails.approver_designation || '-' }}</td>
+              <td>{{ claimDetails.approver_department || '-' }}</td>
+              <td>{{ claimDetails.approved_date || '-' }}</td>
             </tr>
-            <tr  v-if="simplifiedFinanceStatus === 'REIMBURSED' " class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+
+            <!-- REIMBURSED -->
+            <tr v-if="simplifiedFinanceStatus === 'REIMBURSED'" class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
-              <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
-              :class="{
-                'bg-green-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'APPROVED',
-                'bg-amber-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'RESUBMIT',
-                'bg-red-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'REJECTED',
-                'bg-slate-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'REIMBURSED',
-                'bg-blue-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'PENDING'
-              }">
-              <span :class="{
-                'h-1.5 w-1.5 rounded-full': true,
-                'bg-green-500': simplifiedFinanceStatus === 'APPROVED',
-                'bg-amber-500': simplifiedFinanceStatus === 'RESUBMIT',
-                'bg-red-500': simplifiedFinanceStatus === 'REJECTED',
-                'bg-slate-500': simplifiedFinanceStatus === 'REIMBURSED', 
-                'bg-blue-500': simplifiedFinanceStatus === 'PENDING'
-              }"></span>
-              <span :class="{
-                'text-xs font-normal': true,
-                'text-green-500': simplifiedFinanceStatus === 'APPROVED',
-                'text-amber-500': simplifiedFinanceStatus === 'RESUBMIT',
-                'text-red-500': simplifiedFinanceStatus === 'REJECTED',
-                'text-black-500': simplifiedFinanceStatus === 'REIMBURSED', 
-                'text-blue-500': simplifiedFinanceStatus === 'PENDING'
-              }">
-                {{ simplifiedFinanceStatus }}
-              </span>
-            </div>
-            </th>
-              <td class="pl-6">
-                {{
-                  approved || rejectApprover || resubmitApprover || reimbursed
-                    ? claimDetails.approver_name
-                    : '-'
-                }}
-              </td>
-              <td class="">
-                {{
-                  approved || rejectApprover || resubmitApprover || reimbursed
-                    ? claimDetails.approver_designation
-                    : '-'
-                }}
-              </td>
-              <td>
-                {{
-                  approved || rejectApprover || resubmitApprover || reimbursed
-                    ? claimDetails.approver_department
-                    : '-'
-                }}
-              </td>
-              <td class="">
-                {{
-                  approved || rejectApprover || resubmitApprover || reimbursed
-                    ? claimDetails.approved_date
-                    : '-'
-                }}
-              </td>
+                <div class="mx-auto text-xs rounded-full py-2 my-1 w-fit inline-flex items-center px-3 gap-x-2"
+                  :class="{
+                    'bg-slate-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'REIMBURSED'
+                  }">
+                  <span class="h-1.5 w-1.5 rounded-full bg-slate-500"></span>
+                  <span class="text-black">
+                    {{ simplifiedFinanceStatus }}
+                  </span>
+                </div>
+              </th>
+              <td class="pl-6">{{ claimDetails.approver_name || '-' }}</td>
+              <td>{{ claimDetails.approver_designation || '-' }}</td>
+              <td>{{ claimDetails.approver_department || '-' }}</td>
+              <td>{{ claimDetails.approved_date || '-' }}</td>
             </tr>
           </table>
         </div>
+
 
         <!-- Remark table -->
 
@@ -441,46 +401,43 @@
               </tr>
             </table>
           </div>
+          
+          <!-- Buttons Section -->
           <div class="flex space-x-2 py-2">
-            <div v-if="!approved && !approvedFinance && !reimbursed && claimDetails.admin_status !== 'REJECTED BY FINANCE'" 
-            class=".detail-table w-full lg:flex-row flex flex-col justify-between items-center">
+            <!-- Show Approve/Reject before approved by finance -->
+            <div v-if="!approved && !approvedFinance && !reimbursed && simplifiedFinanceStatus !== 'REJECTED'" 
+                class="detail-table w-full lg:flex-row flex flex-col justify-between items-center">
               <div class="flex space-x-2 justify-between items-center">
-                <label class="font-semibold mr-2 mb-4 lg:mb-0">Overall Remark:
-                </label>
+                <label class="font-semibold mr-2 mb-4 lg:mb-0">Overall Remark:</label>
                 <input class="mx-auto py-1 min-w-[80px] rounded-md border text-xs" type="text"
-                  placeholder="Eg. Blurry Receipt Image" v-model="remark" />
+                      placeholder="Eg. Blurry Receipt Image" v-model="remark" />
               </div>
               <div class="flex">
                 <button @click="confirmApprove = true"
-                  class="mr-2 text-sm font-semibold py-2 sm:w-24 md:w-36 bg-green-500 hover:bg-green-600 rounded-lg text-white">
+                        class="mr-2 text-sm font-semibold py-2 sm:w-24 md:w-36 bg-green-500 hover:bg-green-600 rounded-lg text-white">
                   Approve
                 </button>
                 <button @click="confirmReject = true"
-                  class="text-sm font-semibold py-2 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white">
+                        class="text-sm font-semibold py-2 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white">
                   Reject
                 </button>
               </div>
             </div>
-            <div v-else-if="claimDetails.admin_status === 'APPROVED BY FINANCE'" 
-              class="w-full flex justify-end">
-              <div class="my-3" id="hidden">
+
+            <!-- Show Reimburse button only after approved by finance -->
+            <div v-else-if="simplifiedFinanceStatus === 'APPROVED'" class="w-full flex justify-end">
+              <div class="my-3">
                 <div class="relative inline-block text-left">
-                  <div>
-                    <button 
-                      @click="confirmReimburse = true" 
-                      type="button"
-                      class="mr-2 text-sm font-semibold py-2 sm:w-24 md:w-36 bg-green-600 hover:bg-green-700 rounded-lg text-white"
-                    >
-                      Reimburse
-                    </button>
-                  </div>
+                  <button @click="confirmReimburse = true"
+                          type="button"
+                          class="mr-2 text-sm font-semibold py-2 sm:w-24 md:w-36 bg-green-600 hover:bg-green-700 rounded-lg text-white">
+                    Reimburse
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-
 
         <!-- Approve Confirmation -->
         <div v-show="confirmApprove"
@@ -653,7 +610,7 @@
           </div>
         </div>
 
-                <!-- oem -->
+                <!-- Others_Expenses -->
                 <div v-show="showOemList"
      class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
   <div class="bg-white w-full p-2 max-w-3xl mx-4 shadow-xl relative">
@@ -892,454 +849,483 @@ export default {
       return num;
     },
     simplifiedFinanceStatus() {
-    switch (this.adminStatus) {
-      case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
-        return 'APPROVED';
-      case 'REJECTED BY VERIFIER.':
-        return 'REJECTED';
-      case 'RESUBMIT':
-        return 'RESUBMIT';
-      case 'REIMBURSED':
-        return 'REIMBURSED';
-      case 'OPEN':
-        return 'PENDING';
+      const status = this.adminStatus?.trim()?.toUpperCase();
+      switch (status) {
+        case 'APPROVED BY FINANCE':
+        case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
+          return 'APPROVED';
+        case 'REJECTED BY FINANCE':
+          return 'REJECTED';
+        case 'RESUBMIT REQUESTED BY FINANCE':
+          return 'RESUBMIT';
+        case 'REIMBURSED':
+          return 'REIMBURSED';
+        case 'OPEN':
         case 'VERIFIED. WAITING FOR APPROVER.':
-        return 'PENDING';
-      default:
-        return this.adminStatus; 
-    }
-  },
-  simplifiedApproverFinStatus() {
-    switch (this.adminStatus) {
-      case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
-        return 'APPROVED';
-      case 'REJECTED BY VERIFIER.':
-        return 'REJECTED';
-      case 'RESUBMIT':
-        return 'RESUBMIT';
-      case 'REIMBURSED':
-        return 'APPROVED';
-      case 'OPEN':
-        return 'PENDING';
-        case 'VERIFIED. WAITING FOR APPROVER.':
-        return 'PENDING';
-      default:
-        return this.adminStatus; 
-    }
-  },
-  simplifiedApproverStatus() {
-    switch (this.adminStatus) {
-      case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
-        return 'APPROVED';
-      case 'REJECTED BY VERIFIER.':
-        return 'REJECTED';
-      case 'RESUBMIT':
-        return 'RESUBMIT';
-      case 'REIMBURSED':
-        return 'APPROVED';
-      case 'OPEN':
-        return 'PENDING';
-      case 'VERIFIED. WAITING FOR APPROVER.':
-        return 'PENDING';
-      default:
-        return this.adminStatus; 
-    }
-  },
+          return 'PENDING';
+        default:
+          return 'PENDING';
+      }
+    },
 
-  simplifyVerifierStatus(){
-    switch (this.adminStatus) {
-      case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
-        return 'VERIFIED';
-      case 'REJECTED BY VERIFIER.':
-        return 'REJECTED';
-      case 'RESUBMIT':
-        return 'RESUBMIT';
-      case 'REIMBURSED':
-        return 'VERIFIED';
-      case 'OPEN':
-      case 'REJECTED BY FINANCE':
-        return 'REJECTED';
-      case 'VERIFIED. WAITING FOR APPROVER.':
-        return 'VERIFIED'; 
-      default:
-        return this.adminStatus; 
-  }
-  },
+    simplifiedApproverFinStatus() {
+      const status = this.adminStatus?.trim()?.toUpperCase();
+      switch (status) {
+        case 'APPROVED BY FINANCE':
+        case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
+        case 'REIMBURSED':
+          return 'APPROVED';
+        case 'REJECTED BY FINANCE':
+          return 'REJECTED';
+        case 'RESUBMIT REQUESTED BY FINANCE':
+          return 'RESUBMIT';
+        case 'OPEN':
+        case 'VERIFIED. WAITING FOR APPROVER.':
+          return 'PENDING';
+        default:
+          return 'PENDING';
+      }
+    },
+
+    simplifiedApproverStatus() {
+      switch (this.adminStatus) {
+        case 'APPROVED BY FINANCE':
+          return 'APPROVED';
+        case 'REJECTED BY FINANCE':
+          return 'REJECTED';
+        case 'RESUBMIT REQUESTED BY FINANCE':
+          return 'RESUBMIT';
+        case 'REIMBURSED':
+          return 'REIMBURSED';
+        case 'OPEN':
+        case 'VERIFIED. WAITING FOR APPROVER.':
+          return 'PENDING';
+        default:
+          return this.adminStatus;
+      }
+    },
+
+    simplifyVerifierStatus() {
+      switch (this.adminStatus) {
+        case 'APPROVED BY FINANCE':
+        case 'REIMBURSED':
+        case 'VERIFIED. WAITING FOR APPROVER.':
+          return 'VERIFIED';
+        case 'REJECTED BY VERIFIER.':
+          return 'REJECTED';
+        case 'RESUBMIT REQUESTED BY FINANCE':
+          return 'RESUBMIT';
+        case 'OPEN':
+          return 'PENDING';
+        default:
+          return this.adminStatus;
+      }
+    },
+
   },
   methods: {
     toggleDropdown() {
       this.dropdownOpen = !this.dropdownOpen;
     },
     async FetchClaimDetails() {
-  this.loadingText = 'Fetching';
-  this.loading = true;
+      this.loadingText = 'Fetching';
+      this.loading = true;
 
-  try {
-    const response = await axios.get(
-      'http://172.28.28.116:6165/api/User/GetClaimDetails/' + this.referenceNumber
-    );
+      try {
+        const response = await axios.get(
+          'http://172.28.28.116:6165/api/User/GetClaimDetails/' + this.referenceNumber
+        );
 
-    // Handle the successful response
-    this.loading = false;
-    this.claimDetails = response.data.result;
-    this.adminStatus = this.claimDetails.admin_status;
-    
-    switch (this.adminStatus) {
-      case 'VERIFIED. WAITING FOR APPROVER.':
-        this.verified = true;
-        this.pending = false;
-        this.remark = this.claimDetails.comment;
-        break;
+        // Handle the successful response
+        this.loading = false;
+        this.claimDetails = response.data.result;
+        this.adminStatus = this.claimDetails.admin_status;
 
-      case 'CHECKED':
-        this.verified = true;
-        this.checked = true;
-        this.pending = false;
-        this.remark = this.claimDetails.comment;
-        break;
+        // DEBUGGING LOGS FOR STATUS
+        console.log('Raw adminStatus:', this.adminStatus);
+        console.log('simplifiedApproverFinStatus:', this.simplifiedApproverFinStatus);
+        console.log('simplifiedFinanceStatus:', this.simplifiedFinanceStatus);
+        console.log('Current Role Flags:', {
+          approved: this.approved,
+          approvedFinance: this.approvedFinance,
+          reimbursed: this.reimbursed
+        });
+        
+        switch (this.adminStatus) {
+          case 'VERIFIED. WAITING FOR APPROVER.':
+            this.verified = true;
+            this.pending = false;
+            this.remark = this.claimDetails.comment;
+            break;
 
-      case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
-        if (this.claimDetails.admin_status.includes('APPROVER')) {
-          this.verified = true;
-          this.checked = true;
-          this.approved = true;
-          this.pending = true;
-        } else {
-          this.verified = true;
-          this.checked = true;
-          this.approved = true;
-          this.approvedFinance = true;
-          this.pending = false;
+          case 'CHECKED':
+            this.verified = true;
+            this.checked = true;
+            this.pending = false;
+            this.remark = this.claimDetails.comment;
+            break;
+
+          case 'APPROVED BY FINANCE':
+            if (this.claimDetails.admin_status.includes('APPROVER')) {
+              this.verified = true;
+              this.checked = true;
+              this.approved = true;
+              this.pending = true;
+            } else {
+              this.verified = true;
+              this.checked = true;
+              this.approved = true;
+              this.approvedFinance = true;
+              this.pending = false;
+            }
+            this.remark = this.claimDetails.comment;
+            break;
+
+          case 'REJECTED BY VERIFIER.':
+            if (this.claimDetails.admin_status.includes('VERIFIER')) {
+              this.rejectVerifier = true;
+            } else if (this.claimDetails.admin_status.includes('CHECKER')) {
+              this.verified = true;
+              this.rejectChecker = true;
+            } else if (this.claimDetails.admin_status.includes('APPROVER')) {
+              this.verified = true;
+              this.checked = true;
+              this.rejectApprover = true;
+            } else if (this.claimDetails.admin_status.includes('FINANCE')) {
+              this.verified = true;
+              this.checked = true;
+              this.approved = true;
+              this.rejectFinance = true;
+            }
+            this.pending = false;
+            this.remark = this.claimDetails.comment;
+            break;
+
+          case 'RESUBMIT':
+            if (this.claimDetails.admin_status.includes('VERIFIER')) {
+              this.resubmitVerifier = true;
+            } else if (this.claimDetails.admin_status.includes('CHECKER')) {
+              this.verified = true;
+              this.resubmitChecker = true;
+            } else if (this.claimDetails.admin_status.includes('APPROVER')) {
+              this.verified = true;
+              this.checked = true;
+              this.resubmitApprover = true;
+            } else if (this.claimDetails.admin_status.includes('FINANCE')) {
+              this.verified = true;
+              this.checked = true;
+              this.approved = true;
+              this.resubmitFinance = true;
+            }
+            this.pending = false;
+            this.remark = this.claimDetails.comment;
+            break;
+
+          case 'REIMBURSED':
+            this.verified = true;
+            this.checked = true;
+            this.approved = true;
+            this.reimbursed = true;
+            this.pending = false;
+            this.remark = this.claimDetails.comment;
+            break;
+
+          default:
+            break;
         }
-        this.remark = this.claimDetails.comment;
-        break;
-
-      case 'REJECTED BY VERIFIER.':
-        if (this.claimDetails.admin_status.includes('VERIFIER')) {
-          this.rejectVerifier = true;
-        } else if (this.claimDetails.admin_status.includes('CHECKER')) {
-          this.verified = true;
-          this.rejectChecker = true;
-        } else if (this.claimDetails.admin_status.includes('APPROVER')) {
-          this.verified = true;
-          this.checked = true;
-          this.rejectApprover = true;
-        } else if (this.claimDetails.admin_status.includes('FINANCE')) {
-          this.verified = true;
-          this.checked = true;
-          this.approved = true;
-          this.rejectFinance = true;
-        }
-        this.pending = false;
-        this.remark = this.claimDetails.comment;
-        break;
-
-      case 'RESUBMIT':
-        if (this.claimDetails.admin_status.includes('VERIFIER')) {
-          this.resubmitVerifier = true;
-        } else if (this.claimDetails.admin_status.includes('CHECKER')) {
-          this.verified = true;
-          this.resubmitChecker = true;
-        } else if (this.claimDetails.admin_status.includes('APPROVER')) {
-          this.verified = true;
-          this.checked = true;
-          this.resubmitApprover = true;
-        } else if (this.claimDetails.admin_status.includes('FINANCE')) {
-          this.verified = true;
-          this.checked = true;
-          this.approved = true;
-          this.resubmitFinance = true;
-        }
-        this.pending = false;
-        this.remark = this.claimDetails.comment;
-        break;
-
-      case 'REIMBURSED':
-        this.verified = true;
-        this.checked = true;
-        this.approved = true;
-        this.reimbursed = true;
-        this.pending = false;
-        this.remark = this.claimDetails.comment;
-        break;
-
-      default:
-        break;
-    }
-  } catch (error) {
-    // Handle any errors that occur during the axios request
-    this.loading = false;
-    console.error('Error fetching claim details:', error);
-    // Optionally, display an error message to the user
-    this.errorMessage = 'An error occurred while fetching claim details. Please try again later.';
-  }
-},
-async FetchClaimDatasDetails() {
-  try {
-    try {
-      const response = await axios.get(
-        'http://172.28.28.116:6239/api/User/GetLocalOutstation/' +
-        this.referenceNumber
-      );
-      const result = response.data.result;
-      // console.log(result, 'local outstation');
-      let details = [];
-      let amount = 0;
-      
-      for (let i in result) {
-        amount += result[i].total_fee;
-        const editedDetail = {
-          Starting_Point: result[i].starting_point,
-          End_Point: result[i].end_point,
-          Date_Event: result[i].date_event,
-          'Mileage(KM)': Number(result[i].mileage_km).toFixed(2),
+      } catch (error) {
+        // Handle any errors that occur during the axios request
+        this.loading = false;
+        console.error('Error fetching claim details:', error);
+        // Optionally, display an error message to the user
+        this.errorMessage = 'An error occurred while fetching claim details. Please try again later.';
+      }
+    },
+    async FetchClaimDatasDetails() {
+      this.claimDatas = [];
+      this.claimDatasDetails = [];
+      this.claimDataTotalAmount = [];
+      try {
+        try {
+          const response = await axios.get(
+            'http://172.28.28.116:6239/api/User/GetLocalOutstation/' +
+            this.referenceNumber
+          );
+          const result = response.data.result;
+          // console.log(result, 'local outstation');
+          let details = [];
+          let amount = 0;
+          
+          for (let i in result) {
+            amount += result[i].total_fee;
+            const editedDetail = {
+              Date_Event: result[i].date_event,
+              'Return_Date': result[i].return_date,
+              Starting_Point: result[i].starting_point,
+              End_Point: result[i].end_point,
+              'Mileage(KM)': Number(result[i].mileage_km).toFixed(2),
+              'Fare': Number(result[i].fare).toFixed(2),
+              'Meal_Allowance(RM)': result[i].meal_allowance,
+              'Accomodation': result[i].accommodation,
               'Park_Fee(RM)': Number(result[i].park_fee).toFixed(2),
               'Toll_Fee(RM)': Number(result[i].toll_fee).toFixed(2),
-          Transport_Specification: result[i].transport_specification,
-          Transport_Mode: result[i].transport_mode,
-          Trip_Mode: result[i].trip_mode,
-          'Total_Mileage(RM)': Number(result[i].total_mileage).toFixed(2),
-          Attachments: result[i].files,
-          Remark: result[i].comment,
-          Tab_Title: 'Local Outstation',
-          unique_code: result[i].unique_code,
-        };
-        details.push(editedDetail);
-      }
-      if (details.length > 0) {
-        this.claimDatasDetails.push(details);
-        this.claimDataTotalAmount.push(amount);
-      }
-    } catch (e) {
-      console.error('Error fetching Local Outstation data:', e);
-    }
-
-    try {
-      const response = await axios.get(
-        'http://172.28.28.116:6239/api/User/GetOverseasOutstation/' +
-        this.referenceNumber
-      );
-      const result = response.data.result;
-      // console.log("Overseas data:", result);
-      let details = [];
-      let amount = 0;
-      for (let i in result) {
-
-        
-        const mealAllowance = result[i].meal_allowance || 0;
-        const oemAmount = result[i].oem?.[0]?.amount || 0;
-        amount = Number(mealAllowance) + Number(oemAmount);
-        // amount = result[i].meal_allowance + result[i].oem.amount;
-        const editedDetail = {
-          Description: result[i].description,
-          'Meal_Allowance_(RM)': Number(result[i].meal_allowance).toFixed(2),
-          Date: result[i].date_event,
-          'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
-          oem: result[i].oem,
-          Attachments: result[i].files,
-          Tab_Title: 'Overseas Outstation',
-          Remark: result[i].comment,
-          unique_code: result[i].unique_code,
-
-        };
-        details.push(editedDetail);
-        // console.log("editedDetails in overseas,", editedDetail);
-      }
-      // console.log("Amount oversears:",amount)
-      if (details.length > 0) {
-        this.claimDatasDetails.push(details);
-        this.claimDataTotalAmount.push(amount);
-      }
-    } catch (e) {
-      console.error('Error fetching Overseas Outstation data:', e);
-    }
-
-    try {
-      const response = await axios.get(
-        'http://172.28.28.116:6239/api/User/GetRefreshment/' +
-        this.referenceNumber
-      );
-      const result = response.data.result;
-      let details = [];
-      let amount = 0;
-      for (let i in result) {
-        amount += result[i].total_fee;
-        const editedDetail = {
-          Type: result[i].refreshment_type,
-          Date: result[i].date_event,
-          Reference_Type: result[i].reference_type,
-          Venue: result[i].venue_name,
-          Company: result[i].company_name,
-          'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
-          Staff_Involved: result[i].sim,
-          Attachments: result[i].files,
-          Remark: result[i].comment,
-          Tab_Title: 'Staff Refreshment',
-          unique_code: result[i].unique_code,
-        };
-        details.push(editedDetail);
-      }
-      if (details.length > 0) {
-        this.claimDatasDetails.push(details);
-        this.claimDataTotalAmount.push(amount);
-      }
-    } catch (e) {
-      console.error('Error fetching Refreshment data:', e);
-    }
-
-    try {
-      const response = await axios.get(
-        'http://172.28.28.116:6165/api/User/GetEntertainment/' +
-        this.referenceNumber
-      );
-      const result = response.data.result;
-    // console.log("Get entertainment", result);
-      let details = [];
-      let amount = 0;
-      for (let i in result) {
-        amount += result[i].total_fee;
-        const editedDetail = {
-          Type: result[i].entertainment_type,
-          Date: result[i].date_event,
-          Venue: result[i].venue_name,
-          Company: result[i].company_name,
-          'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
-          Participants: result[i].participants,
-          Attachments: result[i].files,
-          Remark: result[i].comment,
-          Tab_Title: 'Entertainment',
-          unique_code: result[i].unique_code,
-        };
-        details.push(editedDetail);
-      }
-      if (details.length > 0) {
-        this.claimDatasDetails.push(details);
-        this.claimDataTotalAmount.push(amount);
-        
-      }
-    } catch (e) {
-      console.error('Error fetching Entertainment data:', e);
-    }
-
-    try {
-      const response = await axios.get(
-        'http://172.28.28.116:6165/api/User/GetMedicalLeave/' +
-        this.referenceNumber
-      );
-      const result = response.data.result;
-      let details = [];
-      let amount = 0;
-      for (let i in result) {
-        amount += result[i].claim_amount;
-        const editedDetail = {
-          reason: result[i].reason,
-          Date: result[i].date_leave_taken,
-          clinicselection: result[i].clinic_name
-            ? result[i].clinic_name
-            : result[i].clinic_selection,
-          reason_other_clinic: result[i].reason_different,
-          bank_name: result[i].bank_name,
-          bank_holder: result[i].bank_holder,
-          bank_account: result[i].bank_account,
-          'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
-          Attachments: result[i].files,
-          Tab_Title: 'Medical Leave',
-          Remark: result[i].comment,
-          unique_code: result[i].unique_code,
-        };
-        details.push(editedDetail);
-      }
-      if (details.length > 0) {
-        this.claimDatasDetails.push(details);
-        this.claimDataTotalAmount.push(amount);
-      }
-    } catch (e) {
-      console.error('Error fetching Medical Leave data:', e);
-    }
-
-    try {
-      const response = await axios.get(
-        'http://172.28.28.116:6165/api/User/GetHandphone/' + this.referenceNumber
-      );
-      const result = response.data.result;
-      let details = [];
-      let amount = 0;
-      for (let i in result) {
-        amount += result[i].claim_amount;
-        const editedDetail = {
-          Claim_Month: result[i].claim_month,
-          Claim_Year: result[i].claim_year,
-          Bank: result[i].bank_name,
-          Bank_Holder: result[i].bank_holder,
-          Bank_Account: result[i].bank_account,
-          'Claim_Amount(RM)': Number(result[i].claim_amount).toFixed(2),
-          Attachments: result[i].files,
-          Tab_Title: 'Handphone Bill',
-          Remark: result[i].comment,
-          unique_code: result[i].unique_code,
-        };
-        details.push(editedDetail);
-      }
-      if (details.length > 0) {
-        this.claimDatasDetails.push(details);
-        this.claimDataTotalAmount.push(amount);
-      }
-    } catch (e) {
-      console.error('Error fetching Handphone data:', e);
-    }
-
-    try {
-      const response = await axios.get(
-        'http://172.28.28.116:6239/api/User/GetOthers/' + this.referenceNumber
-      );
-      const result = response.data.result;
-      let details = [];
-      let amount = 0;
-      for (let i in result) {
-      const fee = parseFloat(result[i].total_fee);
-      amount += isNaN(fee) ? 0 : fee;
-      const editedDetail = {
-        Description: result[i].description,
-        Date: result[i].expense_date,
-        'Total_Fee(RM)': isNaN(fee) ? '0.00' : fee.toFixed(2),
-        Attachments: result[i].files,
-        Tab_Title: 'Other',
-        Remark: result[i].comment,
-        unique_code: result[i].unique_code,
-      };
-      details.push(editedDetail);
-    }
-      if (details.length > 0) {
-        this.claimDatasDetails.push(details);
-        this.claimDataTotalAmount.push(amount);
-      }
-    } catch (e) {
-      console.error('Error fetching Others data:', e);
-    }
-
-    // Process the final claim data
-    try {
-      this.claimDatasDetails.forEach((details, index) => {
-        if (details && details.length > 0) {
-          const claimData = {
-            No: index + 1,
-            Type: details[0].Tab_Title,
-            Amount: this.claimDataTotalAmount[index],
-          };
-          this.claimDatas.push(claimData);
+              Transport_Specification: result[i].transport_specification,
+              Transport_Mode: result[i].transport_mode,
+              Trip_Mode: result[i].trip_mode,
+              'Petrol/EV(RM)': Number(result[i].total_mileage).toFixed(2),
+              'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
+              Attachments: result[i].files,
+              comment: result[i].comment,
+              Tab_Title: 'Local Outstation',
+              unique_code: result[i].unique_code,
+            };
+            details.push(editedDetail);
+          }
+          if (details.length > 0) {
+            this.claimDatasDetails.push(details);
+            this.claimDataTotalAmount.push(amount);
+          }
+        } catch (e) {
+          console.error('Error fetching Local Outstation data:', e);
         }
-      });
 
-      // console.log(this.claimDatas, 'claimDatas');
-      // console.log(this.claimDatasDetails);
-    } catch (e) {
-      console.error('Error processing final claim data:', e);
-    }
-  } catch (e) {
-    console.error('Fatal error in FetchClaimDatasDetails:', e);
-  }
-}
-,
+        try {
+          const response = await axios.get(
+            'http://172.28.28.116:6239/api/User/GetOverseasOutstation/' +
+            this.referenceNumber
+          );
+          const result = response.data.result;
+          // console.log("Overseas data:", result);
+          let details = [];
+          let amount = 0;
+          for (let i in result) {
+
+            
+            const mealAllowance = result[i].meal_allowance || 0;
+            // const oemAmount = result[i].oem?.[0]?.amount || 0;
+            let oemTotal = 0;
+            if (Array.isArray(result[i].oem)) {
+              oemTotal = result[i].oem.reduce((sum, item) => {
+                return sum + (parseFloat(item.amount) || 0);
+              }, 0);
+            }
+
+            amount = Number(mealAllowance) + oemTotal;
+            // amount = result[i].meal_allowance + result[i].oem.amount;
+            const editedDetail = {
+              Date: result[i].date_event,
+              'Return_Date': result[i].return_date,
+              Description: result[i].description,
+              'Meal_Allowance_(RM)': Number(result[i].meal_allowance).toFixed(2),
+              'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
+              Others_Expenses: result[i].oem,
+              Attachments: result[i].files,
+              Tab_Title: 'Overseas Outstation',
+              comment: result[i].comment,
+              unique_code: result[i].unique_code,
+
+            };
+            details.push(editedDetail);
+            // console.log("editedDetails in overseas,", editedDetail);
+          }
+          // console.log("Amount oversears:",amount)
+          if (details.length > 0) {
+            this.claimDatasDetails.push(details);
+            this.claimDataTotalAmount.push(amount);
+          }
+        } catch (e) {
+          console.error('Error fetching Overseas Outstation data:', e);
+        }
+
+        try {
+          const response = await axios.get(
+            'http://172.28.28.116:6239/api/User/GetRefreshment/' +
+            this.referenceNumber
+          );
+          const result = response.data.result;
+          let details = [];
+          let amount = 0;
+          for (let i in result) {
+            amount += result[i].total_fee;
+            const editedDetail = {
+              'Type_of_Refreshment': result[i].refreshment_type,
+              Date: result[i].date_event,
+              'Reference': result[i].reference_type,
+              Venue: result[i].venue_name,
+              Company: result[i].company_name,
+              'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
+              Staff_Involved: result[i].sim,
+              Attachments: result[i].files,
+              comment: result[i].comment,
+              Tab_Title: 'Staff Refreshment',
+              unique_code: result[i].unique_code,
+            };
+            details.push(editedDetail);
+          }
+          if (details.length > 0) {
+            this.claimDatasDetails.push(details);
+            this.claimDataTotalAmount.push(amount);
+          }
+        } catch (e) {
+          console.error('Error fetching Refreshment data:', e);
+        }
+
+        try {
+          const response = await axios.get(
+            'http://172.28.28.116:6165/api/User/GetEntertainment/' +
+            this.referenceNumber
+          );
+          const result = response.data.result;
+        // console.log("Get entertainment", result);
+          let details = [];
+          let amount = 0;
+          for (let i in result) {
+            amount += result[i].total_fee;
+            const editedDetail = {
+              'Type_of_Refreshment': result[i].entertainment_type,
+              Date: result[i].date_event,
+              'Reference': result[i].description,
+              Venue: result[i].venue_name,
+              Company: result[i].company_name,
+              'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
+              Participants: result[i].participants,
+              Attachments: result[i].files,
+              comment: result[i].comment,
+              Tab_Title: 'Entertainment',
+              unique_code: result[i].unique_code,
+            };
+            details.push(editedDetail);
+          }
+          if (details.length > 0) {
+            this.claimDatasDetails.push(details);
+            this.claimDataTotalAmount.push(amount);
+            
+          }
+        } catch (e) {
+          console.error('Error fetching Entertainment data:', e);
+        }
+
+        try {
+          const response = await axios.get(
+            'http://172.28.28.116:6165/api/User/GetMedicalLeave/' +
+            this.referenceNumber
+          );
+          const result = response.data.result;
+          let details = [];
+          let amount = 0;
+          for (let i in result) {
+            amount += result[i].claim_amount;
+            const editedDetail = {
+              IC_Number: result[i].ic_number,
+              'Medical_Category': result[i].medical_category,
+              'Reason': result[i].reason,
+              Date: result[i].date_leave_taken,
+              'Clinic_Name': result[i].clinic_name
+                ? result[i].clinic_name
+                : result[i].clinic_selection,
+              'Reason_Different_Clinic': result[i].reason_different,
+              'Bank_Name': result[i].bank_name,
+              'Bank_Holder': result[i].bank_holder,
+              'Bank_Account': result[i].bank_account,
+              'Total_Fee(RM)': Number(result[i].claim_amount).toFixed(2),
+              Attachments: result[i].files,
+              Tab_Title: 'Medical Leave',
+              comment: result[i].comment,
+              unique_code: result[i].unique_code,
+            };
+            details.push(editedDetail);
+          }
+          if (details.length > 0) {
+            this.claimDatasDetails.push(details);
+            this.claimDataTotalAmount.push(amount);
+          }
+        } catch (e) {
+          console.error('Error fetching Medical Leave data:', e);
+        }
+
+        try {
+          const response = await axios.get(
+            'http://172.28.28.116:6165/api/User/GetHandphone/' + this.referenceNumber
+          );
+          const result = response.data.result;
+          let details = [];
+          let amount = 0;
+          for (let i in result) {
+            amount += result[i].claim_amount;
+            const editedDetail = {
+              IC_Number: result[i].ic_number,
+              Claim_Month: result[i].claim_month,
+              Claim_Year: result[i].claim_year,
+              'Bank_Name': result[i].bank_name,
+              Bank_Holder: result[i].bank_holder,
+              Bank_Account: result[i].bank_account,
+              'Total_Fee(RM)': Number(result[i].claim_amount).toFixed(2),
+              Attachments: result[i].files,
+              Tab_Title: 'Handphone Bill',
+              comment: result[i].comment,
+              unique_code: result[i].unique_code,
+            };
+            details.push(editedDetail);
+          }
+          if (details.length > 0) {
+            this.claimDatasDetails.push(details);
+            this.claimDataTotalAmount.push(amount);
+          }
+        } catch (e) {
+          console.error('Error fetching Handphone data:', e);
+        }
+
+        try {
+          const response = await axios.get(
+            'http://172.28.28.116:6239/api/User/GetOthers/' + this.referenceNumber
+          );
+          const result = response.data.result;
+          let details = [];
+          let amount = 0;
+          for (let i in result) {
+          const fee = parseFloat(result[i].total_fee);
+          amount += isNaN(fee) ? 0 : fee;
+          const editedDetail = {
+            Description: result[i].description,
+            Date: result[i].expense_date,
+            'Total_Fee(RM)': isNaN(fee) ? '0.00' : fee.toFixed(2),
+            Attachments: result[i].files,
+            Tab_Title: 'Other',
+            comment: result[i].comment,
+            unique_code: result[i].unique_code,
+          };
+          details.push(editedDetail);
+        }
+          if (details.length > 0) {
+            this.claimDatasDetails.push(details);
+            this.claimDataTotalAmount.push(amount);
+          }
+        } catch (e) {
+          console.error('Error fetching Others data:', e);
+        }
+
+        // Process the final claim data
+        try {
+          this.claimDatasDetails.forEach((details, index) => {
+            if (details && details.length > 0) {
+              const claimData = {
+                No: index + 1,
+                Type: details[0].Tab_Title,
+                Amount: this.claimDataTotalAmount[index],
+              };
+              this.claimDatas.push(claimData);
+            }
+          });
+
+          // console.log(this.claimDatas, 'claimDatas');
+          // console.log(this.claimDatasDetails);
+        } catch (e) {
+          console.error('Error processing final claim data:', e);
+        }
+      } catch (e) {
+        console.error('Fatal error in FetchClaimDatasDetails:', e);
+      }
+    },
 
     PrintSummary() {
       print();
@@ -1420,7 +1406,7 @@ async FetchClaimDatasDetails() {
       this.pending = false;
 
       const userData = await this.GetUserData();
-   //   console.log(userData);
+      //console.log(userData);
       this.singleRemarks.forEach((remark) => {
         let data = {
           comment: remark.remark,
@@ -1447,13 +1433,12 @@ async FetchClaimDatasDetails() {
             data
           );
         } else if (remark.Tab_Title == 'Other') {
-          axios.put('http://172.28.28.116:6239/api/Verifier/VerifierOthers', data);
+          axios.put('http://172.28.28.116:6165/api/Admin/Approve_Comment_Others', data);
         }
       });
 
       if (AoR == 'Approve') {
         try {
-          this.approve = true;
           this.loadingText = 'Uploading';
           this.loading = true;
 
@@ -1461,43 +1446,49 @@ async FetchClaimDatasDetails() {
             approver_name: userData.userName,
             approver_designation: userData.designation,
             approver_department: userData.department,
-            approver_status: 'APPROVED BY FINANCE. WAITING FOR REIMBURSED',
+            approver_status: 'APPROVED BY FINANCE',
             approver_comment: this.remark ? this.remark : '',
 
-            requester_email: this.claimDetails.requester_email ? this.claimDetails.requester_email : 'test@gmail.com',
-            requester_name: this.claimDetails.requester_name ? this.claimDetails.requester_name : '-',
-            report_name: this.claimDetails.report_name ? this.claimDetails.report_name : '-',
-            verifier_email: this.claimDetails.verifier_email ? this.claimDetails.verifier_email : 'test@gmail.com',
-            reference_number: this.claimDetails.reference_number ? this.claimDetails.reference_number : '-',
+            requester_email: this.claimDetails.requester_email || 'test@gmail.com',
+            requester_name: this.claimDetails.requester_name || '-',
+            report_name: this.claimDetails.report_name || '-',
+            verifier_email: this.claimDetails.verifier_email || 'test@gmail.com',
+            reference_number: this.claimDetails.reference_number || '-',
           };
-      //    console.log(approveData);
 
           const response = await axios.put('http://172.28.28.116:6165/api/Admin/Approve_Claim_FN', approveData);
-          // if (response.status === 200) {
-          //   this.approveSuccess = true;
-          //   this.loading = false;
-          //   setTimeout(() => {
-          //     this.$router.push({ name: 'AdminDashboardpage' });
-          //   }, 2500);
-          // }
 
           if (response.status === 200) {
+            // Show success badge
             this.approveSuccess = true;
-            this.loading = false;
-            // console.log('Approved successful:', response.data);
 
+            // Hide after 2s
+            setTimeout(() => {
+              this.approveSuccess = false;
+            }, 2000);
+
+            // Fetch & refresh
             await this.FetchClaimDetails();
             await this.FetchClaimDatasDetails();
+
+            // Force state update for button logic
+            this.adminStatus = this.claimDetails.admin_status;
+            this.approvedFinance = this.adminStatus === 'APPROVED BY FINANCE. WAITING FOR REIMBURSED';
+            this.approved = true;
+            this.pending = false;
+
+            // Optional scroll
+            // window.scrollTo({ top: 0, behavior: 'smooth' });
           }
         } catch (error) {
-          console.error('Error during Reject:', {
+          console.error('Error during Approve:', {
             message: error.message,
             response: error.response?.data,
             status: error.response?.status
           });
+          this.loading = false;
         }
       } else if (AoR == 'Reject') {
-
         try {
           this.rejectApprover = true;
           this.loadingText = 'Uploading';

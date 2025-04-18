@@ -162,8 +162,8 @@
                 <tr class="h-8 text-left align-center text-xs hover:bg-gray-200 dark:hover:bg-gray-800"
                   v-for="(item, index) in detail" :key="index">
                   <td class="">
-                    <h1 id="remarkText" v-if="item.Remark" class="m-1 px-2 py-1 bg-sky-100 rounded-md dark:bg-sky-950 ">
-                      {{ item.Remark }}
+                    <h1 id="remarkText" v-if="item.comment" class="m-1 px-2 py-1 rounded-md dark:bg-sky-950 ">
+                      {{ item.comment }}
                     </h1>
                   </td>
                   <td class="text-center font-normal px-3 py-1 justify-center items-center " v-for="(val, key, i) in item" :key="i">
@@ -1102,12 +1102,13 @@ export default {
           for (let i in result) {
             amount += result[i].total_fee;
             const editedDetail = {
+              Date_Event: result[i].date_event,
+              'Return_Date': result[i].return_date,
               Starting_Point: result[i].starting_point,
               End_Point: result[i].end_point,
-              Date_Event: result[i].date_event,
               'Mileage(KM)': Number(result[i].mileage_km).toFixed(2),
               'Fare': Number(result[i].fare).toFixed(2),
-              'Meal_Allowance(RM)': Number(result[i].meal_allowance).toFixed(2),
+              'Meal_Allowance(RM)': result[i].meal_allowance,
               'Accomodation': result[i].accommodation,
               'Park_Fee(RM)': Number(result[i].park_fee).toFixed(2),
               'Toll_Fee(RM)': Number(result[i].toll_fee).toFixed(2),
@@ -1117,7 +1118,7 @@ export default {
               'Petrol/EV(RM)': Number(result[i].total_mileage).toFixed(2),
               'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
               Attachments: result[i].files,
-              Remark: result[i].comment,
+              'Remark': result[i].comment,
               Tab_Title: 'Local Outstation',
               unique_code: result[i].unique_code,
             };
@@ -1154,14 +1155,15 @@ export default {
             amount = Number(mealAllowance) + oemTotal;
             // amount = result[i].meal_allowance + result[i].oem.amount;
             const editedDetail = {
+              Date: result[i].date_event,
+              'Return_date': result[i].return_date,
               Description: result[i].description,
               'Meal_Allowance_(RM)': Number(result[i].meal_allowance).toFixed(2),
-              Date: result[i].date_event,
               'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
               Other_Expenses: result[i].oem,
               Attachments: result[i].files,
               Tab_Title: 'Overseas Outstation',
-              Remark: result[i].comment,
+              comment: result[i].comment,
               unique_code: result[i].unique_code,
 
             };
@@ -1188,15 +1190,15 @@ export default {
           for (let i in result) {
             amount += result[i].total_fee;
             const editedDetail = {
-              Type: result[i].refreshment_type,
+              'Type_of_Refreshment': result[i].refreshment_type,
               Date: result[i].date_event,
-              Reference_Type: result[i].reference_type,
+              'Reference': result[i].reference_type,
               Venue: result[i].venue_name,
               Company: result[i].company_name,
               'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
               Staff_Involved: result[i].sim,
               Attachments: result[i].files,
-              Remark: result[i].comment,
+              comment: result[i].comment,
               Tab_Title: 'Staff Refreshment',
               unique_code: result[i].unique_code,
             };
@@ -1222,14 +1224,15 @@ export default {
           for (let i in result) {
             amount += result[i].total_fee;
             const editedDetail = {
-              Type: result[i].entertainment_type,
+              'Type_of_Entertainment': result[i].entertainment_type,
               Date: result[i].date_event,
+              'Reference': result[i].description,
               Venue: result[i].venue_name,
               Company: result[i].company_name,
               'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
               Participants: result[i].participants,
               Attachments: result[i].files,
-              Remark: result[i].comment,
+              comment: result[i].comment,
               Tab_Title: 'Entertainment',
               unique_code: result[i].unique_code,
             };
@@ -1255,19 +1258,21 @@ export default {
           for (let i in result) {
             amount += result[i].claim_amount;
             const editedDetail = {
-              reason: result[i].reason,
+              IC_Number: result[i].ic_number,
+              'Medical_Category': result[i].medical_category,
+              'Reason': result[i].reason,
               Date: result[i].date_leave_taken,
-              clinicselection: result[i].clinic_name
+              'Clinic_Name': result[i].clinic_name
                 ? result[i].clinic_name
                 : result[i].clinic_selection,
-              reason_other_clinic: result[i].reason_different,
-              bank_name: result[i].bank_name,
-              bank_holder: result[i].bank_holder,
-              bank_account: result[i].bank_account,
-              'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
+              'Reason_Different_Clinic': result[i].reason_different,
+              'Bank_Name': result[i].bank_name,
+              'Bank_Holder': result[i].bank_holder,
+              'Bank_Account': result[i].bank_account,
+              'Total_Fee(RM)': Number(result[i].claim_amount).toFixed(2),
               Attachments: result[i].files,
               Tab_Title: 'Medical Leave',
-              Remark: result[i].comment,
+              comment: result[i].comment,
               unique_code: result[i].unique_code,
             };
             details.push(editedDetail);
@@ -1290,15 +1295,16 @@ export default {
           for (let i in result) {
             amount += result[i].claim_amount;
             const editedDetail = {
+              IC_Number: result[i].ic_number,
               Claim_Month: result[i].claim_month,
               Claim_Year: result[i].claim_year,
-              Bank: result[i].bank_name,
+              'Bank_Name': result[i].bank_name,
               Bank_Holder: result[i].bank_holder,
               Bank_Account: result[i].bank_account,
-              'Claim_Amount(RM)': Number(result[i].claim_amount).toFixed(2),
+              'Total_Fee(RM)': Number(result[i].claim_amount).toFixed(2),
               Attachments: result[i].files,
               Tab_Title: 'Handphone Bill',
-              Remark: result[i].comment,
+              comment: result[i].comment,
               unique_code: result[i].unique_code,
             };
             details.push(editedDetail);
@@ -1321,12 +1327,13 @@ export default {
           for (let i in result) {
             amount += result[i].total_fee;
             const editedDetail = {
+              'Expense_Name': result[i].expense_name,
               Description: result[i].description,
               Date: result[i].expense_date,
               'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
               Attachments: result[i].files,
               Tab_Title: 'Other',
-              Remark: result[i].comment,
+              comment: result[i].comment,
               unique_code: result[i].unique_code,
             };
             details.push(editedDetail);

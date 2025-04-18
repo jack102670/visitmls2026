@@ -1411,10 +1411,11 @@ export default {
     },
 
     isOtherEntertainment() {
-      const validTypes = ["BREAKFAST", "LUNCH", "DINNER", "TEA BREAK"];
-      return validTypes.includes(
-        this.entertainmentDetails.TypeofEntertainmentE
-      ) && this.entertainmentDetails.TypeofEntertainmentE !== "OTHERS";
+      // const validTypes = ["BREAKFAST", "LUNCH", "DINNER", "TEA BREAK"];
+      // return validTypes.includes(
+      //   this.entertainmentDetails.TypeofEntertainmentE
+      // ) && 
+      return this.entertainmentDetails.TypeofEntertainmentE !== "OTHERS";
     },
 
     isOtherStaffRefreshment() {
