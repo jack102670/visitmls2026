@@ -1553,6 +1553,7 @@ export default {
   created() {
     this.fetchProfileData();
     this.fetchClaims();
+    // console.log("Claims2:", this.claims);
     this.userDetails = store.getSession().userDetails;
   },
 
@@ -1570,6 +1571,7 @@ export default {
     } else if (element && openOrNot == "true") {
       element.classList.remove("become-big");
     }
+
   },
 
   methods: {
@@ -1620,7 +1622,7 @@ export default {
     async fetchEmployeeID() {
       try {
         const response = await axios.get(
-          "http://172.28.28.116:6239/api/User/GetAllEmployees"
+          " http://172.28.28.116:6239/api/User/GetAllEmployees"
         );
 
         if (response.data.result && response.data.result.length > 0) {
@@ -1772,23 +1774,58 @@ export default {
       }
     },
     fetchClaims() {
-      const formData = formStore.getFormData();
+      try {
+        const formData = formStore.getFormData();
 
-      if (formData.claimantName !== "") {
-        this.claims = [formData];
-        localStorage.setItem("claims", JSON.stringify(this.claims));
-        console.log("Claims data:", this.claims);
-      } else {
-        const storedClaims = JSON.parse(localStorage.getItem("claims")) || [];
-        this.claims = storedClaims;
+        // Log for debugging purposes
+        console.log("Fetched form data from store:", formData);
+
+        const isValidFormData = formData &&
+          formData.claimantName &&
+          formData.companyName &&
+          formData.reportName &&
+          formData.designation &&
+          formData.department;
+
+        if (isValidFormData) {
+          this.claims = [formData];
+
+          // Store the new valid form data
+          localStorage.setItem("claims", JSON.stringify(this.claims));
+          console.log("Valid form data saved to localStorage.");
+        } else {
+          // Fallback to local storage if form data is incomplete
+          const storedClaims = JSON.parse(localStorage.getItem("claims")) || [];
+          this.claims = storedClaims;
+
+          if (!this.claims.length || !this.claims[0].reportName) {
+            console.warn("Missing or invalid claim data from both store and localStorage.");
+            Swal.fire({
+              icon: 'error',
+              title: 'Missing Claim Information',
+              text: 'Unable to load claim data. Please fill out the report form again.',
+              confirmButtonColor: '#d33',
+            });
+          }
+        }
+
+        console.log("Final claims data used:", this.claims);
+      } catch (error) {
+        console.error("Error fetching claims data:", error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Something went wrong while loading claim data.',
+          confirmButtonColor: '#d33',
+        });
       }
-      //  console.log("Claims:", this.claims);
     },
+
 
     async fetchProfileData() {
       try {
         const userId = store.getSession().userDetails.userId; // Get the user ID from the session
-        const response = await axios.get(`http://172.28.28.116:6239/api/User/GetEmployeeById/${userId}`);
+        const response = await axios.get(` http://172.28.28.116:6239/api/User/GetEmployeeById/${userId}`);
         if (response.status === 200 && response.data.result.length > 0) {
           const profileData = response.data.result[0];
           this.requesterEmail = profileData.email_address; // Assign the email_address to a data property
@@ -1803,8 +1840,13 @@ export default {
       return this.dataclaims.length > 0;
     },
 
+    hasAtLeastOneFilledClaim() {
+      return this.dataclaims && this.dataclaims.length > 0;
+    },
+
 
     async senttheclaim() {
+      // Step 1: Check if claim data exists at all
       if (!this.isValidClaimData()) {
         Swal.fire({
           icon: 'warning',
@@ -1815,28 +1857,43 @@ export default {
         return;
       }
 
+      // Step 2: Check if at least one claim form is filled in from sendToAPI (dataclaims)
+      const hasFilledClaimForm = this.dataclaims && this.dataclaims.length > 0 && this.dataclaims.some(claim => {
+        // Check if there's any non-empty value in the form
+        return Object.values(claim).some(v => v !== null && v !== undefined && String(v).trim() !== "");
+      });
+
+      if (!hasFilledClaimForm) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'No Claim Form Filled',
+          text: 'Please fill in at least one claim form (Local, Overseas, etc.) before submitting.',
+          confirmButtonColor: '#d33',
+        });
+        return;
+      }
+
       this.loadingText = "Uploading";
       this.loading = true;
 
       try {
-        // Fetch the reference number
+        // Step 3: Get reference number
         const referenceNumber = await this.fetchSerialNumber();
         if (!referenceNumber) {
           throw new Error("Failed to fetch reference number.");
         }
         this.serialnumber = referenceNumber;
 
-        // Upload files
+        // Step 4: Upload any files (if needed)
         await this.sendFiles(this.userDetails.userId, referenceNumber);
 
-        // Prepare the API payload
+        // Step 5: Build payload
         const apiData = {
           name: this.claims[0].claimantName,
           company_name: this.claims[0].companyName,
           department: this.claims[0].department,
           designation_title: this.claims[0].designation,
           employee_id: this.employeeID,
-          //requester_email: store.getSession().userDetails.email,
           requester_email: this.requesterEmail,
           reference_number: referenceNumber,
           report_name: this.claims[0].reportName,
@@ -1847,8 +1904,8 @@ export default {
         };
 
         console.log("API Data:", apiData);
-        
-        // Send the claim details to the API
+
+        // Step 6: Submit InsertClaimDetails
         const response = await axios.post(
           "http://172.28.28.116:6239/api/User/InsertClaimDetails",
           apiData
@@ -1859,7 +1916,9 @@ export default {
             throw new Error(response.data.message);
           }
 
-          // Proceed to send grouped claims
+          console.log("Claim submitted successfully:", response.data);
+
+          // Step 7: Proceed to detailed claim form submission
           await this.sendToAPI();
 
           Swal.fire({
@@ -1871,8 +1930,9 @@ export default {
             confirmButtonColor: '#3085d6',
           });
 
-          // Optionally reset the form
+          // Optional: Reset form
           // this.resetClaimsAfterSubmit();
+
         } else {
           throw new Error(`Unexpected response status: ${response.status}`);
         }
@@ -1933,9 +1993,10 @@ export default {
                     meal_allowance: String(claim.MealAllowanceLT || "-"),
                     accommodation: claim.AccommodationLT || "-",
                   };
+                  console.log("Local Travelling Payload :", payload);
 
                   const axiosInstance = axios.create({
-                    baseURL: "http://172.28.28.116:6239/api/User/InsertLocalOutstation",
+                    baseURL: " http://172.28.28.116:6239/api/User/InsertLocalOutstation",
                   });
 
                   await axiosInstance.post("/", payload);
@@ -1982,9 +2043,10 @@ export default {
                         }))
                       : [],
                   };
+                  console.log("Overseas Travelling Payload :", payload);
 
                   const axiosInstance = axios.create({
-                    baseURL: "http://172.28.28.116:6239/api/User/InsertOverseasOutstation",
+                    baseURL: " http://172.28.28.116:6239/api/User/InsertOverseasOutstation",
                   });
 
                   await axiosInstance.post("/", payload);
@@ -2024,6 +2086,7 @@ export default {
                         }))
                       : [],
                   };
+                  console.log("Entertainment Payload :", payload);
 
                   const axiosInstance = axios.create({
                     baseURL: "http://172.28.28.116:6165/api/User/InsertEntertainment",
@@ -2058,9 +2121,10 @@ export default {
                         }))
                       : [],
                   };
+                  console.log("Staff Refreshment Payload :", payload);
 
                   const axiosInstance = axios.create({
-                    baseURL: "http://172.28.28.116:6239/api/User/InsertStaffRefreshment",
+                    baseURL: " http://172.28.28.116:6239/api/User/InsertStaffRefreshment",
                   });
 
                   await axiosInstance.post("/", payload);
@@ -2084,9 +2148,10 @@ export default {
                     requester_id: this.userDetails.userId,
                     expense_name: claim.ExpenseNameOthers,
                   };
+                  console.log("Others Payload :", payload);
 
                   const axiosInstance = axios.create({
-                    baseURL: "http://172.28.28.116:6239/api/User/InsertOthers",
+                    baseURL: " http://172.28.28.116:6239/api/User/InsertOthers",
                   });
 
                   await axiosInstance.post("/", payload);
@@ -2113,6 +2178,8 @@ export default {
                     requester_id: this.userDetails.userId,
                     unique_code: uniqueCodeHR,
                   };
+
+                  console.log("Handphone Bill Reimbursement Payload :", payload);
 
                   const axiosInstance = axios.create({
                     baseURL: "http://172.28.28.116:6165/api/User/InsertHandphoneReimburse",

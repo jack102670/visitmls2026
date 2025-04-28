@@ -100,7 +100,7 @@
                       </th>
                       <th scope="col"
                         class="px-2 py-3.5 text-center text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <span>Edit</span>
+                        <span>View</span>
                       </th>
                     </tr>
                   </thead>
@@ -417,6 +417,7 @@ export default {
         VERIFIED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
         PENDING: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
         REIMBURSED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-gray-100 dark:bg-gray-800',
+        CHECKED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
         'CHECKED BY CHECKER. WAITING FOR VERIFIER': 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
       };
       return colorMap[status] || 'bg-orange-100/60 dark:bg-gray-800';
@@ -431,6 +432,7 @@ export default {
         PENDING: 'h-1.5 w-1.5 rounded-full bg-orange-500',
         VERIFIED: 'h-1.5 w-1.5 rounded-full bg-orange-500',
         REIMBURSED: 'h-1.5 w-1.5 rounded-full bg-black',
+        CHECKED: 'h-1.5 w-1.5 rounded-full bg-orange-500',
         'CHECKED BY CHECKER. WAITING FOR VERIFIER': 'h-1.5 w-1.5 rounded-full bg-orange-500',
       };
       const className = colorMap[status] || 'bg-orange-500';
@@ -447,6 +449,7 @@ export default {
         PENDING: 'text-sm font-normal text-orange-500',
         REIMBURSED: 'text-sm font-normal text-black',
         VERIFIED: 'text-sm font-normal text-orange-500',
+        CHECKED: 'text-sm font-normal text-orange-500',
         'CHECKED BY CHECKER. WAITING FOR VERIFIER': 'text-sm font-normal text-orange-500',
       };
       const className = colorMap[status] || 'text-orange-500';

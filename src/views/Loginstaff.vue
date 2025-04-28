@@ -175,8 +175,8 @@ export default {
             redirectPath = "/homepage";
           }
 
-          store.setSession(userDetails, token, role);
-
+          store.setSession(userDetails, role);
+          localStorage.setItem('token', token);
 
           await Swal.fire({
             icon: "success",
@@ -186,7 +186,9 @@ export default {
             confirmButtonText: 'OK',
             confirmButtonColor: '#3085d6'
           }).then(() => {
-            this.$router.push(redirectPath);
+            this.$router.push(redirectPath).then(() => {
+              window.location.reload(); // reload after redirect
+            });
           })
           
 

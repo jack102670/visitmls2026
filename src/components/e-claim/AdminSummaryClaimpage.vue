@@ -264,36 +264,26 @@
             </thead>
 
             <!-- CHECKED -->
-            <tr v-show="claimDetails.checker_name !== ''" class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+            <tr v-if="claimDetails.checker_name !== null"
+              class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
-                <div class="mx-auto text-xs rounded-full py-2 my-1 w-fit inline-flex items-center px-3 gap-x-2"
+                <div
+                  class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
                   :class="{
-                    'bg-blue-100/60 dark:bg-gray-800': checked,
-                    'bg-amber-100/60 dark:bg-gray-800': resubmitChecker,
-                    'bg-red-100/60 dark:bg-gray-800': rejectChecker,
-                    'bg-gray-100/60 dark:bg-gray-800': !checked && !rejectChecker && !resubmitChecker
+                    'bg-orange-100/60 dark:bg-gray-800': simplifiedCheckerStatus === 'CHECKED' || simplifiedCheckerStatus === 'PENDING' || simplifiedCheckerStatus === 'RESUBMIT',
+                    'bg-red-100/60 dark:bg-gray-800': simplifiedCheckerStatus === 'REJECTED'
                   }">
-                  <span class="h-1.5 w-1.5 rounded-full"
-                    :class="{
-                      'bg-blue-500': checked,
-                      'bg-amber-500': resubmitChecker,
-                      'bg-red-500': rejectChecker,
-                      'bg-gray-500': !checked && !rejectChecker && !resubmitChecker
-                    }"></span>
-                  <span
-                    :class="{
-                      'text-blue-500': checked,
-                      'text-amber-500': resubmitChecker,
-                      'text-red-500': rejectChecker,
-                      'text-gray-500': !checked && !rejectChecker && !resubmitChecker
-                    }">
-                    {{
-                      approved || approvedFinance || reimbursed
-                        ? 'CHECKED'
-                        : checked || rejectChecker || resubmitChecker
-                          ? adminStatus.includes('CHECKED') ? 'CHECKED' : adminStatus
-                          : 'PENDING'
-                    }}
+                  <span :class="{
+                    'h-1.5 w-1.5 rounded-full': true,
+                    'bg-orange-500': simplifiedCheckerStatus === 'CHECKED' || simplifiedCheckerStatus === 'PENDING' || simplifiedCheckerStatus === 'RESUBMIT',
+                    'bg-red-500': simplifiedCheckerStatus === 'REJECTED'
+                  }"></span>
+                  <span :class="{
+                    'text-xs font-normal': true,
+                    'text-orange-500': simplifiedCheckerStatus === 'CHECKED' || simplifiedCheckerStatus === 'PENDING' || simplifiedCheckerStatus === 'RESUBMIT',
+                    'text-red-500': simplifiedCheckerStatus === 'REJECTED'
+                  }">
+                    {{ simplifiedCheckerStatus }}
                   </span>
                 </div>
               </th>
@@ -531,7 +521,7 @@
                 d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.745 3.745 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
             </svg>
 
-            <h1>VERIFIED SUCCESSFULLY</h1>
+            <h1>APPROVED SUCCESSFULLY</h1>
           </div>
         </div>
 
@@ -911,6 +901,8 @@ export default {
         case 'APPROVED BY FINANCE':
         case 'REIMBURSED':
         case 'VERIFIED. WAITING FOR APPROVER.':
+        case 'CHECKED BY CHECKER. WAITING FOR VERIFIER':
+        case 'REJECTED BY FINANCE':
           return 'VERIFIED';
         case 'REJECTED BY VERIFIER.':
           return 'REJECTED';
@@ -920,6 +912,28 @@ export default {
           return 'PENDING';
         default:
           return this.adminStatus;
+      }
+    },
+
+    simplifiedCheckerStatus() {
+      const status = this.adminStatus?.trim()?.toUpperCase();
+      switch (status) {
+        case 'CHECKED BY CHECKER. WAITING FOR VERIFIER':
+        case 'VERIFIED. WAITING FOR APPROVER.':
+        case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
+        case 'REIMBURSED':
+        case 'REJECTED BY VERIFIER.':
+        case 'REJECTED BY FINANCE':
+          return 'CHECKED';
+        case 'REJECTED BY CHECKER':
+          return 'REJECTED';
+        case 'RESUBMIT REQUESTED BY FINANCE':
+        case 'RESUBMIT':
+          return 'RESUBMIT';
+        case 'OPEN':
+          return 'PENDING';
+        default:
+          return 'PENDING';
       }
     },
 
@@ -1049,7 +1063,7 @@ export default {
       try {
         try {
           const response = await axios.get(
-            'http://172.28.28.116:6239/api/User/GetLocalOutstation/' +
+            ' http://172.28.28.116:6239/api/User/GetLocalOutstation/' +
             this.referenceNumber
           );
           const result = response.data.result;
@@ -1092,7 +1106,7 @@ export default {
 
         try {
           const response = await axios.get(
-            'http://172.28.28.116:6239/api/User/GetOverseasOutstation/' +
+            ' http://172.28.28.116:6239/api/User/GetOverseasOutstation/' +
             this.referenceNumber
           );
           const result = response.data.result;
@@ -1140,7 +1154,7 @@ export default {
 
         try {
           const response = await axios.get(
-            'http://172.28.28.116:6239/api/User/GetRefreshment/' +
+            ' http://172.28.28.116:6239/api/User/GetRefreshment/' +
             this.referenceNumber
           );
           const result = response.data.result;
@@ -1278,7 +1292,7 @@ export default {
 
         try {
           const response = await axios.get(
-            'http://172.28.28.116:6239/api/User/GetOthers/' + this.referenceNumber
+            ' http://172.28.28.116:6239/api/User/GetOthers/' + this.referenceNumber
           );
           const result = response.data.result;
           let details = [];
@@ -1361,7 +1375,7 @@ export default {
       const username_id = store.getSession().userDetails.userId;
       let userData;
       await axios
-        .get(`http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`)
+        .get(` http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           userData = {
             userName: response.data.result[0].name,
@@ -1374,33 +1388,66 @@ export default {
       return userData;
     },
     // If any single remark is change, save in the array
-    UpdateSingleRemark(event, uc, tab) {
-    //  console.log(this.singleRemarks);
+    // UpdateSingleRemark(event, uc, tab) {
+    // //  console.log(this.singleRemarks);
 
-      let index = this.singleRemarks.findIndex(
-        (item) => item.unique_code == uc
-      );
-      let data = {
-        remark: event.target.value,
+    //   let index = this.singleRemarks.findIndex(
+    //     (item) => item.unique_code == uc
+    //   );
+    //   let data = {
+    //     remark: event.target.value,
+    //     unique_code: uc,
+    //     Tab_Title: tab,
+    //   };
+
+    //   if (index !== -1) {
+    //     if (data.remark.trim() === '') {
+    //       // Remove the item if the remark is empty
+    //       this.singleRemarks.splice(index, 1);
+    //     } else {
+    //       // Update the existing remark
+    //       this.singleRemarks[index] = { ...this.singleRemarks[index], ...data };
+    //     }
+    //   } else {
+    //     // Only push new data if the remark is not empty
+    //     if (data.remark.trim() !== '') {
+    //       this.singleRemarks.push(data);
+    //     }
+    //   }
+    // },
+
+    UpdateSingleRemark(event, uc, tab) {
+      const value = event.target.value;
+
+      // Reflect the change directly into the item in `claimDatasDetails`
+      for (let section of this.claimDatasDetails) {
+        const item = section.find(x => x.unique_code === uc && x.Tab_Title === tab);
+        if (item) {
+          item.comment = value; // Vue will update this reactively
+          break;
+        }
+      }
+
+      // Now also update the singleRemarks tracking array
+      const index = this.singleRemarks.findIndex(item => item.unique_code === uc);
+
+      const data = {
+        remark: value,
         unique_code: uc,
         Tab_Title: tab,
       };
 
       if (index !== -1) {
         if (data.remark.trim() === '') {
-          // Remove the item if the remark is empty
           this.singleRemarks.splice(index, 1);
         } else {
-          // Update the existing remark
           this.singleRemarks[index] = { ...this.singleRemarks[index], ...data };
         }
-      } else {
-        // Only push new data if the remark is not empty
-        if (data.remark.trim() !== '') {
-          this.singleRemarks.push(data);
-        }
+      } else if (data.remark.trim() !== '') {
+        this.singleRemarks.push(data);
       }
     },
+
 
     //approve or reject action
     // need to post to database

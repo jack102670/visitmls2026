@@ -129,6 +129,8 @@
 
 <script>
 import Swal from 'sweetalert2';
+import { store } from '@/views/store.js';
+import axios from 'axios';
 export default {
 
   props: {
@@ -136,7 +138,8 @@ export default {
   },
   data() {
     return {
-      assignedCheckers: [],
+      userDetails: [],
+      // assignedCheckers: [],
       checkers: [],
       searchQuery: "",
       itemsPerPage: 10,
@@ -195,10 +198,26 @@ export default {
     },
   },
   methods: {
-    loadCheckers() {
-      const storedCheckers = localStorage.getItem("assignedCheckers");
-      this.checkers = storedCheckers ? JSON.parse(storedCheckers) : [];
-      console.log('Checkers:', this.checkers);
+    async loadCheckers() {
+      const userId = this.userDetails.userId;
+      try {
+        const response = await fetch(`http://172.28.28.116:6165/api/ApproverVerifier/GetAssignChecker/${userId}`);
+        const data = await response.json();
+
+        if (response.ok && data.result) {
+          this.checkers = data.result.map(c => ({
+            checkerId: c.checker_id,
+            checkerName: c.checker_name,
+            startDate: c.start_date,
+            endDate: c.end_date
+          }));
+        } else {
+          this.checkers = [];
+        }
+      } catch (err) {
+        console.error("Error fetching checkers:", err);
+        this.checkers = [];
+      }
     },
     filterData() {
       this.currentPage = 1;
@@ -223,12 +242,13 @@ export default {
     goToPage(page) {
       this.currentPage = page;
     },
-    deleteChecker(index) {
+    async deleteChecker(index) {
       const checkerToDelete = this.checkers[index];
+      const userId = this.userDetails.userId;
 
       Swal.fire({
         title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        text: `You are about to remove ${checkerToDelete.checkerName} as checker.`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -237,43 +257,43 @@ export default {
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
-            this.checkers.splice(index, 1);
-            if (this.checkers.length === 0) {
-              localStorage.removeItem('assignedCheckers');
-            } else {
-              localStorage.setItem('assignedCheckers', JSON.stringify(this.checkers));
-            }
+            await axios.put(`http://172.28.28.116:6165/api/Admin/DeleteAssignChecker/${userId}`, {
+              checker_userId: checkerToDelete.checkerId
+            });
+
+            await this.loadCheckers(); // Refresh from API
+
             await Swal.fire({
               icon: 'success',
               title: 'Deleted!',
-              text: `${checkerToDelete.checkerName} has been removed as checker.`,
+              text: `${checkerToDelete.checkerName} has been removed.`,
               confirmButtonColor: '#3085d6',
               timer: 1500,
               timerProgressBar: true
             });
-          } catch (error) {
-            console.error('Error deleting checker:', error);
 
+            this.$router.push('/assignchecker');
+
+          } catch (error) {
+            console.error("Error deleting checker:", error);
             await Swal.fire({
               icon: 'error',
               title: 'Delete Failed',
               text: 'Failed to remove checker. Please try again.',
               confirmButtonColor: '#3085d6'
             });
-
-            this.loadCheckers();
           }
         }
       });
     }
-
   },
   mounted() {
+    this.userDetails = store.getSession().userDetails;
     this.loadCheckers();
-    window.addEventListener("storage", this.loadCheckers);
+    // window.addEventListener("storage", this.loadCheckers);
   },
   beforeUnmount() {
-    window.removeEventListener("storage", this.loadCheckers);
+    // window.removeEventListener("storage", this.loadCheckers);
   }
 };
 </script>

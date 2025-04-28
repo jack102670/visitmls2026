@@ -3,7 +3,7 @@
       <div v-if="isOpen" class="fixed inset-0 bg-black bg-opacity-50 z-50" @click="closeSlideOver"></div>
     </transition>
     <transition name="slide">
-      <div v-if="isOpen" class="fixed inset-y-0 right-0 w-1/3 bg-white dark:bg-gray-800 z-50 p-6 overflow-y-auto">
+      <div v-if="isOpen" class="fixed inset-y-0 right-0 w-1/3 bg-white dark:bg-gray-800 z-50 p-6">
         <div class="flex justify-end items-center mb-2">
           <button @click="closeSlideOver" class="text-gray-500 hover:text-gray-700">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -191,11 +191,12 @@
     </transition>
   </template>
   
-  <script>
-  import moment from 'moment';
+<script>
+import moment from 'moment';
 import axios from 'axios';
 import { store } from '@/views/store.js';
 import Swal from 'sweetalert2';
+import { check } from 'prettier';
 
   export default {
     emits: ['update:chosenDepartment', 'update:checkerName', 'close', 'checkerAdded', 'closeSlideOver'],
@@ -266,14 +267,17 @@ import Swal from 'sweetalert2';
 
     methods: {
       closeSlideOver() {
+        this.resetForm();
         this.$emit('close');
       },
       async GetAllDepartments() {
       try {
         const response = await axios.get(
-          "http://172.28.28.116:6239/api/User/GetDepartment"
+          " http://172.28.28.116:6239/api/User/GetDepartment"
         );
-        this.AllDepartments = response.data.result.map((item) => item.department);
+        const departments = response.data.result.map((item) => item.department);
+
+        this.AllDepartments = [...new Set(departments)];
         this.GetAllEmployees();
       } catch (error) {
         console.error("Error fetching departments:", error);
@@ -282,10 +286,20 @@ import Swal from 'sweetalert2';
 
     async GetAllEmployees() {
       try {
-        const response = await axios.get(
-          "http://172.28.28.116:6239/api/User/GetAllEmployees"
-        );
-        this.AllEmployees = response.data.result;
+        const response = await axios.get("http://172.28.28.116:6239/api/User/GetAllEmployees");
+
+        const allEmployees = response.data.result;
+
+        // Remove duplicates based on username_id using a Map
+        const uniqueEmployeesMap = new Map();
+        allEmployees.forEach(emp => {
+          if (!uniqueEmployeesMap.has(emp.username_id)) {
+            uniqueEmployeesMap.set(emp.username_id, emp);
+          }
+        });
+
+        this.AllEmployees = Array.from(uniqueEmployeesMap.values());
+
       } catch (error) {
         console.error("Error fetching employees:", error);
       }
@@ -316,77 +330,54 @@ import Swal from 'sweetalert2';
         return;
       }
 
-      const newChecker = {
-        checkerName: this.checkerName,
-        startDate: moment(this.startDate).format("DD MMMM YYYY"),
-        endDate: moment(this.endDate).format("DD MMMM YYYY"),
-        chosenDepartment: this.chosenDepartment,
-      };
-
       const username_id = store.getSession().userDetails.userId;
-      const result = this.FilteredEmployees.find(
+      const selectedChecker = this.FilteredEmployees.find(
         (person) => person.name === this.checkerName
       );
 
       const formattedEndDate = this.duration === 'permanent' ? '-' : moment(this.endDate).format("DD MMMM YYYY");
 
       const data = {
-        checker_userId: result.id,
+        checker_userId: selectedChecker.id,
         start_date: moment(this.startDate).format("DD MMMM YYYY"),
-        end_date: formattedEndDate,
+        end_date: formattedEndDate
       };
 
-      console.log("Data to be updated:", data);
-
       try {
-        const response = await axios.put(
-          `http://172.28.28.116:7165/api/Admin/AssignChecker/${username_id}`,
+        await axios.put(
+          `http://172.28.28.116:6165/api/Admin/AssignChecker/${username_id}`,
           data
         );
-           console.log("Data successfully updated:", response);
-
-           let storedCheckers = localStorage.getItem('assignedCheckers');
-           storedCheckers = storedCheckers ? JSON.parse(storedCheckers) : [];
-
-        storedCheckers.push(newChecker);
-
-
-        localStorage.setItem('assignedCheckers', JSON.stringify(storedCheckers));
-        this.loadCheckersFromLocalStorage();
-
-        this.Checkers = storedCheckers;
 
         this.resetForm();
-
         this.$emit("checkerAdded");
 
         await Swal.fire({
           icon: 'success',
           title: 'Success!',
-          text: `Checker ${this.checkerName} has been successfully assigned`,
+          text: `Checker ${this.checkerName} has been successfully assigned.`,
           confirmButtonColor: '#3085d6',
           timer: 2000,
           timerProgressBar: true
         });
+
         this.$emit("closeSlideOver");
 
       } catch (error) {
-        console.error("Error updating data:", error);
-
+        console.error("Error assigning checker:", error);
         await Swal.fire({
           icon: 'error',
-          title: 'Update Failed',
+          title: 'Assignment Failed',
           text: 'Failed to assign checker. Please try again.',
           confirmButtonColor: '#3085d6'
         });
-        this.$emit("closeSlideOver");
       }
     },
 
-    loadCheckersFromLocalStorage() {
-      const storedCheckers = localStorage.getItem("assignedCheckers");
-      this.checkers = storedCheckers ? JSON.parse(storedCheckers) : [];
-    },
+    // loadCheckersFromLocalStorage() {
+    //   const storedCheckers = localStorage.getItem("assignedCheckers");
+    //   this.checkers = storedCheckers ? JSON.parse(storedCheckers) : [];
+    // },
 
     resetForm() {
       this.checkerName = "";
@@ -495,7 +486,7 @@ import Swal from 'sweetalert2';
   },
   mounted() {
     this.GetAllDepartments();
-    this.loadCheckersFromLocalStorage();
+    // this.loadCheckersFromLocalStorage();
   },
   };
   </script>

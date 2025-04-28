@@ -163,30 +163,31 @@
                 <!-- table information -->
                 <tr class="h-8 text-left align-top text-xs hover:bg-gray-200 dark:hover:bg-gray-800"
                   v-for="(item, index) in detail" :key="index">
-                  <!-- <td>
-                    <input @input="
-                      UpdateSingleRemark(
-                        $event,
-                        item.unique_code,
-                        item.Tab_Title
-                      )
-                      " v-if="pending" type="text"
-                      class="p-1 text-xs w-full rounded-md outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border" />
-                      <h1 id="remarkText" v-if="!pending && item.comment && item.comment.trim() !== ''"
-                      class="m-1 px-2 py-1 bg-sky-100 rounded-md dark:bg-sky-950">
-                      {{ item.comment }}
-                    </h1>
-                  </td> -->
-                  <td class="text-center justify-between items-center flex">
+                  <td class="px-2 py-1 text-xs text-left align-middle">
+                    <div v-if="!approved && !approvedFinance && !reimbursed && simplifiedVerifierStatus !== 'REJECTED'">
+                      <input 
+                        :value="item.comment || ''"
+                        @input="UpdateSingleRemark($event, item.unique_code, item.Tab_Title)"
+                        type="text"
+                        class="p-1 text-xs w-full rounded-md outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border"
+                      />
+                    </div>
+                    <div v-else>
+                      <span class="m-2 px-2 py-1 rounded-md dark:bg-sky-950">
+                        {{ item.comment }}
+                      </span>
+                    </div>
+                  </td>
+                  <!-- <td class="text-center justify-between items-center flex">
                     <div class="justify-center items-center flex py-2 align-middle">
-                      <!-- Render input only if status is OPEN and no existing comment -->
+                      Render input only if status is OPEN and no existing comment
                       <input
                         v-if="adminStatus === 'OPEN' && (!item.comment || item.comment.trim() === '')"
                         @input="UpdateSingleRemark($event, item.unique_code, item.Tab_Title)"
                         type="text"
                         class="p-1 text-xs w-full rounded-md outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border" />
 
-                      <!-- Render static remark if status is not OPEN or a comment exists -->
+                      Render static remark if status is not OPEN or a comment exists
                       <h1
                         id="remarkText"
                         v-else-if="item.comment && item.comment.trim() !== ''"
@@ -194,7 +195,7 @@
                         {{ item.comment }}
                       </h1>           
                     </div>
-                  </td>
+                  </td> -->
                   <td class="text-center font-normal px-3 py-1 justify-center items-center " v-for="(val, key, i) in item" :key="i">
                     {{
                       key == 'Attachments'
@@ -262,60 +263,54 @@
               <th class="">DEPARTMENT</th>
               <th class="">DATE</th>
             </thead>
-            <tr
-              v-if="checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER' || rejectChecker || claimDetails.admin_status === 'REJECTED BY CHECKER' && claimDetails.checker_name !== ''"
+            <!-- CHECKED -->
+            <tr v-if="claimDetails.checker_name !== null"
               class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
                 <div
                   class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
                   :class="{
-                    'bg-green-100/60 dark:bg-gray-800': checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER',
-                    'bg-red-100/60 dark:bg-gray-800': rejectChecker || claimDetails.admin_status === 'REJECTED BY CHECKER',
-                    'bg-gray-100/60 dark:bg-gray-800': !checked && !rejectChecker && !resubmitChecker
+                    'bg-orange-100/60 dark:bg-gray-800': simplifiedCheckerStatus === 'CHECKED' || simplifiedCheckerStatus === 'PENDING' || simplifiedCheckerStatus === 'RESUBMIT',
+                    'bg-red-100/60 dark:bg-gray-800': simplifiedCheckerStatus === 'REJECTED'
                   }">
                   <span :class="{
                     'h-1.5 w-1.5 rounded-full': true,
-                    'bg-green-500': checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER',
-                    'bg-red-500': rejectChecker || claimDetails.admin_status === 'REJECTED BY CHECKER',
-                    'bg-gray-500': !checked && !rejectChecker && !resubmitChecker
+                    'bg-orange-500': simplifiedCheckerStatus === 'CHECKED' || simplifiedCheckerStatus === 'PENDING' || simplifiedCheckerStatus === 'RESUBMIT',
+                    'bg-red-500': simplifiedCheckerStatus === 'REJECTED'
                   }"></span>
                   <span :class="{
                     'text-xs font-normal': true,
-                    'text-green-500': checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER',
-                    'text-red-500': rejectChecker || claimDetails.admin_status === 'REJECTED BY CHECKER',
-                    'text-gray-500': !checked && !rejectChecker && !resubmitChecker
+                    'text-orange-500': simplifiedCheckerStatus === 'CHECKED' || simplifiedCheckerStatus === 'PENDING' || simplifiedCheckerStatus === 'RESUBMIT',
+                    'text-red-500': simplifiedCheckerStatus === 'REJECTED'
                   }">
-                    {{ checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER'
-                      ? 'CHECKED'
-                      : rejectChecker || claimDetails.admin_status === 'REJECTED BY CHECKER'
-                        ? 'REJECTED'
-                        : 'PENDING'
-                    }}
+                    {{ simplifiedCheckerStatus }}
                   </span>
                 </div>
               </th>
               <td class="pl-6">{{ claimDetails.checker_name || '-' }}</td>
-              <td class="pl-6">{{ claimDetails.checker_designation || '-' }}</td>
+              <td>{{ claimDetails.checker_designation || '-' }}</td>
               <td>{{ claimDetails.checker_department || '-' }}</td>
               <td>{{ claimDetails.checked_date || '-' }}</td>
             </tr>
-            <tr v-if="['VERIFIED', 'APPROVED', 'REIMBURSED'].includes(simplifiedVerifierStatus)"
+
+            <!-- VERIFIED Status Row -->
+            <tr v-if="claimDetails.verifier_name"
               class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
                 <div
                   class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
                   :class="{
-                    'bg-amber-100/60 dark:bg-gray-800': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'RESUBMIT' || simplifiedVerifierStatus === 'PENDING',
+                    'bg-amber-100/60 dark:bg-gray-800': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'PENDING' || simplifiedVerifierStatus === 'RESUBMIT',
                     'bg-red-100/60 dark:bg-gray-800': simplifiedVerifierStatus === 'REJECTED'
                   }">
                   <span :class="{
                     'h-1.5 w-1.5 rounded-full': true,
-                    'bg-amber-500': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'RESUBMIT' || simplifiedVerifierStatus === 'PENDING',
+                    'bg-amber-500': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'PENDING' || simplifiedVerifierStatus === 'RESUBMIT',
                     'bg-red-500': simplifiedVerifierStatus === 'REJECTED'
                   }"></span>
                   <span :class="{
                     'text-xs font-normal': true,
-                    'text-amber-500': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'RESUBMIT' || simplifiedVerifierStatus === 'PENDING',
+                    'text-amber-500': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'PENDING' || simplifiedVerifierStatus === 'RESUBMIT',
                     'text-red-500': simplifiedVerifierStatus === 'REJECTED'
                   }">
                     {{ simplifiedVerifierStatus }}
@@ -323,80 +318,62 @@
                 </div>
               </th>
               <td class="pl-6">{{ claimDetails.verifier_name || '-' }}</td>
-              <td class="">{{ claimDetails.verifier_designation || '-' }}</td>
+              <td>{{ claimDetails.verifier_designation || '-' }}</td>
               <td>{{ claimDetails.verifier_department || '-' }}</td>
-              <td class="">{{ claimDetails.verified_date || '-' }}</td>
+              <td>{{ claimDetails.verified_date || '-' }}</td>
             </tr>
-            <tr v-if="['APPROVED', 'REIMBURSED'].includes(simplifiedApproverFinStatus)"
-              class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+
+            <!-- APPROVED -->
+            <tr v-if="['APPROVED', 'REJECTED', 'REIMBURSED'].includes(simplifiedApproverFinStatus)" class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
-                <div
-                  class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
+                <div class="mx-auto text-xs rounded-full py-2 my-1 w-fit inline-flex items-center px-3 gap-x-2"
                   :class="{
                     'bg-green-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'APPROVED',
                     'bg-amber-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'RESUBMIT',
                     'bg-red-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'REJECTED',
-                    'bg-slate-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'PENDING',
+                    'bg-slate-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'PENDING'
                   }">
-                  <span :class="{
-                    'h-1.5 w-1.5 rounded-full': true,
-                    'bg-green-500': simplifiedApproverFinStatus === 'APPROVED',
-                    'bg-amber-500': simplifiedApproverFinStatus === 'RESUBMIT',
-                    'bg-red-500': simplifiedApproverFinStatus === 'REJECTED',
-                    'bg-slate-500': simplifiedApproverFinStatus === 'PENDING'
-                  }"></span>
-                  <span :class="{
-                    'text-xs font-normal': true,
-                    'text-green-500': simplifiedApproverFinStatus === 'APPROVED',
-                    'text-amber-500': simplifiedApproverFinStatus === 'RESUBMIT',
-                    'text-red-500': simplifiedApproverFinStatus === 'REJECTED',
-                    'text-slate-500': simplifiedApproverFinStatus === 'PENDING'
-                  }">
+                  <span class="h-1.5 w-1.5 rounded-full"
+                    :class="{
+                      'bg-green-500': simplifiedApproverFinStatus === 'APPROVED',
+                      'bg-amber-500': simplifiedApproverFinStatus === 'RESUBMIT',
+                      'bg-red-500': simplifiedApproverFinStatus === 'REJECTED',
+                      'bg-slate-500': simplifiedApproverFinStatus === 'PENDING'
+                    }"></span>
+                  <span
+                    :class="{
+                      'text-green-500': simplifiedApproverFinStatus === 'APPROVED',
+                      'text-amber-500': simplifiedApproverFinStatus === 'RESUBMIT',
+                      'text-red-500': simplifiedApproverFinStatus === 'REJECTED',
+                      'text-slate-500': simplifiedApproverFinStatus === 'PENDING'
+                    }">
                     {{ simplifiedApproverFinStatus }}
                   </span>
                 </div>
               </th>
               <td class="pl-6">{{ claimDetails.approver_name || '-' }}</td>
-              <td class="">{{ claimDetails.approver_designation || '-' }}</td>
+              <td>{{ claimDetails.approver_designation || '-' }}</td>
               <td>{{ claimDetails.approver_department || '-' }}</td>
-              <td class="">{{ claimDetails.approved_date || '-' }}</td>
+              <td>{{ claimDetails.approved_date || '-' }}</td>
             </tr>
-            <tr v-if="simplifiedFinanceStatus === 'REIMBURSED'"
-              class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+
+            <!-- REIMBURSED -->
+            <tr v-if="simplifiedFinanceStatus === 'REIMBURSED'" class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
-                <div
-                  class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
+                <div class="mx-auto text-xs rounded-full py-2 my-1 w-fit inline-flex items-center px-3 gap-x-2"
                   :class="{
-                    'bg-green-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'APPROVED',
-                    'bg-amber-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'RESUBMIT',
-                    'bg-red-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'REJECTED',
-                    'bg-slate-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'REIMBURSED',
-                    'bg-blue-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'PENDING'
+                    'bg-slate-100/60 dark:bg-gray-800': simplifiedFinanceStatus === 'REIMBURSED'
                   }">
-                  <span :class="{
-                    'h-1.5 w-1.5 rounded-full': true,
-                    'bg-green-500': simplifiedFinanceStatus === 'APPROVED',
-                    'bg-amber-500': simplifiedFinanceStatus === 'RESUBMIT',
-                    'bg-red-500': simplifiedFinanceStatus === 'REJECTED',
-                    'bg-slate-500': simplifiedFinanceStatus === 'REIMBURSED',
-                    'bg-blue-500': simplifiedFinanceStatus === 'PENDING'
-                  }"></span>
-                  <span :class="{
-                    'text-xs font-normal': true,
-                    'text-green-500': simplifiedFinanceStatus === 'APPROVED',
-                    'text-amber-500': simplifiedFinanceStatus === 'RESUBMIT',
-                    'text-red-500': simplifiedFinanceStatus === 'REJECTED',
-                    'text-slate-500': simplifiedFinanceStatus === 'REIMBURSED',
-                    'text-blue-500': simplifiedFinanceStatus === 'PENDING'
-                  }">
+                  <span class="h-1.5 w-1.5 rounded-full bg-slate-500"></span>
+                  <span class="text-black">
                     {{ simplifiedFinanceStatus }}
                   </span>
                 </div>
               </th>
               <td class="pl-6">{{ claimDetails.approver_name || '-' }}</td>
-              <td class="">{{ claimDetails.approver_designation || '-' }}</td>
+              <td>{{ claimDetails.approver_designation || '-' }}</td>
               <td>{{ claimDetails.approver_department || '-' }}</td>
-              <td class="">{{ claimDetails.approved_date || '-' }}</td>
+              <td>{{ claimDetails.approved_date || '-' }}</td>
             </tr>
           </table>
         </div>
@@ -833,6 +810,7 @@ export default {
       }
       return num;
     },
+
     simplifiedFinanceStatus() {
       const status = this.adminStatus?.trim()?.toUpperCase();
       switch (status) {
@@ -904,13 +882,35 @@ export default {
         case 'RESUBMIT REQUESTED BY FINANCE':
         case 'RESUBMIT':
           return 'RESUBMIT';
-        case 'OPEN':
         case 'CHECKED BY CHECKER. WAITING FOR VERIFIER':
+        case 'OPEN':
           return 'PENDING';
         default:
           return 'PENDING';
       }
-    }
+    },
+
+    simplifiedCheckerStatus() {
+      const status = this.adminStatus?.trim()?.toUpperCase();
+      switch (status) {
+        case 'CHECKED BY CHECKER. WAITING FOR VERIFIER':
+        case 'VERIFIED. WAITING FOR APPROVER.':
+        case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
+        case 'REIMBURSED':
+        case 'REJECTED BY VERIFIER.':
+        case 'REJECTED BY FINANCE':
+          return 'CHECKED';
+        case 'REJECTED BY CHECKER':
+          return 'REJECTED';
+        case 'RESUBMIT REQUESTED BY FINANCE':
+        case 'RESUBMIT':
+          return 'RESUBMIT';
+        case 'OPEN':
+          return 'PENDING';
+        default:
+          return 'PENDING';
+      }
+    },
   },
   methods: {
     toggleDropdown() {
@@ -942,8 +942,7 @@ export default {
             this.remark = this.claimDetails.comment;
             break;
 
-          case 'CHECKED':
-            this.verified = true;
+          case 'CHECKED BY CHECKER. WAITING FOR VERIFIER':
             this.checked = true;
             this.pending = false;
             this.remark = this.claimDetails.comment;
@@ -1031,7 +1030,7 @@ export default {
       try {
         try {
           const response = await axios.get(
-            'http://172.28.28.116:6239/api/User/GetLocalOutstation/' +
+            ' http://172.28.28.116:6239/api/User/GetLocalOutstation/' +
             this.referenceNumber
           );
           const result = response.data.result;
@@ -1074,7 +1073,7 @@ export default {
 
         try {
           const response = await axios.get(
-            'http://172.28.28.116:6239/api/User/GetOverseasOutstation/' +
+            ' http://172.28.28.116:6239/api/User/GetOverseasOutstation/' +
             this.referenceNumber
           );
           const result = response.data.result;
@@ -1122,7 +1121,7 @@ export default {
 
         try {
           const response = await axios.get(
-            'http://172.28.28.116:6239/api/User/GetRefreshment/' +
+            ' http://172.28.28.116:6239/api/User/GetRefreshment/' +
             this.referenceNumber
           );
           const result = response.data.result;
@@ -1260,7 +1259,7 @@ export default {
 
         try {
           const response = await axios.get(
-            'http://172.28.28.116:6239/api/User/GetOthers/' + this.referenceNumber
+            ' http://172.28.28.116:6239/api/User/GetOthers/' + this.referenceNumber
           );
           const result = response.data.result;
           let details = [];
@@ -1336,7 +1335,7 @@ export default {
       const username_id = store.getSession().userDetails.userId;
       let userData;
       await axios
-        .get(`http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`)
+        .get(` http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           userData = {
             userName: response.data.result[0].name,
@@ -1390,26 +1389,26 @@ export default {
         };
         if (remark.Tab_Title == 'Local Outstation') {
           axios.put(
-            'http://172.28.28.116:6239/api/Verifier/VerifierLocal',
+            ' http://172.28.28.116:6239/api/Verifier/VerifierLocal',
             data
           );
         } else if (remark.Tab_Title == 'Overseas Outstation') {
           axios.put(
-            'http://172.28.28.116:6239/api/Verifier/VerifierOverseas',
+            ' http://172.28.28.116:6239/api/Verifier/VerifierOverseas',
             data
           );
         } else if (remark.Tab_Title == 'Staff Refreshment') {
           axios.put(
-            'http://172.28.28.116:6239/api/Verifier/VerifierStaffRefreshment',
+            ' http://172.28.28.116:6239/api/Verifier/VerifierStaffRefreshment',
             data
           );
         } else if (remark.Tab_Title == 'Entertainment') {
           axios.put(
-            'http://172.28.28.116:6239/api/Verifier/VerifierEntertainment',
+            ' http://172.28.28.116:6239/api/Verifier/VerifierEntertainment',
             data
           );
         } else if (remark.Tab_Title == 'Other') {
-          axios.put('http://172.28.28.116:6239/api/Verifier/VerifierOthers', data);
+          axios.put(' http://172.28.28.116:6239/api/Verifier/VerifierOthers', data);
         }
       });
 
@@ -1428,7 +1427,7 @@ export default {
           this.loadingText = 'Uploading';
           this.loading = true;
 
-          const response = await axios.put('http://172.28.28.116:6239/api/Verifier/VerifierFeedback', {
+          const response = await axios.put(' http://172.28.28.116:6239/api/Verifier/VerifierFeedback', {
             ...feedbackData,
             admin_status: 'VERIFIED. WAITING FOR APPROVER',
           });
@@ -1472,7 +1471,7 @@ export default {
         this.loading = true;
 
         try {
-          await axios.put('http://172.28.28.116:6239/api/Verifier/VerifierFeedback', {
+          await axios.put(' http://172.28.28.116:6239/api/Verifier/VerifierFeedback', {
             ...feedbackData,
             admin_status: 'REJECTED BY VERIFIER',
           });
@@ -1488,7 +1487,7 @@ export default {
         this.loading = true;
 
         try {
-          await axios.put('http://172.28.28.116:6239/api/Verifier/VerifierFeedback', {
+          await axios.put(' http://172.28.28.116:6239/api/Verifier/VerifierFeedback', {
             ...feedbackData,
             admin_status: 'RESUBMIT REQUESTED BY VERIFIER',
           });
@@ -1549,7 +1548,7 @@ export default {
     // ShowFile(val) {
     //   this.files = val;
     //   this.showFileList = true;
-     },
+  },
   mounted() {
     // Sidebar close or open
     let openOrNot = localStorage.getItem('openOrNot');

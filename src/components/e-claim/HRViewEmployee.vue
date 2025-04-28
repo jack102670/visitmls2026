@@ -162,7 +162,7 @@
         <div v-show="view"
           class=" fixed top-0 bg-gray-600/50 left-0 right-0 bottom-0 z-50 flex justify-center items-center">
           <div class="mx-auto max-w-screen-2xl ">
-            <div class="bg-white dark:bg-gray-900 w-full sm:w-4/5 lg:w-3/5 rounded-xl relative min-h-[90vh]  overflow-auto">
+            <div class="bg-white dark:bg-gray-900 w-full sm:w-4/5 lg:w-3/5 rounded-xl relative max-h-[90vh] overflow-y-auto">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="absolute right-3 top-3 size-6" @click="(view = false), (edit = false)">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -579,7 +579,7 @@ export default {
     },
     FetchEmployeesData() {
       axios
-        .get('http://172.28.28.116:6239/api/User/GetAllEmployees')
+        .get(' http://172.28.28.116:6239/api/User/GetAllEmployees')
         .then((response) => {
           this.employeesData = response.data.result;
           if (this.employeesData.length > 0) {
@@ -633,7 +633,7 @@ export default {
 
       let reportingName = '';
       try {
-        const reportingResponse = await axios.get('http://172.28.28.116:6239/api/User/GetAllEmployees');
+        const reportingResponse = await axios.get(' http://172.28.28.116:6239/api/User/GetAllEmployees');
         const allEmployees = reportingResponse.data.result;
         // console.log("All employees:", allEmployees);
         const reportingEmployee = allEmployees.find(emp => emp.emp_id === employee.reporting_to);
@@ -655,7 +655,7 @@ export default {
 
 
       try {
-        const response = await axios.get(`http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`);
+        const response = await axios.get(` http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`);
         // console.log("3. All employees fetched successfully:", response.data.result);
         const responseResult = response.data.result;
       //  console.log("4. responseResult: ", responseResult);
@@ -796,7 +796,7 @@ export default {
       }
 
       try {
-        const response = await axios.get(`http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`);
+        const response = await axios.get(` http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`);
 
 
         const result = response.data.result;
@@ -868,27 +868,28 @@ export default {
         console.error('Error fetching departments:', error);
       }
     },
-    async getAllPositions() {
-      try {
-        const response = await axios.get('http://172.28.28.116:6239/api/User/GetDesignation');
-
-        this.AllPositions = response.data.result
-          .map((item) => item.designation)
-          .sort((a, b) => a.localeCompare(b));
-      } catch (error) {
-        this.error = error;
-        console.error('Error fetching positions:', error);
-      }
+    getAllPositions() {
+      axios
+        .get('http://172.28.28.116:6239/api/User/GetDesignation')
+        .then((response) => {
+          const rawDesignations = response.data.result.map(item => item.designation);
+          this.AllPositions = [...new Set(rawDesignations)].sort((a, b) => a.localeCompare(b));
+        })
+        .catch((error) => {
+          this.error = error;
+          console.error('There was an error!', error);
+        });
     },
+    getAllCompanies() {
+      // axios
+      //   .get(' http://172.28.28.116:6239/api/User/GetCompany')
+      //   .then((response) => {
+      //     this.Company = response.data.result.map((item) => item.company_name);
+      //   });
+      const company = this.fetchOptions.map((item) => item.company);
+      const uniqueCompany = [...new Set(company)];
+      this.Company = uniqueCompany;
 
-    async getAllCompanies() {
-      try {
-        const response = await axios.get('http://172.28.28.116:6239/api/User/GetCompany');
-        this.Company = response.data.result.map((item) => item.company_name);
-      } catch (error) {
-        this.error = error;
-        console.error('Error fetching companies:', error);
-      }
     },
     // limit the employee id to be 10 characters
     limitChar() {
@@ -899,7 +900,7 @@ export default {
 
     async loadEmployeeData() {
       try {
-        const response = await axios.get('http://172.28.28.116:6239/api/User/GetAllEmployees');
+        const response = await axios.get(' http://172.28.28.116:6239/api/User/GetAllEmployees');
         this.employeeCache = response.data.result;
       } catch (error) {
         console.error('Error loading employee data:', error);

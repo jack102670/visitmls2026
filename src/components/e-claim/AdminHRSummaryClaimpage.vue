@@ -833,7 +833,7 @@ export default {
       const username_id = store.getSession().userDetails.userId;
       let userData;
       await axios
-        .get(`http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`)
+        .get(` http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           userData = {
             userName: response.data.result[0].name,

@@ -283,27 +283,40 @@ export default {
     this.checkuser();
     this.role = store.getRole();
    // console.log(this.userDetails, 'user details');
+   // Logout on browser/tab close
+   window.addEventListener('unload', this.handleTabClose);
   },
-  watch: {
-    // Watch for changes in controlView
-    controlView(newVal, oldVal) {
-     // console.log(`controlView changed from ${oldVal} to ${newVal}`);
-    },
+  // watch: {
+  //   // Watch for changes in controlView
+  //   controlView(newVal, oldVal) {
+  //    // console.log(`controlView changed from ${oldVal} to ${newVal}`);
+  //   },
+  // },
+  // beforeCreate() {
+  //   if (!localStorage.getItem('reloaded')) {
+  //     localStorage.setItem('reloaded', 'true');
+  //     window.location.reload();
+  //   } else {
+  //     localStorage.removeItem('reloaded');
+  //   }
+  // },
+  beforeUnmount() {
+    window.removeEventListener('unload', this.handleTabClose);
   },
-  beforeCreate() {
-    if (!localStorage.getItem('reloaded')) {
-      localStorage.setItem('reloaded', 'true');
-      window.location.reload();
-    } else {
-      localStorage.removeItem('reloaded');
-    }
-  },
+  // beforeCreate() {
+  //   if (!localStorage.getItem('reloaded')) {
+  //     localStorage.setItem('reloaded', 'true');
+  //     window.location.reload();
+  //   } else {
+  //     localStorage.removeItem('reloaded');
+  //   }
+  // },
   methods: {
     async checkuser() {
       const username_id = this.userDetails.userId;
       try {
         const response = await axios.get(
-          `http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`
+          ` http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`
         );
         this.userData = response.data.result[0];
       //  console.log('User status:', this.userData);
@@ -313,6 +326,7 @@ export default {
     },
 
     async logout() {
+      const token = localStorage.getItem('token');
       const result = await Swal.fire({
         title: 'Are you sure you want to logout?',
         icon: 'warning',
@@ -323,6 +337,15 @@ export default {
       });
       if (result.isConfirmed) {
         try {
+          await axios.post(
+            'http://172.28.28.91:89/api/Security/logout',
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
           store.clearSession();
           // sessionStorage.removeItem('token');
           localStorage.clear();
@@ -345,6 +368,27 @@ export default {
         }
       }
     },
+
+     // Auto logout on browser/tab close
+     handleTabClose() {
+    try {
+      const token = localStorage.getItem('authToken'); 
+
+      if (!token) return;
+
+      // sendBeacon can't send Authorization headers, so if token is required, use fetch (async not guaranteed)
+      navigator.sendBeacon(
+        'http://172.28.28.91:89/api/Security/logout',
+        new Blob([JSON.stringify({})], { type: 'application/json' })
+      );
+
+      localStorage.clear();
+      sessionStorage.clear();
+    } catch (error) {
+      console.error('Error during tab-close logout:', error);
+    }
+  },
+
     toggleTheme() {
       const root = document.documentElement;
       const isDarkMode = root.classList.contains('dark');

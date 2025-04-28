@@ -59,7 +59,12 @@
           //   image: "https://media.licdn.com/dms/image/D4D12AQHf927L6V5QSA/article-cover_image-shrink_720_1280/0/1673929460399?e=2147483647&v=beta&t=drd3nagneztidtOjuAP49KDkkXGd1hmqUtMwLDK2_Tc",
           //   link: "/Dashboard",
           // },
-   
+          // {
+          //   title: "E-Forms",
+          //   description: "Access our service portal for all your needs.",
+          //   image: require("../assets/images/E-forms.svg"),
+          //   link: "/e-dashboard",
+          // },
           {
             title: "Coming Soon...",
             description: "Stay tuned for updates on our latest feature.",
@@ -78,7 +83,7 @@
             return reject(new Error("User session not found."));
           }
           const username_id = session.userDetails.userId;
-          fetch(`http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`)
+          fetch(` http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`)
             .then((response) => {
               if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -106,13 +111,16 @@
       },
       handleCardClick(card, event) {
         event.preventDefault();
+
         if (card.title === "E-claim System") {
           this.checkUserStatusAndShowModal()
             .then((hasCompletedProfile) => {
               if (hasCompletedProfile === 0) {
                 alert("Please complete your profile before using the E-claim system.");
               } else if (hasCompletedProfile === 1) {
-                window.location.href = card.link;
+                this.$router.push(card.link).then(() => {
+                  window.location.reload(); // optional for other cards
+                }); // Use router push instead of window.location.href
               } else if (hasCompletedProfile === 2) {
                 alert("You don't have a user profile yet. Please contact the HR administrator.");
               }
@@ -120,15 +128,13 @@
             .catch(() => {
               alert("There was an error checking your user status. Please try again later.");
             });
+        } else if (card.link) {
+          this.$router.push(card.link).then(() => {
+            window.location.reload(); // optional for other cards
+          }); // Handle other links too
         }
-        // else if (card.title === "Others") {
-        //   store.setControlView('eform'); 
-        //   this.$router.push(card.link);
-        // }
-        else {
-          window.location.href = card.link;
-        }
-      }
+      },
+
     },
     mounted() {
       store.setControlView(null);

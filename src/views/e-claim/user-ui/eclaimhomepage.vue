@@ -176,12 +176,12 @@
                           </span>
                         </div>
                       </th>
-                      <th scope="col"
+                      <!-- <th scope="col"
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3">
                           <span>Approved Date</span>
                         </div>
-                      </th>
+                      </th> -->
 
                       <th scope="col"
                         class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -192,7 +192,7 @@
 
                       <th scope="col"
                         class="px-12 py-3.5 text-sm text-center font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <span class="">Action.</span>
+                        <span class="">View</span>
                       </th>
                     </tr>
                   </thead>
@@ -210,10 +210,10 @@
                       <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         {{ data.date_requested }}
                       </td>
-                      <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                      <!-- <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         {{ data.endDate }}
-                      </td>
-                      <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                      </td> -->
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                         <div :class="getStatusContainerClass(
                           data.admin_status.split('.')[0].split(' ')[0]
                         )

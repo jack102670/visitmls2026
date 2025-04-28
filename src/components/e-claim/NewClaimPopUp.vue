@@ -513,7 +513,7 @@ filteredCostcenter() {
     async fetchusername() {
       try {
         const response = await fetch(
-          "http://172.28.28.116:6239/api/User/GetAllEmployees"
+          " http://172.28.28.116:6239/api/User/GetAllEmployees"
         );
         if (response.status !== 200) {
           // Corrected status code check
@@ -586,7 +586,7 @@ filteredCostcenter() {
     async fetchDesignations() {
       try {
         const response = await fetch(
-          "http://172.28.28.116:6239/api/User/GetDesignation"
+          " http://172.28.28.116:6239/api/User/GetDesignation"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -601,7 +601,7 @@ filteredCostcenter() {
     async fetchCompany() {
       try {
         const response = await fetch(
-          "http://172.28.28.116:6239/api/User/GetCompany"
+          " http://172.28.28.116:6239/api/User/GetCompany"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -616,7 +616,7 @@ filteredCostcenter() {
     async fetchDepartments() {
       try {
         const response = await fetch(
-          "http://172.28.28.116:6239/api/User/GetDepartment"
+          " http://172.28.28.116:6239/api/User/GetDepartment"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -662,10 +662,11 @@ filteredCostcenter() {
 
         // Log the form data before navigation
         // console.log("Form submitted", formStore.getFormData());
-        this.$emit("close");
+        
         this.$nextTick(() => {
           this.$router.push({ name: "ClaimReport" });
         });
+        this.$emit("close");
 
         // Send API request using axios
         // const apiData = {
@@ -680,7 +681,7 @@ filteredCostcenter() {
         // };
 
         // // Send API request using axios
-        // axios.post('http://172.28.28.116:6239/api/User/InsertClaimDetails', apiData)
+        // axios.post(' http://172.28.28.116:6239/api/User/InsertClaimDetails', apiData)
         //   .then(response => {
         //     // Handle success response
         //     console.log('API response', response.data);

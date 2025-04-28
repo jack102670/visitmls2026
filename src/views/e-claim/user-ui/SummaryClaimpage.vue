@@ -1009,7 +1009,7 @@ export default {
       try {
         try {
           const response = await axios.get(
-            'http://172.28.28.116:6239/api/User/GetLocalOutstation/' +
+            ' http://172.28.28.116:6239/api/User/GetLocalOutstation/' +
             this.referenceNumber
           );
           const result = response.data.result;
@@ -1052,7 +1052,7 @@ export default {
 
         try {
           const response = await axios.get(
-            'http://172.28.28.116:6239/api/User/GetOverseasOutstation/' +
+            ' http://172.28.28.116:6239/api/User/GetOverseasOutstation/' +
             this.referenceNumber
           );
           const result = response.data.result;
@@ -1099,7 +1099,7 @@ export default {
 
         try {
           const response = await axios.get(
-            'http://172.28.28.116:6239/api/User/GetRefreshment/' +
+            ' http://172.28.28.116:6239/api/User/GetRefreshment/' +
             this.referenceNumber
           );
           const result = response.data.result;
@@ -1237,7 +1237,7 @@ export default {
 
         try {
           const response = await axios.get(
-            'http://172.28.28.116:6239/api/User/GetOthers/' + this.referenceNumber
+            ' http://172.28.28.116:6239/api/User/GetOthers/' + this.referenceNumber
           );
           const result = response.data.result;
           let details = [];
@@ -1337,7 +1337,7 @@ export default {
       const username_id = store.getSession().userDetails.userId;
       let userData;
       await axios
-        .get(`http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`)
+        .get(` http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           userData = {
             userName: response.data.result[0].name,

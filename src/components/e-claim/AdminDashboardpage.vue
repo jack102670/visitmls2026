@@ -47,10 +47,10 @@
                           class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                           Requester Name
                         </th>
-                        <th
+                        <!-- <th
                           class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                           Verifier Name
-                        </th>
+                        </th> -->
                         <th
                           class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                           Reference Number
@@ -94,9 +94,9 @@
                         <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           {{ claim.requester_name }}
                         </td>
-                        <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        <!-- <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           {{ claim.verifier_name }}
-                        </td>
+                        </td> -->
                         <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           {{ claim.reference_number }}
                         </td>

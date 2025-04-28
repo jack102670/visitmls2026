@@ -382,7 +382,9 @@ export default {
           this.loading = false;
           this.registerSuccess = true;
 
-          setTimeout(window.location.reload(), 2500);
+          setTimeout(() => {
+            this.$router.push('/viewemployee');
+          }, 2500);
           // Handle success
         })
         .catch((error) => {
@@ -433,9 +435,8 @@ export default {
       axios
         .get('http://172.28.28.116:6239/api/User/GetDesignation')
         .then((response) => {
-          this.AllPositions = response.data.result.map(
-            (item) => item.designation
-          );
+          const rawDesignations = response.data.result.map(item => item.designation);
+          this.AllPositions = [...new Set(rawDesignations)].sort((a, b) => a.localeCompare(b));
         })
         .catch((error) => {
           this.error = error;
@@ -443,11 +444,15 @@ export default {
         });
     },
     getAllCompanies() {
-      axios
-        .get('http://172.28.28.116:6239/api/User/GetCompany')
-        .then((response) => {
-          this.Company = response.data.result.map((item) => item.company_name);
-        });
+      // axios
+      //   .get(' http://172.28.28.116:6239/api/User/GetCompany')
+      //   .then((response) => {
+      //     this.Company = response.data.result.map((item) => item.company_name);
+      //   });
+      const company = this.fetchOptions.map((item) => item.company);
+      const uniqueCompany = [...new Set(company)];
+      this.Company = uniqueCompany;
+
     },
     // limit the employee id to be 10 characters
     limitChar() {
@@ -458,7 +463,7 @@ export default {
     async getEmpId(id) {
       try {
         const response = await axios.get(
-          `http://172.28.28.116:6239/api/User/GetEmployeeById/${id}`
+          ` http://172.28.28.116:6239/api/User/GetEmployeeById/${id}`
         );
         return response.data.result[0].emp_id;
       } catch (error) {
@@ -537,7 +542,7 @@ export default {
 
       // Fetch additional data from the API and filter uniqueUsers
       axios
-        .get('http://172.28.28.116:6239/api/User/GetAllEmployees')
+        .get(' http://172.28.28.116:6239/api/User/GetAllEmployees')
         .then((response) => {
           const existUserIds = response.data.result.map(
             (user) => user.username_id
@@ -574,7 +579,7 @@ export default {
       try {
         // Fetch additional data from the API
         const response = await axios.get(
-          'http://172.28.28.116:6239/api/User/GetAllEmployees'
+          ' http://172.28.28.116:6239/api/User/GetAllEmployees'
         );
         const existUserIds = response.data.result.map(
           (user) => user.username_id
