@@ -170,10 +170,12 @@
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
+            <!-- Handphone Claim Limit -->
             <div>
               <label class="font-semibold text-gray-600 dark:text-gray-300"
                 >Handphone Claim Limit</label
               >
+              
               <div class="mt-2">
                 <input type="radio" id="no" value="no" v-model="enableLimit" />
                 <label for="no">No</label>
@@ -198,16 +200,30 @@
               </div>
             </div>
 
-            <div class="w-full flex justify-end">
-              <button
-                class="py-2 px-6 mt-10 text-white bg-[#160959] hover:bg-blue-950 rounded-md disabled:bg-gray-500 disabled:hover:bg-gray-500 disabled:cursor-not-allowed"
-                @click="Register()"
-                :disabled="!enableBtn"
-              >
-                Register
-              </button>
+            <!-- Assign Checker -->
+            <div class="w-full lg:w-1/2">
+              <label class="font-semibold text-gray-600 dark:text-gray-300">Assign Checker</label>
+              <div class="mt-2">
+                <input type="radio" id="assignNo" value="no" v-model="assignChecker" />
+                <label for="assignNo">No</label>
+
+                <input type="radio" id="assignYes" value="yes" class="ml-4" v-model="assignChecker" />
+                <label for="assignYes">Yes</label>
+              </div>
+              </div>
             </div>
+
+          <!-- Register Button -->
+          <div class="w-full flex justify-end mt-6">
+            <button
+              class="py-2 px-6 text-white bg-[#160959] hover:bg-blue-950 rounded-md disabled:bg-gray-500 disabled:hover:bg-gray-500 disabled:cursor-not-allowed"
+              @click="Register()"
+              :disabled="!enableBtn"
+            >
+              Register
+            </button>
           </div>
+          
         </div>
 
         <div
@@ -322,6 +338,7 @@ export default {
       },
 
       enableLimit: 'no',
+      assignChecker: 'no',
       inputId: '', 
       enableBtn: false,
 
@@ -369,6 +386,7 @@ export default {
         staff_access: accessData.refreshment,
         ent_access: accessData.entertainment,
         others_access: accessData.others,
+        checker_validation : this.assignchecker === 'yes' ? 1 : 0,
       };
    //   console.log('Form Data:', registerData);
 
@@ -413,13 +431,14 @@ export default {
           this.fetchOptions = response.data; // Make sure to access response.data
           this.extractBranches();
           this.getAllDepartments();
-          this.getAllPositions();
+          // this.getAllPositions();
           this.getAllCompanies();
         })
         .catch((error) => {
           this.error = error;
           console.error('There was an error!', error);
         });
+      this.getAllPositions();
     },
     extractBranches() {
       const branches = this.fetchOptions.map((item) => item.branch);
@@ -431,17 +450,22 @@ export default {
       const uniqueDepartments = [...new Set(departments)];
       this.AllDepartments = uniqueDepartments;
     },
-    getAllPositions() {
-      axios
-        .get('http://172.28.28.116:6239/api/User/GetDesignation')
-        .then((response) => {
-          const rawDesignations = response.data.result.map(item => item.designation);
-          this.AllPositions = [...new Set(rawDesignations)].sort((a, b) => a.localeCompare(b));
-        })
-        .catch((error) => {
-          this.error = error;
-          console.error('There was an error!', error);
-        });
+    async getAllPositions() {
+      try {
+        const response = await axios.get('http://172.28.28.116:6239/api/User/GetAllEmployees');
+        this.fetchOptions = response.data.result || [];
+        const position = this.fetchOptions.map((item) => item.position_title);
+        const uniquePosition = [...new Set(position)].sort((a, b) => a.localeCompare(b));
+        this.AllPositions = uniquePosition;
+
+        console.log("list position", uniquePosition);
+        // const rawDesignations = response.data.result.map(item => item.designation);
+        // this.AllPositions = [...new Set(rawDesignations)].sort((a, b) => a.localeCompare(b));
+      }
+      catch(error) {
+        this.error = error;
+        console.error('There was an error!', error);
+      }
     },
     getAllCompanies() {
       // axios

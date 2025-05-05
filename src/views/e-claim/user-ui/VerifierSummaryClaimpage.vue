@@ -1043,9 +1043,13 @@ export default {
             const editedDetail = {
               Date_Event: result[i].date_event,
               'Return_Date': result[i].return_date,
+              'Vehicle Registration Number':result[i].vehicle_no,
+              'Vehicle Model':result[i].vehicle_model,
               Starting_Point: result[i].starting_point,
               End_Point: result[i].end_point,
               'Mileage(KM)': Number(result[i].mileage_km).toFixed(2),
+              'Type of Petrol':result[i].type_petrol,
+              'Petrol(Litre)':Number(result[i].petrol_perlitre).toFixed(2),
               'Fare': Number(result[i].fare).toFixed(2),
               'Meal_Allowance(RM)': result[i].meal_allowance,
               'Accomodation': result[i].accommodation,

@@ -254,6 +254,16 @@
                 <input type="text" id="publicTransportSpecify" v-model="localTravellingDetails.PublicTransportSpec"
                   :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
               </div>
+              <div v-if="!isPublicTransport" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Vehicle Registration Number:</label>
+                <input type="text" id="transportNumberPlate" v-model="localTravellingDetails.TransportNumberPlate"
+                  :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
+              </div>
+              <div v-if="!isPublicTransport" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Vehicle Model:</label>
+                <input type="text" id="transportModel" v-model="localTravellingDetails.TransportModel"
+                  :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
+              </div>
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Location Start:</label>
                 <input type="text" id="locationstart" v-model="localTravellingDetails.LocationStart"
@@ -279,10 +289,16 @@
                 <input type="text" id="mileagekm" v-model="localTravellingDetails.MileageKMLT" :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2" />
               </div>
+              <div v-if="!isPersonalTransport && !isPublicTransport" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Type of Petrol:</label>
+                <input type="text" id="petrolType" v-model="localTravellingDetails.PetrolType" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
+              </div>
+              
 
-              <div v-if="!isCompanyTransport && !isPublicTransport" class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Total Mileage(RM):</label>
-                <input type="text" id="mileagerm" v-model="localTravellingDetails.MileageRMLT" :disabled="!isEditMode"
+              <div v-if="!isPersonalTransport && !isPublicTransport" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Petrol(Litre):</label>
+                <input type="text" id="petrolLitre" v-model="localTravellingDetails.PetrolLitre" :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2" />
               </div>
 
@@ -1363,6 +1379,7 @@ export default {
       let total = 0;
 
       if (this.localTravellingDetails.TransportLT === "Company Transport") {
+        total += parseFloat(this.localTravellingDetails.MileageRMLT) || 0;
         total += parseFloat(this.localTravellingDetails.ParkingLT) || 0;
         total += parseFloat(this.localTravellingDetails.TollLT) || 0;
       } else if (
@@ -1873,82 +1890,90 @@ export default {
         return;
       }
 
-      this.loadingText = "Uploading";
       this.loading = true;
+      this.loadingText = "Uploading...";
 
       try {
-        // Step 3: Get reference number
+        // Step 1: FETCH serial number first
         const referenceNumber = await this.fetchSerialNumber();
         if (!referenceNumber) {
           throw new Error("Failed to fetch reference number.");
         }
+
+        // ⚡ Save to Vue data, NOT localStorage yet
         this.serialnumber = referenceNumber;
 
-        // Step 4: Upload any files (if needed)
-        await this.sendFiles(this.userDetails.userId, referenceNumber);
-
-        // Step 5: Build payload
+        // Step 2: Prepare apiData properly
         const apiData = {
-          name: this.claims[0].claimantName,
-          company_name: this.claims[0].companyName,
-          department: this.claims[0].department,
-          designation_title: this.claims[0].designation,
-          employee_id: this.employeeID,
-          requester_email: this.requesterEmail,
-          reference_number: referenceNumber,
-          report_name: this.claims[0].reportName,
-          grand_total: Number(parseFloat(this.grandTotal).toFixed(2)),
-          requester_id: this.userDetails.userId,
-          cost_center: this.claims[0].costCenter,
-          unique_code: this.claims[0].uniqueCode,
+          name: this.claims[0]?.claimantName || "-",
+          company_name: this.claims[0]?.companyName || "-",
+          department: this.claims[0]?.department || "-",
+          designation_title: this.claims[0]?.designation || "-",
+          cost_center: this.claims[0]?.costCenter || "-",
+          reference_number: this.serialnumber,
+          report_name: this.claims[0]?.reportName || "-",
+          grand_total: Number(parseFloat(this.grandTotal).toFixed(2)) || 0,
+          requester_id: this.userDetails?.userId || "-",
+          employee_id: this.employeeID || "-",
+          requester_email: this.requesterEmail || "-",
+          unique_code: this.claims[0]?.uniqueCode || "-",
         };
 
-        console.log("API Data:", apiData);
+        console.log("Prepared API Data:", apiData);
 
-        // Step 6: Submit InsertClaimDetails
-        const response = await axios.post(
-          "http://172.28.28.116:6239/api/User/InsertClaimDetails",
-          apiData
-        );
+        // Step 3: VALIDATE the apiData before sending
+        this.validateClaimPayload(apiData);
+
+        // Step 4: Send InsertClaimDetails
+        const response = await axios.post("http://172.28.28.116:6239/api/User/InsertClaimDetails", apiData);
 
         if (response.status === 200 || response.status === 201) {
           if (response.data.status_code === "400") {
             throw new Error(response.data.message);
           }
+          
+          console.log("InsertClaimDetails success!", response.data);
 
-          console.log("Claim submitted successfully:", response.data);
-
-          // Step 7: Proceed to detailed claim form submission
+          // Step 5: Continue to send detailed forms
           await this.sendToAPI();
 
           Swal.fire({
             icon: 'success',
-            title: 'Success',
-            text: 'Claim submitted successfully!',
-            showConfirmButton: true,
-            confirmButtonText: 'OK',
-            confirmButtonColor: '#3085d6',
+            title: 'Success!',
+            text: 'Claim submitted successfully.',
           });
 
-          // Optional: Reset form
-          // this.resetClaimsAfterSubmit();
+          // Maybe reset form if needed
+          // this.resetForm();
 
         } else {
-          throw new Error(`Unexpected response status: ${response.status}`);
+          throw new Error(`Unexpected response: ${response.status}`); 
         }
       } catch (error) {
-        console.error("Error during claim submission:", error.message);
-
+        console.error("Error submitting claim:", error.message);
         Swal.fire({
           icon: 'error',
-          title: 'Error',
-          text: error.message || 'An unexpected error occurred.',
-          showConfirmButton: true,
-          confirmButtonText: 'OK',
-          confirmButtonColor: '#6d6d6d',
+          title: 'Submission Failed',
+          text: error.message,
         });
       } finally {
         this.loading = false;
+      }
+    },
+
+    validateClaimPayload(apiData) {
+      const requiredFields = [
+        "name", "company_name", "department", "designation_title",
+        "reference_number", "report_name", "grand_total",
+        "requester_id", "employee_id", "requester_email", "unique_code"
+      ];
+      requiredFields.forEach(field => {
+        if (!apiData[field] || apiData[field] === "-") {
+          throw new Error(`Missing required field: ${field}`);
+        }
+      });
+      if (typeof apiData.grand_total !== "number" || isNaN(apiData.grand_total)) {
+        throw new Error("Invalid grand_total format");
       }
     },
     async sendToAPI() {
@@ -1992,6 +2017,10 @@ export default {
                     return_date: claim.ReturndateLT || "-",
                     meal_allowance: String(claim.MealAllowanceLT || "-"),
                     accommodation: claim.AccommodationLT || "-",
+                    vehicle_no:claim.transportNumberPlate || "-",
+                    vehicle_model:claim.transportModel || "-",
+                    type_petrol:claim.petrolType || "-",
+                    petrol_perlitre:claim.petrolLitre || "0",
                   };
                   console.log("Local Travelling Payload :", payload);
 

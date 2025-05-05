@@ -36,26 +36,26 @@ export const monthOptions = [
 
 export const refOptions = [
   {
-    label: "ENTERTAINMENT-CLIENT(EXISTING)",
-    value: "ENTERTAINMENT-CLIENT(EXISTING)",
+    label: "Entertainment-Client(Existing)",
+    value: "Entertainment-Client(Existing)",
   },
   {
-    label: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)",
-    value: "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)",
+    label: "Entertainment-Client(New/Potential)",
+    value: "Entertainment-Client(New/Potential)",
   },
   {
-    label: "ENTERTAINMENT-NON TRADE",
-    value: "ENTERTAINMENT-NON TRADE",
+    label: "Entertainment-Non Trade",
+    value: "Entertainment-Non Trade",
   },
-  { label: "GIFT TO CLIENT", value: "GIFT TO CLIENT" },
-  { label: "GIFT TO OTHERS", value: "GIFT TO OTHERS" },
-  // { label: "MEAL FOR STAFF", value: "MEAL FOR STAFF" },
+  { label: "Gift To Client", value: "Gift To Client" },
+  { label: "Gift To Others-Non Trade", value: "Gift To Others-Non Trade" },
+  { label: "Meal For Staff", value: "Meal For Staff" },
 ];
 
 export const TypeOptions = [
-  { label: "BREAKFAST", value: "BREAKFAST" },
-  { label: "LUNCH", value: "LUNCH" },
-  { label: "DINNER", value: "DINNER" },
-  { label: "TEA BREAK", value: "TEA BREAK" },
-  { label: "OTHERS", value: "OTHERS" },
+  { label: "Breakfast", value: "Breakfast" },
+  { label: "Lunch", value: "Lunch" },
+  { label: "Dinner", value: "Dinner" },
+  { label: "Tea Break", value: "Tea Break" },
+  { label: "Others", value: "Others" },
 ];

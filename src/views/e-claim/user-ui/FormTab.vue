@@ -83,8 +83,6 @@
                     <template v-if="
                       !isCompanyTransport ||
                       (field.id !== 'MileageKMLT' &&
-                        field.id !== 'MileageRMLT' &&
-                        field.id !== 'UploadMileageRMLT' &&
                         field.id !== 'TransportSpec' &&
                         field.id !== 'PublicTransportSpec' &&
                         field.id !== 'FareRMLT' &&
@@ -100,13 +98,17 @@
                           (field.id !== 'MileageKMLT' &&
                             field.id !== 'TransportSpec' &&
                             field.id !== 'TollLT' &&
-                            field.id !== 'UploadTollLT')
+                            field.id !== 'UploadTollLT'&&
+                            field.id !== 'transportNumberPlate' &&
+                            field.id !== 'transportModel')
                         ">
                           <template v-if="
                             !isPersonalTransport ||
                             (field.id !== 'FareRMLT' &&
                               field.id !== 'UploadFareRMLT' &&
-                              field.id !== 'PublicTransportSpec')
+                              field.id !== 'PublicTransportSpec'&&
+                              field.id !== 'petrolType' &&
+                              field.id !== 'petrolLitre')
                           ">
                             <template v-if="
                               !isOneWay ||
@@ -1403,6 +1405,24 @@ export default {
               gridClass: "sm:col-span-1",
             },
             {
+              id: "transportNumberPlate",
+              label: "Vehicle Registration Number",
+              type: "text",
+              placeholder: "",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "transportModel",
+              label: "Vehicle Model",
+              type: "text",
+              placeholder: "",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-1",
+            },
+            {
               id: "LocationStart",
               label: "Starting Point Location",
               type: "text",
@@ -1441,6 +1461,27 @@ export default {
               id: "MileageKMLT",
               label: "Mileage/Kilometer(KM)",
               type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
+              hidden: false,
+            },
+            {
+              id: "petrolType",
+              label: "Type of Petrol",
+              type: "select",
+              value: "",
+              options: [
+                { label: "Diesel", value: "Diesel" },
+                { label: "Ron 95", value: "Ron 95" },
+              ],
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "petrolLitre",
+              label: "Petrol(Litre)",
+              type: "number",
+              placeholder: "0.00",
               value: "",
               gridClass: "sm:col-span-1",
               hidden: false,
@@ -2168,9 +2209,10 @@ export default {
             {
               id: "ReferenceSR",
               label: "Reference",
-              type: "text",
+              type: "select",
               value: "",
               required: true,
+              options: refOptions,
               gridClass: "sm:col-span-2",
               // readonly: true,
             },
@@ -2654,6 +2696,7 @@ export default {
         'TollLT',
         'ParkingLT',
         'MileageRMLT',
+        'PetrolLitre'
         // 'petrolCharged',
         // 'evCharged'
       ];
@@ -3403,6 +3446,7 @@ export default {
           field.type === "number" &&
           !isNaN(parseFloat(field.value)) &&
           field.id !== "MileageKMLT" &&
+          field.id !== "petrolLitre" &&
           field.id !== "limit_outpatient" &&
           field.id !== "limit_medic_dental" &&
           field.id !== "LimitedAmountHR" &&
@@ -3412,7 +3456,7 @@ export default {
           field.id !== "ExchangeRateAccommodationOT" &&
           field.id !== "AmountforAccommodationOT" &&
           (!isCompanyTransport ||
-            (field.id !== "MileageRMLT" && field.id !== "FareRMLT")) &&
+            (field.id !== "FareRMLT")) &&
           (!isPublicTransport ||
             (field.id !== "TollLT")) &&
           // (!isPersonalTransport ||
@@ -3935,7 +3979,7 @@ export default {
         const formattedData = {};
         this.overseasTabs.forEach((tab) => {
           tab.fields.forEach((field) => {
-            if (field.id === "dateOT") {
+            if (field.id === "dateOT" || field.id === "ReturendateOT") {
               formattedData[field.id] = this.formatDate(field.value);
             } else {
               formattedData[field.id] = field.value;

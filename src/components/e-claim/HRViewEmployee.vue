@@ -191,9 +191,9 @@
               <div v-if="!edit" class="px-4 grid grid-cols-1 mx-auto  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 <div v-for="(val, key, index) in employee" :key="index" :class="key === 'profile_picture' ? 'hidden' : 'ml-3 mt-1 min-h-16'
                   ">
-                  <div v-if="key !== 'profile_picture'">
+                  <div v-if="key !== 'profile_picture' && key !== 'username' && key !== 'username_id'">
                     <h1 class="text-base font-semibold text-gray-900 dark:text-gray-100">
-                      {{ key + ':' }}
+                      {{ getDisplayLabel(key) + ':' }}
                     </h1>
                     <h1 class="font-thin text-sm text-gray-700 dark:text-gray-300 break-words">
                       {{ val ? val : '-' }}
@@ -273,7 +273,7 @@
                       class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
                       Reporting to (Employee ID): <span class="text-red-500">*</span>
                     </label>
-                    <select id="reportingStaffInput" v-model="this.form.reportingId"
+                    <select id="reportingStaffInput" v-model="form.reportingId"
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                       <option value="" disabled selected>Select an Employee ID</option>
                       <option v-for="employee in filteredReportingEmployees" :key="employee" :value="employee">
@@ -283,16 +283,54 @@
                   </div>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
+                  <!-- Employee ID -->
                   <div>
                     <label :for="inputId" class="font-semibold text-gray-600 dark:text-gray-300">Employee ID<span
-                        class="text-red-500">*</span></label>
+                      class="text-red-500">*</span></label>
                     <input :id="inputId" v-model="form.employeeId" @input="limitChar()" :defaultvalue="form.employeeId"
                       class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       type="text" />
                   </div>
+
+
+                  <!-- Assign Checker -->
                   <div class="mt-6 lg:mt-0 lg:ml-4">
-                    <label class="font-semibold text-gray-600 dark:text-gray-300">Limit</label>
-                    <div class="mt-2 ">
+                    <label class="font-semibold text-gray-600 dark:text-gray-300">Assign Checker</label>
+                    <div class="mt-2">
+                      <div class="space-x-2">
+                        <input type="radio" id="assignNo" value="no" v-model="assignChecker" />
+                        <label for="assignNo">No</label>
+
+                        <input type="radio" id="assignYes" value="yes" class="ml-4" v-model="assignChecker" />
+                        <label for="assignYes">Yes</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full gap-4">
+                  <!-- Limit Outpatient -->
+                  <div>
+                    <label class="font-semibold text-gray-600 dark:text-gray-300">Limit Outpatient<span class="text-red-500">*</span></label>
+                    <input v-model="form.limitOutpatient" :defaultvalue="form.limitOutpatient"
+                      class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      type="number" />
+                  </div>
+
+                  <!-- Limit Medical Dental -->
+                  <div>
+                    <label class="font-semibold text-gray-600 dark:text-gray-300">Limit Medical Dental<span class="text-red-500">*</span></label>
+                    <input v-model="form.limitMedicaldental" :defaultvalue="form.limitMedicaldental"
+                      class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      type="number" />
+                  </div>
+
+                  <!-- Handphone Claim Limit -->
+                  <div>
+                    <label class="font-semibold text-gray-600 dark:text-gray-300">Handphone Claim Limit</label>
+                    <div class="mt-2">
                       <div class="space-x-2">
                         <input type="radio" id="no" value="no" v-model="enableLimit" />
                         <label for="no">No</label>
@@ -300,30 +338,15 @@
                         <input type="radio" id="yes" value="yes" class="ml-4" v-model="enableLimit" />
                         <label for="yes">Yes</label>
                       </div>
-                      <div v-if="enableLimit === 'yes'" class="mt-1">
+                      <div v-if="enableLimit === 'yes'" class="mt-2">
                         <input id="limitInput" v-model="form.limit"
-                          class="border-2 border-gray-200 p-2 w-full rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+                          class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           type="number" min="1" />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
-                  <div>
-                    <label :for="inputId" class="font-semibold text-gray-600 dark:text-gray-300">Limit Outpatient<span
-                        class="text-red-500">*</span></label>
-                    <input :id="inputId" v-model="form.limitOutpatient" :defaultvalue="form.limitOutpatient"
-                      class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      type="number" />
-                  </div>
-                  <div class="mt-6 lg:mt-0 lg:ml-4">
-                    <label :for="inputId" class="font-semibold text-gray-600 dark:text-gray-300">Limit Medical
-                      Dental<span class="text-red-500">*</span></label>
-                    <input :id="inputId" v-model="form.limitMedicaldental" :defaultvalue="form.limitMedicaldental"
-                      class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      type="number" />
-                  </div>
-                </div>
+
 
                 <div class="grid grid-cols-1 mt-6 w-full">
                   <div>
@@ -484,6 +507,7 @@ export default {
       },
 
       enableLimit: 'no',
+      assignChecker: 'no',
 
       loading: false,
       loadingText: '',
@@ -499,13 +523,14 @@ export default {
       return paginatedApps;
     },
     filteredQueryApplications() {
-      const query = this.searchQuery.toLowerCase();
+      const query = (this.searchQuery || '').toLowerCase();
       return this.sortedApplications.filter((employee) =>
         (employee.name && employee.name.toLowerCase().includes(query)) ||
         (employee.department && employee.department.toLowerCase().includes(query)) ||
         (employee.position_title && employee.position_title.toLowerCase().includes(query))
       );
     },
+
     sortedApplications() {
       return [...this.userApplications].sort((a, b) => {
         const dateA = new Date(a[this.sortField]).getTime();
@@ -577,6 +602,33 @@ export default {
     initializeDataTable() {
       $(this.$refs.myTable).DataTable({});
     },
+    getDisplayLabel(key) {
+    const labels = {
+      emp_id: "Employee ID",
+      reporting_to: "Reporting To",
+      name: "Name",
+      position_title: "Position Title",
+      email_address: "Email",
+      phone_number: "Phone Number",
+      home_address: "Home Address",
+      company_name: "Company",
+      // username_id: "Username ID",
+      // username: "Username",
+      branch: "Branch",
+      reporting_to_dept: "Reporting Department",
+      department: "Department",
+      account_status: "Account Status",
+      limit_amount: "Limit Amount",
+      bank_name: "Bank Name",
+      bank_number: "Bank Number",
+      ic_number: "IC Number",
+      limit_outpatient: "Limit Outpatient",
+      limit_medicaldental: "Limit Medical/Dental",
+      checker_validation: "Checker Validation",
+      // Add more mappings as needed
+    };
+    return labels[key] || key;
+  },
     FetchEmployeesData() {
       axios
         .get(' http://172.28.28.116:6239/api/User/GetAllEmployees')
@@ -625,7 +677,7 @@ export default {
       return guidRegex.test(guid);
     },
 
-    async getFormData(employee, emp_id, username_id, reporting_to) {
+    async getFormData(employee, emp_id, username_id) {
       // console.log("4. employee in getFormData method: ", employee);
       // console.log("1. emp_id in getFormData method: ", emp_id);
       // console.log("2. username in getFormData method: ", username_id);
@@ -661,7 +713,14 @@ export default {
       //  console.log("4. responseResult: ", responseResult);
 
         const reportingId = `${reportingName} (${employee.reporting_to})`;
-       // console.log("Constructed reportingId:", reportingId);
+        this.form.reportingId = reportingId;
+       console.log("Constructed reportingId:", reportingId);
+
+      //  if (!this.filteredReportingEmployees.includes(reportingId)) {
+      //     this.filteredReportingEmployees.push(reportingId);
+      //   }
+      //   this.form.reportingId = reportingId;
+
 
         if (employee.reporting_to_dept) {
           // console.log("reporting to department:", employee.reporting_to_dept)
@@ -679,14 +738,15 @@ export default {
           userId: employee.name,
           employeeId: employee.emp_id,
           reportingDepartment: employee.reporting_to_dept,
-          reportingId,
+          reportingId: reportingId,
           limit: employee.limit_amount,
           limitOutpatient: employee.limit_outpatient,
           limitMedicaldental: employee.limit_medicaldental,
           userNameId: employee.username_id,
         };
 
-        // console.log("Form data set in getFormData:", this.form);
+        console.log("Form data set in getFormData:", this.form);
+        
 
         // console.log("Form.reportingId after assignment:", this.form.reportingId);
 
@@ -750,8 +810,9 @@ export default {
         others_access: accessData.others,
         limit_md_dental: this.form.limitMedicaldental,
         limit_outpatient: this.form.limitOutpatient,
+        checker_validation : this.assignchecker === 'yes' ? 1 : 0,
       };
-      // console.log('Form Data:', registerData);
+      console.log('Form Data:', registerData);
 
       try {
         axios.put('http://172.28.28.116:6165/api/Admin/Update_UserProfile',registerData)
@@ -764,6 +825,7 @@ export default {
         .catch(error => {
           console.error('Error while updating user profile:', error.response.data);
         });
+        console.log('Form data sent successfully:', registerData.checker_validation);
       const index = this.userApplications.findIndex(emp => emp.emp_id === this.form.employeeId);
       if (index !== -1) {
         this.userApplications[index] = {
@@ -833,6 +895,7 @@ export default {
         // console.log("Current reporting department:", this.form.reportingDepartment);
         await this.extractBranches();
         await this.getAllDepartments();
+        await this.getAllCompanies();
         // await this.getFormAccess();
 
         if (this.form.branch) {
@@ -868,18 +931,22 @@ export default {
         console.error('Error fetching departments:', error);
       }
     },
-    getAllPositions() {
-      axios
-        .get('http://172.28.28.116:6239/api/User/GetDesignation')
-        .then((response) => {
-          const rawDesignations = response.data.result.map(item => item.designation);
-          this.AllPositions = [...new Set(rawDesignations)].sort((a, b) => a.localeCompare(b));
-        })
-        .catch((error) => {
-          this.error = error;
-          console.error('There was an error!', error);
-        });
+    async getAllPositions() {
+      try {
+        const response = await axios.get('http://172.28.28.116:6239/api/User/GetAllEmployees');
+        this.fetchOptions = response.data.result || [];
+        const position = this.fetchOptions.map((item) => item.position_title);
+        const uniquePosition = [...new Set(position)].sort((a, b) => a.localeCompare(b));
+        this.AllPositions = uniquePosition;
+        // const rawDesignations = response.data.result.map(item => item.designation);
+        // this.AllPositions = [...new Set(rawDesignations)].sort((a, b) => a.localeCompare(b));
+      }
+      catch(error) {
+        this.error = error;
+        console.error('There was an error!', error);
+      }
     },
+
     getAllCompanies() {
       // axios
       //   .get(' http://172.28.28.116:6239/api/User/GetCompany')
