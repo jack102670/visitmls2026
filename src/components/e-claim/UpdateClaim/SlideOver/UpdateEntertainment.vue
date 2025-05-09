@@ -15,12 +15,18 @@
             </div>
             <div class="flex justify-between items-center py-2">
                 <p class="text-lg font-bold text-gray-800 dark:text-gray-200">
-                    Update {{ claim.tabTitle }}
+                    Update {{ claim.tabTitle }} Details
                 </p>
             </div>
             <form @submit.prevent="handleSubmit">
                 <div class="grid grid-cols-8 gap-2 w-full">
-                    <div class="col-span-4">
+                    <div class="col-span-8">
+                        <label for="date_event" class="font-medium text-sm">Date Event</label>
+                        <input type="date" id="date_event" v-model="formattedDate"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+
+                    <div class="col-span-8">
                         <label for="entertainment_type" class="font-medium text-sm">Entertainment Type</label>
                         <select id="entertainment_type" v-model="entertainment.entertainment_type"
                             class="mt-1 text-xs block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
@@ -28,25 +34,37 @@
                                 :value="entertainment">{{ entertainment }}</option>
                         </select>
                     </div>
-                    <div class="col-span-4">
-                        <label for="date_event" class="font-medium text-sm">Date Event</label>
-                        <input type="text" id="date_event" v-model="entertainment.date_event"
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    <div class="col-span-8" v-if="entertainment.entertainment_type === 'OTHERS'">
+                        <label for="entertainment_type" class="font-medium text-sm">Specify Type</label>
+                        <input type="text" id= "entertainment_type" v-model="entertainment.other_type" 
+                        class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
                     </div>
-                    <div class="col-span-4">
-                        <label for="venue_name" class="font-medium text-sm">Venue Name</label>
-                        <input type="text" id="venue_name" v-model="entertainment.venue_name"
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                    </div>
+                    
                     <div class="col-span-4">
                         <label for="company_name" class="font-medium text-sm">Company Name</label>
                         <input type="text" id="company_name" v-model="entertainment.company_name"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
+
+                    <div class="col-span-4">
+                        <label for="venue_name" class="font-medium text-sm">Venue Name</label>
+                        <input type="text" id="venue_name" v-model="entertainment.venue_name"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                    
+                    <div class="col-span-8">
+                        <label for="description" class="font-medium text-sm">Reference</label>
+                        <select id="description" v-model="entertainment.description"
+                            class="mt-1 text-xs block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            <option v-for="(description, index) in descriptionType" :key="index" :value="description">{{
+                                description }}</option>
+                        </select>
+                    </div>
+
                     <div class="col-span-4">
                         <label for="company_name" class="font-medium text-sm">Total Amount(RM)</label>
-                        <input type="text" id="company_name" v-model="entertainment.total_fee" readonly
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-gray-100 cursor-not-allowed">
+                        <input type="text" id="company_name" v-model="entertainment.total_fee" 
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
                     <div class="col-span-4">
                         <label for="files" class="font-medium text-sm">Uploaded Files</label>
@@ -61,14 +79,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-span-8">
-                        <label for="input2" class="font-medium text-sm">Description</label>
-                        <select id="entertainment_type" v-model="entertainment.description"
-                            class="mt-1 text-xs block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                            <option v-for="(description, index) in descriptionType" :key="index" :value="description">{{
-                                description }}</option>
-                        </select>
-                    </div>
+                    
                     <div class="col-span-8">
                         <label class="font-medium text-sm">Participants</label>
                         <div class="overflow-x-auto border border-gray-300 rounded-md mt-2">
@@ -82,16 +93,40 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(participant, index) in entertainment.participants || []"
+                                    <tr v-for="(participant, index) in paginatedParticipants || []"
                                         :key="participant.id" class="border-b dark:border-gray-600">
                                         <td class="py-2 px-4 text-xs">{{ index + 1 + (currentPage - 1) * pageSize }}
                                         </td>
                                         <td class="py-2 px-4 text-xs">{{ participant.name }}</td>
                                         <td class="py-2 px-4 text-xs">{{ participant.company_name }}</td>
-                                        <td class="py-2 px-4 text-xs "><button type="button"
-                                                @click="editParticipant(participant)"
-                                                class="bg-green-600 text-white rounded-md px-2 py-1 text-xs">Edit</button>
+                                        <td class="py-2 px-4 text-xs ">
+                                        <!-- Edit Button -->
+                                        <a @click="editParticipant(participant)"
+                                        class="bg-green-600 hover:bg-green-700 text-white transition duration-300 px-2 py-1 rounded-md cursor-pointer inline-flex items-center justify-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M11 4h2m2 0h.01M13 4l7 7-9 9H4v-9l9-9z" />
+                                        </svg>    
+                                        </a>
+                                        <!-- Delete Button
+                                        <a @click="deleteParticipant(participant)"
+                                            class="bg-red-600 hover:bg-red-700 text-white transition duration-300 px-2 py-1 rounded-md cursor-pointer inline-flex items-center justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                        </a> -->
                                         </td>
+                                        <!-- <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2">
+                                <a @click="toggleSlideOver(index)"
+                                class="bg-green-600 hover:bg-green-700 text-white transition duration-300 px-2 py-1 rounded-md cursor-pointer inline-flex items-center justify-center"> -->
+                                    <!-- Pencil Icon -->
+                                    <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M11 4h2m2 0h.01M13 4l7 7-9 9H4v-9l9-9z" />
+                                    </svg>
+                                </a>
+                            </td> -->
                                     </tr>
                                 </tbody>
                             </table>
@@ -150,7 +185,7 @@
                                 class="bg-gray-400 text-white px-4 py-2 rounded">
                                 Cancel
                             </button>
-                            <button @click="saveParticipant" class="bg-blue-600 text-white px-4 py-2 rounded">
+                            <button @click="saveParticipant(selectedParticipant)" class="bg-blue-600 text-white px-4 py-2 rounded">
                                 Save
                             </button>
                         </div>
@@ -162,11 +197,13 @@
     </transition>
 </template>
 <script>
-import { getEntertainment, updateEntertainment } from '@/api/EclaimAPI';
+// import { getEntertainment, updateEntertainment } from '@/api/EclaimAPI';
 import Swal from "sweetalert2";
+import axios from "axios";
+import { id } from "intl-tel-input/i18n";
 
 export default {
-    emits: ['close', 'closeSlideOver'],
+    emits: ['close', 'closeSlideOver', 'refresh-claims'],
     props: {
         isOpen: {
             type: Boolean,
@@ -179,35 +216,60 @@ export default {
     },
     data() {
         return {
-
+            
             entertainment: {
                 description: '',
                 date_event: '',
                 entertainment_type: '',
+                other_type: '',
                 venue_name: '',
                 company_name: '',
                 total_fee: '',
                 comment: '',
                 participants: [],
                 files: [],
+            
+            
 
             },
             EntertainmentType: ["BREAKFAST", "LUNCH", "DINNER", "TEA BREAK", "OTHERS"],
             descriptionType: ["ENTERTAINMENT-CLIENT(EXISTING)", "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)", "ENTERTAINMENT-NON TRADE", "GIFT TO CLIENT", "GIFT TO OTHERS"],
+            // EntertainmentType: ["Breakfast", "Lunch", "Dinner", "Tea Break", "Others"],
+            // descriptionType: ["Entertainment-Client(Existing)", "Entertainment-Client(New/Potential)", "Entertainment-Non Trade", "Gift To Client", "Gift To Others-Non Trade","Meal For Staff" ],
             currentPage: 1,
             pageSize: 5,
             //entertainment: {},
+            
             isParticipantFormOpen: false,
-            selectedParticipant: {}
+            selectedParticipant: null
 
         }
     },
     mounted() {
-        if (this.claim?.refNo) {
-            this.getEntertainment();
-        }
+        const refNo = this.$route.params.rn;
+        console.log("RefNo:", refNo);
+
+        // this.updateEntertainment(refNo),
+        this.fetchEntertainmentData(refNo)
+
+        // if (this.claim?.refNo) {
+        //     this.fetchEntertainment();
+        // }
     },
     computed: {
+        formattedDate: {
+            get() {
+            const d = new Date(this.entertainment.date_event);
+            if (isNaN(d)) return "";
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, "0");
+            const day = String(d.getDate()).padStart(2, "0");
+            return `${year}-${month}-${day}`;
+            },
+            set(value) {
+            this.entertainment.date_event = value; // Keep in ISO format or convert if needed
+            }
+        },
         totalPages() {
             return Math.ceil((this.entertainment?.participants?.length || 0) / this.pageSize);
         },
@@ -220,37 +282,130 @@ export default {
         },
     },
     methods: {
+        // deleteParticipant(participant) {
+        //     if (participant && participant.id) {
+        //         const index = this.entertainment.participants.findIndex(p => p.id === participant.id);
+        //         if (index !== -1) {
+        //             this.entertainment.participants.splice(index, 1, participant); // Remove from array
+        //             console.log(`Deleted participant with ID: ${participant.id}`);
+        //         } else {
+        //         this.entertainment.participants.push(participant);
+        //     }
+                
+        //     }
+        // },
+
         editParticipant(participant) {
             this.selectedParticipant = { ...participant };
             this.isParticipantFormOpen = true;
+            console.log("Editing participant:", this.selectedParticipant); // Debugging log
         },
         saveParticipant(participant) {
-            if (!this.participants || !Array.isArray(this.participants)) {
-                console.error("Participants list is undefined or not an array:", this.participants);
-                return;
+            console.log("Participant before saving:", participant); // Debugging log
+            const index = this.entertainment.participants.findIndex(p => p.id === participant.id);
+            if (index !== -1) {
+                this.entertainment.participants.splice(index, 1, participant); // Update existing participant
+                console.log("Updated participant:", this.entertainment.participants[index]); // Debugging log
+            } else {
+                this.entertainment.participants.push(participant);
             }
 
-            const index = this.participants.findIndex(p => p.id === participant.id);
-            if (index !== -1) {
-                this.participants[index] = participant;
-            } else {
-                this.participants.push(participant);
-            }
+
+            // // Ensure the participant is valid
+            // if (!participant || !participant.id) {
+            //     console.error("Invalid participant:", participant);
+            //     return;
+            // }
+
+            // console.log("Participants before:", this.participants);
+            // console.log("Checking participant ID:", participant.id);
+            // console.log("Checking participant name:", participant.name);
+            // console.log("Checking participant company name:", participant.company_name);
+            // console.log("Existing participant:", this.participants?.[participant.id]);
+            // // Check if participant ID exists and update, otherwise add new
+            // if (this.participants && this.participants[participant.id]) {
+            //     // If participant already exists, update it
+            //     this.participants[participant.id] = { ...participant };
+            //     console.log("Updated participant:", this.participants[participant.id]); // Debugging log
+            // } else {
+            // // If participant doesn't exist, add it
+            // this.participants = {
+            //     ...this.participants,  // Spread existing participants
+            //     [participant.id]: { ...participant },  // Add new participant
+            // };
+            // }
+            // console.log("Saving participant:", participant); // Debugging log
+
+
+            // Optional: reset form state
+            this.selectedParticipant = null;
+            this.isParticipantFormOpen = false;
         },
-        async updateEntertainment() {
-            try {
-                const updatedData = {
-                    ...this.entertainment,
-                    participants: this.participants
-                };
-                await updateEntertainment(this.claim.id, updatedData);
-                Swal.fire("Success", "Entertainment data updated successfully!", "success");
-                this.$emit("close");
-            } catch (error) {
-                Swal.fire("Error", "Failed to update entertainment data.", "error");
-                console.error("Update error:", error);
-            }
-        },
+
+        // saveParticipant(participant) {
+        //     if (!this.participants || !Array.isArray(this.participants)) {
+        //         console.error("Participants list is undefined or not an array:", this.participants);
+        //         return;
+        //     }
+
+        //     const index = this.participants.findIndex(p => p.id === participant.id);
+        //     if (index !== -1) {
+        //         this.participants[index] = participant;
+        //     } else {
+        //         this.participants.push(participant);
+        //     }
+        // },
+        // async updateEntertainment(refNo) {
+        //     try {
+                
+        //         const submitData = {
+        //         ...this.entertainment,
+        //         participants: this.participants
+        //         };
+
+        //         const response = await axios.put(`http://172.28.28.116:6165/api/User/UpdateEntertainment`, submitData, {
+        //         headers: {
+        //             "Content-Type": "application/json",
+        //         },
+        //         });
+
+        //         if (response.data && response.data.result) {
+        //         console.log("Update Entertainment data:", response.data.result);
+        //         Swal.fire("Success", "Entertainment data updated successfully!", "success");
+        //         this.$emit("close");
+        //         } else {
+        //         console.log("Update Entertainment data not found");
+        //         Swal.fire("Error", "Entertainment data not found.", "error");
+        //         }
+        //     } catch (error) {
+        //         if (error.response) {
+        //         console.error("Server responded with an error:", error.response.data);
+        //         console.error("Status Code:", error.response.status);
+        //         console.error("Headers:", error.response.headers);
+        //         } else if (error.request) {
+        //         console.error("No response received from server:", error.request);
+        //         } else {
+        //         console.error("Error setting up the request:", error.message);
+        //         }
+        //         Swal.fire("Error", "Failed to update entertainment data.", "error");
+        //     }
+        //     },
+
+        // async updateEntertainment(refNo) {
+        //     try {
+        //         const updatedData = {
+        //             ...this.entertainment,
+        //             participants: this.participants
+        //         };
+        //         await updateEntertainment(this.claim.id, updatedData);
+        //         // await axios.get(`http://172.28.28.116:6165/api/User/UpdateEntertainment/${refNo}`);
+        //         Swal.fire("Success", "Entertainment data updated successfully!", "success");
+        //         this.$emit("close");
+        //     } catch (error) {
+        //         Swal.fire("Error", "Failed to update entertainment data.", "error");
+        //         console.error("Update error:", error);
+        //     }
+        // },
         nextPage() {
             if (this.currentPage < this.totalPages) {
                 this.currentPage++;
@@ -265,84 +420,137 @@ export default {
             this.$emit('close');
         },
 
-        async getEntertainment() {
-            try {
-                const response = await getEntertainment(this.claim.refNo);
-                console.log("Entertainment Data:", response);
-                if (response) {
-                    const matchingUniqueID = response.find(
-                        record => record.unique_code === this.claim.unique_code
-                    );
+        async fetchEntertainmentData(refNo) {
+   
+        const response = await axios.get(`http://172.28.28.116:6165/api/User/GetEntertainment/${refNo}`);
+        console.log("Entertainment Data:", response.data);
 
-                    if (matchingUniqueID) {
-                        this.entertainment = {
-                            description: matchingUniqueID.description,
-                            date_event: matchingUniqueID.date_event,
-                            entertainment_type: matchingUniqueID.entertainment_type,
-                            venue_name: matchingUniqueID.venue_name,
-                            company_name: matchingUniqueID.company_name,
-                            total_fee: matchingUniqueID.total_fee,
-                            comment: matchingUniqueID.comment,
-                            files: matchingUniqueID.files,
-                            participants: matchingUniqueID.participants || [],
-                        };
-                        this.ent_refNumber = matchingUniqueID.ent_refNumber;
+        const dataArray = response.data.result;
 
-                    } else {
-                        console.log("No matching unique_code found");
-                    }
-                }
-            } catch (error) {
-                console.error("Error fetching Entertainment data:", error);
-                throw error;
+        if (Array.isArray(dataArray)) {
+        const matchingUniqueID = dataArray.find(
+            record => record.unique_code === this.claim.unique_code
+        );
+
+        if (matchingUniqueID) {
+            
+            this.entertainment = {
+            description: matchingUniqueID.description,
+            reference_number: matchingUniqueID.reference_number,
+            date_event: matchingUniqueID.date_event,
+            entertainment_type: matchingUniqueID.entertainment_type,
+            venue_name: matchingUniqueID.venue_name,
+            company_name: matchingUniqueID.company_name,
+            total_fee: matchingUniqueID.total_fee,
+            unique_code: matchingUniqueID.unique_code,
+            comment: matchingUniqueID.comment,
+            files: matchingUniqueID.files,
+            participants: matchingUniqueID.participants || [],
+            other_type:'',
+            };
+
+            const isCustomType = !this.EntertainmentType.includes(matchingUniqueID.entertainment_type);
+            if (isCustomType) {
+                // Display it as "OTHERS" but store the real custom value
+                this.entertainment.other_type = matchingUniqueID.entertainment_type;
+                this.entertainment.entertainment_type = "OTHERS";
             }
 
+            this.ent_refNumber = matchingUniqueID.ent_refNumber;
+        } else {
+            console.log("No matching unique_code found");
+        }
+        } else {
+        console.error("Expected an array but got:", typeof dataArray, dataArray);
+        }
+
         },
+
+        // const response = await axios.get(`http://172.28.28.116:6165/api/User/GetEntertainment/${refNo}`);
+
+        //             const entertainmentData = response.data.result;
+
+        //             if (entertainmentData) {
+        //             console.log("Entertainment details:", entertainmentData);
+
+        //             const entertainmentClaims = entertainmentData.map(claim => ({
+        //                 tabTitle: "Entertainment",
+        //                 locationPurpose: claim.venue_name,
+        //                 date: claim.date_event,
+        //                 total: claim.total_fee,
+        //                 unique_code: claim.unique_code,
+        //                 refNo: refNo,
+        //             }));
+
+        //             console.log("Formatted Entertainment Claims:", entertainmentClaims);
+        //             this.dataclaims = entertainmentClaims; // Assign to dataclaims
+        //             return entertainmentClaims;
+        //             } else {
+        //             console.log("Entertainment details not found");
+        //             return []; // return empty array if no data
+        //             }
+
+        // Function to update entertainment data (as a helper)
         async handleSubmit() {
             try {
-
+                // Prepare the data to be submitted
                 const submitData = {
-                    description: this.entertainment.description,
-                    date_event: this.entertainment.date_event,
-                    entertainment_type: this.entertainment.entertainment_type,
+                    description: this.entertainment.description?.trim(),
+                    reference_number: this.entertainment.reference_number,
+                    date_event: this.formattedDate,
+                    entertainment_type: this.entertainment.entertainment_type === "OTHERS"
+                    ? this.entertainment.other_type  // replace with the actual text entered
+                    : this.entertainment.entertainment_type,
                     venue_name: this.entertainment.venue_name,
                     company_name: this.entertainment.company_name,
-                    total_fee: this.entertainment.total_fee,
-                    ent_refNumber: this.ent_refNumber,
-                    participants: [
-                        {
-                            name: "",
-                            company_name: "",
-                        }
-                    ]
+                    total_fee: isNaN(parseFloat(this.entertainment.total_fee)) ? 0 : parseFloat(this.entertainment.total_fee),
+                    unique_code: this.entertainment.unique_code,
+                    // ent: this.entertainment.ent,
+                    participants: this.entertainment.participants,
+                    // participants:[
+                    //             {
+                    //                 id: this.participant.id,
+                    //                 name: "",
+                    //                 company_name: "",
+                    //             }
+                    //         ],
+                    files: this.entertainment.files || []
+                    // participants: this.participants
                 };
-                console.log("Data to be submitted", submitData);
 
-                const submitResponse = await updateEntertainment(submitData);
+                console.log("Submitting Entertainment payload:", submitData);
 
-                if (submitResponse) {
+                // Make the PUT request to update the entertainment data
+                const response = await axios.put('http://172.28.28.116:6165/api/User/UpdateEntertainment', submitData, {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+
+                // Handle the response based on success or failure
+                if (response.data && response.data.result) {
+                    console.log("Update Entertainment data:", response.data.result);
                     Swal.fire({
                         title: 'Success',
                         text: 'Entertainment updated successfully',
                         icon: 'success',
                         confirmButtonText: 'OK',
-                        confirmButtonColor: '#dc2626'
+                        confirmButtonColor: '#dc2626',
                     });
+                    this.$emit('refresh-claims', this.claim.refNo);
                     this.closeSlideOver();
                 } else {
+                    console.log("Update Entertainment data not found");
                     Swal.fire({
                         title: 'Error',
                         text: 'Failed to update Entertainment',
                         icon: 'error',
                         confirmButtonText: 'OK',
-                        confirmButtonColor: '#dc2626'
-
+                        confirmButtonColor: '#dc2626',
                     });
                 }
-            }
-            catch (error) {
+            } catch (error) {
                 console.error("Error submitting data:", error);
-
                 let errorMessage = "An unexpected error occurred.";
                 if (error.response) {
                     errorMessage = error.response.data?.message || `Error: ${error.response.status} - ${error.response.statusText}`;
@@ -357,16 +565,22 @@ export default {
                     text: errorMessage,
                     icon: 'error',
                     confirmButtonText: 'OK',
-                    confirmButtonColor: '#dc2626'
+                    confirmButtonColor: '#dc2626',
                 });
             }
-        }
-    },
+        },
+
+
+
+
+    
+
     watch: {
         isOpen(newVal) {
-            if (newVal) this.fetchEntertainment();
-        }
-    }
+            if (newVal) this.fetchEntertainmentData();
+        },
+    },
+    },
 
 }
 </script>

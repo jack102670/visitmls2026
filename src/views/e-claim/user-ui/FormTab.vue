@@ -2445,7 +2445,7 @@ export default {
         (field) => field.id === "TypeofEntertainmentE"
       );
       return (
-        typeOfEntertainmentField && typeOfEntertainmentField.value === "OTHERS"
+        typeOfEntertainmentField && typeOfEntertainmentField.value === "Others"
       );
     },
     isOtherStaffRefreshment() {
@@ -2457,7 +2457,7 @@ export default {
         (field) => field.id === "TypeofRefreshmentSR"
       );
       return (
-        TypeofRefreshmentField && TypeofRefreshmentField.value === "OTHERS"
+        TypeofRefreshmentField && TypeofRefreshmentField.value === "Others"
       );
     },
   },
@@ -3144,7 +3144,7 @@ export default {
       );
       if (!otherTypeField2) return;
 
-      otherTypeField2.hidden = staffRefreshmentValue !== "OTHERS";
+      otherTypeField2.hidden = staffRefreshmentValue !== "Others";
     },
 
     updateFieldVisibility4(entertainmentValue) {
@@ -3157,7 +3157,7 @@ export default {
       );
       if (!otherTypeField2) return;
 
-      otherTypeField2.hidden = entertainmentValue !== "OTHERS";
+      otherTypeField2.hidden = entertainmentValue !== "Others";
     },
 
     updateFieldVisibility5(publicTransportValue) {

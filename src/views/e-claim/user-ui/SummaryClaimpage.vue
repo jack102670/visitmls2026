@@ -387,7 +387,24 @@
             </tr>
           </table>
         </div>
+       
+         <!-- Resubmit button for claimant -->
+         <div v-if="canResubmit && !resubmitClicked">
+          <div class="flex justify-end mt-4">
+            <button @click="resubmitForm"
+              class="bg-yellow-600 hover:bg-yellow-700 dark:bg-yellow-700 dark:hover:bg-yellow-800 text-white rounded-xl px-8 text-sm font-bold py-2">
+              Resubmit
+            </button>
+          </div>
+        </div>
 
+
+        <!-- <button
+                @click="confirmResubmit = true"
+                class="mr-2 text-sm font-semibold py-3 w-16 sm:w-24 md:w-36 bg-yellow-500 hover:bg-yellow-600 rounded-lg text-white"
+              >
+                Resubmit
+              </button> -->
 
         <!-- Approve Confirmation -->
         <div v-show="confirmApprove"
@@ -739,8 +756,9 @@ export default {
   },
   data() {
     return {
+      canResubmit: true, 
+      resubmitClicked: false, 
       singleRemarks: [],
-
       sim: [],
       showSimList: false,
       participants: [],
@@ -897,7 +915,9 @@ export default {
         default:
           return 'PENDING';
       }
-    }
+    },
+
+    
 
     },
     methods: {
@@ -909,9 +929,10 @@ export default {
         const response = await axios.get('http://172.28.28.116:6165/api/User/GetClaimDetails/' + this.referenceNumber);
         this.loading = false;
         this.claimDetails = response.data.result;
+        this.date_requested = moment(this.claimDetails.date_requested).format('dddd, MMMM D, YYYY h:mm A');
         this.adminStatus = this.claimDetails.admin_status;
         this.remark = this.claimDetails.comment;
-        console.log("get claimdetails in summary claum : ", this.claimDetails);
+        console.log("get claimdetails in summary claim : ", this.claimDetails);
         console.log("get admin status", this.adminStatus);
 
 
@@ -1523,6 +1544,20 @@ export default {
           });
       }
 
+    },
+
+    resubmitForm() {
+      const refNo = this.referenceNumber;
+      if (refNo) {
+        // Mark the form as unlocked for updates
+        this.isResubmitted = true;
+        // localStorage.setItem('isResubmitted_' + refNo, 'true'); // Persist state per claim
+
+        // Redirect to update route
+        this.$router.push({ name: 'updateclaim', params: { refNo } });
+      } else {
+        console.error("No record number (refNo) found for resubmission.");
+      }
     },
 
     // Download the file

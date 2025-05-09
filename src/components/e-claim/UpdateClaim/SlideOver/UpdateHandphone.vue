@@ -37,18 +37,18 @@
                     </div>
                     <div class="col-span-4">
                         <label for="bank_name" class="font-medium text-sm">Bank Name</label>
-                        <input type="text" id="bank_name" v-model="handphone.bank_name"
-                            class="mt-1 block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <input type="text" id="bank_name" v-model="handphone.bank_name" readonly
+                            class="mt-1 block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-gray-100 cursor-not-allowed">
                     </div>
                     <div class="col-span-4">
                         <label for="bank_holder" class="font-medium text-sm">Bank Holder</label>
-                        <input type="text" id="bank_holder" v-model="handphone.bank_holder"
-                            class="mt-1 block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <input type="text" id="bank_holder" v-model="handphone.bank_holder" readonly
+                            class="mt-1 block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-gray-100 cursor-not-allowed">
                     </div>
                     <div class="col-span-4">
                         <label for="bank_account" class="font-medium text-sm">Bank Account</label>
-                        <input type="text" id="bank_account" v-model="handphone.bank_account"
-                            class="mt-1 block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <input type="text" id="bank_account" v-model="handphone.bank_account" readonly
+                            class="mt-1 block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-gray-100 cursor-not-allowed">
                     </div>
                     <div class="col-span-4">
                         <label for="claim_amount" class="font-medium text-sm">Claim Amount (RM)</label>
@@ -57,8 +57,8 @@
                     </div>
                     <div class="col-span-4">
                         <label for="ic_number" class="font-medium text-sm">Identification Number</label>
-                        <input type="text" id="ic_number" v-model="handphone.ic_number"
-                            class="mt-1 block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <input type="text" id="ic_number" v-model="handphone.ic_number" readonly
+                            class="mt-1 block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-gray-100 cursor-not-allowed">
                     </div>
                     <div class="col-span-4">
                         <label for="files" class="font-medium text-sm">Uploaded Files</label>
@@ -98,10 +98,11 @@
 </template>
 
 <script>
-import { getHandphone, updateHandphone } from "../../../../api/EclaimAPI.js";
+// import { getHandphone, updateHandphone } from "../../../../api/EclaimAPI.js";
 import Swal from "sweetalert2";
+import axios from "axios";
 export default {
-    emits: ['close', 'closeSlideOver'],
+    emits: ['close', 'closeSlideOver', 'refresh-claims'],
     props: {
         isOpen: {
             type: Boolean,
@@ -133,26 +134,38 @@ export default {
         }
     },
     mounted() {
-        if (this.claim?.refNo) {
-            this.fetchHandphoneData();
-        }
+        const refNo = this.$route.params.rn;
+        console.log("RefNo:", refNo);
+
+        this.fetchHandphoneData(refNo)
+        // if (this.claim?.refNo) {
+        //     this.fetchHandphoneData();
+        // }
     },
     methods: {
         closeSlideOver() {
             this.$emit('close');
         },
 
-        async fetchHandphoneData() {
-            try {
-                const response = await getHandphone(this.claim.refNo);
+        async fetchHandphoneData(refNo) {
+          
+                const response = await axios.get(`http://172.28.28.116:6165/api/User/GetHandphone/${refNo}`);
+                console.log("Handphone Data:", response.data);
 
+                const dataArray = response.data.result;
 
-                if (response) {
-                    const matchingRecord = response.find(
-                        record => record.unique_code === this.claim.unique_code
-                    );
+                // if (response) {
+                //     const matchingRecord = response.find(
+                //         record => record.unique_code === this.claim.unique_code
+                //     );
+                if (Array.isArray(dataArray)) {
+                const matchingRecord = dataArray.find(
+                    record => record.unique_code === this.claim.unique_code
+                );
+
                     if (matchingRecord) {
                         this.handphone = {
+                            reference_number: matchingRecord.reference_number,
                             bank_account: matchingRecord.bank_account,
                             bank_holder: matchingRecord.bank_holder,
                             bank_name: matchingRecord.bank_name,
@@ -169,12 +182,11 @@ export default {
                     } else {
                         console.log("No matching unique_code found");
                     }
-                }
-            } catch (error) {
-                console.error("Error fetching handphone data:", error);
-                throw error;
-            }
-        },
+                
+                    } else {
+                    console.error("Expected an array but got:", typeof dataArray, dataArray);
+                    }
+                    },
 
         generateYears() {
             const currentYear = new Date().getFullYear();
@@ -195,47 +207,61 @@ export default {
         async handleSubmit() {
         try {
             const submitData = {
+            reference_number: this.handphone.reference_number,
             claim_month: this.handphone.claim_month,
             claim_year: this.handphone.claim_year,
+            files: this.handphone.files || [],
             bank_name: this.handphone.bank_name,
             bank_holder: this.handphone.bank_holder,
             bank_account: this.handphone.bank_account,
+            claim_amount:isNaN(parseFloat(this.handphone.claim_amount)) ? 0 : parseFloat(this.handphone.claim_amount),
             ic_number: this.handphone.ic_number,
             unique_code: this.uniqueCode,
-            requester_id: this.requesterId,
+            requester_id: this.requesterId
+            
             };
+            console.log("Submitting Handphone payload:", submitData);
 
-            const submitResponse = await updateHandphone(submitData);
+            const response = await axios.put('http://172.28.28.116:6165/api/User/UpdateHandphoneReimburse', submitData, {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
 
-            if (submitResponse) {
-            Swal.fire({
-                title: 'Success',
-                text: 'Handphone claim updated successfully',
-                icon: 'success',
-                confirmButtonText: 'OK',
-                       confirmButtonColor: '#dc2626'
-            });
-            this.closeSlideOver();
+            if (response.data && response.data.result) {
+                console.log("Update Handphone data:", response.data.result);
+
+                
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Handphone claim updated successfully',
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#dc2626'
+                });
+                this.$emit('refresh-claims', this.claim.refNo);
+                this.closeSlideOver();
             } else {
-            Swal.fire({
-                title: 'Error',
-                text: 'Failed to update handphone claim',
-                icon: 'error',
-                confirmButtonText: 'OK',
-                confirmButtonColor: '#dc2626'
+                console.log("Update Handphone data not found");
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Failed to update handphone claim',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#dc2626'
 
-            });
+                });
             }
         } catch (error) {
             console.error("Error submitting data:", error);
             
             let errorMessage = "An unexpected error occurred.";
             if (error.response) {
-            errorMessage = error.response.data?.message || `Error: ${error.response.status} - ${error.response.statusText}`;
+                errorMessage = error.response.data?.message || `Error: ${error.response.status} - ${error.response.statusText}`;
             } else if (error.request) {
-            errorMessage = "No response received from the server.";
+                errorMessage = "No response received from the server.";
             } else {
-            errorMessage = error.message;
+                errorMessage = error.message;
             }
 
             Swal.fire({
@@ -246,7 +272,12 @@ export default {
             confirmButtonColor: '#dc2626'
             });
         }
+        },
+        watch: {
+        isOpen(newVal) {
+            if (newVal) this.fetchHandphoneData();
         }
+    },
 
     },
 }

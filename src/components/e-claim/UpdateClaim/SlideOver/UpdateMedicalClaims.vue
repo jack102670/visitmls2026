@@ -22,20 +22,20 @@
                 <div class="grid grid-cols-8 gap-2 w-full">
                     <div class="col-span-4">
                         <label for="date_leave_taken" class="font-medium text-sm">Date leave Taken</label>
-                        <input type="text" id="date_leave_taken" v-model="medical.date_leave_taken"
+                        <input type="date" id="date_leave_taken" v-model="formattedDate"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
                     <div class="col-span-4">
                         <label for="ic_number" class="font-medium text-sm">Identification Number</label>
-                        <input type="text" id="ic_number" v-model="medical.ic_number"
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <input type="text" id="ic_number" v-model="medical.ic_number" readonly
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-gray-100 cursor-not-allowed">
                     </div>
-                    <div class="col-span-8">
+                    <div v-if="medical.medical_category === 'Outpatient'" class="col-span-8">
                         <label for="reason" class="font-medium text-sm">Reason</label>
                         <textarea type="text" id="reason" v-model="medical.reason"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
                     </div>
-                    <div class="col-span-4">
+                    <div class="col-span-8">
                         <label for="medical_category" class="font-medium text-sm">Medical category</label>
                         <select 
                             id="medical_category" 
@@ -44,7 +44,7 @@
                             <option v-for="(category, index) in medicalCategories" :key="index" :value="category">{{ category }}</option>
                         </select>
                     </div>
-                    <div class="col-span-4">
+                    <div v-if="medical.medical_category === 'Outpatient'" class="col-span-8">
                         <label class="font-medium text-sm">Clinic Selection</label>
                         <div class="flex space-x-2">
                         <div class="mt-1">
@@ -63,12 +63,12 @@
                         </div>
                     </div>
                     </div>
-                    <div class="col-span-4">
+                    <div class="col-span-8" v-if="medical.medical_category === 'Outpatient' && medical.clinic_selection === 'Other Clinic'">
                         <label for="clinic_name" class="font-medium text-sm">Clinic Name</label>
                         <input type="text" id="clinic_name" v-model="medical.clinic_name"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
-                    <div class="col-span-4">
+                    <div class="col-span-8">
                         <label for="files" class="font-medium text-sm">Uploaded Files</label>
                         <div v-if="medical.files.length" class="mt-2">
                             <p class="text-xs text-gray-600">Click on a file to view:</p>
@@ -81,25 +81,25 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-span-8">
+                    <div v-if="medical.medical_category === 'Outpatient'" class="col-span-8">
                         <label for="reason_different" class="font-medium text-sm">reason difference</label>
                         <input type="text" id="reason_different" v-model="medical.reason_different"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
                     <div class="col-span-4">
                         <label for="bank_name" class="font-medium text-sm">Bank Name</label>
-                        <input type="text" id="bank_name" v-model="medical.bank_name"
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <input type="text" id="bank_name" v-model="medical.bank_name" readonly
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-gray-100 cursor-not-allowed">
                     </div>
                     <div class="col-span-4">
                         <label for="bank_holder" class="font-medium text-sm">Bank Holder</label>
-                        <input type="text" id="bank_holder" v-model="medical.bank_holder"
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <input type="text" id="bank_holder" v-model="medical.bank_holder" readonly
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-gray-100 cursor-not-allowed">
                     </div>
                     <div class="col-span-4">
                         <label for="bank_account" class="font-medium text-sm">Bank Account</label>
-                        <input type="text" id="bank_account" v-model="medical.bank_account"
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <input type="text" id="bank_account" v-model="medical.bank_account" readonly
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-gray-100 cursor-not-allowed">
                     </div>
                     <div class="col-span-4">
                         <label for="claim_amount" class="font-medium text-sm">Claim Amount (RM)</label>
@@ -109,8 +109,8 @@
                     <hr class="col-span-8 mt-4 mb-2" />
                     <div class="col-span-8">
                         <label for="comment" class="font-medium text-sm">Comment</label>
-                        <textarea type="text" id="bank_account" v-model="medical.comment"
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
+                        <textarea type="text" id="bank_account" v-model="medical.comment" readonly
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-gray-100 cursor-not-allowed"></textarea>
                     </div>
                     <div class="col-span-8 justify-end items-center flex space-x-2 py-4 ">
                         <button
@@ -129,10 +129,11 @@
     </transition>
 </template>
 <script>
-import { getMedicalLeave, updateMedical } from "../../../../api/EclaimAPI";
+// import { getMedicalLeave, updateMedical } from "../../../../api/EclaimAPI";
 import Swal from "sweetalert2";
+import axios from "axios";
 export default {
-    emits: ['close', 'closeSlideOver'],
+    emits: ['close', 'closeSlideOver','refresh-claims'],
     props: {
         isOpen: {
             type: Boolean,
@@ -164,41 +165,66 @@ export default {
         }
     },
     mounted() {
-        if (this.claim?.refNo) {
-            this.fetchMedicalLeaveData();
-        }
+        const refNo = this.$route.params.rn;
+        console.log("RefNo:", refNo);
+
+        this.fetchMedicalLeaveData(refNo);
+
+        // if (this.claim?.refNo) {
+        //     this.fetchMedicalLeaveData();
+        // }
 
     },
+    computed: {
+        formattedDate: {
+            get() {
+            const d = new Date(this.medical.date_leave_taken);
+            if (isNaN(d)) return "";
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, "0");
+            const day = String(d.getDate()).padStart(2, "0");
+            return `${year}-${month}-${day}`;
+            },
+            set(value) {
+            this.medical.date_leave_taken = value; // Keep in ISO format or convert if needed
+            }
+        },
+        },
     methods: {
         closeSlideOver() {
             this.$emit('close');
         },
 
-        async fetchMedicalLeaveData() {
+        async fetchMedicalLeaveData(refNo) {
 
-            try {
-                const response = await getMedicalLeave(this.claim.refNo);
-                console.log("Medical resonse", response);
-                if (response) {
-                    const matchingUniqueID = response.find(
-                        record => record.unique_code === this.claim.unique_code
-                    );
+           
+                // const response = await getMedicalLeave(this.claim.refNo);
+                const response = await axios.get(`http://172.28.28.116:6165/api/User/GetMedicalLeave/${refNo}`);
+                console.log("Medical response", response);
+                const dataArray = response.data.result;
+
+                if (Array.isArray(dataArray)) {
+                const matchingUniqueID = dataArray.find(
+                    record => record.unique_code === this.claim.unique_code
+                );
                     if (matchingUniqueID) {
                         this.medical = {
                             date_leave_taken: matchingUniqueID.date_leave_taken,
-                            reason: matchingUniqueID.reason,
                             medical_category: matchingUniqueID.medical_category,
-                            clinic_selection: matchingUniqueID.clinic_selection,
-                            clinic_name: matchingUniqueID.clinic_name,
-                            reason_different: matchingUniqueID.reason_different,
+                            reason: matchingUniqueID.medical_category === 'Outpatient' ? matchingUniqueID.reason : '',
+                            clinic_selection: matchingUniqueID.medical_category === 'Outpatient' ? matchingUniqueID.clinic_selection : '',
+                            clinic_name: matchingUniqueID.medical_category === 'Outpatient' && matchingUniqueID.clinic_selection === 'Other Clinic'? matchingUniqueID.clinic_name: '',
+                            reason_different: matchingUniqueID.medical_category === 'Outpatient' ? matchingUniqueID.reason_different : '',
                             bank_name: matchingUniqueID.bank_name,
                             bank_holder: matchingUniqueID.bank_holder,
                             bank_account: matchingUniqueID.bank_account,
                             claim_amount: matchingUniqueID.claim_amount,
                             comment: matchingUniqueID.comment,
                             ic_number: matchingUniqueID.ic_number,
+                            reference_number: matchingUniqueID.reference_number,
                             files: matchingUniqueID.files,
                         };
+
                         this.uniqueCode = matchingUniqueID.unique_code;
                         this.requesterId = matchingUniqueID.requester_id;
                         console.log("matching Unique ID", matchingUniqueID);
@@ -206,31 +232,43 @@ export default {
                         console.log("No matching unique_code found");
                     }
                 }
-            } catch (error) {
-                console.error("Error fetching medical leave data", error);
-                throw error;
-            }
-        },
+                else {
+                    console.error("Expected an array but got:", typeof dataArray, dataArray);
+                    }
+                },
 
         async handleSubmit() {
             try {
                 const submitData = {
-                    date_leave_taken: this.medical.date_leave_taken,
-                    reason: this.medical.reason,
+                    date_leave_taken: this.formattedDate,
+                    reason: this.medical.medical_category === 'Outpatient' ? this.medical.reason : '',
                     medical_category: this.medical.medical_category,
-                    clinic_selection: this.medical.clinic_selection,
-                    clinic_name: this.medical.clinic_name,
-                    reason_different: this.medical.reason_different,
+                    clinic_selection: this.medical.medical_category === 'Outpatient' ? this.medical.clinic_selection : '',
+                    clinic_name: this.medical.medical_category === 'Outpatient' && this.medical.clinic_selection === 'Other Clinic'? this.medical.clinic_name: '',
+                    reason_different: this.medical.medical_category === 'Outpatient' ? this.medical.reason_different : '',
                     bank_name: this.medical.bank_name,
                     bank_holder: this.medical.bank_holder,
                     bank_account: this.medical.bank_account,
+                    claim_amount: isNaN(parseFloat(this.medical.claim_amount)) ? 0 : parseFloat(this.medical.claim_amount),
                     ic_number: this.medical.ic_number,
                     unique_code: this.uniqueCode,
+                    reference_number: this.medical.reference_number,
                     requester_id: this.requesterId,
                 };
+
                 console.log("Data to be submitted", submitData);
-                const submitResponse = await updateMedical(submitData);
-                if (submitResponse) {
+                
+                // Make the PUT request to update the entertainment data
+                const response = await axios.put('http://172.28.28.116:6165/api/User/UpdateMedical', submitData, {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+                // const submitResponse = await updateMedical(submitData);
+                if (response.data && response.data.result) {
+                    console.log("Update Medical data:", response.data.result);
+
+
                     Swal.fire({
                         title: 'Success',
                         text: 'Medical claim updated successfully',
@@ -238,8 +276,10 @@ export default {
                         confirmButtonText: 'OK',
                         confirmButtonColor: '#dc2626'
                     });
+                    this.$emit('refresh-claims', this.claim.refNo);
                     this.closeSlideOver();
                 } else {
+                    console.log("Update Medical data not found");
                     Swal.fire({
                         title: 'Error',
                         text: 'Failed to update Medical claim',
@@ -271,7 +311,12 @@ export default {
 
             }
         },
-    }
+        watch: {
+        isOpen(newVal) {
+            if (newVal) this.fetchMedicalLeaveData();
+        }
+    },
+    },
 
 
 }

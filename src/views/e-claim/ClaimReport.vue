@@ -1432,11 +1432,11 @@ export default {
       // return validTypes.includes(
       //   this.entertainmentDetails.TypeofEntertainmentE
       // ) && 
-      return this.entertainmentDetails.TypeofEntertainmentE !== "OTHERS";
+      return this.entertainmentDetails.TypeofEntertainmentE !== "Others";
     },
 
     isOtherStaffRefreshment() {
-      return this.staffRefreshmentDetails.TypeofRefreshmentSR !== "OTHERS";
+      return this.staffRefreshmentDetails.TypeofRefreshmentSR !== "Others";
     },
 
     totalOverseasTravellingAmount() {
