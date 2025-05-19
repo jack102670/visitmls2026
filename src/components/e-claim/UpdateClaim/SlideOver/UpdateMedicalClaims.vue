@@ -74,12 +74,29 @@
                             <p class="text-xs text-gray-600">Click on a file to view:</p>
                             <ul class="list-disc list-inside">
                                 <li v-for="(file, index) in medical.files" :key="index">
-                                    <a :href="file" target="_blank" class="text-blue-500 hover:underline text-xs">
-                                        Download File {{ index + 1 }}
-                                    </a>
+                                <a :href="typeof file === 'string' ? file : '#'" target="_blank" class="text-blue-500 hover:underline text-xs">
+                                    {{ typeof file === 'string' ? file.split('/').pop() : file.name }}
+                                </a>
+
+                                <a @click="deleteFile(index)" class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
+                                    </svg>
+                                </a>
                                 </li>
                             </ul>
                         </div>
+                        <div v-if="!medical.files.length" class="mt-4">
+                        <input
+                            type="file"
+                            id="newFile"
+                            @change="uploadFiles"  
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        />
+                        <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
+                            Selected file: {{ selectedFileName }}
+                        </span>
+                    </div>
                     </div>
                     <div v-if="medical.medical_category === 'Outpatient'" class="col-span-8">
                         <label for="reason_different" class="font-medium text-sm">reason difference</label>
@@ -103,8 +120,8 @@
                     </div>
                     <div class="col-span-4">
                         <label for="claim_amount" class="font-medium text-sm">Claim Amount (RM)</label>
-                        <input type="text" id="claim_amount" v-model="medical.claim_amount" readonly
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-gray-100 cursor-not-allowed">
+                        <input type="text" id="claim_amount" v-model="medical.claim_amount"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
                     <hr class="col-span-8 mt-4 mb-2" />
                     <div class="col-span-8">
@@ -161,7 +178,12 @@ export default {
                 ic_number: '',
                 files: [],
             },
-            medicalCategories: ["Outpatient", "Medical Check-Up", "Dental"]
+            medicalCategories: ["Outpatient", "Medical Check-Up", "Dental"],
+            newFiles: [],
+            filesToDelete: [],
+            selectedFileName: "",
+            uniqueCode: "",
+            requesterId: ""
         }
     },
     mounted() {
@@ -195,6 +217,55 @@ export default {
             this.$emit('close');
         },
 
+        deleteFile(index) {
+        const deletedFile = this.medical.files[index];
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you really want to delete this file?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#dc2626'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If the file is an existing file (not just uploaded in this session), mark for deletion
+                if (typeof deletedFile === 'string' && !this.newFiles.find(f => f.name === deletedFile)) {
+                    this.filesToDelete.push(deletedFile);
+                } else {
+                    // If it's a new file, remove from newFiles
+                    this.newFiles = this.newFiles.filter(f => f.name !== deletedFile);
+                }
+                // Remove from UI
+                this.medical.files.splice(index, 1);
+            }
+        });
+    },
+        async uploadFiles(event) {
+        const files = event?.target?.files;
+
+        if (!files || !files.length) {
+            this.selectedFileName = "";
+            Swal.fire("No File", "Please select at least one file to upload.", "warning");
+            return;
+        }
+       
+        // const formData = new FormData();
+        for (let i = 0; i < files.length; i++) {
+        const originalFile = files[i];
+        // Prepend SUPPORT_DOC_ if not already present
+        let newFileName = originalFile.name.startsWith("SUPPORT_DOC_")
+            ? originalFile.name
+            : `SUPPORT_DOC_${originalFile.name}`;
+        // Create a new File object with the new name
+        const renamedFile = new File([originalFile], newFileName, { type: originalFile.type });
+        this.newFiles.push(renamedFile);
+        this.medical.files.push(renamedFile);
+        }
+        this.selectedFileName = files[0].name;
+        event.target.value = "";
+        },
+
         async fetchMedicalLeaveData(refNo) {
 
            
@@ -224,7 +295,7 @@ export default {
                             reference_number: matchingUniqueID.reference_number,
                             files: matchingUniqueID.files,
                         };
-
+                        // this.originalClaimAmount = matchingUniqueID.claim_amount;   
                         this.uniqueCode = matchingUniqueID.unique_code;
                         this.requesterId = matchingUniqueID.requester_id;
                         console.log("matching Unique ID", matchingUniqueID);
@@ -239,6 +310,88 @@ export default {
 
         async handleSubmit() {
             try {
+
+                // const originalAmount = parseFloat(this.originalClaimAmount) || 0;
+                // const newAmount = isNaN(parseFloat(this.medical.claim_amount)) ? 0 : parseFloat(this.medical.claim_amount);
+                // const category = this.medical.medical_category;
+
+                // let storageKey = '';
+                // let initialKey = '';
+                // let yearlyLimit = 0;
+                // let perClaimLimit = null;
+
+                // // Step 1: Set keys and limits
+                // if (category === "Outpatient") {
+                // storageKey = "remaining_limit_outpatient";
+                // initialKey = "initial_limit_outpatient";
+                // yearlyLimit = 700;
+                // perClaimLimit = 70;
+                // } else if (category === "Medical Check-Up" || category === "Dental") {
+                // storageKey = "remaining_limit_medicaldental";
+                // initialKey = "initial_limit_medicaldental";
+                // yearlyLimit = 200;
+                // }
+
+                // // Step 2: Get current remaining limit correctly
+                // let currentLimitStr = localStorage.getItem(storageKey);
+                // let currentLimit = currentLimitStr !== null ? parseFloat(currentLimitStr) : NaN;
+
+                // // Fallback to yearlyLimit if no value exists
+                // if (isNaN(currentLimit)) {
+                // currentLimit = parseFloat(localStorage.getItem(initialKey)) || yearlyLimit;
+                // }
+
+                // // Step 3: Restore old claim to the limit
+                // const restoredLimit = currentLimit + originalAmount;
+
+                // // Step 4: Outpatient per-claim limit check
+                // if (perClaimLimit && newAmount > perClaimLimit) {
+                // Swal.fire({
+                //     icon: 'error',
+                //     title: 'Exceeds Per-Claim Limit',
+                //     text: `The maximum allowed per outpatient claim is RM${perClaimLimit}.`,
+                //     confirmButtonColor: '#3085d6',
+                //     confirmButtonText: 'OK'
+                // });
+                // return;
+                // }
+
+                // // Step 5: Check if newAmount exceeds restored limit
+                // if (newAmount > restoredLimit) {
+                // Swal.fire({
+                //     icon: 'error',
+                //     title: 'Exceeds Remaining Limit',
+                //     text: `You only have RM${restoredLimit} remaining.`,
+                //     confirmButtonColor: '#3085d6',
+                //     confirmButtonText: 'OK'
+                // });
+                // return;
+                // }
+
+                // // Step 6: Store the updated remaining limit
+                // const updatedLimit = Math.max(0, restoredLimit - newAmount);
+                // localStorage.setItem(storageKey, updatedLimit.toString());
+
+                // // Step 7: Update original claim amount for future edits
+                // this.originalClaimAmount = newAmount;
+                
+                // Delete files marked for deletion
+                for (const fileUrl of this.filesToDelete) {
+                    const fileName = fileUrl.split('/').pop();
+                    await axios.delete(`http://172.28.28.116:7267/api/Files/DeleteImage/${this.requesterId}/${this.uniqueCode}/${fileName}`);
+                }
+                this.filesToDelete = [];
+
+                // 2. Upload new files
+                if (this.newFiles.length > 0) {
+                    const formData = new FormData();
+                    this.newFiles.forEach(file => formData.append("filecollection", file));
+                    const uploadEndpoint = `https://esvcportal.pktgroup.com/api/file/api/Files/MultiUploadImage/${this.requesterId}/${this.uniqueCode}`;
+                    await axios.post(uploadEndpoint, formData, {
+                        headers: { "Content-Type": "multipart/form-data" },
+                    });
+                    this.newFiles = [];
+                }
                 const submitData = {
                     date_leave_taken: this.formattedDate,
                     reason: this.medical.medical_category === 'Outpatient' ? this.medical.reason : '',
@@ -249,7 +402,7 @@ export default {
                     bank_name: this.medical.bank_name,
                     bank_holder: this.medical.bank_holder,
                     bank_account: this.medical.bank_account,
-                    claim_amount: isNaN(parseFloat(this.medical.claim_amount)) ? 0 : parseFloat(this.medical.claim_amount),
+                    claim_amount: this.medical.claim_amount,
                     ic_number: this.medical.ic_number,
                     unique_code: this.uniqueCode,
                     reference_number: this.medical.reference_number,

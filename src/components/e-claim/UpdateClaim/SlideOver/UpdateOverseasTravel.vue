@@ -50,21 +50,43 @@
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-gray-100 cursor-not-allowed">
                     </div>
                     <div class="col-span-4">
-                        <label for="files" class="font-medium text-sm">Uploaded Files</label>
-                        <div v-if="overseas.files && overseas.files.length" class="mt-2">
-                            <p class="text-xs text-gray-600">Click on a file to view:</p>
-                            <ul class="list-disc list-inside">
-                                <li v-for="(file, index) in overseas.files" :key="index">
-                                    <a :href="file" target="_blank" class="text-blue-500 hover:underline text-xs">
-                                        Download File {{ index + 1 }}
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                    <label for="files" class="font-medium text-sm">Uploaded Files</label>
+                    <div v-if="overseas.files.length" class="mt-2">
+                        <p class="text-xs text-gray-600">Click on a file to view or delete:</p>
+                        <ul class="list-disc list-inside">
+                            <li v-for="(file, index) in overseas.files" :key="index" class="flex items-center space-x-2">
+                                <a :href="typeof file === 'string' ? file : '#'" target="_blank" class="text-blue-500 hover:underline text-xs">
+                                    {{ typeof file === 'string' ? file.split('/').pop() : file.name }}
+                                </a>
+
+                                <a @click="deleteFile(index)" class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
+                                    </svg>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
+
+                    <div v-if="!overseas.files.length" class="mt-4">
+                        <input
+                            type="file"
+                            id="newFile"
+                            @change="uploadFiles"  
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        />
+                        <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
+                            Selected file: {{ selectedFileName }}
+                        </span>
+                    </div>
+                </div>
                     
                     <div class="col-span-8">
-                        <label class="font-medium text-sm">Other Expenses</label>
+                        <label class="font-medium text-sm">Other Expenses </label>
+                        <button type="button"  @click="newExpenses" 
+                            class="mt-1 text-xs bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Add  
+                        </button>
                         <div class="overflow-x-auto border border-gray-300 rounded-md mt-2">
                             <table class="min-w-full bg-white dark:bg-gray-800 border-collapse">
                                 <thead>
@@ -98,6 +120,13 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M11 4h2m2 0h.01M13 4l7 7-9 9H4v-9l9-9z" />
                                         </svg>    
+                                        </a>
+                                        <a @click="deleteExpenses(expenses)"
+                                            class="bg-red-600 hover:bg-red-700 text-white transition duration-300 px-2 py-1 rounded-md cursor-pointer inline-flex items-center justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
                                         </a>
                                         </td>
                                         
@@ -165,7 +194,11 @@
 
                         <div>
                         <label class="block text-sm font-medium">Foreign Currency</label>
-                        <select v-model="selectedExpenses.foreign_currency" class="w-full border rounded p-2">
+                        <select v-model="selectedExpenses.foreign_currency" class="w-full border rounded p-2" :disabled="isForeignFieldsReadOnly">
+                              <option value="" disabled>Select Currency</option>
+                              <option v-for="currency in currencyOptions" :key="currency.value" :value="currency.value">
+                                {{ currency.label }}
+                              </option>
                             <option v-for="currency in currencyOptions" :key="currency.value" :value="currency.value">
                                 {{ currency.label }}
                               </option>
@@ -174,12 +207,12 @@
 
                         <div>
                             <label class="block text-sm font-medium">Exchange Rate</label>
-                            <input type="text" v-model="selectedExpenses.exchange_rate" @input="updateAmountsInRM(selectedExpenses)" class="w-full border rounded p-2">
+                            <input type="text" v-model="selectedExpenses.exchange_rate" @input="updateAmountsInRM(selectedExpenses)" class="w-full border rounded p-2" :readonly="isForeignFieldsReadOnly">
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium">Amount(Foreign Currency)</label>
-                            <input type="text" v-model="selectedExpenses.currency_total" @input="updateAmountsInRM(selectedExpenses)" class="w-full border rounded p-2">
+                            <input type="text" v-model="selectedExpenses.currency_total" @input="updateAmountsInRM(selectedExpenses)" class="w-full border rounded p-2" :readonly="isForeignFieldsReadOnly">
                         </div>
 
                         <div>
@@ -209,6 +242,7 @@
 import Swal from "sweetalert2";
 import axios from "axios";
 import { id } from "intl-tel-input/i18n";
+import { isElement } from "lodash";
 
 export default {
     emits: ['close', 'closeSlideOver', 'refresh-claims'],
@@ -243,9 +277,15 @@ export default {
             currentPage: 1,
             pageSize: 5,
             //overseas: {},
-            
+             newFiles: [],
+            filesToDelete: [],
+            selectedFileName: "",
+            uniqueCode: "",
+            requesterId: "",
+            oemToDelete: [],
             isExpensesFormOpen: false,
-            selectedExpenses: null
+            selectedExpenses: null,
+            isEditingExpenses: false,
 
         }
     },
@@ -261,6 +301,22 @@ export default {
         // }
     },
     computed: {
+        isForeignFieldsReadOnly() {
+            // Only readonly when editing AND any of the fields are empty/null
+            if (!this.isEditingExpenses) return false;
+            const exp = this.selectedExpenses || {};
+            return (
+            !exp.foreign_currency ||
+            exp.foreign_currency === "" ||
+            exp.foreign_currency === null ||
+            !exp.exchange_rate ||
+            exp.exchange_rate === "" ||
+            exp.exchange_rate === null ||
+            !exp.currency_total ||
+            exp.currency_total === "" ||
+            exp.currency_total === null
+            );
+        },
         totalAmount() {
             return this.paginatedExpenses.reduce((sum, expenses) => {
             console.log('Each expense:', expenses);
@@ -338,24 +394,214 @@ export default {
             }
             },
 
+        async newExpenses() {
+            await this.fetchCurrencies(); 
+            this.selectedExpenses = {
+                // id: null,
+                name: "",
+                amount: "",
+                description: "",
+                foreign_currency: "",
+                exchange_rate: "",
+                currency_total: "",
+        };
+        this.isEditingExpenses = false;
+        this.isExpensesFormOpen = true;
+        },
+        // async deleteExpenses(expenses) {
+        //         if (expenses && expenses.id) {
+        //             const confirmResult = await Swal.fire({
+        //                 title: "Are you sure?",
+        //                 text: "This action will permanently delete the expenses.",
+        //                 icon: "warning",
+        //                 showCancelButton: true,
+        //                 confirmButtonColor: "#dc2626",
+        //                 cancelButtonColor: "#6b7280",
+        //                 confirmButtonText: "Yes, delete it!"
+        //             });
+
+        //             if (confirmResult.isConfirmed) {
+        //                 try {
+        //                     const response = await axios.delete(`http://172.28.28.116:6239/api/User/DeleteOverseasExpenses/${expenses.id}`);
+
+        //                     if (response.status === 200) {
+        //                         const index = this.overseas.oem.findIndex(e => e.id === expenses.id);
+        //                         if (index !== -1) {
+        //                             this.overseas.oem.splice(index, 1);
+        //                             console.log(`Deleted expenses with ID: ${expenses.id}`);
+        //                         }
+
+        //                         Swal.fire({
+        //                             title: "Deleted!",
+        //                             text: "Staff has been successfully deleted.",
+        //                             icon: "success",
+        //                             confirmButtonColor: "#dc2626"
+        //                         });
+        //                     }
+        //                 } catch (error) {
+        //                     console.error("Failed to delete staff:", error);
+        //                     Swal.fire({
+        //                         title: "Error",
+        //                         text: "Failed to delete staff. Please try again.",
+        //                         icon: "error",
+        //                         confirmButtonColor: "#dc2626"
+        //                     });
+        //                 }
+        //             }
+        //         } else {
+        //             console.warn("Invalid staff object.");
+        //         }
+        //     },
+        async deleteExpenses(expenses) {
+                if (expenses && expenses.id) {
+                    this.oemToDelete.push(expenses.id); // Add the ID to the array
+                }
+                this.overseas.oem = this.overseas.oem.filter(e => e !== expenses); // Remove from the list
+                    await Swal.fire({
+                        title: "Are you sure?",
+                        text: "This action will permanently delete the expenses.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#dc2626",
+                        cancelButtonColor: "#6b7280",
+                        confirmButtonText: "Yes, delete it!"
+                    }).then(confirmResult => {
+                        if(confirmResult.isConfirmed) {
+                            this.overseas.oem = this.overseas.oem.filter(e => e !== expenses ) // Remove the ID from the array
+                        }
+             });      
+            },
         async editExpenses(expenses) {
             await this.fetchCurrencies(); 
             this.selectedExpenses = { ...expenses };
+            this.isEditingExpenses = true;
             this.isExpensesFormOpen = true;
             console.log("Editing expenses:", this.selectedExpenses); // Debugging log
         },
-        saveExpenses(expenses) {
-            console.log("Staff before saving:", expenses); // Debugging log
-            const index = this.overseas.oem.findIndex(s => s.id === expenses.id);
-            if (index !== -1) {
-                this.overseas.oem.splice(index, 1, expenses); // Update existing expenses
-                console.log("Updated expenses:", this.overseas.oem[index]); // Debugging log
-            } else {
-                this.overseas.oem.push(expenses);
+        async saveExpenses(expenses) {
+        if (!expenses.name || !expenses.amount || !expenses.description 
+            // || !expenses.foreign_currency || !expenses.exchange_rate || !expenses.currency_total
+            ) {
+            Swal.fire({
+                title: "Missing Info",
+                text: "Please fill in all fields.",
+                icon: "warning",
+                confirmButtonColor: "#dc2626"
+            });
+            return;
             }
-            this.selectedExpenses = null;
-            this.isExpensesFormOpen = false;
-        },
+
+            
+
+        // Determine if it's an update or add
+        if (!expenses.id) {
+            // POST new participant
+            
+                this.overseas.oem.push({
+                    ...expenses,
+                    reference_number: this.overseas.reference_number
+                });
+            }else {
+                const idx = this.overseas.oem.findIndex(e => e.id === expenses.id);
+                if (idx !== -1) this.overseas.oem.splice(idx, 1, expenses);
+            }
+               
+
+        this.selectedExpenses = null;
+        this.isExpensesFormOpen = false;
+},
+//         async saveExpenses(expenses) {
+//         if (!expenses.name || !expenses.amount || !expenses.description 
+//             // || !expenses.foreign_currency || !expenses.exchange_rate || !expenses.currency_total
+//             ) {
+//             Swal.fire({
+//                 title: "Missing Info",
+//                 text: "Please fill in all fields.",
+//                 icon: "warning",
+//                 confirmButtonColor: "#dc2626"
+//             });
+//             return;
+//             }
+
+            
+
+//         // Determine if it's an update or add
+//         if (!expenses.id) {
+//             // POST new participant
+//             try {
+//                 console.log("Sending payload:", expenses);
+//                 console.log("Reference Number:", this.expenses_refNumber);
+//                 const response = await axios.post("http://172.28.28.116:6239/api/User/InsertOverseasExpenses", {
+//                     reference_number: this.overseas.expenses_refNumber,
+//                     oed: [
+//                         {
+//                             name: expenses.name,
+//                             amount: isNaN(parseFloat(expenses.amount)) ? 0 : parseFloat(expenses.amount),
+//                             description: expenses.description,
+//                             foreign_currency: expenses.foreign_currency,
+//                             exchange_rate: isNaN(parseFloat(expenses.exchange_rate)) ? 0 : parseFloat(expenses.exchange_rate),
+//                             currency_total: isNaN(parseFloat(expenses.currency_total)) ? 0 : parseFloat(expenses.currency_total),
+//                             // isNaN(parseFloat(this.totalFee)) ? 0 : parseFloat(this.totalFee),
+                            
+//                         }
+//                     ]
+                    
+//                 });
+//                 console.log("Sending payload:", expenses);
+//                 if (response.status === 200) {
+//                 const returnedExpenses = response.data.oed?.[0];
+//                 if (returnedExpenses?.id) {
+//                     this.overseas.oem.push(returnedExpenses); // push to oem
+//                 } else {
+//                     this.overseas.oem.push({
+//                         ...expenses,
+//                         reference_number: this.expenses_refNumber
+//                     });
+//                 }
+//             }
+                
+//                 Swal.fire({
+//                     title: "Success",
+//                     text: "Other Expenses added successfully.",
+//                     icon: "success",
+//                     confirmButtonColor: "#dc2626"
+//                 });
+
+
+//             } catch (error) {
+//                 console.error("Failed to add participant:", error);
+//                 Swal.fire({
+//                     title: "Error",
+//                     text: "Failed to add other expenses. Please try again.",
+//                     icon: "error",
+//                     confirmButtonColor: "#dc2626"
+//                 });
+//             }
+//         } else {
+//             // Update existing participant locally
+//             const index = this.overseas.oem.findIndex(e => e.id === expenses.id);
+//             if (index !== -1) {
+//                 this.overseas.oem.splice(index, 1, expenses);
+//             }
+
+//         }
+
+//         this.selectedExpenses = null;
+//         this.isExpensesFormOpen = false;
+// },
+        // saveExpenses(expenses) {
+        //     console.log("Staff before saving:", expenses); // Debugging log
+        //     const index = this.overseas.oem.findIndex(s => s.id === expenses.id);
+        //     if (index !== -1) {
+        //         this.overseas.oem.splice(index, 1, expenses); // Update existing expenses
+        //         console.log("Updated expenses:", this.overseas.oem[index]); // Debugging log
+        //     } else {
+        //         this.overseas.oem.push(expenses);
+        //     }
+        //     this.selectedExpenses = null;
+        //     this.isExpensesFormOpen = false;
+        // },
+
         nextPage() {
             if (this.currentPage < this.totalPages) {
                 this.currentPage++;
@@ -370,6 +616,55 @@ export default {
             this.$emit('close');
         },
 
+             // Delete a file from the list
+        deleteFile(index) {
+        const deletedFile = this.overseas.files[index];
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you really want to delete this file?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#dc2626'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If the file is an existing file (not just uploaded in this session), mark for deletion
+                if (typeof deletedFile === 'string' && !this.newFiles.find(f => f.name === deletedFile)) {
+                    this.filesToDelete.push(deletedFile);
+                } else {
+                    // If it's a new file, remove from newFiles
+                    this.newFiles = this.newFiles.filter(f => f.name !== deletedFile);
+                }
+                // Remove from UI
+                this.overseas.files.splice(index, 1);
+            }
+        });
+    },
+        async uploadFiles(event) {
+            const files = event?.target?.files;
+
+        if (!files || !files.length) {
+            this.selectedFileName = "";
+            Swal.fire("No File", "Please select at least one file to upload.", "warning");
+            return;
+        }
+       
+        // const formData = new FormData();
+        for (let i = 0; i < files.length; i++) {
+        const originalFile = files[i];
+        // Prepend SUPPORT_DOC_ if not already present
+        let newFileName = originalFile.name.startsWith("SUPPORT_DOC_")
+            ? originalFile.name
+            : `SUPPORT_DOC_${originalFile.name}`;
+        // Create a new File object with the new name
+        const renamedFile = new File([originalFile], newFileName, { type: originalFile.type });
+        this.newFiles.push(renamedFile);
+        this.overseas.files.push(renamedFile);
+        }
+        this.selectedFileName = files[0].name;
+        event.target.value = "";
+    },
         async fetchOverseasData(refNo) {
    
         const response = await axios.get(`http://172.28.28.116:6239/api/User/GetOverseasOutstation/${refNo}`);
@@ -395,8 +690,13 @@ export default {
             comment: matchingUniqueID.comment,
             files: matchingUniqueID.files,
             oem: matchingUniqueID.oem || [],
+            // expenses_refNumber: matchingUniqueID.expenses_refNumber,
             
             };
+            this.requesterId = matchingUniqueID.requester_id;
+            this.uniqueCode = matchingUniqueID.unique_code;
+            this.expenses_refNumber = matchingUniqueID.expenses_refNumber;
+            console.log("Fetched Expenses:", this.overseas.oem);
 
             // const isCustomType = !this.RefreshmentType.includes(matchingUniqueID.refreshment_type);
             // if (isCustomType) {
@@ -416,6 +716,31 @@ export default {
         },
         async handleSubmit() {
             try {
+
+                // Delete expenses
+                for (const id of this.oemToDelete) {
+                    await axios.delete(`http://172.28.28.116:6239/api/User/DeleteOverseasExpenses/${id}`);
+                }
+                this.oemToDelete = [];
+
+
+                // Delete files marked for deletion
+                for (const fileUrl of this.filesToDelete) {
+                    const fileName = fileUrl.split('/').pop();
+                    await axios.delete(`http://172.28.28.116:7267/api/Files/DeleteImage/${this.requesterId}/${this.uniqueCode}/${fileName}`);
+                }
+                this.filesToDelete = [];
+
+                // Upload new files
+                if (this.newFiles.length > 0) {
+                    const formData = new FormData();
+                    this.newFiles.forEach(file => formData.append("filecollection", file));
+                    const uploadEndpoint = `https://esvcportal.pktgroup.com/api/file/api/Files/MultiUploadImage/${this.requesterId}/${this.uniqueCode}`;
+                    await axios.post(uploadEndpoint, formData, {
+                        headers: { "Content-Type": "multipart/form-data" },
+                    });
+                    this.newFiles = [];
+                }
                 // Prepare the data to be submitted
                 const submitData = {
                     description: this.overseas.description,
@@ -426,7 +751,19 @@ export default {
                     reference_number: this.overseas.reference_number,
                     unique_code: this.overseas.unique_code,
                     // ent: this.entertainment.ent,
-                    oem: this.overseas.oem,
+                    oem: [
+                        ...this.overseas.oem.map(e => ({
+                            id: e.id,
+                            name: e.name || "",
+                            amount: isNaN(parseFloat(e.amount)) ? 0 : parseFloat(e.amount),
+                            description: e.description || "",
+                            foreign_currency: e.foreign_currency || "",         // optional: default to empty string
+                            exchange_rate: isNaN(parseFloat(e.exchange_rate)) ? 0 : parseFloat(e.exchange_rate), // optional: default to 0
+                            currency_total: isNaN(parseFloat(e.currency_total)) ? 0 : parseFloat(e.currency_total) // optional: default to 0
+                        }))
+                    ],
+                    // this.overseas.oem,
+                    
                     // participants:[
                     //             {
                     //                 id: this.participant.id,
@@ -437,7 +774,7 @@ export default {
                     files: this.overseas.files || []
                     // participants: this.participants
                 };
-
+                console.log("Overseas data:", this.overseas.oem),
                 console.log("Submitting Overseas payload:", submitData);
 
                 // Make the PUT request to update the entertainment data
@@ -447,9 +784,32 @@ export default {
                     },
                 });
 
+                // Add new participants (those without an id)
+                const newExpenses = this.overseas.oem.filter(e => !e.id);
+                for (const expenses of newExpenses) {
+                    await axios.post("http://172.28.28.116:6239/api/User/InsertOverseasExpenses", {
+                        reference_number: this.expenses_refNumber,
+                        oed: [{ 
+                            name: expenses.name || "",
+                            amount: isNaN(parseFloat(expenses.amount)) ? 0 : parseFloat(expenses.amount),
+                            description: expenses.description || "",
+                            foreign_currency: expenses.foreign_currency || "",         // optional: default to empty string
+                            exchange_rate: isNaN(parseFloat(expenses.exchange_rate)) ? 0 : parseFloat(expenses.exchange_rate), // optional: default to 0
+                            currency_total: isNaN(parseFloat(expenses.currency_total)) ? 0 : parseFloat(expenses.currency_total) // optional: default to 0
+                         }]
+                    });
+                }
+
                 // Handle the response based on success or failure
                 if (response.data && response.data.result) {
                     console.log("Update Overseas data:", response.data.result);
+
+                   this.expenses_refNumber = this.overseas.reference_number;
+                    // Now insert new expenses using saveExpenses()
+                    // for (const expenses of newExpenses) {
+                    //     await this.saveExpenses(expenses);
+                    // }
+ 
                     Swal.fire({
                         title: 'Success',
                         text: 'Overseas updated successfully',

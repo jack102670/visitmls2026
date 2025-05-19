@@ -41,18 +41,37 @@
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
                     <div class="col-span-4">
-                        <label for="files" class="font-medium text-sm">Uploaded Files</label>
-                        <div v-if="others.files.length" class="mt-2">
-                            <p class="text-xs text-gray-600">Click on a file to view:</p>
-                            <ul class="list-disc list-inside">
-                                <li v-for="(file, index) in others.files" :key="index">
-                                    <a :href="file" target="_blank" class="text-blue-500 hover:underline text-xs">
-                                        Download File {{ index + 1 }}
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                    <label for="files" class="font-medium text-sm">Uploaded Files</label>
+                    <div v-if="others.files.length" class="mt-2">
+                        <p class="text-xs text-gray-600">Click on a file to view or delete:</p>
+                        <ul class="list-disc list-inside">
+                            <li v-for="(file, index) in others.files" :key="index" class="flex items-center space-x-2">
+                                <a :href="typeof file === 'string' ? file : '#'" target="_blank" class="text-blue-500 hover:underline text-xs">
+                                    {{ typeof file === 'string' ? file.split('/').pop() : file.name }}
+                                </a>
+
+                                <a @click="deleteFile(index)" class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
+                                    </svg>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
+
+                    <div v-if="!others.files.length" class="mt-4">
+                        <input
+                            type="file"
+                            id="newFile"
+                            @change="uploadFiles"  
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        />
+                        <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
+                            Selected file: {{ selectedFileName }}
+                        </span>
+                    </div>
+                </div>
+
                     <hr class="col-span-8 mt-4 mb-2" />
                     <div class="col-span-8">
                         <label for="comment" class="font-medium text-sm">Comment</label>
@@ -81,6 +100,7 @@
 // import { getHandphone, updateHandphone } from "../../../../api/EclaimAPI.js";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { fi } from "intl-tel-input/i18n";
 export default {
     emits: ['close', 'closeSlideOver', 'refresh-claims'],
     props: {
@@ -105,8 +125,11 @@ export default {
                 total_fee: "",
                 comment: "",
                 files: [],
+                  
             },
-            
+            newFiles: [],
+            filesToDelete: [],
+            selectedFileName: "",
             uniqueCode: "",
             requesterId: ""
         }
@@ -116,6 +139,7 @@ export default {
         console.log("RefNo:", refNo);
 
         this.fetchOthersData(refNo)
+           
         // if (this.claim?.refNo) {
         //     this.fetchHandphoneData();
         // }
@@ -136,35 +160,7 @@ export default {
         },
         },
     methods: {
-        async getClaimDetails(refNo) {
-            try {
-                const response = await axios.get(`http://172.28.28.116:6165/api/User/GetClaimDetails/${refNo}`);
-    
-                if (response.data && response.data.result) {
-                this.claimDetails = response.data.result;
-                console.log("0. General Claim Details:", this.claimDetails);
-                } else {
-                console.warn("No general claim details found");
-                }
-                
-                // const data = await getUserClaimDetails(refNo);
-                // if (data) {
-                //     this.claimDetails = {
-                //         ...data.claimDetails,
-                //         ...data,
-                //     }
-                // }
-                console.log("Claim Details", this.claimDetails);
-            } catch (error) {
-                console.error("Error fetching claim details", error);
-                // throw error;
-            }
-        },
-
-        closeSlideOver() {
-            this.$emit('close');
-        },
-
+              
         async fetchOthersData(refNo) {
            
                 const response = await axios.get(`http://172.28.28.116:6239/api/User/GetOthers/${refNo}`);
@@ -193,6 +189,13 @@ export default {
                         };
                         this.uniqueCode = matchingUniqueID.unique_code;
                         this.requesterId = matchingUniqueID.requester_id;
+
+                        // fetch files
+                        // console.log("Uploading file to:", this.requesterId, this.uniqueCode);
+                        // console.log("Fetching files for:", this.requesterId, this.uniqueCode);
+
+                        // await this.getFiles();
+                        // console.log("Fetched files:", this.others.files);
                     } else {
                         console.log("No matching unique_code found");
                     }
@@ -201,9 +204,155 @@ export default {
                     }
         },
 
+
+
+        // Delete a file from the list
+        deleteFile(index) {
+        const deletedFile = this.others.files[index];
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you really want to delete this file?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#dc2626'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If the file is an existing file (not just uploaded in this session), mark for deletion
+                if (typeof deletedFile === 'string' && !this.newFiles.find(f => f.name === deletedFile)) {
+                    this.filesToDelete.push(deletedFile);
+                } else {
+                    // If it's a new file, remove from newFiles
+                    this.newFiles = this.newFiles.filter(f => f.name !== deletedFile);
+                }
+                // Remove from UI
+                this.others.files.splice(index, 1);
+            }
+        });
+    },
+
+        // Upload a new file
+         async uploadFiles(event) {
+        // const requesterId = this.requesterId;  // get it from your component/data/props
+        // const uniqueCode = this.uniqueCode;    // same here
+
+        const files = event?.target?.files;
+
+        if (!files || !files.length) {
+            this.selectedFileName = "";
+            Swal.fire("No File", "Please select at least one file to upload.", "warning");
+            return;
+        }
+        
+
+        // const formData = new FormData();
+        for (let i = 0; i < files.length; i++) {
+        const originalFile = files[i];
+        // Prepend SUPPORT_DOC_ if not already present
+        let newFileName = originalFile.name.startsWith("SUPPORT_DOC_")
+            ? originalFile.name
+            : `SUPPORT_DOC_${originalFile.name}`;
+        // Create a new File object with the new name
+        const renamedFile = new File([originalFile], newFileName, { type: originalFile.type });
+        this.newFiles.push(renamedFile);
+        this.others.files.push(renamedFile);
+        }
+        this.selectedFileName = files[0].name;
+        // const uploadEndpoint = `https://esvcportal.pktgroup.com/api/file/api/Files/MultiUploadImage/${requesterId}/${uniqueCode}`;
+
+        // try {
+        //     const response = await axios.post(uploadEndpoint, formData, {
+        //         headers: { "Content-Type": "multipart/form-data" },
+        //     });
+        //     console.log("Upload success:", response.data);
+        // } catch (error) {
+        //     console.error("Upload error:", error);
+        //     Swal.fire("Upload Failed", "Something went wrong. Please try again.", "error");
+        // }
+
+        event.target.value = "";
+    },
+
+
+
+
+        // async getFiles() {
+        //     try {
+        //         console.log("Fetching files for:", this.requesterId, this.uniqueCode);
+        //         const response = await axios.get(
+        //             `http://172.28.28.116:6239/api/Files/GetMultiImage/${this.requesterId}/${this.uniqueCode}`
+        //         );
+
+        //         if (response.data && Array.isArray(response.data.result)) {
+        //             this.others.files = response.data.result;
+        //             console.log("Fetched files:", this.others.files);
+        //         } else {
+        //             console.warn("No files found for this claim.");
+        //             Swal.fire({
+        //                 title: "No Files Found",
+        //                 text: "No files were found for the given reference number.",
+        //                 icon: "info",
+        //                 confirmButtonText: "OK",
+        //             });
+        //         }
+        //     } catch (error) {
+        //         console.error("Error fetching files:", error);
+        //     }
+        // },
+
+
+        // async getClaimDetails(refNo) {
+        //     try {
+                
+        //         const response = await axios.get(`http://172.28.28.116:6165/api/User/GetClaimDetails/${refNo}`);
+    
+        //         if (response.data && response.data.result) {
+        //         this.claimDetails = response.data.result;
+        //         console.log("0. General Claim Details:", this.claimDetails);
+        //         } else {
+        //         console.warn("No general claim details found");
+        //         }
+                
+        //         // const data = await getUserClaimDetails(refNo);
+        //         // if (data) {
+        //         //     this.claimDetails = {
+        //         //         ...data.claimDetails,
+        //         //         ...data,
+        //         //     }
+        //         // }
+        //         console.log("Claim Details", this.claimDetails);
+        //     } catch (error) {
+        //         console.error("Error fetching claim details", error);
+        //         // throw error;
+        //     }
+        // },
+
+        closeSlideOver() {
+            this.$emit('close');
+        },
+
+  
         
         async handleSubmit() {
         try {
+            // 1. Delete files marked for deletion
+        for (const fileUrl of this.filesToDelete) {
+            const fileName = fileUrl.split('/').pop();
+            await axios.delete(`http://172.28.28.116:7267/api/Files/DeleteImage/${this.requesterId}/${this.uniqueCode}/${fileName}`);
+        }
+        this.filesToDelete = [];
+
+        // 2. Upload new files
+        if (this.newFiles.length > 0) {
+            const formData = new FormData();
+            this.newFiles.forEach(file => formData.append("filecollection", file));
+            const uploadEndpoint = `https://esvcportal.pktgroup.com/api/file/api/Files/MultiUploadImage/${this.requesterId}/${this.uniqueCode}`;
+            await axios.post(uploadEndpoint, formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+            this.newFiles = [];
+        }
             const submitData = {
             reference_number: this.others.reference_number,
             expense_name: this.others.expense_name,
@@ -214,7 +363,7 @@ export default {
             // bank_account: this.handphone.bank_account,
             files: this.others.files || [],
             unique_code: this.uniqueCode,
-            // requester_id: this.requesterId,
+            requester_id: this.requesterId,
             };
             console.log("Submitting Others payload:", submitData);
 

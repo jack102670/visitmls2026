@@ -23,14 +23,14 @@
                     <div class="col-span-8">
                         <label class="font-medium text-sm">Trip</label>
                         <div class="flex space-x-2">
-                        <div class="mt-1">
+                        <div class="mt-1" v-if="local.trip_mode === 'Round Trip'">
                             <label class="inline-flex items-center">
                                 <input type="radio" v-model="local.trip_mode" value="Round Trip"
                                     class="form-radio text-indigo-600 text-xs">
                                 <span class="ml-2 text-xs">Round Trip</span>
                             </label>
                         </div>
-                        <div class="mt-1">
+                        <div class="mt-1" v-if="local.trip_mode === 'One Way'">
                             <label class="inline-flex items-center">
                                 <input type="radio" v-model="local.trip_mode" value="One Way"
                                     class="form-radio text-indigo-600 text-xs">
@@ -52,21 +52,21 @@
                     <div class="col-span-8">
                         <label class="font-medium text-sm">Travel Mode</label>
                         <div class="flex space-x-2">
-                        <div class="mt-1">
+                        <div class="mt-1" v-if="local.transport_mode === 'Personal Transport'">
                             <label class="inline-flex items-center">
                                 <input type="radio" v-model="local.transport_mode" value="Personal Transport"
                                     class="form-radio text-indigo-600 text-xs">
                                 <span class="ml-2 text-xs">Personal Transport</span>
                             </label>
                         </div>
-                        <div class="mt-1">
+                        <div class="mt-1" v-if="local.transport_mode === 'Company Transport'">
                             <label class="inline-flex items-center">
                                 <input type="radio" v-model="local.transport_mode" value="Company Transport"
                                     class="form-radio text-indigo-600 text-xs">
                                 <span class="ml-2 text-xs">Company Transport</span>
                             </label>
                         </div>
-                        <div class="mt-1">
+                        <div class="mt-1" v-if="local.transport_mode === 'Public Transport'">
                             <label class="inline-flex items-center">
                                 <input type="radio" v-model="local.transport_mode" value="Public Transport"
                                     class="form-radio text-indigo-600 text-xs">
@@ -135,52 +135,227 @@
                         </select>
                     </div>
 
-                    <!-- <div class="col-span-4">
-                        <label for="claim_month" class="font-medium text-sm">Claim Month</label>
-                        <select id="claim_month" v-model="handphone.claim_month"
-                            class="mt-1 block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                            <option v-for="(month, index) in claimMonths" :key="index" :value="month">{{ month }}
-                            </option>
-                        </select>
-                    </div> -->
-
-                    <div class="col-span-4">
-                        <label for="petrol_perlitre" class="font-medium text-sm">Petrol/EV(RM)</label>
-                        <input type="text" id="petrol_perlitre" v-model="local.petrol_perlitre"
+                    <div class="col-span-4" v-if="local.transport_mode !== 'Personal Transport'">
+                        <label for="type_petrol" class="font-medium text-sm" >Petrol(Litre)</label>
+                            <input type="text" id="petrol_perlitre" v-model="local.petrol_perlitre"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
+
+                    <div class="col-span-4">
+                    <label for="total_mileage" class="font-medium text-sm">Petrol/EV(RM)</label>
+                    <input
+                        type="text"
+                        id="total_mileage"
+                        v-model="local.total_mileage"
+                        class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    />
+
+                    <!-- Upload field shown if mileage entered and no files yet -->
+                    <div v-if="local.total_mileage && !categorizedFiles.mileage.length" class="mt-2">
+                        <input
+                        type="file"
+                        id="newFile"
+                        @change="uploadFiles($event, 'mileage')"
+                        class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        />
+                        <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
+                        Selected file: {{ selectedFileName }}
+                        </span>
+                    </div>
+
+                    <!-- Uploaded mileage files shown if any -->
+                    <div v-if="local.total_mileage && categorizedFiles.mileage.length" class="mt-4">
+                        <label class="font-medium text-sm">Uploaded Petrol Files:</label>
+                        <ul class="mt-1 text-xs text-blue-600 underline">
+                        <li v-for="(file, index) in categorizedFiles.mileage" :key="index" class="flex items-center gap-2">
+                            <a :href="typeof file === 'string' ? file : '#'" target="_blank">
+                            {{ typeof file === 'string' ? file.split('/').pop() : file.name }}
+                            </a>
+                            <a @click="deleteFile(index, 'mileage')" class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
+                                    </svg>
+                                </a>
+                        </li>
+                        </ul>
+                    </div>
+                    </div>
+
+
+                    
 
                     <div class="col-span-4">
                         <label for="park_fee" class="font-medium text-sm" >Parking</label>
                         <input type="text" id="park_fee" v-model="local.park_fee"
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"/>
+
+                    <!-- Upload field shown if parking entered and no files yet -->
+                    <div v-if="local.park_fee && !categorizedFiles.parking.length" class="mt-2">
+                        <input
+                        type="file"
+                        id="newFile"
+                        @change="uploadFiles($event, 'parking')"
+                        class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        />
+                        <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
+                        Selected file: {{ selectedFileName }}
+                        </span>
                     </div>
+
+                    <!-- Uploaded parking files shown if any -->
+                    <div v-if="local.park_fee && categorizedFiles.parking.length" class="mt-4">
+                        <label class="font-medium text-sm">Uploaded Parking Files:</label>
+                        <ul class="mt-1 text-xs text-blue-600 underline">
+                        <li v-for="(file, index) in categorizedFiles.parking" :key="index" class="flex items-center gap-2">
+                            <a :href="typeof file === 'string' ? file : '#'" target="_blank">
+                            {{ typeof file === 'string' ? file.split('/').pop() : file.name }}
+                            </a>
+                            <a @click="deleteFile(index, 'parking')" class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
+                                    </svg>
+                                </a>
+                        </li>
+                        </ul>
+                    </div>
+                    </div>
+                    
 
                     <div class="col-span-4" v-if="local.transport_mode !== 'Public Transport'">
                         <label for="toll_fee" class="font-medium text-sm" >Toll/Touch' n Go(RM)</label>
                         <input type="text" id="toll_fee" v-model="local.toll_fee"
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"/>
+
+                    <!-- Upload field shown if toll entered and no files yet -->
+                    <div v-if="local.toll_fee && !categorizedFiles.toll.length" class="mt-2">
+                        <input
+                        type="file"
+                        id="newFile"
+                        @change="uploadFiles($event, 'toll')"
+                        class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        />
+                        <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
+                        Selected file: {{ selectedFileName }}
+                        </span>
                     </div>
+
+                    <!-- Uploaded toll files shown if any -->
+                    <div v-if="local.toll_fee && categorizedFiles.toll.length" class="mt-4">
+                        <label class="font-medium text-sm">Uploaded Toll Files:</label>
+                        <ul class="mt-1 text-xs text-blue-600 underline">
+                        <li v-for="(file, index) in categorizedFiles.toll" :key="index" class="flex items-center gap-2">
+                            <a :href="typeof file === 'string' ? file : '#'" target="_blank">
+                            {{ typeof file === 'string' ? file.split('/').pop() : file.name }}
+                            </a>
+                            <a @click="deleteFile(index, 'toll')" class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
+                                    </svg>
+                                </a>
+                        </li>
+                        </ul>
+                    </div>
+                    </div>
+                    
 
                     <div class="col-span-4" v-if="local.transport_mode === 'Public Transport'">
                         <label for="fare" class="font-medium text-sm" >Fare(RM)</label>
                         <input type="text" id="fare" v-model="local.fare"
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"/>
+
+                    <!-- Upload field shown if fare entered and no files yet -->
+                    <div v-if="local.fare && !categorizedFiles.fare.length" class="mt-2">
+                        <input
+                        type="file"
+                        id="newFile"
+                        @change="uploadFiles($event, 'fare')"
+                        class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        />
+                        <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
+                        Selected file: {{ selectedFileName }}
+                        </span>
                     </div>
 
-                    <div class="col-span-4">
-                        <label for="files" class="font-medium text-sm">Uploaded Files</label>
-                        <div v-if="local.files.length" class="mt-2">
-                            <p class="text-xs text-gray-600">Click on a file to view:</p>
-                            <ul class="list-disc list-inside">
-                                <li v-for="(file, index) in local.files" :key="index">
-                                    <a :href="file" target="_blank" class="text-blue-500 hover:underline text-xs">
-                                        Download File {{ index + 1 }}
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                    <!-- Uploaded toll files shown if any -->
+                    <div v-if="local.fare && categorizedFiles.fare.length" class="mt-4">
+                        <label class="font-medium text-sm">Uploaded Fare Files:</label>
+                        <ul class="mt-1 text-xs text-blue-600 underline">
+                        <li v-for="(file, index) in categorizedFiles.fare" :key="index" class="flex items-center gap-2">
+                            <a :href="typeof file === 'string' ? file : '#'" target="_blank">
+                            {{ typeof file === 'string' ? file.split('/').pop() : file.name }}
+                            </a>
+                            <a @click="deleteFile(index, 'fare')" class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
+                                    </svg>
+                                </a>
+                        </li>
+                        </ul>
                     </div>
+                    </div>
+
+                    
+                    <!-- <div class="col-span-4">
+                        
+                         <div v-if="local.files && categorizedFiles.other.length" class="mt-4">
+                        <label class="font-medium text-sm">Uploaded Files:</label>
+                        <ul class="mt-1 text-xs text-blue-600 underline">
+                        <li v-for="(file, index) in categorizedFiles.other" :key="index" class="flex items-center gap-2">
+                            <a :href="typeof file === 'string' ? file : '#'" target="_blank">
+                            {{ typeof file === 'string' ? file.split('/').pop() : file.name }}
+                            </a>
+                            <a @click="deleteFile(index, 'other')" class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
+                                    </svg>
+                                </a>
+                        </li>
+                        </ul>
+                    </div>
+                    <div v-if="local.other && !categorizedFiles.other.length" class="mt-2">
+                        <input
+                        type="file"
+                        id="newFile"
+                        @change="uploadFiles($event, 'other')"
+                        class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        />
+                        <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
+                        Selected file: {{ selectedFileName }}
+                        </span>
+                    </div>
+                    </div> -->
+                    <div class="col-span-4">
+                    <label class="font-medium text-sm">Uploaded Files</label>
+                    <div v-if="local.files" class="mt-2">
+                        <p class="text-xs text-gray-600">Click on a file to view or delete:</p>
+                        <ul class="list-disc list-inside">
+                            <li v-for="(file, index) in categorizedFiles.other" :key="index" class="flex items-center space-x-2">
+                                <a :href="typeof file === 'string' ? file : '#'" target="_blank" class="text-blue-500 hover:underline text-xs">
+                                    {{ typeof file === 'string' ? file.split('/').pop() : file.name }}
+                                </a>
+
+                                <a @click="deleteFile(index, 'other')" class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
+                                    </svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div v-if="local.files" class="mt-4">
+                        <input
+                            type="file"
+                            id="newFile"
+                            @change="uploadFiles($event, 'other')"  
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        />
+                        <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
+                            Selected file: {{ selectedFileName }}
+                        </span>
+                    </div>
+                </div>
+
                     <div class="col-span-4">
                         <label for="total_fee" class="font-medium text-sm">Total Amount(RM)</label>
                         <input type="text" id="total_fee" v-model="totalFee" readonly
@@ -212,8 +387,10 @@
 
 <script>
 // import { getHandphone, updateHandphone } from "../../../../api/EclaimAPI.js";
+
 import Swal from "sweetalert2";
 import axios from "axios";
+
 export default {
     emits: ['close', 'closeSlideOver', 'refresh-claims'],
     props: {
@@ -252,9 +429,17 @@ export default {
                 comment: "",
                 files: [],
             },
+            categorizedFiles: {
+                toll: [],
+                parking: [],
+                mileage: [],
+                fare: [],
+                other: []
+                },
             
             uniqueCode: "",
             requesterId: "",
+            filesToDelete: [],
             transportSpecifications: ["Motorcycle", "Car"],
             petrolTypes: ["Ron95", "Diesel"]
             
@@ -271,7 +456,7 @@ export default {
     },
     computed: {
     totalFee() {
-        const petrol = parseFloat(this.local.petrol_perlitre) || 0;
+        const petrol = parseFloat(this.local.total_mileage) || 0;
         const parking = parseFloat(this.local.park_fee) || 0;
         const toll = parseFloat(this.local.toll_fee) || 0;
         const fare = parseFloat(this.local.fare) || 0;
@@ -311,6 +496,110 @@ export default {
             this.$emit('close');
         },
 
+
+        detectFileCategory(filename) {
+            const upperName = filename.toUpperCase();
+            if (upperName.includes("TOLL")) return "TOLL";
+            if (upperName.includes("PARKING")) return "PARKING";
+            if (upperName.includes("MILEAGE")) return "MILEAGE";
+            if (upperName.includes("FARE")) return "FARE";
+            return "SUPPORT_DOC";
+        },
+    
+
+
+
+        uploadFiles(event, fileType = "") {
+        const files = event?.target?.files;
+        if (!files || !files.length) return;
+
+        for (let file of files) {
+            const originalName = file.name;
+            const upperName = originalName.toUpperCase();
+
+            if (fileType) {
+            // Set prefix based on explicit fileType
+            let prefix = "";
+            switch (fileType) {
+                case "mileage":
+                prefix = "MILEAGE_";
+                break;
+                case "toll":
+                prefix = "TOLL_";
+                break;
+                case "parking":
+                prefix = "PARKING_";
+                break;
+                case "fare":
+                prefix = "FARE_";
+                break;
+                default:
+                prefix = "SUPPORT_DOC_";
+            }
+
+            // Rename the file with the prefix
+            const newName = originalName.toUpperCase().startsWith(prefix)
+            ? originalName
+            : prefix + originalName;
+            const renamedFile = new File([file], newName, { type: file.type });
+
+            // Push to the specific category
+            this.categorizedFiles[fileType].push(renamedFile);
+
+            // Optionally store the selected file name for display
+            this.selectedFileName = newName;
+
+            } else {
+            // Auto-categorize by file name prefix
+            if (upperName.startsWith("TOLL_")) {
+                this.categorizedFiles.toll.push(file);
+            } else if (upperName.startsWith("PARKING_")) {
+                this.categorizedFiles.parking.push(file);
+            } else if (upperName.startsWith("MILEAGE_")) {
+                this.categorizedFiles.mileage.push(file);
+            } else if (upperName.startsWith("FARE_")) {
+                this.categorizedFiles.fare.push(file);
+            } else {
+                this.categorizedFiles.other.push(file);
+            }
+
+            this.selectedFileName = originalName;
+            }
+        }
+
+        // Clear the input so the same file can be reselected if needed
+        event.target.value = "";
+        },
+
+        async deleteFile(index, fileType) {
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you really want to delete this file?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#dc2626'
+        });
+
+        if (result.isConfirmed && this.categorizedFiles[fileType]) {
+        const removedFile = this.categorizedFiles[fileType].splice(index, 1)[0]; // remove from UI
+
+        // Check if the file is a File object (new file) or a URL string (existing uploaded file)
+        if (removedFile instanceof File) {
+            // Remove it from newFiles list too
+            this.newFiles = this.newFiles.filter(file => file !== removedFile);
+        } else if (typeof removedFile === 'string') {
+            // If it's a previously uploaded file (a URL), mark it for deletion
+            this.filesToDelete.push(removedFile);
+        }
+
+        Swal.fire('Deleted!', 'Your file has been removed.', 'success');
+        }
+        },
+
+
+
         async fetchLocalData(refNo) {
            
                 const response = await axios.get(`http://172.28.28.116:6239/api/User/GetLocalOutstation/${refNo}`);
@@ -349,20 +638,94 @@ export default {
                             petrol_perlitre: matchingUniqueID.petrol_perlitre,
                             comment: matchingUniqueID.comment,
                             files: matchingUniqueID.files,
+
                         };
+                        console.log("Fetched files:", this.local.files);
+                        console.log("Categorizing files...");
+
                         this.uniqueCode = matchingUniqueID.unique_code;
                         this.requesterId = matchingUniqueID.requester_id;
+
+                        this.categorizedFiles = {
+                        toll: [],
+                        parking: [],
+                        mileage: [],
+                        fare: [],
+                        other: []
+                    };
+
+                    (this.local.files || []).forEach(file => {
+                    const fileName = typeof file === "string" ? file.split('/').pop() : file.name;
+                    const upperName = fileName.toUpperCase();
+
+                    if (upperName.startsWith("TOLL_")) {
+                        this.categorizedFiles.toll.push(file);
+                    } else if (upperName.startsWith("PARKING_")) {
+                        this.categorizedFiles.parking.push(file);
+                    } else if (upperName.startsWith("MILEAGE_")) {
+                        this.categorizedFiles.mileage.push(file);
+                    } else if (upperName.startsWith("FARE_")) {
+                        this.categorizedFiles.fare.push(file);
                     } else {
-                        console.log("No matching unique_code found");
+                        this.categorizedFiles.other.push(file);
                     }
-                    }else {
-                    console.error("Expected an array but got:", typeof dataArray, dataArray);
-                    }
+                    });
+                }
+                }           
+                    
         },
 
         
         async handleSubmit() {
         try {
+
+             // 1. Delete files marked for deletion
+        for (const fileUrl of this.filesToDelete) {
+            const fileName = fileUrl.split('/').pop();
+            await axios.delete(`http://172.28.28.116:7267/api/Files/DeleteImage/${this.requesterId}/${this.uniqueCode}/${fileName}`);
+        }
+        this.filesToDelete = [];
+
+        // 2. Upload new files (from all categories)
+        const allNewFiles = [
+            ...this.categorizedFiles.toll,
+            ...this.categorizedFiles.parking,
+            ...this.categorizedFiles.mileage,
+            ...this.categorizedFiles.fare,
+            ...this.categorizedFiles.other
+        ].filter(file => typeof file !== 'string'); // Filter out already uploaded (string URLs)
+
+        if (allNewFiles.length > 0) {
+            const formData = new FormData();
+            allNewFiles.forEach(file => {
+                // Rename file with prefix if needed
+                const fileType = this.detectFileCategory(file.name);  // e.g., "MILEAGE"
+                const upperName = file.name.toUpperCase();
+
+                //  Avoid double prefixing
+                let finalName = upperName.startsWith(fileType + "_")
+                    ? file.name
+                    : `${fileType}_${file.name}`;
+
+                const renamedFile = new File([file], finalName, { type: file.type });
+                formData.append("filecollection", renamedFile);
+            });
+
+            const uploadEndpoint = `https://esvcportal.pktgroup.com/api/file/api/Files/MultiUploadImage/${this.requesterId}/${this.uniqueCode}`;
+            await axios.post(uploadEndpoint, formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+        }
+
+        // 3. Prepare and submit claim data
+        const allFiles = [
+            ...this.categorizedFiles.toll,
+            ...this.categorizedFiles.parking,
+            ...this.categorizedFiles.mileage,
+            ...this.categorizedFiles.fare,
+            ...this.categorizedFiles.other
+        ].filter(file => typeof file === 'string'); 
+
             const submitData = {
             mileage_km: this.local.mileage_km,
             starting_point: this.local.starting_point,
@@ -375,7 +738,7 @@ export default {
             transport_specification: this.local.transport_specification?.trim(),
             transport_mode: this.local.transport_mode?.trim(),
             trip_mode: this.local.trip_mode?.trim(),
-            total_mileage: isNaN(parseFloat(this.local.total_mileage)) ? 0 : parseFloat(this.local.total_mileage),
+            total_mileage: isNaN(parseFloat(this.local.total_mileage)) ? 0 : parseFloat(this.local.total_mileage),//petrol/ev(rm)
             meal_allowance:this.local.meal_allowance,
             accommodation: this.local.accommodation,
             vehicle_no: this.local.vehicle_no?.trim(),
@@ -385,7 +748,7 @@ export default {
             reference_number: this.local.reference_number,
             total_fee: isNaN(parseFloat(this.totalFee)) ? 0 : parseFloat(this.totalFee),
             // bank_account: this.handphone.bank_account,
-            files: this.local.files || [],
+            files: allFiles || [],
             unique_code: this.uniqueCode,
             // requester_id: this.requesterId,
             };

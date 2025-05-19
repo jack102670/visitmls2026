@@ -1650,7 +1650,7 @@ export default {
           if (selectedEmployee) {
             if ("emp_id" in selectedEmployee) {
               this.employeeID = selectedEmployee.emp_id;
-              // console.log("Employee ID:", this.employeeID);
+              console.log("Employee ID:", this.employeeID);
             } else {
               console.error(
                 "Employee found but employee_id is missing:",

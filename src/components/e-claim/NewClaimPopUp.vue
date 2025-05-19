@@ -154,10 +154,11 @@
             />
           </div> -->
           <div class="relative">
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="companyName">Cost Center </label>
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="companyName">Cost Center <span
+                class="text-red-500">*</span></label>
 
             <div class="flex justify-between">
-              <input type="text" placeholder="Cost Center.." v-model="formData.costCenter" @click="toggleDropdown4"
+              <input type="text" placeholder="Cost Center.." v-model="formData.costCenter" required @click="toggleDropdown4"
                 class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
               <div class="bg-slate-200 py-4 px-2 mt-2 rounded" @click="toggleDropdown4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 21" stroke="currentColor"
@@ -168,9 +169,9 @@
             </div>
             <div v-show="dropdownVisible4"
               class="dropdown-content absolute left-0 bg-gray-100 w-full max-h-56 overflow-y-auto border border-gray-300 z-10 mt-2 rounded shadow-lg">
-              <a v-for="Company in filteredCostcenter" :key="Company.company_name"
-                @click="selectCostcenter(Company.company_name)" class="block text-black py-2 px-4 hover:bg-gray-200">
-                {{ Company.company_name }}
+              <a v-for="Company in filteredCostcenter" :key="Company.company_code"
+                @click="selectCostcenter(Company.company_code)" class="block text-black py-2 px-4 hover:bg-gray-200">
+                {{ Company.company_code }}
               </a>
             </div>
           </div>
@@ -446,14 +447,23 @@ filteredCompanyName() {
   });
 },
 filteredCostcenter() {
-  return this.Companies.filter((company) => {
+  // return this.Companies.filter((company) => {
     const searchTerm = this.formData.costCenter ? this.formData.costCenter.toLowerCase() : "";
-    return (
+    const seen = new Set();
+
+    return this.Companies.filter ((company) => {
+      const match =
       (company.company_code &&
         company.company_code.toLowerCase().includes(searchTerm)) ||
       (company.company_name &&
-        company.company_name.toLowerCase().includes(searchTerm))
-    );
+        company.company_name.toLowerCase().includes(searchTerm));
+
+      if (match && !seen.has(company.company_code)) {
+        seen.add(company.company_code);
+        return true;
+      }
+      return false;
+   
   });
 },
   },

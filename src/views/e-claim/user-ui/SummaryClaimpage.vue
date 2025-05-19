@@ -592,7 +592,7 @@ export default {
   },
   data() {
     return {
-      canResubmit: true, 
+      // canResubmit: true, 
       resubmitClicked: false, 
       singleRemarks: [],
       sim: [],
@@ -663,6 +663,10 @@ export default {
     };
   },
   computed: {
+    canResubmit() {
+    const status = this.adminStatus?.trim()?.toUpperCase();
+    return status?.includes('REJECTED');
+  },
       totalAmount() {
         let num = 0;
         for (var i = 0; i < this.claimDatas.length; i++) {
@@ -1478,7 +1482,7 @@ export default {
     resubmitForm() {
       const refNo = this.referenceNumber;
       if (refNo) {
-        // Mark the form as unlocked for updates
+        
         this.isResubmitted = true;
         // localStorage.setItem('isResubmitted_' + refNo, 'true'); // Persist state per claim
 
@@ -1531,7 +1535,16 @@ export default {
 
     this.FetchClaimDetails();
     this.FetchClaimDatasDetails();
+     
   },
+  watch: {
+  totalAmount(newTotal) {
+    this.claimDetails.grand_total = newTotal.toFixed(2);
+  }
+}
+
+ 
+
 };
 </script>
 

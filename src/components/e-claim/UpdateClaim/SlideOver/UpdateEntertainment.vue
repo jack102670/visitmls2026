@@ -67,21 +67,43 @@
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
                     <div class="col-span-4">
-                        <label for="files" class="font-medium text-sm">Uploaded Files</label>
-                        <div v-if="entertainment.files && entertainment.files.length" class="mt-2">
-                            <p class="text-xs text-gray-600">Click on a file to view:</p>
-                            <ul class="list-disc list-inside">
-                                <li v-for="(file, index) in entertainment.files" :key="index">
-                                    <a :href="file" target="_blank" class="text-blue-500 hover:underline text-xs">
-                                        Download File {{ index + 1 }}
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                    <label for="files" class="font-medium text-sm">Uploaded Files</label>
+                    <div v-if="entertainment.files.length" class="mt-2">
+                        <p class="text-xs text-gray-600">Click on a file to view or delete:</p>
+                        <ul class="list-disc list-inside">
+                            <li v-for="(file, index) in entertainment.files" :key="index" class="flex items-center space-x-2">
+                                <a :href="typeof file === 'string' ? file : '#'" target="_blank" class="text-blue-500 hover:underline text-xs">
+                                    {{ typeof file === 'string' ? file.split('/').pop() : file.name }}
+                                </a>
+
+                                <a @click="deleteFile(index)" class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
+                                    </svg>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
+
+                    <div v-if="!entertainment.files.length" class="mt-4">
+                        <input
+                            type="file"
+                            id="newFile"
+                            @change="uploadFiles"  
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        />
+                        <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
+                            Selected file: {{ selectedFileName }}
+                        </span>
+                    </div>
+                </div>
                     
                     <div class="col-span-8">
-                        <label class="font-medium text-sm">Participants</label>
+                        <label class="font-medium text-sm">Participants  </label>
+                        <button type="button"  @click="newParticipants "
+                            class="mt-1 text-xs bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Add  
+                        </button>
                         <div class="overflow-x-auto border border-gray-300 rounded-md mt-2">
                             <table class="min-w-full bg-white dark:bg-gray-800 border-collapse">
                                 <thead>
@@ -108,14 +130,14 @@
                                             d="M11 4h2m2 0h.01M13 4l7 7-9 9H4v-9l9-9z" />
                                         </svg>    
                                         </a>
-                                        <!-- Delete Button
+                                        
                                         <a @click="deleteParticipant(participant)"
                                             class="bg-red-600 hover:bg-red-700 text-white transition duration-300 px-2 py-1 rounded-md cursor-pointer inline-flex items-center justify-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M6 18L18 6M6 6l12 12" />
                                             </svg>
-                                        </a> -->
+                                        </a>
                                         </td>
                                         <!-- <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2">
                                 <a @click="toggleSlideOver(index)"
@@ -169,7 +191,7 @@
             <transition name="fade">
                 <div v-if="isParticipantFormOpen"
                     class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                    <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
+                    <div class="bg-white p-6 rounded-lg shadow-lg w-1/5">
                         <h2 class="text-lg font-bold mb-4">Edit Participant</h2>
                         <div>
                             <label class="block text-sm font-medium">Name</label>
@@ -185,7 +207,7 @@
                                 class="bg-gray-400 text-white px-4 py-2 rounded">
                                 Cancel
                             </button>
-                            <button @click="saveParticipant(selectedParticipant)" class="bg-blue-600 text-white px-4 py-2 rounded">
+                            <button type="button" @click="saveParticipant(selectedParticipant)" class="bg-blue-600 text-white px-4 py-2 rounded">
                                 Save
                             </button>
                         </div>
@@ -239,7 +261,12 @@ export default {
             currentPage: 1,
             pageSize: 5,
             //entertainment: {},
-            
+            newFiles: [],
+            filesToDelete: [],
+            selectedFileName: "",
+            uniqueCode: "",
+            requesterId: "",
+            participantsToDelete: [],
             isParticipantFormOpen: false,
             selectedParticipant: null
 
@@ -282,65 +309,112 @@ export default {
         },
     },
     methods: {
-        // deleteParticipant(participant) {
-        //     if (participant && participant.id) {
-        //         const index = this.entertainment.participants.findIndex(p => p.id === participant.id);
-        //         if (index !== -1) {
-        //             this.entertainment.participants.splice(index, 1, participant); // Remove from array
-        //             console.log(`Deleted participant with ID: ${participant.id}`);
-        //         } else {
-        //         this.entertainment.participants.push(participant);
-        //     }
-                
-        //     }
-        // },
+        newParticipants() {
+        this.selectedParticipant = {
+            // id: null,
+            name: "",
+            company_name: ""
+        };
+        this.isParticipantFormOpen = true;
+    },
+        // async deleteParticipant(participant) {
 
+        //         if (participant && participant.id) {
+        //             const confirmResult = await Swal.fire({
+        //                 title: "Are you sure?",
+        //                 text: "This action will permanently delete the participant.",
+        //                 icon: "warning",
+        //                 showCancelButton: true,
+        //                 confirmButtonColor: "#dc2626",
+        //                 cancelButtonColor: "#6b7280",
+        //                 confirmButtonText: "Yes, delete it!"
+        //             });
+
+        //             if (confirmResult.isConfirmed) {
+        //                 try {
+        //                     const response = await axios.delete(`http://172.28.28.116:6165/api/User/DeleteParticipant/${participant.id}`);
+
+        //                     if (response.status === 200) {
+        //                         const index = this.entertainment.participants.findIndex(p => p.id === participant.id);
+        //                         if (index !== -1) {
+        //                             this.entertainment.participants.splice(index, 1);
+        //                             console.log(`Deleted participant with ID: ${participant.id}`);
+        //                         }
+
+        //                         Swal.fire({
+        //                             title: "Deleted!",
+        //                             text: "Participant has been successfully deleted.",
+        //                             icon: "success",
+        //                             confirmButtonColor: "#dc2626"
+        //                         });
+        //                     }
+        //                 } catch (error) {
+        //                     console.error("Failed to delete participant:", error);
+        //                     Swal.fire({
+        //                         title: "Error",
+        //                         text: "Failed to delete participant. Please try again.",
+        //                         icon: "error",
+        //                         confirmButtonColor: "#dc2626"
+        //                     });
+        //                 }
+        //             }
+        //         } else {
+        //             console.warn("Invalid participant object.");
+        //         }
+        //     },
+        deleteParticipant(participant) {
+        if (participant.id) {
+            this.participantsToDelete.push(participant.id);
+        }
+        this.entertainment.participants = this.entertainment.participants.filter(p => p !== participant);
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This will remove the participant from the list.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#dc2626",
+                cancelButtonColor: "#6b7280",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Remove from array only
+                    this.entertainment.participants = this.entertainment.participants.filter(p => p !== participant);
+                }
+            });
+        },
         editParticipant(participant) {
             this.selectedParticipant = { ...participant };
             this.isParticipantFormOpen = true;
             console.log("Editing participant:", this.selectedParticipant); // Debugging log
         },
-        saveParticipant(participant) {
-            console.log("Participant before saving:", participant); // Debugging log
-            const index = this.entertainment.participants.findIndex(p => p.id === participant.id);
-            if (index !== -1) {
-                this.entertainment.participants.splice(index, 1, participant); // Update existing participant
-                console.log("Updated participant:", this.entertainment.participants[index]); // Debugging log
-            } else {
-                this.entertainment.participants.push(participant);
+        async saveParticipant(participant) {
+            if (!participant.name || !participant.company_name) {
+                Swal.fire({
+                    title: "Missing Info",
+                    text: "Please fill in all fields.",
+                    icon: "warning",
+                    confirmButtonColor: "#dc2626"
+                });
+                return;
             }
 
+            // Determine if it's an update or add
+            if (!participant.id) {
+                // New participant: just push to array
+                this.entertainment.participants.push({
+                    ...participant,
+                    reference_number: this.entertainment.reference_number // or undefined, to indicate it's new
+                });
+            } else {
+                // Edit: update in array
+                const idx = this.entertainment.participants.findIndex(p => p.id === participant.id);
+                if (idx !== -1) this.entertainment.participants.splice(idx, 1, participant);
+            }
 
-            // // Ensure the participant is valid
-            // if (!participant || !participant.id) {
-            //     console.error("Invalid participant:", participant);
-            //     return;
-            // }
-
-            // console.log("Participants before:", this.participants);
-            // console.log("Checking participant ID:", participant.id);
-            // console.log("Checking participant name:", participant.name);
-            // console.log("Checking participant company name:", participant.company_name);
-            // console.log("Existing participant:", this.participants?.[participant.id]);
-            // // Check if participant ID exists and update, otherwise add new
-            // if (this.participants && this.participants[participant.id]) {
-            //     // If participant already exists, update it
-            //     this.participants[participant.id] = { ...participant };
-            //     console.log("Updated participant:", this.participants[participant.id]); // Debugging log
-            // } else {
-            // // If participant doesn't exist, add it
-            // this.participants = {
-            //     ...this.participants,  // Spread existing participants
-            //     [participant.id]: { ...participant },  // Add new participant
-            // };
-            // }
-            // console.log("Saving participant:", participant); // Debugging log
-
-
-            // Optional: reset form state
             this.selectedParticipant = null;
             this.isParticipantFormOpen = false;
         },
+
 
         // saveParticipant(participant) {
         //     if (!this.participants || !Array.isArray(this.participants)) {
@@ -420,6 +494,55 @@ export default {
             this.$emit('close');
         },
 
+          // Delete a file from the list
+        deleteFile(index) {
+        const deletedFile = this.entertainment.files[index];
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you really want to delete this file?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#dc2626'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If the file is an existing file (not just uploaded in this session), mark for deletion
+                if (typeof deletedFile === 'string' && !this.newFiles.find(f => f.name === deletedFile)) {
+                    this.filesToDelete.push(deletedFile);
+                } else {
+                    // If it's a new file, remove from newFiles
+                    this.newFiles = this.newFiles.filter(f => f.name !== deletedFile);
+                }
+                // Remove from UI
+                this.entertainment.files.splice(index, 1);
+            }
+        });
+    },
+        async uploadFiles(event) {
+            const files = event?.target?.files;
+
+        if (!files || !files.length) {
+            this.selectedFileName = "";
+            Swal.fire("No File", "Please select at least one file to upload.", "warning");
+            return;
+        }
+       
+        // const formData = new FormData();
+        for (let i = 0; i < files.length; i++) {
+        const originalFile = files[i];
+        // Prepend SUPPORT_DOC_ if not already present
+        let newFileName = originalFile.name.startsWith("SUPPORT_DOC_")
+            ? originalFile.name
+            : `SUPPORT_DOC_${originalFile.name}`;
+        // Create a new File object with the new name
+        const renamedFile = new File([originalFile], newFileName, { type: originalFile.type });
+        this.newFiles.push(renamedFile);
+        this.entertainment.files.push(renamedFile);
+        }
+        this.selectedFileName = files[0].name;
+        event.target.value = "";
+    },
         async fetchEntertainmentData(refNo) {
    
         const response = await axios.get(`http://172.28.28.116:6165/api/User/GetEntertainment/${refNo}`);
@@ -434,6 +557,7 @@ export default {
 
         if (matchingUniqueID) {
             
+
             this.entertainment = {
             description: matchingUniqueID.description,
             reference_number: matchingUniqueID.reference_number,
@@ -448,6 +572,12 @@ export default {
             participants: matchingUniqueID.participants || [],
             other_type:'',
             };
+            this.uniqueCode = matchingUniqueID.unique_code;
+            this.requesterId = matchingUniqueID.requester_id;
+            // Directly assign participants
+            // this.entertainment.participants = [...matchingUniqueID.participants] || [];
+            console.log("Fetched participants:", this.entertainment.participants);
+          
 
             const isCustomType = !this.EntertainmentType.includes(matchingUniqueID.entertainment_type);
             if (isCustomType) {
@@ -493,6 +623,31 @@ export default {
         // Function to update entertainment data (as a helper)
         async handleSubmit() {
             try {
+
+                // Delete participants
+                for (const id of this.participantsToDelete) {
+                    await axios.delete(`http://172.28.28.116:6165/api/User/DeleteParticipant/${id}`);
+                }
+                this.participantsToDelete = [];
+
+
+                // Delete files marked for deletion
+                for (const fileUrl of this.filesToDelete) {
+                    const fileName = fileUrl.split('/').pop();
+                    await axios.delete(`http://172.28.28.116:7267/api/Files/DeleteImage/${this.requesterId}/${this.uniqueCode}/${fileName}`);
+                }
+                this.filesToDelete = [];
+
+                // Upload new files
+                if (this.newFiles.length > 0) {
+                    const formData = new FormData();
+                    this.newFiles.forEach(file => formData.append("filecollection", file));
+                    const uploadEndpoint = `https://esvcportal.pktgroup.com/api/file/api/Files/MultiUploadImage/${this.requesterId}/${this.uniqueCode}`;
+                    await axios.post(uploadEndpoint, formData, {
+                        headers: { "Content-Type": "multipart/form-data" },
+                    });
+                    this.newFiles = [];
+                }
                 // Prepare the data to be submitted
                 const submitData = {
                     description: this.entertainment.description?.trim(),
@@ -520,6 +675,9 @@ export default {
 
                 console.log("Submitting Entertainment payload:", submitData);
 
+                
+
+                // const newParticipants = this.entertainment.participants.filter(p => !p.id);
                 // Make the PUT request to update the entertainment data
                 const response = await axios.put('http://172.28.28.116:6165/api/User/UpdateEntertainment', submitData, {
                     headers: {
@@ -527,9 +685,25 @@ export default {
                     },
                 });
 
+                // Add new participants (those without an id)
+                const newParticipants = this.entertainment.participants.filter(p => !p.id);
+                for (const participant of newParticipants) {
+                    await axios.post("http://172.28.28.116:6165/api/User/InsertParticipant", {
+                        reference_number: this.ent_refNumber,
+                        participants: [{ name: participant.name, company_name: participant.company_name }]
+                    });
+                }
+
                 // Handle the response based on success or failure
                 if (response.data && response.data.result) {
                     console.log("Update Entertainment data:", response.data.result);
+
+                    this.ent_refNumber = this.entertainment.reference_number;
+                    // Now insert new participants using saveParticipant()
+                    for (const participant of newParticipants) {
+                        await this.saveParticipant(participant);
+                    }
+
                     Swal.fire({
                         title: 'Success',
                         text: 'Entertainment updated successfully',
@@ -570,15 +744,14 @@ export default {
             }
         },
 
-
-
-
-    
-
     watch: {
         isOpen(newVal) {
             if (newVal) this.fetchEntertainmentData();
         },
+        'entertainment.participants'(newVal) {
+        console.log("Participants updated:", newVal);
+        // You can also perform other actions here
+    }
     },
     },
 

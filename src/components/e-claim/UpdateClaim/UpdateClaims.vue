@@ -338,7 +338,7 @@ export default {
             tabTitle: "Medical Leave",
             date: moment(claim.date_leave_taken).format('D MMMM YYYY'),
             total: claim.claim_amount,
-            locationPurpose: claim.clinic_name || "N/A",
+            locationPurpose: claim.medical_category,
             unique_code: claim.unique_code,
             refNo: refNo,
             }));

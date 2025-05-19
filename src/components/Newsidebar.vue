@@ -135,9 +135,9 @@
 
           <span class="mx-4 font-medium">Manage Vendor</span>
         </router-link>
-        <router-link 
+         <router-link 
           v-if="controlView === 'eclaim' && userData.checker_validation !== '0'"
-          class="flex items-center px-4 py-2 mt-4 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
+          class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
           :to="{ name: 'AssignChecker' }"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" 
@@ -147,7 +147,7 @@
             <path d="M17 11l2 2 4-4" />
           </svg>
           <span class="mx-4 font-medium">Assign Checker</span>
-        </router-link>
+        </router-link> 
         <router-link v-if="controlView === 'eclaim'"
           class="flex items-center px-4 py-2 mt-4 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
           :to="{ name: 'checkerDashboardPage' }">

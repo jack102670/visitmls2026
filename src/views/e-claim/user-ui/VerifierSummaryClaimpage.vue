@@ -636,6 +636,7 @@ export default {
     };
   },
   computed: {
+    
     totalAmount() {
       let num = 0;
       for (var i = 0; i < this.claimDatas.length; i++) {
