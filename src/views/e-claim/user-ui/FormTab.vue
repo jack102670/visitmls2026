@@ -151,8 +151,8 @@
                                     field.disabled
                                     " :id="field.id"
                                     class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
-                                    <option v-for="year in yearRange" :key="year" :value="year">
-                                      {{ year }}
+                                    <option v-for="option in field.options" :key="option.value" :value="option.value">
+                                      {{ option.label }}
                                     </option>
                                   </select>
                                 </template>
@@ -1711,7 +1711,7 @@ export default {
               type: "select",
               value: "",
               required: true,
-              options: monthOptions,
+              options: monthOptions, // initially empty
               gridClass: "sm:col-span-1",
             },
             {
@@ -2672,11 +2672,37 @@ export default {
   },
 
   mounted() {
-    // Populate the year range with the last 20 years
-    const currentYear = new Date().getFullYear();
-    for (let i = currentYear; i >= currentYear - 20; i--) {
-      this.yearRange.push(i);
+    // const currentYear = new Date().getFullYear();
+    // for (let i = currentYear; i >= currentYear - 20; i--) {
+    //   this.yearRange.push(i);
+    // }
+    const handphoneTab = this.tabs.find(tab => tab.title === "Handphone Bill Reimbursement");
+    if (handphoneTab && Array.isArray(handphoneTab.fields)) {
+      const monthField = handphoneTab.fields.find(f => f.id === "MonthHR");
+      if (monthField) {
+        monthField.options = this.getAllowedMonthOptions();
+      }
+      const yearField = handphoneTab.fields.find(f => f.id === "YearHR");
+      if (yearField) {
+        // FIX: Call the computed property as a function
+        yearField.options = this.formatYearOptions(this.getAllowedYears());
+        // Should be:
+        // yearField.options = this.formatYearOptions(this.getAllowedYears());
+      }
     }
+
+    // if (this.fields && Array.isArray(this.fields)) {
+    //   const monthField = this.fields.find(f => f.id === "MonthHR");
+    //   if (monthField) {
+    //     monthField.options = this.getAllowedMonthOptions;
+    //   }
+
+    //   const yearField = this.fields.find(f => f.id === "YearHR");
+    //   if (yearField) {
+    //     yearField.options = this.formatYearOptions(this.getAllowedYears);
+    //   }
+    // }
+
     this.fetchCompany();
     this.fetchDepartment();
     this.fetchHrData();
@@ -2684,10 +2710,35 @@ export default {
     this.checkstatus();
 
     this.updateLimitedAmount(this.selectedMedicalCategory);
-
   },
 
+
   methods: {
+    formatYearOptions(years) {
+      return years.map(year => ({ label: year.toString(), value: year.toString() }));
+    },
+
+    getAllowedMonthOptions() {
+      const currentDate = new Date();
+      const currentMonthIndex = currentDate.getMonth(); // 0 = Jan
+      const prevMonthIndex = (currentMonthIndex - 1 + 12) % 12;
+
+      const allowedMonths = [prevMonthIndex, currentMonthIndex];
+
+      return monthOptions.filter((_, index) => allowedMonths.includes(index));
+    },
+    getAllowedYears() {
+      const currentDate = new Date();
+      const currentMonthIndex = currentDate.getMonth(); // 0 = January
+      const currentYear = currentDate.getFullYear();
+
+      // If current month is January, previous month is December of last year
+      const allowedYears = currentMonthIndex === 0
+        ? [currentYear - 1, currentYear]
+        : [currentYear];
+
+      return allowedYears;
+    },
 
     formatDecimal(event) {
       const decimalFields = [

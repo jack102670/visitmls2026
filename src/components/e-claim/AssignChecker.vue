@@ -11,7 +11,7 @@
             <div class="flex flex-col">
               <div class="flex flex-col mb-8">
                 <div class="flex flex-row-reverse">
-                  <button @click="toggleSlideOver" class="bg-primary text-white py-2 w-32 rounded-lg hover:bg-primary">
+                  <button @click="toggleSlideOver" class="bg-primary text-white py-2 w-32 rounded-full hover:bg-primary">
                     New Checker
                   </button>
                 </div>

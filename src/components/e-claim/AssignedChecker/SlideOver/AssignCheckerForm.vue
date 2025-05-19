@@ -178,7 +178,7 @@
                 </div>
                 <div class="flex flex-col mb-8">
                   <button @click="AddCheckers()"
-                    class="bg-blue-800 text-white py-2 mb-[200px] w-32 rounded-lg hover:bg-blue-900">
+                    class="bg-primary text-white py-2 mb-[200px] w-32 rounded-lg ">
                     Confirm
                   </button>
                 </div>
@@ -271,18 +271,18 @@ import { check } from 'prettier';
         this.$emit('close');
       },
       async GetAllDepartments() {
-      try {
-        const response = await axios.get(
-          " http://172.28.28.116:6239/api/User/GetDepartment"
-        );
-        const departments = response.data.result.map((item) => item.department);
+        try {
+          const response = await axios.get(
+            " http://172.28.28.116:6239/api/User/GetDepartment"
+          );
+          const departments = response.data.result.map((item) => item.department);
 
-        this.AllDepartments = [...new Set(departments)];
-        this.GetAllEmployees();
-      } catch (error) {
-        console.error("Error fetching departments:", error);
-      }
-    },
+          this.AllDepartments = [...new Set(departments)];
+          this.GetAllEmployees();
+        } catch (error) {
+          console.error("Error fetching departments:", error);
+        }
+      },
 
     async GetAllEmployees() {
       try {

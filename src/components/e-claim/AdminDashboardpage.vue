@@ -6,7 +6,20 @@
         <h1 class="text-blue-800 dark:text-blue-600 text-xl md:text-2xl font-bold">
           FINANCE DASHBOARD
         </h1>
-
+        <div class="grid grid-cols-8 gap-4 w-full">
+          <div class="col-span-8">
+            <div class="flex flex-col">
+              <div class="flex flex-col">
+                <div class="flex flex-row-reverse">
+                  <button @click="toggleSlideOver" class="bg-primary text-white p-2 w-38 rounded-full hover:bg-primary">
+                    Monthly Report
+                  </button>
+                </div>
+                <!-- <CheckerTable :refreshKey="refreshKey" /> -->
+              </div>
+            </div>
+          </div>
+        </div>
             <div class="flex flex-col mt-6">
               <div class=" py-2 flex flex-col md:flex-row justify-between items-center md:items-end">
                 <div class="flex items-center">
@@ -279,6 +292,12 @@
       </div>
     </div>
   </div>
+  <SlideOver
+      :isOpen="isSlideOverOpen"
+      @close="toggleSlideOver"
+      @closeSlideOver="isSlideOverOpen = false"
+      @fetch-report="handleHRReportFetch"
+    />
   </main>
 </template>
 
@@ -287,7 +306,12 @@ import $ from 'jquery';
 import 'datatables.net-dt';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';
 import axios from 'axios';
+import SlideOver from '@/components/e-claim/MonthlySummaryClaim/SlideOver/MonthlyReportFINForm.vue';
+
 export default {
+  components: {
+    SlideOver,
+  },
   data() {
     return {
       userId: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
@@ -299,6 +323,14 @@ export default {
       currentPage: 1,
       itemsPerPage: 10,
       loading: false,
+
+      isSlideOverOpen: false,
+
+      exportParams: {
+        company: null,
+        startDate: null,
+        endDate: null
+      },
     };
   },
 
@@ -362,6 +394,21 @@ export default {
     },
   },
   methods: {
+    handleHRReportFetch({ company, startDate, endDate }) {
+      // Redirect with query parameters
+      this.$router.push({
+        name: 'FINMonthlyReport',
+        query: {
+          company,
+          start_date: startDate,
+          end_date: endDate,
+        }
+      });
+    },
+
+    toggleSlideOver() {
+      this.isSlideOverOpen = !this.isSlideOverOpen;
+    },
     nextPage() {
       if (this.currentPage < this.totalPages) {
         this.currentPage++;

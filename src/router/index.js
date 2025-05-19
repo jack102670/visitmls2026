@@ -53,7 +53,8 @@ import NotFound from "../views/pagenotfound.vue";
 import AdminHODpage from "@/components/e-claim/AdminHODpage.vue";
 import AdminHODClaimpage from "@/components/e-claim/AdminHODClaimpage.vue";
 import UpdateClaims from "@/components/e-claim/UpdateClaim/UpdateClaims.vue"
-
+import HRMonthlyReport from "@/components/e-claim/MonthlySummaryClaim/HRMonthlyReport.vue";
+import FINMonthlyReport from "@/components/e-claim/MonthlySummaryClaim/FINMonthlyReport.vue";
 
 
 const routes = [
@@ -152,6 +153,24 @@ const routes = [
     name: "AdminHRSummaryClaimpage",
     components: {
       default: AdminHRSummaryClaimpage,
+      Sidebar: Newsidebar,
+    },
+    props: true,
+  },
+  {
+    path: "/monthlyhrsummaryclaim",
+    name: "HRMonthlyReport",
+    components: {
+      default: HRMonthlyReport,
+      Sidebar: Newsidebar,
+    },
+    props: true,
+  },
+  {
+    path: "/monthlyfinsummaryclaim",
+    name: "FINMonthlyReport",
+    components: {
+      default: FINMonthlyReport,
       Sidebar: Newsidebar,
     },
     props: true,

@@ -1,8 +1,8 @@
 <template>
   <main class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 dark:text-white p-4 sm:ml-64">
-    <div class="container mx-auto text-xs lg:text-base">
+    <div class="mx-auto text-xs lg:text-base">
       <div id="summaryPrint"
-        class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
+        class="relative bg-[#f7fbff] dark:bg-gray-900 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
         <h1 class="text-gray-500 italic absolute top-4 right-4">
           SN: {{ referenceNumber }}
         </h1>
@@ -111,7 +111,7 @@
                       <td class="px-4 py-3 text-center text-xs">
                        <p>{{ claim.No }}</p> 
                       </td>
-                      <td class="px-4 py-3 text-xs">
+                      <td class="px-4 py-3 text-xs text-left">
                         <span class="font-medium">{{ claim.Type }}</span>
                         <span class="ml-1 text-gray-500 dark:text-gray-400">
                           (x{{ claimDatasDetails[claim.No - 1].length }})
@@ -146,7 +146,7 @@
             <h1 class="mt-4 text-xl font-semibold tab-title" v-if="detail && detail.length > 0">
               {{ detail[0].Tab_Title }}
             </h1>
-            <div class="border border-gray-400 dark:border-gray-600 rounded-md overflow-y-auto" id="table-overflow">
+            <div class="border rounded-lg overflow-x-auto border-gray-400 dark:border-gray-600">
               <table class="w-full">
                 <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md text-xs">
                   <th class="w-40">Remark</th>
@@ -203,26 +203,14 @@
                             ? ''
                             : val
                     }}
-                    <div v-show="key === 'Others_Expenses'" id="staffDetails" class="my-1">
-                      <a 
-                        @click="showOemModal(val)" 
-                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white px-4 py-1 my-1 rounded-md w-20 text-center justify-center items-center">
-                        See More
-                      </a>
+                    <div v-if="key === 'Others_Expenses'">
+                      <span v-html="val"></span>
                     </div>
-                    <div v-show="key == 'Staff_Involved'" id="staffDetails" class="my-1">
-                      <a 
-                        @click="showStaffInvolved(val)" 
-                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white px-4 py-1 my-1 rounded-md w-20 text-center">
-                        See More
-                      </a>
+                    <div v-if="key === 'Staff_Involved'">
+                      <span v-html="val"></span>
                     </div>
-                    <div v-show="key == 'Participants'" id="staffDetails" class="my-1">
-                      <a 
-                        @click="showParticipants(val)" 
-                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white px-4 py-1 my-1 rounded-md w-20 text-center">
-                        See More
-                      </a>
+                    <div v-if="key === 'Participants'">
+                      <span v-html="val"></span>
                     </div>
 
                     <div v-show="key == 'Attachments'"
@@ -250,8 +238,8 @@
         </div>
 
         <!-- Status Table -->
-        <div class="text-xs border mt-4 border-gray-400 dark:border-gray-600 rounded-md">
-          <table class="w-full">
+        <div class="border rounded-lg overflow-x-auto border-gray-400 dark:border-gray-600 my-4">
+          <table class="w-full status-table">
             <!-- title -->
             <thead class="h-8 bg-gray-300 dark:bg-gray-700 text-left rounded-md space-x-2">
               <th class="rounded-tl w-[20%] text-center border-r border-gray-400 dark:border-gray-600">
@@ -381,9 +369,9 @@
 
         <div>
           <div v-show="!pending"  
-            class="text-xs border mt-4 border-gray-400 dark:border-gray-600 rounded-md"
-            id="table-overflow">
-            <table class="w-full">
+            class="border rounded-lg overflow-x-auto border-gray-400 dark:border-gray-600 my-4"
+            >
+            <table class="w-full remark-table">
               <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md">
                 <th class="pl-6">Remark</th>
               </thead>
@@ -525,161 +513,6 @@
           </div>
         </div>
 
-        <!-- Staff Involved List -->
-        <div v-show="showSimList"
-          class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
-          <div
-            class="bg-white w-full pt-4 pb-6 px-4 max-w-3xl mx-4 shadow-xl transform transition-all duration-300 ease-in-out scale-100">
-            <div class="flex justify-between items-center p-2 border-b border-gray-200 relative">
-              <div class="absolute inset-0 flex justify-center items-center pointer-events-none">
-                <h1 class="text-xl font-bold text-gray-800">Staff Involved</h1>
-              </div>
-
-              <div class="ml-auto"> 
-                <button @click="showSimList = !showSimList" class="text-gray-500 hover:text-gray-800 transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-            <div class="overflow-x-auto p-2">
-              <table class="w-full p-2">
-                <thead class="bg-gray-100">
-                  <th class="py-3 px-4 text-left">No.</th>
-                  <th class="py-3 px-4 text-left">Company</th>
-                  <th class="py-3 px-4 text-left">Name</th>
-                  <th class="py-3 px-4 text-left">Department</th>
-                </thead>
-                <tbody class="text-gray-600">
-                  <tr v-for="(staff, i) in sim" :key="i"
-                    class="border-b border-gray-200 hover:bg-gray-100 transition-colors">
-                    <td class="py-3 px-4">{{ i + 1 }}</td>
-                    <td class="py-3 px-4">{{ staff.company_name }}</td>
-                    <td class="py-3 px-4">{{ staff.name }}</td>
-                    <td class="py-3 px-4">{{ staff.department }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- Participants List -->
-        <div v-show="showParticipantsList"
-          class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
-          <div class="bg-white w-full p-2 max-w-3xl mx-4 shadow-xl relative">
-            <button @click="showParticipantsList = false"
-              class="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-              </svg>
-            </button>
-
-            <div class="text-center px-2 py-4">
-              <h1 class="text-xl font-semibold">Participants</h1>
-            </div>
-
-            <div class="overflow-x-auto p-2">
-              <table class="w-full text-center">
-                <thead class="bg-gray-100">
-                  <th class="py-3 px-4">No.</th>
-                  <th class="py-3 px-4">Name</th>
-                  <th class="py-3 px-4">Company</th>
-                </thead>
-                <tbody>
-                  <tr v-for="(staff, i) in participants" :key="i" class="border-b border-gray-200 hover:bg-gray-100">
-                    <td class="py-3 px-4">{{ i + 1 }}</td>
-                    <td class="py-3 px-4">{{ staff.name }}</td>
-                    <td class="py-3 px-4">{{ staff.company_name }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-                <!-- Others_Expenses -->
-                <div v-show="showOemList"
-     class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
-  <div class="bg-white w-full p-2 max-w-3xl mx-4 shadow-xl relative">
-    <button @click="showOemList = false"
-            class="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition-colors">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-           stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-      </svg>
-    </button>
-    <div class="text-center px-2 py-4">
-      <h1 class="text-xl font-semibold">Other Expenses & Mileage</h1>
-    </div>
-    <div class="overflow-x-auto p-2">
-      <table class="w-full text-center">
-        <thead class="bg-gray-100">
-          <th class="py-3 px-4">No.</th>
-          <th class="py-3 px-4">Name</th>
-          <th class="py-3 px-4">Description</th>
-          <th class="py-3 px-4">Amount (RM)</th>
-          <th class="py-3 px-4">Foreign Currency</th>
-          <th class="py-3 px-4">Exchange Rate</th>
-          <th class="py-3 px-4">Currency Total</th>
-        </thead>
-        <tbody>
-          <tr v-for="(item, i) in oem" :key="i" class="border-b border-gray-200 hover:bg-gray-100">
-            <td class="py-3 px-4">{{ i + 1 }}</td>
-            <td class="py-3 px-4">{{ item.name }}</td>
-            <td class="py-3 px-4">{{ item.description }}</td>
-            <td class="py-3 px-4">{{ item.amount.toFixed(2) }}</td>
-            <td class="py-3 px-4">{{ item.foreign_currency }}</td>
-            <td class="py-3 px-4">{{ item.exchange_rate }}</td>
-            <td class="py-3 px-4">{{ item.currency_total }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-        <!-- Other Expenses List -->
-        <div v-show="showOEsList"
-          class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
-          <div class="bg-white w-full max-w-3xl mx-4 shadow-xl relative">
-            <button @click="showOEsList = false"
-              class="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-              </svg>
-            </button>
-
-            <div class="text-center py-4">
-              <h1 class="text-xl font-semibold">Other Expenses</h1>
-            </div>
-
-            <div class="overflow-x-auto p-2">
-              <table class="w-full text-center">
-                <thead class="bg-gray-100">
-
-                  <th class="py-3 px-4">No.</th>
-                  <th class="py-3 px-4">Name</th>
-                  <th class="py-3 px-4">Amount</th>
-                  <th class="py-3 px-4">Description</th>
-                </thead>
-                <tbody>
-                  <tr v-for="(expense, i) in oe" :key="i"
-                    class="border-b border-gray-200 hover:bg-gray-100 transition-colors">
-                    <td class="py-3 px-4">{{ i + 1 }}</td>
-                    <td class="py-3 px-4">{{ expense.name }}</td>
-                    <td class="py-3 px-4">{{ expense.amount }}</td>
-                    <td class="py-3 px-4">{{ expense.description }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
 
         <!-- File List -->
         <div v-show="showFileList"
@@ -1076,23 +909,23 @@ export default {
             const editedDetail = {
               Date_Event: result[i].date_event,
               'Return_Date': result[i].return_date,
-              'Vehicle Registration Number':result[i].vehicle_no,
+              'Vehicle Number':result[i].vehicle_no,
               'Vehicle Model':result[i].vehicle_model,
               Starting_Point: result[i].starting_point,
               End_Point: result[i].end_point,
-              'Mileage(KM)': Number(result[i].mileage_km).toFixed(2),
+              'Mileage (KM)': Number(result[i].mileage_km).toFixed(2),
               'Type of Petrol':result[i].type_petrol,
-              'Petrol(Litre)':Number(result[i].petrol_perlitre).toFixed(2),
+              'Petrol (Litre)':Number(result[i].petrol_perlitre).toFixed(2),
               'Fare': Number(result[i].fare).toFixed(2),
-              'Meal_Allowance(RM)': result[i].meal_allowance,
+              'Meal_Allowance (RM)': result[i].meal_allowance,
               'Accomodation': result[i].accommodation,
-              'Park_Fee(RM)': Number(result[i].park_fee).toFixed(2),
-              'Toll_Fee(RM)': Number(result[i].toll_fee).toFixed(2),
+              'Park_Fee (RM)': Number(result[i].park_fee).toFixed(2),
+              'Toll_Fee (RM)': Number(result[i].toll_fee).toFixed(2),
               Transport_Specification: result[i].transport_specification,
               Transport_Mode: result[i].transport_mode,
               Trip_Mode: result[i].trip_mode,
-              'Petrol/EV(RM)': Number(result[i].total_mileage).toFixed(2),
-              'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
+              'Petrol/EV (RM)': Number(result[i].total_mileage).toFixed(2),
+              'Total_Fee (RM)': Number(result[i].total_fee).toFixed(2),
               Attachments: result[i].files,
               comment: result[i].comment,
               Tab_Title: 'Local Outstation',
@@ -1118,8 +951,39 @@ export default {
           let details = [];
           let amount = 0;
           for (let i in result) {
+            const oem = result[i].oem || [];
+            const buildFullExpenseTable = () => {
+              if (!oem.length) return '-';
+              return `
+                <table class="w-full border border-collapse text-[10px]">
+                  <thead class="bg-gray-100">
+                    <tr>
+                      <th class="border px-1 py-0.5">Name</th>
+                      <th class="border px-1 py-0.5">Description</th>
+                      <th class="border px-1 py-0.5">Foreign Currency</th>
+                      <th class="border px-1 py-0.5">Exchange Rate</th>
+                      <th class="border px-1 py-0.5">Currency Total</th>
+                      <th class="border px-1 py-0.5">Amount (RM)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${oem
+                      .map(
+                        e => `
+                      <tr>
+                        <td class="border px-1 py-0.5">${e.name}</td>
+                        <td class="border px-1 py-0.5">${e.description}</td>
+                        <td class="border px-1 py-0.5">${e.foreign_currency}</td>
+                        <td class="border px-1 py-0.5">${e.exchange_rate}</td>
+                        <td class="border px-1 py-0.5">${e.currency_total}</td>
+                        <td class="border px-1 py-0.5">${e.amount}</td>
+                      </tr>`
+                      )
+                      .join('')}
+                  </tbody>
+                </table>`;
+            };
 
-            
             const mealAllowance = result[i].meal_allowance || 0;
             // const oemAmount = result[i].oem?.[0]?.amount || 0;
             let oemTotal = 0;
@@ -1137,7 +1001,7 @@ export default {
               Description: result[i].description,
               'Meal_Allowance_(RM)': Number(result[i].meal_allowance).toFixed(2),
               'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
-              Others_Expenses: result[i].oem,
+              Others_Expenses: buildFullExpenseTable(),
               Attachments: result[i].files,
               Tab_Title: 'Overseas Outstation',
               comment: result[i].comment,
@@ -1165,6 +1029,33 @@ export default {
           let details = [];
           let amount = 0;
           for (let i in result) {
+            const sim = result[i].sim || [];
+            const buildFullExpenseTable = () => {
+              if (!sim.length) return '-';
+              return `
+                <table class="w-full border border-collapse text-[10px]">
+                  <thead class="bg-gray-100">
+                    <tr>
+                      <th class="border px-1 py-0.5">Name</th>
+                      <th class="border px-1 py-0.5">Company Name</th>
+                      <th class="border px-1 py-0.5">Department</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${sim
+                      .map(
+                        e => `
+                      <tr>
+                        <td class="border px-1 py-0.5">${e.name}</td>
+                        <td class="border px-1 py-0.5">${e.company_name}</td>
+                        <td class="border px-1 py-0.5">${e.department}</td>
+                      </tr>`
+                      )
+                      .join('')}
+                  </tbody>
+                </table>`;
+            };
+
             amount += result[i].total_fee;
             const editedDetail = {
               'Type_of_Refreshment': result[i].refreshment_type,
@@ -1173,7 +1064,7 @@ export default {
               Venue: result[i].venue_name,
               Company: result[i].company_name,
               'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
-              Staff_Involved: result[i].sim,
+              Staff_Involved: buildFullExpenseTable(),
               Attachments: result[i].files,
               comment: result[i].comment,
               Tab_Title: 'Staff Refreshment',
@@ -1199,6 +1090,31 @@ export default {
           let details = [];
           let amount = 0;
           for (let i in result) {
+            const participants = result[i].participants || [];
+            const buildFullExpenseTable = () => {
+              if (!participants.length) return '-';
+              return `
+                <table class="w-full border border-collapse text-[10px]">
+                  <thead class="bg-gray-100">
+                    <tr>
+                      <th class="border px-1 py-0.5">Name</th>
+                      <th class="border px-1 py-0.5">Company Name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${participants
+                      .map(
+                        e => `
+                      <tr>
+                        <td class="border px-1 py-0.5">${e.name}</td>
+                        <td class="border px-1 py-0.5">${e.company_name}</td>
+                      </tr>`
+                      )
+                      .join('')}
+                  </tbody>
+                </table>`;
+            };
+
             amount += result[i].total_fee;
             const editedDetail = {
               'Type_of_Refreshment': result[i].entertainment_type,
@@ -1207,7 +1123,7 @@ export default {
               Venue: result[i].venue_name,
               Company: result[i].company_name,
               'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
-              Participants: result[i].participants,
+              Participants: buildFullExpenseTable(),
               Attachments: result[i].files,
               comment: result[i].comment,
               Tab_Title: 'Entertainment',
@@ -1348,6 +1264,17 @@ export default {
     },
 
     PrintSummary() {
+      // print();
+      const printStyles = `
+        @page {
+          size: A4 landscape;
+        }
+      `;
+      const styleSheet = document.createElement('style');
+      styleSheet.type = 'text/css';
+      styleSheet.innerHTML = printStyles;
+      document.head.appendChild(styleSheet);
+
       print();
     },
     // click function after confirm the approve
@@ -1761,17 +1688,43 @@ div:has(> table) {
   overflow-x: auto;
 }
 
-table th,
-td {
-  padding-right: 4px;
-  padding-left: 4px;
-}
+td, th {
+    word-break: break-word;
+    white-space: normal;
+    white-space: normal !important;
+    word-break: break-word !important;
+  }
+
+  table th,
+  td {
+      padding-right: 4px;
+      padding-left: 4px;
+      vertical-align: middle;
+      
+  }
+  tfoot td.text-right {
+      text-align: right !important;
+  }
+  table {
+    table-layout: auto;
+    width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  td table th,
+  td table td {
+    white-space: nowrap;
+    padding: 4px 6px;
+    vertical-align: top;
+    border: 1px solid #ccc;
+  }
 </style>
 
 <style scoped>
 @media print {
   @page {
-    size: A4 portrait;
+    size: A4 landscape;
   }
 
   * {
@@ -1805,12 +1758,53 @@ td {
     visibility: hidden !important;
   }
 
-  .detail-table {
-    page-break-inside: avoid;
+  .detail-table,
+  .status-table,
+  .remark-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    page-break-inside: avoid !important;
+    overflow: visible !important;
+    table-layout: fixed !important;
+  }
+
+  .status-table th,
+  .status-table td,
+  .remark-table th,
+  .remark-table td {
+    font-size: 8px !important;
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+    vertical-align: top !important;
+  }
+
+  .status-table th:first-child,
+  .remark-table thead th {
+    font-size: 10px !important;
+    font-weight: bold !important;
+    text-align: center !important;
+  }
+
+  
+  .overflow-x-auto,
+  .overflow-y-auto,
+  .overflow-auto {
+    overflow: visible !important;
   }
 
   table {
-    page-break-inside: avoid;
+    table-layout: auto !important;
+    width: 100% !important;
+    page-break-inside: avoid !important;
+    border-collapse: collapse !important;
+  }
+  
+  th, td {
+    page-break-inside: avoid !important;
+    word-wrap: break-word !important;
+    white-space: normal !important;
+    font-size: 10px !important;
+    overflow: visible !important;
   }
 
   * {
@@ -1826,9 +1820,11 @@ td {
   }
 
   #summaryPrint {
-    margin-left: 0;
-    width: 100vw !important;
-    padding: 0;
+    margin: 0 auto;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    box-sizing: border-box;
   }
 
   #summaryPrint div {

@@ -29,3 +29,31 @@ export default {
 };
 
 </script>
+
+<style>
+@media print {
+  /* Hide the sidebar rendered from named router-view
+   [name="Sidebar"],
+  aside,
+  .toggle-btn {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    position: absolute !important;
+    left: -9999px !important;
+  }
+
+   Ensure main content fills full width
+  main {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+
+   Optional: Remove background for clean print
+  body,
+  html {
+    background: white !important;
+    color: black !important;
+  } */
+}
+</style>

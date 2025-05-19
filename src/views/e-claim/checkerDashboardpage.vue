@@ -51,7 +51,7 @@
             <div class="overflow-x-auto">
               <div class="inline-block min-w-full py-2 align-middle ">
                 <div class=" border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                  <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe">
+                  <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-700 rounded-lg text-xs md:text-sm">
                     <thead class="bg-gray-50 dark:bg-gray-800">
                       <tr>
                         <th scope="col" class="px-6 py-3">No</th>
@@ -120,7 +120,7 @@
                             </div>
                           </div>
                         </td>
-                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-balance">
+                        <td class="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 text-balance">
                           {{ item.reference_number }}
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-balance">

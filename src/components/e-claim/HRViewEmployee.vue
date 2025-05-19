@@ -160,51 +160,88 @@
 
         <!-- View Employees -->
         <div v-show="view"
-          class=" fixed top-0 bg-gray-600/50 left-0 right-0 bottom-0 z-50 flex justify-center items-center">
-          <div class="mx-auto max-w-screen-2xl ">
-            <div class="bg-white dark:bg-gray-900 w-full sm:w-4/5 lg:w-3/5 rounded-xl relative max-h-[90vh] overflow-y-auto">
+          class="fixed top-0 bg-gray-600/50 left-0 right-0 bottom-0 z-50 flex justify-center items-center">
+          <div class="bg-white dark:bg-gray-900 w-3/4 max-w-screen-lg rounded-xl relative max-h-[90vh] overflow-y-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="absolute right-3 top-3 size-6 cursor-pointer" @click="(view = false), (edit = false)">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+
+            <div class="flex my-0 items-center">
+              <h1 class="text-xl font-bold m-3 mb-2 ml-7">
+                {{ edit ? 'Edit Employee Profile' : 'Employee Details' }}
+              </h1>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="absolute right-3 top-3 size-6" @click="(view = false), (edit = false)">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                stroke="currentColor" class="size-6 ml-1 cursor-pointer" @click="(edit = true), fetchData()"
+                v-show="!edit">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
               </svg>
+            </div>
 
-              <div class="flex my-0 items-center">
-                <h1 class="text-xl font-bold m-3 mb-2 ml-7">
-                  {{ edit ? 'Edit Employee Profile' : 'Employee Details' }}
-                </h1>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                  stroke="currentColor" class="size-6 ml-1 cursor-pointer" @click="(edit = true), fetchData()"
-                  v-show="!edit">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                </svg>
-              </div>
-              <div class="m-3 mt-2 ml-7 h-1/5">
-                <img v-if="employee.profile_picture" :src="employee.profile_picture" alt="profile picture"
-                  class="h-full object-cover w-40 h-40 rounded-xl" />
-                <img v-else
-                  src="https://happytravel.viajes/wp-content/uploads/2020/04/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"
-                  alt="profile picture" class="w-40 h-40 object-cover rounded-xl" />
-              </div>
+            <div class="m-3 mt-2 ml-7 h-1/5">
+              <img v-if="employee.profile_picture" :src="employee.profile_picture" alt="profile picture"
+                class="h-full object-cover w-40 h-40 rounded-xl" />
+              <img v-else
+                src="https://happytravel.viajes/wp-content/uploads/2020/04/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"
+                alt="profile picture" class="w-40 h-40 object-cover rounded-xl" />
+            </div>
 
-              <!-- employee details -->
-              <div v-if="!edit" class="px-4 grid grid-cols-1 mx-auto  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                <div v-for="(val, key, index) in employee" :key="index" :class="key === 'profile_picture' ? 'hidden' : 'ml-3 mt-1 min-h-16'
-                  ">
-                  <div v-if="key !== 'profile_picture' && key !== 'username' && key !== 'username_id'">
-                    <h1 class="text-base font-semibold text-gray-900 dark:text-gray-100">
-                      {{ getDisplayLabel(key) + ':' }}
-                    </h1>
-                    <h1 class="font-thin text-sm text-gray-700 dark:text-gray-300 break-words">
-                      {{ val ? val : '-' }}
-                    </h1>
-                  </div>
-                </div>
+            <!-- Employee Details -->
+            <div v-if="!edit" class="px-4 mb-4 mx-auto grid grid-cols-1 gap-6 lg:grid-cols-3">
+              <div>
+                <label class="text-base font-semibold text-gray-900 dark:text-gray-100">Employee ID:</label>
+                <p class="font-thin text-sm text-gray-700 dark:text-gray-300 break-words">{{ employee.emp_id }}</p>
               </div>
+              <div>
+                <label class="text-base font-semibold text-gray-900 dark:text-gray-100">Name:</label>
+                <p class="font-thin text-sm text-gray-700 dark:text-gray-300 break-words">{{ employee.name }}</p>
+              </div>
+              <div>
+                <label class="text-base font-semibold text-gray-900 dark:text-gray-100">IC Number:</label>
+                <p class="font-thin text-sm text-gray-700 dark:text-gray-300 break-words">{{ employee.ic_number || '-' }}</p>
+              </div>
+              <div>
+                <label class="text-base font-semibold text-gray-900 dark:text-gray-100">Position:</label>
+                <p class="font-thin text-sm text-gray-700 dark:text-gray-300 break-words">{{ employee.position_title }}</p>
+              </div>
+              <div>
+                <label class="text-base font-semibold text-gray-900 dark:text-gray-100">Department:</label>
+                <p class="font-thin text-sm text-gray-700 dark:text-gray-300 break-words">{{ employee.department }}</p>
+              </div>
+              <div>
+                <label class="text-base font-semibold text-gray-900 dark:text-gray-100">Branch:</label>
+                <p class="font-thin text-sm text-gray-700 dark:text-gray-300 break-words">{{ employee.branch }}</p>
+              </div>
+              <div>
+                <label class="text-base font-semibold text-gray-900 dark:text-gray-100">Phone:</label>
+                <p class="font-thin text-sm text-gray-700 dark:text-gray-300 break-words">{{ employee.phone_number || '-' }}</p>
+              </div>
+              <div>
+                <label class="text-base font-semibold text-gray-900 dark:text-gray-100">Email:</label>
+                <p class="font-thin text-sm text-gray-700 dark:text-gray-300 break-words">{{ employee.email_address || '-' }}</p>
+              </div>
+              <div>
+                <label class="text-base font-semibold text-gray-900 dark:text-gray-100">Home Address:</label>
+                <p class="font-thin text-sm text-gray-700 dark:text-gray-300 break-words">{{ employee.home_address || '-' }}</p>
+              </div>
+              <div>
+                <label class="text-base font-semibold text-gray-900 dark:text-gray-100">Limit Outpatient:</label>
+                <p class="font-thin text-sm text-gray-700 dark:text-gray-300 break-words">{{ employee.limit_outpatient }}</p>
+              </div>
+              <div>
+                <label class="text-base font-semibold text-gray-900 dark:text-gray-100">Medical/Dental:</label>
+                <p class="font-thin text-sm text-gray-700 dark:text-gray-300 break-words">{{ employee.limit_medicaldental }}</p>
+              </div>
+              <div>
+                <label class="text-base font-semibold text-gray-900 dark:text-gray-100">Phone Claim Limit:</label>
+                <p class="font-thin text-sm text-gray-700 dark:text-gray-300 break-words">{{ employee.limit_amount }}</p>
+              </div>
+            </div>
 
               <!-- edit employees -->
               <div v-else class="px-4 mb-4 mx-auto">
-                <div class=" space-x-2 grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
+                <div class="space-x-2 grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
                   <div>
                     <label for="branchInput" class="block mb-2 text-sm font-medium text-primary dark:text-white italic">
                       Branch: <span class="text-red-500">*</span>
@@ -434,7 +471,7 @@
           </div>
         </div>
       </div>
-    </div>
+    <!-- </div> -->
   </main>
 </template>
 
@@ -602,33 +639,32 @@ export default {
     initializeDataTable() {
       $(this.$refs.myTable).DataTable({});
     },
-    getDisplayLabel(key) {
-    const labels = {
-      emp_id: "Employee ID",
-      reporting_to: "Reporting To",
-      name: "Name",
-      position_title: "Position Title",
-      email_address: "Email",
-      phone_number: "Phone Number",
-      home_address: "Home Address",
-      company_name: "Company",
-      // username_id: "Username ID",
-      // username: "Username",
-      branch: "Branch",
-      reporting_to_dept: "Reporting Department",
-      department: "Department",
-      account_status: "Account Status",
-      limit_amount: "Limit Amount",
-      bank_name: "Bank Name",
-      bank_number: "Bank Number",
-      ic_number: "IC Number",
-      limit_outpatient: "Limit Outpatient",
-      limit_medicaldental: "Limit Medical/Dental",
-      checker_validation: "Checker Validation",
-      // Add more mappings as needed
-    };
-    return labels[key] || key;
-  },
+  //   getDisplayLabel(key) {
+  //   const labels = {
+  //     emp_id: "Employee ID",
+  //     reporting_to: "Reporting To",
+  //     name: "Name",
+  //     position_title: "Position Title",
+  //     email_address: "Email",
+  //     phone_number: "Phone Number",
+  //     home_address: "Home Address",
+  //     company_name: "Company",
+  //     // username_id: "Username ID",
+  //     // username: "Username",
+  //     branch: "Branch",
+  //     reporting_to_dept: "Reporting Department",
+  //     department: "Department",
+  //     account_status: "Account Status",
+  //     limit_amount: "Limit Amount",
+  //     bank_name: "Bank Name",
+  //     bank_number: "Bank Number",
+  //     ic_number: "IC Number",
+  //     limit_outpatient: "Limit Outpatient",
+  //     limit_medicaldental: "Limit Medical/Dental",
+  //     checker_validation: "Checker Validation",
+  //   };
+  //   return labels[key] || key;
+  // },
     FetchEmployeesData() {
       axios
         .get(' http://172.28.28.116:6239/api/User/GetAllEmployees')

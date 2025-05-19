@@ -112,7 +112,7 @@
                       <td class="px-4 py-3 text-center text-xs">
                        <p>{{ claim.No }}</p> 
                       </td>
-                      <td class="px-4 py-3 text-xs">
+                      <td class="px-4 py-3 text-xs text-left">
                         <span class="font-medium">{{ claim.Type }}</span>
                         <span class="ml-1 text-gray-500 dark:text-gray-400">
                           (x{{ claimDatasDetails[claim.No - 1].length }})
@@ -499,7 +499,8 @@
                           <div class="flex items-center space-x-3">
                             <div class="flex-shrink-0 w-20 h-32">
                               <img v-if="['png', 'jpg', 'jpeg'].includes(file.split('.').pop().toLowerCase())"
-                                :src="file" alt="attachment" class="w-full h-full object-contain rounded-sm" />
+                                :src="file" alt="attachment" class="w-full h-full object-contain rounded-sm cursor-pointer"
+                                @click="openImagePreview(file)" />
                               <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor" class="w-full h-full text-gray-500 dark:text-gray-400">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5"
@@ -532,6 +533,18 @@
             <div v-if="files.length <= 0" class="w-full">
               <h1 class="mx-auto text-center font-thin text-gray-500">Empty</h1>
             </div>
+          </div>
+        </div>
+
+        <!-- Image Preview Modal -->
+        <div v-show="showImagePreview" class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-75">
+          <div class="relative max-w-4xl w-full p-4">
+            <button @click="showImagePreview = false"
+              class="absolute top-4 right-4 text-white text-2xl font-bold">
+              ×
+            </button>
+            <img :src="previewImage" alt="Preview"
+              class="max-h-[80vh] mx-auto object-contain rounded-md shadow-xl" />
           </div>
         </div>
 
@@ -571,6 +584,9 @@ export default {
   },
   data() {
     return {
+      previewImage: '',
+      showImagePreview: false,
+
       role: 'approver',
       singleRemarks: [],
       singleColumnRemarks: [],
@@ -616,6 +632,10 @@ export default {
     },
   },
   methods: {
+    openImagePreview(file) {
+      this.previewImage = file;
+      this.showImagePreview = true;
+    },
     getStatusClass() {
       const status = this.getSimplifiedStatus(this.statusApprover);
       return {
@@ -801,7 +821,17 @@ export default {
   });
 },
 
+
     PrintSummary() {
+      const printStyles = `
+        @page {
+          size: A4 potrait;
+        }
+      `;
+      const styleSheet = document.createElement('style');
+      styleSheet.type = 'text/css';
+      styleSheet.innerHTML = printStyles;
+      document.head.appendChild(styleSheet);
       print();
     },
     // click function after confirm the approve
@@ -1078,6 +1108,12 @@ export default {
 
     this.FetchClaimDetails();
     this.FetchClaimDatasDetails();
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.showImagePreview) {
+        this.showImagePreview = false;
+      }
+    });
   },
 };
 </script>
@@ -1134,8 +1170,6 @@ td {
 }
 </style>
 
-
-
 <style scoped>
 @media print {
   @page {
@@ -1173,12 +1207,53 @@ td {
     visibility: hidden !important;
   }
 
-  .detail-table {
-    page-break-inside: avoid;
+  .detail-table,
+  .status-table,
+  .remark-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    page-break-inside: avoid !important;
+    overflow: visible !important;
+    table-layout: fixed !important;
+  }
+
+  .status-table th,
+  .status-table td,
+  .remark-table th,
+  .remark-table td {
+    font-size: 8px !important;
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+    vertical-align: top !important;
+  }
+
+  .status-table th:first-child,
+  .remark-table thead th {
+    font-size: 10px !important;
+    font-weight: bold !important;
+    text-align: center !important;
+  }
+
+  
+  .overflow-x-auto,
+  .overflow-y-auto,
+  .overflow-auto {
+    overflow: visible !important;
   }
 
   table {
-    page-break-inside: avoid;
+    table-layout: auto !important;
+    width: 100% !important;
+    page-break-inside: avoid !important;
+    border-collapse: collapse !important;
+  }
+  
+  th, td {
+    page-break-inside: avoid !important;
+    word-wrap: break-word !important;
+    white-space: normal !important;
+    font-size: 10px !important;
+    overflow: visible !important;
   }
 
   * {
@@ -1194,9 +1269,11 @@ td {
   }
 
   #summaryPrint {
-    margin-left: 0;
-    width: 100vw !important;
-    padding: 0;
+    margin: 0 auto;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    box-sizing: border-box;
   }
 
   #summaryPrint div {
@@ -1280,3 +1357,4 @@ td {
   }
 }
 </style>
+
