@@ -1900,7 +1900,7 @@ export default {
           throw new Error("Failed to fetch reference number.");
         }
 
-        // ⚡ Save to Vue data, NOT localStorage yet
+        //  Save to Vue data, NOT localStorage yet
         this.serialnumber = referenceNumber;
 
         // Step 2: Prepare apiData properly

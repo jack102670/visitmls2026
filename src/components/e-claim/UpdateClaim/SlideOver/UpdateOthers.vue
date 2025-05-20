@@ -18,7 +18,7 @@
                     Update {{ claim.tabTitle }}
                 </p>
             </div>
-            <form @submit.prevent="handleSubmit">
+            <form @submit.prevent="handleSubmitOthers">
                 <div class="grid grid-cols-8 gap-2 w-full">
                     <div class="col-span-4">
                         <label for="expense_date" class="font-medium text-sm">Expense Date</label>
@@ -334,7 +334,7 @@ export default {
 
   
         
-        async handleSubmit() {
+        async handleSubmitOthers() {
         try {
             // 1. Delete files marked for deletion
         for (const fileUrl of this.filesToDelete) {

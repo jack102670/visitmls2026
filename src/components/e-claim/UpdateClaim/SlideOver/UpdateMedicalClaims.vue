@@ -39,8 +39,9 @@
                         <label for="medical_category" class="font-medium text-sm">Medical category</label>
                         <select 
                             id="medical_category" 
-                            v-model="medical.medical_category"
-                            class="mt-1 text-xs block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            v-model="medical.medical_category" 
+                            class="mt-1 text-xs block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-gray-100 cursor-not-allowed"
+                            disabled>
                             <option v-for="(category, index) in medicalCategories" :key="index" :value="category">{{ category }}</option>
                         </select>
                     </div>
@@ -120,7 +121,7 @@
                     </div>
                     <div class="col-span-4">
                         <label for="claim_amount" class="font-medium text-sm">Claim Amount (RM)</label>
-                        <input type="text" id="claim_amount" v-model="medical.claim_amount"
+                        <input type="text" id="claim_amount" v-model="medical.claim_amount" @input="validateMedicalClaim"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
                     <hr class="col-span-8 mt-4 mb-2" />
@@ -182,6 +183,7 @@ export default {
             newFiles: [],
             filesToDelete: [],
             selectedFileName: "",
+            originalClaimAmount:0,
             uniqueCode: "",
             requesterId: ""
         }
@@ -189,8 +191,9 @@ export default {
     mounted() {
         const refNo = this.$route.params.rn;
         console.log("RefNo:", refNo);
-
         this.fetchMedicalLeaveData(refNo);
+        // this.fetchAndSetMedicalLimits();
+        
 
         // if (this.claim?.refNo) {
         //     this.fetchMedicalLeaveData();
@@ -211,12 +214,75 @@ export default {
             this.medical.date_leave_taken = value; // Keep in ISO format or convert if needed
             }
         },
-        },
+    //     medicalLimit() {
+    //     return parseFloat(localStorage.getItem('remaining_limit_medicaldental')) || 0;
+    //     },
+    //     outpatientLimit() {
+    //     return parseFloat(localStorage.getItem('remaining_limit_outpatient')) || 0;
+    // }
+    
+},
+        
     methods: {
         closeSlideOver() {
             this.$emit('close');
         },
 
+       
+
+        validateMedicalClaim() {
+            const category = this.medical.medical_category;
+            const claim = parseFloat(this.medical.claim_amount) || 0;
+
+            if (category === "Outpatient") {
+                const limit = parseFloat(localStorage.getItem('remaining_limit_outpatient')) || 0;
+                const original = parseFloat(this.originalClaimAmount) || 0;
+                const restoredLimit = limit + original;
+
+                // Check per-claim max of RM70
+                if (claim > 70) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Exceeds Per-Claim Limit',
+                        text: 'Outpatient claim cannot exceed RM70 per claim.',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                    });
+                    this.medical.claim_amount = 70;
+                    return;
+                }
+
+                // Check against restored yearly limit
+                if (claim > restoredLimit) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Exceeds Yearly Limit',
+                        text: `Your claim amount exceeds the remaining limit of RM${limit}.`,
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                    });
+                    this.medical.claim_amount = limit;
+                    return;
+                }
+
+            } else if (category === "Medical Check-Up" || category === "Dental") {
+                const limit = parseFloat(localStorage.getItem('remaining_limit_medicaldental')) || 0;
+                const original = parseFloat(this.originalClaimAmount) || 0;
+                const restoredLimit = limit + original;
+
+                if (claim > restoredLimit) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Exceeds Yearly Limit',
+                        text: `Your claim amount exceeds the remaining limit of RM${limit}.`,
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                    });
+                    this.medical.claim_amount = limit;
+                    return;
+                }
+            }
+        },
         deleteFile(index) {
         const deletedFile = this.medical.files[index];
         Swal.fire({
@@ -249,14 +315,14 @@ export default {
             Swal.fire("No File", "Please select at least one file to upload.", "warning");
             return;
         }
-       
+                                       
         // const formData = new FormData();
         for (let i = 0; i < files.length; i++) {
         const originalFile = files[i];
         // Prepend SUPPORT_DOC_ if not already present
-        let newFileName = originalFile.name.startsWith("SUPPORT_DOC_")
+        let newFileName = originalFile.name.startsWith("SUPPORT_DOC_")                                                                           
             ? originalFile.name
-            : `SUPPORT_DOC_${originalFile.name}`;
+            : `SUPPORT_DOC_${originalFile.name}`;                                                                                                                                                                                                                  
         // Create a new File object with the new name
         const renamedFile = new File([originalFile], newFileName, { type: originalFile.type });
         this.newFiles.push(renamedFile);
@@ -265,6 +331,7 @@ export default {
         this.selectedFileName = files[0].name;
         event.target.value = "";
         },
+
 
         async fetchMedicalLeaveData(refNo) {
 
@@ -277,10 +344,10 @@ export default {
                 if (Array.isArray(dataArray)) {
                 const matchingUniqueID = dataArray.find(
                     record => record.unique_code === this.claim.unique_code
-                );
-                    if (matchingUniqueID) {
-                        this.medical = {
-                            date_leave_taken: matchingUniqueID.date_leave_taken,
+                );                                                                                                                                                                                                                                                                            
+                    if (matchingUniqueID) {                                                                                                                                                                                                                                                                            
+                        this.medical = {                                                                                                                                                                                                                                                                            
+                            date_leave_taken: matchingUniqueID.date_leave_taken,                                                                                                                                                                                                                                                                            
                             medical_category: matchingUniqueID.medical_category,
                             reason: matchingUniqueID.medical_category === 'Outpatient' ? matchingUniqueID.reason : '',
                             clinic_selection: matchingUniqueID.medical_category === 'Outpatient' ? matchingUniqueID.clinic_selection : '',
@@ -298,6 +365,8 @@ export default {
                         // this.originalClaimAmount = matchingUniqueID.claim_amount;   
                         this.uniqueCode = matchingUniqueID.unique_code;
                         this.requesterId = matchingUniqueID.requester_id;
+                        this.originalClaimAmount = parseFloat(matchingUniqueID.claim_amount) || 0;
+                        await this.fetchAndSetMedicalLimits();
                         console.log("matching Unique ID", matchingUniqueID);
                     } else {
                         console.log("No matching unique_code found");
@@ -305,6 +374,48 @@ export default {
                 }
                 else {
                     console.error("Expected an array but got:", typeof dataArray, dataArray);
+                    }
+                },
+                 async fetchAndSetMedicalLimits() {
+                    try {
+                        // Replace with your actual API endpoint and user identifier
+                        const response = await axios.get(`http://172.28.28.116:6239/api/User/GetEmployeeById/${this.requesterId}`);
+                        const user = response.data.result[0];
+                        // Initialize limits only if they are not already set
+                    if (!localStorage.getItem('initial_limit_medicaldental')) {
+                        localStorage.setItem('initial_limit_medicaldental', user.limit_medicaldental);
+                    }
+                    if (!localStorage.getItem('initial_limit_outpatient')) {
+                        localStorage.setItem('initial_limit_outpatient', user.limit_outpatient);
+                    }
+                    if (!localStorage.getItem('initial_limit_amount')) {
+                        localStorage.setItem('initial_limit_amount', user.limit_amount);
+                    }
+
+                    this.remaining_medicaldental = localStorage.getItem('remaining_limit_medicaldental')
+                        ? parseFloat(localStorage.getItem('remaining_limit_medicaldental'))
+                        : parseFloat(localStorage.getItem('initial_limit_medicaldental'));
+
+                    this.remaining_outpatient = localStorage.getItem('remaining_limit_outpatient')
+                        ? parseFloat(localStorage.getItem('remaining_limit_outpatient'))
+                        : parseFloat(localStorage.getItem('initial_limit_outpatient'));
+
+                    this.remaining_amount = localStorage.getItem('remaining_limit_amount')
+                        ? parseFloat(localStorage.getItem('remaining_limit_amount'))
+                        : parseFloat(localStorage.getItem('initial_limit_amount'));
+
+                    // Save remaining limits back to localStorage if not already set
+                    if (!localStorage.getItem('remaining_limit_medicaldental')) {
+                        localStorage.setItem('remaining_limit_medicaldental', this.remaining_medicaldental);
+                    }
+                    if (!localStorage.getItem('remaining_limit_outpatient')) {
+                        localStorage.setItem('remaining_limit_outpatient', this.remaining_outpatient);
+                    }
+                    if (!localStorage.getItem('remaining_limit_amount')) {
+                        localStorage.setItem('remaining_limit_amount', this.remaining_amount);
+                    }
+                    } catch (error) {
+                        console.error("Failed to fetch medical limits:", error);
                     }
                 },
 
@@ -392,6 +503,8 @@ export default {
                     });
                     this.newFiles = [];
                 }
+
+                this.validateMedicalClaim();
                 const submitData = {
                     date_leave_taken: this.formattedDate,
                     reason: this.medical.medical_category === 'Outpatient' ? this.medical.reason : '',
@@ -420,6 +533,35 @@ export default {
                 // const submitResponse = await updateMedical(submitData);
                 if (response.data && response.data.result) {
                     console.log("Update Medical data:", response.data.result);
+                    const category = this.medical.medical_category;
+                    const original = parseFloat(this.originalClaimAmount) || 0;
+                    const claim = parseFloat(this.medical.claim_amount) || 0;
+
+                    if (category === "Outpatient") {
+                        const limitKey = "remaining_limit_outpatient";
+                        const initialKey = "initial_limit_outpatient"; // optional
+                        let currentLimit = parseFloat(localStorage.getItem(limitKey)) || 0;
+
+                        // Restore the original amount, then deduct the new claim amount
+                        let updatedLimit = Math.max(0, currentLimit + original - claim);
+
+                        // Update both remaining and initial limits if needed
+                        localStorage.setItem(limitKey, updatedLimit.toString());
+                        localStorage.setItem(initialKey, updatedLimit.toString());
+
+                    } else if (category === "Medical Check-Up" || category === "Dental") {
+                        const limitKey = "remaining_limit_medicaldental";
+                        const initialKey = "initial_limit_medicaldental"; // optional
+                        let currentLimit = parseFloat(localStorage.getItem(limitKey)) || 0;
+
+                        // Restore the original amount, then deduct the new claim amount
+                        let updatedLimit = Math.max(0, currentLimit + original - claim);
+
+                        // Update both remaining and initial limits if needed
+                        localStorage.setItem(limitKey, updatedLimit.toString());
+                        localStorage.setItem(initialKey, updatedLimit.toString());
+                    }
+
 
 
                     Swal.fire({

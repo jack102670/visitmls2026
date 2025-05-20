@@ -2726,6 +2726,8 @@ export default {
       const allowedMonths = [prevMonthIndex, currentMonthIndex];
 
       return monthOptions.filter((_, index) => allowedMonths.includes(index));
+      // return monthOptions.filter(month => allowedMonths.includes(month.value));
+
     },
     getAllowedYears() {
       const currentDate = new Date();
@@ -3875,9 +3877,15 @@ export default {
 
       const formattedData = {};
       tab.fields.forEach((field) => {
-        formattedData[field.id] = field.type === "date" && field.value
-          ? this.formatDate(field.value)
-          : field.value;
+        // For MonthHR, send the label instead of value
+        if (field.id === "MonthHR") {
+          const selectedOption = (field.options || []).find(opt => opt.value === field.value);
+          formattedData[field.id] = selectedOption ? selectedOption.label : field.value;
+        } else if (field.type === "date" && field.value) {
+          formattedData[field.id] = this.formatDate(field.value);
+        } else {
+          formattedData[field.id] = field.value;
+        }
       });
 
       formattedData["tabTitle"] = tab.title;

@@ -18,7 +18,7 @@
                     Update {{ claim.tabTitle }}
                 </p>
             </div>
-            <form @submit.prevent="handleSubmit">
+            <form @submit.prevent="handleSubmitLocal">
                 <div class="grid grid-cols-8 gap-2 w-full">
                     <div class="col-span-8">
                         <label class="font-medium text-sm">Trip</label>
@@ -676,7 +676,7 @@ export default {
         },
 
         
-        async handleSubmit() {
+        async handleSubmitLocal() {
         try {
 
              // 1. Delete files marked for deletion

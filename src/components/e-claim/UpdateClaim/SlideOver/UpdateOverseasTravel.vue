@@ -18,7 +18,7 @@
                     Update {{ claim.tabTitle }} Details
                 </p>
             </div>
-            <form @submit.prevent="handleSubmit">
+            <form @submit.prevent="handleSubmitOverseas">
                 <div class="grid grid-cols-8 gap-2 w-full">
                     <div class="col-span-4">
                         <label for="date_event" class="font-medium text-sm">Date </label>
@@ -714,7 +714,7 @@ export default {
         }
 
         },
-        async handleSubmit() {
+        async handleSubmitOverseas() {
             try {
 
                 // Delete expenses

@@ -18,7 +18,7 @@
                     Update {{ claim.tabTitle }} Details
                 </p>
             </div>
-            <form @submit.prevent="handleSubmit">
+            <form @submit.prevent="handleSubmitEntertainment">
                 <div class="grid grid-cols-8 gap-2 w-full">
                     <div class="col-span-8">
                         <label for="date_event" class="font-medium text-sm">Date Event</label>
@@ -621,7 +621,7 @@ export default {
         //             }
 
         // Function to update entertainment data (as a helper)
-        async handleSubmit() {
+        async handleSubmitEntertainment() {
             try {
 
                 // Delete participants

@@ -52,9 +52,15 @@
                     </div>
                     <div class="col-span-4">
                         <label for="claim_amount" class="font-medium text-sm">Claim Amount (RM)</label>
-                        <input type="text" id="claim_amount" v-model="handphone.claim_amount"
+                        <input type="number" id="claim_amount" v-model="handphone.claim_amount" @input="validateHandphoneClaim"
                             class="mt-1 block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
+                    <!-- <input type="number"
+       id="claim_amount"
+       v-model.number="handphone.claim_amount"
+       @input="validateHandphoneClaim"
+       class="mt-1 block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"> -->
+
                     <div class="col-span-4">
                         <label for="ic_number" class="font-medium text-sm">Identification Number</label>
                         <input type="text" id="ic_number" v-model="handphone.ic_number" readonly
@@ -149,14 +155,20 @@ export default {
             newFiles: [],
             filesToDelete: [],
             selectedFileName: "",
+            originalClaimAmount: 0,
             uniqueCode: "",
             requesterId: ""
         }
     },
+    computed: {
+    handphoneLimit() {
+        return parseFloat(localStorage.getItem('remaining_limit_amount')) || 0;
+    }
+    },
     mounted() {
         const refNo = this.$route.params.rn;
         console.log("RefNo:", refNo);
-
+       
         this.fetchHandphoneData(refNo)
         // if (this.claim?.refNo) {
         //     this.fetchHandphoneData();
@@ -166,7 +178,24 @@ export default {
         closeSlideOver() {
             this.$emit('close');
         },
-
+        validateHandphoneClaim() {
+        const limit = parseFloat(localStorage.getItem('remaining_limit_amount')) || 0;
+        const original = parseFloat(this.originalClaimAmount) || 0;
+        const claim = parseFloat(this.handphone.claim_amount) || 0;
+        const restoredLimit = limit + original;
+        if (claim > restoredLimit) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Exceeds Limit',
+                text: `Your claim amount exceeds the remaining limit of RM${limit}.`,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            });
+            this.handphone.claim_amount = limit; // Optionally reset to limit
+            
+        }
+    },
+      
         deleteFile(index) {
         const deletedFile = this.handphone.files[index];
         Swal.fire({
@@ -249,6 +278,7 @@ export default {
                         // this.originalClaimAmount = matchingRecord.claim_amount;
                         this.uniqueCode = matchingRecord.unique_code;
                         this.requesterId = matchingRecord.requester_id;
+                        this.originalClaimAmount = parseFloat(matchingRecord.claim_amount) || 0;
                     } else {
                         console.log("No matching unique_code found");
                     }
@@ -331,6 +361,24 @@ export default {
                     });
                     this.newFiles = [];
                 }
+
+                // 1. Validate claim amount against limit
+                const limit = parseFloat(localStorage.getItem('remaining_limit_amount')) || 0;
+                const original = parseFloat(this.originalClaimAmount) || 0;
+                const claim = parseFloat(this.handphone.claim_amount) || 0;
+                const restoredLimit = limit + original;
+
+                if (claim > restoredLimit) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Exceeds Limit',
+                        text: `Your claim amount exceeds the remaining limit of RM${limit}. Please adjust your claim.`,
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                    });
+                    return; // Prevent submission
+                }
+
             const submitData = {
             reference_number: this.handphone.reference_number,
             claim_month: this.handphone.claim_month,
@@ -355,6 +403,19 @@ export default {
 
             if (response.data && response.data.result) {
                 console.log("Update Handphone data:", response.data.result);
+                // Calculate and update the new limit
+                const limitKey = "remaining_limit_amount";
+                const initialKey = "initial_limit_amount";
+                const original = parseFloat(this.originalClaimAmount) || 0;
+                const claim = parseFloat(this.handphone.claim_amount) || 0;
+                let currentLimit = parseFloat(localStorage.getItem(limitKey)) || 0;
+
+                // Restore the original amount, then deduct the new claim amount
+                let updatedLimit = Math.max(0, currentLimit + original - claim);
+
+                // Update both remaining and initial limit if you want both to reflect the new value
+                localStorage.setItem(limitKey, updatedLimit.toString());
+                localStorage.setItem(initialKey, updatedLimit.toString());
 
                 
                 Swal.fire({
