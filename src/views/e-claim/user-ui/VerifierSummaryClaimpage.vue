@@ -283,7 +283,7 @@
             </tr>
 
             <!-- VERIFIED Status Row -->
-            <tr v-if="claimDetails.verifier_name"
+            <tr v-if="(['VERIFIED', 'APPROVED', 'REIMBURSED'].includes(simplifiedVerifierStatus))"
               class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
                 <div
@@ -705,7 +705,7 @@ export default {
       const status = this.adminStatus?.trim()?.toUpperCase();
       switch (status) {
         case 'CHECKED BY CHECKER. WAITING FOR VERIFIER':
-          return 'CHECKED';
+          return 'PENDING';
         case 'VERIFIED. WAITING FOR APPROVER.':
         case 'APPROVED BY FINANCE':
         case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':

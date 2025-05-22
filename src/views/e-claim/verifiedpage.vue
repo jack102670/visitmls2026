@@ -407,7 +407,7 @@ export default {
     getStatusContainerClass(status) {
      // console.log('Status:', status);
       const colorMap = {
-        // RESUBMIT: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
+        RESUBMITTED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-amber-100/60 dark:bg-gray-800',
         CLOSE: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800',
         OPEN: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-indigo-100/60 dark:bg-gray-800',
         APPROVED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
@@ -415,25 +415,25 @@ export default {
         COMPLETED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800',
         REJECTED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800',
         VERIFIED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
-        PENDING: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
+        PENDING: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-gray-100/60 dark:bg-gray-800',
         REIMBURSED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-gray-100 dark:bg-gray-800',
-        CHECKED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
-        'CHECKED BY CHECKER. WAITING FOR VERIFIER': 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
+        CHECKED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-yellow-100/60 dark:bg-gray-800',
+        'CHECKED BY CHECKER. WAITING FOR VERIFIER': 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-yellow-100/60 dark:bg-gray-800',
       };
       return colorMap[status] || 'bg-orange-100/60 dark:bg-gray-800';
     },
     getStatusDotClass(status) {
       const colorMap = {
-        // RESUBMIT: 'h-1.5 w-1.5 rounded-full bg-orange-500',
+        RESUBMITTED: 'h-1.5 w-1.5 rounded-full bg-amber-500',
         OPEN: 'h-1.5 w-1.5 rounded-full bg-indigo-500',
         APPROVED: 'h-1.5 w-1.5 rounded-full bg-emerald-500',
         COMPLETED: 'h-1.5 w-1.5 rounded-full bg-blue-500',
         REJECTED: 'h-1.5 w-1.5 rounded-full bg-red-500',
-        PENDING: 'h-1.5 w-1.5 rounded-full bg-orange-500',
+        PENDING: 'h-1.5 w-1.5 rounded-full bg-gray-500',
         VERIFIED: 'h-1.5 w-1.5 rounded-full bg-orange-500',
         REIMBURSED: 'h-1.5 w-1.5 rounded-full bg-black',
-        CHECKED: 'h-1.5 w-1.5 rounded-full bg-orange-500',
-        'CHECKED BY CHECKER. WAITING FOR VERIFIER': 'h-1.5 w-1.5 rounded-full bg-orange-500',
+        CHECKED: 'h-1.5 w-1.5 rounded-full bg-yellow-500',
+        'CHECKED BY CHECKER. WAITING FOR VERIFIER': 'h-1.5 w-1.5 rounded-full bg-yellow-500',
       };
       const className = colorMap[status] || 'bg-orange-500';
         // console.log('Dot Class:', className);
@@ -441,16 +441,16 @@ export default {
     },
     getStatusTextClass(status) {
       const colorMap = {
-        // RESUBMIT: 'text-sm font-normal text-orange-500',
+        RESUBMITTED: 'text-sm font-normal text-amber-500',
         OPEN: 'text-sm font-normal text-indigo-500',
         APPROVED: 'text-sm font-normal text-emerald-500',
         COMPLETED: 'text-sm font-normal text-blue-500',
         REJECTED: 'text-sm font-normal text-red-500',
-        PENDING: 'text-sm font-normal text-orange-500',
+        PENDING: 'text-sm font-normal text-gray-500',
         REIMBURSED: 'text-sm font-normal text-black',
         VERIFIED: 'text-sm font-normal text-orange-500',
-        CHECKED: 'text-sm font-normal text-orange-500',
-        'CHECKED BY CHECKER. WAITING FOR VERIFIER': 'text-sm font-normal text-orange-500',
+        CHECKED: 'text-sm font-normal text-yellow-500',
+        'CHECKED BY CHECKER. WAITING FOR VERIFIER': 'text-sm font-normal text-yellow-500',
       };
       const className = colorMap[status] || 'text-orange-500';
       // console.log('Text Class:', className); 

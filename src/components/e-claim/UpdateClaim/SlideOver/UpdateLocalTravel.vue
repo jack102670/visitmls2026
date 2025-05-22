@@ -579,6 +579,7 @@ export default {
             showCancelButton: true,
             confirmButtonText: 'Yes, delete it!',
             cancelButtonText: 'Cancel',
+            cancelButtonColor: '#6b7280',
             confirmButtonColor: '#dc2626'
         });
 

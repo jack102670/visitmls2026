@@ -754,6 +754,8 @@ export default {
         case 'CHECKED BY CHECKER. WAITING FOR VERIFIER':
         case 'VERIFIED. WAITING FOR APPROVER.':
         case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
+        case 'APPROVED BY FINANCE':
+          return 'CHECKED';
         case 'REIMBURSED':
         case 'REJECTED BY VERIFIER.':
         case 'REJECTED BY FINANCE':

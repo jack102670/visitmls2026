@@ -1941,6 +1941,7 @@ export default {
             icon: 'success',
             title: 'Success!',
             text: 'Claim submitted successfully.',
+            confirmButtonColor: '#3085d6'
           });
 
           // Maybe reset form if needed
