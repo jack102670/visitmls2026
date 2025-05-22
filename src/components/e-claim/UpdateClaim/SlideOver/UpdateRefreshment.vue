@@ -18,7 +18,7 @@
                     Update {{ claim.tabTitle }} Details
                 </p>
             </div>
-            <form @submit.prevent="handleSubmitRefreshment">
+            <form @submit.prevent="handleSubmit">
                 <div class="grid grid-cols-8 gap-2 w-full">
                     <div class="col-span-4">
                         <label for="date_event" class="font-medium text-sm">Date Event</label>
@@ -69,7 +69,7 @@
                     <div class="col-span-4">
                     <label for="files" class="font-medium text-sm">Uploaded Files</label>
                     <div v-if="refreshment.files.length" class="mt-2">
-                        <p class="text-xs text-gray-600">Click on a file to view or delete:</p>
+                        <!-- <p class="text-xs text-gray-600">Click on a file to view or delete:</p> -->
                         <ul class="list-disc list-inside">
                             <li v-for="(file, index) in refreshment.files" :key="index" class="flex items-center space-x-2">
                                 <a :href="typeof file === 'string' ? file : '#'" target="_blank" class="text-blue-500 hover:underline text-xs">
@@ -717,129 +717,161 @@ export default {
         }
 
         },
-        async handleSubmitRefreshment() {
-            try {
+        // async handleSubmitRefreshment() {
+        //     try {
 
-                // Delete participants
-                for (const id of this.simToDelete) {
-                    await axios.delete(`http://172.28.28.116:6239/api/User/DeleteStaffInvolved/${id}`);
-                }
-                this.simToDelete = [];
+        //         // Delete participants
+        //         for (const id of this.simToDelete) {
+        //             await axios.delete(`http://172.28.28.116:6239/api/User/DeleteStaffInvolved/${id}`);
+        //         }
+        //         this.simToDelete = [];
 
-                 // Delete files marked for deletion
-                for (const fileUrl of this.filesToDelete) {
-                    const fileName = fileUrl.split('/').pop();
-                    await axios.delete(`http://172.28.28.116:7267/api/Files/DeleteImage/${this.requesterId}/${this.uniqueCode}/${fileName}`);
-                }
-                this.filesToDelete = [];
+        //          // Delete files marked for deletion
+        //         for (const fileUrl of this.filesToDelete) {
+        //             const fileName = fileUrl.split('/').pop();
+        //             await axios.delete(`http://172.28.28.116:7267/api/Files/DeleteImage/${this.requesterId}/${this.uniqueCode}/${fileName}`);
+        //         }
+        //         this.filesToDelete = [];
 
-                // 2. Upload new files
-                if (this.newFiles.length > 0) {
-                    const formData = new FormData();
-                    this.newFiles.forEach(file => formData.append("filecollection", file));
-                    const uploadEndpoint = `https://esvcportal.pktgroup.com/api/file/api/Files/MultiUploadImage/${this.requesterId}/${this.uniqueCode}`;
-                    await axios.post(uploadEndpoint, formData, {
-                        headers: { "Content-Type": "multipart/form-data" },
-                    });
-                    this.newFiles = [];
-                }
-                // Prepare the data to be submitted
-                const submitData = {
-                    refreshment_type: this.refreshment.refreshment_type === "Others"
-                    ? this.refreshment.other_type  // replace with the actual text entered
-                    : this.refreshment.refreshment_type,
-                    date_event: this.formattedDate,
-                    reference_type: this.refreshment.reference_type?.trim(),
-                    venue_name: this.refreshment.venue_name,
-                    company_name: this.refreshment.company_name,
-                    total_fee: isNaN(parseFloat(this.refreshment.total_fee)) ? 0 : parseFloat(this.refreshment.total_fee),
-                    reference_number: this.refreshment.reference_number,
-                    unique_code: this.refreshment.unique_code,
-                    // ent: this.entertainment.ent,
-                    sim: this.refreshment.sim,
-                    // participants:[
-                    //             {
-                    //                 id: this.participant.id,
-                    //                 name: "",
-                    //                 company_name: "",
-                    //             }
-                    //         ],
-                    files: this.refreshment.files || []
-                    // participants: this.participants
-                };
+        //         // 2. Upload new files
+        //         if (this.newFiles.length > 0) {
+        //             const formData = new FormData();
+        //             this.newFiles.forEach(file => formData.append("filecollection", file));
+        //             const uploadEndpoint = `https://esvcportal.pktgroup.com/api/file/api/Files/MultiUploadImage/${this.requesterId}/${this.uniqueCode}`;
+        //             await axios.post(uploadEndpoint, formData, {
+        //                 headers: { "Content-Type": "multipart/form-data" },
+        //             });
+        //             this.newFiles = [];
+        //         }
+        //         // Prepare the data to be submitted
+        //         const submitData = {
+        //             refreshment_type: this.refreshment.refreshment_type === "Others"
+        //             ? this.refreshment.other_type  // replace with the actual text entered
+        //             : this.refreshment.refreshment_type,
+        //             date_event: this.formattedDate,
+        //             reference_type: this.refreshment.reference_type?.trim(),
+        //             venue_name: this.refreshment.venue_name,
+        //             company_name: this.refreshment.company_name,
+        //             total_fee: isNaN(parseFloat(this.refreshment.total_fee)) ? 0 : parseFloat(this.refreshment.total_fee),
+        //             reference_number: this.refreshment.reference_number,
+        //             unique_code: this.refreshment.unique_code,
+        //             // ent: this.entertainment.ent,
+        //             sim: this.refreshment.sim,
+        //             // participants:[
+        //             //             {
+        //             //                 id: this.participant.id,
+        //             //                 name: "",
+        //             //                 company_name: "",
+        //             //             }
+        //             //         ],
+        //             files: this.refreshment.files || []
+        //             // participants: this.participants
+        //         };
 
-                console.log("Submitting Entertainment payload:", submitData);
+        //         console.log("Submitting Entertainment payload:", submitData);
 
                 
-                // Make the PUT request to update the entertainment data
-                const response = await axios.put('http://172.28.28.116:6239/api/User/UpdateStaffRefreshment', submitData, {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
+        //         // Make the PUT request to update the entertainment data
+        //         const response = await axios.put('http://172.28.28.116:6239/api/User/UpdateStaffRefreshment', submitData, {
+        //             headers: {
+        //                 "Content-Type": "application/json",
+        //             },
+        //         });
 
-                //Add new staff involved(have no id)
-                const newStaff = this.refreshment.sim.filter(s => !s.id);
-                for (const staff of newStaff) {
-                    await axios.post("http://172.28.28.116:6239/api/User/InsertStaffInvolved", {
-                        reference_number: this.inv_refNumber,
-                        sim: [{ company_name: staff.company_name, name: staff.name, department: staff.department }]
-                    });
-                }
+        //         //Add new staff involved(have no id)
+        //         const newStaff = this.refreshment.sim.filter(s => !s.id);
+        //         for (const staff of newStaff) {
+        //             await axios.post("http://172.28.28.116:6239/api/User/InsertStaffInvolved", {
+        //                 reference_number: this.inv_refNumber,
+        //                 sim: [{ company_name: staff.company_name, name: staff.name, department: staff.department }]
+        //             });
+        //         }
 
-                // Handle the response based on success or failure
-                if (response.data && response.data.result) {
-                    console.log("Update Refreshment data:", response.data.result);
+        //         // Handle the response based on success or failure
+        //         if (response.data && response.data.result) {
+        //             console.log("Update Refreshment data:", response.data.result);
 
-                    this.inv_refNumber = this.refreshment.reference_number;
-                    // Now insert new participants using saveParticipant()
-                    for (const staff of newStaff) {
-                        await this.saveStaff(staff);
-                    }
-                    Swal.fire({
-                        title: 'Success',
-                        text: 'Refreshment updated successfully',
-                        icon: 'success',
-                        confirmButtonText: 'OK',
-                        confirmButtonColor: '#dc2626',
-                    });
-                    this.$emit('refresh-claims', this.claim.refNo);
-                    this.closeSlideOver();
-                } else {
-                    console.log("Update Refreshment data not found");
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'Failed to update Refreshment',
-                        icon: 'error',
-                        confirmButtonText: 'OK',
-                        confirmButtonColor: '#dc2626',
-                    });
-                }
-            } catch (error) {
-                console.error("Error submitting data:", error);
-                let errorMessage = "An unexpected error occurred.";
-                if (error.response) {
-                    errorMessage = error.response.data?.message || `Error: ${error.response.status} - ${error.response.statusText}`;
-                } else if (error.request) {
-                    errorMessage = "No response received from the server.";
-                } else {
-                    errorMessage = error.message;
-                }
+        //             this.inv_refNumber = this.refreshment.reference_number;
+        //             // Now insert new participants using saveParticipant()
+        //             for (const staff of newStaff) {
+        //                 await this.saveStaff(staff);
+        //             }
+        //             Swal.fire({
+        //                 title: 'Success',
+        //                 text: 'Refreshment updated successfully',
+        //                 icon: 'success',
+        //                 confirmButtonText: 'OK',
+        //                 confirmButtonColor: '#dc2626',
+        //             });
+        //             this.$emit('refresh-claims', this.claim.refNo);
+        //             this.closeSlideOver();
+        //         } else {
+        //             console.log("Update Refreshment data not found");
+        //             Swal.fire({
+        //                 title: 'Error',
+        //                 text: 'Failed to update Refreshment',
+        //                 icon: 'error',
+        //                 confirmButtonText: 'OK',
+        //                 confirmButtonColor: '#dc2626',
+        //             });
+        //         }
+        //     } catch (error) {
+        //         console.error("Error submitting data:", error);
+        //         let errorMessage = "An unexpected error occurred.";
+        //         if (error.response) {
+        //             errorMessage = error.response.data?.message || `Error: ${error.response.status} - ${error.response.statusText}`;
+        //         } else if (error.request) {
+        //             errorMessage = "No response received from the server.";
+        //         } else {
+        //             errorMessage = error.message;
+        //         }
 
-                Swal.fire({
-                    title: 'Submission Failed',
-                    text: errorMessage,
-                    icon: 'error',
-                    confirmButtonText: 'OK',
-                    confirmButtonColor: '#dc2626',
-                });
-            }
+        //         Swal.fire({
+        //             title: 'Submission Failed',
+        //             text: errorMessage,
+        //             icon: 'error',
+        //             confirmButtonText: 'OK',
+        //             confirmButtonColor: '#dc2626',
+        //         });
+        //     }
+        // },
+
+        async handleSubmit() {
+            const updatedClaim = {
+                requester_id: this.requesterId,
+                refreshment_type: this.refreshment.refreshment_type === "Others"
+                    ? this.refreshment.other_type  // replace with the actual text entered
+                    : this.refreshment.refreshment_type,
+                date_event: this.formattedDate,
+                reference_type: this.refreshment.reference_type?.trim(),
+                venue_name: this.refreshment.venue_name,
+                company_name: this.refreshment.company_name,
+                total_fee: isNaN(parseFloat(this.refreshment.total_fee)) ? 0 : parseFloat(this.refreshment.total_fee),
+                reference_number: this.refreshment.reference_number,
+                unique_code: this.refreshment.unique_code,
+                sim: this.refreshment.sim.map(s => ({
+                    id: s.id,
+                    name: s.name,
+                    company_name: s.company_name,
+                    department: s.department
+                })),
+                inv_refNumber: this.inv_refNumber,
+                filesToDelete: this.filesToDelete,
+                newFiles: this.newFiles,
+                files: this.refreshment.files || [],
+                simToDelete: this.simToDelete,
+
+                tabTitle: "Refreshment",
+                locationPurpose: this.refreshment.venue_name || "-",
+                date: this.date_event || "-",
+                total: this.refreshment.total_fee || "0.00"
+            };
+
+            console.log("Emitting Refreshment payload:", updatedClaim);
+            this.$emit("update-claim", updatedClaim);
+            this.closeSlideOver();
         },
-
-
-
-
-    
+        
 
     watch: {
         isOpen(newVal) {

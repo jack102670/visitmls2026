@@ -109,20 +109,20 @@
                       <td class="px-2 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
                         {{ (currentPage - 1) * itemsPerPage + index + 1 }}
                       </td>
-                      <td class="px-2 py-4 text-sm text-gray-500 dark:text-gray-300 text-balance">
+                      <td class="px-2 py-2 text-sm text-gray-500 dark:text-gray-300 text-left">
                         {{ item.reference_number }}
                       </td>
-                      <td class="px-2 py-4 text-sm text-gray-500 dark:text-gray-300 text-balance">
+                      <td class="px-2 py-2 text-sm text-gray-500 dark:text-gray-300 text-left">
                         {{ item.report_name }}
                       </td>
 
-                      <td class="px-2 py-4 text-sm text-gray-500 dark:text-gray-300 text-balance">
+                      <td class="px-2 py-2 text-sm text-gray-500 dark:text-gray-300 text-left">
                         {{ item.date_requested }}
                       </td>
-                      <td class="px-2 py-4 text-sm text-gray-500 dark:text-gray-300 text-wrap">
+                      <td class="px-2 py-2 text-sm text-gray-500 dark:text-gray-300 text-left">
                         {{ item.requester_name }}
                       </td>
-                      <td class="px-2 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                      <td class="px-2 py-2 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap text-left">
                         RM {{ item.grand_total }}
                       </td>
 
@@ -173,26 +173,30 @@
                         </span>
                       </td> -->
 
-                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          <div :class="getStatusContainerClass(
-                            item.admin_status.split('.')[0].split(' ')[0]
-                          )
-                            ">
-                            <span :class="getStatusDotClass(
-                              item.admin_status.split('.')[0].split(' ')[0]
-                            )
-                              "></span>
-                            <h2 :class="getStatusTextClass(
-                              item.admin_status.split('.')[0].split(' ')[0]
-                            )
-                              ">
-                              {{
-                                item.admin_status
+                      <td class="px-2 py-2 text-sm font-medium text-gray-700 whitespace-nowrap">
+                        <div :class="[
+                              'inline-flex items-center gap-x-1 rounded-full',
+                              'px-2 py-1',
+                              getStatusContainerClass(item.admin_status.split('.')[0].split(' ')[0])
+                            ]"
+                            style="font-size:0.93rem; min-width:0; min-height:0; line-height:1.2;"
+                            >
+                              <span :class="[
+                                'rounded-full',
+                                getStatusDotClass(item.admin_status.split('.')[0].split(' ')[0])
+                              ]"
+                              style="width:0.6rem; height:0.6rem; display:inline-block;"
+                            ></span>
+                                <h2 :class="getStatusTextClass(item.admin_status.split('.')[0].split(' ')[0])"
+                                style="font-size:0.93rem;"
+                            >
+                            {{
+                              item.admin_status
 
-                              }}
-                            </h2>
-                          </div>
-                        </td>
+                            }}
+                          </h2>
+                        </div>
+                      </td>
                       <td class="px-4 py-4 ml justify-center items-center text-sm whitespace-nowrap">
                         <div class="gap-x-6 text-center">
                           <button @click="ViewClaim(item.reference_number)"
@@ -512,7 +516,28 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
+/* th, td {
+  padding-top: 0.35rem !important;
+  padding-bottom: 0.35rem !important;
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+  vertical-align: middle !important;
+}
+
+tbody tr {
+  height: 36px;
+}
+
+.inline-flex.items-center.gap-x-1.rounded-md {
+  border-radius: 0.7rem !important;
+  padding: 0.15rem 0.7rem !important;
+  min-width: 0;
+  min-height: 0;
+  line-height: 1.2;
+} */
+
 .PopUpAnimation .popup {
   animation: PopUpKeyframes 0.45s ease;
 }

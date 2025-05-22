@@ -18,7 +18,7 @@
                     Update {{ claim.tabTitle }}
                 </p>
             </div>
-            <form @submit.prevent="handleSubmitLocal">
+            <form @submit.prevent="handleSubmit">
                 <div class="grid grid-cols-8 gap-2 w-full">
                     <div class="col-span-8">
                         <label class="font-medium text-sm">Trip</label>
@@ -327,7 +327,7 @@
                     <div class="col-span-4">
                     <label class="font-medium text-sm">Uploaded Files</label>
                     <div v-if="local.files" class="mt-2">
-                        <p class="text-xs text-gray-600">Click on a file to view or delete:</p>
+                        <!-- <p class="text-xs text-gray-600">Click on a file to view or delete:</p> -->
                         <ul class="list-disc list-inside">
                             <li v-for="(file, index) in categorizedFiles.other" :key="index" class="flex items-center space-x-2">
                                 <a :href="typeof file === 'string' ? file : '#'" target="_blank" class="text-blue-500 hover:underline text-xs">
@@ -350,9 +350,9 @@
                             @change="uploadFiles($event, 'other')"  
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                         />
-                        <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
+                        <!-- <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
                             Selected file: {{ selectedFileName }}
-                        </span>
+                        </span> -->
                     </div>
                 </div>
 
@@ -676,134 +676,184 @@ export default {
                     
         },
 
-        
-        async handleSubmitLocal() {
-        try {
-
-             // 1. Delete files marked for deletion
-        for (const fileUrl of this.filesToDelete) {
-            const fileName = fileUrl.split('/').pop();
-            await axios.delete(`http://172.28.28.116:7267/api/Files/DeleteImage/${this.requesterId}/${this.uniqueCode}/${fileName}`);
-        }
-        this.filesToDelete = [];
-
-        // 2. Upload new files (from all categories)
-        const allNewFiles = [
-            ...this.categorizedFiles.toll,
-            ...this.categorizedFiles.parking,
-            ...this.categorizedFiles.mileage,
-            ...this.categorizedFiles.fare,
-            ...this.categorizedFiles.other
-        ].filter(file => typeof file !== 'string'); // Filter out already uploaded (string URLs)
-
-        if (allNewFiles.length > 0) {
-            const formData = new FormData();
-            allNewFiles.forEach(file => {
-                // Rename file with prefix if needed
-                const fileType = this.detectFileCategory(file.name);  // e.g., "MILEAGE"
-                const upperName = file.name.toUpperCase();
-
-                //  Avoid double prefixing
-                let finalName = upperName.startsWith(fileType + "_")
-                    ? file.name
-                    : `${fileType}_${file.name}`;
-
-                const renamedFile = new File([file], finalName, { type: file.type });
-                formData.append("filecollection", renamedFile);
-            });
-
-            const uploadEndpoint = `https://esvcportal.pktgroup.com/api/file/api/Files/MultiUploadImage/${this.requesterId}/${this.uniqueCode}`;
-            await axios.post(uploadEndpoint, formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
-        }
-
-        // 3. Prepare and submit claim data
-        const allFiles = [
-            ...this.categorizedFiles.toll,
-            ...this.categorizedFiles.parking,
-            ...this.categorizedFiles.mileage,
-            ...this.categorizedFiles.fare,
-            ...this.categorizedFiles.other
-        ].filter(file => typeof file === 'string'); 
-
-            const submitData = {
-            mileage_km: this.local.mileage_km,
-            starting_point: this.local.starting_point,
-            end_point: this.local.end_point,
-            date_event: this.date_event,
-            return_date: this.return_date,
-            park_fee: isNaN(parseFloat(this.local.park_fee)) ? 0 : parseFloat(this.local.park_fee),
-            toll_fee: isNaN(parseFloat(this.local.toll_fee)) ? 0 : parseFloat(this.local.toll_fee),
-            fare: isNaN(parseFloat(this.local.fare)) ? 0 : parseFloat(this.local.fare),
-            transport_specification: this.local.transport_specification?.trim(),
-            transport_mode: this.local.transport_mode?.trim(),
-            trip_mode: this.local.trip_mode?.trim(),
-            total_mileage: isNaN(parseFloat(this.local.total_mileage)) ? 0 : parseFloat(this.local.total_mileage),//petrol/ev(rm)
-            meal_allowance:this.local.meal_allowance,
-            accommodation: this.local.accommodation,
-            vehicle_no: this.local.vehicle_no?.trim(),
-            vehicle_model: this.local.vehicle_model?.trim(),
-            type_petrol: this.local.type_petrol?.trim(),
-            petrol_perlitre: isNaN(parseFloat(this.local.petrol_perlitre)) ? 0 : parseFloat(this.local.petrol_perlitre),
-            reference_number: this.local.reference_number,
-            total_fee: isNaN(parseFloat(this.totalFee)) ? 0 : parseFloat(this.totalFee),
-            // bank_account: this.handphone.bank_account,
-            files: allFiles || [],
-            unique_code: this.uniqueCode,
-            // requester_id: this.requesterId,
-            };
-            console.log("Submitting Local payload:", submitData);
-
-            const response = await axios.put('http://172.28.28.116:6239/api/User/UpdateLocalOutstation', submitData, {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
-
-            if (response.data && response.data.result) {
-                console.log("Update Other data:", response.data.result);
-                Swal.fire({
-                    title: 'Success',
-                    text: 'Local claim updated successfully',
-                    icon: 'success',
-                    confirmButtonText: 'OK',
-                    confirmButtonColor: '#dc2626'
-                });
-                this.$emit('refresh-claims', this.claim.refNo);
-                this.closeSlideOver();
-            } else {
-                console.log("Update Other data not found");
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Failed to update local claim',
-                    icon: 'error',
-                    confirmButtonText: 'OK',
-                    confirmButtonColor: '#dc2626'
-
-                });
-            }
-        } catch (error) {
-            console.error("Error submitting data:", error);
-            
-            let errorMessage = "An unexpected error occurred.";
-            if (error.response) {
-                errorMessage = error.response.data?.message || `Error: ${error.response.status} - ${error.response.statusText}`;
-            } else if (error.request) {
-                errorMessage = "No response received from the server.";
-            } else {
-                errorMessage = error.message;
-            }
-
-            Swal.fire({
-            title: 'Submission Failed',
-            text: errorMessage,
-            icon: 'error',
-            confirmButtonText: 'OK',
-            confirmButtonColor: '#dc2626'
-            });
-        }
+        getNewFiles() {
+            return [
+                ...this.categorizedFiles.toll,
+                ...this.categorizedFiles.parking,
+                ...this.categorizedFiles.mileage,
+                ...this.categorizedFiles.fare,
+                ...this.categorizedFiles.other
+            ].filter(file => typeof file !== 'string'); // only include new files
         },
+
+        // async handleSubmitLocal() {
+        // try {
+
+        //      // 1. Delete files marked for deletion
+        // for (const fileUrl of this.filesToDelete) {
+        //     const fileName = fileUrl.split('/').pop();
+        //     await axios.delete(`http://172.28.28.116:7267/api/Files/DeleteImage/${this.requesterId}/${this.uniqueCode}/${fileName}`);
+        // }
+        // this.filesToDelete = [];
+
+        // // 2. Upload new files (from all categories)
+        // const allNewFiles = [
+        //     ...this.categorizedFiles.toll,
+        //     ...this.categorizedFiles.parking,
+        //     ...this.categorizedFiles.mileage,
+        //     ...this.categorizedFiles.fare,
+        //     ...this.categorizedFiles.other
+        // ].filter(file => typeof file !== 'string'); // Filter out already uploaded (string URLs)
+
+        // if (allNewFiles.length > 0) {
+        //     const formData = new FormData();
+        //     allNewFiles.forEach(file => {
+        //         // Rename file with prefix if needed
+        //         const fileType = this.detectFileCategory(file.name);  // e.g., "MILEAGE"
+        //         const upperName = file.name.toUpperCase();
+
+        //         //  Avoid double prefixing
+        //         let finalName = upperName.startsWith(fileType + "_")
+        //             ? file.name
+        //             : `${fileType}_${file.name}`;
+
+        //         const renamedFile = new File([file], finalName, { type: file.type });
+        //         formData.append("filecollection", renamedFile);
+        //     });
+
+        //     const uploadEndpoint = `https://esvcportal.pktgroup.com/api/file/api/Files/MultiUploadImage/${this.requesterId}/${this.uniqueCode}`;
+        //     await axios.post(uploadEndpoint, formData, {
+        //         headers: { "Content-Type": "multipart/form-data" },
+        //     });
+        // }
+
+        // // 3. Prepare and submit claim data
+        // const allFiles = [
+        //     ...this.categorizedFiles.toll,
+        //     ...this.categorizedFiles.parking,
+        //     ...this.categorizedFiles.mileage,
+        //     ...this.categorizedFiles.fare,
+        //     ...this.categorizedFiles.other
+        // ].filter(file => typeof file === 'string'); 
+
+        //     const submitData = {
+        //     mileage_km: this.local.mileage_km,
+        //     starting_point: this.local.starting_point,
+        //     end_point: this.local.end_point,
+        //     date_event: this.date_event,
+        //     return_date: this.return_date,
+        //     park_fee: isNaN(parseFloat(this.local.park_fee)) ? 0 : parseFloat(this.local.park_fee),
+        //     toll_fee: isNaN(parseFloat(this.local.toll_fee)) ? 0 : parseFloat(this.local.toll_fee),
+        //     fare: isNaN(parseFloat(this.local.fare)) ? 0 : parseFloat(this.local.fare),
+        //     transport_specification: this.local.transport_specification?.trim(),
+        //     transport_mode: this.local.transport_mode?.trim(),
+        //     trip_mode: this.local.trip_mode?.trim(),
+        //     total_mileage: isNaN(parseFloat(this.local.total_mileage)) ? 0 : parseFloat(this.local.total_mileage),//petrol/ev(rm)
+        //     meal_allowance:this.local.meal_allowance,
+        //     accommodation: this.local.accommodation,
+        //     vehicle_no: this.local.vehicle_no?.trim(),
+        //     vehicle_model: this.local.vehicle_model?.trim(),
+        //     type_petrol: this.local.type_petrol?.trim(),
+        //     petrol_perlitre: isNaN(parseFloat(this.local.petrol_perlitre)) ? 0 : parseFloat(this.local.petrol_perlitre),
+        //     reference_number: this.local.reference_number,
+        //     total_fee: isNaN(parseFloat(this.totalFee)) ? 0 : parseFloat(this.totalFee),
+        //     // bank_account: this.handphone.bank_account,
+        //     files: allFiles || [],
+        //     unique_code: this.uniqueCode,
+        //     // requester_id: this.requesterId,
+        //     };
+        //     console.log("Submitting Local payload:", submitData);
+
+        //     const response = await axios.put('http://172.28.28.116:6239/api/User/UpdateLocalOutstation', submitData, {
+        //             headers: {
+        //                 "Content-Type": "application/json",
+        //             },
+        //         });
+
+        //     if (response.data && response.data.result) {
+        //         console.log("Update Other data:", response.data.result);
+        //         Swal.fire({
+        //             title: 'Success',
+        //             text: 'Local claim updated successfully',
+        //             icon: 'success',
+        //             confirmButtonText: 'OK',
+        //             confirmButtonColor: '#dc2626'
+        //         });
+        //         this.$emit('refresh-claims', this.claim.refNo);
+        //         this.closeSlideOver();
+        //     } else {
+        //         console.log("Update Other data not found");
+        //         Swal.fire({
+        //             title: 'Error',
+        //             text: 'Failed to update local claim',
+        //             icon: 'error',
+        //             confirmButtonText: 'OK',
+        //             confirmButtonColor: '#dc2626'
+
+        //         });
+        //     }
+        // } catch (error) {
+        //     console.error("Error submitting data:", error);
+            
+        //     let errorMessage = "An unexpected error occurred.";
+        //     if (error.response) {
+        //         errorMessage = error.response.data?.message || `Error: ${error.response.status} - ${error.response.statusText}`;
+        //     } else if (error.request) {
+        //         errorMessage = "No response received from the server.";
+        //     } else {
+        //         errorMessage = error.message;
+        //     }
+
+        //     Swal.fire({
+        //     title: 'Submission Failed',
+        //     text: errorMessage,
+        //     icon: 'error',
+        //     confirmButtonText: 'OK',
+        //     confirmButtonColor: '#dc2626'
+        //     });
+        // }
+        // },
+
+        async handleSubmit() {
+            const updatedClaim = {
+
+                mileage_km: this.local.mileage_km,
+                starting_point: this.local.starting_point,
+                end_point: this.local.end_point,
+                date_event: this.date_event,
+                return_date: this.return_date,
+                park_fee: isNaN(parseFloat(this.local.park_fee)) ? 0 : parseFloat(this.local.park_fee),
+                toll_fee: isNaN(parseFloat(this.local.toll_fee)) ? 0 : parseFloat(this.local.toll_fee),
+                fare: isNaN(parseFloat(this.local.fare)) ? 0 : parseFloat(this.local.fare),
+                transport_specification: this.local.transport_specification?.trim(),
+                transport_mode: this.local.transport_mode?.trim(),
+                trip_mode: this.local.trip_mode?.trim(),
+                total_mileage: isNaN(parseFloat(this.local.total_mileage)) ? 0 : parseFloat(this.local.total_mileage),//petrol/ev(rm)
+                meal_allowance:this.local.meal_allowance,
+                accommodation: this.local.accommodation,
+                vehicle_no: this.local.vehicle_no?.trim(),
+                vehicle_model: this.local.vehicle_model?.trim(),
+                type_petrol: this.local.type_petrol?.trim(),
+                petrol_perlitre: isNaN(parseFloat(this.local.petrol_perlitre)) ? 0 : parseFloat(this.local.petrol_perlitre),
+                reference_number: this.local.reference_number,
+                total_fee: isNaN(parseFloat(this.totalFee)) ? 0 : parseFloat(this.totalFee),
+                unique_code: this.uniqueCode,
+                files: this.local.files || [],
+                filesToDelete: this.filesToDelete,
+                newFiles: this.getNewFiles(),
+                requester_id: this.requesterId,
+
+                tabTitle: "Local Travelling",
+                locationPurpose: this.local.end_point || "-",
+                date: this.date_event || "-",
+                total: this.totalFee || "0.00"
+            };
+
+            console.log("Submitting Local payload:", updatedClaim);
+            this.$emit("update-claim", updatedClaim);
+            this.closeSlideOver();
+        },
+
         watch: {
         isOpen(newVal) {
             if (newVal) this.fetchLocalData();

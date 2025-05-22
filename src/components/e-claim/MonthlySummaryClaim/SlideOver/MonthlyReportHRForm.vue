@@ -33,6 +33,40 @@
                 </div>
               </div>
             </div>
+            <!-- Department -->
+            <div class="relative mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-1">Department</label>
+              <div class="relative overflow-visible">
+                <input type="text" :id="departmentInputId" v-model="departmentSearch" @focus="isDepartmentOpen = true"
+                  @blur="handleDepartmentBlur"
+                  class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                  placeholder="Search department..." />
+                <div v-if="isDepartmentOpen"
+                  class="absolute z-[1000] w-full mt-1 bg-white border rounded-md shadow-lg max-h-60 overflow-auto">
+                  <div v-for="department in filteredDepartment" :key="department" @mousedown="selectDepartment(department)"
+                    class="p-2 hover:bg-gray-100 cursor-pointer">
+                    {{ department }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Branch -->
+            <div class="relative mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-1">Branch</label>
+              <div class="relative overflow-visible">
+                <input type="text" :id="branchInputId" v-model="branchSearch" @focus="isBranchOpen = true"
+                  @blur="handleBranchBlur"
+                  class="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                  placeholder="Search branch..." />
+                <div v-if="isBranchOpen"
+                  class="absolute z-[1000] w-full mt-1 bg-white border rounded-md shadow-lg max-h-60 overflow-auto">
+                  <div v-for="branch in filteredBranch" :key="branch" @mousedown="selectBranch(branch)"
+                    class="p-2 hover:bg-gray-100 cursor-pointer">
+                    {{ branch }}
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <!-- Date Pickers -->
             <div class="grid grid-cols-4 gap-4">
@@ -124,19 +158,30 @@
 import moment from 'moment';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { filter } from 'lodash';
 
 export default {
   emits: ['fetch-report', 'close', 'closeSlideOver'],
   props: {
     isOpen: { type: Boolean, required: true },
     companyInputId: { type: String, default: "companyInput" },
+    departmentInputId: { type: String, default: "departmentInput" },
+    branchInputId: { type: String, default: "branchInput" },
   },
   data() {
     return {
       companySearch: "",
+      departmentSearch: "",
+      branchSearch: "",
       AllCompany: [],
+      AllDepartment: [],
+      AllBranch: [],
       chosenCompany: "",
+      chosenDepartment: "",
+      chosenBranch: "",
       isCompanyOpen: false,
+      isDepartmentOpen: false,
+      isBranchOpen: false,
 
       startDate: null,
       endDate: null,
@@ -181,12 +226,24 @@ export default {
         typeof company === 'string' &&
         company.toLowerCase().includes(this.companySearch.toLowerCase())
       );
+    },
+    filteredDepartment() {
+      return this.AllDepartment.filter((department) =>
+        typeof department === 'string' &&
+        department.toLowerCase().includes(this.departmentSearch.toLowerCase())
+      );
+    },
+    filteredBranch() {
+      return this.AllBranch.filter((branch) =>
+        typeof branch === 'string' &&
+        branch.toLowerCase().includes(this.branchSearch.toLowerCase())
+      );
     }
 
   },
   methods: {
     triggerDownload() {
-      if (!this.companySearch || !this.startDate || !this.endDate) {
+      if (!this.companySearch || !this.startDate || !this.endDate || !this.departmentSearch || !this.branchSearch) {
         Swal.fire({ icon: 'warning', title: 'Missing Info', text: 'Please fill in all fields.' });
         return;
       }
@@ -194,7 +251,16 @@ export default {
       this.$emit("fetch-report", {
         company: this.companySearch,
         startDate: this.formattedStartDate,
-        endDate: this.formattedEndDate
+        endDate: this.formattedEndDate,
+        branch: this.branchSearch,
+        department: this.departmentSearch,
+      });
+      console.log("Download triggered with payload:", {
+        company: this.companySearch,
+        startDate: this.formattedStartDate,
+        endDate: this.formattedEndDate,
+        branch: this.branchSearch,
+        department: this.departmentSearch,
       });
     },
     
@@ -239,14 +305,39 @@ export default {
         console.error("Error fetching company:", error);
       }
     },
+    async GetAllBranchesAndDepartments() {
+    try {
+      const response = await axios.get("http://172.28.28.116:6239/api/User/GetAllEmployees");
+      const department = response.data.result.map((item) => item.department);
+      this.AllDepartment = [...new Set(department)];
+      const branch = response.data.result.map((item) => item.branch);
+      this.AllBranch = [...new Set(branch)];
+    } catch (error) {
+      console.error("Error fetching branches and departments:", error);
+    }
+  },
     selectCompany(company) {
       this.companySearch = company;
       this.chosenCompany = company;
       this.$emit("update:chosenCompany", company);
       this.isCompanyOpen = false;
     },
+    selectDepartment(department) {
+      this.departmentSearch = department;
+      this.chosenDepartment = department;
+      this.$emit("update:chosenDepartment", department);
+      this.isDepartmentOpen = false;
+    },
+    selectBranch(branch) {
+      this.branchSearch = branch;
+      this.chosenBranch = branch;
+      this.$emit("update:chosenBranch", branch);
+      this.isBranchOpen = false;
+    },
     resetForm() {
       this.companySearch = "";
+      this.departmentSearch = "";
+      this.branchSearch = "";
       this.startDate = null;
       this.endDate = null;
     },
@@ -322,10 +413,21 @@ export default {
       setTimeout(() => {
         this.isCompanyOpen = false;
       }, 200);
-    }
+    },
+    handleDepartmentBlur() {
+      setTimeout(() => {
+        this.isDepartmentOpen = false;
+      }, 200);
+    },
+    handleBranchBlur() {
+      setTimeout(() => {
+        this.isBranchOpen = false;
+      }, 200);
+    },
   },
   mounted() {
     this.GetAllCompany();
+    this.GetAllBranchesAndDepartments();
   },
 };
 </script>

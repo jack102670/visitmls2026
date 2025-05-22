@@ -237,6 +237,19 @@
       </nav>
     </div>
   </aside>
+  <!-- <div v-if="showWarningModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div class="bg-white p-6 rounded shadow-lg text-center w-80">
+      <h3 class="text-lg font-bold mb-2">Session Timeout Warning</h3>
+      <p class="text-gray-700">You will be logged out in {{ warningCountdown }} seconds due to inactivity.</p>
+      <button
+        @click="stayLoggedIn"
+        class="mt-4 px-4 py-2 rounded-full bg-[#160959] dark:bg-[#111827] text-sm hover:bg-[#190a70] hover:text-white"
+      >
+        Stay Logged In
+      </button>
+    </div>
+  </div> -->
+
 
 </template>
 
@@ -265,6 +278,12 @@ export default {
       showLogOutButton: true,
       showLoadingButton: false,
       controlView: null,
+      // inactivityTimeout: null,
+      // warningTimeout: null,
+      // warningCountdown: 30,
+      // inactivityTimeLimit: 1 * 60 * 1000,
+      // showWarningModal: false,
+      // warningInterval: null,
     };
   },
   computed: {
@@ -285,7 +304,13 @@ export default {
     this.role = store.getRole();
    // console.log(this.userDetails, 'user details');
    // Logout on browser/tab close
-   window.addEventListener('unload', this.handleTabClose);
+    window.addEventListener('unload', this.handleTabClose);
+
+    // this.resetInactivityTimer();
+    // ['mousemove', 'keydown', 'click', 'scroll'].forEach(event =>
+    //   window.addEventListener(event, this.resetInactivityTimer)
+    // );
+
   },
   // watch: {
   //   // Watch for changes in controlView
@@ -303,6 +328,14 @@ export default {
   // },
   beforeUnmount() {
     window.removeEventListener('unload', this.handleTabClose);
+
+    // clearTimeout(this.inactivityTimeout);
+    // clearTimeout(this.warningTimeout);
+    // if (this.warningInterval) clearInterval(this.warningInterval);
+    // ['mousemove', 'keydown', 'click', 'scroll'].forEach(event =>
+    //   window.removeEventListener(event, this.resetInactivityTimer)
+    // );
+
   },
   // beforeCreate() {
   //   if (!localStorage.getItem('reloaded')) {
@@ -325,6 +358,37 @@ export default {
         console.error('There was an error fetching the user status:', error);
       }
     },
+
+    // resetInactivityTimer() {
+    //   clearTimeout(this.inactivityTimeout);
+    //   clearTimeout(this.warningTimeout);
+    //   if (this.warningInterval) clearInterval(this.warningInterval);
+    //   this.showWarningModal = false;
+    //   this.warningCountdown = 30;
+
+    //   this.inactivityTimeout = setTimeout(this.showInactivityWarning, this.inactivityTimeLimit);
+    // },
+
+    // showInactivityWarning() {
+    //   this.showWarningModal = true;
+    //   this.warningCountdown = 30;
+
+    //   this.warningInterval = setInterval(() => {
+    //     this.warningCountdown--;
+    //     if (this.warningCountdown <= 0) {
+    //       clearInterval(this.warningInterval);
+    //       this.logout(); // auto-logout after countdown
+    //     }
+    //   }, 1000);
+    // },
+
+    // stayLoggedIn() {
+    //   this.resetInactivityTimer(); // resets everything
+    // },
+
+    // handleInactivity() {
+    //   this.logout(); 
+    // },
 
     async logout() {
       const token = localStorage.getItem('token');

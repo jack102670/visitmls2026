@@ -18,7 +18,7 @@
                     Update {{ claim.tabTitle }} Details
                 </p>
             </div>
-            <form @submit.prevent="handleSubmitEntertainment">
+            <form @submit.prevent="handleSubmit">
                 <div class="grid grid-cols-8 gap-2 w-full">
                     <div class="col-span-8">
                         <label for="date_event" class="font-medium text-sm">Date Event</label>
@@ -36,10 +36,10 @@
                     </div>
                     <div class="col-span-8" v-if="entertainment.entertainment_type === 'OTHERS'">
                         <label for="entertainment_type" class="font-medium text-sm">Specify Type</label>
-                        <input type="text" id= "entertainment_type" v-model="entertainment.other_type" 
-                        class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                        <input type="text" id="entertainment_type" v-model="entertainment.other_type"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
                     </div>
-                    
+
                     <div class="col-span-4">
                         <label for="company_name" class="font-medium text-sm">Company Name</label>
                         <input type="text" id="company_name" v-model="entertainment.company_name"
@@ -51,7 +51,7 @@
                         <input type="text" id="venue_name" v-model="entertainment.venue_name"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
-                    
+
                     <div class="col-span-8">
                         <label for="description" class="font-medium text-sm">Reference</label>
                         <select id="description" v-model="entertainment.description"
@@ -63,46 +63,47 @@
 
                     <div class="col-span-4">
                         <label for="company_name" class="font-medium text-sm">Total Amount(RM)</label>
-                        <input type="text" id="company_name" v-model="entertainment.total_fee" 
+                        <input type="text" id="company_name" v-model="entertainment.total_fee"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
                     <div class="col-span-4">
-                    <label for="files" class="font-medium text-sm">Uploaded Files</label>
-                    <div v-if="entertainment.files.length" class="mt-2">
-                        <p class="text-xs text-gray-600">Click on a file to view or delete:</p>
-                        <ul class="list-disc list-inside">
-                            <li v-for="(file, index) in entertainment.files" :key="index" class="flex items-center space-x-2">
-                                <a :href="typeof file === 'string' ? file : '#'" target="_blank" class="text-blue-500 hover:underline text-xs">
-                                    {{ typeof file === 'string' ? file.split('/').pop() : file.name }}
-                                </a>
+                        <label for="files" class="font-medium text-sm">Uploaded Files</label>
+                        <div v-if="entertainment.files.length" class="mt-2">
+                            <!-- <p class="text-xs text-gray-600">Click on a file to view or delete:</p> -->
+                            <ul class="list-disc list-inside">
+                                <li v-for="(file, index) in entertainment.files" :key="index"
+                                    class="flex items-center space-x-2">
+                                    <a :href="typeof file === 'string' ? file : '#'" target="_blank"
+                                        class="text-blue-500 hover:underline text-xs">
+                                        {{ typeof file === 'string' ? file.split('/').pop() : file.name }}
+                                    </a>
 
-                                <a @click="deleteFile(index)" class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
-                                    </svg>
-                                </a>
-                            </li>
-                        </ul>
+                                    <a @click="deleteFile(index)"
+                                        class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
+                                        </svg>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div v-if="!entertainment.files.length" class="mt-4">
+                            <input type="file" id="newFile" @change="uploadFiles"
+                                class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                            <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
+                                Selected file: {{ selectedFileName }}
+                            </span>
+                        </div>
                     </div>
 
-                    <div v-if="!entertainment.files.length" class="mt-4">
-                        <input
-                            type="file"
-                            id="newFile"
-                            @change="uploadFiles"  
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        />
-                        <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
-                            Selected file: {{ selectedFileName }}
-                        </span>
-                    </div>
-                </div>
-                    
                     <div class="col-span-8">
-                        <label class="font-medium text-sm">Participants  </label>
-                        <button type="button"  @click="newParticipants "
+                        <label class="font-medium text-sm">Participants </label>
+                        <button type="button" @click="newParticipants"
                             class="mt-1 text-xs bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            Add  
+                            Add
                         </button>
                         <div class="overflow-x-auto border border-gray-300 rounded-md mt-2">
                             <table class="min-w-full bg-white dark:bg-gray-800 border-collapse">
@@ -122,28 +123,30 @@
                                         <td class="py-2 px-4 text-xs">{{ participant.name }}</td>
                                         <td class="py-2 px-4 text-xs">{{ participant.company_name }}</td>
                                         <td class="py-2 px-4 text-xs ">
-                                        <!-- Edit Button -->
-                                        <a @click="editParticipant(participant)"
-                                        class="bg-green-600 hover:bg-green-700 text-white transition duration-300 px-2 py-1 rounded-md cursor-pointer inline-flex items-center justify-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M11 4h2m2 0h.01M13 4l7 7-9 9H4v-9l9-9z" />
-                                        </svg>    
-                                        </a>
-                                        
-                                        <a @click="deleteParticipant(participant)"
-                                            class="bg-red-600 hover:bg-red-700 text-white transition duration-300 px-2 py-1 rounded-md cursor-pointer inline-flex items-center justify-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M6 18L18 6M6 6l12 12" />
-                                            </svg>
-                                        </a>
+                                            <!-- Edit Button -->
+                                            <a @click="editParticipant(participant)"
+                                                class="bg-green-600 hover:bg-green-700 text-white transition duration-300 px-2 py-1 rounded-md cursor-pointer inline-flex items-center justify-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M11 4h2m2 0h.01M13 4l7 7-9 9H4v-9l9-9z" />
+                                                </svg>
+                                            </a>
+
+                                            <a @click="deleteParticipant(participant)"
+                                                class="bg-red-600 hover:bg-red-700 text-white transition duration-300 px-2 py-1 rounded-md cursor-pointer inline-flex items-center justify-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </a>
                                         </td>
                                         <!-- <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2">
                                 <a @click="toggleSlideOver(index)"
                                 class="bg-green-600 hover:bg-green-700 text-white transition duration-300 px-2 py-1 rounded-md cursor-pointer inline-flex items-center justify-center"> -->
-                                    <!-- Pencil Icon -->
-                                    <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <!-- Pencil Icon -->
+                                        <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M11 4h2m2 0h.01M13 4l7 7-9 9H4v-9l9-9z" />
                                     </svg>
@@ -207,7 +210,8 @@
                                 class="bg-gray-400 text-white px-4 py-2 rounded">
                                 Cancel
                             </button>
-                            <button type="button" @click="saveParticipant(selectedParticipant)" class="bg-blue-600 text-white px-4 py-2 rounded">
+                            <button type="button" @click="saveParticipant(selectedParticipant)"
+                                class="bg-blue-600 text-white px-4 py-2 rounded">
                                 Save
                             </button>
                         </div>
@@ -238,7 +242,7 @@ export default {
     },
     data() {
         return {
-            
+
             entertainment: {
                 description: '',
                 date_event: '',
@@ -250,14 +254,16 @@ export default {
                 comment: '',
                 participants: [],
                 files: [],
-            
-            
+
+
 
             },
-            EntertainmentType: ["BREAKFAST", "LUNCH", "DINNER", "TEA BREAK", "OTHERS"],
-            descriptionType: ["ENTERTAINMENT-CLIENT(EXISTING)", "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)", "ENTERTAINMENT-NON TRADE", "GIFT TO CLIENT", "GIFT TO OTHERS"],
-            // EntertainmentType: ["Breakfast", "Lunch", "Dinner", "Tea Break", "Others"],
-            // descriptionType: ["Entertainment-Client(Existing)", "Entertainment-Client(New/Potential)", "Entertainment-Non Trade", "Gift To Client", "Gift To Others-Non Trade","Meal For Staff" ],
+            // EntertainmentType: ["BREAKFAST", "LUNCH", "DINNER", "TEA BREAK", "OTHERS"],
+            // descriptionType: ["ENTERTAINMENT-CLIENT(EXISTING)", "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)", 
+            // "ENTERTAINMENT-NON TRADE", "GIFT TO CLIENT", "GIFT TO OTHERS"],
+            EntertainmentType: ["Breakfast", "Lunch", "Dinner", "Tea Break", "Others"],
+            descriptionType: ["Entertainment-Client(Existing)", "Entertainment-Client(New/Potential)", 
+            "Entertainment-Non Trade", "Gift To Client", "Gift To Others-Non Trade","Meal For Staff" ],
             currentPage: 1,
             pageSize: 5,
             //entertainment: {},
@@ -286,15 +292,15 @@ export default {
     computed: {
         formattedDate: {
             get() {
-            const d = new Date(this.entertainment.date_event);
-            if (isNaN(d)) return "";
-            const year = d.getFullYear();
-            const month = String(d.getMonth() + 1).padStart(2, "0");
-            const day = String(d.getDate()).padStart(2, "0");
-            return `${year}-${month}-${day}`;
+                const d = new Date(this.entertainment.date_event);
+                if (isNaN(d)) return "";
+                const year = d.getFullYear();
+                const month = String(d.getMonth() + 1).padStart(2, "0");
+                const day = String(d.getDate()).padStart(2, "0");
+                return `${year}-${month}-${day}`;
             },
             set(value) {
-            this.entertainment.date_event = value; // Keep in ISO format or convert if needed
+                this.entertainment.date_event = value; // Keep in ISO format or convert if needed
             }
         },
         totalPages() {
@@ -310,13 +316,13 @@ export default {
     },
     methods: {
         newParticipants() {
-        this.selectedParticipant = {
-            // id: null,
-            name: "",
-            company_name: ""
-        };
-        this.isParticipantFormOpen = true;
-    },
+            this.selectedParticipant = {
+                // id: null,
+                name: "",
+                company_name: ""
+            };
+            this.isParticipantFormOpen = true;
+        },
         // async deleteParticipant(participant) {
 
         //         if (participant && participant.id) {
@@ -363,10 +369,10 @@ export default {
         //         }
         //     },
         deleteParticipant(participant) {
-        if (participant.id) {
-            this.participantsToDelete.push(participant.id);
-        }
-        this.entertainment.participants = this.entertainment.participants.filter(p => p !== participant);
+            if (participant.id) {
+                this.participantsToDelete.push(participant.id);
+            }
+            this.entertainment.participants = this.entertainment.participants.filter(p => p !== participant);
             Swal.fire({
                 title: "Are you sure?",
                 text: "This will remove the participant from the list.",
@@ -431,7 +437,7 @@ export default {
         // },
         // async updateEntertainment(refNo) {
         //     try {
-                
+
         //         const submitData = {
         //         ...this.entertainment,
         //         participants: this.participants
@@ -494,265 +500,276 @@ export default {
             this.$emit('close');
         },
 
-          // Delete a file from the list
+        // Delete a file from the list
         deleteFile(index) {
-        const deletedFile = this.entertainment.files[index];
-        Swal.fire({
-            title: 'Are you sure?',
-            text: 'Do you really want to delete this file?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'Cancel',
-            confirmButtonColor: '#dc2626'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // If the file is an existing file (not just uploaded in this session), mark for deletion
-                if (typeof deletedFile === 'string' && !this.newFiles.find(f => f.name === deletedFile)) {
-                    this.filesToDelete.push(deletedFile);
-                } else {
-                    // If it's a new file, remove from newFiles
-                    this.newFiles = this.newFiles.filter(f => f.name !== deletedFile);
+            const deletedFile = this.entertainment.files[index];
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Do you really want to delete this file?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel',
+                confirmButtonColor: '#dc2626'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // If the file is an existing file (not just uploaded in this session), mark for deletion
+                    if (typeof deletedFile === 'string' && !this.newFiles.find(f => f.name === deletedFile)) {
+                        this.filesToDelete.push(deletedFile);
+                    } else {
+                        // If it's a new file, remove from newFiles
+                        this.newFiles = this.newFiles.filter(f => f.name !== deletedFile);
+                    }
+                    // Remove from UI
+                    this.entertainment.files.splice(index, 1);
                 }
-                // Remove from UI
-                this.entertainment.files.splice(index, 1);
-            }
-        });
-    },
+            });
+        },
         async uploadFiles(event) {
             const files = event?.target?.files;
 
-        if (!files || !files.length) {
-            this.selectedFileName = "";
-            Swal.fire("No File", "Please select at least one file to upload.", "warning");
-            return;
-        }
-       
-        // const formData = new FormData();
-        for (let i = 0; i < files.length; i++) {
-        const originalFile = files[i];
-        // Prepend SUPPORT_DOC_ if not already present
-        let newFileName = originalFile.name.startsWith("SUPPORT_DOC_")
-            ? originalFile.name
-            : `SUPPORT_DOC_${originalFile.name}`;
-        // Create a new File object with the new name
-        const renamedFile = new File([originalFile], newFileName, { type: originalFile.type });
-        this.newFiles.push(renamedFile);
-        this.entertainment.files.push(renamedFile);
-        }
-        this.selectedFileName = files[0].name;
-        event.target.value = "";
-    },
-        async fetchEntertainmentData(refNo) {
-   
-        const response = await axios.get(`http://172.28.28.116:6165/api/User/GetEntertainment/${refNo}`);
-        console.log("Entertainment Data:", response.data);
-
-        const dataArray = response.data.result;
-
-        if (Array.isArray(dataArray)) {
-        const matchingUniqueID = dataArray.find(
-            record => record.unique_code === this.claim.unique_code
-        );
-
-        if (matchingUniqueID) {
-            
-
-            this.entertainment = {
-            description: matchingUniqueID.description,
-            reference_number: matchingUniqueID.reference_number,
-            date_event: matchingUniqueID.date_event,
-            entertainment_type: matchingUniqueID.entertainment_type,
-            venue_name: matchingUniqueID.venue_name,
-            company_name: matchingUniqueID.company_name,
-            total_fee: matchingUniqueID.total_fee,
-            unique_code: matchingUniqueID.unique_code,
-            comment: matchingUniqueID.comment,
-            files: matchingUniqueID.files,
-            participants: matchingUniqueID.participants || [],
-            other_type:'',
-            };
-            this.uniqueCode = matchingUniqueID.unique_code;
-            this.requesterId = matchingUniqueID.requester_id;
-            // Directly assign participants
-            // this.entertainment.participants = [...matchingUniqueID.participants] || [];
-            console.log("Fetched participants:", this.entertainment.participants);
-          
-
-            const isCustomType = !this.EntertainmentType.includes(matchingUniqueID.entertainment_type);
-            if (isCustomType) {
-                // Display it as "OTHERS" but store the real custom value
-                this.entertainment.other_type = matchingUniqueID.entertainment_type;
-                this.entertainment.entertainment_type = "OTHERS";
+            if (!files || !files.length) {
+                this.selectedFileName = "";
+                Swal.fire("No File", "Please select at least one file to upload.", "warning");
+                return;
             }
 
-            this.ent_refNumber = matchingUniqueID.ent_refNumber;
-        } else {
-            console.log("No matching unique_code found");
-        }
-        } else {
-        console.error("Expected an array but got:", typeof dataArray, dataArray);
-        }
-
+            // const formData = new FormData();
+            for (let i = 0; i < files.length; i++) {
+                const originalFile = files[i];
+                // Prepend SUPPORT_DOC_ if not already present
+                let newFileName = originalFile.name.startsWith("SUPPORT_DOC_")
+                    ? originalFile.name
+                    : `SUPPORT_DOC_${originalFile.name}`;
+                // Create a new File object with the new name
+                const renamedFile = new File([originalFile], newFileName, { type: originalFile.type });
+                this.newFiles.push(renamedFile);
+                this.entertainment.files.push(renamedFile);
+            }
+            this.selectedFileName = files[0].name;
+            event.target.value = "";
         },
+        async fetchEntertainmentData(refNo) {
 
-        // const response = await axios.get(`http://172.28.28.116:6165/api/User/GetEntertainment/${refNo}`);
+            const response = await axios.get(`http://172.28.28.116:6165/api/User/GetEntertainment/${refNo}`);
+            console.log("Entertainment Data:", response.data);
 
-        //             const entertainmentData = response.data.result;
+            const dataArray = response.data.result;
 
-        //             if (entertainmentData) {
-        //             console.log("Entertainment details:", entertainmentData);
+            if (Array.isArray(dataArray)) {
+                const matchingUniqueID = dataArray.find(
+                    record => record.unique_code === this.claim.unique_code
+                );
 
-        //             const entertainmentClaims = entertainmentData.map(claim => ({
-        //                 tabTitle: "Entertainment",
-        //                 locationPurpose: claim.venue_name,
-        //                 date: claim.date_event,
-        //                 total: claim.total_fee,
-        //                 unique_code: claim.unique_code,
-        //                 refNo: refNo,
-        //             }));
-
-        //             console.log("Formatted Entertainment Claims:", entertainmentClaims);
-        //             this.dataclaims = entertainmentClaims; // Assign to dataclaims
-        //             return entertainmentClaims;
-        //             } else {
-        //             console.log("Entertainment details not found");
-        //             return []; // return empty array if no data
-        //             }
-
-        // Function to update entertainment data (as a helper)
-        async handleSubmitEntertainment() {
-            try {
-
-                // Delete participants
-                for (const id of this.participantsToDelete) {
-                    await axios.delete(`http://172.28.28.116:6165/api/User/DeleteParticipant/${id}`);
-                }
-                this.participantsToDelete = [];
+                if (matchingUniqueID) {
 
 
-                // Delete files marked for deletion
-                for (const fileUrl of this.filesToDelete) {
-                    const fileName = fileUrl.split('/').pop();
-                    await axios.delete(`http://172.28.28.116:7267/api/Files/DeleteImage/${this.requesterId}/${this.uniqueCode}/${fileName}`);
-                }
-                this.filesToDelete = [];
+                    this.entertainment = {
+                        description: matchingUniqueID.description,
+                        reference_number: matchingUniqueID.reference_number,
+                        date_event: matchingUniqueID.date_event,
+                        entertainment_type: matchingUniqueID.entertainment_type,
+                        venue_name: matchingUniqueID.venue_name,
+                        company_name: matchingUniqueID.company_name,
+                        total_fee: matchingUniqueID.total_fee,
+                        unique_code: matchingUniqueID.unique_code,
+                        comment: matchingUniqueID.comment,
+                        files: matchingUniqueID.files,
+                        participants: matchingUniqueID.participants || [],
+                        other_type: '',
+                    };
+                    this.uniqueCode = matchingUniqueID.unique_code;
+                    this.requesterId = matchingUniqueID.requester_id;
+                    // Directly assign participants
+                    // this.entertainment.participants = [...matchingUniqueID.participants] || [];
+                    console.log("Fetched participants:", this.entertainment.participants);
 
-                // Upload new files
-                if (this.newFiles.length > 0) {
-                    const formData = new FormData();
-                    this.newFiles.forEach(file => formData.append("filecollection", file));
-                    const uploadEndpoint = `https://esvcportal.pktgroup.com/api/file/api/Files/MultiUploadImage/${this.requesterId}/${this.uniqueCode}`;
-                    await axios.post(uploadEndpoint, formData, {
-                        headers: { "Content-Type": "multipart/form-data" },
-                    });
-                    this.newFiles = [];
-                }
-                // Prepare the data to be submitted
-                const submitData = {
-                    description: this.entertainment.description?.trim(),
-                    reference_number: this.entertainment.reference_number,
-                    date_event: this.formattedDate,
-                    entertainment_type: this.entertainment.entertainment_type === "OTHERS"
-                    ? this.entertainment.other_type  // replace with the actual text entered
-                    : this.entertainment.entertainment_type,
-                    venue_name: this.entertainment.venue_name,
-                    company_name: this.entertainment.company_name,
-                    total_fee: isNaN(parseFloat(this.entertainment.total_fee)) ? 0 : parseFloat(this.entertainment.total_fee),
-                    unique_code: this.entertainment.unique_code,
-                    // ent: this.entertainment.ent,
-                    participants: this.entertainment.participants,
-                    // participants:[
-                    //             {
-                    //                 id: this.participant.id,
-                    //                 name: "",
-                    //                 company_name: "",
-                    //             }
-                    //         ],
-                    files: this.entertainment.files || []
-                    // participants: this.participants
-                };
 
-                console.log("Submitting Entertainment payload:", submitData);
-
-                
-
-                // const newParticipants = this.entertainment.participants.filter(p => !p.id);
-                // Make the PUT request to update the entertainment data
-                const response = await axios.put('http://172.28.28.116:6165/api/User/UpdateEntertainment', submitData, {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
-
-                // Add new participants (those without an id)
-                const newParticipants = this.entertainment.participants.filter(p => !p.id);
-                for (const participant of newParticipants) {
-                    await axios.post("http://172.28.28.116:6165/api/User/InsertParticipant", {
-                        reference_number: this.ent_refNumber,
-                        participants: [{ name: participant.name, company_name: participant.company_name }]
-                    });
-                }
-
-                // Handle the response based on success or failure
-                if (response.data && response.data.result) {
-                    console.log("Update Entertainment data:", response.data.result);
-
-                    this.ent_refNumber = this.entertainment.reference_number;
-                    // Now insert new participants using saveParticipant()
-                    for (const participant of newParticipants) {
-                        await this.saveParticipant(participant);
+                    const isCustomType = !this.EntertainmentType.includes(matchingUniqueID.entertainment_type);
+                    if (isCustomType) {
+                        // Display it as "OTHERS" but store the real custom value
+                        this.entertainment.other_type = matchingUniqueID.entertainment_type;
+                        this.entertainment.entertainment_type = "OTHERS";
                     }
 
-                    Swal.fire({
-                        title: 'Success',
-                        text: 'Entertainment updated successfully',
-                        icon: 'success',
-                        confirmButtonText: 'OK',
-                        confirmButtonColor: '#dc2626',
-                    });
-                    this.$emit('refresh-claims', this.claim.refNo);
-                    this.closeSlideOver();
+                    this.ent_refNumber = matchingUniqueID.ent_refNumber;
                 } else {
-                    console.log("Update Entertainment data not found");
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'Failed to update Entertainment',
-                        icon: 'error',
-                        confirmButtonText: 'OK',
-                        confirmButtonColor: '#dc2626',
-                    });
+                    console.log("No matching unique_code found");
                 }
-            } catch (error) {
-                console.error("Error submitting data:", error);
-                let errorMessage = "An unexpected error occurred.";
-                if (error.response) {
-                    errorMessage = error.response.data?.message || `Error: ${error.response.status} - ${error.response.statusText}`;
-                } else if (error.request) {
-                    errorMessage = "No response received from the server.";
-                } else {
-                    errorMessage = error.message;
-                }
+            } else {
+                console.error("Expected an array but got:", typeof dataArray, dataArray);
+            }
 
-                Swal.fire({
-                    title: 'Submission Failed',
-                    text: errorMessage,
-                    icon: 'error',
-                    confirmButtonText: 'OK',
-                    confirmButtonColor: '#dc2626',
-                });
+        },
+
+        // Function to update entertainment data (as a helper)
+        // async handleSubmitEntertainment() {
+        //     try {
+
+        //         // Delete participants
+        //         for (const id of this.participantsToDelete) {
+        //             await axios.delete(`http://172.28.28.116:6165/api/User/DeleteParticipant/${id}`);
+        //         }
+        //         this.participantsToDelete = [];
+
+
+        //         // Delete files marked for deletion
+        //         for (const fileUrl of this.filesToDelete) {
+        //             const fileName = fileUrl.split('/').pop();
+        //             await axios.delete(`http://172.28.28.116:7267/api/Files/DeleteImage/${this.requesterId}/${this.uniqueCode}/${fileName}`);
+        //         }
+        //         this.filesToDelete = [];
+
+        //         // Upload new files
+        //         if (this.newFiles.length > 0) {
+        //             const formData = new FormData();
+        //             this.newFiles.forEach(file => formData.append("filecollection", file));
+        //             const uploadEndpoint = `https://esvcportal.pktgroup.com/api/file/api/Files/MultiUploadImage/${this.requesterId}/${this.uniqueCode}`;
+        //             await axios.post(uploadEndpoint, formData, {
+        //                 headers: { "Content-Type": "multipart/form-data" },
+        //             });
+        //             this.newFiles = [];
+        //         }
+        //         // Prepare the data to be submitted
+        //         const submitData = {
+        //             description: this.entertainment.description?.trim(),
+        //             reference_number: this.entertainment.reference_number,
+        //             date_event: this.formattedDate,
+        //             entertainment_type: this.entertainment.entertainment_type === "OTHERS"
+        //                 ? this.entertainment.other_type  // replace with the actual text entered
+        //                 : this.entertainment.entertainment_type,
+        //             venue_name: this.entertainment.venue_name,
+        //             company_name: this.entertainment.company_name,
+        //             total_fee: isNaN(parseFloat(this.entertainment.total_fee)) ? 0 : parseFloat(this.entertainment.total_fee),
+        //             unique_code: this.entertainment.unique_code,
+        //             // ent: this.entertainment.ent,
+        //             participants: this.entertainment.participants,
+        //             // participants:[
+        //             //             {
+        //             //                 id: this.participant.id,
+        //             //                 name: "",
+        //             //                 company_name: "",
+        //             //             }
+        //             //         ],
+        //             files: this.entertainment.files || []
+        //             // participants: this.participants
+        //         };
+
+        //         console.log("Submitting Entertainment payload:", submitData);
+
+
+
+        //         // const newParticipants = this.entertainment.participants.filter(p => !p.id);
+        //         // Make the PUT request to update the entertainment data
+        //         const response = await axios.put('http://172.28.28.116:6165/api/User/UpdateEntertainment', submitData, {
+        //             headers: {
+        //                 "Content-Type": "application/json",
+        //             },
+        //         });
+
+        //         // Add new participants (those without an id)
+        //         const newParticipants = this.entertainment.participants.filter(p => !p.id);
+        //         for (const participant of newParticipants) {
+        //             await axios.post("http://172.28.28.116:6165/api/User/InsertParticipant", {
+        //                 reference_number: this.ent_refNumber,
+        //                 participants: [{ name: participant.name, company_name: participant.company_name }]
+        //             });
+        //         }
+
+        //         // Handle the response based on success or failure
+        //         if (response.data && response.data.result) {
+        //             console.log("Update Entertainment data:", response.data.result);
+
+        //             this.ent_refNumber = this.entertainment.reference_number;
+        //             // Now insert new participants using saveParticipant()
+        //             for (const participant of newParticipants) {
+        //                 await this.saveParticipant(participant);
+        //             }
+
+        //             Swal.fire({
+        //                 title: 'Success',
+        //                 text: 'Entertainment updated successfully',
+        //                 icon: 'success',
+        //                 confirmButtonText: 'OK',
+        //                 confirmButtonColor: '#dc2626',
+        //             });
+        //             this.$emit('refresh-claims', this.claim.refNo);
+        //             this.closeSlideOver();
+        //         } else {
+        //             console.log("Update Entertainment data not found");
+        //             Swal.fire({
+        //                 title: 'Error',
+        //                 text: 'Failed to update Entertainment',
+        //                 icon: 'error',
+        //                 confirmButtonText: 'OK',
+        //                 confirmButtonColor: '#dc2626',
+        //             });
+        //         }
+        //     } catch (error) {
+        //         console.error("Error submitting data:", error);
+        //         let errorMessage = "An unexpected error occurred.";
+        //         if (error.response) {
+        //             errorMessage = error.response.data?.message || `Error: ${error.response.status} - ${error.response.statusText}`;
+        //         } else if (error.request) {
+        //             errorMessage = "No response received from the server.";
+        //         } else {
+        //             errorMessage = error.message;
+        //         }
+
+        //         Swal.fire({
+        //             title: 'Submission Failed',
+        //             text: errorMessage,
+        //             icon: 'error',
+        //             confirmButtonText: 'OK',
+        //             confirmButtonColor: '#dc2626',
+        //         });
+        //     }
+        // },
+
+        async handleSubmit() {
+            const updatedClaim = {
+                requester_id: this.requesterId,
+                description: this.entertainment.description?.trim(),
+                reference_number: this.entertainment.reference_number,
+                date_event: this.formattedDate,
+                entertainment_type: this.entertainment.entertainment_type === "OTHERS"
+                    ? this.entertainment.other_type  // replace with the actual text entered
+                    : this.entertainment.entertainment_type,
+                venue_name: this.entertainment.venue_name,
+                company_name: this.entertainment.company_name,
+                total_fee: isNaN(parseFloat(this.entertainment.total_fee)) ? 0 : parseFloat(this.entertainment.total_fee),
+                unique_code: this.entertainment.unique_code,
+                participants: this.entertainment.participants.map(p => ({
+                    id: p.id,
+                    name: p.name,
+                    company_name: p.company_name
+                })),
+                ent_refNumber: this.ent_refNumber,
+                filesToDelete: this.filesToDelete,
+                newFiles: this.newFiles,
+                files: this.entertainment.files || [],
+                participantsToDelete: this.participantsToDelete,
+
+                tabTitle: "Entertainment",
+                locationPurpose: this.entertainment.description || "-",
+                date: this.date_event || "-",
+                total: this.entertainment.total_fee || "0.00"
+            };
+
+            console.log("Emitting Entertainment payload:", updatedClaim);
+            this.$emit("update-claim", updatedClaim);
+            this.closeSlideOver();
+        },
+
+        watch: {
+            isOpen(newVal) {
+                if (newVal) this.fetchEntertainmentData();
+            },
+            'entertainment.participants'(newVal) {
+                console.log("Participants updated:", newVal);
+                // You can also perform other actions here
             }
         },
-
-    watch: {
-        isOpen(newVal) {
-            if (newVal) this.fetchEntertainmentData();
-        },
-        'entertainment.participants'(newVal) {
-        console.log("Participants updated:", newVal);
-        // You can also perform other actions here
-    }
-    },
     },
 
 }

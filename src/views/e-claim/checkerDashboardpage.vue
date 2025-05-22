@@ -120,35 +120,39 @@
                             </div>
                           </div>
                         </td>
-                        <td class="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 text-balance">
+                        <td class="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 text-left">
                           {{ item.reference_number }}
                         </td>
-                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-balance">
+                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-left">
                           {{ item.report_name }}
                         </td>
 
-                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-balance">
+                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-left">
                           {{ item.date_requested }}
                         </td>
-                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-wrap">
+                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 text-left">
                           {{ item.requester_name }}
                         </td>
-                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap text-left">
                           RM {{ item.grand_total }}
                         </td>
-                        <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          <div :class="getStatusContainerClass(
-                            item.admin_status.split('.')[0].split(' ')[0]
-                          )
-                            ">
-                            <span :class="getStatusDotClass(
-                              item.admin_status.split('.')[0].split(' ')[0]
-                            )
-                              "></span>
-                            <h2 :class="getStatusTextClass(
-                              item.admin_status.split('.')[0].split(' ')[0]
-                            )
-                              ">
+                        <td class="px-2 py-2 text-sm font-medium text-gray-700 whitespace-nowrap">
+                          <div :class="[
+                                'inline-flex items-center gap-x-1 rounded-full',
+                                'px-2 py-1',
+                                getStatusContainerClass(item.admin_status.split('.')[0].split(' ')[0])
+                              ]"
+                              style="font-size:0.93rem; min-width:0; min-height:0; line-height:1.2;"
+                              >
+                                <span :class="[
+                                  'rounded-full',
+                                  getStatusDotClass(item.admin_status.split('.')[0].split(' ')[0])
+                                ]"
+                                style="width:0.6rem; height:0.6rem; display:inline-block;"
+                              ></span>
+                                  <h2 :class="getStatusTextClass(item.admin_status.split('.')[0].split(' ')[0])"
+                                  style="font-size:0.93rem;"
+                              >
                               {{
                                 item.admin_status
 

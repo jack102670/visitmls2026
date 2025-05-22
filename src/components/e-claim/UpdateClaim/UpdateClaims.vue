@@ -138,7 +138,7 @@
                         
                     </div>
                     <div class="mt-6 flex justify-end" >
-                        <button @click="resubmitForm"
+                        <button @click="resubmitForm()"
                             class="bg-yellow-600 hover:bg-yellow-700 dark:bg-yellow-700 dark:hover:bg-yellow-800 text-white rounded-xl px-8 text-sm font-bold py-2">
                             Resubmit
                         </button>
@@ -151,20 +151,46 @@
         <UpdateHandphone v-if="isHandphoneSlideOverOpen" :isOpen="isHandphoneSlideOverOpen" :claim="selectedClaim"
             @close="isHandphoneSlideOverOpen = false" @refresh-claims = "fetchAllClaims($route.params.rn)" />
 
-        <UpdateLocalTravel v-if="isLocalSlideOverOpen" :isOpen="isLocalSlideOverOpen" :claim="selectedClaim"
-        @close="isLocalSlideOverOpen = false" @refresh-claims = "fetchAllClaims($route.params.rn)" />
+        <UpdateLocalTravel 
+            v-if="isLocalSlideOverOpen" 
+            :isOpen="isLocalSlideOverOpen" 
+            :claim="selectedClaim"
+            @close="isLocalSlideOverOpen = false" 
+            @update-claim="updateClaim" 
+        />
 
-        <UpdateOverseasTravel v-if="isOverseaSlideOverOpen" :isOpen="isOverseaSlideOverOpen" :claim="selectedClaim"
-        @close="isOverseaSlideOverOpen = false" @refresh-claims = "fetchAllClaims($route.params.rn)" />
+        <UpdateOverseasTravel
+            v-if="isOverseaSlideOverOpen"
+            :isOpen="isOverseaSlideOverOpen"
+            :claim="selectedClaim"
+            @close="isOverseaSlideOverOpen = false"
+            @update-claim="updateClaim"
+        />
 
-        <UpdateEntertainment v-if="isEntertainmentSlideOverOpen" :isOpen="isEntertainmentSlideOverOpen" :claim="selectedClaim"
-            @close="isEntertainmentSlideOverOpen = false" @refresh-claims = "fetchAllClaims($route.params.rn)" />
+        <UpdateEntertainment 
+            v-if="isEntertainmentSlideOverOpen"
+            :isOpen="isEntertainmentSlideOverOpen" 
+            :claim="selectedClaim"
+            @close="isEntertainmentSlideOverOpen = false"
+            @update-claim="updateClaim" 
+        />
 
-        <UpdateRefreshment v-if="isRefreshmentSlideOverOpen" :isOpen="isRefreshmentSlideOverOpen" :claim="selectedClaim"
-        @close="isRefreshmentSlideOverOpen = false" @refresh-claims = "fetchAllClaims($route.params.rn)" />
+        <UpdateRefreshment 
+            v-if="isRefreshmentSlideOverOpen" 
+            :isOpen="isRefreshmentSlideOverOpen" 
+            :claim="selectedClaim"
+            @close="isRefreshmentSlideOverOpen = false" 
+            @update-claim="updateClaim" 
+        />
 
-        <UpdateOthers v-if="isOthersSlideOverOpen" :isOpen="isOthersSlideOverOpen" :claim="selectedClaim"
-        @close="isOthersSlideOverOpen = false" @refresh-claims = "fetchAllClaims($route.params.rn)" />
+        <UpdateOthers
+            v-if="isOthersSlideOverOpen"
+            :isOpen="isOthersSlideOverOpen"
+            :claim="selectedClaim"
+            @close="isOthersSlideOverOpen = false"
+            @update-claim="updateClaim"
+        />
+
 
     </div>
 
@@ -181,6 +207,7 @@ import UpdateRefreshment from "./SlideOver/UpdateRefreshment.vue";
 import UpdateOthers from "./SlideOver/UpdateOthers.vue";
 import axios from "axios";
 import moment from "moment";
+import Swal from "sweetalert2";
 
 
 export default {
@@ -421,6 +448,416 @@ export default {
             //     this.loading = false;
             // }
         },
+
+        updateClaim(updatedClaim) {
+            const index = this.dataclaims.findIndex(c => c.unique_code === updatedClaim.unique_code);
+            if (index !== -1) {
+                this.dataclaims.splice(index, 1, updatedClaim);
+                this.claimDetails.grand_total = this.dataclaims.reduce((sum, claim) => {
+                    return sum + (parseFloat(claim.total) || 0);
+                }, 0).toFixed(2);
+                console.log("Grand Total:", this.claimDetails.grand_total);
+                console.log("Updated claim saved locally:", updatedClaim);
+            }
+        },
+
+
+        async resubmitForm() {
+            try {
+                this.loading = true;
+
+                for (const claim of this.dataclaims) {
+                    const { tabTitle, unique_code, refNo } = claim;
+
+                    const requester_id = this.claimDetails.requester_id;
+
+                    const payload = {
+                        requester_id,
+                        unique_code,
+                        newFiles: [],        // If no file updates are needed on resubmit, leave empty
+                        filesToDelete: [],
+                        files: [],           // Assuming existing files are managed
+                        ...claim 
+                    };
+                    console.log("Claim payload for resubmit:", payload);
+
+                    if (tabTitle === "Overseas Travelling") {
+                        await this.handleOverseasSubmit(payload);
+                    } else if (tabTitle === "Other") {
+                        await this.handleOthersSubmit(payload);
+                    } else if (tabTitle === "Entertainment") {
+                        await this.handleEntertainmentSubmit(payload);
+                    } else if (tabTitle === "Refreshment") {
+                        await this.handleRefreshmentSubmit(payload);
+                    } else if (tabTitle === "Local Travelling") {
+                        await this.handleLocalTravelSubmit(payload);
+                    } else if (tabTitle === "Handphone") {
+                        await this.handleHandphoneSubmit(payload);
+                    } else if (tabTitle === "Medical Leave") {
+                        await this.handleMedicalLeaveSubmit(payload);
+                    } 
+                }
+
+                const finalPayload = {
+                    name: this.claimDetails.name || '',
+                    company_name: this.claimDetails.company_name || '',
+                    department: this.claimDetails.department || '',
+                    reference_number: this.refNo || '',
+                    requester_email: this.claimDetails.email || '',
+                    report_name: this.claimDetails.report_name || '',
+                    grand_total: parseFloat(this.claimDetails.grand_total).toFixed(2) || 0.00,
+                    checker_email: this.claimDetails.checker_email || '',
+                    verifier_email: this.claimDetails.verifier_email || '',
+                    admin_status: 'RESUBMITTED',
+                };
+                console.log("Final payload for resubmit:", finalPayload);
+
+                const response = await axios.put(
+                    `http://172.28.28.116:6239/api/User/UpdateClaimDetails`,
+                    finalPayload,
+                    { headers: { "Content-Type": "application/json" } }
+                );
+
+                if (response.data?.result) {
+                    Swal.fire({
+                        title: "Success",
+                        text: "Claim and all entries resubmitted successfully",
+                        icon: "success",
+                        confirmButtonText: "OK",
+                        confirmButtonColor: "#3085d6"
+                    });
+
+                    // await this.fetchAllClaims(this.refNo);
+                    this.$router.push({ name: "eclaimhomepages" });
+                } else {
+                    Swal.fire({
+                        title: "Error",
+                        text: "Failed to resubmit final claim details",
+                        icon: "error",
+                        confirmButtonText: "OK",
+                        confirmButtonColor: "#dc2626"
+                    });
+                }
+
+            } catch (error) {
+                console.error("Error during full resubmit process:", error);
+                const msg = error.response?.data?.message || "Unexpected error during resubmission.";
+                Swal.fire("Error", msg, "error");
+            } finally {
+                this.loading = false;
+            }
+        },
+
+        async handleFileUpdates({ requester_id, unique_code, newFiles = [], filesToDelete = [] }) {
+            // Delete files
+            for (const fileUrl of filesToDelete) {
+                const fileName = fileUrl.split("/").pop();
+                await axios.delete(
+                    `https://esvcportal.pktgroup.com/api/file/api/Files/DeleteImage/${requester_id}/${unique_code}/${fileName}`
+                );
+            }
+
+            // Upload new files
+            if (newFiles.length > 0) {
+                const formData = new FormData();
+                newFiles.forEach(file => formData.append("filecollection", file));
+
+                await axios.post(
+                    `https://esvcportal.pktgroup.com/api/file/api/Files/MultiUploadImage/${requester_id}/${unique_code}`,
+                    formData,
+                    { headers: { "Content-Type": "multipart/form-data" } }
+                );
+            }
+        },  
+        
+        async handleOverseasSubmit(payload) {
+            try {
+                const {
+                newFiles,
+                filesToDelete,
+                requester_id,
+                unique_code,
+                files,
+                oem,
+                oemToDelete,
+                ...overseasData
+                } = payload;
+
+                console.log("Overseas submit payload:", payload);
+                if (oemToDelete && oemToDelete.length > 0) {
+                    for (const id of oemToDelete) {
+                        await axios.delete(`http://172.28.28.116:6239/api/User/DeleteOverseasExpenses/${id}`);
+                        console.log(`Deleted expense ID: ${id}`);
+                    }
+                }
+
+                await this.handleFileUpdates({ requester_id, unique_code, newFiles, filesToDelete });
+
+                console.log("Overseas file updates handled");
+                console.log("Overseas data before submit:", overseasData);
+                console.log("Overseas files before submit:", files);
+                console.log("Overseas oem before submit:", oem);
+                console.log("Overseas unique_code:", unique_code);
+                console.log("Overseas requester_id:", requester_id);
+
+                const submitData = {
+                ...overseasData,
+                files,
+                unique_code,
+                // requester_id,
+                oem: oem.filter(e => e.id), // only existing expenses go in PUT
+                };
+
+                console.log("Overseas submit data:", submitData);
+                console.log("expenses refNumber:", overseasData.expenses_refNumber);
+
+                const response = await axios.put(
+                "http://172.28.28.116:6239/api/User/UpdateOverseasOutstation",
+                submitData,
+                { headers: { "Content-Type": "application/json" } }
+                );
+
+
+                const newExpenses = oem.filter(e => !e.id);
+                    for (const expenses of newExpenses) {
+                    await axios.post("http://172.28.28.116:6239/api/User/InsertOverseasExpenses", {
+                        reference_number: overseasData.expenses_refNumber,
+                        oed: [{
+                        name: expenses.name || "",
+                        amount: parseFloat(expenses.amount).toFixed(2) || 0.00,
+                        description: expenses.description || "",
+                        foreign_currency: expenses.foreign_currency || "",
+                        exchange_rate: parseFloat(expenses.exchange_rate).toFixed(2) || 0.00,
+                        currency_total: parseFloat(expenses.currency_total).toFixed(2) || 0.00
+                        }]
+                    });
+                }
+                console.log("New expenses added:", newExpenses);
+                console.log("expenses refNumber:", overseasData.expenses_refNumber);
+
+            } catch (error) {
+                console.error("Overseas update error:", error);
+                const msg = error.response?.data?.message || "Unexpected error occurred.";
+                Swal.fire("Error", msg, "error");
+            }
+        },
+
+        async handleOthersSubmit(payload) {
+            try {
+                const {
+                newFiles,
+                filesToDelete,
+                requester_id,
+                unique_code,
+                files,
+                ...othersData
+                } = payload;
+                console.log("Others submit payload:", payload);
+
+                await this.handleFileUpdates({ requester_id, unique_code, newFiles, filesToDelete });
+
+                console.log("Others file updates handled");
+                console.log("Others data before submit:", othersData);
+                console.log("Others files before submit:", files);
+                console.log("Others unique_code:", unique_code);
+                console.log("Others requester_id:", requester_id);
+
+                const submitData = {
+                ...othersData,
+                files,
+                unique_code,
+                requester_id
+                };
+
+                const response = await axios.put(
+                "http://172.28.28.116:6239/api/User/UpdateOthers",
+                submitData,
+                { headers: { "Content-Type": "application/json" } }
+                );
+
+            } catch (error) {
+                console.error("Others update failed:", error);
+                const msg = error.response?.data?.message || "Unexpected error occurred.";
+                Swal.fire("Error", msg, "error");
+            }
+        },
+
+        async handleEntertainmentSubmit(payload) {
+            try {
+                const {
+                newFiles,
+                filesToDelete,
+                requester_id,
+                unique_code,
+                files,
+                participants,
+                participantsToDelete,
+                ...entertainmentData
+                } = payload;
+
+                console.log("Entertainment submit payload:", payload);
+                if (participantsToDelete && participantsToDelete.length > 0) {
+                    for (const id of participantsToDelete) {
+                        await axios.delete(`http://172.28.28.116:6165/api/User/DeleteParticipant/${id}`);
+                        console.log(`Deleted expense ID: ${id}`);
+                    }
+                }
+
+                await this.handleFileUpdates({ requester_id, unique_code, newFiles, filesToDelete });
+
+                console.log("Entertainment file updates handled");
+                console.log("Entertainment data before submit:", entertainmentData);
+                console.log("Entertainment files before submit:", files);
+                console.log("Entertainment oem before submit:", participants);
+                console.log("Entertainment unique_code:", unique_code);
+                console.log("Entertainment requester_id:", requester_id);
+
+                const submitData = {
+                ...entertainmentData,
+                files,
+                unique_code,
+                // requester_id,
+                participants: participants.filter(e => e.id), // only existing expenses go in PUT
+                };
+
+                console.log("Entertainment submit data:", submitData);
+                console.log("Entertainment refNumber:", entertainmentData.expenses_refNumber);
+
+                const response = await axios.put(
+                "http://172.28.28.116:6165/api/User/UpdateEntertainment",
+                submitData,
+                { headers: { "Content-Type": "application/json" } }
+                );
+
+
+                const newParticipants = participants.filter(e => !e.id);
+                    for (const entertainment of newParticipants) {
+                    await axios.post("http://172.28.28.116:6165/api/User/InsertParticipant", {
+                        reference_number: entertainmentData.ent_refNumber,
+                        participants: [{
+                        name: entertainment.name || "",
+                        company_name: entertainment.company_name || ""
+                        }]
+                    });
+                }
+                console.log("New expenses added:", newParticipants);
+                console.log("expenses refNumber:", entertainmentData.ent_refNumber);
+
+            } catch (error) {
+                console.error("Overseas update error:", error);
+                const msg = error.response?.data?.message || "Unexpected error occurred.";
+                Swal.fire("Error", msg, "error");
+            }
+        },
+        
+        async handleLocalTravelSubmit(payload) {
+            try {
+                const {
+                newFiles,
+                filesToDelete,
+                requester_id,
+                unique_code,
+                files,
+                ...localData
+                } = payload;
+                console.log("Local submit payload:", payload);
+
+                await this.handleFileUpdates({ requester_id, unique_code, newFiles, filesToDelete });
+
+                console.log("Local file updates handled");
+                console.log("Local data before submit:", localData);
+                console.log("Local files before submit:", files);
+                console.log("Local unique_code:", unique_code);
+                console.log("Local requester_id:", requester_id);
+
+                const submitData = {
+                ...localData,
+                files,
+                unique_code,
+                requester_id
+                };
+
+                const response = await axios.put(
+                "http://172.28.28.116:6239/api/User/UpdateLocalOutstation",
+                submitData,
+                { headers: { "Content-Type": "application/json" } }
+                );
+
+            } catch (error) {
+                console.error("Others update failed:", error);
+                const msg = error.response?.data?.message || "Unexpected error occurred.";
+                Swal.fire("Error", msg, "error");
+            }
+        },
+
+        async handleRefreshmentSubmit(payload) {
+            try {
+                const {
+                newFiles,
+                filesToDelete,
+                requester_id,
+                unique_code,
+                files,
+                sim,
+                simToDelete,
+                ...refreshmentData
+                } = payload;
+
+                console.log("Refreshment submit payload:", payload);
+                if (simToDelete && simToDelete.length > 0) {
+                    for (const id of simToDelete) {
+                        await axios.delete(`http://172.28.28.116:6239/api/User/DeleteStaffInvolved/${id}`);
+                        console.log(`Deleted sim ID: ${id}`);
+                    }
+                }
+
+                await this.handleFileUpdates({ requester_id, unique_code, newFiles, filesToDelete });
+
+                console.log("Refreshment file updates handled");
+                console.log("Refreshment data before submit:", refreshmentData);
+                console.log("Refreshment files before submit:", files);
+                console.log("Refreshment oem before submit:", sim);
+                console.log("Refreshment unique_code:", unique_code);
+                console.log("Refreshment requester_id:", requester_id);
+
+                const submitData = {
+                ...refreshmentData,
+                files,
+                unique_code,
+                // requester_id,
+                sim: sim.filter(e => e.id), // only existing expenses go in PUT
+                };
+
+                console.log("Refreshment submit data:", submitData);
+                console.log("staff involved refNumber:", refreshmentData.inv_refNumber);
+
+                const response = await axios.put(
+                "http://172.28.28.116:6239/api/User/UpdateStaffRefreshment",
+                submitData,
+                { headers: { "Content-Type": "application/json" } }
+                );
+
+
+                const newStaffInvolved = sim.filter(e => !e.id);
+                    for (const staff of newStaffInvolved) {
+                    await axios.post("http://172.28.28.116:6239/api/User/InsertStaffInvolved", {
+                        reference_number: refreshmentData.inv_refNumber,
+                        sim: [{
+                        name: staff.name || "",
+                        company_name: staff.company_name || "",
+                        department: staff.department || ""
+                        }]
+                    });
+                }
+                console.log("New expenses added:", newStaffInvolved);
+
+            } catch (error) {
+                console.error("Overseas update error:", error);
+                const msg = error.response?.data?.message || "Unexpected error occurred.";
+                Swal.fire("Error", msg, "error");
+            }
+        },
+
         getClaimDate(claim) {
             return claim.dateLT || claim.dateOT || claim.dateML ||
                 claim.dateE || claim.dateSR || claim.dateOthers || '-';

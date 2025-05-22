@@ -302,7 +302,9 @@ export default {
       exportParams: {
         company: null,
         startDate: null,
-        endDate: null
+        endDate: null,
+        branch: null,
+        department: null,
       },
     };
   },
@@ -362,7 +364,7 @@ export default {
     },
   },
   methods: {
-    handleHRReportFetch({ company, startDate, endDate }) {
+    handleHRReportFetch({ company, startDate, endDate, branch, department }) {
       // Redirect with query parameters
       this.$router.push({
         name: 'HRMonthlyReport', // this should match your route name for HRMonthlyReport.vue
@@ -370,6 +372,8 @@ export default {
           company,
           start_date: startDate,
           end_date: endDate,
+          branch,
+          department
         }
       });
     },

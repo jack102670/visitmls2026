@@ -201,35 +201,36 @@
                       <td class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
                         {{ (currentPage - 1) * itemsPerPage + index + 1 }}
                       </td>
-                      <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                      <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap text-left">
                         {{ data.report_name }}
                       </td>
-                      <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                      <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap text-left">
                         {{ data.reference_number }}
                       </td>
-                      <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                      <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap text-left">
                         {{ data.date_requested }}
                       </td>
                       <!-- <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         {{ data.endDate }}
                       </td> -->
-                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                        <div :class="getStatusContainerClass(
-                          data.admin_status.split('.')[0].split(' ')[0]
-                        )
-                          ">
-                          <span :class="getStatusDotClass(
-                            data.admin_status.split('.')[0].split(' ')[0]
-                          )
-                            "></span>
-                          <h2 :class="getStatusTextClass(
-                            data.admin_status.split('.')[0].split(' ')[0]
-                          )
-                            ">
-                            {{
-                              data.admin_status
-
-                            }}
+                      <td class="px-2 py-2 text-sm font-medium text-gray-700 whitespace-nowrap ">
+                        <div :class="[
+                              'inline-flex gap-x-1 rounded-full',
+                              'px-2 py-1',
+                              getStatusContainerClass(data.admin_status.split('.')[0].split(' ')[0])
+                            ]"
+                            style="font-size:0.93rem; min-width:0; min-height:0; line-height:1.2;"
+                            >
+                              <span :class="[
+                                'rounded-full',
+                                getStatusDotClass(data.admin_status.split('.')[0].split(' ')[0])
+                              ]"
+                              style="width:0.6rem; height:0.6rem; display:inline-block;"
+                            ></span>
+                                <h2 :class="getStatusTextClass(data.admin_status.split('.')[0].split(' ')[0])"
+                                style="font-size:0.93rem;"
+                            >
+                            {{ data.admin_status }}
                           </h2>
                         </div>
                       </td>
@@ -595,6 +596,7 @@ export default {
 </script>
 
 <style scoped>
+
 .PopUpAnimation .popup {
   animation: PopUpKeyframes 0.45s ease;
 }

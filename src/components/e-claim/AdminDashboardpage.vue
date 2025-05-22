@@ -101,22 +101,22 @@
                         <td class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
                           {{ (currentPage - 1) * itemsPerPage + index + 1 }}
                         </td>
-                        <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        <td class="text-left px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           {{ claim.report_name }}
                         </td>
-                        <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        <td class="text-left px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           {{ claim.requester_name }}
                         </td>
                         <!-- <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           {{ claim.verifier_name }}
                         </td> -->
-                        <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        <td class="text-left px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           {{ claim.reference_number }}
                         </td>
-                        <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        <td class="text-left px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           RM {{ claim.grand_total }}
                         </td>
-                        <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        <td class="text-left px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           {{ claim.date_requested }}
                         </td>
                         <!-- <td
@@ -183,23 +183,24 @@
                             </span>
                           </td> -->
 
-                        <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          <div :class="getStatusContainerClass(
-                            claim.admin_status.split('.')[0].split(' ')[0]
-                          )
-                            ">
-                            <span :class="getStatusDotClass(
-                              claim.admin_status.split('.')[0].split(' ')[0]
-                            )
-                              "></span>
-                            <h2 :class="getStatusTextClass(
-                              claim.admin_status.split('.')[0].split(' ')[0]
-                            )
-                              ">
-                              {{
-                                claim.admin_status
-
-                              }}
+                        <td class="px-2 py-2 text-sm font-medium text-gray-700 whitespace-nowrap">
+                          <div :class="[
+                                'inline-flex items-center gap-x-1 rounded-full',
+                                'px-2 py-1',
+                                getStatusContainerClass(claim.admin_status.split('.')[0].split(' ')[0])
+                              ]"
+                              style="font-size:0.93rem; min-width:0; min-height:0; line-height:1.2;"
+                              >
+                                <span :class="[
+                                  'rounded-full',
+                                  getStatusDotClass(claim.admin_status.split('.')[0].split(' ')[0])
+                                ]"
+                                style="width:0.6rem; height:0.6rem; display:inline-block;"
+                              ></span>
+                                  <h2 :class="getStatusTextClass(claim.admin_status.split('.')[0].split(' ')[0])"
+                                  style="font-size:0.93rem;"
+                              >
+                              {{ claim.admin_status }}
                             </h2>
                           </div>
                         </td>
@@ -534,3 +535,26 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+
+/* th, td {
+  padding-top: 0.35rem !important;
+  padding-bottom: 0.35rem !important;
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+  vertical-align: middle !important;
+}
+
+tbody tr {
+  height: 36px;
+}
+
+.inline-flex.items-center.gap-x-1.rounded-md {
+  border-radius: 0.7rem !important;
+  padding: 0.15rem 0.7rem !important;
+  min-width: 0;
+  min-height: 0;
+  line-height: 1.2;
+} */
+</style>

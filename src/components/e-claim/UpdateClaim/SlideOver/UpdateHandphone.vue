@@ -381,17 +381,17 @@ export default {
                 }
 
             const submitData = {
-            reference_number: this.handphone.reference_number,
-            claim_month: this.handphone.claim_month,
-            claim_year: this.handphone.claim_year,
-            files: this.handphone.files || [],
-            bank_name: this.handphone.bank_name,
-            bank_holder: this.handphone.bank_holder,
-            bank_account: this.handphone.bank_account,
-            claim_amount:this.handphone.claim_amount,
-            ic_number: this.handphone.ic_number,
-            unique_code: this.uniqueCode,
-            requester_id: this.requesterId
+                reference_number: this.handphone.reference_number,
+                claim_month: this.handphone.claim_month,
+                claim_year: this.handphone.claim_year,
+                files: this.handphone.files || [],
+                bank_name: this.handphone.bank_name,
+                bank_holder: this.handphone.bank_holder,
+                bank_account: this.handphone.bank_account,
+                claim_amount:this.handphone.claim_amount,
+                ic_number: this.handphone.ic_number,
+                unique_code: this.uniqueCode,
+                requester_id: this.requesterId
             
             };
             console.log("Submitting Handphone payload:", submitData);
