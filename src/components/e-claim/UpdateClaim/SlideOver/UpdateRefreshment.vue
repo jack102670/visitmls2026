@@ -47,8 +47,14 @@
                     </div>
                     
                     <div class="col-span-4">
-                        <label for="venue_name" class="font-medium text-sm">Venue Name</label>
+                        <label for="venue_name" class="font-medium text-sm">Restaurant Name</label>
                         <input type="text" id="venue_name" v-model="refreshment.venue_name"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+
+                    <div class="col-span-4">
+                        <label for="receipt_no" class="font-medium text-sm">Receipt No.</label>
+                        <input type="text" id="receipt_no" v-model="refreshment.receipt_no"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
                     
@@ -247,6 +253,7 @@ export default {
                 date_event: '',
                 reference_type: '',
                 venue_name: '',
+                receipt_no: '',
                 company_name: '',
                 total_fee: '',
                 comment: '',
@@ -687,6 +694,7 @@ export default {
             date_event: matchingUniqueID.date_event,
             reference_type: matchingUniqueID.reference_type,
             venue_name: matchingUniqueID.venue_name,
+            receipt_no: matchingUniqueID.receipt_no,
             company_name: matchingUniqueID.company_name,
             total_fee: matchingUniqueID.total_fee,
             reference_number: matchingUniqueID.reference_number,
@@ -845,6 +853,7 @@ export default {
                 date_event: this.formattedDate,
                 reference_type: this.refreshment.reference_type?.trim(),
                 venue_name: this.refreshment.venue_name,
+                receipt_no: this.refreshment.receipt_no,
                 company_name: this.refreshment.company_name,
                 total_fee: isNaN(parseFloat(this.refreshment.total_fee)) ? 0 : parseFloat(this.refreshment.total_fee),
                 reference_number: this.refreshment.reference_number,

@@ -82,9 +82,7 @@
                   <template v-if="!field.hidden">
                     <template v-if="
                       !isCompanyTransport ||
-                      (field.id !== 'MileageKMLT' &&
-                        field.id !== 'TransportSpec' &&
-                        field.id !== 'PublicTransportSpec' &&
+                      (field.id !== 'PublicTransportSpec' &&
                         field.id !== 'FareRMLT' &&
                         field.id !== 'UploadFareRMLT')
                     ">
@@ -95,8 +93,7 @@
                       ">
                         <template v-if="
                           !isPublicTransport ||
-                          (field.id !== 'MileageKMLT' &&
-                            field.id !== 'TransportSpec' &&
+                          (field.id !== 'TransportSpec' &&
                             field.id !== 'TollLT' &&
                             field.id !== 'UploadTollLT'&&
                             field.id !== 'transportNumberPlate' &&
@@ -1391,6 +1388,7 @@ export default {
               options: [
                 { label: "Motorcycle", value: "Motorcycle" },
                 { label: "Car", value: "Car" },
+                { label: "Truck", value: "Truck" },
               ],
               hidden: false,
               gridClass: "sm:col-span-1",
@@ -2112,7 +2110,15 @@ export default {
             },
             {
               id: "VenueE",
-              label: "Venue",
+              label: "Restaurant Name",
+              type: "text",
+              value: "",
+              required: false,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "ReceiptE",
+              label: "Receipt No.",
               type: "text",
               value: "",
               required: false,
@@ -2200,7 +2206,15 @@ export default {
             },
             {
               id: "VenueSR",
-              label: "Venue",
+              label: "Restaurant Name",
+              type: "text",
+              value: "",
+              required: false,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "ReceiptSR",
+              label: "Receipt No.",
               type: "text",
               value: "",
               required: false,

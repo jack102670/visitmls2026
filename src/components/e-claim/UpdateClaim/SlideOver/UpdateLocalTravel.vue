@@ -76,12 +76,12 @@
                     </div>
                     </div>
 
-                    <div class="col-span-8" v-if="local.transport_mode !== 'Company Transport'">
+                    <div class="col-span-8">
                         <label for="transport_specification" class="font-medium text-sm" >Transport Specification</label>
                         <input v-if="local.transport_mode === 'Public Transport'" type="text" id="transport_specification" v-model="local.transport_specification"
                         class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                         <!-- Show dropdown when mode is 'Personal' -->
-                        <select v-else-if="local.transport_mode === 'Personal Transport'" id="transport_specification" v-model="local.transport_specification"
+                        <select v-else-if="local.transport_mode === 'Personal Transport' " id="transport_specification" v-model="local.transport_specification"
                                 class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                                 <option v-for="(specify, index) in transportSpecifications" :key="index" :value="specify">{{ specify }}</option>
                         </select>
@@ -122,20 +122,20 @@
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
 
-                    <div class="col-span-8" v-if="local.transport_mode === 'Personal Transport'">
+                    <div class="col-span-8" >
                         <label for="mileage_km" class="font-medium text-sm" >Mileage/ Kilometer(KM)</label>
                         <input type="text" id="mileage_km" v-model="local.mileage_km"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
 
-                    <div class="col-span-4" v-if="local.transport_mode !== 'Personal Transport'">
+                    <div class="col-span-4">
                         <label for="type_petrol" class="font-medium text-sm" >Type of Petrol</label>
                             <select id="type_petrol" v-model="local.type_petrol" class="mt-1 text-xs block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                             <option v-for="(type, index) in petrolTypes" :key="index" :value="type">{{ type }}</option>
                         </select>
                     </div>
 
-                    <div class="col-span-4" v-if="local.transport_mode !== 'Personal Transport'">
+                    <div class="col-span-4">
                         <label for="type_petrol" class="font-medium text-sm" >Petrol(Litre)</label>
                             <input type="text" id="petrol_perlitre" v-model="local.petrol_perlitre"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
@@ -440,7 +440,7 @@ export default {
             uniqueCode: "",
             requesterId: "",
             filesToDelete: [],
-            transportSpecifications: ["Motorcycle", "Car"],
+            transportSpecifications: ["Motorcycle", "Car", "Truck"],
             petrolTypes: ["Ron95", "Diesel"]
             
         }

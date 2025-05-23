@@ -803,7 +803,7 @@
                   class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Venue:</label>
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Restaurant Name:</label>
                 <input type="text" id="nodeParentId" v-model="entertainmentDetails.VenueE" :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2" />
               </div>
@@ -958,7 +958,7 @@
                   class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Venue:</label>
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Restaurant Name:</label>
                 <input type="text" id="nodeParentId" v-model="staffRefreshmentDetails.VenueSR" :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2" />
               </div>
@@ -2103,6 +2103,7 @@ export default {
                     date_event: claim.dateE,
                     entertainment_type: claim.OtherTypeofEntertainmentE || claim.TypeofEntertainmentE,
                     venue_name: claim.VenueE,
+                    receipt_no: claim.ReceiptNoE,
                     company_name: claim.CompanyE,
                     total_fee: parseFloat(claim.AmountRME),
                     requester_id: this.userDetails.userId,
@@ -2138,6 +2139,7 @@ export default {
                     date_event: claim.dateSR,
                     company_name: claim.CompanySR,
                     venue_name: claim.VenueSR,
+                    receipt_no: claim.ReceiptSR,
                     reference_type: claim.ReferenceSR,
                     total_fee: claim.AmountRMSR,
                     reference_number: this.serialnumber,

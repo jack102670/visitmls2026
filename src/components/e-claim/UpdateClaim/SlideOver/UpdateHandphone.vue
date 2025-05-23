@@ -187,15 +187,16 @@ export default {
             Swal.fire({
                 icon: 'warning',
                 title: 'Exceeds Limit',
-                text: `Your claim amount exceeds the remaining limit of RM${limit}.`,
+                text: `Your claim amount exceeds the remaining limit of RM${restoredLimit}.`,
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'OK'
             });
-            this.handphone.claim_amount = limit; // Optionally reset to limit
+            // this.handphone.claim_amount = limit; // Optionally reset to limit
+            return true;
             
         }
     },
-      
+       
         deleteFile(index) {
         const deletedFile = this.handphone.files[index];
         Swal.fire({
@@ -246,6 +247,7 @@ export default {
         event.target.value = "";
         },
 
+
         async fetchHandphoneData(refNo) {
           
                 const response = await axios.get(`http://172.28.28.116:6165/api/User/GetHandphone/${refNo}`);
@@ -280,6 +282,8 @@ export default {
                         this.uniqueCode = matchingRecord.unique_code;
                         this.requesterId = matchingRecord.requester_id;
                         this.originalClaimAmount = parseFloat(matchingRecord.claim_amount) || 0;
+                        await this.fetchAndSetLimits();
+                       
                     } else {
                         console.log("No matching unique_code found");
                     }
@@ -288,6 +292,48 @@ export default {
                     console.error("Expected an array but got:", typeof dataArray, dataArray);
                     }
                     },
+         async fetchAndSetLimits() {
+                    try {
+                        // Replace with your actual API endpoint and user identifier
+                        const response = await axios.get(`http://172.28.28.116:6239/api/User/GetEmployeeById/${this.requesterId}`);
+                        const user = response.data.result[0];
+                        // Initialize limits only if they are not already set
+                    if (!localStorage.getItem('initial_limit_medicaldental')) {
+                        localStorage.setItem('initial_limit_medicaldental', user.limit_medicaldental);
+                    }
+                    if (!localStorage.getItem('initial_limit_outpatient')) {
+                        localStorage.setItem('initial_limit_outpatient', user.limit_outpatient);
+                    }
+                    if (!localStorage.getItem('initial_limit_amount')) {
+                        localStorage.setItem('initial_limit_amount', user.limit_amount);
+                    }
+
+                    this.remaining_medicaldental = localStorage.getItem('remaining_limit_medicaldental')
+                        ? parseFloat(localStorage.getItem('remaining_limit_medicaldental'))
+                        : parseFloat(localStorage.getItem('initial_limit_medicaldental'));
+
+                    this.remaining_outpatient = localStorage.getItem('remaining_limit_outpatient')
+                        ? parseFloat(localStorage.getItem('remaining_limit_outpatient'))
+                        : parseFloat(localStorage.getItem('initial_limit_outpatient'));
+
+                    this.remaining_amount = localStorage.getItem('remaining_limit_amount')
+                        ? parseFloat(localStorage.getItem('remaining_limit_amount'))
+                        : parseFloat(localStorage.getItem('initial_limit_amount'));
+
+                    // Save remaining limits back to localStorage if not already set
+                    if (!localStorage.getItem('remaining_limit_medicaldental')) {
+                        localStorage.setItem('remaining_limit_medicaldental', this.remaining_medicaldental);
+                    }
+                    if (!localStorage.getItem('remaining_limit_outpatient')) {
+                        localStorage.setItem('remaining_limit_outpatient', this.remaining_outpatient);
+                    }
+                    if (!localStorage.getItem('remaining_limit_amount')) {
+                        localStorage.setItem('remaining_limit_amount', this.remaining_amount);
+                    }
+                    } catch (error) {
+                        console.error("Failed to fetch medical limits:", error);
+                    }
+                },
 
         generateYears() {
             const currentYear = new Date().getFullYear();
@@ -305,8 +351,8 @@ export default {
             ];
         },
 
-        async handleSubmit() {
-        try {
+       
+            
             
             // const originalAmount = parseFloat(this.originalClaimAmount) || 0;
             // const newAmount = isNaN(parseFloat(this.handphone.claim_amount)) ? 0 : parseFloat(this.handphone.claim_amount);
@@ -345,121 +391,135 @@ export default {
             // // Update originalClaimAmount so future edits work correctly
             // this.originalClaimAmount = newAmount;
 
-            // Delete files marked for deletion
-                for (const fileUrl of this.filesToDelete) {
-                    const fileName = fileUrl.split('/').pop();
-                    await axios.delete(`http://172.28.28.116:7267/api/Files/DeleteImage/${this.requesterId}/${this.uniqueCode}/${fileName}`);
-                }
-                this.filesToDelete = [];
+      async handleSubmit() {
+        const updatedClaim = {
+            reference_number: this.handphone.reference_number,
+            claim_month: this.handphone.claim_month,
+            claim_year: this.handphone.claim_year,
+            files: this.handphone.files || [],
+            bank_name: this.handphone.bank_name,
+            bank_holder: this.handphone.bank_holder,
+            bank_account: this.handphone.bank_account,
+            claim_amount: isNaN(parseFloat(this.handphone.claim_amount)) ? 0 : parseFloat(this.handphone.claim_amount),
+            ic_number: this.handphone.ic_number,
+            unique_code: this.uniqueCode,
+            requester_id: this.requesterId,
+            originalClaimAmount: this.originalClaimAmount,
+            // limit_amount: this.handphoneLimit,
+            // limit_outpatient: this.remaining_outpatient,
+            // limit_medicaldental: this.remaining_medicaldental,
 
-                // 2. Upload new files
-                if (this.newFiles.length > 0) {
-                    const formData = new FormData();
-                    this.newFiles.forEach(file => formData.append("filecollection", file));
-                    const uploadEndpoint = `https://esvcportal.pktgroup.com/api/file/api/Files/MultiUploadImage/${this.requesterId}/${this.uniqueCode}`;
-                    await axios.post(uploadEndpoint, formData, {
-                        headers: { "Content-Type": "multipart/form-data" },
-                    });
-                    this.newFiles = [];
-                }
+            tabTitle: "Handphone",
+            locationPurpose: "-",
+            date: this.handphone.date_claim || "-",
+            total: this.handphone.claim_amount || 0
+     };
 
-                // 1. Validate claim amount against limit
-                const limit = parseFloat(localStorage.getItem('remaining_limit_amount')) || 0;
-                const original = parseFloat(this.originalClaimAmount) || 0;
-                const claim = parseFloat(this.handphone.claim_amount) || 0;
-                const restoredLimit = limit + original;
+      console.log("Submitting Handphone payload:", updatedClaim);
+      this.$emit("update-claim",updatedClaim);
+      this.closeSlideOver();
+    },
+        //     async handleSubmit() {
+        //         try {
+        //     // Delete files marked for deletion
+        //         for (const fileUrl of this.filesToDelete) {
+        //             const fileName = fileUrl.split('/').pop();
+        //             await axios.delete(`http://172.28.28.116:7267/api/Files/DeleteImage/${this.requesterId}/${this.uniqueCode}/${fileName}`);
+        //         }
+        //         this.filesToDelete = [];
 
-                if (claim > restoredLimit) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Exceeds Limit',
-                        text: `Your claim amount exceeds the remaining limit of RM${limit}. Please adjust your claim.`,
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'OK'
-                    });
-                    return; // Prevent submission
-                }
+        //         // 2. Upload new files
+        //         if (this.newFiles.length > 0) {
+        //             const formData = new FormData();
+        //             this.newFiles.forEach(file => formData.append("filecollection", file));
+        //             const uploadEndpoint = `https://esvcportal.pktgroup.com/api/file/api/Files/MultiUploadImage/${this.requesterId}/${this.uniqueCode}`;
+        //             await axios.post(uploadEndpoint, formData, {
+        //                 headers: { "Content-Type": "multipart/form-data" },
+        //             });
+        //             this.newFiles = [];
+        //         }
 
-            const submitData = {
-                reference_number: this.handphone.reference_number,
-                claim_month: this.handphone.claim_month,
-                claim_year: this.handphone.claim_year,
-                files: this.handphone.files || [],
-                bank_name: this.handphone.bank_name,
-                bank_holder: this.handphone.bank_holder,
-                bank_account: this.handphone.bank_account,
-                claim_amount:this.handphone.claim_amount,
-                ic_number: this.handphone.ic_number,
-                unique_code: this.uniqueCode,
-                requester_id: this.requesterId
+        //        this.validateHandphoneClaim();
+        //        const submitData = {
+        //         reference_number: this.handphone.reference_number,
+        //         claim_month: this.handphone.claim_month,
+        //         claim_year: this.handphone.claim_year,
+        //         files: this.handphone.files || [],
+        //         bank_name: this.handphone.bank_name,
+        //         bank_holder: this.handphone.bank_holder,
+        //         bank_account: this.handphone.bank_account,
+        //         claim_amount:this.handphone.claim_amount,
+        //         ic_number: this.handphone.ic_number,
+        //         unique_code: this.uniqueCode,
+        //         requester_id: this.requesterId
             
-            };
-            console.log("Submitting Handphone payload:", submitData);
+        //     };
+        //     console.log("Submitting Handphone payload:", submitData);
 
-            const response = await axios.put('http://172.28.28.116:6165/api/User/UpdateHandphoneReimburse', submitData, {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
+        //     const response = await axios.put('http://172.28.28.116:6165/api/User/UpdateHandphoneReimburse', submitData, {
+        //             headers: {
+        //                 "Content-Type": "application/json",
+        //             },
+        //         });
 
-            if (response.data && response.data.result) {
-                console.log("Update Handphone data:", response.data.result);
-                // Calculate and update the new limit
-                const limitKey = "remaining_limit_amount";
-                const initialKey = "initial_limit_amount";
-                const original = parseFloat(this.originalClaimAmount) || 0;
-                const claim = parseFloat(this.handphone.claim_amount) || 0;
-                let currentLimit = parseFloat(localStorage.getItem(limitKey)) || 0;
+        //     if (response.data && response.data.result) {
+        //         console.log("Update Handphone data:", response.data.result);
+        //         // Calculate and update the new limit
+        //         const limitKey = "remaining_limit_amount";
+        //         const initialKey = "initial_limit_amount";
+        //         const original = parseFloat(this.originalClaimAmount) || 0;
+        //         const claim = parseFloat(this.handphone.claim_amount) || 0;
+        //         let currentLimit = parseFloat(localStorage.getItem(limitKey)) || 0;
 
-                // Restore the original amount, then deduct the new claim amount
-                let updatedLimit = Math.max(0, currentLimit + original - claim);
+        //         // Restore the original amount, then deduct the new claim amount
+        //         let updatedLimit = Math.max(0, currentLimit + original - claim);
 
-                // Update both remaining and initial limit if you want both to reflect the new value
-                localStorage.setItem(limitKey, updatedLimit.toString());
-                localStorage.setItem(initialKey, updatedLimit.toString());
+        //         // Update both remaining and initial limit if you want both to reflect the new value
+        //         localStorage.setItem(limitKey, updatedLimit.toString());
+        //         localStorage.setItem(initialKey, updatedLimit.toString());
 
                 
-                Swal.fire({
-                    title: 'Success',
-                    text: 'Handphone claim updated successfully',
-                    icon: 'success',
-                    confirmButtonText: 'OK',
-                    confirmButtonColor: '#dc2626'
-                });
-                this.$emit('refresh-claims', this.claim.refNo);
-                this.closeSlideOver();
-            } else {
-                console.log("Update Handphone data not found");
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Failed to update handphone claim',
-                    icon: 'error',
-                    confirmButtonText: 'OK',
-                    confirmButtonColor: '#dc2626'
+        //         Swal.fire({
+        //             title: 'Success',
+        //             text: 'Handphone claim updated successfully',
+        //             icon: 'success',
+        //             confirmButtonText: 'OK',
+        //             confirmButtonColor: '#dc2626'
+        //         });
+        //         this.$emit('refresh-claims', this.claim.refNo);
+        //         this.closeSlideOver();
+        //     } else {
+        //         console.log("Update Handphone data not found");
+        //         Swal.fire({
+        //             title: 'Error',
+        //             text: 'Failed to update handphone claim',
+        //             icon: 'error',
+        //             confirmButtonText: 'OK',
+        //             confirmButtonColor: '#dc2626'
 
-                });
-            }
-        } catch (error) {
-            console.error("Error submitting data:", error);
+        //         });
+        //     }
+        // } catch (error) {
+        //     console.error("Error submitting data:", error);
             
-            let errorMessage = "An unexpected error occurred.";
-            if (error.response) {
-                errorMessage = error.response.data?.message || `Error: ${error.response.status} - ${error.response.statusText}`;
-            } else if (error.request) {
-                errorMessage = "No response received from the server.";
-            } else {
-                errorMessage = error.message;
-            }
+        //     let errorMessage = "An unexpected error occurred.";
+        //     if (error.response) {
+        //         errorMessage = error.response.data?.message || `Error: ${error.response.status} - ${error.response.statusText}`;
+        //     } else if (error.request) {
+        //         errorMessage = "No response received from the server.";
+        //     } else {
+        //         errorMessage = error.message;
+        //     }
 
-            Swal.fire({
-            title: 'Submission Failed',
-            text: errorMessage,
-            icon: 'error',
-            confirmButtonText: 'OK',
-            confirmButtonColor: '#dc2626'
-            });
-        }
-        },
+        //     Swal.fire({
+        //     title: 'Submission Failed',
+        //     text: errorMessage,
+        //     icon: 'error',
+        //     confirmButtonText: 'OK',
+        //     confirmButtonColor: '#dc2626'
+        //     });
+        // }
+        // },
         watch: {
         isOpen(newVal) {
             if (newVal) this.fetchHandphoneData();
