@@ -49,7 +49,19 @@
                         <input type="date" id="return_date" v-model="return_date"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
-                    <div class="col-span-8">
+
+                    <div class="col-span-4">
+                        <label for="departure_airport" class="font-medium text-sm">Flight Departure Airport</label>
+                        <input type="text" id="departure_airport" v-model="local.departure_airport"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                    <div class="col-span-4" >
+                        <label for="arrival_airport" class="font-medium text-sm" >Flight Arrival Airport</label>
+                        <input type="text" id="arrival_airport" v-model="local.arrival_airport"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+
+                    <div class="col-span-4">
                         <label class="font-medium text-sm">Travel Mode</label>
                         <div class="flex space-x-2">
                         <div class="mt-1" v-if="local.transport_mode === 'Personal Transport'">
@@ -74,6 +86,13 @@
                             </label>
                         </div>
                     </div>
+                    </div>
+
+                    <div class="col-span-4">
+                        <label for="class_airline" class="font-medium text-sm" >Flight Class</label>
+                        <select id="class_airline" v-model="local.class_airline" class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                             <option v-for="(specify, index) in flightClass" :key="index" :value="specify">{{ specify }}</option>
+                        </select>
                     </div>
 
                     <div class="col-span-8">
@@ -121,6 +140,36 @@
                         <input type="text" id="meal_allowance" v-model="local.meal_allowance"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
+
+                    <div class="col-span-4">
+                        <label for="checkin_date" class="font-medium text-sm">Check In Date</label>
+                        <input type="date" id="checkin_date" v-model="checkin_date"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                    <div class="col-span-4" >
+                        <label for="checkout_date" class="font-medium text-sm" >Check Out Date</label>
+                        <input type="date" id="checkout_date" v-model="checkout_date"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+
+                    <div class="col-span-4">
+                        <label for="number_of_nights" class="font-medium text-sm">Number of Nights</label>
+                        <input type="text" id="number_of_nights" v-model="local.number_of_nights"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+
+                    <div class="col-span-4">
+                        <label for="number_of_rooms" class="font-medium text-sm">Number of Rooms</label>
+                        <input type="text" id="number_of_rooms" v-model="local.number_of_rooms"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+
+                    <div class="col-span-8" >
+                        <label for="city" class="font-medium text-sm" >City (Hotel)</label>
+                        <input type="text" id="city" v-model="local.city"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+
 
                     <div class="col-span-8" >
                         <label for="mileage_km" class="font-medium text-sm" >Mileage/ Kilometer(KM)</label>
@@ -425,6 +474,14 @@ export default {
                 vehicle_model: "",
                 type_petrol: "",
                 petrol_perlitre: "",
+                departure_airport: "",
+                arrival_airport: "",
+                number_of_nights: "",
+                number_of_rooms: "",
+                city: "",
+                checkin_date: "",
+                checkout_date: "",
+                class_airline: "",
                 total_fee: "",
                 comment: "",
                 files: [],
@@ -440,6 +497,7 @@ export default {
             uniqueCode: "",
             requesterId: "",
             filesToDelete: [],
+            flightClass:["Business", "Economy"],
             transportSpecifications: ["Motorcycle", "Car", "Truck"],
             petrolTypes: ["Ron95", "Diesel"]
             
@@ -637,6 +695,14 @@ export default {
                             vehicle_model: matchingUniqueID.vehicle_model,
                             type_petrol: matchingUniqueID.type_petrol,
                             petrol_perlitre: matchingUniqueID.petrol_perlitre,
+                            departure_airport: matchingUniqueID.departure_airport,
+                            arrival_airport: matchingUniqueID.arrival_airport,
+                            number_of_nights: matchingUniqueID.number_of_nights,
+                            number_of_rooms: matchingUniqueID.number_of_rooms,
+                            city: matchingUniqueID.city,
+                            checkin_date: matchingUniqueID.checkin_date,
+                            checkout_date: matchingUniqueID.checkout_date,
+                            class_airline: matchingUniqueID.class_airline,
                             comment: matchingUniqueID.comment,
                             files: matchingUniqueID.files,
 
@@ -837,6 +903,14 @@ export default {
                 petrol_perlitre: isNaN(parseFloat(this.local.petrol_perlitre)) ? 0 : parseFloat(this.local.petrol_perlitre),
                 reference_number: this.local.reference_number,
                 total_fee: isNaN(parseFloat(this.totalFee)) ? 0 : parseFloat(this.totalFee),
+                departure_airport:this.local.departure_airport,
+                arrival_airport: this.local.arrival_airport,
+                number_of_nights:isNaN(parseFloat(this.local.number_of_nights)) ? 0 : parseFloat(this.local.number_of_nights),
+                number_of_rooms: isNaN(parseFloat(this.local.number_of_rooms)) ? 0 : parseFloat(this.local.number_of_rooms),
+                city: this.local.city,
+                checkin_date: this.local.checkin_date,
+                checkout_date: this.local.checkout_date,
+                class_airline: this.local.class_airline,
                 unique_code: this.uniqueCode,
                 files: this.local.files || [],
                 filesToDelete: this.filesToDelete,

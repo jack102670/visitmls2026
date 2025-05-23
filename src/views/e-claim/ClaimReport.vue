@@ -1301,6 +1301,7 @@ import axios from "axios";
 import { formStore } from "../store.js";
 import { store } from "../store.js";
 import Swal from 'sweetalert2';
+import { c } from "@/api/EclaimAPI";
 
 export default {
   name: "TEtstS",
@@ -2022,6 +2023,14 @@ export default {
                     vehicle_model:claim.transportModel || "-",
                     type_petrol:claim.petrolType || "-",
                     petrol_perlitre:claim.petrolLitre || "0",
+                    departure_airport: claim.DepartureAirportLT || "-",
+                    arrival_airport: claim.ArrivalAirportLT || "-",
+                    class_airline:claim.FlightClassLT || "-",
+                    checkin_date: claim.CheckInLT || "-",
+                    checkout_date: claim.CheckOutLT || "-",
+                    city:claim.HotelCityLT || "-",
+                    number_of_nights: claim.HotelNightLT || "0",
+                    number_of_rooms: claim.HotelRoomLT || "0",
                   };
                   console.log("Local Travelling Payload :", payload);
 
@@ -2061,7 +2070,30 @@ export default {
                     reference_number: this.serialnumber || "-",
                     unique_code: uniqueCodeOT || "-",
                     return_date: claim.ReturendateOT || "-",
+                    mileage_km: claim.MileageKMOT || 0,
+                    starting_point: claim.LocationStartOT || "-",
+                    end_point: claim.LocationEndOT || "-",
+                    park_fee: claim.ParkingOT || 0,
+                    toll_fee: claim.TollOT || 0,
+                    fare: claim.FareRMOT || 0,
+                    transport_specification: claim.TransportSpecOT || "-",
+                    transport_mode: claim.TransportOT || "-",
+                    total_mileage: claim.MileageRMOT || 0,
                     accommodation: claim.AccommodationOT || "-",
+                    vehicle_no: claim.transportNumberPlateOT || "-",
+                    vehicle_model: claim.transportModelOT || "-",
+                    type_petrol: claim.petrolTypeOT || "-",
+                    petrol_perlitre: claim.petrolLitreOT || "0",
+                    departure_airport: claim.DepartureAirportOT || "-",
+                    arrival_airport: claim.ArrivalAirportOT || "-",
+                    class_airline: claim.FlightClassOT || "-",
+                    checkin_date: claim.CheckInOT || "-",
+                    checkout_date: claim.CheckOutOT || "-",
+                    city: claim.HotelCityOT || "-",
+                    number_of_nights: claim.HotelNightOT || "0",
+                    number_of_rooms: claim.HotelRoomOT || "0",
+                    
+
                     oem: claim.otherExpenses
                       ? claim.otherExpenses.map((expense) => ({
                           name: expense.name || "-",
