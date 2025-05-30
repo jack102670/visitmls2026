@@ -50,33 +50,33 @@
                 <div class=" border border-gray-200 dark:border-gray-700 md:rounded-lg">
                   <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover strip">
                     <thead class="bg-gray-50 dark:bg-gray-800">
-                      <tr>
-                        <th scope="col" class="px-6 py-3">No</th>
-                        <th
-                          class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                          Report Name
-                        </th>
-                        <th
-                          class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                          Requester Name
-                        </th>
-                        <!-- <th
-                          class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                          Verifier Name
-                        </th> -->
-                        <th
-                          class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                          Reference Number
-                        </th>
-                        <th
-                          class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                          Amount
-                        </th>
-                        <th
-                          class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                          <span>
-                            Date requested
-                          </span>
+                    <tr>
+                      <th scope="col" class="w-1/12 px-6 py-3">No</th>
+                      <!-- <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Branch</span>
+                        </div>
+                      </th> -->
+                      <th scope="col"
+                        class="px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3 whitespace-nowrap">
+                          <span>Reference Number</span>
+                        </div>
+                      </th>
+
+                      <th scope="col"
+                        class="px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3 whitespace-nowrap">
+                          <span>Report Name</span>
+                        </div>
+                      </th>
+                      <th scope="col"
+                        class="w-1/6 px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3 whitespace-nowrap">
+                          <span>Date Requested</span>
                           <span class="ml-1 cursor-pointer" @click="toggleSort('date_requested')">
                             <template v-if="sortField === 'date_requested'">
                               {{ sortDirection === 'desc' ? '↓' : '↑' }}
@@ -85,24 +85,46 @@
                               <span class="text-gray-300">↕</span>
                             </template>
                           </span>
-                        </th>
-                        <th
-                          class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                          Status
-                        </th>
-                        <th
-                          class="text-nowrap px-4 text-center py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                          View
-                        </th>
-                      </tr>
-                    </thead>
+                        </div>
+                      </th>
+                      <th scope="col"
+                        class="w-1/6 px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3 whitespace-nowrap">
+                          <span>Requester Name</span>
+                        </div>
+                      </th>
+                      <th scope="col"
+                        class="w-1/12 px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3 whitespace-nowrap">
+                          <span>Amount</span>
+                        </div>
+                      </th>
+
+                      <th scope="col"
+                        class="w-1/6 px-2 py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">
+                        
+                          <span>Status</span>
+                        
+                      </th>
+                      <th scope="col"
+                        class="w-1/12 px-2 py-3.5 text-center text-sm font-normal rtl:text-right text-gray-500 dark:text-gray-400">
+                        <span>View</span>
+                      </th>
+                    </tr>
+                  </thead>
                     <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                       <tr v-for="(claim, index) in paginatedApplications" :key="index">
                         <td class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
                           {{ (currentPage - 1) * itemsPerPage + index + 1 }}
                         </td>
                         <td class="text-left px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {{ claim.reference_number }}
+                        </td>
+                        <td class="text-left px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           {{ claim.report_name }}
+                        </td>
+                        <td class="text-left px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {{ claim.date_requested }}
                         </td>
                         <td class="text-left px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           {{ claim.requester_name }}
@@ -111,13 +133,7 @@
                           {{ claim.verifier_name }}
                         </td> -->
                         <td class="text-left px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          {{ claim.reference_number }}
-                        </td>
-                        <td class="text-left px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           RM {{ claim.grand_total }}
-                        </td>
-                        <td class="text-left px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          {{ claim.date_requested }}
                         </td>
                         <!-- <td
                             class="px-12 py-4 text-sm font-medium text-gray-700 text-wrap whitespace-nowrap"
@@ -200,7 +216,7 @@
                                   <h2 :class="getStatusTextClass(claim.admin_status.split('.')[0].split(' ')[0])"
                                   style="font-size:0.93rem;"
                               >
-                              {{ claim.admin_status }}
+                              {{ claim.admin_status.split(' ')[0].split('.')[0] }}
                             </h2>
                           </div>
                         </td>
@@ -343,7 +359,7 @@ export default {
         (claim.requester_name && claim.requester_name.toLowerCase().includes(query)) ||
         (claim.verifier_name && claim.verifier_name.toLowerCase().includes(query)) ||
         (claim.reference_number && claim.reference_number.toLowerCase().includes(query)) ||
-        (claim.grand_total && claim.grand_total.toLowerCase().includes(query)) ||
+        (claim.grand_total && String(claim.grand_total).includes(query)) ||
         (claim.date_requested && claim.date_requested.toLowerCase().includes(query)) ||
         (claim.admin_status && claim.admin_status.toLowerCase().includes(query))
       );

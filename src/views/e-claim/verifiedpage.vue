@@ -43,7 +43,7 @@
                   class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe border border-gray-200 dark:border-gray-700 md:rounded-lg rounded-md">
                   <thead class="bg-gray-50 dark:bg-gray-800">
                     <tr>
-                      <th scope="col" class="px-6 py-3">No</th>
+                      <th scope="col" class="w-1/12 px-6 py-3">No</th>
                       <!-- <th
                         scope="col"
                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
@@ -66,7 +66,7 @@
                         </div>
                       </th>
                       <th scope="col"
-                        class="px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        class="w-1/6 px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3 whitespace-nowrap">
                           <span>Date Requested</span>
                           <span class="ml-1 cursor-pointer" @click="toggleSort('date_requested')">
@@ -80,26 +80,26 @@
                         </div>
                       </th>
                       <th scope="col"
-                        class="px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        class="w-1/6 px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3 whitespace-nowrap">
                           <span>Requester Name</span>
                         </div>
                       </th>
                       <th scope="col"
-                        class="px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        class="w-1/12 px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3 whitespace-nowrap">
                           <span>Amount</span>
                         </div>
                       </th>
 
                       <th scope="col"
-                        class="px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <div class="flex items-center gap-x-3">
+                        class="w-1/6 px-2 py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">
+                        
                           <span>Status</span>
-                        </div>
+                        
                       </th>
                       <th scope="col"
-                        class="px-2 py-3.5 text-center text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        class="w-1/12 px-2 py-3.5 text-center text-sm font-normal rtl:text-right text-gray-500 dark:text-gray-400">
                         <span>View</span>
                       </th>
                     </tr>
@@ -182,7 +182,7 @@
                             style="font-size:0.93rem; min-width:0; min-height:0; line-height:1.2;"
                             >
                               <span :class="[
-                                'rounded-full',
+                                'rounded-full ',
                                 getStatusDotClass(item.admin_status.split('.')[0].split(' ')[0])
                               ]"
                               style="width:0.6rem; height:0.6rem; display:inline-block;"
@@ -191,7 +191,7 @@
                                 style="font-size:0.93rem;"
                             >
                             {{
-                              item.admin_status
+                              item.admin_status.split(' ')[0].split('.')[0]
 
                             }}
                           </h2>

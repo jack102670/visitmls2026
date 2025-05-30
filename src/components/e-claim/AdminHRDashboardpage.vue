@@ -52,46 +52,64 @@
                   class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover strip border border-gray-200 dark:border-gray-700 md:rounded-lg">
                   <thead class="bg-gray-50 dark:bg-gray-800">
                     <tr>
-                      <th scope="col" class="px-4 py-3">No</th>
-                      <th
-                        class="text-nowrappy-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        Report Name
-                      </th>
-                      <th
-                        class="text-nowrap py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        Requester Name
-                      </th>
+                      <th scope="col" class="w-1/12 px-6 py-3">No</th>
                       <!-- <th
-                        class="text-nowrap py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        Verifier Name
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Branch</span>
+                        </div>
                       </th> -->
-                      <th
-                        class="text-nowrap py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        Reference Number
+                      <th scope="col"
+                        class="px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3 whitespace-nowrap">
+                          <span>Reference Number</span>
+                        </div>
                       </th>
-                      <th
-                        class="text-nowrap py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        Amount
+
+                      <th scope="col"
+                        class="px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3 whitespace-nowrap">
+                          <span>Report Name</span>
+                        </div>
                       </th>
-                      <th
-                        class="text-nowrap py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        Date requested
-                        <span class="ml-1 cursor-pointer" @click="toggleSort('date_requested')">
-                          <template v-if="sortField === 'date_requested'">
-                            {{ sortDirection === 'desc' ? '↓' : '↑' }}
-                          </template>
-                          <template v-else>
-                            <span class="text-gray-300">↕</span>
-                          </template>
-                        </span>
+                      <th scope="col"
+                        class="w-1/6 px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3 whitespace-nowrap">
+                          <span>Date Requested</span>
+                          <span class="ml-1 cursor-pointer" @click="toggleSort('date_requested')">
+                            <template v-if="sortField === 'date_requested'">
+                              {{ sortDirection === 'desc' ? '↓' : '↑' }}
+                            </template>
+                            <template v-else>
+                              <span class="text-gray-300">↕</span>
+                            </template>
+                          </span>
+                        </div>
                       </th>
-                      <th
-                        class="text-nowrap py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        Status
+                      <th scope="col"
+                        class="w-1/6 px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3 whitespace-nowrap">
+                          <span>Requester Name</span>
+                        </div>
                       </th>
-                      <th
-                        class="text-nowrap py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        View
+                      <th scope="col"
+                        class="w-1/12 px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3 whitespace-nowrap">
+                          <span>Amount</span>
+                        </div>
+                      </th>
+
+                      <th scope="col"
+                        class="w-1/6 px-2 py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">
+                        
+                          <span>Status</span>
+                        
+                      </th>
+                      <th scope="col"
+                        class="w-1/12 px-2 py-3.5 text-center text-sm font-normal rtl:text-right text-gray-500 dark:text-gray-400">
+                        <span>View</span>
                       </th>
                     </tr>
                   </thead>
@@ -100,8 +118,14 @@
                       <td class="px-4 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
                         {{ (currentPage - 1) * itemsPerPage + index + 1 }}
                       </td>
+                      <td class="text-wrap  py-4 px-2 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        {{ claim.reference_number }}
+                      </td>
                       <td class="text-wrap py-4 px-2 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         {{ claim.report_name }}
+                      </td>
+                      <td class="text-wrap  py-4 px-2 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                        {{ claim.date_requested }}
                       </td>
                       <td class="text-wrap py-4 px-2 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         {{ claim.requester_name }}
@@ -109,14 +133,8 @@
                       <!-- <td class="text-wrap py-4 px-2 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         {{ claim.verifier_name }}
                       </td> -->
-                      <td class="text-wrap  py-4 px-2 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        {{ claim.reference_number }}
-                      </td>
                       <td class="text-wrap py-4 px-2 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         RM {{ claim.grand_total }}
-                      </td>
-                      <td class="text-wrap  py-4 px-2 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                        {{ claim.date_requested }}
                       </td>
                       <!-- <td class=" py-4 px-2 text-sm font-medium text-gray-700 text-wrap whitespace-nowrap">
                         <span :class="{
@@ -149,26 +167,28 @@
                           </span>
                         </span>
                       </td> -->
-                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                          <div :class="getStatusContainerClass(
-                            claim.admin_status.split('.')[0].split(' ')[0]
-                          )
-                            ">
-                            <span :class="getStatusDotClass(
-                              claim.admin_status.split('.')[0].split(' ')[0]
-                            )
-                              "></span>
-                            <h2 :class="getStatusTextClass(
-                              claim.admin_status.split('.')[0].split(' ')[0]
-                            )
-                              ">
-                              {{
-                                claim.admin_status
-
-                              }}
+                      <td class="px-2 py-2 text-sm font-medium text-gray-700 whitespace-nowrap">
+                          <div :class="[
+                                'inline-flex items-center gap-x-1 rounded-full',
+                                'px-2 py-1',
+                                getStatusContainerClass(claim.admin_status.split('.')[0].split(' ')[0])
+                              ]"
+                              style="font-size:0.93rem; min-width:0; min-height:0; line-height:1.2;"
+                              >
+                                <span :class="[
+                                  'rounded-full',
+                                  getStatusDotClass(claim.admin_status.split('.')[0].split(' ')[0])
+                                ]"
+                                style="width:0.6rem; height:0.6rem; display:inline-block;"
+                              ></span>
+                                  <h2 :class="getStatusTextClass(claim.admin_status.split('.')[0].split(' ')[0])"
+                                  style="font-size:0.93rem;"
+                              >
+                              {{ claim.admin_status.split(' ')[0].split('.')[0] }}
                             </h2>
                           </div>
                         </td>
+                        
                       <td class="px-4 py-4 text-sm text-center text-gray-500 dark:text-gray-300 whitespace-nowrap">
                         <button @click="ViewClaim(claim.reference_number)"
                           class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
@@ -317,7 +337,7 @@ export default {
         (claim.verifier_name && claim.verifier_name.toLowerCase().includes(query)) ||
         (claim.reference_number && claim.reference_number.toLowerCase().includes(query)) ||
         (claim.date_requested && claim.date_requested.toLowerCase().includes(query)) ||
-        (claim.grand_total && claim.grand_total.toLowerCase().includes(query)) ||
+        (claim.grand_total && claim.String(claim.grand_total).toLowerCase().includes(query)) ||
         (claim.admin_status && claim.admin_status.toLowerCase().includes(query))
       );
     },
@@ -435,8 +455,8 @@ export default {
 
     getStatusContainerClass(status) {
       const colorMap = {
-        RESUBMIT:
-          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
+        RESUBMITTED:
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-amber-100/60 dark:bg-gray-800',
         CLOSE:
           'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800',
         OPEN: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-indigo-100/60 dark:bg-gray-800',
@@ -459,7 +479,7 @@ export default {
     },
     getStatusDotClass(status) {
       const colorMap = {
-        RESUBMIT: 'h-1.5 w-1.5 rounded-full bg-orange-500',
+        RESUBMITTED: 'h-1.5 w-1.5 rounded-full bg-amber-500',
         OPEN: 'h-1.5 w-1.5 rounded-full bg-indigo-500',
         APPROVED: 'h-1.5 w-1.5 rounded-full bg-emerald-500',
         COMPLETED: 'h-1.5 w-1.5 rounded-full bg-blue-500',
@@ -472,7 +492,7 @@ export default {
     },
     getStatusTextClass(status) {
       const colorMap = {
-        RESUBMIT: 'text-sm font-normal text-orange-500',
+        RESUBMITTED: 'text-sm font-normal text-amber-500',
         OPEN: 'text-sm font-normal text-indigo-500',
         APPROVED: 'text-sm font-normal text-emerald-500',
         COMPLETED: 'text-sm font-normal text-blue-500',

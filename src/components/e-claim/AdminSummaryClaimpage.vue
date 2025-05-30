@@ -1,7 +1,7 @@
 <template>
   <main class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 dark:text-white p-4 sm:ml-64">
     <div class="mx-auto text-xs lg:text-base">
-      <div id="summaryPrint"
+      <div id="summaryPrint content-to-export"
         class="relative bg-[#f7fbff] dark:bg-gray-900 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
         <h1 class="text-gray-500 italic absolute top-4 right-4">
           SN: {{ referenceNumber }}
@@ -37,16 +37,24 @@
               class="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white rounded-xl px-8 text-sm font-bold py-2">
               See More
             </button>
-            <button v-show="seeMore" @click="PrintSummary">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-7 h-7">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
-              </svg>
-            </button>
+            <div v-show="seeMore">
+              <button class="mr-2" @click="ExportToExcel">
+                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0,0,256,256"
+                style="fill:#1A1A1A;">
+                <g fill="#1a1a1a" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(8,8)"><path d="M15.875,4l-0.09375,0.03125l-11,2.4375l-0.78125,0.1875v18.6875l0.78125,0.1875l11,2.4375l0.09375,0.03125h2.125v-3h10v-18h-10v-3zM16,6.03125v19.9375l-10,-2.1875v-15.5625zM18,9h8v14h-8v-2h2v-2h-2v-1h2v-2h-2v-1h2v-2h-2v-1h2v-2h-2zM21,10v2h4v-2zM14.15625,11l-2.28125,0.28125l-1.25,2.6875c-0.13281,0.38672 -0.23047,0.67969 -0.28125,0.875h-0.03125c-0.07812,-0.32422 -0.15234,-0.60547 -0.25,-0.84375l-0.625,-2.3125l-2.125,0.25l-0.09375,0.0625l1.78125,4l-2,4l2.15625,0.25l0.875,-2.46875c0.10547,-0.3125 0.19141,-0.56641 0.21875,-0.71875h0.03125c0.05859,0.32422 0.09766,0.56641 0.15625,0.6875l1.34375,2.9375l2.4375,0.3125l-2.65625,-5.03125zM21,13v2h4v-2zM21,16v2h4v-2zM21,19v2h4v-2z"></path></g></g>
+                </svg>
+              </button>
+              <button  @click="PrintSummary">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-7 h-7">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
-        <div id="claimant-informations"
+        <div id="claimant-informations" ref="divToExport"
           class="text-sm grid grid-cols-2 lg:grid-cols-3 gap-2 [&>*:nth-child(even)]:text-right lg:[&>*:nth-child(even)]:text-left">
           <div class="mt-2 h-10">
             <h2 class="font-semibold">Name of Claimaint :</h2>
@@ -141,7 +149,7 @@
         </div>
 
         <!-- Details -->
-        <div class="details" v-show="seeMore">
+        <div class="details" ref="divToExport2" v-show="seeMore">
           <div v-for="(detail, i) in claimDatasDetails" :key="i" class="detail-table mt-5">
             <h1 class="mt-4 text-xl font-semibold tab-title" v-if="detail && detail.length > 0">
               {{ detail[0].Tab_Title }}
@@ -601,6 +609,7 @@
 import fileSaver from 'file-saver';
 import axios from 'axios';
 import { store } from '@/views/store.js';
+import * as XLSX from 'xlsx';
 
 export default {
   name: 'AdminSummaryClaimpage',
@@ -1264,7 +1273,83 @@ export default {
         console.error('Fatal error in FetchClaimDatasDetails:', e);
       }
     },
-
+    ExportToExcel() {
+      // Create a new workbook
+      const wb = XLSX.utils.book_new();
+      
+      // Collect all data in one array for a single sheet
+      const allData = [];
+      
+      // 1. Process claimant information div (divToExport)
+      const claimantInfoDiv = this.$refs.divToExport;
+      const claimantInfoItems = claimantInfoDiv.querySelectorAll('div');
+      
+      // Add claimant info header
+      allData.push(['CLAIMANT INFORMATION']);
+      allData.push([]); // empty row
+      
+      // Process claimant info in pairs (since it's a grid layout)
+      for (let i = 0; i < claimantInfoItems.length; i += 2) {
+        const item1 = claimantInfoItems[i];
+        const item2 = claimantInfoItems[i + 1] || { textContent: '' };
+        
+        const label1 = item1.querySelector('h2')?.textContent.trim() || '';
+        const value1 = item1.querySelector('p')?.textContent.trim() || '';
+        const label2 = item2.querySelector('h2')?.textContent.trim() || '';
+        const value2 = item2.querySelector('p')?.textContent.trim() || '';
+        
+        allData.push([label1, value1, label2, value2]);
+      }
+      
+      // Add separator
+      allData.push([]);
+      allData.push(['CLAIM DETAILS']);
+      allData.push([]);
+      
+      // 2. Process details div with multiple tables (divToExport2)
+      const detailsDiv = this.$refs.divToExport2;
+      const detailTables = detailsDiv.querySelectorAll('.detail-table');
+      
+      detailTables.forEach((detailTable, tableIndex) => {
+        // Add table title
+        const title = detailTable.querySelector('.tab-title')?.textContent.trim();
+        if (title) {
+          allData.push([title]);
+        }
+        
+        // Process the table
+        const table = detailTable.querySelector('table');
+        const tableData = XLSX.utils.table_to_sheet(table);
+        const tableArray = XLSX.utils.sheet_to_json(tableData, { header: 1 });
+        
+        // Add table data to allData
+        tableArray.forEach(row => allData.push(row));
+        
+        // Add separator between tables
+        if (tableIndex < detailTables.length - 1) {
+          allData.push([]);
+        }
+      });
+      
+      // Create worksheet from combined data
+      const ws = XLSX.utils.aoa_to_sheet(allData);
+      
+      // Set column widths for better formatting
+      const colWidths = [
+        { wch: 20 }, // First column width
+        { wch: 30 }, // Second column width
+        { wch: 20 }, // Third column width
+        { wch: 30 }  // Fourth column width
+      ];
+      ws['!cols'] = colWidths;
+      
+      // Add worksheet to workbook
+      XLSX.utils.book_append_sheet(wb, ws, "Claim Report");
+      
+      // Generate Excel file and download
+      XLSX.writeFile(wb, `Claim_Report_${this.claimDetails.name || 'export'}.xlsx`);
+    
+    },
     PrintSummary() {
       // print();
       const printStyles = `

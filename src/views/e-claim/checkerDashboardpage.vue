@@ -53,26 +53,34 @@
                 <div class=" border border-gray-200 dark:border-gray-700 md:rounded-lg">
                   <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-700 rounded-lg text-xs md:text-sm">
                     <thead class="bg-gray-50 dark:bg-gray-800">
-                      <tr>
-                        <th scope="col" class="px-6 py-3">No</th>
-                        <th scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                          <div class="flex items-center gap-x-3 whitespace-nowrap">
-                            <span>Reference Number</span>
-                          </div>
-                        </th>
+                    <tr>
+                      <th scope="col" class="w-1/12 px-6 py-3">No</th>
+                      <!-- <th
+                        scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                      >
+                        <div class="flex items-center gap-x-3">
+                          <span>Branch</span>
+                        </div>
+                      </th> -->
+                      <th scope="col"
+                        class="px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3 whitespace-nowrap">
+                          <span>Reference Number</span>
+                        </div>
+                      </th>
 
-                        <th scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                          <div class="flex items-center gap-x-3 whitespace-nowrap">
-                            <span>Report Name</span>
-                          </div>
-                        </th>
-                        <th scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                          <div class="flex items-center gap-x-3 whitespace-nowrap">
-                            <span>Date Requested</span>
-                            <span class="ml-1 cursor-pointer" @click="toggleSort('date_requested')">
+                      <th scope="col"
+                        class="px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3 whitespace-nowrap">
+                          <span>Report Name</span>
+                        </div>
+                      </th>
+                      <th scope="col"
+                        class="w-1/6 px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3 whitespace-nowrap">
+                          <span>Date Requested</span>
+                          <span class="ml-1 cursor-pointer" @click="toggleSort('date_requested')">
                             <template v-if="sortField === 'date_requested'">
                               {{ sortDirection === 'desc' ? '↓' : '↑' }}
                             </template>
@@ -80,33 +88,33 @@
                               <span class="text-gray-300">↕</span>
                             </template>
                           </span>
-                          </div>
-                        </th>
-                        <th scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                          <div class="flex items-center gap-x-3 whitespace-nowrap">
-                            <span>Requester Name</span>
-                          </div>
-                        </th>
-                        <th scope="col"
-                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                          <div class="flex items-center gap-x-3 whitespace-nowrap">
-                            <span>Amount</span>
-                          </div>
-                        </th>
+                        </div>
+                      </th>
+                      <th scope="col"
+                        class="w-1/6 px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3 whitespace-nowrap">
+                          <span>Requester Name</span>
+                        </div>
+                      </th>
+                      <th scope="col"
+                        class="w-1/12 px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3 whitespace-nowrap">
+                          <span>Amount</span>
+                        </div>
+                      </th>
 
-                        <th scope="col"
-                          class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                          <div class="flex items-center gap-x-3">
-                            <span>Status</span>
-                          </div>
-                        </th>
-
-                        <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                          <span class="">View</span>
-                        </th>
-                      </tr>
-                    </thead>
+                      <th scope="col"
+                        class="w-1/6 px-2 py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">
+                        
+                          <span>Status</span>
+                        
+                      </th>
+                      <th scope="col"
+                        class="w-1/12 px-2 py-3.5 text-center text-sm font-normal rtl:text-right text-gray-500 dark:text-gray-400">
+                        <span>View</span>
+                      </th>
+                    </tr>
+                  </thead>
                     <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                       <tr v-for="(item, index) in paginatedApplications" :key="index">
                         <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
@@ -154,15 +162,15 @@
                                   style="font-size:0.93rem;"
                               >
                               {{
-                                item.admin_status
+                                item.admin_status.split(' ')[0].split('.')[0]
 
                               }}
                             </h2>
                           </div>
                         </td>
 
-                        <td class="px-4 py-4 ml text-sm whitespace-nowrap">
-                          <div class="flex items-center gap-x-6">
+                        <td class="px-4 py-4 ml justify-center items-center text-sm whitespace-nowrap">
+                          <div class="gap-x-6 text-center">
                             <button @click="ViewClaim(item.reference_number)"
                               class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

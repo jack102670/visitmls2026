@@ -144,7 +144,7 @@
             </div>
             <div class="overflow-x-auto">
               <div class="inline-block min-w-full py-2 align-middle">
-                <table
+                <table ref="myTable"
                   class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe border border-gray-200 dark:border-gray-700 md:rounded-lg">
                   <thead class="bg-gray-50 dark:bg-gray-800">
                     <tr>
@@ -230,7 +230,7 @@
                                 <h2 :class="getStatusTextClass(data.admin_status.split('.')[0].split(' ')[0])"
                                 style="font-size:0.93rem;"
                             >
-                            {{ data.admin_status }}
+                            {{ data.admin_status.split(' ')[0].split('.')[0] }}
                           </h2>
                         </div>
                       </td>
@@ -331,6 +331,7 @@ export default {
       userDetails: {},
       requests: [],
       userApplications: [],
+      currentFilter: '',
       searchQuery: '',
       sortField: 'date_requested',
       sortDirection: 'desc',
@@ -371,7 +372,17 @@ export default {
       );
     },
     sortedApplications() {
-      return [...this.userApplications].sort((a, b) => {
+      let originalApplications = this.userApplications
+      if (this.currentFilter != '') {
+        originalApplications = originalApplications.filter(item => {
+        return item.admin_status.split(' ')[0] === this.currentFilter;
+        });
+        console.log(this.currentFilter)
+        console.log(originalApplications)
+      }
+      
+
+      return [...originalApplications].sort((a, b) => {
         const dateA = new Date(a[this.sortField]).getTime();
         const dateB = new Date(b[this.sortField]).getTime();
         return this.sortDirection === 'desc' ? dateB - dateA : dateA - dateB;
@@ -436,6 +447,9 @@ export default {
     updateItemsPerPage(event) {
       this.itemsPerPage = parseInt(event.target.value);
       this.currentPage = 1;
+      const table = $(this.$refs.myTable).DataTable();
+      table.page.len(this.itemsPerPage).draw();
+      console.log(this.itemsPerPage)
     },
     toggleSort(field) {
       if (this.sortField === field) {
@@ -453,15 +467,12 @@ export default {
       this.$router.push({ name: 'updateclaim', params: { rn } })
     },
     initializeDataTable() {
-      $(this.$refs.myTable).DataTable({});
+      $(this.$refs.myTable).DataTable({
+        dom: 'T'
+      });
     },
     filterTable(status) {
-      const dataTable = $(this.$refs.myTable).DataTable();
-      if (status === 'REJECTED') {
-        dataTable.search('REJECTED').draw();  // This will match both rejection types
-      } else {
-        dataTable.search(status).draw();
-      }
+      this.currentFilter = status
     },
     async fetchAllRequests() {
       this.loadingText = 'Fetching';
