@@ -146,10 +146,8 @@
                 </div>
             </div>
         </div>
-        <UpdateMedicalClaims v-if="isMedicalSlideOverOpen"  :isOpen="isMedicalSlideOverOpen" :claim="selectedClaim"
-            @close="isMedicalSlideOverOpen = false" @refresh-claims = "fetchAllClaims($route.params.rn)"  />
-        <UpdateHandphone v-if="isHandphoneSlideOverOpen" :isOpen="isHandphoneSlideOverOpen" :claim="selectedClaim"
-            @close="isHandphoneSlideOverOpen = false" @refresh-claims = "fetchAllClaims($route.params.rn)" />
+        
+       
 
         <UpdateLocalTravel 
             v-if="isLocalSlideOverOpen" 
@@ -190,6 +188,19 @@
             @close="isOthersSlideOverOpen = false"
             @update-claim="updateClaim"
         />
+
+         <UpdateHandphone v-if="isHandphoneSlideOverOpen" 
+         :isOpen="isHandphoneSlideOverOpen" 
+         :claim="selectedClaim"
+         @close="isHandphoneSlideOverOpen = false" 
+         @update-claim="updateClaim" 
+         />
+
+         <UpdateMedicalClaims v-if="isMedicalSlideOverOpen"  
+         :isOpen="isMedicalSlideOverOpen" 
+         :claim="selectedClaim"
+         @close="isMedicalSlideOverOpen = false" 
+         @refresh-claims = "updateClaim"  />
 
 
     </div>
@@ -247,6 +258,7 @@ export default {
         try {
             await this.getClaimDetails(refNo);
             await this.fetchAllClaims(refNo);
+
             
         } catch (error) {
             console.error("Error initializing component", error);
@@ -270,6 +282,31 @@ export default {
                 if (response.data && response.data.result) {
                 this.claimDetails = response.data.result;
                 console.log("0. General Claim Details:", this.claimDetails);
+                } else {
+                console.warn("No general claim details found");
+                }
+                
+                // const data = await getUserClaimDetails(refNo);
+                // if (data) {
+                //     this.claimDetails = {
+                //         ...data.claimDetails,
+                //         ...data,
+                //     }
+                // }
+                console.log("Claim Details", this.claimDetails);
+            } catch (error) {
+                console.error("Error fetching claim details", error);
+                // throw error;
+            }
+        },
+        async getEmployee(requester_id) {
+            try {
+                const response = await axios.get(`http://172.28.28.116:6239/api/User/GetEmployeeById/${this.requesterId}`);
+                // const response = await axios.get(`http://172.28.28.116:6165/api/User/GetClaimDetails/${refNo}`);
+    
+                if (response.data && response.data.result) {
+                this.employee = response.data.result;
+                console.log("0. employee:", this.claimDetails);
                 } else {
                 console.warn("No general claim details found");
                 }
@@ -363,12 +400,13 @@ export default {
 
             const medicalClaims = (medicalRes.data.result || []).map(claim => ({
             tabTitle: "Medical Leave",
-            date: moment(claim.date_leave_taken).format('D MMMM YYYY'),
+            date: claim.date_leave_taken,
             total: claim.claim_amount,
             locationPurpose: claim.medical_category,
             unique_code: claim.unique_code,
             refNo: refNo,
             }));
+            console.log("1. Local Travel Claims:", medicalClaims);
 
             // Combine all claims
             const allClaims = [
@@ -453,6 +491,7 @@ export default {
             const index = this.dataclaims.findIndex(c => c.unique_code === updatedClaim.unique_code);
             if (index !== -1) {
                 this.dataclaims.splice(index, 1, updatedClaim);
+                console.log("Updated claim:", updatedClaim);
                 this.claimDetails.grand_total = this.dataclaims.reduce((sum, claim) => {
                     return sum + (parseFloat(claim.total) || 0);
                 }, 0).toFixed(2);
@@ -460,7 +499,7 @@ export default {
                 console.log("Updated claim saved locally:", updatedClaim);
             }
         },
-
+        
 
         async resubmitForm() {
             try {
@@ -493,10 +532,12 @@ export default {
                         await this.handleLocalTravelSubmit(payload);
                     } else if (tabTitle === "Handphone") {
                         await this.handleHandphoneSubmit(payload);
+                        console.log("total claims:", payload.claim_amount);
                     } else if (tabTitle === "Medical Leave") {
                         await this.handleMedicalLeaveSubmit(payload);
                     } 
                 }
+                
 
                 const finalPayload = {
                     name: this.claimDetails.name || '',
@@ -505,13 +546,56 @@ export default {
                     reference_number: this.refNo || '',
                     requester_email: this.claimDetails.email || '',
                     report_name: this.claimDetails.report_name || '',
-                    grand_total: parseFloat(this.claimDetails.grand_total).toFixed(2) || 0.00,
-                    checker_email: this.claimDetails.checker_email || '',
-                    verifier_email: this.claimDetails.verifier_email || '',
-                    admin_status: 'RESUBMITTED',
+                    grand_total: parseFloat(this.claimDetails.grand_total) || 0.00,
+                    checker_email: this.claimDetails.checker_email || '-',
+                    verifier_email: this.claimDetails.verifier_email || '-',
+                    admin_status: 'RESUBMITTED'
+                    
                 };
+
                 console.log("Final payload for resubmit:", finalPayload);
 
+                    // try {
+                    //     // Replace with your actual API endpoint and user identifier
+                    //     const response = await axios.get(`http://172.28.28.116:6239/api/User/GetEmployeeById/${this.requesterId}`);
+                    //     const user = response.data.result[0];
+                    //     // Initialize limits only if they are not already set
+                    // if (!localStorage.getItem('initial_limit_medicaldental')) {
+                    //     localStorage.setItem('initial_limit_medicaldental', user.limit_medicaldental);
+                    // }
+                    // if (!localStorage.getItem('initial_limit_outpatient')) {
+                    //     localStorage.setItem('initial_limit_outpatient', user.limit_outpatient);
+                    // }
+                    // if (!localStorage.getItem('initial_limit_amount')) {
+                    //     localStorage.setItem('initial_limit_amount', user.limit_amount);
+                    // }
+
+                    // this.remaining_medicaldental = localStorage.getItem('remaining_limit_medicaldental')
+                    //     ? parseFloat(localStorage.getItem('remaining_limit_medicaldental'))
+                    //     : parseFloat(localStorage.getItem('initial_limit_medicaldental'));
+
+                    // this.remaining_outpatient = localStorage.getItem('remaining_limit_outpatient')
+                    //     ? parseFloat(localStorage.getItem('remaining_limit_outpatient'))
+                    //     : parseFloat(localStorage.getItem('initial_limit_outpatient'));
+
+                    // this.remaining_amount = localStorage.getItem('remaining_limit_amount')
+                    //     ? parseFloat(localStorage.getItem('remaining_limit_amount'))
+                    //     : parseFloat(localStorage.getItem('initial_limit_amount'));
+
+                    // // Save remaining limits back to localStorage if not already set
+                    // if (!localStorage.getItem('remaining_limit_medicaldental')) {
+                    //     localStorage.setItem('remaining_limit_medicaldental', this.remaining_medicaldental);
+                    // }
+                    // if (!localStorage.getItem('remaining_limit_outpatient')) {
+                    //     localStorage.setItem('remaining_limit_outpatient', this.remaining_outpatient);
+                    // }
+                    // if (!localStorage.getItem('remaining_limit_amount')) {
+                    //     localStorage.setItem('remaining_limit_amount', this.remaining_amount);
+                    // }
+                    // } catch (error) {
+                    //     console.error("Failed to fetch medical limits:", error);
+                    // }
+                
                 const response = await axios.put(
                     `http://172.28.28.116:6239/api/User/UpdateClaimDetails`,
                     finalPayload,
@@ -853,6 +937,199 @@ export default {
 
             } catch (error) {
                 console.error("Overseas update error:", error);
+                const msg = error.response?.data?.message || "Unexpected error occurred.";
+                Swal.fire("Error", msg, "error");
+            }
+        },
+
+        async handleHandphoneSubmit(payload) {
+            try {
+                const {
+                    newFiles,
+                    filesToDelete,
+                    requester_id,
+                    unique_code,
+                    files,
+                    originalClaimAmount,
+                    claim_amount,
+                    ...handphoneData
+                } = payload;
+
+                console.log("Handphone submit payload:", payload);
+
+
+                // Handle file uploads/deletions
+                await this.handleFileUpdates({ requester_id, unique_code, newFiles, filesToDelete });
+                console.log("Handphone file updates handled");
+
+                // Prepare data for handphone reimburse API
+                const submitData = {
+                    ...handphoneData,
+                    claim_amount,
+                    files,
+                    unique_code,
+                    requester_id,
+                    
+                };
+                console.log("Handphone submit data:", submitData);
+
+                const response = await axios.put(
+                    "http://172.28.28.116:6165/api/User/UpdateHandphoneReimburse",
+                    submitData,
+                    { headers: { "Content-Type": "application/json" } }
+                );
+
+                if (response.data?.result) {
+                    console.log("Update Handphone data:", response.data);
+
+                    // Update localStorage limit
+                    const limitKey = "remaining_limit_amount";
+                    const initialKey = "initial_limit_amount";
+                    const original = parseFloat(originalClaimAmount) || 0;
+                    const claim = parseFloat(claim_amount) || 0;
+                    let currentLimit = parseFloat(localStorage.getItem(limitKey)) || 0;
+                    let updatedLimit = Math.max(0, currentLimit + original - claim);
+
+                    console.log("Updated limit:", updatedLimit);
+                    console.log("Original claim amount:", original);
+                    console.log("Claim amount:", claim);
+                    console.log("Current limit:", currentLimit);
+                    console.log("initialKey:", initialKey);
+                    console.log("limitkeyt:", limitKey);
+
+                    localStorage.setItem(limitKey, updatedLimit.toString());
+                    localStorage.setItem(initialKey, updatedLimit.toString());
+
+                    
+
+                    // Sync updated limit to backend
+                    try {
+                        await axios.put(
+                            "http://172.28.28.116:6239/api/User/UpdateLimitClaim",
+                            {
+                                requester_id,
+                                limit_amount: updatedLimit,     // Handphone limit
+                                limit_outpatient: this.limit_outpatient,
+                                limit_medicaldental: this.limit_outpatient,
+                            },
+                            { headers: { "Content-Type": "application/json" } }
+                            
+                        );
+                        console.log("Limit outpatient:", this.limit_outpatient);
+                        console.log("Limit medical:", this.limit_medicaldental);
+                        console.log("Limit updated successfully on server.");
+                    } catch (limitError) {
+                        console.error("Failed to update limit on server:", limitError);
+                        Swal.fire("Warning", "Limit updated locally, but failed to sync with server.", "warning");
+                    }
+                }
+
+            } catch (error) {
+                console.error("Handphone update failed:", error);
+                const msg = error.response?.data?.message || "Unexpected error occurred.";
+                Swal.fire("Error", msg, "error");
+            }
+        },
+        async handleMedicalLeaveSubmit(payload) {
+            try {
+                const {
+                    newFiles,
+                    filesToDelete,
+                    requester_id,
+                    unique_code,
+                    files,
+                    originalClaimAmount,
+                    medical_category,
+                    claim_amount,
+                    ...medicalData
+                } = payload;
+
+                console.log("Medical submit payload:", payload);
+
+
+                // Handle file uploads/deletions
+                await this.handleFileUpdates({ requester_id, unique_code, newFiles, filesToDelete });
+                console.log("Medical file updates handled");
+
+                // Prepare data for handphone reimburse API
+                const submitData = {
+                    ...medicalData,
+                    claim_amount,
+                    files,
+                    unique_code,
+                    requester_id,
+                    
+                };
+                console.log("Medical submit data:", submitData);
+
+                const response = await axios.put(
+                    "http://172.28.28.116:6165/api/User/UpdateMedical",
+                    submitData,
+                    { headers: { "Content-Type": "application/json" } }
+                );
+
+                if (response.data?.result) {
+                    console.log("Update Medical data:", response.data);
+
+                    // Update localStorage limit
+                    const category = medical_category;
+                    const original = parseFloat(originalClaimAmount) || 0;
+                    const claim = parseFloat(claim_amount) || 0;
+                    let updatedLimit = 0;
+
+                    if (category === "Outpatient") {
+                        const limitKey = "remaining_limit_outpatient";
+                        const initialKey = "initial_limit_outpatient"; // optional
+                        let currentLimit = parseFloat(localStorage.getItem(limitKey)) || 0;
+
+                        // Restore the original amount, then deduct the new claim amount
+                        updatedLimit = Math.max(0, currentLimit + original - claim);
+
+                        // Update both remaining and initial limits if needed
+                        localStorage.setItem(limitKey, updatedLimit.toString());
+                        localStorage.setItem(initialKey, updatedLimit.toString());
+
+                    } else if (category === "Medical Check-Up" || category === "Dental") {
+                        const limitKey = "remaining_limit_medicaldental";
+                        const initialKey = "initial_limit_medicaldental"; // optional
+                        let currentLimit = parseFloat(localStorage.getItem(limitKey)) || 0;
+
+                        // Restore the original amount, then deduct the new claim amount
+                        updatedLimit = Math.max(0, currentLimit + original - claim);
+
+                        // Update both remaining and initial limits if needed
+                        localStorage.setItem(limitKey, updatedLimit.toString());
+                        localStorage.setItem(initialKey, updatedLimit.toString());
+                    }
+
+                    
+
+                    // Sync updated limit to backend
+                    try {
+                        await axios.put(
+                            "http://172.28.28.116:6239/api/User/UpdateLimitClaim",
+                            {
+                                requester_id,
+                                limit_amount: this.limit_amount,     // Handphone limit
+                                limit_outpatient: updatedLimit,
+                                limit_medicaldental: updatedLimit,
+                            },
+                            { headers: { "Content-Type": "application/json" } }
+                            
+                        );
+                        console.log("Limit amount:", this.limit_amount);
+                        console.log("Limit outpatient:", updatedLimit);
+                        console.log("Limit medical:", updatedLimit);
+                        
+                        console.log("Limit updated successfully on server.");
+                    } catch (limitError) {
+                        console.error("Failed to update limit on server:", limitError);
+                        Swal.fire("Warning", "Limit updated locally, but failed to sync with server.", "warning");
+                    }
+                }
+
+            } catch (error) {
+                console.error("Medical update failed:", error);
                 const msg = error.response?.data?.message || "Unexpected error occurred.";
                 Swal.fire("Error", msg, "error");
             }

@@ -261,7 +261,7 @@ export default {
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'OK'
                     });
-                    this.medical.claim_amount = limit;
+                    // this.medical.claim_amount = limit;
                     return;
                 }
 
@@ -278,7 +278,7 @@ export default {
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'OK'
                     });
-                    this.medical.claim_amount = limit;
+                    // this.medical.claim_amount = limit;
                     return;
                 }
             }
@@ -367,7 +367,7 @@ export default {
                         this.uniqueCode = matchingUniqueID.unique_code;
                         this.requesterId = matchingUniqueID.requester_id;
                         this.originalClaimAmount = parseFloat(matchingUniqueID.claim_amount) || 0;
-                        await this.fetchAndSetMedicalLimits();
+                        await this.fetchAndSetLimits();
                         console.log("matching Unique ID", matchingUniqueID);
                     } else {
                         console.log("No matching unique_code found");
@@ -377,7 +377,7 @@ export default {
                     console.error("Expected an array but got:", typeof dataArray, dataArray);
                     }
                 },
-                 async fetchAndSetMedicalLimits() {
+                 async fetchAndSetLimits() {
                     try {
                         // Replace with your actual API endpoint and user identifier
                         const response = await axios.get(`http://172.28.28.116:6239/api/User/GetEmployeeById/${this.requesterId}`);
@@ -420,8 +420,8 @@ export default {
                     }
                 },
 
-        async handleSubmit() {
-            try {
+        // async handleSubmit() {
+        //     try {
 
                 // const originalAmount = parseFloat(this.originalClaimAmount) || 0;
                 // const newAmount = isNaN(parseFloat(this.medical.claim_amount)) ? 0 : parseFloat(this.medical.claim_amount);
@@ -488,125 +488,154 @@ export default {
                 // this.originalClaimAmount = newAmount;
                 
                 // Delete files marked for deletion
-                for (const fileUrl of this.filesToDelete) {
-                    const fileName = fileUrl.split('/').pop();
-                    await axios.delete(`http://172.28.28.116:7267/api/Files/DeleteImage/${this.requesterId}/${this.uniqueCode}/${fileName}`);
-                }
-                this.filesToDelete = [];
+        //         for (const fileUrl of this.filesToDelete) {
+        //             const fileName = fileUrl.split('/').pop();
+        //             await axios.delete(`http://172.28.28.116:7267/api/Files/DeleteImage/${this.requesterId}/${this.uniqueCode}/${fileName}`);
+        //         }
+        //         this.filesToDelete = [];
 
-                // 2. Upload new files
-                if (this.newFiles.length > 0) {
-                    const formData = new FormData();
-                    this.newFiles.forEach(file => formData.append("filecollection", file));
-                    const uploadEndpoint = `https://esvcportal.pktgroup.com/api/file/api/Files/MultiUploadImage/${this.requesterId}/${this.uniqueCode}`;
-                    await axios.post(uploadEndpoint, formData, {
-                        headers: { "Content-Type": "multipart/form-data" },
-                    });
-                    this.newFiles = [];
-                }
+        //         // 2. Upload new files
+        //         if (this.newFiles.length > 0) {
+        //             const formData = new FormData();
+        //             this.newFiles.forEach(file => formData.append("filecollection", file));
+        //             const uploadEndpoint = `https://esvcportal.pktgroup.com/api/file/api/Files/MultiUploadImage/${this.requesterId}/${this.uniqueCode}`;
+        //             await axios.post(uploadEndpoint, formData, {
+        //                 headers: { "Content-Type": "multipart/form-data" },
+        //             });
+        //             this.newFiles = [];
+        //         }
 
-                this.validateMedicalClaim();
-                const submitData = {
-                    date_leave_taken: this.formattedDate,
-                    reason: this.medical.medical_category === 'Outpatient' ? this.medical.reason : '',
-                    medical_category: this.medical.medical_category,
-                    clinic_selection: this.medical.medical_category === 'Outpatient' ? this.medical.clinic_selection : '',
-                    clinic_name: this.medical.medical_category === 'Outpatient' && this.medical.clinic_selection === 'Other Clinic'? this.medical.clinic_name: '',
-                    reason_different: this.medical.medical_category === 'Outpatient' ? this.medical.reason_different : '',
-                    bank_name: this.medical.bank_name,
-                    bank_holder: this.medical.bank_holder,
-                    bank_account: this.medical.bank_account,
-                    claim_amount: this.medical.claim_amount,
-                    ic_number: this.medical.ic_number,
-                    unique_code: this.uniqueCode,
-                    reference_number: this.medical.reference_number,
-                    requester_id: this.requesterId,
-                };
+        //         this.validateMedicalClaim();
+        //         const submitData = {
+        //             date_leave_taken: this.formattedDate,
+        //             reason: this.medical.medical_category === 'Outpatient' ? this.medical.reason : '',
+        //             medical_category: this.medical.medical_category,
+        //             clinic_selection: this.medical.medical_category === 'Outpatient' ? this.medical.clinic_selection : '',
+        //             clinic_name: this.medical.medical_category === 'Outpatient' && this.medical.clinic_selection === 'Other Clinic'? this.medical.clinic_name: '',
+        //             reason_different: this.medical.medical_category === 'Outpatient' ? this.medical.reason_different : '',
+        //             bank_name: this.medical.bank_name,
+        //             bank_holder: this.medical.bank_holder,
+        //             bank_account: this.medical.bank_account,
+        //             claim_amount: this.medical.claim_amount,
+        //             ic_number: this.medical.ic_number,
+        //             unique_code: this.uniqueCode,
+        //             reference_number: this.medical.reference_number,
+        //             requester_id: this.requesterId,
+        //         };
 
-                console.log("Data to be submitted", submitData);
+        //         console.log("Data to be submitted", submitData);
                 
-                // Make the PUT request to update the entertainment data
-                const response = await axios.put('http://172.28.28.116:6165/api/User/UpdateMedical', submitData, {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
-                // const submitResponse = await updateMedical(submitData);
-                if (response.data && response.data.result) {
-                    console.log("Update Medical data:", response.data.result);
-                    const category = this.medical.medical_category;
-                    const original = parseFloat(this.originalClaimAmount) || 0;
-                    const claim = parseFloat(this.medical.claim_amount) || 0;
+        //         // Make the PUT request to update the entertainment data
+        //         const response = await axios.put('http://172.28.28.116:6165/api/User/UpdateMedical', submitData, {
+        //             headers: {
+        //                 "Content-Type": "application/json",
+        //             },
+        //         });
+        //         // const submitResponse = await updateMedical(submitData);
+        //         if (response.data && response.data.result) {
+        //             console.log("Update Medical data:", response.data.result);
+        //             const category = this.medical.medical_category;
+        //             const original = parseFloat(this.originalClaimAmount) || 0;
+        //             const claim = parseFloat(this.medical.claim_amount) || 0;
 
-                    if (category === "Outpatient") {
-                        const limitKey = "remaining_limit_outpatient";
-                        const initialKey = "initial_limit_outpatient"; // optional
-                        let currentLimit = parseFloat(localStorage.getItem(limitKey)) || 0;
+        //             if (category === "Outpatient") {
+        //                 const limitKey = "remaining_limit_outpatient";
+        //                 const initialKey = "initial_limit_outpatient"; // optional
+        //                 let currentLimit = parseFloat(localStorage.getItem(limitKey)) || 0;
 
-                        // Restore the original amount, then deduct the new claim amount
-                        let updatedLimit = Math.max(0, currentLimit + original - claim);
+        //                 // Restore the original amount, then deduct the new claim amount
+        //                 let updatedLimit = Math.max(0, currentLimit + original - claim);
 
-                        // Update both remaining and initial limits if needed
-                        localStorage.setItem(limitKey, updatedLimit.toString());
-                        localStorage.setItem(initialKey, updatedLimit.toString());
+        //                 // Update both remaining and initial limits if needed
+        //                 localStorage.setItem(limitKey, updatedLimit.toString());
+        //                 localStorage.setItem(initialKey, updatedLimit.toString());
 
-                    } else if (category === "Medical Check-Up" || category === "Dental") {
-                        const limitKey = "remaining_limit_medicaldental";
-                        const initialKey = "initial_limit_medicaldental"; // optional
-                        let currentLimit = parseFloat(localStorage.getItem(limitKey)) || 0;
+        //             } else if (category === "Medical Check-Up" || category === "Dental") {
+        //                 const limitKey = "remaining_limit_medicaldental";
+        //                 const initialKey = "initial_limit_medicaldental"; // optional
+        //                 let currentLimit = parseFloat(localStorage.getItem(limitKey)) || 0;
 
-                        // Restore the original amount, then deduct the new claim amount
-                        let updatedLimit = Math.max(0, currentLimit + original - claim);
+        //                 // Restore the original amount, then deduct the new claim amount
+        //                 let updatedLimit = Math.max(0, currentLimit + original - claim);
 
-                        // Update both remaining and initial limits if needed
-                        localStorage.setItem(limitKey, updatedLimit.toString());
-                        localStorage.setItem(initialKey, updatedLimit.toString());
-                    }
+        //                 // Update both remaining and initial limits if needed
+        //                 localStorage.setItem(limitKey, updatedLimit.toString());
+        //                 localStorage.setItem(initialKey, updatedLimit.toString());
+        //             }
 
 
 
-                    Swal.fire({
-                        title: 'Success',
-                        text: 'Medical claim updated successfully',
-                        icon: 'success',
-                        confirmButtonText: 'OK',
-                        confirmButtonColor: '#dc2626'
-                    });
-                    this.$emit('refresh-claims', this.claim.refNo);
-                    this.closeSlideOver();
-                } else {
-                    console.log("Update Medical data not found");
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'Failed to update Medical claim',
-                        icon: 'error',
-                        confirmButtonText: 'OK',
-                        confirmButtonColor: '#dc2626'
+        //             Swal.fire({
+        //                 title: 'Success',
+        //                 text: 'Medical claim updated successfully',
+        //                 icon: 'success',
+        //                 confirmButtonText: 'OK',
+        //                 confirmButtonColor: '#dc2626'
+        //             });
+        //             this.$emit('refresh-claims', this.claim.refNo);
+        //             this.closeSlideOver();
+        //         } else {
+        //             console.log("Update Medical data not found");
+        //             Swal.fire({
+        //                 title: 'Error',
+        //                 text: 'Failed to update Medical claim',
+        //                 icon: 'error',
+        //                 confirmButtonText: 'OK',
+        //                 confirmButtonColor: '#dc2626'
 
-                    });
-                }
-            } catch (error) {
-                console.error("Error submitting data:", error);
+        //             });
+        //         }
+        //     } catch (error) {
+        //         console.error("Error submitting data:", error);
 
-                let errorMessage = "An unexpected error occurred.";
-                if (error.response) {
-                    errorMessage = error.response.data?.message || `Error: ${error.response.status} - ${error.response.statusText}`;
-                } else if (error.request) {
-                    errorMessage = "No response received from the server.";
-                } else {
-                    errorMessage = error.message;
-                }
+        //         let errorMessage = "An unexpected error occurred.";
+        //         if (error.response) {
+        //             errorMessage = error.response.data?.message || `Error: ${error.response.status} - ${error.response.statusText}`;
+        //         } else if (error.request) {
+        //             errorMessage = "No response received from the server.";
+        //         } else {
+        //             errorMessage = error.message;
+        //         }
 
-                Swal.fire({
-                    title: 'Submission Failed',
-                    text: errorMessage,
-                    icon: 'error',
-                    confirmButtonText: 'OK',
-                    confirmButtonColor: '#dc2626'
-                });
+        //         Swal.fire({
+        //             title: 'Submission Failed',
+        //             text: errorMessage,
+        //             icon: 'error',
+        //             confirmButtonText: 'OK',
+        //             confirmButtonColor: '#dc2626'
+        //         });
 
-            }
-        },
+        //     }
+        // },
+
+        async handleSubmit() {
+        const updatedClaim = {
+            date_leave_taken: this.formattedDate,
+            reason: this.medical.medical_category === 'Outpatient' ? this.medical.reason : '',
+            medical_category: this.medical.medical_category,
+            clinic_selection: this.medical.medical_category === 'Outpatient' ? this.medical.clinic_selection : '',
+            clinic_name: this.medical.medical_category === 'Outpatient' && this.medical.clinic_selection === 'Other Clinic'? this.medical.clinic_name: '',
+            reason_different: this.medical.medical_category === 'Outpatient' ? this.medical.reason_different : '',
+            bank_name: this.medical.bank_name,
+            bank_holder: this.medical.bank_holder,
+            bank_account: this.medical.bank_account,
+            claim_amount: isNaN(parseFloat(this.medical.claim_amount)) ? 0 : parseFloat(this.medical.claim_amount),
+            ic_number: this.medical.ic_number,
+            unique_code: this.uniqueCode,
+            reference_number: this.medical.reference_number,
+            requester_id: this.requesterId,
+            originalClaimAmount: this.originalClaimAmount,
+
+            tabTitle: "Medical Leave",
+            locationPurpose: "-",
+            date: this.medical.date_leave_taken || "-",
+            total: this.medical.claim_amount || 0
+     };
+
+      console.log("Submitting Medical UPDATEDCLAIM:", updatedClaim);
+      this.$emit("update-claim",updatedClaim);
+      this.closeSlideOver();
+    },
         watch: {
         isOpen(newVal) {
             if (newVal) this.fetchMedicalLeaveData();

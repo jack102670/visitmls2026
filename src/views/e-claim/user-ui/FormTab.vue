@@ -82,9 +82,7 @@
                   <template v-if="!field.hidden">
                     <template v-if="
                       !isCompanyTransport ||
-                      (field.id !== 'MileageKMLT' &&
-                        field.id !== 'TransportSpec' &&
-                        field.id !== 'PublicTransportSpec' &&
+                      (field.id !== 'PublicTransportSpec' &&
                         field.id !== 'FareRMLT' &&
                         field.id !== 'UploadFareRMLT')
                     ">
@@ -95,8 +93,7 @@
                       ">
                         <template v-if="
                           !isPublicTransport ||
-                          (field.id !== 'MileageKMLT' &&
-                            field.id !== 'TransportSpec' &&
+                          (field.id !== 'TransportSpec' &&
                             field.id !== 'TollLT' &&
                             field.id !== 'UploadTollLT'&&
                             field.id !== 'transportNumberPlate' &&
@@ -1370,6 +1367,38 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
+              id: "DepartureAirportLT",
+              label: "Flight Departure Airport",
+              type: "text",
+              value: "",
+              required: true,
+              hidden: false,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "ArrivalAirportLT",
+              label: "Flight Arrival Airport",
+              type: "text",
+              value: "",
+              required: true,
+              hidden: false,
+              gridClass: "sm:col-span-2",
+            },
+             {
+              id: "FlightClassLT",
+              label: "Flight Class",
+              type: "select",
+              value: "",
+              required: true,
+              options: [
+                { label: "Business", value: "Business" },
+                { label: "Economy", value: "Economy" },
+                
+              ],
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+            {
               id: "TransportLT",
               label: "Travelling Mode By",
               type: "radio-group",
@@ -1391,6 +1420,7 @@ export default {
               options: [
                 { label: "Motorcycle", value: "Motorcycle" },
                 { label: "Car", value: "Car" },
+                { label: "Truck", value: "Truck" },
               ],
               hidden: false,
               gridClass: "sm:col-span-1",
@@ -1446,6 +1476,53 @@ export default {
               type: "text",
               placeholder: "Hotel Name",
               value: "",
+              required: true,
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+             {
+              id: "CheckInLT",
+              label: "Check In Date",
+              type: "date",
+              value: "",
+              required: true,
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+             {
+              id: "CheckOutLT",
+              label: "Check Out Date",
+              type: "date",
+              value: "",
+              required: true,
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+             {
+              id: "HotelNightLT",
+              label: "Number of Nights",
+              type: "number",
+              value: "",
+              required: true,
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+             {
+              id: "HotelRoomLT",
+              label: "Number of Rooms",
+              type: "number",
+              value: "",
+              required: true,
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+             {
+              id: "HotelCityLT",
+              label: "City(Hotel)",
+              type: "text",
+              placeholder: "Hotel Location",
+              value: "",
+              required: true,
               hidden: false,
               gridClass: "sm:col-span-1",
             },
@@ -2031,20 +2108,331 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
+              id: "DepartureAirportOT",
+              label: "Flight Departure Airport",
+              type: "text",
+              value: "",
+              required: true,
+              hidden: false,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "ArrivalAirportOT",
+              label: "Flight Arrival Airport",
+              type: "text",
+              value: "",
+              required: true,
+              hidden: false,
+              gridClass: "sm:col-span-2",
+            },
+             {
+              id: "FlightClassOT",
+              label: "Flight Class",
+              type: "select",
+              value: "",
+              required: true,
+              options: [
+                { label: "Business", value: "Business" },
+                { label: "Economy", value: "Economy" },
+                
+              ],
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+              {
               id: "PurposeOT",
               label: "Purpose",
               type: "text",
               value: "",
               required: true,
               gridClass: "sm:col-span-2",
+              },
+            {
+              id: "TransportOT",
+              label: "Travelling Mode By",
+              type: "radio-group",
+              value: [],
+              required: true,
+              options: [
+                { label: "Personal Transport", value: "Personal Transport" },
+                { label: "Company Transport", value: "Company Transport" },
+                { label: "Public Transport", value: "Public Transport" },
+              ],
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "TransportSpecOT",
+              label: "Transport Specification",
+              type: "select",
+              value: "",
+              required: true,
+              options: [
+                { label: "Motorcycle", value: "Motorcycle" },
+                { label: "Car", value: "Car" },
+                { label: "Truck", value: "Truck" },
+              ],
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "PublicTransportSpecOT",
+              label: "Transport Specification",
+              type: "text",
+              value: "",
+              required: true,
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "transportNumberPlateOT",
+              label: "Vehicle Registration Number",
+              type: "text",
+              placeholder: "",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "transportModelOT",
+              label: "Vehicle Model",
+              type: "text",
+              placeholder: "",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "LocationStartOT",
+              label: "Starting Point Location",
+              type: "text",
+              placeholder: "From Where",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "LocationEndOT",
+              label: "End Point Location",
+              type: "text",
+              placeholder: "To Where",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "AccommodationOT",
+              label: "Accommodation",
+              type: "text",
+              placeholder: "Hotel Name",
+              value: "",
+              required: true,
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+             {
+              id: "CheckInOT",
+              label: "Check In Date",
+              type: "date",
+              value: "",
+              required: true,
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+             {
+              id: "CheckOutOT",
+              label: "Check Out Date",
+              type: "date",
+              value: "",
+              required: true,
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+             {
+              id: "HotelNightOT",
+              label: "Number of Nights",
+              type: "number",
+              value: "",
+              required: true,
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+             {
+              id: "HotelRoomOT",
+              label: "Number of Rooms",
+              type: "number",
+              value: "",
+              required: true,
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+             {
+              id: "HotelCityOT",
+              label: "City(Hotel)",
+              type: "text",
+              placeholder: "Hotel Location",
+              value: "",
+              required: true,
+              hidden: false,
+              gridClass: "sm:col-span-1",
             },
             {
               id: "MealAllowanceOT",
               label: "Meal Allowance(RM)",
               type: "number",
               value: "",
+              hidden: false,
               gridClass: "sm:col-span-2",
             },
+            {
+              id: "MileageKMOT",
+              label: "Mileage/Kilometer(KM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
+              hidden: false,
+            },
+            {
+              id: "petrolTypeOT",
+              label: "Type of Petrol",
+              type: "select",
+              value: "",
+              options: [
+                { label: "Diesel", value: "Diesel" },
+                { label: "Ron 95", value: "Ron 95" },
+              ],
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "petrolLitreOT",
+              label: "Petrol(Litre)",
+              type: "number",
+              placeholder: "0.00",
+              value: "",
+              gridClass: "sm:col-span-1",
+              hidden: false,
+            },
+            {
+              id: "MileageRMOT",
+              label: "Petrol/EV(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
+              placeholder: "0.00",
+              hidden: false,
+            },
+            {
+              id: "UploadMileageRMOT",
+              label: "",
+              type: "file",
+              value: [],
+              allowMultiple: true,
+              server: null,
+              required: false,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
+              hidden: false,
+            },
+            {
+              id: "FareRMOT",
+              label: "Fare(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
+              placeholder: "0.00",
+              required: true,
+              hidden: false,
+            },
+            {
+              id: "UploadFareRMOT",
+              label: "",
+              type: "file",
+              value: [],
+              allowMultiple: true,
+              server: null,
+              required: false,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
+              hidden: false,
+            },
+            {
+              id: "TollOT",
+              label: "Toll/Touch' n Go(RM)",
+              type: "number",
+              placeholder: "0.00",
+              value: "",
+              gridClass: "sm:col-span-1",
+              hidden: false,
+            },
+            {
+              id: "UploadTollOT",
+              label: "",
+              type: "file",
+              value: [],
+              allowMultiple: true,
+              server: null,
+              required: false,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
+              hidden: false,
+            },
+            {
+              id: "ParkingOT",
+              label: "Parking(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
+              placeholder: "0.00",
+              hidden: false,
+            },
+            {
+              id: "UploadParkingOT",
+              label: "",
+              type: "file",
+              value: [],
+              allowMultiple: true,
+              server: null,
+              required: false,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
+              hidden: false,
+            },
+            
+            // {
+            //   id: "MealAllowanceOT",
+            //   label: "Meal Allowance(RM)",
+            //   type: "number",
+            //   value: "",
+            //   gridClass: "sm:col-span-2",
+            // },
             {
               id: "UploadOT",
               label:
@@ -2112,7 +2500,15 @@ export default {
             },
             {
               id: "VenueE",
-              label: "Venue",
+              label: "Restaurant Name",
+              type: "text",
+              value: "",
+              required: false,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "ReceiptE",
+              label: "Receipt No.",
               type: "text",
               value: "",
               required: false,
@@ -2200,7 +2596,15 @@ export default {
             },
             {
               id: "VenueSR",
-              label: "Venue",
+              label: "Restaurant Name",
+              type: "text",
+              value: "",
+              required: false,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "ReceiptSR",
+              label: "Receipt No.",
               type: "text",
               value: "",
               required: false,
@@ -2749,7 +3153,13 @@ export default {
         'TollLT',
         'ParkingLT',
         'MileageRMLT',
-        'PetrolLitre'
+        'PetrolLitre',
+        'MealAllowanceOT',
+        'FareRMOT',
+        'TollOT',
+        'ParkingOT',
+        'MileageRMOT',
+        'PetrolLitreOT'
         // 'petrolCharged',
         // 'evCharged'
       ];
@@ -2784,6 +3194,30 @@ export default {
         const parkingField = this.tabs
           .find((tab) => tab.title === "Local Travelling")
           .fields.find((field) => field.id === "ParkingLT");
+        return parkingField && parkingField.value !== "";
+      }
+      if (fieldId === "UploadMileageRMOT") {
+        const mileageField = this.tabs
+          .find((tab) => tab.title === "Overseas Travelling")
+          .fields.find((field) => field.id === "MileageRMLT");
+        return mileageField && mileageField.value !== "";
+      }
+      if (fieldId === "UploadFareRMoT") {
+        const fareField = this.tabs
+          .find((tab) => tab.title === "Overseas Travelling")
+          .fields.find((field) => field.id === "FareRMoT");
+        return fareField && fareField.value !== "";
+      }
+      if (fieldId === "UploadTolloT") {
+        const tollField = this.tabs
+          .find((tab) => tab.title === "Overseas Travelling")
+          .fields.find((field) => field.id === "TolloT");
+        return tollField && tollField.value !== "";
+      }
+      if (fieldId === "UploadParkingoT") {
+        const parkingField = this.tabs
+          .find((tab) => tab.title === "Overseas Travelling")
+          .fields.find((field) => field.id === "ParkingoT");
         return parkingField && parkingField.value !== "";
       }
       // if (fieldId === "UploadPetrolCharged") {
@@ -2877,15 +3311,19 @@ export default {
     toggleUploadField(field) {
       switch (field) {
         case "MileageRMLT":
+        case "MileageRMOT":
           this.showMileageUpload = !this.showMileageUpload;
           break;
         case "FareRMLT":
+        case "FareRMOT":
           this.showFareUpload = !this.showFareUpload;
           break;
         case "TollLT":
+        case "TollOT":
           this.showTollUpload = !this.showTollUpload;
           break;
         case "ParkingLT":
+        case "ParkingOT":
           this.showParkingUpload = !this.showParkingUpload;
           break;
         // case "petrolCharged":
@@ -2902,15 +3340,19 @@ export default {
       let prefix = "";
       switch (fieldId) {
         case "UploadMileageRMLT":
+        case "UploadMileageRMOT":
           prefix = "MILEAGE_";
           break;
         case "UploadFareRMLT":
+        case "UploadFareRMOT":
           prefix = "FARE_";
           break;
         case "UploadTollLT":
+        case "UploadTollOT":
           prefix = "TOLL_";
           break;
         case "UploadParkingLT":
+        case "UploadParkingOT":
           prefix = "PARKING_";
           break;
         // case "UploadPetrolCharged":

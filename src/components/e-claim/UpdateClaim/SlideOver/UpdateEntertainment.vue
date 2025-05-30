@@ -47,12 +47,18 @@
                     </div>
 
                     <div class="col-span-4">
-                        <label for="venue_name" class="font-medium text-sm">Venue Name</label>
+                        <label for="venue_name" class="font-medium text-sm">Restaurant Name</label>
                         <input type="text" id="venue_name" v-model="entertainment.venue_name"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
 
-                    <div class="col-span-8">
+                    <div class="col-span-4">
+                        <label for="receipt_no" class="font-medium text-sm">Receipt No.</label>
+                        <input type="text" id="receipt_no" v-model="entertainment.receipt_no"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+
+                    <div class="col-span-4">
                         <label for="description" class="font-medium text-sm">Reference</label>
                         <select id="description" v-model="entertainment.description"
                             class="mt-1 text-xs block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
@@ -249,6 +255,7 @@ export default {
                 entertainment_type: '',
                 other_type: '',
                 venue_name: '',
+                receipt_no: '',
                 company_name: '',
                 total_fee: '',
                 comment: '',
@@ -570,6 +577,7 @@ export default {
                         date_event: matchingUniqueID.date_event,
                         entertainment_type: matchingUniqueID.entertainment_type,
                         venue_name: matchingUniqueID.venue_name,
+                        receipt_no: matchingUniqueID.receipt_no,
                         company_name: matchingUniqueID.company_name,
                         total_fee: matchingUniqueID.total_fee,
                         unique_code: matchingUniqueID.unique_code,
@@ -736,6 +744,7 @@ export default {
                     ? this.entertainment.other_type  // replace with the actual text entered
                     : this.entertainment.entertainment_type,
                 venue_name: this.entertainment.venue_name,
+                receipt_no: this.entertainment.receipt_no,
                 company_name: this.entertainment.company_name,
                 total_fee: isNaN(parseFloat(this.entertainment.total_fee)) ? 0 : parseFloat(this.entertainment.total_fee),
                 unique_code: this.entertainment.unique_code,
