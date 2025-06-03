@@ -103,9 +103,7 @@
                             !isPersonalTransport ||
                             (field.id !== 'FareRMLT' &&
                               field.id !== 'UploadFareRMLT' &&
-                              field.id !== 'PublicTransportSpec'&&
-                              field.id !== 'petrolType' &&
-                              field.id !== 'petrolLitre')
+                              field.id !== 'PublicTransportSpec')
                           ">
                             <template v-if="
                               !isOneWay ||
@@ -187,6 +185,7 @@
                                           " :accepted-file-types="field.acceptedFileTypes
                                             " :max-file-size="field.maxFileSize"
                                       :allow-multiple="field.allowMultiple" />
+                                      
                                     <file-pond v-if="
                                       field.id === 'UploadFareRMLT' &&
                                       showFareUpload
@@ -201,6 +200,7 @@
                                           " :accepted-file-types="field.acceptedFileTypes
                                             " :max-file-size="field.maxFileSize"
                                       :allow-multiple="field.allowMultiple" />
+
                                     <file-pond v-if="
                                       field.id === 'UploadTollLT' &&
                                       showTollUpload
@@ -216,9 +216,25 @@
                                           " :accepted-file-types="field.acceptedFileTypes
                                             " :max-file-size="field.maxFileSize"
                                       :allow-multiple="field.allowMultiple" />
+
                                     <file-pond v-if="
                                       field.id === 'UploadParkingLT' &&
                                       showParkingUpload
+                                    " :name="field.id" :disabled="(tab.title ===
+                                      'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
+                                      field.disabled
+                                      " :required="field.required" ref="pond" label-idle="Drop files here..." @addfile="(error, file) =>
+                                        handleAddFile(error, file, field)
+                                        " @removefile="(error, file) =>
+                                          handleRemoveFile(error, file, field)
+                                          " :accepted-file-types="field.acceptedFileTypes
+                                            " :max-file-size="field.maxFileSize"
+                                      :allow-multiple="field.allowMultiple" />
+
+                                    <file-pond v-if="
+                                      field.id === 'UploadHotelRMLT' &&
+                                      showHotelUpload
                                     " :name="field.id" :disabled="(tab.title ===
                                       'Handphone Bill Reimbursement' &&
                                       isFormDisabled) ||
@@ -485,53 +501,81 @@
                     subTab.gridLayout || 'sm:grid-cols-2',
                     field.gridClass,
                   ]">
-                    <label :for="field.id" class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2">
-                      {{ field.label }}
-                      <span v-if="field.required" style="color: red">*</span>
-                    </label>
+                    <template v-if="!field.hidden">
+                      <template v-if="
+                        !isCompanyTransportOT ||
+                        (field.id !== 'PublicTransportSpecOT' &&
+                          field.id !== 'FareRMOT' &&
+                          field.id !== 'UploadFareRMOT')
+                      ">
+                        <template v-if="
+                          !isPublicTransportOT ||
+                          (field.id !== 'TransportSpecOT' &&
+                            field.id !== 'TollOT' &&
+                            field.id !== 'UploadTollOT'&&
+                            field.id !== 'transportNumberPlateOT' &&
+                            field.id !== 'transportModelOT')
+                        ">
+                          <template v-if="
+                            !isPersonalTransportOT ||
+                            (field.id !== 'FareRMOT' &&
+                              field.id !== 'UploadFareRMOT' &&
+                              field.id !== 'PublicTransportSpecOT')
+                          ">
+                            <label :for="field.id" class="m-3 p-1 block text-gray-700 text-sm font-bold mb-2">
+                              {{ field.label }}
+                              <span v-if="field.required" style="color: red">*</span>
+                            </label>
+                            <template v-if="field.type === 'select'">
+                              <select v-model="field.value" :required="field.required" :id="field.id"
+                                class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
+                                <option v-for="(option, optionIndex) in field.options" :key="optionIndex" :value="option.value">
+                                  {{ option.label }}
+                                </option>
+                              </select>
+                            </template>
 
-                    <template v-if="field.type === 'select'">
-                      <select v-model="field.value" :required="field.required" :id="field.id"
-                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
-                        <option v-for="(option, optionIndex) in field.options" :key="optionIndex" :value="option.value">
-                          {{ option.label }}
-                        </option>
-                      </select>
-                    </template>
+                            <template v-else-if="field.type === 'radio-group'">
+                              <div class="grid grid-cols-2">
+                                <div class="p-4 pt-2 pb-2 flex items-center" v-for="option in field.options"
+                                  :key="option.value">
+                                  <input type="radio" :id="option.value" :name="field.id" :value="option.value"
+                                    v-model="field.value" :required="field.required" :disabled="(tab.title === 'Handphone Bill Reimbursement' &&
+                                      isFormDisabled) ||
+                                      field.disabled
+                                      " class="mr-2" />
+                                  <label :for="option.value" class="text-sm text-gray-700">
+                                    {{ option.label }}
+                                  </label>
+                                </div>
+                              </div>
+                            </template>
 
-                    <template v-else-if="field.type === 'radio-group'">
-                      <div class="grid grid-cols-2">
-                        <div class="p-4 pt-2 pb-2 flex items-center" v-for="option in field.options"
-                          :key="option.value">
-                          <input type="radio" :id="option.value" :name="field.id" :value="option.value"
-                            v-model="field.value" :required="field.required" :disabled="(tab.title === 'Handphone Bill Reimbursement' &&
-                              isFormDisabled) ||
-                              field.disabled
-                              " class="mr-2" />
-                          <label :for="option.value" class="text-sm text-gray-700">
-                            {{ option.label }}
-                          </label>
-                        </div>
-                      </div>
-                    </template>
+                            <template v-else-if="field.type === 'file'">
+                              <div class="pt-3">
+                                <file-pond :name="field.id" :required="field.required" ref="pond"
+                                  label-idle="Drop files here..." @addfile="(error, file) => handleAddFile(error, file, field)
+                                    " @removefile="(error, file) =>
+                                      handleRemoveFile(error, file, field)
+                                      " :accepted-file-types="field.acceptedFileTypes" :max-file-size="field.maxFileSize"
+                                  :allow-multiple="field.allowMultiple" />
+                              </div>
+                            </template>
 
-                    <template v-else-if="field.type === 'file'">
-                      <div class="pt-3">
-                        <file-pond :name="field.id" :required="field.required" ref="pond"
-                          label-idle="Drop files here..." @addfile="(error, file) => handleAddFile(error, file, field)
-                            " @removefile="(error, file) =>
-                              handleRemoveFile(error, file, field)
-                              " :accepted-file-types="field.acceptedFileTypes" :max-file-size="field.maxFileSize"
-                          :allow-multiple="field.allowMultiple" />
-                      </div>
-                    </template>
-
-                    <template v-else>
-                      <input v-model="field.value" :required="field.required" :id="field.id" :type="field.type"
-                        :placeholder="field.placeholder" :step="field.type === 'number' ? '0.01' : undefined"
-                        class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+                            <template v-else>
+                              <input v-model="field.value" :required="field.required" :id="field.id" :type="field.type"
+                                :placeholder="field.placeholder" :step="field.type === 'number' ? '0.01' : undefined"
+                                class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+                            </template>
+                          </template>
+                        </template>
+                      </template>
                     </template>
                   </div>
+
+                    
+
+                    
 
                   <div v-if="subTab.title === 'Other Expenses'" class="mt-4">
                     <span class="m-3 block text-gray-700 text-md font-bold mb-2">Please select the currency type for
@@ -1296,6 +1340,7 @@ export default {
       showFareUpload: true,
       showTollUpload: true,
       showParkingUpload: true,
+      showHotelUpload: true,
       // showPetrolUpload: true,
       // showEvUpload: true,
 
@@ -1367,6 +1412,139 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
+              id: "TransportLT",
+              label: "Travelling Mode By",
+              type: "radio-group",
+              value: [],
+              required: true,
+              options: [
+                { label: "Personal Transport", value: "Personal Transport" },
+                { label: "Company Transport", value: "Company Transport" },
+                { label: "Public Transport", value: "Public Transport" },
+              ],
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "TransportSpec",
+              label: "Transport Specification",
+              type: "select",
+              value: "",
+              required: true,
+              options: [
+                { label: "Motorcycle", value: "Motorcycle" },
+                { label: "Car", value: "Car" },
+                { label: "Truck", value: "Truck" },
+              ],
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "PublicTransportSpec",
+              label: "Transport Specification",
+              type: "select",
+              value: "",
+              required: true,
+              options: [
+                { label: "E-hailing", value: "E-Hailing" },
+                { label: "Flight", value: "Flight" },
+              ],
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "LocationStart",
+              label: "Starting Point Location",
+              type: "text",
+              placeholder: "From Where",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "LocationEnd",
+              label: "End Point Location",
+              type: "text",
+              placeholder: "To Where",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "MileageKMLT",
+              label: "Mileage/Kilometer(KM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
+              hidden: false,
+            },
+            {
+              id: "transportNumberPlate",
+              label: "Vehicle Registration Number",
+              type: "text",
+              placeholder: "",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "transportModel",
+              label: "Vehicle Model",
+              type: "text",
+              placeholder: "",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "petrolType",
+              label: "Type of Petrol",
+              type: "select",
+              value: "",
+              options: [
+                { label: "Diesel", value: "Diesel" },
+                { label: "Ron 95", value: "Ron 95" },
+              ],
+              hidden: false,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "petrolLitre",
+              label: "Petrol(Litre)",
+              type: "number",
+              placeholder: "0.00",
+              value: "",
+              gridClass: "sm:col-span-1",
+              hidden: false,
+            },
+            {
+              id: "MileageRMLT",
+              label: "Petrol/EV(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
+              placeholder: "0.00",
+              hidden: false,
+            },
+            {
+              id: "UploadMileageRMLT",
+              label: "",
+              type: "file",
+              value: [],
+              allowMultiple: true,
+              server: null,
+              required: false,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
+              hidden: false,
+            },
+            {
               id: "DepartureAirportLT",
               label: "Flight Departure Airport",
               type: "text",
@@ -1399,76 +1577,41 @@ export default {
               gridClass: "sm:col-span-1",
             },
             {
-              id: "TransportLT",
-              label: "Travelling Mode By",
-              type: "radio-group",
+              id: "FareRMLT",
+              label: "Fare(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
+              placeholder: "0.00",
+              required: true,
+              hidden: false,
+            },
+            {
+              id: "UploadFareRMLT",
+              label: "",
+              type: "file",
               value: [],
-              required: true,
-              options: [
-                { label: "Personal Transport", value: "Personal Transport" },
-                { label: "Company Transport", value: "Company Transport" },
-                { label: "Public Transport", value: "Public Transport" },
+              allowMultiple: true,
+              server: null,
+              required: false,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
               ],
               gridClass: "sm:col-span-1",
-            },
-            {
-              id: "TransportSpec",
-              label: "Transport Specification",
-              type: "select",
-              value: "",
-              required: true,
-              options: [
-                { label: "Motorcycle", value: "Motorcycle" },
-                { label: "Car", value: "Car" },
-                { label: "Truck", value: "Truck" },
-              ],
               hidden: false,
-              gridClass: "sm:col-span-1",
             },
             {
-              id: "PublicTransportSpec",
-              label: "Transport Specification",
-              type: "text",
+              id: "MealAllowanceLT",
+              label: "Meal Allowance(RM)",
+              type: "number",
               value: "",
-              required: true,
               hidden: false,
-              gridClass: "sm:col-span-1",
-            },
-            {
-              id: "transportNumberPlate",
-              label: "Vehicle Registration Number",
-              type: "text",
-              placeholder: "",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-1",
-            },
-            {
-              id: "transportModel",
-              label: "Vehicle Model",
-              type: "text",
-              placeholder: "",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-1",
-            },
-            {
-              id: "LocationStart",
-              label: "Starting Point Location",
-              type: "text",
-              placeholder: "From Where",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-1",
-            },
-            {
-              id: "LocationEnd",
-              label: "End Point Location",
-              type: "text",
-              placeholder: "To Where",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-1",
+              gridClass: "sm:col-span-2",
             },
             {
               id: "AccommodationLT",
@@ -1527,73 +1670,8 @@ export default {
               gridClass: "sm:col-span-1",
             },
             {
-              id: "MealAllowanceLT",
-              label: "Meal Allowance(RM)",
-              type: "number",
-              value: "",
-              hidden: false,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "MileageKMLT",
-              label: "Mileage/Kilometer(KM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-1",
-              hidden: false,
-            },
-            {
-              id: "petrolType",
-              label: "Type of Petrol",
-              type: "select",
-              value: "",
-              options: [
-                { label: "Diesel", value: "Diesel" },
-                { label: "Ron 95", value: "Ron 95" },
-              ],
-              hidden: false,
-              gridClass: "sm:col-span-1",
-            },
-            {
-              id: "petrolLitre",
-              label: "Petrol(Litre)",
-              type: "number",
-              placeholder: "0.00",
-              value: "",
-              gridClass: "sm:col-span-1",
-              hidden: false,
-            },
-            {
-              id: "MileageRMLT",
-              label: "Petrol/EV(RM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-1",
-              placeholder: "0.00",
-              hidden: false,
-            },
-            {
-              id: "UploadMileageRMLT",
-              label: "",
-              type: "file",
-              value: [],
-              allowMultiple: true,
-              server: null,
-              required: false,
-              maxFileSize: "5MB",
-              acceptedFileTypes: [
-                "image/png",
-                "image/jpeg",
-                "application/pdf",
-                "application/vnd.ms-excel",
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-              ],
-              gridClass: "sm:col-span-1",
-              hidden: false,
-            },
-            {
-              id: "FareRMLT",
-              label: "Fare(RM)",
+              id: "HotelRMLT",
+              label: "Hotel(RM)",
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
@@ -1602,7 +1680,7 @@ export default {
               hidden: false,
             },
             {
-              id: "UploadFareRMLT",
+              id: "UploadHotelRMLT",
               label: "",
               type: "file",
               value: [],
@@ -2107,38 +2185,6 @@ export default {
               required: true,
               gridClass: "sm:col-span-2",
             },
-            {
-              id: "DepartureAirportOT",
-              label: "Flight Departure Airport",
-              type: "text",
-              value: "",
-              required: true,
-              hidden: false,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "ArrivalAirportOT",
-              label: "Flight Arrival Airport",
-              type: "text",
-              value: "",
-              required: true,
-              hidden: false,
-              gridClass: "sm:col-span-2",
-            },
-             {
-              id: "FlightClassOT",
-              label: "Flight Class",
-              type: "select",
-              value: "",
-              required: true,
-              options: [
-                { label: "Business", value: "Business" },
-                { label: "Economy", value: "Economy" },
-                
-              ],
-              hidden: false,
-              gridClass: "sm:col-span-1",
-            },
               {
               id: "PurposeOT",
               label: "Purpose",
@@ -2177,11 +2223,41 @@ export default {
             {
               id: "PublicTransportSpecOT",
               label: "Transport Specification",
-              type: "text",
+              type: "select",
               value: "",
               required: true,
+              options: [
+                { label: "E-hailing", value: "E-Hailing" },
+                { label: "Flight", value: "Flight" },
+              ],
               hidden: false,
               gridClass: "sm:col-span-1",
+            },
+            {
+              id: "LocationStartOT",
+              label: "Starting Point Location",
+              type: "text",
+              placeholder: "From Where",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "LocationEndOT",
+              label: "End Point Location",
+              type: "text",
+              placeholder: "To Where",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-1",
+            },
+            {
+              id: "MileageKMOT",
+              label: "Mileage/Kilometer(KM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
+              hidden: false,
             },
             {
               id: "transportNumberPlateOT",
@@ -2202,22 +2278,122 @@ export default {
               gridClass: "sm:col-span-1",
             },
             {
-              id: "LocationStartOT",
-              label: "Starting Point Location",
-              type: "text",
-              placeholder: "From Where",
+              id: "petrolTypeOT",
+              label: "Type of Petrol",
+              type: "select",
               value: "",
-              required: true,
+              options: [
+                { label: "Diesel", value: "Diesel" },
+                { label: "Ron 95", value: "Ron 95" },
+              ],
+              hidden: false,
               gridClass: "sm:col-span-1",
             },
             {
-              id: "LocationEndOT",
-              label: "End Point Location",
+              id: "petrolLitreOT",
+              label: "Petrol(Litre)",
+              type: "number",
+              placeholder: "0.00",
+              value: "",
+              gridClass: "sm:col-span-1",
+              hidden: false,
+            },
+            {
+              id: "MileageRMOT",
+              label: "Petrol/EV(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
+              placeholder: "0.00",
+              hidden: false,
+            },
+            {
+              id: "UploadMileageRMOT",
+              label: "",
+              type: "file",
+              value: [],
+              allowMultiple: true,
+              server: null,
+              required: false,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
+              hidden: false,
+            },
+            {
+              id: "DepartureAirportOT",
+              label: "Flight Departure Airport",
               type: "text",
-              placeholder: "To Where",
               value: "",
               required: true,
+              hidden: false,
+              gridClass: "sm:col-span-2",
+            },
+            {
+              id: "ArrivalAirportOT",
+              label: "Flight Arrival Airport",
+              type: "text",
+              value: "",
+              required: true,
+              hidden: false,
+              gridClass: "sm:col-span-2",
+            },
+             {
+              id: "FlightClassOT",
+              label: "Flight Class",
+              type: "select",
+              value: "",
+              required: true,
+              options: [
+                { label: "Business", value: "Business" },
+                { label: "Economy", value: "Economy" },
+                
+              ],
+              hidden: false,
               gridClass: "sm:col-span-1",
+            },
+            {
+              id: "FareRMOT",
+              label: "Fare(RM)",
+              type: "number",
+              value: "",
+              gridClass: "sm:col-span-1",
+              placeholder: "0.00",
+              required: true,
+              hidden: false,
+            },
+            {
+              id: "UploadFareRMOT",
+              label: "",
+              type: "file",
+              value: [],
+              allowMultiple: true,
+              server: null,
+              required: false,
+              maxFileSize: "5MB",
+              acceptedFileTypes: [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              ],
+              gridClass: "sm:col-span-1",
+              hidden: false,
+            },
+            {
+              id: "MealAllowanceOT",
+              label: "Meal Allowance(RM)",
+              type: "number",
+              value: "",
+              hidden: false,
+              gridClass: "sm:col-span-2",
             },
             {
               id: "AccommodationOT",
@@ -2276,73 +2452,8 @@ export default {
               gridClass: "sm:col-span-1",
             },
             {
-              id: "MealAllowanceOT",
-              label: "Meal Allowance(RM)",
-              type: "number",
-              value: "",
-              hidden: false,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "MileageKMOT",
-              label: "Mileage/Kilometer(KM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-1",
-              hidden: false,
-            },
-            {
-              id: "petrolTypeOT",
-              label: "Type of Petrol",
-              type: "select",
-              value: "",
-              options: [
-                { label: "Diesel", value: "Diesel" },
-                { label: "Ron 95", value: "Ron 95" },
-              ],
-              hidden: false,
-              gridClass: "sm:col-span-1",
-            },
-            {
-              id: "petrolLitreOT",
-              label: "Petrol(Litre)",
-              type: "number",
-              placeholder: "0.00",
-              value: "",
-              gridClass: "sm:col-span-1",
-              hidden: false,
-            },
-            {
-              id: "MileageRMOT",
-              label: "Petrol/EV(RM)",
-              type: "number",
-              value: "",
-              gridClass: "sm:col-span-1",
-              placeholder: "0.00",
-              hidden: false,
-            },
-            {
-              id: "UploadMileageRMOT",
-              label: "",
-              type: "file",
-              value: [],
-              allowMultiple: true,
-              server: null,
-              required: false,
-              maxFileSize: "5MB",
-              acceptedFileTypes: [
-                "image/png",
-                "image/jpeg",
-                "application/pdf",
-                "application/vnd.ms-excel",
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-              ],
-              gridClass: "sm:col-span-1",
-              hidden: false,
-            },
-            {
-              id: "FareRMOT",
-              label: "Fare(RM)",
+              id: "HotelRMOT",
+              label: "Hotel(RM)",
               type: "number",
               value: "",
               gridClass: "sm:col-span-1",
@@ -2351,7 +2462,7 @@ export default {
               hidden: false,
             },
             {
-              id: "UploadFareRMOT",
+              id: "UploadHotelRMOT",
               label: "",
               type: "file",
               value: [],
@@ -2425,14 +2536,6 @@ export default {
               gridClass: "sm:col-span-1",
               hidden: false,
             },
-            
-            // {
-            //   id: "MealAllowanceOT",
-            //   label: "Meal Allowance(RM)",
-            //   type: "number",
-            //   value: "",
-            //   gridClass: "sm:col-span-2",
-            // },
             {
               id: "UploadOT",
               label:
@@ -2490,25 +2593,25 @@ export default {
               gridClass: "sm:col-span-2",
               hidden: true,
             },
+            // {
+            //   id: "CompanyE",
+            //   label: "Company",
+            //   type: "text",
+            //   value: "",
+            //   required: true,
+            //   gridClass: "sm:col-span-2",
+            // },
             {
-              id: "CompanyE",
-              label: "Company",
-              type: "text",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "VenueE",
-              label: "Restaurant Name",
+              id: "ReceiptE",
+              label: "Receipt No.",
               type: "text",
               value: "",
               required: false,
               gridClass: "sm:col-span-2",
             },
             {
-              id: "ReceiptE",
-              label: "Receipt No.",
+              id: "VenueE",
+              label: "Restaurant Name",
               type: "text",
               value: "",
               required: false,
@@ -2586,25 +2689,25 @@ export default {
               gridClass: "sm:col-span-2",
               hidden: true,
             },
+            // {
+            //   id: "CompanySR",
+            //   label: "Customer",
+            //   type: "text",
+            //   value: "",
+            //   required: true,
+            //   gridClass: "sm:col-span-2",
+            // },
             {
-              id: "CompanySR",
-              label: "Customer",
-              type: "text",
-              value: "",
-              required: true,
-              gridClass: "sm:col-span-2",
-            },
-            {
-              id: "VenueSR",
-              label: "Restaurant Name",
+              id: "ReceiptSR",
+              label: "Receipt No.",
               type: "text",
               value: "",
               required: false,
               gridClass: "sm:col-span-2",
             },
             {
-              id: "ReceiptSR",
-              label: "Receipt No.",
+              id: "VenueSR",
+              label: "Restaurant Name",
               type: "text",
               value: "",
               required: false,
@@ -2794,6 +2897,42 @@ export default {
 
       return tripField && tripField.value === "One Way";
     },
+    isCompanyTransportOT() {
+      const tab = this.overseasTabs.find(tab => tab.title === "Details");
+      if (!tab) return false;
+      const transportField = tab.fields.find(
+        (field) =>
+          field.id === "TransportOT" 
+      );
+      this.updateFieldVisibility14();
+      return transportField && transportField.value === "Company Transport";
+    },
+    isPublicTransportOT() {
+      const tab = this.overseasTabs.find(tab => tab.title === "Details");
+      if (!tab) return false;
+      const publicTransportField = tab.fields.find(
+        (field) =>
+          field.id === "TransportOT" 
+      );
+      this.updateFieldVisibility14();
+      return (
+        publicTransportField &&
+        publicTransportField.value === "Public Transport"
+      );
+    },
+    isPersonalTransportOT() {
+      const tab = this.overseasTabs.find(tab => tab.title === "Details");
+      if (!tab) return false;
+      const personalTransportField = tab.fields.find(
+        (field) =>
+          field.id === "TransportOT" 
+      );
+      this.updateFieldVisibility14();
+      return (
+        personalTransportField &&
+        personalTransportField.value === "Personal Transport"
+      );
+    },
     isOtherThanOutpatient() {
       const tab = this.tabs.find(
         (tab) => tab.title === "Medical Bill Reimbursement"
@@ -2904,6 +3043,14 @@ export default {
             );
             if (tripField) {
               this.updateFieldVisibility7(tripField.value);
+            }
+          }
+
+          // const currentTab = this.overseasTabs.find(tab => tab.title === 'Details');
+          if (this.overseasTabs && this.overseasTabs.length > 0) {
+            const overseasDetailsTab = this.overseasTabs.find(t => t.title === 'Details');
+            if (overseasDetailsTab) {
+              this.updateFieldVisibility14();
             }
           }
 
@@ -3035,6 +3182,7 @@ export default {
             if (typeOfRefreshmentField) {
               this.updateFieldVisibility3(typeOfRefreshmentField.value);
             }
+            
           }
 
           if (tab.title === "Handphone Bill Reimbursement") {
@@ -3184,6 +3332,12 @@ export default {
           .fields.find((field) => field.id === "FareRMLT");
         return fareField && fareField.value !== "";
       }
+      if (fieldId === "UploadHotelRMLT") {
+        const hotelField = this.tabs
+          .find((tab) => tab.title === "Local Travelling")
+          .fields.find((field) => field.id === "HotelRMLT");
+        return hotelField && hotelField.value !== "";
+      }
       if (fieldId === "UploadTollLT") {
         const tollField = this.tabs
           .find((tab) => tab.title === "Local Travelling")
@@ -3197,26 +3351,32 @@ export default {
         return parkingField && parkingField.value !== "";
       }
       if (fieldId === "UploadMileageRMOT") {
-        const mileageField = this.tabs
-          .find((tab) => tab.title === "Overseas Travelling")
+        const mileageField = this.overseasTabs
+          .find(tab => tab.title === 'Details')
           .fields.find((field) => field.id === "MileageRMLT");
         return mileageField && mileageField.value !== "";
       }
       if (fieldId === "UploadFareRMoT") {
-        const fareField = this.tabs
-          .find((tab) => tab.title === "Overseas Travelling")
-          .fields.find((field) => field.id === "FareRMoT");
+        const fareField = this.overseasTabs
+          .find((tab) => tab.title === "Details")
+          .fields.find((field) => field.id === "FareRMOT");
         return fareField && fareField.value !== "";
       }
+      if (fieldId === "UploadHotelRMOT") {
+        const hotelField = this.overseasTabs
+          .find((tab) => tab.title === "Details")
+          .fields.find((field) => field.id === "HotelRMLT");
+        return hotelField && hotelField.value !== "";
+      }
       if (fieldId === "UploadTolloT") {
-        const tollField = this.tabs
-          .find((tab) => tab.title === "Overseas Travelling")
+        const tollField = this.overseasTabs
+          .find((tab) => tab.title === "Details")
           .fields.find((field) => field.id === "TolloT");
         return tollField && tollField.value !== "";
       }
       if (fieldId === "UploadParkingoT") {
-        const parkingField = this.tabs
-          .find((tab) => tab.title === "Overseas Travelling")
+        const parkingField = this.overseasTabs
+          .find((tab) => tab.title === "Details")
           .fields.find((field) => field.id === "ParkingoT");
         return parkingField && parkingField.value !== "";
       }
@@ -3326,6 +3486,10 @@ export default {
         case "ParkingOT":
           this.showParkingUpload = !this.showParkingUpload;
           break;
+        case "HotelRMLT":
+        case "HotelRMOT":
+          this.showHotelUpload = !this.showHotelUpload;
+          break;
         // case "petrolCharged":
         //   this.showPetrolUpload = !this.showPetrolUpload;
         //   break;
@@ -3354,6 +3518,10 @@ export default {
         case "UploadParkingLT":
         case "UploadParkingOT":
           prefix = "PARKING_";
+          break;
+        case "UploadHotelRMLT":
+        case "UploadHotelRMOT":
+          prefix = "HOTEL_";
           break;
         // case "UploadPetrolCharged":
         //   prefix = "PETROL_";
@@ -3492,10 +3660,247 @@ export default {
         console.warn("File to remove not found:", fileObject.name);
       }
     },
+    
+    updateFieldVisibility11(transportValue) {
+      const overseasTravellingTab = this.overseasTabs.find(
+        (tab) => tab.title === "Details" 
+      );
+      if (!overseasTravellingTab) return;
+      const mileageKMOTField = overseasTravellingTab.fields.find(
+        (field) => field.id === "MileageKMOT"
+      );
+      const mileageRMOTField = overseasTravellingTab.fields.find(
+        (field) => field.id === "MileageRMOT"
+      );
+      const uploadmileageRMOTField = overseasTravellingTab.fields.find(
+        (field) => field.id === "UploadMileageRMOT"
+      );
+      const TransportSpecOTField = overseasTravellingTab.fields.find(
+        (field) => field.id === "TransportSpecOT"
+      );
+      const PublicTransportOTSpecField = overseasTravellingTab.fields.find(
+        (field) => field.id === "PublicTransportSpecOT"
+      );
+      if (
+        !mileageKMOTField ||
+        !mileageRMOTField ||
+        !uploadmileageRMOTField ||
+        !TransportSpecOTField ||
+        !PublicTransportOTSpecField
+      )
+        return;
+
+      if (transportValue === "Company Transport") {
+        mileageKMOTField.hidden = true;
+        mileageRMOTField.hidden = true;
+        uploadmileageRMOTField.hidden = true;
+        TransportSpecOTField.hidden = true;
+        PublicTransportOTSpecField.hidden = true;
+      } else {
+        mileageKMOTField.hidden = false;
+        mileageRMOTField.hidden = false;
+        uploadmileageRMOTField.hidden = false;
+        TransportSpecOTField.hidden = false;
+        PublicTransportOTSpecField.hidden = false;
+      }
+    },
+
+    updateFieldVisibility12(publicTransportValue) {
+      const overseasTravellingTab = this.overseasTabs.find(
+        (tab) => tab.title === "Details"
+      );
+      if (!overseasTravellingTab) return;
+      const mileageKMOTField = overseasTravellingTab.fields.find(
+        (field) => field.id === "MileageKMOT"
+      );
+      const mileageRMOTField = overseasTravellingTab.fields.find(
+        (field) => field.id === "MileageRMOT"
+      );
+      const uploadmileageRMOTField = overseasTravellingTab.fields.find(
+        (field) => field.id === "UploadMileageRMOT"
+      );
+      const TransportSpecOTField = overseasTravellingTab.fields.find(
+        (field) => field.id === "TransportSpecOT"
+      );
+      const TollOTField = overseasTravellingTab.fields.find(
+        (field) => field.id === "TollOT"
+      );
+      const uploadTollOTField = overseasTravellingTab.fields.find(
+        (field) => field.id === "UploadTollOT"
+      );
+      if (
+        !mileageKMOTField ||
+        !mileageRMOTField ||
+        !uploadmileageRMOTField ||
+        !TransportSpecOTField ||
+        !TollOTField ||
+        !uploadTollOTField
+      )
+        return;
+
+      if (publicTransportValue === "Public Transport") {
+        mileageKMOTField.hidden = true;
+        mileageRMOTField.hidden = true;
+        uploadmileageRMOTField.hidden = true;
+        TransportSpecOTField.hidden = true;
+        TollOTField.hidden = true;
+        uploadTollOTField.hidden = true;
+      } else {
+        mileageKMOTField.hidden = false;
+        mileageRMOTField.hidden = false;
+        uploadmileageRMOTField.hidden = false;
+        TransportSpecOTField.hidden = false;
+        TollOTField.hidden = false;
+        uploadTollOTField.hidden = false;
+      }
+    },
+
+    updateFieldVisibility13(personalTransportValue) {
+      const overseasTravellingTab = this.overseasTabs.find(
+        (tab) => tab.title === "Details"
+      );
+      if (!overseasTravellingTab) return;
+      const publicTransportOTField = overseasTravellingTab.fields.find(
+        (field) => field.id === "PublicTransportSpecOT"
+      );
+      const fareRMOTField = overseasTravellingTab.fields.find(
+        (field) => field.id === "FareRMOT"
+      );
+      const uploadfareRMOTField = overseasTravellingTab.fields.find(
+        (field) => field.id === "UploadFareRMOT"
+      );
+      if (!publicTransportOTField || !fareRMOTField || !uploadfareRMOTField)
+        return;
+
+      if (personalTransportValue === "Personal Transport") {
+        publicTransportOTField.hidden = true;
+        fareRMOTField.hidden = true;
+        uploadfareRMOTField.hidden = true;
+      } else {
+        publicTransportOTField.hidden = false;
+        fareRMOTField.hidden = false;
+        uploadfareRMOTField.hidden = false;
+      }
+    },
+
+    updateFieldVisibility14() {
+      const tab = this.overseasTabs.find(t => t.title === "Details");
+      if (!tab) return;
+
+      // Get current value
+      const transportType = tab.fields.find(f => f.id === "TransportOT")?.value;
+      const publicTransportSpec = tab.fields.find(f => f.id === "PublicTransportSpecOT")?.value;
+
+      // Helper to show/hide fields
+      const setHidden = (id, hidden) => {
+        const field = tab.fields.find(f => f.id === id);
+        if (field) field.hidden = hidden;
+      };
+
+      // Hide all by default
+      const allFields = [
+        "AccommodationOT", "CheckInOT", "CheckOutOT", "HotelNightOT", "HotelRoomOT", "HotelCityOT", "HotelRMOT", "UploadHotelRMOT",
+        "MealAllowanceOT", "FareRMOT", "UploadFareRMOT", "TransportSpecOT", "PublicTransportSpecOT",
+        "LocationStartOT", "LocationEndOT", "MileageKMOT", "MileageRMOT", "UploadMileageRMOT",
+        "transportNumberPlateOT", "transportModelOT", "petrolTypeOT", "petrolLitreOT", "TollOT", "UploadTollOT", "ParkingOT", "UploadParkingOT",
+        "DepartureAirportOT", "ArrivalAirportOT", "FlightClassOT"
+      ];
+      allFields.forEach(id => setHidden(id, true));
+
+      // Always show TransportOT
+      setHidden("TransportOT", false);
+
+      // Personal or Company Transport
+      if (transportType === "Personal Transport" || transportType === "Company Transport") {
+        setHidden("TransportSpecOT", false);
+        setHidden("LocationStartOT", false);
+        setHidden("LocationEndOT", false);
+        setHidden("MileageKMOT", false);
+        setHidden("MileageRMOT", false);
+        setHidden("UploadMileageRMOT", false);
+        setHidden("transportNumberPlateOT", false);
+        setHidden("transportModelOT", false);
+        setHidden("petrolTypeOT", false);
+        setHidden("petrolLitreOT", false);
+        setHidden("TollOT", false);
+        setHidden("UploadTollOT", false);
+        setHidden("ParkingOT", false);
+        setHidden("UploadParkingOT", false);
+        // setHidden("ReturendateOT", false);
+        setHidden("AccommodationOT", false);
+        setHidden("CheckInOT", false);
+        setHidden("CheckOutOT", false);
+        setHidden("HotelNightOT", false);
+        setHidden("HotelRoomOT", false);
+        setHidden("HotelCityOT", false);
+        setHidden("HotelRMOT", false);
+        setHidden("UploadHotelRMOT", false);
+        setHidden("MealAllowanceOT", false);
+
+        // Hide flight and fare fields
+        setHidden("DepartureAirportOT", true);
+        setHidden("ArrivalAirportOT", true);
+        setHidden("FlightClassOT", true);
+        setHidden("FareRMOT", true);
+        setHidden("UploadFareRMOT", true);
+        setHidden("PublicTransportSpecOT", true);
+      }
+
+      // Public Transport
+      if (transportType === "Public Transport") {
+        setHidden("PublicTransportSpecOT", false);
+        setHidden("LocationStartOT", false);
+        setHidden("LocationEndOT", false);
+
+        if (publicTransportSpec === "E-Hailing") {
+          setHidden("MileageKMOT", false);
+          setHidden("FareRMOT", false);
+          setHidden("UploadFareRMOT", false);
+          // setHidden("ReturendateOT", false);
+          setHidden("AccommodationOT", false);
+          setHidden("CheckInOT", false);
+          setHidden("CheckOutOT", false);
+          setHidden("HotelNightOT", false);
+          setHidden("HotelRoomOT", false);
+          setHidden("HotelCityOT", false);
+          setHidden("HotelRMOT", false);
+          setHidden("UploadHotelRMOT", false);
+          setHidden("MealAllowanceOT", false);
+
+          // Hide flight fields
+          setHidden("DepartureAirportOT", true);
+          setHidden("ArrivalAirportOT", true);
+          setHidden("FlightClassOT", true);
+        }
+        if (publicTransportSpec === "Flight") {
+          setHidden("MileageKMOT", false);
+          setHidden("FareRMOT", false);
+          setHidden("UploadFareRMOT", false);
+          setHidden("DepartureAirportOT", false);
+          setHidden("ArrivalAirportOT", false);
+          setHidden("FlightClassOT", false);
+          // setHidden("ReturendateOT", false);
+          setHidden("AccommodationOT", false);
+          setHidden("CheckInOT", false);
+          setHidden("CheckOutOT", false);
+          setHidden("HotelNightOT", false);
+          setHidden("HotelRoomOT", false);
+          setHidden("HotelCityOT", false);
+          setHidden("HotelRMOT", false);
+          setHidden("UploadHotelRMOT", false);
+          setHidden("MealAllowanceOT", false);
+        }
+        // Hide vehicle fields for public transport
+        [
+          "TransportSpecOT", "MileageRMOT", "UploadMileageRMOT", "transportNumberPlateOT", "transportModelOT",
+          "petrolTypeOT", "petrolLitreOT", "TollOT", "UploadTollOT", "ParkingOT", "UploadParkingOT"
+        ].forEach(id => setHidden(id, true));
+      }
+    },
 
     updateFieldVisibility(transportValue) {
       const localTravellingTab = this.tabs.find(
-        (tab) => tab.title === "Local Travelling"
+        (tab) => tab.title === "Local Travelling" 
       );
       if (!localTravellingTab) return;
       const mileageKMLTField = localTravellingTab.fields.find(
@@ -3536,69 +3941,166 @@ export default {
         PublicTransportSpecField.hidden = false;
       }
     },
+    
+    updateFieldVisibility10() {
+      const tab = this.tabs.find(t => t.title === "Local Travelling");
+      if (!tab) return;
 
-    updateFieldVisibility10(param) {
-      //  console.log("test console log : " + param);
-      const localTravellingTab = this.tabs.find(
-        (tab) => tab.title === "Local Travelling"
-      );
-      if (!localTravellingTab) return;
+      // Get current values
+      const tripType = tab.fields.find(f => f.id === "tripwayLT")?.value;
+      const transportType = tab.fields.find(f => f.id === "TransportLT")?.value;
+      const publicTransportSpec = tab.fields.find(f => f.id === "PublicTransportSpec")?.value;
 
-      const ReturndateLTField = localTravellingTab.fields.find(
-        (field) => field.id === "ReturndateLT"
-      );
-      const PublicTransportSpec = localTravellingTab.fields.find(
-        (field) => field.id === "PublicTransportSpec"
-      );
-      const FareRMLT = localTravellingTab.fields.find(
-        (field) => field.id === "FareRMLT"
-      );
-      const TransportSpec = localTravellingTab.fields.find(
-        (field) => field.id === "TransportSpec"
-      );
-      const MileageRMLT = localTravellingTab.fields.find(
-        (field) => field.id === "MileageRMLT"
-      );
-      const MileageKMLT = localTravellingTab.fields.find(
-        (field) => field.id === "MileageKMLT"
-      );
-      const ParkingLT = localTravellingTab.fields.find(
-        (field) => field.id === "ParkingLT"
-      );
-      // const petrolCharged = localTravellingTab.fields.find(
-      //   (field) => field.id === "petrolCharged"
-      // );
-      // const evCharged = localTravellingTab.fields.find(
-      //   (field) => field.id === "evCharged"
-      // );
-      const TollLT = localTravellingTab.fields.find(
-        (field) => field.id === "TollLT"
-      );
-      if (!ReturndateLTField || !ReturndateLTField) return;
+      // Helper to show/hide fields
+      const setHidden = (id, hidden) => {
+        const field = tab.fields.find(f => f.id === id);
+        if (field) field.hidden = hidden;
+      };
 
-      if (param === "Round Trip") {
-        ReturndateLTField.value = ""; // Reset value
-      } else if (param === "Personal Transport") {
-        PublicTransportSpec.value = ""; // Reset value
-        FareRMLT.value = ""; // Reset value
+      // Hide all by default
+      const allFields = [
+        "ReturndateLT", "AccommodationLT", "CheckInLT", "CheckOutLT", "HotelNightLT", "HotelRoomLT", "HotelCityLT", "HotelRMLT", "UploadHotelRMLT",
+        "MealAllowanceLT", "FareRMLT", "UploadFareRMLT", "TransportSpec", "PublicTransportSpec",
+        "LocationStart", "LocationEnd", "MileageKMLT", "MileageRMLT", "UploadMileageRMLT",
+        "transportNumberPlate", "transportModel", "petrolType", "petrolLitre", "TollLT", "UploadTollLT", "ParkingLT", "UploadParkingLT",
+        "DepartureAirportLT", "ArrivalAirportLT", "FlightClassLT"
+      ];
+      allFields.forEach(id => setHidden(id, true));
 
-        // Reset value
-      } else if (param === "Company Transport") {
-        PublicTransportSpec.value = ""; // Reset value
-        FareRMLT.value = ""; // Reset value
-        TransportSpec.value = ""; // Reset value
-        MileageRMLT.value = ""; // Reset value
-        MileageKMLT.value = "";
+      // Always show TransportLT and tripwayLT
+      setHidden("TransportLT", false);
+      setHidden("tripwayLT", false);
 
-        // Reset value
-      } else {
-        TransportSpec.value = ""; // Reset value
-        MileageRMLT.value = ""; // Reset value
-        MileageKMLT.value = "";
-        ParkingLT.value = "";
-        // evCharged.value = "";
-        TollLT.value = "";
-        // petrolCharged.value = "";
+      if (tripType === "Round Trip") {
+        setHidden("ReturndateLT", false);
+        setHidden("AccommodationLT", false);
+        setHidden("CheckInLT", false);
+        setHidden("CheckOutLT", false);
+        setHidden("HotelNightLT", false);
+        setHidden("HotelRoomLT", false);
+        setHidden("HotelCityLT", false);
+        setHidden("HotelRMLT", false);
+        setHidden("UploadHotelRMLT", false);
+        setHidden("MealAllowanceLT", false);
+
+        // Personal or Company Transport
+        if (transportType === "Personal Transport" || transportType === "Company Transport") {
+          setHidden("TransportSpec", false);
+          setHidden("LocationStart", false);
+          setHidden("LocationEnd", false);
+          setHidden("MileageKMLT", false);
+          setHidden("MileageRMLT", false);
+          setHidden("UploadMileageRMLT", false);
+          setHidden("transportNumberPlate", false);
+          setHidden("transportModel", false);
+          setHidden("petrolType", false);
+          setHidden("petrolLitre", false);
+          setHidden("TollLT", false);
+          setHidden("UploadTollLT", false);
+          setHidden("ParkingLT", false);
+          setHidden("UploadParkingLT", false);
+
+          // Flight fields and fare are always hidden for personal/company
+          setHidden("DepartureAirportLT", true);
+          setHidden("ArrivalAirportLT", true);
+          setHidden("FlightClassLT", true);
+          setHidden("FareRMLT", true);
+          setHidden("UploadFareRMLT", true);
+          setHidden("PublicTransportSpec", true);
+        }
+
+        // Public Transport
+        if (transportType === "Public Transport") {
+          setHidden("PublicTransportSpec", false);
+          setHidden("LocationStart", false);
+          setHidden("LocationEnd", false);
+
+            if (publicTransportSpec === "E-Hailing") {
+              setHidden("MileageKMLT", false);
+              setHidden("FareRMLT", false);
+              setHidden("UploadFareRMLT", false);
+              // Hide flight fields
+              setHidden("DepartureAirportLT", true);
+              setHidden("ArrivalAirportLT", true);
+              setHidden("FlightClassLT", true);
+            }
+
+            if (publicTransportSpec === "Flight") {
+              setHidden("MileageKMLT", false);
+              setHidden("FareRMLT", false);
+              setHidden("UploadFareRMLT", false);
+              setHidden("DepartureAirportLT", false);
+              setHidden("ArrivalAirportLT", false);
+              setHidden("FlightClassLT", false);
+            }
+
+          // Hide vehicle fields for public transport
+          [
+            "TransportSpec", "MileageRMLT", "UploadMileageRMLT", "transportNumberPlate", "transportModel",
+            "petrolType", "petrolLitre", "TollLT", "UploadTollLT", "ParkingLT", "UploadParkingLT"
+          ].forEach(id => setHidden(id, true));
+        }
+      }
+      else
+      {
+        // Personal or Company Transport
+        if (transportType === "Personal Transport" || transportType === "Company Transport") {
+          setHidden("TransportSpec", false);
+          setHidden("LocationStart", false);
+          setHidden("LocationEnd", false);
+          setHidden("MileageKMLT", false);
+          setHidden("MileageRMLT", false);
+          setHidden("UploadMileageRMLT", false);
+          setHidden("transportNumberPlate", false);
+          setHidden("transportModel", false);
+          setHidden("petrolType", false);
+          setHidden("petrolLitre", false);
+          setHidden("TollLT", false);
+          setHidden("UploadTollLT", false);
+          setHidden("ParkingLT", false);
+          setHidden("UploadParkingLT", false);
+
+          // Flight fields and fare are always hidden for personal/company
+          setHidden("DepartureAirportLT", true);
+          setHidden("ArrivalAirportLT", true);
+          setHidden("FlightClassLT", true);
+          setHidden("FareRMLT", true);
+          setHidden("UploadFareRMLT", true);
+          setHidden("PublicTransportSpec", true);
+        }
+
+        // Public Transport
+        if (transportType === "Public Transport") {
+          setHidden("PublicTransportSpec", false);
+          setHidden("LocationStart", false);
+          setHidden("LocationEnd", false);
+
+            if (publicTransportSpec === "E-Hailing") {
+              setHidden("MileageKMLT", false);
+              setHidden("FareRMLT", false);
+              setHidden("UploadFareRMLT", false);
+              // Hide flight fields
+              setHidden("DepartureAirportLT", true);
+              setHidden("ArrivalAirportLT", true);
+              setHidden("FlightClassLT", true);
+            }
+
+            if (publicTransportSpec === "Flight") {
+              setHidden("MileageKMLT", false);
+              setHidden("FareRMLT", false);
+              setHidden("UploadFareRMLT", false);
+              setHidden("DepartureAirportLT", false);
+              setHidden("ArrivalAirportLT", false);
+              setHidden("FlightClassLT", false);
+            }
+
+          // Hide vehicle fields for public transport
+          [
+            "TransportSpec", "MileageRMLT", "UploadMileageRMLT", "transportNumberPlate", "transportModel",
+            "petrolType", "petrolLitre", "TollLT", "UploadTollLT", "ParkingLT", "UploadParkingLT"
+          ].forEach(id => setHidden(id, true));
+        }
+
       }
     },
 
@@ -3917,21 +4419,21 @@ export default {
       // Check if the transport mode is Company Transport
       const isCompanyTransport = tab.fields.some(
         (field) =>
-          field.id === "TransportLT" &&
+          (field.id === "TransportLT" || field.id === "TransportOT") &&
           field.value?.includes("Company Transport")
       );
 
       // Check if the transport mode is Public Transport
       const isPublicTransport = tab.fields.some(
         (field) =>
-          field.id === "TransportLT" &&
+          (field.id === "TransportLT" || field.id === "TransportOT") &&
           field.value?.includes("Public Transport")
       );
 
       // Check if the transport mode is Personal Transport
       const isPersonalTransport = tab.fields.some(
         (field) =>
-          field.id === "TransportLT" &&
+          (field.id === "TransportLT" || field.id === "TransportOT") &&
           field.value?.includes("Personal Transport")
       );
 
@@ -3941,7 +4443,13 @@ export default {
           field.type === "number" &&
           !isNaN(parseFloat(field.value)) &&
           field.id !== "MileageKMLT" &&
+          field.id !== "MileageKMOT" &&
           field.id !== "petrolLitre" &&
+          field.id !== "petrolLitreOT" &&
+          field.id !== "HotelRoomLT" &&
+          field.id !== "HotelRoomOT" &&
+          field.id !== "HotelNightLT" &&
+          field.id !== "HotelNightOT" &&
           field.id !== "limit_outpatient" &&
           field.id !== "limit_medic_dental" &&
           field.id !== "LimitedAmountHR" &&
@@ -3951,15 +4459,26 @@ export default {
           field.id !== "ExchangeRateAccommodationOT" &&
           field.id !== "AmountforAccommodationOT" &&
           (!isCompanyTransport ||
-            (field.id !== "FareRMLT")) &&
+            (field.id !== "FareRMLT" || field.id !== "FareRMOT")) &&
           (!isPublicTransport ||
-            (field.id !== "TollLT")) &&
+            (field.id !== "TollLT" || field.id !== "TollOT")) &&
           // (!isPersonalTransport ||
           //   (field.id !== "FareRMLT" && field.id !== "ParkingLT")) &&
           // (!isPersonalTransport ||
           //   (field.id !== "FareRMLT" && field.id !== "petrolCharged")) &&
           (!isPersonalTransport ||
-            (!field.id !== "FareRMLT"))
+            (!field.id !== "FareRMLT" || !field.id !== "FareRMOT"))
+          // Only calculate Fare if not company or personal transport
+          // ((!isCompanyTransport && !isPersonalTransport) || 
+          //   (field.id !== "FareRMLT" || field.id !== "FareRMOT")) &&
+          // // Only calculate Toll, Parking, Petrol if company or personal transport
+          // (!isPublicTransport || 
+          //   ((field.id !== "TollLT" || field.id !== "TollOT") && (field.id !== "ParkingLT" || field.id !== "ParkingOT") && 
+          //   (field.id !== "MileageRMLT" || field.id !== "MileageRMOT"))
+          // )||
+          // // Always calculate Meal and Hotel regardless of transport
+          // (field.id !== "MealAllowanceLT" || field.id !== "MealAllowanceOT") ||
+          // (field.id !== "HotelRMLT" || field.id !== "HotelRMOT")
         ) {
           total += parseFloat(field.value);
         }
@@ -3971,7 +4490,7 @@ export default {
       return total.toFixed(2);
 
     },
-
+    
     //calculate limit amount
     handleClaimDeleted({ claimAmount, category, updatedLimit, tabTitle }) {
       //console.log("Claim Deleted:", claimAmount, category, updatedLimit);
@@ -4447,8 +4966,9 @@ export default {
       if (tabTitle === 'overseas') {
         const currentTab = this.overseasTabs.find(tab => tab.title === 'Details');
         return currentTab.fields.every(field => {
-          if (field.required) {
-            return field.value !== '';
+          if (field.hidden) return true;
+          if (field.required && (field.value === null || field.value === '')) {
+            return false;
           }
           return true;
         });
@@ -4476,6 +4996,7 @@ export default {
     },
     submitForm4(tabTitle) {
       console.log("submitForm4 called for tab:", tabTitle);
+      console.log("Field values:", this.overseasTabs[0].fields);
       if (this.validateCurrentTab(tabTitle)) {
         const formattedData = {};
         this.overseasTabs.forEach((tab) => {
@@ -4487,11 +5008,13 @@ export default {
             }
           });
         });
+        const currentTab = this.overseasTabs.find(tab => tab.title === 'Details');
         formattedData["otherExpenses"] = [...this.otherExpenses];
-        formattedData["combinetotal"] = parseFloat(this.totalMealAllowanceOTplusotherExpenses);
+        // formattedData["combinetotal"] = parseFloat(this.totalMealAllowanceOTplusotherExpenses);
+        formattedData["combinetotal"] = parseFloat(this.calculateTotal(currentTab));
         formattedData["tabTitle"] = "Overseas Travelling";
-        this.$emit("formSubmitted", formattedData);
-        //  console.log("Formatted Form Data:", formattedData);
+        this.$emit("formSubmitted", formattedData); 
+         console.log("Formatted Form Data:", formattedData);
 
         this.overseasTabs.forEach((tab) => {
           tab.fields.forEach((field) => {
@@ -4520,6 +5043,7 @@ export default {
         };
         //  console.log("Form submitted successfully");
         console.log("submitForm4 called for tab:", tabTitle);
+        console.log("Other expenses:", this.otherExpenses);
       } else {
         alert("Please fill all required fields before submitting.");
       }

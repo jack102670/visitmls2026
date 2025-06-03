@@ -20,13 +20,13 @@
             </div>
             <form @submit.prevent="handleSubmit">
                 <div class="grid grid-cols-8 gap-2 w-full">
-                    <div class="col-span-8">
+                    <div class="col-span-4">
                         <label for="date_event" class="font-medium text-sm">Date Event</label>
                         <input type="date" id="date_event" v-model="formattedDate"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
 
-                    <div class="col-span-8">
+                    <div class="col-span-4">
                         <label for="entertainment_type" class="font-medium text-sm">Entertainment Type</label>
                         <select id="entertainment_type" v-model="entertainment.entertainment_type"
                             class="mt-1 text-xs block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
@@ -34,17 +34,17 @@
                                 :value="entertainment">{{ entertainment }}</option>
                         </select>
                     </div>
-                    <div class="col-span-8" v-if="entertainment.entertainment_type === 'OTHERS'">
+                    <div class="col-span-4" v-if="entertainment.entertainment_type === 'OTHERS'">
                         <label for="entertainment_type" class="font-medium text-sm">Specify Type</label>
                         <input type="text" id="entertainment_type" v-model="entertainment.other_type"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
                     </div>
 
-                    <div class="col-span-4">
+                    <!-- <div class="col-span-4">
                         <label for="company_name" class="font-medium text-sm">Company Name</label>
                         <input type="text" id="company_name" v-model="entertainment.company_name"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                    </div>
+                    </div> -->
 
                     <div class="col-span-4">
                         <label for="venue_name" class="font-medium text-sm">Restaurant Name</label>
@@ -256,7 +256,7 @@ export default {
                 other_type: '',
                 venue_name: '',
                 receipt_no: '',
-                company_name: '',
+                // company_name: '',
                 total_fee: '',
                 comment: '',
                 participants: [],
@@ -578,7 +578,7 @@ export default {
                         entertainment_type: matchingUniqueID.entertainment_type,
                         venue_name: matchingUniqueID.venue_name,
                         receipt_no: matchingUniqueID.receipt_no,
-                        company_name: matchingUniqueID.company_name,
+                        // company_name: matchingUniqueID.company_name,
                         total_fee: matchingUniqueID.total_fee,
                         unique_code: matchingUniqueID.unique_code,
                         comment: matchingUniqueID.comment,
@@ -745,7 +745,7 @@ export default {
                     : this.entertainment.entertainment_type,
                 venue_name: this.entertainment.venue_name,
                 receipt_no: this.entertainment.receipt_no,
-                company_name: this.entertainment.company_name,
+                // company_name: this.entertainment.company_name,
                 total_fee: isNaN(parseFloat(this.entertainment.total_fee)) ? 0 : parseFloat(this.entertainment.total_fee),
                 unique_code: this.entertainment.unique_code,
                 participants: this.entertainment.participants.map(p => ({

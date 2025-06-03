@@ -892,6 +892,9 @@ export default {
             const editedDetail = {
               Date_Event: result[i].date_event,
               'Return_Date': result[i].return_date,
+              Trip_Mode: result[i].trip_mode,
+              Transport_Specification: result[i].transport_specification,
+              Transport_Mode: result[i].transport_mode,
               'Vehicle Number':result[i].vehicle_no,
               'Vehicle Model':result[i].vehicle_model,
               Starting_Point: result[i].starting_point,
@@ -899,14 +902,20 @@ export default {
               'Mileage (KM)': Number(result[i].mileage_km).toFixed(2),
               'Type of Petrol':result[i].type_petrol,
               'Petrol (Litre)':Number(result[i].petrol_perlitre).toFixed(2),
+              'Departure Airport': result[i].departure_airport,
+              'Arrival Airport': result[i].arrival_airport,
+              'Class Airline': result[i].class_airline,
               'Fare': Number(result[i].fare).toFixed(2),
               'Meal_Allowance (RM)': result[i].meal_allowance,
               'Accomodation': result[i].accommodation,
+              'Check In Date': result[i].checkin_date,
+              'Check Out Date': result[i].checkout_date,
+              'City(Hotel)': result[i].city,
+              'No of nights': result[i].number_of_nights,
+              'No of rooms': result[i].number_of_rooms,
+              'Hotel Fee (RM)': Number(result[i].hotel_fee).toFixed(2),
               'Park_Fee (RM)': Number(result[i].park_fee).toFixed(2),
               'Toll_Fee (RM)': Number(result[i].toll_fee).toFixed(2),
-              Transport_Specification: result[i].transport_specification,
-              Transport_Mode: result[i].transport_mode,
-              Trip_Mode: result[i].trip_mode,
               'Petrol/EV (RM)': Number(result[i].total_mileage).toFixed(2),
               'Total_Fee (RM)': Number(result[i].total_fee).toFixed(2),
               Attachments: result[i].files,
@@ -967,7 +976,7 @@ export default {
                 </table>`;
             };
 
-            const mealAllowance = result[i].meal_allowance || 0;
+            // const mealAllowance = result[i].meal_allowance || 0;
             // const oemAmount = result[i].oem?.[0]?.amount || 0;
             let oemTotal = 0;
             if (Array.isArray(result[i].oem)) {
@@ -976,14 +985,45 @@ export default {
               }, 0);
             }
 
-            amount = Number(mealAllowance) + oemTotal;
+            // amount = Number(mealAllowance) + oemTotal;
             // amount = result[i].meal_allowance + result[i].oem.amount;
+            amount += result[i].total_fee;
             const editedDetail = {
-              Date: result[i].date_event,
-              'Return_date': result[i].return_date,
+              Date_Event: result[i].date_event,
+              'Return_Date': result[i].return_date,
               Description: result[i].description,
-              'Meal_Allowance_(RM)': Number(result[i].meal_allowance).toFixed(2),
-              'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
+              Transport_Specification: result[i].transport_specification,
+              Transport_Mode: result[i].transport_mode,
+              'Vehicle Number':result[i].vehicle_no,
+              'Vehicle Model':result[i].vehicle_model,
+              Starting_Point: result[i].starting_point,
+              End_Point: result[i].end_point,
+              'Mileage (KM)': Number(result[i].mileage_km).toFixed(2),
+              'Type of Petrol':result[i].type_petrol,
+              'Petrol (Litre)':Number(result[i].petrol_perlitre).toFixed(2),
+              'Departure Airport': result[i].departure_airport,
+              'Arrival Airport': result[i].arrival_airport,
+              'Class Airline': result[i].class_airline,
+              'Fare': Number(result[i].fare).toFixed(2),
+              'Meal_Allowance (RM)': result[i].meal_allowance,
+              'Accomodation': result[i].accommodation,
+              'Check In Date': result[i].checkin_date,
+              'Check Out Date': result[i].checkout_date,
+              'City(Hotel)': result[i].city,
+              'No of nights': result[i].number_of_nights,
+              'No of rooms': result[i].number_of_rooms,
+              'Hotel Fee (RM)': Number(result[i].hotel_fee).toFixed(2),
+              'Park_Fee (RM)': Number(result[i].park_fee).toFixed(2),
+              'Toll_Fee (RM)': Number(result[i].toll_fee).toFixed(2),
+              'Petrol/EV (RM)': Number(result[i].total_mileage).toFixed(2),
+              'Total_Fee (RM)': Number(result[i].total_fee).toFixed(2),
+
+              // Date: result[i].date_event,
+              // 'Return_date': result[i].return_date,
+              // Description: result[i].description,
+              // 'Meal Allowance (RM)': Number(result[i].meal_allowance).toFixed(2),
+              // 'Total Fee(RM)': Number(result[i].total_fee).toFixed(2),
+
               Others_Expenses: buildFullExpenseTable(),
               Attachments: result[i].files,
               Tab_Title: 'Overseas Outstation',
@@ -1044,8 +1084,8 @@ export default {
               'Type_of_Refreshment': result[i].refreshment_type,
               Date: result[i].date_event,
               'Reference': result[i].reference_type,
-              Venue: result[i].venue_name,
-              Company: result[i].company_name,
+              'Receipt No': result[i].receipt_no,
+              'Restaurant Name': result[i].venue_name,
               'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
               Staff_Involved: buildFullExpenseTable(),
               Attachments: result[i].files,
@@ -1103,8 +1143,8 @@ export default {
               'Type_of_Entertainment': result[i].entertainment_type,
               Date: result[i].date_event,
               'Reference': result[i].description,
-              Venue: result[i].venue_name,
-              Company: result[i].company_name,
+              'Receipt No': result[i].receipt_no,
+              'Restaurant Name': result[i].venue_name,
               'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
               Participants: buildFullExpenseTable(),
               Attachments: result[i].files,

@@ -289,16 +289,14 @@
                 <input type="text" id="mileagekm" v-model="localTravellingDetails.MileageKMLT" :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2" />
               </div>
-              <div v-if="!isPersonalTransport && !isPublicTransport" class="flex justify-between items-center mb-4">
+              <div v-if="isPersonalTransport || isCompanyTransport" class="flex justify-between items-center mb-4">
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Type of Petrol:</label>
-                <input type="text" id="petrolType" v-model="localTravellingDetails.PetrolType" :disabled="!isEditMode"
+                <input type="text" id="petrolType" v-model="localTravellingDetails.petrolType" :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2" />
               </div>
-              
-
-              <div v-if="!isPersonalTransport && !isPublicTransport" class="flex justify-between items-center mb-4">
+              <div v-if="isPersonalTransport || isCompanyTransport" class="flex justify-between items-center mb-4">
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Petrol(Litre):</label>
-                <input type="text" id="petrolLitre" v-model="localTravellingDetails.PetrolLitre" :disabled="!isEditMode"
+                <input type="text" id="petrolLitre" v-model="localTravellingDetails.petrolLitre" :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2" />
               </div>
 
@@ -431,18 +429,91 @@
               </div>
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeId" class="text-gray-700 font-bold mr-2">Return Date:</label>
-                <input type="text" id="nodeId" v-model="overseasTravellingDetails.ReturendateOT" :disabled="!isEditMode"
+                <input type="text" id="returnDate" v-model="overseasTravellingDetails.ReturendateOT" :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeName" class="text-gray-700 font-bold mr-2">Purpose:</label>
-                <input type="text" id="nodeName" v-model="overseasTravellingDetails.PurposeOT" :disabled="!isEditMode"
+                <input type="text" id="purpose" v-model="overseasTravellingDetails.PurposeOT" :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="mealAllowance" class="text-gray-700 font-bold mr-2">Meal Allowance(RM):</label>
-                <input type="text" id="mealAllowance" v-model="overseasTravellingDetails.MealAllowanceOT"
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Travelling Mode By:</label>
+                <input type="text" id="transport" v-model="overseasTravellingDetails.TransportOT"
+                  :disabled="!isEditMode || nonEditableFields" class="border rounded-md px-16 py-2" />
+              </div>
+              <div v-if="!isCompanyTransportOT && !isPublicTransportOT" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Transport Specification:</label>
+                <input type="text" id="transportSpecify" v-model="overseasTravellingDetails.TransportSpecOT"
+                  :disabled="!isEditMode || nonEditableFields" class="border rounded-md px-16 py-2" />
+              </div>
+              <div v-if="!isCompanyTransportOT && !isPersonalTransportOT" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Transport Specification:</label>
+                <input type="text" id="publicTransportSpecify" v-model="overseasTravellingDetails.PublicTransportSpecOT"
+                  :disabled="!isEditMode" class="border rounded-md px-16 py-2" /> 
+              </div>
+              <div v-if="!isPublicTransportOT" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Vehicle Registration Number:</label>
+                <input type="text" id="transportNumberPlate" v-model="overseasTravellingDetails.TransportNumberPlateOT"
                   :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
+              </div>
+              <div v-if="!isPublicTransportOT" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Vehicle Model:</label>
+                <input type="text" id="transportModel" v-model="overseasTravellingDetails.TransportModelOT"
+                  :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Location Start:</label>
+                <input type="text" id="locationstart" v-model="overseasTravellingDetails.LocationStartOT"
+                  :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Location End:</label>
+                <input type="text" id="locationend" v-model="overseasTravellingDetails.LocationEndOT" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Accommodation:</label>
+                <input type="text" id="accommodationlt" v-model="overseasTravellingDetails.AccommodationOT"
+                  :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Meal Allowance(RM):</label>
+                <input type="text" id="mealallowancelt" v-model="overseasTravellingDetails.MealAllowanceOT"
+                  :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
+              </div>
+              <div v-if="!isCompanyTransportOT && !isPublicTransportOT" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Mileage/Kilometer(KM):</label>
+                <input type="text" id="mileagekm" v-model="overseasTravellingDetails.MileageKMOT" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
+              </div>
+              <div v-if="isPersonalTransportOT || isCompanyTransportOT" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Type of Petrol:</label>
+                <input type="text" id="petrolType" v-model="overseasTravellingDetails.petrolTypeOT" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
+              </div>
+              <div v-if="isPersonalTransportOT || isCompanyTransportOT" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Petrol(Litre):</label>
+                <input type="text" id="petrolLitre" v-model="overseasTravellingDetails.petrolLitreOT" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
+              </div>
+
+              <div v-if="!isCompanyTransportOT && !isPersonalTransportOT" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Fare(RM):</label>
+                <input type="text" id="farerm" v-model="overseasTravellingDetails.FareRMOT" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
+              </div>
+
+              <div v-if="!isPublicTransportOT" class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Toll:</label>
+                <input type="text" id="phonenumber" v-model="overseasTravellingDetails.TollOT" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
+              </div>
+
+              <div class="flex justify-between items-center mb-4">
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Parking:</label>
+                <input type="text" id="positioname" v-model="overseasTravellingDetails.ParkingOT" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
                 <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Additional Supporting Document(s).
@@ -454,6 +525,43 @@
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <!-- Fare Attachment table -->
+              <div class="mb-4">
+                <h2 class="text-xl font-bold">Fare Attachment</h2>
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                  <thead class="bg-gray-50 dark:bg-gray-800">
+                    <tr>
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3">
+                          <span>Type of Fare</span>
+                        </div>
+                      </th>
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3">
+                          <span>Attachment(s)</span>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                    <tr v-for="([type, fileGroup], index) in fileGroups" :key="index">
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-wrap w-32">
+                        {{ type }}
+                      </td>
+                      <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap w-24">
+                        <div v-for="(file, fileIndex) in fileGroup" :key="fileIndex" class="m-2">
+                          <div class="border-2 border-gray-200 rounded-lg overflow-hidden w-24 h-24">
+                            <img :src="createObjectURL(file)" :alt="file.name" class="w-full h-full object-cover" />
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
 
               <!-- Other Expenses Table-->
@@ -1345,8 +1453,14 @@ export default {
         UploadMileageRMLT: [],
         UploadParkingLT: [],
         UploadTollLT: [],
+        UploadHotelRMLT: [],
       },
       overseasTravellingDetails: {
+        UploadFareRMLT: [],
+        UploadMileageRMLT: [],
+        UploadParkingLT: [],
+        UploadTollLT: [],
+        UploadHotelRMLT: [],
         otherExpenses: [],
       },
       medicalBillReimbursementDetails: {},
@@ -1371,6 +1485,7 @@ export default {
         Mileage: this.localTravellingDetails?.UploadMileageRMLT || [],
         Parking: this.localTravellingDetails?.UploadParkingLT || [],
         "Toll/Touch n'Go": this.localTravellingDetails?.UploadTollLT || [],
+        "Hotel (RM)": this.localTravellingDetails?.UploadHotelRMLT || [],
       };
 
       return Object.entries(groups).filter(([files]) => files.length > 0);
@@ -1413,6 +1528,18 @@ export default {
 
     isOneWay() {
       return this.localTravellingDetails.tripwayLT === "One Way";
+    },
+
+    isCompanyTransportOT() {
+      return this.overseasTravellingDetails.TransportOT === "Company Transport";
+    },
+
+    isPublicTransportOT() {
+      return this.overseasTravellingDetails.TransportOT === "Public Transport";
+    },
+
+    isPersonalTransportOT() {
+      return this.overseasTravellingDetails.TransportOT === "Personal Transport";
     },
 
     isPanelClinic() {
@@ -2031,6 +2158,7 @@ export default {
                     city:claim.HotelCityLT || "-",
                     number_of_nights: claim.HotelNightLT || "0",
                     number_of_rooms: claim.HotelRoomLT || "0",
+                    hotel_fee: claim.HotelRMLT || "0",
                   };
                   console.log("Local Travelling Payload :", payload);
 
@@ -2046,6 +2174,7 @@ export default {
                     { type: "UploadTollLT", files: claim.UploadTollLT },
                     { type: "UploadFareRMLT", files: claim.UploadFareRMLT },
                     { type: "UploadMileageRMLT", files: claim.UploadMileageRMLT },
+                    { type: "UploadHotelRMLT", files: claim.UploadHotelRMLT },
                   ];
 
                   for (const { type, files } of fileUploads) {
@@ -2064,9 +2193,10 @@ export default {
                     description: claim.PurposeOT || "-",
                     meal_allowance: String(claim.MealAllowanceOT || 0),
                     date_event: claim.dateOT || "-",
-                    total_fee: claim.combinedTotal ||
-                      (parseFloat(claim.MealAllowanceOT) || 0) +
-                      ((claim.otherExpenses || []).reduce((sum, e) => sum + (parseFloat(e.amount) || 0), 0)),
+                    // total_fee: claim.combinedTotal ||
+                    //   (parseFloat(claim.MealAllowanceOT) || 0) +
+                    //   ((claim.otherExpenses || []).reduce((sum, e) => sum + (parseFloat(e.amount) || 0), 0)),
+                    total_fee: claim.combinetotal || 0,
                     reference_number: this.serialnumber || "-",
                     unique_code: uniqueCodeOT || "-",
                     return_date: claim.ReturendateOT || "-",
@@ -2092,6 +2222,7 @@ export default {
                     city: claim.HotelCityOT || "-",
                     number_of_nights: claim.HotelNightOT || "0",
                     number_of_rooms: claim.HotelRoomOT || "0",
+                    hotel_fee: claim.HotelRMOT || "0",
                     
 
                     oem: claim.otherExpenses
@@ -2113,9 +2244,24 @@ export default {
 
                   await axiosInstance.post("/", payload);
 
-                  if (claim.UploadOT && claim.UploadOT.length > 0) {
-                    await this.uploadFiles(claim.UploadOT, this.userDetails.userId, uniqueCodeOT);
+                  const fileUploads = [
+                    { type: "UploadOT", files: claim.UploadOT },
+                    { type: "UploadParkingOT", files: claim.UploadParkingOT },
+                    { type: "UploadTollOT", files: claim.UploadTollOT },
+                    { type: "UploadFareRMOT", files: claim.UploadFareRMOT },
+                    { type: "UploadMileageRMOT", files: claim.UploadMileageRMOT },
+                    { type: "UploadHotelRMOT", files: claim.UploadHotelRMOT },
+                  ];
+
+                  for (const { type, files } of fileUploads) {
+                    if (files && files.length > 0) {
+                      await this.uploadFiles(files, this.userDetails.userId, uniqueCodeOT);
+                    }
                   }
+
+                  // if (claim.UploadOT && claim.UploadOT.length > 0) {
+                  //   await this.uploadFiles(claim.UploadOT, this.userDetails.userId, uniqueCodeOT);
+                  // }
 
                   if (claim.otherExpenses && claim.otherExpenses.length > 0) {
                     const filesToUpload = claim.otherExpenses.flatMap((expense) => expense.files || []);
@@ -2135,8 +2281,8 @@ export default {
                     date_event: claim.dateE,
                     entertainment_type: claim.OtherTypeofEntertainmentE || claim.TypeofEntertainmentE,
                     venue_name: claim.VenueE,
-                    receipt_no: claim.ReceiptNoE,
-                    company_name: claim.CompanyE,
+                    receipt_no: claim.ReceiptE,
+                    // company_name: claim.CompanyE,
                     total_fee: parseFloat(claim.AmountRME),
                     requester_id: this.userDetails.userId,
                     unique_code: uniqueCodeE,
@@ -2169,7 +2315,7 @@ export default {
                   const payload = {
                     refreshment_type: claim.OtherTypeofStaffRefreshmentSR || claim.TypeofRefreshmentSR,
                     date_event: claim.dateSR,
-                    company_name: claim.CompanySR,
+                    // company_name: claim.CompanySR,
                     venue_name: claim.VenueSR,
                     receipt_no: claim.ReceiptSR,
                     reference_type: claim.ReferenceSR,

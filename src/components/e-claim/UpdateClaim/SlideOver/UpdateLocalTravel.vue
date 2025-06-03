@@ -20,7 +20,7 @@
             </div>
             <form @submit.prevent="handleSubmit">
                 <div class="grid grid-cols-8 gap-2 w-full">
-                    <div class="col-span-8">
+                    <div class="col-span-4">
                         <label class="font-medium text-sm">Trip</label>
                         <div class="flex space-x-2">
                         <div class="mt-1" v-if="local.trip_mode === 'Round Trip'">
@@ -37,30 +37,8 @@
                                 <span class="ml-2 text-xs">One Way</span>
                             </label>
                         </div>
+                        </div>
                     </div>
-                    </div>
-                    <div class="col-span-4">
-                        <label for="date_event" class="font-medium text-sm">Date</label>
-                        <input type="date" id="date_event" v-model="date_event"
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                    </div>
-                    <div class="col-span-4" v-if="local.trip_mode === 'Round Trip'">
-                        <label for="return_date" class="font-medium text-sm" >Return Date</label>
-                        <input type="date" id="return_date" v-model="return_date"
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                    </div>
-
-                    <div class="col-span-4">
-                        <label for="departure_airport" class="font-medium text-sm">Flight Departure Airport</label>
-                        <input type="text" id="departure_airport" v-model="local.departure_airport"
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                    </div>
-                    <div class="col-span-4" >
-                        <label for="arrival_airport" class="font-medium text-sm" >Flight Arrival Airport</label>
-                        <input type="text" id="arrival_airport" v-model="local.arrival_airport"
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                    </div>
-
                     <div class="col-span-4">
                         <label class="font-medium text-sm">Travel Mode</label>
                         <div class="flex space-x-2">
@@ -86,38 +64,38 @@
                             </label>
                         </div>
                     </div>
+                </div>
+                    <div class="col-span-4">
+                        <label for="date_event" class="font-medium text-sm">Departure Date</label>
+                        <input type="date" id="date_event" v-model="date_event"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                    <div class="col-span-4" v-if="local.trip_mode === 'Round Trip'">
+                        <label for="return_date" class="font-medium text-sm" >Return Date</label>
+                        <input type="date" id="return_date" v-model="return_date"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
 
                     <div class="col-span-4">
-                        <label for="class_airline" class="font-medium text-sm" >Flight Class</label>
-                        <select id="class_airline" v-model="local.class_airline" class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                             <option v-for="(specify, index) in flightClass" :key="index" :value="specify">{{ specify }}</option>
-                        </select>
-                    </div>
-
-                    <div class="col-span-8">
                         <label for="transport_specification" class="font-medium text-sm" >Transport Specification</label>
-                        <input v-if="local.transport_mode === 'Public Transport'" type="text" id="transport_specification" v-model="local.transport_specification"
+                        <select v-if="local.transport_mode === 'Public Transport'" id="transport_specification" v-model="local.transport_specification"
                         class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            <option v-for="(specify, index) in transportSpecPublic" :key="index" :value="specify">{{ specify }}</option>
+                        </select>
                         <!-- Show dropdown when mode is 'Personal' -->
-                        <select v-else-if="local.transport_mode === 'Personal Transport' " id="transport_specification" v-model="local.transport_specification"
+                        <select v-else-if="local.transport_mode !== 'Public Transport' " id="transport_specification" v-model="local.transport_specification"
                                 class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                                 <option v-for="(specify, index) in transportSpecifications" :key="index" :value="specify">{{ specify }}</option>
                         </select>
                     </div>
 
-                    <div class="col-span-4">
-                        <label for="vehicle_no" class="font-medium text-sm">Vehicle Registration Number</label>
-                        <input type="text" id="vehicle_no" v-model="local.vehicle_no"
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                    </div>
-                    <div class="col-span-4">
-                        <label for="vehicle_model" class="font-medium text-sm">Vehicle Model</label>
-                        <input type="text" id="vehicle_model" v-model="local.vehicle_model"
+                    <div class="col-span-4" >
+                        <label for="mileage_km" class="font-medium text-sm" >Mileage/ Kilometer(KM)</label>
+                        <input type="text" id="mileage_km" v-model="local.mileage_km"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
 
-                    <div class="col-span-4">
+                    <div class="col-span-4" >
                         <label for="starting_point" class="font-medium text-sm">Starting Point</label>
                         <input type="text" id="starting_point" v-model="local.starting_point"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
@@ -129,6 +107,134 @@
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
 
+                    <div class="col-span-4" v-if="local.transport_mode !== 'Public Transport'">
+                        <label for="vehicle_no" class="font-medium text-sm">Vehicle Registration Number</label>
+                        <input type="text" id="vehicle_no" v-model="local.vehicle_no"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                    <div class="col-span-4" v-if="local.transport_mode !== 'Public Transport'">
+                        <label for="vehicle_model" class="font-medium text-sm">Vehicle Model</label>
+                        <input type="text" id="vehicle_model" v-model="local.vehicle_model"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+
+                    <div class="col-span-4" v-if="local.transport_mode !== 'Public Transport'">
+                        <label for="type_petrol" class="font-medium text-sm" >Type of Petrol</label>
+                            <select id="type_petrol" v-model="local.type_petrol" class="mt-1 text-xs block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            <option v-for="(type, index) in petrolTypes" :key="index" :value="type">{{ type }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-span-4" v-if="local.transport_mode !== 'Public Transport'">
+                        <label for="type_petrol" class="font-medium text-sm" >Petrol(Litre)</label>
+                            <input type="text" id="petrol_perlitre" v-model="local.petrol_perlitre"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+
+                    <div class="col-span-4" v-if="local.transport_mode !== 'Public Transport'">
+                        <label for="total_mileage" class="font-medium text-sm">Petrol/EV(RM)</label>
+                        <input
+                            type="text"
+                            id="total_mileage"
+                            v-model="local.total_mileage"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        />
+                    </div>  
+                    <div class="col-span-4" v-if="local.transport_mode !== 'Public Transport'">
+                        <!-- Upload field shown if mileage entered and no files yet -->
+                        <div v-if="local.total_mileage && !categorizedFiles.mileage.length">
+                            <input
+                            type="file"
+                            id="newFile"
+                            @change="uploadFiles($event, 'mileage')"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            />
+                            <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
+                            Selected file: {{ selectedFileName }}
+                            </span>
+                        </div>
+
+                        <!-- Uploaded mileage files shown if any -->
+                        <div v-if="local.total_mileage && categorizedFiles.mileage.length" class="col-span-4">
+                            <label class="font-medium text-sm">Uploaded Petrol Files:</label>
+                            <ul class="mt-1 text-xs text-blue-600 underline">
+                            <li v-for="(file, index) in categorizedFiles.mileage" :key="index" class="flex items-center gap-2">
+                                <a :href="typeof file === 'string' ? file : '#'" target="_blank">
+                                {{ typeof file === 'string' ? file.split('/').pop() : file.name }}
+                                </a>
+                                <a @click="deleteFile(index, 'mileage')" class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
+                                        </svg>
+                                    </a>
+                            </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-span-4" v-if="local.transport_mode === 'Public Transport' && local.transport_specification === 'Flight'">
+                        <label for="departure_airport" class="font-medium text-sm">Flight Departure Airport</label>
+                        <input type="text" id="departure_airport" v-model="local.departure_airport"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                    <div class="col-span-4" v-if="local.transport_mode === 'Public Transport' && local.transport_specification === 'Flight'">
+                        <label for="arrival_airport" class="font-medium text-sm" >Flight Arrival Airport</label>
+                        <input type="text" id="arrival_airport" v-model="local.arrival_airport"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                    <div class="col-span-8" v-if="local.transport_mode === 'Public Transport' && local.transport_specification === 'Flight'">
+                        <label for="class_airline" class="font-medium text-sm" >Flight Class</label>
+                        <select id="class_airline" v-model="local.class_airline" class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                             <option v-for="(specify, index) in flightClass" :key="index" :value="specify">{{ specify }}</option>
+                        </select>
+                    </div>
+                </div>
+                    
+                <div class="grid grid-cols-8 gap-2 w-full">
+                    <div class="col-span-4" v-if="local.transport_mode === 'Public Transport'">
+                        <label for="fare" class="font-medium text-sm" >Fare(RM)</label>
+                        <input type="text" id="fare" v-model="local.fare"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"/>
+                    </div>
+                    <div class="col-span-4" v-if="local.transport_mode === 'Public Transport'">
+                        <!-- Upload field shown if fare entered and no files yet -->
+                        <div v-if="local.fare && !categorizedFiles.fare.length" class="mt-2">
+                            <input
+                            type="file"
+                            id="newFile"
+                            @change="uploadFiles($event, 'fare')"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            />
+                            <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
+                            Selected file: {{ selectedFileName }}
+                            </span>
+                        </div>
+
+                        <!-- Uploaded toll files shown if any -->
+                        <div v-if="local.fare && categorizedFiles.fare.length" class="mt-4">
+                            <label class="font-medium text-sm">Uploaded Fare Files:</label>
+                            <ul class="mt-1 text-xs text-blue-600 underline">
+                            <li v-for="(file, index) in categorizedFiles.fare" :key="index" class="flex items-center gap-2">
+                                <a :href="typeof file === 'string' ? file : '#'" target="_blank">
+                                {{ typeof file === 'string' ? file.split('/').pop() : file.name }}
+                                </a>
+                                <a @click="deleteFile(index, 'fare')" class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
+                                        </svg>
+                                    </a>
+                            </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-8 gap-2 w-full">
+                    <div class="col-span-4" v-if="local.trip_mode === 'Round Trip'">
+                        <label for="meal_allowance" class="font-medium text-sm" >Meal Allowance</label>
+                        <input type="text" id="meal_allowance" v-model="local.meal_allowance"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+
                     <div class="col-span-4" v-if="local.trip_mode === 'Round Trip'">
                         <label for="accommodation" class="font-medium text-sm" >Accommodation</label>
                         <input type="text" id="accommodation" v-model="local.accommodation"
@@ -136,213 +242,158 @@
                     </div>
 
                     <div class="col-span-4" v-if="local.trip_mode === 'Round Trip'">
-                        <label for="meal_allowance" class="font-medium text-sm" >Meal Allowance</label>
-                        <input type="text" id="meal_allowance" v-model="local.meal_allowance"
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                    </div>
-
-                    <div class="col-span-4">
                         <label for="checkin_date" class="font-medium text-sm">Check In Date</label>
                         <input type="date" id="checkin_date" v-model="checkin_date"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
-                    <div class="col-span-4" >
+                    <div class="col-span-4" v-if="local.trip_mode === 'Round Trip'">
                         <label for="checkout_date" class="font-medium text-sm" >Check Out Date</label>
                         <input type="date" id="checkout_date" v-model="checkout_date"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
 
-                    <div class="col-span-4">
+                    <div class="col-span-4" v-if="local.trip_mode === 'Round Trip'">
                         <label for="number_of_nights" class="font-medium text-sm">Number of Nights</label>
                         <input type="text" id="number_of_nights" v-model="local.number_of_nights"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
 
-                    <div class="col-span-4">
+                    <div class="col-span-4" v-if="local.trip_mode === 'Round Trip'">
                         <label for="number_of_rooms" class="font-medium text-sm">Number of Rooms</label>
                         <input type="text" id="number_of_rooms" v-model="local.number_of_rooms"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
 
-                    <div class="col-span-8" >
+                    <div class="col-span-4" v-if="local.trip_mode === 'Round Trip'">
                         <label for="city" class="font-medium text-sm" >City (Hotel)</label>
                         <input type="text" id="city" v-model="local.city"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
-
-
-                    <div class="col-span-8" >
-                        <label for="mileage_km" class="font-medium text-sm" >Mileage/ Kilometer(KM)</label>
-                        <input type="text" id="mileage_km" v-model="local.mileage_km"
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                    </div>
-
                     <div class="col-span-4">
-                        <label for="type_petrol" class="font-medium text-sm" >Type of Petrol</label>
-                            <select id="type_petrol" v-model="local.type_petrol" class="mt-1 text-xs block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                            <option v-for="(type, index) in petrolTypes" :key="index" :value="type">{{ type }}</option>
-                        </select>
+                        <label for="total_fee" class="font-medium text-sm">Total Amount(RM)</label>
+                        <input type="text" id="total_fee" v-model="totalFee" readonly
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-gray-100 cursor-not-allowed">
                     </div>
+                </div>
 
-                    <div class="col-span-4">
-                        <label for="type_petrol" class="font-medium text-sm" >Petrol(Litre)</label>
-                            <input type="text" id="petrol_perlitre" v-model="local.petrol_perlitre"
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                    </div>
-
-                    <div class="col-span-4">
-                    <label for="total_mileage" class="font-medium text-sm">Petrol/EV(RM)</label>
-                    <input
-                        type="text"
-                        id="total_mileage"
-                        v-model="local.total_mileage"
-                        class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                    />
-
-                    <!-- Upload field shown if mileage entered and no files yet -->
-                    <div v-if="local.total_mileage && !categorizedFiles.mileage.length" class="mt-2">
-                        <input
-                        type="file"
-                        id="newFile"
-                        @change="uploadFiles($event, 'mileage')"
-                        class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        />
-                        <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
-                        Selected file: {{ selectedFileName }}
-                        </span>
-                    </div>
-
-                    <!-- Uploaded mileage files shown if any -->
-                    <div v-if="local.total_mileage && categorizedFiles.mileage.length" class="mt-4">
-                        <label class="font-medium text-sm">Uploaded Petrol Files:</label>
-                        <ul class="mt-1 text-xs text-blue-600 underline">
-                        <li v-for="(file, index) in categorizedFiles.mileage" :key="index" class="flex items-center gap-2">
-                            <a :href="typeof file === 'string' ? file : '#'" target="_blank">
-                            {{ typeof file === 'string' ? file.split('/').pop() : file.name }}
-                            </a>
-                            <a @click="deleteFile(index, 'mileage')" class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
-                                    </svg>
-                                </a>
-                        </li>
-                        </ul>
-                    </div>
-                    </div>
-
-
-                    
-
-                    <div class="col-span-4">
-                        <label for="park_fee" class="font-medium text-sm" >Parking</label>
-                        <input type="text" id="park_fee" v-model="local.park_fee"
+                <div class="grid grid-cols-8 gap-2 w-full">
+                    <div class="col-span-4" v-if="local.trip_mode === 'Round Trip'">
+                        <label for="hotel_fee" class="font-medium text-sm" >Hotel(RM)</label>
+                        <input type="text" id="hotel_fee" v-model="local.hotel_fee"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"/>
-
-                    <!-- Upload field shown if parking entered and no files yet -->
-                    <div v-if="local.park_fee && !categorizedFiles.parking.length" class="mt-2">
-                        <input
-                        type="file"
-                        id="newFile"
-                        @change="uploadFiles($event, 'parking')"
-                        class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        />
-                        <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
-                        Selected file: {{ selectedFileName }}
-                        </span>
                     </div>
 
-                    <!-- Uploaded parking files shown if any -->
-                    <div v-if="local.park_fee && categorizedFiles.parking.length" class="mt-4">
-                        <label class="font-medium text-sm">Uploaded Parking Files:</label>
-                        <ul class="mt-1 text-xs text-blue-600 underline">
-                        <li v-for="(file, index) in categorizedFiles.parking" :key="index" class="flex items-center gap-2">
-                            <a :href="typeof file === 'string' ? file : '#'" target="_blank">
-                            {{ typeof file === 'string' ? file.split('/').pop() : file.name }}
-                            </a>
-                            <a @click="deleteFile(index, 'parking')" class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
-                                    </svg>
+                    <div class="col-span-4" v-if="local.trip_mode === 'Round Trip'">
+                        <!-- Upload field shown if hotel entered and no files yet -->
+                        <div v-if="local.hotel_fee && !categorizedFiles.hotel.length" class="mt-2">
+                            <input
+                            type="file"
+                            id="newFile"
+                            @change="uploadFiles($event, 'hotel')"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            />
+                            <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
+                            Selected file: {{ selectedFileName }}
+                            </span>
+                        </div>
+
+                        <!-- Uploaded hotel files shown if any -->
+                        <div v-if="local.hotel_fee && categorizedFiles.hotel.length" class="mt-2">
+                            <label class="font-medium text-sm">Uploaded Hotel Files:</label>
+                            <ul class="mt-1 text-xs text-blue-600 underline">
+                            <li v-for="(file, index) in categorizedFiles.hotel" :key="index" class="flex items-center gap-2">
+                                <a :href="typeof file === 'string' ? file : '#'" target="_blank">
+                                {{ typeof file === 'string' ? file.split('/').pop() : file.name }}
                                 </a>
-                        </li>
-                        </ul>
+                                <a @click="deleteFile(index, 'hotel')" class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
+                                        </svg>
+                                    </a>
+                            </li>
+                            </ul>
+                        </div>
                     </div>
-                    </div>
-                    
-
+                </div>
+                
+                <div class="grid grid-cols-8 gap-2 w-full">
                     <div class="col-span-4" v-if="local.transport_mode !== 'Public Transport'">
                         <label for="toll_fee" class="font-medium text-sm" >Toll/Touch' n Go(RM)</label>
                         <input type="text" id="toll_fee" v-model="local.toll_fee"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"/>
-
-                    <!-- Upload field shown if toll entered and no files yet -->
-                    <div v-if="local.toll_fee && !categorizedFiles.toll.length" class="mt-2">
-                        <input
-                        type="file"
-                        id="newFile"
-                        @change="uploadFiles($event, 'toll')"
-                        class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        />
-                        <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
-                        Selected file: {{ selectedFileName }}
-                        </span>
                     </div>
-
-                    <!-- Uploaded toll files shown if any -->
-                    <div v-if="local.toll_fee && categorizedFiles.toll.length" class="mt-4">
-                        <label class="font-medium text-sm">Uploaded Toll Files:</label>
-                        <ul class="mt-1 text-xs text-blue-600 underline">
-                        <li v-for="(file, index) in categorizedFiles.toll" :key="index" class="flex items-center gap-2">
-                            <a :href="typeof file === 'string' ? file : '#'" target="_blank">
-                            {{ typeof file === 'string' ? file.split('/').pop() : file.name }}
-                            </a>
-                            <a @click="deleteFile(index, 'toll')" class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
-                                    </svg>
-                                </a>
-                        </li>
-                        </ul>
-                    </div>
-                    </div>
+                    <div class="col-span-4" v-if="local.transport_mode !== 'Public Transport'">
+                        <!-- Upload field shown if toll entered and no files yet -->
+                        <div v-if="local.toll_fee && !categorizedFiles.toll.length" class="mt-2">
+                            <input
+                            type="file"
+                            id="newFile"
+                            @change="uploadFiles($event, 'toll')"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            />
+                            <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
+                            Selected file: {{ selectedFileName }}
+                            </span>
+                        </div>
                     
-
-                    <div class="col-span-4" v-if="local.transport_mode === 'Public Transport'">
-                        <label for="fare" class="font-medium text-sm" >Fare(RM)</label>
-                        <input type="text" id="fare" v-model="local.fare"
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"/>
-
-                    <!-- Upload field shown if fare entered and no files yet -->
-                    <div v-if="local.fare && !categorizedFiles.fare.length" class="mt-2">
-                        <input
-                        type="file"
-                        id="newFile"
-                        @change="uploadFiles($event, 'fare')"
-                        class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        />
-                        <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
-                        Selected file: {{ selectedFileName }}
-                        </span>
-                    </div>
-
-                    <!-- Uploaded toll files shown if any -->
-                    <div v-if="local.fare && categorizedFiles.fare.length" class="mt-4">
-                        <label class="font-medium text-sm">Uploaded Fare Files:</label>
-                        <ul class="mt-1 text-xs text-blue-600 underline">
-                        <li v-for="(file, index) in categorizedFiles.fare" :key="index" class="flex items-center gap-2">
-                            <a :href="typeof file === 'string' ? file : '#'" target="_blank">
-                            {{ typeof file === 'string' ? file.split('/').pop() : file.name }}
-                            </a>
-                            <a @click="deleteFile(index, 'fare')" class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
-                                    </svg>
+                        <!-- Uploaded toll files shown if any -->
+                        <div v-if="local.toll_fee && categorizedFiles.toll.length" class="mt-2">
+                            <label class="font-medium text-sm">Uploaded Toll Files:</label>
+                            <ul class="mt-1 text-xs text-blue-600 underline">
+                            <li v-for="(file, index) in categorizedFiles.toll" :key="index" class="flex items-center gap-2">
+                                <a :href="typeof file === 'string' ? file : '#'" target="_blank">
+                                {{ typeof file === 'string' ? file.split('/').pop() : file.name }}
                                 </a>
-                        </li>
-                        </ul>
+                                <a @click="deleteFile(index, 'toll')" class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
+                                        </svg>
+                                    </a>
+                            </li>
+                            </ul>
+                        </div>
                     </div>
+                </div>
+                
+                <div class="grid grid-cols-8 gap-2 w-full">
+                    <div class="col-span-4" v-if="local.transport_mode !== 'Public Transport'">
+                        <label for="park_fee" class="font-medium text-sm" >Parking</label>
+                        <input type="text" id="park_fee" v-model="local.park_fee"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"/>
                     </div>
+                    <div class="col-span-4" v-if="local.transport_mode !== 'Public Transport'">
+                        <!-- Upload field shown if parking entered and no files yet -->
+                        <div v-if="local.park_fee && !categorizedFiles.parking.length" class="mt-2">
+                            <input
+                            type="file"
+                            id="newFile"
+                            @change="uploadFiles($event, 'parking')"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            />
+                            <span v-if="selectedFileName" class="text-xs text-gray-600 mt-1 block">
+                            Selected file: {{ selectedFileName }}
+                            </span>
+                        </div>
 
+                        <!-- Uploaded parking files shown if any -->
+                        <div v-if="local.park_fee && categorizedFiles.parking.length" class="mt-2">
+                            <label class="font-medium text-sm">Uploaded Parking Files:</label>
+                            <ul class="mt-1 text-xs text-blue-600 underline">
+                            <li v-for="(file, index) in categorizedFiles.parking" :key="index" class="flex items-center gap-2">
+                                <a :href="typeof file === 'string' ? file : '#'" target="_blank">
+                                {{ typeof file === 'string' ? file.split('/').pop() : file.name }}
+                                </a>
+                                <a @click="deleteFile(index, 'parking')" class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
+                                        </svg>
+                                    </a>
+                            </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                    
                     
                     <!-- <div class="col-span-4">
                         
@@ -373,6 +424,7 @@
                         </span>
                     </div>
                     </div> -->
+                    
                     <div class="col-span-4">
                     <label class="font-medium text-sm">Uploaded Files</label>
                     <div v-if="local.files" class="mt-2">
@@ -392,7 +444,7 @@
                         </ul>
                     </div>
 
-                    <div v-if="local.files" class="mt-4">
+                    <div v-if="local.files" class="mt-2 mb-2">
                         <input
                             type="file"
                             id="newFile"
@@ -403,13 +455,8 @@
                             Selected file: {{ selectedFileName }}
                         </span> -->
                     </div>
-                </div>
+                <!-- </div> -->
 
-                    <div class="col-span-4">
-                        <label for="total_fee" class="font-medium text-sm">Total Amount(RM)</label>
-                        <input type="text" id="total_fee" v-model="totalFee" readonly
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-gray-100 cursor-not-allowed">
-                    </div>
                     <hr class="col-span-8 mt-4 mb-2" />
                     <div class="col-span-8">
                         <label for="comment" class="font-medium text-sm">Comment</label>
@@ -478,6 +525,7 @@ export default {
                 arrival_airport: "",
                 number_of_nights: "",
                 number_of_rooms: "",
+                hotel_fee: "",
                 city: "",
                 checkin_date: "",
                 checkout_date: "",
@@ -491,6 +539,7 @@ export default {
                 parking: [],
                 mileage: [],
                 fare: [],
+                hotel: [],
                 other: []
                 },
             
@@ -499,7 +548,8 @@ export default {
             filesToDelete: [],
             flightClass:["Business", "Economy"],
             transportSpecifications: ["Motorcycle", "Car", "Truck"],
-            petrolTypes: ["Ron95", "Diesel"]
+            transportSpecPublic: [ "Flight", "E-hailing"],
+            petrolTypes: ["Ron 95", "Diesel"]
             
         }
     },
@@ -518,13 +568,14 @@ export default {
         const parking = parseFloat(this.local.park_fee) || 0;
         const toll = parseFloat(this.local.toll_fee) || 0;
         const fare = parseFloat(this.local.fare) || 0;
+        const hotel = parseFloat(this.local.hotel_fee) || 0;
         
         let meal = 0;
         if (this.local.trip_mode === 'Round Trip') {
             meal = parseFloat(this.local.meal_allowance) || 0;
         }
 
-        const total = petrol + parking + toll + fare + meal;
+        const total = petrol + parking + toll + fare + meal + hotel;
         return total.toFixed(2);
     },
     date_event: {
@@ -547,7 +598,27 @@ export default {
         this.local.return_date = value;
         },
     },
+    checkin_date: {
+        get() {
+            const d = new Date(this.local.checkin_date);
+            if (isNaN(d)) return "";
+            return d.toISOString().split("T")[0];
         },
+        set(value) {
+        this.local.checkin_date = value;
+        },
+    },
+    checkout_date: {
+        get() {
+            const d = new Date(this.local.checkout_date);
+            if (isNaN(d)) return "";
+            return d.toISOString().split("T")[0];
+        },
+        set(value) {
+        this.local.checkout_date = value;
+        },
+    }
+    },
     methods: {
 
         closeSlideOver() {
@@ -561,11 +632,9 @@ export default {
             if (upperName.includes("PARKING")) return "PARKING";
             if (upperName.includes("MILEAGE")) return "MILEAGE";
             if (upperName.includes("FARE")) return "FARE";
+            if (upperName.includes("HOTEL")) return "HOTEL";
             return "SUPPORT_DOC";
         },
-    
-
-
 
         uploadFiles(event, fileType = "") {
         const files = event?.target?.files;
@@ -590,6 +659,9 @@ export default {
                 break;
                 case "fare":
                 prefix = "FARE_";
+                break;
+                case "hotel":
+                prefix = "HOTEL_";
                 break;
                 default:
                 prefix = "SUPPORT_DOC_";
@@ -617,6 +689,8 @@ export default {
                 this.categorizedFiles.mileage.push(file);
             } else if (upperName.startsWith("FARE_")) {
                 this.categorizedFiles.fare.push(file);
+            } else if (upperName.startsWith("HOTEL_")) {
+                this.categorizedFiles.hotel.push(file);
             } else {
                 this.categorizedFiles.other.push(file);
             }
@@ -700,6 +774,7 @@ export default {
                             number_of_nights: matchingUniqueID.number_of_nights,
                             number_of_rooms: matchingUniqueID.number_of_rooms,
                             city: matchingUniqueID.city,
+                            hotel_fee:matchingUniqueID.hotel_fee,
                             checkin_date: matchingUniqueID.checkin_date,
                             checkout_date: matchingUniqueID.checkout_date,
                             class_airline: matchingUniqueID.class_airline,
@@ -718,6 +793,7 @@ export default {
                         parking: [],
                         mileage: [],
                         fare: [],
+                        hotel: [],
                         other: []
                     };
 
@@ -733,6 +809,8 @@ export default {
                         this.categorizedFiles.mileage.push(file);
                     } else if (upperName.startsWith("FARE_")) {
                         this.categorizedFiles.fare.push(file);
+                    } else if (upperName.startsWith("HOTEL_")) {
+                        this.categorizedFiles.hotel.push(file);
                     } else {
                         this.categorizedFiles.other.push(file);
                     }
@@ -748,6 +826,7 @@ export default {
                 ...this.categorizedFiles.parking,
                 ...this.categorizedFiles.mileage,
                 ...this.categorizedFiles.fare,
+                ...this.categorizedFiles.hotel,
                 ...this.categorizedFiles.other
             ].filter(file => typeof file !== 'string'); // only include new files
         },
@@ -880,6 +959,51 @@ export default {
         // }
         // },
 
+        getCurrentClaimData() {
+            return {
+                mileage_km: this.local.mileage_km,
+                starting_point: this.local.starting_point,
+                end_point: this.local.end_point,
+                date_event: this.date_event,
+                return_date: this.return_date,
+                park_fee: isNaN(parseFloat(this.local.park_fee)) ? 0 : parseFloat(this.local.park_fee),
+                toll_fee: isNaN(parseFloat(this.local.toll_fee)) ? 0 : parseFloat(this.local.toll_fee),
+                fare: isNaN(parseFloat(this.local.fare)) ? 0 : parseFloat(this.local.fare),
+                transport_specification: this.local.transport_specification?.trim(),
+                transport_mode: this.local.transport_mode?.trim(),
+                trip_mode: this.local.trip_mode?.trim(),
+                total_mileage: isNaN(parseFloat(this.local.total_mileage)) ? 0 : parseFloat(this.local.total_mileage),//petrol/ev(rm)
+                meal_allowance:this.local.meal_allowance,
+                accommodation: this.local.accommodation,
+                vehicle_no: this.local.vehicle_no?.trim(),
+                vehicle_model: this.local.vehicle_model?.trim(),
+                type_petrol: this.local.type_petrol?.trim(),
+                petrol_perlitre: isNaN(parseFloat(this.local.petrol_perlitre)) ? 0 : parseFloat(this.local.petrol_perlitre),
+                reference_number: this.local.reference_number,
+                total_fee: isNaN(parseFloat(this.totalFee)) ? 0 : parseFloat(this.totalFee),
+                departure_airport:this.local.departure_airport,
+                arrival_airport: this.local.arrival_airport,
+                number_of_nights:isNaN(parseFloat(this.local.number_of_nights)) ? 0 : parseFloat(this.local.number_of_nights),
+                number_of_rooms: isNaN(parseFloat(this.local.number_of_rooms)) ? 0 : parseFloat(this.local.number_of_rooms),
+                city: this.local.city,
+                hotel_fee: isNaN(parseFloat(this.local.hotel_fee)) ? 0 : parseFloat(this.local.hotel_fee),
+                checkin_date: this.local.checkin_date,
+                checkout_date: this.local.checkout_date,
+                class_airline: this.local.class_airline,
+                unique_code: this.uniqueCode,
+                files: this.local.files || [],
+                filesToDelete: this.filesToDelete,
+                newFiles: this.getNewFiles(),
+                requester_id: this.requesterId,
+                
+                tabTitle: "Local Travelling",
+                locationPurpose: this.local.end_point || "-",
+                date: this.date_event || "-",
+                total: this.totalFee || "0.00"
+            };
+        },
+
+
         async handleSubmit() {
             const updatedClaim = {
 
@@ -908,6 +1032,7 @@ export default {
                 number_of_nights:isNaN(parseFloat(this.local.number_of_nights)) ? 0 : parseFloat(this.local.number_of_nights),
                 number_of_rooms: isNaN(parseFloat(this.local.number_of_rooms)) ? 0 : parseFloat(this.local.number_of_rooms),
                 city: this.local.city,
+                hotel_fee: isNaN(parseFloat(this.local.hotel_fee)) ? 0 : parseFloat(this.local.hotel_fee),
                 checkin_date: this.local.checkin_date,
                 checkout_date: this.local.checkout_date,
                 class_airline: this.local.class_airline,
@@ -945,7 +1070,7 @@ export default {
         //     this.local.return_date = ""; // Reset
         //     }
         // }
-    },
+        },
 
     },
 }

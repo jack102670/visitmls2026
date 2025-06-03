@@ -148,7 +148,6 @@
         </div>
         
        
-
         <UpdateLocalTravel 
             v-if="isLocalSlideOverOpen" 
             :isOpen="isLocalSlideOverOpen" 
@@ -189,18 +188,21 @@
             @update-claim="updateClaim"
         />
 
-         <UpdateHandphone v-if="isHandphoneSlideOverOpen" 
-         :isOpen="isHandphoneSlideOverOpen" 
-         :claim="selectedClaim"
-         @close="isHandphoneSlideOverOpen = false" 
-         @update-claim="updateClaim" 
+        <UpdateHandphone 
+            v-if="isHandphoneSlideOverOpen" 
+            :isOpen="isHandphoneSlideOverOpen" 
+            :claim="selectedClaim"
+            @close="isHandphoneSlideOverOpen = false" 
+            @update-claim="updateClaim" 
          />
 
-         <UpdateMedicalClaims v-if="isMedicalSlideOverOpen"  
-         :isOpen="isMedicalSlideOverOpen" 
-         :claim="selectedClaim"
-         @close="isMedicalSlideOverOpen = false" 
-         @refresh-claims = "updateClaim"  />
+         <UpdateMedicalClaims
+            v-if="isMedicalSlideOverOpen"  
+            :isOpen="isMedicalSlideOverOpen" 
+            :claim="selectedClaim"
+            @close="isMedicalSlideOverOpen = false" 
+            @update-claim = "updateClaim"  
+        />
 
 
     </div>
@@ -391,9 +393,9 @@ export default {
 
             const handphoneClaims = (handphoneRes.data.result || []).map(claim => ({
             tabTitle: "Handphone",
-            date: claim.date_claim,
+            date: claim.claim_year,
             total: claim.claim_amount,
-            locationPurpose: `Claim for ${claim.claim_month} ${claim.claim_year}`,
+            locationPurpose: `Claim for ${claim.claim_month}`,
             unique_code: claim.unique_code,
             refNo: refNo,
             }));
@@ -502,8 +504,63 @@ export default {
         
 
         async resubmitForm() {
-            try {
+            try {   
                 this.loading = true;
+
+                // const claimsWithUpdates = this.dataclaims.map(claim => {
+                //     if (claim.tabTitle === "Local Travelling" && this.$refs.localRef?.getCurrentClaimData) {
+                //         return this.$refs.localRef.getCurrentClaimData();
+                //     }
+                //     if (claim.tabTitle === "Overseas Travelling" && this.$refs.overseaRef?.getCurrentClaimData) {
+                //         return this.$refs.overseaRef.getCurrentClaimData();
+                //     }
+                //     if (claim.tabTitle === "Entertainment" && this.$refs.entertainmentRef?.getCurrentClaimData) {
+                //         return this.$refs.entertainmentRef.getCurrentClaimData();
+                //     }
+                //     if (claim.tabTitle === "Refreshment" && this.$refs.refreshmentRef?.getCurrentClaimData) {
+                //         return this.$refs.refreshmentRef.getCurrentClaimData();
+                //     }
+                //     if (claim.tabTitle === "Other" && this.$refs.othersRef?.getCurrentClaimData) {
+                //         return this.$refs.othersRef.getCurrentClaimData();
+                //     }
+                //     if (claim.tabTitle === "Handphone" && this.$refs.handphoneRef?.getCurrentClaimData) {
+                //         return this.$refs.handphoneRef.getCurrentClaimData();
+                //     }
+                //     if (claim.tabTitle === "Medical Leave" && this.$refs.medicalRef?.getCurrentClaimData) {
+                //         return this.$refs.medicalRef.getCurrentClaimData();
+                //     }
+                //     return claim; // default
+                // });
+                // console.log("Full claim from Local Travelling form:", this.$refs.localRef?.getCurrentClaimData());
+                // console.log("Claims with updates:", claimsWithUpdates);
+
+                // for (const claim of claimsWithUpdates) {
+                //     const { tabTitle, unique_code, refNo } = claim;
+                //     const requester_id = this.claimDetails.requester_id;
+                    
+                //     const payload = {
+                //         requester_id,
+                //         unique_code,
+                //         ...claim
+                //     };
+                //     console.log("Claim payload for resubmit:", payload);
+
+                //     if (tabTitle === "Overseas Travelling") {
+                //         await this.handleOverseasSubmit(payload);
+                //     } else if (tabTitle === "Other") {
+                //         await this.handleOthersSubmit(payload);
+                //     } else if (tabTitle === "Entertainment") {
+                //         await this.handleEntertainmentSubmit(payload);
+                //     } else if (tabTitle === "Refreshment") {
+                //         await this.handleRefreshmentSubmit(payload);
+                //     } else if (tabTitle === "Local Travelling") {
+                //         await this.handleLocalTravelSubmit(payload);
+                //     } else if (tabTitle === "Handphone") {
+                //         await this.handleHandphoneSubmit(payload);
+                //     } else if (tabTitle === "Medical Leave") {
+                //         await this.handleMedicalLeaveSubmit(payload);
+                //     }
+                // }
 
                 for (const claim of this.dataclaims) {
                     const { tabTitle, unique_code, refNo } = claim;
@@ -532,13 +589,11 @@ export default {
                         await this.handleLocalTravelSubmit(payload);
                     } else if (tabTitle === "Handphone") {
                         await this.handleHandphoneSubmit(payload);
-                        console.log("total claims:", payload.claim_amount);
                     } else if (tabTitle === "Medical Leave") {
                         await this.handleMedicalLeaveSubmit(payload);
                     } 
                 }
                 
-
                 const finalPayload = {
                     name: this.claimDetails.name || '',
                     company_name: this.claimDetails.company_name || '',
@@ -1000,6 +1055,8 @@ export default {
                     localStorage.setItem(limitKey, updatedLimit.toString());
                     localStorage.setItem(initialKey, updatedLimit.toString());
 
+                    const limitoutpatient = localStorage.getItem('remaining_limit_outpatient') || 0;
+                    const limitmedicaldental = localStorage.getItem('remaining_limit_medicaldental') || 0;
                     
 
                     // Sync updated limit to backend
@@ -1009,8 +1066,8 @@ export default {
                             {
                                 requester_id,
                                 limit_amount: updatedLimit,     // Handphone limit
-                                limit_outpatient: this.limit_outpatient,
-                                limit_medicaldental: this.limit_outpatient,
+                                limit_outpatient: limitoutpatient,
+                                limit_medicaldental: limitmedicaldental,
                             },
                             { headers: { "Content-Type": "application/json" } }
                             
@@ -1030,6 +1087,7 @@ export default {
                 Swal.fire("Error", msg, "error");
             }
         },
+
         async handleMedicalLeaveSubmit(payload) {
             try {
                 const {
@@ -1102,6 +1160,7 @@ export default {
                         localStorage.setItem(initialKey, updatedLimit.toString());
                     }
 
+                    const limitamount = localStorage.getItem('remaining_limit_amount') || 0;
                     
 
                     // Sync updated limit to backend
@@ -1110,7 +1169,7 @@ export default {
                             "http://172.28.28.116:6239/api/User/UpdateLimitClaim",
                             {
                                 requester_id,
-                                limit_amount: this.limit_amount,     // Handphone limit
+                                limit_amount: limitamount,     // Handphone limit
                                 limit_outpatient: updatedLimit,
                                 limit_medicaldental: updatedLimit,
                             },

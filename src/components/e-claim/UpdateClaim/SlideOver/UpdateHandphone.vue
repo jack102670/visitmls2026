@@ -410,14 +410,14 @@ export default {
             // limit_medicaldental: this.remaining_medicaldental,
 
             tabTitle: "Handphone",
-            locationPurpose: "-",
-            date: this.handphone.date_claim || "-",
+            locationPurpose: this.handphone.claim_month||"-",
+            date: this.handphone.claim_year || "-",
             total: this.handphone.claim_amount || 0
-     };
+        };
 
-      console.log("Submitting Handphone payload:", updatedClaim);
-      this.$emit("update-claim",updatedClaim);
-      this.closeSlideOver();
+        console.log("Submitting Handphone payload:", updatedClaim);
+        this.$emit("update-claim", updatedClaim);
+        this.closeSlideOver();
     },
         //     async handleSubmit() {
         //         try {

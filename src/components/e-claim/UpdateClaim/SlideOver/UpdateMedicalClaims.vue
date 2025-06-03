@@ -335,8 +335,6 @@ export default {
 
 
         async fetchMedicalLeaveData(refNo) {
-
-           
                 // const response = await getMedicalLeave(this.claim.refNo);
                 const response = await axios.get(`http://172.28.28.116:6165/api/User/GetMedicalLeave/${refNo}`);
                 console.log("Medical response", response);
@@ -609,33 +607,33 @@ export default {
         // },
 
         async handleSubmit() {
-        const updatedClaim = {
-            date_leave_taken: this.formattedDate,
-            reason: this.medical.medical_category === 'Outpatient' ? this.medical.reason : '',
-            medical_category: this.medical.medical_category,
-            clinic_selection: this.medical.medical_category === 'Outpatient' ? this.medical.clinic_selection : '',
-            clinic_name: this.medical.medical_category === 'Outpatient' && this.medical.clinic_selection === 'Other Clinic'? this.medical.clinic_name: '',
-            reason_different: this.medical.medical_category === 'Outpatient' ? this.medical.reason_different : '',
-            bank_name: this.medical.bank_name,
-            bank_holder: this.medical.bank_holder,
-            bank_account: this.medical.bank_account,
-            claim_amount: isNaN(parseFloat(this.medical.claim_amount)) ? 0 : parseFloat(this.medical.claim_amount),
-            ic_number: this.medical.ic_number,
-            unique_code: this.uniqueCode,
-            reference_number: this.medical.reference_number,
-            requester_id: this.requesterId,
-            originalClaimAmount: this.originalClaimAmount,
+            const updatedClaim = {
+                date_leave_taken: this.formattedDate,
+                reason: this.medical.medical_category === 'Outpatient' ? this.medical.reason : '',
+                medical_category: this.medical.medical_category,
+                clinic_selection: this.medical.medical_category === 'Outpatient' ? this.medical.clinic_selection : '',
+                clinic_name: this.medical.medical_category === 'Outpatient' && this.medical.clinic_selection === 'Other Clinic'? this.medical.clinic_name: '',
+                reason_different: this.medical.medical_category === 'Outpatient' ? this.medical.reason_different : '',
+                bank_name: this.medical.bank_name,
+                bank_holder: this.medical.bank_holder,
+                bank_account: this.medical.bank_account,
+                claim_amount: isNaN(parseFloat(this.medical.claim_amount)) ? 0 : parseFloat(this.medical.claim_amount),
+                ic_number: this.medical.ic_number,
+                unique_code: this.uniqueCode,
+                reference_number: this.medical.reference_number,
+                requester_id: this.requesterId,
+                originalClaimAmount: this.originalClaimAmount,
 
-            tabTitle: "Medical Leave",
-            locationPurpose: "-",
-            date: this.medical.date_leave_taken || "-",
-            total: this.medical.claim_amount || 0
-     };
+                tabTitle: "Medical Leave",
+                locationPurpose: "-",
+                date: this.medical.date_leave_taken || "-",
+                total: this.medical.claim_amount || 0
+            };
 
-      console.log("Submitting Medical UPDATEDCLAIM:", updatedClaim);
-      this.$emit("update-claim",updatedClaim);
-      this.closeSlideOver();
-    },
+            console.log("Submitting Medical updated claim:", updatedClaim);
+            this.$emit("update-claim", updatedClaim);
+            this.closeSlideOver();
+        },
         watch: {
         isOpen(newVal) {
             if (newVal) this.fetchMedicalLeaveData();

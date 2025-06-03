@@ -26,13 +26,13 @@
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
 
-                    <div class="col-span-4">
+                    <!-- <div class="col-span-4">
                         <label for="company_name" class="font-medium text-sm">Customer</label>
                         <input type="text" id="company_name" v-model="refreshment.company_name"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                    </div>
+                    </div> -->
 
-                    <div class="col-span-8">
+                    <div class="col-span-4">
                         <label for="refreshment_type" class="font-medium text-sm">Refreshment Type</label>
                         <select id="refreshment_type" v-model="refreshment.refreshment_type"
                             class="mt-1 text-xs block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
@@ -254,7 +254,7 @@ export default {
                 reference_type: '',
                 venue_name: '',
                 receipt_no: '',
-                company_name: '',
+                // company_name: '',
                 total_fee: '',
                 comment: '',
                 pktDepartments: [], // For department dropdown
@@ -695,7 +695,7 @@ export default {
             reference_type: matchingUniqueID.reference_type,
             venue_name: matchingUniqueID.venue_name,
             receipt_no: matchingUniqueID.receipt_no,
-            company_name: matchingUniqueID.company_name,
+            // company_name: matchingUniqueID.company_name,
             total_fee: matchingUniqueID.total_fee,
             reference_number: matchingUniqueID.reference_number,
             unique_code: matchingUniqueID.unique_code,
@@ -843,6 +843,38 @@ export default {
         //         });
         //     }
         // },
+        getCurrentClaimData() {
+            return {
+                requester_id: this.requesterId,
+                refreshment_type: this.refreshment.refreshment_type === "Others"
+                    ? this.refreshment.other_type  // replace with the actual text entered
+                    : this.refreshment.refreshment_type,
+                date_event: this.formattedDate,
+                reference_type: this.refreshment.reference_type?.trim(),
+                venue_name: this.refreshment.venue_name,
+                receipt_no: this.refreshment.receipt_no,
+                // company_name: this.refreshment.company_name,
+                total_fee: isNaN(parseFloat(this.refreshment.total_fee)) ? 0 : parseFloat(this.refreshment.total_fee),
+                reference_number: this.refreshment.reference_number,
+                unique_code: this.refreshment.unique_code,
+                sim: this.refreshment.sim.map(s => ({
+                    id: s.id,
+                    name: s.name,
+                    company_name: s.company_name,
+                    department: s.department
+                })),
+                inv_refNumber: this.inv_refNumber,
+                filesToDelete: this.filesToDelete,
+                newFiles: this.newFiles,
+                files: this.refreshment.files || [],
+                simToDelete: this.simToDelete,
+                
+                tabTitle: "Refreshment",
+                locationPurpose: this.refreshment.venue_name || "-",
+                date: this.date_event || "-",
+                total: this.refreshment.total_fee || "0.00"
+            };
+        },
 
         async handleSubmit() {
             const updatedClaim = {
@@ -854,7 +886,7 @@ export default {
                 reference_type: this.refreshment.reference_type?.trim(),
                 venue_name: this.refreshment.venue_name,
                 receipt_no: this.refreshment.receipt_no,
-                company_name: this.refreshment.company_name,
+                // company_name: this.refreshment.company_name,
                 total_fee: isNaN(parseFloat(this.refreshment.total_fee)) ? 0 : parseFloat(this.refreshment.total_fee),
                 reference_number: this.refreshment.reference_number,
                 unique_code: this.refreshment.unique_code,
