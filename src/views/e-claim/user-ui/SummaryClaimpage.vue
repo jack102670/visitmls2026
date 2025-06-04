@@ -668,7 +668,7 @@ export default {
   computed: {
     canResubmit() {
     const status = this.adminStatus?.trim()?.toUpperCase();
-    return status?.includes('REJECTED');
+    return status?.includes('REVISED');
   },
       totalAmount() {
         let num = 0;

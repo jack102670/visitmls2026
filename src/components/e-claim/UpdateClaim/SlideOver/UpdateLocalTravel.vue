@@ -959,51 +959,6 @@ export default {
         // }
         // },
 
-        getCurrentClaimData() {
-            return {
-                mileage_km: this.local.mileage_km,
-                starting_point: this.local.starting_point,
-                end_point: this.local.end_point,
-                date_event: this.date_event,
-                return_date: this.return_date,
-                park_fee: isNaN(parseFloat(this.local.park_fee)) ? 0 : parseFloat(this.local.park_fee),
-                toll_fee: isNaN(parseFloat(this.local.toll_fee)) ? 0 : parseFloat(this.local.toll_fee),
-                fare: isNaN(parseFloat(this.local.fare)) ? 0 : parseFloat(this.local.fare),
-                transport_specification: this.local.transport_specification?.trim(),
-                transport_mode: this.local.transport_mode?.trim(),
-                trip_mode: this.local.trip_mode?.trim(),
-                total_mileage: isNaN(parseFloat(this.local.total_mileage)) ? 0 : parseFloat(this.local.total_mileage),//petrol/ev(rm)
-                meal_allowance:this.local.meal_allowance,
-                accommodation: this.local.accommodation,
-                vehicle_no: this.local.vehicle_no?.trim(),
-                vehicle_model: this.local.vehicle_model?.trim(),
-                type_petrol: this.local.type_petrol?.trim(),
-                petrol_perlitre: isNaN(parseFloat(this.local.petrol_perlitre)) ? 0 : parseFloat(this.local.petrol_perlitre),
-                reference_number: this.local.reference_number,
-                total_fee: isNaN(parseFloat(this.totalFee)) ? 0 : parseFloat(this.totalFee),
-                departure_airport:this.local.departure_airport,
-                arrival_airport: this.local.arrival_airport,
-                number_of_nights:isNaN(parseFloat(this.local.number_of_nights)) ? 0 : parseFloat(this.local.number_of_nights),
-                number_of_rooms: isNaN(parseFloat(this.local.number_of_rooms)) ? 0 : parseFloat(this.local.number_of_rooms),
-                city: this.local.city,
-                hotel_fee: isNaN(parseFloat(this.local.hotel_fee)) ? 0 : parseFloat(this.local.hotel_fee),
-                checkin_date: this.local.checkin_date,
-                checkout_date: this.local.checkout_date,
-                class_airline: this.local.class_airline,
-                unique_code: this.uniqueCode,
-                files: this.local.files || [],
-                filesToDelete: this.filesToDelete,
-                newFiles: this.getNewFiles(),
-                requester_id: this.requesterId,
-                
-                tabTitle: "Local Travelling",
-                locationPurpose: this.local.end_point || "-",
-                date: this.date_event || "-",
-                total: this.totalFee || "0.00"
-            };
-        },
-
-
         async handleSubmit() {
             const updatedClaim = {
 
@@ -1057,19 +1012,7 @@ export default {
         isOpen(newVal) {
             if (newVal) this.fetchLocalData();
         }
-
-        // return_date(newVal) {
-        //     if (new Date(newVal) <= new Date(this.date_event)) {
-        //     Swal.fire({
-        //         title: 'Invalid Return Date',
-        //         text: 'Return date must be after the event date.',
-        //         icon: 'error',
-        //         confirmButtonText: 'OK',
-        //         confirmButtonColor: '#dc2626',
-        //     });
-        //     this.local.return_date = ""; // Reset
-        //     }
-        // }
+        
         },
 
     },

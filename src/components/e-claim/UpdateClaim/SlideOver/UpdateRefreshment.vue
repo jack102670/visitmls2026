@@ -843,38 +843,6 @@ export default {
         //         });
         //     }
         // },
-        getCurrentClaimData() {
-            return {
-                requester_id: this.requesterId,
-                refreshment_type: this.refreshment.refreshment_type === "Others"
-                    ? this.refreshment.other_type  // replace with the actual text entered
-                    : this.refreshment.refreshment_type,
-                date_event: this.formattedDate,
-                reference_type: this.refreshment.reference_type?.trim(),
-                venue_name: this.refreshment.venue_name,
-                receipt_no: this.refreshment.receipt_no,
-                // company_name: this.refreshment.company_name,
-                total_fee: isNaN(parseFloat(this.refreshment.total_fee)) ? 0 : parseFloat(this.refreshment.total_fee),
-                reference_number: this.refreshment.reference_number,
-                unique_code: this.refreshment.unique_code,
-                sim: this.refreshment.sim.map(s => ({
-                    id: s.id,
-                    name: s.name,
-                    company_name: s.company_name,
-                    department: s.department
-                })),
-                inv_refNumber: this.inv_refNumber,
-                filesToDelete: this.filesToDelete,
-                newFiles: this.newFiles,
-                files: this.refreshment.files || [],
-                simToDelete: this.simToDelete,
-                
-                tabTitle: "Refreshment",
-                locationPurpose: this.refreshment.venue_name || "-",
-                date: this.date_event || "-",
-                total: this.refreshment.total_fee || "0.00"
-            };
-        },
 
         async handleSubmit() {
             const updatedClaim = {

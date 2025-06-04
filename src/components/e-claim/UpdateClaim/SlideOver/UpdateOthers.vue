@@ -503,32 +503,6 @@ export default {
     //     });
     // }
     // },
-    getCurrentClaimData() {
-      return {
-        reference_number: this.others.reference_number,
-        expense_name: this.others.expense_name,
-        expense_date: this.formattedDate,
-        amount: isNaN(parseFloat(this.others.amount))
-          ? 0
-          : parseFloat(this.others.amount),
-        description: this.others.description?.trim(),
-        total_fee: isNaN(parseFloat(this.others.total_fee))
-          ? 0
-          : parseFloat(this.others.total_fee),
-        files: this.others.files || [],
-        filesToDelete: this.filesToDelete,
-        newFiles: this.newFiles,
-        unique_code: this.uniqueCode,
-        requester_id: this.requesterId,
-        
-        tabTitle: "Other",
-        locationPurpose: "-",
-        date: this.others.expense_date || "-",
-        total: this.others.total_fee || "0.00"
-      };
-  },
-
-
     async handleSubmit() {
       const updatedClaim = {
         reference_number: this.others.reference_number,

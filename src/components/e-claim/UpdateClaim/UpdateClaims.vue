@@ -250,7 +250,9 @@ export default {
             isEntertainmentSlideOverOpen: false,
             isRefreshmentSlideOverOpen: false,
             isOthersSlideOverOpen: false,
-            selectedClaim: null
+            selectedClaim: null,
+            hasEdits: false,
+
         }
 
     },
@@ -260,7 +262,6 @@ export default {
         try {
             await this.getClaimDetails(refNo);
             await this.fetchAllClaims(refNo);
-
             
         } catch (error) {
             console.error("Error initializing component", error);
@@ -422,7 +423,10 @@ export default {
             ];
 
             console.log("All formatted claims:", allClaims);
-            this.dataclaims = allClaims;
+            this.dataclaims = allClaims.map(claim => ({
+                ...claim,
+                edited: false 
+            }));
 
             this.claimDetails.grand_total = this.dataclaims.reduce((sum, claim) => {
             return sum + (parseFloat(claim.total) || 0);
@@ -490,9 +494,15 @@ export default {
         },
 
         updateClaim(updatedClaim) {
+            console.log("updateClaim() triggered");
             const index = this.dataclaims.findIndex(c => c.unique_code === updatedClaim.unique_code);
             if (index !== -1) {
-                this.dataclaims.splice(index, 1, updatedClaim);
+                // this.dataclaims.splice(index, 1, updatedClaim);
+                this.dataclaims[index] = {
+                    ...updatedClaim,
+                    edited: true
+                };
+                this.hasEdits = true;
                 console.log("Updated claim:", updatedClaim);
                 this.claimDetails.grand_total = this.dataclaims.reduce((sum, claim) => {
                     return sum + (parseFloat(claim.total) || 0);
@@ -506,63 +516,16 @@ export default {
         async resubmitForm() {
             try {   
                 this.loading = true;
+                console.log("hasEdits value is:", this.hasEdits);
 
-                // const claimsWithUpdates = this.dataclaims.map(claim => {
-                //     if (claim.tabTitle === "Local Travelling" && this.$refs.localRef?.getCurrentClaimData) {
-                //         return this.$refs.localRef.getCurrentClaimData();
-                //     }
-                //     if (claim.tabTitle === "Overseas Travelling" && this.$refs.overseaRef?.getCurrentClaimData) {
-                //         return this.$refs.overseaRef.getCurrentClaimData();
-                //     }
-                //     if (claim.tabTitle === "Entertainment" && this.$refs.entertainmentRef?.getCurrentClaimData) {
-                //         return this.$refs.entertainmentRef.getCurrentClaimData();
-                //     }
-                //     if (claim.tabTitle === "Refreshment" && this.$refs.refreshmentRef?.getCurrentClaimData) {
-                //         return this.$refs.refreshmentRef.getCurrentClaimData();
-                //     }
-                //     if (claim.tabTitle === "Other" && this.$refs.othersRef?.getCurrentClaimData) {
-                //         return this.$refs.othersRef.getCurrentClaimData();
-                //     }
-                //     if (claim.tabTitle === "Handphone" && this.$refs.handphoneRef?.getCurrentClaimData) {
-                //         return this.$refs.handphoneRef.getCurrentClaimData();
-                //     }
-                //     if (claim.tabTitle === "Medical Leave" && this.$refs.medicalRef?.getCurrentClaimData) {
-                //         return this.$refs.medicalRef.getCurrentClaimData();
-                //     }
-                //     return claim; // default
-                // });
-                // console.log("Full claim from Local Travelling form:", this.$refs.localRef?.getCurrentClaimData());
-                // console.log("Claims with updates:", claimsWithUpdates);
-
-                // for (const claim of claimsWithUpdates) {
-                //     const { tabTitle, unique_code, refNo } = claim;
-                //     const requester_id = this.claimDetails.requester_id;
-                    
-                //     const payload = {
-                //         requester_id,
-                //         unique_code,
-                //         ...claim
-                //     };
-                //     console.log("Claim payload for resubmit:", payload);
-
-                //     if (tabTitle === "Overseas Travelling") {
-                //         await this.handleOverseasSubmit(payload);
-                //     } else if (tabTitle === "Other") {
-                //         await this.handleOthersSubmit(payload);
-                //     } else if (tabTitle === "Entertainment") {
-                //         await this.handleEntertainmentSubmit(payload);
-                //     } else if (tabTitle === "Refreshment") {
-                //         await this.handleRefreshmentSubmit(payload);
-                //     } else if (tabTitle === "Local Travelling") {
-                //         await this.handleLocalTravelSubmit(payload);
-                //     } else if (tabTitle === "Handphone") {
-                //         await this.handleHandphoneSubmit(payload);
-                //     } else if (tabTitle === "Medical Leave") {
-                //         await this.handleMedicalLeaveSubmit(payload);
-                //     }
+                // if (!this.hasEdits) {
+                //     console.log("No local edits found. Fetching latest claims from backend...");
+                //     await this.fetchAllClaims(this.refNo);
+                // } else {
+                //     console.log("Local edits found. Skipping data fetch.");
                 // }
-
-                for (const claim of this.dataclaims) {
+                const claimsToSubmit = this.dataclaims.filter(c => c.edited);
+                for (const claim of claimsToSubmit) {
                     const { tabTitle, unique_code, refNo } = claim;
 
                     const requester_id = this.claimDetails.requester_id;
@@ -658,6 +621,7 @@ export default {
                 );
 
                 if (response.data?.result) {
+                    this.hasEdits = false;
                     Swal.fire({
                         title: "Success",
                         text: "Claim and all entries resubmitted successfully",
