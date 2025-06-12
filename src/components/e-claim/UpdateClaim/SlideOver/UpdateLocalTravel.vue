@@ -269,6 +269,7 @@
                         <input type="text" id="city" v-model="local.city"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
+
                     <div class="col-span-4">
                         <label for="total_fee" class="font-medium text-sm">Total Amount(RM)</label>
                         <input type="text" id="total_fee" v-model="totalFee" readonly
@@ -426,7 +427,7 @@
                     </div> -->
                     
                     <div class="col-span-4">
-                    <label class="font-medium text-sm">Uploaded Files</label>
+                    <label class="font-medium text-sm">Additional Files</label>
                     <div v-if="local.files" class="mt-2">
                         <!-- <p class="text-xs text-gray-600">Click on a file to view or delete:</p> -->
                         <ul class="list-disc list-inside">
@@ -541,7 +542,7 @@ export default {
                 fare: [],
                 hotel: [],
                 other: []
-                },
+            },
             
             uniqueCode: "",
             requesterId: "",
@@ -789,33 +790,33 @@ export default {
                         this.requesterId = matchingUniqueID.requester_id;
 
                         this.categorizedFiles = {
-                        toll: [],
-                        parking: [],
-                        mileage: [],
-                        fare: [],
-                        hotel: [],
-                        other: []
-                    };
+                            toll: [],
+                            parking: [],
+                            mileage: [],
+                            fare: [],
+                            hotel: [],
+                            other: []
+                        };
 
-                    (this.local.files || []).forEach(file => {
-                    const fileName = typeof file === "string" ? file.split('/').pop() : file.name;
-                    const upperName = fileName.toUpperCase();
+                        (this.local.files || []).forEach(file => {
+                        const fileName = typeof file === "string" ? file.split('/').pop() : file.name;
+                        const upperName = fileName.toUpperCase();
 
-                    if (upperName.startsWith("TOLL_")) {
-                        this.categorizedFiles.toll.push(file);
-                    } else if (upperName.startsWith("PARKING_")) {
-                        this.categorizedFiles.parking.push(file);
-                    } else if (upperName.startsWith("MILEAGE_")) {
-                        this.categorizedFiles.mileage.push(file);
-                    } else if (upperName.startsWith("FARE_")) {
-                        this.categorizedFiles.fare.push(file);
-                    } else if (upperName.startsWith("HOTEL_")) {
-                        this.categorizedFiles.hotel.push(file);
-                    } else {
-                        this.categorizedFiles.other.push(file);
+                        if (upperName.startsWith("TOLL_")) {
+                            this.categorizedFiles.toll.push(file);
+                        } else if (upperName.startsWith("PARKING_")) {
+                            this.categorizedFiles.parking.push(file);
+                        } else if (upperName.startsWith("MILEAGE_")) {
+                            this.categorizedFiles.mileage.push(file);
+                        } else if (upperName.startsWith("FARE_")) {
+                            this.categorizedFiles.fare.push(file);
+                        } else if (upperName.startsWith("HOTEL_")) {
+                            this.categorizedFiles.hotel.push(file);
+                        } else {
+                            this.categorizedFiles.other.push(file);
+                        }
+                        });
                     }
-                    });
-                }
                 }           
                     
         },

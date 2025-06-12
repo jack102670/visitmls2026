@@ -122,16 +122,28 @@
                                         {{ claim.total || '-' }}
                                     </td>
                                     <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2">
-                                <a @click="toggleSlideOver(index)"
-                                class="bg-green-600 hover:bg-green-700 text-white transition duration-300 px-2 py-1 rounded-md cursor-pointer inline-flex items-center justify-center">
-                                    <!-- Pencil Icon -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M11 4h2m2 0h.01M13 4l7 7-9 9H4v-9l9-9z" />
-                                    </svg>
-                                </a>
-                            </td>
+                                        <!-- Edit Button -->
+                                        <a @click="toggleSlideOver(index)"
+                                            class="bg-green-600 hover:bg-green-700 text-white transition duration-300 px-2 py-1 rounded-md cursor-pointer inline-flex items-center justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M11 4h2m2 0h.01M13 4l7 7-9 9H4v-9l9-9z" />
+                                            </svg>
+                                        </a>
 
+                                        <!-- Delete Button -->
+                                        <a @click="confirmDelete(claim)"
+                                            class="bg-red-600 hover:bg-red-700 text-white transition duration-300 px-2 py-1 rounded-md cursor-pointer inline-flex items-center justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                            stroke="currentColor" class="w-4 h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
+                                            </svg>
+
+                                            <!-- class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"> -->
+                    
+                                        </a>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -241,6 +253,7 @@ export default {
             claimDetails: {},
             claims: [],
             dataclaims: [],
+            deletedClaims: [],
             loading: true,
             error: null,
             isHandphoneSlideOverOpen: false,
@@ -399,6 +412,8 @@ export default {
             locationPurpose: `Claim for ${claim.claim_month}`,
             unique_code: claim.unique_code,
             refNo: refNo,
+            requester_id: claim.requester_id,
+            claim_amount: claim.claim_amount,
             }));
 
             const medicalClaims = (medicalRes.data.result || []).map(claim => ({
@@ -408,6 +423,9 @@ export default {
             locationPurpose: claim.medical_category,
             unique_code: claim.unique_code,
             refNo: refNo,
+            requester_id: claim.requester_id,
+            claim_amount: claim.claim_amount,       
+            medical_category: claim.medical_category,
             }));
             console.log("1. Local Travel Claims:", medicalClaims);
 
@@ -518,12 +536,25 @@ export default {
                 this.loading = true;
                 console.log("hasEdits value is:", this.hasEdits);
 
-                // if (!this.hasEdits) {
-                //     console.log("No local edits found. Fetching latest claims from backend...");
-                //     await this.fetchAllClaims(this.refNo);
-                // } else {
-                //     console.log("Local edits found. Skipping data fetch.");
-                // }
+                for (const claim of this.deletedClaims) {
+                    if (claim.tabTitle === "Other") {
+                        await this.deleteOthersClaim(claim);
+                    } else if (claim.tabTitle === "Entertainment") {
+                        await this.deleteEntertainmentClaim(claim);
+                    } else if (claim.tabTitle === "Refreshment") {
+                        await this.deleteRefreshmentClaim(claim);
+                    } else if (claim.tabTitle === "Local Travelling") {
+                        await this.deleteLocalClaim(claim);
+                    } else if (claim.tabTitle === "Overseas Travelling") {
+                        await this.deleteOverseasClaim(claim);
+                    } else if (claim.tabTitle === "Handphone") {
+                        await this.deleteHandphoneClaim(claim);
+                    } else if (claim.tabTitle === "Medical Leave") {
+                        await this.deleteMedicalClaim(claim);
+                    }
+                }
+
+
                 const claimsToSubmit = this.dataclaims.filter(c => c.edited);
                 for (const claim of claimsToSubmit) {
                     const { tabTitle, unique_code, refNo } = claim;
@@ -824,7 +855,7 @@ export default {
                 };
 
                 console.log("Entertainment submit data:", submitData);
-                console.log("Entertainment refNumber:", entertainmentData.expenses_refNumber);
+                console.log("Entertainment refNumber:", entertainmentData.ent_refNumber);
 
                 const response = await axios.put(
                 "http://172.28.28.116:6165/api/User/UpdateEntertainment",
@@ -1247,6 +1278,285 @@ export default {
         refreshTable() {
             this.refreshKey += 1;
         },
+
+        confirmDelete(claim) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This item will be removed and deleted upon resubmission.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Mark for deletion
+                    claim.markedForDeletion = true;
+
+                    // Save to delete list
+                    this.deletedClaims.push(claim);
+
+                    // Remove from the UI list
+                    this.dataclaims = this.dataclaims.filter(c => c.unique_code !== claim.unique_code);
+
+                    // 🔁 Recalculate the grand total immediately
+                    this.claimDetails.grand_total = this.dataclaims.reduce((sum, c) => {
+                        return sum + (parseFloat(c.total) || 0);
+                    }, 0).toFixed(2);
+
+                    Swal.fire("Marked!", "The claim will be deleted on resubmit.", "success");
+                }
+            });
+        },
+
+
+        async deleteRefreshmentClaim(claim) {
+            try {
+                const { refNo, unique_code, inv_refNumber } = claim;
+
+                const url = `http://172.28.28.116:6239/api/User/DeleteRefreshment?reference_number=${encodeURIComponent(refNo)}&unique_code=${encodeURIComponent(unique_code)}&serial_number=${encodeURIComponent(inv_refNumber)}`;
+                const response = await axios.delete(url);
+
+                if (response.status !== 200 && response.status !== 204) {
+                    throw new Error("Unexpected server response during deletion.");
+                }
+
+                if (Array.isArray(claim.files)) {
+                    for (const fileUrl of claim.files) {
+                        const fileName = fileUrl.split("/").pop();
+                        await axios.delete(
+                            `https://esvcportal.pktgroup.com/api/file/api/Files/DeleteImage/${claim.requester_id}/${claim.unique_code}/${fileName}`
+                        );
+                    }
+                }
+
+            } catch (error) {
+                console.error("Error deleting others claim or attachments:", error);
+                throw error;
+            }
+        },
+
+        async deleteOthersClaim(claim) {
+            try {
+                const { refNo, unique_code } = claim;
+
+                const url = `http://172.28.28.116:6239/api/User/DeleteOthers?reference_number=${encodeURIComponent(refNo)}&unique_code=${encodeURIComponent(unique_code)}`;
+                const response = await axios.delete(url);
+
+                if (response.status !== 200 && response.status !== 204) {
+                    throw new Error("Unexpected server response during deletion.");
+                }
+
+                if (Array.isArray(claim.files)) {
+                    for (const fileUrl of claim.files) {
+                        const fileName = fileUrl.split("/").pop();
+                        await axios.delete(
+                            `https://esvcportal.pktgroup.com/api/file/api/Files/DeleteImage/${claim.requester_id}/${claim.unique_code}/${fileName}`
+                        );
+                    }
+                }
+
+            } catch (error) {
+                console.error("Error deleting others claim or attachments:", error);
+                throw error;
+            }
+        },
+
+        async deleteEntertainmentClaim(claim) {
+            try {
+                const { refNo, unique_code, ent_refNumber } = claim;
+
+                const url = `http://172.28.28.116:6165/api/User/DeleteEntertainment?reference_number=${encodeURIComponent(refNo)}&unique_code=${encodeURIComponent(unique_code)}&serial_number=${encodeURIComponent(ent_refNumber)}`;
+                const response = await axios.delete(url);
+
+                if (response.status !== 200 && response.status !== 204) {
+                    throw new Error("Unexpected server response during deletion.");
+                }
+
+                if (Array.isArray(claim.files)) {
+                    for (const fileUrl of claim.files) {
+                        const fileName = fileUrl.split("/").pop();
+                        await axios.delete(
+                            `https://esvcportal.pktgroup.com/api/file/api/Files/DeleteImage/${claim.requester_id}/${claim.unique_code}/${fileName}`
+                        );
+                    }
+                }
+
+            } catch (error) {
+                console.error("Error deleting others claim or attachments:", error);
+                throw error;
+            }
+        },
+
+        async deleteOverseasClaim(claim) {
+            try {
+                const { refNo, unique_code, expenses_refNumber } = claim;
+
+                const url = `http://172.28.28.116:6239/api/User/DeleteOverseas?reference_number=${encodeURIComponent(refNo)}&unique_code=${encodeURIComponent(unique_code)}&serial_number=${encodeURIComponent(expenses_refNumber)}`;
+                const response = await axios.delete(url);
+
+                if (response.status !== 200 && response.status !== 204) {
+                    throw new Error("Unexpected server response during deletion.");
+                }
+
+                if (Array.isArray(claim.files)) {
+                    for (const fileUrl of claim.files) {
+                        const fileName = fileUrl.split("/").pop();
+                        await axios.delete(
+                            `https://esvcportal.pktgroup.com/api/file/api/Files/DeleteImage/${claim.requester_id}/${claim.unique_code}/${fileName}`
+                        );
+                    }
+                }
+
+            } catch (error) {
+                console.error("Error deleting others claim or attachments:", error);
+                throw error;
+            }
+        },
+
+        async deleteLocalClaim(claim) {
+            try {
+                const { refNo, unique_code } = claim;
+
+                const url = `http://172.28.28.116:6239/api/User/DeleteLocal?reference_number=${encodeURIComponent(refNo)}&unique_code=${encodeURIComponent(unique_code)}`;
+                const response = await axios.delete(url);
+
+                if (response.status !== 200 && response.status !== 204) {
+                    throw new Error("Unexpected server response during deletion.");
+                }
+
+                if (Array.isArray(claim.files)) {
+                    for (const fileUrl of claim.files) {
+                        const fileName = fileUrl.split("/").pop();
+                        await axios.delete(
+                            `https://esvcportal.pktgroup.com/api/file/api/Files/DeleteImage/${claim.requester_id}/${claim.unique_code}/${fileName}`
+                        );
+                    }
+                }
+
+            } catch (error) {
+                console.error("Error deleting others claim or attachments:", error);
+                throw error;
+            }
+        },
+
+        async deleteHandphoneClaim(claim) {
+            try {
+                const { refNo, unique_code, claim_amount, requester_id } = claim;
+
+                console.log("Deleting handphone claim:", claim);
+                console.log("Claim amount:", claim_amount);
+                console.log("Requester ID:", requester_id);
+
+                const url = `http://172.28.28.116:6165/api/User/DeleteHandphone?reference_number=${encodeURIComponent(refNo)}&unique_code=${encodeURIComponent(unique_code)}`;
+                const response = await axios.delete(url);
+
+                if (![200, 204].includes(response.status)) {
+                    throw new Error("Unexpected server response during deletion.");
+                }
+
+                // Delete files if any
+                if (Array.isArray(claim.files)) {
+                    for (const fileUrl of claim.files) {
+                        const fileName = fileUrl.split("/").pop();
+                        await axios.delete(
+                            `https://esvcportal.pktgroup.com/api/file/api/Files/DeleteImage/${claim.requester_id}/${claim.unique_code}/${fileName}`
+                        );
+                    }
+                }
+
+                const limitKey = "remaining_limit_amount";
+                const currentLimit = parseFloat(localStorage.getItem(limitKey)) || 0;
+                const restoredLimit = currentLimit + parseFloat(claim_amount || 0);
+                localStorage.setItem(limitKey, restoredLimit.toFixed(2));
+                console.log("Restored limit amount:", restoredLimit);
+                console.log("Current limit after restoration:", localStorage.getItem(limitKey));
+
+                // Also update the server
+                await axios.put(
+                    "http://172.28.28.116:6239/api/User/UpdateLimitClaim",
+                    {
+                        requester_id,
+                        limit_amount: restoredLimit,
+                        limit_outpatient: parseFloat(localStorage.getItem("remaining_limit_outpatient") || 0),
+                        limit_medicaldental: parseFloat(localStorage.getItem("remaining_limit_medicaldental") || 0),
+                    },
+                    { headers: { "Content-Type": "application/json" } }
+                );
+
+                console.log("Handphone limit restored successfully.");
+
+            } catch (error) {
+                console.error("Error deleting handphone claim or restoring limit:", error);
+            }
+        },
+
+        async deleteMedicalClaim(claim) {
+            try {
+                const { refNo, unique_code, claim_amount, medical_category, requester_id } = claim;
+
+                console.log("Deleting medical claim:", claim);
+                console.log("Claim amount:", claim_amount);
+                console.log("Medical category:", medical_category);
+                console.log("Requester ID:", requester_id);
+
+                const url = `http://172.28.28.116:6165/api/User/DeleteMedical?reference_number=${encodeURIComponent(refNo)}&unique_code=${encodeURIComponent(unique_code)}`;
+                const response = await axios.delete(url);
+
+                if (![200, 204].includes(response.status)) {
+                    throw new Error("Unexpected server response during deletion.");
+                }
+
+                if (Array.isArray(claim.files)) {
+                    for (const fileUrl of claim.files) {
+                        const fileName = fileUrl.split("/").pop();
+                        await axios.delete(
+                            `https://esvcportal.pktgroup.com/api/file/api/Files/DeleteImage/${claim.requester_id}/${claim.unique_code}/${fileName}`
+                        );
+                    }
+                }
+
+                let updatedLimit = 0;
+                const claimAmount = parseFloat(claim_amount || 0);
+                const limitamount = parseFloat(localStorage.getItem("remaining_limit_amount") || 0);
+                const limitoutpatient = parseFloat(localStorage.getItem("remaining_limit_outpatient") || 0);
+                const limitmedicaldental = parseFloat(localStorage.getItem("remaining_limit_medicaldental") || 0);
+
+                console.log("Current limits:", {
+                    limitamount,
+                    limitoutpatient,
+                    limitmedicaldental
+                });
+
+                console.log("Claim amount:", claimAmount);
+                if (medical_category === "Outpatient") {
+                    updatedLimit = limitoutpatient + claimAmount;
+                    localStorage.setItem("remaining_limit_outpatient", updatedLimit.toFixed(2));
+                } else {
+                    updatedLimit = limitmedicaldental + claimAmount;
+                    localStorage.setItem("remaining_limit_medicaldental", updatedLimit.toFixed(2));
+                }
+                console
+
+                // Update the server
+                await axios.put(
+                    "http://172.28.28.116:6239/api/User/UpdateLimitClaim",
+                    {
+                        requester_id,
+                        limit_amount: limitamount,
+                        limit_outpatient: medical_category === "Outpatient" ? updatedLimit : limitoutpatient,
+                        limit_medicaldental: medical_category !== "Outpatient" ? updatedLimit : limitmedicaldental,
+                    },
+                    { headers: { "Content-Type": "application/json" } }
+                );
+
+                console.log("Medical limit restored successfully.");
+
+            } catch (error) {
+                console.error("Error deleting medical claim or restoring limit:", error);
+            }
+        },
+        
     },
 }  
 </script>
