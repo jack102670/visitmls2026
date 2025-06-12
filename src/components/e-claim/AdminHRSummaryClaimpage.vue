@@ -326,7 +326,7 @@
         
 
         <!-- Remark table -->
-        <!-- v-show="approve || verified || reimbursed || resubmit || claimDetails.admin_status === 'REJECTED BY HR & ADMIN' -->
+        <!-- v-show="approve || verified || reimbursed || revise || claimDetails.admin_status === 'REJECTED BY HR & ADMIN' -->
         <div v-show="!pending"
           class="border rounded-lg overflow-x-auto border-gray-400 dark:border-gray-600 my-4">
           <table class="w-full">
@@ -356,8 +356,12 @@
                   Approve
                 </button>
                 <button @click="confirmReject = true"
-                  class="text-sm font-semibold py-2 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white">
+                  class="mr-2 text-sm font-semibold py-2 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white">
                   Reject
+                </button>
+                <button @click="confirmRevise = true"
+                        class="text-sm font-semibold py-2 sm:w-24 md:w-36 bg-orange-600 hover:bg-red-700 rounded-lg text-white">
+                  Revise
                 </button>
               </div>
             </div>
@@ -394,8 +398,8 @@
           </div>
         </div>
 
-        <!-- Resubmit Confirmation -->
-        <div v-show="confirmResubmit"
+        <!-- Revise Confirmation -->
+        <div v-show="confirmRevise"
           class="bg-black backdrop-filter backdrop-blur-sm bg-opacity-50  dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center backdrop-filter backdrop-blur-sm">
           <div
             class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center px-1">
@@ -407,11 +411,11 @@
               placeholder="Eg. Blurry Receipt Image" v-model="remark" />
             <div class="flex mt-4">
               <button class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
-                @click="confirmResubmit = false">
+                @click="confirmRevise = false">
                 Back
               </button>
               <button class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
-                @click="ConfirmResubmit()">
+                @click="ConfirmRevise()">
                 Confirm
               </button>
             </div>
@@ -607,7 +611,7 @@ export default {
       confirmReject: false,
       confirmApprove: false,
       confirmReimburse: false,
-      confirmResubmit: false,
+      confirmRevise: false,
       approveSuccess: false,
       loading: false,
       loadingText: '',
@@ -616,7 +620,7 @@ export default {
       approve: false,
       verified: false,
       reimbursed: false,
-      resubmit: false,
+      revise: false,
       remark: '',
       statusApprover: 'PENDING',
       claimDetails: [],
@@ -648,11 +652,11 @@ export default {
     getStatusClass() {
       const status = this.getSimplifiedStatus(this.statusApprover);
       return {
-        'bg-orange-200 my-2 dark:bg-orange-500': status === 'PENDING',
+        'bg-orange-200 my-2 dark:bg-orange-500': status === 'PENDING' || status === 'REVISE',
         'bg-green-200 my-2 dark:bg-green-500': status === 'APPROVED',
         'bg-red-200 my-2 dark:bg-red-500': status === 'REJECTED',
         'bg-slate-200 my-2 dark:bg-slate-500': status === 'REIMBURSED',
-        'text-orange-500 my-2 dark:text-orange-100': status === 'PENDING',
+        'text-orange-500 my-2 dark:text-orange-100': status === 'PENDING' || status === 'REVISE',
         'text-green-500 my-2 dark:text-green-100': status === 'APPROVED',
         'text-red-500 my-2 dark:text-red-100': status === 'REJECTED',
         'text-black my-2 dark:text-white': status === 'REIMBURSED'
@@ -664,7 +668,7 @@ export default {
       const statusMap = {
         'APPROVED BY HR & ADMIN': 'APPROVED',
         'REJECTED BY HR & ADMIN': 'REJECTED',
-        'RESUBMIT BY HR & ADMIN': 'RESUBMIT',
+        'REQUESTER REVISION NEEDED BY HR & ADMIN.': 'REVISE',
         'REIMBURSED BY HR & ADMIN': 'REIMBURSED',
         'OPEN': 'PENDING'
       };
@@ -687,7 +691,7 @@ export default {
         // Reset all status flags
         this.approve = false;
         this.rejectApprover = false;
-        this.resubmit = false;
+        this.revise = false;
         this.reimbursed = false;
         this.remark = this.claimDetails.comment;
 
@@ -699,8 +703,8 @@ export default {
           case 'REJECTED BY HR & ADMIN':
             this.rejectApprover = true;
             break;
-          case 'RESUBMIT BY HR & ADMIN':
-            this.resubmit = true;
+          case 'REQUESTER REVISION NEEDED BY HR & ADMIN':
+            this.revise = true;
             break;
           case 'REIMBURSED BY HR & ADMIN':
             this.reimbursed = true;
@@ -937,10 +941,10 @@ ExportToExcel() {
       this.ApproveOrReject('Reimbursed');
     },
 
-    // click function after confirm the resubmit
-    ConfirmResubmit() {
-      this.confirmResubmit = false;
-      this.ApproveOrReject('Resubmit');
+    // click function after confirm the revise
+    ConfirmRevise() {
+      this.confirmRevise = false;
+      this.ApproveOrReject('Revise');
     },
 
     // get the user data from store
@@ -1084,10 +1088,10 @@ ExportToExcel() {
             status: error.response?.status
           });
         }
-      } else if (AoR == 'Resubmit') {
+      } else if (AoR == 'Revise') {
 
         try {
-          this.resubmit = true;
+          this.revise = true;
           this.dateApprover = moment(new Date()).format('D MMM YYYY');
           this.loadingText = 'Uploading';
           this.loading = true;
@@ -1096,7 +1100,7 @@ ExportToExcel() {
             approver_name: userData.userName,
             approver_designation: userData.designation,
             approver_department: userData.department,
-            approver_status: 'RESUBMIT',
+            approver_status: 'REQUESTER REVISION NEEDED BY HR & ADMIN.',
             approver_comment: this.remark ? this.remark : '-',
             requester_email: this.claimDetails.email ? this.claimDetails.email : '-',
             requester_name: this.claimDetails.name ? this.claimDetails.name : '-',
@@ -1110,7 +1114,7 @@ ExportToExcel() {
           this.loading = false;
 
       //    console.log('API response', response.data);
-          localStorage.setItem('ApproveOrNot', 'resubmit');
+          localStorage.setItem('ApproveOrNot', 'revise');
 
         } catch (error) {
           console.error('Error during Reject:', {

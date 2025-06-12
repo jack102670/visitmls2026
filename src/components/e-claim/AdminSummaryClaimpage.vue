@@ -266,17 +266,17 @@
                 <div
                   class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
                   :class="{
-                    'bg-orange-100/60 dark:bg-gray-800': simplifiedCheckerStatus === 'CHECKED' || simplifiedCheckerStatus === 'PENDING' || simplifiedCheckerStatus === 'RESUBMIT',
+                    'bg-orange-100/60 dark:bg-gray-800': simplifiedCheckerStatus === 'CHECKED' || simplifiedCheckerStatus === 'PENDING' || simplifiedCheckerStatus === 'RESUBMIT' || simplifiedCheckerStatus === 'REVISE',
                     'bg-red-100/60 dark:bg-gray-800': simplifiedCheckerStatus === 'REJECTED'
                   }">
                   <span :class="{
                     'h-1.5 w-1.5 rounded-full': true,
-                    'bg-orange-500': simplifiedCheckerStatus === 'CHECKED' || simplifiedCheckerStatus === 'PENDING' || simplifiedCheckerStatus === 'RESUBMIT',
+                    'bg-orange-500': simplifiedCheckerStatus === 'CHECKED' || simplifiedCheckerStatus === 'PENDING' || simplifiedCheckerStatus === 'RESUBMIT' || simplifiedCheckerStatus === 'REVISE',
                     'bg-red-500': simplifiedCheckerStatus === 'REJECTED'
                   }"></span>
                   <span :class="{
                     'text-xs font-normal': true,
-                    'text-orange-500': simplifiedCheckerStatus === 'CHECKED' || simplifiedCheckerStatus === 'PENDING' || simplifiedCheckerStatus === 'RESUBMIT',
+                    'text-orange-500': simplifiedCheckerStatus === 'CHECKED' || simplifiedCheckerStatus === 'PENDING' || simplifiedCheckerStatus === 'RESUBMIT' || simplifiedCheckerStatus === 'REVISE',
                     'text-red-500': simplifiedCheckerStatus === 'REJECTED'
                   }">
                     {{ simplifiedCheckerStatus }}
@@ -294,17 +294,17 @@
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
                 <div class="mx-auto text-xs rounded-full py-2 my-1 w-fit inline-flex items-center px-3 gap-x-2"
                   :class="{
-                    'bg-amber-100/60 dark:bg-gray-800': ['VERIFIED', 'RESUBMIT', 'PENDING'].includes(simplifyVerifierStatus),
+                    'bg-amber-100/60 dark:bg-gray-800': ['VERIFIED', 'RESUBMIT', 'PENDING', 'REVISE'].includes(simplifyVerifierStatus),
                     'bg-red-100/60 dark:bg-gray-800': simplifyVerifierStatus === 'REJECTED'
                   }">
                   <span class="h-1.5 w-1.5 rounded-full"
                     :class="{
-                      'bg-amber-500': ['VERIFIED', 'RESUBMIT', 'PENDING'].includes(simplifyVerifierStatus),
+                      'bg-amber-500': ['VERIFIED', 'RESUBMIT', 'PENDING', 'REVISE'].includes(simplifyVerifierStatus),
                       'bg-red-500': simplifyVerifierStatus === 'REJECTED'
                     }"></span>
                   <span
                     :class="{
-                      'text-amber-500': ['VERIFIED', 'RESUBMIT', 'PENDING'].includes(simplifyVerifierStatus),
+                      'text-amber-500': ['VERIFIED', 'RESUBMIT', 'PENDING', 'REVISE'].includes(simplifyVerifierStatus),
                       'text-red-500': simplifyVerifierStatus === 'REJECTED'
                     }">
                     {{ simplifyVerifierStatus }}
@@ -323,21 +323,21 @@
                 <div class="mx-auto text-xs rounded-full py-2 my-1 w-fit inline-flex items-center px-3 gap-x-2"
                   :class="{
                     'bg-green-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'APPROVED',
-                    'bg-amber-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'RESUBMIT',
+                    'bg-amber-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'RESUBMIT' || simplifiedApproverFinStatus === 'REVISE',
                     'bg-red-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'REJECTED',
                     'bg-slate-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'PENDING'
                   }">
                   <span class="h-1.5 w-1.5 rounded-full"
                     :class="{
                       'bg-green-500': simplifiedApproverFinStatus === 'APPROVED',
-                      'bg-amber-500': simplifiedApproverFinStatus === 'RESUBMIT',
+                      'bg-amber-500': simplifiedApproverFinStatus === 'RESUBMIT' || simplifiedApproverFinStatus === 'REVISE',
                       'bg-red-500': simplifiedApproverFinStatus === 'REJECTED',
                       'bg-slate-500': simplifiedApproverFinStatus === 'PENDING'
                     }"></span>
                   <span
                     :class="{
                       'text-green-500': simplifiedApproverFinStatus === 'APPROVED',
-                      'text-amber-500': simplifiedApproverFinStatus === 'RESUBMIT',
+                      'text-amber-500': simplifiedApproverFinStatus === 'RESUBMIT' || simplifiedApproverFinStatus === 'REVISE',
                       'text-red-500': simplifiedApproverFinStatus === 'REJECTED',
                       'text-slate-500': simplifiedApproverFinStatus === 'PENDING'
                     }">
@@ -405,8 +405,12 @@
                   Approve
                 </button>
                 <button @click="confirmReject = true"
-                        class="text-sm font-semibold py-2 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white">
+                        class="mr-2 text-sm font-semibold py-2 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white">
                   Reject
+                </button>
+                <button @click="confirmRevise = true"
+                        class="text-sm font-semibold py-2 sm:w-24 md:w-36 bg-orange-600 hover:bg-red-700 rounded-lg text-white">
+                  Revise
                 </button>
               </div>
             </div>
@@ -444,9 +448,9 @@
           </div>
         </div>
 
-        <!-- Resubmit Confirmation -->
-        <div v-show="confirmResubmit"
-          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center">
+        <!-- Revise Confirmation -->
+        <div v-show="confirmRevise"
+          class="backdrop-blur-md bg-black/50 dark:bg-black/60 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center">
           <div
             class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center px-1">
             <h1 class="text-2xl font-bold text-center">
@@ -457,13 +461,14 @@
               placeholder="Eg. Blurry Receipt Image" v-model="remark" />
             <div class="flex mt-4">
               <button class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
-                @click="confirmResubmit = false">
+                @click="confirmRevise = false">
                 Back
               </button>
               <button class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
-                @click="ConfirmResubmit()">
+                @click="ConfirmRevise()">
                 Confirm
               </button>
+              
             </div>
           </div>
         </div>
@@ -654,7 +659,7 @@ export default {
       confirmReject: false,
       confirmApprove: false,
       confirmReimburse: false,
-      confirmResubmit: false,
+      confirmRevise: false,
       approveSuccess: false,
       loading: false,
       loadingText: '',
@@ -706,6 +711,8 @@ export default {
           return 'REJECTED';
         case 'RESUBMIT REQUESTED BY FINANCE':
           return 'RESUBMIT';
+        case 'REQUESTER REVISION NEEDED BY FINANCE.':
+          return 'REVISE';
         case 'REIMBURSED':
           return 'REIMBURSED';
         case 'OPEN':
@@ -727,6 +734,8 @@ export default {
           return 'REJECTED';
         case 'RESUBMIT REQUESTED BY FINANCE':
           return 'RESUBMIT';
+        case 'REQUESTER REVISION NEEDED BY FINANCE.':
+          return 'REVISE';
         case 'OPEN':
         case 'VERIFIED. WAITING FOR APPROVER.':
           return 'PENDING';
@@ -743,6 +752,8 @@ export default {
           return 'REJECTED';
         case 'RESUBMIT REQUESTED BY FINANCE':
           return 'RESUBMIT';
+        case 'REQUESTER REVISION NEEDED BY FINANCE.':
+          return 'REVISE';
         case 'REIMBURSED':
           return 'REIMBURSED';
         case 'OPEN':
@@ -765,6 +776,8 @@ export default {
           return 'REJECTED';
         case 'RESUBMIT REQUESTED BY FINANCE':
           return 'RESUBMIT';
+        case 'REQUESTER REVISION NEEDED BY FINANCE.':
+          return 'REVISE';
         case 'OPEN':
           return 'PENDING';
         default:
@@ -789,6 +802,8 @@ export default {
         case 'RESUBMIT REQUESTED BY FINANCE':
         case 'RESUBMIT':
           return 'RESUBMIT';
+        case 'REQUESTER REVISION NEEDED BY FINANCE.':
+          return 'REVISE';
         case 'OPEN':
           return 'PENDING';
         default:
@@ -1402,9 +1417,9 @@ export default {
     },
 
     // click function after confirm the resubmit
-    ConfirmResubmit() {
-      this.confirmResubmit = false;
-      this.ApproveOrReject('Resubmit');
+    ConfirmRevise() {
+      this.confirmRevise = false;
+      this.ApproveOrReject('Revise');
     },
 
     // get the user data from store
@@ -1608,7 +1623,7 @@ export default {
             status: error.response?.status
           });
         }
-      } else if (AoR == 'Resubmit') {
+      } else if (AoR == 'Revise') {
         try {
           this.resubmitApprover = true;
           this.loadingText = 'Uploading';
@@ -1619,7 +1634,7 @@ export default {
             approver_name: userData.userName,
             approver_designation: userData.designation,
             approver_department: userData.department,
-            approver_status: 'RESUBMIT REQUESTED BY FINANCE',
+            approver_status: 'REQUESTER REVISION NEEDED BY FINANCE.',
             approver_comment: this.remark ? this.remark : '',
 
             requester_email: this.claimDetails.requester_email ? this.claimDetails.requester_email : 'test@gmail.com',

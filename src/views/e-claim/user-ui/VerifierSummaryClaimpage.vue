@@ -395,8 +395,12 @@
                   Verify
                 </button>
                 <button @click="confirmReject = true"
-                        class="text-sm font-semibold py-2 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white">
+                        class="mr-2 text-sm font-semibold py-2 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white">
                   Reject
+                </button>
+                <button @click="confirmRevise = true"
+                        class="text-sm font-semibold py-2 sm:w-24 md:w-36 bg-orange-600 hover:bg-red-700 rounded-lg text-white">
+                  Revise
                 </button>
               </div>
             </div>
@@ -422,9 +426,9 @@
           </div>
         </div>
 
-        <!-- Resubmit Confirmation -->
-        <div v-show="confirmResubmit"
-          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center">
+        <!-- Revise Confirmation -->
+        <div v-show="confirmRevise"
+          class="backdrop-blur-md bg-black/50 dark:bg-black/60 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center">
           <div
             class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center px-1">
             <h1 class="text-2xl font-bold text-center">
@@ -435,11 +439,11 @@
               placeholder="Eg. Blurry Receipt Image" v-model="remark" />
             <div class="flex mt-4">
               <button class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
-                @click="confirmResubmit = false">
+                @click="confirmRevise = false">
                 Back
               </button>
               <button class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
-                @click="ConfirmResubmit()">
+                @click="ConfirmRevise()">
                 Confirm
               </button>
             </div>
@@ -614,7 +618,7 @@ export default {
       seeMore: false,
       confirmReject: false,
       confirmApprove: false,
-      confirmResubmit: false,
+      confirmRevise: false,
       approveSuccess: false,
       loading: false,
       loadingText: '',
@@ -631,10 +635,10 @@ export default {
       rejectApprover: false,
       rejectFinance: false,
 
-      resubmitVerifier: false,
-      resubmitChecker: false,
-      resubmitApprover: false,
-      resubmitFinance: false,
+      reviseVerifier: false,
+      reviseChecker: false,
+      reviseApprover: false,
+      reviseFinance: false,
       reimbursed: false,
       remark: '',
       adminStatus: '',
@@ -670,6 +674,8 @@ export default {
           return 'REJECTED';
         case 'RESUBMIT REQUESTED BY FINANCE':
           return 'RESUBMIT';
+        case 'REQUESTER REVISION NEEDED BY FINANCE.':
+          return 'REVISED';
         case 'REIMBURSED':
           return 'REIMBURSED';
         case 'OPEN':
@@ -691,6 +697,8 @@ export default {
           return 'REJECTED';
         case 'RESUBMIT REQUESTED BY FINANCE':
           return 'RESUBMIT';
+        case 'REQUESTER REVISION NEEDED BY FINANCE.':
+          return 'REVISED';
         case 'OPEN':
         case 'VERIFIED. WAITING FOR APPROVER.':
           return 'PENDING';
@@ -707,6 +715,8 @@ export default {
           return 'REJECTED';
         case 'RESUBMIT REQUESTED BY FINANCE':
           return 'RESUBMIT';
+        case 'REQUESTER REVISION NEEDED BY FINANCE.':
+          return 'REVISED';
         case 'REIMBURSED':
           return 'REIMBURSED';
         case 'OPEN':
@@ -733,6 +743,8 @@ export default {
         case 'RESUBMIT REQUESTED BY FINANCE':
         case 'RESUBMIT':
           return 'RESUBMIT';
+        case 'REQUESTER REVISION NEEDED BY VERIFIER.':
+          return 'REVISED';
         case 'OPEN':
           return 'PENDING';
         default:
@@ -756,6 +768,8 @@ export default {
         case 'RESUBMIT REQUESTED BY FINANCE':
         case 'RESUBMIT':
           return 'RESUBMIT';
+        case 'REQUESTER REVISION NEEDED BY CHECKER.':
+          return 'REVISED';
         case 'OPEN':
           return 'PENDING';
         default:
@@ -1315,9 +1329,9 @@ export default {
     },
 
     // click function after confirm the resubmit
-    ConfirmResubmit() {
-      this.confirmResubmit = false;
-      this.ApproveOrReject('Resubmit');
+    ConfirmRevise() {
+      this.confirmRevise = false;
+      this.ApproveOrReject('Revise');
     },
 
     // get the user data from store
@@ -1471,21 +1485,21 @@ export default {
           this.loading = false;
           console.error('Error submitting reject feedback:', error);
         }
-      } else if (AoR === 'Resubmit') {
-        this.resubmitVerifier = true;
+      } else if (AoR === 'Revise') {
+        this.reviseVerifier = true;
         this.loadingText = 'Uploading';
         this.loading = true;
 
         try {
           await axios.put(' http://172.28.28.116:6239/api/Verifier/VerifierFeedback', {
             ...feedbackData,
-            admin_status: 'RESUBMIT REQUESTED BY VERIFIER',
+            admin_status: 'REQUESTER REVISION NEEDED BY VERIFIER.',
           });
 
           this.loading = false;
         } catch (error) {
           this.loading = false;
-          console.error('Error submitting resubmit feedback:', error);
+          console.error('Error submitting revise feedback:', error);
         }
       }
 

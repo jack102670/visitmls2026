@@ -453,6 +453,8 @@ export default {
       const colorMap = {
         RESUBMITTED:
           'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-amber-100/60 dark:bg-gray-800',
+        REQUESTER:
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-amber-100/60 dark:bg-gray-800',
         CLOSE:
           'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800',
         OPEN: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-indigo-100/60 dark:bg-gray-800',
@@ -476,6 +478,7 @@ export default {
     getStatusDotClass(status) {
       const colorMap = {
         RESUBMITTED: 'h-1.5 w-1.5 rounded-full bg-amber-500',
+        REQUESTER: 'h-1.5 w-1.5 rounded-full bg-amber-500',
         OPEN: 'h-1.5 w-1.5 rounded-full bg-indigo-500',
         APPROVED: 'h-1.5 w-1.5 rounded-full bg-emerald-500',
         COMPLETED: 'h-1.5 w-1.5 rounded-full bg-blue-500',
@@ -489,6 +492,7 @@ export default {
     getStatusTextClass(status) {
       const colorMap = {
         RESUBMITTED: 'text-sm font-normal text-amber-500',
+        REQUESTER: 'text-sm font-normal text-amber-500',
         OPEN: 'text-sm font-normal text-indigo-500',
         APPROVED: 'text-sm font-normal text-emerald-500',
         COMPLETED: 'text-sm font-normal text-blue-500',
