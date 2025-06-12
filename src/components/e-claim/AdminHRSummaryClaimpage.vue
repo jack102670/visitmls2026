@@ -551,7 +551,7 @@
               class="absolute top-4 right-4 text-white text-2xl font-bold">
               ×
             </button>
-            <img :src="previewImage" alt="Preview"
+            <img src="../../assets/images/pkt-blue-log-crop.jpg" alt="Preview"
               class="max-h-[80vh] mx-auto object-contain rounded-md shadow-xl" />
           </div>
         </div>

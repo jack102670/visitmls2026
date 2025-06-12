@@ -3,9 +3,83 @@
     <div class=" mx-auto">
       <div
         class="relative bg-[#f7fbff] dark:bg-gray-900 dark:text-white border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
-        <h1 class="text-blue-800 dark:text-blue-600 text-xl md:text-2xl font-bold">
-          HR DASHBOARD
-        </h1>
+        <div class="grid grid-cols-12 gap-4 pr-5 mb-6">
+
+          <h1 class="text-blue-800 dark:text-blue-600 text-xl md:text-2xl font-bold col-span-4">
+            HR DASHBOARD
+          </h1>
+
+          <div v-if="userApplications" class="col-span-8">
+              <div class="grid grid-cols-6 gap-4">
+                <div
+                class="dark:bg-[#111827] dark:border-blue-200 dark:hover:bg-gray-800 hover:bg-indigo-100 bg-white shadow-xl border-2 border-blue-300 rounded-lg">
+                <div class="card p-4" @click="filterTable('OPEN')">
+                  <div class="flex flex-col items-center">
+                    <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
+                      {{ userApplications.filter((request) => request.admin_status === 'OPEN').length }}
+                      </span>
+                      <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">Open</span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="dark:bg-[#111827] dark:border-yellow-200 dark:hover:bg-gray-800 bg-white shadow-xl hover:bg-yellow-100 border-2 border-yellow-300 rounded-lg">
+                  <div class="card p-4" @click="filterTable('CHECKED')">
+                    <div class="flex flex-col items-center">
+                      <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
+                        {{ userApplications.filter((request) => request.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER').length }}
+                      </span>
+                      <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">Checked</span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                class="dark:bg-[#111827] dark:border-orange-200 dark:hover:bg-gray-800 bg-white hover:bg-gray-100 shadow-xl border-2 border-orange-300 rounded-lg">
+                <div class="card p-4" @click="filterTable('VERIFIED')">
+                  <div class="flex flex-col items-center">
+                    <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
+                      {{ userApplications.filter((request) => request.admin_status === 'VERIFIED. WAITING FOR APPROVER.').length }}
+                    </span>
+                    <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">Verified</span>
+                  </div>
+                </div>
+              </div>
+              <div
+              class="dark:bg-[#111827] dark:border-green-600 dark:hover:bg-gray-800 bg-white hover:bg-gray-100 shadow-xl border-2 border-green-300 rounded-lg">
+              <div class="card p-4" @click="filterTable('APPROVED')">
+                <div class="flex flex-col items-center">
+                    <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
+                      {{ userApplications.filter((request) => request.admin_status === 'APPROVED BY FINANCE' ||
+                        request.admin_status === 'APPROVED BY HR & ADMIN').length }}
+                    </span>
+                    <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">Approved</span>
+                  </div>
+                </div>
+              </div>
+                <div
+                  class="dark:bg-[#111827] dark:border-red-200 dark:hover:bg-gray-800 bg-white hover:bg-red-100 shadow-xl border-2 border-red-300 rounded-lg">
+                  <div class="card p-4" @click="filterTable('REJECTED')">
+                    <div class="flex flex-col items-center">
+                      <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
+                        {{ userApplications.filter((request) => request.admin_status === 'REJECTED BY HR & ADMIN' ||
+                          request.admin_status === 'REJECTED BY FINANCE').length }}
+                      </span>
+                      <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">Rejected</span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="dark:bg-[#111827] dark:border-teal-200 dark:hover:bg-gray-800 bg-white hover:bg-teal-100 shadow-xl border-2 border-teal-300 rounded-lg">
+                  <div class="card p-4" @click="filterTable('')">
+                    <div class="flex flex-col items-center">
+                      <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{ this.userApplications.length }}</span>
+                      <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">All Claims</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
         <div class="grid grid-cols-8 gap-4 w-full">
           <div class="col-span-8">
             <div class="flex flex-col">
@@ -169,14 +243,14 @@
                       </td> -->
                       <td class="px-2 py-2 text-sm font-medium text-gray-700 whitespace-nowrap">
                           <div :class="[
-                                'inline-flex items-center gap-x-1 rounded-full',
+                                'inline-flex gap-x-1 rounded-full',
                                 'px-2 py-1',
                                 getStatusContainerClass(claim.admin_status.split('.')[0].split(' ')[0])
                               ]"
                               style="font-size:0.93rem; min-width:0; min-height:0; line-height:1.2;"
                               >
                                 <span :class="[
-                                  'rounded-full',
+                                  'rounded-full flex-shrink-0',
                                   getStatusDotClass(claim.admin_status.split('.')[0].split(' ')[0])
                                 ]"
                                 style="width:0.6rem; height:0.6rem; display:inline-block;"
@@ -184,7 +258,7 @@
                                   <h2 :class="getStatusTextClass(claim.admin_status.split('.')[0].split(' ')[0])"
                                   style="font-size:0.93rem;"
                               >
-                              {{ claim.admin_status.split(' ')[0].split('.')[0] }}
+                              {{ claim.admin_status }}
                             </h2>
                           </div>
                         </td>
@@ -310,6 +384,7 @@ export default {
       userId: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
       claimsData: [],
       userApplications: [],
+      currentFilter: '',
       searchQuery: '',
       sortField: 'date_requested',
       sortDirection: 'desc',
@@ -337,12 +412,21 @@ export default {
         (claim.verifier_name && claim.verifier_name.toLowerCase().includes(query)) ||
         (claim.reference_number && claim.reference_number.toLowerCase().includes(query)) ||
         (claim.date_requested && claim.date_requested.toLowerCase().includes(query)) ||
-        (claim.grand_total && claim.String(claim.grand_total).toLowerCase().includes(query)) ||
+        (claim.grand_total && String(claim.grand_total).toLowerCase().includes(query)) ||
         (claim.admin_status && claim.admin_status.toLowerCase().includes(query))
       );
     },
     sortedApplications() {
-      return [...this.userApplications].sort((a, b) => {
+      let originalApplications = this.userApplications
+      if (this.currentFilter != '') {
+        originalApplications = originalApplications.filter(item => {
+        return item.admin_status.split(' ')[0].split('.')[0] === this.currentFilter;
+        });
+        console.log(this.currentFilter)
+        console.log(originalApplications)
+      }
+
+      return [...originalApplications].sort((a, b) => {
         const dateA = new Date(a[this.sortField]).getTime();
         const dateB = new Date(b[this.sortField]).getTime();
         return this.sortDirection === 'desc' ? dateB - dateA : dateA - dateB;
@@ -440,6 +524,9 @@ export default {
         this.sortField = field;
         this.sortDirection = 'desc';
       }
+    },
+    filterTable(status) {
+      this.currentFilter = status
     },
 
     ViewClaim(rn) {

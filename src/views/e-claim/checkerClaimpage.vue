@@ -527,7 +527,8 @@
                     <td class="py-3 px-4 flex items-center space-x-2">
                       <div class="w-20 h-32 flex items-center justify-center">
                         <img v-if="['png', 'jpg', 'jpeg'].includes(file.split('.').pop().toLowerCase())" :src="file"
-                          alt="attachment" class="max-w-full max-h-full object-contain" />
+                          alt="attachment" class="max-w-full max-h-full object-contain" 
+                          @click="openImagePreview(file)"/>
                         <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                           stroke-width="0.5" stroke="currentColor" class="w-16 h-16 text-gray-500">
                           <path stroke-linecap="round" stroke-linejoin="round"
@@ -555,6 +556,18 @@
             <div v-else class="text-center py-4">
               <p class="text-gray-500">No attachments</p>
             </div>
+          </div>
+        </div>
+
+        <!-- Image Preview Modal -->
+        <div v-show="showImagePreview" class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-75">
+          <div class="relative max-w-4xl w-full p-4">
+            <button @click="showImagePreview = false"
+              class="absolute top-4 right-4 text-white text-2xl font-bold">
+              ×
+            </button>
+            <img src="../../assets/images/pkt-blue-log-crop.jpg" alt="Preview"
+              class="max-h-[80vh] mx-auto object-contain rounded-md shadow-xl" />
           </div>
         </div>
 
@@ -593,6 +606,8 @@ export default {
   },
   data() {
     return {
+      previewImage: '',
+      showImagePreview: false,
       oem: [],
       showOemList: false,
 
@@ -761,6 +776,10 @@ export default {
     
   },
   methods: {
+    openImagePreview(file) {
+      this.previewImage = file;
+      this.showImagePreview = true;
+    },
     toggleDropdown() {
       this.dropdownOpen = !this.dropdownOpen;
     },
