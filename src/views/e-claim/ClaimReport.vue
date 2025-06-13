@@ -1736,11 +1736,34 @@ export default {
       }
     },
 
-    async fetchSerialNumber() {
+    // async fetchRunningNumber(reportType) {
+    //   try {
+    //     const res = await axios.get(
+    //       "http://172.28.28.116:6165/api/User/GetRunningNumberReport",
+    //       {
+    //         params: { reportType: reportType }
+    //       }
+    //     );
+
+    //     if (res.status === 200 && res.data.result) {
+    //       return String(res.data.result).padStart(3, "0");
+    //     } else {
+    //       console.error("Failed to fetch running number");
+    //       return null;
+    //     }
+    //   } catch (err) {
+    //     console.error("API Error:", err);
+    //     return null;
+    //   }
+    //},
+    async fetchSerialNumber(reportType) {
       let result = null;
       try {
         const response = await axios.get(
-          "http://172.28.28.116:6165/api/User/GetRunningNumber"
+          "http://172.28.28.116:6165/api/User/GetRunningNumberReport",
+          {
+            params: { reportType: reportType }
+          }
         );
         if (response.status === 200) {
           // console.log("Serial Number:", response.data);
@@ -2023,7 +2046,8 @@ export default {
 
       try {
         // Step 1: FETCH serial number first
-        const referenceNumber = await this.fetchSerialNumber();
+        const reportType = this.claims[0]?.reportType;
+        const referenceNumber = await this.fetchSerialNumber(reportType);
         if (!referenceNumber) {
           throw new Error("Failed to fetch reference number.");
         }
@@ -2054,7 +2078,7 @@ export default {
 
         // Step 4: Send InsertClaimDetails
         const response = await axios.post("http://172.28.28.116:6239/api/User/InsertClaimDetails", apiData);
-
+4
         if (response.status === 200 || response.status === 201) {
           if (response.data.status_code === "400") {
             throw new Error(response.data.message);

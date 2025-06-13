@@ -10,7 +10,7 @@
             VERIFIER DASHBOARD
           </h1>
           <div v-if="userApplications" class="col-span-8">
-              <div class="grid grid-cols-6 gap-4">
+              <div class="grid grid-cols-7 gap-2">
                 <div
                 class="dark:bg-[#111827] dark:border-blue-200 dark:hover:bg-gray-800 hover:bg-indigo-100 bg-white shadow-xl border-2 border-blue-300 rounded-lg">
                 <div class="card p-4" @click="filterTable('OPEN')">

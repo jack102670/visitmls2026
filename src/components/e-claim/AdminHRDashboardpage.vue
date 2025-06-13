@@ -4,13 +4,32 @@
       <div
         class="relative bg-[#f7fbff] dark:bg-gray-900 dark:text-white border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
         <div class="grid grid-cols-12 gap-4 pr-5 mb-6">
-
-          <h1 class="text-blue-800 dark:text-blue-600 text-xl md:text-2xl font-bold col-span-4">
-            HR DASHBOARD
-          </h1>
+          <div class="col-span-4">
+            <div class="flex flex-col">
+              <div class="ml-5">
+                <h1 class="text-blue-800 dark:text-blue-600 text-xl md:text-2xl font-bold col-span-4">
+                  HR DASHBOARD
+                </h1>
+              </div>
+              <div class="pt-2 ml-5">
+                <div class="col-span-8">
+                  <div class="flex flex-col">
+                    <div class="flex flex-col">
+                      <div class="">
+                        <button @click="toggleSlideOver" class="bg-primary text-white p-2 w-38 rounded-full hover:bg-primary">
+                          Monthly Report
+                        </button>
+                      </div>
+                      <!-- <CheckerTable :refreshKey="refreshKey" /> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div v-if="userApplications" class="col-span-8">
-              <div class="grid grid-cols-6 gap-4">
+              <div class="grid grid-cols-7 gap-2">
                 <div
                 class="dark:bg-[#111827] dark:border-blue-200 dark:hover:bg-gray-800 hover:bg-indigo-100 bg-white shadow-xl border-2 border-blue-300 rounded-lg">
                 <div class="card p-4" @click="filterTable('OPEN')">
@@ -92,20 +111,7 @@
               </div>
             </div>
         </div>
-        <div class="grid grid-cols-8 gap-4 w-full">
-          <div class="col-span-8">
-            <div class="flex flex-col">
-              <div class="flex flex-col">
-                <div class="flex flex-row-reverse">
-                  <button @click="toggleSlideOver" class="bg-primary text-white p-2 w-38 rounded-full hover:bg-primary">
-                    Monthly Report
-                  </button>
-                </div>
-                <!-- <CheckerTable :refreshKey="refreshKey" /> -->
-              </div>
-            </div>
-          </div>
-        </div>
+        
         <div class="flex flex-col mt-4">
           <div class=" py-2 flex flex-col md:flex-row justify-between items-center md:items-end">
             <div class="flex items-center">
