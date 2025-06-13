@@ -693,6 +693,7 @@ export default {
           return 'REIMBURSED';
         case 'OPEN':
         case 'VERIFIED. WAITING FOR APPROVER.':
+        case 'RESUBMITTED':
           return 'PENDING';
         default:
           return 'PENDING';
@@ -714,6 +715,7 @@ export default {
           return 'REVISED';
         case 'OPEN':
         case 'VERIFIED. WAITING FOR APPROVER.':
+        case 'RESUBMITTED':
           return 'PENDING';
         default:
           return 'PENDING';
@@ -734,6 +736,7 @@ export default {
           return 'REIMBURSED';
         case 'OPEN':
         case 'VERIFIED. WAITING FOR APPROVER.':
+        case 'RESUBMITTED':
           return 'PENDING';
         default:
           return this.adminStatus;
@@ -759,6 +762,7 @@ export default {
         case 'REQUESTER REVISION NEEDED BY VERIFIER.':
           return 'REVISED';
         case 'OPEN':
+        case 'RESUBMITTED':
           return 'PENDING';
         default:
           return 'PENDING';
@@ -783,6 +787,7 @@ export default {
         case 'REQUESTER REVISION NEEDED BY CHECKER.':
           return 'REVISED';
         case 'OPEN':
+        case 'RESUBMITTED':
           return 'PENDING';
         default:
           return 'PENDING';

@@ -320,6 +320,22 @@
                 <td>{{ claimDetails.approver_department || '-'}}</td>
                 <td>{{ claimDetails.approved_date || '-'}}</td>
               </tr>
+
+              <!-- Show only REVISED if not yet reimbursed -->
+              <tr v-else-if="getSimplifiedStatus(statusApprover) === 'REVISED'" class="text-wrap text-left text-xs border-t border-gray-400 dark:border-gray-600">
+                <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                  <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2 bg-amber-100/60 dark:bg-gray-800">
+                    <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>
+                    <span class="text-xs font-normal text-amber-500">REVISED</span>
+                  </div>
+                </th>
+                <td class="pl-6">{{ claimDetails.approver_name }}</td>
+                <td>{{ claimDetails.approver_designation }}</td>
+                <td>{{ claimDetails.approver_department }}</td>
+                <td>{{ claimDetails.approved_date }}</td>
+              </tr>
+
+
             </tbody>
           </table>
         </div>
@@ -343,7 +359,7 @@
           <!-- Remark/approve/reject/reimburshed button -->
           <div class="w-full">
             <div
-              v-if="claimDetails.admin_status !== 'APPROVED BY HR & ADMIN' && claimDetails.admin_status !== 'REJECTED BY HR & ADMIN' && claimDetails.admin_status !== 'REIMBURSED' &&  claimDetails.admin_status === 'OPEN'"
+              v-if="claimDetails.admin_status !== 'APPROVED BY HR & ADMIN' && claimDetails.admin_status !== 'REJECTED BY HR & ADMIN' && claimDetails.admin_status !== 'REIMBURSED' &&  claimDetails.admin_status === 'OPEN' || claimDetails.admin_status === 'RESUBMITTED'"
               class="w-full flex items-center justify-between">
               <div class="flex items-center">
                 <label class="font-semibold whitespace-nowrap mr-2">Overall Remark:</label>
@@ -668,8 +684,9 @@ export default {
       const statusMap = {
         'APPROVED BY HR & ADMIN': 'APPROVED',
         'REJECTED BY HR & ADMIN': 'REJECTED',
-        'REQUESTER REVISION NEEDED BY HR & ADMIN.': 'REVISE',
+        'REQUESTER REVISION NEEDED BY HR & ADMIN.': 'REVISED',
         'REIMBURSED BY HR & ADMIN': 'REIMBURSED',
+        'RESUBMITTED': 'PENDING',
         'OPEN': 'PENDING'
       };
       return statusMap[status] || status;
@@ -686,6 +703,7 @@ export default {
         this.loading = false;
         this.claimDetails = response.data.result;
         this.statusApprover = this.claimDetails.admin_status || 'PENDING';
+        console.log(this.claimDetails);
 
 
         // Reset all status flags

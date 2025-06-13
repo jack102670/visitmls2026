@@ -60,12 +60,24 @@
                     <div class="flex flex-col items-center">
                       <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
                         {{ userApplications.filter((request) => request.admin_status === 'REJECTED BY HR & ADMIN' ||
-                          request.admin_status === 'REJECTED BY FINANCE').length }}
+                          request.admin_status === 'REJECTED BY FINANCE' || request.admin_status === 'REJECTED BY CHECKER' || request.admin_status === 'REJECTED BY VERIFIER').length }}
                       </span>
                       <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">Rejected</span>
                     </div>
                   </div>
                 </div>
+                <div
+                class="dark:bg-[#111827] dark:border-red-200 dark:hover:bg-gray-800 bg-white hover:bg-red-100 shadow-xl border-2 border-red-300 rounded-lg">
+                <div class="card p-4" @click="filterTable('RESUBMITTED')">
+                  <div class="flex flex-col items-center">
+                    <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
+                      {{ this.userApplications.filter((request) =>
+                        request.admin_status === 'RESUBMITTED').length }}
+                    </span>
+                    <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">Resubmitted</span>
+                  </div>
+                </div>
+              </div>
                 <div
                   class="dark:bg-[#111827] dark:border-teal-200 dark:hover:bg-gray-800 bg-white hover:bg-teal-100 shadow-xl border-2 border-teal-300 rounded-lg">
                   <div class="card p-4" @click="filterTable('')">
@@ -120,68 +132,60 @@
                 </div>
               </div>
               <div class="overflow-x-auto">
-                <div class=" border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                  <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover strip">
+                <div class="inline-block min-w-full py-2 align-middle">
+                  <table ref="myTable"
+                    class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe border border-gray-200 dark:border-gray-700 md:rounded-lg">
                     <thead class="bg-gray-50 dark:bg-gray-800">
                     <tr>
-                      <th scope="col" class="w-1/12 px-6 py-3">No</th>
-                      <!-- <th
-                        scope="col"
-                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        <div class="flex items-center gap-x-3">
-                          <span>Branch</span>
-                        </div>
-                      </th> -->
+                      <th scope="col" class="px-6 py-3">No</th>
                       <th scope="col"
-                        class="px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <div class="flex items-center gap-x-3 whitespace-nowrap">
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3">
                           <span>Reference Number</span>
                         </div>
                       </th>
-
                       <th scope="col"
-                        class="px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <div class="flex items-center gap-x-3 whitespace-nowrap">
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3">
                           <span>Report Name</span>
                         </div>
                       </th>
                       <th scope="col"
-                        class="w-1/6 px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <div class="flex items-center gap-x-3 whitespace-nowrap">
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3">
                           <span>Date Requested</span>
-                          <span class="ml-1 cursor-pointer" @click="toggleSort('date_requested')">
-                            <template v-if="sortField === 'date_requested'">
-                              {{ sortDirection === 'desc' ? '↓' : '↑' }}
-                            </template>
-                            <template v-else>
-                              <span class="text-gray-300">↕</span>
-                            </template>
-                          </span>
                         </div>
                       </th>
                       <th scope="col"
-                        class="w-1/6 px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <div class="flex items-center gap-x-3 whitespace-nowrap">
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3">
                           <span>Requester Name</span>
-                        </div>
-                      </th>
-                      <th scope="col"
-                        class="w-1/12 px-2 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <div class="flex items-center gap-x-3 whitespace-nowrap">
-                          <span>Amount</span>
                         </div>
                       </th>
 
                       <th scope="col"
-                        class="w-1/6 px-2 py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">
-                        
-                          <span>Status</span>
-                        
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3">
+                          <span>Amount</span>
+                        </div>
                       </th>
+                      <!-- <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3">
+                          <span>Approved Date</span>
+                        </div>
+                      </th> -->
+
                       <th scope="col"
-                        class="w-1/12 px-2 py-3.5 text-center text-sm font-normal rtl:text-right text-gray-500 dark:text-gray-400">
-                        <span>View</span>
+                        class="w-1/6 px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3">
+                          <span>Status</span>
+                        </div>
+                      </th>
+
+                      <th scope="col"
+                        class="px-12 py-3.5 text-sm text-center font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <span class="">View</span>
                       </th>
                     </tr>
                   </thead>
@@ -601,7 +605,9 @@ export default {
       });
     },
     initializeDataTable() {
-      $(this.$refs.myTable).DataTable({});
+      $(this.$refs.myTable).DataTable({
+        dom: 'T'
+      });
     },
     async FetchClaimsData() {
       this.loading = true;

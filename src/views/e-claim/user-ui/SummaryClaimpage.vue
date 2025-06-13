@@ -225,27 +225,27 @@
               <th class="">DATE</th>
             </thead>
             <tr
-              v-if="claimDetails.checker_name || simplifiedCheckerStatus === 'REJECTED' || simplifiedCheckerStatus === 'CHECKED'"
+              v-if="claimDetails.checker_name || simplifiedCheckerStatus === 'REJECTED' || simplifiedCheckerStatus === 'CHECKED' || simplifiedCheckerStatus === 'REVISED'"
               class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
                 <div
                   class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
                   :class="{
-                    'bg-yellow-100/60 dark:bg-gray-800': simplifiedCheckerStatus === 'CHECKED',
+                    'bg-yellow-100/60 dark:bg-gray-800': simplifiedCheckerStatus === 'CHECKED'|| simplifiedCheckerStatus === 'REVISED',
                     'bg-red-100/60 dark:bg-gray-800': simplifiedCheckerStatus === 'REJECTED',
                     'bg-gray-100/60 dark:bg-gray-800': simplifiedCheckerStatus === 'PENDING'
                   }">
                   <span :class="{
                     'h-1.5 w-1.5 rounded-full': true,
-                    'bg-yellow-500': simplifiedCheckerStatus === 'CHECKED',
-                    'bg-red-500': simplifiedCheckerStatus === 'REJECTED',
-                    'bg-gray-500': simplifiedCheckerStatus === 'PENDING'
+                    'bg-yellow-500': simplifiedCheckerStatus === 'CHECKED'|| simplifiedCheckerStatus === 'REVISED',
+                    'bg-red-500': simplifiedCheckerStatus === 'REJECTED', 
+                    'bg-gray-500': simplifiedCheckerStatus === 'PENDING'  
                   }"></span>
                   <span :class="{
                     'text-xs font-normal': true,
-                    'text-yellow-500': simplifiedCheckerStatus === 'CHECKED',
+                    'text-yellow-500': simplifiedCheckerStatus === 'CHECKED'|| simplifiedCheckerStatus === 'REVISED',
                     'text-red-500': simplifiedCheckerStatus === 'REJECTED',
-                    'text-gray-500': simplifiedCheckerStatus === 'PENDING'
+                    'text-gray-500': simplifiedCheckerStatus === 'PENDING' 
                   }">
                   {{ simplifiedCheckerStatus }}
                     <!-- {{ checked || claimDetails.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER'
@@ -262,23 +262,23 @@
               <td>{{ claimDetails.checker_department || '-' }}</td>
               <td>{{ claimDetails.checked_date || '-' }}</td>
             </tr>
-            <tr v-if="['VERIFIED', 'APPROVED', 'REIMBURSED', 'REJECTED'].includes(simplifiedVerifierStatus)"
+            <tr v-if="['VERIFIED', 'APPROVED', 'REIMBURSED', 'REJECTED', 'REVISED'].includes(simplifiedVerifierStatus)"
               class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
                 <div
                   class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
                   :class="{
-                    'bg-orange-100/60 dark:bg-gray-800': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'RESUBMITTED' || simplifiedVerifierStatus === 'PENDING',
+                    'bg-orange-100/60 dark:bg-gray-800': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'REVISED' || simplifiedVerifierStatus === 'PENDING',
                     'bg-red-100/60 dark:bg-gray-800': simplifiedVerifierStatus === 'REJECTED'
                   }">
                   <span :class="{
                     'h-1.5 w-1.5 rounded-full': true,
-                    'bg-orange-500': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'RESUBMITTED' || simplifiedVerifierStatus === 'PENDING',
+                    'bg-orange-500': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'REVISED' || simplifiedVerifierStatus === 'PENDING',
                     'bg-red-500': simplifiedVerifierStatus === 'REJECTED'
                   }"></span>
                   <span :class="{
                     'text-xs font-normal': true,
-                    'text-orange-500': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'RESUBMITTED' || simplifiedVerifierStatus === 'PENDING',
+                    'text-orange-500': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'REVISED' || simplifiedVerifierStatus === 'PENDING',
                     'text-red-500': simplifiedVerifierStatus === 'REJECTED'
                   }">
                     {{ simplifiedVerifierStatus }}
@@ -291,28 +291,28 @@
               <td class="">{{ claimDetails.verified_date || '-' }}</td>
             </tr>
             
-            <tr v-if="['APPROVED','REJECTED', 'REIMBURSED'].includes(simplifiedApproverFinStatus) && !(simplifiedApproverFinStatus === 'REJECTED' && claimDetails.approved_date === 'N/A')"
+            <tr v-if="['APPROVED','REJECTED', 'REIMBURSED', 'REVISED'].includes(simplifiedApproverFinStatus) && !(simplifiedApproverFinStatus === 'REJECTED' && claimDetails.approved_date === 'N/A')"
               class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
                 <div
                   class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
                   :class="{
                     'bg-green-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'APPROVED',
-                    'bg-amber-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'RESUBMITTED',
+                    'bg-amber-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'REVISED',
                     'bg-red-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'REJECTED',
                     'bg-slate-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'PENDING',
                   }">
                   <span :class="{
                     'h-1.5 w-1.5 rounded-full': true,
                     'bg-green-500': simplifiedApproverFinStatus === 'APPROVED',
-                    'bg-amber-500': simplifiedApproverFinStatus === 'RESUBMITTED',
+                    'bg-amber-500': simplifiedApproverFinStatus === 'REVISED',
                     'bg-red-500': simplifiedApproverFinStatus === 'REJECTED',
                     'bg-slate-500': simplifiedApproverFinStatus === 'PENDING'
                   }"></span>
                   <span :class="{
                     'text-xs font-normal': true,
                     'text-green-500': simplifiedApproverFinStatus === 'APPROVED',
-                    'text-amber-500': simplifiedApproverFinStatus === 'RESUBMITTED',
+                    'text-amber-500': simplifiedApproverFinStatus === 'REVISED',
                     'text-red-500': simplifiedApproverFinStatus === 'REJECTED',
                     'text-slate-500': simplifiedApproverFinStatus === 'PENDING'
                   }">
@@ -380,7 +380,7 @@
         </div>
        
          <!-- Resubmit button for claimant -->
-         <div v-if="canResubmit && !resubmitClicked">
+         <div v-if="canResubmit && !isResubmitted">
           <div class="flex justify-end mt-4">
             <button @click="resubmitForm"
               class="bg-yellow-600 hover:bg-yellow-700 dark:bg-yellow-700 dark:hover:bg-yellow-800 text-white rounded-xl px-8 text-sm font-bold py-2">
@@ -611,7 +611,7 @@ export default {
       showImagePreview: false,
       adminStatus: '',
       // canResubmit: true, 
-      resubmitClicked: false, 
+      isResubmitted: false, 
       singleRemarks: [],
       sim: [],
       showSimList: false,
@@ -683,7 +683,7 @@ export default {
   computed: {
     canResubmit() {
     const status = this.adminStatus?.trim()?.toUpperCase();
-    return status?.includes('REJECTED');
+    return status?.includes('REVISION');
   },
       totalAmount() {
         let num = 0;
@@ -705,6 +705,8 @@ export default {
           return 'RESUBMIT';
         case 'REIMBURSED':
           return 'REIMBURSED';
+        case 'REQUESTER REVISION NEEDED BY FINANCE.':
+          return 'REVISED'
         case 'OPEN':
         case 'VERIFIED. WAITING FOR APPROVER.':
           return 'PENDING';
@@ -727,6 +729,8 @@ export default {
         case 'RESUBMIT REQUESTED BY FINANCE':
         case 'RESUBMIT REQUESTED BY HR & ADMIN':
           return 'RESUBMIT';
+        case 'REQUESTER REVISION NEEDED BY FINANCE.':
+          return 'REVISED'
         case 'OPEN':
         case 'VERIFIED. WAITING FOR APPROVER.':
           return 'PENDING';
@@ -758,6 +762,7 @@ export default {
         case 'VERIFIED. WAITING FOR APPROVER.':
         case 'APPROVED BY FINANCE':
         case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
+        case 'REQUESTER REVISION NEEDED BY FINANCE.':
         case 'REIMBURSED':
           return 'VERIFIED';
         case 'REJECTED BY VERIFIER.':
@@ -766,8 +771,10 @@ export default {
         case 'RESUBMIT REQUESTED BY FINANCE':
         case 'RESUBMIT':
           return 'RESUBMIT';
+        case 'REQUESTER REVISION NEEDED BY VERIFIER.':
+          return 'REVISED'
         case 'OPEN':
-        case 'CHECKED BY CHECKER. WAITING FOR VERIFIER':
+        case 'CHECKED BY CHECKER. WAITING FOR VERIFIER.':
           return 'PENDING';
         default:
           return 'PENDING';
@@ -783,12 +790,16 @@ export default {
         case 'REIMBURSED':
         case 'REJECTED BY VERIFIER.':
         case 'REJECTED BY FINANCE':
+        case 'REQUESTER REVISION NEEDED BY VERIFIER.':
+        case 'REQUESTER REVISION NEEDED BY FINANCE.':
           return 'CHECKED';
         case 'REJECTED BY CHECKER.':
           return 'REJECTED';
         case 'RESUBMIT REQUESTED BY FINANCE':
         case 'RESUBMIT':
           return 'RESUBMIT';
+        case 'REQUESTER REVISION NEEDED BY CHECKER.':
+          return 'REVISED'
         case 'OPEN':
           return 'PENDING';
         default:

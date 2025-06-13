@@ -283,23 +283,23 @@
             </tr>
 
             <!-- VERIFIED Status Row -->
-            <tr v-if="(['VERIFIED', 'APPROVED', 'REIMBURSED'].includes(simplifiedVerifierStatus))"
+            <tr v-if="(['VERIFIED', 'APPROVED', 'REIMBURSED', 'REVISED'].includes(simplifiedVerifierStatus))"
               class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
                 <div
                   class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
                   :class="{
-                    'bg-amber-100/60 dark:bg-gray-800': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'PENDING' || simplifiedVerifierStatus === 'RESUBMIT',
+                    'bg-amber-100/60 dark:bg-gray-800': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'PENDING' || simplifiedVerifierStatus === 'REVISED',
                     'bg-red-100/60 dark:bg-gray-800': simplifiedVerifierStatus === 'REJECTED'
                   }">
                   <span :class="{
                     'h-1.5 w-1.5 rounded-full': true,
-                    'bg-amber-500': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'PENDING' || simplifiedVerifierStatus === 'RESUBMIT',
+                    'bg-amber-500': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'PENDING' || simplifiedVerifierStatus === 'REVISED',
                     'bg-red-500': simplifiedVerifierStatus === 'REJECTED'
                   }"></span>
                   <span :class="{
                     'text-xs font-normal': true,
-                    'text-amber-500': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'PENDING' || simplifiedVerifierStatus === 'RESUBMIT',
+                    'text-amber-500': simplifiedVerifierStatus === 'VERIFIED' || simplifiedVerifierStatus === 'PENDING' || simplifiedVerifierStatus === 'REVISED',
                     'text-red-500': simplifiedVerifierStatus === 'REJECTED'
                   }">
                     {{ simplifiedVerifierStatus }}
@@ -313,26 +313,26 @@
             </tr>
 
             <!-- APPROVED -->
-            <tr v-if="['APPROVED', 'REJECTED', 'REIMBURSED'].includes(simplifiedApproverFinStatus)" class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+            <tr v-if="['APPROVED', 'REJECTED', 'REIMBURSED', 'REVISED'].includes(simplifiedApproverFinStatus)" class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
                 <div class="mx-auto text-xs rounded-full py-2 my-1 w-fit inline-flex items-center px-3 gap-x-2"
                   :class="{
                     'bg-green-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'APPROVED',
-                    'bg-amber-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'RESUBMIT',
+                    'bg-amber-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'REVISED',
                     'bg-red-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'REJECTED',
                     'bg-slate-100/60 dark:bg-gray-800': simplifiedApproverFinStatus === 'PENDING'
                   }">
                   <span class="h-1.5 w-1.5 rounded-full"
                     :class="{
                       'bg-green-500': simplifiedApproverFinStatus === 'APPROVED',
-                      'bg-amber-500': simplifiedApproverFinStatus === 'RESUBMIT',
+                      'bg-amber-500': simplifiedApproverFinStatus === 'REVISED',
                       'bg-red-500': simplifiedApproverFinStatus === 'REJECTED',
                       'bg-slate-500': simplifiedApproverFinStatus === 'PENDING'
                     }"></span>
                   <span
                     :class="{
                       'text-green-500': simplifiedApproverFinStatus === 'APPROVED',
-                      'text-amber-500': simplifiedApproverFinStatus === 'RESUBMIT',
+                      'text-amber-500': simplifiedApproverFinStatus === 'REVISED',
                       'text-red-500': simplifiedApproverFinStatus === 'REJECTED',
                       'text-slate-500': simplifiedApproverFinStatus === 'PENDING'
                     }">
@@ -680,6 +680,7 @@ export default {
           return 'REIMBURSED';
         case 'OPEN':
         case 'VERIFIED. WAITING FOR APPROVER.':
+        case 'RESUBMITTED':
           return 'PENDING';
         default:
           return 'PENDING';
@@ -701,6 +702,7 @@ export default {
           return 'REVISED';
         case 'OPEN':
         case 'VERIFIED. WAITING FOR APPROVER.':
+        case 'RESUBMITTED':
           return 'PENDING';
         default:
           return 'PENDING';
@@ -721,6 +723,7 @@ export default {
           return 'REIMBURSED';
         case 'OPEN':
         case 'VERIFIED. WAITING FOR APPROVER.':
+        case 'RESUBMITTED':
           return 'PENDING';
         default:
           return this.adminStatus;
@@ -734,11 +737,11 @@ export default {
         case 'VERIFIED. WAITING FOR APPROVER.':
         case 'APPROVED BY FINANCE':
         case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
+        case 'REQUESTER REVISION NEEDED BY FINANCE.':
+        case 'REJECTED BY FINANCE':
         case 'REIMBURSED':
           return 'VERIFIED';
-        case 'REJECTED BY CHECKER':
         case 'REJECTED BY VERIFIER.':
-        case 'REJECTED BY FINANCE':
           return 'REJECTED';
         case 'RESUBMIT REQUESTED BY FINANCE':
         case 'RESUBMIT':
@@ -746,6 +749,8 @@ export default {
         case 'REQUESTER REVISION NEEDED BY VERIFIER.':
           return 'REVISED';
         case 'OPEN':
+        case 'RESUBMITTED':
+        case 'REJECTED BY CHECKER':
           return 'PENDING';
         default:
           return 'PENDING';
@@ -762,6 +767,8 @@ export default {
         case 'REIMBURSED':
         case 'REJECTED BY VERIFIER.':
         case 'REJECTED BY FINANCE':
+        case 'REQUESTER REVISION NEEDED BY VERIFIER.':
+        case 'REQUESTER REVISION NEEDED BY FINANCE.':
           return 'CHECKED';
         case 'REJECTED BY CHECKER':
           return 'REJECTED';
@@ -771,6 +778,7 @@ export default {
         case 'REQUESTER REVISION NEEDED BY CHECKER.':
           return 'REVISED';
         case 'OPEN':
+        case 'RESUBMITTED':
           return 'PENDING';
         default:
           return 'PENDING';
