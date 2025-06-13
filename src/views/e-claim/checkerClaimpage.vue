@@ -569,9 +569,9 @@
           <div class="relative max-w-4xl w-full p-4">
             <button @click="showImagePreview = false"
               class="absolute top-4 right-4 text-white text-2xl font-bold">
-              ×
+              x
             </button>
-            <img src="../../assets/images/pkt-blue-log-crop.jpg" alt="Preview"
+            <img :src="this.previewImage" alt="Preview"
               class="max-h-[80vh] mx-auto object-contain rounded-md shadow-xl" />
           </div>
         </div>
