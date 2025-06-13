@@ -325,6 +325,41 @@
               <td>{{ claimDetails.approver_department || '-' }}</td>
               <td class="">{{ claimDetails.approved_date || '-' }}</td>
             </tr>
+            
+            <tr v-if="['APPROVED','REJECTED', 'REIMBURSED', 'REVISED'].includes(simplifiedApproverStatus)"
+              class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+              <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                <div
+                  class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
+                  :class="{
+                    'bg-green-100/60 dark:bg-gray-800': simplifiedApproverStatus === 'APPROVED',
+                    'bg-amber-100/60 dark:bg-gray-800': simplifiedApproverStatus === 'REVISED',
+                    'bg-red-100/60 dark:bg-gray-800': simplifiedApproverStatus === 'REJECTED',
+                    'bg-slate-100/60 dark:bg-gray-800': simplifiedApproverStatus === 'PENDING',
+                  }">
+                  <span :class="{
+                    'h-1.5 w-1.5 rounded-full': true,
+                    'bg-green-500': simplifiedApproverStatus === 'APPROVED',
+                    'bg-amber-500': simplifiedApproverStatus === 'REVISED',
+                    'bg-red-500': simplifiedApproverStatus === 'REJECTED',
+                    'bg-slate-500': simplifiedApproverStatus === 'PENDING'
+                  }"></span>
+                  <span :class="{
+                    'text-xs font-normal': true,
+                    'text-green-500': simplifiedApproverStatus === 'APPROVED',
+                    'text-amber-500': simplifiedApproverStatus === 'REVISED',
+                    'text-red-500': simplifiedApproverStatus === 'REJECTED',
+                    'text-slate-500': simplifiedApproverStatus === 'PENDING'
+                  }">
+                    {{ simplifiedApproverStatus }}
+                  </span>
+                </div>
+              </th>
+              <td class="pl-6">{{ claimDetails.approver_name || '-' }}</td>
+              <td class="">{{ claimDetails.approver_designation || '-' }}</td>
+              <td>{{ claimDetails.approver_department || '-' }}</td>
+              <td class="">{{ claimDetails.approved_date || '-' }}</td>
+            </tr>
             <tr v-if="simplifiedFinanceStatus === 'REIMBURSED'"
              class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
@@ -719,15 +754,12 @@ export default {
       const status = this.adminStatus?.trim()?.toUpperCase();
       switch (status) {
         case 'APPROVED BY FINANCE':
-        case 'APPROVED BY HR & ADMIN':
         case 'APPROVED BY FINANCE. WAITING FOR REIMBURSED':
         case 'REIMBURSED':
           return 'APPROVED';
         case 'REJECTED BY FINANCE':
-        case 'REJECTED BY HR & ADMIN':
           return 'REJECTED';
         case 'RESUBMIT REQUESTED BY FINANCE':
-        case 'RESUBMIT REQUESTED BY HR & ADMIN':
           return 'RESUBMIT';
         case 'REQUESTER REVISION NEEDED BY FINANCE.':
           return 'REVISED'
@@ -749,6 +781,8 @@ export default {
           return 'RESUBMIT';
         case 'REIMBURSED':
           return 'REIMBURSED';
+        case 'REQUESTER REVISION NEEDED BY HR & ADMIN.':
+          return 'REVISED'
         case 'OPEN':
         case 'VERIFIED. WAITING FOR APPROVER.':
           return 'PENDING';
