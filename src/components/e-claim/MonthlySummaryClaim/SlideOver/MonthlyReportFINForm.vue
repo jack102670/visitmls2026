@@ -52,11 +52,11 @@
                       <button @click="nextStartMonth">➡️</button>
                     </div>
                     <div class="grid grid-cols-7 gap-2">
-                      <span v-for="day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" :key="day"
+                      <span v-for="day in ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']" :key="day"
                         class="text-center text-sm font-bold w-10 py-2">
                         {{ day }}
                       </span>
-                      <span v-for="n in startFirstDayOfMonth" :key="`empty-${n}`" class="text-transparent w-10 h-10">0</span>
+                      <span v-for="n in startFirstDayOfMonth" :key="`empty-${n}`" class="text-transparent w-10 h-10"></span>
                       <button v-for="day in startDaysInMonth" :key="day"
                         class="w-10 h-10 text-sm rounded-full hover:bg-gray-200 flex items-center justify-center"
                         :class="{
@@ -86,11 +86,11 @@
                       <button @click="nextEndMonth">➡️</button>
                     </div>
                     <div class="grid grid-cols-7 gap-2">
-                      <span v-for="day in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" :key="day"
-                        class="text-center text-sm font-bold">
+                      <span v-for="day in ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']" :key="day"
+                        class="text-center text-sm font-bold ">
                         {{ day }}
                       </span>
-                      <span v-for="n in endFirstDayOfMonth" :key="`empty-${n}`" class="text-transparent">0</span>
+                      <span v-for="n in endFirstDayOfMonth" :key="`empty-${n}`" class="text-transparent"></span>
                       <button v-for="day in endDaysInMonth" :key="day"
                         class="w-10 h-10 text-sm rounded-full hover:bg-gray-200 flex items-center justify-center"
                         :class="{
