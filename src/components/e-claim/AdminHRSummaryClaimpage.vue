@@ -156,11 +156,11 @@
             <h1 class="mt-4 text-xl font-semibold tab-title" v-if="detail && detail.length > 0">
               {{ detail[0].Tab_Title }}
             </h1>
-            <div class="border rounded-lg overflow-x-auto border-gray-400 dark:border-gray-600">
-              <table class="w-full">
+            <div class="border rounded-lg overflow-x-hidden border-gray-400 dark:border-gray-600">
+              <table class="w-full overflow-x-hidden">
                 <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md text-xs">
                   <th class="w-40">Remark</th>
-                  <th class="px-6 w-36 break-words text-xs"
+                  <th class="px-2 w-28 break-words text-xs"
                     v-for="key in Object.keys(detail[0]).filter(k => !['Tab_Title', 'unique_code', 'comment'].includes(k))"
                     :key="key">
                     {{ key.split('_').join(' ') }}
