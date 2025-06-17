@@ -790,7 +790,7 @@ export default {
         Bank_Account: result[i].bank_account,
         'Total_Fee(RM)': Number(result[i].claim_amount).toFixed(2),
         Attachments: result[i].files,
-        Tab_Title: 'Medical Bill',
+        Tab_Title: 'Medical Claim',
         unique_code: result[i].unique_code,
         comment: result[i].comment,
       };

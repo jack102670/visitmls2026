@@ -22,18 +22,18 @@
                 <div class="grid grid-cols-8 gap-2 w-full">
                     <div class="col-span-4">
                         <label for="claim_month" class="font-medium text-sm">Claim Month</label>
-                        <select id="claim_month" v-model="handphone.claim_month"
-                            class="mt-1 block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                            <option v-for="(month, index) in claimMonths" :key="index" :value="month">{{ month }}
-                            </option>
-                        </select>
+                        <input type="text" id="claim_month" v-model="handphone.claim_month" readonly
+                            class="mt-1 block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-gray-100 cursor-not-allowed">
+                            <!-- <option v-for="(month, index) in claimMonths" :key="index" :value="month">{{ month }} -->
+                            <!-- </option> -->
+                        <!-- </input> -->
                     </div>
                     <div class="col-span-4">
                         <label for="claim_year" class="font-medium text-sm">Claim Year</label>
-                        <select id="claim_year" v-model="handphone.claim_year"
-                            class="mt-1 block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                            <option v-for="year in claimYears" :key="year" :value="year">{{ year }}</option>
-                        </select>
+                        <input type="text" id="claim_year" v-model="handphone.claim_year" readonly
+                            class="mt-1 block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-gray-100 cursor-not-allowed">
+                            <!-- <option v-for="year in claimYears" :key="year" :value="year">{{ year }}</option> -->
+                        <!-- </input> -->
                     </div>
                     <div class="col-span-4">
                         <label for="bank_name" class="font-medium text-sm">Bank Name</label>
@@ -391,34 +391,46 @@ export default {
             // // Update originalClaimAmount so future edits work correctly
             // this.originalClaimAmount = newAmount;
 
-      async handleSubmit() {
-        const updatedClaim = {
-            reference_number: this.handphone.reference_number,
-            claim_month: this.handphone.claim_month,
-            claim_year: this.handphone.claim_year,
-            files: this.handphone.files || [],
-            bank_name: this.handphone.bank_name,
-            bank_holder: this.handphone.bank_holder,
-            bank_account: this.handphone.bank_account,
-            claim_amount: isNaN(parseFloat(this.handphone.claim_amount)) ? 0 : parseFloat(this.handphone.claim_amount),
-            ic_number: this.handphone.ic_number,
-            unique_code: this.uniqueCode,
-            requester_id: this.requesterId,
-            originalClaimAmount: this.originalClaimAmount,
-            // limit_amount: this.handphoneLimit,
-            // limit_outpatient: this.remaining_outpatient,
-            // limit_medicaldental: this.remaining_medicaldental,
+        async handleSubmit() {
+            const original = parseFloat(this.originalClaimAmount) || 0;
+            const updated = parseFloat(this.handphone.claim_amount) || 0;
 
-            tabTitle: "Handphone",
-            locationPurpose: this.handphone.claim_month||"-",
-            date: this.handphone.claim_year || "-",
-            total: this.handphone.claim_amount || 0
-        };
+            // Calculate restored limit before update
+            let currentLimit = parseFloat(localStorage.getItem("remaining_limit_amount")) || 0;
+            let restoredLimit = currentLimit + original;
+            let updatedLimit = Math.max(0, restoredLimit - updated);
 
-        console.log("Submitting Handphone payload:", updatedClaim);
-        this.$emit("update-claim", updatedClaim);
-        this.closeSlideOver();
-    },
+            // Save the updated limit
+            localStorage.setItem("remaining_limit_amount", updatedLimit.toString());
+
+            const updatedClaim = {
+                reference_number: this.handphone.reference_number,
+                claim_month: this.handphone.claim_month,
+                claim_year: this.handphone.claim_year,
+                // files: this.handphone.files || [],
+                bank_name: this.handphone.bank_name,
+                bank_holder: this.handphone.bank_holder,
+                bank_account: this.handphone.bank_account,
+                claim_amount: updated,
+                ic_number: this.handphone.ic_number,
+                unique_code: this.uniqueCode,
+                requester_id: this.requesterId,
+                originalClaimAmount: original,
+                files: this.handphone.files || [],
+                filesToDelete: this.filesToDelete,
+                newFiles: this.newFiles,
+
+                tabTitle: "Handphone",
+                locationPurpose: this.handphone.claim_month || "-",
+                date: this.handphone.claim_year || "-",
+                total: updated || 0
+            };
+
+            console.log("Submitting Handphone payload:", updatedClaim);
+            this.$emit("update-claim", updatedClaim);
+            this.closeSlideOver();
+        },
+
         //     async handleSubmit() {
         //         try {
         //     // Delete files marked for deletion

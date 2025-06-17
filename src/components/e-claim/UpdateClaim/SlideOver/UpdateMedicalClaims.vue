@@ -64,9 +64,14 @@
                         </div>
                     </div>
                     </div>
-                    <div class="col-span-8" v-if="medical.medical_category === 'Outpatient' && medical.clinic_selection === 'Other Clinic'">
+                    <div class="col-span-4" v-if="medical.medical_category === 'Outpatient' && medical.clinic_selection === 'Other Clinic'">
                         <label for="clinic_name" class="font-medium text-sm">Clinic Name</label>
                         <input type="text" id="clinic_name" v-model="medical.clinic_name"
+                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                     <div v-if="medical.medical_category === 'Outpatient' && medical.clinic_selection === 'Other Clinic'" class="col-span-4">
+                        <label for="reason_different" class="font-medium text-sm">reason difference</label>
+                        <input type="text" id="reason_different" v-model="medical.reason_different"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
                     <div class="col-span-8">
@@ -98,11 +103,6 @@
                             Selected file: {{ selectedFileName }}
                         </span>
                     </div>
-                    </div>
-                    <div v-if="medical.medical_category === 'Outpatient'" class="col-span-8">
-                        <label for="reason_different" class="font-medium text-sm">reason difference</label>
-                        <input type="text" id="reason_different" v-model="medical.reason_different"
-                            class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
                     <div class="col-span-4">
                         <label for="bank_name" class="font-medium text-sm">Bank Name</label>
@@ -607,30 +607,58 @@ export default {
         // },
 
         async handleSubmit() {
+            const category = this.medical.medical_category;
+            const original = parseFloat(this.originalClaimAmount) || 0;
+            const updated = parseFloat(this.medical.claim_amount) || 0;
+
+            // Identify which limit to update
+            let limitKey = '';
+            let initialKey = '';
+            if (category === "Outpatient") {
+                limitKey = "remaining_limit_outpatient";
+                initialKey = "initial_limit_outpatient";
+            } else {
+                limitKey = "remaining_limit_medicaldental";
+                initialKey = "initial_limit_medicaldental";
+            }
+
+            // Restore original claim, subtract new amount, and update localStorage
+            if (limitKey) {
+                let currentLimit = parseFloat(localStorage.getItem(limitKey)) || 0;
+                let restoredLimit = currentLimit + original;
+                let updatedLimit = Math.max(0, restoredLimit - updated);
+                localStorage.setItem(limitKey, updatedLimit.toString());
+                localStorage.setItem(initialKey, updatedLimit.toString()); // Optional, in case you reset all limits later
+                console.log(`Updated ${limitKey} from ${currentLimit} to ${updatedLimit}`);
+            }
+
             const updatedClaim = {
                 date_leave_taken: this.formattedDate,
-                reason: this.medical.medical_category === 'Outpatient' ? this.medical.reason : '',
-                medical_category: this.medical.medical_category,
-                clinic_selection: this.medical.medical_category === 'Outpatient' ? this.medical.clinic_selection : '',
-                clinic_name: this.medical.medical_category === 'Outpatient' && this.medical.clinic_selection === 'Other Clinic'? this.medical.clinic_name: '',
-                reason_different: this.medical.medical_category === 'Outpatient' ? this.medical.reason_different : '',
+                reason: category === 'Outpatient' ? this.medical.reason : '-',
+                medical_category: category,
+                clinic_selection: category === 'Outpatient' ? this.medical.clinic_selection : '-',
+                clinic_name: category === 'Outpatient' && this.medical.clinic_selection === 'Other Clinic'? this.medical.clinic_name: '-',
+                reason_different: this.category === 'Outpatient' ? this.medical.reason_different : '-',
                 bank_name: this.medical.bank_name,
                 bank_holder: this.medical.bank_holder,
                 bank_account: this.medical.bank_account,
-                claim_amount: isNaN(parseFloat(this.medical.claim_amount)) ? 0 : parseFloat(this.medical.claim_amount),
+                claim_amount: updated,
                 ic_number: this.medical.ic_number,
                 unique_code: this.uniqueCode,
                 reference_number: this.medical.reference_number,
                 requester_id: this.requesterId,
-                originalClaimAmount: this.originalClaimAmount,
+                originalClaimAmount: original,
+                files: this.medical.files || [],
+                filesToDelete: this.filesToDelete,
+                newFiles: this.newFiles,
 
-                tabTitle: "Medical Leave",
+                tabTitle: "Medical Claim",
                 locationPurpose: "-",
                 date: this.medical.date_leave_taken || "-",
-                total: this.medical.claim_amount || 0
+                total: updated || 0
             };
 
-            console.log("Submitting Medical updated claim:", updatedClaim);
+            console.log("Submitting updated medical claim:", updatedClaim);
             this.$emit("update-claim", updatedClaim);
             this.closeSlideOver();
         },

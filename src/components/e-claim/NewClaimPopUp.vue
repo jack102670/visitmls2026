@@ -637,25 +637,47 @@ filteredCostcenter() {
         console.error(`Error fetching departments: ${error}`);
       }
     },
+    // generateSerialNumber() {
+    //   let names = this.formData.reportName.split(" ");
+    //   let shortform = [];
+
+    //   for (let i = 0; i < names.length; i++) {
+    //     shortform[i] = names[i][0];
+    //   }
+
+    //   let datetime = moment(new Date()).format("YYYY-MM-");
+    //   let sn =
+    //     shortform.join("").toString() +
+    //     "-" +
+    //     this.formData.reportType +
+    //     "-" +
+    //     datetime;
+    //   // console.log(sn);
+    //   this.formData.uniqueCode = sn;
+    //   return sn;
+    // },
+
     generateSerialNumber() {
-      let names = this.formData.reportName.split(" ");
-      let shortform = [];
+    // Define custom shortcodes for each report type
+    const reportTypeMap = {
+      HR: "MHR",
+      Finance: "TESO"
+    };
 
-      for (let i = 0; i < names.length; i++) {
-        shortform[i] = names[i][0];
-      }
+    // Get the mapped report type or fallback to original
+    const typeCode = reportTypeMap[this.formData.reportType] || this.formData.reportType;
 
-      let datetime = moment(new Date()).format("YYYY-MM-");
-      let sn =
-        shortform.join("").toString() +
-        "-" +
-        this.formData.reportType +
-        "-" +
-        datetime;
-      // console.log(sn);
-      this.formData.uniqueCode = sn;
-      return sn;
-    },
+    // Generate date portion
+    let datetime = moment(new Date()).format("YYYY-MM-");
+
+    // Build the serial number
+    let sn = typeCode + "-" +
+        this.formData.reportType + "-" + datetime;
+
+    // Save and return
+    this.formData.uniqueCode = sn;
+    return sn;
+  },
 
     submitForm(page) {
   this.active += page;

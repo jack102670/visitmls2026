@@ -411,7 +411,7 @@
                       </div>
                       <div>
                         <input type="checkbox" name="ml" id="ml" v-model="formAccess.medical" />
-                        <label class="ml-1" for="ml">Medical Leaves</label>
+                        <label class="ml-1" for="ml">Medical Claim</label>
                       </div>
                       <div>
                         <input type="checkbox" name="hp" id="hp" v-model="formAccess.handphone" />
