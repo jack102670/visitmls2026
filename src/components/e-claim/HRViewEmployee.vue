@@ -452,6 +452,18 @@
                 </div>
               </div>
 
+              <!-- Notification -->
+        <div v-if="notification" class="fixed left-0 top-0 flex justify-center items-center z-50 w-screen h-screen">
+          <div class="bg-gray-100 dark:bg-gray-500 px-10 py-3 rounded-full z-50 flex justify-center items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="red" class="w-8 h-8 mr-2">
+  <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+
+
+            <h1>Please fill in required information</h1>
+          </div>
+        </div>
+
               <div class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
                 v-if="loading">
                 <div class="absolute w-screen h-screen bg-gray-900 opacity-30"></div>
@@ -494,6 +506,8 @@ export default {
       edit: false,
       confirm: false,
       employeeCache: null,
+
+      notification: false,
 
       userApplications: [],
       searchQuery: '',
@@ -811,10 +825,18 @@ export default {
    //   console.log('form list', this.form);
       if (!this.form.reportingId) {
     //    console.log('Reporting ID is required');
+        this.notification = true;
+        setTimeout(()=> {
+          this.notification = false;
+        }, 1500);
         return;
       }
       if (!this.form.employeeId) {
      //   console.log('Employee ID is required');
+     this.notification = true;
+        setTimeout(()=> {
+          this.notification = false;
+        }, 1500);
         return;
       }
       this.loadingText = 'Uploading';
