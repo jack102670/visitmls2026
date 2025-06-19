@@ -15,7 +15,7 @@
           (tab.title === 'Overseas Travelling' &&
             profilestatus.overseas_access === '1') ||
           (tab.title === 'Entertainment' && profilestatus.ent_access === '1'))
-        " :key="index" @click="activeTab = index" :class="[
+        " :key="index" @click="TabClickAction(index)" :class="[
           'flex-1 px-4 py-1 text-md mr-2 rounded-3xl focus:outline-none border border-gray-300',
           {
             'bg-[#160959] text-white': activeTab === index,
@@ -412,6 +412,12 @@
                                   </div>
                                 </template>
 
+                                <template v-else-if="field.type === 'integer'">
+                              <input v-model="field.value" :required="field.required" :id="field.id" type="number"
+                                :placeholder="field.placeholder" step="1"
+                                class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+                            </template>
+
                                 <template v-else>
                                   <input v-model="field.value" :required="field.required"
                                     :disabled="(tab.title === 'Handphone Bill Reimbursement' && isFormDisabled) || field.disabled"
@@ -560,6 +566,12 @@
                                       " :accepted-file-types="field.acceptedFileTypes" :max-file-size="field.maxFileSize"
                                   :allow-multiple="field.allowMultiple" />
                               </div>
+                            </template>
+
+                            <template v-else-if="field.type === 'integer'">
+                              <input v-model="field.value" :required="field.required" :id="field.id" type="number"
+                                :placeholder="field.placeholder" step="1"
+                                class="block w-full px-4 py-2 mt-1 mb-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
                             </template>
 
                             <template v-else>
@@ -1644,7 +1656,7 @@ export default {
              {
               id: "HotelNightLT",
               label: "Number of Nights",
-              type: "number",
+              type: "integer",
               value: "",
               required: true,
               hidden: false,
@@ -1653,7 +1665,7 @@ export default {
              {
               id: "HotelRoomLT",
               label: "Number of Rooms",
-              type: "number",
+              type: "integer",
               value: "",
               required: true,
               hidden: false,
@@ -2426,7 +2438,7 @@ export default {
              {
               id: "HotelNightOT",
               label: "Number of Nights",
-              type: "number",
+              type: "integer",
               value: "",
               required: true,
               hidden: false,
@@ -2435,7 +2447,7 @@ export default {
              {
               id: "HotelRoomOT",
               label: "Number of Rooms",
-              type: "number",
+              type: "integer",
               value: "",
               required: true,
               hidden: false,
@@ -5103,6 +5115,78 @@ export default {
         alert("Please fill all required fields before submitting.");
       }
     },
+
+    TabClickAction(index) {
+      this.activeTab = index;
+      this.tabs.forEach((tab) => {
+        tab.fields.forEach((field) => {
+          if (!["LimitedAmountHR", "LimitedAmountML", "BankNameHR", "BankNameML",
+            "AccBankNumberHR", "AccBankNumberML", "AccHolderNameHR", "AccHolderNameML", "icNumber"]
+            .includes(field.id)) {
+            field.value = null;
+          }
+  
+          if (field.type === "file" ) {
+            field.value = []; // Clear file field value
+            if (this.$refs.pond) {
+              this.$refs.pond.forEach((pond) => {
+                if (pond && typeof pond.removeFiles === "function") {
+                  pond.removeFiles(); // Clear FilePond files
+                }
+              });
+            }
+          }
+        });
+      })
+
+      this.entertainmentTabs.forEach((tab) => {
+          tab.fields.forEach((field) => {
+            field.value = null;
+            if (field.type === "file") {
+              field.value = []; // Clear file field value
+              if (this.$refs.pond) {
+                this.$refs.pond.forEach((pond) => {
+                  if (pond && typeof pond.removeFiles === "function") {
+                    pond.removeFiles(); // Clear FilePond files
+                  }
+                });
+              }
+            }
+          });
+        });
+
+        this.staffRefreshmentTabs.forEach((tab) => {
+          tab.fields.forEach((field) => {
+            field.value = null;
+            if (field.type === "file") {
+              field.value = []; // Clear file field value
+              if (this.$refs.pond) {
+                this.$refs.pond.forEach((pond) => {
+                  if (pond && typeof pond.removeFiles === "function") {
+                    pond.removeFiles(); // Clear FilePond files
+                  }
+                });
+              }
+            }
+          });
+        });
+
+        this.overseasTabs.forEach((tab) => {
+          tab.fields.forEach((field) => {
+            field.value = null;
+            if (field.type === "file") {
+              field.value = []; // Clear file field value
+              if (this.$refs.pond) {
+                this.$refs.pond.forEach((pond) => {
+                  if (pond && typeof pond.removeFiles === "function") {
+                    pond.removeFiles(); // Clear FilePond files
+                  }
+                });
+              }
+            }
+          });
+        });
+    }
   },
 };
 </script>
