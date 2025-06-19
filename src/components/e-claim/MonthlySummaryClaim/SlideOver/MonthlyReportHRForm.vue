@@ -80,6 +80,19 @@
                   </div>
                 </div>
               </div>
+              <!-- multiple branch -->
+              <div class="flex flex-wrap gap-2 mt-2">
+                <span
+                  v-for="(dept, index) in chosenBranch"
+                  :key="dept"
+                  class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs flex items-center"
+                >
+                  {{ dept }}
+                  <button @click="chosenBranch.splice(index, 1)" class="ml-1 text-blue-500 hover:text-red-600">
+                    &times;
+                  </button>
+                </span>
+              </div>
             </div>
 
             <!-- Date Pickers -->
@@ -193,7 +206,8 @@ export default {
       chosenCompany: "",
       // chosenDepartment: "",
       chosenDepartments: [],
-      chosenBranch: "",
+      // chosenBranch: "",
+      chosenBranch: [],
       isCompanyOpen: false,
       isDepartmentOpen: false,
       isBranchOpen: false,
@@ -258,7 +272,7 @@ export default {
   },
   methods: {
     triggerDownload() {
-      if (!this.companySearch || !this.startDate || !this.endDate || !this.chosenDepartments.length || !this.branchSearch) {
+      if (!this.companySearch || !this.startDate || !this.endDate || !this.chosenDepartments.length || !this.chosenBranch.length) {
         Swal.fire({ icon: 'warning', title: 'Missing Info', text: 'Please fill in all fields.' });
         return;
       }
@@ -267,7 +281,8 @@ export default {
         company: this.companySearch,
         startDate: this.formattedStartDate,
         endDate: this.formattedEndDate,
-        branch: this.branchSearch,
+        // branch: this.branchSearch,
+        branch: this.chosenBranch,
         // department: this.departmentSearch,
         department: this.chosenDepartments,
       });
@@ -275,7 +290,8 @@ export default {
         company: this.companySearch,
         startDate: this.formattedStartDate,
         endDate: this.formattedEndDate,
-        branch: this.branchSearch,
+        // branch: this.branchSearch,
+        branch: this.chosenBranch,
         // department: this.departmentSearch,
         department: this.chosenDepartments,
       });
@@ -344,8 +360,7 @@ export default {
     //   this.chosenDepartment = department;
     //   this.$emit("update:chosenDepartment", department);
     //   this.isDepartmentOpen = false;
-    // },
-
+    // },\
     selectDepartment(department) {
       if (!this.chosenDepartments.includes(department)) {
         this.chosenDepartments.push(department);
@@ -354,11 +369,18 @@ export default {
     },
 
     selectBranch(branch) {
-      this.branchSearch = branch;
-      this.chosenBranch = branch;
-      this.$emit("update:chosenBranch", branch);
-      this.isBranchOpen = false;
+      if (!this.chosenBranch.includes(branch)) {
+        this.chosenBranch.push(branch);
+      }
+      this.branchSearch = "";
     },
+
+    // selectBranch(branch) {
+    //   this.branchSearch = branch;
+    //   this.chosenBranch = branch;
+    //   this.$emit("update:chosenBranch", branch);
+    //   this.isBranchOpen = false;
+    // },
     resetForm() {
       this.companySearch = "";
       this.departmentSearch = "";

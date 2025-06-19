@@ -2759,6 +2759,15 @@ export default {
   },
 
   computed: {
+    isClaimsAmountHRDisabled() {
+      // Find the active tab for Handphone Bill Reimbursement
+      const tab = this.tabs.find(tab => tab.title === "Handphone Bill Reimbursement");
+      if (!tab) return false;
+      const limitField = tab.fields.find(field => field.id === "LimitedAmountHR");
+      const limit = parseFloat(limitField?.value);
+      return !limit || limit === 0; // disables if null, undefined, 0, or NaN
+    },
+
     totalMealAllowanceOTplusotherExpenses() {
       let otherExpensesTotal = this.otherExpenses.reduce((total, expense) => {
         const amount = parseFloat(expense.amount) || 0;
@@ -3185,6 +3194,39 @@ export default {
             
           }
 
+          // if (tab.title === "Handphone Bill Reimbursement") {
+          //   const limitedAmountField = tab.fields.find(
+          //     (field) => field.id === "LimitedAmountHR"
+          //   );
+          //   const claimsAmountField = tab.fields.find(
+          //     (field) => field.id === "ClaimsAmountHR"
+          //   );
+
+          //   if (limitedAmountField && claimsAmountField) {
+          //     this.$watch(
+          //       () => limitedAmountField.value,
+          //       (newValue) => {
+          //         if (
+          //           parseFloat(claimsAmountField.value) > parseFloat(newValue)
+          //         ) {
+          //           claimsAmountField.value = newValue;
+          //         }
+          //       }
+          //     );
+
+          //     this.$watch(
+          //       () => claimsAmountField.value,
+          //       (newValue) => {
+          //         if (
+          //           parseFloat(newValue) > parseFloat(limitedAmountField.value)
+          //         ) {
+          //           claimsAmountField.value = limitedAmountField.value;
+          //         }
+          //       }
+          //     );
+          //   }
+          // }
+
           if (tab.title === "Handphone Bill Reimbursement") {
             const limitedAmountField = tab.fields.find(
               (field) => field.id === "LimitedAmountHR"
@@ -3197,10 +3239,16 @@ export default {
               this.$watch(
                 () => limitedAmountField.value,
                 (newValue) => {
-                  if (
-                    parseFloat(claimsAmountField.value) > parseFloat(newValue)
-                  ) {
-                    claimsAmountField.value = newValue;
+                  const limit = parseFloat(newValue);
+                  const claim = parseFloat(claimsAmountField.value);
+
+                  // Prevent updates when limit is not a valid number
+                  if (!isNaN(limit) && limit > 0) {
+                    if (claim > limit) {
+                      claimsAmountField.value = limit.toString();
+                    }
+                  } else {
+                    claimsAmountField.value = ''; // Allow user input but reset if invalid limit
                   }
                 }
               );
@@ -3208,15 +3256,22 @@ export default {
               this.$watch(
                 () => claimsAmountField.value,
                 (newValue) => {
-                  if (
-                    parseFloat(newValue) > parseFloat(limitedAmountField.value)
-                  ) {
-                    claimsAmountField.value = limitedAmountField.value;
+                  const claim = parseFloat(newValue);
+                  const limit = parseFloat(limitedAmountField.value);
+
+                  if (!isNaN(limit) && limit > 0) {
+                    if (claim > limit) {
+                      claimsAmountField.value = limit.toString();
+                    }
+                  } else {
+                    // Reset claim if limit is not valid
+                    claimsAmountField.value = '';
                   }
                 }
               );
             }
-          }
+            }
+
         });
       },
       deep: true,

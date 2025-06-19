@@ -3,7 +3,7 @@
     class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 dark:text-white p-4 sm:ml-64"
     id="summaryPrint"
   >
-    <div class="container mx-auto text-xs lg:text-base" id="summaryPrint">
+    <div class="container mx-auto text-xs lg:text-base">
       <div
         class="print-div relative overflow-auto bg-[#f7fbff] dark:bg-gray-900 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
@@ -318,7 +318,8 @@ export default {
       },
 
       // option for dropdown
-      fetchOptions: [],
+      fetchOptions: [], //getUserAD
+      positionOptions: [], //getallEmployee
       Branches: [],
       Company: [],
       filteredDepartments: [],
@@ -357,6 +358,7 @@ export default {
       const registerData = {
         company_name: this.form.company,
         limit_amount: this.form.limit,
+        limit_amount_max: this.form.limit,
         userNameId: this.fetchOptions.filter(
           (item) =>
             item.displayName === this.form.userId &&
@@ -439,6 +441,11 @@ export default {
           console.error('There was an error!', error);
         });
       this.getAllPositions();
+      console.log('fetchOptions:', this.fetchOptions);
+      console.log('Branches:', this.Branches);
+      console.log('Departments:', this.AllDepartments);
+      console.log('Company:', this.Company);
+
     },
     extractBranches() {
       const branches = this.fetchOptions.map((item) => item.branch);
@@ -451,10 +458,11 @@ export default {
       this.AllDepartments = uniqueDepartments;
     },
     async getAllPositions() {
+
       try {
         const response = await axios.get('http://172.28.28.116:6239/api/User/GetAllEmployees');
-        this.fetchOptions = response.data.result || [];
-        const position = this.fetchOptions.map((item) => item.position_title);
+        this.positionOptions = response.data.result || [];
+        const position = this.positionOptions.map((item) => item.position_title);
         const uniquePosition = [...new Set(position)].sort((a, b) => a.localeCompare(b));
         this.AllPositions = uniquePosition;
 

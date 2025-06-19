@@ -60,6 +60,7 @@
     <div class="flex flex-col justify-between flex-1">
       <nav>
         <router-link :to="{ name: 'UserFirstTimeLogin' }"
+          :class="{ 'pointer-events-none opacity-40': !hasProfile }"
           class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400">
           <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="24" cy="11" r="7" fill="transparent" stroke="currentColor" stroke-width="4"
@@ -236,6 +237,14 @@
         </a>
       </nav>
     </div>
+    <!-- <div
+      v-if="!hasProfile"
+      class="absolute inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center text-white text-center pointer-events-auto"
+    >
+      <p class="text-lg font-semibold px-6">
+        You don't have a user profile yet. Please contact the HR administrator.
+      </p>
+    </div> -->
   </aside>
   <!-- <div v-if="showWarningModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
     <div class="bg-white p-6 rounded shadow-lg text-center w-80">
@@ -278,6 +287,8 @@ export default {
       showLogOutButton: true,
       showLoadingButton: false,
       controlView: null,
+
+      hasProfile: true,
       // inactivityTimeout: null,
       // warningTimeout: null,
       // warningCountdown: 30,
@@ -346,16 +357,36 @@ export default {
   //   }
   // },
   methods: {
+    // async checkuser() {
+    //   const username_id = this.userDetails.userId;
+    //   try {
+    //     const response = await axios.get(
+    //       ` http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`
+    //     );
+    //     this.userData = response.data.result[0];
+    //   //  console.log('User status:', this.userData);
+    //   } catch (error) {
+    //     console.error('There was an error fetching the user status:', error);
+    //   }
+    // },
+
     async checkuser() {
       const username_id = this.userDetails.userId;
       try {
         const response = await axios.get(
-          ` http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`
+          `http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`
         );
-        this.userData = response.data.result[0];
-      //  console.log('User status:', this.userData);
+        const result = response.data.result;
+        if (result && result.length > 0) {
+          this.userData = result[0];
+          this.hasProfile = true;
+        } else {
+          this.hasProfile = false;
+          alert("You don't have a user profile yet. Please contact the HR administrator.");
+        }
       } catch (error) {
         console.error('There was an error fetching the user status:', error);
+        this.hasProfile = false;
       }
     },
 

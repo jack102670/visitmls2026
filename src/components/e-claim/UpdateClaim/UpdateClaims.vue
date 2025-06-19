@@ -61,7 +61,7 @@
             </div>
             <div class="mt-6 overflow-x-auto">
                 <div class="py-2 align-middle">
-                    <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                    <div class="overflow-visible border border-gray-200 dark:border-gray-700 md:rounded-lg">
                         <table class=" divide-y divide-gray-200 dark:divide-gray-700 min-w-full">
                             <thead class="bg-slate-200 dark:bg-gray-800 text-gray-900">
                                 <tr>
@@ -123,26 +123,38 @@
                                     </td>
                                     <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2">
                                         <!-- Edit Button -->
-                                        <a @click="toggleSlideOver(index)"
-                                            class="bg-green-600 hover:bg-green-700 text-white transition duration-300 px-2 py-1 rounded-md cursor-pointer inline-flex items-center justify-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M11 4h2m2 0h.01M13 4l7 7-9 9H4v-9l9-9z" />
-                                            </svg>
-                                        </a>
-
+                                        <div class="relative group inline-block">
+                                            <a @click="toggleSlideOver(index)"
+                                                class="bg-green-600 hover:bg-green-700 text-white transition duration-300 px-2 py-1 rounded-md cursor-pointer inline-flex items-center justify-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M11 4h2m2 0h.01M13 4l7 7-9 9H4v-9l9-9z" />
+                                                </svg>
+                                            </a>
+                                            <!-- Tooltip -->
+                                            <div
+                                                class="absolute top-full mt-1 left-1/2 transform -translate-x-1/2 hidden group-hover:block w-max px-2 py-1 bg-white border border-gray-300 rounded shadow-lg text-gray-700 text-sm z-50">
+                                                Edit
+                                            </div>
+                                        </div>
+                                        
                                         <!-- Delete Button -->
-                                        <a @click="confirmDelete(claim)"
-                                            class="bg-red-600 hover:bg-red-700 text-white transition duration-300 px-2 py-1 rounded-md cursor-pointer inline-flex items-center justify-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                            stroke="currentColor" class="w-4 h-4">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
-                                            </svg>
+                                        <div class="relative group inline-block">
+                                            <a @click="confirmDelete(claim)"
+                                                class="bg-red-600 hover:bg-red-700 text-white transition duration-300 px-2 py-1 rounded-md cursor-pointer inline-flex items-center justify-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                                    stroke="currentColor" class="w-4 h-4">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L6.26 5.79m8.788 0H6.26m12.804 0a2.25 2.25 0 00-2.73-1.684M6.26 5.79a2.25 2.25 0 002.73 1.684m0 0a2.25 2.25 0 00-2.73 1.684m0 0a2.25 2.25 0 012.73 1.684" />
+                                                </svg>
+                                            </a>
+                                            <!-- Tooltip -->
+                                            <div
+                                                class="absolute top-full mt-1 left-1/2 transform -translate-x-1/2 hidden group-hover:block w-max px-2 py-1 bg-white border border-gray-300 rounded shadow-lg text-gray-700 text-sm z-50">
+                                                Delete
+                                            </div>
+                                        </div>
 
-                                            <!-- class="text-red-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none"> -->
-                    
-                                        </a>
                                     </td>
                                 </tr>
                             </tbody>
