@@ -179,8 +179,15 @@
                           <span v-if="claim.combinetotal">RM {{ claim.combinetotal }}</span>
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2">
-                          <button @click="deleteForm(index)"
+                          <button @click="editForm(index)"
                             class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-yellow-500 focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                            </svg>
+
+                          </button>
+                          <button @click="deleteForm(index)"
+                            class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-5 h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -196,7 +203,7 @@
             </div>
           </div>
         </section>
-        <tab class="mt-10" @formSubmitted="addClaim" :type="claims[0].reportType" 
+        <tab class="mt-10" @formSubmitted="addClaim" :type="claims[0].reportType" :itemData="editingItem" @quitEdit="quitEditing" @saveEdit="saveEditing"
           ></tab>
       </div>
       <div v-if="isClickModal"
@@ -1475,6 +1482,8 @@ export default {
       },
       loading: false,
       loadingText: "",
+
+      editingItem: {},
     };
   },
 
@@ -2664,10 +2673,31 @@ export default {
       this.isClickModal = false; // Close the modal
     },
 
+    editForm(index) {
+      this.editingItem = this.dataclaims[index];
+      this.editingIndex = index;
+    },
+
+    quitEditing() {
+      this.editingItem = {};
+    },
+
     async addClaim(formData) {
       try {
         // Simply add the validated form data to dataclaims array
         this.dataclaims.push(formData);
+        // console.log("Data Claims added:", this.dataclaims);
+      } catch(error) {
+        console.error("error", error);
+        throw error;
+      }
+    },
+
+    async saveEditing(formData){
+      try {
+        // Simply add the validated form data to dataclaims array
+        
+        this.dataclaims[this.editingIndex] = formData;
         // console.log("Data Claims added:", this.dataclaims);
       } catch(error) {
         console.error("error", error);

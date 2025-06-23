@@ -178,7 +178,7 @@
                                       'Handphone Bill Reimbursement' &&
                                       isFormDisabled) ||
                                       field.disabled
-                                      " :required="field.required" ref="pond" label-idle="Drop files here..." @addfile="(error, file) =>
+                                      " :required="field.required" :ref="`pond-${field.id}`" label-idle="Drop files here..." @addfile="(error, file) =>
                                         handleAddFile(error, file, field)
                                         " @removefile="(error, file) =>
                                           handleRemoveFile(error, file, field)
@@ -193,7 +193,7 @@
                                       'Handphone Bill Reimbursement' &&
                                       isFormDisabled) ||
                                       field.disabled
-                                      " :required="field.required" ref="pond" label-idle="Drop files here..." @addfile="(error, file) =>
+                                      " :required="field.required" :ref="`pond-${field.id}`" label-idle="Drop files here..." @addfile="(error, file) =>
                                         handleAddFile(error, file, field)
                                         " @removefile="(error, file) =>
                                           handleRemoveFile(error, file, field)
@@ -208,7 +208,7 @@
                                       'Handphone Bill Reimbursement' &&
                                       isFormDisabled) ||
                                       field.disabled
-                                      " :required="isFieldRequired(field.id)" ref="pond"
+                                      " :required="isFieldRequired(field.id)" :ref="`pond-${field.id}`"
                                       label-idle="Drop files here..." @addfile="(error, file) =>
                                         handleAddFile(error, file, field)
                                         " @removefile="(error, file) =>
@@ -224,7 +224,7 @@
                                       'Handphone Bill Reimbursement' &&
                                       isFormDisabled) ||
                                       field.disabled
-                                      " :required="field.required" ref="pond" label-idle="Drop files here..." @addfile="(error, file) =>
+                                      " :required="field.required" :ref="`pond-${field.id}`" label-idle="Drop files here..." @addfile="(error, file) =>
                                         handleAddFile(error, file, field)
                                         " @removefile="(error, file) =>
                                           handleRemoveFile(error, file, field)
@@ -239,7 +239,7 @@
                                       'Handphone Bill Reimbursement' &&
                                       isFormDisabled) ||
                                       field.disabled
-                                      " :required="field.required" ref="pond" label-idle="Drop files here..." @addfile="(error, file) =>
+                                      " :required="field.required" :ref="`pond-${field.id}`" label-idle="Drop files here..." @addfile="(error, file) =>
                                         handleAddFile(error, file, field)
                                         " @removefile="(error, file) =>
                                           handleRemoveFile(error, file, field)
@@ -291,7 +291,7 @@
                                       'Handphone Bill Reimbursement' &&
                                       isFormDisabled) ||
                                       field.disabled
-                                      " :required="field.required" ref="pond" label-idle="Drop files here..." @addfile="(error, file) =>
+                                      " :required="field.required" :ref="`pond-${field.id}`" label-idle="Drop files here..." @addfile="(error, file) =>
                                         handleAddFile(error, file, field)
                                         " @removefile="(error, file) =>
                                           handleRemoveFile(error, file, field)
@@ -464,7 +464,7 @@
                 </div>
                 <div class="mt-4 mr-6 flex flex-row-reverse">
                   <div class="flex items-center justify-between">
-                    <button :class="{
+                    <button v-if="!edit" :class="{
                       'bg-blue-500 hover:bg-blue-700': !isSaveButtonDisabled,
                       '': isSaveButtonDisabled || isFormDisabled,
                       'text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline': true,
@@ -477,6 +477,12 @@
                         ">
                       Save
                     </button>
+                    <button v-else-if="edit" type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Edit
+                      </button>
+
+                    
                   </div>
                 </div>
               </div>
@@ -559,7 +565,7 @@
 
                             <template v-else-if="field.type === 'file'">
                               <div class="pt-3">
-                                <file-pond :name="field.id" :required="field.required" ref="pond"
+                                <file-pond :name="field.id" :required="field.required" :ref="`pond-${field.id}`"
                                   label-idle="Drop files here..." @addfile="(error, file) => handleAddFile(error, file, field)
                                     " @removefile="(error, file) =>
                                       handleRemoveFile(error, file, field)
@@ -691,7 +697,7 @@
                             <label class="block text-sm font-medium text-gray-700" for="expenseAttachment">Attachment(s)
                               (png,
                               jpeg, pdf, or xlsx) <span class="text-red-500">*</span></label>
-                            <file-pond ref="pond" name="files" label-idle="Drop files here..." @addfile="(error, file) =>
+                            <file-pond :ref="`pond-${field.id}`" name="files" label-idle="Drop files here..." @addfile="(error, file) =>
                               handleAddFileOT(error, file, newExpense.files)
                               " @removefile="(error, file) =>
                                 handleRemoveFileOT(
@@ -753,7 +759,7 @@
                             <label class="block text-sm font-medium text-gray-700" for="expenseAttachment">Attachment(s)
                               (png,
                               jpeg, pdf, or xlsx)</label>
-                            <file-pond ref="pond" name="files" label-idle="Drop files here..." @addfile="(error, file) =>
+                            <file-pond :ref="`pond-${field.id}`" name="files" label-idle="Drop files here..." @addfile="(error, file) =>
                               handleAddFileOT(error, file, newExpense.files)
                               " @removefile="(error, file) =>
                                 handleRemoveFileOT(
@@ -916,10 +922,15 @@
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                         Next
                       </button>
-                      <button v-else-if="subTab.title === 'Other Expenses'" type="submit"
+                      <button v-else-if="subTab.title === 'Other Expenses' && !edit" type="submit"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                         Save
                       </button>
+                      <button v-else-if="subTab.title === 'Other Expenses' && edit " type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Edit
+                      </button>
+
                     </div>
                   </div>
                 </form>
@@ -975,7 +986,7 @@
 
                       <template v-else-if="field.type === 'file'">
                         <div class="pt-3">
-                          <file-pond :name="field.id" :required="field.required" ref="pond"
+                          <file-pond :name="field.id" :required="field.required" :ref="`pond-${field.id}`"
                             label-idle="Drop files here..." @addfile="(error, file) => handleAddFile(error, file, field)
                               " @removefile="(error, file) =>
                                 handleRemoveFile(error, file, field)
@@ -1087,9 +1098,13 @@
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                         Next
                       </button>
-                      <button v-else-if="subTab.title === 'Attendees'" type="submit"
+                      <button v-else-if="subTab.title === 'Attendees' && !edit" type="submit"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                         Save
+                      </button>
+                      <button v-else-if="subTab.title === 'Attendees' && edit " type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Edit
                       </button>
                     </div>
                   </div>
@@ -1145,7 +1160,7 @@
 
                       <template v-else-if="field.type === 'file'">
                         <div class="pt-3">
-                          <file-pond :name="field.id" ref="pond" label-idle="Drop files here..." @addfile="(error, file) => handleAddFile(error, file, field)
+                          <file-pond :name="field.id" :ref="`pond-${field.id}`" label-idle="Drop files here..." @addfile="(error, file) => handleAddFile(error, file, field)
                             " @removefile="(error, file) =>
                               handleRemoveFile(error, file, field)
                               " :accepted-file-types="field.acceptedFileTypes" :max-file-size="field.maxFileSize"
@@ -1279,9 +1294,13 @@
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                         Next
                       </button>
-                      <button v-else-if="subTab.title === 'Staff Involved'" type="submit"
+                      <button v-else-if="subTab.title === 'Staff Involved' && !edit" type="submit"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                         Save
+                      </button>
+                      <button v-else-if="subTab.title === 'Staff Involved' && edit " type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Edit
                       </button>
                     </div>
                   </div>
@@ -1321,10 +1340,13 @@ export default {
 
   props: {
     type: String,
+    itemData: Object,
   },
 
   data() {
     return {
+      // become true if the itemData is updated
+      edit: false,
 
       claimsHistory: {
         Dental: 0,
@@ -3287,7 +3309,149 @@ export default {
         });
       },
       deep: true,
+      
     },
+    itemData: {
+      handler(newData) {
+        this.otherExpenses = [];
+        this.attendees = [];
+        this.staffInvolved = [];
+        
+        if (Object.keys(newData).length !== 0) {
+          this.edit = true;
+          
+          const formatDateString = (dateStr) => {
+            if (!dateStr) return null;
+            
+            // If already in YYYY-MM-DD format, return as-is
+            if (typeof dateStr === 'string' && dateStr.match(/^\d{4}-\d{2}-\d{2}$/)) {
+              return dateStr;
+            }
+            
+            // Convert from "24 June 2025" or other formats to Date object
+            const dateObj = new Date(dateStr);
+            if (isNaN(dateObj.getTime())) return null; // Return null if invalid
+            
+            // Format as YYYY-MM-DD for datepicker
+            const year = dateObj.getFullYear();
+            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const day = String(dateObj.getDate()).padStart(2, '0');
+            
+            return `${year}-${month}-${day}`;
+          };
+
+
+          const populateFields = (fields) => {
+            fields.forEach((field) => {
+              if (newData[field.id] !== undefined) {
+                // Handle date fields
+                if (field.type === "date") {
+                  field.value = formatDateString(newData[field.id]);
+                } 
+                // Handle file fields
+                else if (field.type === "file") {
+                  // Clear existing files first
+                  if (this.$refs[`pond-${field.id}`]) {
+                    this.$refs[`pond-${field.id}`].forEach(pond => {
+                      if (pond && typeof pond.removeFiles === 'function') {
+                        pond.removeFiles();
+                      }
+                    });
+                  }
+                  
+                  // Set new files (ensure we have an array)
+                  field.value = Array.isArray(newData[field.id]) 
+                    ? [...newData[field.id].filter(file => file)] // Filter out null/undefined
+                    : [];
+                  
+                  // Initialize FilePond with new files
+                  if (this.$refs[`pond-${field.id}`] && field.value.length > 0) {
+                    this.$nextTick(() => {
+                      this.$refs[`pond-${field.id}`].forEach(pond => {
+                        if (pond && typeof pond.addFile === 'function') {
+                          // Add only new files that don't already exist in pond
+                          const currentFiles = pond.getFiles();
+                          field.value.forEach(file => {
+                            const fileExists = currentFiles.some(
+                              f => f.filename === file.name || f.source === file
+                            );
+                            if ((typeof file === 'string' || file instanceof File) && !fileExists) {
+                              pond.addFile(file);
+                              console.log('pond file', pond);
+                            }
+                          });
+                        }
+                      });
+                    });
+                  }
+                }
+                // Handle all other field types
+                else {
+                  field.value = newData[field.id];
+                }
+              }
+              console.log('field value', field.value)
+            });
+
+          };
+
+          switch (newData.tabTitle) {
+            case 'Local Travelling':
+              this.activeTab = 0;
+              this.tabs.forEach(tab => populateFields(tab.fields));
+              break;
+              
+            case 'Overseas Travelling':
+              this.activeTab = 1;
+              this.overseasTabs.forEach(tab => populateFields(tab.fields));
+              if(newData.otherExpenses.length > 0){
+                newData.otherExpenses.forEach((expense) => {
+                  this.otherExpenses.push(expense);
+                })
+              }
+              break;
+              
+            case 'Entertainment':
+              this.activeTab = 2;
+              this.entertainmentTabs.forEach(tab => populateFields(tab.fields));
+              if(newData.attendees.length > 0){
+                newData.attendees.forEach((attendee) => {
+                  this.attendees.push(attendee);
+                })
+              }
+              break;
+              
+            case 'Staff Refreshment':
+              this.activeTab = 3;
+              this.staffRefreshmentTabs.forEach(tab => populateFields(tab.fields));
+              if(newData.staffInvolved.length > 0){
+                newData.staffInvolved.forEach((staff) => {
+                  this.staffInvolved.push(staff);
+                })
+              }
+              break;
+              
+            case 'Handphone Bill Reimbursement':
+              this.activeTab = 4;
+              this.tabs.forEach(tab => populateFields(tab.fields));
+              break;
+              
+            case 'Medical Bill Reimbursement':
+              this.activeTab = 5;
+              this.tabs.forEach(tab => populateFields(tab.fields));
+              break;
+              
+            default:
+              this.activeTab = 6;
+              this.tabs.forEach(tab => populateFields(tab.fields));
+          }
+
+          console.log('Populated form data from:', newData);
+        }
+      },
+      deep: true,
+      
+    }
   },
 
   mounted() {
@@ -4916,6 +5080,9 @@ export default {
         }
       });
 
+      console.log('tab field', tab.fields);
+
+
       formattedData["tabTitle"] = tab.title;
       formattedData["totalRM"] = this.calculateTotal(tab);
 
@@ -4923,7 +5090,13 @@ export default {
         formattedData["otherExpenses"] = [...this.otherExpenses];
       }
 
-      this.$emit("formSubmitted", formattedData);
+      console.log('formsubmitted', formattedData);
+      if(this.edit){
+        this.$emit("saveEdit", formattedData);
+        this.edit = false;
+      }else{
+        this.$emit("formSubmitted", formattedData);
+      }
 
       tab.fields.forEach((field) => {
         if (!["LimitedAmountHR", "LimitedAmountML", "BankNameHR", "BankNameML",
@@ -4934,8 +5107,8 @@ export default {
 
         if (field.type === "file" ) {
           field.value = []; // Clear file field value
-          if (this.$refs.pond) {
-            this.$refs.pond.forEach((pond) => {
+          if (this.$refs[`pond-${field.id}`]) {
+            this.$refs[`pond-${field.id}`].forEach((pond) => {
               if (pond && typeof pond.removeFiles === "function") {
                 pond.removeFiles(); // Clear FilePond files
               }
@@ -4961,7 +5134,14 @@ export default {
           formattedData["attendees"] = [...tab.attendees];
         });
         formattedData["tabTitle"] = "Entertainment";
+        console.log('formsubmitted', formattedData);
+
+        if(this.edit){
+        this.$emit("saveEdit", formattedData);
+        this.edit = false;
+      }else{
         this.$emit("formSubmitted", formattedData);
+      }
         //   console.log("Formatted Form Data:", formattedData);
 
         this.entertainmentTabs.forEach((tab) => {
@@ -4969,8 +5149,8 @@ export default {
             field.value = null;
             if (field.type === "file") {
               field.value = []; // Clear file field value
-              if (this.$refs.pond) {
-                this.$refs.pond.forEach((pond) => {
+              if (this.$refs[`pond-${field.id}`]) {
+                this.$refs[`pond-${field.id}`].forEach((pond) => {
                   if (pond && typeof pond.removeFiles === "function") {
                     pond.removeFiles(); // Clear FilePond files
                   }
@@ -5005,7 +5185,14 @@ export default {
           formattedData["staffInvolved"] = [...tab.staffInvolved];
         });
         formattedData["tabTitle"] = "Staff Refreshment";
+      console.log('formsubmitted', formattedData);
+
+        if(this.edit){
+        this.$emit("saveEdit", formattedData);
+        this.edit = false;
+      }else{
         this.$emit("formSubmitted", formattedData);
+      }
         //  console.log("Formatted Form Data:", formattedData);
 
         this.staffRefreshmentTabs.forEach((tab) => {
@@ -5013,8 +5200,8 @@ export default {
             field.value = null;
             if (field.type === "file") {
               field.value = []; // Clear file field value
-              if (this.$refs.pond) {
-                this.$refs.pond.forEach((pond) => {
+              if (this.$refs[`pond-${field.id}`]) {
+                this.$refs[`pond-${field.id}`].forEach((pond) => {
                   if (pond && typeof pond.removeFiles === "function") {
                     pond.removeFiles(); // Clear FilePond files
                   }
@@ -5080,7 +5267,14 @@ export default {
         // formattedData["combinetotal"] = parseFloat(this.totalMealAllowanceOTplusotherExpenses);
         formattedData["combinetotal"] = parseFloat(this.calculateTotal(currentTab));
         formattedData["tabTitle"] = "Overseas Travelling";
-        this.$emit("formSubmitted", formattedData); 
+      console.log('formsubmitted', formattedData);
+
+        if(this.edit){
+        this.$emit("saveEdit", formattedData);
+        this.edit = false;
+      }else{
+        this.$emit("formSubmitted", formattedData);
+      }
          console.log("Formatted Form Data:", formattedData);
 
         this.overseasTabs.forEach((tab) => {
@@ -5088,8 +5282,8 @@ export default {
             field.value = null;
             if (field.type === "file") {
               field.value = []; // Clear file field value
-              if (this.$refs.pond) {
-                this.$refs.pond.forEach((pond) => {
+              if (this.$refs[`pond-${field.id}`]) {
+                this.$refs[`pond-${field.id}`].forEach((pond) => {
                   if (pond && typeof pond.removeFiles === "function") {
                     pond.removeFiles(); // Clear FilePond files
                   }
@@ -5118,6 +5312,11 @@ export default {
 
     TabClickAction(index) {
       this.activeTab = index;
+      this.edit = false;
+      this.otherExpenses = [];
+      this.attendees = [];
+      this.staffInvolved = [];
+      this.$emit("quitEdit");
       this.tabs.forEach((tab) => {
         tab.fields.forEach((field) => {
           if (!["LimitedAmountHR", "LimitedAmountML", "BankNameHR", "BankNameML",
@@ -5128,8 +5327,8 @@ export default {
   
           if (field.type === "file" ) {
             field.value = []; // Clear file field value
-            if (this.$refs.pond) {
-              this.$refs.pond.forEach((pond) => {
+            if (this.$refs[`pond-${field.id}`]) {
+              this.$refs[`pond-${field.id}`].forEach((pond) => {
                 if (pond && typeof pond.removeFiles === "function") {
                   pond.removeFiles(); // Clear FilePond files
                 }
@@ -5144,8 +5343,8 @@ export default {
             field.value = null;
             if (field.type === "file") {
               field.value = []; // Clear file field value
-              if (this.$refs.pond) {
-                this.$refs.pond.forEach((pond) => {
+              if (this.$refs[`pond-${field.id}`]) {
+                this.$refs[`pond-${field.id}`].forEach((pond) => {
                   if (pond && typeof pond.removeFiles === "function") {
                     pond.removeFiles(); // Clear FilePond files
                   }
@@ -5160,8 +5359,8 @@ export default {
             field.value = null;
             if (field.type === "file") {
               field.value = []; // Clear file field value
-              if (this.$refs.pond) {
-                this.$refs.pond.forEach((pond) => {
+              if (this.$refs[`pond-${field.id}`]) {
+                this.$refs[`pond-${field.id}`].forEach((pond) => {
                   if (pond && typeof pond.removeFiles === "function") {
                     pond.removeFiles(); // Clear FilePond files
                   }
@@ -5176,8 +5375,8 @@ export default {
             field.value = null;
             if (field.type === "file") {
               field.value = []; // Clear file field value
-              if (this.$refs.pond) {
-                this.$refs.pond.forEach((pond) => {
+              if (this.$refs[`pond-${field.id}`]) {
+                this.$refs[`pond-${field.id}`].forEach((pond) => {
                   if (pond && typeof pond.removeFiles === "function") {
                     pond.removeFiles(); // Clear FilePond files
                   }
