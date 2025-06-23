@@ -3369,16 +3369,8 @@ export default {
                     this.$nextTick(() => {
                       this.$refs[`pond-${field.id}`].forEach(pond => {
                         if (pond && typeof pond.addFile === 'function') {
-                          // Add only new files that don't already exist in pond
-                          const currentFiles = pond.getFiles();
                           field.value.forEach(file => {
-                            const fileExists = currentFiles.some(
-                              f => f.filename === file.name || f.source === file
-                            );
-                            if ((typeof file === 'string' || file instanceof File) && !fileExists) {
-                              pond.addFile(file);
-                              console.log('pond file', pond);
-                            }
+                              pond.addFile(file)                            
                           });
                         }
                       });
@@ -5075,7 +5067,37 @@ export default {
           formattedData[field.id] = selectedOption ? selectedOption.label : field.value;
         } else if (field.type === "date" && field.value) {
           formattedData[field.id] = this.formatDate(field.value);
-        } else {
+        } else if (field.type === "file") {
+          // Initialize empty array for this field's files
+          formattedData[field.id] = [];
+          
+          // Get the specific FilePond instance for this field
+          const pondRef = this.$refs[`pond-${field.id}`];
+          
+          // Handle both single instance and array cases
+          const pondInstances = Array.isArray(pondRef) ? pondRef : [pondRef];
+          
+          pondInstances.forEach(pond => {
+            if (pond && typeof pond.getFiles === 'function') {
+              const files = pond.getFiles();
+              console.log('Files in pond:', files);
+              
+              // Process each file
+              files.forEach(file => {
+                // For already uploaded files (has serverId)
+                if (file.serverId) {
+                  formattedData[field.id].push(file.serverId);
+                } 
+                // For new files (has File object)
+                else if (file.file) {
+                  formattedData[field.id].push(file.file);
+                }
+              });
+            }
+          });
+          
+          console.log('Formatted file data:', formattedData[field.id]);
+        }else {
           formattedData[field.id] = field.value;
         }
       });
@@ -5094,8 +5116,11 @@ export default {
       if(this.edit){
         this.$emit("saveEdit", formattedData);
         this.edit = false;
+        console.log('save edit')
       }else{
         this.$emit("formSubmitted", formattedData);
+        console.log('save first')
+
       }
 
       tab.fields.forEach((field) => {
