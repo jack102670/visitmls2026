@@ -211,7 +211,7 @@
                 <input type="radio" id="Finance" name="claimType" value="Finance" v-model="formData.reportType"
                   class="mr-2" />
                 <label for="Finance">Travelling, Entertainment & Others </label>
-                <label class="font-bold">(Work In Progress)</label>
+                <!-- <label class="font-bold">(Work In Progress)</label> -->
                 <!-- <div
                   class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
                   v-show="showFinanceMessage"

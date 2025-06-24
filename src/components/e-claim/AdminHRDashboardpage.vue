@@ -409,6 +409,8 @@ export default {
         endDate: null,
         branch: null,
         department: null,
+        includeMedicalLeave: false,
+        includeHandphone: false
       },
     };
   },
@@ -477,7 +479,7 @@ export default {
     },
   },
   methods: {
-    handleHRReportFetch({ company, startDate, endDate, branch, department }) {
+    handleHRReportFetch({ company, startDate, endDate, branch, department, includeMedicalLeave, includeHandphone }) {
       // Redirect with query parameters
       this.$router.push({
         name: 'HRMonthlyReport', // this should match your route name for HRMonthlyReport.vue
@@ -486,7 +488,9 @@ export default {
           start_date: startDate,
           end_date: endDate,
           branch,
-          department
+          department,
+          includeMedicalLeave: Boolean(includeMedicalLeave),
+          includeHandphone: Boolean(includeHandphone)
         }
       });
     },

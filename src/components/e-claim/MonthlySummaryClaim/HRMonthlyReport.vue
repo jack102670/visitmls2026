@@ -127,7 +127,114 @@ export default {
         return sum + value;
       }, 0).toFixed(2);
     },
-    async FetchClaimDetails(companyName, startDate, endDate, branchName, departmentName) {
+    // async FetchClaimDetails(companyName, startDate, endDate, branchName, departmentName, includeMedicalLeave = true, includeHandphone = true) {
+    //   try {
+    //     const payload = {
+    //       company_name: companyName,
+    //       start_date: startDate,
+    //       end_date: endDate,
+    //       branch_name: branchName,
+    //       department: departmentName,
+    //       includeMedicalLeave,
+    //       includeHandphone,
+    //     };
+
+    //     console.log('Sending payload:', payload);
+    //     this.loading = true;
+
+    //     const response = await axios.post(
+    //       'http://172.28.28.116:6239/api/Admin/MonthlyReportHR/',
+    //       payload,
+    //       { headers: { 'Content-Type': 'application/json' } }
+    //     );
+    //     console.log('Response:', response.data);
+
+    //     const results = response.data.result;
+    //     this.claimDatasDetails = {
+    //       'Medical Claim': [],
+    //       'Handphone Claim': []
+    //     };
+
+    //     results.forEach(result => {
+    //       const userName = result.name;
+    //       const userDept = result.department;
+    //       const companyName = result.company_name;
+    //       const status = result.admin_status === 'APPROVED BY HR & ADMIN' ? 'A' : result.admin_status;
+    //       const userBranch = result.branch_name;
+    //       const limit_amount = result.limit_amount;
+    //       const limit_medicaldental = result.limit_medicaldental;
+    //       const limit_outpatient = result.limit_outpatient;
+    //       const emp_id = result.employee_id;
+
+    //       if (includeMedicalLeave && result.medical_leave_data?.length) {
+    //         const medicalData = result.medical_leave_data.map(item => {
+    //           let limitValue = 0;
+    //           if (item.medical_category === 'Outpatient') {
+    //             limitValue = Number(limit_outpatient).toFixed(2);
+    //           } else if (item.medical_category === 'Medical Checkup') 
+    //           {
+    //             limitValue = Number(limit_medicaldental).toFixed(2);
+    //           } else if (item.medical_category === 'Dental') {
+    //             limitValue = Number(limit_medicaldental).toFixed(2);
+    //           } else {
+    //             limitValue = '-';
+    //           }
+    //           return {
+    //             Tab_Title: 'Medical Claim',
+    //             'Status': status,
+    //             'Company': companyName,
+    //             'Employee ID': emp_id,
+    //             'Name': userName,
+    //             'Branch': userBranch,
+    //             'Department': userDept,
+    //             IC_Number: item.ic_number,
+    //             'Medical_Category': item.medical_category,
+    //             'Reason': item.reason,
+    //             Date: item.date_leave_taken,
+    //             'Clinic_Name': item.clinic_name
+    //               ? item.clinic_name
+    //               : item.clinic_selection,
+    //             'Reason_Different_Clinic': item.reason_different,
+    //             'Bank_Name': item.bank_name,
+    //             'Bank_Holder': item.bank_holder,
+    //             'Bank_Account': item.bank_account,
+    //             'Limit Medical (RM)': limitValue,
+    //             'Total_Fee(RM)': Number(item.claim_amount).toFixed(2),
+    //           };
+    //         });
+    //         this.claimDatasDetails['Medical Claim'].push(...medicalData);
+    //       }
+          
+    //       if (includeHandphone && result.handphone_data?.length) {
+    //         const phoneData = result.handphone_data.map(item => ({
+    //           Tab_Title: 'Handphone Claim',
+    //           'Status': status,
+    //           'Company': companyName,
+    //           'Employee ID': emp_id,
+    //           'Name': userName,
+    //           'Branch': userBranch,
+    //           'Department': userDept,
+    //           IC_Number: item.ic_number,
+    //           Claim_Month: item.claim_month,
+    //           Claim_Year: item.claim_year,
+    //           'Bank_Name': item.bank_name,
+    //           Bank_Holder: item.bank_holder,
+    //           Bank_Account: item.bank_account,
+    //           'Limit Handphone (RM)': Number(limit_amount).toFixed(2),
+    //           'Total_Fee(RM)': Number(item.claim_amount).toFixed(2),
+    //         }));
+    //         this.claimDatasDetails['Handphone Claim'].push(...phoneData);
+    //       }
+    //     });
+        
+    //   } catch(error) {
+    //     console.error("Error fetching claim details:", error.response?.data || error);
+    //   } finally {
+    //     this.loading = false;
+    //   }
+    // },
+
+    async FetchClaimDetails(companyName, startDate, endDate, branchName, departmentName, includeMedicalLeave, includeHandphone) {
       try {
         const payload = {
           company_name: companyName,
@@ -135,6 +242,8 @@ export default {
           end_date: endDate,
           branch_name: branchName,
           department: departmentName,
+          includeMedicalLeave,
+          includeHandphone
         };
 
         console.log('Sending payload:', payload);
@@ -145,13 +254,25 @@ export default {
           payload,
           { headers: { 'Content-Type': 'application/json' } }
         );
-        console.log('Response:', response.data);
 
+        console.log('Response:', response.data);
         const results = response.data.result;
-        this.claimDatasDetails = {
-          'Medical Leave Claim': [],
-          'Handphone Claim': []
-        };
+
+        // Reset claims container
+        // this.claimDatasDetails = {
+        //   'Medical Claim': [],
+        //   'Handphone Claim': []
+        // };
+
+        this.claimDatasDetails = {};
+
+        if (includeMedicalLeave === true) {
+          this.claimDatasDetails['Medical Claim'] = [];
+        }
+        if (includeHandphone === true) {
+          this.claimDatasDetails['Handphone Claim'] = [];
+        }
+
 
         results.forEach(result => {
           const userName = result.name;
@@ -164,21 +285,20 @@ export default {
           const limit_outpatient = result.limit_outpatient;
           const emp_id = result.employee_id;
 
-          if (result.medical_leave_data?.length) {
+          // Medical Claim Section
+          if (includeMedicalLeave && result.medical_leave_data?.length) {
             const medicalData = result.medical_leave_data.map(item => {
               let limitValue = 0;
               if (item.medical_category === 'Outpatient') {
                 limitValue = Number(limit_outpatient).toFixed(2);
-              } else if (item.medical_category === 'Medical Checkup') 
-              {
-                limitValue = Number(limit_medicaldental).toFixed(2);
-              } else if (item.medical_category === 'Dental') {
+              } else if (['Medical Checkup', 'Dental'].includes(item.medical_category)) {
                 limitValue = Number(limit_medicaldental).toFixed(2);
               } else {
                 limitValue = '-';
               }
+
               return {
-                Tab_Title: 'Medical Leave Claim',
+                Tab_Title: 'Medical Claim',
                 'Status': status,
                 'Company': companyName,
                 'Employee ID': emp_id,
@@ -189,9 +309,7 @@ export default {
                 'Medical_Category': item.medical_category,
                 'Reason': item.reason,
                 Date: item.date_leave_taken,
-                'Clinic_Name': item.clinic_name
-                  ? item.clinic_name
-                  : item.clinic_selection,
+                'Clinic_Name': item.clinic_name || item.clinic_selection,
                 'Reason_Different_Clinic': item.reason_different,
                 'Bank_Name': item.bank_name,
                 'Bank_Holder': item.bank_holder,
@@ -200,10 +318,11 @@ export default {
                 'Total_Fee(RM)': Number(item.claim_amount).toFixed(2),
               };
             });
-            this.claimDatasDetails['Medical Leave Claim'].push(...medicalData);
+            this.claimDatasDetails['Medical Claim'].push(...medicalData);
           }
 
-          if (result.handphone_data?.length) {
+          // Handphone Claim Section
+          if (includeHandphone && result.handphone_data?.length) {
             const phoneData = result.handphone_data.map(item => ({
               Tab_Title: 'Handphone Claim',
               'Status': status,
@@ -224,20 +343,23 @@ export default {
             this.claimDatasDetails['Handphone Claim'].push(...phoneData);
           }
         });
-        
-      } catch(error) {
+
+      } catch (error) {
         console.error("Error fetching claim details:", error.response?.data || error);
       } finally {
         this.loading = false;
       }
     },
+
   },
+
   mounted() {
     console.log("Mounted HRMonthlyReport");
-    const { company, start_date, end_date, branch, department } = this.$route.query;
+    const { company, start_date, end_date, branch, department, includeMedicalLeave, includeHandphone } = this.$route.query;
     console.log("Query parameters:", this.$route.query);
     if (company && start_date && end_date && branch && department) {
-      this.FetchClaimDetails(company, start_date, end_date, branch, department);
+      this.FetchClaimDetails(company, start_date, end_date, branch, department, 
+        includeMedicalLeave === 'true', includeHandphone === 'true');
     } else {
       console.warn("Missing query parameters for report");
     }

@@ -1479,7 +1479,7 @@ export default {
               value: "",
               required: true,
               options: [
-                { label: "E-hailing", value: "E-Hailing" },
+                { label: "E-Hailing", value: "E-Hailing" },
                 { label: "Flight", value: "Flight" },
               ],
               hidden: false,
@@ -2261,7 +2261,7 @@ export default {
               value: "",
               required: true,
               options: [
-                { label: "E-hailing", value: "E-Hailing" },
+                { label: "E-Hailing", value: "E-Hailing" },
                 { label: "Flight", value: "Flight" },
               ],
               hidden: false,
@@ -4020,6 +4020,12 @@ export default {
         if (field) field.hidden = hidden;
       };
 
+      // Helper to clear values
+      const setValue = (id, value = "") => {
+        const field = tab.fields.find(f => f.id === id);
+        if (field) field.value = value;
+      };
+
       // Hide all by default
       const allFields = [
         "AccommodationOT", "CheckInOT", "CheckOutOT", "HotelNightOT", "HotelRoomOT", "HotelCityOT", "HotelRMOT", "UploadHotelRMOT",
@@ -4028,7 +4034,7 @@ export default {
         "transportNumberPlateOT", "transportModelOT", "petrolTypeOT", "petrolLitreOT", "TollOT", "UploadTollOT", "ParkingOT", "UploadParkingOT",
         "DepartureAirportOT", "ArrivalAirportOT", "FlightClassOT"
       ];
-      allFields.forEach(id => setHidden(id, true));
+      allFields.forEach(id => { setHidden(id, true); setValue(id); });
 
       // Always show TransportOT
       setHidden("TransportOT", false);
@@ -4061,12 +4067,15 @@ export default {
         setHidden("MealAllowanceOT", false);
 
         // Hide flight and fare fields
-        setHidden("DepartureAirportOT", true);
-        setHidden("ArrivalAirportOT", true);
-        setHidden("FlightClassOT", true);
-        setHidden("FareRMOT", true);
-        setHidden("UploadFareRMOT", true);
-        setHidden("PublicTransportSpecOT", true);
+        // setHidden("DepartureAirportOT", true);
+        // setHidden("ArrivalAirportOT", true);
+        // setHidden("FlightClassOT", true);
+        // setHidden("FareRMOT", true);
+        // setHidden("UploadFareRMOT", true);
+        // setHidden("PublicTransportSpecOT", true);
+
+        ["DepartureAirportOT", "ArrivalAirportOT", "FlightClassOT", "FareRMOT", "UploadFareRMOT", "PublicTransportSpecOT"]
+            .forEach(id => { setHidden(id, true); setValue(id); });
       }
 
       // Public Transport
@@ -4091,9 +4100,11 @@ export default {
           setHidden("MealAllowanceOT", false);
 
           // Hide flight fields
-          setHidden("DepartureAirportOT", true);
-          setHidden("ArrivalAirportOT", true);
-          setHidden("FlightClassOT", true);
+          // setHidden("DepartureAirportOT", true);
+          // setHidden("ArrivalAirportOT", true);
+          // setHidden("FlightClassOT", true);
+
+          ["DepartureAirportOT", "ArrivalAirportOT", "FlightClassOT"].forEach(id => { setHidden(id, true); setValue(id); });
         }
         if (publicTransportSpec === "Flight") {
           setHidden("MileageKMOT", false);
@@ -4117,7 +4128,7 @@ export default {
         [
           "TransportSpecOT", "MileageRMOT", "UploadMileageRMOT", "transportNumberPlateOT", "transportModelOT",
           "petrolTypeOT", "petrolLitreOT", "TollOT", "UploadTollOT", "ParkingOT", "UploadParkingOT"
-        ].forEach(id => setHidden(id, true));
+        ].forEach(id => { setHidden(id, true); setValue(id); });
       }
     },
 
@@ -4165,6 +4176,169 @@ export default {
       }
     },
     
+    // updateFieldVisibility10() {
+    //   const tab = this.tabs.find(t => t.title === "Local Travelling");
+    //   if (!tab) return;
+
+    //   // Get current values
+    //   const tripType = tab.fields.find(f => f.id === "tripwayLT")?.value;
+    //   const transportType = tab.fields.find(f => f.id === "TransportLT")?.value;
+    //   const publicTransportSpec = tab.fields.find(f => f.id === "PublicTransportSpec")?.value;
+
+    //   // Helper to show/hide fields
+    //   const setHidden = (id, hidden) => {
+    //     const field = tab.fields.find(f => f.id === id);
+    //     if (field) field.hidden = hidden;
+    //   };
+      
+
+    //   // Hide all by default
+    //   const allFields = [
+    //     "ReturndateLT", "AccommodationLT", "CheckInLT", "CheckOutLT", "HotelNightLT", "HotelRoomLT", "HotelCityLT", "HotelRMLT", "UploadHotelRMLT",
+    //     "MealAllowanceLT", "FareRMLT", "UploadFareRMLT", "TransportSpec", "PublicTransportSpec",
+    //     "LocationStart", "LocationEnd", "MileageKMLT", "MileageRMLT", "UploadMileageRMLT",
+    //     "transportNumberPlate", "transportModel", "petrolType", "petrolLitre", "TollLT", "UploadTollLT", "ParkingLT", "UploadParkingLT",
+    //     "DepartureAirportLT", "ArrivalAirportLT", "FlightClassLT"
+    //   ];
+    //   allFields.forEach(id => setHidden(id, true));
+
+    //   // Always show TransportLT and tripwayLT
+    //   setHidden("TransportLT", false);
+    //   setHidden("tripwayLT", false);
+
+    //   if (tripType === "Round Trip") {
+    //     setHidden("ReturndateLT", false);
+    //     setHidden("AccommodationLT", false);
+    //     setHidden("CheckInLT", false);
+    //     setHidden("CheckOutLT", false);
+    //     setHidden("HotelNightLT", false);
+    //     setHidden("HotelRoomLT", false);
+    //     setHidden("HotelCityLT", false);
+    //     setHidden("HotelRMLT", false);
+    //     setHidden("UploadHotelRMLT", false);
+    //     setHidden("MealAllowanceLT", false);
+
+    //     // Personal or Company Transport
+    //     if (transportType === "Personal Transport" || transportType === "Company Transport") {
+    //       setHidden("TransportSpec", false);
+    //       setHidden("LocationStart", false);
+    //       setHidden("LocationEnd", false);
+    //       setHidden("MileageKMLT", false);
+    //       setHidden("MileageRMLT", false);
+    //       setHidden("UploadMileageRMLT", false);
+    //       setHidden("transportNumberPlate", false);
+    //       setHidden("transportModel", false);
+    //       setHidden("petrolType", false);
+    //       setHidden("petrolLitre", false);
+    //       setHidden("TollLT", false);
+    //       setHidden("UploadTollLT", false);
+    //       setHidden("ParkingLT", false);
+    //       setHidden("UploadParkingLT", false);
+
+    //       // Flight fields and fare are always hidden for personal/company
+    //       setHidden("DepartureAirportLT", true);
+    //       setHidden("ArrivalAirportLT", true);
+    //       setHidden("FlightClassLT", true);
+    //       setHidden("FareRMLT", true);
+    //       setHidden("UploadFareRMLT", true);
+    //       setHidden("PublicTransportSpec", true);
+    //     }
+
+    //     // Public Transport
+    //     if (transportType === "Public Transport") {
+    //       setHidden("PublicTransportSpec", false);
+    //       setHidden("LocationStart", false);
+    //       setHidden("LocationEnd", false);
+
+    //         if (publicTransportSpec === "E-Hailing") {
+    //           setHidden("MileageKMLT", false);
+    //           setHidden("FareRMLT", false);
+    //           setHidden("UploadFareRMLT", false);
+    //           // Hide flight fields
+    //           setHidden("DepartureAirportLT", true);
+    //           setHidden("ArrivalAirportLT", true);
+    //           setHidden("FlightClassLT", true);
+    //         }
+
+    //         if (publicTransportSpec === "Flight") {
+    //           setHidden("MileageKMLT", false);
+    //           setHidden("FareRMLT", false);
+    //           setHidden("UploadFareRMLT", false);
+    //           setHidden("DepartureAirportLT", false);
+    //           setHidden("ArrivalAirportLT", false);
+    //           setHidden("FlightClassLT", false);
+    //         }
+
+    //       // Hide vehicle fields for public transport
+    //       [
+    //         "TransportSpec", "MileageRMLT", "UploadMileageRMLT", "transportNumberPlate", "transportModel",
+    //         "petrolType", "petrolLitre", "TollLT", "UploadTollLT", "ParkingLT", "UploadParkingLT"
+    //       ].forEach(id => setHidden(id, true));
+    //     }
+    //   }
+    //   else
+    //   {
+    //     // Personal or Company Transport
+    //     if (transportType === "Personal Transport" || transportType === "Company Transport") {
+    //       setHidden("TransportSpec", false);
+    //       setHidden("LocationStart", false);
+    //       setHidden("LocationEnd", false);
+    //       setHidden("MileageKMLT", false);
+    //       setHidden("MileageRMLT", false);
+    //       setHidden("UploadMileageRMLT", false);
+    //       setHidden("transportNumberPlate", false);
+    //       setHidden("transportModel", false);
+    //       setHidden("petrolType", false);
+    //       setHidden("petrolLitre", false);
+    //       setHidden("TollLT", false);
+    //       setHidden("UploadTollLT", false);
+    //       setHidden("ParkingLT", false);
+    //       setHidden("UploadParkingLT", false);
+
+    //       // Flight fields and fare are always hidden for personal/company
+    //       setHidden("DepartureAirportLT", true);
+    //       setHidden("ArrivalAirportLT", true);
+    //       setHidden("FlightClassLT", true);
+    //       setHidden("FareRMLT", true);
+    //       setHidden("UploadFareRMLT", true);
+    //       setHidden("PublicTransportSpec", true);
+    //     }
+
+    //     // Public Transport
+    //     if (transportType === "Public Transport") {
+    //       setHidden("PublicTransportSpec", false);
+    //       setHidden("LocationStart", false);
+    //       setHidden("LocationEnd", false);
+
+    //         if (publicTransportSpec === "E-Hailing") {
+    //           setHidden("MileageKMLT", false);
+    //           setHidden("FareRMLT", false);
+    //           setHidden("UploadFareRMLT", false);
+    //           // Hide flight fields
+    //           setHidden("DepartureAirportLT", true);
+    //           setHidden("ArrivalAirportLT", true);
+    //           setHidden("FlightClassLT", true);
+    //         }
+
+    //         if (publicTransportSpec === "Flight") {
+    //           setHidden("MileageKMLT", false);
+    //           setHidden("FareRMLT", false);
+    //           setHidden("UploadFareRMLT", false);
+    //           setHidden("DepartureAirportLT", false);
+    //           setHidden("ArrivalAirportLT", false);
+    //           setHidden("FlightClassLT", false);
+    //         }
+
+    //       // Hide vehicle fields for public transport
+    //       [
+    //         "TransportSpec", "MileageRMLT", "UploadMileageRMLT", "transportNumberPlate", "transportModel",
+    //         "petrolType", "petrolLitre", "TollLT", "UploadTollLT", "ParkingLT", "UploadParkingLT"
+    //       ].forEach(id => setHidden(id, true));
+    //     }
+
+    //   }
+    // },
+
     updateFieldVisibility10() {
       const tab = this.tabs.find(t => t.title === "Local Travelling");
       if (!tab) return;
@@ -4180,6 +4354,12 @@ export default {
         if (field) field.hidden = hidden;
       };
 
+      // Helper to clear values
+      const setValue = (id, value = "") => {
+        const field = tab.fields.find(f => f.id === id);
+        if (field) field.value = value;
+      };
+
       // Hide all by default
       const allFields = [
         "ReturndateLT", "AccommodationLT", "CheckInLT", "CheckOutLT", "HotelNightLT", "HotelRoomLT", "HotelCityLT", "HotelRMLT", "UploadHotelRMLT",
@@ -4188,7 +4368,7 @@ export default {
         "transportNumberPlate", "transportModel", "petrolType", "petrolLitre", "TollLT", "UploadTollLT", "ParkingLT", "UploadParkingLT",
         "DepartureAirportLT", "ArrivalAirportLT", "FlightClassLT"
       ];
-      allFields.forEach(id => setHidden(id, true));
+      allFields.forEach(id => { setHidden(id, true); setValue(id); });
 
       // Always show TransportLT and tripwayLT
       setHidden("TransportLT", false);
@@ -4206,7 +4386,6 @@ export default {
         setHidden("UploadHotelRMLT", false);
         setHidden("MealAllowanceLT", false);
 
-        // Personal or Company Transport
         if (transportType === "Personal Transport" || transportType === "Company Transport") {
           setHidden("TransportSpec", false);
           setHidden("LocationStart", false);
@@ -4223,50 +4402,37 @@ export default {
           setHidden("ParkingLT", false);
           setHidden("UploadParkingLT", false);
 
-          // Flight fields and fare are always hidden for personal/company
-          setHidden("DepartureAirportLT", true);
-          setHidden("ArrivalAirportLT", true);
-          setHidden("FlightClassLT", true);
-          setHidden("FareRMLT", true);
-          setHidden("UploadFareRMLT", true);
-          setHidden("PublicTransportSpec", true);
+          ["DepartureAirportLT", "ArrivalAirportLT", "FlightClassLT", "FareRMLT", "UploadFareRMLT", "PublicTransportSpec"]
+            .forEach(id => { setHidden(id, true); setValue(id); });
         }
 
-        // Public Transport
         if (transportType === "Public Transport") {
           setHidden("PublicTransportSpec", false);
           setHidden("LocationStart", false);
           setHidden("LocationEnd", false);
 
-            if (publicTransportSpec === "E-Hailing") {
-              setHidden("MileageKMLT", false);
-              setHidden("FareRMLT", false);
-              setHidden("UploadFareRMLT", false);
-              // Hide flight fields
-              setHidden("DepartureAirportLT", true);
-              setHidden("ArrivalAirportLT", true);
-              setHidden("FlightClassLT", true);
-            }
+          if (publicTransportSpec === "E-Hailing") {
+            setHidden("MileageKMLT", false);
+            setHidden("FareRMLT", false);
+            setHidden("UploadFareRMLT", false);
+            ["DepartureAirportLT", "ArrivalAirportLT", "FlightClassLT"].forEach(id => { setHidden(id, true); setValue(id); });
+          }
 
-            if (publicTransportSpec === "Flight") {
-              setHidden("MileageKMLT", false);
-              setHidden("FareRMLT", false);
-              setHidden("UploadFareRMLT", false);
-              setHidden("DepartureAirportLT", false);
-              setHidden("ArrivalAirportLT", false);
-              setHidden("FlightClassLT", false);
-            }
+          if (publicTransportSpec === "Flight") {
+            setHidden("MileageKMLT", false);
+            setHidden("FareRMLT", false);
+            setHidden("UploadFareRMLT", false);
+            setHidden("DepartureAirportLT", false);
+            setHidden("ArrivalAirportLT", false);
+            setHidden("FlightClassLT", false);
+          }
 
-          // Hide vehicle fields for public transport
           [
             "TransportSpec", "MileageRMLT", "UploadMileageRMLT", "transportNumberPlate", "transportModel",
             "petrolType", "petrolLitre", "TollLT", "UploadTollLT", "ParkingLT", "UploadParkingLT"
-          ].forEach(id => setHidden(id, true));
+          ].forEach(id => { setHidden(id, true); setValue(id); });
         }
-      }
-      else
-      {
-        // Personal or Company Transport
+      } else {
         if (transportType === "Personal Transport" || transportType === "Company Transport") {
           setHidden("TransportSpec", false);
           setHidden("LocationStart", false);
@@ -4283,47 +4449,36 @@ export default {
           setHidden("ParkingLT", false);
           setHidden("UploadParkingLT", false);
 
-          // Flight fields and fare are always hidden for personal/company
-          setHidden("DepartureAirportLT", true);
-          setHidden("ArrivalAirportLT", true);
-          setHidden("FlightClassLT", true);
-          setHidden("FareRMLT", true);
-          setHidden("UploadFareRMLT", true);
-          setHidden("PublicTransportSpec", true);
+          ["DepartureAirportLT", "ArrivalAirportLT", "FlightClassLT", "FareRMLT", "UploadFareRMLT", "PublicTransportSpec"]
+            .forEach(id => { setHidden(id, true); setValue(id); });
         }
 
-        // Public Transport
         if (transportType === "Public Transport") {
           setHidden("PublicTransportSpec", false);
           setHidden("LocationStart", false);
           setHidden("LocationEnd", false);
 
-            if (publicTransportSpec === "E-Hailing") {
-              setHidden("MileageKMLT", false);
-              setHidden("FareRMLT", false);
-              setHidden("UploadFareRMLT", false);
-              // Hide flight fields
-              setHidden("DepartureAirportLT", true);
-              setHidden("ArrivalAirportLT", true);
-              setHidden("FlightClassLT", true);
-            }
+          if (publicTransportSpec === "E-Hailing") {
+            setHidden("MileageKMLT", false);
+            setHidden("FareRMLT", false);
+            setHidden("UploadFareRMLT", false);
+            ["DepartureAirportLT", "ArrivalAirportLT", "FlightClassLT"].forEach(id => { setHidden(id, true); setValue(id); });
+          }
 
-            if (publicTransportSpec === "Flight") {
-              setHidden("MileageKMLT", false);
-              setHidden("FareRMLT", false);
-              setHidden("UploadFareRMLT", false);
-              setHidden("DepartureAirportLT", false);
-              setHidden("ArrivalAirportLT", false);
-              setHidden("FlightClassLT", false);
-            }
+          if (publicTransportSpec === "Flight") {
+            setHidden("MileageKMLT", false);
+            setHidden("FareRMLT", false);
+            setHidden("UploadFareRMLT", false);
+            setHidden("DepartureAirportLT", false);
+            setHidden("ArrivalAirportLT", false);
+            setHidden("FlightClassLT", false);
+          }
 
-          // Hide vehicle fields for public transport
           [
             "TransportSpec", "MileageRMLT", "UploadMileageRMLT", "transportNumberPlate", "transportModel",
             "petrolType", "petrolLitre", "TollLT", "UploadTollLT", "ParkingLT", "UploadParkingLT"
-          ].forEach(id => setHidden(id, true));
+          ].forEach(id => { setHidden(id, true); setValue(id); });
         }
-
       }
     },
 

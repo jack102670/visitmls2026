@@ -652,7 +652,7 @@ export default {
 
             flightClass:["Business", "Economy"],
             transportSpecifications: ["Motorcycle", "Car", "Truck"],
-            transportSpecPublic: [ "Flight", "E-hailing"],
+            transportSpecPublic: [ "Flight", "E-Hailing"],
             petrolTypes: ["Ron 95", "Diesel"],
 
             currentPage: 1,

@@ -166,6 +166,18 @@
               </div>
             </div>
 
+            <!-- Select Report Types -->
+            <div class="flex gap-4 mb-4">
+              <label class="flex items-center space-x-2">
+                <input type="checkbox" v-model="includeMedicalLeave" />
+                <span>Medical Claim</span>
+              </label>
+              <label class="flex items-center space-x-2">
+                <input type="checkbox" v-model="includeHandphone" />
+                <span>Handphone Claim</span>
+              </label>
+            </div>
+
             <!-- Confirm -->
             <div class="flex flex-col mb-8">
               <button
@@ -211,6 +223,9 @@ export default {
       isCompanyOpen: false,
       isDepartmentOpen: false,
       isBranchOpen: false,
+      includeMedicalLeave: true,
+      includeHandphone: true,
+
 
       startDate: null,
       endDate: null,
@@ -285,6 +300,9 @@ export default {
         branch: this.chosenBranch,
         // department: this.departmentSearch,
         department: this.chosenDepartments,
+        includeMedicalLeave: this.includeMedicalLeave,
+        includeHandphone: this.includeHandphone,
+
       });
       console.log("Download triggered with payload:", {
         company: this.companySearch,
@@ -294,6 +312,8 @@ export default {
         branch: this.chosenBranch,
         // department: this.departmentSearch,
         department: this.chosenDepartments,
+        includeMedicalLeave: this.includeMedicalLeave,
+        includeHandphone: this.includeHandphone,
       });
     },
     
@@ -360,7 +380,7 @@ export default {
     //   this.chosenDepartment = department;
     //   this.$emit("update:chosenDepartment", department);
     //   this.isDepartmentOpen = false;
-    // },\
+    // },
     selectDepartment(department) {
       if (!this.chosenDepartments.includes(department)) {
         this.chosenDepartments.push(department);
