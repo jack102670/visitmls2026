@@ -4046,12 +4046,14 @@ export default {
 
       const preserveFields = ["TransportOT", "PublicTransportSpecOT"];
 
-      allFields.forEach(id => {
-        setHidden(id, true);
-        if (!preserveFields.includes(id)) {
-          setValue(id);
-        }
-      });
+      if(this.edit !== true){
+        allFields.forEach(id => {
+          setHidden(id, true);
+          if (!preserveFields.includes(id)) {
+            setValue(id);
+          }
+        });
+      }
 
       // Always show TransportOT
       setHidden("TransportOT", false);
@@ -4389,12 +4391,14 @@ export default {
 
       const preserveFields = ["TransportLT", "tripwayLT", "PublicTransportSpec", "ReturndateLT"];
 
-      allFields.forEach(id => {
-        setHidden(id, true);
-        if (!preserveFields.includes(id)) {
-          setValue(id);
-        }
-      });
+      if(this.edit !== true){
+        allFields.forEach(id => {
+          setHidden(id, true);
+          if (!preserveFields.includes(id)) {
+            setValue(id);
+          }
+        });
+      }
 
       // Always show TransportLT and tripwayLT
       setHidden("tripwayLT", false);

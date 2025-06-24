@@ -169,6 +169,7 @@
                           <span v-if="claim.dateOthers">{{
                             claim.dateOthers
                             }}</span>
+                          <span v-if="claim.MonthHR && claim.YearHR">{{ claim.MonthHR }} {{ claim.YearHR }}</span>
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                           <span v-if="claim.totalRM">RM {{ claim.totalRM }}</span>
@@ -1484,6 +1485,7 @@ export default {
       loadingText: "",
 
       editingItem: {},
+      editingIndex: null,
     };
   },
 
@@ -2608,6 +2610,9 @@ export default {
     },
 
     deleteForm(index) {
+      if(this.editingIndex == index){
+        return;
+      }
       // console.log("Deleting index:", index);
       // console.log("Current dataclaims array:", this.dataclaims);
 
@@ -2658,6 +2663,11 @@ export default {
         remainingLimitAmount += claimAmount; // Add the claimAmount back
         localStorage.setItem("remaining_limit_amount", remainingLimitAmount);
       }
+
+      if(this.editingIndex && this.editingIndex > index){
+        this.editingIndex -= 1;
+      }
+      
 
       // Emit the claimDeleted event
       this.$emit("claimDeleted", {
