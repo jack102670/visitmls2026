@@ -97,7 +97,7 @@
           <hr class="h-mx-auto bg-gray-100 border-0 rounded" />
         
         <section class="mx-auto pt-2">
-          <div class="flex justify-between items-center">
+          <!-- <div class="flex justify-between items-center">
             <div>
               <h2 class="text-lg font-medium text-gray-800 dark:text-white capitalize">
                 checker claim
@@ -106,9 +106,9 @@
                 </span>
               </h2>
             </div>
-          </div>
+          </div> -->
 
-          <div class="flex flex-col mt-6">
+          <div class="flex flex-col">
             <div class=" py-2 flex flex-col md:flex-row justify-between items-center md:items-end">
                 <div class="flex items-center">
                   <div class="space-x-2">

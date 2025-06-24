@@ -697,7 +697,7 @@
                             <label class="block text-sm font-medium text-gray-700" for="expenseAttachment">Attachment(s)
                               (png,
                               jpeg, pdf, or xlsx) <span class="text-red-500">*</span></label>
-                            <file-pond :ref="`pond-${field.id}`" name="files" label-idle="Drop files here..." @addfile="(error, file) =>
+                            <file-pond :ref="`pond-expense-${index}`" name="files" label-idle="Drop files here..." @addfile="(error, file) =>
                               handleAddFileOT(error, file, newExpense.files)
                               " @removefile="(error, file) =>
                                 handleRemoveFileOT(
@@ -3072,6 +3072,10 @@ export default {
               this.updateFieldVisibility(transportField.value);
               this.updateFieldVisibility5(transportField.value);
               this.updateFieldVisibility6(transportField.value);
+
+              // this.$nextTick(() => {
+              //   this.updateFieldVisibility10();
+              // });
             }
 
             const tripField = tab.fields.find(
@@ -3365,13 +3369,17 @@ export default {
                     : [];
                   
                   // Initialize FilePond with new files
-                  if (this.$refs[`pond-${field.id}`] && field.value.length > 0) {
+                  if (this.$refs[`pond-${field.id}`] && Array.isArray(field.value) && field.value.length > 0) {
                     this.$nextTick(() => {
                       this.$refs[`pond-${field.id}`].forEach(pond => {
                         if (pond && typeof pond.addFile === 'function') {
-                          field.value.forEach(file => {
-                              pond.addFile(file)                            
-                          });
+                          // field.value.forEach(file => {
+                          //     pond.addFile(file)                            
+                          // });
+                          const files = Array.isArray(field.value) ? field.value : [field.value];
+                          files
+                            .filter(file => !!file) // filter out null/undefined
+                            .forEach(file => pond.addFile(file));
                         }
                       });
                     });
@@ -4034,7 +4042,16 @@ export default {
         "transportNumberPlateOT", "transportModelOT", "petrolTypeOT", "petrolLitreOT", "TollOT", "UploadTollOT", "ParkingOT", "UploadParkingOT",
         "DepartureAirportOT", "ArrivalAirportOT", "FlightClassOT"
       ];
-      allFields.forEach(id => { setHidden(id, true); setValue(id); });
+      // allFields.forEach(id => { setHidden(id, true); setValue(id); });
+
+      const preserveFields = ["TransportOT", "PublicTransportSpecOT"];
+
+      allFields.forEach(id => {
+        setHidden(id, true);
+        if (!preserveFields.includes(id)) {
+          setValue(id);
+        }
+      });
 
       // Always show TransportOT
       setHidden("TransportOT", false);
@@ -4368,11 +4385,20 @@ export default {
         "transportNumberPlate", "transportModel", "petrolType", "petrolLitre", "TollLT", "UploadTollLT", "ParkingLT", "UploadParkingLT",
         "DepartureAirportLT", "ArrivalAirportLT", "FlightClassLT"
       ];
-      allFields.forEach(id => { setHidden(id, true); setValue(id); });
+      // allFields.forEach(id => { setHidden(id, true); setValue(id); });
+
+      const preserveFields = ["TransportLT", "tripwayLT", "PublicTransportSpec", "ReturndateLT"];
+
+      allFields.forEach(id => {
+        setHidden(id, true);
+        if (!preserveFields.includes(id)) {
+          setValue(id);
+        }
+      });
 
       // Always show TransportLT and tripwayLT
-      setHidden("TransportLT", false);
       setHidden("tripwayLT", false);
+      setHidden("TransportLT", false);
 
       if (tripType === "Round Trip") {
         setHidden("ReturndateLT", false);
