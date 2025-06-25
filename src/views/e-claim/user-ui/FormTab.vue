@@ -1949,7 +1949,6 @@ export default {
               label: "Claims Amount(RM)",
               type: "number",
               value: "",
-              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -3352,6 +3351,10 @@ export default {
                 if (field.type === "date") {
                   field.value = formatDateString(newData[field.id]);
                 } 
+                else if(field.id === "MonthHR"){
+                  const monthInOption = monthOptions.find(option => option.label === newData[field.id])?.value;
+                  field.value = monthInOption;
+                }
                 // Handle file fields
                 else if (field.type === "file") {
                   // Clear existing files first
