@@ -7,10 +7,10 @@
           <div class="col-span-4">
             <div class="flex flex-col">
               <div class="ml-5">
-                <h2 class="text-3xl font-bold text-blue-900 dark:text-slate-200">
+                <h2 class="text-3xl font-bold text-blue-900 dark:text-blue-800">
                   PKT GROUP OF COMPANIES
                 </h2>
-                <h3 class="text-xl font-bold text-blue-800 dark:text-slate-200">
+                <h3 class="text-xl font-bold text-blue-700">
                   Claim for Reimbursement of All Expenses
                 </h3>
               </div>

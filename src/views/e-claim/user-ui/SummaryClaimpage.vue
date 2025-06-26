@@ -108,7 +108,7 @@
                   </thead>
                   <tbody class="dark:bg-gray-800 divide-y divide-gray-400 dark:divide-gray-600">
                     <tr v-for="claim in claimDatas" :key="claim.no"
-                      class="hover:bg-gray-200 dark:hover:bg-gray-800transition-colors duration-200">
+                      class="hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200">
                       <td class="px-4 py-3 text-center text-xs">
                        <p>{{ claim.No }}</p> 
                       </td>
@@ -326,12 +326,13 @@
               <td class="">{{ claimDetails.approved_date || '-' }}</td>
             </tr>
             
-            <tr v-if="['APPROVED','REJECTED', 'REIMBURSED', 'REVISED'].includes(simplifiedApproverStatus)"
+            <tr v-if="['ACKNOWLEDGEMENT','APPROVED','REJECTED', 'REIMBURSED', 'REVISED'].includes(simplifiedApproverStatus)"
               class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
                 <div
                   class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2"
                   :class="{
+                    'bg-blue-100/60 dark:bg-gray-800': simplifiedApproverStatus === 'ACKNOWLEDGEMENT',
                     'bg-green-100/60 dark:bg-gray-800': simplifiedApproverStatus === 'APPROVED',
                     'bg-amber-100/60 dark:bg-gray-800': simplifiedApproverStatus === 'REVISED',
                     'bg-red-100/60 dark:bg-gray-800': simplifiedApproverStatus === 'REJECTED',
@@ -339,6 +340,7 @@
                   }">
                   <span :class="{
                     'h-1.5 w-1.5 rounded-full': true,
+                    'bg-blue-500': simplifiedApproverStatus === 'ACKNOWLEDGEMENT',
                     'bg-green-500': simplifiedApproverStatus === 'APPROVED',
                     'bg-amber-500': simplifiedApproverStatus === 'REVISED',
                     'bg-red-500': simplifiedApproverStatus === 'REJECTED',
@@ -346,6 +348,7 @@
                   }"></span>
                   <span :class="{
                     'text-xs font-normal': true,
+                    'text-blue-500': simplifiedApproverStatus === 'ACKNOWLEDGEMENT',
                     'text-green-500': simplifiedApproverStatus === 'APPROVED',
                     'text-amber-500': simplifiedApproverStatus === 'REVISED',
                     'text-red-500': simplifiedApproverStatus === 'REJECTED',
@@ -355,11 +358,12 @@
                   </span>
                 </div>
               </th>
-              <td class="pl-6">{{ claimDetails.approver_name || '-' }}</td>
-              <td class="">{{ claimDetails.approver_designation || '-' }}</td>
-              <td>{{ claimDetails.approver_department || '-' }}</td>
-              <td class="">{{ claimDetails.approved_date || '-' }}</td>
+              <td class="pl-6">{{ claimDetails.acknow_name || '-' }}</td>
+              <td class="">{{ claimDetails.acknow_designation || '-' }}</td>
+              <td>{{ claimDetails.acknow_department || '-' }}</td>
+              <td class="">{{ claimDetails.acknow_date || '-' }}</td>
             </tr>
+
             <tr v-if="simplifiedFinanceStatus === 'REIMBURSED'"
              class="text-wrap h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
               <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
@@ -531,7 +535,7 @@
         <!-- File List -->
         <div v-show="showFileList"
           class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
-          <div class="bg-white w-full max-w-3xl mx-4 shadow-xl relative">
+          <div class="bg-white dark:bg-gray-700 w-full max-w-3xl mx-4 shadow-xl relative">
             <button @click="showFileList = false"
               class="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -773,6 +777,8 @@ export default {
 
     simplifiedApproverStatus() {
       switch (this.adminStatus) {
+        case 'ACKNOWLEDGEMENT BY HR & ADMIN':
+          return 'ACKNOWLEDGEMENT';
         case 'APPROVED BY HR & ADMIN':
           return 'APPROVED';
         case 'REJECTED BY HR & ADMIN':

@@ -116,7 +116,7 @@
                   </thead>
                   <tbody class="dark:bg-gray-800 divide-y divide-gray-400 dark:divide-gray-600">
                     <tr v-for="claim in claimDatas" :key="claim.no"
-                      class="hover:bg-gray-200 dark:hover:bg-gray-800transition-colors duration-200">
+                      class="hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200">
                       <td class="px-4 py-3 text-center text-xs">
                        <p>{{ claim.No }}</p> 
                       </td>
@@ -265,8 +265,22 @@
                 <td>{{ claimDetails.approved_date }}</td>
               </tr>
 
+              <!-- Show only OPEN if not yet reimbursed -->
+              <tr v-if="getSimplifiedStatus(statusApprover) === 'ACKNOWLEDGEMENT'" class="text-wrap text-left text-xs border-t border-gray-400 dark:border-gray-600">
+                <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                  <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2 bg-blue-100/60 dark:bg-gray-800">
+                    <span class="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
+                    <span class="text-xs font-normal text-blue-500">ACKNOWLEDGEMENT</span>
+                  </div>
+                </th>
+                <td class="pl-6">{{ claimDetails.acknow_name }}</td>
+                <td>{{ claimDetails.acknow_designation }}</td>
+                <td>{{ claimDetails.acknow_department }}</td>
+                <td>{{ claimDetails.acknow_date }}</td>
+              </tr>
+
               <!-- Show only APPROVED if not yet reimbursed -->
-              <tr v-else-if="getSimplifiedStatus(statusApprover) === 'APPROVED' || getSimplifiedStatus(statusApprover) === 'PENDING'" class="text-wrap text-left text-xs border-t border-gray-400 dark:border-gray-600">
+              <tr v-else-if="getSimplifiedStatus(statusApprover) === 'APPROVED'" class="text-wrap text-left text-xs border-t border-gray-400 dark:border-gray-600">
                 <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
                   <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2 bg-green-100/60 dark:bg-gray-800">
                     <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
@@ -521,7 +535,7 @@
         <!-- File List -->
         <div v-show="showFileList"
           class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center">
-          <div class="bg-white max-w-4xl sm:w-4/5 rounded-xl flex flex-col relative p-4">
+          <div class="bg-white dark:bg-gray-700 max-w-4xl sm:w-4/5 rounded-xl flex flex-col relative p-4">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="absolute right-3 top-3 size-6" @click="showFileList = false">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -712,12 +726,12 @@ export default {
     getSimplifiedStatus(status) {
       if (!status) return 'PENDING';
       const statusMap = {
+        'ACKNOWLEDGEMENT BY HR & ADMIN': 'ACKNOWLEDGEMENT',
         'APPROVED BY HR & ADMIN': 'APPROVED',
         'REJECTED BY HR & ADMIN': 'REJECTED',
         'REQUESTER REVISION NEEDED BY HR & ADMIN.': 'REVISED',
         'REIMBURSED BY HR & ADMIN': 'REIMBURSED',
         'RESUBMITTED': 'PENDING',
-        'ACKNOWLEDGEMENT BY HR & ADMIN': 'PENDING',
         'OPEN': 'PENDING'
       };
       return statusMap[status] || status;

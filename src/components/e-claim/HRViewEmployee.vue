@@ -25,7 +25,7 @@
                       <div class="space-x-2">
                         <label for="number-dd" class="text-md font-medium">Sort</label>
                         <select id="number-dd" name="number" @change="updateItemsPerPage"
-                          class="rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 text-sm bg-gray-50 ">
+                          class="rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 text-sm bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white ">
                           <option value="10">10</option>
                           <option value="50">50</option>
                           <option value="100">100</option>

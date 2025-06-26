@@ -110,7 +110,7 @@
                   </thead>
                   <tbody class="dark:bg-gray-800 divide-y divide-gray-400 dark:divide-gray-600">
                     <tr v-for="claim in claimDatas" :key="claim.no"
-                      class="hover:bg-gray-200 dark:hover:bg-gray-800transition-colors duration-200">
+                      class="hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200">
                       <td class="px-4 py-3 text-center text-xs">
                         <p>{{ claim.No }}</p>
                       </td>
@@ -503,7 +503,7 @@
         <!-- File List -->
         <div v-show="showFileList"
           class="fixed inset-0 bg-black/40 z-50 flex justify-center items-center overflow-hidden">
-          <div class="bg-white w-full max-w-3xl mx-4 shadow-xl relative">
+          <div class="bg-white dark:bg-gray-700 w-full max-w-3xl mx-4 shadow-xl relative">
             <button @click="showFileList = false"
               class="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
