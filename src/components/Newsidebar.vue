@@ -509,6 +509,7 @@ export default {
     toggleSidebar() {
       this.open = !this.open;
       const element = document.querySelector('main');
+      console.log('element', element);
       if (element && !this.open) {
         element.classList.add('become-big');
       } else if (element && this.open) {
@@ -549,7 +550,7 @@ export default {
 }
 
 .become-big {
-  margin-left: 0;
+  margin-left: 0 !important;
   transition: all 0.5s ease;
 }
 

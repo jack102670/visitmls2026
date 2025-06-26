@@ -1,6 +1,6 @@
 <template>
   <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
-    <div class="popup overflow-y-auto lg:w-3/5 md:w-3/4 w-5/6 bg-white h-[90%] rounded-xl relative px-10 pb-6">
+    <div class="popup overflow-y-auto lg:w-3/5 md:w-3/4 w-5/6 bg-white dark:bg-gray-800 h-[85%] rounded-xl relative px-10 pb-6">
       <!-- Heading Title -->
       <h1 class="text-3xl font-bold py-6 border-b-2 border-black">
         CREATE NEW CLAIM
@@ -275,15 +275,15 @@
             >
           </div>
         </div> -->
-        <div class="pt-5">
+        <!-- <div class="pt-5">
           <label class="font-semibold text-gray-700 dark:text-gray-200" for="username">Upload Attachment (png, jpeg, pdf
             or xlsx)</label>
           <h1 class="text-black-500 text-sm">
             Note : Support document or job scope is require for overseas travel or company invitation.
-          </h1>
+          </h1> -->
             <!-- component -->
 
-          <div>
+          <!-- <div>
             <div class="pt-3">
               <FilePond ref="pond" name="file" :server="null" :allowMultiple="true" :maxFileSize="'5MB'"
                 :acceptedFileTypes="[
@@ -293,12 +293,12 @@
                   'application/vnd.ms-excel',
                   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 ]" @addfile="handleAddFile" @removefile="handleRemoveFile" />
-            </div>
+            </div> -->
             <!-- component -->
-          </div>
-        </div>
+          <!-- </div>
+        </div> -->
 
-        <h1 class="text-red-500 text-sm">
+        <h1 class="text-red-500 text-sm my-4">
           Note : Claims must be submitted by the 15th of each month.
           Submissions made after this date will be processed in the
           following month.
@@ -325,7 +325,7 @@
           </div>
           <div class="flex justify-center mt-4">
             <button type="cancel" @click.prevent="submitForm(-1)"
-              class="bg-[#f7fbff] px-8 py-2.5 leading-5 text-gray transition-colors duration-300 transform rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200">
+              class="bg-[#f7fbff] dark:bg-gray-900 dark:hover:bg-gray-950 px-8 py-2.5 leading-5 text-gray transition-colors duration-300 transform rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200">
               Cancel
             </button>
           </div>
@@ -367,9 +367,9 @@ const FilePond = vueFilePond(
   FilePondPluginFileValidateType
 );
 export default {
-  components: {
-    FilePond,
-  },
+  // components: {
+  //   FilePond,
+  // },
   emits: ["close"],
   data() {
     return {

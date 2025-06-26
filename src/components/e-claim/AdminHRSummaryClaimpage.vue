@@ -358,8 +358,17 @@
         <div class="flex space-x-2 py-2">
           <!-- Remark/approve/reject/reimburshed button -->
           <div class="w-full">
+            <div v-if="claimDetails.admin_status === 'OPEN'" class="w-full flex items-center justify-end">
+              <div>
+                <button @click="confirmAcknowledge = true"
+                  class="mr-2 text-sm font-semibold py-2 sm:w-24 md:w-36 bg-green-500 hover:bg-green-600 rounded-lg text-white">
+                  Acknowledge
+                </button>
+              </div>
+
+            </div>
             <div
-              v-if="claimDetails.admin_status !== 'APPROVED BY HR & ADMIN' && claimDetails.admin_status !== 'REJECTED BY HR & ADMIN' && claimDetails.admin_status !== 'REIMBURSED' &&  claimDetails.admin_status === 'OPEN' || claimDetails.admin_status === 'RESUBMITTED'"
+              v-if="claimDetails.admin_status !== 'APPROVED BY HR & ADMIN' && claimDetails.admin_status !== 'REJECTED BY HR & ADMIN' && claimDetails.admin_status !== 'REIMBURSED' &&  claimDetails.admin_status === 'ACKNOWLEDGEMENT BY HR & ADMIN' || claimDetails.admin_status === 'RESUBMITTED'"
               class="w-full flex items-center justify-between">
               <div class="flex items-center">
                 <label class="font-semibold whitespace-nowrap mr-2">Overall Remark:</label>
@@ -392,6 +401,24 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Acknowledge Confirmation -->
+        <div v-show="confirmAcknowledge"
+          class="bg-black backdrop-filter backdrop-blur-sm bg-opacity-50  dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center">
+          <div class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center">
+            <h1 class="text-2xl font-bold">Do you confirm to acknowledge?</h1>
+            <div class="flex mt-4">
+              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
+                @click="confirmAcknowledge = false">
+                Back
+              </button>
+              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
+                @click="ConfirmAcknowledge">
+                Confirm
+              </button>
             </div>
           </div>
         </div>
@@ -624,6 +651,7 @@ export default {
       showFileList: false,
 
       seeMore: false,
+      confirmAcknowledge: false,
       confirmReject: false,
       confirmApprove: false,
       confirmReimburse: false,
@@ -633,6 +661,7 @@ export default {
       loadingText: '',
       rejectApprover: false,
       rejectVerifier: false,
+      acknowledge: false,
       approve: false,
       verified: false,
       reimbursed: false,
@@ -648,7 +677,8 @@ export default {
       referenceNumber: 'HS-HR-2024-07-5800',
 
       outpatientTotal: 0,
-      medicalAndDentalTotal: 0
+      medicalAndDentalTotal: 0,
+      phoneTotal: 0,
     };
   },
   computed: {
@@ -687,6 +717,7 @@ export default {
         'REQUESTER REVISION NEEDED BY HR & ADMIN.': 'REVISED',
         'REIMBURSED BY HR & ADMIN': 'REIMBURSED',
         'RESUBMITTED': 'PENDING',
+        'ACKNOWLEDGEMENT BY HR & ADMIN': 'PENDING',
         'OPEN': 'PENDING'
       };
       return statusMap[status] || status;
@@ -757,6 +788,7 @@ export default {
 
     let outpatientTotal = 0;
     let medicalAndDentalTotal = 0;
+    let phoneTotal = 0;
 
     const response = await axios.get(
       'http://172.28.28.116:6165/api/User/GetMedicalLeave/' +
@@ -778,6 +810,7 @@ export default {
           medicalAndDentalTotal += result[i].claim_amount;
           this.medicalAndDentalTotal = medicalAndDentalTotal;
         }
+
       const editedDetail = {
         IC_Number: result[i].ic_number,
         Date_Leave: result[i].date_leave_taken,
@@ -832,6 +865,7 @@ export default {
       };
       details.push(editedDetail);
     }
+    this.phoneTotal = amount;
     if (details.length > 0) {
       this.claimDatasDetails.push(details);
       this.claimDataTotalAmount.push(amount);
@@ -941,6 +975,12 @@ ExportToExcel() {
       document.head.appendChild(styleSheet);
       print();
     },
+
+    ConfirmAcknowledge() {
+      this.confirmAcknowledge = false;
+      this.ApproveOrReject('Acknowledge');
+    },
+
     // click function after confirm the approve
     ConfirmApprove() {
       this.confirmApprove = false;
@@ -1027,7 +1067,43 @@ ExportToExcel() {
           );
         }
       });
-      if (AoR == 'Approve') {
+
+      if (AoR == 'Acknowledge'){
+        this.acknowledge = true;
+        this.loadingText = 'Uploading';
+        this.loading = true;
+
+        const ackData = {
+          acknow_name: userData.userName,
+          acknow_designation: userData.designation,
+          acknow_department: userData.department,
+          acknow_status: "ACKNOWLEDGEMENT",
+          requester_email: this.claimDetails.email ? this.claimDetails.email : '-',
+          requester_name: this.claimDetails.name ? this.claimDetails.name : '-',
+          report_name: this.claimDetails.report_name ? this.claimDetails.report_name : '-',
+          reference_number: this.claimDetails.reference_number,
+        }
+
+        console.log("Acknowledge data to be sent to admin:", ackData);
+        try {
+          const response = await axios.put('http://172.28.28.116:6165/api/Admin/Acknowledge_Claim_HR', ackData)
+      //    console.log('API response after approval', response.data);
+          localStorage.setItem('ApproveOrNot', 'acknowledge');
+          this.loading = false;
+        } catch (error) {
+          this.loading = false;
+          console.error('API error', error);
+          console.error('Error Details:', {
+            message: error.message,
+            response: error.response?.data,
+            status: error.response?.status,
+            statusText: error.response?.statusText,
+            validationErrors: error.response?.data?.errors
+          }
+          );
+        }
+
+      } else if (AoR == 'Approve') {
         this.approve = true;
         this.dateApprover = moment(new Date()).format('D MMM YYYY');
         this.loadingText = 'Uploading';
@@ -1046,9 +1122,11 @@ ExportToExcel() {
           reference_number: this.claimDetails.reference_number,
           
 
-          outpatient_total: Number(this.outpatientTotal).toFixed(2),
-          medical_dental_total: Number(this.medicalAndDentalTotal).toFixed(2),
-          total_claim_amount: Number(this.outpatientTotal + this.medicalAndDentalTotal).toFixed(2)
+          total_phone: this.phoneTotal,
+          total_outpatient: this.outpatientTotal,
+          total_medic_dental: this.medicalAndDentalTotal,
+          requester_id: this.claimDetails.requester_id ? this.claimDetails.requester_id : '-',
+
           
         };
         console.log("Approved data to be sent to admin Approved-claim-HR:", approveData);
@@ -1083,6 +1161,9 @@ ExportToExcel() {
           this.loading = true;
 
           const approveData = {
+            total_phone: this.phoneTotal,
+            total_outpatient: this.outpatientTotal,
+            total_medic_dental: this.medicalAndDentalTotal,
             approver_name: userData.userName,
             approver_designation: userData.designation,
             approver_department: userData.department,
@@ -1092,12 +1173,13 @@ ExportToExcel() {
             requester_name: this.claimDetails.name ? this.claimDetails.name : '-',
             report_name: this.claimDetails.report_name ? this.claimDetails.report_name : '-',
             verifier_email: this.claimDetails.verifier_email ? this.claimDetails.verifier_email : 'test@gmail.com',
+            requester_id: this.claimDetails.requester_id ? this.claimDetails.requester_id : '-',
             reference_number: this.claimDetails.reference_number
           };
 
           const response = await axios.put('http://172.28.28.116:6165/api/Admin/Approve_Claim_HR', approveData);
           this.loading = false;
-     //     console.log('API response', response.data);
+         console.log('API response', response.data);
           localStorage.setItem('ApproveOrNot', 'reject');
         } catch (error) {
           console.error('Error during Reject:', {
@@ -1124,7 +1206,11 @@ ExportToExcel() {
             requester_name: this.claimDetails.name ? this.claimDetails.name : '-',
             report_name: this.claimDetails.report_name ? this.claimDetails.report_name : '-',
             verifier_email: this.claimDetails.verifier_email ? this.claimDetails.verifier_email : 'test@gmail.com',
-            reference_number: this.claimDetails.reference_number
+            reference_number: this.claimDetails.reference_number,
+            total_phone: this.phoneTotal,
+            total_outpatient: this.outpatientTotal,
+            total_medic_dental: this.medicalAndDentalTotal,
+            requester_id: this.claimDetails.requester_id ? this.claimDetails.requester_id : '-',
           };
 
 
@@ -1159,13 +1245,17 @@ ExportToExcel() {
             requester_name: this.claimDetails.name ? this.claimDetails.name : '-',
             report_name: this.claimDetails.report_name ? this.claimDetails.report_name : '-',
             verifier_email: this.claimDetails.verifier_email ? this.claimDetails.verifier_email : 'test@gmail.com',
-            reference_number: this.claimDetails.reference_number
+            reference_number: this.claimDetails.reference_number,
+            total_phone: this.phoneTotal,
+            total_outpatient: this.outpatientTotal,
+            total_medic_dental: this.medicalAndDentalTotal,
+            requester_id: this.claimDetails.requester_id ? this.claimDetails.requester_id : '-',
           };
 
           const response = await axios.put('http://172.28.28.116:6165/api/Admin/Approve_Claim_HR', approveData);
           this.loading = false;
 
-      //    console.log('API response', response.data);
+        //    console.log('API response', response.data);
           localStorage.setItem('ApproveOrNot', 'reimbursed');
 
         } catch (error) {

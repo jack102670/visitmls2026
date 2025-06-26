@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app" class="overflow-x-hidden">
     <router-view name="Sidebar" />
-    <RouterView />
+    <RouterView class=""/>
   </div>
 </template>
 

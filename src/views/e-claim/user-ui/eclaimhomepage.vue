@@ -1,5 +1,5 @@
 <template>
-  <main class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] p-4 sm:ml-64">
+  <main class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-[#111827] dark:text-slate-200 p-4 sm:ml-64 w-auto">
     <div class="">
       <div
         class="relative bg-[#f7fbff] dark:bg-gray-800 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
@@ -7,10 +7,10 @@
           <div class="col-span-4">
             <div class="flex flex-col">
               <div class="ml-5">
-                <h2 class="text-3xl font-bold text-blue-900 dark:text-white">
+                <h2 class="text-3xl font-bold text-blue-900 dark:text-slate-200">
                   PKT GROUP OF COMPANIES
                 </h2>
-                <h3 class="text-xl font-bold text-blue-800 dark:text-white">
+                <h3 class="text-xl font-bold text-blue-800 dark:text-slate-200">
                   Claim for Reimbursement of All Expenses
                 </h3>
               </div>
@@ -133,7 +133,7 @@
                   <div class="space-x-2">
                     <label for="number-dd" class="text-md font-medium">Sort</label>
                     <select id="number-dd" name="number" @change="updateItemsPerPage"
-                      class="rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 text-sm bg-gray-50 ">
+                      class="rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 text-sm bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
                       <option value="10">10</option>
                       <option value="50">50</option>
                       <option value="100">100</option>
@@ -196,7 +196,7 @@
                       </th> -->
 
                       <th scope="col"
-                        class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        class="w-1/6 px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-x-3">
                           <span>Status</span>
                         </div>
@@ -545,6 +545,7 @@ export default {
         REQUESTER: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-amber-100/60 dark:bg-gray-800',
         CLOSE: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800',
         OPEN: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-indigo-100/60 dark:bg-gray-800',
+        ACKNOWLEDGEMENT: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-indigo-100/60 dark:bg-gray-800',
         APPROVED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
         'APPROVED. AWAITING PAYMENT.': 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
         COMPLETED: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800',
@@ -562,6 +563,7 @@ export default {
         RESUBMITTED: 'h-1.5 w-1.5 rounded-full bg-amber-500',
         REQUESTER: 'h-1.5 w-1.5 rounded-full bg-amber-500',
         OPEN: 'h-1.5 w-1.5 rounded-full bg-indigo-500',
+        ACKNOWLEDGEMENT: 'h-1.5 w-1.5 rounded-full bg-indigo-500',
         APPROVED: 'h-1.5 w-1.5 rounded-full bg-emerald-500',
         COMPLETED: 'h-1.5 w-1.5 rounded-full bg-blue-500',
         REJECTED: 'h-1.5 w-1.5 rounded-full bg-red-500',
@@ -578,6 +580,7 @@ export default {
         RESUBMITTED: 'text-sm font-normal text-amber-500',
         REQUESTER: 'text-sm font-normal text-amber-500',
         OPEN: 'text-sm font-normal text-indigo-500',
+        ACKNOWLEDGEMENT: 'text-sm font-normal text-indigo-500',
         APPROVED: 'text-sm font-normal text-emerald-500',
         COMPLETED: 'text-sm font-normal text-blue-500',
         REJECTED: 'text-sm font-normal text-red-500',

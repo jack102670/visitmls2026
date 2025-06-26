@@ -5328,6 +5328,8 @@ export default {
             });
           }
         }
+
+        this.scrollToTop();
       });
     },
     submitForm2(tabTitle) {
@@ -5352,9 +5354,9 @@ export default {
         if(this.edit){
         this.$emit("saveEdit", formattedData);
         this.edit = false;
-      }else{
-        this.$emit("formSubmitted", formattedData);
-      }
+        }else{
+          this.$emit("formSubmitted", formattedData);
+        }
         //   console.log("Formatted Form Data:", formattedData);
 
         this.entertainmentTabs.forEach((tab) => {
@@ -5375,9 +5377,14 @@ export default {
         this.attendees = [];
         // Your logic to handle form submission
         //    console.log('Form submitted successfully');
+
+        this.scrollToTop();
+
       } else {
         alert('Please fill all required fields before submitting.');
       }
+
+      
     },
 
     submitForm3(tabTitle) {
@@ -5425,6 +5432,9 @@ export default {
         });
         this.staffInvolved = [];
         //  console.log('Form submitted successfully');
+
+        this.scrollToTop();
+
       } else {
         alert('Please fill all required fields before submitting.');
       }
@@ -5518,6 +5528,8 @@ export default {
         //  console.log("Form submitted successfully");
         console.log("submitForm4 called for tab:", tabTitle);
         console.log("Other expenses:", this.otherExpenses);
+        this.scrollToTop();
+
       } else {
         alert("Please fill all required fields before submitting.");
       }
@@ -5598,7 +5610,13 @@ export default {
             }
           });
         });
-    }
+    },
+    scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // for smooth scrolling
+    });
+  }
   },
 };
 </script>
