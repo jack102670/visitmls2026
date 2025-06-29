@@ -1486,6 +1486,9 @@ export default {
 
       editingItem: {},
       editingIndex: null,
+
+      originalLimits: {},
+      isSaved: false,
     };
   },
 
@@ -1706,11 +1709,42 @@ export default {
     },
   },
 
-  created() {
+  async created() {
     this.fetchProfileData();
     this.fetchClaims();
     // console.log("Claims2:", this.claims);
     this.userDetails = store.getSession().userDetails;
+
+    try {
+        const username_id = this.userDetails.userId;
+        const response = await axios.get(` http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`);
+        const data = response.data.result[0];
+
+        if (data) {
+          
+          // Initialize limits only if they are not already set
+          if (!localStorage.getItem('initial_limit_medicaldental')) {
+            localStorage.setItem('initial_limit_medicaldental', data.limit_medicaldental);
+          }
+          if (!localStorage.getItem('initial_limit_outpatient')) {
+            localStorage.setItem('initial_limit_outpatient', data.limit_outpatient);
+          }
+          if (!localStorage.getItem('initial_limit_amount')) {
+            localStorage.setItem('initial_limit_amount', data.limit_amount);
+          }
+        }
+      }catch (error) {
+        console.error("Error fetching HR Data:", error);
+      }
+
+    this.originalLimits = {
+      outpatient: localStorage.getItem('remaining_limit_outpatient') || localStorage.getItem('initial_limit_outpatient'),
+      medicaldental: localStorage.getItem('remaining_limit_medicaldental') || localStorage.getItem('initial_limit_medicaldental'),
+      amount: localStorage.getItem('remaining_limit_amount') || localStorage.getItem('initial_limit_amount')
+
+    }
+
+    window.addEventListener('beforeunload', this.checkAndRestoreLimits);
   },
 
   mounted() {
@@ -1728,6 +1762,10 @@ export default {
       element.classList.remove("become-big");
     }
 
+  },
+
+  beforeUnmount(){
+    window.removeEventListener('beforeunload', this.checkAndRestoreLimits);
   },
 
   methods: {
@@ -2502,7 +2540,9 @@ export default {
         confirmButtonColor: "#3085d6",
       });
 
+      this.isSaved = true;
       this.$router.push({ name: "eclaimhomepages" });
+
     },
 
     todayFormatted() {
@@ -2713,7 +2753,16 @@ export default {
         console.error("error", error);
         throw error;
       }
+    },
+
+    checkAndRestoreLimits() {
+    if (!this.isSaved) {
+      // 恢复原始值
+      localStorage.setItem('remaining_limit_outpatient', this.originalLimits.outpatient);
+      localStorage.setItem('remaining_limit_medicaldental', this.originalLimits.medicaldental);
+      localStorage.setItem('remaining_limit_amount', this.originalLimits.amount);
     }
+  },
   },
 };
 </script>
