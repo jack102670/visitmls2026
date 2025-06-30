@@ -3735,39 +3735,40 @@ export default {
     },
 
     generateNewFileName(originalName, fieldId) {
+      // Determine the prefix based on fieldId
       let prefix = "";
       switch (fieldId) {
-        case "UploadMileageRMLT":
-        case "UploadMileageRMOT":
-          prefix = "MILEAGE_";
-          break;
-        case "UploadFareRMLT":
-        case "UploadFareRMOT":
-          prefix = "FARE_";
-          break;
-        case "UploadTollLT":
-        case "UploadTollOT":
-          prefix = "TOLL_";
-          break;
-        case "UploadParkingLT":
-        case "UploadParkingOT":
-          prefix = "PARKING_";
-          break;
-        case "UploadHotelRMLT":
-        case "UploadHotelRMOT":
-          prefix = "HOTEL_";
-          break;
-        // case "UploadPetrolCharged":
-        //   prefix = "PETROL_";
-        //   break;
-        // case "UploadEvCharged":
-        //   prefix = "EV_";
-        //   break;
-        default:
-          prefix = "SUPPORTING_DOC_";
+          case "UploadMileageRMLT":
+          case "UploadMileageRMOT":
+              prefix = "MILEAGE_";
+              break;
+          case "UploadFareRMLT":
+          case "UploadFareRMOT":
+              prefix = "FARE_";
+              break;
+          case "UploadTollLT":
+          case "UploadTollOT":
+              prefix = "TOLL_";
+              break;
+          case "UploadParkingLT":
+          case "UploadParkingOT":
+              prefix = "PARKING_";
+              break;
+          case "UploadHotelRMLT":
+          case "UploadHotelRMOT":
+              prefix = "HOTEL_";
+              break;
+          default:
+              prefix = "SUPPORTING_DOC_";
       }
+
+      // Check if the originalName already starts with the prefix
+      if (originalName.toUpperCase().startsWith(prefix)) {
+          return originalName; // Return as-is if prefix already exists
+      }
+
       return `${prefix}${originalName}`;
-    },
+  },
 
     handleAddFile(error, file, field) {
       if (error) {
@@ -3788,6 +3789,8 @@ export default {
         lastModified: file.file.lastModified,
       });
 
+      console.log('renamed', renamedFile)
+
       // Check if file is already in the list
       if (
         !field.value.some(
@@ -3798,6 +3801,7 @@ export default {
       ) {
         // Use a new array instance to trigger Vue's reactivity
         field.value = [...field.value, renamedFile];
+        console.log(field.value)
       }
 
       // console.log("File added:", renamedFile);
@@ -5256,36 +5260,51 @@ export default {
         } else if (field.type === "date" && field.value) {
           formattedData[field.id] = this.formatDate(field.value);
         } else if (field.type === "file") {
-          // Initialize empty array for this field's files
-          formattedData[field.id] = [];
-          
-          // Get the specific FilePond instance for this field
-          const pondRef = this.$refs[`pond-${field.id}`];
-          
-          // Handle both single instance and array cases
-          const pondInstances = Array.isArray(pondRef) ? pondRef : [pondRef];
-          
-          pondInstances.forEach(pond => {
-            if (pond && typeof pond.getFiles === 'function') {
-              const files = pond.getFiles();
-              console.log('Files in pond:', files);
-              
-              // Process each file
-              files.forEach(file => {
+    // Initialize empty array for this field's files
+    formattedData[field.id] = [];
+    
+    // Get the specific FilePond instance for this field
+    const pondRef = this.$refs[`pond-${field.id}`];
+    
+    // Handle both single instance and array cases
+    const pondInstances = Array.isArray(pondRef) ? pondRef : [pondRef];
+    
+    pondInstances.forEach(pond => {
+        if (pond && typeof pond.getFiles === 'function') {
+            const files = pond.getFiles();
+            console.log('Files in pond:', files);
+            
+            // Process each file
+            files.forEach(file => {
+                console.log('name', file.file?.name);
+                
                 // For already uploaded files (has serverId)
                 if (file.serverId) {
-                  formattedData[field.id].push(file.serverId);
+                    formattedData[field.id].push(file.serverId);
+                    console.log('server');
                 } 
-                // For new files (has File object)
+                // For new files (use renamed files from field.value)
                 else if (file.file) {
-                  formattedData[field.id].push(file.file);
+                    // Find the corresponding renamed file in field.value
+                    const renamedFile = field.value?.find(
+                        f => f.name === this.generateNewFileName(file.file.name, field.id)
+                    );
+                    
+                    if (renamedFile) {
+                        formattedData[field.id].push(renamedFile);
+                        console.log('renamed file pushed:', renamedFile);
+                    } else {
+                        // Fallback to original file (if not found in field.value)
+                        formattedData[field.id].push(file.file);
+                        console.log('original file pushed (fallback):', file.file);
+                    }
                 }
-              });
-            }
-          });
-          
-          console.log('Formatted file data:', formattedData[field.id]);
-        }else {
+            });
+        }
+    });
+    
+    console.log('Formatted file data:', formattedData[field.id]);
+}else {
           formattedData[field.id] = field.value;
         }
       });
