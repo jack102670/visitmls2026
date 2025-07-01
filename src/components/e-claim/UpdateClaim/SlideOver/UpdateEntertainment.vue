@@ -27,7 +27,7 @@
                     </div>
 
                     <div class="col-span-4">
-                        <label for="entertainment_type" class="font-medium text-sm">Entertainment Type</label>
+                        <label for="entertainment_type" class="font-medium text-sm">Type of Entertainment</label>
                         <select id="entertainment_type" v-model="entertainment.entertainment_type"
                             class="mt-1 text-xs block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                             <option v-for="(entertainment, index) in EntertainmentType" :key="index"
@@ -270,7 +270,7 @@ export default {
             // "ENTERTAINMENT-NON TRADE", "GIFT TO CLIENT", "GIFT TO OTHERS"],
             EntertainmentType: ["Breakfast", "Lunch", "Dinner", "Tea Break", "Others"],
             descriptionType: ["Entertainment-Client(Existing)", "Entertainment-Client(New/Potential)", 
-            "Entertainment-Non Trade", "Gift To Client", "Gift To Others-Non Trade","Meal For Staff" ],
+            "Entertainment-Non Trade", "Gift To Client", "Gift To Others-Non Trade" ],
             currentPage: 1,
             pageSize: 5,
             //entertainment: {},

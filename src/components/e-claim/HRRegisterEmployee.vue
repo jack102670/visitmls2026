@@ -136,7 +136,7 @@
                     id="sr"
                     v-model="formAccess.refreshment"
                   />
-                  <label class="ml-1" for="sr">Staff Refreshment</label>
+                  <label class="ml-1" for="sr">Staff Entertainment</label>
                 </div>
                 <div>
                   <input
@@ -463,7 +463,7 @@ export default {
         const response = await axios.get('http://172.28.28.116:6239/api/User/GetAllEmployees');
         this.positionOptions = response.data.result || [];
         const position = this.positionOptions.map((item) => item.position_title);
-        const uniquePosition = [...new Set(position)].sort((a, b) => a.localeCompare(b));
+        const uniquePosition = [...new Set(position.filter(p => !!p))].sort((a, b) => a.localeCompare(b));
         this.AllPositions = uniquePosition;
 
         console.log("list position", uniquePosition);

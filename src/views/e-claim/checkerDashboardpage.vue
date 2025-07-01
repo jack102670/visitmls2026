@@ -219,7 +219,7 @@
                           {{ item.requester_name }}
                         </td>
                         <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap text-left">
-                          RM {{ item.grand_total }}
+                          RM {{ parseFloat(item.grand_total).toFixed(2) }}
                         </td>
                         <td class="px-2 py-2 text-sm font-medium text-gray-700 whitespace-nowrap">
                           <div :class="[

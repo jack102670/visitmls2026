@@ -35,7 +35,7 @@ export const monthOptions = [
 ];
 
 
-export const refOptions = [
+export const refOptionsEnt = [
   {
     label: "Entertainment-Client(Existing)",
     value: "Entertainment-Client(Existing)",
@@ -49,7 +49,10 @@ export const refOptions = [
     value: "Entertainment-Non Trade",
   },
   { label: "Gift To Client", value: "Gift To Client" },
-  { label: "Gift To Others-Non Trade", value: "Gift To Others-Non Trade" },
+  { label: "Gift To Others-Non Trade", value: "Gift To Others-Non Trade" }
+];
+
+export const refOptionsSR = [
   { label: "Meal For Staff", value: "Meal For Staff" },
 ];
 

@@ -230,7 +230,7 @@
                           {{ claim.verifier_name }}
                         </td> -->
                         <td class="text-left px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                          RM {{ claim.grand_total }}
+                          RM {{ parseFloat(claim.grand_total).toFixed(2) }}
                         </td>
                         <!-- <td
                             class="px-12 py-4 text-sm font-medium text-gray-700 text-wrap whitespace-nowrap"

@@ -1296,7 +1296,7 @@ export default {
               'Total_Mileage(RM)': result[i].total_mileage,
               'Total_Fee(RM)': result[i].total_fee,
               Attachments: result[i].files,
-              Tab_Title: 'Local Outstation',
+              Tab_Title: 'Local Travelling',
               unique_code: result[i].unique_code,
               comment: result[i].comment,
             };
@@ -1340,7 +1340,7 @@ export default {
               Other_Expenses: result[i].oem,
               'Total_Fee(RM)': result[i].total_fee,
               Attachments: result[i].files,
-              Tab_Title: 'Overseas Outstation',
+              Tab_Title: 'Overseas Travelling',
               unique_code: result[i].unique_code,
               comment: result[i].comment,
             };
@@ -1376,7 +1376,7 @@ export default {
               Staff_Involved: result[i].sim,
               'Total_Fee(RM)': result[i].total_fee,
               Attachments: result[i].files,
-              Tab_Title: 'Staff Refreshment',
+              Tab_Title: 'Staff Entertainment',
               unique_code: result[i].unique_code,
               comment: result[i].comment,
             };
@@ -1559,17 +1559,17 @@ export default {
           comment: remark.remark,
           unique_code: remark.unique_code,
         };
-        if (remark.Tab_Title == 'Local Outstation') {
+        if (remark.Tab_Title == 'Local Travelling') {
           axios.put(
             'http://172.28.28.116:6165/api/Admin/Approver_Comment_Local',
             data
           );
-        } else if (remark.Tab_Title == 'Overseas Outstation') {
+        } else if (remark.Tab_Title == 'Overseas Travelling') {
           axios.put(
             'http://172.28.28.116:6165/api/Admin/Approve_Comment_Overseas',
             data
           );
-        } else if (remark.Tab_Title == 'Staff Refreshment') {
+        } else if (remark.Tab_Title == 'Staff Entertainment') {
           axios.put(
             'http://172.28.28.116:6165/api/Admin/Approve_Comment_Refreshment',
             data
