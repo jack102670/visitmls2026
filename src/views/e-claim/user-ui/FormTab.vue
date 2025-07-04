@@ -10,7 +10,7 @@
             profilestatus.phone_access === '1') ||
           (tab.title === 'Medical Bill Reimbursement' &&
             profilestatus.md_access === '1') ||
-          (tab.title === 'Staff Refreshment' &&
+          (tab.title === 'Staff Entertainment' &&
             profilestatus.staff_access === '1') ||
           (tab.title === 'Overseas Travelling' &&
             profilestatus.overseas_access === '1') ||
@@ -56,14 +56,14 @@
             <h1 class="text-gray-500 text-sm">
               Note: This form is intended for claiming expenses that do not fall
               under the Local Travelling, Overseas Travelling, Entertainment,
-              and Staff Refreshment.
+              and Staff Entertainment.
             </h1>
           </div>
         </section>
 
         <div v-if="
           tab.title !== 'Entertainment' &&
-          tab.title !== 'Staff Refreshment' &&
+          tab.title !== 'Staff Entertainment' &&
           tab.title !== 'Overseas Travelling'
         ">
           <form @submit.prevent="submitForm(tab)" :class="{
@@ -1116,7 +1116,7 @@
         <!-- End of Entertainment tab -->
 
         <!-- Staff Refreshment tab -->
-        <div v-if="tab.title === 'Staff Refreshment'">
+        <div v-if="tab.title === 'Staff Entertainment'">
           <div class="tabs">
             <button v-for="(subTab, subIndex) in staffRefreshmentTabs" :key="subIndex" @click="activeSubTab = subIndex"
               :class="{
@@ -1321,7 +1321,8 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import { monthOptions } from "@/javascript/eClaimOptions.js";
-import { refOptions } from "@/javascript/eClaimOptions.js";
+import { refOptionsEnt } from "@/javascript/eClaimOptions.js";
+import { refOptionsSR } from "@/javascript/eClaimOptions.js";
 import { TypeOptions } from "@/javascript/eClaimOptions.js";
 import axios from "axios";
 import { store } from "@/views/store.js";
@@ -1467,7 +1468,6 @@ export default {
               options: [
                 { label: "Motorcycle", value: "Motorcycle" },
                 { label: "Car", value: "Car" },
-                { label: "Truck", value: "Truck" },
               ],
               hidden: false,
               gridClass: "sm:col-span-1",
@@ -1479,8 +1479,10 @@ export default {
               value: "",
               required: true,
               options: [
-                { label: "E-Hailing", value: "E-Hailing" },
+                { label: "E-Hailing/Taxi", value: "E-Hailing/Taxi" },
                 { label: "Flight", value: "Flight" },
+                { label: "Train", value: "Train" },
+                { label: "Bus", value: "Bus" },
               ],
               hidden: false,
               gridClass: "sm:col-span-1",
@@ -1508,6 +1510,7 @@ export default {
               label: "Mileage/Kilometer(KM)",
               type: "number",
               value: "",
+              required: true,
               gridClass: "sm:col-span-1",
               hidden: false,
             },
@@ -1531,12 +1534,13 @@ export default {
             },
             {
               id: "petrolType",
-              label: "Type of Petrol",
+              label: "Type of Fuel",
               type: "select",
               value: "",
+              required: true,
               options: [
                 { label: "Diesel", value: "Diesel" },
-                { label: "Ron 95", value: "Ron 95" },
+                { label: "Petrol", value: "Petrol" },
               ],
               hidden: false,
               gridClass: "sm:col-span-1",
@@ -1547,6 +1551,7 @@ export default {
               type: "number",
               placeholder: "0.00",
               value: "",
+              required: true,
               gridClass: "sm:col-span-1",
               hidden: false,
             },
@@ -1555,6 +1560,7 @@ export default {
               label: "Petrol/EV(RM)",
               type: "number",
               value: "",
+              required: true,
               gridClass: "sm:col-span-1",
               placeholder: "0.00",
               hidden: false,
@@ -1653,7 +1659,7 @@ export default {
               type: "text",
               placeholder: "Hotel Name",
               value: "",
-              required: true,
+              // required: true,
               hidden: false,
               gridClass: "sm:col-span-1",
             },
@@ -1662,7 +1668,7 @@ export default {
               label: "Check In Date",
               type: "date",
               value: "",
-              required: true,
+              // required: true,
               hidden: false,
               gridClass: "sm:col-span-1",
             },
@@ -1671,7 +1677,7 @@ export default {
               label: "Check Out Date",
               type: "date",
               value: "",
-              required: true,
+              // required: true,
               hidden: false,
               gridClass: "sm:col-span-1",
             },
@@ -1680,7 +1686,7 @@ export default {
               label: "Number of Nights",
               type: "integer",
               value: "",
-              required: true,
+              // required: true,
               hidden: false,
               gridClass: "sm:col-span-1",
             },
@@ -1689,7 +1695,7 @@ export default {
               label: "Number of Rooms",
               type: "integer",
               value: "",
-              required: true,
+              // required: true,
               hidden: false,
               gridClass: "sm:col-span-1",
             },
@@ -1699,7 +1705,7 @@ export default {
               type: "text",
               placeholder: "Hotel Location",
               value: "",
-              required: true,
+              // required: true,
               hidden: false,
               gridClass: "sm:col-span-1",
             },
@@ -1710,7 +1716,7 @@ export default {
               value: "",
               gridClass: "sm:col-span-1",
               placeholder: "0.00",
-              required: true,
+              // required: true,
               hidden: false,
             },
             {
@@ -1882,7 +1888,7 @@ export default {
           fields: [],
         },
         {
-          title: "Staff Refreshment",
+          title: "Staff Entertainment",
           tabType: "Finance",
 
           gridLayout: "grid-cols-3",
@@ -2161,6 +2167,14 @@ export default {
               gridClass: "sm:col-span-2",
             },
             {
+              id: "ReceiptOthers",
+              label: "Receipt No.",
+              type: "text",
+              value: "",
+              required: true,
+              gridClass: "sm:col-span-2",
+            },
+            {
               id: "AmountRMOthers",
               label: "Amount(RM)",
               type: "number",
@@ -2248,7 +2262,6 @@ export default {
               options: [
                 { label: "Motorcycle", value: "Motorcycle" },
                 { label: "Car", value: "Car" },
-                { label: "Truck", value: "Truck" },
               ],
               hidden: false,
               gridClass: "sm:col-span-1",
@@ -2260,8 +2273,10 @@ export default {
               value: "",
               required: true,
               options: [
-                { label: "E-Hailing", value: "E-Hailing" },
+                { label: "E-Hailing/Taxi", value: "E-Hailing/Taxi" },
                 { label: "Flight", value: "Flight" },
+                { label: "Train", value: "Train" },
+                { label: "Bus", value: "Bus" },
               ],
               hidden: false,
               gridClass: "sm:col-span-1",
@@ -2289,6 +2304,7 @@ export default {
               label: "Mileage/Kilometer(KM)",
               type: "number",
               value: "",
+              required: true,
               gridClass: "sm:col-span-1",
               hidden: false,
             },
@@ -2312,12 +2328,13 @@ export default {
             },
             {
               id: "petrolTypeOT",
-              label: "Type of Petrol",
+              label: "Type of Fuel",
               type: "select",
               value: "",
+              required: true,
               options: [
                 { label: "Diesel", value: "Diesel" },
-                { label: "Ron 95", value: "Ron 95" },
+                { label: "Petrol", value: "Petrol" },
               ],
               hidden: false,
               gridClass: "sm:col-span-1",
@@ -2328,6 +2345,7 @@ export default {
               type: "number",
               placeholder: "0.00",
               value: "",
+              required: true,
               gridClass: "sm:col-span-1",
               hidden: false,
             },
@@ -2336,6 +2354,7 @@ export default {
               label: "Petrol/EV(RM)",
               type: "number",
               value: "",
+              required: true,
               gridClass: "sm:col-span-1",
               placeholder: "0.00",
               hidden: false,
@@ -2434,7 +2453,7 @@ export default {
               type: "text",
               placeholder: "Hotel Name",
               value: "",
-              required: true,
+              // required: true,
               hidden: false,
               gridClass: "sm:col-span-1",
             },
@@ -2443,7 +2462,7 @@ export default {
               label: "Check In Date",
               type: "date",
               value: "",
-              required: true,
+              // required: true,
               hidden: false,
               gridClass: "sm:col-span-1",
             },
@@ -2452,7 +2471,7 @@ export default {
               label: "Check Out Date",
               type: "date",
               value: "",
-              required: true,
+              // required: true,
               hidden: false,
               gridClass: "sm:col-span-1",
             },
@@ -2461,7 +2480,7 @@ export default {
               label: "Number of Nights",
               type: "integer",
               value: "",
-              required: true,
+              // required: true,
               hidden: false,
               gridClass: "sm:col-span-1",
             },
@@ -2470,7 +2489,7 @@ export default {
               label: "Number of Rooms",
               type: "integer",
               value: "",
-              required: true,
+              // required: true,
               hidden: false,
               gridClass: "sm:col-span-1",
             },
@@ -2480,7 +2499,7 @@ export default {
               type: "text",
               placeholder: "Hotel Location",
               value: "",
-              required: true,
+              // required: true,
               hidden: false,
               gridClass: "sm:col-span-1",
             },
@@ -2491,7 +2510,7 @@ export default {
               value: "",
               gridClass: "sm:col-span-1",
               placeholder: "0.00",
-              required: true,
+              // required: true,
               hidden: false,
             },
             {
@@ -2656,7 +2675,7 @@ export default {
               type: "select",
               value: "",
               required: true,
-              options: refOptions,
+              options: refOptionsEnt,
               gridClass: "sm:col-span-2",
             },
             {
@@ -2706,7 +2725,7 @@ export default {
             },
             {
               id: "TypeofRefreshmentSR",
-              label: "Type of Refreshment",
+              label: "Type of Entertainment",
               type: "select",
               value: "",
               required: true,
@@ -2715,7 +2734,7 @@ export default {
             },
             {
               id: "OtherTypeofStaffRefreshmentSR",
-              label: "Other Type of Staff Refreshment",
+              label: "Other Type of Staff Entertainment",
               type: "text",
               value: "",
               placeholder: "Specify other type",
@@ -2752,7 +2771,7 @@ export default {
               type: "select",
               value: "",
               required: true,
-              options: refOptions,
+              options: refOptionsSR,
               gridClass: "sm:col-span-2",
               // readonly: true,
             },
@@ -3424,7 +3443,7 @@ export default {
               }
               break;
               
-            case 'Staff Refreshment':
+            case 'Staff Entertainment':
               this.activeTab = 3;
               this.staffRefreshmentTabs.forEach(tab => populateFields(tab.fields));
               if(newData.staffInvolved.length > 0){
@@ -3497,7 +3516,6 @@ export default {
 
     this.updateLimitedAmount(this.selectedMedicalCategory);
   },
-
 
   methods: {
     formatYearOptions(years) {
@@ -4065,18 +4083,18 @@ export default {
       // Always show TransportOT
       setHidden("TransportOT", false);
 
-      // Personal or Company Transport
-      if (transportType === "Personal Transport" || transportType === "Company Transport") {
+      // Personal Transport
+      if (transportType === "Personal Transport") {
         setHidden("TransportSpecOT", false);
         setHidden("LocationStartOT", false);
         setHidden("LocationEndOT", false);
         setHidden("MileageKMOT", false);
-        setHidden("MileageRMOT", false);
-        setHidden("UploadMileageRMOT", false);
         setHidden("transportNumberPlateOT", false);
         setHidden("transportModelOT", false);
-        setHidden("petrolTypeOT", false);
-        setHidden("petrolLitreOT", false);
+        // setHidden("petrolTypeOT", false);
+        // setHidden("petrolLitreOT", false);
+        // setHidden("MileageRMOT", false);
+        // setHidden("UploadMileageRMOT", false);
         setHidden("TollOT", false);
         setHidden("UploadTollOT", false);
         setHidden("ParkingOT", false);
@@ -4100,7 +4118,46 @@ export default {
         // setHidden("UploadFareRMOT", true);
         // setHidden("PublicTransportSpecOT", true);
 
-        ["DepartureAirportOT", "ArrivalAirportOT", "FlightClassOT", "FareRMOT", "UploadFareRMOT", "PublicTransportSpecOT"]
+        ["DepartureAirportOT", "ArrivalAirportOT", "FlightClassOT", "FareRMOT", "UploadFareRMOT", "PublicTransportSpecOT", "petrolTypeOT", "petrolLitreOT", "MileageRMOT", "UploadMileageRMOT"]
+            .forEach(id => { setHidden(id, true); setValue(id); });
+      }
+
+      // Company Transport
+      if (transportType === "Company Transport") {
+        setHidden("TransportSpecOT", false);
+        setHidden("LocationStartOT", false);
+        setHidden("LocationEndOT", false);
+        // setHidden("MileageKMOT", false);
+        setHidden("transportNumberPlateOT", false);
+        setHidden("transportModelOT", false);
+        setHidden("petrolTypeOT", false);
+        setHidden("petrolLitreOT", false);
+        setHidden("MileageRMOT", false);
+        setHidden("UploadMileageRMOT", false);
+        setHidden("TollOT", false);
+        setHidden("UploadTollOT", false);
+        setHidden("ParkingOT", false);
+        setHidden("UploadParkingOT", false);
+        // setHidden("ReturendateOT", false);
+        setHidden("AccommodationOT", false);
+        setHidden("CheckInOT", false);
+        setHidden("CheckOutOT", false);
+        setHidden("HotelNightOT", false);
+        setHidden("HotelRoomOT", false);
+        setHidden("HotelCityOT", false);
+        setHidden("HotelRMOT", false);
+        setHidden("UploadHotelRMOT", false);
+        setHidden("MealAllowanceOT", false);
+
+        // Hide flight and fare fields
+        // setHidden("DepartureAirportOT", true);
+        // setHidden("ArrivalAirportOT", true);
+        // setHidden("FlightClassOT", true);
+        // setHidden("FareRMOT", true);
+        // setHidden("UploadFareRMOT", true);
+        // setHidden("PublicTransportSpecOT", true);
+
+        ["DepartureAirportOT", "ArrivalAirportOT", "FlightClassOT", "FareRMOT", "UploadFareRMOT", "PublicTransportSpecOT", "MileageKMOT"]
             .forEach(id => { setHidden(id, true); setValue(id); });
       }
 
@@ -4110,7 +4167,7 @@ export default {
         setHidden("LocationStartOT", false);
         setHidden("LocationEndOT", false);
 
-        if (publicTransportSpec === "E-Hailing") {
+        if (publicTransportSpec === "E-Hailing/Taxi" || publicTransportSpec === "Bus" || publicTransportSpec === "Train") {
           setHidden("MileageKMOT", false);
           setHidden("FareRMOT", false);
           setHidden("UploadFareRMOT", false);
@@ -4201,169 +4258,6 @@ export default {
         PublicTransportSpecField.hidden = false;
       }
     },
-    
-    // updateFieldVisibility10() {
-    //   const tab = this.tabs.find(t => t.title === "Local Travelling");
-    //   if (!tab) return;
-
-    //   // Get current values
-    //   const tripType = tab.fields.find(f => f.id === "tripwayLT")?.value;
-    //   const transportType = tab.fields.find(f => f.id === "TransportLT")?.value;
-    //   const publicTransportSpec = tab.fields.find(f => f.id === "PublicTransportSpec")?.value;
-
-    //   // Helper to show/hide fields
-    //   const setHidden = (id, hidden) => {
-    //     const field = tab.fields.find(f => f.id === id);
-    //     if (field) field.hidden = hidden;
-    //   };
-      
-
-    //   // Hide all by default
-    //   const allFields = [
-    //     "ReturndateLT", "AccommodationLT", "CheckInLT", "CheckOutLT", "HotelNightLT", "HotelRoomLT", "HotelCityLT", "HotelRMLT", "UploadHotelRMLT",
-    //     "MealAllowanceLT", "FareRMLT", "UploadFareRMLT", "TransportSpec", "PublicTransportSpec",
-    //     "LocationStart", "LocationEnd", "MileageKMLT", "MileageRMLT", "UploadMileageRMLT",
-    //     "transportNumberPlate", "transportModel", "petrolType", "petrolLitre", "TollLT", "UploadTollLT", "ParkingLT", "UploadParkingLT",
-    //     "DepartureAirportLT", "ArrivalAirportLT", "FlightClassLT"
-    //   ];
-    //   allFields.forEach(id => setHidden(id, true));
-
-    //   // Always show TransportLT and tripwayLT
-    //   setHidden("TransportLT", false);
-    //   setHidden("tripwayLT", false);
-
-    //   if (tripType === "Round Trip") {
-    //     setHidden("ReturndateLT", false);
-    //     setHidden("AccommodationLT", false);
-    //     setHidden("CheckInLT", false);
-    //     setHidden("CheckOutLT", false);
-    //     setHidden("HotelNightLT", false);
-    //     setHidden("HotelRoomLT", false);
-    //     setHidden("HotelCityLT", false);
-    //     setHidden("HotelRMLT", false);
-    //     setHidden("UploadHotelRMLT", false);
-    //     setHidden("MealAllowanceLT", false);
-
-    //     // Personal or Company Transport
-    //     if (transportType === "Personal Transport" || transportType === "Company Transport") {
-    //       setHidden("TransportSpec", false);
-    //       setHidden("LocationStart", false);
-    //       setHidden("LocationEnd", false);
-    //       setHidden("MileageKMLT", false);
-    //       setHidden("MileageRMLT", false);
-    //       setHidden("UploadMileageRMLT", false);
-    //       setHidden("transportNumberPlate", false);
-    //       setHidden("transportModel", false);
-    //       setHidden("petrolType", false);
-    //       setHidden("petrolLitre", false);
-    //       setHidden("TollLT", false);
-    //       setHidden("UploadTollLT", false);
-    //       setHidden("ParkingLT", false);
-    //       setHidden("UploadParkingLT", false);
-
-    //       // Flight fields and fare are always hidden for personal/company
-    //       setHidden("DepartureAirportLT", true);
-    //       setHidden("ArrivalAirportLT", true);
-    //       setHidden("FlightClassLT", true);
-    //       setHidden("FareRMLT", true);
-    //       setHidden("UploadFareRMLT", true);
-    //       setHidden("PublicTransportSpec", true);
-    //     }
-
-    //     // Public Transport
-    //     if (transportType === "Public Transport") {
-    //       setHidden("PublicTransportSpec", false);
-    //       setHidden("LocationStart", false);
-    //       setHidden("LocationEnd", false);
-
-    //         if (publicTransportSpec === "E-Hailing") {
-    //           setHidden("MileageKMLT", false);
-    //           setHidden("FareRMLT", false);
-    //           setHidden("UploadFareRMLT", false);
-    //           // Hide flight fields
-    //           setHidden("DepartureAirportLT", true);
-    //           setHidden("ArrivalAirportLT", true);
-    //           setHidden("FlightClassLT", true);
-    //         }
-
-    //         if (publicTransportSpec === "Flight") {
-    //           setHidden("MileageKMLT", false);
-    //           setHidden("FareRMLT", false);
-    //           setHidden("UploadFareRMLT", false);
-    //           setHidden("DepartureAirportLT", false);
-    //           setHidden("ArrivalAirportLT", false);
-    //           setHidden("FlightClassLT", false);
-    //         }
-
-    //       // Hide vehicle fields for public transport
-    //       [
-    //         "TransportSpec", "MileageRMLT", "UploadMileageRMLT", "transportNumberPlate", "transportModel",
-    //         "petrolType", "petrolLitre", "TollLT", "UploadTollLT", "ParkingLT", "UploadParkingLT"
-    //       ].forEach(id => setHidden(id, true));
-    //     }
-    //   }
-    //   else
-    //   {
-    //     // Personal or Company Transport
-    //     if (transportType === "Personal Transport" || transportType === "Company Transport") {
-    //       setHidden("TransportSpec", false);
-    //       setHidden("LocationStart", false);
-    //       setHidden("LocationEnd", false);
-    //       setHidden("MileageKMLT", false);
-    //       setHidden("MileageRMLT", false);
-    //       setHidden("UploadMileageRMLT", false);
-    //       setHidden("transportNumberPlate", false);
-    //       setHidden("transportModel", false);
-    //       setHidden("petrolType", false);
-    //       setHidden("petrolLitre", false);
-    //       setHidden("TollLT", false);
-    //       setHidden("UploadTollLT", false);
-    //       setHidden("ParkingLT", false);
-    //       setHidden("UploadParkingLT", false);
-
-    //       // Flight fields and fare are always hidden for personal/company
-    //       setHidden("DepartureAirportLT", true);
-    //       setHidden("ArrivalAirportLT", true);
-    //       setHidden("FlightClassLT", true);
-    //       setHidden("FareRMLT", true);
-    //       setHidden("UploadFareRMLT", true);
-    //       setHidden("PublicTransportSpec", true);
-    //     }
-
-    //     // Public Transport
-    //     if (transportType === "Public Transport") {
-    //       setHidden("PublicTransportSpec", false);
-    //       setHidden("LocationStart", false);
-    //       setHidden("LocationEnd", false);
-
-    //         if (publicTransportSpec === "E-Hailing") {
-    //           setHidden("MileageKMLT", false);
-    //           setHidden("FareRMLT", false);
-    //           setHidden("UploadFareRMLT", false);
-    //           // Hide flight fields
-    //           setHidden("DepartureAirportLT", true);
-    //           setHidden("ArrivalAirportLT", true);
-    //           setHidden("FlightClassLT", true);
-    //         }
-
-    //         if (publicTransportSpec === "Flight") {
-    //           setHidden("MileageKMLT", false);
-    //           setHidden("FareRMLT", false);
-    //           setHidden("UploadFareRMLT", false);
-    //           setHidden("DepartureAirportLT", false);
-    //           setHidden("ArrivalAirportLT", false);
-    //           setHidden("FlightClassLT", false);
-    //         }
-
-    //       // Hide vehicle fields for public transport
-    //       [
-    //         "TransportSpec", "MileageRMLT", "UploadMileageRMLT", "transportNumberPlate", "transportModel",
-    //         "petrolType", "petrolLitre", "TollLT", "UploadTollLT", "ParkingLT", "UploadParkingLT"
-    //       ].forEach(id => setHidden(id, true));
-    //     }
-
-    //   }
-    // },
 
     updateFieldVisibility10() {
       const tab = this.tabs.find(t => t.title === "Local Travelling");
@@ -4423,7 +4317,7 @@ export default {
         setHidden("UploadHotelRMLT", false);
         setHidden("MealAllowanceLT", false);
 
-        if (transportType === "Personal Transport" || transportType === "Company Transport") {
+        if (transportType === "Personal Transport") {
           setHidden("TransportSpec", false);
           setHidden("LocationStart", false);
           setHidden("LocationEnd", false);
@@ -4432,14 +4326,36 @@ export default {
           setHidden("UploadMileageRMLT", false);
           setHidden("transportNumberPlate", false);
           setHidden("transportModel", false);
-          setHidden("petrolType", false);
-          setHidden("petrolLitre", false);
+          // setHidden("petrolType", false);
+          // setHidden("petrolLitre", false);
+          // setHidden("MileageRMLT", false);
+          // setHidden("UploadMileageRMLT", false);
           setHidden("TollLT", false);
           setHidden("UploadTollLT", false);
           setHidden("ParkingLT", false);
           setHidden("UploadParkingLT", false);
 
-          ["DepartureAirportLT", "ArrivalAirportLT", "FlightClassLT", "FareRMLT", "UploadFareRMLT", "PublicTransportSpec"]
+          ["DepartureAirportLT", "ArrivalAirportLT", "FlightClassLT", "FareRMLT", "UploadFareRMLT", "PublicTransportSpec", "petrolType", "petrolLitre", "MileageRMLT", "UploadMileageRMLT" ]
+            .forEach(id => { setHidden(id, true); setValue(id); });
+        }
+
+        if (transportType === "Company Transport") {
+          setHidden("TransportSpec", false);
+          setHidden("LocationStart", false);
+          setHidden("LocationEnd", false);
+          // setHidden("MileageKMLT", false);
+          setHidden("transportNumberPlate", false);
+          setHidden("transportModel", false);
+          setHidden("petrolType", false);
+          setHidden("petrolLitre", false);
+          setHidden("MileageRMLT", false);
+          setHidden("UploadMileageRMLT", false);
+          setHidden("TollLT", false);
+          setHidden("UploadTollLT", false);
+          setHidden("ParkingLT", false);
+          setHidden("UploadParkingLT", false);
+
+          ["DepartureAirportLT", "ArrivalAirportLT", "FlightClassLT", "FareRMLT", "UploadFareRMLT", "PublicTransportSpec", "MileageKMLT"]
             .forEach(id => { setHidden(id, true); setValue(id); });
         }
 
@@ -4448,7 +4364,7 @@ export default {
           setHidden("LocationStart", false);
           setHidden("LocationEnd", false);
 
-          if (publicTransportSpec === "E-Hailing") {
+          if (publicTransportSpec === "E-Hailing/Taxi" || publicTransportSpec === "Bus" || publicTransportSpec === "Train") {
             setHidden("MileageKMLT", false);
             setHidden("FareRMLT", false);
             setHidden("UploadFareRMLT", false);
@@ -4495,7 +4411,7 @@ export default {
           setHidden("LocationStart", false);
           setHidden("LocationEnd", false);
 
-          if (publicTransportSpec === "E-Hailing") {
+          if (publicTransportSpec === "E-Hailing/Taxi" || publicTransportSpec === "Bus" || publicTransportSpec === "Train") {
             setHidden("MileageKMLT", false);
             setHidden("FareRMLT", false);
             setHidden("UploadFareRMLT", false);
@@ -4828,32 +4744,43 @@ export default {
     },
 
     calculateTotal(tab) {
-      // console.log("tabs nme",tab);
       let total = 0;
 
-      // Check if the transport mode is Company Transport
-      const isCompanyTransport = tab.fields.some(
-        (field) =>
-          (field.id === "TransportLT" || field.id === "TransportOT") &&
-          field.value?.includes("Company Transport")
-      );
+      // Check if the transport mode is Personal Transport for Local Travelling
+      const isLocalTravelling = tab.title === "Local Travelling";
+      const transportField = tab.fields.find(f => f.id === "TransportLT");
+      const transportSpecField = tab.fields.find(f => f.id === "TransportSpec");
+      const mileageKMField = tab.fields.find(f => f.id === "MileageKMLT");
 
-      // Check if the transport mode is Public Transport
-      const isPublicTransport = tab.fields.some(
-        (field) =>
-          (field.id === "TransportLT" || field.id === "TransportOT") &&
-          field.value?.includes("Public Transport")
-      );
-
-      // Check if the transport mode is Personal Transport
-      const isPersonalTransport = tab.fields.some(
-        (field) =>
-          (field.id === "TransportLT" || field.id === "TransportOT") &&
-          field.value?.includes("Personal Transport")
-      );
+      // Personal Transport calculation for Local Travelling
+      if (
+        isLocalTravelling &&
+        transportField &&
+        transportField.value === "Personal Transport" &&
+        mileageKMField &&
+        !isNaN(parseFloat(mileageKMField.value)) &&
+        transportSpecField
+      ) {
+        const mileage = parseFloat(mileageKMField.value);
+        if (transportSpecField.value === "Car") {
+          total += mileage * 0.5;
+        } else if (transportSpecField.value === "Motorcycle") {
+          total += mileage * 0.2;
+        }
+      }
 
       tab.fields.forEach((field) => {
-        // Calculate the total based on the field value
+        // Skip MileageKMLT for Local Travelling Personal Transport (already calculated above)
+        if (
+          isLocalTravelling &&
+          transportField &&
+          transportField.value === "Personal Transport" &&
+          field.id === "MileageKMLT"
+        ) {
+          return;
+        }
+
+        // ...existing checks...
         if (
           field.type === "number" &&
           !isNaN(parseFloat(field.value)) &&
@@ -4872,39 +4799,94 @@ export default {
           field.id !== "AccBankNumberHR" &&
           field.id !== "AccBankNumberML" &&
           field.id !== "ExchangeRateAccommodationOT" &&
-          field.id !== "AmountforAccommodationOT" &&
-          (!isCompanyTransport ||
-            (field.id !== "FareRMLT" || field.id !== "FareRMOT")) &&
-          (!isPublicTransport ||
-            (field.id !== "TollLT" || field.id !== "TollOT")) &&
-          // (!isPersonalTransport ||
-          //   (field.id !== "FareRMLT" && field.id !== "ParkingLT")) &&
-          // (!isPersonalTransport ||
-          //   (field.id !== "FareRMLT" && field.id !== "petrolCharged")) &&
-          (!isPersonalTransport ||
-            (!field.id !== "FareRMLT" || !field.id !== "FareRMOT"))
-          // Only calculate Fare if not company or personal transport
-          // ((!isCompanyTransport && !isPersonalTransport) || 
-          //   (field.id !== "FareRMLT" || field.id !== "FareRMOT")) &&
-          // // Only calculate Toll, Parking, Petrol if company or personal transport
-          // (!isPublicTransport || 
-          //   ((field.id !== "TollLT" || field.id !== "TollOT") && (field.id !== "ParkingLT" || field.id !== "ParkingOT") && 
-          //   (field.id !== "MileageRMLT" || field.id !== "MileageRMOT"))
-          // )||
-          // // Always calculate Meal and Hotel regardless of transport
-          // (field.id !== "MealAllowanceLT" || field.id !== "MealAllowanceOT") ||
-          // (field.id !== "HotelRMLT" || field.id !== "HotelRMOT")
+          field.id !== "AmountforAccommodationOT"
         ) {
           total += parseFloat(field.value);
         }
       });
 
       total += this.calculateOverseasTotal();
-      // console.log("totwl", total);
-      // Return the total
       return total.toFixed(2);
-
     },
+    
+    // calculateTotal(tab) {
+    //   // console.log("tabs nme",tab);
+    //   let total = 0;
+
+    //   // Check if the transport mode is Company Transport
+    //   const isCompanyTransport = tab.fields.some(
+    //     (field) =>
+    //       (field.id === "TransportLT" || field.id === "TransportOT") &&
+    //       field.value?.includes("Company Transport")
+    //   );
+
+    //   // Check if the transport mode is Public Transport
+    //   const isPublicTransport = tab.fields.some(
+    //     (field) =>
+    //       (field.id === "TransportLT" || field.id === "TransportOT") &&
+    //       field.value?.includes("Public Transport")
+    //   );
+
+    //   // Check if the transport mode is Personal Transport
+    //   const isPersonalTransport = tab.fields.some(
+    //     (field) =>
+    //       (field.id === "TransportLT" || field.id === "TransportOT") &&
+    //       field.value?.includes("Personal Transport")
+    //   );
+
+    //   tab.fields.forEach((field) => {
+    //     // Calculate the total based on the field value
+    //     if (
+    //       field.type === "number" &&
+    //       !isNaN(parseFloat(field.value)) &&
+    //       field.id !== "MileageKMLT" &&
+    //       field.id !== "MileageKMOT" &&
+    //       field.id !== "petrolLitre" &&
+    //       field.id !== "petrolLitreOT" &&
+    //       field.id !== "HotelRoomLT" &&
+    //       field.id !== "HotelRoomOT" &&
+    //       field.id !== "HotelNightLT" &&
+    //       field.id !== "HotelNightOT" &&
+    //       field.id !== "limit_outpatient" &&
+    //       field.id !== "limit_medic_dental" &&
+    //       field.id !== "LimitedAmountHR" &&
+    //       field.id !== "LimitedAmountML" &&
+    //       field.id !== "AccBankNumberHR" &&
+    //       field.id !== "AccBankNumberML" &&
+    //       field.id !== "ExchangeRateAccommodationOT" &&
+    //       field.id !== "AmountforAccommodationOT" &&
+    //       (!isCompanyTransport ||
+    //         (field.id !== "FareRMLT" || field.id !== "FareRMOT")) &&
+    //       (!isPublicTransport ||
+    //         (field.id !== "TollLT" || field.id !== "TollOT")) &&
+    //       // (!isPersonalTransport ||
+    //       //   (field.id !== "FareRMLT" && field.id !== "ParkingLT")) &&
+    //       // (!isPersonalTransport ||
+    //       //   (field.id !== "FareRMLT" && field.id !== "petrolCharged")) &&
+    //       (!isPersonalTransport ||
+    //         (!field.id !== "FareRMLT" || !field.id !== "FareRMOT"))
+    //       // Only calculate Fare if not company or personal transport
+    //       // ((!isCompanyTransport && !isPersonalTransport) || 
+    //       //   (field.id !== "FareRMLT" || field.id !== "FareRMOT")) &&
+    //       // // Only calculate Toll, Parking, Petrol if company or personal transport
+    //       // (!isPublicTransport || 
+    //       //   ((field.id !== "TollLT" || field.id !== "TollOT") && (field.id !== "ParkingLT" || field.id !== "ParkingOT") && 
+    //       //   (field.id !== "MileageRMLT" || field.id !== "MileageRMOT"))
+    //       // )||
+    //       // // Always calculate Meal and Hotel regardless of transport
+    //       // (field.id !== "MealAllowanceLT" || field.id !== "MealAllowanceOT") ||
+    //       // (field.id !== "HotelRMLT" || field.id !== "HotelRMOT")
+    //     ) {
+    //       total += parseFloat(field.value);
+    //     }
+    //   });
+
+    //   total += this.calculateOverseasTotal();
+    //   // console.log("totwl", total);
+    //   // Return the total
+    //   return total.toFixed(2);
+
+    // },
     
     //calculate limit amount
     handleClaimDeleted({ claimAmount, category, updatedLimit, tabTitle }) {
@@ -5311,7 +5293,6 @@ export default {
 
       console.log('tab field', tab.fields);
 
-
       formattedData["tabTitle"] = tab.title;
       formattedData["totalRM"] = this.calculateTotal(tab);
 
@@ -5423,7 +5404,7 @@ export default {
           tab.staffInvolved = [...this.staffInvolved];
           formattedData["staffInvolved"] = [...tab.staffInvolved];
         });
-        formattedData["tabTitle"] = "Staff Refreshment";
+        formattedData["tabTitle"] = "Staff Entertainment";
       console.log('formsubmitted', formattedData);
 
         if(this.edit){

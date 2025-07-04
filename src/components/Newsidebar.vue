@@ -83,7 +83,7 @@
 
           <span class="mx-4 font-medium">Dashboard</span>
         </router-link>
-        <router-link to="/eclaimhomepage" v-if="controlView === 'eclaim'"
+        <router-link to="/eclaimhomepage" v-if="controlView === 'eclaim'" @click.prevent="refreshToEclaimHomepage"
           class="flex items-center px-4 py-2 mt-2 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400">
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -369,6 +369,10 @@ export default {
     //     console.error('There was an error fetching the user status:', error);
     //   }
     // },
+
+    refreshToEclaimHomepage() {
+      window.location.href = '/eclaimhomepage';
+    },
 
     async checkuser() {
       const username_id = this.userDetails.userId;

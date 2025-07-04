@@ -961,7 +961,7 @@ export default {
             this.referenceNumber
           );
           const result = response.data.result;
-          // console.log(result, 'local outstation');
+          // console.log(result, 'Local Travelling');
           let details = [];
           let amount = 0;
           
@@ -989,7 +989,7 @@ export default {
               'Total_Fee (RM)': Number(result[i].total_fee).toFixed(2),
               Attachments: result[i].files,
               comment: result[i].comment,
-              Tab_Title: 'Local Outstation',
+              Tab_Title: 'Local Travelling',
               unique_code: result[i].unique_code,
             };
             details.push(editedDetail);
@@ -999,7 +999,7 @@ export default {
             this.claimDataTotalAmount.push(amount);
           }
         } catch (e) {
-          console.error('Error fetching Local Outstation data:', e);
+          console.error('Error fetching Local Travelling data:', e);
         }
 
         try {
@@ -1064,7 +1064,7 @@ export default {
               'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
               Others_Expenses: buildFullExpenseTable(),
               Attachments: result[i].files,
-              Tab_Title: 'Overseas Outstation',
+              Tab_Title: 'Overseas Travelling',
               comment: result[i].comment,
               unique_code: result[i].unique_code,
 
@@ -1078,7 +1078,7 @@ export default {
             this.claimDataTotalAmount.push(amount);
           }
         } catch (e) {
-          console.error('Error fetching Overseas Outstation data:', e);
+          console.error('Error fetching Overseas Travelling data:', e);
         }
 
         try {
@@ -1119,7 +1119,7 @@ export default {
 
             amount += result[i].total_fee;
             const editedDetail = {
-              'Type_of_Refreshment': result[i].refreshment_type,
+              'Type_of_Entertainment': result[i].refreshment_type,
               Date: result[i].date_event,
               'Reference': result[i].reference_type,
               Venue: result[i].venue_name,
@@ -1128,7 +1128,7 @@ export default {
               Staff_Involved: buildFullExpenseTable(),
               Attachments: result[i].files,
               comment: result[i].comment,
-              Tab_Title: 'Staff Refreshment',
+              Tab_Title: 'Staff Entertainment',
               unique_code: result[i].unique_code,
             };
             details.push(editedDetail);
@@ -1178,11 +1178,11 @@ export default {
 
             amount += result[i].total_fee;
             const editedDetail = {
-              'Type_of_Refreshment': result[i].entertainment_type,
+              'Type_of_Entertainment': result[i].entertainment_type,
               Date: result[i].date_event,
               'Reference': result[i].description,
-              Venue: result[i].venue_name,
-              Company: result[i].company_name,
+              'Receipt_No': result[i].receipt_no,
+              'Restaurant_Name': result[i].venue_name,
               'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
               Participants: buildFullExpenseTable(),
               Attachments: result[i].files,
@@ -1540,17 +1540,17 @@ export default {
           comment: remark.remark,
           unique_code: remark.unique_code,
         };
-        if (remark.Tab_Title == 'Local Outstation') {
+        if (remark.Tab_Title == 'Local Travelling') {
           axios.put(
             'http://172.28.28.116:6165/api/Admin/Approver_Comment_Local',
             data
           );
-        } else if (remark.Tab_Title == 'Overseas Outstation') {
+        } else if (remark.Tab_Title == 'Overseas Travelling') {
           axios.put(
             'http://172.28.28.116:6165/api/Admin/Approve_Comment_Overseas',
             data
           );
-        } else if (remark.Tab_Title == 'Staff Refreshment') {
+        } else if (remark.Tab_Title == 'Staff Entertainment') {
           axios.put(
             'http://172.28.28.116:6165/api/Admin/Approve_Comment_Refreshment',
             data

@@ -548,9 +548,9 @@ export default {
             requesterId: "",
             filesToDelete: [],
             flightClass:["Business", "Economy"],
-            transportSpecifications: ["Motorcycle", "Car", "Truck"],
-            transportSpecPublic: [ "Flight", "E-Hailing"],
-            petrolTypes: ["Ron 95", "Diesel"]
+            transportSpecifications: ["Motorcycle", "Car"],
+            transportSpecPublic: [ "Flight", "E-Hailing/Taxi", "Train", "Bus"],
+            petrolTypes: ["Petrol", "Diesel"]
             
         }
     },

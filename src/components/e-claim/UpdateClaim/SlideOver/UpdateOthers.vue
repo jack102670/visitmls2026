@@ -61,14 +61,14 @@
               class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
-          <div class="col-span-8">
-            <label for="description" class="font-medium text-sm"
-              >Description of Claim</label
+          <div class="col-span-4">
+            <label for="receipt_no" class="font-medium text-sm"
+              >Receipt No</label
             >
             <input
               type="text"
-              id="description"
-              v-model="others.description"
+              id="receipt_no"
+              v-model="others.receipt_no"
               class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
@@ -83,6 +83,18 @@
               class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             />
           </div>
+          <div class="col-span-4">
+            <label for="description" class="font-medium text-sm"
+              >Description of Claim</label
+            >
+            <textarea
+              type="text"
+              id="description"
+              v-model="others.description"
+              class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            ></textarea>
+          </div>
+          
           <div class="col-span-4">
             <label for="files" class="font-medium text-sm"
               >Uploaded Files</label
@@ -204,6 +216,7 @@ export default {
         expense_name: "",
         expense_date: "",
         amount: "",
+        receipt_no: "",
         description: "",
         unique_code: "",
         total_fee: "",
@@ -264,6 +277,7 @@ export default {
             expense_name: matchingUniqueID.expense_name,
             expense_date: matchingUniqueID.expense_date,
             amount: matchingUniqueID.amount,
+            receipt_no: matchingUniqueID.receipt_no,
             description: matchingUniqueID.description,
             unique_code: matchingUniqueID.unique_code,
             total_fee: matchingUniqueID.total_fee,
@@ -508,6 +522,7 @@ export default {
         reference_number: this.others.reference_number,
         expense_name: this.others.expense_name,
         expense_date: this.formattedDate,
+        receipt_no: this.others.receipt_no,
         amount: isNaN(parseFloat(this.others.amount))
           ? 0
           : parseFloat(this.others.amount),

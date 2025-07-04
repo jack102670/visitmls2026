@@ -1049,7 +1049,7 @@
                 </button>
               </div>
               <h1 class="text-3xl font-bold text-blue-900">
-                Staff Refreshment Claim Form
+                Staff Entertainment Claim Form
               </h1>
               <hr class="mt-2 mb-4" />
 
@@ -1059,12 +1059,12 @@
                   class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
-                <label for="nodeName" class="text-gray-700 font-bold mr-2">Type of Refreshment:</label>
+                <label for="nodeName" class="text-gray-700 font-bold mr-2">Type of Entertainment:</label>
                 <input type="text" id="nodeName" v-model="staffRefreshmentDetails.TypeofRefreshmentSR"
                   :disabled="!isEditMode || nonEditableFields" class="border rounded-md px-16 py-2" />
               </div>
               <div v-if="!isOtherStaffRefreshment" class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Other Type of Staff Refreshment:</label>
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Other Type of Staff Entertainment:</label>
                 <input type="text" id="nodeParentId" v-model="staffRefreshmentDetails.OtherTypeofStaffRefreshmentSR
                   " :disabled="!isEditMode" class="border rounded-md px-16 py-2" />
               </div>
@@ -1216,6 +1216,11 @@
               <div class="flex justify-between items-center mb-4">
                 <label for="expensename" class="text-gray-700 font-bold mr-2">Expense Name:</label>
                 <input type="text" id="expensename" v-model="othersDetails.ExpenseNameOthers" :disabled="!isEditMode"
+                  class="border rounded-md px-16 py-2" />
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <label for="receiptothers" class="text-gray-700 font-bold mr-2">Receipt No:</label>
+                <input type="text" id="receiptothers" v-model="othersDetails.ReceiptOthers" :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2" />
               </div>
               <div class="flex justify-between items-center mb-4">
@@ -1515,14 +1520,21 @@ export default {
       } else if (
         this.localTravellingDetails.TransportLT === "Personal Transport"
       ) {
-        total += parseFloat(this.localTravellingDetails.MileageRMLT) || 0;
-        total += parseFloat(this.localTravellingDetails.ParkingLT) || 0;
-        total += parseFloat(this.localTravellingDetails.TollLT) || 0;
+        if(this.localTravellingDetails.TransportSpec === "Motorcycle") {
+          total += (parseFloat(this.localTravellingDetails.MileageKMLT) * 0.2) || 0;
+          total += parseFloat(this.localTravellingDetails.ParkingLT) || 0;
+          total += parseFloat(this.localTravellingDetails.TollLT) || 0;
+        }
+        else if(this.localTravellingDetails.TransportSpec === "Car") {
+          total += (parseFloat(this.localTravellingDetails.MileageKMLT) * 0.5) || 0;
+          total += parseFloat(this.localTravellingDetails.ParkingLT) || 0;
+          total += parseFloat(this.localTravellingDetails.TollLT) || 0;
+        }
       } else if (
         this.localTravellingDetails.TransportLT === "Public Transport"
       ) {
         total += parseFloat(this.localTravellingDetails.FareRMLT) || 0;
-        total += parseFloat(this.localTravellingDetails.ParkingLT) || 0;
+        total += parseFloat(this.localTravellingDetails.HotelRMLT) || 0;
       }
       this.totalplusmethod(total);
       return total;
@@ -1919,7 +1931,7 @@ export default {
           case "Entertainment":
             prefix = "ENT";
             break;
-          case "Staff Refreshment":
+          case "Staff Entertainment":
             prefix = "SR";
             break;
           case "Others":
@@ -1965,7 +1977,7 @@ export default {
           case "Entertainment":
             prefix = "ENT";
             break;
-          case "Staff Refreshment":
+          case "Staff Entertainment":
             prefix = "SR";
             break;
           case "Others":
@@ -2096,6 +2108,17 @@ export default {
       try {
         // Step 1: FETCH serial number first
         const reportType = this.claims[0]?.reportType;
+
+        // if (!this.validateAllClaims()) {
+        //   Swal.fire({
+        //     icon: 'error',
+        //     title: 'Form Incomplete',
+        //     text: 'One or more claim forms are incomplete. Please fill them before submitting.',
+        //     confirmButtonColor: '#d33',
+        //   });
+        //   return;
+        // }
+
         const referenceNumber = await this.fetchSerialNumber(reportType);
         if (!referenceNumber) {
           throw new Error("Failed to fetch reference number.");
@@ -2156,7 +2179,8 @@ export default {
         Swal.fire({
           icon: 'error',
           title: 'Submission Failed',
-          text: error.message,
+          text: "Please fill in all the data.",
+          // text: error.message,
         });
       } finally {
         this.loading = false;
@@ -2178,6 +2202,21 @@ export default {
         throw new Error("Invalid grand_total format");
       }
     },
+
+    // validateAllClaims() {
+    //   let isValid = true;
+
+    //   for (const claim of this.dataclaims) {
+    //     const hasValidData = Object.values(claim).some(v => v !== null && v !== undefined && String(v).trim() !== "");
+    //     if (!hasValidData) {
+    //       isValid = false;
+    //       break;
+    //     }
+    //   }
+
+    //   return isValid;
+    // },
+
     async sendToAPI() {
       const groupedClaims = this.dataclaims.reduce((acc, claim) => {
         if (!acc[claim.tabTitle]) {
@@ -2382,7 +2421,7 @@ export default {
                 }
                 break;
 
-              case "staff refreshment":
+              case "staff entertainment":
                 for (const claim of claimsToSend) {
                   const uniqueCodeSR = this.generateUniqueCode(claim.tabTitle);
                   const payload = {
@@ -2404,7 +2443,7 @@ export default {
                         }))
                       : [],
                   };
-                  console.log("Staff Refreshment Payload :", payload);
+                  console.log("Staff Entertainment Payload :", payload);
 
                   const axiosInstance = axios.create({
                     baseURL: " http://172.28.28.116:6239/api/User/InsertStaffRefreshment",
@@ -2428,6 +2467,7 @@ export default {
                     unique_code: uniqueCodeOthers,
                     total_fee: parseFloat(claim.totalRM).toFixed(2),
                     reference_number: this.serialnumber,
+                    receipt_no: claim.ReceiptOthers,
                     requester_id: this.userDetails.userId,
                     expense_name: claim.ExpenseNameOthers,
                   };
@@ -2500,6 +2540,8 @@ export default {
                     unique_code: uniqueCodeML,
                   };
 
+                  console.log("Medical Claim Payload :", payload);
+
                   const axiosInstance = axios.create({
                     baseURL: "http://172.28.28.116:6165/api/User/InsertMedicalLeave",
                   });
@@ -2509,6 +2551,8 @@ export default {
                   if (claim.UploadML && claim.UploadML.length > 0) {
                     await this.uploadFiles(claim.UploadML, this.userDetails.userId, uniqueCodeML);
                   }
+
+                  console.log("Medical Claim Payload after submit claims :", payload);
                 }
                 break;
 

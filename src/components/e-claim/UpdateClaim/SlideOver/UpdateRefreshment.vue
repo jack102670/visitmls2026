@@ -33,7 +33,7 @@
                     </div> -->
 
                     <div class="col-span-4">
-                        <label for="refreshment_type" class="font-medium text-sm">Refreshment Type</label>
+                        <label for="refreshment_type" class="font-medium text-sm">Type of Entertainment</label>
                         <select id="refreshment_type" v-model="refreshment.refreshment_type"
                             class="mt-1 text-xs block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                             <option v-for="(refreshment, index) in RefreshmentType" :key="index"
@@ -268,7 +268,7 @@ export default {
             // RefreshmentType: ["BREAKFAST", "LUNCH", "DINNER", "TEA BREAK", "OTHERS"],
             // ReferenceType: ["ENTERTAINMENT-CLIENT(EXISTING)", "ENTERTAINMENT-CLIENT(NEW/POTENTIAL)", "ENTERTAINMENT-NON TRADE", "GIFT TO CLIENT", "GIFT TO OTHERS"],
             RefreshmentType: ["Breakfast", "Lunch", "Dinner", "Tea Break", "Others"],
-            ReferenceType: ["Entertainment-Client(Existing)", "Entertainment-Client(New/Potential)", "Entertainment-Non Trade", "Gift To Client", "Gift To Others-Non Trade","Meal For Staff" ],
+            ReferenceType: ["Meal For Staff"],
             currentPage: 1,
             pageSize: 5,
             newFiles: [],
@@ -870,7 +870,7 @@ export default {
                 files: this.refreshment.files || [],
                 simToDelete: this.simToDelete,
 
-                tabTitle: "Refreshment",
+                tabTitle: "Staff Entertainment",
                 locationPurpose: this.refreshment.venue_name || "-",
                 date: this.date_event || "-",
                 total: this.refreshment.total_fee || "0.00"

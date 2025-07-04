@@ -140,7 +140,7 @@ import axios from 'axios';
               'Local Travelling': [],
               'Overseas Travelling': [],
               'Entertainment': [],
-              'Staff Refreshment': [],
+              'Staff Entertainment': [],
               'Others': []
             };
 
@@ -304,8 +304,8 @@ import axios from 'axios';
                       </table>`;
                   };
 
-                  this.claimDatasDetails['Staff Refreshment'].push({
-                    Tab_Title: 'Staff Refreshment',
+                  this.claimDatasDetails['Staff Entertainment'].push({
+                    Tab_Title: 'Staff Entertainment',
                     'Name': userName,
                     'Department': userDept,
                     'Reference Number': item.reference_number,

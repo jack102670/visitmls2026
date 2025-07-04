@@ -401,7 +401,7 @@ export default {
             }));
 
             const refreshmentClaims = (refreshmentRes.data.result || []).map(claim => ({
-            tabTitle: "Refreshment",
+            tabTitle: "Staff Entertainment",
             locationPurpose: claim.venue_name,
             date: moment(claim.date_event).format('D MMMM YYYY'),
             total: claim.total_fee,
@@ -554,7 +554,7 @@ export default {
                         await this.deleteOthersClaim(claim);
                     } else if (claim.tabTitle === "Entertainment") {
                         await this.deleteEntertainmentClaim(claim);
-                    } else if (claim.tabTitle === "Refreshment") {
+                    } else if (claim.tabTitle === "Staff Entertainment") {
                         await this.deleteRefreshmentClaim(claim);
                     } else if (claim.tabTitle === "Local Travelling") {
                         await this.deleteLocalClaim(claim);
@@ -590,7 +590,7 @@ export default {
                         await this.handleOthersSubmit(payload);
                     } else if (tabTitle === "Entertainment") {
                         await this.handleEntertainmentSubmit(payload);
-                    } else if (tabTitle === "Refreshment") {
+                    } else if (tabTitle === "Staff Entertainment") {
                         await this.handleRefreshmentSubmit(payload);
                     } else if (tabTitle === "Local Travelling") {
                         await this.handleLocalTravelSubmit(payload);
@@ -979,7 +979,7 @@ export default {
                 ...refreshmentData
                 } = payload;
 
-                console.log("Refreshment submit payload:", payload);
+                console.log("Staff Entertainment submit payload:", payload);
                 if (simToDelete && simToDelete.length > 0) {
                     for (const id of simToDelete) {
                         await axios.delete(`http://172.28.28.116:6239/api/User/DeleteStaffInvolved/${id}`);
@@ -989,12 +989,12 @@ export default {
 
                 await this.handleFileUpdates({ requester_id, unique_code, newFiles, filesToDelete });
 
-                console.log("Refreshment file updates handled");
-                console.log("Refreshment data before submit:", refreshmentData);
-                console.log("Refreshment files before submit:", files);
-                console.log("Refreshment oem before submit:", sim);
-                console.log("Refreshment unique_code:", unique_code);
-                console.log("Refreshment requester_id:", requester_id);
+                console.log("Staff Entertainment file updates handled");
+                console.log("Staff Entertainment data before submit:", refreshmentData);
+                console.log("Staff Entertainment files before submit:", files);
+                console.log("Staff Entertainment oem before submit:", sim);
+                console.log("Staff Entertainment unique_code:", unique_code);
+                console.log("Staff Entertainment requester_id:", requester_id);
 
                 const submitData = {
                 ...refreshmentData,
@@ -1004,7 +1004,7 @@ export default {
                 sim: sim.filter(e => e.id), // only existing expenses go in PUT
                 };
 
-                console.log("Refreshment submit data:", submitData);
+                console.log("Staff Entertainment submit data:", submitData);
                 console.log("staff involved refNumber:", refreshmentData.inv_refNumber);
 
                 const response = await axios.put(
@@ -1296,7 +1296,7 @@ export default {
                 this.isRefreshmentSlideOverOpen = false;
                 this.isOthersSlideOverOpen = false;
             
-            }else if (claim.tabTitle === "Refreshment") {
+            }else if (claim.tabTitle === "Staff Entertainment") {
                 this.isMedicalSlideOverOpen = false;
                 this.isHandphoneSlideOverOpen = false;
                 this.isLocalSlideOverOpen = false;

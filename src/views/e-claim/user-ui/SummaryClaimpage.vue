@@ -967,7 +967,7 @@ export default {
             this.referenceNumber
           );
           const result = response.data.result;
-          // console.log(result, 'local outstation');
+          // console.log(result, 'Local Travelling');
           let details = [];
           let amount = 0;
           
@@ -1004,7 +1004,7 @@ export default {
               'Total_Fee (RM)': Number(result[i].total_fee).toFixed(2),
               Attachments: result[i].files,
               comment: result[i].comment,
-              Tab_Title: 'Local Outstation',
+              Tab_Title: 'Local Travelling',
               unique_code: result[i].unique_code,
             };
             details.push(editedDetail);
@@ -1014,7 +1014,7 @@ export default {
             this.claimDataTotalAmount.push(amount);
           }
         } catch (e) {
-          console.error('Error fetching Local Outstation data:', e);
+          console.error('Error fetching Local Travelling data:', e);
         }
 
         try {
@@ -1110,7 +1110,7 @@ export default {
 
               Other_Expenses: buildFullExpenseTable(),
               Attachments: result[i].files,
-              Tab_Title: 'Overseas Outstation',
+              Tab_Title: 'Overseas Travelling',
               comment: result[i].comment,
               unique_code: result[i].unique_code,
 
@@ -1124,7 +1124,7 @@ export default {
             this.claimDataTotalAmount.push(amount);
           }
         } catch (e) {
-          console.error('Error fetching Overseas Outstation data:', e);
+          console.error('Error fetching Overseas Travelling data:', e);
         }
 
         try {
@@ -1165,7 +1165,7 @@ export default {
 
             amount += result[i].total_fee;
             const editedDetail = {
-              'Type_of_Refreshment': result[i].refreshment_type,
+              'Type_of_Entertainment': result[i].refreshment_type,
               Date: result[i].date_event,
               'Reference': result[i].reference_type,
               'Receipt No': result[i].receipt_no,
@@ -1174,7 +1174,7 @@ export default {
               Staff_Involved: buildFullExpenseTable(),
               Attachments: result[i].files,
               comment: result[i].comment,
-              Tab_Title: 'Staff Refreshment',
+              Tab_Title: 'Staff Entertainment',
               unique_code: result[i].unique_code,
             };
             details.push(editedDetail);

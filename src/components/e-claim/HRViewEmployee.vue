@@ -403,7 +403,7 @@
                       </div>
                       <div>
                         <input type="checkbox" name="sr" id="sr" v-model="formAccess.refreshment" />
-                        <label class="ml-1" for="sr">Staff Refreshment</label>
+                        <label class="ml-1" for="sr">Staff Entertainment</label>
                       </div>
                       <div>
                         <input type="checkbox" name="others" id="others" v-model="formAccess.others" />
@@ -994,7 +994,7 @@ export default {
         const response = await axios.get('http://172.28.28.116:6239/api/User/GetAllEmployees');
         this.fetchOptions = response.data.result || [];
         const position = this.fetchOptions.map((item) => item.position_title);
-        const uniquePosition = [...new Set(position)].sort((a, b) => a.localeCompare(b));
+        const uniquePosition = [...new Set(position.filter(p => !!p))].sort((a, b) => a.localeCompare(b));
         this.AllPositions = uniquePosition;
         // const rawDesignations = response.data.result.map(item => item.designation);
         // this.AllPositions = [...new Set(rawDesignations)].sort((a, b) => a.localeCompare(b));

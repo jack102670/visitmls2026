@@ -274,7 +274,7 @@
                     </div>
                     <div>
                       <input type="checkbox" name="sr" id="sr" v-model="formAccess.refreshment" />
-                      <label class="ml-1" for="sr">Staff Refreshment</label>
+                      <label class="ml-1" for="sr">Staff Entertainment</label>
                     </div>
                     <div>
                       <input type="checkbox" name="others" id="others" v-model="formAccess.others" />

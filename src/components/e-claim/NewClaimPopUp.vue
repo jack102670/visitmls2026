@@ -10,9 +10,9 @@
       <form @submit.prevent="submitForm(1)" class="text-sm py-2">
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="claimantName">Report Name <span
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="claimantName">Report Name (Claim Description)<span
                 class="text-red-500">*</span></label>
-            <input placeholder="Example: Travel to BKH / Medical Claim 2025" v-model="formData.reportName" required id="ReportName" type="text" value="required"
+            <input placeholder="E.g 1: Travel to BKH / E.g 2: Medical Claim 2025" v-model="formData.reportName" required id="ReportName" type="text" value="required"
               class="block w-full px-4 py-2 mt-2 capitalize text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
           </div>
           <div>
@@ -154,7 +154,8 @@
             />
           </div> -->
           <div class="relative">
-            <label class="font-semibold text-gray-700 dark:text-gray-200" for="companyName">Cost Center </label>
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="companyName">Cost Center (Company Code)<span
+                class="text-red-500">*</span></label>
 
             <div class="flex justify-between">
               <input type="text" placeholder="Cost Center.." v-model="formData.costCenter"  @click="toggleDropdown4" required
@@ -211,13 +212,13 @@
                 <input type="radio" id="Finance" name="claimType" value="Finance" v-model="formData.reportType"
                   class="mr-2" />
                 <label for="Finance">Travelling, Entertainment & Others </label>
-                <!-- <label class="font-bold">(Work In Progress)</label> -->
+                <label class="font-bold">(Work In Progress)</label>
                 <!-- <div
                   class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
                   v-show="showFinanceMessage"
                 >
                   Local Travelling, Overseas Travelling With Accommodation,
-                  Entertainment, Staff Refreshment, and Others Form
+                  Entertainment, Staff Entertainment, and Others Form
                 </div> -->
               </div>
             </div>
