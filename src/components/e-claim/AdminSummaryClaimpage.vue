@@ -38,12 +38,12 @@
               See More
             </button>
             <div v-show="seeMore">
-              <!-- <button class="mr-2" @click="ExportToExcel">
+              <button class="mr-2" @click="ExportToExcel">
                 <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0,0,256,256"
                 style="fill:#1A1A1A;">
                 <g fill="#1a1a1a" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(8,8)"><path d="M15.875,4l-0.09375,0.03125l-11,2.4375l-0.78125,0.1875v18.6875l0.78125,0.1875l11,2.4375l0.09375,0.03125h2.125v-3h10v-18h-10v-3zM16,6.03125v19.9375l-10,-2.1875v-15.5625zM18,9h8v14h-8v-2h2v-2h-2v-1h2v-2h-2v-1h2v-2h-2v-1h2v-2h-2zM21,10v2h4v-2zM14.15625,11l-2.28125,0.28125l-1.25,2.6875c-0.13281,0.38672 -0.23047,0.67969 -0.28125,0.875h-0.03125c-0.07812,-0.32422 -0.15234,-0.60547 -0.25,-0.84375l-0.625,-2.3125l-2.125,0.25l-0.09375,0.0625l1.78125,4l-2,4l2.15625,0.25l0.875,-2.46875c0.10547,-0.3125 0.19141,-0.56641 0.21875,-0.71875h0.03125c0.05859,0.32422 0.09766,0.56641 0.15625,0.6875l1.34375,2.9375l2.4375,0.3125l-2.65625,-5.03125zM21,13v2h4v-2zM21,16v2h4v-2zM21,19v2h4v-2z"></path></g></g>
                 </svg>
-              </button> -->
+              </button>
               <button  @click="PrintSummary">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                   stroke="currentColor" class="w-7 h-7">
@@ -1324,82 +1324,93 @@ export default {
       }
     },
     ExportToExcel() {
-      // Create a new workbook
-      const wb = XLSX.utils.book_new();
-      
-      // Collect all data in one array for a single sheet
-      const allData = [];
-      
-      // 1. Process claimant information div (divToExport)
-      const claimantInfoDiv = this.$refs.divToExport;
-      const claimantInfoItems = claimantInfoDiv.querySelectorAll('div');
-      
-      // Add claimant info header
-      allData.push(['CLAIMANT INFORMATION']);
-      allData.push([]); // empty row
-      
-      // Process claimant info in pairs (since it's a grid layout)
-      for (let i = 0; i < claimantInfoItems.length; i += 2) {
-        const item1 = claimantInfoItems[i];
-        const item2 = claimantInfoItems[i + 1] || { textContent: '' };
-        
-        const label1 = item1.querySelector('h2')?.textContent.trim() || '';
-        const value1 = item1.querySelector('p')?.textContent.trim() || '';
-        const label2 = item2.querySelector('h2')?.textContent.trim() || '';
-        const value2 = item2.querySelector('p')?.textContent.trim() || '';
-        
-        allData.push([label1, value1, label2, value2]);
-      }
-      
-      // Add separator
-      allData.push([]);
-      allData.push(['CLAIM DETAILS']);
-      allData.push([]);
-      
-      // 2. Process details div with multiple tables (divToExport2)
-      const detailsDiv = this.$refs.divToExport2;
-      const detailTables = detailsDiv.querySelectorAll('.detail-table');
-      
-      detailTables.forEach((detailTable, tableIndex) => {
-        // Add table title
-        const title = detailTable.querySelector('.tab-title')?.textContent.trim();
-        if (title) {
-          allData.push([title]);
+  const wb = XLSX.utils.book_new();
+  const allData = [];
+
+  // 1. Title
+  const reportTitle = this.claimDetails.report_name || 'Claim Report';
+  const reportTotal = `RM${this.claimDetails.grand_total || '0.00'}`;
+  allData.push([reportTitle, reportTotal]);
+  allData.push([]);
+
+  // 2. Claimant Info (from divToExport)
+  const claimantDiv = this.$refs.divToExport;
+  const infoBlocks = claimantDiv.querySelectorAll('div');
+
+  allData.push(['CLAIMANT INFORMATION']);
+  for (let i = 0; i < infoBlocks.length; i += 2) {
+    const d1 = infoBlocks[i];
+    const d2 = infoBlocks[i + 1] || {};
+    const label1 = d1.querySelector('h2')?.textContent.trim().replace(':', '') || '';
+    const value1 = d1.querySelector('p')?.textContent.trim() || '';
+    const label2 = d2.querySelector('h2')?.textContent.trim().replace(':', '') || '';
+    const value2 = d2.querySelector('p')?.textContent.trim() || '';
+    allData.push([label1, value1, label2, value2]);
+  }
+  allData.push([]);
+
+  // 3. Table Data (from divToExport2)
+  const detailTables = this.$refs.divToExport2.querySelectorAll('.detail-table');
+  detailTables.forEach((tableDiv, i) => {
+    const sectionTitle = tableDiv.querySelector('.tab-title')?.textContent.trim() || `Section ${i + 1}`;
+    allData.push([sectionTitle]);
+    allData.push([]);
+
+    const table = tableDiv.querySelector('table');
+    if (!table) return;
+
+    // Get headers
+    const theadRow = table.querySelector('thead');
+    if (theadRow) {
+      const headers = Array.from(theadRow.querySelectorAll('th')).map(th => th.textContent.trim());
+      allData.push(headers);
+    }
+
+    // Get tbody rows
+    const bodyRows = table.querySelectorAll('tr:not(thead tr):not(.border-t)');
+    bodyRows.forEach(tr => {
+      const cells = Array.from(tr.querySelectorAll('td')).map(td => {
+        // Special handling for fields with innerHTML (Participants, etc.)
+        if (td.innerHTML.includes('<table')) {
+          const nestedRows = [];
+          const temp = document.createElement('div');
+          temp.innerHTML = td.innerHTML;
+          const rows = temp.querySelectorAll('tr');
+          rows.forEach(nr => {
+            const nestedText = Array.from(nr.querySelectorAll('td')).map(nc => nc.textContent.trim()).join(' - ');
+            nestedRows.push(nestedText);
+          });
+          return nestedRows.join(' | ');
         }
-        
-        // Process the table
-        const table = detailTable.querySelector('table');
-        const tableData = XLSX.utils.table_to_sheet(table);
-        const tableArray = XLSX.utils.sheet_to_json(tableData, { header: 1 });
-        
-        // Add table data to allData
-        tableArray.forEach(row => allData.push(row));
-        
-        // Add separator between tables
-        if (tableIndex < detailTables.length - 1) {
-          allData.push([]);
-        }
+
+        return td.textContent.trim();
       });
-      
-      // Create worksheet from combined data
-      const ws = XLSX.utils.aoa_to_sheet(allData);
-      
-      // Set column widths for better formatting
-      const colWidths = [
-        { wch: 20 }, // First column width
-        { wch: 30 }, // Second column width
-        { wch: 20 }, // Third column width
-        { wch: 30 }  // Fourth column width
-      ];
-      ws['!cols'] = colWidths;
-      
-      // Add worksheet to workbook
-      XLSX.utils.book_append_sheet(wb, ws, "Claim Report");
-      
-      // Generate Excel file and download
-      XLSX.writeFile(wb, `Claim_Report_${this.claimDetails.name || 'export'}.xlsx`);
-    
-    },
+
+      // Only add rows with real data
+      if (cells.some(cell => cell !== '')) {
+        allData.push(cells);
+      }
+    });
+
+    // Add TOTAL row
+    const totalRow = table.querySelector('tr.border-t');
+    if (totalRow) {
+      const totalCells = Array.from(totalRow.querySelectorAll('td')).map(td => td.textContent.trim());
+      allData.push(totalCells);
+    }
+
+    allData.push([]); // Space between sections
+  });
+
+  // 4. Generate Excel Sheet
+  const ws = XLSX.utils.aoa_to_sheet(allData);
+  ws['!cols'] = new Array(10).fill({ wch: 25 }); // Adjust column width
+
+  XLSX.utils.book_append_sheet(wb, ws, 'Claim Report');
+  XLSX.writeFile(wb, `Claim_Report_${this.claimDetails.name || 'export'}.xlsx`);
+},
+
+
     PrintSummary() {
       // print();
       const printStyles = `
