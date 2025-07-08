@@ -597,7 +597,7 @@ export default {
       };
 
    //   console.log('Employee Data this:', employeeData);
-      axios
+      return axios
         .put(' http://172.28.28.116:6239/api/User/UpdateEmployee', employeeData)
         .then((response) => {
       //    console.log('Response: this method', response);
@@ -797,7 +797,7 @@ export default {
 },
 
     checkUserStatusAndShowModal() {
-   //   console.log('Checking user status and showing modal');
+     console.log('Checking user status and showing modal');
    
       const username_id = store.getSession().userDetails.userId;
       axios
@@ -808,8 +808,8 @@ export default {
           const email = response.data.result[0].email_address;
 
      //     console.log('User status: baru', userStatus);
-if (userStatus===null) this.$router.push('/homepage')
-{
+        if (userStatus===null) this.$router.push('/homepage')
+        
           if (userStatus === '0' && email !== '') {
             // User has not completed their OTP, show the modal
 
@@ -819,7 +819,7 @@ if (userStatus===null) this.$router.push('/homepage')
 
             this.showRequestOtpModal = false;
           }
-        }
+        
         })
         .catch((error) => {
           console.error('There was an error fetching the user status:', error);
@@ -833,19 +833,25 @@ if (userStatus===null) this.$router.push('/homepage')
       this.loadingButton = true;
 
       try {
+        console.log(this.status)
+        console.log('email', this.tempEmail)
+        console.log('email', this.user.email_address)
         if (this.tempImageUrl) {
           await this.uploadimg(); // Wait for the image upload to finish
         } else if (this.status === '1' && this.tempEmail === this.user.email_address) {
           await this.updateEmployeeData(); // Wait for the employee data update
+          console.log('1')
         } else {
           await this.updateEmployeeDataNewEmail(); // Wait for the employee data update with new email
+          console.log('2')
+
         }
       } catch (error) {
         console.error('Error during verify and save data process:', error);
       } finally {
         // Ensure checkUserStatusAndShowModal runs last
      //  console.log('Executing finally block');
-        this.checkUserStatusAndShowModal();
+        // this.checkUserStatusAndShowModal();
         this.loadingButton = false;
       }
     },
@@ -868,19 +874,19 @@ if (userStatus===null) this.$router.push('/homepage')
         limit_medicaldental: this.user.limit_medical_dental,
         limit_outpatient: this.user.limit_outpatient,
       };
-   //   console.log('Employee Data test :', employeeData);
+     console.log('Employee Data test :', employeeData);
 
-      axios
-        .put(' http://172.28.28.116:6239/api/User/UpdateProfile', employeeData)
+      return axios
+        .put(' http://172.28.28.116:6239/api/User/UpdateEmployee', employeeData)
         .then((response) => {
-     //     console.log('Response:', response);
+         console.log('Response:', response);
           const elapsedTime = Date.now() - startTime; // Calculate elapsed time
           const remainingTime = Math.max(2000 - elapsedTime, 0); // Ensure min 2 seconds loading time
 
           setTimeout(() => {
             this.loadingButton = false; // Stop loading after ensuring min 2 seconds
             if (response.data.status_code === '200') {
-     //         console.log(':', response.data.status_code);
+             console.log(':', response.data.status_code);
               this.message = 'Successfully Updated';
               this.showSuccessNotification = true;
               setTimeout(() => {
@@ -894,7 +900,7 @@ if (userStatus===null) this.$router.push('/homepage')
                 'Successfully Updated. Verify Your Email.'
               )
             ) {
-      //        console.log(':otp is sent', response.data.message);
+             console.log(':otp is sent', response.data.message);
               this.message = 'Successfully Updated. Verify Your Email.';
               this.showSuccessNotification = true;
               setTimeout(() => {
