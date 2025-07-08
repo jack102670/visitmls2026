@@ -759,7 +759,7 @@
                             <label class="block text-sm font-medium text-gray-700" for="expenseAttachment">Attachment(s)
                               (png,
                               jpeg, pdf, or xlsx)</label>
-                            <file-pond :ref="`pond-${field.id}`" name="files" label-idle="Drop files here..." @addfile="(error, file) =>
+                            <file-pond :ref="`pond-expense-${index}`" name="files" label-idle="Drop files here..." @addfile="(error, file) =>
                               handleAddFileOT(error, file, newExpense.files)
                               " @removefile="(error, file) =>
                                 handleRemoveFileOT(
@@ -3885,8 +3885,8 @@ export default {
       // Add renamed file to the files array
       filesArray = [...filesArray, renamedFile]; // Create a new array instance to ensure reactivity
 
-      // console.log("File added:", renamedFile);
-      // console.log("Updated files:", filesArray);
+      console.log("File added:", renamedFile);
+      console.log("Updated files:", filesArray);
     },
 
     handleRemoveFileOT(error, file, filesArray) {
@@ -4652,6 +4652,44 @@ export default {
       } else {
         this.newExpense.amount = parseFloat(this.newExpense.amount).toFixed(2);
       }
+
+      // Initialize empty array for this field's files
+    this.newExpense.files = [];
+    
+    // Get the specific FilePond instance for this field
+    const pondRef = this.$refs[`pond-expense-1`];
+    
+    // Handle both single instance and array cases
+    const pondInstances = Array.isArray(pondRef) ? pondRef : [pondRef];
+    
+    pondInstances.forEach(pond => {
+        if (pond && typeof pond.getFiles === 'function') {
+            const files = pond.getFiles();
+            console.log('Files in pond:', files);
+            
+            // Process each file
+            files.forEach(file => {
+                console.log('name', file.file?.name);
+                
+                // For already uploaded files (has serverId)
+                if (file.serverId) {
+                    this.newExpense.files.push(file.serverId);
+                    console.log('server');
+                } 
+                // For new files (use renamed files from field.value)
+                else if (file.file) {
+                    
+                    this.newExpense.files.push(file.file);
+                    console.log('original file pushed (fallback):', file.file);
+                    
+                }
+            });
+        }
+    });
+    
+    console.log('Formatted file data:', this.newExpense.files);
+
+      console.log('files', this.newExpense.files);
 
       // Convert the string back to a number if needed
       this.newExpense.amount = parseFloat(this.newExpense.amount);

@@ -8,6 +8,12 @@
         </div>
 
         <div class="h-12 flex items-right justify-end">
+          <button class="mr-2" @click="ExportToExcel">
+                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0,0,256,256"
+                style="fill:#1A1A1A;">
+                <g fill="#1a1a1a" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(8,8)"><path d="M15.875,4l-0.09375,0.03125l-11,2.4375l-0.78125,0.1875v18.6875l0.78125,0.1875l11,2.4375l0.09375,0.03125h2.125v-3h10v-18h-10v-3zM16,6.03125v19.9375l-10,-2.1875v-15.5625zM18,9h8v14h-8v-2h2v-2h-2v-1h2v-2h-2v-1h2v-2h-2v-1h2v-2h-2zM21,10v2h4v-2zM14.15625,11l-2.28125,0.28125l-1.25,2.6875c-0.13281,0.38672 -0.23047,0.67969 -0.28125,0.875h-0.03125c-0.07812,-0.32422 -0.15234,-0.60547 -0.25,-0.84375l-0.625,-2.3125l-2.125,0.25l-0.09375,0.0625l1.78125,4l-2,4l2.15625,0.25l0.875,-2.46875c0.10547,-0.3125 0.19141,-0.56641 0.21875,-0.71875h0.03125c0.05859,0.32422 0.09766,0.56641 0.15625,0.6875l1.34375,2.9375l2.4375,0.3125l-2.65625,-5.03125zM21,13v2h4v-2zM21,16v2h4v-2zM21,19v2h4v-2z"></path></g></g>
+                </svg>
+              </button>
           <button @click="PrintSummary">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="w-7 h-7">
@@ -21,7 +27,7 @@
 
         <div v-else class="w-full">
           <div class="details">
-            <div v-for="(detailGroup, tabTitle) in claimDatasDetails" :key="tabTitle" class="detail-table mb-6">
+            <div v-for="(detailGroup, tabTitle) in claimDatasDetails" :key="tabTitle" :class="tabTitle.split(' ')[0]" class="detail-table mb-6">
               <h1 class="mt-4 text-xl font-semibold tab-title">{{ tabTitle }}</h1>
               <div class="border rounded-md border-gray-400 dark:border-gray-600 mt-2">
                 <table
@@ -70,6 +76,8 @@
 
 <script>
 import axios from 'axios';
+import * as XLSX from 'xlsx';
+
 // import html2pdf from 'html2pdf.js';
 
 export default {
@@ -85,6 +93,101 @@ export default {
     PrintSummary() {
       print();
     },
+    ExportToExcel() {
+      this.$nextTick(() => {
+
+    const wb = XLSX.utils.book_new();
+    const allData = [];
+    
+    // 1. Report Title and Summary
+    allData.push(['MONTHLY SUMMARY CLAIM FOR REIMBURSEMENT OF ALL EXPENSES']);
+    allData.push([]); // Empty row
+    
+    // 2. Medical Claim Section
+    allData.push(['MEDICAL CLAIM']);
+    allData.push([]);
+    
+    // Get medical claim table data
+    const medicalTable = document.querySelector('.Medical');
+    if (medicalTable) {
+      // Add headers
+      const medicalHeaders = Array.from(medicalTable.querySelectorAll('thead th'))
+        .map(th => th.textContent.trim());
+      allData.push(medicalHeaders);
+      
+      // Add rows
+      const medicalRows = medicalTable.querySelectorAll('tbody tr');
+      medicalRows.forEach(row => {
+        const rowData = Array.from(row.querySelectorAll('td'))
+          .map(td => td.textContent.trim());
+        allData.push(rowData);
+      });
+      
+      // Add total row
+      allData.push([...Array(medicalHeaders.length - 2).fill(''), 'Total:', 'RM 40.00']);
+    }
+    
+    allData.push([]); // Empty row between sections
+    
+    // 3. Handphone Claim Section
+    allData.push(['HANDPHONE CLAIM']);
+    allData.push([]);
+    
+    // Get handphone claim table data
+    const handphoneTable = document.querySelector('.Handphone');
+    console.log(handphoneTable)
+    if (handphoneTable) {
+      // Add headers
+      const handphoneHeaders = Array.from(handphoneTable.querySelectorAll('thead th'))
+        .map(th => th.textContent.trim());
+      allData.push(handphoneHeaders);
+      
+      // Add rows
+      const handphoneRows = handphoneTable.querySelectorAll('tbody tr');
+      handphoneRows.forEach(row => {
+        const rowData = Array.from(row.querySelectorAll('td'))
+          .map(td => td.textContent.trim());
+        allData.push(rowData);
+      });
+    }
+    
+    // 4. Generate Excel Sheet with formatting
+    const ws = XLSX.utils.aoa_to_sheet(allData);
+    
+    // Apply styling through column widths
+    ws['!cols'] = [
+      { wch: 8 },  // Status
+      { wch: 10 }, // Company
+      { wch: 15 }, // Employee ID
+      { wch: 20 }, // Name
+      { wch: 15 }, // Branch
+      { wch: 15 }, // Department
+      { wch: 15 }, // IC Number
+      { wch: 20 }, // Medical Category/Claim Month
+      { wch: 15 }, // Reason/Claim Year
+      { wch: 15 }, // Date/Bank Name
+      { wch: 25 }, // Clinic Name/Bank Holder
+      { wch: 20 }, // Reason Different Clinic/Bank Account
+      { wch: 20 }, // Bank Name/Limit
+      { wch: 15 }, // Bank Holder/Total
+      { wch: 15 }, // Bank Account
+      { wch: 15 }, // Limit Medical
+      { wch: 15 }  // Total Fee
+    ];
+    
+    // Merge title cells
+    ws['!merges'] = [
+      { s: { r: 0, c: 0 }, e: { r: 0, c: 16 } }, // Main title
+      { s: { r: 2, c: 0 }, e: { r: 2, c: 16 } }, // Medical Claim title
+      { s: { r: 9, c: 0 }, e: { r: 9, c: 13 } }  // Handphone Claim title
+    ];
+    
+    XLSX.utils.book_append_sheet(wb, ws, 'Monthly Claims');
+    XLSX.writeFile(wb, 'Monthly_Claims_Summary.xlsx');
+      })
+
+  },
+
     getVisibleColumnCount(item) {
       const excludedKeys = ['Tab_Title', 'files', 'Remark', 'name', 'department', 'claim_amount',
         'requester_id', 'unique_code', 'bank_name', 'bank_holder', 'bank_account'];
