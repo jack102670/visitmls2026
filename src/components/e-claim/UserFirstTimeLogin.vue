@@ -775,7 +775,8 @@ export default {
           // Assuming the API response structure has a status field
           const userStatus = response.data.result[0].account_status;
           const email = response.data.result[0].email_address;
-       //   console.log('User status:', userStatus);
+         console.log('User status:', userStatus);
+         console.log('email', email);
 
       if (userStatus === '0' && email === null) {
         // User has not completed their OTP, show the modal
@@ -886,28 +887,31 @@ export default {
           setTimeout(() => {
             this.loadingButton = false; // Stop loading after ensuring min 2 seconds
             if (response.data.status_code === '200') {
-             console.log(':', response.data.status_code);
-              this.message = 'Successfully Updated';
-              this.showSuccessNotification = true;
-              setTimeout(() => {
-                this.showSuccessNotification = false;
-              }, 3000);
-              // alert(response.data.message);
-              // Additional logic here for successful update
-              window.location.reload();
-            } else if (
-              response.data.message.includes(
-                'Successfully Updated. Verify Your Email.'
-              )
-            ) {
-             console.log(':otp is sent', response.data.message);
-              this.message = 'Successfully Updated. Verify Your Email.';
+
+              axios
+              .put(' http://172.28.28.116:6239/api/User/UpdateProfile', employeeData)
+              .then((response) => {
+                this.message = 'Successfully Updated. Verify Your Email.';
               this.showSuccessNotification = true;
               setTimeout(() => {
                 this.showSuccessNotification = false;
               }, 3000);
               this.showRequestOtpModal = true;
               this.startTimer();
+
+              }).catch((error) => {
+                console.error('Error updating employee data:', error);
+                const elapsedTime = Date.now() - startTime;
+                const remainingTime = Math.max(2000 - elapsedTime, 0);
+
+                setTimeout(() => {
+                  this.loadingButton = false; // Ensure loading is stopped after min 2 seconds
+                  alert('An error occurred while updating employee data.');
+                  // Additional error handling logic here
+                }, remainingTime);
+              });
+
+             
               // Additional logic here for OTP sent
             } else if (response.data.status_code === '400') {
               alert(

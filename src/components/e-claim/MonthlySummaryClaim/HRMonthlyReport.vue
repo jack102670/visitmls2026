@@ -56,12 +56,12 @@
                     </tr>
                   </tbody>
                   <tfoot>
-                    <tr class="bg-gray-100 dark:bg-gray-800 font-semibold">
+                    <tr class="bg-gray-100 dark:bg-gray-800 font-semibold ">
                       <td :colspan="detailGroup.length > 0 ? getVisibleColumnCount(detailGroup[0]) : 1"
                         class="text-right px-4 py-2">
                         Total:
                       </td>
-                      <td class="px-4 py-2 text-center">RM {{ getGroupTotal(detailGroup) }}</td>
+                      <td class="total px-4 py-2 text-center">RM {{ getGroupTotal(detailGroup) }}</td>
                     </tr>
                   </tfoot>
                 </table>
@@ -122,9 +122,12 @@ export default {
           .map(td => td.textContent.trim());
         allData.push(rowData);
       });
+
       
+      const medicalTotal = medicalTable.querySelector('.total').textContent.trim().replace('RM ', '').replace(/,/g, '');
+      console.log('medical', medicalTotal)
       // Add total row
-      allData.push([...Array(medicalHeaders.length - 2).fill(''), 'Total:', 'RM 40.00']);
+      allData.push([...Array(medicalHeaders.length - 2).fill(''), 'Total:', medicalTotal]);
     }
     
     allData.push([]); // Empty row between sections
@@ -149,7 +152,15 @@ export default {
           .map(td => td.textContent.trim());
         allData.push(rowData);
       });
+
+      const handphoneTotal = handphoneTable.querySelector('.total').textContent.trim().replace('RM ', '').replace(/,/g, '');
+      console.log('handphone', handphoneTotal)
+
+      // Add total row
+      allData.push([...Array(handphoneHeaders.length - 2).fill(''), 'Total:', handphoneTotal]);
     }
+
+    console.log(allData)
     
     // 4. Generate Excel Sheet with formatting
     const ws = XLSX.utils.aoa_to_sheet(allData);
@@ -173,13 +184,6 @@ export default {
       { wch: 15 }, // Bank Account
       { wch: 15 }, // Limit Medical
       { wch: 15 }  // Total Fee
-    ];
-    
-    // Merge title cells
-    ws['!merges'] = [
-      { s: { r: 0, c: 0 }, e: { r: 0, c: 16 } }, // Main title
-      { s: { r: 2, c: 0 }, e: { r: 2, c: 16 } }, // Medical Claim title
-      { s: { r: 9, c: 0 }, e: { r: 9, c: 13 } }  // Handphone Claim title
     ];
     
     XLSX.utils.book_append_sheet(wb, ws, 'Monthly Claims');
