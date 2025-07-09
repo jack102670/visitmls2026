@@ -878,7 +878,7 @@ export default {
      console.log('Employee Data test :', employeeData);
 
       return axios
-        .put(' http://172.28.28.116:6239/api/User/UpdateEmployee', employeeData)
+        .put(' http://172.28.28.116:6239/api/User/UpdateProfile', employeeData)
         .then((response) => {
          console.log('Response:', response);
           const elapsedTime = Date.now() - startTime; // Calculate elapsed time
@@ -888,29 +888,13 @@ export default {
             this.loadingButton = false; // Stop loading after ensuring min 2 seconds
             if (response.data.status_code === '200') {
 
-              axios
-              .put(' http://172.28.28.116:6239/api/User/UpdateProfile', employeeData)
-              .then((response) => {
-                this.message = 'Successfully Updated. Verify Your Email.';
+              this.message = 'Successfully Updated. Verify Your Email.';
               this.showSuccessNotification = true;
               setTimeout(() => {
                 this.showSuccessNotification = false;
               }, 3000);
               this.showRequestOtpModal = true;
               this.startTimer();
-
-              }).catch((error) => {
-                console.error('Error updating employee data:', error);
-                const elapsedTime = Date.now() - startTime;
-                const remainingTime = Math.max(2000 - elapsedTime, 0);
-
-                setTimeout(() => {
-                  this.loadingButton = false; // Ensure loading is stopped after min 2 seconds
-                  alert('An error occurred while updating employee data.');
-                  // Additional error handling logic here
-                }, remainingTime);
-              });
-
              
               // Additional logic here for OTP sent
             } else if (response.data.status_code === '400') {
