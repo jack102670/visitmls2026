@@ -168,7 +168,7 @@
                 <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md text-xs">
                   <th class="w-40">Remark</th>
                   <th class="px-2 w-28 break-words text-xs"
-                    v-for="key in Object.keys(detail[0]).filter(k => !['Tab_Title', 'unique_code', 'comment'].includes(k))"
+                    v-for="key in getVisibleKeys(detail).filter(k => !['Tab_Title', 'unique_code', 'comment'].includes(k))"
                     :key="key">
                     {{ key.split('_').join(' ') }}
                   </th>
@@ -194,7 +194,7 @@
                     </div>
 
                   </td>
-                  <td class="text-center font-normal px-3 py-1 align-middle" v-for="(val, key, i) in item" :key="i">
+                  <td class="text-center font-normal px-3 py-1 justify-center items-center " v-for="(key, i) in getVisibleKeys(detail)" :key="i">
                     {{
                       key == 'Attachments'
                         ? ''
@@ -202,35 +202,29 @@
                           ? ''
                           : key == 'Participants'
                             ? ''
-                            : val
+                            : key == 'Others_Expenses'
+                            ? ''
+                            : item[key]
                     }}
-
-                    <!-- See More button for show list of staff involved -->
-                    <div v-show="key == 'Staff_Involved'" id="staffDetails">
-                      <h1 @click="showStaffInvolved(val)"
-                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white p-1 rounded-lg">
-                        See More
-                      </h1>
+                    <div v-if="key === 'Others_Expenses'">
+                      <span v-html="item[key]"></span>
+                    </div>
+                    <div v-if="key === 'Staff_Involved'">
+                      <span v-html="item[key]"></span>
+                    </div>
+                    <div v-if="key === 'Participants'">
+                      <span v-html="item[key]"></span>
                     </div>
 
-                    <!-- See More button for show list of staff involved -->
-                    <div v-show="key == 'Participants'" id="staffDetails">
-                      <h1 @click="showParticipants(val)"
-                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white p-1 rounded-lg">
-                        See More
-                      </h1>
-                    </div>
-
-                    <!-- Click to pop up files -->
-                    <div v-show="key == 'Attachments'"
+                    <div v-if="key == 'Attachments'"
                       class="text-blue-700 flex items-center justify-center cursor-pointer"
-                      @click.prevent="ShowFile(val)">
+                      @click.prevent="ShowFile(item[key])">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
                           d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                       </svg>
-                      x{{ val ? val.length : '0' }}
+                      x{{ item[key].length }}
                     </div>
                   </td>
                 </tr>
@@ -712,6 +706,22 @@ export default {
     },
   },
   methods: {
+  getVisibleKeys(detail) {
+      if (!Array.isArray(detail) || detail.length === 0) return [];
+
+      const keys = Object.keys(detail[0])
+
+      const filtered = keys.filter(key => {
+        return detail.some(item => {
+          const val = item[key];
+          return val !== '-' && val !== '0.00' && val !== 0;
+        });
+      });
+
+      console.log('filter', filtered)
+
+      return filtered;
+    },
     openImagePreview(file) {
       this.previewImage = file;
       this.showImagePreview = true;
