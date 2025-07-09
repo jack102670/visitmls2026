@@ -1454,6 +1454,7 @@ export default {
         report_name: this.claimDetails.report_name === '-' ? '-' : this.claimDetails.report_name,
         verifier_name: this.claimDetails.verifier_name === '-' ? '-' : this.claimDetails.verifier_name,
         requester_email: this.claimDetails.email === '-' ? '-' : this.claimDetails.email,
+        company_name: this.claimDetails.company_name === '-' ? '-' : this.claimDetails.company_name,
       };
 
       if (AoR === 'Verify') {

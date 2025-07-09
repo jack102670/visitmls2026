@@ -841,6 +841,7 @@ export default {
       }
       this.loadingText = 'Uploading';
       this.loading = true;
+      this.updatingEmployeeId = this.form.employeeId;
       const accessData = this.convertValues();
 
       this.updatingEmployeeId = this.form.employeeId; // Trigger loader
@@ -849,7 +850,7 @@ export default {
       const registerData = {
         company_name: this.form.company,
         limit_amount: this.form.limit,
-        //userNameId: this.form.userNameId,
+        userNameId: this.form.userNameId,
         branch: this.form.branch,
         //userName: this.form.userId,
         employeeId: this.form.employeeId,
@@ -879,6 +880,7 @@ export default {
           this.confirm = false;
           this.edit = false;
           this.view = false;
+          
         })
         .catch(error => {
           console.error('Error while updating user profile:', error.response.data);
@@ -899,6 +901,7 @@ export default {
         this.userApplications = [...this.userApplications];
       }
       await new Promise(resolve => setTimeout(resolve, 1500));
+      await this.FetchEmployeesData();
       } catch (error){
         console.error('Error while updating user profile:', error.response?.data || error);
       } finally {
@@ -991,13 +994,19 @@ export default {
     },
     async getAllPositions() {
       try {
-        const response = await axios.get('http://172.28.28.116:6239/api/User/GetAllEmployees');
-        this.fetchOptions = response.data.result || [];
-        const position = this.fetchOptions.map((item) => item.position_title);
-        const uniquePosition = [...new Set(position.filter(p => !!p))].sort((a, b) => a.localeCompare(b));
-        this.AllPositions = uniquePosition;
+        // const response = await axios.get('http://172.28.28.116:6239/api/User/GetDesignation');
+        // this.fetchOptions = response.data.result || [];
+        // const position = this.fetchOptions.map((item) => item.position_title);
+        // const uniquePosition = [...new Set(position.filter(p => !!p))].sort((a, b) => a.localeCompare(b));
+        // this.AllPositions = uniquePosition;
         // const rawDesignations = response.data.result.map(item => item.designation);
         // this.AllPositions = [...new Set(rawDesignations)].sort((a, b) => a.localeCompare(b));
+
+        const response = await axios.get('http://172.28.28.116:6239/api/User/GetDesignation');
+        const designations = response.data.result.map((item) => item.designation);
+        const uniquePosition = [...new Set(designations)].sort((a, b) => a.localeCompare(b));
+
+        this.AllPositions = uniquePosition;
       }
       catch(error) {
         this.error = error;
