@@ -183,11 +183,11 @@
                           ? ''
                           : key == 'Participants'
                             ? ''
-                            : key == 'Others_Expenses'
+                            : key == 'Other_Expenses'
                             ? ''
                             : item[key]
                     }}
-                    <div v-if="key === 'Others_Expenses'">
+                    <div v-if="key === 'Other_Expenses'">
                       <span v-html="item[key]"></span>
                     </div>
                     <div v-if="key === 'Staff_Involved'">
