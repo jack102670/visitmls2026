@@ -801,7 +801,7 @@ export default {
       const filtered = keys.filter(key => {
         return detail.some(item => {
           const val = item[key];
-          return val !== '-' && val !== '0.00' && val !== 0;
+          return val !== '-' && val !== '0.00' && val !== 0 || key == 'comment' || key == 'status' || key == 'unique_code' || key == 'Tab_Title';
         });
       });
 
