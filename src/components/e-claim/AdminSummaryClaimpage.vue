@@ -167,7 +167,7 @@
                   <th class="w-16" v-if="simplifiedFinanceStatus == 'PENDING'">Status</th>
                   <th class="w-40">Remark</th>
                   <th class="px-6 w-36 break-words text-xs "
-                      v-for="key in getVisibleKeys(detail).filter(k => !['Tab_Title', 'unique_code', 'comment'].includes(k))"
+                      v-for="key in getVisibleKeys(detail).filter(k => !['Tab_Title', 'unique_code', 'comment','status'].includes(k))"
                       :key="key">
                       {{ key.split('_').join(' ') }}
                     </th>
@@ -192,12 +192,12 @@
                     </h1>
                   </td> -->
                   <td v-if="simplifiedFinanceStatus == 'PENDING'">
-                      <input  type="checkbox" class="rounded-md" @change="UpdateSingleRemark($event, item.unique_code, item.Tab_Title, true)">
+                      <input v-if="!item.status"  type="checkbox" class="rounded-md" @change="UpdateSingleRemark($event, item.unique_code, item.Tab_Title, true)">
 
                   </td>
                   <td class="px-2 py-1 text-xs text-left align-middle">
 
-                    <div v-if="!approved && !approvedFinance && !reimbursed && simplifiedFinanceStatus !== 'REJECTED'">
+                    <div v-if="!approved && !approvedFinance && !reimbursed && simplifiedFinanceStatus !== 'REJECTED' && !item.status">
                       <input 
                         :value="item.comment || ''"
                         @input="UpdateSingleRemark($event, item.unique_code, item.Tab_Title, false)"
@@ -1019,6 +1019,8 @@ export default {
               comment: result[i].comment,
               Tab_Title: 'Local Travelling',
               unique_code: result[i].unique_code,
+              status: result[i].status,
+
             };
             details.push(editedDetail);
           }
@@ -1095,6 +1097,7 @@ export default {
               Tab_Title: 'Overseas Travelling',
               comment: result[i].comment,
               unique_code: result[i].unique_code,
+              status: result[i].status,
 
             };
             details.push(editedDetail);
@@ -1158,6 +1161,8 @@ export default {
               comment: result[i].comment,
               Tab_Title: 'Staff Entertainment',
               unique_code: result[i].unique_code,
+              status: result[i].status,
+
             };
             details.push(editedDetail);
           }
@@ -1217,6 +1222,8 @@ export default {
               comment: result[i].comment,
               Tab_Title: 'Entertainment',
               unique_code: result[i].unique_code,
+              status: result[i].status,
+
             };
             details.push(editedDetail);
           }
@@ -1318,6 +1325,8 @@ export default {
             Tab_Title: 'Other',
             comment: result[i].comment,
             unique_code: result[i].unique_code,
+              status: result[i].status,
+
           };
           details.push(editedDetail);
         }
@@ -1854,6 +1863,14 @@ tr:last-child th:last-child {
 }
 
 .details tr th:nth-last-child(3) {
+  display: none;
+}
+
+.details tr td:nth-last-child(4) {
+  display: none;
+}
+
+.details tr th:nth-last-child(4) {
   display: none;
 }
 

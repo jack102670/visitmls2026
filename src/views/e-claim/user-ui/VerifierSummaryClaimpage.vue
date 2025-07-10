@@ -161,7 +161,7 @@
                 <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md text-xs">
                   <th class="w-40">Remark</th>
                   <th class="px-6 w-36 break-words text-xs"
-                    v-for="key in getVisibleKeys(detail).filter(k => !['Tab_Title', 'unique_code', 'comment'].includes(k))"
+                    v-for="key in getVisibleKeys(detail).filter(k => !['Tab_Title', 'unique_code', 'comment', 'status'].includes(k))"
                     :key="key">
                     {{ key.split('_').join(' ') }}
                   </th>
@@ -171,7 +171,7 @@
                 <tr class="h-8 text-left align-top text-xs hover:bg-gray-200 dark:hover:bg-gray-800"
                   v-for="(item, index) in detail" :key="index">
                   <td class="px-2 py-1 text-xs text-left align-middle">
-                    <div v-if="!verified">
+                    <div v-if="!verified && !item.status">
                       <input 
                         :value="item.comment || ''"
                         @input="UpdateSingleRemark($event, item.unique_code, item.Tab_Title)"
@@ -972,6 +972,8 @@ export default {
               comment: result[i].comment,
               Tab_Title: 'Local Travelling',
               unique_code: result[i].unique_code,
+              status: result[i].status,
+
             };
             details.push(editedDetail);
           }
@@ -1078,6 +1080,7 @@ export default {
               Tab_Title: 'Overseas Travelling',
               comment: result[i].comment,
               unique_code: result[i].unique_code,
+              status: result[i].status,
 
             };
             details.push(editedDetail);
@@ -1141,6 +1144,8 @@ export default {
               comment: result[i].comment,
               Tab_Title: 'Staff Entertainment',
               unique_code: result[i].unique_code,
+              status: result[i].status,
+
             };
             details.push(editedDetail);
           }
@@ -1199,6 +1204,8 @@ export default {
               comment: result[i].comment,
               Tab_Title: 'Entertainment',
               unique_code: result[i].unique_code,
+              status: result[i].status,
+
             };
             details.push(editedDetail);
           }
@@ -1270,6 +1277,7 @@ export default {
               Tab_Title: 'Handphone Bill',
               comment: result[i].comment,
               unique_code: result[i].unique_code,
+              
             };
             details.push(editedDetail);
           }
@@ -1299,6 +1307,7 @@ export default {
               Tab_Title: 'Other',
               comment: result[i].comment,
               unique_code: result[i].unique_code,
+              status: result[i].status,
             };
             details.push(editedDetail);
           }
@@ -1646,6 +1655,16 @@ tr:last-child th:last-child {
 .details tr th:nth-last-child(3) {
   display: none;
 }
+
+
+.details tr td:nth-last-child(4) {
+  display: none;
+}
+
+.details tr th:nth-last-child(4) {
+  display: none;
+}
+
 
 div:has(> table) {
   overflow-x: auto;

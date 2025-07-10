@@ -161,7 +161,7 @@
                 <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md text-xs">
                   <th class="w-40">Remark</th>
                   <th class="px-6 w-36 break-words text-xs"
-                    v-for="key in getVisibleKeys(detail).filter(k => !['Tab_Title', 'unique_code', 'comment'].includes(k))"
+                    v-for="key in getVisibleKeys(detail).filter(k => !['status','Tab_Title', 'unique_code', 'comment'].includes(k))"
                     :key="key">
                     {{ key.split('_').join(' ') }}
                   </th>
@@ -188,7 +188,7 @@
                     <div class="justify-center items-center flex py-2 align-middle">
                       <!-- Render input only if status is OPEN and no existing comment -->
                       <input
-                        v-if="adminStatus === 'OPEN' && simplifiedVerifierStatus === 'PENDING' && (!item.comment || item.comment.trim() === '')"
+                        v-if="(adminStatus === 'OPEN' || adminStatus === 'RESUBMITTED') && simplifiedVerifierStatus === 'PENDING' && !item.status"
                         @input="UpdateSingleRemark($event, item.unique_code, item.Tab_Title)"
                         type="text"
                         class="p-1 text-xs w-full rounded-md outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border" />
@@ -981,8 +981,10 @@ export default {
               'Total_Fee (RM)': Number(result[i].total_fee).toFixed(2),
               Attachments: result[i].files,
               comment: result[i].comment,
+              status: result[i].status,
               Tab_Title: 'Local Travelling',
               unique_code: result[i].unique_code,
+
             };
             details.push(editedDetail);
           }
@@ -1088,6 +1090,7 @@ export default {
               Others_Expenses: buildFullExpenseTable(),
               Attachments: result[i].files,
               Tab_Title: 'Overseas Travelling',
+              status: result[i].status,
               comment: result[i].comment,
               unique_code: result[i].unique_code,
 
@@ -1153,6 +1156,8 @@ export default {
               comment: result[i].comment,
               Tab_Title: 'Staff Entertainment',
               unique_code: result[i].unique_code,
+              status: result[i].status,
+
             };
             details.push(editedDetail);
           }
@@ -1210,8 +1215,10 @@ export default {
               Participants: buildFullExpenseTable(),
               Attachments: result[i].files,
               comment: result[i].comment,
+              status: result[i].status,
               Tab_Title: 'Entertainment',
               unique_code: result[i].unique_code,
+
             };
             details.push(editedDetail);
           }
@@ -1309,9 +1316,11 @@ export default {
               Date: result[i].expense_date,
               'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),
               Attachments: result[i].files,
-              Tab_Title: 'Other',
               comment: result[i].comment,
+              status: result[i].status,
               unique_code: result[i].unique_code,
+              Tab_Title: 'Other',
+
             };
             details.push(editedDetail);
           }
@@ -1669,6 +1678,16 @@ tr:last-child th:last-child {
 .details tr th:nth-last-child(3) {
   display: none;
 }
+
+
+.details tr td:nth-last-child(4) {
+  display: none;
+}
+
+.details tr th:nth-last-child(4) {
+  display: none;
+}
+
 
 div:has(> table) {
   overflow-x: auto;
