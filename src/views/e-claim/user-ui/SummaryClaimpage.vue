@@ -861,7 +861,6 @@ export default {
         });
       });
 
-      console.log('filter', filtered)
 
       return filtered;
     },

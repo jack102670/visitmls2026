@@ -33,7 +33,7 @@
           </h1>
 
           <div class="h-12 flex items-center">
-            <button  @click="PrintSummary" class="mx-4">
+            <button v-show="!seeMore"  @click="PrintSummary" class="mx-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                   stroke="currentColor" class="w-7 h-7">
                   <path stroke-linecap="round" stroke-linejoin="round"
@@ -164,6 +164,7 @@
             <div class="border rounded-lg overflow-x-auto border-gray-400 dark:border-gray-600">
               <table class="w-full">
                 <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md text-xs">
+                  <th class="w-16">Status</th>
                   <th class="w-40">Remark</th>
                   <th class="px-6 w-36 break-words text-xs "
                       v-for="key in getVisibleKeys(detail).filter(k => !['Tab_Title', 'unique_code', 'comment'].includes(k))"
@@ -190,11 +191,16 @@
                       {{ item.comment }}
                     </h1>
                   </td> -->
+                  <td>
+                      <input type="checkbox" class="rounded-md" @change="UpdateSingleRemark($event, item.unique_code, item.Tab_Title, true)">
+
+                  </td>
                   <td class="px-2 py-1 text-xs text-left align-middle">
+
                     <div v-if="!approved && !approvedFinance && !reimbursed && simplifiedFinanceStatus !== 'REJECTED'">
                       <input 
                         :value="item.comment || ''"
-                        @input="UpdateSingleRemark($event, item.unique_code, item.Tab_Title)"
+                        @input="UpdateSingleRemark($event, item.unique_code, item.Tab_Title, false)"
                         type="text"
                         class="p-1 text-xs w-full rounded-md outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border"
                       />
@@ -840,7 +846,6 @@ export default {
         });
       });
 
-      console.log('filter', filtered)
 
       return filtered;
     },
@@ -1338,7 +1343,7 @@ export default {
           });
 
           // console.log(this.claimDatas, 'claimDatas');
-          // console.log(this.claimDatasDetails);
+          console.log(this.claimDatasDetails);
         } catch (e) {
           console.error('Error processing final claim data:', e);
         }
@@ -1518,36 +1523,33 @@ export default {
     //   }
     // },
 
-    UpdateSingleRemark(event, uc, tab) {
+    UpdateSingleRemark(event, uc, tab, changeStatus = false) {
       const value = event.target.value;
-
-      // Reflect the change directly into the item in `claimDatasDetails`
-      for (let section of this.claimDatasDetails) {
-        const item = section.find(x => x.unique_code === uc && x.Tab_Title === tab);
-        if (item) {
-          item.comment = value; // Vue will update this reactively
-          break;
-        }
-      }
 
       // Now also update the singleRemarks tracking array
       const index = this.singleRemarks.findIndex(item => item.unique_code === uc);
+      console.log('inde', index)
 
       const data = {
-        remark: value,
+        remark: changeStatus ? (this.singleRemarks[index]?.remark || '') : value,
+        status: changeStatus ? (event.target.checked ? 1 : 0) : (this.singleRemarks[index]?.status || 0),
         unique_code: uc,
         Tab_Title: tab,
       };
 
       if (index !== -1) {
-        if (data.remark.trim() === '') {
+        if (data.remark.trim() === '' && data.status === 0) {
           this.singleRemarks.splice(index, 1);
         } else {
           this.singleRemarks[index] = { ...this.singleRemarks[index], ...data };
         }
-      } else if (data.remark.trim() !== '') {
-        this.singleRemarks.push(data);
+      } else {
+        if (data.remark.trim() !== '' || data.status === 1) {
+          this.singleRemarks.push(data);
+        }
       }
+
+      console.log('remark', this.singleRemarks)
     },
 
 
@@ -1561,6 +1563,7 @@ export default {
       this.singleRemarks.forEach((remark) => {
         let data = {
           comment: remark.remark,
+          status: remark.status,
           unique_code: remark.unique_code,
         };
         if (remark.Tab_Title == 'Local Travelling') {

@@ -34,7 +34,7 @@
           </h1>
 
           <div class="h-12 flex items-center">
-            <button  @click="PrintSummary" class="mx-4">
+            <button v-show="!seeMore" @click="PrintSummary" class="mx-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                   stroke="currentColor" class="w-7 h-7">
                   <path stroke-linecap="round" stroke-linejoin="round"
@@ -805,7 +805,6 @@ export default {
         });
       });
 
-      console.log('filter', filtered)
 
       return filtered;
     },
@@ -1454,7 +1453,10 @@ export default {
         report_name: this.claimDetails.report_name === '-' ? '-' : this.claimDetails.report_name,
         verifier_name: this.claimDetails.verifier_name === '-' ? '-' : this.claimDetails.verifier_name,
         requester_email: this.claimDetails.email === '-' ? '-' : this.claimDetails.email,
+        company_name: this.claimDetails.company_name === '-' ? '-' : this.claimDetails.company_name
       };
+
+      console.log(feedbackData)
 
       if (AoR === 'Verify') {
         try {
@@ -1466,6 +1468,8 @@ export default {
             ...feedbackData,
             admin_status: 'VERIFIED. WAITING FOR APPROVER',
           });
+
+          console.log('response', response)
 
           this.approveSuccess = true;
           this.loading = false;

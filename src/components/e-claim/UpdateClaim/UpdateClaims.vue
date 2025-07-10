@@ -121,7 +121,7 @@
                                     <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                         {{ claim.total || '-' }}
                                     </td>
-                                    <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2">
+                                    <td v-if="!claim.status" class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2">
                                         <!-- Edit Button -->
                                         <div class="relative group inline-block">
                                             <a @click="toggleSlideOver(index)"
@@ -133,6 +133,7 @@
                                             </a>
                                             <!-- Tooltip -->
                                             <div
+                                                
                                                 class="absolute top-full mt-1 left-1/2 transform -translate-x-1/2 hidden group-hover:block w-max px-2 py-1 bg-white border border-gray-300 rounded shadow-lg text-gray-700 text-sm z-50">
                                                 Edit
                                             </div>
@@ -380,6 +381,7 @@ export default {
             total: claim.total_fee,
             unique_code: claim.unique_code,
             refNo: refNo,
+            status: claim.status
             }));
 
             const OverseasTravelClaims = (overseasTravelRes.data.result || []).map(claim => ({
@@ -389,6 +391,8 @@ export default {
             total: claim.total_fee,
             unique_code: claim.unique_code,
             refNo: refNo,
+            status: claim.status
+
             }));
 
             const entertainmentClaims = (entertainmentRes.data.result || []).map(claim => ({
@@ -398,6 +402,8 @@ export default {
             total: claim.total_fee,
             unique_code: claim.unique_code,
             refNo: refNo,
+            status: claim.status
+
             }));
 
             const refreshmentClaims = (refreshmentRes.data.result || []).map(claim => ({
@@ -407,6 +413,8 @@ export default {
             total: claim.total_fee,
             unique_code: claim.unique_code,
             refNo: refNo,
+            status: claim.status
+
             }));
 
             const othersClaims = (othersRes.data.result || []).map(claim => ({
@@ -416,6 +424,8 @@ export default {
             total: claim.total_fee,
             unique_code: claim.unique_code,
             refNo: refNo,
+            status: claim.status
+
             }));
 
             const handphoneClaims = (handphoneRes.data.result || []).map(claim => ({

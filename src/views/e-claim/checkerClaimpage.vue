@@ -34,7 +34,7 @@
           </h1>
 
           <div class="h-12 flex items-center">
-            <button  @click="PrintSummary" class="mx-4">
+            <button v-show="!seeMore" @click="PrintSummary" class="mx-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                   stroke="currentColor" class="w-7 h-7">
                   <path stroke-linecap="round" stroke-linejoin="round"
@@ -815,7 +815,6 @@ export default {
         });
       });
 
-      console.log('filter', filtered)
 
       return filtered;
     },

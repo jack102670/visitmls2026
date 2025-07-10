@@ -2179,7 +2179,7 @@ export default {
         Swal.fire({
           icon: 'error',
           title: 'Submission Failed',
-          text: "Please fill in all the data.",
+          text: error.message,
           // text: error.message,
         });
       } finally {
