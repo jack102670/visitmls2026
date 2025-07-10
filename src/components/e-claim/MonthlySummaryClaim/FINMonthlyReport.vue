@@ -207,8 +207,8 @@ import axios from 'axios';
                   'Start Point': item.starting_point,
                   'End Point': item.end_point,
                   'Mileage (KM)': Number(item.mileage_km).toFixed(2),
-                  'Type of Petrol':item.type_petrol,
-                  'Petrol (Litre)':Number(item.petrol_perlitre).toFixed(2),
+                  'Type of Fuel':item.type_petrol,
+                  'Fuel (Litre)':Number(item.petrol_perlitre).toFixed(2),
                   'Fare': Number(item.fare).toFixed(2),
                   'Meal Allowance (RM)': item.meal_allowance,
                   'Accomodation': item.accommodation,
@@ -217,7 +217,7 @@ import axios from 'axios';
                   'Transport Specification': item.transport_specification,
                   'Transport Mode': item.transport_mode,
                   'Trip Mode': item.trip_mode,
-                  'Petrol/ EV (RM)': Number(item.total_mileage).toFixed(2),
+                  'Fuel/ EV (RM)': Number(item.total_mileage).toFixed(2),
                   'Total Fee(RM)': Number(item.total_fee).toFixed(2),
                 }));
                 this.claimDatasDetails['Local Travelling'].push(...localData);

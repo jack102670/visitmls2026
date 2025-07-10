@@ -1547,7 +1547,7 @@ export default {
             },
             {
               id: "petrolLitre",
-              label: "Petrol(Litre)",
+              label: "Fuel(Litre)",
               type: "number",
               placeholder: "0.00",
               value: "",
@@ -1557,7 +1557,7 @@ export default {
             },
             {
               id: "MileageRMLT",
-              label: "Petrol/EV(RM)",
+              label: "Fuel/EV(RM)",
               type: "number",
               value: "",
               required: true,
@@ -2341,7 +2341,7 @@ export default {
             },
             {
               id: "petrolLitreOT",
-              label: "Petrol(Litre)",
+              label: "Fuel(Litre)",
               type: "number",
               placeholder: "0.00",
               value: "",
@@ -2351,7 +2351,7 @@ export default {
             },
             {
               id: "MileageRMOT",
-              label: "Petrol/EV(RM)",
+              label: "Fuel/EV(RM)",
               type: "number",
               value: "",
               required: true,
@@ -4386,7 +4386,7 @@ export default {
           ].forEach(id => { setHidden(id, true); setValue(id); });
         }
       } else {
-        if (transportType === "Personal Transport" || transportType === "Company Transport") {
+        if (transportType === "Personal Transport") {
           setHidden("TransportSpec", false);
           setHidden("LocationStart", false);
           setHidden("LocationEnd", false);
@@ -4395,14 +4395,36 @@ export default {
           setHidden("UploadMileageRMLT", false);
           setHidden("transportNumberPlate", false);
           setHidden("transportModel", false);
-          setHidden("petrolType", false);
-          setHidden("petrolLitre", false);
+          // setHidden("petrolType", false);
+          // setHidden("petrolLitre", false);
+          // setHidden("MileageRMLT", false);
+          // setHidden("UploadMileageRMLT", false);
           setHidden("TollLT", false);
           setHidden("UploadTollLT", false);
           setHidden("ParkingLT", false);
           setHidden("UploadParkingLT", false);
 
-          ["DepartureAirportLT", "ArrivalAirportLT", "FlightClassLT", "FareRMLT", "UploadFareRMLT", "PublicTransportSpec"]
+          ["DepartureAirportLT", "ArrivalAirportLT", "FlightClassLT", "FareRMLT", "UploadFareRMLT", "PublicTransportSpec", "petrolType", "petrolLitre", "MileageRMLT", "UploadMileageRMLT" ]
+            .forEach(id => { setHidden(id, true); setValue(id); });
+        }
+
+        if (transportType === "Company Transport") {
+          setHidden("TransportSpec", false);
+          setHidden("LocationStart", false);
+          setHidden("LocationEnd", false);
+          // setHidden("MileageKMLT", false);
+          setHidden("transportNumberPlate", false);
+          setHidden("transportModel", false);
+          setHidden("petrolType", false);
+          setHidden("petrolLitre", false);
+          setHidden("MileageRMLT", false);
+          setHidden("UploadMileageRMLT", false);
+          setHidden("TollLT", false);
+          setHidden("UploadTollLT", false);
+          setHidden("ParkingLT", false);
+          setHidden("UploadParkingLT", false);
+
+          ["DepartureAirportLT", "ArrivalAirportLT", "FlightClassLT", "FareRMLT", "UploadFareRMLT", "PublicTransportSpec", "MileageKMLT"]
             .forEach(id => { setHidden(id, true); setValue(id); });
         }
 

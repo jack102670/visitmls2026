@@ -109,28 +109,28 @@
               class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
           </div>
 
-          <div class="col-span-4" v-if="overseas.transport_mode !== 'Public Transport'">
-            <label for="type_petrol" class="font-medium text-sm">Type of Petrol</label>
+          <div class="col-span-4" v-if="overseas.transport_mode === 'Company Transport'">
+            <label for="type_petrol" class="font-medium text-sm">Type of Fuel</label>
             <select id="type_petrol" v-model="overseas.type_petrol"
               class="mt-1 text-xs block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
               <option v-for="(type, index) in petrolTypes" :key="index" :value="type">{{ type }}</option>
             </select>
           </div>
 
-          <div class="col-span-4" v-if="overseas.transport_mode !== 'Public Transport'">
-            <label for="type_petrol" class="font-medium text-sm">Petrol(Litre)</label>
+          <div class="col-span-4" v-if="overseas.transport_mode === 'Company Transport'">
+            <label for="type_petrol" class="font-medium text-sm">Fuel(Litre)</label>
             <input type="text" id="petrol_perlitre" v-model="overseas.petrol_perlitre"
               class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
           </div>
         
 
-          <div class="col-span-4" v-if="overseas.transport_mode !== 'Public Transport'">
-            <label for="total_mileage" class="font-medium text-sm">Petrol/EV(RM)</label>
+          <div class="col-span-4" v-if="overseas.transport_mode === 'Company Transport'">
+            <label for="total_mileage" class="font-medium text-sm">Fuel/EV(RM)</label>
             <input type="text" id="total_mileage" v-model="overseas.total_mileage"
               class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
           </div>
 
-          <div class="col-span-4" v-if="overseas.transport_mode !== 'Public Transport'">
+          <div class="col-span-4" v-if="overseas.transport_mode === 'Company Transport'">
             <!-- Upload field shown if mileage entered and no files yet -->
             <div v-if="overseas.total_mileage && !categorizedFiles.mileage.length">
               <input type="file" id="newFile" @change="uploadFiles($event, 'mileage')"
@@ -142,7 +142,7 @@
 
             <!-- Uploaded mileage files shown if any -->
             <div v-if="overseas.total_mileage && categorizedFiles.mileage.length">
-              <label class="font-medium text-sm">Uploaded Petrol Files:</label>
+              <label class="font-medium text-sm">Uploaded Fuel Files:</label>
               <ul class="mt-1 text-xs text-blue-600 underline">
                 <li v-for="(file, index) in categorizedFiles.mileage" :key="index" class="flex items-center gap-2">
                   <a :href="typeof file === 'string' ? file : '#'" target="_blank">
@@ -711,13 +711,24 @@ export default {
         },
         totalFee() {
         const meal = parseFloat(this.overseas.meal_allowance) || 0;
+        const mileage = parseFloat(this.overseas.mileage_km) || 0;
         const petrol = parseFloat(this.overseas.total_mileage) || 0;
         const parking = parseFloat(this.overseas.park_fee) || 0;
         const toll = parseFloat(this.overseas.toll_fee) || 0;
         const fare = parseFloat(this.overseas.fare) || 0;
         const hotel = parseFloat(this.overseas.hotel_fee) || 0;
 
-        const total = petrol + parking + toll + fare + meal + hotel;
+        let total = 0;
+        if (this.overseas.transport_mode === 'Public Transport') {
+            total = fare + meal + hotel;
+        } else if (this.overseas.transport_mode === 'Company Transport') {
+            total = petrol + meal + hotel + toll + parking;
+        } else if (this.overseas.transport_mode === 'Personal Transport' && this.overseas.transport_specification === 'Motorcycle') {
+            total = (mileage * 0.2) + parking + toll + meal + hotel;
+        } else if (this.overseas.transport_mode === 'Personal Transport' && this.overseas.transport_specification === 'Car') {
+            total = (mileage * 0.5) + parking + toll + meal + hotel;
+        }
+        // const total = petrol + parking + toll + fare + meal + hotel;
         return total.toFixed(2);
         },
         date_event: {
