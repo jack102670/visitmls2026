@@ -298,12 +298,12 @@
                   class="border rounded-md px-16 py-2" />
               </div>
               <div v-if="isPersonalTransport || isCompanyTransport" class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Type of Petrol:</label>
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Type of Fuel:</label>
                 <input type="text" id="petrolType" v-model="localTravellingDetails.petrolType" :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2" />
               </div>
               <div v-if="isPersonalTransport || isCompanyTransport" class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Petrol(Litre):</label>
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Fuel(Litre):</label>
                 <input type="text" id="petrolLitre" v-model="localTravellingDetails.petrolLitre" :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2" />
               </div>
@@ -496,12 +496,12 @@
                   class="border rounded-md px-16 py-2" />
               </div>
               <div v-if="isPersonalTransportOT || isCompanyTransportOT" class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Type of Petrol:</label>
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Type of Fuel:</label>
                 <input type="text" id="petrolType" v-model="overseasTravellingDetails.petrolTypeOT" :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2" />
               </div>
               <div v-if="isPersonalTransportOT || isCompanyTransportOT" class="flex justify-between items-center mb-4">
-                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Petrol(Litre):</label>
+                <label for="nodeParentId" class="text-gray-700 font-bold mr-2">Fuel(Litre):</label>
                 <input type="text" id="petrolLitre" v-model="overseasTravellingDetails.petrolLitreOT" :disabled="!isEditMode"
                   class="border rounded-md px-16 py-2" />
               </div>
