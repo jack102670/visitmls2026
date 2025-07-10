@@ -460,10 +460,16 @@ export default {
     async getAllPositions() {
 
       try {
-        const response = await axios.get('http://172.28.28.116:6239/api/User/GetAllEmployees');
-        this.positionOptions = response.data.result || [];
-        const position = this.positionOptions.map((item) => item.position_title);
-        const uniquePosition = [...new Set(position.filter(p => !!p))].sort((a, b) => a.localeCompare(b));
+        // const response = await axios.get('http://172.28.28.116:6239/api/User/GetAllEmployees');
+        // this.positionOptions = response.data.result || [];
+        // const position = this.positionOptions.map((item) => item.position_title);
+        // const uniquePosition = [...new Set(position.filter(p => !!p))].sort((a, b) => a.localeCompare(b));
+        // this.AllPositions = uniquePosition;
+
+        const response = await axios.get('http://172.28.28.116:6239/api/User/GetDesignation');
+        const designations = response.data.result.map((item) => item.designation);
+        const uniquePosition = [...new Set(designations)].sort((a, b) => a.localeCompare(b));
+
         this.AllPositions = uniquePosition;
 
         console.log("list position", uniquePosition);

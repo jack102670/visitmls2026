@@ -650,6 +650,21 @@ export default {
 
     // fetch claims data from api
     this.FetchClaimsData();
+
+    this.$router.beforeEach((to, from, next) => {
+      document.body.classList.remove('overflow-hidden');
+      next();
+    });
+  },
+
+  watch: {
+    isSlideOverOpen(newVal) {
+      if (newVal) {
+        document.body.classList.add('overflow-hidden');
+      } else {
+        document.body.classList.remove('overflow-hidden');
+      }
+    }
   },
 };
 </script>

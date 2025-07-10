@@ -420,6 +420,7 @@ import $ from 'jquery';
 import 'datatables.net-dt';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';
 import axios from 'axios';
+import { store } from "@/views/store.js";
 import SlideOver from '@/components/e-claim/MonthlySummaryClaim/SlideOver/MonthlyReportFINForm.vue';
 
 export default {
@@ -630,9 +631,14 @@ export default {
       });
     },
     async FetchClaimsData() {
+      console.log('Fetching claims data... Finance Approver');
       this.loading = true;
       try {
-        const response = await axios.get('http://172.28.28.116:6165/api/ApproverVerifier/GetAllRequestApproverFinance');
+        const username_id = store.getSession().userDetails.userId;
+        const response = await axios.get(
+          `http://172.28.28.116:6165/api/ApproverVerifier/GetAllRequestApproverFinance`,
+          { params: { user_id: username_id } }
+        );
         this.claimsData = response.data.result.filter(
           (item) => item.admin_status != ''
         );

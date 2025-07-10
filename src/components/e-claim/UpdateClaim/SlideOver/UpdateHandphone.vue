@@ -22,11 +22,20 @@
                 <div class="grid grid-cols-8 gap-2 w-full">
                     <div class="col-span-4">
                         <label for="claim_month" class="font-medium text-sm">Claim Month</label>
-                        <input type="text" id="claim_month" v-model="handphone.claim_month" readonly
+                        <!-- <select type="text" id="claim_month" v-model="handphone.claim_month"
                             class="mt-1 block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-gray-100 cursor-not-allowed">
-                            <!-- <option v-for="(month, index) in claimMonths" :key="index" :value="month">{{ month }} -->
-                            <!-- </option> -->
-                        <!-- </input> -->
+                            <option v-for="(month, index) in claimMonths" :key="index" :value="month">{{ month.label }}
+                            </option>
+                        </select> -->
+                        <select
+                            id="claim_month"
+                            v-model="handphone.claim_month"
+                            class="mt-1 block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-gray-100 cursor-not-allowed"
+                            >
+                            <option v-for="(month, index) in claimMonths" :key="index" :value="month.label">
+                                {{ month.label }}
+                            </option>
+                        </select>
                     </div>
                     <div class="col-span-4">
                         <label for="claim_year" class="font-medium text-sm">Claim Year</label>
@@ -124,6 +133,7 @@
 // import { getHandphone, updateHandphone } from "../../../../api/EclaimAPI.js";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { monthOptions } from "@/javascript/eClaimOptions.js";
 export default {
     emits: ['close', 'closeSlideOver', 'refresh-claims'],
     props: {
@@ -150,8 +160,8 @@ export default {
                 ic_number: "",
                 files: [],
             },
-            claimYears: this.generateYears(),
-            claimMonths: this.generateMonths(),
+            claimYears: this.getAllowedYears(),
+            claimMonths: this.getAllowedMonthOptions(),
             newFiles: [],
             filesToDelete: [],
             selectedFileName: "",
@@ -335,20 +345,28 @@ export default {
                     }
                 },
 
-        generateYears() {
-            const currentYear = new Date().getFullYear();
-            const startYear = 2005;
-            const years = [];
-            for (let i = currentYear; i >= startYear; i--) {
-                years.push(i);
-            }
-            return years;
+        getAllowedMonthOptions() {
+            const currentDate = new Date();
+            const currentMonthIndex = currentDate.getMonth(); // 0 = Jan
+            const prevMonthIndex = (currentMonthIndex - 1 + 12) % 12;
+
+            const allowedMonths = [prevMonthIndex, currentMonthIndex];
+
+            return monthOptions.filter((_, index) => allowedMonths.includes(index));
+            // return monthOptions.filter(month => allowedMonths.includes(month.value));
+
         },
-        generateMonths() {
-            return [
-                "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
-                "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
-            ];
+        getAllowedYears() {
+            const currentDate = new Date();
+            const currentMonthIndex = currentDate.getMonth(); // 0 = January
+            const currentYear = currentDate.getFullYear();
+
+            // If current month is January, previous month is December of last year
+            const allowedYears = currentMonthIndex === 0
+                ? [currentYear - 1, currentYear]
+                : [currentYear];
+
+            return allowedYears;
         },
 
        
