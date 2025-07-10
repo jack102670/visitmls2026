@@ -1,7 +1,8 @@
 <template>
   <main class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 dark:text-white p-4 sm:ml-64">
     <div class="mx-auto text-xs lg:text-base">
-      <div id="summaryPrint content-to-export"
+      <!-- <div id="summaryPrint content-to-export" -->
+      <div id="summaryPrint"
         class="relative bg-[#f7fbff] dark:bg-gray-900 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
         <h1 class="text-gray-500 italic absolute top-4 right-4">
           SN: {{ referenceNumber }}
@@ -51,7 +52,7 @@
                 <g fill="#1a1a1a" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(8,8)"><path d="M15.875,4l-0.09375,0.03125l-11,2.4375l-0.78125,0.1875v18.6875l0.78125,0.1875l11,2.4375l0.09375,0.03125h2.125v-3h10v-18h-10v-3zM16,6.03125v19.9375l-10,-2.1875v-15.5625zM18,9h8v14h-8v-2h2v-2h-2v-1h2v-2h-2v-1h2v-2h-2v-1h2v-2h-2zM21,10v2h4v-2zM14.15625,11l-2.28125,0.28125l-1.25,2.6875c-0.13281,0.38672 -0.23047,0.67969 -0.28125,0.875h-0.03125c-0.07812,-0.32422 -0.15234,-0.60547 -0.25,-0.84375l-0.625,-2.3125l-2.125,0.25l-0.09375,0.0625l1.78125,4l-2,4l2.15625,0.25l0.875,-2.46875c0.10547,-0.3125 0.19141,-0.56641 0.21875,-0.71875h0.03125c0.05859,0.32422 0.09766,0.56641 0.15625,0.6875l1.34375,2.9375l2.4375,0.3125l-2.65625,-5.03125zM21,13v2h4v-2zM21,16v2h4v-2zM21,19v2h4v-2z"></path></g></g>
                 </svg>
               </button> -->
-              <button  @click="PrintSummary">
+              <button @click="PrintSummary">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                   stroke="currentColor" class="w-7 h-7">
                   <path stroke-linecap="round" stroke-linejoin="round"
