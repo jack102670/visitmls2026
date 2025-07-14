@@ -1313,6 +1313,7 @@ export default {
             amount += result[i].total_fee;
             const editedDetail = {
              'Expense_Name': result[i].expense_name,
+              'Receipt_No': result[i].receipt_no,
               Description: result[i].description,
               Date: result[i].expense_date,
               'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),

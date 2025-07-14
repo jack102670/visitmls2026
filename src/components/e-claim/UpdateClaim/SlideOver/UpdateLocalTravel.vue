@@ -82,14 +82,17 @@
                         class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                             <option v-for="(specify, index) in transportSpecPublic" :key="index" :value="specify">{{ specify }}</option>
                         </select>
-                        <!-- Show dropdown when mode is 'Personal' -->
-                        <select v-else-if="local.transport_mode !== 'Public Transport' " id="transport_specification" v-model="local.transport_specification"
+                        <select v-else-if="local.transport_mode === 'Personal Transport' " id="transport_specification" v-model="local.transport_specification"
+                                class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                <option v-for="(specify, index) in transportSpecifications" :key="index" :value="specify">{{ specify }}</option>
+                        </select>
+                        <select v-else-if="local.transport_mode === 'Company Transport' " id="transport_specification" v-model="local.transport_specification"
                                 class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                                 <option v-for="(specify, index) in transportSpecifications" :key="index" :value="specify">{{ specify }}</option>
                         </select>
                     </div>
 
-                    <div class="col-span-4" >
+                    <div class="col-span-4" v-if="local.transport_mode !== 'Company Transport'">
                         <label for="mileage_km" class="font-medium text-sm" >Mileage/ Kilometer(KM)</label>
                         <input type="text" id="mileage_km" v-model="local.mileage_km"
                             class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">

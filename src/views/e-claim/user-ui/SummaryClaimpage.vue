@@ -1075,7 +1075,7 @@ export default {
                         <td class="border px-1 py-0.5">${e.foreign_currency}</td>
                         <td class="border px-1 py-0.5">${e.exchange_rate}</td>
                         <td class="border px-1 py-0.5">${e.currency_total}</td>
-                        <td class="border px-1 py-0.5">${e.amount}</td>
+                        <td class="border px-1 py-0.5">${e.amount.toFixed(2)}</td>
                       </tr>`
                       )
                       .join('')}
@@ -1350,6 +1350,7 @@ export default {
             amount += result[i].total_fee;
             const editedDetail = {
               'Expense_Name': result[i].expense_name,
+              'Receipt_No': result[i].receipt_no,
               Description: result[i].description,
               Date: result[i].expense_date,
               'Total_Fee(RM)': Number(result[i].total_fee).toFixed(2),

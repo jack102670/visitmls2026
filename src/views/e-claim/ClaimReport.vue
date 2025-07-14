@@ -2462,10 +2462,10 @@ export default {
                   const uniqueCodeOthers = this.generateUniqueCode(claim.tabTitle);
                   const payload = {
                     expense_date: claim.dateOthers,
-                    amount: parseFloat(claim.AmountRMOthers).toFixed(2),
+                    amount: Number(parseFloat(claim.AmountRMOthers) || 0),
                     description: claim.DescriptionOthers,
                     unique_code: uniqueCodeOthers,
-                    total_fee: parseFloat(claim.totalRM).toFixed(2),
+                    total_fee: Number(parseFloat(claim.totalRM) || 0),
                     reference_number: this.serialnumber,
                     receipt_no: claim.ReceiptOthers,
                     requester_id: this.userDetails.userId,

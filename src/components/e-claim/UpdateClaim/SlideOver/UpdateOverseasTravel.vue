@@ -71,7 +71,13 @@
               <option v-for="(specify, index) in transportSpecPublic" :key="index" :value="specify">{{ specify }}
               </option>
             </select>
-            <select v-else-if="overseas.transport_mode !== 'Public Transport' " id="transport_specification"
+            <select v-else-if="overseas.transport_mode === 'Personal Transport' " id="transport_specification"
+              v-model="overseas.transport_specification"
+              class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+              <option v-for="(specify, index) in transportSpecifications" :key="index" :value="specify">{{ specify }}
+              </option>
+            </select>
+            <select v-else-if="overseas.transport_mode === 'Company Transport' " id="transport_specification"
               v-model="overseas.transport_specification"
               class="mt-1 text-xs block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
               <option v-for="(specify, index) in transportSpecifications" :key="index" :value="specify">{{ specify }}
@@ -717,16 +723,17 @@ export default {
         const toll = parseFloat(this.overseas.toll_fee) || 0;
         const fare = parseFloat(this.overseas.fare) || 0;
         const hotel = parseFloat(this.overseas.hotel_fee) || 0;
+        const others = parseFloat(this.totalAmount) || 0;
 
         let total = 0;
         if (this.overseas.transport_mode === 'Public Transport') {
-            total = fare + meal + hotel;
+            total = fare + meal + hotel + others;
         } else if (this.overseas.transport_mode === 'Company Transport') {
-            total = petrol + meal + hotel + toll + parking;
+            total = petrol + meal + hotel + toll + parking + others;
         } else if (this.overseas.transport_mode === 'Personal Transport' && this.overseas.transport_specification === 'Motorcycle') {
-            total = (mileage * 0.2) + parking + toll + meal + hotel;
+            total = (mileage * 0.2) + parking + toll + meal + hotel + others;
         } else if (this.overseas.transport_mode === 'Personal Transport' && this.overseas.transport_specification === 'Car') {
-            total = (mileage * 0.5) + parking + toll + meal + hotel;
+            total = (mileage * 0.5) + parking + toll + meal + hotel + others;
         }
         // const total = petrol + parking + toll + fare + meal + hotel;
         return total.toFixed(2);

@@ -2658,7 +2658,7 @@ export default {
               label: "Receipt No.",
               type: "text",
               value: "",
-              required: false,
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -2666,7 +2666,7 @@ export default {
               label: "Restaurant Name",
               type: "text",
               value: "",
-              required: false,
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -2683,6 +2683,7 @@ export default {
               label: "Amount(RM)",
               type: "number",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -2754,7 +2755,7 @@ export default {
               label: "Receipt No.",
               type: "text",
               value: "",
-              required: false,
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -2762,7 +2763,7 @@ export default {
               label: "Restaurant Name",
               type: "text",
               value: "",
-              required: false,
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
@@ -2780,6 +2781,7 @@ export default {
               label: "Amount(RM)",
               type: "number",
               value: "",
+              required: true,
               gridClass: "sm:col-span-2",
             },
             {
