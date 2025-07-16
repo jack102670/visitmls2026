@@ -61,7 +61,7 @@
                     </div>
                     <div class="col-span-4">
                         <label for="claim_amount" class="font-medium text-sm">Claim Amount (RM)</label>
-                        <input type="number" id="claim_amount" v-model="handphone.claim_amount" @input="validateHandphoneClaim"
+                        <input type="number" id="claim_amount" v-model="handphone.claim_amount" @input="validateHandphoneClaim" step="0.01"
                             class="mt-1 block text-xs w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                     </div>
                     <!-- <input type="number"
