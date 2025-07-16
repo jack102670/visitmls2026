@@ -1630,8 +1630,8 @@ export default {
           });
 
         this.isModalVisible = true;
-        console.log("this is get request masuk tak" + this.getRequest);
-        console.log(this.isModalVisible)
+        // console.log("this is get request masuk tak" + this.getRequest);
+        // console.log(this.isModalVisible)
         this.showBadgeRequest = true;
       }
       if (refNumber.includes("VET")) {
@@ -1639,7 +1639,7 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetVisitor/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
-            console.log("try" + this.getRequest);
+          //  console.log("try" + this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1653,7 +1653,7 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetCCTVRequest/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
-            console.log(this.getRequest);
+         //   console.log(this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1667,7 +1667,7 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetPTW/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
-            console.log(this.getRequest);
+         //   console.log(this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1683,7 +1683,7 @@ export default {
           )
           .then((response) => {
             this.getRequest = response.data;
-            console.log(this.getRequest);
+       //     console.log(this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1697,7 +1697,7 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetTestKits/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
-            console.log(this.getRequest);
+       //     console.log(this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1711,7 +1711,7 @@ export default {
           .get("http://172.28.28.91:8085/api/Main/GetMask/" + refNumber)
           .then((response) => {
             this.getRequest = response.data;
-            console.log(this.getRequest);
+      //      console.log(this.getRequest);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -1772,7 +1772,7 @@ export default {
     },
     viewRequestDetails() {
       // You can implement the logic to show the details view here
-      console.log("see", this.requester);
+   //   console.log("see", this.requester);
     },
     convertJsonToArray(json, keysToExclude) {
       return Object.entries(json).reduce((tableData, [key, value]) => {
@@ -1858,14 +1858,14 @@ export default {
 
       const test = this.convertJsonToKeyValArray(this.getRequest);
 
-      console.log(test);
+   //   console.log(test);
 
       const tableRows = this.convertJsonToArray(
         this.getRequest,
         this.keysToExclude
       );
 
-      console.log(tableRows);
+    //  console.log(tableRows);
 
       // doc.autoTable({
       //   startY: yPos,

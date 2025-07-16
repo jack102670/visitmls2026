@@ -3,7 +3,7 @@
     class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 dark:text-white p-4 sm:ml-64"
     id="summaryPrint"
   >
-    <div class="container mx-auto text-xs lg:text-base" id="summaryPrint">
+    <div class="container mx-auto text-xs lg:text-base">
       <div
         class="print-div relative overflow-auto bg-[#f7fbff] dark:bg-gray-900 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
@@ -19,14 +19,14 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
             <DropDown
               inputId="branchInput"
-              label="Branch"
+              label="1. Branch"
               :options="Branches"
               :mandatory="true"
               @input="(payload) => (form.branch = payload)"
             />
             <DropDown
               inputId="companyInput"
-              label="Company"
+              label="2. Company"
               :options="Company"
               :mandatory="true"
               class="mt-6 lg:mt-0 lg:ml-4"
@@ -37,14 +37,14 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
             <DropDown
               inputId="departmentInput"
-              label="Department"
+              label="3. Department"
               :options="filteredDepartments"
               :mandatory="true"
               @input="(payload) => (form.department = payload)"
             />
             <DropDown
               inputId="positionInput"
-              label="Position"
+              label="4. Position"
               :options="AllPositions"
               :mandatory="true"
               class="mt-6 lg:mt-0 lg:ml-4"
@@ -55,7 +55,7 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
             <DropDown
               inputId="userIdInput"
-              label="User ID"
+              label="5. User ID"
               :options="filteredUsers"
               :mandatory="true"
               @input="(payload) => (form.userId = payload)"
@@ -64,7 +64,7 @@
               <label
                 :for="inputId"
                 class="font-semibold text-gray-600 dark:text-gray-300"
-                >Employee ID<span class="text-red-500">*</span></label
+                >6. Employee ID<span class="text-red-500">*</span></label
               >
               <input
                 :id="inputId"
@@ -79,14 +79,14 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
             <DropDown
               inputId="reportingDepartmentInput"
-              label="Reporting to (Department)"
+              label="7. Reporting to (Department)"
               :options="AllDepartments"
               :mandatory="true"
               @input="(payload) => (form.reportingDepartment = payload)"
             />
             <DropDown
               inputId="reportingStaffInput"
-              label="Reporting to (Employee ID)"
+              label="8. Reporting to (Employee ID)"
               :options="filteredReportingEmployees"
               :mandatory="true"
               class="mt-6 lg:mt-0 lg:ml-4"
@@ -136,7 +136,7 @@
                     id="sr"
                     v-model="formAccess.refreshment"
                   />
-                  <label class="ml-1" for="sr">Staff Refreshment</label>
+                  <label class="ml-1" for="sr">Staff Entertainment</label>
                 </div>
                 <div>
                   <input
@@ -170,10 +170,12 @@
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-2 mt-6 w-full">
+            <!-- Handphone Claim Limit -->
             <div>
               <label class="font-semibold text-gray-600 dark:text-gray-300"
                 >Handphone Claim Limit</label
               >
+              
               <div class="mt-2">
                 <input type="radio" id="no" value="no" v-model="enableLimit" />
                 <label for="no">No</label>
@@ -198,16 +200,30 @@
               </div>
             </div>
 
-            <div class="w-full flex justify-end">
-              <button
-                class="py-2 px-6 mt-10 text-white bg-[#160959] hover:bg-blue-950 rounded-md disabled:bg-gray-500 disabled:hover:bg-gray-500 disabled:cursor-not-allowed"
-                @click="Register()"
-                :disabled="!enableBtn"
-              >
-                Register
-              </button>
+            <!-- Assign Checker -->
+            <div class="w-full lg:w-1/2">
+              <label class="font-semibold text-gray-600 dark:text-gray-300">Assign Checker</label>
+              <div class="mt-2">
+                <input type="radio" id="assignNo" value="no" v-model="assignChecker" />
+                <label for="assignNo">No</label>
+
+                <input type="radio" id="assignYes" value="yes" class="ml-4" v-model="assignChecker" />
+                <label for="assignYes">Yes</label>
+              </div>
+              </div>
             </div>
+
+          <!-- Register Button -->
+          <div class="w-full flex justify-end mt-6">
+            <button
+              class="py-2 px-6 text-white bg-[#160959] hover:bg-blue-950 rounded-md disabled:bg-gray-500 disabled:hover:bg-gray-500 disabled:cursor-not-allowed"
+              @click="Register()"
+              :disabled="!enableBtn"
+            >
+              Register
+            </button>
           </div>
+          
         </div>
 
         <div
@@ -302,7 +318,8 @@ export default {
       },
 
       // option for dropdown
-      fetchOptions: [],
+      fetchOptions: [], //getUserAD
+      positionOptions: [], //getallEmployee
       Branches: [],
       Company: [],
       filteredDepartments: [],
@@ -322,7 +339,8 @@ export default {
       },
 
       enableLimit: 'no',
-
+      assignChecker: 'no',
+      inputId: '', 
       enableBtn: false,
 
       loading: true,
@@ -340,6 +358,7 @@ export default {
       const registerData = {
         company_name: this.form.company,
         limit_amount: this.form.limit,
+        limit_amount_max: this.form.limit,
         userNameId: this.fetchOptions.filter(
           (item) =>
             item.displayName === this.form.userId &&
@@ -369,27 +388,30 @@ export default {
         staff_access: accessData.refreshment,
         ent_access: accessData.entertainment,
         others_access: accessData.others,
+        checker_validation : this.assignchecker === 'yes' ? 1 : 0,
       };
-      console.log('Form Data:', registerData);
+   //   console.log('Form Data:', registerData);
 
       axios
         .post(
-          'http://172.28.28.91:91/api/Admin/Register_UserProfile',
+          'http://172.28.28.116:6165/api/Admin/Register_UserProfile',
           registerData
         )
         .then((response) => {
-          console.log('Response:', response.data);
+     //     console.log('Response:', response.data);
           this.loading = false;
           this.registerSuccess = true;
 
-          setTimeout(window.location.reload(), 2500);
+          setTimeout(() => {
+            this.$router.push('/viewemployee');
+          }, 2500);
           // Handle success
         })
         .catch((error) => {
           console.error('Error:', error);
           // Handle error
         });
-      console.log(this.convertValues());
+   //   console.log(this.convertValues());
     },
     convertValues() {
       let convertedValues = Object.keys(this.formAccess).reduce(
@@ -411,13 +433,19 @@ export default {
           this.fetchOptions = response.data; // Make sure to access response.data
           this.extractBranches();
           this.getAllDepartments();
-          this.getAllPositions();
+          // this.getAllPositions();
           this.getAllCompanies();
         })
         .catch((error) => {
           this.error = error;
           console.error('There was an error!', error);
         });
+      this.getAllPositions();
+      console.log('fetchOptions:', this.fetchOptions);
+      console.log('Branches:', this.Branches);
+      console.log('Departments:', this.AllDepartments);
+      console.log('Company:', this.Company);
+
     },
     extractBranches() {
       const branches = this.fetchOptions.map((item) => item.branch);
@@ -429,25 +457,40 @@ export default {
       const uniqueDepartments = [...new Set(departments)];
       this.AllDepartments = uniqueDepartments;
     },
-    getAllPositions() {
-      axios
-        .get('http://172.28.28.91:99/api/User/GetDesignation')
-        .then((response) => {
-          this.AllPositions = response.data.result.map(
-            (item) => item.designation
-          );
-        })
-        .catch((error) => {
-          this.error = error;
-          console.error('There was an error!', error);
-        });
+    async getAllPositions() {
+
+      try {
+        // const response = await axios.get('http://172.28.28.116:6239/api/User/GetAllEmployees');
+        // this.positionOptions = response.data.result || [];
+        // const position = this.positionOptions.map((item) => item.position_title);
+        // const uniquePosition = [...new Set(position.filter(p => !!p))].sort((a, b) => a.localeCompare(b));
+        // this.AllPositions = uniquePosition;
+
+        const response = await axios.get('http://172.28.28.116:6239/api/User/GetDesignation');
+        const designations = response.data.result.map((item) => item.designation);
+        const uniquePosition = [...new Set(designations)].sort((a, b) => a.localeCompare(b));
+
+        this.AllPositions = uniquePosition;
+
+        console.log("list position", uniquePosition);
+        // const rawDesignations = response.data.result.map(item => item.designation);
+        // this.AllPositions = [...new Set(rawDesignations)].sort((a, b) => a.localeCompare(b));
+      }
+      catch(error) {
+        this.error = error;
+        console.error('There was an error!', error);
+      }
     },
     getAllCompanies() {
-      axios
-        .get('http://172.28.28.91:99/api/User/GetCompany')
-        .then((response) => {
-          this.Company = response.data.result.map((item) => item.company_name);
-        });
+      // axios
+      //   .get(' http://172.28.28.116:6239/api/User/GetCompany')
+      //   .then((response) => {
+      //     this.Company = response.data.result.map((item) => item.company_name);
+      //   });
+      const company = this.fetchOptions.map((item) => item.company);
+      const uniqueCompany = [...new Set(company)];
+      this.Company = uniqueCompany;
+
     },
     // limit the employee id to be 10 characters
     limitChar() {
@@ -458,7 +501,7 @@ export default {
     async getEmpId(id) {
       try {
         const response = await axios.get(
-          `http://172.28.28.91:99/api/User/GetEmployeeById/${id}`
+          ` http://172.28.28.116:6239/api/User/GetEmployeeById/${id}`
         );
         return response.data.result[0].emp_id;
       } catch (error) {
@@ -484,7 +527,7 @@ export default {
     form: {
       handler(newVal) {
         let count = 0;
-        console.log(newVal);
+      //  console.log(newVal);
         for (let item in newVal) {
           if (item != 'limit') {
             if (this.form[item].length > 0) {
@@ -510,7 +553,7 @@ export default {
 
       this.filteredDepartments = uniqueDepartments;
 
-      console.log(this.filteredDepartments);
+    //  console.log(this.filteredDepartments);
     },
 
     'form.department'(newDepartment) {
@@ -530,25 +573,25 @@ export default {
         ...new Map(users.map((user) => [user.userId, user])).values(),
       ];
 
-      console.log('unique users: ', uniqueUsers);
+   //  console.log('unique users: ', uniqueUsers);
 
       // Update filteredUsers with unique users initially
       this.filteredUsers = uniqueUsers.map((user) => user.userName);
 
       // Fetch additional data from the API and filter uniqueUsers
       axios
-        .get('http://172.28.28.91:99/api/User/GetAllEmployees')
+        .get(' http://172.28.28.116:6239/api/User/GetAllEmployees')
         .then((response) => {
           const existUserIds = response.data.result.map(
             (user) => user.username_id
           );
-          console.log('Existing User IDs from API:', existUserIds);
+        //  console.log('Existing User IDs from API:', existUserIds);
 
           this.filteredUsers = uniqueUsers
             .filter((user) => !existUserIds.includes(user.userId))
             .map((user) => user.userName);
 
-          console.log('Filtered Users:', this.filteredUsers);
+       //   console.log('Filtered Users:', this.filteredUsers);
         })
         .catch((error) => {
           console.error('Error fetching data from API:', error);
@@ -570,16 +613,16 @@ export default {
         ).values(),
       ];
 
-      console.log(uniqueEmployees);
+   //   console.log(uniqueEmployees);
       try {
         // Fetch additional data from the API
         const response = await axios.get(
-          'http://172.28.28.91:99/api/User/GetAllEmployees'
+          ' http://172.28.28.116:6239/api/User/GetAllEmployees'
         );
         const existUserIds = response.data.result.map(
           (user) => user.username_id
         );
-        console.log('Existing User IDs from API:', existUserIds);
+      //  console.log('Existing User IDs from API:', existUserIds);
 
         // Fetch empIds asynchronously and wait for all to complete
         const employeesWithEmpId = await Promise.all(
@@ -598,7 +641,7 @@ export default {
           (employee) => employee.userName + ' (' + employee.empId + ')'
         );
 
-        console.log(this.filteredReportingEmployees);
+   //     console.log(this.filteredReportingEmployees);
       } catch (error) {
         console.error('Error fetching data from API:', error);
       }

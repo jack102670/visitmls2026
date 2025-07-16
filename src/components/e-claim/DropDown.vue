@@ -90,11 +90,13 @@ export default {
       this.$emit('input', this.inputValue); // Emit input event with selectedOption
     },
     FilterOptions() {
-      this.filteredOptions = this.options.filter((option) =>
-        option.toLowerCase().includes(this.inputValue.toLowerCase())
-      );
-      this.highlightedIndex = 0;
+    this.filteredOptions = (this.options || []).filter((option) =>
+      typeof option === 'string' &&
+      option.toLowerCase().includes((this.inputValue || '').toLowerCase())
+    );
+    this.highlightedIndex = 0;
     },
+
     selectOption(option) {
       this.inputValue = option;
       this.showDropdown = false;

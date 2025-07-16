@@ -7,16 +7,6 @@
         class="bg-[#f7fbff] dark:bg-gray-800 dark:ring-offset-gray-900 border-gray-200 dark:border-gray-700 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
       >
         <div class="flex justify-between">
-          <!-- <div class="text-center space-y-12 ml-5 ">
-      <div class="flex text-3xl font-bold text-blue-900 ">
-        Services Portal
-        <div class="relative inline-grid grid-cols-1 grid-rows-1 gap-12 overflow-hidden">
-          <span class="animate-word col-span-full row-span-full text-blue-800">Security</span>
-          <span class="animate-word-delay-1 col-span-full row-span-full text-blue-800">Safety</span>
-          <span class="animate-word-delay-2 col-span-full row-span-full ml-4 text-blue-800">Maintenance</span>
-        </div>
-      </div>
-    </div> -->
           <div class="flex justify-start flex-col ml-5">
             <h2 class="text-3xl font-bold text-blue-900 dark:text-white">
               Services Portal System
@@ -48,40 +38,6 @@
                   <div class="flex"></div>
                 </button>
               </div>
-
-              <!-- <div
-                class="w-64 h-10 border-4 bg-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-3xl relative"
-              >
-                <a
-                  href="#"
-                  class="p-6 absolute top-0 -right-1 text-blue-100 capitalize transition-colors duration-300 transform bg-blue-100 rounded-full rtl:-scale-x-100 dark:bg-blue-500 dark:text-blue-500 hover:underline dark:hover:text-blue-500"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="w-6 h-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  <span
-                    class="text-blue-700 dark:text-white mx-1 top-5 font-semibold text-2xl absolute"
-                    >{{ requesters.length }}</span
-                  >
-                </a>
-                <h1
-                  class="text-xl font-semibold text-gray-700 capitalize dark:text-slate-300"
-                >
-                  On-Going Request
-                </h1>
-              </div> -->
-
               <div class="flex flex-col ml-5">
                 <button
                   @click="showContent"
@@ -109,7 +65,6 @@
                   </div>
                 </button>
               </div>
-              <!-- <button class="bg-red-500 grid">test</button> -->
             </div>
           </div>
         </div>
@@ -285,13 +240,13 @@ export default {
         return;
       }
 
-      console.log("Fetching requesters for role:", userDetails.role);
+      // console.log("Fetching requesters for role:", userDetails.role);
       axios
         .get(url)
         .then((response) => {
           this.requesters = response.data;
-          console.log("Requesters on dashboard:", this.requesters);
-          console.log("all", this.requesters.length);
+          // console.log("Requesters on dashboard:", this.requesters);
+          // console.log("all", this.requesters.length);
           // this.OGR = this.requesters.length;
           // store.setOGR(this.OGR);
           // console.log("OGR set to:", this.OGR);
@@ -309,7 +264,7 @@ export default {
       this.departments = [];
 
       // Log to console to check if the method is being called
-      console.log("Location changed. Updating departments.");
+      // console.log("Location changed. Updating departments.");
 
       // Your logic to update departments based on the selected location
       this.updateDepartments();
@@ -414,7 +369,7 @@ export default {
       }
 
       // Log to console to check if departments are being updated
-      console.log("Departments updated:", this.departments);
+      // console.log("Departments updated:", this.departments);
     },
 
     onDepartmentChange() {

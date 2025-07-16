@@ -1,51 +1,111 @@
 <template>
-  <div class="container">
-    <div class="running-number">{{ runningNumber }}</div>
-
+  <div>
+    <input type="file" class="filepond" ref="filepond" accept="image/*">
+    <button @click="saveToFilePond">Save</button>
   </div>
 </template>
 
 <script>
+import { create, registerPlugin } from 'filepond';
+import axios from 'axios';
+
+import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import FilePondPluginImageCrop from 'filepond-plugin-image-crop';
+import FilePondPluginImageResize from 'filepond-plugin-image-resize';
+import FilePondPluginImageTransform from 'filepond-plugin-image-transform';
+
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import 'filepond/dist/filepond.min.css';
+
+registerPlugin(
+  FilePondPluginFileEncode,
+  FilePondPluginFileValidateType,
+  FilePondPluginImageExifOrientation,
+  FilePondPluginImagePreview,
+  FilePondPluginImageCrop,
+  FilePondPluginImageResize,
+  FilePondPluginImageTransform
+);
+
 export default {
-  name: 'TestingInsghR',
+  name: 'CircleFilePond',
   data() {
     return {
-      // Your data properties go here
-      runningNumber: null,
-  
+      files: []
     };
   },
+  mounted() {
+    this.$nextTick(() => {
+      this.initializeFilePond();
+    });
+  },
   methods: {
-    async fetchRunningNumber() {
-      try {
-        const response = await fetch('http://localhost/api/service2/api/User/GetRunningNumber');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        this.runningNumber = data.message; // Assuming the API returns an object with a runningNumber property
-      } catch (error) {
-        console.error('Error fetching running number:', error);
+    initializeFilePond() {
+      if (this.$refs.filepond) {
+        const pond = create(this.$refs.filepond, {
+          labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
+          stylePanelLayout: 'compact circle',
+          imagePreviewHeight: 150,
+          imageCropAspectRatio: '1:1',
+          imageResizeTargetWidth: 150,
+          imageResizeTargetHeight: 150,
+          styleLoadIndicatorPosition: 'center bottom',
+          styleButtonRemoveItemPosition: 'center bottom'
+        });
+
+        pond.on('addfile', (error, file) => {
+          if (!error) {
+            // console.log("Added file name:", file.file.name); // Access file name
+            this.files = [file.file]; // Replace files array with the new file
+          }
+        });
+
+        pond.on('removefile', () => {
+          this.files = []; // Clear files array when file is removed
+        });
+      } else {
+        console.error("FilePond element not found.");
       }
     },
+    saveToFilePond() {
+      if (this.files.length === 0) {
+        console.error("No files selected.");
+        return;
+      }
 
-  },
-  mounted() {
-    this.fetchRunningNumber();
+      const formData = new FormData();
+      formData.append('profile_picture', this.files[0]);
+      formData.append('emp_id', '1');
+      formData.append('name', 'John Doe');
+      formData.append('reporting_to', 'PKTM2582');
+      formData.append('position_code', 'NGETES');
+      formData.append('position_title', 'NGETES');
+      formData.append('email_address', 'example@example.com');
+      formData.append('phone_number', '1234567890');
+      formData.append('home_address', '123 Main St');
+      formData.append('department', 'NGETES');
 
-  },
+      axios.put('http://172.28.28.116:7239/api/Admin/UpdateEmployee', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then(response => {
+        // console.log('File uploaded successfully:', response.data);
+        // Handle response from server
+      })
+      .catch(error => {
+        console.error('Error uploading file:', error);
+        // Handle error
+      });
+    }
+  }
 };
-</script><style scoped>
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  text-align: center;
-}
+</script>
 
-.running-number {
-  font-size: 5rem; /* 5xl font size */
-  font-weight: bold;
-}
+<style scoped>
+/* Your styles here */
 </style>

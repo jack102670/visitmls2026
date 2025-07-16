@@ -52,6 +52,10 @@ import checkerClaimpage from "../views/e-claim/checkerClaimpage.vue";
 import NotFound from "../views/pagenotfound.vue";
 import AdminHODpage from "@/components/e-claim/AdminHODpage.vue";
 import AdminHODClaimpage from "@/components/e-claim/AdminHODClaimpage.vue";
+import UpdateClaims from "@/components/e-claim/UpdateClaim/UpdateClaims.vue"
+import HRMonthlyReport from "@/components/e-claim/MonthlySummaryClaim/HRMonthlyReport.vue";
+import FINMonthlyReport from "@/components/e-claim/MonthlySummaryClaim/FINMonthlyReport.vue";
+
 
 const routes = [
   {
@@ -68,23 +72,6 @@ const routes = [
     name: "verified",
     components: {
       default: verified,
-      Sidebar: Newsidebar,
-    },
-  },
-  {
-    path: "/checkerclaimpage/:rn",
-    name: "checkerClaimpage",
-    components: {
-      default: checkerClaimpage,
-      Sidebar: Newsidebar,
-    },
-    props: true,
-  },
-  {
-    path: "/checker",
-    name: "checkerDashboardPage",
-    components: {
-      default: checkerDashboardpage,
       Sidebar: Newsidebar,
     },
   },
@@ -153,10 +140,37 @@ const routes = [
     props: true,
   },
   {
+    path: "/updateclaim/:rn",
+    name: "updateclaim",
+    components: {
+      default: UpdateClaims,
+      Sidebar: Newsidebar,
+    },
+    props: true,
+  },
+  {
     path: "/adminhrsummaryclaim/:rn",
     name: "AdminHRSummaryClaimpage",
     components: {
       default: AdminHRSummaryClaimpage,
+      Sidebar: Newsidebar,
+    },
+    props: true,
+  },
+  {
+    path: "/monthlyhrsummaryclaim",
+    name: "HRMonthlyReport",
+    components: {
+      default: HRMonthlyReport,
+      Sidebar: Newsidebar,
+    },
+    props: true,
+  },
+  {
+    path: "/monthlyfinsummaryclaim",
+    name: "FINMonthlyReport",
+    components: {
+      default: FINMonthlyReport,
       Sidebar: Newsidebar,
     },
     props: true,
@@ -215,6 +229,23 @@ const routes = [
     name: "AssignChecker",
     components: {
       default: AssignChecker,
+      Sidebar: Newsidebar,
+    },
+  },
+  {
+    path: "/checkerclaimpage/:rn",
+    name: "checkerClaimpage",
+    components: {
+      default: checkerClaimpage,
+      Sidebar: Newsidebar,
+    },
+    props: true,
+  },
+  {
+    path: "/checker",
+    name: "checkerDashboardPage",
+    components: {
+      default: checkerDashboardpage,
       Sidebar: Newsidebar,
     },
   },
@@ -451,7 +482,7 @@ const routes = [
     component: Vendorsignup,
   },
   {
-    path: "/:pathMatch(.*)*", // This regex matches any route
+    path: "/:pathMatch(.*)*",
     name: "NotFound",
     component: NotFound,
   },
@@ -462,20 +493,19 @@ const router = createRouter({
   routes,
 });
 
-// Step 1: Modify the checkUserStatusAndShowModal method
-// Step 1: Modify the checkUserStatusAndShowModal method
+
 function checkUserStatusAndShowModal() {
   return new Promise((resolve, reject) => {
     const username_id = store.getSession().userDetails.userId;
-    fetch(`http://172.28.28.91:99/api/User/GetEmployeeById/${username_id}`)
-      .then((response) => response.json()) // Parse the response body to JSON
+    fetch(` http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`)
+      .then((response) => response.json()) 
       .then((data) => {
         const userStatus = data.result[0].account_status;
-        console.log("User status:", userStatus);
+     //   console.log("User status:", userStatus);
         if (userStatus === "0") {
-          resolve(false); // User has not completed their profile
+          resolve(false);
         } else {
-          resolve(true); // User has completed their profile
+          resolve(true);
         }
       })
       .catch((error) => {
@@ -484,20 +514,15 @@ function checkUserStatusAndShowModal() {
       });
   });
 }
-
-// Step 2: Define routes that require profile completion checks
-const routesRequiringProfileCheck = ["eclaimhomepages"]; // Add route names that require profile completion
-
-// Step 3: Modify the router.beforeEach guard
+const routesRequiringProfileCheck = ["eclaimhomepages"]; 
 router.beforeEach((to, from, next) => {
-  const publicPages = ["Login", "Loginstaff", "Vendorsingup", "testing"]; // Add other public route names as necessary
+  const publicPages = ["Login", "Loginstaff", "Vendorsingup", "testing"]; 
   const authRequired = !publicPages.includes(to.name);
   const session = store.getSession();
 
   if (authRequired && !session) {
     next({ name: "Loginstaff" });
   } else if (session) {
-    // Check if the route requires profile completion
     if (routesRequiringProfileCheck.includes(to.name)) {
       checkUserStatusAndShowModal()
         .then((isProfileComplete) => {
@@ -512,7 +537,7 @@ router.beforeEach((to, from, next) => {
           next("/error");
         });
     } else {
-      next(); // Allow navigation for routes that don't require profile completion
+      next();
     }
   } else {
     next();

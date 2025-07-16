@@ -280,7 +280,7 @@ export default {
       formStore.setFormData(this.formData);
 
       // Log the form data before navigation
-      console.log("Form submitted", formStore.getFormData());
+     // console.log("Form submitted", formStore.getFormData());
 
       this.$router.push({ name: "testing" });
       // Get the router instance

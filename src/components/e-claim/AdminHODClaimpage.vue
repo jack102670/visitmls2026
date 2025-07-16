@@ -1028,7 +1028,6 @@
 </template>
 
 <script>
-import moment from 'moment';
 import fileSaver from 'file-saver';
 import axios from 'axios';
 import { store } from '@/views/store.js';
@@ -1153,7 +1152,7 @@ export default {
       this.loading = true;
       await axios
         .get(
-          'http://172.28.28.91:91/api/User/GetClaimDetails/' +
+          'http://172.28.28.116:6165/api/User/GetClaimDetails/' +
             this.referenceNumber
         )
         .then((response) => {
@@ -1163,7 +1162,7 @@ export default {
             .split(' ')[0]
             .split('.')[0]
             .toUpperCase();
-          console.log(this.claimDetails.admin_status);
+        //  console.log(this.claimDetails.admin_status);
           switch (this.adminStatus) {
             case 'VERIFIED':
               this.verified = true;
@@ -1198,26 +1197,26 @@ export default {
             case 'REJECTED':
               if (this.claimDetails.admin_status.includes('VERIFIER')) {
                 this.rejectVerifier = true;
-                console.log('yes');
+            //    console.log('yes');
               } else if (this.claimDetails.admin_status.includes('CHECKER')) {
                 this.verified = true;
                 this.rejectChecker = true;
-                console.log('yes2');
+              //  console.log('yes2');
               } else if (this.claimDetails.admin_status.includes('APPROVER')) {
                 this.verified = true;
                 this.checked = true;
                 this.rejectApprover = true;
-                console.log('yes2');
+              //  console.log('yes2');
               } else if (this.claimDetails.admin_status.includes('FINANCE')) {
                 this.verified = true;
                 this.checked = true;
                 this.approved = true;
                 this.rejectFinance = true;
-                console.log('yes2');
+              //  console.log('yes2');
               }
               this.pending = false;
 
-              console.log('no ' + this.claimDetails.admin_status);
+           //   console.log('no ' + this.claimDetails.admin_status);
 
               this.remark = this.claimDetails.comment;
               break;
@@ -1257,7 +1256,7 @@ export default {
               break;
           }
 
-          console.log(this.adminStatus);
+       //   console.log(this.adminStatus);
         });
     },
     async FetchClaimDatasDetails() {
@@ -1266,12 +1265,12 @@ export default {
       this.claimDatas = [];
       await axios
         .get(
-          'http://172.28.28.91:99/api/User/GetLocalOutstation/' +
+          ' http://172.28.28.116:6239/api/User/GetLocalOutstation/' +
             this.referenceNumber
         )
         .then((response) => {
           const result = response.data.result;
-          console.log(result);
+       //   console.log(result);
           let details = [];
           let amount = 0;
           for (let i in result) {
@@ -1279,10 +1278,14 @@ export default {
             const editedDetail = {
               Date_Event: result[i].date_event,
               Return_Date: result[i].return_date,
+              'Vehicle Registration Number':result[i].vehicle_no,
+              'Vehicle Model':result[i].vehicle_model,
               Starting_Point: result[i].starting_point,
               End_Point: result[i].end_point,
               'Accom.': result[i].accommodation,
               'Mileage(KM)': result[i].mileage_km,
+              'Type of Fuel':result[i].type_petrol,
+              'Fuel(Litre)':Number(result[i].petrol_perlitre).toFixed(2),
               'Park_Fee(RM)': result[i].park_fee,
               'Toll_Fee(RM)': result[i].toll_fee,
               Fare: result[i].fare,
@@ -1293,7 +1296,7 @@ export default {
               'Total_Mileage(RM)': result[i].total_mileage,
               'Total_Fee(RM)': result[i].total_fee,
               Attachments: result[i].files,
-              Tab_Title: 'Local Outstation',
+              Tab_Title: 'Local Travelling',
               unique_code: result[i].unique_code,
               comment: result[i].comment,
             };
@@ -1310,12 +1313,12 @@ export default {
 
       await axios
         .get(
-          'http://172.28.28.91:99/api/User/GetOverseasOutstation/' +
+          ' http://172.28.28.116:6239/api/User/GetOverseasOutstation/' +
             this.referenceNumber
         )
         .then((response) => {
           const result = response.data.result;
-          console.log(result);
+       //   console.log(result);
           let details = [];
           let amount = 0;
           for (let i in result) {
@@ -1337,7 +1340,7 @@ export default {
               Other_Expenses: result[i].oem,
               'Total_Fee(RM)': result[i].total_fee,
               Attachments: result[i].files,
-              Tab_Title: 'Overseas Outstation',
+              Tab_Title: 'Overseas Travelling',
               unique_code: result[i].unique_code,
               comment: result[i].comment,
             };
@@ -1354,12 +1357,12 @@ export default {
 
       await axios
         .get(
-          'http://172.28.28.91:99/api/User/GetRefreshment/' +
+          ' http://172.28.28.116:6239/api/User/GetRefreshment/' +
             this.referenceNumber
         )
         .then((response) => {
           const result = response.data.result;
-          console.log(result);
+      //    console.log(result);
           let details = [];
           let amount = 0;
           for (let i in result) {
@@ -1373,7 +1376,7 @@ export default {
               Staff_Involved: result[i].sim,
               'Total_Fee(RM)': result[i].total_fee,
               Attachments: result[i].files,
-              Tab_Title: 'Staff Refreshment',
+              Tab_Title: 'Staff Entertainment',
               unique_code: result[i].unique_code,
               comment: result[i].comment,
             };
@@ -1390,12 +1393,12 @@ export default {
 
       await axios
         .get(
-          'http://172.28.28.91:91/api/User/GetEntertainment/' +
+          'http://172.28.28.116:6165/api/User/GetEntertainment/' +
             this.referenceNumber
         )
         .then((response) => {
           const result = response.data.result;
-          console.log(result);
+       //   console.log(result);
           let details = [];
           let amount = 0;
           for (let i in result) {
@@ -1426,11 +1429,11 @@ export default {
 
       await axios
         .get(
-          'http://172.28.28.91:99/api/User/GetOthers/' + this.referenceNumber
+          ' http://172.28.28.116:6239/api/User/GetOthers/' + this.referenceNumber
         )
         .then((response) => {
           const result = response.data.result;
-          console.log(result);
+       //   console.log(result);
           let details = [];
           let amount = 0;
           for (let i in result) {
@@ -1467,8 +1470,8 @@ export default {
         }
       });
 
-      console.log(this.claimDatas);
-      console.log(this.claimDatasDetails);
+      // console.log(this.claimDatas);
+      // console.log(this.claimDatasDetails);
     },
 
     PrintSummary() {
@@ -1503,7 +1506,7 @@ export default {
       const username_id = store.getSession().userDetails.userId;
       let userData;
       await axios
-        .get(`http://172.28.28.91:99/api/User/GetEmployeeById/${username_id}`)
+        .get(` http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           userData = {
             userName: response.data.result[0].name,
@@ -1511,13 +1514,13 @@ export default {
             designation: response.data.result[0].position_title,
           };
 
-          console.log(userData);
+       //   console.log(userData);
         });
       return userData;
     },
     // If any single remark is change, save in the array
     UpdateSingleRemark(event, uc, tab) {
-      console.log(this.singleRemarks);
+   //   console.log(this.singleRemarks);
 
       let index = this.singleRemarks.findIndex(
         (item) => item.unique_code == uc
@@ -1550,34 +1553,34 @@ export default {
       this.pending = false;
 
       const userData = await this.GetUserData();
-      console.log(userData);
+   //   console.log(userData);
       this.singleRemarks.forEach((remark) => {
         let data = {
           comment: remark.remark,
           unique_code: remark.unique_code,
         };
-        if (remark.Tab_Title == 'Local Outstation') {
+        if (remark.Tab_Title == 'Local Travelling') {
           axios.put(
-            'http://172.28.28.91:91/api/Admin/Approver_Comment_Local',
+            'http://172.28.28.116:6165/api/Admin/Approver_Comment_Local',
             data
           );
-        } else if (remark.Tab_Title == 'Overseas Outstation') {
+        } else if (remark.Tab_Title == 'Overseas Travelling') {
           axios.put(
-            'http://172.28.28.91:91/api/Admin/Approve_Comment_Overseas',
+            'http://172.28.28.116:6165/api/Admin/Approve_Comment_Overseas',
             data
           );
-        } else if (remark.Tab_Title == 'Staff Refreshment') {
+        } else if (remark.Tab_Title == 'Staff Entertainment') {
           axios.put(
-            'http://172.28.28.91:91/api/Admin/Approve_Comment_Refreshment',
+            'http://172.28.28.116:6165/api/Admin/Approve_Comment_Refreshment',
             data
           );
         } else if (remark.Tab_Title == 'Entertainment') {
           axios.put(
-            'http://172.28.28.91:91/api/Admin/Approve_Comment_Entertainment',
+            'http://172.28.28.116:6165/api/Admin/Approve_Comment_Entertainment',
             data
           );
         } else if (remark.Tab_Title == 'Other') {
-          axios.put('http://172.28.28.91:99/api/Verifier/VerifierOthers', data);
+          axios.put(' http://172.28.28.116:6239/api/Verifier/VerifierOthers', data);
         }
       });
 
@@ -1594,15 +1597,15 @@ export default {
           verifier_email: this.claimDetails.verifier_email,
           reference_number: this.claimDetails.reference_number,
         };
-        console.log(approveData);
+    //    console.log(approveData);
         await axios
           .put(
-            'http://172.28.28.91:91/api/Admin/Approve_Claim_HOD',
+            'http://172.28.28.116:6165/api/Admin/Approve_Claim_HOD',
             approveData
           )
           .then((response) => {
             // Handle success response
-            console.log('API response', response.data);
+     //       console.log('API response', response.data);
 
             this.approveSuccess = true;
             this.loading = false;
@@ -1628,14 +1631,14 @@ export default {
         };
         await axios
           .put(
-            'http://172.28.28.91:91/api/Admin/Approve_Claim_HOD',
+            'http://172.28.28.116:6165/api/Admin/Approve_Claim_HOD',
             approveData
           )
           .then((response) => {
             // Handle success response
             this.loading = false;
 
-            console.log('API response', response.data);
+      //      console.log('API response', response.data);
           })
           .catch((error) => {
             // Handle error response
@@ -1655,14 +1658,14 @@ export default {
         };
         await axios
           .put(
-            'http://172.28.28.91:91/api/Admin/Approve_Claim_HOD',
+            'http://172.28.28.116:6165/api/Admin/Approve_Claim_HOD',
             approveData
           )
           .then((response) => {
             // Handle success response
             this.loading = false;
 
-            console.log('API response', response.data);
+     //       console.log('API response', response.data);
           })
           .catch((error) => {
             // Handle error response
@@ -1693,8 +1696,22 @@ export default {
       this.showOEsList = true;
     },
     ShowFile(val) {
-      this.files = val;
-      this.showFileList = true;
+      if (Array.isArray(val)) {
+        this.files = val;
+        this.showFileList = true;
+      } else if (val.userId && val.uniqueCode) {
+        axios
+          .get(`https://esvcportal.pktgroup.com/api/file/api/Files/GetMultiImage/${val.userId}/${val.uniqueCode}`)
+          .then((response) => {
+            this.files = response.data.result || [];
+            this.showFileList = true;
+          })
+          .catch((error) => {
+            console.error("Error fetching files:", error);
+          });
+      } else {
+        console.error("Invalid file data provided.");
+      }
     },
   },
   mounted() {

@@ -247,7 +247,7 @@ export default {
   },
   methods: {
     ViewClaim(rn) {
-      console.log(rn);
+    //  console.log(rn);
       this.$router.push({
         name: 'AdminHODClaimpage',
         params: { rn: String(rn) },
@@ -260,14 +260,14 @@ export default {
       this.loading = true;
       axios
         .get(
-          'http://172.28.28.91:91/api/ApproverVerifier/GetAllRequestApprover/' +
+          'http://172.28.28.116:6165/api/ApproverVerifier/GetAllRequestApprover/' +
             this.userId
         )
         .then((response) => {
           this.claimsData = response.data.result.filter(
             (item) => item.admin_status != ''
           );
-          console.log(this.claimsData);
+      //    console.log(this.claimsData);
 
           this.loading = false;
 

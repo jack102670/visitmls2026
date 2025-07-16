@@ -1,247 +1,417 @@
 <template>
-  <main
-    class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 p-4 sm:ml-64"
-  >
-    <div class="container mx-auto">
+  <main class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 p-4 sm:ml-64">
+    <div class=" mx-auto">
       <div
-        class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 dark:text-white border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
-      >
-        <h1
-          class="text-blue-800 dark:text-blue-600 text-xl md:text-2xl font-bold"
-        >
-          FINANCE DASHBOARD
-        </h1>
-
-        <!-- Datatable -->
-        <div class="flex flex-col mt-6">
-          <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div
-              class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
-            >
-              <div
-                class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg"
-              >
-                <table
-                  ref="myTable"
-                  class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover strip"
-                >
-                  <thead class="bg-gray-50 dark:bg-gray-800">
-                    <tr>
-                      <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        Report Name
-                      </th>
-                      <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        Requester Name
-                      </th>
-                      <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        Verifier Name
-                      </th>
-                      <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        Reference Number
-                      </th>
-                      <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        Amount
-                      </th>
-                      <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        Date requested
-                      </th>
-                      <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        Status
-                      </th>
-                      <th
-                        class="text-nowrap px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                      >
-                        View
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody
-                    class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
-                  >
-                    <tr v-for="(claim, index) in claimsData" :key="index">
-                      <td
-                        class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                      >
-                        {{ claim.report_name }}
-                      </td>
-                      <td
-                        class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                      >
-                        {{ claim.requester_name }}
-                      </td>
-                      <td
-                        class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                      >
-                        {{ claim.verifier_name }}
-                      </td>
-                      <td
-                        class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                      >
-                        {{ claim.reference_number }}
-                      </td>
-                      <td
-                        class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                      >
-                        RM {{ claim.grand_total }}
-                      </td>
-                      <td
-                        class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                      >
-                        {{ claim.date_requested }}
-                      </td>
-                      <td
-                        class="px-12 py-4 text-sm font-medium text-gray-700 text-wrap whitespace-nowrap"
-                      >
-                        <span
-                          :class="{
-                            'inline-flex items-center px-3 py-1 rounded-full gap-x-2': true,
-                            'bg-red-100/60 dark:bg-gray-800':
-                              claim.admin_status.split('.')[0] === 'REJECT',
-                            'bg-green-100/60 dark:bg-gray-800':
-                              claim.admin_status.split('.')[0] === 'APPROVED',
-                            'bg-amber-100/60 dark:bg-gray-800':
-                              claim.admin_status.split('.')[0] === 'VERIFIED',
-                            'bg-blue-100/60 dark:bg-gray-800':
-                              claim.admin_status.split('.')[0] === 'OPEN', // Added for VERIFIED status
-                          }"
-                        >
-                          <span
-                            :class="{
-                              'h-1.5 w-1.5 rounded-full': true,
-                              'bg-red-500':
-                                claim.admin_status
-                                  .split('.')[0]
-                                  .split(' ')[0] === 'REJECT',
-                              'bg-green-500':
-                                claim.admin_status
-                                  .split('.')[0]
-                                  .split(' ')[0] === 'APPROVED',
-                              'bg-amber-500':
-                                claim.admin_status
-                                  .split('.')[0]
-                                  .split(' ')[0] === 'VERIFIED',
-                              'bg-blue-500':
-                                claim.admin_status
-                                  .split('.')[0]
-                                  .split(' ')[0] === 'OPEN', // Added for VERIFIED status
-                            }"
-                          ></span>
-                          <span
-                            :class="{
-                              'text-sm font-normal': true,
-                              'text-red-500':
-                                claim.admin_status
-                                  .split('.')[0]
-                                  .split(' ')[0] === 'REJECT',
-                              'text-green-500':
-                                claim.admin_status
-                                  .split('.')[0]
-                                  .split(' ')[0] === 'APPROVED',
-                              'text-amber-500':
-                                claim.admin_status
-                                  .split('.')[0]
-                                  .split(' ')[0] === 'VERIFIED',
-                              'text-blue-500':
-                                claim.admin_status
-                                  .split('.')[0]
-                                  .split(' ')[0] === 'OPEN', // Added for VERIFIED status
-                            }"
-                            >{{
-                              claim.admin_status.split('.')[0].split(' ')[0]
-                            }}</span
-                          >
-                        </span>
-                      </td>
-                      <td
-                        class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                      >
-                        <button
-                          @click="ViewClaim(claim.reference_number)"
-                          class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-5 h-5"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                            />
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                            />
-                          </svg>
+        class="relative bg-[#f7fbff] dark:bg-gray-900 dark:text-white border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
+        <div class="grid grid-cols-12 gap-4 pr-5 mb-6">
+          <div class="col-span-4">
+            <div class="flex flex-col">
+              <div class="ml-5">
+                <h1 class="text-blue-800 dark:text-blue-600 text-xl md:text-2xl font-bold col-span-4">
+                  FINANCE DASHBOARD
+                </h1>
+              </div>
+              <div class="pt-2 ml-5">
+                <div class="col-span-8">
+                  <div class="flex flex-col">
+                    <div class="flex flex-col">
+                      <div class="">
+                        <button @click="toggleSlideOver" class="bg-primary text-white p-2 w-38 rounded-full hover:bg-primary">
+                          Monthly Report
                         </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                      </div>
+                      <!-- <CheckerTable :refreshKey="refreshKey" /> -->
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+          <div v-if="userApplications" class="col-span-8">
+              <div class="grid grid-cols-7 gap-2">
+                <div
+                class="dark:bg-[#111827] dark:border-blue-200 dark:hover:bg-gray-800 hover:bg-indigo-100 bg-white shadow-xl border-2 border-blue-300 rounded-lg">
+                <div class="card p-4" @click="filterTable('OPEN')">
+                  <div class="flex flex-col items-center">
+                    <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
+                      {{ userApplications.filter((request) => request.admin_status === 'OPEN').length }}
+                      </span>
+                      <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">Open</span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="dark:bg-[#111827] dark:border-yellow-200 dark:hover:bg-gray-800 bg-white shadow-xl hover:bg-yellow-100 border-2 border-yellow-300 rounded-lg">
+                  <div class="card p-4" @click="filterTable('CHECKED')">
+                    <div class="flex flex-col items-center">
+                      <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
+                        {{ userApplications.filter((request) => request.admin_status === 'CHECKED BY CHECKER. WAITING FOR VERIFIER').length }}
+                      </span>
+                      <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">Checked</span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                class="dark:bg-[#111827] dark:border-orange-200 dark:hover:bg-gray-800 bg-white hover:bg-gray-100 shadow-xl border-2 border-orange-300 rounded-lg">
+                <div class="card p-4" @click="filterTable('VERIFIED')">
+                  <div class="flex flex-col items-center">
+                    <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
+                      {{ userApplications.filter((request) => request.admin_status === 'VERIFIED. WAITING FOR APPROVER.').length }}
+                    </span>
+                    <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">Verified</span>
+                  </div>
+                </div>
+              </div>
+              <div
+              class="dark:bg-[#111827] dark:border-green-600 dark:hover:bg-gray-800 bg-white hover:bg-gray-100 shadow-xl border-2 border-green-300 rounded-lg">
+              <div class="card p-4" @click="filterTable('APPROVED')">
+                <div class="flex flex-col items-center">
+                    <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
+                      {{ userApplications.filter((request) => request.admin_status === 'APPROVED BY FINANCE' ||
+                        request.admin_status === 'APPROVED BY HR & ADMIN').length }}
+                    </span>
+                    <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">Approved</span>
+                  </div>
+                </div>
+              </div>
+                <div
+                  class="dark:bg-[#111827] dark:border-red-200 dark:hover:bg-gray-800 bg-white hover:bg-red-100 shadow-xl border-2 border-red-300 rounded-lg">
+                  <div class="card p-4" @click="filterTable('REJECTED')">
+                    <div class="flex flex-col items-center">
+                      <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
+                        {{ userApplications.filter((request) => request.admin_status === 'REJECTED BY HR & ADMIN' ||
+                          request.admin_status === 'REJECTED BY FINANCE' || request.admin_status === 'REJECTED BY CHECKER' || request.admin_status === 'REJECTED BY VERIFIER').length }}
+                      </span>
+                      <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">Rejected</span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                class="dark:bg-[#111827] dark:border-red-200 dark:hover:bg-gray-800 bg-white hover:bg-red-100 shadow-xl border-2 border-red-300 rounded-lg">
+                <div class="card p-4" @click="filterTable('RESUBMITTED')">
+                  <div class="flex flex-col items-center">
+                    <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">
+                      {{ this.userApplications.filter((request) =>
+                        request.admin_status === 'RESUBMITTED').length }}
+                    </span>
+                    <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">Resubmitted</span>
+                  </div>
+                </div>
+              </div>
+                <div
+                  class="dark:bg-[#111827] dark:border-teal-200 dark:hover:bg-gray-800 bg-white hover:bg-teal-100 shadow-xl border-2 border-teal-300 rounded-lg">
+                  <div class="card p-4" @click="filterTable('')">
+                    <div class="flex flex-col items-center">
+                      <span class="text-gray-800 text-2xl font-bold dark:text-slate-200">{{ this.userApplications.length }}</span>
+                      <span class="text-sm text-gray-500 font-semibold dark:text-slate-200">All Claims</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        <!-- Loading Animation -->
-        <div
-          class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
-          v-if="loading"
-        >
-          <div class="absolute w-screen h-screen bg-gray-900 opacity-30"></div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 200 200"
-            class="w-16 h-16 z-50"
-          >
-            <circle
-              transform="rotate(0)"
-              transform-origin="center"
-              fill="none"
-              stroke="blue"
-              stroke-width="10"
-              stroke-linecap="round"
-              stroke-dasharray="230 1000"
-              stroke-dashoffset="0"
-              cx="100"
-              cy="100"
-              r="70"
-            >
-              <animateTransform
-                attributeName="transform"
-                type="rotate"
-                from="0"
-                to="360"
-                dur="2"
-                repeatCount="indefinite"
-              ></animateTransform>
-            </circle>
-          </svg>
-          <h1 class="text-gray-50 font-semibold z-50 ml-2 text-lg">
-            Fetching Data...
-          </h1>
         </div>
+        <!-- <div class="grid grid-cols-8 gap-4 w-full">
+          <div class="col-span-8">            
+            <div class="flex flex-col">
+              <div class="flex flex-col">
+                <div class="flex flex-row-reverse">
+                  <button @click="toggleSlideOver" class="bg-primary text-white p-2 w-38 rounded-full hover:bg-primary">
+                    Monthly Report
+                  </button>
+                </div>
+                <CheckerTable :refreshKey="refreshKey" />
+              </div>
+            </div>
+          </div>
+        </div> -->
+            <div class="flex flex-col mt-6">
+              <div class=" py-2 flex flex-col md:flex-row justify-between items-center md:items-end">
+                <div class="flex items-center">
+                  <div class="space-x-2">
+                    <label for="number-dd" class="text-md font-medium">Sort</label>
+                    <select id="number-dd" name="number" @change="updateItemsPerPage"
+                      class="rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 text-sm bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white ">
+                      <option value="10">10</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="relative md:mt-0 w-full md:w-auto">
+                  <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    </svg>
+                  </div>
+                  <input type="text" id="table-search" v-model="searchQuery"
+                    class="block py-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-full md:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Search for applications" />
+                </div>
+              </div>
+              <div class="overflow-x-auto">
+                <div class="inline-block min-w-full py-2 align-middle">
+                  <table ref="myTable"
+                    class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 hover stripe border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                    <thead class="bg-gray-50 dark:bg-gray-800">
+                    <tr>
+                      <th scope="col" class="px-6 py-3">No</th>
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3">
+                          <span>Reference Number</span>
+                        </div>
+                      </th>
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3">
+                          <span>Report Name</span>
+                        </div>
+                      </th>
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3">
+                          <span>Date Requested</span>
+                        </div>
+                      </th>
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3">
+                          <span>Requester Name</span>
+                        </div>
+                      </th>
+
+                      <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3">
+                          <span>Amount</span>
+                        </div>
+                      </th>
+                      <!-- <th scope="col"
+                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3">
+                          <span>Approved Date</span>
+                        </div>
+                      </th> -->
+
+                      <th scope="col"
+                        class="w-1/6 px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-x-3">
+                          <span>Status</span>
+                        </div>
+                      </th>
+
+                      <th scope="col"
+                        class="px-12 py-3.5 text-sm text-center font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <span class="">View</span>
+                      </th>
+                    </tr>
+                  </thead>
+                    <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                      <tr v-for="(claim, index) in paginatedApplications" :key="index">
+                        <td class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
+                          {{ (currentPage - 1) * itemsPerPage + index + 1 }}
+                        </td>
+                        <td class="text-left px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {{ claim.reference_number }}
+                        </td>
+                        <td class="text-left px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {{ claim.report_name }}
+                        </td>
+                        <td class="text-left px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {{ claim.date_requested }}
+                        </td>
+                        <td class="text-left px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {{ claim.requester_name }}
+                        </td>
+                        <!-- <td class="text-wrap px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          {{ claim.verifier_name }}
+                        </td> -->
+                        <td class="text-left px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          RM {{ parseFloat(claim.grand_total).toFixed(2) }}
+                        </td>
+                        <!-- <td
+                            class="px-12 py-4 text-sm font-medium text-gray-700 text-wrap whitespace-nowrap"
+                          >
+                            <span
+                              :class="{
+                                'inline-flex items-center px-3 py-1 rounded-full gap-x-2': true,
+                                'bg-red-100/60 dark:bg-gray-800':
+                                  claim.admin_status.split('.')[0] === 'REJECT',
+                                'bg-green-100/60 dark:bg-gray-800':
+                                  claim.admin_status.split('.')[0] === 'APPROVED',
+                                'bg-amber-100/60 dark:bg-gray-800':
+                                  claim.admin_status.split('.')[0] === 'VERIFIED',
+                                'bg-blue-100/60 dark:bg-gray-800':
+                                  claim.admin_status.split('.')[0] === 'OPEN',
+                              }"
+                            >
+                              <span
+                                :class="{
+                                  'h-1.5 w-1.5 rounded-full': true,
+                                  'bg-red-500':
+                                    claim.admin_status
+                                      .split('.')[0]
+                                      .split(' ')[0] === 'REJECT',
+                                  'bg-green-500':
+                                    claim.admin_status
+                                      .split('.')[0]
+                                      .split(' ')[0] === 'APPROVED',
+                                  'bg-amber-500':
+                                    claim.admin_status
+                                      .split('.')[0]
+                                      .split(' ')[0] === 'VERIFIED',
+                                  'bg-blue-500':
+                                    claim.admin_status
+                                      .split('.')[0]
+                                      .split(' ')[0] === 'OPEN', 
+                                }"
+                              ></span>
+                              <span
+                                :class="{
+                                  'text-sm font-normal': true,
+                                  'text-red-500':
+                                    claim.admin_status
+                                      .split('.')[0]
+                                      .split(' ')[0] === 'REJECT',
+                                  'text-green-500':
+                                    claim.admin_status
+                                      .split('.')[0]
+                                      .split(' ')[0] === 'APPROVED',
+                                  'text-amber-500':
+                                    claim.admin_status
+                                      .split('.')[0]
+                                      .split(' ')[0] === 'VERIFIED',
+                                  'text-blue-500':
+                                    claim.admin_status
+                                      .split('.')[0]
+                                      .split(' ')[0] === 'OPEN',
+                                }"
+                                >{{
+                                  claim.admin_status.split('.')[0].split(' ')[0]
+                                }}</span
+                              >
+                            </span>
+                          </td> -->
+
+                        <td class="px-2 py-2 text-sm font-medium text-gray-700 whitespace-nowrap">
+                          <div :class="[
+                                'inline-flex items-center gap-x-1 rounded-full',
+                                'px-2 py-1',
+                                getStatusContainerClass(claim.admin_status.split('.')[0].split(' ')[0])
+                              ]"
+                              style="font-size:0.93rem; min-width:0; min-height:0; line-height:1.2;"
+                              >
+                                <span :class="[
+                                  'rounded-full flex-shrink-0',
+                                  getStatusDotClass(claim.admin_status.split('.')[0].split(' ')[0])
+                                ]"
+                                style="width:0.6rem; height:0.6rem; display:inline-block;"
+                              ></span>
+                                  <h2 :class="getStatusTextClass(claim.admin_status.split('.')[0].split(' ')[0])"
+                                  style="font-size:0.93rem;"
+                              >
+                              {{ claim.admin_status }}
+                            </h2>
+                          </div>
+                        </td>
+
+                        <td class="px-4 py-4 text-sm text-center text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                          <button @click="ViewClaim(claim.reference_number)"
+                            class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                              stroke="currentColor" class="w-5 h-5">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            <nav class="overflow-hidden flex items-center flex-col flex-wrap md:flex-row justify-between items-center pt-4"
+              aria-label="Table navigation">
+              <div>
+                <span class="text-xs md:text-xs font-normal text-gray-500 dark:text-gray-400">
+                  Showing <span class="font-semibold text-gray-900 dark:text-white">
+                    {{ (currentPage - 1) * itemsPerPage + 1 }}-{{ Math.min(currentPage * itemsPerPage,
+                      filteredQueryApplications.length) }}
+                  </span>
+                  of <span class="font-semibold text-gray-900 dark:text-white">{{ filteredQueryApplications.length
+                    }}</span>
+                </span>
+              </div>
+              <div>
+                <ul class="inline-flex -space-x-px text-xs md:text-sm h-6 md:h-8">
+                  <li>
+                    <a href="#" @click.prevent="previousPage"
+                      :class="{ 'cursor-not-allowed opacity-50': currentPage === 1 }"
+                      class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
+                      Previous
+                    </a>
+                  </li>
+
+                  <li v-for="page in visiblePages" :key="page">
+                    <template v-if="page === '...'">
+                      <span
+                        class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight border border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700">
+                        {{ page }}
+                      </span>
+                    </template>
+                    <template v-else>
+                      <a href="#" @click.prevent="goToPage(page)" :class="{
+                        'bg-blue-500 text-dark': page === currentPage,
+                        'text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700': page !== currentPage
+                      }"
+                        class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700">
+                        {{ page }}
+                      </a>
+                    </template>
+                  </li>
+
+                  <li>
+                    <a href="#" @click.prevent="nextPage"
+                      :class="{ 'cursor-not-allowed opacity-50': currentPage >= totalPages }"
+                      class="flex items-center justify-center px-2 md:px-3 h-6 md:h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700">
+                      Next
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+
+
+
+      <!-- Loading Animation -->
+      <div class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
+        v-if="loading">
+        <div class="absolute w-screen h-screen bg-gray-900 opacity-30"></div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="w-16 h-16 z-50">
+          <circle transform="rotate(0)" transform-origin="center" fill="none" stroke="blue" stroke-width="10"
+            stroke-linecap="round" stroke-dasharray="230 1000" stroke-dashoffset="0" cx="100" cy="100" r="70">
+            <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="2" repeatCount="indefinite">
+            </animateTransform>
+          </circle>
+        </svg>
+        <h1 class="text-gray-50 font-semibold z-50 ml-2 text-lg">
+          Fetching Data...
+        </h1>
       </div>
     </div>
+  </div>
+  <SlideOver
+      :isOpen="isSlideOverOpen"
+      @close="toggleSlideOver"
+      @closeSlideOver="isSlideOverOpen = false"
+      @fetch-report="handleHRReportFetch"
+    />
   </main>
 </template>
 
@@ -250,46 +420,239 @@ import $ from 'jquery';
 import 'datatables.net-dt';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';
 import axios from 'axios';
+import { store } from "@/views/store.js";
+import SlideOver from '@/components/e-claim/MonthlySummaryClaim/SlideOver/MonthlyReportFINForm.vue';
+
 export default {
+  components: {
+    SlideOver,
+  },
   data() {
     return {
       userId: '7A7641D6-DEDE-4803-8B7B-93063DE2F077',
-
-      // need to fetch from API
       claimsData: [],
-
+      userApplications: [],
+      currentFilter: '',
+      searchQuery: '',
+      sortField: 'date_requested',
+      sortDirection: 'desc',
+      currentPage: 1,
+      itemsPerPage: 10,
       loading: false,
+
+      isSlideOverOpen: false,
+
+      exportParams: {
+        company: null,
+        startDate: null,
+        endDate: null
+      },
     };
   },
+
+  computed: {
+    filteredQueryApplications() {
+      const query = this.searchQuery.toLowerCase();
+      return this.sortedApplications.filter((claim) =>
+        (claim.report_name && claim.report_name.toLowerCase().includes(query)) ||
+        (claim.requester_name && claim.requester_name.toLowerCase().includes(query)) ||
+        (claim.verifier_name && claim.verifier_name.toLowerCase().includes(query)) ||
+        (claim.reference_number && claim.reference_number.toLowerCase().includes(query)) ||
+        (claim.grand_total && String(claim.grand_total).includes(query)) ||
+        (claim.date_requested && claim.date_requested.toLowerCase().includes(query)) ||
+        (claim.admin_status && claim.admin_status.toLowerCase().includes(query))
+      );
+    },
+    sortedApplications() {
+      let originalApplications = this.userApplications
+      if (this.currentFilter != '') {
+        originalApplications = originalApplications.filter(item => {
+        return item.admin_status.split(' ')[0].split('.')[0] === this.currentFilter;
+        });
+        console.log(this.currentFilter)
+        console.log(originalApplications)
+      }
+
+      return [...originalApplications].sort((a, b) => {
+        const dateA = new Date(a[this.sortField]).getTime();
+        const dateB = new Date(b[this.sortField]).getTime();
+        return this.sortDirection === 'desc' ? dateB - dateA : dateA - dateB;
+      });
+    },
+    paginatedApplications() {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+      return this.filteredQueryApplications.slice(start, end);
+    },
+    totalPages() {
+      return Math.ceil(this.filteredQueryApplications.length / this.itemsPerPage);
+    },
+    visiblePages() {
+      const total = this.totalPages;
+      const current = this.currentPage;
+      const maxVisiblePages = 2;
+
+      let pages = [];
+
+      if (total <= maxVisiblePages) {
+        pages = Array.from({ length: total }, (_, i) => i + 1);
+      } else {
+        // First page (1, 2, 3, ..., total)
+        if (current === 1) {
+          pages = [1, 2, 3, '...', total];
+        }
+        // Last page (1, ..., last-2, last-1, last)
+        else if (current === total) {
+          pages = [1, '...', total - 2, total - 1, total];
+        }
+        // handle second to last page
+        else if (current === total - 1) {
+          pages = [1, '...', total - 2, total - 1, total];
+        }
+        // Intermediate pages (1, ..., current-1, current, current+1, ..., total)
+        else {
+          pages = [1, '...', current - 1, current, current + 1, '...', total];
+        }
+      }
+
+      return pages;
+    },
+  },
   methods: {
+    handleHRReportFetch({ company, startDate, endDate }) {
+      // Redirect with query parameters
+      this.$router.push({
+        name: 'FINMonthlyReport',
+        query: {
+          company,
+          start_date: startDate,
+          end_date: endDate,
+        }
+      });
+    },
+
+    toggleSlideOver() {
+      this.isSlideOverOpen = !this.isSlideOverOpen;
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    },
+    previousPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    goToPage(page) {
+      if (typeof page === 'number') {
+        this.currentPage = page;
+      }
+    },
+    updateItemsPerPage(event) {
+      this.itemsPerPage = parseInt(event.target.value);
+      this.currentPage = 1;
+    },
+    toggleSort(field) {
+      if (this.sortField === field) {
+        this.sortDirection = this.sortDirection === 'desc' ? 'asc' : 'desc';
+      } else {
+        this.sortField = field;
+        this.sortDirection = 'desc';
+      }
+    },
+    filterTable(status) {
+      this.currentFilter = status
+    },
+    getStatusContainerClass(status) {
+      const colorMap = {
+        RESUBMIT:
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
+        REQUESTER:
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
+        CLOSE:
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-green-100/60 dark:bg-gray-800',
+        OPEN: 'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-indigo-100/60 dark:bg-gray-800',
+        APPROVED:
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
+        'APPROVED. AWAITING PAYMENT.':
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800',
+        COMPLETED:
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800',
+        REJECTED:
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800',
+        VERIFIED:
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
+        PENDING:
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-orange-100/60 dark:bg-gray-800',
+        REIMBURSED:
+          'inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-gray-100 dark:bg-gray-800',
+      };
+      return colorMap[status] || '  bg-orange-100/ 60 dark:bg-gray-800';
+    },
+    getStatusDotClass(status) {
+      const colorMap = {
+        RESUBMIT: 'h-1.5 w-1.5 rounded-full bg-orange-500',
+        REQUESTER: 'h-1.5 w-1.5 rounded-full bg-orange-500',
+        OPEN: 'h-1.5 w-1.5 rounded-full bg-indigo-500',
+        APPROVED: 'h-1.5 w-1.5 rounded-full bg-emerald-500',
+        COMPLETED: 'h-1.5 w-1.5 rounded-full bg-blue-500',
+        REJECTED: 'h-1.5 w-1.5 rounded-full bg-red-500',
+        PENDING: 'h-1.5 w-1.5 rounded-full bg-orange-500',
+        VERIFIED: 'h-1.5 w-1.5 rounded-full bg-orange-500',
+        REIMBURSED: 'h-1.5 w-1.5 rounded-full bg-black',
+      };
+      return colorMap[status] || 'bg-orange-500';
+    },
+    getStatusTextClass(status) {
+      const colorMap = {
+        RESUBMIT: 'text-sm font-normal text-orange-500',
+        REQUESTER: 'text-sm font-normal text-orange-500',
+        OPEN: 'text-sm font-normal text-indigo-500',
+        APPROVED: 'text-sm font-normal text-emerald-500',
+        COMPLETED: 'text-sm font-normal text-blue-500',
+        REJECTED: 'text-sm font-normal text-red-500',
+        PENDING: 'text-sm font-normal text-orange-500',
+        REIMBURSED: 'text-sm font-normal text-black',
+        VERIFIED: 'text-sm font-normal text-orange-500',
+      };
+      return colorMap[status] || 'text-orange-500';
+    },
     ViewClaim(rn) {
-      console.log(rn);
+      // console.log(rn);
       this.$router.push({
         name: 'AdminSummaryClaimpage',
         params: { rn: String(rn) },
       });
     },
     initializeDataTable() {
-      $(this.$refs.myTable).DataTable({});
+      $(this.$refs.myTable).DataTable({
+        dom: 'T'
+      });
     },
-    FetchClaimsData() {
+    async FetchClaimsData() {
+      console.log('Fetching claims data... Finance Approver');
       this.loading = true;
-      axios
-        .get(
-          'http://172.28.28.91:91/api/ApproverVerifier/GetAllRequestApproverFinance'
-        )
-        .then((response) => {
-          this.claimsData = response.data.result.filter(
-            (item) => item.admin_status != ''
-          );
-          console.log(this.claimsData);
-
-          this.loading = false;
-
-          this.$nextTick(() => {
-            this.initializeDataTable();
-          });
+      try {
+        const username_id = store.getSession().userDetails.userId;
+        const response = await axios.get(
+          `http://172.28.28.116:6165/api/ApproverVerifier/GetAllRequestApproverFinance`,
+          { params: { user_id: username_id } }
+        );
+        this.claimsData = response.data.result.filter(
+          (item) => item.admin_status != ''
+        );
+        if (response.data.result.length > 0) {
+          this.userApplications = response.data.result;
+        }
+     //   console.log(this.claimsData);
+        this.loading = false;
+        this.$nextTick(() => {
+          this.initializeDataTable();
         });
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
   mounted() {
@@ -310,3 +673,26 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+
+/* th, td {
+  padding-top: 0.35rem !important;
+  padding-bottom: 0.35rem !important;
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+  vertical-align: middle !important;
+}
+
+tbody tr {
+  height: 36px;
+}
+
+.inline-flex.items-center.gap-x-1.rounded-md {
+  border-radius: 0.7rem !important;
+  padding: 0.15rem 0.7rem !important;
+  min-width: 0;
+  min-height: 0;
+  line-height: 1.2;
+} */
+</style>

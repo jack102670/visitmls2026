@@ -1,12 +1,8 @@
 <template>
-  <main
-    class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 dark:text-white p-4 sm:ml-64"
-  >
+  <main class="flex-1 text overflow-y-auto bg-[#CED1DA] dark:bg-gray-900 dark:text-white p-4 sm:ml-64">
     <div class="container mx-auto text-xs lg:text-base">
-      <div
-        id="summaryPrint"
-        class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
-      >
+      <div id="summaryPrint"
+        class="relative overflow-hidden bg-[#f7fbff] dark:bg-gray-900 border-gray-200 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
         <h1 class="text-gray-500 italic absolute top-4 right-4">
           SN: {{ referenceNumber }}
         </h1>
@@ -16,24 +12,11 @@
           </h1>
         </div>
         <!-- Head Title -->
-        <button
-          class="absolute top-1 lg:top-6 p-1 bg-blue-800 hover:bg-blue-900 rounded-[100%]"
-          v-show="seeMore"
-          @click="seeMore = !seeMore"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="white"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
-            />
+        <button class="absolute top-1 lg:top-6 p-1 bg-blue-800 hover:bg-blue-900 rounded-[100%]" v-show="seeMore"
+          @click="seeMore = !seeMore">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white"
+            class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
           </svg>
         </button>
         <div class="flex justify-center">
@@ -44,47 +27,43 @@
 
         <!-- Information -->
         <div class="flex justify-between items-center">
-          <h1
-            class="text-blue-900 dark:text-blue-600 font-bold text-3xl"
-            id="title"
-          >
+          <h1 class="text-blue-900 dark:text-blue-600 font-bold text-3xl" id="title">
             {{ claimDetails.report_name }}
 
-            <span class="text-blue-900 dark:text-blue-600 text-3xl" id="title"
-              >| RM{{ claimDetails.grand_total }}</span
-            >
+            <span class="text-blue-900 dark:text-blue-600 text-3xl" id="title">| RM{{ claimDetails.grand_total }}</span>
           </h1>
 
           <div class="h-12 flex items-center">
-            <button
-              v-show="!seeMore"
-              @click="seeMore = !seeMore"
-              class="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white rounded-xl px-8 text-sm font-bold py-2"
-            >
+            <button v-show="!seeMore" @click="PrintSummary" class="mx-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-7 h-7">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
+                </svg>
+              </button>
+            <button v-show="!seeMore" @click="seeMore = !seeMore"
+              class="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 text-white rounded-md px-8 text-sm font-bold py-2">
               See More
             </button>
-            <button v-show="seeMore" @click="PrintSummary">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-7 h-7"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z"
-                />
-              </svg>
-            </button>
+            <div v-show="seeMore">
+              <!-- <button class="mr-2" @click="ExportToExcel">
+                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0,0,256,256"
+                style="fill:#1A1A1A;">
+                <g fill="#1a1a1a" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(8,8)"><path d="M15.875,4l-0.09375,0.03125l-11,2.4375l-0.78125,0.1875v18.6875l0.78125,0.1875l11,2.4375l0.09375,0.03125h2.125v-3h10v-18h-10v-3zM16,6.03125v19.9375l-10,-2.1875v-15.5625zM18,9h8v14h-8v-2h2v-2h-2v-1h2v-2h-2v-1h2v-2h-2v-1h2v-2h-2zM21,10v2h4v-2zM14.15625,11l-2.28125,0.28125l-1.25,2.6875c-0.13281,0.38672 -0.23047,0.67969 -0.28125,0.875h-0.03125c-0.07812,-0.32422 -0.15234,-0.60547 -0.25,-0.84375l-0.625,-2.3125l-2.125,0.25l-0.09375,0.0625l1.78125,4l-2,4l2.15625,0.25l0.875,-2.46875c0.10547,-0.3125 0.19141,-0.56641 0.21875,-0.71875h0.03125c0.05859,0.32422 0.09766,0.56641 0.15625,0.6875l1.34375,2.9375l2.4375,0.3125l-2.65625,-5.03125zM21,13v2h4v-2zM21,16v2h4v-2zM21,19v2h4v-2z"></path></g></g>
+                </svg>
+              </button> -->
+              <button  @click="PrintSummary">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="w-7 h-7">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
-        <div
-          id="claimant-informations"
-          class="text-sm grid grid-cols-2 lg:grid-cols-3 gap-2 [&>*:nth-child(even)]:text-right lg:[&>*:nth-child(even)]:text-left"
-        >
+        <div id="claimant-informations"
+          class="text-sm grid grid-cols-2 lg:grid-cols-3 gap-2 [&>*:nth-child(even)]:text-right lg:[&>*:nth-child(even)]:text-left">
           <div class="mt-2 h-10">
             <h2 class="font-semibold">Name of Claimaint :</h2>
             <p class="text-gray-600 dark:text-gray-400">
@@ -109,10 +88,6 @@
               {{ claimDetails.department }}
             </p>
           </div>
-          <!-- <div class="mt-5 h-12">
-            <h2 class="font-semibold">Report Type :</h2>
-            <p class="text-gray-600 dark:text-gray-400">Finance</p>
-          </div> -->
           <div class="mt-2 h-10">
             <h2 class="font-semibold">Cost Center :</h2>
             <p class="text-gray-600 dark:text-gray-400">
@@ -125,189 +100,101 @@
               {{ claimDetails.date_requested }}
             </p>
           </div>
-          <!-- <div class="mt-5 h-12">
-            <h2 class="font-semibold">Claim for the Month Ended :</h2>
-            <p class="text-gray-600 dark:text-gray-400">31 MAY 2024</p>
-          </div> -->
         </div>
+        <!-- Summary -->
+        <div class="summary" v-show="!seeMore">
+          <div class="overflow-x-auto mt-4">
+            <div class="min-w-full inline-block align-middle">
+              <div class="border rounded-lg overflow-x-auto border-gray-400 dark:border-gray-600">
+                <table class="min-w-full divide-y divide-gray-400 dark:divide-gray-600">
+                  <thead class="bg-gray-300 dark:bg-gray-700">
 
-        <!-- status button after approved -->
-        <div v-if="approve" class="my-3" id="hidden">
-          <h1 class="text-lg font-semibold">Status</h1>
-          <div class="relative inline-block text-left">
-            <div>
-              <button
-                @click="toggleDropdown"
-                type="button"
-                :class="
-                  selectedStatus.class +
-                  ' inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-3 py-1 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-                "
-              >
-                {{ selectedStatus.label }}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="-mr-1 ml-2 mt-1 h-5 w-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div
-              v-if="dropdownOpen"
-              class="origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
-            >
-              <div
-                class="py-1"
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="options-menu"
-              >
-                <button
-                  v-for="(status, i) in statuses"
-                  :key="i"
-                  @click="selectStatus(status)"
-                  :class="
-                    status.dropDownClass +
-                    'block px-4 py-2 text-sm  w-full text-left hover:bg-gray-200'
-                  "
-                  role="menuitem"
-                >
-                  {{ status.label }}
-                </button>
+                    <th scope="col" class="px-4 py-3 text-center text-xs font-bold uppercase">
+                      No
+                    </th>
+                    <th scope="col" class="px-4 py-3 text-left text-xs font-bold uppercase">
+                      Type of Claim
+                    </th>
+                    <th>
+                    </th>
+                    <th scope="col" class="px-4 py-3 text-right text-xs font-bold uppercase">
+                      Amount (RM)
+                    </th>
+                  </thead>
+                  <tbody class="dark:bg-gray-800 divide-y divide-gray-400 dark:divide-gray-600">
+                    <tr v-for="claim in claimDatas" :key="claim.no"
+                      class="hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200">
+                      <td class="px-4 py-3 text-center text-xs">
+                       <p>{{ claim.No }}</p> 
+                      </td>
+                      <td class="px-4 py-3 text-xs text-left">
+                        <span class="font-medium">{{ claim.Type }}</span>
+                        <span class="ml-1 text-gray-500 dark:text-gray-400">
+                          (x{{ claimDatasDetails[claim.No - 1].length }})
+                        </span>
+                      </td>
+                      <td>
+
+                      </td>
+                      <td class="px-4 py-3 text-xs text-right">
+                      <p class="px-2"> {{ claim.Amount.toFixed(2) }}</p> 
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot class="dark:bg-gray-900">
+                    <tr class="font-semibold text-gray-900 dark:text-white">
+                      <td colspan="3" class="text-right"></td>
+                      <td colspan="1" class="px-4 py-3 text-sm sm:text-base text-right whitespace-nowrap">
+                     <p class="px-2 text-sm">
+                      Total : MYR {{ totalAmount.toFixed(2) }}</p>  
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Summary -->
-        <div class="summary" v-show="!seeMore">
-          <!-- Claim Table -->
-          <div
-            class="border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl"
-          >
-            <table class="w-full text-xs">
-              <!-- title -->
-              <tr
-                class="h-8 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl"
-              >
-                <th class="rounded-tl-2xl w-[20%] text-center">NO</th>
-                <th class="w-[60%]">TYPE OF CLAIM</th>
-                <th class="w-[20%]">AMOUNT (RM)</th>
-              </tr>
-
-              <!-- table information -->
-              <tr
-                class="h-8 text-left align-top text-xs lg:text-base"
-                v-for="claim in claimDatas"
-                :key="claim.no"
-              >
-                <td class="text-center font-normal">{{ claim.No }}</td>
-                <td class="font-normal">
-                  {{
-                    claim.Type +
-                    ' (x' +
-                    claimDatasDetails[claim.No - 1].length +
-                    ')'
-                  }}
-                </td>
-                <td class="font-normal">{{ claim.Amount.toFixed(2) }}</td>
-              </tr>
-
-              <!-- total -->
-              <tr
-                class="border-t-2 border-gray-400 dark:border-gray-600 h-8 text-base lg:text-lg font-semibold"
-              >
-                <td colspan="2" class="px-6 text-right">TOTAL:</td>
-                <td>{{ totalAmount.toFixed(2) }}</td>
-              </tr>
-            </table>
-          </div>
-        </div>
 
         <!-- Details -->
         <div class="details" v-show="seeMore">
-          <div
-            v-for="(detail, i) in claimDatasDetails"
-            :key="i"
-            class="detail-table mt-5"
-          >
-            <h1
-              class="mt-4 text-xl font-semibold tab-title"
-              v-if="detail && detail.length > 0"
-            >
+          <div v-for="(detail, i) in claimDatasDetails" :key="i" class="detail-table mt-5">
+            <h1 class="mt-4 text-xl font-semibold tab-title" v-if="detail && detail.length > 0">
               {{ detail[0].Tab_Title }}
             </h1>
-            <div
-              class="border-2 border-gray-400 dark:border-gray-600 rounded-2xl overflow-y-auto"
-              id="table-overflow"
-            >
-              <table class="w-full">
-                <!-- title -->
-                <tr
-                  class="h-8 bg-gray-300 dark:bg-gray-700 rounded-2xl text-xs"
-                >
+            <div class="border rounded-lg overflow-x-hidden border-gray-400 dark:border-gray-600">
+              <table class="w-full overflow-x-hidden">
+                <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md text-xs">
                   <th class="w-40">Remark</th>
-
-                  <th
-                    class="px-6 w-36 break-words text-xs"
-                    v-for="(val, key, i) in detail[0]"
-                    :key="i"
-                  >
-                    {{
-                      key
-                        .split('_')
-
-                        .join(' ')
-                    }}
+                  <th class="px-2 w-28 break-words text-xs"
+                    v-for="key in getVisibleKeys(detail).filter(k => !['Tab_Title', 'unique_code', 'comment'].includes(k))"
+                    :key="key">
+                    {{ key.split('_').join(' ') }}
                   </th>
-                </tr>
+                </thead>
+                <tr class="h-8 text-left align-center text-xs hover:bg-gray-200 dark:hover:bg-gray-800"
+                  v-for="(item, index) in detail" :key="index">
+                  <td class="text-center justify-between items-center flex">
+                    <div class="justify-center items-center flex py-2 align-middle">
+                      <!-- Render input only if status is OPEN and no existing comment -->
+                      <input
+                        v-if="statusApprover === 'OPEN' && (!item.comment || item.comment.trim() === '')"
+                        @input="UpdateSingleRemark($event, item.unique_code, item.Tab_Title)"
+                        type="text"
+                        class="p-1 text-xs w-full rounded-md outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border" />
 
-                <!-- table information -->
-                <tr
-                  class="h-8 text-left align-top text-xs hover:bg-gray-200 dark:hover:bg-gray-800"
-                  v-for="(item, index) in detail"
-                  :key="index"
-                >
-                  <td>
-                    <input
-                      @input="
-                        UpdateSingleRemark(
-                          $event,
-                          item.unique_code,
-                          item.Tab_Title
-                        )
-                      "
-                      v-if="
-                        !reimbursed && !approve && !rejectApprover && !resubmit
-                      "
-                      type="text"
-                      class="p-1 text-xs w-full rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
-                    />
-                    <h1
-                      id="remarkText"
-                      v-if="
-                        (reimbursed || approve || rejectApprover || resubmit) &&
-                        item.comment.trim() !== ''
-                      "
-                      class="m-1 px-2 py-1 bg-sky-100 rounded-2xl dark:bg-sky-950"
-                    >
-                      {{ item.comment }}
-                    </h1>
+                      <!-- Render static remark if status is not OPEN or a comment exists -->
+                      <h1
+                        id="remarkText"
+                        v-else-if="item.comment && item.comment.trim() !== ''"
+                        class="m-1 px-2 py-1 rounded-md text-xs mx-auto w-fit block dark:bg-sky-950 text-center">
+                        {{ item.comment }}
+                      </h1>           
+                    </div>
+
                   </td>
-                  <td
-                    class="text-center font-normal px-3 py-1 align-middle"
-                    v-for="(val, key, i) in item"
-                    :key="i"
-                  >
+                  <td class="text-center font-normal px-3 py-1 justify-center items-center " v-for="(key, i) in getVisibleKeys(detail)" :key="i">
                     {{
                       key == 'Attachments'
                         ? ''
@@ -315,58 +202,34 @@
                           ? ''
                           : key == 'Participants'
                             ? ''
-                            : val
+                            : key == 'Others_Expenses'
+                            ? ''
+                            : item[key]
                     }}
-
-                    <!-- See More button for show list of staff involved -->
-                    <div v-show="key == 'Staff_Involved'" id="staffDetails">
-                      <h1
-                        @click="showStaffInvolved(val)"
-                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white p-1 rounded-lg"
-                      >
-                        See More
-                      </h1>
+                    <div v-if="key === 'Others_Expenses'">
+                      <span v-html="item[key]"></span>
+                    </div>
+                    <div v-if="key === 'Staff_Involved'">
+                      <span v-html="item[key]"></span>
+                    </div>
+                    <div v-if="key === 'Participants'">
+                      <span v-html="item[key]"></span>
                     </div>
 
-                    <!-- See More button for show list of staff involved -->
-                    <div v-show="key == 'Participants'" id="staffDetails">
-                      <h1
-                        @click="showParticipants(val)"
-                        class="bg-gray-500 hover:bg-gray-600 cursor-pointer text-white p-1 rounded-lg"
-                      >
-                        See More
-                      </h1>
-                    </div>
-
-                    <!-- Click to pop up files -->
-                    <div
-                      v-show="key == 'Attachments'"
+                    <div v-if="key == 'Attachments'"
                       class="text-blue-700 flex items-center justify-center cursor-pointer"
-                      @click.prevent="ShowFile(val)"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-6 h-6"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
-                        />
+                      @click.prevent="ShowFile(item[key])">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                          d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                       </svg>
-                      x{{ val ? val.length : '0' }}
+                      x{{ item[key].length }}
                     </div>
                   </td>
                 </tr>
-
-                <!-- total -->
                 <tr
-                  class="border-t-2 border-gray-400 dark:border-gray-600 h-8 text-base font-semibold"
-                >
+                  class="border-t border-gray-400 dark:border-gray-600 h-8 text-dark dark:text-white text-base font-semibold">
                   <td class="text-center">TOTAL:</td>
                   <td class="text-center">RM{{ claimDataTotalAmount[i] }}</td>
                   <td></td>
@@ -377,202 +240,240 @@
         </div>
 
         <!-- Status Table -->
-        <div
-          class="text-xs border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl"
-          id="table-overflow"
-        >
+        <div class="border rounded-lg overflow-x-auto border-gray-400 dark:border-gray-600 my-4">
           <table class="w-full">
-            <!-- title -->
-            <tr class="h-8 bg-gray-300 dark:bg-gray-700 text-left rounded-2xl">
-              <th
-                class="rounded-tl-2xl w-[20%] text-center border-r-2 border-gray-400 dark:border-gray-600"
-              >
+            <thead class="h-8 font-semibold bg-gray-300 dark:bg-gray-700 text-left rounded-md space-x-2">
+              <th class="rounded-tl-md text-center border-r border-gray-400 dark:border-gray-600">
                 STATUS
               </th>
-              <th class="w-[24%] pl-6">NAME</th>
-              <th class="w-[23%]">DESIGNATION</th>
-              <th class="w-[23%]">DEPARTMENT</th>
-              <th class="w-[10%]">DATE</th>
-            </tr>
+              <th class="">NAME</th>
+              <th class="">DESIGNATION</th>
+              <th class="">DEPARTMENT</th>
+              <th class="">DATE</th>
+            </thead>
+            <tbody>
+              <!-- Show only OPEN if not yet reimbursed -->
+              <tr v-if="getSimplifiedStatus(statusApprover) === 'PENDING'" class="text-wrap text-left text-xs border-t border-gray-400 dark:border-gray-600">
+                <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                  <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2 bg-amber-100/60 dark:bg-gray-800">
+                    <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>
+                    <span class="text-xs font-normal text-amber-500">PENDING</span>
+                  </div>
+                </th>
+                <td class="pl-6">{{ claimDetails.approver_name }}</td>
+                <td>{{ claimDetails.approver_designation }}</td>
+                <td>{{ claimDetails.approver_department }}</td>
+                <td>{{ claimDetails.approved_date }}</td>
+              </tr>
 
-            <!-- table information -->
+              <!-- Show only OPEN if not yet reimbursed -->
+              <tr v-if="getSimplifiedStatus(statusApprover) === 'ACKNOWLEDGEMENT'" class="text-wrap text-left text-xs border-t border-gray-400 dark:border-gray-600">
+                <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                  <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2 bg-blue-100/60 dark:bg-gray-800">
+                    <span class="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
+                    <span class="text-xs font-normal text-blue-500">ACKNOWLEDGEMENT</span>
+                  </div>
+                </th>
+                <td class="pl-6">{{ claimDetails.acknow_name }}</td>
+                <td>{{ claimDetails.acknow_designation }}</td>
+                <td>{{ claimDetails.acknow_department }}</td>
+                <td>{{ claimDetails.acknow_date }}</td>
+              </tr>
 
-            <tr
-              class="text-wrap h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
-            >
-              <th
-                class="text-xs text-center font-semibold border-r-2 border-gray-400 dark:border-gray-600"
-              >
-                <!-- Status Bar -->
-                <div
-                  class="mx-auto rounded-full py-2 text-center lg:w-[90%] w-full"
-                  :class="{
-                    'bg-orange-200 dark:bg-orange-500':
-                      statusApprover == 'PENDING',
-                    'bg-green-200 dark:bg-green-500':
-                      statusApprover == 'APPROVED',
-                    'bg-red-200 dark:bg-red-500': statusApprover == 'REJECTED',
-                    'text-orange-500 dark:text-orange-100':
-                      statusApprover == 'PENDING',
-                    'text-green-500 dark:text-green-100':
-                      statusApprover == 'APPROVED',
-                    'text-red-500 dark:text-red-100':
-                      statusApprover == 'REJECTED',
-                  }"
-                >
-                  <p>{{ statusApprover }}</p>
-                </div>
-              </th>
-              <td class="pl-6">
-                {{
-                  statusApprover == 'PENDING' ? '' : claimDetails.approver_name
-                }}
-              </td>
-              <td class="">
-                {{
-                  statusApprover == 'PENDING'
-                    ? ''
-                    : claimDetails.approver_designation
-                }}
-              </td>
-              <td>
-                {{
-                  statusApprover == 'PENDING'
-                    ? ''
-                    : claimDetails.approver_department
-                }}
-              </td>
-              <td class="">
-                {{
-                  statusApprover == 'PENDING' ? '' : claimDetails.approved_date
-                }}
-              </td>
-            </tr>
+              <!-- Show only APPROVED if not yet reimbursed -->
+              <tr v-else-if="getSimplifiedStatus(statusApprover) === 'APPROVED'" class="text-wrap text-left text-xs border-t border-gray-400 dark:border-gray-600">
+                <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                  <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2 bg-green-100/60 dark:bg-gray-800">
+                    <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
+                    <span class="text-xs font-normal text-green-500">APPROVED</span>
+                  </div>
+                </th>
+                <td class="pl-6">{{ claimDetails.approver_name || '-'}}</td>
+                <td>{{ claimDetails.approver_designation || '-'}}</td>
+                <td>{{ claimDetails.approver_department || '-'}}</td>
+                <td>{{ claimDetails.approved_date || '-'}}</td>
+              </tr>
+
+              <!-- Show both APPROVED and REIMBURSED -->
+              <template v-else-if="getSimplifiedStatus(statusApprover) === 'REIMBURSED'">
+                <tr class="text-wrap text-left text-xs border-t border-gray-400 dark:border-gray-600">
+                  <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                    <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2 bg-green-100/60 dark:bg-gray-800">
+                      <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
+                      <span class="text-xs font-normal text-green-500">APPROVED</span>
+                    </div>
+                  </th>
+                  <td class="pl-6">{{ claimDetails.approver_name || '-'}}</td>
+                  <td>{{ claimDetails.approver_designation || '-'}}</td>
+                  <td>{{ claimDetails.approver_department || '-'}}</td>
+                  <td>{{ claimDetails.approved_date || '-'}}</td>
+                </tr>
+                <tr class="text-wrap text-left text-xs border-t border-gray-400 dark:border-gray-600">
+                  <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                    <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2 bg-slate-100/60 dark:bg-gray-800">
+                      <span class="h-1.5 w-1.5 rounded-full bg-black"></span>
+                      <span class="text-xs font-normal text-black dark:text-white">REIMBURSED</span>
+                    </div>
+                  </th>
+                  <td class="pl-6">{{ claimDetails.approver_name || '-'}}</td>
+                  <td>{{ claimDetails.approver_designation || '-'}}</td>
+                  <td>{{ claimDetails.approver_department || '-'}}</td>
+                  <td>{{ claimDetails.approved_date || '-'}}</td>
+                </tr>
+              </template>
+
+              <!-- Show only REJECTED if not yet reimbursed -->
+              <tr v-else-if="getSimplifiedStatus(statusApprover) === 'REJECTED'" class="text-wrap text-left text-xs border-t border-gray-400 dark:border-gray-600">
+                <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                  <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2 bg-red-100/60 dark:bg-gray-800">
+                    <span class="h-1.5 w-1.5 rounded-full bg-red-500"></span>
+                    <span class="text-xs font-normal text-red-500">REJECTED</span>
+                  </div>
+                </th>
+                <td class="pl-6">{{ claimDetails.approver_name || '-'}}</td>
+                <td>{{ claimDetails.approver_designation || '-'}}</td>
+                <td>{{ claimDetails.approver_department || '-'}}</td>
+                <td>{{ claimDetails.approved_date || '-'}}</td>
+              </tr>
+
+              <!-- Show only REVISED if not yet reimbursed -->
+              <tr v-else-if="getSimplifiedStatus(statusApprover) === 'REVISED'" class="text-wrap text-left text-xs border-t border-gray-400 dark:border-gray-600">
+                <th class="text-xs text-center font-semibold border-r border-gray-400 dark:border-gray-600">
+                  <div class="mx-auto text-xs rounded-full py-2 my-1 text-center w-fit inline-flex items-center px-3 gap-x-2 bg-amber-100/60 dark:bg-gray-800">
+                    <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>
+                    <span class="text-xs font-normal text-amber-500">REVISED</span>
+                  </div>
+                </th>
+                <td class="pl-6">{{ claimDetails.approver_name }}</td>
+                <td>{{ claimDetails.approver_designation }}</td>
+                <td>{{ claimDetails.approver_department }}</td>
+                <td>{{ claimDetails.approved_date }}</td>
+              </tr>
+
+
+            </tbody>
           </table>
         </div>
+        
 
         <!-- Remark table -->
-
-        <div
-          v-show="
-            approve || verified || reimbursed || resubmit || rejectApprover
-          "
-          class="text-xs border-2 mt-4 border-gray-400 dark:border-gray-600 rounded-2xl"
-          id="table-overflow"
-        >
+        <!-- v-show="approve || verified || reimbursed || revise || claimDetails.admin_status === 'REJECTED BY HR & ADMIN' -->
+        <div v-show="!pending"
+          class="border rounded-lg overflow-x-auto border-gray-400 dark:border-gray-600 my-4">
           <table class="w-full">
-            <!-- title -->
-            <tr class="h-8 bg-gray-300 dark:bg-gray-700 rounded-2xl">
-              <th class="pl-6">Remark</th>
-            </tr>
-
-            <!-- table information -->
-            <tr
-              class="h-8 text-left text-xs border-t-2 border-gray-400 dark:border-gray-600"
-            >
-              <td class="pl-6">{{ remark }}</td>
+            <thead class="h-8 bg-gray-300 dark:bg-gray-700 rounded-md">
+              <th class="uppercase">Remark</th>
+            </thead>
+            <tr class="h-8 text-left text-xs border-t border-gray-400 dark:border-gray-600">
+              <td class="text-xs"><p class="px-2 font-semibold">{{ remark }}</p></td>
             </tr>
           </table>
         </div>
 
-        <!-- Button -->
-        <div
-          v-show="
-            approve != true &&
-            verified != true &&
-            rejectApprover != true &&
-            rejectVerifier != true &&
-            resubmit != true &&
-            reimbursed != true
-          "
-          class=".detail-table w-full lg:flex-row flex flex-col justify-between h-full items-center pt-6"
-        >
-          <div class="flex w-full items-center">
-            <label class="font-semibold mr-2 mb-4 lg:mb-0"
-              >Overall Remark:
-            </label>
-            <input
-              class="py-3 px-2 mb-4 lg:mb-0 w-full lg:max-w-96 lg:mr-2 rounded-lg outline-none border-gray-400 dark:border-gray-600 dark:bg-gray-700 border-2"
-              type="text"
-              placeholder="Eg. Blurry Receipt Image"
-              v-model="remark"
-            />
-          </div>
-          <div class="flex">
-            <button
-              @click="confirmApprove = true"
-              class="mr-2 text-sm font-semibold py-3 w-16 sm:w-24 md:w-36 bg-green-500 hover:bg-green-600 rounded-lg text-white"
-            >
-              Approve
-            </button>
-            <!-- <button
-              @click="confirmResubmit = true"
-              class="mr-2 text-sm font-semibold py-3 w-16 sm:w-24 md:w-36 bg-yellow-500 hover:bg-yellow-600 rounded-lg text-white"
-            >
-              Resubmit
-            </button> -->
-            <button
-              @click="confirmReject = true"
-              class="text-sm font-semibold py-3 w-16 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white"
-            >
-              Reject
-            </button>
+        <div class="flex space-x-2 py-2">
+          <!-- Remark/approve/reject/reimburshed button -->
+          <div class="w-full">
+            <div v-if="claimDetails.admin_status === 'OPEN'" class="w-full flex items-center justify-end">
+              <div>
+                <button @click="confirmAcknowledge = true"
+                  class="mr-2 text-sm font-semibold py-2 sm:w-24 md:w-36 bg-green-500 hover:bg-green-600 rounded-lg text-white">
+                  Acknowledge
+                </button>
+              </div>
+
+            </div>
+            <div
+              v-if="claimDetails.admin_status !== 'APPROVED BY HR & ADMIN' && claimDetails.admin_status !== 'REJECTED BY HR & ADMIN' && claimDetails.admin_status !== 'REIMBURSED' &&  claimDetails.admin_status === 'ACKNOWLEDGEMENT BY HR & ADMIN' || claimDetails.admin_status === 'RESUBMITTED'"
+              class="w-full flex items-center justify-between">
+              <div class="flex items-center">
+                <label class="font-semibold whitespace-nowrap mr-2">Overall Remark:</label>
+                <input class="mx-auto py-2 min-w-[80px] rounded-md border text-xs" type="text"
+                  placeholder="Eg. Blurry Receipt Image" v-model="remark" />
+              </div>
+              <div class="flex space-x-2">
+                <button @click="confirmApprove = true"
+                  class="mr-2 text-sm font-semibold py-2 sm:w-24 md:w-36 bg-green-500 hover:bg-green-600 rounded-lg text-white">
+                  Approve
+                </button>
+                <button @click="confirmReject = true"
+                  class="mr-2 text-sm font-semibold py-2 sm:w-24 md:w-36 bg-red-600 hover:bg-red-700 rounded-lg text-white">
+                  Reject
+                </button>
+                <button @click="confirmRevise = true"
+                        class="text-sm font-semibold py-2 sm:w-24 md:w-36 bg-orange-600 hover:bg-red-700 rounded-lg text-white">
+                  Revise
+                </button>
+              </div>
+            </div>
+            <div v-else-if="claimDetails.admin_status === 'APPROVED BY HR & ADMIN'" class="w-full flex justify-end">
+              <div class="my-3">
+                <div class="relative inline-block text-left">
+                  <div>
+                    <button @click="confirmReimburse = true"
+                      class="text-sm font-semibold py-2 px-6 bg-green-600 hover:bg-green-700 rounded-lg text-white">
+                      Reimburse
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Approve Confirmation -->
-        <div
-          v-show="confirmApprove"
-          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
-        >
-          <div
-            class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center"
-          >
-            <h1 class="text-2xl font-bold">Do you confirm to approve?</h1>
+        <!-- Acknowledge Confirmation -->
+        <div v-show="confirmAcknowledge"
+          class="bg-black backdrop-filter backdrop-blur-sm bg-opacity-50  dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center">
+          <div class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center">
+            <h1 class="text-2xl font-bold">Do you confirm to acknowledge?</h1>
             <div class="flex mt-4">
-              <button
-                class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
-                @click="confirmApprove = false"
-              >
+              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
+                @click="confirmAcknowledge = false">
                 Back
               </button>
-              <button
-                class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
-                @click="ConfirmApprove"
-              >
+              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
+                @click="ConfirmAcknowledge">
                 Confirm
               </button>
             </div>
           </div>
         </div>
 
-        <!-- Resubmit Confirmation -->
-        <div
-          v-show="confirmResubmit"
-          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
-        >
+        <!-- Approve Confirmation -->
+        <div v-show="confirmApprove"
+          class="bg-black backdrop-filter backdrop-blur-sm bg-opacity-50  dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center">
+          <div class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center">
+            <h1 class="text-2xl font-bold">Do you confirm to approve?</h1>
+            <div class="flex mt-4">
+              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
+                @click="confirmApprove = false">
+                Back
+              </button>
+              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
+                @click="ConfirmApprove">
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Revise Confirmation -->
+        <div v-show="confirmRevise"
+          class="bg-black backdrop-filter backdrop-blur-sm bg-opacity-50  dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center backdrop-filter backdrop-blur-sm">
           <div
-            class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center px-1"
-          >
+            class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center px-1">
             <h1 class="text-2xl font-bold text-center">
               Please write the remark to return to claimant for resubmission?
             </h1>
             <input
               class="py-4 px-2 w-4/5 rounded-lg mt-4 outline-none border-gray-300 dark:border-gray-600 dark:bg-gray-500 border-2"
-              placeholder="Eg. Blurry Receipt Image"
-              v-model="remark"
-            />
+              placeholder="Eg. Blurry Receipt Image" v-model="remark" />
             <div class="flex mt-4">
-              <button
-                class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
-                @click="confirmResubmit = false"
-              >
+              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
+                @click="confirmRevise = false">
                 Back
               </button>
-              <button
-                class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
-                @click="ConfirmResubmit()"
-              >
+              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
+                @click="ConfirmRevise()">
                 Confirm
               </button>
             </div>
@@ -580,27 +481,17 @@
         </div>
 
         <!-- Reimburse Confirmation -->
-        <div
-          v-show="confirmReimburse"
-          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
-        >
-          <div
-            class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center"
-          >
+        <div v-show="confirmReimburse"
+          class="bg-black backdrop-filter backdrop-blur-sm bg-opacity-50  dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center backdrop-filter backdrop-blur-sm">
+          <div class="bg-white dark:bg-gray-900 w-96 h-52 rounded-xl fixed flex flex-col justify-center items-center">
             <h1 class="text-2xl font-bold">Do you confirm to reimburse?</h1>
             <div class="flex mt-4">
-              <button
-                class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
-                @click="
-                  (confirmReimburse = false), (selectedStatus = statuses[0])
-                "
-              >
+              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
+                @click="confirmReimburse = false">
                 Back
               </button>
-              <button
-                class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
-                @click="ConfirmReimburse()"
-              >
+              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-green-600 hover:bg-green-700 text-white ml-2"
+                @click="ConfirmReimburse()">
                 Confirm
               </button>
             </div>
@@ -608,30 +499,21 @@
         </div>
 
         <!-- Reject Confirmation -->
-        <div
-          v-show="confirmReject"
-          class="bg-gray-500 dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center"
-        >
+        <div v-show="confirmReject"
+          class="bg-black backdrop-filter backdrop-blur-sm bg-opacity-50  dark:bg-gray-700 dark:bg-opacity-30 bg-opacity-40 w-screen h-screen fixed left-0 top-0 z-50 flex justify-center items-center backdrop-filter backdrop-blur-sm">
           <div
-            class="bg-white dark:bg-gray-900 w-96 px-8 h-52 rounded-xl fixed flex flex-col justify-center items-center"
-          >
+            class="bg-white dark:bg-gray-900 w-96 px-8 h-52 rounded-xl fixed flex flex-col justify-center items-center">
             <h1 class="text-xl font-bold">Please write the remark to reject</h1>
             <input
               class="py-4 px-2 w-4/5 rounded-lg mt-4 outline-none border-gray-300 dark:border-gray-600 dark:bg-gray-500 border-2"
-              placeholder="Eg. Blurry Receipt Image"
-              v-model="remark"
-            />
+              placeholder="Eg. Blurry Receipt Image" v-model="remark" />
             <div class="flex mt-4">
-              <button
-                class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
-                @click="confirmReject = false"
-              >
+              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-gray-600 hover:bg-gray-700 text-white"
+                @click="confirmReject = false">
                 Back
               </button>
-              <button
-                class="rounded-lg px-4 py-2 w-28 text-lg bg-red-600 hover:bg-red-700 text-white ml-2"
-                @click="ConfirmReject"
-              >
+              <button class="rounded-lg px-4 py-2 w-28 text-lg bg-red-600 hover:bg-red-700 text-white ml-2"
+                @click="ConfirmReject">
                 Reject
               </button>
             </div>
@@ -639,125 +521,84 @@
         </div>
 
         <!-- Approve Success Notification -->
-        <div
-          class="fixed left-0 top-0 flex justify-center items-center z-50 w-screen h-screen"
-          v-if="approveSuccess"
-        >
-          <div
-            class="bg-gray-100 dark:bg-gray-500 px-10 py-3 rounded-full z-50 flex justify-center items-center"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="green"
-              class="w-8 h-8"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
-              />
+        <div class="fixed left-0 top-0 flex justify-center items-center z-50 w-screen h-screen" v-if="approveSuccess">
+          <div class="bg-gray-100 dark:bg-gray-500 px-10 py-3 rounded-full z-50 flex justify-center items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="green"
+              class="w-8 h-8">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
             </svg>
 
-            <h1>VERIFIED SUCCESSFULLY</h1>
+            <h1>APPROVED SUCCESSFULLY</h1>
           </div>
         </div>
 
         <!-- File List -->
-        <div
-          v-show="showFileList"
-          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center"
-        >
-          <div
-            class="bg-white w-full sm:w-4/5 rounded-xl flex flex-col items-center relative pb-6"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="absolute right-3 top-3 size-6"
-              @click="showFileList = false"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18 18 6M6 6l12 12"
-              />
+        <div v-show="showFileList"
+          class="fixed top-0 left-0 w-screen h-screen bg-gray-600/50 z-50 flex justify-center items-center">
+          <div class="bg-white dark:bg-gray-700 max-w-4xl sm:w-4/5 rounded-xl flex flex-col relative p-4">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="absolute right-3 top-3 size-6" @click="showFileList = false">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
             </svg>
             <div class="relative flex w-4/5 mx-auto justify-center">
               <h1 class="text-xl font-semibold my-4">Attachments</h1>
             </div>
-            <table v-if="files.length > 0" class="w-4/5 text-center mt-1 mb-8">
-              <tr class="bg-gray-300 text-center h-12">
-                <th>No.</th>
-                <th>File</th>
-                <th>Action</th>
-              </tr>
-              <tr
-                v-for="(file, i) in files"
-                :key="i"
-                class="bg-white text-black text-center h-12 mt-2"
-              >
-                <th class="font-normal">{{ i + 1 }}</th>
-                <th class="font-normal flex">
-                  <img
-                    v-if="
-                      file.split('.').slice(-1)[0].toLowerCase() == 'png' ||
-                      file.split('.').slice(-1)[0].toLowerCase() == 'jpg' ||
-                      file.split('.').slice(-1)[0].toLowerCase() == 'jpeg'
-                    "
-                    :src="file"
-                    alt="attachment"
-                    class="w-20 h-32 object-contain"
-                  />
-                  <svg
-                    v-else
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="0.5"
-                    stroke="currentColor"
-                    class="w-20 h-32"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
-                    />
-                  </svg>
-
-                  <h1 class="ml-2">
-                    {{ file.split('/')[file.split('/').length - 1] }}
-                  </h1>
-                </th>
-                <th class="font-normal">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-5 h-5 mx-auto"
-                    @click="
-                      DownloadFile(
-                        file,
-                        file.split('/')[file.split('/').length - 1]
-                      )
-                    "
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
-                    />
-                  </svg>
-                </th>
-              </tr>
-            </table>
+            <div v-if="files.length > 0" class="overflow-x-auto p-2">
+              <div class=" min-w-full">
+                <div class="border rounded-md overflow-hidden border-gray-300 dark:border-gray-600 shadow-sm">
+                  <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-600">
+                    <thead class="bg-gray-300 dark:bg-gray-700">
+                      <th scope="col" class="px-4 py-3 text-center text-xs font-semibold uppercase w-[10%]">
+                        No.
+                      </th>
+                      <th scope="col" class="px-4 py-3 text-left text-xs font-semibold uppercase w-[70%]">
+                        File
+                      </th>
+                      <th scope="col" class="px-4 py-3 text-center text-xs font-semibold uppercase w-[20%]">
+                        Action
+                      </th>
+                    </thead>
+                    <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-300 dark:divide-gray-600">
+                      <tr v-for="(file, i) in files" :key="i"
+                        class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
+                        <td class="px-4 py-3 text-center text-sm">
+                          {{ i + 1 }}
+                        </td>
+                        <td class="px-4 py-3">
+                          <div class="flex items-center space-x-3">
+                            <div class="flex-shrink-0 w-20 h-32">
+                              <img v-if="['png', 'jpg', 'jpeg'].includes(file.split('.').pop().toLowerCase())"
+                                :src="file" alt="attachment" class="w-full h-full object-contain rounded-sm cursor-pointer"
+                                @click="openImagePreview(file)" />
+                              <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor" class="w-full h-full text-gray-500 dark:text-gray-400">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5"
+                                  d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                              </svg>
+                            </div>
+                            <span class="text-sm text-gray-900 dark:text-gray-200">
+                              {{ file.split('/').pop() }}
+                            </span>
+                          </div>
+                        </td>
+                        <td class="px-4 py-3 text-center">
+                          <button @click="DownloadFile(file, file.split('/').pop())"
+                            class="inline-flex items-center justify-center p-2 rounded-full text-gray-500 hover:text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-600 transition-colors duration-200"
+                            title="Download file">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                              stroke="currentColor" class="w-5 h-5">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                            </svg>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
 
             <div v-if="files.length <= 0" class="w-full">
               <h1 class="mx-auto text-center font-thin text-gray-500">Empty</h1>
@@ -765,38 +606,27 @@
           </div>
         </div>
 
+        <!-- Image Preview Modal -->
+        <div v-show="showImagePreview" class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-75">
+          <div class="relative max-w-4xl w-full p-4">
+            <button @click="showImagePreview = false"
+              class="absolute top-4 right-4 text-white text-2xl font-bold">
+              ×
+            </button>
+            <img :src="this.previewImage" alt="Preview"
+              class="max-h-[80vh] mx-auto object-contain rounded-md shadow-xl" />
+          </div>
+        </div>
+
         <!-- Loading Animation -->
-        <div
-          class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
-          v-if="loading"
-        >
+        <div class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
+          v-if="loading">
           <div class="absolute w-screen h-screen bg-gray-900 opacity-30"></div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 200 200"
-            class="w-16 h-16 z-50"
-          >
-            <circle
-              transform="rotate(0)"
-              transform-origin="center"
-              fill="none"
-              stroke="blue"
-              stroke-width="10"
-              stroke-linecap="round"
-              stroke-dasharray="230 1000"
-              stroke-dashoffset="0"
-              cx="100"
-              cy="100"
-              r="70"
-            >
-              <animateTransform
-                attributeName="transform"
-                type="rotate"
-                from="0"
-                to="360"
-                dur="2"
-                repeatCount="indefinite"
-              ></animateTransform>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="w-16 h-16 z-50">
+            <circle transform="rotate(0)" transform-origin="center" fill="none" stroke="blue" stroke-width="10"
+              stroke-linecap="round" stroke-dasharray="230 1000" stroke-dashoffset="0" cx="100" cy="100" r="70">
+              <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="2"
+                repeatCount="indefinite"></animateTransform>
             </circle>
           </svg>
           <h1 class="text-gray-50 font-semibold z-50 ml-2 text-lg">
@@ -813,6 +643,7 @@ import moment from 'moment';
 import fileSaver from 'file-saver';
 import axios from 'axios';
 import { store } from '@/views/store.js';
+import * as XLSX from 'xlsx'
 
 export default {
   name: 'AdminSummaryClaimpage',
@@ -824,69 +655,45 @@ export default {
   },
   data() {
     return {
-      // need to get from API
+      previewImage: '',
+      showImagePreview: false,
+
       role: 'approver',
-
-      // remark for every single detail
       singleRemarks: [],
-
-      //remark for every single details in one tab
       singleColumnRemarks: [],
-
-      // user's data
       userData: {},
-
-      // File List
       files: [],
       showFileList: false,
 
-      dropdownOpen: false,
-      selectedStatus: {
-        label: 'Approved',
-        class: 'bg-green-500 text-white hover:bg-green-600',
-      },
-      statuses: [
-        {
-          label: 'Approved',
-          class: 'bg-green-500 text-white hover:bg-green-600',
-          dropDownClass: 'text-green-500 hover:text-green-600',
-        },
-        {
-          label: 'Reimbursed',
-          class: 'bg-white text-gray-700 hover:bg-gray-100',
-          dropDownClass: 'text-gray-700 hover:text-gray-800',
-        },
-      ],
-
       seeMore: false,
+      confirmAcknowledge: false,
       confirmReject: false,
       confirmApprove: false,
       confirmReimburse: false,
-      confirmResubmit: false,
+      confirmRevise: false,
       approveSuccess: false,
       loading: false,
       loadingText: '',
-
-      // need to fetch from or post to API
       rejectApprover: false,
       rejectVerifier: false,
+      acknowledge: false,
       approve: false,
       verified: false,
       reimbursed: false,
-      resubmit: false,
+      revise: false,
       remark: '',
-      statusApprover: '',
-
-      // fetch from backend
+      statusApprover: 'PENDING',
       claimDetails: [],
       claimDatas: [],
       claimDatasDetails: [],
       claimDataTotalAmount: [],
 
       keysToExclude: ['Tab_Title', 'unique_code'],
-
-      // referenceNumber: 'TMTM-Finance-2024-07-0451',
       referenceNumber: 'HS-HR-2024-07-5800',
+
+      outpatientTotal: 0,
+      medicalAndDentalTotal: 0,
+      phoneTotal: 0,
     };
   },
   computed: {
@@ -897,179 +704,313 @@ export default {
       }
       return num;
     },
-    // status of verifier to change the status color and title in table
-    // need to post to database
-    statusVerifier() {
-      let status = 'PENDING';
-      if (this.rejectVerifier) {
-        status = 'REJECTED';
-      } else if (this.verified) {
-        status = 'VERIFIED';
-      } else {
-        status = 'VERIFIED';
-      }
-
-      status = 'VERIFIED';
-
-      return status;
-    },
   },
   methods: {
-    toggleDropdown() {
-      this.dropdownOpen = !this.dropdownOpen;
-    },
-    selectStatus(status) {
-      this.selectedStatus = status;
-      this.dropdownOpen = false;
+  getVisibleKeys(detail) {
+      if (!Array.isArray(detail) || detail.length === 0) return [];
 
-      if (status.label == 'Reimbursed') {
-        this.confirmReimburse = true;
-      }
+      const keys = Object.keys(detail[0])
+
+      const filtered = keys.filter(key => {
+        return detail.some(item => {
+          const val = item[key];
+          return val !== '-' && val !== '0.00' && val !== 0;
+        });
+      });
+
+
+      return filtered;
     },
+    openImagePreview(file) {
+      this.previewImage = file;
+      this.showImagePreview = true;
+    },
+    getStatusClass() {
+      const status = this.getSimplifiedStatus(this.statusApprover);
+      return {
+        'bg-orange-200 my-2 dark:bg-orange-500': status === 'PENDING' || status === 'REVISE',
+        'bg-green-200 my-2 dark:bg-green-500': status === 'APPROVED',
+        'bg-red-200 my-2 dark:bg-red-500': status === 'REJECTED',
+        'bg-slate-200 my-2 dark:bg-slate-500': status === 'REIMBURSED',
+        'text-orange-500 my-2 dark:text-orange-100': status === 'PENDING' || status === 'REVISE',
+        'text-green-500 my-2 dark:text-green-100': status === 'APPROVED',
+        'text-red-500 my-2 dark:text-red-100': status === 'REJECTED',
+        'text-black my-2 dark:text-white': status === 'REIMBURSED'
+      };
+    },
+
+    getSimplifiedStatus(status) {
+      if (!status) return 'PENDING';
+      const statusMap = {
+        'ACKNOWLEDGEMENT BY HR & ADMIN': 'ACKNOWLEDGEMENT',
+        'APPROVED BY HR & ADMIN': 'APPROVED',
+        'REJECTED BY HR & ADMIN': 'REJECTED',
+        'REQUESTER REVISION NEEDED BY HR & ADMIN.': 'REVISED',
+        'REIMBURSED BY HR & ADMIN': 'REIMBURSED',
+        'RESUBMITTED': 'PENDING',
+        'OPEN': 'PENDING'
+      };
+      return statusMap[status] || status;
+    },
+
     async FetchClaimDetails() {
       this.loadingText = 'Fetching';
       this.loading = true;
-      await axios
-        .get(
-          'http://172.28.28.91:91/api/User/GetClaimDetails/' +
-            this.referenceNumber
-        )
-        .then((response) => {
-          this.loading = false;
-          this.claimDetails = response.data.result;
-          this.statusApprover = this.claimDetails.admin_status
-            .split('.')[0]
-            .toUpperCase();
-          if (this.statusApprover == 'APPROVED') {
-            this.approve = true;
-            this.remark = this.claimDetails.comment;
-          } else if (this.statusApprover == 'REJECTED') {
-            this.rejectApprover = true;
-            this.remark = this.claimDetails.comment;
-          } else if (this.statusApprover == 'RESUBMIT') {
-            this.resubmit = true;
-            this.remark = this.claimDetails.comment;
-          } else if (this.statusApprover == 'REIMBURSED') {
-            this.reimbursed = true;
-            this.remark = this.claimDetails.comment;
-          }
+      try {
+        const response = await axios.get(
+          `http://172.28.28.116:6165/api/User/GetClaimDetails/${this.referenceNumber}`
+        );
 
-          console.log(this.statusApprover);
+        this.loading = false;
+        this.claimDetails = response.data.result;
+        this.statusApprover = this.claimDetails.admin_status || 'PENDING';
+        console.log(this.claimDetails);
 
-          if (this.statusApprover == 'APPROVED') {
+
+        // Reset all status flags
+        this.approve = false;
+        this.rejectApprover = false;
+        this.revise = false;
+        this.reimbursed = false;
+        this.remark = this.claimDetails.comment;
+
+        // Set the appropriate flag and remark based on status
+        switch (this.statusApprover) {
+          case 'APPROVED BY HR & ADMIN':
             this.approve = true;
-          } else if (this.statusApprover == 'REJECTED') {
+            break;
+          case 'REJECTED BY HR & ADMIN':
             this.rejectApprover = true;
-          } else if (this.statusApprover == 'RESUBMIT') {
-            this.resubmit = true;
-          } else if (this.statusApprover == 'REIMBURSED') {
+            break;
+          case 'REQUESTER REVISION NEEDED BY HR & ADMIN':
+            this.revise = true;
+            break;
+          case 'REIMBURSED BY HR & ADMIN':
             this.reimbursed = true;
-          } else {
-            this.statusApprover = 'PENDING';
-          }
+            break;
+            case 'OPEN':
+            this.reimbursed = true;
+            break;
+        }
+
+        // if (this.statusApprover !== 'PENDING') {
+        //   this.remark = this.claimDetails.comment;
+        // }
+
+     //   console.log("Get application claim details", this.claimDetails);
+      } catch (error) {
+        this.loading = false;
+        console.error('API error:', error.message);
+        console.error('Error Details:', {
+          message: error.message,
+          response: error.response?.data,
+          status: error.response?.status,
+          statusText: error.response?.statusText,
+          validationErrors: error.response?.data?.errors
         });
+      }
     },
     async FetchClaimDatasDetails() {
-      this.claimDatasDetails = [];
-      this.claimDataTotalAmount = [];
-      this.claimDatas = [];
-      await axios
-        .get(
-          'http://172.28.28.91:91/api/User/GetMedicalLeave/' +
-            this.referenceNumber
-        )
-        .then((response) => {
-          const result = response.data.result;
-          console.log(result);
-          let details = [];
-          let amount = 0;
-          for (let i in result) {
-            amount += result[i].claim_amount;
-            const editedDetail = {
-              IC_Number: result[i].ic_number,
-              Date_Leave: result[i].date_leave_taken,
-              Reason: result[i].reason,
-              Medical_Category: result[i].medical_category,
-              Clinic_Selection: result[i].clinic_selection,
-              Clinic_Name: result[i].clinic_name,
-              Reason_Different_Clinic: result[i].reason_different,
-              
-              Bank: result[i].bank_name,
-              Bank_Holder: result[i].bank_holder,
-              Bank_Account: result[i].bank_account,
-              'Claim_Amount(RM)': result[i].claim_amount,
-              Attachments: result[i].files,
-              Tab_Title: 'Medical Bill',
-              unique_code: result[i].unique_code,
-              comment: result[i].comment,
-            };
-            details.push(editedDetail);
-          }
-          if (details.length > 0) {
-            this.claimDatasDetails.push(details);
-            this.claimDataTotalAmount.push(amount);
-          }
-        })
-        .catch((e) => {
-          console.error(e);
-        });
+  try {
+    this.claimDatasDetails = [];
+    this.claimDataTotalAmount = [];
+    this.claimDatas = [];
 
-      await axios
-        .get(
-          'http://172.28.28.91:91/api/User/GetHandphone/' + this.referenceNumber
-        )
-        .then((response) => {
-          const result = response.data.result;
-          console.log(result);
+    let outpatientTotal = 0;
+    let medicalAndDentalTotal = 0;
+    let phoneTotal = 0;
 
-          let details = [];
-          let amount = 0;
-          for (let i in result) {
-            amount += result[i].claim_amount;
-            const editedDetail = {
-              IC_Number: result[i].ic_number,
-              Claim_Month: result[i].claim_month,
-              Claim_Year: result[i].claim_year,
-            
-              Bank: result[i].bank_name,
-             
-              Bank_Holder: result[i].bank_holder,
-              Bank_Account: result[i].bank_account,
-              'Claim_Amount(RM)': result[i].claim_amount,
-              Attachments: result[i].files,
-              Tab_Title: 'Handphone Bill',
-              unique_code: result[i].unique_code,
-              comment: result[i].comment,
-            };
-            details.push(editedDetail);
-          }
-          if (details.length > 0) {
-            this.claimDatasDetails.push(details);
-            this.claimDataTotalAmount.push(amount);
-          }
-        })
-        .catch((e) => {
-          console.error(e);
-        });
+    const response = await axios.get(
+      'http://172.28.28.116:6165/api/User/GetMedicalLeave/' +
+      this.referenceNumber
+    );
+    const result = response.data.result;
+    console.table(response.data.result, ['claim_amount', 'medical_category']);
+    console.log("Medical Leave", response.data.result);
+    let details = [];
+    let amount = 0;
+    for (let i in result) {
+      amount += result[i].claim_amount;
 
-      this.claimDatasDetails.forEach((details, index) => {
-        if (details && details.length > 0) {
-          const claimData = {
-            No: index + 1,
-            Type: details[0].Tab_Title, // Ensure details[0] exists before accessing properties
-            Amount: this.claimDataTotalAmount[index],
-          };
-          this.claimDatas.push(claimData);
+      if (result[i].medical_category === "Outpatient") {
+          outpatientTotal += result[i].claim_amount;
+          this.outpatientTotal = outpatientTotal;
+        } else if (result[i].medical_category === "Medical Check-Up" || 
+                  result[i].medical_category === "Dental") {
+          medicalAndDentalTotal += result[i].claim_amount;
+          this.medicalAndDentalTotal = medicalAndDentalTotal;
+        }
+
+      const editedDetail = {
+        IC_Number: result[i].ic_number,
+        Date_Leave: result[i].date_leave_taken,
+        Reason: result[i].reason,
+        Medical_Category: result[i].medical_category,
+        Clinic_Name: result[i].clinic_name,
+        Reason_Different_Clinic: result[i].reason_different,
+        'Bank_Name': result[i].bank_name,
+        Bank_Holder: result[i].bank_holder,
+        Bank_Account: result[i].bank_account,
+        'Total_Fee(RM)': Number(result[i].claim_amount).toFixed(2),
+        Attachments: result[i].files,
+        Tab_Title: 'Medical Claim',
+        unique_code: result[i].unique_code,
+        comment: result[i].comment,
+      };
+      details.push(editedDetail);
+    }
+    if (details.length > 0) {
+      this.claimDatasDetails.push(details);
+      this.claimDataTotalAmount.push(amount);
+    }
+    console.log("Claim datas details", this.claimDataTotalAmount);
+    console.log("Outpatient Total:", outpatientTotal);
+    console.log("Medical Check-Up & Dental Total:", medicalAndDentalTotal);
+  } catch (error) {
+    console.error("Error fetching medical leave data:", error);
+  }
+
+  try {
+    const response = await axios.get(
+      'http://172.28.28.116:6165/api/User/GetHandphone/' + this.referenceNumber
+    );
+    const result = response.data.result;
+
+    let details = [];
+    let amount = 0;
+    for (let i in result) {
+      amount += result[i].claim_amount;
+      const editedDetail = {
+        IC_Number: result[i].ic_number,
+        Claim_Month: result[i].claim_month,
+        Claim_Year: result[i].claim_year,
+        Bank_Name: result[i].bank_name,
+        Bank_Holder: result[i].bank_holder,
+        Bank_Account: result[i].bank_account,
+        'Total_Fee(RM)': Number(result[i].claim_amount).toFixed(2),
+        Attachments: result[i].files,
+        Tab_Title: 'Handphone Bill',
+        unique_code: result[i].unique_code,
+        comment: result[i].comment,
+      };
+      details.push(editedDetail);
+    }
+    this.phoneTotal = amount;
+    if (details.length > 0) {
+      this.claimDatasDetails.push(details);
+      this.claimDataTotalAmount.push(amount);
+    }
+  } catch (error) {
+    console.error("Error fetching handphone data:", error);
+  }
+
+  this.claimDatasDetails.forEach((details, index) => {
+    if (details && details.length > 0) {
+      const claimData = {
+        No: index + 1,
+        Type: details[0].Tab_Title,
+        Amount: this.claimDataTotalAmount[index],
+      };
+      this.claimDatas.push(claimData);
+    }
+  });
+},
+
+ExportToExcel() {
+      // Create a new workbook
+      const wb = XLSX.utils.book_new();
+      
+      // Collect all data in one array for a single sheet
+      const allData = [];
+      
+      // 1. Process claimant information div (divToExport)
+      const claimantInfoDiv = this.$refs.divToExport;
+      const claimantInfoItems = claimantInfoDiv.querySelectorAll('div');
+      
+      // Add claimant info header
+      allData.push(['CLAIMANT INFORMATION']);
+      allData.push([]); // empty row
+      
+      // Process claimant info in pairs (since it's a grid layout)
+      for (let i = 0; i < claimantInfoItems.length; i += 2) {
+        const item1 = claimantInfoItems[i];
+        const item2 = claimantInfoItems[i + 1] || { textContent: '' };
+        
+        const label1 = item1.querySelector('h2')?.textContent.trim() || '';
+        const value1 = item1.querySelector('p')?.textContent.trim() || '';
+        const label2 = item2.querySelector('h2')?.textContent.trim() || '';
+        const value2 = item2.querySelector('p')?.textContent.trim() || '';
+        
+        allData.push([label1, value1, label2, value2]);
+      }
+      
+      // Add separator
+      allData.push([]);
+      allData.push(['CLAIM DETAILS']);
+      allData.push([]);
+      
+      // 2. Process details div with multiple tables (divToExport2)
+      const detailsDiv = this.$refs.divToExport2;
+      const detailTables = detailsDiv.querySelectorAll('.detail-table');
+      
+      detailTables.forEach((detailTable, tableIndex) => {
+        // Add table title
+        const title = detailTable.querySelector('.tab-title')?.textContent.trim();
+        if (title) {
+          allData.push([title]);
+        }
+        
+        // Process the table
+        const table = detailTable.querySelector('table');
+        const tableData = XLSX.utils.table_to_sheet(table);
+        const tableArray = XLSX.utils.sheet_to_json(tableData, { header: 1 });
+        
+        // Add table data to allData
+        tableArray.forEach(row => allData.push(row));
+        
+        // Add separator between tables
+        if (tableIndex < detailTables.length - 1) {
+          allData.push([]);
         }
       });
-
-      console.log(this.claimDatas);
-      console.log(this.claimDatasDetails);
+      
+      // Create worksheet from combined data
+      const ws = XLSX.utils.aoa_to_sheet(allData);
+      
+      // Set column widths for better formatting
+      const colWidths = [
+        { wch: 20 }, // First column width
+        { wch: 30 }, // Second column width
+        { wch: 20 }, // Third column width
+        { wch: 30 }  // Fourth column width
+      ];
+      ws['!cols'] = colWidths;
+      
+      // Add worksheet to workbook
+      XLSX.utils.book_append_sheet(wb, ws, "Claim Report");
+      
+      // Generate Excel file and download
+      XLSX.writeFile(wb, `Claim_Report_${this.claimDetails.name || 'export'}.xlsx`);
+    
     },
-
     PrintSummary() {
+      const printStyles = `
+        @page {
+          size: A4 potrait;
+        }
+      `;
+      const styleSheet = document.createElement('style');
+      styleSheet.type = 'text/css';
+      styleSheet.innerHTML = printStyles;
+      document.head.appendChild(styleSheet);
       print();
     },
+
+    ConfirmAcknowledge() {
+      this.confirmAcknowledge = false;
+      this.ApproveOrReject('Acknowledge');
+    },
+
     // click function after confirm the approve
     ConfirmApprove() {
       this.confirmApprove = false;
@@ -1088,10 +1029,10 @@ export default {
       this.ApproveOrReject('Reimbursed');
     },
 
-    // click function after confirm the resubmit
-    ConfirmResubmit() {
-      this.confirmResubmit = false;
-      this.ApproveOrReject('Resubmit');
+    // click function after confirm the revise
+    ConfirmRevise() {
+      this.confirmRevise = false;
+      this.ApproveOrReject('Revise');
     },
 
     // get the user data from store
@@ -1099,7 +1040,7 @@ export default {
       const username_id = store.getSession().userDetails.userId;
       let userData;
       await axios
-        .get(`http://172.28.28.91:99/api/User/GetEmployeeById/${username_id}`)
+        .get(` http://172.28.28.116:6239/api/User/GetEmployeeById/${username_id}`)
         .then((response) => {
           userData = {
             userName: response.data.result[0].name,
@@ -1107,7 +1048,7 @@ export default {
             designation: response.data.result[0].position_title,
           };
 
-          console.log(userData);
+       //   console.log(userData);
         });
       return userData;
     },
@@ -1125,14 +1066,11 @@ export default {
 
       if (index !== -1) {
         if (data.remark.trim() === '') {
-          // Remove the item if the remark is empty
           this.singleRemarks.splice(index, 1);
         } else {
-          // Update the existing remark
           this.singleRemarks[index] = { ...this.singleRemarks[index], ...data };
         }
       } else {
-        // Only push new data if the remark is not empty
         if (data.remark.trim() !== '') {
           this.singleRemarks.push(data);
         }
@@ -1140,7 +1078,6 @@ export default {
     },
 
     //approve or reject action
-    // need to post to database
     async ApproveOrReject(AoR) {
       const userData = await this.GetUserData();
       this.singleRemarks.forEach((remark) => {
@@ -1150,20 +1087,55 @@ export default {
         };
         if (remark.Tab_Title == 'Medical Bill') {
           axios.put(
-            'http://172.28.28.91:91/api/Admin/Approve_Comment_Medical',
+            'http://172.28.28.116:6165/api/Admin/Approve_Comment_Medical',
             data
           );
         } else if (remark.Tab_Title == 'Handphone Bill') {
           axios.put(
-            'http://172.28.28.91:91/api/Admin/Approve_Comment_Handphone',
+            'http://172.28.28.116:6165/api/Admin/Approve_Comment_Handphone',
             data
           );
         }
       });
-      if (AoR == 'Approve') {
+
+      if (AoR == 'Acknowledge'){
+        this.acknowledge = true;
+        this.loadingText = 'Uploading';
+        this.loading = true;
+
+        const ackData = {
+          acknow_name: userData.userName,
+          acknow_designation: userData.designation,
+          acknow_department: userData.department,
+          acknow_status: "ACKNOWLEDGEMENT",
+          requester_email: this.claimDetails.email ? this.claimDetails.email : '-',
+          requester_name: this.claimDetails.name ? this.claimDetails.name : '-',
+          report_name: this.claimDetails.report_name ? this.claimDetails.report_name : '-',
+          reference_number: this.claimDetails.reference_number,
+        }
+
+        console.log("Acknowledge data to be sent to admin:", ackData);
+        try {
+          const response = await axios.put('http://172.28.28.116:6165/api/Admin/Acknowledge_Claim_HR', ackData)
+      //    console.log('API response after approval', response.data);
+          localStorage.setItem('ApproveOrNot', 'acknowledge');
+          this.loading = false;
+        } catch (error) {
+          this.loading = false;
+          console.error('API error', error);
+          console.error('Error Details:', {
+            message: error.message,
+            response: error.response?.data,
+            status: error.response?.status,
+            statusText: error.response?.statusText,
+            validationErrors: error.response?.data?.errors
+          }
+          );
+        }
+
+      } else if (AoR == 'Approve') {
         this.approve = true;
         this.dateApprover = moment(new Date()).format('D MMM YYYY');
-        // post the status and remark to API
         this.loadingText = 'Uploading';
         this.loading = true;
 
@@ -1172,128 +1144,181 @@ export default {
           approver_designation: userData.designation,
           approver_department: userData.department,
           approver_status: 'APPROVED',
-          approver_comment: this.remark ? this.remark : '',
-          user_email: 'user_email',
-          verifier_email: this.claimDetails.verifier_email,
+          approver_comment: this.remark ? this.remark : '-',
+          requester_email: this.claimDetails.email ? this.claimDetails.email : '-',
+          requester_name: this.claimDetails.name ? this.claimDetails.name : '-',
+          report_name: this.claimDetails.report_name ? this.claimDetails.report_name : '-',
+          verifier_email: this.claimDetails.verifier_email ? this.claimDetails.verifier_email : 'test@gmail.com',
           reference_number: this.claimDetails.reference_number,
-        };
-        console.log(approveData);
-        await axios
-          .put('http://172.28.28.91:91/api/Admin/Approve_Claim', approveData)
-          .then((response) => {
-            // Handle success response
-            console.log('API response', response.data);
-            localStorage.setItem('ApproveOrNot', 'approve');
+          
 
-            this.approveSuccess = true;
-            this.loading = false;
-            setTimeout(() => {
-              this.$router.push({ name: 'AdminHRDashboardpage' });
-            }, 2500);
-          })
-          .catch((error) => {
-            // Handle error response
-            console.error('API error', error);
-          });
+          total_phone: this.phoneTotal,
+          total_outpatient: this.outpatientTotal,
+          total_medic_dental: this.medicalAndDentalTotal,
+          requester_id: this.claimDetails.requester_id ? this.claimDetails.requester_id : '-',
+
+          
+        };
+        console.log("Approved data to be sent to admin Approved-claim-HR:", approveData);
+        try {
+          const response = await axios.put('http://172.28.28.116:6165/api/Admin/Approve_Claim_HR', approveData)
+      //    console.log('API response after approval', response.data);
+          localStorage.setItem('ApproveOrNot', 'approve');
+
+          this.approveSuccess = true;
+          this.loading = false;
+          setTimeout(() => {
+            this.$router.push({ name: 'AdminHRDashboardpage' });
+          }, 2500);
+        } catch (error) {
+          this.loading = false;
+          console.error('API error', error);
+          console.error('Error Details:', {
+            message: error.message,
+            response: error.response?.data,
+            status: error.response?.status,
+            statusText: error.response?.statusText,
+            validationErrors: error.response?.data?.errors
+          }
+          );
+        }
       } else if (AoR == 'Reject') {
-        this.rejectApprover = true;
-        this.dateApprover = moment(new Date()).format('D MMM YYYY');
-        this.loadingText = 'Uploading';
-        this.loading = true;
 
-        const approveData = {
-          approver_name: userData.userName,
-          approver_designation: userData.designation,
-          approver_department: userData.department,
-          approver_status: 'REJECTED',
-          approver_comment: this.remark ? this.remark : '',
-          user_email: 'user_email',
-          verifier_email: this.claimDetails.verifier_email,
-          reference_number: this.claimDetails.reference_number,
-        };
-        await axios
-          .put('http://172.28.28.91:91/api/Admin/Approve_Claim', approveData)
-          .then((response) => {
-            // Handle success response
-            this.loading = false;
+        try {
+          this.rejectApprover = true;
+          this.dateApprover = moment(new Date()).format('D MMM YYYY');
+          this.loadingText = 'Uploading';
+          this.loading = true;
 
-            console.log('API response', response.data);
-            localStorage.setItem('ApproveOrNot', 'reject');
-          })
-          .catch((error) => {
-            // Handle error response
-            console.error('API error', error);
+          const approveData = {
+            total_phone: this.phoneTotal,
+            total_outpatient: this.outpatientTotal,
+            total_medic_dental: this.medicalAndDentalTotal,
+            approver_name: userData.userName,
+            approver_designation: userData.designation,
+            approver_department: userData.department,
+            approver_status: 'REJECTED',
+            approver_comment: this.remark ? this.remark : '-',
+            requester_email: this.claimDetails.email ? this.claimDetails.email : '-',
+            requester_name: this.claimDetails.name ? this.claimDetails.name : '-',
+            report_name: this.claimDetails.report_name ? this.claimDetails.report_name : '-',
+            verifier_email: this.claimDetails.verifier_email ? this.claimDetails.verifier_email : 'test@gmail.com',
+            requester_id: this.claimDetails.requester_id ? this.claimDetails.requester_id : '-',
+            reference_number: this.claimDetails.reference_number
+          };
+
+          const response = await axios.put('http://172.28.28.116:6165/api/Admin/Approve_Claim_HR', approveData);
+          this.loading = false;
+         console.log('API response', response.data);
+          localStorage.setItem('ApproveOrNot', 'reject');
+        } catch (error) {
+          console.error('Error during Reject:', {
+            message: error.message,
+            response: error.response?.data,
+            status: error.response?.status
           });
-      } else if (AoR == 'Resubmit') {
-        this.resubmit = true;
-        this.dateApprover = moment(new Date()).format('D MMM YYYY');
-        this.loadingText = 'Uploading';
-        this.loading = true;
+        }
+      } else if (AoR == 'Revise') {
 
-        const approveData = {
-          approver_name: userData.userName,
-          approver_designation: userData.designation,
-          approver_department: userData.department,
-          approver_status: 'RESUBMIT',
-          approver_comment: this.remark ? this.remark : '',
-          user_email: 'user_email',
-          verifier_email: this.claimDetails.verifier_email,
-          reference_number: this.claimDetails.reference_number,
-        };
-        await axios
-          .put('http://172.28.28.91:91/api/Admin/Approve_Claim', approveData)
-          .then((response) => {
-            // Handle success response
-            this.loading = false;
+        try {
+          this.revise = true;
+          this.dateApprover = moment(new Date()).format('D MMM YYYY');
+          this.loadingText = 'Uploading';
+          this.loading = true;
 
-            console.log('API response', response.data);
-            localStorage.setItem('ApproveOrNot', 'resubmit');
-          })
-          .catch((error) => {
-            // Handle error response
-            console.error('API error', error);
+          const approveData = {
+            approver_name: userData.userName,
+            approver_designation: userData.designation,
+            approver_department: userData.department,
+            approver_status: 'REQUESTER REVISION NEEDED BY HR & ADMIN.',
+            approver_comment: this.remark ? this.remark : '-',
+            requester_email: this.claimDetails.email ? this.claimDetails.email : '-',
+            requester_name: this.claimDetails.name ? this.claimDetails.name : '-',
+            report_name: this.claimDetails.report_name ? this.claimDetails.report_name : '-',
+            verifier_email: this.claimDetails.verifier_email ? this.claimDetails.verifier_email : 'test@gmail.com',
+            reference_number: this.claimDetails.reference_number,
+            total_phone: this.phoneTotal,
+            total_outpatient: this.outpatientTotal,
+            total_medic_dental: this.medicalAndDentalTotal,
+            requester_id: this.claimDetails.requester_id ? this.claimDetails.requester_id : '-',
+          };
+
+
+          const response = await axios.put('http://172.28.28.116:6165/api/Admin/Approve_Claim_HR', approveData);
+          this.loading = false;
+
+      //    console.log('API response', response.data);
+          localStorage.setItem('ApproveOrNot', 'revise');
+
+        } catch (error) {
+          console.error('Error during Reject:', {
+            message: error.message,
+            response: error.response?.data,
+            status: error.response?.status
           });
+        }
       } else if (AoR == 'Reimbursed') {
-        this.reimbursed = true;
-        this.dateApprover = moment(new Date()).format('D MMM YYYY');
-        this.loadingText = 'Uploading';
-        this.loading = true;
 
-        const approveData = {
-          approver_name: userData.userName,
-          approver_designation: userData.designation,
-          approver_department: userData.department,
-          approver_status: 'REIMBURSED',
-          approver_comment: this.remark ? this.remark : '',
-          user_email: 'user_email',
-          verifier_email: this.claimDetails.verifier_email,
-          reference_number: this.claimDetails.reference_number,
-        };
-        await axios
-          .put('http://172.28.28.91:91/api/Admin/Approve_Claim', approveData)
-          .then((response) => {
-            // Handle success response
-            this.loading = false;
+        try {
+          this.reimbursed = true;
+          this.dateApprover = moment(new Date()).format('D MMM YYYY');
+          this.loadingText = 'Uploading';
+          this.loading = true;
 
-            console.log('API response', response.data);
-            localStorage.setItem('ApproveOrNot', 'reimbursed');
-          })
-          .catch((error) => {
-            // Handle error response
-            console.error('API error', error);
+          const approveData = {
+            approver_name: userData.userName,
+            approver_designation: userData.designation,
+            approver_department: userData.department,
+            approver_status: 'REIMBURSED',
+            approver_comment: this.remark ? this.remark : '-',
+            requester_email: this.claimDetails.email ? this.claimDetails.email : '-',
+            requester_name: this.claimDetails.name ? this.claimDetails.name : '-',
+            report_name: this.claimDetails.report_name ? this.claimDetails.report_name : '-',
+            verifier_email: this.claimDetails.verifier_email ? this.claimDetails.verifier_email : 'test@gmail.com',
+            reference_number: this.claimDetails.reference_number,
+            total_phone: this.phoneTotal,
+            total_outpatient: this.outpatientTotal,
+            total_medic_dental: this.medicalAndDentalTotal,
+            requester_id: this.claimDetails.requester_id ? this.claimDetails.requester_id : '-',
+          };
+
+          const response = await axios.put('http://172.28.28.116:6165/api/Admin/Approve_Claim_HR', approveData);
+          this.loading = false;
+
+        //    console.log('API response', response.data);
+          localStorage.setItem('ApproveOrNot', 'reimbursed');
+
+        } catch (error) {
+          console.error('Error during Reject:', {
+            message: error.message,
+            response: error.response?.data,
+            status: error.response?.status
           });
+        }
       }
       this.FetchClaimDetails();
       this.FetchClaimDatasDetails();
     },
-
-    // Download the file
     DownloadFile(url, fileName) {
       fileSaver.saveAs(url, fileName);
     },
     ShowFile(val) {
-      this.files = val;
-      this.showFileList = true;
+      if (Array.isArray(val)) {
+        this.files = val;
+        this.showFileList = true;
+      } else if (val.userId && val.uniqueCode) {
+        axios
+          .get(`https://esvcportal.pktgroup.com/api/file/api/Files/GetMultiImage/${val.userId}/${val.uniqueCode}`)
+          .then((response) => {
+            this.files = response.data.result || [];
+            this.showFileList = true;
+          })
+          .catch((error) => {
+            console.error("Error fetching files:", error);
+          });
+      } else {
+        console.error("Invalid file data provided.");
+      }
     },
   },
   mounted() {
@@ -1310,6 +1335,12 @@ export default {
 
     this.FetchClaimDetails();
     this.FetchClaimDatasDetails();
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.showImagePreview) {
+        this.showImagePreview = false;
+      }
+    });
   },
 };
 </script>
@@ -1318,12 +1349,15 @@ export default {
 tr:first-child th:first-child {
   border-top-left-radius: 16px;
 }
+
 tr:first-child th:last-child {
   border-top-right-radius: 16px;
 }
+
 tr:last-child th:first-child {
   border-bottom-left-radius: 16px;
 }
+
 tr:last-child th:last-child {
   border-bottom-right-radius: 16px;
 }
@@ -1331,62 +1365,23 @@ tr:last-child th:last-child {
 .details tr td:last-child {
   display: none;
 }
+
 .details tr th:last-child {
   display: none;
 }
+
 .details tr td:nth-last-child(2) {
   display: none;
 }
+
 .details tr th:nth-last-child(2) {
   display: none;
 }
+
 .details tr td:nth-last-child(3) {
   display: none;
 }
-.details tr th:nth-last-child(3) {
-  display: none;
-}
 
-div:has(> table) {
-  overflow-x: auto;
-}
-
-table th,
-td {
-  padding-right: 4px;
-  padding-left: 4px;
-}
-</style>
-
-<style scoped>
-tr:first-child th:first-child {
-  border-top-left-radius: 16px;
-}
-tr:first-child th:last-child {
-  border-top-right-radius: 16px;
-}
-tr:last-child th:first-child {
-  border-bottom-left-radius: 16px;
-}
-tr:last-child th:last-child {
-  border-bottom-right-radius: 16px;
-}
-
-.details tr td:last-child {
-  display: none;
-}
-.details tr th:last-child {
-  display: none;
-}
-.details tr td:nth-last-child(2) {
-  display: none;
-}
-.details tr th:nth-last-child(2) {
-  display: none;
-}
-.details tr td:nth-last-child(3) {
-  display: none;
-}
 .details tr th:nth-last-child(3) {
   display: none;
 }
@@ -1407,36 +1402,87 @@ td {
   @page {
     size: A4 portrait;
   }
+
   * {
     color: black;
   }
+
   input {
     display: none;
   }
+
   #title {
     white-space: nowrap;
   }
+
   #claimant-informations {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+
   .details h1 {
     font-size: 12px;
     margin-bottom: 6px;
     margin-top: 6px;
   }
+
   .print-div {
     box-shadow: none;
     border: none;
   }
+
   body *:not(#summaryPrint):not(#summaryPrint *) {
     visibility: hidden !important;
   }
-  .detail-table {
-    page-break-inside: avoid;
+
+  .detail-table,
+  .status-table,
+  .remark-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    page-break-inside: avoid !important;
+    overflow: visible !important;
+    table-layout: fixed !important;
   }
+
+  .status-table th,
+  .status-table td,
+  .remark-table th,
+  .remark-table td {
+    font-size: 8px !important;
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+    vertical-align: top !important;
+  }
+
+  .status-table th:first-child,
+  .remark-table thead th {
+    font-size: 10px !important;
+    font-weight: bold !important;
+    text-align: center !important;
+  }
+
+  
+  .overflow-x-auto,
+  .overflow-y-auto,
+  .overflow-auto {
+    overflow: visible !important;
+  }
+
   table {
-    page-break-inside: avoid;
+    table-layout: auto !important;
+    width: 100% !important;
+    page-break-inside: avoid !important;
+    border-collapse: collapse !important;
   }
+  
+  th, td {
+    page-break-inside: avoid !important;
+    word-wrap: break-word !important;
+    white-space: normal !important;
+    font-size: 10px !important;
+    overflow: visible !important;
+  }
+
   * {
     box-shadow: 0;
     margin: 0;
@@ -1444,43 +1490,55 @@ td {
     --tw-ring-shadow: 0;
     --tw-ring-color: 0;
   }
+
   #toLeft {
     text-align: left !important;
   }
+
   #summaryPrint {
-    margin-left: 0;
-    width: 100vw !important;
-    padding: 0;
+    margin: 0 auto;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    box-sizing: border-box;
   }
+
   #summaryPrint div {
     visibility: visible !important;
     width: 100% !important;
     box-shadow: 0;
   }
+
   #summaryPrint button {
     display: none;
   }
+
   #total {
     position: absolute;
     right: 10px;
   }
+
   .tab-title {
     font-size: 12px;
     line-height: 30px;
   }
+
   #table-overflow {
     width: 100%;
     overflow: hidden;
     margin-bottom: 15px !important;
   }
+
   #table-overflow table {
     width: 100%;
   }
+
   #table-overflow table tr {
     height: 120%;
     width: 100%;
     font-size: 8px !important;
   }
+
   #table-overflow table th {
     padding: 0 auto;
     margin: 0 auto;
@@ -1492,6 +1550,7 @@ td {
     line-height: 10px !important;
     vertical-align: middle !important;
   }
+
   #summaryPrint #table-overflow table td {
     padding: 0 auto;
     margin: 0 auto;
@@ -1525,3 +1584,4 @@ td {
   }
 }
 </style>
+

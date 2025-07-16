@@ -1,10 +1,6 @@
 <template>
-  <div
-    class="bg-gray-500 bg-opacity-40 w-screen h-screen absolute left-0 top-0 z-50 flex justify-center items-center"
-  >
-    <div
-      class="popup overflow-y-auto lg:w-3/5 md:w-3/4 w-5/6 bg-white h-[90%] rounded-xl relative px-10 pb-6"
-    >
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+    <div class="popup overflow-y-auto lg:w-3/5 md:w-3/4 w-5/6 bg-white dark:bg-gray-800 h-[85%] rounded-xl relative px-10 pb-6">
       <!-- Heading Title -->
       <h1 class="text-3xl font-bold py-6 border-b-2 border-black">
         CREATE NEW CLAIM
@@ -14,53 +10,24 @@
       <form @submit.prevent="submitForm(1)" class="text-sm py-2">
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
-            <label
-              class="font-semibold text-gray-700 dark:text-gray-200"
-              for="claimantName"
-              >Report Name <span class="text-red-500">*</span></label
-            >
-            <input
-              v-model="formData.reportName"
-              required
-              id="ReportName"
-              type="text"
-              value="required"
-              class="block w-full px-4 py-2 mt-2 capitalize text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="claimantName">Report Name (Claim Description)<span
+                class="text-red-500">*</span></label>
+            <input placeholder="E.g 1: Travel to BKH / E.g 2: Medical Claim 2025" v-model="formData.reportName" required id="ReportName" type="text" value="required"
+              class="block w-full px-4 py-2 mt-2 capitalize text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
           </div>
           <div>
-            <label
-              class="font-semibold text-gray-700 dark:text-gray-200"
-              for="claimantName"
-              >Claimant Name</label
-            >
-            <input
-              placeholder="e.g ALI BIN ABU"
-              v-model="formData.claimantName"
-              disabled
-              required
-              id="claimantName"
-              type="text"
-              value="required"
-              class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="claimantName">Claimant Name</label>
+            <input placeholder="e.g ALI BIN ABU" v-model="formData.claimantName" disabled required id="claimantName"
+              type="text" value="required"
+              class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
           </div>
           <div class="relative">
-            <label
-              class="font-semibold text-gray-700 dark:text-gray-200"
-              for="companyName"
-              >Company Name</label
-            >
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="companyName">Company Name</label>
 
             <div class="flex justify-between">
-              <input disabled
-                type="text"
-                required
-                placeholder="Company name.."
-                v-model="formData.companyName"
+              <input disabled type="text" required placeholder="Company name.." v-model="formData.companyName"
                 @click="toggleDropdown2"
-                class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
+                class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
               <!-- <div
                 class="bg-slate-200 py-4 px-2 mt-2 rounded"
                 @click="toggleDropdown2"
@@ -96,21 +63,12 @@
             </div> -->
           </div>
           <div class="relative">
-            <label
-              class="font-semibold text-gray-700 dark:text-gray-200"
-              for="designation"
-            >
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="designation">
               Designation
             </label>
             <div class="flex justify-between">
-              <input
-                disabled
-                type="text"
-                placeholder="Designation.."
-                v-model="formData.designation"
-                required
-                class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
+              <input disabled type="text" placeholder="Designation.." v-model="formData.designation" required
+                class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
               <!-- <div
                 class="bg-slate-200 py-4 px-2 mt-2 rounded"
                 @click="toggleDropdown3"
@@ -148,22 +106,13 @@
         </div>
         <div class="grid grid-cols-3 gap-6 mt-4 sm:grid-cols-3">
           <div class="relative">
-            <label
-              class="font-semibold text-gray-700 dark:text-gray-200"
-              for="department"
-            >
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="department">
               Department
             </label>
             <div class="flex justify-between">
-              <input
-                type="text"
-                placeholder="Department.."
-                disabled
-                v-model="formData.department"
-                required
+              <input type="text" placeholder="Department.." disabled v-model="formData.department" required
                 @click="toggleDropdown"
-                class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
+                class="block w-full px-4 py-2 mt-1 text-gray-700 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
               <!-- <div
                 class="bg-slate-200 py-4 px-2 mt-2 rounded"
                 @click="toggleDropdown"
@@ -184,16 +133,10 @@
                 </svg>
               </div> -->
             </div>
-            <div
-              v-show="dropdownVisible"
-              class="dropdown-content absolute left-0 bg-gray-100 w-full max-h-56 overflow-y-auto border border-gray-300 z-10 mt-2 rounded shadow-lg"
-            >
-              <a
-                v-for="department in filteredDepartments"
-                :key="department.department"
-                @click="selectDepartment(department.department)"
-                class="block text-black py-2 px-4 hover:bg-gray-200"
-              >
+            <div v-show="dropdownVisible"
+              class="dropdown-content absolute left-0 bg-gray-100 w-full max-h-56 overflow-y-auto border border-gray-300 z-10 mt-2 rounded shadow-lg">
+              <a v-for="department in filteredDepartments" :key="department.department"
+                @click="selectDepartment(department.department)" class="block text-black py-2 px-4 hover:bg-gray-200">
                 {{ department.department }}
               </a>
             </div>
@@ -211,52 +154,24 @@
             />
           </div> -->
           <div class="relative">
-            <label
-              class="font-semibold text-gray-700 dark:text-gray-200"
-              for="companyName"
-              >Cost Center </label
-            >
+            <label class="font-semibold text-gray-700 dark:text-gray-200" for="companyName">Cost Center (Company Code)<span
+                class="text-red-500">*</span></label>
 
             <div class="flex justify-between">
-              <input
-                type="text"
-                placeholder="Cost Center.."
-                
-                v-model="formData.costCenter"
-                @click="toggleDropdown4"
-                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-              />
-              <div
-                class="bg-slate-200 py-4 px-2 mt-2 rounded"
-                @click="toggleDropdown4"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 21 21"
-                  stroke="currentColor"
-                  class="h-2 w-4 text-gray-600"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  ></path>
+              <input type="text" placeholder="Cost Center.." v-model="formData.costCenter"  @click="toggleDropdown4" required
+                class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+              <div class="bg-slate-200 py-4 px-2 mt-2 rounded" @click="toggleDropdown4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 21" stroke="currentColor"
+                  class="h-2 w-4 text-gray-600">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
               </div>
             </div>
-            <div
-              v-show="dropdownVisible4"
-              class="dropdown-content absolute left-0 bg-gray-100 w-full max-h-56 overflow-y-auto border border-gray-300 z-10 mt-2 rounded shadow-lg"
-            >
-              <a
-                v-for="Company in filteredCostcenter"
-                :key="Company.company_name"
-                @click="selectCostcenter(Company.company_name)"
-                class="block text-black py-2 px-4 hover:bg-gray-200"
-              >
-                {{ Company.company_name }}
+            <div v-show="dropdownVisible4"
+              class="dropdown-content absolute left-0 bg-gray-100 w-full max-h-56 overflow-y-auto border border-gray-300 z-10 mt-2 rounded shadow-lg">
+              <a v-for="Company in filteredCostcenter" :key="Company.company_code"
+                @click="selectCostcenter(Company.company_code)" class="block text-black py-2 px-4 hover:bg-gray-200">
+                {{ Company.company_code }}
               </a>
             </div>
           </div>
@@ -277,23 +192,11 @@
             </label>
 
             <div
-              class="space-x-3 block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            >
+              class="space-x-3 block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring">
               <!-- HR Group -->
-              <div
-                class="relative inline-block"
-                @mouseover="showHRMessage = true"
-                @mouseleave="showHRMessage = false"
-              >
-                <input
-                  type="radio"
-                  id="HR"
-                  name="claimType"
-                  value="HR"
-                  required
-                  v-model="formData.reportType"
-                  class="mr-2"
-                />
+              <div class="relative inline-block" @mouseover="showHRMessage = true" @mouseleave="showHRMessage = false">
+                <input type="radio" id="HR" name="claimType" value="HR" required v-model="formData.reportType"
+                  class="mr-2" />
                 <label for="HR">Medical & Handphone Reimbursement</label>
                 <!-- <div
                   class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
@@ -304,26 +207,18 @@
               </div>
 
               <!-- Finance Group -->
-              <div
-                class="relative inline-block"
-                @mouseover="showFinanceMessage = true"
-                @mouseleave="showFinanceMessage = false"
-              >
-                <input
-                  type="radio"
-                  id="Finance"
-                  name="claimType"
-                  value="Finance"
-                  v-model="formData.reportType"
-                  class="mr-2"
-                />
-                <label for="Finance">Travelling, Entertainment & Others</label>
+              <div class="relative inline-block" @mouseover="showFinanceMessage = true"
+                @mouseleave="showFinanceMessage = false">
+                <input type="radio" id="Finance" name="claimType" value="Finance" v-model="formData.reportType"
+                  class="mr-2" />
+                <label for="Finance">Travelling, Entertainment & Others </label>
+                <label class="font-bold">(Work In Progress)</label>
                 <!-- <div
                   class="absolute bg-white border border-gray-100 p-2 whitespace-nowrap"
                   v-show="showFinanceMessage"
                 >
                   Local Travelling, Overseas Travelling With Accommodation,
-                  Entertainment, Staff Refreshment, and Others Form
+                  Entertainment, Staff Entertainment, and Others Form
                 </div> -->
               </div>
             </div>
@@ -381,44 +276,34 @@
             >
           </div>
         </div> -->
-        <div class="pt-5">
-          <label
-            class="font-semibold text-gray-700 dark:text-gray-200"
-            for="username"
-            >Upload Attachment (png, jpeg, pdf or xlsx)</label
-          >
+        <!-- <div class="pt-5">
+          <label class="font-semibold text-gray-700 dark:text-gray-200" for="username">Upload Attachment (png, jpeg, pdf
+            or xlsx)</label>
+          <h1 class="text-black-500 text-sm">
+            Note : Support document or job scope is require for overseas travel or company invitation.
+          </h1> -->
+            <!-- component -->
 
-          <!-- component -->
-
-          <div>
+          <!-- <div>
             <div class="pt-3">
-              <FilePond
-             
-                ref="pond"
-                name="file"
-                :server="null"
-                :allowMultiple="true"
-                :maxFileSize="'5MB'"
+              <FilePond ref="pond" name="file" :server="null" :allowMultiple="true" :maxFileSize="'5MB'"
                 :acceptedFileTypes="[
                   'image/png',
                   'image/jpeg',
                   'application/pdf',
                   'application/vnd.ms-excel',
                   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                ]"
-                @addfile="handleAddFile"
-                @removefile="handleRemoveFile"
-              />
-            </div>
+                ]" @addfile="handleAddFile" @removefile="handleRemoveFile" />
+            </div> -->
             <!-- component -->
-          </div>
-        </div>
+          <!-- </div>
+        </div> -->
 
-        <h1 class="text-red-500 text-sm">
-                      Note : Claims must be submitted by the 15th of each month.
-                      Submissions made after this date will be processed in the
-                      following month.
-                    </h1>
+        <h1 class="text-red-500 text-sm my-4">
+          Note : Claims must be submitted by the 15th of each month.
+          Submissions made after this date will be processed in the
+          following month.
+        </h1>
         <!-- <h1 class="text-gray-500 text-sm">
           <span class="text-red-500">*</span
           ><span class="text-red-500">*</span> HR: Medical Bill and Handphone
@@ -433,60 +318,32 @@
 
         <!-- button -->
         <div class="gap-3 flex flex-row-reverse">
-          <div class="flex justify-center mt-10">
-            <button
-              type="submit"
-              class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
-            >
+          <div class="flex justify-center mt-4">
+            <button type="submit"
+              class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
               Next
             </button>
           </div>
-          <div class="flex justify-center mt-10">
-            <button
-              type="cancel"
-              @click.prevent="submitForm(-1)"
-              class="bg-[#f7fbff] px-8 py-2.5 leading-5 text-gray transition-colors duration-300 transform rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
-            >
+          <div class="flex justify-center mt-4">
+            <button type="cancel" @click.prevent="submitForm(-1)"
+              class="bg-[#f7fbff] dark:bg-gray-900 dark:hover:bg-gray-950 px-8 py-2.5 leading-5 text-gray transition-colors duration-300 transform rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200">
               Cancel
             </button>
           </div>
         </div>
       </form>
-       <!-- Loading Animation -->
-       <div
-          class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
-          v-if="loading && !approveSuccess"
-        >
-          <div class="absolute w-screen h-screen bg-gray-900 opacity-10"></div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 200 200"
-            class="w-24 h-24 z-50"
-          >
-            <circle
-              transform="rotate(0)"
-              transform-origin="center"
-              fill="none"
-              stroke="blue"
-              stroke-width="10"
-              stroke-linecap="round"
-              stroke-dasharray="230 1000"
-              stroke-dashoffset="0"
-              cx="100"
-              cy="100"
-              r="70"
-            >
-              <animateTransform
-                attributeName="transform"
-                type="rotate"
-                from="0"
-                to="360"
-                dur="2"
-                repeatCount="indefinite"
-              ></animateTransform>
-            </circle>
-          </svg>
-        </div>
+      <!-- Loading Animation -->
+      <div class="w-screen h-screen fixed z-50 flex justify-center items-center top-0 left-0 backdrop-blur-md"
+        v-if="loading && !approveSuccess">
+        <div class="absolute w-screen h-screen bg-gray-900 opacity-10"></div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="w-24 h-24 z-50">
+          <circle transform="rotate(0)" transform-origin="center" fill="none" stroke="blue" stroke-width="10"
+            stroke-linecap="round" stroke-dasharray="230 1000" stroke-dashoffset="0" cx="100" cy="100" r="70">
+            <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="2"
+              repeatCount="indefinite"></animateTransform>
+          </circle>
+        </svg>
+      </div>
     </div>
   </div>
 </template>
@@ -502,7 +359,6 @@ import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import moment from "moment";
 import { formStore } from "../../views/store.js"; // Import your form store
 import { store } from "../../views/store.js";
-import { unique } from "jquery";
 // import axios from 'axios';
 
 const FilePond = vueFilePond(
@@ -512,9 +368,9 @@ const FilePond = vueFilePond(
   FilePondPluginFileValidateType
 );
 export default {
-  components: {
-    FilePond,
-  },
+  // components: {
+  //   FilePond,
+  // },
   emits: ["close"],
   data() {
     return {
@@ -565,41 +421,54 @@ export default {
   },
   computed: {
     filteredDesignation() {
-      return this.designations.filter((designation) => {
-        return designation.designation
-          .toLowerCase()
-          .includes(this.formData.designation.toLowerCase());
-      });
-    },
-    filteredDepartments() {
-      return this.departments.filter((department) => {
-        return department.department
-          .toLowerCase()
-          .includes(this.formData.department.toLowerCase());
-      });
-    },
-    filteredCompanyName() {
-      return this.Companies.filter((park) => {
-        const searchTerm = this.formData.companyName.toLowerCase();
-        return (
-          (park.company_code &&
-            park.company_code.toLowerCase().includes(searchTerm)) ||
-          (park.company_name &&
-            park.company_name.toLowerCase().includes(searchTerm))
-        );
-      });
-    },
-    filteredCostcenter() {
-      return this.Companies.filter((park) => {
-        const searchTerm = this.formData.costCenter.toLowerCase();
-        return (
-          (park.company_code &&
-            park.company_code.toLowerCase().includes(searchTerm)) ||
-          (park.company_name &&
-            park.company_name.toLowerCase().includes(searchTerm))
-        );
-      });
-    },
+  return this.designations.filter((designation) => {
+    return (
+      designation.designation &&
+      this.formData.designation &&
+      designation.designation.toLowerCase().includes(this.formData.designation.toLowerCase())
+    );
+  });
+},
+filteredDepartments() {
+  return this.departments.filter((department) => {
+    return (
+      department.department &&
+      this.formData.department &&
+      department.department.toLowerCase().includes(this.formData.department.toLowerCase())
+    );
+  });
+},
+filteredCompanyName() {
+  return this.Companies.filter((company) => {
+    const searchTerm = this.formData.companyName ? this.formData.companyName.toLowerCase() : "";
+    return (
+      (company.company_code &&
+        company.company_code.toLowerCase().includes(searchTerm)) ||
+      (company.company_name &&
+        company.company_name.toLowerCase().includes(searchTerm))
+    );
+  });
+},
+filteredCostcenter() {
+  // return this.Companies.filter((company) => {
+    const searchTerm = this.formData.costCenter ? this.formData.costCenter.toLowerCase() : "";
+    const seen = new Set();
+
+    return this.Companies.filter ((company) => {
+      const match =
+      (company.company_code &&
+        company.company_code.toLowerCase().includes(searchTerm)) ||
+      (company.company_name &&
+        company.company_name.toLowerCase().includes(searchTerm));
+
+      if (match && !seen.has(company.company_code)) {
+        seen.add(company.company_code);
+        return true;
+      }
+      return false;
+   
+  });
+},
   },
 
   mounted() {
@@ -613,21 +482,21 @@ export default {
 
   methods: {
     handleAddFile(error, fileItem) {
-    if (!error) {
-      console.log("Added file name:", fileItem.file.name);
+      if (!error) {
+    //    console.log("Added file name:", fileItem.file.name);
 
-      // Rename the file
-      const newFileName = `ClaimsAttachment_${fileItem.file.name}`;
-      const renamedFile = new File([fileItem.file], newFileName, { type: fileItem.file.type });
+        // Rename the file
+        const newFileName = `ClaimsAttachment_${fileItem.file.name}`;
+        const renamedFile = new File([fileItem.file], newFileName, { type: fileItem.file.type });
 
-      this.formData.fileUpload.push(renamedFile);
-      console.log("Files after upload (plain array):", this.formData.fileUpload);
-    }
-  },
+        this.formData.fileUpload.push(renamedFile);
+      //  console.log("Files after upload (plain array):", this.formData.fileUpload);
+      }
+    },
 
-  handleRemoveFile(error, fileItem) {
-    this.formData.fileUpload = this.formData.fileUpload.filter((file) => file !== fileItem.file);
-  },
+    handleRemoveFile(error, fileItem) {
+      this.formData.fileUpload = this.formData.fileUpload.filter((file) => file !== fileItem.file);
+    },
 
     generateUniqueCode() {
       // Check if this.userId is defined
@@ -657,7 +526,7 @@ export default {
     async fetchusername() {
       try {
         const response = await fetch(
-          "http://172.28.28.91:99/api/User/GetAllEmployees"
+          " http://172.28.28.116:6239/api/User/GetAllEmployees"
         );
         if (response.status !== 200) {
           // Corrected status code check
@@ -730,7 +599,7 @@ export default {
     async fetchDesignations() {
       try {
         const response = await fetch(
-          "http://172.28.28.91:99/api/User/GetDesignation"
+          " http://172.28.28.116:6239/api/User/GetDesignation"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -745,7 +614,7 @@ export default {
     async fetchCompany() {
       try {
         const response = await fetch(
-          "http://172.28.28.91:99/api/User/GetCompany"
+          " http://172.28.28.116:6239/api/User/GetCompany"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -760,7 +629,7 @@ export default {
     async fetchDepartments() {
       try {
         const response = await fetch(
-          "http://172.28.28.91:99/api/User/GetDepartment"
+          " http://172.28.28.116:6239/api/User/GetDepartment"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -772,44 +641,67 @@ export default {
         console.error(`Error fetching departments: ${error}`);
       }
     },
+    // generateSerialNumber() {
+    //   let names = this.formData.reportName.split(" ");
+    //   let shortform = [];
+
+    //   for (let i = 0; i < names.length; i++) {
+    //     shortform[i] = names[i][0];
+    //   }
+
+    //   let datetime = moment(new Date()).format("YYYY-MM-");
+    //   let sn =
+    //     shortform.join("").toString() +
+    //     "-" +
+    //     this.formData.reportType +
+    //     "-" +
+    //     datetime;
+    //   // console.log(sn);
+    //   this.formData.uniqueCode = sn;
+    //   return sn;
+    // },
+
     generateSerialNumber() {
-      let names = this.formData.reportName.split(" ");
-      let shortform = [];
+    // Define custom shortcodes for each report type
+    const reportTypeMap = {
+      HR: "MHR",
+      Finance: "TESO"
+    };
 
-      for (let i = 0; i < names.length; i++) {
-        shortform[i] = names[i][0];
-      }
+    // Get the mapped report type or fallback to original
+    const typeCode = reportTypeMap[this.formData.reportType] || this.formData.reportType;
 
-      let datetime = moment(new Date()).format("YYYY-MM-");
-      let sn =
-        shortform.join("").toString() +
-        "-" +
-        this.formData.reportType +
-        "-" +
-        datetime;
-      // console.log(sn);
-      this.formData.uniqueCode = sn;
-      return sn;
-    },
- 
+    // Generate date portion
+    let datetime = moment(new Date()).format("YYYY-MM-");
+
+    // Build the serial number
+    let sn = typeCode + "-" +
+        this.formData.reportType + "-" + datetime;
+
+    // Save and return
+    this.formData.uniqueCode = sn;
+    return sn;
+  },
+
     submitForm(page) {
-      this.active += page;
+  this.active += page;
 
       if (this.active > 0) {
         // Update form data in the form store
-      
+
         formStore.clearFormData();
         this.generateSerialNumber();
         this.generateUniqueCode();
         formStore.setFormData(this.formData);
 
-   
+
         // Log the form data before navigation
         // console.log("Form submitted", formStore.getFormData());
+        
+        this.$nextTick(() => {
+          this.$router.push({ name: "ClaimReport" });
+        });
         this.$emit("close");
-this.$nextTick(() => {
-    this.$router.push({ name: "ClaimReport" });
-});
 
         // Send API request using axios
         // const apiData = {
@@ -824,7 +716,7 @@ this.$nextTick(() => {
         // };
 
         // // Send API request using axios
-        // axios.post('http://172.28.28.91:99/api/User/InsertClaimDetails', apiData)
+        // axios.post(' http://172.28.28.116:6239/api/User/InsertClaimDetails', apiData)
         //   .then(response => {
         //     // Handle success response
         //     console.log('API response', response.data);
@@ -851,8 +743,10 @@ this.$nextTick(() => {
 </script>
 <style scoped>
 .dropdown-content {
-  max-height: 10rem; /* max-h-56 in Tailwind CSS */
+  max-height: 10rem;
+  /* max-h-56 in Tailwind CSS */
 }
+
 .formStepCircle:not(:first-child)::before {
   content: "";
   background-color: rgb(209 213 219);

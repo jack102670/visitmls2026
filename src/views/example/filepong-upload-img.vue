@@ -88,7 +88,7 @@ export default {
       formData.append('home_address', '123 Main St');
       formData.append('department', 'NGETES');
 
-      axios.put('http://172.28.28.91:99/api/Admin/UpdateEmployee', formData, {
+      axios.put('http://172.28.28.116:7239/api/Admin/UpdateEmployee', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
