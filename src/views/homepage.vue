@@ -66,10 +66,10 @@
           //   link: "/e-dashboard",
           // },
           {
-            title: "Coming Soon...",
+            title: "E-Appraisal",
             description: "Stay tuned for updates on our latest feature.",
             image: "https://img.freepik.com/free-vector/abstract-grunge-style-coming-soon-with-black-splatter_1017-26690.jpg",
-            link: "",
+            link: "/MyAppraisal",
           },
         ],
       };

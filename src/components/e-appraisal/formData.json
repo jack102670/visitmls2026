@@ -1,0 +1,365 @@
+{
+  "employeeInfo": {
+    "fullName": "ALI BIN ABU",
+    "employeeId": "EMP001",
+    "companyName": "PKT LOGISTIC (M) SDN BHD",
+    "designation": "ICT",
+    "assistantManagerAbove": "Yes",
+    "dataJoined": "07 JUL 2021",
+    "appraisalType": "YearEnd"
+  },
+  "sectionA": {
+  "yearEnd": {
+    "purpose": "Year-End",
+    "periodOfAssessment": "1 Month",
+    "jobDescriptionFiles": [
+      {
+        "name": "JD_2025_Appraisee.pdf",
+        "url": "/files/JD_2025_Appraisee.pdf",
+        "uploadedBy": "appraisee",
+        "uploadedAt": "2025-06-25T10:00:00Z"
+      },
+      {
+        "name": "JD_Extra_Info.pdf",
+        "url": "/files/JD_Extra_Info.pdf",
+        "uploadedBy": "appraiser",
+        "uploadedAt": "2025-06-27T15:30:00Z"
+      }
+    ]
+  },
+  "midYear": {
+    "purpose": "Mid-Year Review",
+    "periodOfAssessment": "6 Months",
+    "jobDescriptionFiles": [
+      {
+        "name": "JD_MidYear_Appraisee.pdf",
+        "url": "/files/JD_MidYear_Appraisee.pdf",
+        "uploadedBy": "appraisee",
+        "uploadedAt": "2025-03-20T09:00:00Z"
+      },
+      {
+        "name": "JD_MidYear_Reviewer.pdf",
+        "url": "/files/JD_MidYear_Reviewer.pdf",
+        "uploadedBy": "appraiser",
+        "uploadedAt": "2025-03-22T14:15:00Z"
+      }
+    ]
+  }
+},  
+
+  "sectionB": {
+    "fields": [
+      {
+        "title": "(I) ATTENDANCE",
+        "items": [
+          {
+            "key": "attendance",
+            "label": "PUNCTUALITY & ATTENDANCE",
+            "info": "Regular and punctual attendance in accordance with working days & hours",
+            "score": {
+              "mid": {"appraisee": 5, "appraiser": 5},
+              "end": {"appraisee": 5, "appraiser": 5}
+            }
+          }
+        ]
+      },
+      {
+        "title": "(II) KNOWLEDGE",
+        "items": [
+          {
+            "key": "jobKnowledge",
+            "label": "JOB KNOWLEDGE & SKILLS",
+            "info": "Demonstrates the knowledge & skills necessary to perform the essential functions of the job",
+            "score": {
+              "mid": { "appraisee": 5, "appraiser": 5 },
+              "end": { "appraisee": 5, "appraiser": 5 }
+            }
+          },
+          {
+            "key": "organizing",
+            "label": "ORGANIZING AND PLANNING",
+            "info": "Ability to plan, organize & coordinate job to achieve desired work objectives",
+            "score": {
+              "mid": { "appraisee": 5, "appraiser": 5 },
+              "end": { "appraisee": 5, "appraiser": 5 }
+            }
+          },
+          {
+            "key": "workQuality",
+            "label": "WORK QUALITY",
+            "info": "The accuracy and thoroughness of the task performed",
+            "score": {
+              "mid": { "appraisee": 5, "appraiser": 5 },
+              "end": { "appraisee": 5, "appraiser": 5 }
+            }
+          },
+          {
+            "key": "creativity",
+            "label": "CREATIVITY AND INNOVATION",
+            "info": "Contributing of new ideas, ability to think & act in ways that are new",
+            "score": {
+              "mid": { "appraisee": 5, "appraiser": 5 },
+              "end": { "appraisee": 5, "appraiser": 5 }
+            }
+          }
+        ]
+      },
+      {
+        "title": "(III) PERSONAL AND SOCIAL CAPABILITIES",
+        "items": [
+          {
+            "key": "attitude",
+            "label": "ATTITUDE & COMMITMENT",
+            "info": "Respect superiors and peers. Willingness to take up new task given",
+            "score": {
+              "mid": { "appraisee": 5, "appraiser": 5 },
+              "end": { "appraisee": 5, "appraiser": 5 }
+            }
+          },
+          {
+            "key": "teamwork",
+            "label": "TEAM WORK & COOPERATION",
+            "info": "Working together collectively & harmoniously to achieve company’s goals",
+            "score": {
+              "mid": { "appraisee": 5, "appraiser": 5 },
+              "end": { "appraisee": 5, "appraiser": 5 }
+            }
+          },
+          {
+            "key": "communication",
+            "label": "COMMUNICATIONS & CUSTOMER ORIENTATION",
+            "info": "Communication skills, getting along with colleagues, customers & vendors, customer orientation",
+            "score": {
+              "mid": { "appraisee": 5, "appraiser": 5 },
+              "end": { "appraisee": 5, "appraiser": 5 }
+            }
+          },
+          {
+            "key": "workEthics",
+            "label": "WORK ETHICS & VALUES",
+            "info": "Honesty, loyalty, reliability, initiatives",
+            "score": {
+              "mid": { "appraisee": 5, "appraiser": 5 },
+              "end": { "appraisee": 5, "appraiser": 5 }
+            }
+          },
+          {
+            "key": "reliability",
+            "label": "RELIABILITY & INITIATIVE",
+            "info": "Takes on additional responsibility as needed and completes assignments on time and with accuracy",
+            "score": {
+              "mid": { "appraisee": 5, "appraiser": 5 },
+              "end": { "appraisee": 5, "appraiser": 5 }
+            }
+          }
+        ]
+      },
+      {
+        "title": "(IV) MANAGEMENT CAPABILITIES",
+        "items": [
+          {
+            "key": "socialRelationship",
+            "label": "SOCIAL RELATIONSHIP",
+            "info": "Ability to carry oneself in interaction with different levels of people and handle conflict",
+            "score": {
+              "mid": { "appraisee": 5, "appraiser": 5 },
+              "end": { "appraisee": 5, "appraiser": 5 }
+            }
+          },
+          {
+            "key": "managementSkills",
+            "label": "MANAGEMENT SKILLS",
+            "info": "Judgment & reasoning, problem solving and decision making, leadership",
+            "score": {
+              "mid": { "appraisee": 5, "appraiser": 5 },
+              "end": { "appraisee": 5, "appraiser": 5 }
+            }
+          },
+          {
+            "key": "handsOn",
+            "label": "HANDS-ON & INVOLVEMENT",
+            "info": "Knowing precisely what is happening. Taking part with the right spirit & a sense of enthusiasm",
+            "score": {
+              "mid": { "appraisee": 5, "appraiser": 5 },
+              "end": { "appraisee": 5, "appraiser": 5 }
+            }
+          },
+          {
+            "key": "ownership",
+            "label": "OWNERSHIP & RESPONSIBILITIES",
+            "info": "Taking full personal responsibility & be accountable for the impact of our decision & actions",
+            "score": {
+              "mid": { "appraisee": 5, "appraiser": 5 },
+              "end": { "appraisee": 5, "appraiser": 5 }
+            }
+          }
+        ]
+      }
+    ],
+    "totalScore": {
+    "mid": {
+      "appraisee": 60,
+      "appraiser": 60
+    },
+    "end": {
+      "appraisee": 60,
+      "appraiser": 60
+    }
+  }
+},
+
+  "sectionC": {
+  "midKpis": [
+    {
+      "id": 1,
+      "title": "Improve customer satisfaction score",
+      "result": "Achieved 90% CSAT",
+       "attachments": [
+        { "name": "csat_report.pdf", "url": "/uploads/csat_report.pdf" }
+      ],
+      "score": {
+        "appraisee": 5,
+        "appraiser": 5
+      }
+    },
+    {
+      "id": 2,
+      "title": "Deliver new product module",
+      "result": "Delivered ahead of schedule",
+       "attachments": [
+        { "name": "survey_data.xlsx", "url": "/uploads/survey_data.xlsx" }
+      ],
+      "score": {
+        "appraisee": 5,
+        "appraiser": 5
+      }
+    },
+    {
+      "id": 3,
+      "title": "Reduce defect rate by 15%",
+      "result": "Reduced by 18%",
+       "attachments": [
+        { "name": "report.pdf", "url": "/uploads/report.pdf" }
+      ],
+      "score": {
+        "appraisee": 5,
+        "appraiser": 5
+      }
+    }
+  ],
+  "endKpis": [
+    {
+      "id": 1,
+      "title": "Complete annual audit",
+      "result": "Completed with no findings",
+       "attachments": [
+        { "name": "completed_report.pdf", "url": "/uploads/completed_report.pdf" }
+      ],
+      "score": {
+        "appraisee": 5,
+        "appraiser": 5
+      }
+    },
+    {
+      "id": 2,
+      "title": "Lead 3 department workshops",
+      "result": "Successfully led all 3",
+      "attachments": [
+        { "name": "data.pdf", "url": "/uploads/data.pdf" }
+      ],
+      "score": {
+        "appraisee": 5,
+        "appraiser": 5
+      }
+    },
+    {
+      "id": 3,
+      "title": "Achieve 10% cost reduction",
+      "result": "Achieved 12%",
+      "attachments": [
+        { "name": "kpi.pdf", "url": "/uploads/kpi.pdf" }
+      ],
+      "score": {
+        "appraisee": 5,
+        "appraiser": 5
+      }
+    }
+  ],
+  "nextYearKpis": [
+    {
+      "id": 1,
+      "title": "Expand regional market by 8%"
+    },
+    {
+      "id": 2,
+      "title": "Implement internal knowledge system"
+    },
+    {
+      "id": 3,
+      "title": "Improve onboarding satisfaction to 85%"
+    }
+  ],
+  "totalScore": {
+    "mid": {
+      "appraisee": 40,
+      "appraiser": 40
+    },
+    "end": {
+      "appraisee": 40,
+      "appraiser": 40
+    }
+  }
+},
+
+  "sectionD": {
+  "appraiseeComment": {
+    "mid": "I learned a lot.",
+    "end": "Improved in the second half."
+  },
+  "appraiserComment": {
+    "mid": "Good effort.",
+    "end": "Great growth."
+  },
+  "extend": {
+  "mid": false,
+  "end": true,
+  "extension": 3
+  },
+  "totalScore": {
+    "mid": {
+      "overall": 100
+    },
+    "end": {
+      "overall": 100,
+      "yearSectionB": 60,
+      "yearSectionC": 40,
+      "yearOverall": 100
+    }
+  }
+},
+
+"departmentHead": {
+  "comment": {
+    "mid": "This employee exceeded expectations.",
+    "end": "Continued strong performance."
+  },
+  "remark": "Yes",
+  "status": true,
+  "submittedAt": "2025-01-31",
+  "departmentHeadName": "MR ONG"
+  },
+  
+  "sectionE": {
+    "courseProposed": "Advanced Vue.js Workshop",
+    "remark": "Frontend skill enhancement",
+    "organizationalNeeds": "Stronger UI capabilities"
+  },
+
+  "status": {
+    "appraiser": {
+      "appraiserName": "MS KOH",
+      "submitted": true, 
+      "submittedAt": "2025-01-15"
+    }
+  }
+}

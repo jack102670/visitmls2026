@@ -210,6 +210,98 @@
 
           <span class="mx-4 font-medium">Employee</span>
         </router-link>
+
+        <!-- My APPRAISAL -->
+          <router-link
+            :to="{ name: 'MyAppraisal', query: { view: 'appraisee' } }"
+            v-if="['MyAppraisal', 'NewAppraisalForm', 'PerformanceOverview','AttendanceRecord'].includes($route.name)"
+            class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg 
+                  dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
+          >
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M19 11H5M19 11C20.1046 11 21 11.8954 21 13V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V13C3 11.89543 3.89543 11 5 11M19 11V9C19 7.89543 18.1046 7 17 7M5 11V9C5 7.89543 5.89543 7 7 7M7 7V5C7 3.89543 7.89543 3 9 3H15C16.1046 3 17 3.89543 17 5V7M7 7H17"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              />
+            </svg>
+            <span class="mx-4 font-medium">My APPRAISAL</span>
+          </router-link>
+
+          <!-- Appraise Employee List -->
+          <router-link
+            :to="{ name: 'MyAppraisal', query: { view: 'appraiser' } }"
+            v-if="['MyAppraisal', 'NewAppraisalForm', 'PerformanceOverview','AttendanceRecord'].includes($route.name)"
+            class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg 
+                  dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
+          >
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              />
+            </svg>
+            <span class="mx-4 font-medium">APPRAISE EMPLOYEE LIST</span>
+          </router-link>
+
+          <!-- HOD Dashboard -->
+          <router-link
+            :to="{ name: 'MyAppraisal', query: { view: 'departmentHead' } }"
+            v-if="['MyAppraisal', 'NewAppraisalForm', 'PerformanceOverview','AttendanceRecord'].includes($route.name)"
+            class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg 
+                  dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
+          >
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M3 12h18M12 3v18"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              />
+            </svg>
+            <span class="mx-4 font-medium">HOD DASHBOARD</span>
+          </router-link>
+
+          <!-- Performance Overview (HR) -->
+          <router-link
+            :to="{ name: 'MyAppraisal', query: { view: 'hr' } }"
+            v-if="['MyAppraisal', 'NewAppraisalForm', 'PerformanceOverview','AttendanceRecord'].includes($route.name)"
+            class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg 
+                  dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
+          >
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M4 6h16M4 12h16M4 18h16"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              />
+            </svg>
+            <span class="mx-4 font-medium">Performance Overview (HR)</span>
+          </router-link>
+
+          <!-- Attendance Record (HR) -->
+          <router-link 
+            to="/AttendanceRecord"
+            v-if="['MyAppraisal', 'NewAppraisalForm', 'PerformanceOverview','AttendanceRecord'].includes($route.name)"
+            class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125Z" 
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span class="mx-4 font-medium">Attendance Record (HR)</span>
+          </router-link>
+          
+          <!-- Performance Overview -->
+          <router-link 
+            to="/PerformanceOverview"
+            v-if="['MyAppraisal', 'NewAppraisalForm', 'PerformanceOverview','AttendanceRecord'].includes($route.name)"
+            class="flex items-center px-4 py-2 mt-5 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125Z" 
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span class="mx-4 font-medium">Performance Overview</span>
+          </router-link>
+
+          
         <a class="flex items-center px-4 py-2 mt-4 text-slate-200 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-[#190a70] dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-400"
           href="#">
           <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">

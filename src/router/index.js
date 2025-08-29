@@ -56,6 +56,13 @@ import UpdateClaims from "@/components/e-claim/UpdateClaim/UpdateClaims.vue"
 import HRMonthlyReport from "@/components/e-claim/MonthlySummaryClaim/HRMonthlyReport.vue";
 import FINMonthlyReport from "@/components/e-claim/MonthlySummaryClaim/FINMonthlyReport.vue";
 
+import MyAppraisal from "@/components/e-appraisal/MyAppraisal.vue";
+import NewAppraisalForm from "@/components/e-appraisal/NewAppraisalForm.vue";
+import PerformanceOverview from "@/components/e-appraisal/PerformanceOverview.vue";
+import DepartmentHead from "@/components/e-appraisal/DepartmentHead.vue";
+import AttendanceRecord from "@/components/e-appraisal/AttendanceRecord.vue";
+
+
 
 const routes = [
   {
@@ -486,7 +493,58 @@ const routes = [
     name: "NotFound",
     component: NotFound,
   },
-];
+
+  {
+    path: "/MyAppraisal",
+    name: "MyAppraisal",
+    components: {
+      default: MyAppraisal,
+      Sidebar: Newsidebar,
+    }
+  },
+
+  {
+  path: "/NewAppraisalForm/:role/:id?",
+  name: "NewAppraisalForm",
+  components: {
+    default: NewAppraisalForm,
+    Sidebar: Newsidebar
+  },
+  props: {
+    default: true,
+    Sidebar: false
+  }
+},
+  {
+    path: "/PerformanceOverview",
+    name: "PerformanceOverview",
+    components:{
+      default: PerformanceOverview,
+      Sidebar: Newsidebar
+    }
+  },
+  {
+    path: "/AttendanceRecord",
+    name: "AttendanceRecord",
+    components:{
+      default: AttendanceRecord,
+      Sidebar: Newsidebar
+    }
+  },
+  {
+    path: "/DepartmentHead",
+    name: "DepartmentHead",
+    components:{
+      default: DepartmentHead,
+      Sidebar: Newsidebar
+    }
+  },
+
+  
+
+
+  
+]; 
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
