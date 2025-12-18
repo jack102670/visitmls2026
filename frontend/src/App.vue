@@ -1,5 +1,9 @@
 <template>
-  <div class="text-red-500 text-2xl font-bold">
-    Hello Tailwind!
-  </div>
+  <router-view />
 </template>
+
+<script setup>
+</script>
+
+<style>
+</style>
