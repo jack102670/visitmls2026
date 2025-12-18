@@ -11,7 +11,7 @@
         class="w-full bg-amber-700 text-white py-2"
         @click="signup"
       >
-        Create Account
+        Create Accounts
       </button>
     </div>
   </div>
