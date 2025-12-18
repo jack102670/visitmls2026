@@ -1,5 +1,5 @@
 <template>
   <div class="text-red-500 text-2xl font-bold">
-    Hello Tailwind!
+    ok
   </div>
 </template>
